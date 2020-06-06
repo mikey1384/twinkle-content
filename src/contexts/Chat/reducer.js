@@ -1,4 +1,5 @@
 import { initialChatState } from '.';
+import { defaultChatSubject } from 'constants/defaultValues';
 
 export default function ChatReducer(state, action) {
   switch (action.type) {
@@ -232,10 +233,13 @@ export default function ChatReducer(state, action) {
               ? action.data.editedMessage
               : message.content
         })),
-        subject: action.isSubject
+        subjectObj: action.isSubject
           ? {
-              ...state.subject,
-              content: action.data.editedMessage
+              ...state.subjectObj,
+              [state.selectedChannelId]: {
+                ...state.subjectObj[state.selectedChannelId],
+                content: action.data.editedMessage
+              }
             }
           : state.subject
       };
@@ -494,7 +498,13 @@ export default function ChatReducer(state, action) {
     case 'LOAD_SUBJECT':
       return {
         ...state,
-        subject: action.subject
+        subjectObj: {
+          ...state.subjectObj,
+          [action.data.channelId]: {
+            ...action.data,
+            loaded: true
+          }
+        }
       };
     case 'LOAD_VOCABULARY': {
       let vocabActivitiesLoadMoreButton = false;
@@ -545,30 +555,36 @@ export default function ChatReducer(state, action) {
       return {
         ...state,
         homeChannelIds: [
-          action.data.channelId,
+          action.channelId,
           ...state.homeChannelIds.filter(
-            (channelId) => channelId !== action.data.channelId
+            (channelId) => channelId !== action.channelId
           )
         ],
-        subject: action.data.subject,
+        subjectObj: {
+          ...state.subjectObj,
+          [action.channelId]: {
+            ...state.subjectObj[action.channelId],
+            ...action.subject
+          }
+        },
         channelsObj: {
           ...state.channelsObj,
-          [action.data.channelId]: {
-            ...state.channelsObj[action.data.channelId],
+          [action.channelId]: {
+            ...state.channelsObj[action.channelId],
             lastMessage: {
-              content: action.data.subject.content,
+              content: action.subject.content,
               sender: {
-                id: action.data.subject.userId,
-                username: action.data.subject.username
+                id: action.subject.userId,
+                username: action.subject.username
               }
             }
           }
         },
         messages: state.messages.concat([
           {
-            id: action.data.subject.id,
-            channelId: action.data.channelId,
-            ...action.data.subject
+            id: action.subject.id,
+            channelId: action.channelId,
+            ...action.subject
           }
         ])
       };
@@ -843,7 +859,13 @@ export default function ChatReducer(state, action) {
     case 'RELOAD_SUBJECT':
       return {
         ...state,
-        subject: action.subject,
+        subjectObj: {
+          ...state.subjectObj,
+          [action.channelId]: {
+            ...state.subjectObj[action.channelId],
+            ...action.subject
+          }
+        },
         messages: state.messages.concat([action.message]),
         homeChannelIds: [
           action.channelId,
@@ -1051,7 +1073,15 @@ export default function ChatReducer(state, action) {
         }
       };
     }
-    case 'SUBMIT_MESSAGE':
+    case 'SUBMIT_MESSAGE': {
+      const targetSubject = action.isRespondingToSubject
+        ? {
+            ...state.subjectObj[action.message.channelId],
+            content:
+              state.subjectObj[action.message.channelId].content ||
+              defaultChatSubject
+          }
+        : null;
       return {
         ...state,
         isRespondingToSubject: false,
@@ -1084,10 +1114,11 @@ export default function ChatReducer(state, action) {
             ...action.message,
             content: action.message.content,
             targetMessage: action.replyTarget,
-            targetSubject: action.isRespondingToSubject ? state.subject : null
+            targetSubject
           }
         ])
       };
+    }
     case 'UPDATE_LAST_MESSAGE': {
       const newChannelsObj = { ...state.channelsObj };
       let newHomeChannelIds = [...state.homeChannelIds];

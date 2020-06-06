@@ -1,4 +1,4 @@
-export const defaultChatSubject = 'Introduce yourself!';
+export const defaultChatSubject = 'Welcome!';
 export const rewardValue = {
   star: 200
 };
@@ -94,6 +94,7 @@ export const rewardReasons = {
   }
 };
 
+export const GENERAL_CHAT_ID = 2;
 export const FILE_UPLOAD_XP_REQUIREMENT = 100000;
 export const LAST_ONLINE_FILTER_LABEL = 'Last Online';
 export const RANKING_FILTER_LABEL = 'Ranking';

@@ -18,20 +18,22 @@ import { css } from 'emotion';
 
 EditSubjectForm.propTypes = {
   autoFocus: PropTypes.bool,
+  channelId: PropTypes.number,
   currentSubjectId: PropTypes.number,
   maxLength: PropTypes.number,
   onChange: PropTypes.func.isRequired,
   onClickOutSide: PropTypes.func.isRequired,
   onEditSubmit: PropTypes.func.isRequired,
-  reloadChatSubject: PropTypes.func,
+  onReloadChatSubject: PropTypes.func,
   searchResults: PropTypes.array,
   title: PropTypes.string.isRequired
 };
 
 export default function EditSubjectForm({
   autoFocus,
+  channelId,
   currentSubjectId,
-  reloadChatSubject,
+  onReloadChatSubject,
   maxLength = 100,
   searchResults,
   onChange,
@@ -51,8 +53,8 @@ export default function EditSubjectForm({
 
   useEffect(() => {
     clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => changeInput(title), 300);
-    async function changeInput(input) {
+    timerRef.current = setTimeout(() => handleChangeInput(title), 300);
+    async function handleChangeInput(input) {
       await onChange(input);
       const content = input ? `${input[0].toUpperCase()}${input.slice(1)}` : '';
       for (let i = 0; i < searchResults.length; i++) {
@@ -70,10 +72,11 @@ export default function EditSubjectForm({
     <ErrorBoundary>
       {subjectsModalShown && (
         <SubjectsModal
+          channelId={channelId}
           currentSubjectId={currentSubjectId}
           onHide={() => setSubjectsModalShown(false)}
           selectSubject={(subjectId) => {
-            reloadChatSubject(subjectId);
+            onReloadChatSubject(subjectId);
             setSubjectsModalShown(false);
           }}
         />
@@ -100,7 +103,7 @@ export default function EditSubjectForm({
                 position: 'relative',
                 marginTop: '1.5rem'
               }}
-              onSubmit={onEditSubmit}
+              onSubmit={handleEditSubmit}
             >
               <Input
                 autoFocus={autoFocus}
@@ -188,13 +191,13 @@ export default function EditSubjectForm({
     setHighlightedIndex(-1);
   }
 
-  function onEditSubmit(event) {
+  function handleEditSubmit(event) {
     event.preventDefault();
     if (!readyForSubmit) return;
     if (highlightedIndex > -1) {
       const { id: subjectId } = searchResults[highlightedIndex];
       if (subjectId === currentSubjectId) return onClickOutSide();
-      return reloadChatSubject(subjectId);
+      return onReloadChatSubject({ subjectId, channelId });
     }
 
     if (title && title.length > maxLength) return;
@@ -212,7 +215,7 @@ export default function EditSubjectForm({
   function onItemClick(item) {
     const { id: subjectId } = item;
     if (subjectId === currentSubjectId) return onClickOutSide();
-    return reloadChatSubject(subjectId);
+    onReloadChatSubject(subjectId);
   }
 
   function renderItemLabel(item) {

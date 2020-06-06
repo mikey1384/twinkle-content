@@ -188,9 +188,11 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async loadChatSubject() {
+    async loadChatSubject(channelId) {
       try {
-        const { data } = await request.get(`${URL}/chat/chatSubject`);
+        const { data } = await request.get(
+          `${URL}/chat/chatSubject?channelId=${channelId}`
+        );
         return Promise.resolve(data);
       } catch (error) {
         return handleError(error);
@@ -261,13 +263,13 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async reloadChatSubject(subjectId) {
+    async reloadChatSubject({ subjectId, channelId }) {
       try {
         const {
           data: { subject, message }
         } = await request.put(
           `${URL}/chat/chatSubject/reload`,
-          { subjectId },
+          { channelId, subjectId },
           auth()
         );
         return Promise.resolve({ subject, message });
@@ -298,13 +300,13 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async saveMessage({ message, targetMessageId }) {
+    async saveMessage({ message, targetMessageId, targetSubject }) {
       try {
         const {
           data: { messageId }
         } = await request.post(
           `${URL}/chat`,
-          { message, targetMessageId },
+          { message, targetMessageId, targetSubject },
           auth()
         );
         return Promise.resolve(messageId);
@@ -323,10 +325,10 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async searchChatSubject(text) {
+    async searchChatSubject({ text, channelId }) {
       try {
         const { data } = await request.get(
-          `${URL}/chat/search/subject?text=${text}`
+          `${URL}/chat/search/subject?text=${text}&channelId=${channelId}`
         );
         return Promise.resolve(data);
       } catch (error) {
