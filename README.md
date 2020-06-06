@@ -1,68 +1,41 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Twinkle Network
 
-## Available Scripts
+https://www.twinkle.network
 
-In the project directory, you can run:
+## About this project:
 
-### `yarn start`
+Twinkle Network is a social network service used primarily by students and teachers of Twinkle - a private school located in Seoul, Korea. The members of the website can share YouTube videos and educational web URLs, create discussion topics, and chat or play chess with other users.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The website is a tool for the Twinkle community members to:
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+1. Build relationships with people from different countries, ethnicities, and cultures early on in their lives
 
-### `yarn test`
+2. Find and connect with lifelong mentors from all over the world
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+3. Find motivation in learning, to become active learners instead of passive ones, to be driven by their own curiosity rather than the pressure imposed on them by grownups
 
-### `yarn build`
+4. Have opportunity to teach and help other members of the community
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+5. Become critical thinkers
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+6. Learn to discuss and debate
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+7. Have equal opportunity in reaching their full potentials
 
-### `yarn eject`
+And to fill their minds with wonder.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+API source codes are private due to security concerns. If you are interested in helping me build this project, please contact me at mikey1384@gmail.com
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Setup:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+0. Ensure that Node 12+ is installed
+1. Install yarn `npm install -g yarn`
+1. git clone https://github.com/mikey1384/twinkle-network.git [your directory name]
+1. Run `yarn install` at the directory where you cloned the git repository.
+1. Inside /source/constants there is a file titled "rename this to URL.js" rename it to URL.js
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+finally, run:
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+```shell
+yarn start
+```
