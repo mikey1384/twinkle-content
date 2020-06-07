@@ -38,11 +38,6 @@ export default function HomeActions(dispatch) {
         data
       });
     },
-    onReloadFeeds() {
-      return dispatch({
-        type: 'RELOAD_FEEDS'
-      });
-    },
     onSetDisplayOrder(order) {
       return dispatch({
         type: 'SET_DISPLAY_ORDER',

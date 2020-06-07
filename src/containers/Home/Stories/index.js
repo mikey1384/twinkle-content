@@ -132,21 +132,7 @@ export default function Stories({ location }) {
 
   useEffect(() => {
     if (!loaded) {
-      init();
-    }
-    async function init() {
-      setLoadingFeeds(true);
-      categoryRef.current = 'uploads';
-      onChangeCategory('uploads');
-      onChangeSubFilter('all');
-      onResetNumNewPosts();
-      try {
-        const { data } = await loadFeeds();
-        onLoadFeeds(data);
-        setLoadingFeeds(false);
-      } catch (error) {
-        console.error(error);
-      }
+      handleLoadFeeds();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loaded]);
@@ -204,7 +190,7 @@ export default function Stories({ location }) {
               {feedsOutdated && (
                 <Banner
                   color="gold"
-                  onClick={handleFetchNewFeeds}
+                  onClick={handleLoadFeeds}
                   style={{ marginBottom: '1rem' }}
                 >
                   Tap to See New Posts!
@@ -335,6 +321,21 @@ export default function Stories({ location }) {
       });
       if (data && mounted.current) onLoadNewFeeds(data);
       setLoadingNewFeeds(false);
+    }
+  }
+
+  async function handleLoadFeeds() {
+    setLoadingFeeds(true);
+    categoryRef.current = 'uploads';
+    onChangeCategory('uploads');
+    onChangeSubFilter('all');
+    onResetNumNewPosts();
+    try {
+      const { data } = await loadFeeds();
+      onLoadFeeds(data);
+      setLoadingFeeds(false);
+    } catch (error) {
+      console.error(error);
     }
   }
 
