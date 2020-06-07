@@ -8,13 +8,14 @@ import Peer from 'simple-peer';
 import { css } from 'emotion';
 import { Color, mobileMaxWidth, desktopMinWidth } from 'constants/css';
 import { socket } from 'constants/io';
-import { getSectionFromPathname } from 'helpers';
 import { useHistory, useLocation } from 'react-router-dom';
+import { getSectionFromPathname } from 'helpers';
 import { useMyState } from 'helpers/hooks';
 import {
   useAppContext,
   useContentContext,
   useViewContext,
+  useHomeContext,
   useNotiContext,
   useChatContext
 } from 'contexts';
@@ -38,6 +39,7 @@ export default function Header({
       checkVersion,
       getNumberOfUnreadMessages,
       loadChat,
+      loadNewFeeds,
       loadRankings,
       updateChatLastRead
     }
@@ -89,6 +91,11 @@ export default function Header({
       onUpdateCollectorsRankings
     }
   } = useChatContext();
+
+  const {
+    state: { category, feeds, subFilter },
+    actions: { onSetFeedsOutdated }
+  } = useHomeContext();
 
   const {
     state: { numNewNotis, numNewPosts, totalRewardAmount, versionMatch },
@@ -200,6 +207,7 @@ export default function Header({
       onClearRecentChessMessage();
       onChangeSocketStatus(true);
       handleCheckVersion();
+      handleCheckNewFeeds();
       if (userId) {
         handleGetNumberOfUnreadMessages();
         socket.emit('bind_uid_to_socket', { userId, username, profilePicId });
@@ -211,6 +219,20 @@ export default function Header({
         onSetReconnecting(true);
         const data = await loadChat();
         onInitChat(data);
+      }
+
+      async function handleCheckNewFeeds() {
+        const firstFeed = feeds[0];
+        if (
+          firstFeed?.lastInteraction &&
+          category === 'uploads' &&
+          subFilter === 'all'
+        ) {
+          const outdated = await loadNewFeeds({
+            lastInteraction: feeds[0] ? feeds[0].lastInteraction : 0
+          });
+          onSetFeedsOutdated(outdated.length > 0);
+        }
       }
 
       async function handleCheckVersion() {

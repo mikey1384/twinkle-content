@@ -8,9 +8,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import HomeFilter from './HomeFilter';
 import ContentPanel from 'components/ContentPanel';
 import { css } from 'emotion';
-import { queryStringForArray } from 'helpers/stringHelpers';
 import { mobileMaxWidth } from 'constants/css';
-import { socket } from 'constants/io';
 import {
   useInfiniteScroll,
   useMyState,
@@ -71,8 +69,7 @@ export default function Stories({ location }) {
       onLoadFeeds,
       onLoadMoreFeeds,
       onLoadNewFeeds,
-      onSetDisplayOrder,
-      onSetFeedsOutdated
+      onSetDisplayOrder
     }
   } = useHomeContext();
 
@@ -93,7 +90,6 @@ export default function Stories({ location }) {
   const categoryRef = useRef(null);
   const ContainerRef = useRef(null);
   const hideWatchedRef = useRef(null);
-  const disconnected = useRef(false);
 
   useInfiniteScroll({
     scrollable: feeds.length > 0,
@@ -110,42 +106,6 @@ export default function Stories({ location }) {
       mounted.current = false;
     };
   }, []);
-
-  useEffect(() => {
-    socket.on('connect', onConnect);
-    socket.on('disconnect', onDisconnect);
-    async function onConnect() {
-      const firstFeed = feeds[0];
-      if (
-        firstFeed?.lastInteraction &&
-        !loadingFeeds &&
-        category === 'uploads' &&
-        subFilter === 'all'
-      ) {
-        if (disconnected.current) {
-          disconnected.current = false;
-          const outdated = await loadNewFeeds({
-            lastInteraction: feeds[0] ? feeds[0].lastInteraction : 0,
-            shownFeeds: queryStringForArray({
-              array: feeds,
-              originVar: 'feedId',
-              destinationVar: 'shownFeeds'
-            })
-          });
-          if (mounted.current) {
-            onSetFeedsOutdated(outdated.length > 0);
-          }
-        }
-      }
-    }
-    function onDisconnect() {
-      disconnected.current = true;
-    }
-    return function cleanUp() {
-      socket.removeListener('connect', onConnect);
-      socket.removeListener('disconnect', onDisconnect);
-    };
-  });
 
   useEffect(() => {
     if (
