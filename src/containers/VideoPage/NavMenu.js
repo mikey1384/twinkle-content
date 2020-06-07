@@ -23,7 +23,7 @@ NavMenu.propTypes = {
 
 export default function NavMenu({ playlistId, videoId }) {
   const {
-    requestHelpers: { fetchNotifications }
+    requestHelpers: { fetchNotifications, loadRightMenuVideos }
   } = useAppContext();
   const { profileTheme, userId } = useMyState();
   const {
@@ -64,23 +64,17 @@ export default function NavMenu({ playlistId, videoId }) {
   useEffect(() => {
     mounted.current = true;
     socket.on('new_reward_posted', handleNewReward);
-    loadRightMenuVideos();
+    handleLoadRightMenuVideos();
 
     function handleNewReward({ receiverId }) {
       if (receiverId === userId) {
         handleFetchNotifications();
       }
     }
-    async function loadRightMenuVideos() {
+    async function handleLoadRightMenuVideos() {
       try {
         setLoading(true);
-        const { data } = await request.get(
-          `${URL}/${
-            playlistId ? 'playlist' : 'video'
-          }/rightMenu?videoId=${videoId}${
-            playlistId ? `&playlistId=${playlistId}` : ''
-          }`
-        );
+        const data = await loadRightMenuVideos({ videoId, playlistId });
         if (mounted.current) {
           if (data.playlistTitle) {
             setPlaylistTitle(data.playlistTitle);
