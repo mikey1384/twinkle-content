@@ -93,7 +93,7 @@ export default function MessagesContainer({
       onUpdateLastMessages
     }
   } = useChatContext();
-  const { authLevel, profilePicId, userId, username } = useMyState();
+  const { authLevel, banned, profilePicId, userId, username } = useMyState();
   const [chessCountdownObj, setChessCountdownObj] = useState({});
   const [textAreaHeight, setTextAreaHeight] = useState(0);
   const [fileObj, setFileObj] = useState(null);
@@ -332,7 +332,7 @@ export default function MessagesContainer({
 
   return (
     <ErrorBoundary>
-      {selectedChannelId !== GENERAL_CHAT_ID && (
+      {selectedChannelId !== GENERAL_CHAT_ID && !banned && (
         <DropdownButton
           skeuomorphic
           color="darkerGray"
@@ -546,6 +546,7 @@ export default function MessagesContainer({
             }}
             onUploadButtonClick={() => FileInputRef.current.click()}
             onSelectVideoButtonClick={() => setSelectVideoModalShown(true)}
+            recepientId={recepientId}
           />
         ) : (
           <div>
