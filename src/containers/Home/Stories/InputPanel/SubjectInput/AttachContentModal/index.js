@@ -33,16 +33,20 @@ export default function AttachContentModal({ onConfirm, onHide }) {
       <header>{sectionObj[section].title}</header>
       <main>
         {section === 'start' && (
-          <StartScreen navigateTo={setSection} onHide={onHide} />
+          <StartScreen
+            attachContentType="subject"
+            navigateTo={setSection}
+            onHide={onHide}
+          />
         )}
         {section === 'selectVideo' && (
           <SelectAttachmentScreen
             contentType="video"
-            onSelect={video =>
+            onSelect={(video) =>
               setSelected({
                 contentType: 'video',
                 id: video.id,
-                title: video.title
+                title: video?.title
               })
             }
             onDeselect={() => setSelected(undefined)}
@@ -51,11 +55,11 @@ export default function AttachContentModal({ onConfirm, onHide }) {
         {section === 'selectLink' && (
           <SelectAttachmentScreen
             contentType="url"
-            onSelect={link =>
+            onSelect={(link) =>
               setSelected({
                 contentType: 'url',
                 id: link.id,
-                title: link.title
+                title: link?.title
               })
             }
             onDeselect={() => setSelected(undefined)}
@@ -81,7 +85,7 @@ export default function AttachContentModal({ onConfirm, onHide }) {
             disabled={!selected}
             color="blue"
             style={{ marginLeft: '0.7rem' }}
-            onClick={() => onConfirm(selected)}
+            onClick={() => onConfirm(selected, 'subject')}
           >
             Confirm
           </Button>

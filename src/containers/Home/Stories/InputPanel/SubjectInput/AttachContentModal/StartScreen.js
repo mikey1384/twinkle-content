@@ -16,10 +16,11 @@ import { FILE_UPLOAD_XP_REQUIREMENT } from 'constants/defaultValues';
 
 StartScreen.propTypes = {
   navigateTo: PropTypes.func.isRequired,
-  onHide: PropTypes.func.isRequired
+  onHide: PropTypes.func.isRequired,
+  attachContentType: PropTypes.string.isRequired
 };
 
-export default function StartScreen({ navigateTo, onHide }) {
+export default function StartScreen({ navigateTo, onHide, attachContentType }) {
   const {
     actions: { onSetSubjectAttachment }
   } = useInputContext();
@@ -166,12 +167,15 @@ export default function StartScreen({ navigateTo, onHide }) {
       reader.onload = (upload) => {
         const payload = upload.target.result;
         if (fileObj.name.split('.')[1] === 'gif') {
-          onSetSubjectAttachment({
-            file: fileObj,
-            contentType: 'file',
-            fileType,
-            imageUrl: payload
-          });
+          onSetSubjectAttachment(
+            {
+              file: fileObj,
+              contentType: 'file',
+              fileType,
+              imageUrl: payload
+            },
+            attachContentType
+          );
           onHide();
         } else {
           window.loadImage(
@@ -181,12 +185,15 @@ export default function StartScreen({ navigateTo, onHide }) {
               const dataUri = imageUrl.replace(/^data:image\/\w+;base64,/, '');
               const buffer = Buffer.from(dataUri, 'base64');
               const file = new File([buffer], fileObj.name);
-              onSetSubjectAttachment({
-                file,
-                contentType: 'file',
-                fileType,
-                imageUrl
-              });
+              onSetSubjectAttachment(
+                {
+                  file,
+                  contentType: 'file',
+                  fileType,
+                  imageUrl
+                },
+                attachContentType
+              );
               onHide();
             },
             { orientation: true, canvas: true }
@@ -195,11 +202,14 @@ export default function StartScreen({ navigateTo, onHide }) {
       };
       reader.readAsDataURL(fileObj);
     } else {
-      onSetSubjectAttachment({
-        file: fileObj,
-        contentType: 'file',
-        fileType
-      });
+      onSetSubjectAttachment(
+        {
+          file: fileObj,
+          contentType: 'file',
+          fileType
+        },
+        attachContentType
+      );
       onHide();
     }
     event.target.value = null;
