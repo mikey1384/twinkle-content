@@ -337,7 +337,7 @@ function Message({
       }
     }
   ];
-  if (userCanEditThis) {
+  if (userCanEditThis && !rewardAmount) {
     messageMenuItems.push({
       label: (
         <>
@@ -368,8 +368,9 @@ function Message({
     });
   }
   if (
-    (userCanRewardThis && channelId === 2) ||
-    (isCreator && !userIsUploader)
+    ((userCanRewardThis && channelId === 2) ||
+      (isCreator && !userIsUploader)) &&
+    !rewardAmount
   ) {
     messageMenuItems.push({
       label: (
