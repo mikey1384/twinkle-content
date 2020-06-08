@@ -270,6 +270,10 @@ export default function ChatReducer(state, action) {
       action.data.messages.reverse();
       return {
         ...state,
+        selectedChatTab:
+          state.selectedChatTab === 'class' && !selectedChannel.isClass
+            ? 'home'
+            : state.selectedChatTab,
         chatType: null,
         recentChessMessage: undefined,
         channelsObj: {

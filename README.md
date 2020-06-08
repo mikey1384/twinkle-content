@@ -1,6 +1,6 @@
 # Twinkle Network
 
-https://www.twinkle.network
+https://www.twin-kle.com
 
 ## About this project:
 

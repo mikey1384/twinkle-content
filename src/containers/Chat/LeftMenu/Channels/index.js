@@ -88,9 +88,9 @@ function Channels({ onChannelEnter }) {
         <ClassMainMenu onChannelEnter={onChannelEnter} />
       )}
       {channelIds
-        ?.map(channelId => channelsObj[channelId])
-        .filter(channel => !channel?.isHidden)
-        .map(channel => (
+        ?.map((channelId) => channelsObj[channelId])
+        .filter((channel) => !channel?.isHidden)
+        .map((channel) => (
           <Channel
             key={channel.id}
             channel={channel}

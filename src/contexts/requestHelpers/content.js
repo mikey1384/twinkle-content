@@ -413,6 +413,21 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async loadRightMenuVideos({ playlistId, videoId }) {
+      try {
+        const { data } = await request.get(
+          `${URL}/${
+            playlistId ? 'playlist' : 'video'
+          }/rightMenu?videoId=${videoId}${
+            playlistId ? `&playlistId=${playlistId}` : ''
+          }`,
+          auth()
+        );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async loadSubjects({ contentType, contentId, lastSubjectId }) {
       try {
         const {

@@ -30,6 +30,7 @@ export default function HomeReducer(state, action) {
     case 'LOAD_FEEDS':
       return {
         ...state,
+        feedsOutdated: false,
         displayOrder: 'desc',
         feeds: action.feeds,
         loadMoreButton: action.loadMoreButton,
@@ -46,11 +47,6 @@ export default function HomeReducer(state, action) {
         ...state,
         feedsOutdated: false,
         feeds: action.data.concat(state.feeds)
-      };
-    case 'RELOAD_FEEDS':
-      return {
-        ...state,
-        loaded: false
       };
     case 'SET_DISPLAY_ORDER':
       return {

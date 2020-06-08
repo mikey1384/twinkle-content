@@ -16,7 +16,7 @@ export default function Privacy() {
 
       <p>
         {`Twinkle Network ("us", "we", or "our") operates the
-        https://www.twinkle.network website (hereinafter referred to as the
+        https://www.twin-kle.com website (hereinafter referred to as the
         "Service").`}
       </p>
 
@@ -31,7 +31,7 @@ export default function Privacy() {
         Service, you agree to the collection and use of information in
         accordance with this policy. Unless otherwise defined in this Privacy
         Policy, the terms used in this Privacy Policy have the same meanings as
-        in our Terms and Conditions, accessible from https://www.twinkle.network
+        in our Terms and Conditions, accessible from https://www.twin-kle.com
       </p>
 
       <h2>Definitions</h2>
@@ -41,8 +41,8 @@ export default function Privacy() {
             <strong>Service</strong>
           </p>
           <p>
-            Service is the https://www.twinkle.network website operated by
-            Twinkle Network
+            Service is the https://www.twin-kle.com website operated by Twinkle
+            Network
           </p>
         </li>
         <li>

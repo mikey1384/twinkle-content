@@ -26,7 +26,8 @@ MessageInput.propTypes = {
   onImagePaste: PropTypes.func.isRequired,
   onMessageSubmit: PropTypes.func.isRequired,
   onSelectVideoButtonClick: PropTypes.func.isRequired,
-  onUploadButtonClick: PropTypes.func.isRequired
+  onUploadButtonClick: PropTypes.func.isRequired,
+  recepientId: PropTypes.number
 };
 
 function MessageInput({
@@ -39,9 +40,10 @@ function MessageInput({
   onHeightChange,
   onMessageSubmit,
   onSelectVideoButtonClick,
-  onUploadButtonClick
+  onUploadButtonClick,
+  recepientId
 }) {
-  const { profileTheme } = useMyState();
+  const { banned, profileTheme } = useMyState();
   const {
     state: { isRespondingToSubject, replyTarget },
     actions: { onSetIsRespondingToSubject, onSetReplyTarget }
@@ -221,6 +223,9 @@ function MessageInput({
   }
 
   async function handleSendMsg() {
+    if (banned && recepientId !== 5) {
+      return;
+    }
     innerRef.current.focus();
     if (stringIsEmpty(text)) return;
     try {

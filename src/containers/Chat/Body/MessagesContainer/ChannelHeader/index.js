@@ -46,7 +46,7 @@ export default function ChannelHeader({
       uploadChatSubject
     }
   } = useAppContext();
-  const { authLevel, profilePicId, userId, username } = useMyState();
+  const { authLevel, banned, profilePicId, userId, username } = useMyState();
   const {
     state: { subjectObj, subjectSearchResults },
     actions: {
@@ -284,7 +284,7 @@ export default function ChannelHeader({
                     Respond
                   </span>
                 </Button>
-                {menuButtonShown && (
+                {menuButtonShown && !banned && (
                   <DropdownButton
                     skeuomorphic
                     color="darkerGray"
