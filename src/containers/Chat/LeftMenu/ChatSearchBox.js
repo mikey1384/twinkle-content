@@ -60,7 +60,7 @@ export default function ChatSearchBox({ style }) {
           setSearchText('');
           onClearChatSearchResults();
         }}
-        onSelect={onSelect}
+        onSelect={handleSelect}
       />
       {searching && (
         <Loading style={{ height: '7rem', position: 'absolute' }} />
@@ -73,7 +73,7 @@ export default function ChatSearchBox({ style }) {
     onSearchChat(data);
   }
 
-  async function onSelect(item) {
+  async function handleSelect(item) {
     if (item.primary || !!item.channelId) {
       if (item.channelId === selectedChannelId) {
         setSearchText('');
