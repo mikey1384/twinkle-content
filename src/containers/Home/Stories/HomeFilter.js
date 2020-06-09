@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import DropdownButton from 'components/Buttons/DropdownButton';
-import SwitchButton from 'components/SwitchButton';
+import SwitchButton from 'components/Buttons/SwitchButton';
 import FilterBar from 'components/FilterBar';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { PropTypes } from 'prop-types';
@@ -67,7 +67,7 @@ export default function HomeFilter({
           fontSize: '1.6rem'
         }}
       >
-        {['uploads', 'challenges', 'videos'].map(elem => (
+        {['uploads', 'challenges', 'videos'].map((elem) => (
           <nav
             key={elem}
             className={activeTab === elem ? 'active' : ''}
@@ -125,7 +125,7 @@ export default function HomeFilter({
                   />
                 }
               >
-                {['all', 'subject'].map(type => {
+                {['all', 'subject'].map((type) => {
                   const displayLabel =
                     type === 'all' ? 'All Posts' : 'Subjects';
                   return (
@@ -165,6 +165,7 @@ export default function HomeFilter({
                     checked={!!hideWatched}
                     label="Hide Watched"
                     onChange={handleToggleHideWatched}
+                    labelStyle={{ fontSize: '1.6rem' }}
                   />
                 )}
               </div>

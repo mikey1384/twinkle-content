@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import Input from 'components/Texts/Input';
-import SwitchButton from 'components/SwitchButton';
+import SwitchButton from 'components/Buttons/SwitchButton';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useChatContext } from 'contexts';
 import { Color, mobileMaxWidth } from 'constants/css';
