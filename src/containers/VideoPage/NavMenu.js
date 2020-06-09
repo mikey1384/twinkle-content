@@ -196,7 +196,7 @@ export default function NavMenu({ playlistId, videoId }) {
           {rewardsExist ? 'Rewards' : 'News'}
         </nav>
       </FilterBar>
-      {userId && videoTabActive && (
+      {userId && videoTabActive && playlistId && (
         <section
           style={{
             display: 'flex',
