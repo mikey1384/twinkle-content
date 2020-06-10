@@ -42,6 +42,14 @@ export default function ContentActions(dispatch) {
         contentType: 'subject'
       });
     },
+    onChangeUserCoins({ coins, userId }) {
+      return dispatch({
+        type: 'CHANGE_USER_COINS',
+        contentId: userId,
+        contentType: 'user',
+        coins
+      });
+    },
     onChangeUserXP({ xp, rank, userId }) {
       return dispatch({
         type: 'CHANGE_USER_XP',

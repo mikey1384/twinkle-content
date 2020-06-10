@@ -169,7 +169,7 @@ function MainNavs({
         padding: 0;
         display: flex;
         justify-content: center;
-        width: 100%;
+        width: auto;
       `}
     >
       <HeaderNav

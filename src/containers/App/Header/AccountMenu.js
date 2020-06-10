@@ -2,17 +2,18 @@ import React, { memo, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import DropdownButton from 'components/Buttons/DropdownButton';
+import Icon from 'components/Icon';
 import { useAppContext, useChatContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { socket } from 'constants/io';
+import { addCommasToNumber } from 'helpers/stringHelpers';
 
 AccountMenu.propTypes = {
   className: PropTypes.string,
-  history: PropTypes.object.isRequired,
-  style: PropTypes.object
+  history: PropTypes.object.isRequired
 };
 
-function AccountMenu({ className, history, style = {} }) {
+function AccountMenu({ className, history }) {
   const {
     user: {
       actions: { onLogout, onOpenSigninModal }
@@ -21,7 +22,13 @@ function AccountMenu({ className, history, style = {} }) {
   const {
     actions: { onResetChat }
   } = useChatContext();
-  const { loggedIn, username, userId, managementLevel } = useMyState();
+  const {
+    loggedIn,
+    username,
+    userId,
+    managementLevel,
+    twinkleCoins
+  } = useMyState();
   const menuProps = useMemo(() => {
     const result = [
       {
@@ -44,7 +51,13 @@ function AccountMenu({ className, history, style = {} }) {
   }, [managementLevel, username]);
 
   return (
-    <div className="desktop" style={style}>
+    <div className="desktop" style={{ display: 'flex', alignItems: 'center' }}>
+      {loggedIn && twinkleCoins > 0 && (
+        <div style={{ marginRight: '1rem' }}>
+          <Icon icon={['far', 'badge-dollar']} />{' '}
+          {addCommasToNumber(twinkleCoins)}
+        </div>
+      )}
       {loggedIn ? (
         <DropdownButton
           className={className}

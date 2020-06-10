@@ -212,6 +212,14 @@ export default function ContentReducer(state, action) {
       }
       return newState;
     }
+    case 'CHANGE_USER_COINS':
+      return {
+        ...state,
+        [contentKey]: {
+          ...prevContentState,
+          twinkleCoins: action.coins
+        }
+      };
     case 'CHANGE_USER_XP':
       return {
         ...state,

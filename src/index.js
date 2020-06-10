@@ -14,6 +14,9 @@ import { faAlignJustify } from '@fortawesome/pro-solid-svg-icons/faAlignJustify'
 import { faArrowLeft } from '@fortawesome/pro-solid-svg-icons/faArrowLeft';
 import { faArrowRight } from '@fortawesome/pro-solid-svg-icons/faArrowRight';
 import { faArrowDown } from '@fortawesome/pro-solid-svg-icons/faArrowDown';
+import { faBadgeDollar } from '@fortawesome/pro-solid-svg-icons/faBadgeDollar';
+import { faBadgeDollar as farBadgeDollar } from '@fortawesome/pro-regular-svg-icons/faBadgeDollar';
+import { faBadgeDollar as falBadgeDollar } from '@fortawesome/pro-light-svg-icons/faBadgeDollar';
 import { faBars } from '@fortawesome/pro-solid-svg-icons/faBars';
 import { faBolt } from '@fortawesome/pro-solid-svg-icons/faBolt';
 import { faBook } from '@fortawesome/pro-solid-svg-icons/faBook';
@@ -78,6 +81,9 @@ import * as serviceWorker from './serviceWorker';
 
 library.add(
   faAlignJustify,
+  faBadgeDollar,
+  farBadgeDollar,
+  falBadgeDollar,
   faBars,
   faBolt,
   faBook,
