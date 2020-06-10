@@ -9,6 +9,8 @@ import VideoThumbImage from 'components/VideoThumbImage';
 import FilterBar from 'components/FilterBar';
 import Notification from 'components/Notification';
 import Loading from 'components/Loading';
+import SwitchButton from 'components/Buttons/SwitchButton';
+import Icon from 'components/Icon';
 import request from 'axios';
 import URL from 'constants/URL';
 import { socket } from 'constants/io';
@@ -23,19 +25,29 @@ NavMenu.propTypes = {
 
 export default function NavMenu({ playlistId, videoId }) {
   const {
-    requestHelpers: { fetchNotifications, loadRightMenuVideos }
+    user: {
+      actions: { onToggleHideWatched }
+    },
+    requestHelpers: {
+      auth,
+      fetchNotifications,
+      loadRightMenuVideos,
+      toggleHideWatched
+    }
   } = useAppContext();
-  const { profileTheme, userId } = useMyState();
+  const { hideWatched, profileTheme, userId } = useMyState();
   const {
     state: { numNewNotis, totalRewardAmount },
     actions: { onClearNotifications, onFetchNotifications }
   } = useNotiContext();
+
   const [nextVideos, setNextVideos] = useState([]);
   const [relatedVideos, setRelatedVideos] = useState([]);
   const [otherVideos, setOtherVideos] = useState([]);
   const [playlistVideos, setPlaylistVideos] = useState([]);
   const [rewardsExist, setRewardsExist] = useState(false);
   const [playlistTitle, setPlaylistTitle] = useState();
+  const [filtering, setFiltering] = useState(false);
   const [playlistVideosLoading, setPlaylistVideosLoading] = useState(false);
   const [
     playlistVideosLoadMoreShown,
@@ -64,17 +76,32 @@ export default function NavMenu({ playlistId, videoId }) {
   useEffect(() => {
     mounted.current = true;
     socket.on('new_reward_posted', handleNewReward);
-    handleLoadRightMenuVideos();
 
-    function handleNewReward({ receiverId }) {
+    return function cleanUp() {
+      socket.removeListener('new_reward_posted', handleNewReward);
+      mounted.current = false;
+    };
+
+    async function handleNewReward({ receiverId }) {
       if (receiverId === userId) {
-        handleFetchNotifications();
+        const data = await fetchNotifications();
+        onFetchNotifications(data);
       }
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
+
+  useEffect(() => {
+    handleLoadRightMenuVideos();
     async function handleLoadRightMenuVideos() {
       try {
         setLoading(true);
-        const data = await loadRightMenuVideos({ videoId, playlistId });
+        const data = await loadRightMenuVideos({
+          videoId,
+          playlistId,
+          hideWatched
+        });
         if (mounted.current) {
           if (data.playlistTitle) {
             setPlaylistTitle(data.playlistTitle);
@@ -100,13 +127,8 @@ export default function NavMenu({ playlistId, videoId }) {
         console.error(error);
       }
     }
-
-    return function cleanUp() {
-      socket.removeListener('new_reward_posted', handleNewReward);
-      mounted.current = false;
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [videoId]);
+  }, [videoId, hideWatched]);
 
   useEffect(() => {
     setRewardsExist(totalRewardAmount > 0);
@@ -174,6 +196,29 @@ export default function NavMenu({ playlistId, videoId }) {
           {rewardsExist ? 'Rewards' : 'News'}
         </nav>
       </FilterBar>
+      {userId && videoTabActive && playlistId && (
+        <section
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end'
+          }}
+        >
+          {filtering && (
+            <Icon
+              style={{ marginRight: '1rem', color: Color[profileTheme]() }}
+              icon="spinner"
+              pulse
+            />
+          )}
+          <SwitchButton
+            checked={!!hideWatched}
+            label="Hide Watched"
+            onChange={handleToggleHideWatched}
+            labelStyle={{ fontSize: '1.6rem' }}
+          />
+        </section>
+      )}
       {loading && noVideos && <Loading />}
       {videoTabActive && (
         <>
@@ -213,7 +258,7 @@ export default function NavMenu({ playlistId, videoId }) {
               {playlistVideosLoadMoreShown && (
                 <LoadMoreButton
                   loading={playlistVideosLoading}
-                  onClick={loadMorePlaylistVideos}
+                  onClick={handleLoadMorePlaylistVideos}
                   color="green"
                   filled
                   style={{ marginTop: '1.5rem', width: '100%' }}
@@ -239,12 +284,16 @@ export default function NavMenu({ playlistId, videoId }) {
     </ErrorBoundary>
   );
 
-  async function handleFetchNotifications() {
-    const data = await fetchNotifications();
-    onFetchNotifications(data);
+  async function handleToggleHideWatched() {
+    setFiltering(true);
+    const hideWatched = await toggleHideWatched();
+    if (mounted.current) {
+      onToggleHideWatched(hideWatched);
+      setFiltering(false);
+    }
   }
 
-  async function loadMorePlaylistVideos() {
+  async function handleLoadMorePlaylistVideos() {
     setPlaylistVideosLoading(true);
     const shownVideos = queryStringForArray({
       array: playlistVideos,
@@ -258,7 +307,8 @@ export default function NavMenu({ playlistId, videoId }) {
           playlistVideosLoadMoreShown: shown
         }
       } = await request.get(
-        `${URL}/video/more/playlistVideos?videoId=${videoId}&playlistId=${playlistId}&${shownVideos}`
+        `${URL}/video/more/playlistVideos?videoId=${videoId}&playlistId=${playlistId}&${shownVideos}`,
+        auth()
       );
       setPlaylistVideosLoading(false);
       setPlaylistVideos(playlistVideos.concat(newPlaylistVideos));
