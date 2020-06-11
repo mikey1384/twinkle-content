@@ -612,6 +612,7 @@ export default function MessagesContainer({
       )}
       {settingsModalShown && (
         <SettingsModal
+          canChangeSubject={currentChannel.canChangeSubject}
           members={currentChannel.members}
           isClass={currentChannel.isClass}
           isClosed={currentChannel.isClosed}

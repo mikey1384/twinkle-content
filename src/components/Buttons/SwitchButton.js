@@ -7,6 +7,7 @@ import { useMyState } from 'helpers/hooks';
 
 SwitchButton.propTypes = {
   color: PropTypes.string,
+  disabled: PropTypes.bool,
   checked: PropTypes.bool.isRequired,
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   labelStyle: PropTypes.object,
@@ -16,6 +17,7 @@ SwitchButton.propTypes = {
 
 export default function SwitchButton({
   color,
+  disabled,
   checked,
   label,
   labelStyle = { fontSize: '1.3rem' },
@@ -28,7 +30,8 @@ export default function SwitchButton({
       style={{
         display: 'flex',
         alignItems: 'center',
-        ...style
+        ...style,
+        ...(disabled ? { opacity: 0.2 } : {})
       }}
     >
       {label && (
@@ -55,13 +58,13 @@ export default function SwitchButton({
             }
           `}
           checked={checked}
-          onChange={onChange}
+          onChange={disabled ? () => {} : onChange}
           type="checkbox"
         />
         <span
           className={css`
             position: absolute;
-            cursor: pointer;
+            cursor: ${disabled ? 'default' : 'pointer'};
             top: 0;
             left: 0;
             right: 0;

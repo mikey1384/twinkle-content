@@ -5,6 +5,9 @@ import Button from 'components/Button';
 import Input from 'components/Texts/Input';
 import SelectNewOwnerModal from './SelectNewOwnerModal';
 import SwitchButton from 'components/Buttons/SwitchButton';
+import ConfirmModal from 'components/Modals/ConfirmModal';
+import FullTextReveal from 'components/Texts/FullTextReveal';
+import { useMyState } from 'helpers/hooks';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useChatContext } from 'contexts';
 import { Color, mobileMaxWidth } from 'constants/css';
@@ -12,6 +15,7 @@ import { css } from 'emotion';
 
 SettingsModal.propTypes = {
   channelId: PropTypes.number,
+  canChangeSubject: PropTypes.string,
   members: PropTypes.array,
   onDone: PropTypes.func.isRequired,
   onHide: PropTypes.func.isRequired,
@@ -25,6 +29,7 @@ SettingsModal.propTypes = {
 export default function SettingsModal({
   channelId,
   channelName,
+  canChangeSubject,
   isClass,
   isClosed,
   members,
@@ -36,11 +41,18 @@ export default function SettingsModal({
   const {
     state: { customChannelNames }
   } = useChatContext();
+  const { twinkleCoins } = useMyState();
+  const [hovered, setHovered] = useState(false);
   const [selectNewOwnerModalShown, setSelectNewOwnerModalShown] = useState(
     false
   );
+  const [confirmModalShown, setConfirmModalShown] = useState(false);
   const [editedChannelName, setEditedChannelName] = useState(channelName);
   const [editedIsClosed, setEditedIsClosed] = useState(isClosed);
+  const [editedCanChangeSubject, setEditedCanChangeSubject] = useState(
+    canChangeSubject
+  );
+  const insufficientFunds = useMemo(() => twinkleCoins < 10, [twinkleCoins]);
   const disabled = useMemo(() => {
     const customChannelName = customChannelNames[channelId];
     let channelNameDidNotChange = editedChannelName === channelName;
@@ -104,6 +116,64 @@ export default function SettingsModal({
               />
             </div>
           )}
+          {userIsChannelOwner && (
+            <div
+              style={{
+                marginTop: '1.5rem',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <p
+                  style={{
+                    fontWeight: 'bold',
+                    fontSize: '1.7rem',
+                    opacity: canChangeSubject ? 1 : 0.3
+                  }}
+                >
+                  <span style={{ color: Color.logoBlue() }}>Anyone</span> can
+                  change subject:
+                </p>
+                <SwitchButton
+                  disabled={!canChangeSubject}
+                  style={{ marginLeft: '1rem' }}
+                  checked={editedCanChangeSubject === 'all'}
+                  onChange={() =>
+                    setEditedCanChangeSubject((prevValue) =>
+                      !prevValue || prevValue === 'all' ? 'owner' : 'all'
+                    )
+                  }
+                />
+              </div>
+              <div>
+                <Button
+                  onClick={() =>
+                    insufficientFunds ? null : setConfirmModalShown(true)
+                  }
+                  filled
+                  onMouseEnter={() => setHovered(true)}
+                  onMouseLeave={() => setHovered(false)}
+                  color="logoBlue"
+                  style={{
+                    opacity: insufficientFunds ? 0.2 : 1,
+                    cursor: insufficientFunds ? 'default' : 'pointer'
+                  }}
+                >
+                  Buy (10 TC)
+                </Button>
+                {insufficientFunds && hovered && (
+                  <FullTextReveal
+                    show
+                    direction="left"
+                    style={{ color: '#000', marginTop: '2px' }}
+                    text={`You need ${10 - twinkleCoins} more Twinkle Coins`}
+                  />
+                )}
+              </div>
+            </div>
+          )}
           <div
             style={{
               display: 'flex',
@@ -152,6 +222,16 @@ export default function SettingsModal({
             onHide();
           }}
           isClass={isClass}
+        />
+      )}
+      {confirmModalShown && (
+        <ConfirmModal
+          modalOverModal
+          onHide={() => setConfirmModalShown(false)}
+          title={`Purchase "Subject" Feature`}
+          description={`Purchase "Subject" Feature for 10 Twinkle Coins?`}
+          descriptionFontSize="2rem"
+          onConfirm={() => console.log('done')}
         />
       )}
     </Modal>
