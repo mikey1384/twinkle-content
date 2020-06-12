@@ -42,9 +42,15 @@ export default function ChatActions(dispatch) {
         newOwner
       });
     },
-    onChangeChannelSettings({ channelId, channelName, isClosed }) {
+    onChangeChannelSettings({
+      canChangeSubject,
+      channelId,
+      channelName,
+      isClosed
+    }) {
       return dispatch({
         type: 'CHANGE_CHANNEL_SETTINGS',
+        canChangeSubject,
         channelId,
         channelName,
         isClosed
@@ -121,9 +127,15 @@ export default function ChatActions(dispatch) {
         }
       });
     },
-    onEditChannelSettings({ channelName, isClosed, channelId }) {
+    onEditChannelSettings({
+      channelName,
+      isClosed,
+      channelId,
+      canChangeSubject
+    }) {
       return dispatch({
         type: 'EDIT_CHANNEL_SETTINGS',
+        canChangeSubject,
         channelName,
         isClosed,
         channelId

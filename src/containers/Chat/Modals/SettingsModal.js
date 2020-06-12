@@ -7,9 +7,11 @@ import SelectNewOwnerModal from './SelectNewOwnerModal';
 import SwitchButton from 'components/Buttons/SwitchButton';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import FullTextReveal from 'components/Texts/FullTextReveal';
+import Icon from 'components/Icon';
+import { priceTable } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { useChatContext } from 'contexts';
+import { useAppContext, useChatContext } from 'contexts';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 
@@ -39,6 +41,9 @@ export default function SettingsModal({
   userIsChannelOwner
 }) {
   const {
+    requestHelpers: { buyChatSubject }
+  } = useAppContext();
+  const {
     state: { customChannelNames }
   } = useChatContext();
   const { twinkleCoins } = useMyState();
@@ -52,7 +57,10 @@ export default function SettingsModal({
   const [editedCanChangeSubject, setEditedCanChangeSubject] = useState(
     canChangeSubject
   );
-  const insufficientFunds = useMemo(() => twinkleCoins < 10, [twinkleCoins]);
+  const insufficientFunds = useMemo(
+    () => twinkleCoins < priceTable.chatSubject,
+    [twinkleCoins]
+  );
   const disabled = useMemo(() => {
     const customChannelName = customChannelNames[channelId];
     let channelNameDidNotChange = editedChannelName === channelName;
@@ -61,16 +69,20 @@ export default function SettingsModal({
     }
     return (
       (stringIsEmpty(editedChannelName) || channelNameDidNotChange) &&
-      isClosed === editedIsClosed
+      isClosed === editedIsClosed &&
+      editedCanChangeSubject === canChangeSubject
     );
   }, [
+    canChangeSubject,
     channelId,
     channelName,
     customChannelNames,
+    editedCanChangeSubject,
     editedChannelName,
     editedIsClosed,
     isClosed
   ]);
+
   return (
     <Modal onHide={onHide}>
       <header>{userIsChannelOwner ? 'Settings' : 'Edit Group Name'}</header>
@@ -147,31 +159,39 @@ export default function SettingsModal({
                   }
                 />
               </div>
-              <div>
-                <Button
-                  onClick={() =>
-                    insufficientFunds ? null : setConfirmModalShown(true)
-                  }
-                  filled
-                  onMouseEnter={() => setHovered(true)}
-                  onMouseLeave={() => setHovered(false)}
-                  color="logoBlue"
-                  style={{
-                    opacity: insufficientFunds ? 0.2 : 1,
-                    cursor: insufficientFunds ? 'default' : 'pointer'
-                  }}
-                >
-                  Buy (10 TC)
-                </Button>
-                {insufficientFunds && hovered && (
-                  <FullTextReveal
-                    show
-                    direction="left"
-                    style={{ color: '#000', marginTop: '2px' }}
-                    text={`You need ${10 - twinkleCoins} more Twinkle Coins`}
-                  />
-                )}
-              </div>
+              {!canChangeSubject && (
+                <div>
+                  <Button
+                    onClick={() =>
+                      insufficientFunds ? null : setConfirmModalShown(true)
+                    }
+                    filled
+                    onMouseEnter={() => setHovered(true)}
+                    onMouseLeave={() => setHovered(false)}
+                    color="logoBlue"
+                    style={{
+                      fontSize: '1.2rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      opacity: insufficientFunds ? 0.2 : 1,
+                      cursor: insufficientFunds ? 'default' : 'pointer'
+                    }}
+                  >
+                    <Icon size="lg" icon={['far', 'badge-dollar']} />
+                    <span style={{ marginLeft: '0.5rem' }}>Buy</span>
+                  </Button>
+                  {insufficientFunds && hovered && (
+                    <FullTextReveal
+                      show
+                      direction="left"
+                      style={{ color: '#000', marginTop: '2px' }}
+                      text={`You need ${
+                        priceTable.chatSubject - twinkleCoins
+                      } more Twinkle Coins`}
+                    />
+                  )}
+                </div>
+              )}
             </div>
           )}
           <div
@@ -207,7 +227,13 @@ export default function SettingsModal({
         <Button
           color="blue"
           disabled={disabled}
-          onClick={() => onDone({ editedChannelName, editedIsClosed })}
+          onClick={() =>
+            onDone({
+              editedChannelName,
+              editedIsClosed,
+              editedCanChangeSubject
+            })
+          }
         >
           Done
         </Button>
@@ -231,9 +257,15 @@ export default function SettingsModal({
           title={`Purchase "Subject" Feature`}
           description={`Purchase "Subject" Feature for 10 Twinkle Coins?`}
           descriptionFontSize="2rem"
-          onConfirm={() => console.log('done')}
+          onConfirm={handlePurchaseSubject}
         />
       )}
     </Modal>
   );
+
+  async function handlePurchaseSubject() {
+    const data = await buyChatSubject(channelId);
+    console.log(data);
+    onHide();
+  }
 }

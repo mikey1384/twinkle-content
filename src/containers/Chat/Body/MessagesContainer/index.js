@@ -732,22 +732,29 @@ export default function MessagesContainer({
     });
   }
 
-  async function handleEditSettings({ editedChannelName, editedIsClosed }) {
+  async function handleEditSettings({
+    editedChannelName,
+    editedIsClosed,
+    editedCanChangeSubject
+  }) {
     await editChannelSettings({
       channelName: editedChannelName,
       isClosed: editedIsClosed,
-      channelId: selectedChannelId
+      channelId: selectedChannelId,
+      canChangeSubject: editedCanChangeSubject
     });
     onEditChannelSettings({
       channelName: editedChannelName,
       isClosed: editedIsClosed,
-      channelId: selectedChannelId
+      channelId: selectedChannelId,
+      canChangeSubject: editedCanChangeSubject
     });
     if (userId === currentChannel.creatorId) {
       socket.emit('new_channel_settings', {
         channelName: editedChannelName,
         isClosed: editedIsClosed,
-        channelId: selectedChannelId
+        channelId: selectedChannelId,
+        canChangeSubject: editedCanChangeSubject
       });
     }
     setSettingsModalShown(false);

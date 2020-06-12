@@ -18,7 +18,8 @@ export default function ChatReducer(state, action) {
           ...state.channelsObj,
           [action.channelId]: {
             ...state.channelsObj[action.channelId],
-            isClosed: action.isClosed
+            isClosed: action.isClosed,
+            canChangeSubject: action.canChangeSubject
           }
         },
         customChannelNames: {
@@ -86,7 +87,8 @@ export default function ChatReducer(state, action) {
           [action.channelId]: {
             ...state.channelsObj[action.channelId],
             channelName: action.channelName,
-            isClosed: action.isClosed
+            isClosed: action.isClosed,
+            canChangeSubject: action.canChangeSubject
           }
         }
       };
