@@ -258,6 +258,18 @@ export default function ChatReducer(state, action) {
           }
         }
       };
+    case 'ENABLE_CHAT_SUBJECT': {
+      return {
+        ...state,
+        channelsObj: {
+          ...state.channelsObj,
+          [action.channelId]: {
+            ...state.channelsObj[action.channelId],
+            canChangeSubject: 'owner'
+          }
+        }
+      };
+    }
     case 'ENTER_CHANNEL': {
       let messagesLoadMoreButton = false;
       let originalNumUnreads = 0;

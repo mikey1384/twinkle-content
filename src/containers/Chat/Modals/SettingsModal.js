@@ -11,7 +11,7 @@ import Icon from 'components/Icon';
 import { priceTable } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { useAppContext, useChatContext } from 'contexts';
+import { useAppContext, useChatContext, useContentContext } from 'contexts';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 
@@ -44,9 +44,13 @@ export default function SettingsModal({
     requestHelpers: { buyChatSubject }
   } = useAppContext();
   const {
-    state: { customChannelNames }
+    state: { customChannelNames },
+    actions: { onEnableChatSubject }
   } = useChatContext();
-  const { twinkleCoins } = useMyState();
+  const {
+    actions: { onChangeUserCoins }
+  } = useContentContext();
+  const { twinkleCoins, userId } = useMyState();
   const [hovered, setHovered] = useState(false);
   const [selectNewOwnerModalShown, setSelectNewOwnerModalShown] = useState(
     false
@@ -264,8 +268,14 @@ export default function SettingsModal({
   );
 
   async function handlePurchaseSubject() {
-    const data = await buyChatSubject(channelId);
-    console.log(data);
-    onHide();
+    try {
+      const { coins } = await buyChatSubject(channelId);
+      onEnableChatSubject(channelId);
+      onChangeUserCoins({ coins, userId });
+      onHide();
+    } catch (error) {
+      console.error(error);
+      onHide();
+    }
   }
 }

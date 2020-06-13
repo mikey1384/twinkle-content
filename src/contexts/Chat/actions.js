@@ -157,6 +157,12 @@ export default function ChatActions(dispatch) {
         word
       });
     },
+    onEnableChatSubject(channelId) {
+      return dispatch({
+        type: 'ENABLE_CHAT_SUBJECT',
+        channelId
+      });
+    },
     onEnterChannelWithId({ data, showOnTop }) {
       return dispatch({
         type: 'ENTER_CHANNEL',
