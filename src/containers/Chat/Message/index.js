@@ -26,7 +26,10 @@ import { useInView } from 'react-intersection-observer';
 import { socket } from 'constants/io';
 import { unix } from 'moment';
 import { MessageStyle } from '../Styles';
-import { fetchURLFromText } from 'helpers/stringHelpers';
+import {
+  fetchURLFromText,
+  getFileInfoFromFileName
+} from 'helpers/stringHelpers';
 import { useMyState, useContentState, useLazyLoad } from 'helpers/hooks';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
@@ -491,7 +494,12 @@ function Message({
                       fileName={fileName}
                       fileSize={fileSize}
                       thumbUrl={thumbUrl || recentThumbUrl}
-                      style={{ marginTop: '1rem' }}
+                      style={{
+                        marginTop: '1rem',
+                        marginBottom:
+                          getFileInfoFromFileName(fileName)?.fileType ===
+                            'audio' && '2rem'
+                      }}
                     />
                   )}
                   {rewardAmount ? (

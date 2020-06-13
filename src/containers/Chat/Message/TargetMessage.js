@@ -51,6 +51,7 @@ export default function TargetMessage({ message, onSetScrollToBottom }) {
     );
     return (
       fileType !== 'video' &&
+      fileType !== 'audio' &&
       (message.thumbUrl || extractedVideoId) &&
       !message.attachmentHidden
     );
