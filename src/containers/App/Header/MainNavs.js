@@ -1,11 +1,13 @@
 import React, { memo, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import HeaderNav from './HeaderNav';
+import Icon from 'components/Icon';
 import { matchPath } from 'react-router';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 import { getSectionFromPathname } from 'helpers';
-import { truncateText } from 'helpers/stringHelpers';
+import { addCommasToNumber, truncateText } from 'helpers/stringHelpers';
+import { useMyState } from 'helpers/hooks';
 import { useHomeContext, useViewContext } from 'contexts';
 import { socket } from 'constants/io';
 
@@ -30,6 +32,7 @@ function MainNavs({
   defaultSearchFilter,
   totalRewardAmount
 }) {
+  const { twinkleCoins } = useMyState();
   const {
     state: { exploreCategory, explorePath, exploreSubNav, profileNav, homeNav },
     actions: {
@@ -170,6 +173,9 @@ function MainNavs({
         display: flex;
         justify-content: center;
         width: auto;
+        @media (max-width: ${mobileMaxWidth}) {
+          width: 100%;
+        }
       `}
     >
       <HeaderNav
@@ -275,6 +281,16 @@ function MainNavs({
         >
           CHAT
         </HeaderNav>
+      </div>
+      <div
+        style={{ display: 'flex', alignItems: 'center', paddingRight: '1rem' }}
+        className="mobile"
+      >
+        <Icon
+          style={{ marginRight: '0.5rem' }}
+          icon={['far', 'badge-dollar']}
+        />
+        {addCommasToNumber(twinkleCoins)}
       </div>
     </div>
   );
