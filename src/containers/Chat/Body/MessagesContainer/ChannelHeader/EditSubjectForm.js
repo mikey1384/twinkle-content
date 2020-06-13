@@ -26,7 +26,8 @@ EditSubjectForm.propTypes = {
   onEditSubmit: PropTypes.func.isRequired,
   onReloadChatSubject: PropTypes.func,
   searchResults: PropTypes.array,
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
+  userIsOwner: PropTypes.bool
 };
 
 export default function EditSubjectForm({
@@ -38,6 +39,7 @@ export default function EditSubjectForm({
   searchResults,
   onChange,
   onClickOutSide,
+  userIsOwner,
   ...props
 }) {
   const [exactMatchExists, setExactMatchExists] = useState(false);
@@ -75,6 +77,7 @@ export default function EditSubjectForm({
           channelId={channelId}
           currentSubjectId={currentSubjectId}
           onHide={() => setSubjectsModalShown(false)}
+          userIsOwner={userIsOwner}
           selectSubject={(subjectId) => {
             onReloadChatSubject(subjectId);
             setSubjectsModalShown(false);

@@ -18,14 +18,16 @@ SubjectsModal.propTypes = {
   channelId: PropTypes.number.isRequired,
   currentSubjectId: PropTypes.number,
   onHide: PropTypes.func,
-  selectSubject: PropTypes.func
+  selectSubject: PropTypes.func,
+  userIsOwner: PropTypes.bool
 };
 
 export default function SubjectsModal({
   channelId,
   currentSubjectId,
   onHide,
-  selectSubject
+  selectSubject,
+  userIsOwner
 }) {
   const {
     requestHelpers: { deleteChatSubject, loadMoreSubjects }
@@ -104,7 +106,7 @@ export default function SubjectsModal({
             )}
           </div>
         )}
-        {loaded && (
+        {loaded && allSubjects.subjects.length > 0 && (
           <div
             style={{
               margin: '1rem 0',
@@ -121,12 +123,16 @@ export default function SubjectsModal({
             </h3>
           </div>
         )}
+        {loaded && allSubjects.subjects.length === 0 && (
+          <div>{`There aren't any subjects here, yet`}</div>
+        )}
         {allSubjects.subjects.map((subject) => (
           <SubjectItem
             key={subject.id}
             currentSubjectId={currentSubjectId}
             onDeleteSubject={() => setDeleteTarget(subject.id)}
             onSelectSubject={() => selectSubject(subject.id)}
+            userIsOwner={userIsOwner}
             {...subject}
           />
         ))}

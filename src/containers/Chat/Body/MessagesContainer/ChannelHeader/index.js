@@ -308,6 +308,7 @@ export default function ChannelHeader({
           {onEdit && (
             <EditSubjectForm
               autoFocus
+              userIsOwner={currentChannel.creatorId === userId}
               channelId={selectedChannelId}
               maxLength={charLimit.chat.subject}
               currentSubjectId={subjectId}
