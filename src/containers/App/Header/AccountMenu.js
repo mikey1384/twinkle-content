@@ -52,7 +52,7 @@ function AccountMenu({ className, history }) {
 
   return (
     <div className="desktop" style={{ display: 'flex', alignItems: 'center' }}>
-      {loggedIn && twinkleCoins > 0 && (
+      {loggedIn && (
         <div style={{ marginRight: '1rem' }}>
           <Icon icon={['far', 'badge-dollar']} />{' '}
           {addCommasToNumber(twinkleCoins)}
