@@ -385,7 +385,7 @@ export default function ChannelHeader({
       username,
       content,
       isSubject: true,
-      channelId: 2,
+      channelId: selectedChannelId,
       timeStamp,
       isNewMessage: true
     };
