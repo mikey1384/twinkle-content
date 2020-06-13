@@ -102,6 +102,7 @@ export default function Chess({
     }
   }, [parsedState]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const myColor = useMemo(() => parsedState?.playerColors[myId] || 'white', [
     myId,
     parsedState
@@ -472,12 +473,13 @@ export default function Chess({
         <div style={{ position: 'absolute', bottom: '1rem', right: '1rem' }}>
           <div
             style={{
-              background:
-                isStalemate || isDraw
-                  ? Color.logoBlue(0.8)
-                  : userMadeLastMove
-                  ? Color.gold(0.9)
-                  : Color.black(0.8),
+              background: isStalemate
+                ? Color.pink(0.8)
+                : isDraw
+                ? Color.logoBlue(0.8)
+                : userMadeLastMove
+                ? Color.gold(0.9)
+                : Color.black(0.8),
               color: '#fff',
               fontSize: '2.5rem',
               fontWeight: 'bold',
@@ -488,7 +490,7 @@ export default function Chess({
           >
             {isStalemate || isDraw ? (
               <>
-                {isStalemate && <p>Stalemate...</p>}
+                {isStalemate && <p>Stalemate!</p>}
                 <p>{`It's a draw`}</p>
               </>
             ) : userMadeLastMove ? (

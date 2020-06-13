@@ -4,7 +4,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import Button from 'components/Button';
 import TagForm from 'components/Forms/TagForm';
 import Input from 'components/Texts/Input';
-import SwitchButton from 'components/SwitchButton';
+import SwitchButton from 'components/Buttons/SwitchButton';
 import { css } from 'emotion';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { useAppContext, useChatContext } from 'contexts';

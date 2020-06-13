@@ -20,7 +20,7 @@ import {
   finalizeEmoji
 } from 'helpers/stringHelpers';
 import { v1 as uuidv1 } from 'uuid';
-import SwitchButton from 'components/SwitchButton';
+import SwitchButton from 'components/Buttons/SwitchButton';
 import RewardLevelForm from 'components/Forms/RewardLevelForm';
 import Icon from 'components/Icon';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
