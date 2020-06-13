@@ -621,6 +621,9 @@ export default function MessagesContainer({
           onHide={() => setSettingsModalShown(false)}
           onDone={handleEditSettings}
           channelId={selectedChannelId}
+          onPurchaseSubject={() =>
+            socket.emit('purchased_chat_subject', selectedChannelId)
+          }
           onSelectNewOwner={handleSelectNewOwner}
         />
       )}

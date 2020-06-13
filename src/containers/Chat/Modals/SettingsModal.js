@@ -25,7 +25,8 @@ SettingsModal.propTypes = {
   isClass: PropTypes.bool,
   isClosed: PropTypes.bool,
   userIsChannelOwner: PropTypes.bool,
-  onSelectNewOwner: PropTypes.func
+  onSelectNewOwner: PropTypes.func,
+  onPurchaseSubject: PropTypes.func
 };
 
 export default function SettingsModal({
@@ -37,6 +38,7 @@ export default function SettingsModal({
   members,
   onDone,
   onHide,
+  onPurchaseSubject,
   onSelectNewOwner,
   userIsChannelOwner
 }) {
@@ -272,6 +274,7 @@ export default function SettingsModal({
       const { coins } = await buyChatSubject(channelId);
       onEnableChatSubject(channelId);
       onChangeUserCoins({ coins, userId });
+      onPurchaseSubject();
       onHide();
     } catch (error) {
       console.error(error);

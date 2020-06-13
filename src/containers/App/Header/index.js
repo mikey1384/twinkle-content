@@ -65,6 +65,7 @@ export default function Header({
       onChangeAwayStatus,
       onChangeBusyStatus,
       onChangeChatSubject,
+      onEnableChatSubject,
       onSetImLive,
       onSetReconnecting,
       onChangeChannelOwner,
@@ -139,6 +140,7 @@ export default function Header({
     socket.on('chat_invitation_received', handleChatInvitation);
     socket.on('chat_message_deleted', onDeleteMessage);
     socket.on('chat_message_edited', onEditMessage);
+    socket.on('chat_subject_purchased', onEnableChatSubject);
     socket.on('channel_owner_changed', onChangeChannelOwner);
     socket.on('channel_settings_changed', onChangeChannelSettings);
     socket.on('connect', handleConnect);
@@ -170,6 +172,7 @@ export default function Header({
       socket.removeListener('chat_invitation_received', handleChatInvitation);
       socket.removeListener('chat_message_deleted', onDeleteMessage);
       socket.removeListener('chat_message_edited', onEditMessage);
+      socket.removeListener('chat_subject_purchased', onEnableChatSubject);
       socket.removeListener('channel_owner_changed', onChangeChannelOwner);
       socket.removeListener(
         'channel_settings_changed',
