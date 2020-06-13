@@ -19,6 +19,7 @@ import {
   useNotiContext,
   useChatContext
 } from 'contexts';
+import { GENERAL_CHAT_ID } from 'constants/defaultValues';
 
 Header.propTypes = {
   onChatButtonClick: PropTypes.func,
@@ -499,9 +500,11 @@ export default function Header({
       }
     }
 
-    function handleSubjectChange({ subject }) {
-      onNotifyChatSubjectChange(subject);
-      onChangeChatSubject(subject);
+    function handleSubjectChange({ channelId, subject }) {
+      if (channelId === GENERAL_CHAT_ID) {
+        onNotifyChatSubjectChange(subject);
+      }
+      onChangeChatSubject({ subject, channelId });
     }
   });
 

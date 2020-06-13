@@ -197,7 +197,7 @@ export default function EditSubjectForm({
     if (highlightedIndex > -1) {
       const { id: subjectId } = searchResults[highlightedIndex];
       if (subjectId === currentSubjectId) return onClickOutSide();
-      return onReloadChatSubject({ subjectId, channelId });
+      return onReloadChatSubject(subjectId);
     }
 
     if (title && title.length > maxLength) return;

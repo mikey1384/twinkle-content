@@ -56,10 +56,11 @@ export default function ChatActions(dispatch) {
         isClosed
       });
     },
-    onChangeChatSubject(subject) {
+    onChangeChatSubject({ subject, channelId }) {
       return dispatch({
         type: 'CHANGE_SUBJECT',
-        subject
+        subject,
+        channelId
       });
     },
     onChannelLoadingDone() {

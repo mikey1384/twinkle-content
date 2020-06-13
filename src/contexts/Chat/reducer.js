@@ -96,7 +96,13 @@ export default function ChatReducer(state, action) {
     case 'CHANGE_SUBJECT': {
       return {
         ...state,
-        subject: action.subject
+        subjectObj: {
+          ...state.subjectObj,
+          [action.channelId]: {
+            ...state.subjectObj[action.channelId],
+            ...action.subject
+          }
+        }
       };
     }
     case 'CHANNEL_LOADING_DONE': {

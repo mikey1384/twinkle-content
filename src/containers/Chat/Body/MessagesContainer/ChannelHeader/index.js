@@ -346,7 +346,11 @@ export default function ChannelHeader({
       subjectId
     });
     onReloadChatSubject({ channelId: selectedChannelId, message, subject });
-    socket.emit('new_subject', { subject, message });
+    socket.emit('new_subject', {
+      subject,
+      message,
+      channelId: selectedChannelId
+    });
     setOnEdit(false);
     onClearSubjectSearchResults();
     if (!isMobile(navigator)) {
@@ -390,7 +394,11 @@ export default function ChannelHeader({
       timeStamp,
       isNewMessage: true
     };
-    socket.emit('new_subject', { subject, message });
+    socket.emit('new_subject', {
+      subject,
+      message,
+      channelId: selectedChannelId
+    });
     setOnEdit(false);
     if (!isMobile(navigator)) {
       onInputFocus();
