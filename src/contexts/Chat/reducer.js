@@ -441,7 +441,6 @@ export default function ChatReducer(state, action) {
         recentChessMessage: undefined,
         reconnecting: false,
         selectedChannelId: action.data.currentChannelId,
-        subject: action.data.currentChannelId === 2 ? state.subject : {},
         wordsObj: action.data.wordsObj,
         wordCollectors: action.data.wordCollectors
       };
@@ -784,7 +783,6 @@ export default function ChatReducer(state, action) {
     case 'RECEIVE_FIRST_MSG':
       return {
         ...state,
-        subject: action.duplicate ? {} : state.subject,
         numUnreads:
           action.duplicate && action.pageVisible
             ? state.numUnreads
