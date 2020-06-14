@@ -350,6 +350,7 @@ export default function ChannelHeader({
     socket.emit('new_subject', {
       subject,
       message,
+      channelName: currentChannel.channelName,
       channelId: selectedChannelId
     });
     setOnEdit(false);
@@ -398,6 +399,7 @@ export default function ChannelHeader({
     socket.emit('new_subject', {
       subject,
       message,
+      channelName: currentChannel.channelName,
       channelId: selectedChannelId
     });
     setOnEdit(false);

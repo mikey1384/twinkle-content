@@ -291,7 +291,7 @@ function Chat({ onFileUpload }) {
     setCreatingChat(false);
   }
 
-  function onSubjectChange({ message }) {
+  function onSubjectChange({ message, channelId, channelName }) {
     let messageIsForCurrentChannel = message.channelId === selectedChannelId;
     let senderIsUser = message.userId === userId;
     if (senderIsUser) return;
@@ -302,10 +302,10 @@ function Chat({ onFileUpload }) {
       onReceiveMessageOnDifferentChannel({
         pageVisible,
         channel: {
-          id: 2,
+          id: channelId,
+          channelName,
           lastUpdate: message.timeStamp,
           isHidden: false,
-          channelName: 'General',
           lastMessage: {
             content: message.content,
             sender: {
