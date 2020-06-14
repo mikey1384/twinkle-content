@@ -86,7 +86,7 @@ export default function ChannelHeader({
       onLoadChatSubject(data);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedChannelId]);
+  }, [selectedChannelId, loaded]);
 
   useEffect(() => {
     setTimeSincePost(timeSince(timeStamp));
