@@ -249,7 +249,7 @@ export default function ChatReducer(state, action) {
                 content: action.data.editedMessage
               }
             }
-          : state.subject
+          : state.subjectObj
       };
     case 'EDIT_WORD':
       return {
