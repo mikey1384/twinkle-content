@@ -133,6 +133,7 @@ export function addAdvancedEmoji(string) {
     .replace(/(\:moo\:)/gi, '🐮')
     .replace(/(\:moose\:)/gi, '🦌')
     .replace(/(\:mouse\:)/gi, '🐭')
+    .replace(/(\:neutral\:)/gi, '😐')
     .replace(/(\:nice\:)/gi, '👍')
     .replace(/(\:ok\:)/gi, '👌')
     .replace(/(\:okay\:)/gi, '👌')
