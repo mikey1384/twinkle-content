@@ -32,7 +32,7 @@ function MainNavs({
   defaultSearchFilter,
   totalRewardAmount
 }) {
-  const { twinkleCoins } = useMyState();
+  const { twinkleCoins, userId } = useMyState();
   const {
     state: { exploreCategory, explorePath, exploreSubNav, profileNav, homeNav },
     actions: {
@@ -282,16 +282,22 @@ function MainNavs({
           CHAT
         </HeaderNav>
       </div>
-      <div
-        style={{ display: 'flex', alignItems: 'center', paddingRight: '1rem' }}
-        className="mobile"
-      >
-        <Icon
-          style={{ marginRight: '0.5rem' }}
-          icon={['far', 'badge-dollar']}
-        />
-        {addCommasToNumber(twinkleCoins)}
-      </div>
+      {userId && typeof twinkleCoins === 'number' && (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            paddingRight: '1rem'
+          }}
+          className="mobile"
+        >
+          <Icon
+            style={{ marginRight: '0.5rem' }}
+            icon={['far', 'badge-dollar']}
+          />
+          {addCommasToNumber(twinkleCoins)}
+        </div>
+      )}
     </div>
   );
 }
