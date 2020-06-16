@@ -26,6 +26,7 @@ SettingsModal.propTypes = {
   isClosed: PropTypes.bool,
   userIsChannelOwner: PropTypes.bool,
   onSelectNewOwner: PropTypes.func,
+  onSetScrollToBottom: PropTypes.func,
   onPurchaseSubject: PropTypes.func
 };
 
@@ -40,6 +41,7 @@ export default function SettingsModal({
   onHide,
   onPurchaseSubject,
   onSelectNewOwner,
+  onSetScrollToBottom,
   userIsChannelOwner
 }) {
   const {
@@ -275,10 +277,12 @@ export default function SettingsModal({
       onEnableChatSubject(channelId);
       onChangeUserCoins({ coins, userId });
       onPurchaseSubject();
-      onHide();
+      setEditedCanChangeSubject('owner');
+      onSetScrollToBottom();
+      setConfirmModalShown(false);
     } catch (error) {
       console.error(error);
-      onHide();
+      setConfirmModalShown(false);
     }
   }
 }

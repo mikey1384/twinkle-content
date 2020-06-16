@@ -625,6 +625,7 @@ export default function MessagesContainer({
             socket.emit('purchased_chat_subject', selectedChannelId)
           }
           onSelectNewOwner={handleSelectNewOwner}
+          onSetScrollToBottom={handleSetScrollToBottom}
         />
       )}
       {leaveConfirmModalShown && (
