@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Color } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 import { addCommasToNumber } from 'helpers/stringHelpers';
-import { mobileMaxWidth } from '../constants/css';
 import Icon from 'components/Icon';
 import FullTextReveal from 'components/Texts/FullTextReveal';
 
@@ -42,7 +41,7 @@ export default function ColorSelector({
         ...style
       }}
     >
-      {colors.map(color => (
+      {colors.map((color) => (
         <div key={color}>
           <div
             className={css`

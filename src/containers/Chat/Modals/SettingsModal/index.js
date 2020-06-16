@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import Input from 'components/Texts/Input';
-import SelectNewOwnerModal from './SelectNewOwnerModal';
+import SelectNewOwnerModal from '../SelectNewOwnerModal';
 import SwitchButton from 'components/Buttons/SwitchButton';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import FullTextReveal from 'components/Texts/FullTextReveal';
 import Icon from 'components/Icon';
+import ColorSelector from './ColorSelector';
 import { priceTable } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { stringIsEmpty } from 'helpers/stringHelpers';
@@ -27,7 +28,8 @@ SettingsModal.propTypes = {
   userIsChannelOwner: PropTypes.bool,
   onSelectNewOwner: PropTypes.func,
   onSetScrollToBottom: PropTypes.func,
-  onPurchaseSubject: PropTypes.func
+  onPurchaseSubject: PropTypes.func,
+  theme: PropTypes.string
 };
 
 export default function SettingsModal({
@@ -42,6 +44,7 @@ export default function SettingsModal({
   onPurchaseSubject,
   onSelectNewOwner,
   onSetScrollToBottom,
+  theme,
   userIsChannelOwner
 }) {
   const {
@@ -65,6 +68,7 @@ export default function SettingsModal({
   const [editedCanChangeSubject, setEditedCanChangeSubject] = useState(
     canChangeSubject
   );
+  const [selectedTheme, setSelectedTheme] = useState(theme || 'green');
   const insufficientFunds = useMemo(
     () => twinkleCoins < priceTable.chatSubject,
     [twinkleCoins]
@@ -90,6 +94,8 @@ export default function SettingsModal({
     editedIsClosed,
     isClosed
   ]);
+
+  const unlocked = [];
 
   return (
     <Modal onHide={onHide}>
@@ -202,6 +208,46 @@ export default function SettingsModal({
               )}
             </div>
           )}
+          {!!canChangeSubject && (
+            <div
+              style={{
+                width: '100%',
+                marginTop: '2rem',
+                justifyContent: 'space-between',
+                display: 'flex'
+              }}
+            >
+              <div
+                style={{
+                  width: '50%',
+                  fontWeight: 'bold',
+                  fontSize: '1.7rem'
+                }}
+              >
+                Change theme color:
+              </div>
+              <ColorSelector
+                colors={[
+                  'green',
+                  'orange',
+                  'red',
+                  'rose',
+                  'pink',
+                  'purple',
+                  'darkBlue',
+                  'logoBlue'
+                ]}
+                unlocked={unlocked}
+                onSetColor={handleSetColor}
+                selectedColor={selectedTheme}
+                style={{
+                  marginTop: '1rem',
+                  height: 'auto',
+                  justifyContent: 'flex-end'
+                }}
+              />
+            </div>
+          )}
           <div
             style={{
               display: 'flex',
@@ -270,6 +316,12 @@ export default function SettingsModal({
       )}
     </Modal>
   );
+
+  function handleSetColor(color) {
+    if (unlocked.includes(color)) {
+      setSelectedTheme(color);
+    }
+  }
 
   async function handlePurchaseSubject() {
     try {

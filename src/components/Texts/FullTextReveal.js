@@ -7,7 +7,7 @@ FullTextReveal.propTypes = {
   direction: PropTypes.string,
   show: PropTypes.bool,
   style: PropTypes.object,
-  text: PropTypes.string.isRequired
+  text: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired
 };
 
 export default function FullTextReveal({

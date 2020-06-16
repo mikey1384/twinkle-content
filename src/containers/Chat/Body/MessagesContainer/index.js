@@ -613,11 +613,10 @@ export default function MessagesContainer({
       {settingsModalShown && (
         <SettingsModal
           canChangeSubject={currentChannel.canChangeSubject}
-          members={currentChannel.members}
+          channelName={channelName}
           isClass={currentChannel.isClass}
           isClosed={currentChannel.isClosed}
-          userIsChannelOwner={currentChannel.creatorId === userId}
-          channelName={channelName}
+          members={currentChannel.members}
           onHide={() => setSettingsModalShown(false)}
           onDone={handleEditSettings}
           channelId={selectedChannelId}
@@ -626,6 +625,8 @@ export default function MessagesContainer({
           }
           onSelectNewOwner={handleSelectNewOwner}
           onSetScrollToBottom={handleSetScrollToBottom}
+          theme={currentChannel.theme}
+          userIsChannelOwner={currentChannel.creatorId === userId}
         />
       )}
       {leaveConfirmModalShown && (
