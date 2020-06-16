@@ -4,7 +4,7 @@ import Modal from 'components/Modal';
 import Button from 'components/Button';
 
 ConfirmModal.propTypes = {
-  description: PropTypes.string,
+  description: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   disabled: PropTypes.bool,
   descriptionFontSize: PropTypes.oneOfType([
     PropTypes.string,

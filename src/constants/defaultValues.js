@@ -7,7 +7,8 @@ export const S3URL = `https://${process.env.REACT_APP_AWS_S3_BUCKET_NAME}.s3.ama
 export const clientVersion = '1.3.66';
 export const descriptionLengthForExtraRewardLevel = 1000;
 export const priceTable = {
-  chatSubject: 5
+  chatSubject: 5,
+  chatTheme: 10
 };
 export const charLimit = {
   chat: {

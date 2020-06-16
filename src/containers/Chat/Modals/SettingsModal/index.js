@@ -69,6 +69,7 @@ export default function SettingsModal({
     canChangeSubject
   );
   const [selectedTheme, setSelectedTheme] = useState(theme || 'green');
+  const [themeToPurchase, setThemeToPurchase] = useState('');
   const insufficientFunds = useMemo(
     () => twinkleCoins < priceTable.chatSubject,
     [twinkleCoins]
@@ -224,7 +225,7 @@ export default function SettingsModal({
                   fontSize: '1.7rem'
                 }}
               >
-                Change theme color:
+                Change theme:
               </div>
               <ColorSelector
                 colors={[
@@ -314,13 +315,30 @@ export default function SettingsModal({
           onConfirm={handlePurchaseSubject}
         />
       )}
+      {themeToPurchase && (
+        <ConfirmModal
+          modalOverModal
+          onHide={() => setThemeToPurchase('')}
+          title={`Purchase theme`}
+          description={
+            <div>
+              Purchase{' '}
+              <b style={{ color: Color[themeToPurchase]() }}>this theme</b> for{' '}
+              {priceTable.chatTheme} Twinkle Coins?
+            </div>
+          }
+          descriptionFontSize="2rem"
+          onConfirm={handlePurchaseSubject}
+        />
+      )}
     </Modal>
   );
 
   function handleSetColor(color) {
-    if (unlocked.includes(color)) {
-      setSelectedTheme(color);
+    if (unlocked.includes(color) || color === 'green') {
+      return setSelectedTheme(color);
     }
+    setThemeToPurchase(color);
   }
 
   async function handlePurchaseSubject() {
