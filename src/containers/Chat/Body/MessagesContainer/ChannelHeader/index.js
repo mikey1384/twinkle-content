@@ -60,6 +60,7 @@ export default function ChannelHeader({
   } = useChatContext();
   const [onEdit, setOnEdit] = useState(false);
   const [onHover, setOnHover] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   const {
     content = defaultChatSubject,
@@ -369,42 +370,51 @@ export default function ChannelHeader({
   }
 
   async function onSubjectSubmit(text) {
-    const content = `${text[0].toUpperCase()}${text.slice(1)}`;
-    const data = await uploadChatSubject({
-      content: text,
-      channelId: selectedChannelId
-    });
-    onUploadChatSubject({ ...data, channelId: selectedChannelId });
-    const timeStamp = Math.floor(Date.now() / 1000);
-    const subject = {
-      id: data.subjectId,
-      userId,
-      username,
-      reloadedBy: null,
-      reloaderName: null,
-      uploader: { id: userId, username },
-      content,
-      timeStamp
-    };
-    const message = {
-      profilePicId,
-      userId,
-      username,
-      content,
-      isSubject: true,
-      channelId: selectedChannelId,
-      timeStamp,
-      isNewMessage: true
-    };
-    socket.emit('new_subject', {
-      subject,
-      message,
-      channelName: currentChannel.channelName,
-      channelId: selectedChannelId
-    });
-    setOnEdit(false);
-    if (!isMobile(navigator)) {
-      onInputFocus();
+    if (!submitting) {
+      setSubmitting(true);
+      try {
+        const content = `${text[0].toUpperCase()}${text.slice(1)}`;
+        const data = await uploadChatSubject({
+          content: text,
+          channelId: selectedChannelId
+        });
+        onUploadChatSubject({ ...data, channelId: selectedChannelId });
+        const timeStamp = Math.floor(Date.now() / 1000);
+        const subject = {
+          id: data.subjectId,
+          userId,
+          username,
+          reloadedBy: null,
+          reloaderName: null,
+          uploader: { id: userId, username },
+          content,
+          timeStamp
+        };
+        const message = {
+          profilePicId,
+          userId,
+          username,
+          content,
+          isSubject: true,
+          channelId: selectedChannelId,
+          timeStamp,
+          isNewMessage: true
+        };
+        socket.emit('new_subject', {
+          subject,
+          message,
+          channelName: currentChannel.channelName,
+          channelId: selectedChannelId
+        });
+        setOnEdit(false);
+        setSubmitting(false);
+        if (!isMobile(navigator)) {
+          onInputFocus();
+        }
+      } catch (error) {
+        console.error(error);
+        setSubmitting(false);
+      }
     }
   }
 }
