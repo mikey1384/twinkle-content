@@ -99,10 +99,7 @@ export default function ChatReducer(state, action) {
         ...state,
         subjectObj: {
           ...state.subjectObj,
-          [action.channelId]: {
-            ...state.subjectObj[action.channelId],
-            ...action.subject
-          }
+          [action.channelId]: action.subject
         }
       };
     }
@@ -899,10 +896,7 @@ export default function ChatReducer(state, action) {
         ...state,
         subjectObj: {
           ...state.subjectObj,
-          [action.channelId]: {
-            ...state.subjectObj[action.channelId],
-            ...action.subject
-          }
+          [action.channelId]: action.subject
         },
         messages: state.messages.concat([action.message]),
         homeChannelIds: [
