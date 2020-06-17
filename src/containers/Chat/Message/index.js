@@ -73,6 +73,7 @@ function Message({
   chessCountdownNumber,
   chessOpponent,
   currentChannel,
+  currentChannel: { theme },
   index,
   isLastMsg,
   isNotification,
@@ -528,6 +529,7 @@ function Message({
                       socketConnected={socketConnected}
                       subjectId={subjectId}
                       targetMessage={targetMessage}
+                      theme={theme}
                       userCanEditThis={userCanEditThis}
                     />
                   )}

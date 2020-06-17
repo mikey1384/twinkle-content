@@ -132,14 +132,16 @@ export default function ChatActions(dispatch) {
       channelName,
       isClosed,
       channelId,
-      canChangeSubject
+      canChangeSubject,
+      theme
     }) {
       return dispatch({
         type: 'EDIT_CHANNEL_SETTINGS',
         canChangeSubject,
         channelName,
         isClosed,
-        channelId
+        channelId,
+        theme
       });
     },
     onEditMessage({ editedMessage, messageId, isSubject }) {
@@ -162,6 +164,13 @@ export default function ChatActions(dispatch) {
       return dispatch({
         type: 'ENABLE_CHAT_SUBJECT',
         channelId
+      });
+    },
+    onEnableTheme({ channelId, theme }) {
+      return dispatch({
+        type: 'ENABLE_THEME',
+        channelId,
+        theme
       });
     },
     onEnterChannelWithId({ data, showOnTop }) {

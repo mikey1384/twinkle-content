@@ -32,6 +32,7 @@ ChannelHeader.propTypes = {
 
 export default function ChannelHeader({
   currentChannel,
+  currentChannel: { theme },
   onInputFocus,
   onSetInviteUsersModalShown,
   onSetLeaveConfirmModalShown,
@@ -231,7 +232,7 @@ export default function ChannelHeader({
                     className={css`
                       width: 100%;
                       cursor: default;
-                      color: ${Color.green()};
+                      color: ${Color[theme || 'green']()};
                       white-space: nowrap;
                       text-overflow: ellipsis;
                       overflow: hidden;
@@ -274,7 +275,7 @@ export default function ChannelHeader({
                 `}
               >
                 <Button
-                  color="green"
+                  color={theme || 'green'}
                   filled
                   onClick={() => {
                     onSetIsRespondingToSubject(true);

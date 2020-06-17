@@ -29,7 +29,8 @@ SettingsModal.propTypes = {
   onSelectNewOwner: PropTypes.func,
   onSetScrollToBottom: PropTypes.func,
   onPurchaseSubject: PropTypes.func,
-  theme: PropTypes.string
+  theme: PropTypes.string,
+  unlockedThemes: PropTypes.array
 };
 
 export default function SettingsModal({
@@ -45,14 +46,15 @@ export default function SettingsModal({
   onSelectNewOwner,
   onSetScrollToBottom,
   theme,
+  unlockedThemes,
   userIsChannelOwner
 }) {
   const {
-    requestHelpers: { buyChatSubject }
+    requestHelpers: { buyChatSubject, buyChatTheme }
   } = useAppContext();
   const {
     state: { customChannelNames },
-    actions: { onEnableChatSubject }
+    actions: { onEnableChatSubject, onEnableTheme }
   } = useChatContext();
   const {
     actions: { onChangeUserCoins }
@@ -68,7 +70,8 @@ export default function SettingsModal({
   const [editedCanChangeSubject, setEditedCanChangeSubject] = useState(
     canChangeSubject
   );
-  const [selectedTheme, setSelectedTheme] = useState(theme || 'green');
+  const currentTheme = theme || 'green';
+  const [selectedTheme, setSelectedTheme] = useState(currentTheme);
   const [themeToPurchase, setThemeToPurchase] = useState('');
   const insufficientFunds = useMemo(
     () => twinkleCoins < priceTable.chatSubject,
@@ -83,20 +86,21 @@ export default function SettingsModal({
     return (
       (stringIsEmpty(editedChannelName) || channelNameDidNotChange) &&
       isClosed === editedIsClosed &&
-      editedCanChangeSubject === canChangeSubject
+      editedCanChangeSubject === canChangeSubject &&
+      currentTheme === selectedTheme
     );
   }, [
     canChangeSubject,
     channelId,
     channelName,
+    currentTheme,
     customChannelNames,
     editedCanChangeSubject,
     editedChannelName,
     editedIsClosed,
-    isClosed
+    isClosed,
+    selectedTheme
   ]);
-
-  const unlocked = [];
 
   return (
     <Modal onHide={onHide}>
@@ -238,7 +242,7 @@ export default function SettingsModal({
                   'darkBlue',
                   'logoBlue'
                 ]}
-                unlocked={unlocked}
+                unlocked={unlockedThemes}
                 onSetColor={handleSetColor}
                 selectedColor={selectedTheme}
                 style={{
@@ -286,7 +290,8 @@ export default function SettingsModal({
             onDone({
               editedChannelName,
               editedIsClosed,
-              editedCanChangeSubject
+              editedCanChangeSubject,
+              editedTheme: selectedTheme
             })
           }
         >
@@ -328,14 +333,14 @@ export default function SettingsModal({
             </div>
           }
           descriptionFontSize="2rem"
-          onConfirm={handlePurchaseSubject}
+          onConfirm={handlePurchaseTheme}
         />
       )}
     </Modal>
   );
 
   function handleSetColor(color) {
-    if (unlocked.includes(color) || color === 'green') {
+    if (unlockedThemes.includes(color) || color === 'green') {
       return setSelectedTheme(color);
     }
     setThemeToPurchase(color);
@@ -353,6 +358,21 @@ export default function SettingsModal({
     } catch (error) {
       console.error(error);
       setConfirmModalShown(false);
+    }
+  }
+
+  async function handlePurchaseTheme() {
+    try {
+      const { coins } = await buyChatTheme({
+        channelId,
+        theme: themeToPurchase
+      });
+      onEnableTheme({ channelId, theme: themeToPurchase });
+      onChangeUserCoins({ coins, userId });
+      setThemeToPurchase('');
+    } catch (error) {
+      console.error(error);
+      setThemeToPurchase('');
     }
   }
 }

@@ -28,6 +28,7 @@ TextMessage.propTypes = {
   onShowSubjectMsgsModal: PropTypes.func.isRequired,
   socketConnected: PropTypes.bool,
   subjectId: PropTypes.number,
+  theme: PropTypes.string,
   userCanEditThis: PropTypes.bool
 };
 
@@ -49,7 +50,8 @@ function TextMessage({
   subjectId,
   onShowSubjectMsgsModal,
   socketConnected,
-  userCanEditThis
+  userCanEditThis,
+  theme
 }) {
   const {
     actions: { onHideAttachment }
@@ -130,11 +132,15 @@ function TextMessage({
   function renderPrefix() {
     let prefix = '';
     if (isSubject) {
-      prefix = <span className={MessageStyle.subjectPrefix}>Subject: </span>;
+      prefix = (
+        <span style={{ fontWeight: 'bold', color: Color[theme || 'green']() }}>
+          Subject:{' '}
+        </span>
+      );
     }
     if (isReloadedSubject) {
       prefix = (
-        <span className={MessageStyle.subjectPrefix}>
+        <span style={{ fontWeight: 'bold', color: Color[theme || 'green']() }}>
           {'Returning Subject: '}
         </span>
       );

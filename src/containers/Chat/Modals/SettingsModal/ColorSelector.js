@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import FullTextReveal from 'components/Texts/FullTextReveal';
+import { useMyState } from 'helpers/hooks';
 import { Color, mobileMaxWidth } from 'constants/css';
+import { priceTable } from 'constants/defaultValues';
 import { css } from 'emotion';
 
 ColorSelector.propTypes = {
@@ -20,6 +22,7 @@ export default function ColorSelector({
   selectedColor,
   style
 }) {
+  const { twinkleCoins } = useMyState();
   const [hovered, setHovered] = useState();
 
   return (
@@ -34,6 +37,8 @@ export default function ColorSelector({
     >
       {colors.map((color) => {
         const locked = color !== 'green' && !unlocked.includes(color);
+        const cannotAfford = locked && twinkleCoins < priceTable.chatTheme;
+
         return (
           <div key={color}>
             <div
@@ -48,10 +53,11 @@ export default function ColorSelector({
               style={{
                 borderRadius: '50%',
                 background: Color[color](),
-                cursor: 'pointer',
+                cursor: cannotAfford ? 'default' : 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                opacity: cannotAfford ? 0.2 : 1,
                 ...(selectedColor !== color
                   ? {
                       border: `0.5rem solid #fff`,
@@ -59,7 +65,7 @@ export default function ColorSelector({
                     }
                   : {})
               }}
-              onClick={() => onSetColor(color)}
+              onClick={() => (cannotAfford ? null : onSetColor(color))}
               onMouseEnter={() => setHovered(color)}
               onMouseLeave={() => setHovered(undefined)}
             >
@@ -87,7 +93,8 @@ export default function ColorSelector({
                 }}
                 text={
                   <>
-                    <Icon icon={['far', 'badge-dollar']} /> 10
+                    <Icon icon={['far', 'badge-dollar']} />{' '}
+                    {priceTable.chatTheme}
                   </>
                 }
               />

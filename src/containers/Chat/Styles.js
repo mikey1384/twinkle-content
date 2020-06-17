@@ -45,9 +45,5 @@ export const MessageStyle = {
   `,
   relatedConversationsButton: css`
     margin-top: 1rem;
-  `,
-  subjectPrefix: css`
-    font-weight: bold;
-    color: ${Color.green()};
   `
 };

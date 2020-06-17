@@ -29,6 +29,21 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async buyChatTheme({ channelId, theme }) {
+      try {
+        const { data } = await request.put(
+          `${URL}/chat/theme/buy`,
+          {
+            channelId,
+            theme
+          },
+          auth()
+        );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async changeChannelOwner({ channelId, newOwner }) {
       try {
         const {

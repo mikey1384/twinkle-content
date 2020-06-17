@@ -19,7 +19,8 @@ export default function ChatReducer(state, action) {
           [action.channelId]: {
             ...state.channelsObj[action.channelId],
             isClosed: action.isClosed,
-            canChangeSubject: action.canChangeSubject
+            canChangeSubject: action.canChangeSubject,
+            theme: action.theme
           }
         },
         customChannelNames: {
@@ -272,6 +273,21 @@ export default function ChatReducer(state, action) {
           [action.channelId]: {
             ...state.channelsObj[action.channelId],
             canChangeSubject: 'owner'
+          }
+        }
+      };
+    }
+    case 'ENABLE_THEME': {
+      return {
+        ...state,
+        channelsObj: {
+          ...state.channelsObj,
+          [action.channelId]: {
+            ...state.channelsObj[action.channelId],
+            unlockedThemes: [
+              ...state.channelsObj[action.channelId].unlockedThemes,
+              action.theme
+            ]
           }
         }
       };

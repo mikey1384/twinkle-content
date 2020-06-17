@@ -626,6 +626,7 @@ export default function MessagesContainer({
           onSelectNewOwner={handleSelectNewOwner}
           onSetScrollToBottom={handleSetScrollToBottom}
           theme={currentChannel.theme}
+          unlockedThemes={currentChannel.unlockedThemes}
           userIsChannelOwner={currentChannel.creatorId === userId}
         />
       )}
@@ -740,26 +741,30 @@ export default function MessagesContainer({
   async function handleEditSettings({
     editedChannelName,
     editedIsClosed,
-    editedCanChangeSubject
+    editedCanChangeSubject,
+    editedTheme
   }) {
     await editChannelSettings({
       channelName: editedChannelName,
       isClosed: editedIsClosed,
       channelId: selectedChannelId,
-      canChangeSubject: editedCanChangeSubject
+      canChangeSubject: editedCanChangeSubject,
+      theme: editedTheme
     });
     onEditChannelSettings({
       channelName: editedChannelName,
       isClosed: editedIsClosed,
       channelId: selectedChannelId,
-      canChangeSubject: editedCanChangeSubject
+      canChangeSubject: editedCanChangeSubject,
+      theme: editedTheme
     });
     if (userId === currentChannel.creatorId) {
       socket.emit('new_channel_settings', {
         channelName: editedChannelName,
         isClosed: editedIsClosed,
         channelId: selectedChannelId,
-        canChangeSubject: editedCanChangeSubject
+        canChangeSubject: editedCanChangeSubject,
+        theme: editedTheme
       });
     }
     setSettingsModalShown(false);
