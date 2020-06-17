@@ -80,7 +80,11 @@ export default function SettingsModal({
   const disabled = useMemo(() => {
     const customChannelName = customChannelNames[channelId];
     let channelNameDidNotChange = editedChannelName === channelName;
-    if (customChannelName !== channelName) {
+    if (
+      !!customChannelName &&
+      !stringIsEmpty(customChannelName) &&
+      customChannelName !== editedChannelName
+    ) {
       channelNameDidNotChange = false;
     }
     return (
@@ -213,7 +217,7 @@ export default function SettingsModal({
               )}
             </div>
           )}
-          {!!canChangeSubject && (
+          {!!canChangeSubject && userIsChannelOwner && (
             <div
               style={{
                 width: '100%',
