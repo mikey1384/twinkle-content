@@ -4,13 +4,13 @@ import ProfilePic from 'components/ProfilePic';
 import Button from 'components/Button';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Loading from 'components/Loading';
+import WelcomeMessage from './WelcomeMessage';
 import { container } from './Styles';
 import { borderRadius } from 'constants/css';
 import { MAX_PROFILE_PIC_SIZE } from 'constants/defaultValues';
 import { css } from 'emotion';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
-const WelcomeMessage = React.lazy(() => import('./WelcomeMessage'));
 
 ProfileWidget.propTypes = {
   history: PropTypes.object,
