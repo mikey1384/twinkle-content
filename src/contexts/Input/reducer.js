@@ -284,6 +284,14 @@ export default function InputReducer(state, action) {
           websiteError: action.websiteError
         }
       };
+    case 'SET_YOUTUBE_VIDEO_DETAILS':
+      return {
+        ...state,
+        content: {
+          ...state.content,
+          ytDetails: action.ytDetails
+        }
+      };
     case 'SET_YOUTUBE_ERROR':
       return {
         ...state,

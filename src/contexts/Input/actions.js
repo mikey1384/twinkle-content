@@ -202,6 +202,12 @@ export default function InputActions(dispatch) {
         onEdit
       });
     },
+    onSetYouTubeVideoDetails(ytDetails) {
+      return dispatch({
+        type: 'SET_YOUTUBE_VIDEO_DETAILS',
+        ytDetails
+      });
+    },
     onSetWebsiteError(websiteError) {
       return dispatch({
         type: 'SET_WEBSITE_ERROR',

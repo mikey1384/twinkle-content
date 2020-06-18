@@ -26,7 +26,7 @@ export default function AlreadyPosted({
   videoCode
 }) {
   const {
-    requestHelpers: { checkIfContentExists }
+    requestHelpers: { checkContentUrl }
   } = useAppContext();
   const {
     actions: { onSetExistingContent }
@@ -44,7 +44,7 @@ export default function AlreadyPosted({
     }
     async function checkExists() {
       setLoading(true);
-      const { content } = await checkIfContentExists({
+      const { content } = await checkContentUrl({
         contentType,
         url,
         videoCode

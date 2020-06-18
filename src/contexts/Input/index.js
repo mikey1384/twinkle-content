@@ -28,7 +28,8 @@ export const initialInputState = {
     },
     titleFieldShown: false,
     urlHelper: '',
-    urlError: ''
+    urlError: '',
+    ytDetails: null
   },
   userInfo: {}
 };
