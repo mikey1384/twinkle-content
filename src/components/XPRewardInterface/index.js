@@ -54,6 +54,7 @@ export default function XPRewardInterface({
     starTabActive = false,
     prevRewardLevel
   } = rewardForm;
+
   const [rewarding, setRewarding] = useState(false);
   const mounted = useRef(true);
   const commentRef = useRef(prevComment);

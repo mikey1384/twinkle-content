@@ -90,7 +90,11 @@ function Comment({
       onSetXpRewardInterfaceShown
     }
   } = useContentContext();
-  const { deleted, isEditing, xpRewardInterfaceShown } = useContentState({
+  const {
+    deleted,
+    isEditing,
+    xpRewardInterfaceShown: prevRewardInterfaceShown
+  } = useContentState({
     contentType: 'comment',
     contentId: comment.id
   });
@@ -107,6 +111,11 @@ function Comment({
     onReplySubmit,
     onRewardCommentEdit
   } = useContext(LocalContext);
+
+  const [rewardInterfaceShown, setRewardInterfaceShown] = useState(
+    prevRewardInterfaceShown
+  );
+  const rewardInterfaceShownRef = useRef(prevRewardInterfaceShown);
   const [userListModalShown, setUserListModalShown] = useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   const [loadingReplies, setLoadingReplies] = useState(false);
@@ -227,12 +236,9 @@ function Comment({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canDelete, canEdit, comment.id, userIsUploader]);
   useEffect(() => {
-    onSetXpRewardInterfaceShown({
-      contentType: 'comment',
-      contentId: comment.id,
-      shown:
-        xpRewardInterfaceShown && userIsHigherAuth && canStar && !userIsUploader
-    });
+    handleRewardInterfaceShown(
+      rewardInterfaceShown && userIsHigherAuth && canStar && !userIsUploader
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
@@ -254,10 +260,10 @@ function Comment({
     return determineXpButtonDisabled({
       rewardLevel,
       myId: userId,
-      xpRewardInterfaceShown,
+      xpRewardInterfaceShown: rewardInterfaceShown,
       stars
     });
-  }, [isPreview, rewardLevel, stars, userId, xpRewardInterfaceShown]);
+  }, [isPreview, rewardInterfaceShown, rewardLevel, stars, userId]);
 
   useEffect(() => {
     mounted.current = true;
@@ -286,12 +292,20 @@ function Comment({
         }
       }
     }
-
-    return function cleanUp() {
-      mounted.current = false;
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
+
+  useEffect(() => {
+    return function saveStateBeforeUnmount() {
+      mounted.current = false;
+      onSetXpRewardInterfaceShown({
+        contentId: comment.id,
+        contentType: 'comment',
+        shown: rewardInterfaceShownRef.current
+      });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return !deleted && !comment.deleted ? (
     <>
@@ -400,7 +414,7 @@ function Comment({
                           <Button
                             color="pink"
                             style={{ marginLeft: '0.7rem' }}
-                            onClick={handleSetXpRewardInterfaceShown}
+                            onClick={() => handleRewardInterfaceShown(true)}
                             disabled={!!xpButtonDisabled}
                           >
                             <Icon icon="certificate" />
@@ -421,7 +435,7 @@ function Comment({
                 </div>
               )}
             </div>
-            {!isPreview && xpRewardInterfaceShown && (
+            {!isPreview && rewardInterfaceShown && (
               <XPRewardInterface
                 innerRef={RewardInterfaceRef}
                 rewardLevel={rewardLevel}
@@ -430,11 +444,7 @@ function Comment({
                 contentId={comment.id}
                 uploaderId={uploader.id}
                 onRewardSubmit={(data) => {
-                  onSetXpRewardInterfaceShown({
-                    contentId: comment.id,
-                    contentType: 'comment',
-                    shown: false
-                  });
+                  handleRewardInterfaceShown(false);
                   onAttachStar({
                     data,
                     contentId: comment.id,
@@ -519,14 +529,6 @@ function Comment({
     });
   }
 
-  function handleSetXpRewardInterfaceShown() {
-    onSetXpRewardInterfaceShown({
-      contentId: comment.id,
-      contentType: 'comment',
-      shown: true
-    });
-  }
-
   function handleLikeClick(likes) {
     onLikeClick({ commentId: comment.id, likes });
   }
@@ -545,6 +547,11 @@ function Comment({
       setLoadingReplies(false);
     }
     ReplyInputAreaRef.current.focus();
+  }
+
+  function handleRewardInterfaceShown(shown) {
+    setRewardInterfaceShown(shown);
+    rewardInterfaceShownRef.current = shown;
   }
 
   function submitReply(reply) {
