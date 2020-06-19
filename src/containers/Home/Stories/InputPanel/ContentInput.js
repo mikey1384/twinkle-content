@@ -311,6 +311,7 @@ function ContentInput() {
       setSubmitting(false);
     } catch (error) {
       console.error(error);
+      setSubmitting(false);
     }
   }
 

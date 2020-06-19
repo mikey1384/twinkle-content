@@ -402,6 +402,7 @@ function SubjectInput() {
       return Promise.resolve();
     } catch (error) {
       console.error(error);
+      onSetSubmittingSubject(false);
     }
   }
 }
