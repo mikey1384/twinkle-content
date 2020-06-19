@@ -587,7 +587,8 @@ export default function contentRequestHelpers({ auth, handleError }) {
       filePath,
       fileSize,
       rewardLevel,
-      secretAnswer
+      secretAnswer,
+      ytDetails
     }) {
       try {
         const { data } = await request.post(
@@ -602,7 +603,8 @@ export default function contentRequestHelpers({ auth, handleError }) {
             filePath,
             fileSize,
             rewardLevel,
-            secretAnswer
+            secretAnswer,
+            ytDetails
           },
           auth()
         );

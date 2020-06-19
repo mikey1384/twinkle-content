@@ -298,7 +298,8 @@ function ContentInput() {
         ...form,
         url,
         title: finalizeEmoji(title),
-        description: finalizeEmoji(description)
+        description: finalizeEmoji(description),
+        ytDetails: form.isVideo ? ytDetails : null
       });
       if (data) {
         onResetContentInput();
