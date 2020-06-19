@@ -329,7 +329,7 @@ export default function ChannelHeader({
       ) : (
         <Loading
           style={{
-            color: Color.green()
+            color: Color[theme || 'green']()
           }}
           text="Loading Subject..."
         />
