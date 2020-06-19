@@ -6,7 +6,8 @@ import { addCommasToNumber } from 'helpers/stringHelpers';
 
 MenuButtons.propTypes = {
   maxStars: PropTypes.number.isRequired,
-  onSetRewardForm: PropTypes.func.isRequired,
+  onSetSelectedAmount: PropTypes.func.isRequired,
+  onSetStarTabActive: PropTypes.func.isRequired,
   selectedAmount: PropTypes.number.isRequired,
   stars: PropTypes.array.isRequired,
   starTabActive: PropTypes.bool.isRequired,
@@ -15,7 +16,8 @@ MenuButtons.propTypes = {
 
 export default function MenuButtons({
   maxStars,
-  onSetRewardForm,
+  onSetSelectedAmount,
+  onSetStarTabActive,
   selectedAmount,
   stars,
   starTabActive,
@@ -64,11 +66,7 @@ export default function MenuButtons({
             justifyContent: 'flex-start',
             marginTop: i !== 1 && '0.5rem'
           }}
-          onClick={() =>
-            onSetRewardForm({
-              selectedAmount: i * multiplier
-            })
-          }
+          onClick={() => onSetSelectedAmount(i * multiplier)}
           filled={selectedAmount === i * multiplier}
         >
           {renderStars({ numStars: i, starTabActive })}
@@ -85,11 +83,7 @@ export default function MenuButtons({
         <Button
           color="pink"
           key={5}
-          onClick={() =>
-            onSetRewardForm({
-              starTabActive: true
-            })
-          }
+          onClick={() => onSetStarTabActive(true)}
           style={{
             justifyContent: 'flex-start',
             marginTop: '0.5rem'
@@ -103,11 +97,11 @@ export default function MenuButtons({
       );
     }
     return result;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     maxRewardableStars,
     multiplier,
     myRewardableStars,
-    onSetRewardForm,
     remainingStars,
     selectedAmount,
     starTabActive

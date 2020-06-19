@@ -50,8 +50,8 @@ export default function XPRewardInterface({
   const rewardForm = state['reward' + contentType + contentId] || {};
   const {
     comment: prevComment = '',
-    selectedAmount = 0,
-    starTabActive = false,
+    selectedAmount: prevSelectedAmount = 0,
+    starTabActive: prevStarTabActive = false,
     prevRewardLevel
   } = rewardForm;
 
@@ -59,25 +59,14 @@ export default function XPRewardInterface({
   const mounted = useRef(true);
   const commentRef = useRef(prevComment);
   const [comment, setComment] = useState(prevComment);
+  const starTabActiveRef = useRef(prevStarTabActive);
+  const [starTabActive, setStarTabActive] = useState(prevStarTabActive);
+  const selectedAmountRef = useRef(prevSelectedAmount);
+  const [selectedAmount, setSelectedAmount] = useState(prevSelectedAmount);
 
   useEffect(() => {
     handleSetComment(prevComment);
   }, [prevComment]);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      onSetRewardForm({
-        contentType,
-        contentId,
-        form: {
-          comment: commentRef.current
-        }
-      });
-      mounted.current = false;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     onSetRewardForm({
@@ -104,6 +93,23 @@ export default function XPRewardInterface({
     [comment]
   );
 
+  useEffect(() => {
+    mounted.current = true;
+    return function cleanUp() {
+      onSetRewardForm({
+        contentType,
+        contentId,
+        form: {
+          comment: commentRef.current,
+          selectedAmount: selectedAmountRef.current,
+          starTabActive: starTabActiveRef.current
+        }
+      });
+      mounted.current = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return userId && uploaderId !== userId ? (
     <div
       ref={innerRef}
@@ -120,14 +126,7 @@ export default function XPRewardInterface({
         <nav
           className={!starTabActive ? 'active' : ''}
           onClick={() => {
-            onSetRewardForm({
-              contentType,
-              contentId,
-              form: {
-                selectedAmount: !starTabActive ? selectedAmount : 0,
-                starTabActive: false
-              }
-            });
+            handleSetStarTabActive(false);
           }}
         >
           Reward Twinkles
@@ -135,14 +134,7 @@ export default function XPRewardInterface({
         <nav
           className={starTabActive ? 'active' : ''}
           onClick={() => {
-            onSetRewardForm({
-              contentType,
-              contentId,
-              form: {
-                selectedAmount: starTabActive ? selectedAmount : 0,
-                starTabActive: true
-              }
-            });
+            handleSetStarTabActive(true);
           }}
         >
           Reward Stars
@@ -156,9 +148,8 @@ export default function XPRewardInterface({
           selectedAmount={selectedAmount}
           stars={stars}
           starTabActive={starTabActive}
-          onSetRewardForm={(form) =>
-            onSetRewardForm({ contentType, contentId, form })
-          }
+          onSetSelectedAmount={handleSetSelectedAmount}
+          onSetStarTabActive={handleSetStarTabActive}
           userId={userId}
         />
       </section>
@@ -233,5 +224,15 @@ export default function XPRewardInterface({
   function handleSetComment(text) {
     setComment(text);
     commentRef.current = text;
+  }
+
+  function handleSetSelectedAmount(amount) {
+    setSelectedAmount(amount);
+    selectedAmountRef.current = amount;
+  }
+
+  function handleSetStarTabActive(active) {
+    setStarTabActive(active);
+    starTabActiveRef.current = active;
   }
 }
