@@ -72,6 +72,7 @@ function ProfilePanel({ expandable, profileId }) {
       onLoadComments,
       onLoadMoreComments,
       onLoadMoreReplies,
+      onLoadRepliesOfReply,
       onReloadContent,
       onSetCommentsShown,
       onSetOnline,
@@ -477,6 +478,7 @@ function ProfilePanel({ expandable, profileId }) {
                   onLikeClick={onLikeComment}
                   onLoadMoreComments={onLoadMoreComments}
                   onLoadMoreReplies={onLoadMoreReplies}
+                  onLoadRepliesOfReply={onLoadRepliesOfReply}
                   onPreviewClick={onExpandComments}
                   onReplySubmit={onUploadReply}
                   onRewardCommentEdit={onEditRewardComment}
