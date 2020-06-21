@@ -564,12 +564,26 @@ export default function contentRequestHelpers({ auth, handleError }) {
       parent,
       rootCommentId,
       subjectId,
-      targetCommentId
+      targetCommentId,
+      attachment,
+      filePath,
+      fileName,
+      fileSize
     }) {
       try {
         const { data } = await request.post(
           `${URL}/content/comments`,
-          { content, parent, rootCommentId, subjectId, targetCommentId },
+          {
+            content,
+            parent,
+            rootCommentId,
+            subjectId,
+            targetCommentId,
+            attachment,
+            filePath,
+            fileName,
+            fileSize
+          },
           auth()
         );
         return Promise.resolve(data);

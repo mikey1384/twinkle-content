@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
@@ -25,7 +26,7 @@ export default function RestoreAccount({ username, onShowLoginForm, onHide }) {
   const matchingAccount = useMemo(() => {
     if (
       searchedProfiles.filter(
-        profile =>
+        (profile) =>
           profile.username?.toLowerCase?.() === searchText?.toLowerCase?.()
       ).length > 0
     ) {

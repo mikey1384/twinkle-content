@@ -8,7 +8,7 @@ import Loading from 'components/Loading';
 import { scrollElementToCenter } from 'helpers';
 import { css } from 'emotion';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { useAppContext } from 'contexts';
+import { useAppContext, useContentContext } from 'contexts';
 
 Comments.propTypes = {
   autoExpand: PropTypes.bool,
@@ -84,6 +84,9 @@ function Comments({
   const {
     requestHelpers: { deleteContent, loadComments, uploadComment }
   } = useAppContext();
+  const {
+    actions: { onSetCommentUploadingFile }
+  } = useContentContext();
   const [deleting, setDeleting] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [commentSubmitted, setCommentSubmitted] = useState(false);
@@ -221,16 +224,27 @@ function Comments({
     content,
     rootCommentId,
     subjectId,
-    targetCommentId
+    targetCommentId,
+    attachment,
+    contentType,
+    contentId
   }) {
     try {
       setCommentSubmitted(true);
+      if (attachment?.contentType === 'file') {
+        return onSetCommentUploadingFile({
+          contentType,
+          contentId,
+          uploading: true
+        });
+      }
       const data = await uploadComment({
         content,
         parent,
         rootCommentId,
         subjectId,
-        targetCommentId
+        targetCommentId,
+        attachment
       });
       onCommentSubmit({
         ...data,
@@ -311,6 +325,7 @@ function Comments({
         targetCommentId={
           parent.contentType === 'comment' ? parent.contentId : null
         }
+        onCommentSubmit={onCommentSubmit}
       />
     );
   }

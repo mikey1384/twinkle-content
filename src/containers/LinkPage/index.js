@@ -179,7 +179,7 @@ export default function LinkPage({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
-
+  const userIsUploader = uploader?.id === userId;
   const userCanEditThis = useMemo(
     () => (canEdit || canDelete) && authLevel > uploader?.authLevel,
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -191,7 +191,6 @@ export default function LinkPage({
     [authLevel, canStar, uploader, userIsUploader]
   );
 
-  const userIsUploader = uploader?.id === userId;
   useEffect(() => {
     onSetXpRewardInterfaceShown({
       contentType: 'url',

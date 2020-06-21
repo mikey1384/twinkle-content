@@ -53,7 +53,7 @@ export default function SelectAttachmentScreen({
         for (let result of results) {
           onInitContent({ contentId: result.id, contentType, ...result });
         }
-        setAllUploads(results.map(result => result.id));
+        setAllUploads(results.map((result) => result.id));
         contentObjs.current = objectify(results);
         setLoadMoreButton(loadMoreButton);
         setLoaded(true);
@@ -84,7 +84,7 @@ export default function SelectAttachmentScreen({
         loadMoreButton={
           !stringIsEmpty(searchText) ? searchLoadMoreButton : loadMoreButton
         }
-        onSelect={uploadId => {
+        onSelect={(uploadId) => {
           setSelectedUpload([uploadId]);
           onSelect(contentObjs.current[uploadId]);
         }}
@@ -104,15 +104,15 @@ export default function SelectAttachmentScreen({
         filter: contentType,
         searchText,
         shownResults: searchedUploads.map(
-          uploadId => contentObjs.current[uploadId]
+          (uploadId) => contentObjs.current[uploadId]
         )
       });
       contentObjs.current = {
         ...contentObjs.current,
         ...objectify(results)
       };
-      setSearchedUploads(searchedUploads =>
-        searchedUploads.concat(results.map(result => result.id))
+      setSearchedUploads((searchedUploads) =>
+        searchedUploads.concat(results.map((result) => result.id))
       );
       setLoadingMore(false);
       setSearchLoadMoreButton(loadMoreButton);
@@ -129,8 +129,8 @@ export default function SelectAttachmentScreen({
         ...contentObjs.current,
         ...objectify(results)
       };
-      setAllUploads(allUploads =>
-        allUploads.concat(results.map(result => result.id))
+      setAllUploads((allUploads) =>
+        allUploads.concat(results.map((result) => result.id))
       );
       setLoadingMore(false);
       setLoadMoreButton(loadMoreButton);
@@ -146,7 +146,7 @@ export default function SelectAttachmentScreen({
       ...contentObjs.current,
       ...objectify(searchedUploads)
     };
-    setSearchedUploads(searchedUploads.map(upload => upload.id));
+    setSearchedUploads(searchedUploads.map((upload) => upload.id));
     setSearchLoadMoreButton(loadMoreButton);
   }
 }

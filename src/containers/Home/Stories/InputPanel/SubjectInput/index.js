@@ -9,8 +9,8 @@ import React, {
 import Button from 'components/Button';
 import Input from 'components/Texts/Input';
 import Textarea from 'components/Texts/Textarea';
-import AttachContentModal from './AttachContentModal';
-import Attachment from './Attachment';
+import AttachContentModal from 'components/AttachContentModal';
+import Attachment from 'components/Attachment';
 import ErrorBoundary from 'components/ErrorBoundary';
 import LocalContext from '../../../Context';
 import {
@@ -161,7 +161,12 @@ function SubjectInput() {
               {attachment ? (
                 <Attachment
                   attachment={attachment}
-                  onClose={() => onSetSubjectAttachment(undefined)}
+                  onClose={() =>
+                    onSetSubjectAttachment({
+                      attachment: undefined,
+                      attachContentType: 'subject'
+                    })
+                  }
                 />
               ) : (
                 <Button
@@ -304,9 +309,13 @@ function SubjectInput() {
         <AttachContentModal
           onHide={() => setAttachContentModalShown(false)}
           onConfirm={(content) => {
-            onSetSubjectAttachment(content);
+            onSetSubjectAttachment({
+              attachment: content,
+              attachContentType: 'subject'
+            });
             setAttachContentModalShown(false);
           }}
+          type="subject"
         />
       )}
     </ErrorBoundary>

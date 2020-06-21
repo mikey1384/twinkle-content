@@ -7,7 +7,7 @@ import SelectAttachmentScreen from './SelectAttachmentScreen';
 
 const sectionObj = {
   start: {
-    title: 'Attach a content to your subject'
+    title: 'Attach a content to your {type}'
   },
   selectVideo: {
     title: 'Select a Video'
@@ -19,10 +19,19 @@ const sectionObj = {
 
 AttachContentModal.propTypes = {
   onConfirm: PropTypes.func.isRequired,
-  onHide: PropTypes.func.isRequired
+  onHide: PropTypes.func.isRequired,
+  type: PropTypes.string,
+  contentType: PropTypes.string,
+  contentId: PropTypes.number
 };
 
-export default function AttachContentModal({ onConfirm, onHide }) {
+export default function AttachContentModal({
+  onConfirm,
+  onHide,
+  type,
+  contentType,
+  contentId
+}) {
   const [section, setSection] = useState('start');
   const [selected, setSelected] = useState();
   return (
@@ -30,15 +39,21 @@ export default function AttachContentModal({ onConfirm, onHide }) {
       large={section === 'selectVideo' || section === 'selectLink'}
       onHide={onHide}
     >
-      <header>{sectionObj[section].title}</header>
+      <header>{sectionObj[section].title.replace('{type}', type)}</header>
       <main>
         {section === 'start' && (
-          <StartScreen navigateTo={setSection} onHide={onHide} />
+          <StartScreen
+            navigateTo={setSection}
+            onHide={onHide}
+            type={type}
+            contentType={contentType}
+            contentId={contentId}
+          />
         )}
         {section === 'selectVideo' && (
           <SelectAttachmentScreen
             contentType="video"
-            onSelect={video =>
+            onSelect={(video) =>
               setSelected({
                 contentType: 'video',
                 id: video.id,
@@ -51,7 +66,7 @@ export default function AttachContentModal({ onConfirm, onHide }) {
         {section === 'selectLink' && (
           <SelectAttachmentScreen
             contentType="url"
-            onSelect={link =>
+            onSelect={(link) =>
               setSelected({
                 contentType: 'url',
                 id: link.id,

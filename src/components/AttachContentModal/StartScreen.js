@@ -16,10 +16,19 @@ import { FILE_UPLOAD_XP_REQUIREMENT } from 'constants/defaultValues';
 
 StartScreen.propTypes = {
   navigateTo: PropTypes.func.isRequired,
-  onHide: PropTypes.func.isRequired
+  onHide: PropTypes.func.isRequired,
+  type: PropTypes.string,
+  contentType: PropTypes.string,
+  contentId: PropTypes.number
 };
 
-export default function StartScreen({ navigateTo, onHide }) {
+export default function StartScreen({
+  navigateTo,
+  onHide,
+  type,
+  contentType,
+  contentId
+}) {
   const {
     actions: { onSetSubjectAttachment }
   } = useInputContext();
@@ -156,6 +165,7 @@ export default function StartScreen({ navigateTo, onHide }) {
   );
 
   function handleUpload(event) {
+    const key = contentType + contentId;
     const fileObj = event.target.files[0];
     if (fileObj.size / mb > maxSize) {
       return setAlertModalShown(true);
@@ -181,11 +191,15 @@ export default function StartScreen({ navigateTo, onHide }) {
               const dataUri = imageUrl.replace(/^data:image\/\w+;base64,/, '');
               const buffer = Buffer.from(dataUri, 'base64');
               const file = new File([buffer], fileObj.name);
+
               onSetSubjectAttachment({
-                file,
-                contentType: 'file',
-                fileType,
-                imageUrl
+                attachment: {
+                  file,
+                  contentType: 'file',
+                  fileType,
+                  imageUrl
+                },
+                attachContentType: type === 'subject' ? 'subject' : key
               });
               onHide();
             },
@@ -196,9 +210,12 @@ export default function StartScreen({ navigateTo, onHide }) {
       reader.readAsDataURL(fileObj);
     } else {
       onSetSubjectAttachment({
-        file: fileObj,
-        contentType: 'file',
-        fileType
+        attachment: {
+          file: fileObj,
+          contentType: 'file',
+          fileType
+        },
+        attachContentType: type === 'subject' ? 'subject' : key
       });
       onHide();
     }

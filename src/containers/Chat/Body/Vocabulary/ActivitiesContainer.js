@@ -57,6 +57,7 @@ function ActivitiesContainer({ style }) {
         ? ActivitiesContainerRef.current?.offsetHeight -
           ContentRef.current?.offsetHeight
         : 20,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       // eslint-disable-next-line react-hooks/exhaustive-deps
       ActivitiesContainerRef.current?.offsetHeight,
