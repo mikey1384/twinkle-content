@@ -208,6 +208,8 @@ export default function XPRewardInterface({
       if (mounted.current) {
         setRewarding(false);
         handleSetComment('');
+        handleSetStarTabActive(false);
+        handleSetSelectedAmount(0);
         onSetRewardForm({
           contentType,
           contentId,
