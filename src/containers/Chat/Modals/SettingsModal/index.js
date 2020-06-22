@@ -121,13 +121,13 @@ export default function SettingsModal({
           <div style={{ width: '100%' }}>
             {userIsChannelOwner && (
               <p style={{ fontWeight: 'bold', fontSize: '1.7rem' }}>
-                Channel Name:
+                Group Name:
               </p>
             )}
             <Input
               style={{ marginTop: '0.5rem', width: '100%' }}
               autoFocus
-              placeholder="Enter channel name..."
+              placeholder="Enter group name..."
               value={editedChannelName}
               onChange={setEditedChannelName}
             />

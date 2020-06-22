@@ -69,10 +69,10 @@ export default function RegularMenu({
           {selectedUsers.length > 1 && (
             <div style={{ width: '100%' }}>
               <div style={{ marginTop: '1.5rem' }}>
-                <h3>Channel name</h3>
+                <h3>Group name</h3>
                 <Input
                   style={{ marginTop: '1rem' }}
-                  placeholder="Enter channel name"
+                  placeholder="Enter group name"
                   maxLength="150"
                   value={channelName}
                   onChange={setChannelName}
