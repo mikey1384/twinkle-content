@@ -102,12 +102,14 @@ export default function chatRequestHelpers({ auth, handleError }) {
     },
     async editMessage({ editedMessage, messageId, isSubject, subjectId }) {
       try {
-        await request.put(
+        const {
+          data: { subjectChanged }
+        } = await request.put(
           `${URL}/chat/message`,
           { editedMessage, messageId, isSubject, subjectId },
           auth()
         );
-        return Promise.resolve();
+        return Promise.resolve(subjectChanged);
       } catch (error) {
         return handleError(error);
       }

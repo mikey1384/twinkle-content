@@ -585,7 +585,7 @@ function Message({
 
   async function handleEditDone(editedMessage) {
     const messageIsSubject = !!isSubject || !!isReloadedSubject;
-    await editMessage({
+    const subjectChanged = await editMessage({
       editedMessage,
       messageId,
       isSubject: messageIsSubject,
@@ -594,7 +594,8 @@ function Message({
     onEditMessage({
       editedMessage,
       messageId,
-      isSubject: messageIsSubject
+      isSubject: messageIsSubject,
+      subjectChanged
     });
     socket.emit('edit_chat_message', {
       channelId,

@@ -144,11 +144,12 @@ export default function ChatActions(dispatch) {
         theme
       });
     },
-    onEditMessage({ editedMessage, messageId, isSubject }) {
+    onEditMessage({ editedMessage, messageId, isSubject, subjectChanged }) {
       return dispatch({
         type: 'EDIT_MESSAGE',
         data: { editedMessage, messageId },
-        isSubject
+        isSubject,
+        subjectChanged
       });
     },
     onEditWord({ deletedDefIds, partOfSpeeches, editedDefinitionOrder, word }) {
