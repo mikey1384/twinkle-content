@@ -192,12 +192,12 @@ export function capitalize(string = '') {
 }
 
 export function containsTwinkleVideoUrl(string) {
-  const regex = /(^((http[s]?:\/\/(www\.)?|www\.)(twin-kle.com|twinkle.network)\/videos\/[0-9]+))/g;
+  const regex = /(^((http[s]?:\/\/(www\.)?|www\.)(twin-kle.com)\/videos\/[0-9]+))/g;
   return regex.test(string);
 }
 
 export function extractVideoIdFromTwinkleVideoUrl(string) {
-  const regex = /(^((http[s]?:\/\/(www\.)?|www\.)(twin-kle.com|twinkle.network)\/videos\/[0-9]+))/g;
+  const regex = /(^((http[s]?:\/\/(www\.)?|www\.)(twin-kle.com)\/videos\/[0-9]+))/g;
   if (!regex.test(string)) return null;
   const urlArray = string.match(regex);
   const videoId = urlArray?.[0].split('videos/')[1];
