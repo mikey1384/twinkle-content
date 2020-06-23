@@ -183,6 +183,10 @@ function Comment({
   ]);
 
   useEffect(() => {
+    handleRewardInterfaceShown(prevRewardInterfaceShown);
+  }, [prevRewardInterfaceShown]);
+
+  useEffect(() => {
     if (!isPreview) {
       if (replying && replies?.length > prevReplies.current?.length) {
         setReplying(false);
@@ -317,11 +321,13 @@ function Comment({
   useEffect(() => {
     return function saveStateBeforeUnmount() {
       mounted.current = false;
-      onSetXpRewardInterfaceShown({
-        contentId: comment.id,
-        contentType: 'comment',
-        shown: rewardInterfaceShownRef.current
-      });
+      if (rewardInterfaceShownRef.current) {
+        onSetXpRewardInterfaceShown({
+          contentId: comment.id,
+          contentType: 'comment',
+          shown: true
+        });
+      }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

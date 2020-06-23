@@ -172,7 +172,8 @@ export default function ChatReducer(state, action) {
             numUnreads: 0,
             twoPeople: false,
             creatorId: action.data.message.userId,
-            members: action.data.members
+            members: action.data.members,
+            unlockedThemes: []
           }
         },
         selectedChannelId: channelId,
@@ -239,15 +240,16 @@ export default function ChatReducer(state, action) {
               ? action.data.editedMessage
               : message.content
         })),
-        subjectObj: action.isSubject
-          ? {
-              ...state.subjectObj,
-              [state.selectedChannelId]: {
-                ...state.subjectObj[state.selectedChannelId],
-                content: action.data.editedMessage
+        subjectObj:
+          action.isSubject && action.subjectChanged
+            ? {
+                ...state.subjectObj,
+                [state.selectedChannelId]: {
+                  ...state.subjectObj[state.selectedChannelId],
+                  content: action.data.editedMessage
+                }
               }
-            }
-          : state.subjectObj
+            : state.subjectObj
       };
     case 'EDIT_WORD':
       return {
