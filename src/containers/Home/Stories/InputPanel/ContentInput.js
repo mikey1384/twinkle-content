@@ -318,8 +318,6 @@ function ContentInput() {
 
   function onUrlFieldChange(text) {
     onSetYouTubeVideoDetails(null);
-    clearTimeout(checkContentExistsTimerRef.current);
-    clearTimeout(showHelperMessageTimerRef.current);
     const urlIsValid = isValidUrl(text);
     onSetContentAlreadyPosted(false);
     handleSetUrl(text);
@@ -329,11 +327,13 @@ function ContentInput() {
     onSetContentUrlError('');
     onSetContentUrlHelper('');
     if (urlIsValid) {
+      clearTimeout(checkContentExistsTimerRef.current);
       checkContentExistsTimerRef.current = setTimeout(
         () => handleCheckUrl(text),
         300
       );
     }
+    clearTimeout(showHelperMessageTimerRef.current);
     showHelperMessageTimerRef.current = setTimeout(() => {
       onSetContentUrlHelper(
         urlIsValid || stringIsEmpty(text)
