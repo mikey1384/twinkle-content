@@ -118,6 +118,7 @@ function MessageInput({
     >
       {isRespondingToSubject ? (
         <TargetSubjectPreview
+          channelId={currentChannelId}
           onClose={() => onSetIsRespondingToSubject(false)}
         />
       ) : replyTarget ? (

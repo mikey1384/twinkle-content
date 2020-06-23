@@ -133,6 +133,7 @@ export function addAdvancedEmoji(string) {
     .replace(/(\:moo\:)/gi, '🐮')
     .replace(/(\:moose\:)/gi, '🦌')
     .replace(/(\:mouse\:)/gi, '🐭')
+    .replace(/(\:neutral\:)/gi, '😐')
     .replace(/(\:nice\:)/gi, '👍')
     .replace(/(\:ok\:)/gi, '👌')
     .replace(/(\:okay\:)/gi, '👌')
@@ -727,7 +728,7 @@ export function renderText(text) {
 
 export function stringIsEmpty(string) {
   const checkedString =
-    typeof string === 'string'
+    string && typeof string === 'string'
       ? string.replace(/\s/g, '').replace(/\r?\n/g, '')
       : '';
   return checkedString === '';

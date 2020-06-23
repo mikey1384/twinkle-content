@@ -14,6 +14,9 @@ import { faAlignJustify } from '@fortawesome/pro-solid-svg-icons/faAlignJustify'
 import { faArrowLeft } from '@fortawesome/pro-solid-svg-icons/faArrowLeft';
 import { faArrowRight } from '@fortawesome/pro-solid-svg-icons/faArrowRight';
 import { faArrowDown } from '@fortawesome/pro-solid-svg-icons/faArrowDown';
+import { faBadgeDollar } from '@fortawesome/pro-solid-svg-icons/faBadgeDollar';
+import { faBadgeDollar as farBadgeDollar } from '@fortawesome/pro-regular-svg-icons/faBadgeDollar';
+import { faBadgeDollar as falBadgeDollar } from '@fortawesome/pro-light-svg-icons/faBadgeDollar';
 import { faBars } from '@fortawesome/pro-solid-svg-icons/faBars';
 import { faBolt } from '@fortawesome/pro-solid-svg-icons/faBolt';
 import { faBook } from '@fortawesome/pro-solid-svg-icons/faBook';
@@ -34,6 +37,7 @@ import { faCommentAlt } from '@fortawesome/pro-solid-svg-icons/faCommentAlt';
 import { faComments } from '@fortawesome/pro-solid-svg-icons/faComments';
 import { faCopy } from '@fortawesome/pro-solid-svg-icons/faCopy';
 import { faCrown } from '@fortawesome/pro-solid-svg-icons/faCrown';
+import { faExchangeAlt } from '@fortawesome/pro-solid-svg-icons/faExchangeAlt';
 import { faFilm } from '@fortawesome/pro-solid-svg-icons/faFilm';
 import { faFile } from '@fortawesome/pro-solid-svg-icons/faFile';
 import { faFileArchive } from '@fortawesome/pro-solid-svg-icons/faFileArchive';
@@ -77,6 +81,9 @@ import * as serviceWorker from './serviceWorker';
 
 library.add(
   faAlignJustify,
+  faBadgeDollar,
+  farBadgeDollar,
+  falBadgeDollar,
   faBars,
   faBolt,
   faBook,
@@ -100,6 +107,7 @@ library.add(
   faComments,
   faCopy,
   faCrown,
+  faExchangeAlt,
   faFile,
   faFileArchive,
   faFileAudio,

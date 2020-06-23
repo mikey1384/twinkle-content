@@ -42,18 +42,25 @@ export default function ChatActions(dispatch) {
         newOwner
       });
     },
-    onChangeChannelSettings({ channelId, channelName, isClosed }) {
+    onChangeChannelSettings({
+      canChangeSubject,
+      channelId,
+      channelName,
+      isClosed
+    }) {
       return dispatch({
         type: 'CHANGE_CHANNEL_SETTINGS',
+        canChangeSubject,
         channelId,
         channelName,
         isClosed
       });
     },
-    onChangeChatSubject(subject) {
+    onChangeChatSubject({ subject, channelId }) {
       return dispatch({
         type: 'CHANGE_SUBJECT',
-        subject
+        subject,
+        channelId
       });
     },
     onChannelLoadingDone() {
@@ -121,12 +128,20 @@ export default function ChatActions(dispatch) {
         }
       });
     },
-    onEditChannelSettings({ channelName, isClosed, channelId }) {
+    onEditChannelSettings({
+      channelName,
+      isClosed,
+      channelId,
+      canChangeSubject,
+      theme
+    }) {
       return dispatch({
         type: 'EDIT_CHANNEL_SETTINGS',
+        canChangeSubject,
         channelName,
         isClosed,
-        channelId
+        channelId,
+        theme
       });
     },
     onEditMessage({ editedMessage, messageId, isSubject }) {
@@ -143,6 +158,19 @@ export default function ChatActions(dispatch) {
         partOfSpeeches,
         editedDefinitionOrder,
         word
+      });
+    },
+    onEnableChatSubject(channelId) {
+      return dispatch({
+        type: 'ENABLE_CHAT_SUBJECT',
+        channelId
+      });
+    },
+    onEnableTheme({ channelId, theme }) {
+      return dispatch({
+        type: 'ENABLE_THEME',
+        channelId,
+        theme
       });
     },
     onEnterChannelWithId({ data, showOnTop }) {
@@ -201,10 +229,10 @@ export default function ChatActions(dispatch) {
         channelId
       });
     },
-    onLoadChatSubject(subject) {
+    onLoadChatSubject(data) {
       return dispatch({
         type: 'LOAD_SUBJECT',
-        subject
+        data
       });
     },
     onLoadMoreChannels({ type, channels }) {
@@ -548,10 +576,12 @@ export default function ChatActions(dispatch) {
         channelId
       });
     },
-    onUploadChatSubject(data) {
+    onUploadChatSubject({ subjectId, subject, channelId }) {
       return dispatch({
         type: 'NEW_SUBJECT',
-        data
+        subjectId,
+        subject,
+        channelId
       });
     }
   };

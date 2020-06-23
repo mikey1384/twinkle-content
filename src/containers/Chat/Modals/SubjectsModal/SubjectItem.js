@@ -17,7 +17,8 @@ SubjectItem.propTypes = {
   username: PropTypes.string,
   onDeleteSubject: PropTypes.func,
   onSelectSubject: PropTypes.func,
-  timeStamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  timeStamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  userIsOwner: PropTypes.bool
 };
 
 export default function SubjectItem({
@@ -28,7 +29,8 @@ export default function SubjectItem({
   content,
   userId,
   username,
-  timeStamp
+  timeStamp,
+  userIsOwner
 }) {
   const [marginBottom, setMarginBottom] = useState(`${marginHeight}rem`);
   const SubjectTitleRef = useRef(null);
@@ -41,7 +43,10 @@ export default function SubjectItem({
 
   const buttons = useMemo(() => {
     const result = [];
-    if (currentSubjectId !== id && authLevel > 3 && canDelete) {
+    if (
+      (currentSubjectId !== id && authLevel > 3 && canDelete) ||
+      userIsOwner
+    ) {
       result.push({
         color: 'rose',
         opacity: 0.5,

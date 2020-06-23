@@ -160,6 +160,15 @@ export default function ContentReducer(state, action) {
       }
       return newState;
     }
+    case 'CLEAR_COMMENT_FILE_UPLOAD_PROGRESS':
+      return {
+        ...state,
+        [contentKey]: {
+          ...prevContentState,
+          fileUploadProgress: null,
+          fileUploadComplete: false
+        }
+      };
     case 'CHANGE_PROFILE_THEME':
       return {
         ...state,
@@ -212,6 +221,14 @@ export default function ContentReducer(state, action) {
       }
       return newState;
     }
+    case 'CHANGE_USER_COINS':
+      return {
+        ...state,
+        [contentKey]: {
+          ...prevContentState,
+          twinkleCoins: action.coins
+        }
+      };
     case 'CHANGE_USER_XP':
       return {
         ...state,
@@ -941,12 +958,28 @@ export default function ContentReducer(state, action) {
             : undefined
         }
       };
+    case 'SET_COMMENT_FILE_UPLOAD_COMPLETE':
+      return {
+        ...state,
+        [contentKey]: {
+          ...prevContentState,
+          fileUploadComplete: true
+        }
+      };
     case 'SET_COMMENTS_SHOWN':
       return {
         ...state,
         [contentKey]: {
           ...prevContentState,
           commentsShown: true
+        }
+      };
+    case 'SET_COMMENT_UPLOADING_FILE':
+      return {
+        ...state,
+        [contentKey]: {
+          ...prevContentState,
+          uploadingFile: action.uploading
         }
       };
     case 'SET_EMBEDDED_URL':
@@ -1195,6 +1228,14 @@ export default function ContentReducer(state, action) {
         [contentKey]: {
           ...prevContentState,
           targetObj: { ...prevContentState.targetObj, replyInputShown: true }
+        }
+      };
+    case 'UPDATE_COMMENT_FILE_UPLOAD_PROGRESS':
+      return {
+        ...state,
+        [contentKey]: {
+          ...prevContentState,
+          fileUploadProgress: action.progress
         }
       };
     case 'UPDATE_PROFILE_INFO':

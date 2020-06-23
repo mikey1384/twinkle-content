@@ -23,10 +23,10 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async checkIfContentExists({ url, videoCode, contentType }) {
+    async checkContentUrl({ url, videoCode, contentType }) {
       try {
         const {
-          data: { exists, content }
+          data: { exists, content, ytDetails }
         } = await request.get(
           `${URL}/content/checkUrl?url=${encodeURIComponent(
             url
@@ -34,7 +34,7 @@ export default function contentRequestHelpers({ auth, handleError }) {
             videoCode ? `&videoCode=${videoCode}` : ''
           }`
         );
-        return Promise.resolve({ exists, content });
+        return Promise.resolve({ exists, content, ytDetails });
       } catch (error) {
         return handleError(error);
       }
@@ -565,7 +565,10 @@ export default function contentRequestHelpers({ auth, handleError }) {
       rootCommentId,
       subjectId,
       targetCommentId,
-      attachment
+      attachment,
+      filePath,
+      fileName,
+      fileSize
     }) {
       try {
         const { data } = await request.post(
@@ -576,7 +579,10 @@ export default function contentRequestHelpers({ auth, handleError }) {
             rootCommentId,
             subjectId,
             targetCommentId,
-            attachment
+            attachment,
+            filePath,
+            fileName,
+            fileSize
           },
           auth()
         );
@@ -595,7 +601,8 @@ export default function contentRequestHelpers({ auth, handleError }) {
       filePath,
       fileSize,
       rewardLevel,
-      secretAnswer
+      secretAnswer,
+      ytDetails
     }) {
       try {
         const { data } = await request.post(
@@ -610,7 +617,8 @@ export default function contentRequestHelpers({ auth, handleError }) {
             filePath,
             fileSize,
             rewardLevel,
-            secretAnswer
+            secretAnswer,
+            ytDetails
           },
           auth()
         );

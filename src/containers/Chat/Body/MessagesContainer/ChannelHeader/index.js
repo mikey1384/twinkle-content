@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Loading from 'components/Loading';
@@ -6,21 +6,39 @@ import FullTextReveal from 'components/Texts/FullTextReveal';
 import UsernameText from 'components/Texts/UsernameText';
 import EditSubjectForm from './EditSubjectForm';
 import ErrorBoundary from 'components/ErrorBoundary';
+import DropdownButton from 'components/Buttons/DropdownButton';
 import Icon from 'components/Icon';
 import { isMobile, textIsOverflown } from 'helpers';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { socket } from 'constants/io';
-import { charLimit, defaultChatSubject } from 'constants/defaultValues';
+import {
+  charLimit,
+  defaultChatSubject,
+  GENERAL_CHAT_ID
+} from 'constants/defaultValues';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 import { useInterval, useMyState } from 'helpers/hooks';
 import { useAppContext, useChatContext } from 'contexts';
 
 ChannelHeader.propTypes = {
-  onInputFocus: PropTypes.func.isRequired
+  currentChannel: PropTypes.object.isRequired,
+  onInputFocus: PropTypes.func.isRequired,
+  onSetInviteUsersModalShown: PropTypes.func,
+  onSetLeaveConfirmModalShown: PropTypes.func,
+  onSetSettingsModalShown: PropTypes.func,
+  selectedChannelId: PropTypes.number
 };
 
-export default function ChannelHeader({ onInputFocus }) {
+export default function ChannelHeader({
+  currentChannel,
+  currentChannel: { theme },
+  onInputFocus,
+  onSetInviteUsersModalShown,
+  onSetLeaveConfirmModalShown,
+  onSetSettingsModalShown,
+  selectedChannelId
+}) {
   const {
     requestHelpers: {
       loadChatSubject,
@@ -29,19 +47,9 @@ export default function ChannelHeader({ onInputFocus }) {
       uploadChatSubject
     }
   } = useAppContext();
-  const { authLevel, profilePicId, userId, username } = useMyState();
+  const { authLevel, banned, profilePicId, userId, username } = useMyState();
   const {
-    state: {
-      subject: {
-        content = defaultChatSubject,
-        id: subjectId,
-        uploader = {},
-        reloader = {},
-        timeStamp,
-        reloadTimeStamp
-      },
-      subjectSearchResults
-    },
+    state: { subjectObj, subjectSearchResults },
     actions: {
       onClearSubjectSearchResults,
       onLoadChatSubject,
@@ -53,6 +61,18 @@ export default function ChannelHeader({ onInputFocus }) {
   } = useChatContext();
   const [onEdit, setOnEdit] = useState(false);
   const [onHover, setOnHover] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+
+  const {
+    content = defaultChatSubject,
+    id: subjectId,
+    loaded,
+    uploader = {},
+    reloader = {},
+    timeStamp,
+    reloadTimeStamp
+  } = subjectObj[selectedChannelId] || {};
+
   const [timeSincePost, setTimeSincePost] = useState(timeSince(timeStamp));
   const [timeSinceReload, setTimeSinceReload] = useState(
     timeSince(reloadTimeStamp)
@@ -60,15 +80,15 @@ export default function ChannelHeader({ onInputFocus }) {
   const HeaderLabelRef = useRef(null);
 
   useEffect(() => {
-    if (!subjectId) {
-      initialLoad();
+    if (!loaded) {
+      handleInitialLoad();
     }
-    async function initialLoad() {
-      const data = await loadChatSubject();
+    async function handleInitialLoad() {
+      const data = await loadChatSubject(selectedChannelId);
       onLoadChatSubject(data);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [selectedChannelId, loaded]);
 
   useEffect(() => {
     setTimeSincePost(timeSince(timeStamp));
@@ -80,17 +100,121 @@ export default function ChannelHeader({ onInputFocus }) {
     setTimeSinceReload(timeSince(reloadTimeStamp));
   }, 1000);
 
+  const subjectDetails = useMemo(() => {
+    const isReloaded = reloader && reloader.id;
+    let posterString = '';
+    if (uploader.id && timeSincePost) {
+      posterString = (
+        <span>
+          Started by <UsernameText user={uploader} />{' '}
+          <span className="desktop">{timeSincePost}</span>
+        </span>
+      );
+    }
+    if (isReloaded && timeSinceReload) {
+      posterString = (
+        <span>
+          Brought back by <UsernameText user={reloader} />{' '}
+          <span className="desktop">{timeSinceReload}</span>{' '}
+          <span className="desktop">
+            (started by {<UsernameText user={uploader} />})
+          </span>
+        </span>
+      );
+    }
+    return <small>{posterString}</small>;
+  }, [reloader, timeSincePost, timeSinceReload, uploader]);
+
+  const menuProps = useMemo(() => {
+    let result = [];
+    if (
+      (currentChannel.id === GENERAL_CHAT_ID && authLevel > 0) ||
+      currentChannel.canChangeSubject === 'all' ||
+      (currentChannel.canChangeSubject === 'owner' &&
+        currentChannel.creatorId === userId)
+    ) {
+      result.push({
+        label: (
+          <>
+            <Icon icon="exchange-alt" />
+            <span style={{ marginLeft: '1rem' }}>Change Subject</span>
+          </>
+        ),
+        onClick: () => setOnEdit(true)
+      });
+    }
+    if (currentChannel.id !== GENERAL_CHAT_ID) {
+      if (!currentChannel.isClosed || currentChannel.creatorId === userId) {
+        result.push({
+          label: (
+            <>
+              <Icon icon="users" />
+              <span style={{ marginLeft: '1rem' }}>Invite People</span>
+            </>
+          ),
+          onClick: () => onSetInviteUsersModalShown(true)
+        });
+      }
+      result.push({
+        label:
+          currentChannel.creatorId === userId ? (
+            <>
+              <Icon icon="sliders-h" />
+              <span style={{ marginLeft: '1rem' }}>Settings</span>
+            </>
+          ) : (
+            <>
+              <Icon icon="pencil-alt" />
+              <span style={{ marginLeft: '1rem' }}>Edit Group Name</span>
+            </>
+          ),
+        onClick: () => onSetSettingsModalShown(true)
+      });
+      result.push({
+        separator: true
+      });
+      result.push({
+        label: (
+          <>
+            <Icon icon="sign-out-alt" />
+            <span style={{ marginLeft: '1rem' }}>Leave</span>
+          </>
+        ),
+        onClick: () => onSetLeaveConfirmModalShown(true)
+      });
+    }
+    return result;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    currentChannel.twoPeople,
+    currentChannel.isClosed,
+    currentChannel.creatorId,
+    userId
+  ]);
+
+  const menuButtonShown = useMemo(() => {
+    return (
+      (currentChannel.id !== GENERAL_CHAT_ID || authLevel > 0) &&
+      menuProps.length > 0
+    );
+  }, [authLevel, currentChannel.id, menuProps.length]);
+
   return (
     <ErrorBoundary
       className={css`
         position: relative;
         width: 100%;
+        height: 100%;
         padding: 1rem;
         height: 7rem;
+        align-items: center;
         display: flex;
         align-items: center;
         > section {
           position: relative;
+          display: flex;
+          align-items: center;
+          flex-direction: column;
           width: CALC(100% - ${authLevel > 0 ? '22rem' : '12rem'});
           @media (max-width: ${mobileMaxWidth}) {
             width: CALC(100% - ${authLevel > 0 ? '13rem' : '3rem'});
@@ -98,7 +222,7 @@ export default function ChannelHeader({ onInputFocus }) {
         }
       `}
     >
-      {subjectId ? (
+      {loaded ? (
         <>
           {!onEdit && (
             <>
@@ -108,7 +232,7 @@ export default function ChannelHeader({ onInputFocus }) {
                     className={css`
                       width: 100%;
                       cursor: default;
-                      color: ${Color.green()};
+                      color: ${Color[theme || 'green']()};
                       white-space: nowrap;
                       text-overflow: ellipsis;
                       overflow: hidden;
@@ -135,22 +259,23 @@ export default function ChannelHeader({ onInputFocus }) {
                   </span>
                   <FullTextReveal text={content} show={onHover} />
                 </div>
-                {renderDetails()}
+                <div style={{ width: '100%' }}>{subjectDetails}</div>
               </section>
               <div
                 className={css`
                   position: absolute;
+                  height: 100%;
                   font-size: 1.3rem;
-                  top: 1.3rem;
                   right: 1rem;
                   display: flex;
+                  align-items: center;
                   @media (max-width: ${mobileMaxWidth}) {
                     font-size: 1.2rem;
                   }
                 `}
               >
                 <Button
-                  color="green"
+                  color={theme || 'green'}
                   filled
                   onClick={() => {
                     onSetIsRespondingToSubject(true);
@@ -162,15 +287,22 @@ export default function ChannelHeader({ onInputFocus }) {
                     Respond
                   </span>
                 </Button>
-                {authLevel > 0 && (
-                  <Button
-                    style={{ marginLeft: '1rem' }}
-                    color="logoBlue"
-                    filled
-                    onClick={() => setOnEdit(true)}
-                  >
-                    Change
-                  </Button>
+                {menuButtonShown && !banned && (
+                  <DropdownButton
+                    skeuomorphic
+                    color="darkerGray"
+                    opacity={0.7}
+                    style={{
+                      marginLeft: '1rem'
+                    }}
+                    listStyle={{
+                      width: '15rem'
+                    }}
+                    direction="left"
+                    icon="bars"
+                    text="Menu"
+                    menuProps={menuProps}
+                  />
                 )}
               </div>
             </>
@@ -178,6 +310,8 @@ export default function ChannelHeader({ onInputFocus }) {
           {onEdit && (
             <EditSubjectForm
               autoFocus
+              userIsOwner={currentChannel.creatorId === userId}
+              channelId={selectedChannelId}
               maxLength={charLimit.chat.subject}
               currentSubjectId={subjectId}
               title={content}
@@ -187,7 +321,7 @@ export default function ChannelHeader({ onInputFocus }) {
                 setOnEdit(false);
                 onClearSubjectSearchResults();
               }}
-              reloadChatSubject={handleReloadChatSubject}
+              onReloadChatSubject={handleReloadChatSubject}
               searchResults={subjectSearchResults}
             />
           )}
@@ -195,7 +329,7 @@ export default function ChannelHeader({ onInputFocus }) {
       ) : (
         <Loading
           style={{
-            color: Color.green()
+            color: Color[theme || 'green']()
           }}
           text="Loading Subject..."
         />
@@ -210,9 +344,17 @@ export default function ChannelHeader({ onInputFocus }) {
   }
 
   async function handleReloadChatSubject(subjectId) {
-    const { message, subject } = await reloadChatSubject(subjectId);
-    onReloadChatSubject({ channelId: 2, message, subject });
-    socket.emit('new_subject', { subject, message });
+    const { message, subject } = await reloadChatSubject({
+      channelId: selectedChannelId,
+      subjectId
+    });
+    onReloadChatSubject({ channelId: selectedChannelId, message, subject });
+    socket.emit('new_subject', {
+      subject,
+      message,
+      channelName: currentChannel.channelName,
+      channelId: selectedChannelId
+    });
     setOnEdit(false);
     onClearSubjectSearchResults();
     if (!isMobile(navigator)) {
@@ -221,77 +363,59 @@ export default function ChannelHeader({ onInputFocus }) {
   }
 
   async function handleSearchChatSubject(text) {
-    const data = await searchChatSubject(text);
+    const data = await searchChatSubject({
+      text,
+      channelId: selectedChannelId
+    });
     onSearchChatSubject(data);
   }
 
   async function onSubjectSubmit(text) {
-    const content = `${text[0].toUpperCase()}${text.slice(1)}`;
-    const data = await uploadChatSubject({ content: text, channelId: 2 });
-    onUploadChatSubject({ ...data, channelId: 2 });
-    const timeStamp = Math.floor(Date.now() / 1000);
-    const subject = {
-      id: data.subjectId,
-      userId,
-      username,
-      reloadedBy: null,
-      reloaderName: null,
-      uploader: { id: userId, username },
-      content,
-      timeStamp
-    };
-    const message = {
-      profilePicId,
-      userId,
-      username,
-      content,
-      isSubject: true,
-      channelId: 2,
-      timeStamp,
-      isNewMessage: true
-    };
-    socket.emit('new_subject', { subject, message });
-    setOnEdit(false);
-    if (!isMobile(navigator)) {
-      onInputFocus();
+    if (!submitting) {
+      setSubmitting(true);
+      try {
+        const content = `${text[0].toUpperCase()}${text.slice(1)}`;
+        const data = await uploadChatSubject({
+          content: text,
+          channelId: selectedChannelId
+        });
+        onUploadChatSubject({ ...data, channelId: selectedChannelId });
+        const timeStamp = Math.floor(Date.now() / 1000);
+        const subject = {
+          id: data.subjectId,
+          userId,
+          username,
+          reloadedBy: null,
+          reloaderName: null,
+          uploader: { id: userId, username },
+          content,
+          timeStamp
+        };
+        const message = {
+          profilePicId,
+          userId,
+          username,
+          content,
+          isSubject: true,
+          channelId: selectedChannelId,
+          timeStamp,
+          isNewMessage: true
+        };
+        socket.emit('new_subject', {
+          subject,
+          message,
+          channelName: currentChannel.channelName,
+          channelId: selectedChannelId
+        });
+        setOnEdit(false);
+        setSubmitting(false);
+        if (!isMobile(navigator)) {
+          onInputFocus();
+        }
+      } catch (error) {
+        console.error(error);
+        setSubmitting(false);
+      }
     }
-  }
-
-  function renderDetails() {
-    const isReloaded = reloader && reloader.id;
-    let posterString =
-      'You can change this subject by clicking the "Change" button';
-    if (uploader.id) {
-      posterString = (
-        <span>
-          Started by <UsernameText user={uploader} />{' '}
-          <span className="desktop">{timeSincePost}</span>
-        </span>
-      );
-    }
-    if (isReloaded) {
-      posterString = (
-        <span>
-          Brought back by <UsernameText user={reloader} />{' '}
-          <span className="desktop">{timeSinceReload}</span>{' '}
-          <span className="desktop">
-            (started by {<UsernameText user={uploader} />})
-          </span>
-        </span>
-      );
-    }
-    return (
-      <>
-        {uploader ? (
-          <small>{posterString}</small>
-        ) : (
-          <small>
-            {
-              'You can change the subject by clicking the "Change" button to the right'
-            }
-          </small>
-        )}
-      </>
-    );
   }
 }

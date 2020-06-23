@@ -67,6 +67,7 @@ function XPVideoPlayer({
   } = useViewContext();
   const {
     actions: {
+      onChangeUserCoins,
       onChangeUserXP,
       onSetVideoImageUrl,
       onSetVideoStarted,
@@ -482,7 +483,7 @@ function XPVideoPlayer({
         rewardingXP.current = true;
         try {
           await updateVideoXPEarned(videoId);
-          const { alreadyDone, xp, rank } = await updateUserXP({
+          const { alreadyDone, xp, rank, coins } = await updateUserXP({
             action: 'watch',
             target: 'video',
             amount: rewardAmountRef.current,
@@ -490,6 +491,7 @@ function XPVideoPlayer({
             type: 'increase'
           });
           if (alreadyDone) return;
+          onChangeUserCoins({ coins, userId });
           onChangeUserXP({ xp, rank, userId });
           onSetVideoXpJustEarned({ videoId, justEarned: true });
           onSetVideoXpEarned({ videoId, earned: true });

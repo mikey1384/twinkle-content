@@ -26,7 +26,10 @@ import { useInView } from 'react-intersection-observer';
 import { socket } from 'constants/io';
 import { unix } from 'moment';
 import { MessageStyle } from '../Styles';
-import { fetchURLFromText } from 'helpers/stringHelpers';
+import {
+  fetchURLFromText,
+  getFileInfoFromFileName
+} from 'helpers/stringHelpers';
 import { useMyState, useContentState, useLazyLoad } from 'helpers/hooks';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
@@ -47,7 +50,6 @@ Message.propTypes = {
   message: PropTypes.object,
   style: PropTypes.object,
   onDelete: PropTypes.func,
-  showSubjectMsgsModal: PropTypes.func,
   index: PropTypes.number,
   innerRef: PropTypes.func,
   isLastMsg: PropTypes.bool,
@@ -61,6 +63,7 @@ Message.propTypes = {
   onRewardClick: PropTypes.func,
   onRewardMessageSubmit: PropTypes.func.isRequired,
   onSetScrollToBottom: PropTypes.func,
+  onShowSubjectMsgsModal: PropTypes.func,
   recepientId: PropTypes.number
 };
 
@@ -70,6 +73,7 @@ function Message({
   chessCountdownNumber,
   chessOpponent,
   currentChannel,
+  currentChannel: { theme },
   index,
   isLastMsg,
   isNotification,
@@ -112,8 +116,8 @@ function Message({
   onReplyClick,
   onRewardMessageSubmit,
   onSetScrollToBottom,
-  recepientId,
-  showSubjectMsgsModal
+  onShowSubjectMsgsModal,
+  recepientId
 }) {
   const [ComponentRef, inView] = useInView({
     threshold: 0
@@ -220,7 +224,8 @@ function Message({
     async function handleSaveMessage() {
       const messageId = await saveMessage({
         message: post,
-        targetMessageId: targetMessage?.id
+        targetMessageId: targetMessage?.id,
+        targetSubject
       });
       onSaveMessage({ messageId, index });
       socket.emit('new_chat_message', {
@@ -490,7 +495,12 @@ function Message({
                       fileName={fileName}
                       fileSize={fileSize}
                       thumbUrl={thumbUrl || recentThumbUrl}
-                      style={{ marginTop: '1rem' }}
+                      style={{
+                        marginTop: '1rem',
+                        marginBottom:
+                          getFileInfoFromFileName(fileName)?.fileType ===
+                            'audio' && '2rem'
+                      }}
                     />
                   )}
                   {rewardAmount ? (
@@ -515,10 +525,11 @@ function Message({
                       onEditCancel={handleEditCancel}
                       onEditDone={handleEditDone}
                       onSetScrollToBottom={handleSetScrollToBottom}
-                      showSubjectMsgsModal={showSubjectMsgsModal}
+                      onShowSubjectMsgsModal={onShowSubjectMsgsModal}
                       socketConnected={socketConnected}
                       subjectId={subjectId}
                       targetMessage={targetMessage}
+                      theme={theme}
                       userCanEditThis={userCanEditThis}
                     />
                   )}

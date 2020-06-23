@@ -22,6 +22,7 @@ function ChatInfo({
   selectedChannelId,
   channelOnCall,
   currentChannel,
+  currentChannel: { theme },
   currentChannelOnlineMembers,
   channelName
 }) {
@@ -64,6 +65,7 @@ function ChatInfo({
       currentChannel.isClass &&
       (callOngoing || currentChannel.creatorId === myId)
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     authLevel,
     callOngoing,
@@ -108,6 +110,7 @@ function ChatInfo({
       ];
     }
     return [me, ...currentChannelOnlineMembersOtherThanMe];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     currentChannel,
     myId,
@@ -182,7 +185,7 @@ function ChatInfo({
           {displayedChannelMembers.length > 2 && (
             <div
               className={css`
-                color: ${Color.green()};
+                color: ${Color[theme || 'green']()};
                 font-size: 1.7rem;
                 font-weight: bold;
                 @media (max-width: ${mobileMaxWidth}) {

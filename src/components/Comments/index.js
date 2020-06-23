@@ -8,7 +8,7 @@ import Loading from 'components/Loading';
 import { scrollElementToCenter } from 'helpers';
 import { css } from 'emotion';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { useAppContext, useInputContext } from 'contexts';
+import { useAppContext, useContentContext } from 'contexts';
 
 Comments.propTypes = {
   autoExpand: PropTypes.bool,
@@ -84,7 +84,9 @@ function Comments({
   const {
     requestHelpers: { deleteContent, loadComments, uploadComment }
   } = useAppContext();
-  const { state } = useInputContext();
+  const {
+    actions: { onSetCommentUploadingFile }
+  } = useContentContext();
   const [deleting, setDeleting] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [commentSubmitted, setCommentSubmitted] = useState(false);
@@ -92,11 +94,6 @@ function Comments({
   const ContainerRef = useRef(null);
   const CommentInputAreaRef = useRef(null);
   const CommentRefs = {};
-  const targetCommentId =
-    parent.contentType === 'comment' ? parent.contentId : null;
-  const contentType = targetCommentId ? 'comment' : parent.contentType;
-  const contentId = targetCommentId || parent.contentId;
-  const attachment = state[contentType + contentId]?.attachment;
 
   useEffect(() => {
     if (comments.length < prevComments.length && deleting) {
@@ -227,10 +224,20 @@ function Comments({
     content,
     rootCommentId,
     subjectId,
-    targetCommentId
+    targetCommentId,
+    attachment,
+    contentType,
+    contentId
   }) {
     try {
       setCommentSubmitted(true);
+      if (attachment?.contentType === 'file') {
+        return onSetCommentUploadingFile({
+          contentType,
+          contentId,
+          uploading: true
+        });
+      }
       const data = await uploadComment({
         content,
         parent,
@@ -315,7 +322,10 @@ function Comments({
         }
         subjectId={subject?.id}
         style={style}
-        targetCommentId={targetCommentId}
+        targetCommentId={
+          parent.contentType === 'comment' ? parent.contentId : null
+        }
+        onCommentSubmit={onCommentSubmit}
       />
     );
   }

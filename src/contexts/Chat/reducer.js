@@ -1,4 +1,5 @@
 import { initialChatState } from '.';
+import { defaultChatSubject } from 'constants/defaultValues';
 
 export default function ChatReducer(state, action) {
   switch (action.type) {
@@ -17,7 +18,9 @@ export default function ChatReducer(state, action) {
           ...state.channelsObj,
           [action.channelId]: {
             ...state.channelsObj[action.channelId],
-            isClosed: action.isClosed
+            isClosed: action.isClosed,
+            canChangeSubject: action.canChangeSubject,
+            theme: action.theme
           }
         },
         customChannelNames: {
@@ -85,7 +88,8 @@ export default function ChatReducer(state, action) {
           [action.channelId]: {
             ...state.channelsObj[action.channelId],
             channelName: action.channelName,
-            isClosed: action.isClosed
+            isClosed: action.isClosed,
+            canChangeSubject: action.canChangeSubject
           }
         }
       };
@@ -93,7 +97,10 @@ export default function ChatReducer(state, action) {
     case 'CHANGE_SUBJECT': {
       return {
         ...state,
-        subject: action.subject
+        subjectObj: {
+          ...state.subjectObj,
+          [action.channelId]: action.subject
+        }
       };
     }
     case 'CHANNEL_LOADING_DONE': {
@@ -232,12 +239,15 @@ export default function ChatReducer(state, action) {
               ? action.data.editedMessage
               : message.content
         })),
-        subject: action.isSubject
+        subjectObj: action.isSubject
           ? {
-              ...state.subject,
-              content: action.data.editedMessage
+              ...state.subjectObj,
+              [state.selectedChannelId]: {
+                ...state.subjectObj[state.selectedChannelId],
+                content: action.data.editedMessage
+              }
             }
-          : state.subject
+          : state.subjectObj
       };
     case 'EDIT_WORD':
       return {
@@ -252,6 +262,33 @@ export default function ChatReducer(state, action) {
           }
         }
       };
+    case 'ENABLE_CHAT_SUBJECT': {
+      return {
+        ...state,
+        channelsObj: {
+          ...state.channelsObj,
+          [action.channelId]: {
+            ...state.channelsObj[action.channelId],
+            canChangeSubject: 'owner'
+          }
+        }
+      };
+    }
+    case 'ENABLE_THEME': {
+      return {
+        ...state,
+        channelsObj: {
+          ...state.channelsObj,
+          [action.channelId]: {
+            ...state.channelsObj[action.channelId],
+            unlockedThemes: [
+              ...state.channelsObj[action.channelId].unlockedThemes,
+              action.theme
+            ]
+          }
+        }
+      };
+    }
     case 'ENTER_CHANNEL': {
       let messagesLoadMoreButton = false;
       let originalNumUnreads = 0;
@@ -417,7 +454,6 @@ export default function ChatReducer(state, action) {
         recentChessMessage: undefined,
         reconnecting: false,
         selectedChannelId: action.data.currentChannelId,
-        subject: action.data.currentChannelId === 2 ? state.subject : {},
         wordsObj: action.data.wordsObj,
         wordCollectors: action.data.wordCollectors
       };
@@ -498,7 +534,13 @@ export default function ChatReducer(state, action) {
     case 'LOAD_SUBJECT':
       return {
         ...state,
-        subject: action.subject
+        subjectObj: {
+          ...state.subjectObj,
+          [action.data.channelId]: {
+            ...action.data,
+            loaded: true
+          }
+        }
       };
     case 'LOAD_VOCABULARY': {
       let vocabActivitiesLoadMoreButton = false;
@@ -549,30 +591,36 @@ export default function ChatReducer(state, action) {
       return {
         ...state,
         homeChannelIds: [
-          action.data.channelId,
+          action.channelId,
           ...state.homeChannelIds.filter(
-            (channelId) => channelId !== action.data.channelId
+            (channelId) => channelId !== action.channelId
           )
         ],
-        subject: action.data.subject,
+        subjectObj: {
+          ...state.subjectObj,
+          [action.channelId]: {
+            ...state.subjectObj[action.channelId],
+            ...action.subject
+          }
+        },
         channelsObj: {
           ...state.channelsObj,
-          [action.data.channelId]: {
-            ...state.channelsObj[action.data.channelId],
+          [action.channelId]: {
+            ...state.channelsObj[action.channelId],
             lastMessage: {
-              content: action.data.subject.content,
+              content: action.subject.content,
               sender: {
-                id: action.data.subject.userId,
-                username: action.data.subject.username
+                id: action.subject.userId,
+                username: action.subject.username
               }
             }
           }
         },
         messages: state.messages.concat([
           {
-            id: action.data.subject.id,
-            channelId: action.data.channelId,
-            ...action.data.subject
+            id: action.subject.id,
+            channelId: action.channelId,
+            ...action.subject
           }
         ])
       };
@@ -748,7 +796,6 @@ export default function ChatReducer(state, action) {
     case 'RECEIVE_FIRST_MSG':
       return {
         ...state,
-        subject: action.duplicate ? {} : state.subject,
         numUnreads:
           action.duplicate && action.pageVisible
             ? state.numUnreads
@@ -847,7 +894,10 @@ export default function ChatReducer(state, action) {
     case 'RELOAD_SUBJECT':
       return {
         ...state,
-        subject: action.subject,
+        subjectObj: {
+          ...state.subjectObj,
+          [action.channelId]: action.subject
+        },
         messages: state.messages.concat([action.message]),
         homeChannelIds: [
           action.channelId,
@@ -1055,7 +1105,15 @@ export default function ChatReducer(state, action) {
         }
       };
     }
-    case 'SUBMIT_MESSAGE':
+    case 'SUBMIT_MESSAGE': {
+      const targetSubject = action.isRespondingToSubject
+        ? {
+            ...state.subjectObj[action.message.channelId],
+            content:
+              state.subjectObj[action.message.channelId].content ||
+              defaultChatSubject
+          }
+        : null;
       return {
         ...state,
         isRespondingToSubject: false,
@@ -1088,10 +1146,11 @@ export default function ChatReducer(state, action) {
             ...action.message,
             content: action.message.content,
             targetMessage: action.replyTarget,
-            targetSubject: action.isRespondingToSubject ? state.subject : null
+            targetSubject
           }
         ])
       };
+    }
     case 'UPDATE_LAST_MESSAGE': {
       const newChannelsObj = { ...state.channelsObj };
       let newHomeChannelIds = [...state.homeChannelIds];

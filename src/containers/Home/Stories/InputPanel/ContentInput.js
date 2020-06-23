@@ -7,6 +7,7 @@ import RewardLevelForm from 'components/Forms/RewardLevelForm';
 import Link from 'components/Link';
 import Checkbox from 'components/Checkbox';
 import ErrorBoundary from 'components/ErrorBoundary';
+import Loading from 'components/Loading';
 import { PanelStyle } from './Styles';
 import { css } from 'emotion';
 import { scrollElementToCenter } from 'helpers';
@@ -23,7 +24,7 @@ import { useAppContext, useHomeContext, useInputContext } from 'contexts';
 
 function ContentInput() {
   const {
-    requestHelpers: { checkIfContentExists, uploadContent }
+    requestHelpers: { checkContentUrl, uploadContent }
   } = useAppContext();
   const { canEditRewardLevel } = useMyState();
   const {
@@ -42,7 +43,8 @@ function ContentInput() {
       onSetContentTitleFieldShown,
       onSetContentUrl,
       onSetContentUrlError,
-      onSetContentUrlHelper
+      onSetContentUrlHelper,
+      onSetYouTubeVideoDetails
     }
   } = useInputContext();
   const {
@@ -51,7 +53,8 @@ function ContentInput() {
     form,
     titleFieldShown,
     urlHelper,
-    urlError
+    urlError,
+    ytDetails
   } = content;
   const titleRef = useRef(form.title);
   const [title, setTitle] = useState(form.title);
@@ -63,6 +66,10 @@ function ContentInput() {
   const UrlFieldRef = useRef(null);
   const checkContentExistsTimerRef = useRef(null);
   const showHelperMessageTimerRef = useRef(null);
+
+  const loadingYTDetails = useMemo(() => {
+    return form.isVideo && !ytDetails;
+  }, [form.isVideo, ytDetails]);
 
   const descriptionExceedsCharLimit = useMemo(
     () =>
@@ -170,102 +177,106 @@ function ContentInput() {
           }}
         />
       )}
-      <div style={{ marginTop: '1.5rem' }}>
-        <div className="unselectable" style={{ position: 'relative' }}>
-          {titleFieldShown && (
-            <>
-              <span
-                style={{
-                  fontWeight: 'bold',
-                  fontSize: '2rem'
-                }}
-              >
-                Title:
-              </span>
-              <Input
-                value={title}
-                onChange={handleSetTitle}
-                placeholder="Enter Title Here"
-                onKeyUp={(event) => {
-                  if (event.key === ' ') {
-                    handleSetTitle(addEmoji(event.target.value));
-                  }
-                }}
-                style={{
-                  ...(titleExceedsCharLimit?.style || {})
-                }}
-              />
-              {titleExceedsCharLimit && (
-                <small style={{ color: 'red' }}>
-                  {titleExceedsCharLimit.message}
-                </small>
-              )}
-            </>
-          )}
-          {descriptionFieldShown && (
-            <>
-              <Textarea
-                value={description}
-                minRows={4}
-                placeholder="Enter Description (Optional, you don't need to write this)"
-                onChange={(event) => handleSetDescription(event.target.value)}
-                onKeyUp={(event) => {
-                  if (event.key === ' ') {
-                    handleSetDescription(addEmoji(event.target.value));
-                  }
-                }}
+      {loadingYTDetails ? (
+        <Loading />
+      ) : (
+        <div style={{ marginTop: '1.5rem' }}>
+          <div className="unselectable" style={{ position: 'relative' }}>
+            {titleFieldShown && (
+              <>
+                <span
+                  style={{
+                    fontWeight: 'bold',
+                    fontSize: '2rem'
+                  }}
+                >
+                  Title:
+                </span>
+                <Input
+                  value={title}
+                  onChange={handleSetTitle}
+                  placeholder="Enter Title Here"
+                  onKeyUp={(event) => {
+                    if (event.key === ' ') {
+                      handleSetTitle(addEmoji(event.target.value));
+                    }
+                  }}
+                  style={{
+                    ...(titleExceedsCharLimit?.style || {})
+                  }}
+                />
+                {titleExceedsCharLimit && (
+                  <small style={{ color: 'red' }}>
+                    {titleExceedsCharLimit.message}
+                  </small>
+                )}
+              </>
+            )}
+            {descriptionFieldShown && (
+              <>
+                <Textarea
+                  value={description}
+                  minRows={4}
+                  placeholder="Enter Description (Optional, you don't need to write this)"
+                  onChange={(event) => handleSetDescription(event.target.value)}
+                  onKeyUp={(event) => {
+                    if (event.key === ' ') {
+                      handleSetDescription(addEmoji(event.target.value));
+                    }
+                  }}
+                  style={{
+                    marginTop: '1rem',
+                    ...(descriptionExceedsCharLimit?.style || {})
+                  }}
+                />
+                {descriptionExceedsCharLimit && (
+                  <small style={{ color: 'red' }}>
+                    {descriptionExceedsCharLimit?.message}
+                  </small>
+                )}
+              </>
+            )}
+          </div>
+          {!buttonDisabled && !urlHelper && form.isVideo && canEditRewardLevel && (
+            <div style={{ marginTop: '1rem' }}>
+              <div style={{ fontSize: '1.5rem' }}>
+                For every star you add, the amount of XP gained by the viewers
+                of this video rises by 200 XP. Please consider both difficulty
+                and educational importance of your video when setting the reward
+                level.
+              </div>
+              <RewardLevelForm
+                themed
                 style={{
                   marginTop: '1rem',
-                  ...(descriptionExceedsCharLimit?.style || {})
+                  textAlign: 'center',
+                  display: 'flex',
+                  alignItems: 'center',
+                  flexDirection: 'column',
+                  padding: '1rem',
+                  fontSize: '3rem'
                 }}
+                rewardLevel={form.rewardLevel}
+                onSetRewardLevel={onSetContentRewardLevel}
               />
-              {descriptionExceedsCharLimit && (
-                <small style={{ color: 'red' }}>
-                  {descriptionExceedsCharLimit?.message}
-                </small>
-              )}
-            </>
+            </div>
+          )}
+          {descriptionFieldShown && (
+            <div className="button-container">
+              <Button
+                type="submit"
+                filled
+                color="green"
+                style={{ marginTop: '1rem' }}
+                disabled={submitting || buttonDisabled}
+                onClick={onSubmit}
+              >
+                Share!
+              </Button>
+            </div>
           )}
         </div>
-        {!buttonDisabled && !urlHelper && form.isVideo && canEditRewardLevel && (
-          <div style={{ marginTop: '1rem' }}>
-            <div style={{ fontSize: '1.5rem' }}>
-              For every star you add, the amount of XP gained by the viewers of
-              this video rises by 200 XP. Please consider both difficulty and
-              educational importance of your video when setting the reward
-              level.
-            </div>
-            <RewardLevelForm
-              themed
-              style={{
-                marginTop: '1rem',
-                textAlign: 'center',
-                display: 'flex',
-                alignItems: 'center',
-                flexDirection: 'column',
-                padding: '1rem',
-                fontSize: '3rem'
-              }}
-              rewardLevel={form.rewardLevel}
-              onSetRewardLevel={onSetContentRewardLevel}
-            />
-          </div>
-        )}
-        {descriptionFieldShown && (
-          <div className="button-container">
-            <Button
-              type="submit"
-              filled
-              color="green"
-              style={{ marginTop: '1rem' }}
-              disabled={submitting || buttonDisabled}
-              onClick={onSubmit}
-            >
-              Share!
-            </Button>
-          </div>
-        )}
-      </div>
+      )}
     </ErrorBoundary>
   );
 
@@ -287,7 +298,8 @@ function ContentInput() {
         ...form,
         url,
         title: finalizeEmoji(title),
-        description: finalizeEmoji(description)
+        description: finalizeEmoji(description),
+        ytDetails: form.isVideo ? ytDetails : null
       });
       if (data) {
         onResetContentInput();
@@ -300,10 +312,12 @@ function ContentInput() {
       setSubmitting(false);
     } catch (error) {
       console.error(error);
+      setSubmitting(false);
     }
   }
 
   function onUrlFieldChange(text) {
+    onSetYouTubeVideoDetails(null);
     clearTimeout(checkContentExistsTimerRef.current);
     clearTimeout(showHelperMessageTimerRef.current);
     const urlIsValid = isValidUrl(text);
@@ -316,7 +330,7 @@ function ContentInput() {
     onSetContentUrlHelper('');
     if (urlIsValid) {
       checkContentExistsTimerRef.current = setTimeout(
-        () => handleCheckIfContentExists(text),
+        () => handleCheckUrl(text),
         300
       );
     }
@@ -339,12 +353,18 @@ function ContentInput() {
     }, 300);
   }
 
-  async function handleCheckIfContentExists(url) {
+  async function handleCheckUrl(url) {
     const isVideo = isValidYoutubeUrl(url);
-    const { exists, content } = await checkIfContentExists({
+    const { exists, content, ytDetails: details } = await checkContentUrl({
       url,
       contentType: isVideo ? 'video' : 'url'
     });
+    if (details) {
+      if (!stringIsEmpty(details.ytTitle)) {
+        handleSetTitle(details.ytTitle);
+      }
+      onSetYouTubeVideoDetails(details);
+    }
     return onSetContentAlreadyPosted(exists ? content : false);
   }
 

@@ -9,7 +9,6 @@ import Message from '../../Message';
 import ChannelHeader from './ChannelHeader';
 import SubjectMsgsModal from '../../Modals/SubjectMsgsModal';
 import UploadModal from '../../Modals/UploadModal';
-import Icon from 'components/Icon';
 import InviteUsersModal from '../../Modals/InviteUsers';
 import AlertModal from 'components/Modals/AlertModal';
 import ChessModal from '../../Modals/ChessModal';
@@ -18,9 +17,9 @@ import SelectNewOwnerModal from '../../Modals/SelectNewOwnerModal';
 import SettingsModal from '../../Modals/SettingsModal';
 import CallScreen from './CallScreen';
 import ErrorBoundary from 'components/ErrorBoundary';
+import Icon from 'components/Icon';
 import { v1 as uuidv1 } from 'uuid';
-import { GENERAL_CHAT_ID } from 'constants/database';
-import { rewardReasons } from 'constants/defaultValues';
+import { GENERAL_CHAT_ID, rewardReasons } from 'constants/defaultValues';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 import { css } from 'emotion';
 import { Color } from 'constants/css';
@@ -74,7 +73,7 @@ export default function MessagesContainer({
       reconnecting,
       replyTarget,
       selectedChannelId,
-      subject
+      subjectObj
     },
     actions: {
       onDeleteMessage,
@@ -118,7 +117,9 @@ export default function MessagesContainer({
   const [settingsModalShown, setSettingsModalShown] = useState(false);
   const [leaveConfirmModalShown, setLeaveConfirmModalShown] = useState(false);
   const [scrollAtBottom, setScrollAtBottom] = useState(true);
-  const [selectNewOwnerModal, setSelectNewOwnerModal] = useState(null);
+  const [selectNewOwnerModalShown, setSelectNewOwnerModalShown] = useState(
+    false
+  );
   const [placeholderHeight, setPlaceholderHeight] = useState(0);
 
   const ContentRef = useRef(null);
@@ -162,6 +163,23 @@ export default function MessagesContainer({
     textAreaHeight
   ]);
 
+  const loading = useMemo(
+    () => channelLoading || creatingNewDMChannel || reconnecting,
+    [channelLoading, creatingNewDMChannel, reconnecting]
+  );
+
+  const maxSize = useMemo(
+    () =>
+      authLevel > 3
+        ? 5000 * mb
+        : authLevel > 1
+        ? 3000 * mb
+        : authLevel === 1
+        ? 1000 * mb
+        : 300 * mb,
+    [authLevel]
+  );
+
   const menuProps = useMemo(() => {
     if (currentChannel.twoPeople) {
       return [
@@ -171,7 +189,7 @@ export default function MessagesContainer({
         }
       ];
     }
-    let result = [];
+    const result = [];
     if (!currentChannel.isClosed || currentChannel.creatorId === userId) {
       result.push({
         label: (
@@ -183,7 +201,7 @@ export default function MessagesContainer({
         onClick: () => setInviteUsersModalShown(true)
       });
     }
-    result = result.concat([
+    result.push(
       {
         label:
           currentChannel.creatorId === userId ? (
@@ -211,7 +229,7 @@ export default function MessagesContainer({
         ),
         onClick: () => setLeaveConfirmModalShown(true)
       }
-    ]);
+    );
     return result;
     async function handleHideChat() {
       await hideChat(selectedChannelId);
@@ -230,22 +248,11 @@ export default function MessagesContainer({
     selectedChannelId
   ]);
 
-  const loading = useMemo(
-    () => channelLoading || creatingNewDMChannel || reconnecting,
-    [channelLoading, creatingNewDMChannel, reconnecting]
-  );
-
-  const maxSize = useMemo(
-    () =>
-      authLevel > 3
-        ? 5000 * mb
-        : authLevel > 1
-        ? 3000 * mb
-        : authLevel === 1
-        ? 1000 * mb
-        : 300 * mb,
-    [authLevel]
-  );
+  const channelHeaderShown = useMemo(() => {
+    return (
+      currentChannel.id === GENERAL_CHAT_ID || !!currentChannel.canChangeSubject
+    );
+  }, [currentChannel.canChangeSubject, currentChannel.id]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -332,7 +339,7 @@ export default function MessagesContainer({
 
   return (
     <ErrorBoundary>
-      {selectedChannelId !== GENERAL_CHAT_ID && !banned && (
+      {!channelHeaderShown && !banned && (
         <DropdownButton
           skeuomorphic
           color="darkerGray"
@@ -385,7 +392,7 @@ export default function MessagesContainer({
             right: '0',
             bottom: '0',
             opacity: loading ? 0 : 1,
-            top: selectedChannelId === GENERAL_CHAT_ID ? '7rem' : 0,
+            top: channelHeaderShown ? '7rem' : 0,
             overflowY: 'scroll'
           }}
           onScroll={() => {
@@ -458,7 +465,7 @@ export default function MessagesContainer({
                   onRewardMessageSubmit={handleRewardMessageSubmit}
                   onSetScrollToBottom={handleSetScrollToBottom}
                   recepientId={recepientId}
-                  showSubjectMsgsModal={({ subjectId, content }) =>
+                  onShowSubjectMsgsModal={({ subjectId, content }) =>
                     setSubjectMsgsModal({ shown: true, subjectId, content })
                   }
                 />
@@ -466,8 +473,15 @@ export default function MessagesContainer({
             </div>
           </div>
         </div>
-        {!loading && selectedChannelId === GENERAL_CHAT_ID && (
-          <ChannelHeader onInputFocus={() => ChatInputRef.current.focus()} />
+        {!loading && channelHeaderShown && (
+          <ChannelHeader
+            currentChannel={currentChannel}
+            onInputFocus={() => ChatInputRef.current.focus()}
+            onSetInviteUsersModalShown={setInviteUsersModalShown}
+            onSetLeaveConfirmModalShown={setLeaveConfirmModalShown}
+            onSetSettingsModalShown={setSettingsModalShown}
+            selectedChannelId={selectedChannelId}
+          />
         )}
         <div
           style={{
@@ -598,14 +612,22 @@ export default function MessagesContainer({
       )}
       {settingsModalShown && (
         <SettingsModal
+          canChangeSubject={currentChannel.canChangeSubject}
+          channelName={channelName}
           isClass={currentChannel.isClass}
           isClosed={currentChannel.isClosed}
-          userIsChannelOwner={currentChannel.creatorId === userId}
-          channelName={channelName}
+          members={currentChannel.members}
           onHide={() => setSettingsModalShown(false)}
           onDone={handleEditSettings}
           channelId={selectedChannelId}
-          onChangeOwner={() => setSelectNewOwnerModal({ andLeave: false })}
+          onPurchaseSubject={() =>
+            socket.emit('purchased_chat_subject', selectedChannelId)
+          }
+          onSelectNewOwner={handleSelectNewOwner}
+          onSetScrollToBottom={handleSetScrollToBottom}
+          theme={currentChannel.theme}
+          unlockedThemes={currentChannel.unlockedThemes}
+          userIsChannelOwner={currentChannel.creatorId === userId}
         />
       )}
       {leaveConfirmModalShown && (
@@ -628,12 +650,13 @@ export default function MessagesContainer({
           }}
         />
       )}
-      {!!selectNewOwnerModal && (
+      {!!selectNewOwnerModalShown && (
         <SelectNewOwnerModal
-          onHide={() => setSelectNewOwnerModal(null)}
+          onHide={() => setSelectNewOwnerModalShown(false)}
           members={currentChannel.members}
           onSubmit={handleSelectNewOwner}
           isClass={currentChannel.isClass}
+          andLeave
         />
       )}
     </ErrorBoundary>
@@ -715,22 +738,33 @@ export default function MessagesContainer({
     });
   }
 
-  async function handleEditSettings({ editedChannelName, editedIsClosed }) {
+  async function handleEditSettings({
+    editedChannelName,
+    editedIsClosed,
+    editedCanChangeSubject,
+    editedTheme
+  }) {
     await editChannelSettings({
       channelName: editedChannelName,
       isClosed: editedIsClosed,
-      channelId: selectedChannelId
+      channelId: selectedChannelId,
+      canChangeSubject: editedCanChangeSubject,
+      theme: editedTheme
     });
     onEditChannelSettings({
       channelName: editedChannelName,
       isClosed: editedIsClosed,
-      channelId: selectedChannelId
+      channelId: selectedChannelId,
+      canChangeSubject: editedCanChangeSubject,
+      theme: editedTheme
     });
     if (userId === currentChannel.creatorId) {
       socket.emit('new_channel_settings', {
         channelName: editedChannelName,
         isClosed: editedIsClosed,
-        channelId: selectedChannelId
+        channelId: selectedChannelId,
+        canChangeSubject: editedCanChangeSubject,
+        theme: editedTheme
       });
     }
     setSettingsModalShown(false);
@@ -800,7 +834,7 @@ export default function MessagesContainer({
       if (currentChannel.members.length === 1) {
         handleLeaveChannel();
       } else {
-        setSelectNewOwnerModal({ andLeave: true });
+        setSelectNewOwnerModalShown(true);
       }
     } else {
       handleLeaveChannel();
@@ -904,7 +938,9 @@ export default function MessagesContainer({
       profilePicId,
       content,
       channelId: selectedChannelId,
-      subjectId: isRespondingToSubject ? subject?.id : null
+      subjectId: isRespondingToSubject
+        ? subjectObj[selectedChannelId]?.id
+        : null
     };
     onSubmitMessage({
       message,
@@ -942,7 +978,7 @@ export default function MessagesContainer({
     }
   }
 
-  async function handleSelectNewOwner(newOwner) {
+  async function handleSelectNewOwner({ newOwner, andLeave }) {
     const notificationMsg = await changeChannelOwner({
       channelId: selectedChannelId,
       newOwner
@@ -955,10 +991,10 @@ export default function MessagesContainer({
       newOwner,
       notificationMsg
     });
-    if (selectNewOwnerModal.andLeave) {
+    if (andLeave) {
       handleLeaveChannel();
     }
-    setSelectNewOwnerModal(null);
+    setSelectNewOwnerModalShown(false);
   }
 
   function handleSetScrollToBottom() {

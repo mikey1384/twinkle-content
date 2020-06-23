@@ -4,7 +4,12 @@ import Modal from 'components/Modal';
 import Button from 'components/Button';
 
 ConfirmModal.propTypes = {
+  description: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   disabled: PropTypes.bool,
+  descriptionFontSize: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
   modalOverModal: PropTypes.bool,
   onHide: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
@@ -13,6 +18,8 @@ ConfirmModal.propTypes = {
 
 export default function ConfirmModal({
   disabled = false,
+  description = 'Are you sure?',
+  descriptionFontSize = '3rem',
   modalOverModal,
   onHide,
   title,
@@ -21,7 +28,9 @@ export default function ConfirmModal({
   return (
     <Modal modalOverModal={modalOverModal} onHide={onHide}>
       <header>{title}</header>
-      <main style={{ fontSize: '3rem', paddingTop: 0 }}>Are you sure?</main>
+      <main style={{ fontSize: descriptionFontSize, paddingTop: 0 }}>
+        {description}
+      </main>
       <footer>
         <Button transparent style={{ marginRight: '0.7rem' }} onClick={onHide}>
           Cancel

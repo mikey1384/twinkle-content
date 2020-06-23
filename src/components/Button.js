@@ -135,7 +135,7 @@ function Button({
       style={{ ...style, ...(stretch ? { width: '100%' } : {}) }}
       className={ButtonStyle}
       ref={ButtonRef}
-      onClick={event => {
+      onClick={(event) => {
         if (ButtonRef.current !== null) ButtonRef.current.blur();
         if (onClick) onClick(event);
       }}

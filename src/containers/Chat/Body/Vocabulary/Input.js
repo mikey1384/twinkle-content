@@ -32,7 +32,7 @@ export default function Input({
     actions: { onSetVocabErrorMessage }
   } = useChatContext();
 
-  const text = state['vocabulary'] || '';
+  const text = state['vocabulary']?.text || '';
 
   useEffect(() => {
     if (!isMobile(navigator)) {

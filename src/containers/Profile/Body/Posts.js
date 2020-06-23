@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import FilterBar from 'components/FilterBar';
@@ -187,22 +187,20 @@ export default function Posts({
           </div>
         )}
         {section !== 'likes' && (
-          <Suspense fallback={<Loading />}>
-            <SideMenu
-              className={`desktop ${css`
-                width: 10%;
-              `}`}
-              menuItems={[
-                { key: 'all', label: 'All' },
-                { key: 'comment', label: 'Comments' },
-                { key: 'subject', label: 'Subjects' },
-                { key: 'video', label: 'Videos' },
-                { key: 'url', label: 'Links' }
-              ]}
-              onMenuClick={onClickPostsMenu}
-              selectedKey={filterTable[section]}
-            />
-          </Suspense>
+          <SideMenu
+            className={`desktop ${css`
+              width: 10%;
+            `}`}
+            menuItems={[
+              { key: 'all', label: 'All' },
+              { key: 'comment', label: 'Comments' },
+              { key: 'subject', label: 'Subjects' },
+              { key: 'video', label: 'Videos' },
+              { key: 'url', label: 'Links' }
+            ]}
+            onMenuClick={onClickPostsMenu}
+            selectedKey={filterTable[section]}
+          />
         )}
       </div>
     </div>

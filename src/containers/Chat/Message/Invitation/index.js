@@ -50,6 +50,7 @@ export default function Invitation({
   const alreadyJoined = useMemo(() => {
     const memberIds = invitationDetail?.members.map((member) => member.id);
     return memberIds?.includes(userId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [invitationDetail, userId]);
 
   const desktopHeight = useMemo(() => {

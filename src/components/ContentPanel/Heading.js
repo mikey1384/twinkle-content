@@ -125,6 +125,7 @@ function Heading({
       }
       return null;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     action,
     commentId,

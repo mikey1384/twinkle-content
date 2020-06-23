@@ -31,6 +31,13 @@ import { useContentState, useMyState } from 'helpers/hooks';
 import { determineXpButtonDisabled, scrollElementToCenter } from 'helpers';
 import { useAppContext, useContentContext } from 'contexts';
 import LocalContext from './Context';
+import { css } from 'emotion';
+import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
+import Embedly from 'components/Embedly';
+import TwinkleVideo from 'components/Embedly/TwinkleVideo';
+import LoginToViewContent from 'components/LoginToViewContent';
+import FileViewer from 'components/FileViewer';
+import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 
 Comment.propTypes = {
   comment: PropTypes.shape({
@@ -49,7 +56,12 @@ Comment.propTypes = {
     targetUserId: PropTypes.number,
     timeStamp: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
       .isRequired,
-    uploader: PropTypes.object.isRequired
+    uploader: PropTypes.object.isRequired,
+    attachmentRootId: PropTypes.number,
+    attachmentRootType: PropTypes.string,
+    filePath: PropTypes.string,
+    fileName: PropTypes.string,
+    fileSize: PropTypes.number
   }).isRequired,
   innerRef: PropTypes.func,
   isPreview: PropTypes.bool,
@@ -73,7 +85,12 @@ function Comment({
     likes = [],
     stars = [],
     uploader,
-    numReplies
+    numReplies,
+    attachmentRootType,
+    attachmentRootId,
+    filePath,
+    fileName,
+    fileSize
   }
 }) {
   subject = subject || comment.targetObj?.subject || {};
@@ -82,15 +99,21 @@ function Comment({
     requestHelpers: { checkIfUserResponded, editContent, loadReplies }
   } = useAppContext();
   const { authLevel, canDelete, canEdit, canStar, userId } = useMyState();
+  const fileType = getFileInfoFromFileName(fileName) || '';
   const {
     actions: {
       onChangeSpoilerStatus,
       onLoadReplies,
       onSetIsEditing,
-      onSetXpRewardInterfaceShown
+      onSetXpRewardInterfaceShown,
+      onSetVideoStarted
     }
   } = useContentContext();
-  const { deleted, isEditing, xpRewardInterfaceShown } = useContentState({
+  const {
+    deleted,
+    isEditing,
+    xpRewardInterfaceShown: prevRewardInterfaceShown
+  } = useContentState({
     contentType: 'comment',
     contentId: comment.id
   });
@@ -107,6 +130,11 @@ function Comment({
     onReplySubmit,
     onRewardCommentEdit
   } = useContext(LocalContext);
+
+  const [rewardInterfaceShown, setRewardInterfaceShown] = useState(
+    prevRewardInterfaceShown
+  );
+  const rewardInterfaceShownRef = useRef(prevRewardInterfaceShown);
   const [userListModalShown, setUserListModalShown] = useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   const [loadingReplies, setLoadingReplies] = useState(false);
@@ -227,12 +255,9 @@ function Comment({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canDelete, canEdit, comment.id, userIsUploader]);
   useEffect(() => {
-    onSetXpRewardInterfaceShown({
-      contentType: 'comment',
-      contentId: comment.id,
-      shown:
-        xpRewardInterfaceShown && userIsHigherAuth && canStar && !userIsUploader
-    });
+    handleRewardInterfaceShown(
+      rewardInterfaceShown && userIsHigherAuth && canStar && !userIsUploader
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
@@ -254,10 +279,10 @@ function Comment({
     return determineXpButtonDisabled({
       rewardLevel,
       myId: userId,
-      xpRewardInterfaceShown,
+      xpRewardInterfaceShown: rewardInterfaceShown,
       stars
     });
-  }, [isPreview, rewardLevel, stars, userId, xpRewardInterfaceShown]);
+  }, [isPreview, rewardInterfaceShown, rewardLevel, stars, userId]);
 
   useEffect(() => {
     mounted.current = true;
@@ -286,12 +311,20 @@ function Comment({
         }
       }
     }
-
-    return function cleanUp() {
-      mounted.current = false;
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
+
+  useEffect(() => {
+    return function saveStateBeforeUnmount() {
+      mounted.current = false;
+      onSetXpRewardInterfaceShown({
+        contentId: comment.id,
+        contentType: 'comment',
+        shown: rewardInterfaceShownRef.current
+      });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return !deleted && !comment.deleted ? (
     <>
@@ -371,6 +404,86 @@ function Comment({
                       {comment.content}
                     </LongText>
                   )}
+                  {attachmentRootType === 'url' && !isHidden && (
+                    <div
+                      className={css`
+                        padding: 1rem;
+                        background: ${Color.whiteGray()};
+                        border: 1px solid ${Color.borderGray()};
+                        border-radius: ${borderRadius};
+                        margin-top: -1rem;
+                        transition: background 0.5s;
+                        &:hover {
+                          background: #fff;
+                        }
+                        @media (max-width: ${mobileMaxWidth}) {
+                          margin-top: -0.5rem;
+                          border-left: 0;
+                          border-right: 0;
+                        }
+                      `}
+                    >
+                      <Embedly small contentId={attachmentRootId} />
+                    </div>
+                  )}
+                  {attachmentRootType === 'video' && !isHidden && (
+                    <div
+                      className={css`
+                        padding: 1rem;
+                        background: ${Color.whiteGray()};
+                        border: 1px solid ${Color.borderGray()};
+                        border-radius: ${borderRadius};
+                        margin-top: -1rem;
+                        transition: background 0.5s;
+                        &:hover {
+                          background: #fff;
+                        }
+                        @media (max-width: ${mobileMaxWidth}) {
+                          margin-top: -0.5rem;
+                          border-left: 0;
+                          border-right: 0;
+                        }
+                      `}
+                    >
+                      <TwinkleVideo
+                        imageOnly={false}
+                        onPlay={handlePlay}
+                        style={{
+                          width: '29vw',
+                          height: 'CALC(20vw + 3rem)'
+                        }}
+                        videoId={attachmentRootId || 1}
+                      />
+                    </div>
+                  )}
+                  {filePath &&
+                    (userId ? (
+                      <div style={{ width: '100%' }}>
+                        <FileViewer
+                          autoPlay
+                          contentId={comment.id}
+                          contentType={'comment'}
+                          fileName={fileName}
+                          filePath={filePath}
+                          fileSize={fileSize}
+                          thumbUrl={filePath}
+                          videoHeight="100%"
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            marginTop: '1rem',
+                            ...(fileType === 'audio'
+                              ? {
+                                  padding: '1rem'
+                                }
+                              : {}),
+                            marginBottom: rewardLevel ? '1rem' : 0
+                          }}
+                        />
+                      </div>
+                    ) : (
+                      <LoginToViewContent />
+                    ))}
                   {!isPreview && !isHidden && (
                     <>
                       <div className="comment__buttons">
@@ -400,7 +513,7 @@ function Comment({
                           <Button
                             color="pink"
                             style={{ marginLeft: '0.7rem' }}
-                            onClick={handleSetXpRewardInterfaceShown}
+                            onClick={() => handleRewardInterfaceShown(true)}
                             disabled={!!xpButtonDisabled}
                           >
                             <Icon icon="certificate" />
@@ -421,7 +534,7 @@ function Comment({
                 </div>
               )}
             </div>
-            {!isPreview && xpRewardInterfaceShown && (
+            {!isPreview && rewardInterfaceShown && (
               <XPRewardInterface
                 innerRef={RewardInterfaceRef}
                 rewardLevel={rewardLevel}
@@ -430,11 +543,7 @@ function Comment({
                 contentId={comment.id}
                 uploaderId={uploader.id}
                 onRewardSubmit={(data) => {
-                  onSetXpRewardInterfaceShown({
-                    contentId: comment.id,
-                    contentType: 'comment',
-                    shown: false
-                  });
+                  handleRewardInterfaceShown(false);
                   onAttachStar({
                     data,
                     contentId: comment.id,
@@ -519,14 +628,6 @@ function Comment({
     });
   }
 
-  function handleSetXpRewardInterfaceShown() {
-    onSetXpRewardInterfaceShown({
-      contentId: comment.id,
-      contentType: 'comment',
-      shown: true
-    });
-  }
-
   function handleLikeClick(likes) {
     onLikeClick({ commentId: comment.id, likes });
   }
@@ -547,9 +648,22 @@ function Comment({
     ReplyInputAreaRef.current.focus();
   }
 
+  function handleRewardInterfaceShown(shown) {
+    setRewardInterfaceShown(shown);
+    rewardInterfaceShownRef.current = shown;
+  }
+
   function submitReply(reply) {
     setReplying(true);
     onReplySubmit(reply);
+  }
+
+  function handlePlay() {
+    onSetVideoStarted({
+      video: 'video',
+      contentId: attachmentRootId,
+      started: true
+    });
   }
 }
 
