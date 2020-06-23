@@ -17,12 +17,6 @@ import { FILE_UPLOAD_XP_REQUIREMENT } from 'constants/defaultValues';
 StartScreen.propTypes = {
   navigateTo: PropTypes.func.isRequired,
   onHide: PropTypes.func.isRequired,
-<<<<<<< HEAD:src/containers/Home/Stories/InputPanel/SubjectInput/AttachContentModal/StartScreen.js
-  attachContentType: PropTypes.string.isRequired
-};
-
-export default function StartScreen({ navigateTo, onHide, attachContentType }) {
-=======
   type: PropTypes.string,
   contentType: PropTypes.string,
   contentId: PropTypes.number
@@ -35,7 +29,6 @@ export default function StartScreen({
   contentType,
   contentId
 }) {
->>>>>>> aaa9216901c5aca08561159c23d556321bb3d602:src/components/AttachContentModal/StartScreen.js
   const {
     actions: { onSetSubjectAttachment }
   } = useInputContext();
@@ -183,15 +176,15 @@ export default function StartScreen({
       reader.onload = (upload) => {
         const payload = upload.target.result;
         if (fileObj.name.split('.')[1] === 'gif') {
-          onSetSubjectAttachment(
-            {
+          onSetSubjectAttachment({
+            attachment: {
               file: fileObj,
               contentType: 'file',
               fileType,
               imageUrl: payload
             },
-            attachContentType
-          );
+            attachContentType: type === 'subject' ? 'subject' : key
+          });
           onHide();
         } else {
           window.loadImage(
@@ -201,26 +194,16 @@ export default function StartScreen({
               const dataUri = imageUrl.replace(/^data:image\/\w+;base64,/, '');
               const buffer = Buffer.from(dataUri, 'base64');
               const file = new File([buffer], fileObj.name);
-<<<<<<< HEAD:src/containers/Home/Stories/InputPanel/SubjectInput/AttachContentModal/StartScreen.js
-              onSetSubjectAttachment(
-                {
-=======
 
               onSetSubjectAttachment({
                 attachment: {
->>>>>>> aaa9216901c5aca08561159c23d556321bb3d602:src/components/AttachContentModal/StartScreen.js
                   file,
                   contentType: 'file',
                   fileType,
                   imageUrl
                 },
-<<<<<<< HEAD:src/containers/Home/Stories/InputPanel/SubjectInput/AttachContentModal/StartScreen.js
-                attachContentType
-              );
-=======
                 attachContentType: type === 'subject' ? 'subject' : key
               });
->>>>>>> aaa9216901c5aca08561159c23d556321bb3d602:src/components/AttachContentModal/StartScreen.js
               onHide();
             },
             { orientation: true, canvas: true }
@@ -229,24 +212,14 @@ export default function StartScreen({
       };
       reader.readAsDataURL(fileObj);
     } else {
-<<<<<<< HEAD:src/containers/Home/Stories/InputPanel/SubjectInput/AttachContentModal/StartScreen.js
-      onSetSubjectAttachment(
-        {
-=======
       onSetSubjectAttachment({
         attachment: {
->>>>>>> aaa9216901c5aca08561159c23d556321bb3d602:src/components/AttachContentModal/StartScreen.js
           file: fileObj,
           contentType: 'file',
           fileType
         },
-<<<<<<< HEAD:src/containers/Home/Stories/InputPanel/SubjectInput/AttachContentModal/StartScreen.js
-        attachContentType
-      );
-=======
         attachContentType: type === 'subject' ? 'subject' : key
       });
->>>>>>> aaa9216901c5aca08561159c23d556321bb3d602:src/components/AttachContentModal/StartScreen.js
       onHide();
     }
     event.target.value = null;
