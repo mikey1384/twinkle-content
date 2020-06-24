@@ -124,7 +124,6 @@ export default function VideoPage({
     deleted,
     description,
     rewardLevel,
-    hasHqThumb,
     likes,
     loaded,
     questions = [],
@@ -295,7 +294,6 @@ export default function VideoPage({
                     rewardLevel={rewardLevel}
                     byUser={!!byUser}
                     key={videoId}
-                    hasHqThumb={hasHqThumb}
                     videoId={videoId}
                     videoCode={content}
                     title={title}

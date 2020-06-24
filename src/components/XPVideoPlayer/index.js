@@ -19,7 +19,6 @@ const intervalLength = 2000;
 XPVideoPlayer.propTypes = {
   isChat: PropTypes.bool,
   byUser: PropTypes.bool,
-  hasHqThumb: PropTypes.number,
   minimized: PropTypes.bool,
   onPlay: PropTypes.func,
   rewardLevel: PropTypes.number,
@@ -33,7 +32,6 @@ function XPVideoPlayer({
   isChat,
   byUser,
   rewardLevel,
-  hasHqThumb,
   minimized,
   onPlay,
   style = {},
@@ -45,7 +43,6 @@ function XPVideoPlayer({
     requestHelpers: {
       addVideoView,
       checkXPEarned,
-      fetchVideoThumbUrl,
       updateCurrentlyWatching,
       updateUserXP,
       updateTotalViewDuration,
@@ -66,7 +63,6 @@ function XPVideoPlayer({
     actions: {
       onChangeUserCoins,
       onChangeUserXP,
-      onSetVideoImageUrl,
       onSetVideoStarted,
       onSetVideoXpEarned,
       onSetVideoXpJustEarned,
@@ -103,6 +99,7 @@ function XPVideoPlayer({
   const themeColor = profileTheme || 'logoBlue';
   const rewardLevelRef = useRef(0);
   const rewardAmountRef = useRef(rewardLevel * rewardValue.star);
+
   useEffect(() => {
     mounted.current = true;
     setStartingPosition(currentTime);
@@ -147,15 +144,6 @@ function XPVideoPlayer({
   useEffect(() => {
     rewardLevelRef.current = rewardLevel;
     rewardAmountRef.current = rewardLevel * rewardValue.star;
-    if (!imageUrl && videoCode && typeof hasHqThumb !== 'number') {
-      fetchVideoThumb();
-    } else {
-      const imageName = hasHqThumb ? 'maxresdefault' : 'mqdefault';
-      onSetVideoImageUrl({
-        videoId,
-        url: `https://img.youtube.com/vi/${videoCode}/${imageName}.jpg`
-      });
-    }
 
     if (!!rewardLevel && userId && !xpLoaded) {
       handleCheckXPEarned();
@@ -166,16 +154,6 @@ function XPVideoPlayer({
       if (mounted.current) {
         onSetVideoXpEarned({ videoId, earned: !!xpEarned });
         onSetVideoXpLoaded({ videoId, loaded: true });
-      }
-    }
-
-    async function fetchVideoThumb() {
-      const thumbUrl = await fetchVideoThumbUrl({ videoCode, videoId });
-      if (mounted.current) {
-        onSetVideoImageUrl({
-          videoId,
-          url: thumbUrl
-        });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -200,15 +178,6 @@ function XPVideoPlayer({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId, xpEarned, playing]);
-
-  useEffect(() => {
-    const newImageName = hasHqThumb ? 'maxresdefault' : 'mqdefault';
-    onSetVideoImageUrl({
-      videoId,
-      url: `https://img.youtube.com/vi/${videoCode}/${newImageName}.jpg`
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [videoCode]);
 
   useEffect(() => {
     const userWatchingMultipleVideo =

@@ -1109,14 +1109,6 @@ export default function ContentReducer(state, action) {
           online: action.online
         }
       };
-    case 'SET_VIDEO_IMAGE_URL':
-      return {
-        ...state,
-        [contentKey]: {
-          ...prevContentState,
-          imageUrl: action.url
-        }
-      };
     case 'SET_VIDEO_CURRENT_TIME':
       return {
         ...state,

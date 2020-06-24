@@ -30,7 +30,6 @@ export default function TwinkleVideo({ imageOnly, onPlay, style, videoId }) {
     notFound,
     byUser,
     content,
-    hasHqThumb,
     rewardLevel,
     uploader
   } = useContentState({
@@ -69,7 +68,6 @@ export default function TwinkleVideo({ imageOnly, onPlay, style, videoId }) {
           style={{ width: '100%', height: '100%' }}
           byUser={!!byUser}
           rewardLevel={rewardLevel}
-          hasHqThumb={hasHqThumb}
           uploader={uploader}
           videoCode={content}
           videoId={videoId}

@@ -327,7 +327,6 @@ export default function Body({
             title={rootObj.title}
             style={{ marginBottom: '1rem' }}
             uploader={rootObj.uploader}
-            hasHqThumb={rootObj.hasHqThumb}
             videoId={rootId}
             videoCode={rootObj.content}
           />

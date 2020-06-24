@@ -188,21 +188,6 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async fetchVideoThumbUrl({ videoCode, videoId }) {
-      try {
-        const {
-          data: { payload }
-        } = await request.put(`${URL}/content/videoThumb`, {
-          videoCode,
-          videoId
-        });
-        return Promise.resolve(
-          payload || `https://img.youtube.com/vi/${videoCode}/mqdefault.jpg`
-        );
-      } catch (error) {
-        console.error(error.response || error);
-      }
-    },
     async likeContent({ id, contentType }) {
       try {
         const {

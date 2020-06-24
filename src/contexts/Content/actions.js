@@ -436,14 +436,6 @@ export default function ContentActions(dispatch) {
         currentTime
       });
     },
-    onSetVideoImageUrl({ videoId, url }) {
-      return dispatch({
-        type: 'SET_VIDEO_IMAGE_URL',
-        contentType: 'video',
-        contentId: videoId,
-        url
-      });
-    },
     onSetVideoQuestions({ questions, contentType, contentId }) {
       return dispatch({
         type: 'SET_VIDEO_QUESTIONS',
