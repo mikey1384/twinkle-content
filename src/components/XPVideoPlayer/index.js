@@ -1,13 +1,11 @@
 import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
-import ProgressBar from 'components/ProgressBar';
-import Icon from 'components/Icon';
 import ErrorBoundary from 'components/ErrorBoundary';
+import XPBar from './XPBar';
+import { rewardValue } from 'constants/defaultValues';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
-import { rewardValue } from 'constants/defaultValues';
-import { addCommasToNumber } from 'helpers/stringHelpers';
 import { useContentState, useMyState } from 'helpers/hooks';
 import {
   useAppContext,
@@ -17,7 +15,6 @@ import {
 } from 'contexts';
 
 const intervalLength = 2000;
-const xp = rewardValue.star;
 
 XPVideoPlayer.propTypes = {
   isChat: PropTypes.bool,
@@ -86,7 +83,6 @@ function XPVideoPlayer({
     xpEarned,
     justEarned,
     imageUrl = '',
-    progress = 0,
     watchTime = 0,
     isEditing
   } = useContentState({ contentType: 'video', contentId: videoId });
@@ -106,7 +102,7 @@ function XPVideoPlayer({
   const rewardingXP = useRef(false);
   const themeColor = profileTheme || 'logoBlue';
   const rewardLevelRef = useRef(0);
-  const rewardAmountRef = useRef(rewardLevel * xp);
+  const rewardAmountRef = useRef(rewardLevel * rewardValue.star);
   useEffect(() => {
     mounted.current = true;
     setStartingPosition(currentTime);
@@ -150,7 +146,7 @@ function XPVideoPlayer({
 
   useEffect(() => {
     rewardLevelRef.current = rewardLevel;
-    rewardAmountRef.current = rewardLevel * xp;
+    rewardAmountRef.current = rewardLevel * rewardValue.star;
     if (!imageUrl && videoCode && typeof hasHqThumb !== 'number') {
       fetchVideoThumb();
     } else {
@@ -234,22 +230,6 @@ function XPVideoPlayer({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageVisible]);
-
-  const meterColor = useMemo(
-    () =>
-      xpEarned
-        ? Color.green()
-        : rewardLevel === 5
-        ? Color.gold()
-        : rewardLevel === 4
-        ? Color.brownOrange()
-        : rewardLevel === 3
-        ? Color.orange()
-        : rewardLevel === 2
-        ? Color.pink()
-        : Color.logoBlue(),
-    [rewardLevel, xpEarned]
-  );
 
   const videoUrl = useMemo(
     () =>
@@ -354,70 +334,19 @@ function XPVideoPlayer({
           onEnded={handleVideoStop}
         />
       </div>
-      {startingPosition > 0 && !started ? (
-        <div
-          style={{
-            background: Color.darkBlue(),
-            padding: '0.5rem',
-            color: '#fff',
-            fontSize: '1.5rem',
-            fontWeight: 'bold',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer'
-          }}
-          onClick={() => PlayerRef.current?.getInternalPlayer()?.playVideo()}
-        >
-          Continue Watching...
-        </div>
-      ) : (!userId || xpLoaded) &&
-        !!rewardLevel &&
-        (!started || alreadyEarned) ? (
-        <div
-          className={css`
-            font-size: 1.5rem;
-            padding: 0.5rem;
-            @media (max-width: ${mobileMaxWidth}) {
-              padding: 0.3rem;
-              font-size: ${isChat ? '1rem' : '1.5rem'};
-            }
-          `}
-          style={{
-            background: meterColor,
-            color: '#fff',
-            fontWeight: 'bold',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-        >
-          {!alreadyEarned && (
-            <div>
-              {[...Array(rewardLevel)].map((elem, index) => (
-                <Icon key={index} icon="star" />
-              ))}
-            </div>
-          )}
-          <div style={{ marginLeft: '0.7rem' }}>
-            {alreadyEarned
-              ? 'You have earned XP from this video'
-              : `Watch and earn ${addCommasToNumber(rewardLevel * xp)} XP`}
-          </div>
-        </div>
-      ) : null}
-      {!alreadyEarned && !!rewardLevel && userId && started && (
-        <ProgressBar
-          progress={progress}
-          color={justEarned ? Color.green() : meterColor}
-          noBorderRadius
-          text={
-            justEarned
-              ? `Earned ${addCommasToNumber(rewardLevel * xp)} XP!`
-              : ''
-          }
-        />
-      )}
+      <XPBar
+        alreadyEarned={alreadyEarned}
+        isChat={isChat}
+        justEarned={justEarned}
+        onPlayVideo={() => PlayerRef.current?.getInternalPlayer()?.playVideo()}
+        rewardLevel={rewardLevel}
+        started={started}
+        startingPosition={startingPosition}
+        userId={userId}
+        videoId={videoId}
+        xpEarned={xpEarned}
+        xpLoaded={xpLoaded}
+      />
     </ErrorBoundary>
   );
 
@@ -444,7 +373,7 @@ function XPVideoPlayer({
       }
       clearInterval(timerRef.current);
       timerRef.current = setInterval(
-        () => increaseProgress({ requiredDurationCap, userId, watchTime }),
+        () => handleIncreaseXPMeter({ requiredDurationCap, userId, watchTime }),
         intervalLength
       );
     }
@@ -461,7 +390,11 @@ function XPVideoPlayer({
     onEmptyCurrentVideoSlot();
   }
 
-  async function increaseProgress({ requiredDurationCap, userId, watchTime }) {
+  async function handleIncreaseXPMeter({
+    requiredDurationCap,
+    userId,
+    watchTime
+  }) {
     setTimeAt(PlayerRef.current.getCurrentTime());
     if (!totalDurationRef.current) {
       onVideoReady();
