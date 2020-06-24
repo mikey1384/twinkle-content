@@ -450,7 +450,6 @@ function Comment({
                 contentId={comment.id}
                 uploaderId={uploader.id}
                 onRewardSubmit={(data) => {
-                  handleRewardInterfaceShown(false);
                   onSetXpRewardInterfaceShown({
                     contentId: comment.id,
                     contentType: 'comment',
