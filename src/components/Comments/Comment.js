@@ -451,7 +451,11 @@ function Comment({
                 uploaderId={uploader.id}
                 onRewardSubmit={(data) => {
                   handleRewardInterfaceShown(false);
-                  onSetXpRewardInterfaceShown(false);
+                  onSetXpRewardInterfaceShown({
+                    contentId: comment.id,
+                    contentType: 'comment',
+                    shown: false
+                  });
                   onAttachStar({
                     data,
                     contentId: comment.id,
