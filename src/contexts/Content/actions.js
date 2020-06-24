@@ -238,6 +238,22 @@ export default function ContentActions(dispatch) {
         contentId
       });
     },
+    onLoadSubjectRepliesOfReply({
+      replies,
+      commentId,
+      replyId,
+      contentType,
+      contentId
+    }) {
+      return dispatch({
+        type: 'LOAD_SUBJECT_REPLIES_OF_REPLY',
+        replies,
+        commentId,
+        replyId,
+        contentType,
+        contentId
+      });
+    },
     onLoadSubjects({ contentId, contentType, subjects, loadMoreButton }) {
       return dispatch({
         type: 'LOAD_SUBJECTS',

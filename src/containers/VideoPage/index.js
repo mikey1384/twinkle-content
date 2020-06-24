@@ -94,6 +94,8 @@ export default function VideoPage({
       onLoadMoreSubjectComments,
       onLoadMoreSubjectReplies,
       onLoadMoreSubjects,
+      onLoadRepliesOfReply,
+      onLoadSubjectRepliesOfReply,
       onLoadSubjects,
       onLoadSubjectComments,
       onLoadTags,
@@ -413,6 +415,7 @@ export default function VideoPage({
                 onLikeClick: onLikeComment,
                 onLoadMoreComments: onLoadMoreSubjectComments,
                 onLoadMoreReplies: onLoadMoreSubjectReplies,
+                onLoadRepliesOfReply: onLoadSubjectRepliesOfReply,
                 onUploadComment,
                 onUploadReply
               }}
@@ -448,6 +451,7 @@ export default function VideoPage({
                 onLikeClick={onLikeComment}
                 onLoadMoreComments={onLoadMoreComments}
                 onLoadMoreReplies={onLoadMoreReplies}
+                onLoadRepliesOfReply={onLoadRepliesOfReply}
                 onReplySubmit={onUploadReply}
                 onRewardCommentEdit={onEditRewardComment}
                 parent={{

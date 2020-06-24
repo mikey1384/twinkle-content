@@ -71,6 +71,8 @@ export default function LinkPage({
       onLoadMoreSubjectComments,
       onLoadMoreSubjectReplies,
       onLoadMoreSubjects,
+      onLoadRepliesOfReply,
+      onLoadSubjectRepliesOfReply,
       onLoadSubjects,
       onLoadSubjectComments,
       onSetXpRewardInterfaceShown,
@@ -180,6 +182,11 @@ export default function LinkPage({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
+  const userIsUploader = useMemo(() => uploader?.id === userId, [
+    uploader?.id,
+    userId
+  ]);
+
   const userCanEditThis = useMemo(
     () => (canEdit || canDelete) && authLevel > uploader?.authLevel,
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -191,7 +198,6 @@ export default function LinkPage({
     [authLevel, canStar, uploader, userIsUploader]
   );
 
-  const userIsUploader = uploader?.id === userId;
   useEffect(() => {
     onSetXpRewardInterfaceShown({
       contentType: 'url',
@@ -365,6 +371,7 @@ export default function LinkPage({
           onLikeClick: onLikeComment,
           onLoadMoreComments: onLoadMoreSubjectComments,
           onLoadMoreReplies: onLoadMoreSubjectReplies,
+          onLoadRepliesOfReply: onLoadSubjectRepliesOfReply,
           onUploadComment: handleUploadComment,
           onUploadReply: handleUploadReply
         }}
@@ -383,6 +390,7 @@ export default function LinkPage({
         onLikeClick={onLikeComment}
         onLoadMoreComments={onLoadMoreComments}
         onLoadMoreReplies={onLoadMoreReplies}
+        onLoadRepliesOfReply={onLoadRepliesOfReply}
         onReplySubmit={handleUploadReply}
         onRewardCommentEdit={onEditRewardComment}
         parent={{ contentType: 'url', contentId: linkId }}

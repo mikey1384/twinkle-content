@@ -28,6 +28,7 @@ Subjects.propTypes = {
     onLikeClick: PropTypes.func.isRequired,
     onLoadMoreComments: PropTypes.func.isRequired,
     onLoadMoreReplies: PropTypes.func.isRequired,
+    onLoadRepliesOfReply: PropTypes.func.isRequired,
     onUploadComment: PropTypes.func.isRequired,
     onUploadReply: PropTypes.func.isRequired
   })
@@ -55,6 +56,7 @@ export default function Subjects({
     onLikeClick,
     onLoadMoreComments,
     onLoadMoreReplies,
+    onLoadRepliesOfReply,
     onUploadComment,
     onUploadReply
   }
@@ -72,6 +74,7 @@ export default function Subjects({
         onLikeClick,
         onLoadMoreComments,
         onLoadMoreReplies,
+        onLoadRepliesOfReply,
         onSubjectEditDone,
         onSubjectDelete,
         onLoadSubjectComments,

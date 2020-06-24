@@ -78,6 +78,7 @@ export default function SubjectPanel({
     onLikeClick,
     onLoadMoreComments,
     onLoadMoreReplies,
+    onLoadRepliesOfReply,
     onSubjectEditDone,
     onSubjectDelete,
     onLoadSubjectComments,
@@ -306,6 +307,7 @@ export default function SubjectPanel({
               onLikeClick={onLikeClick}
               onLoadMoreComments={loadMoreComments}
               onLoadMoreReplies={onLoadMoreReplies}
+              onLoadRepliesOfReply={onLoadRepliesOfReply}
               onReplySubmit={onUploadReply}
               onRewardCommentEdit={editRewardComment}
               parent={{
