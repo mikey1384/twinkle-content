@@ -1077,6 +1077,14 @@ export default function ContentReducer(state, action) {
           prevUrl: action.prevUrl
         }
       };
+    case 'SET_RECOMMEND_INTERFACE_SHOWN':
+      return {
+        ...state,
+        [contentKey]: {
+          ...prevContentState,
+          recommendInterfaceShown: action.shown
+        }
+      };
     case 'SET_REWARD_LEVEL': {
       const newState = { ...state };
       const contentKeys = Object.keys(newState);

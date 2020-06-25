@@ -37,6 +37,10 @@ export const container = css`
         .left {
           display: flex;
           align-items: center;
+          button,
+          span {
+            font-size: 1.4rem;
+          }
           @media (max-width: ${mobileMaxWidth}) {
             button,
             span {

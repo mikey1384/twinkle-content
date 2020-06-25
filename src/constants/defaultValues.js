@@ -8,7 +8,8 @@ export const clientVersion = '1.3.73';
 export const descriptionLengthForExtraRewardLevel = 1000;
 export const priceTable = {
   chatSubject: 5,
-  chatTheme: 10
+  chatTheme: 10,
+  recommendation: 2
 };
 export const charLimit = {
   chat: {

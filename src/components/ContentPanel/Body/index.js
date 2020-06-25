@@ -12,6 +12,7 @@ import MainContent from './MainContent';
 import DropdownButton from 'components/Buttons/DropdownButton';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import XPRewardInterface from 'components/XPRewardInterface';
+import RecommendInterface from 'components/RecommendInterface';
 import RewardStatus from 'components/RewardStatus';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FileViewer from 'components/FileViewer';
@@ -73,6 +74,7 @@ export default function Body({
   const {
     requestHelpers: { deleteContent, loadComments }
   } = useAppContext();
+
   const {
     authLevel,
     canDelete,
@@ -81,9 +83,15 @@ export default function Body({
     canStar,
     userId
   } = useMyState();
+
   const {
-    actions: { onSetIsEditing, onSetXpRewardInterfaceShown }
+    actions: {
+      onSetIsEditing,
+      onSetRecommendInterfaceShown,
+      onSetXpRewardInterfaceShown
+    }
   } = useContentContext();
+
   const {
     description,
     filePath,
@@ -91,6 +99,7 @@ export default function Body({
     fileSize,
     thumbUrl,
     isEditing,
+    recommendInterfaceShown,
     secretAnswer,
     secretShown,
     xpRewardInterfaceShown
@@ -98,6 +107,7 @@ export default function Body({
     contentType,
     contentId
   });
+
   const { fileType } = fileName ? getFileInfoFromFileName(fileName) : '';
   const { secretShown: rootSecretShown } = useContentState({
     contentId: rootId,
@@ -278,6 +288,11 @@ export default function Body({
     [authLevel, canStar, uploader.authLevel, uploader.id, userId]
   );
 
+  const userCanRecommendThis = useMemo(() => userId && !userCanRewardThis, [
+    userCanRewardThis,
+    userId
+  ]);
+
   useEffect(() => {
     onSetXpRewardInterfaceShown({
       contentType,
@@ -393,6 +408,22 @@ export default function Body({
                     </span>
                   </Button>
                 )}
+                {userCanRecommendThis && (
+                  <Button
+                    color="pink"
+                    style={{ marginLeft: '1rem' }}
+                    onClick={() =>
+                      onSetRecommendInterfaceShown({
+                        contentType,
+                        contentId,
+                        shown: true
+                      })
+                    }
+                  >
+                    <Icon icon="star" />
+                    <span style={{ marginLeft: '0.7rem' }}>Recommend</span>
+                  </Button>
+                )}
                 {editButtonShown && (
                   <DropdownButton
                     transparent
@@ -494,6 +525,7 @@ export default function Body({
             }}
           />
         )}
+        {recommendInterfaceShown && <RecommendInterface />}
         <RewardStatus
           contentType={contentType}
           rewardLevel={finalRewardLevel}
