@@ -361,7 +361,7 @@ function XPVideoPlayer({
       }
       const requiredViewDuration =
         totalDurationRef.current < requiredDuration + 10
-          ? Math.floor(totalDurationRef.current / 2) * 2 - 20
+          ? Math.floor(totalDurationRef.current * 0.8)
           : requiredDuration;
       if (
         rewardAmountRef.current &&
