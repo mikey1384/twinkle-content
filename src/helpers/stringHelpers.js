@@ -237,7 +237,7 @@ export function exceedsCharLimit({ inputType, contentType, text }) {
 
 export function fetchURLFromText(text) {
   const regex = /(\b(http[s]?:\/\/(www\.)?|ftp:\/\/(www\.)?|www\.){1}([0-9A-Za-z-.,;:?@%_\+~#=\/()])+(\.[A-Z])?([^\s-.,;:?'")])+)/gi;
-  let url = text.match(regex)?.[0] || '';
+  let url = (text || '').toLowerCase().match(regex)?.[0] || '';
   if (url && !url.includes('http://') && !url.includes('https://')) {
     url = 'http://' + url;
   }
