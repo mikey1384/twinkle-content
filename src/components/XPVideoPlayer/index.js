@@ -49,7 +49,7 @@ function XPVideoPlayer({
       updateVideoXPEarned
     }
   } = useAppContext();
-  const { profileTheme, twinkleXP, userId } = useMyState();
+  const { profileTheme, userId } = useMyState();
   const {
     state: {
       videos: { currentVideoSlot }
@@ -86,8 +86,7 @@ function XPVideoPlayer({
   const [alreadyEarned, setAlreadyEarned] = useState(false);
   const [startingPosition, setStartingPosition] = useState(0);
   const [timeAt, setTimeAt] = useState(0);
-  const maxRequiredDuration = 150;
-  const requiredDurationCap = useRef(maxRequiredDuration);
+  const requiredDuration = 150;
   const PlayerRef = useRef(null);
   const timerRef = useRef(null);
   const timeWatchedRef = useRef(0);
@@ -132,14 +131,6 @@ function XPVideoPlayer({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeAt]);
-
-  useEffect(() => {
-    PlayerRef.current?.getInternalPlayer()?.pauseVideo?.();
-    requiredDurationCap.current =
-      60 + Math.min(twinkleXP / 1000, 60) || maxRequiredDuration;
-    userIdRef.current = userId;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId]);
 
   useEffect(() => {
     rewardLevelRef.current = rewardLevel;
@@ -294,7 +285,6 @@ function XPVideoPlayer({
           onPlay={() => {
             onPlay?.();
             onVideoPlay({
-              requiredDurationCap: requiredDurationCap.current,
               userId: userIdRef.current,
               watchTime
             });
@@ -325,7 +315,7 @@ function XPVideoPlayer({
       ?.getDuration();
   }
 
-  function onVideoPlay({ requiredDurationCap, userId, watchTime }) {
+  function onVideoPlay({ userId, watchTime }) {
     onSetVideoStarted({
       contentType: 'video',
       contentId: videoId,
@@ -342,7 +332,7 @@ function XPVideoPlayer({
       }
       clearInterval(timerRef.current);
       timerRef.current = setInterval(
-        () => handleIncreaseXPMeter({ requiredDurationCap, userId, watchTime }),
+        () => handleIncreaseXPMeter({ userId, watchTime }),
         intervalLength
       );
     }
@@ -359,11 +349,7 @@ function XPVideoPlayer({
     onEmptyCurrentVideoSlot();
   }
 
-  async function handleIncreaseXPMeter({
-    requiredDurationCap,
-    userId,
-    watchTime
-  }) {
+  async function handleIncreaseXPMeter({ userId, watchTime }) {
     setTimeAt(PlayerRef.current.getCurrentTime());
     if (!totalDurationRef.current) {
       onVideoReady();
@@ -373,9 +359,9 @@ function XPVideoPlayer({
         PlayerRef.current.getInternalPlayer()?.unMute();
       }
       const requiredViewDuration =
-        totalDurationRef.current < requiredDurationCap + 10
+        totalDurationRef.current < requiredDuration + 10
           ? Math.floor(totalDurationRef.current / 2) * 2 - 20
-          : requiredDurationCap;
+          : requiredDuration;
       if (
         rewardAmountRef.current &&
         timeWatchedRef.current >= requiredViewDuration &&
