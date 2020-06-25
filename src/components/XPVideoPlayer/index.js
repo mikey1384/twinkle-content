@@ -86,7 +86,7 @@ function XPVideoPlayer({
   const [alreadyEarned, setAlreadyEarned] = useState(false);
   const [startingPosition, setStartingPosition] = useState(0);
   const [timeAt, setTimeAt] = useState(0);
-  const requiredDuration = 150;
+  const requiredDuration = 120;
   const PlayerRef = useRef(null);
   const timerRef = useRef(null);
   const timeWatchedRef = useRef(0);
@@ -147,8 +147,9 @@ function XPVideoPlayer({
         onSetVideoXpLoaded({ videoId, loaded: true });
       }
     }
+    userIdRef.current = userId;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rewardLevel, userId]);
+  }, [rewardLevel, userId, videoId, xpLoaded]);
 
   useEffect(() => {
     if (isEditing) {
