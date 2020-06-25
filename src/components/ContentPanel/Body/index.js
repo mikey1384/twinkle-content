@@ -410,8 +410,9 @@ export default function Body({
                 )}
                 {userCanRecommendThis && (
                   <Button
-                    color="pink"
+                    color="brownOrange"
                     style={{ marginLeft: '1rem' }}
+                    disabled={recommendInterfaceShown}
                     onClick={() =>
                       onSetRecommendInterfaceShown({
                         contentType,
@@ -525,7 +526,18 @@ export default function Body({
             }}
           />
         )}
-        {recommendInterfaceShown && <RecommendInterface />}
+        {recommendInterfaceShown && (
+          <RecommendInterface
+            contentType={contentType}
+            onHide={() =>
+              onSetRecommendInterfaceShown({
+                contentType,
+                contentId,
+                shown: false
+              })
+            }
+          />
+        )}
         <RewardStatus
           contentType={contentType}
           rewardLevel={finalRewardLevel}
