@@ -7,6 +7,7 @@ import Banner from 'components/Banner';
 import ErrorBoundary from 'components/ErrorBoundary';
 import HomeFilter from './HomeFilter';
 import ContentPanel from 'components/ContentPanel';
+import { isMobile } from 'helpers';
 import { css } from 'emotion';
 import { mobileMaxWidth } from 'constants/css';
 import {
@@ -80,7 +81,8 @@ export default function Stories({ location }) {
   useScrollPosition({
     onRecordScrollPosition,
     pathname: location.pathname,
-    scrollPositions
+    scrollPositions,
+    isMobile: isMobile(navigator)
   });
 
   const [loadingFeeds, setLoadingFeeds] = useState(false);
