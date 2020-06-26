@@ -72,7 +72,7 @@ export default function Body({
   onChangeSpoilerStatus
 }) {
   const {
-    requestHelpers: { deleteContent, loadComments }
+    requestHelpers: { deleteContent, loadComments, promoteContent }
   } = useAppContext();
 
   const {
@@ -536,6 +536,7 @@ export default function Body({
                 shown: false
               })
             }
+            onPromote={handlePromoteContent}
           />
         )}
         <RewardStatus
@@ -627,6 +628,16 @@ export default function Body({
         onChangeSpoilerStatus({ shown: true, subjectId: contentObj.id });
       }
     }
+  }
+
+  async function handlePromoteContent() {
+    const data = await promoteContent({ contentId, contentType });
+    console.log(data);
+    onSetPromotionInterfaceShown({
+      contentType,
+      contentId,
+      shown: false
+    });
   }
 
   function handleSetXpRewardInterfaceShown() {

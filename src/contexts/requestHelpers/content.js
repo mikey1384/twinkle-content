@@ -450,6 +450,18 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async promoteContent({ contentId, contentType }) {
+      try {
+        const { data } = await request.post(
+          `${URL}/content/promote`,
+          { contentId, contentType },
+          auth()
+        );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async reorderPlaylistVideos({
       originalVideoIds,
       reorderedVideoIds,

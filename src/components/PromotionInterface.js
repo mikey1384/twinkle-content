@@ -7,10 +7,11 @@ import { Color } from 'constants/css';
 
 PromotionInterface.propTypes = {
   contentType: PropTypes.string.isRequired,
-  onHide: PropTypes.func.isRequired
+  onHide: PropTypes.func.isRequired,
+  onPromote: PropTypes.func.isRequired
 };
 
-export default function PromotionInterface({ contentType, onHide }) {
+export default function PromotionInterface({ contentType, onHide, onPromote }) {
   return (
     <ErrorBoundary
       style={{
@@ -36,7 +37,7 @@ export default function PromotionInterface({ contentType, onHide }) {
         </div>
       </div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <Button color="darkBlue" skeuomorphic>
+        <Button onClick={onPromote} color="darkBlue" skeuomorphic>
           Yes
         </Button>
         <Button
