@@ -189,7 +189,7 @@ export function useScrollPosition({
     setTimeout(() => {
       document.getElementById('App').scrollTop = scrollPositions[pathname] || 0;
       BodyRef.current.scrollTop = scrollPositions[pathname] || 0;
-    }, 500);
+    }, 0);
 
     return function recordScrollPositionAndCleanUp() {
       const position = Math.max(
