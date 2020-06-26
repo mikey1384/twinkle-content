@@ -5,12 +5,12 @@ import Button from 'components/Button';
 import Icon from 'components/Icon';
 import { Color } from 'constants/css';
 
-RecommendInterface.propTypes = {
+PromotionInterface.propTypes = {
   contentType: PropTypes.string.isRequired,
   onHide: PropTypes.func.isRequired
 };
 
-export default function RecommendInterface({ contentType, onHide }) {
+export default function PromotionInterface({ contentType, onHide }) {
   return (
     <ErrorBoundary
       style={{
@@ -27,7 +27,7 @@ export default function RecommendInterface({ contentType, onHide }) {
         <div>
           <span style={{ fontWeight: 'bold' }}>
             <span style={{ marginRight: '0.7rem' }}>
-              Recommend this {contentType}?
+              Promote this {contentType}?
             </span>
             (
             <Icon icon={['far', 'badge-dollar']} />
@@ -36,14 +36,14 @@ export default function RecommendInterface({ contentType, onHide }) {
         </div>
       </div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <Button color="blue" filled>
+        <Button color="darkBlue" skeuomorphic>
           Yes
         </Button>
         <Button
           onClick={onHide}
           style={{ marginLeft: '0.7rem' }}
           color="rose"
-          filled
+          skeuomorphic
         >
           No
         </Button>

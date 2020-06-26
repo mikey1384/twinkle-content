@@ -404,9 +404,9 @@ export default function ContentActions(dispatch) {
         prevUrl
       });
     },
-    onSetRecommendInterfaceShown({ contentId, contentType, shown }) {
+    onSetPromotionInterfaceShown({ contentId, contentType, shown }) {
       return dispatch({
-        type: 'SET_RECOMMEND_INTERFACE_SHOWN',
+        type: 'SET_PROMOTION_INTERFACE_SHOWN',
         contentId,
         contentType,
         shown

@@ -12,7 +12,7 @@ import MainContent from './MainContent';
 import DropdownButton from 'components/Buttons/DropdownButton';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import XPRewardInterface from 'components/XPRewardInterface';
-import RecommendInterface from 'components/RecommendInterface';
+import PromotionInterface from 'components/PromotionInterface';
 import RewardStatus from 'components/RewardStatus';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FileViewer from 'components/FileViewer';
@@ -87,7 +87,7 @@ export default function Body({
   const {
     actions: {
       onSetIsEditing,
-      onSetRecommendInterfaceShown,
+      onSetPromotionInterfaceShown,
       onSetXpRewardInterfaceShown
     }
   } = useContentContext();
@@ -99,7 +99,7 @@ export default function Body({
     fileSize,
     thumbUrl,
     isEditing,
-    recommendInterfaceShown,
+    promotionInterfaceShown,
     secretAnswer,
     secretShown,
     xpRewardInterfaceShown
@@ -288,7 +288,7 @@ export default function Body({
     [authLevel, canStar, uploader.authLevel, uploader.id, userId]
   );
 
-  const userCanRecommendThis = useMemo(() => userId && !userCanRewardThis, [
+  const userCanPromoteThis = useMemo(() => userId && !userCanRewardThis, [
     userCanRewardThis,
     userId
   ]);
@@ -408,13 +408,13 @@ export default function Body({
                     </span>
                   </Button>
                 )}
-                {userCanRecommendThis && (
+                {userCanPromoteThis && (
                   <Button
                     color="brownOrange"
                     style={{ marginLeft: '1rem' }}
-                    disabled={recommendInterfaceShown}
+                    disabled={promotionInterfaceShown}
                     onClick={() =>
-                      onSetRecommendInterfaceShown({
+                      onSetPromotionInterfaceShown({
                         contentType,
                         contentId,
                         shown: true
@@ -422,7 +422,7 @@ export default function Body({
                     }
                   >
                     <Icon icon="star" />
-                    <span style={{ marginLeft: '0.7rem' }}>Recommend</span>
+                    <span style={{ marginLeft: '0.7rem' }}>Promote</span>
                   </Button>
                 )}
                 {editButtonShown && (
@@ -526,11 +526,11 @@ export default function Body({
             }}
           />
         )}
-        {recommendInterfaceShown && (
-          <RecommendInterface
+        {promotionInterfaceShown && (
+          <PromotionInterface
             contentType={contentType}
             onHide={() =>
-              onSetRecommendInterfaceShown({
+              onSetPromotionInterfaceShown({
                 contentType,
                 contentId,
                 shown: false
