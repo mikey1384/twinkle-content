@@ -9,6 +9,7 @@ import { stringIsEmpty } from 'helpers/stringHelpers';
 import { css } from 'emotion';
 import { mobileMaxWidth } from 'constants/css';
 import { useAppContext, useInputContext, useViewContext } from 'contexts';
+import { isMobile } from 'helpers';
 import {
   useInfiniteScroll,
   useMyState,
@@ -54,7 +55,8 @@ function People({ location }) {
   useScrollPosition({
     onRecordScrollPosition,
     pathname: location.pathname,
-    scrollPositions
+    scrollPositions,
+    isMobile: isMobile(navigator)
   });
   const {
     state: { userSearchText },

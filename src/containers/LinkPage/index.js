@@ -16,7 +16,7 @@ import Loading from 'components/Loading';
 import Description from './Description';
 import { css } from 'emotion';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { determineXpButtonDisabled } from 'helpers';
+import { determineXpButtonDisabled, isMobile } from 'helpers';
 import { useContentState, useMyState, useScrollPosition } from 'helpers/hooks';
 import { processedURL } from 'helpers/stringHelpers';
 import {
@@ -107,7 +107,8 @@ export default function LinkPage({
   useScrollPosition({
     onRecordScrollPosition,
     pathname: location.pathname,
-    scrollPositions
+    scrollPositions,
+    isMobile: isMobile(navigator)
   });
   const [loadingComments, setLoadingComments] = useState(false);
   const [notFound, setNotFound] = useState(false);

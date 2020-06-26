@@ -12,6 +12,7 @@ import ConfirmModal from 'components/Modals/ConfirmModal';
 import BioEditModal from 'components/Modals/BioEditModal';
 import DropDownButton from 'components/Buttons/DropdownButton';
 import LoginToViewContent from 'components/LoginToViewContent';
+import { isMobile } from 'helpers';
 import { css } from 'emotion';
 import {
   addEmoji,
@@ -50,7 +51,8 @@ export default function Home({ location, profile, selectedTheme }) {
   useScrollPosition({
     onRecordScrollPosition,
     pathname: location.pathname,
-    scrollPositions
+    scrollPositions,
+    isMobile: isMobile(navigator)
   });
   const {
     actions: {
@@ -203,8 +205,8 @@ export default function Home({ location, profile, selectedTheme }) {
                   profile={profile}
                   statusColor={editedStatusColor || statusColor}
                   editedStatusMsg={editedStatusMsg}
-                  setColor={color => onSetEditedStatusColor(color)}
-                  onTextChange={event => {
+                  setColor={(color) => onSetEditedStatusColor(color)}
+                  onTextChange={(event) => {
                     onSetEditedStatusMsg(
                       addEmoji(renderText(event.target.value))
                     );

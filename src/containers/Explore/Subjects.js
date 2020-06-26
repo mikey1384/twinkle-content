@@ -7,6 +7,7 @@ import SelectFeaturedSubjects from './Modals/SelectFeaturedSubjects';
 import Button from 'components/Button';
 import { useMyState, useScrollPosition } from 'helpers/hooks';
 import { useAppContext, useViewContext, useExploreContext } from 'contexts';
+import { isMobile } from 'helpers';
 
 Subjects.propTypes = {
   location: PropTypes.object.isRequired
@@ -30,7 +31,8 @@ export default function Subjects({ location }) {
   useScrollPosition({
     onRecordScrollPosition,
     pathname: location.pathname,
-    scrollPositions
+    scrollPositions,
+    isMobile: isMobile(navigator)
   });
   const [modalShown, setModalShown] = useState(false);
   const prevLoaded = useRef(false);
@@ -67,7 +69,7 @@ export default function Subjects({ location }) {
           emptyMessage="No featured subjects for now..."
           loaded={loaded || prevLoaded.current}
         >
-          {featured.map(subject => (
+          {featured.map((subject) => (
             <ContentListItem
               key={subject.id}
               style={{ marginBottom: '1rem' }}
@@ -79,7 +81,7 @@ export default function Subjects({ location }) {
           <SelectFeaturedSubjects
             subjects={featured}
             onHide={() => setModalShown(false)}
-            onSubmit={selectedSubjects => {
+            onSubmit={(selectedSubjects) => {
               onLoadFeaturedSubjects(selectedSubjects);
               setModalShown(false);
             }}

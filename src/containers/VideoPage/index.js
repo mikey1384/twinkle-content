@@ -19,6 +19,7 @@ import Details from './Details';
 import NavMenu from './NavMenu';
 import PageTab from './PageTab';
 import URL from 'constants/URL';
+import { isMobile } from 'helpers';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 import { fetchedVideoCodeFromURL } from 'helpers/stringHelpers';
@@ -114,7 +115,8 @@ export default function VideoPage({
   useScrollPosition({
     onRecordScrollPosition,
     pathname,
-    scrollPositions
+    scrollPositions,
+    isMobile: isMobile(navigator)
   });
 
   const {
