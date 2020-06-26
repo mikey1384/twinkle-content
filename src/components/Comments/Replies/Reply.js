@@ -313,6 +313,11 @@ function Reply({
                 uploaderId={uploader.id}
                 onRewardSubmit={(data) => {
                   handleRewardInterfaceShown(false);
+                  onSetXpRewardInterfaceShown({
+                    contentId: reply.id,
+                    contentType: 'comment',
+                    shown: false
+                  });
                   onAttachStar({
                     data,
                     contentId: reply.id,
