@@ -56,7 +56,7 @@ export default function Home({ location, profile, selectedTheme }) {
   });
   const {
     actions: {
-      onAttachStar,
+      onAttachReward,
       onDeleteComment,
       onEditComment,
       onEditRewardComment,
@@ -452,7 +452,7 @@ export default function Home({ location, profile, selectedTheme }) {
             loadMoreButton={commentsLoadMoreButton}
             noInput={id === userId}
             numPreviews={1}
-            onAttachStar={onAttachStar}
+            onAttachReward={onAttachReward}
             onCommentSubmit={onUploadComment}
             onDelete={onDeleteComment}
             onEditDone={onEditComment}

@@ -9,7 +9,6 @@ import { useMyState } from 'helpers/hooks';
 import URL from 'constants/URL';
 
 const API_URL = `${URL}/video`;
-const xp = rewardValue.star;
 
 VideoThumbImage.propTypes = {
   height: PropTypes.string,
@@ -117,7 +116,7 @@ export default function VideoThumbImage({
             color: '#fff'
           }}
         >
-          {addCommasToNumber(rewardLevel * xp)} XP
+          {addCommasToNumber(rewardLevel * rewardValue)} XP
         </div>
       )}
     </div>

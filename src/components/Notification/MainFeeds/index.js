@@ -155,21 +155,21 @@ function MainFeeds({
             <>
               <p>Tap to collect all your rewards</p>
               <p style={{ fontSize: '1.5rem' }}>
-                ({totalRewardAmount} Twinkles x {rewardValue.star} XP/Twinkle ={' '}
-                {addCommasToNumber(totalRewardAmount * rewardValue.star)} XP)
+                ({totalRewardAmount} Twinkles x {rewardValue} XP/Twinkle ={' '}
+                {addCommasToNumber(totalRewardAmount * rewardValue)} XP)
               </p>
             </>
           )}
           {totalRewardAmount === 0 && (
             <>
               <p>
-                {addCommasToNumber(originalTotalReward * rewardValue.star)} XP
+                {addCommasToNumber(originalTotalReward * rewardValue)} XP
                 Collected!
               </p>
               <p style={{ fontSize: '1.5rem' }}>
                 Your XP: {addCommasToNumber(originalTwinkleXP)} {'=>'}{' '}
                 {addCommasToNumber(
-                  originalTwinkleXP + originalTotalReward * rewardValue.star
+                  originalTwinkleXP + originalTotalReward * rewardValue
                 )}
               </p>
             </>

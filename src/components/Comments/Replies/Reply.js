@@ -48,7 +48,7 @@ Reply.propTypes = {
     originType: PropTypes.string,
     profilePicId: PropTypes.number,
     replyId: PropTypes.number,
-    stars: PropTypes.array,
+    rewards: PropTypes.array,
     targetObj: PropTypes.object,
     targetUserId: PropTypes.number,
     targetUserName: PropTypes.string,
@@ -68,7 +68,7 @@ function Reply({
   onLoadRepliesOfReply,
   parent,
   reply,
-  reply: { likes = [], stars = [], uploader },
+  reply: { likes = [], rewards = [], uploader },
   rootContent,
   onSubmitReply,
   subject
@@ -76,7 +76,7 @@ function Reply({
   const {
     requestHelpers: { editContent, loadReplies }
   } = useAppContext();
-  const { authLevel, canDelete, canEdit, canStar, userId } = useMyState();
+  const { authLevel, canDelete, canEdit, canReward, userId } = useMyState();
   const {
     actions: { onSetIsEditing, onSetXpRewardInterfaceShown }
   } = useContentContext();
@@ -89,7 +89,7 @@ function Reply({
     contentId: reply.id
   });
   const {
-    onAttachStar,
+    onAttachReward,
     onEditDone,
     onLikeClick,
     onRewardCommentEdit
@@ -110,8 +110,8 @@ function Reply({
     return userIsUploader || userCanEditThis;
   }, [canDelete, canEdit, userIsHigherAuth, userIsUploader]);
   const rewardButtonShown = useMemo(
-    () => canStar && userIsHigherAuth && !userIsUploader,
-    [canStar, userIsHigherAuth, userIsUploader]
+    () => canReward && userIsHigherAuth && !userIsUploader,
+    [canReward, userIsHigherAuth, userIsUploader]
   );
   const rewardLevel = useMemo(() => {
     if (parent.contentType === 'subject' && parent.rewardLevel > 0) {
@@ -151,14 +151,14 @@ function Reply({
         myId: userId,
         rewardLevel,
         xpRewardInterfaceShown: rewardInterfaceShown,
-        stars
+        rewards
       }),
-    [rewardLevel, stars, userId, rewardInterfaceShown]
+    [rewardLevel, rewards, userId, rewardInterfaceShown]
   );
 
   useEffect(() => {
     handleRewardInterfaceShown(
-      rewardInterfaceShown && userIsHigherAuth && canStar && !userIsUploader
+      rewardInterfaceShown && userIsHigherAuth && canReward && !userIsUploader
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
@@ -307,7 +307,7 @@ function Reply({
               <XPRewardInterface
                 innerRef={RewardInterfaceRef}
                 rewardLevel={rewardLevel}
-                stars={stars}
+                rewards={rewards}
                 contentType="comment"
                 contentId={reply.id}
                 uploaderId={uploader.id}
@@ -318,7 +318,7 @@ function Reply({
                     contentType: 'comment',
                     shown: false
                   });
-                  onAttachStar({
+                  onAttachReward({
                     data,
                     contentId: reply.id,
                     contentType: 'comment'
@@ -334,7 +334,7 @@ function Reply({
                 fontSize: '1.5rem',
                 marginTop: reply.likes.length > 0 ? '0.5rem' : '1rem'
               }}
-              stars={stars}
+              rewards={rewards}
               uploaderName={uploader.username}
             />
             <ReplyInputArea
@@ -344,7 +344,9 @@ function Reply({
               rootCommentId={reply.commentId}
               style={{
                 marginTop:
-                  stars.length > 0 || reply.likes.length > 0 ? '0.5rem' : '1rem'
+                  rewards.length > 0 || reply.likes.length > 0
+                    ? '0.5rem'
+                    : '1rem'
               }}
               targetCommentId={reply.id}
             />

@@ -54,12 +54,12 @@ export default function TargetContent({
   const {
     requestHelpers: { uploadComment }
   } = useAppContext();
-  const { authLevel, canStar, profilePicId, userId, username } = useMyState();
+  const { authLevel, canReward, profilePicId, userId, username } = useMyState();
   const {
     actions: { onSetXpRewardInterfaceShown }
   } = useContentContext();
   const {
-    onAttachStar,
+    onAttachReward,
     onDeleteComment,
     onEditComment,
     onEditRewardComment,
@@ -84,10 +84,10 @@ export default function TargetContent({
     let canRewardThis;
     if (comment && !comment.notFound) {
       canRewardThis =
-        !userIsUploader && canStar && authLevel > comment.uploader.authLevel;
+        !userIsUploader && canReward && authLevel > comment.uploader.authLevel;
     }
     return canRewardThis;
-  }, [authLevel, canStar, comment, userId]);
+  }, [authLevel, canReward, comment, userId]);
 
   const uploader = useMemo(() => {
     let result = {};
@@ -105,13 +105,14 @@ export default function TargetContent({
           : 0
         : rootObj.rewardLevel;
     return subject?.rewardLevel || rootRewardLevel;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rootObj.rewardLevel, rootType, subject]);
 
   const xpButtonDisabled = useMemo(
     () =>
       determineXpButtonDisabled({
         rewardLevel: finalRewardLevel,
-        stars: comment.stars || [],
+        rewards: comment.rewards || [],
         myId: userId,
         xpRewardInterfaceShown
       }),
@@ -131,6 +132,7 @@ export default function TargetContent({
     const secretShown =
       subjectState.secretShown || subject?.uploader?.id === userId;
     return hasSecretAnswer && !secretShown;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subject, subjectState.secretShown, userId]);
 
   return (
@@ -270,7 +272,7 @@ export default function TargetContent({
                       />
                     </div>
                     <div>
-                      {canStar && userCanRewardThis && (
+                      {canReward && userCanRewardThis && (
                         <Button
                           color="pink"
                           disabled={!!xpButtonDisabled}
@@ -293,14 +295,14 @@ export default function TargetContent({
                   contentId={comment.id}
                   rewardLevel={finalRewardLevel}
                   uploaderId={comment.uploader.id}
-                  stars={comment.stars}
+                  rewards={comment.rewards}
                   onRewardSubmit={(data) => {
                     onSetXpRewardInterfaceShown({
                       contentType: 'comment',
                       contentId: comment.id,
                       shown: false
                     });
-                    onAttachStar({
+                    onAttachReward({
                       data,
                       contentId: comment.id,
                       contentType: 'comment'
@@ -325,7 +327,7 @@ export default function TargetContent({
                 }}
                 rewardLevel={finalRewardLevel}
                 onCommentEdit={onEditRewardComment}
-                stars={comment.stars}
+                rewards={comment.rewards}
                 uploaderName={uploader.username}
               />
               {replyInputShown && !contentHidden && (

@@ -13,7 +13,7 @@ import {
 import FilterBar from 'components/FilterBar';
 import Button from 'components/Button';
 import request from 'axios';
-import { returnMaxStars } from 'constants/defaultValues';
+import { returnMaxRewards } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useInputContext } from 'contexts';
 import URL from 'constants/URL';
@@ -23,7 +23,7 @@ XPRewardInterface.propTypes = {
   contentId: PropTypes.number.isRequired,
   innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   rewardLevel: PropTypes.number,
-  stars: PropTypes.array,
+  rewards: PropTypes.array,
   uploaderId: PropTypes.number.isRequired,
   noPadding: PropTypes.bool,
   onRewardSubmit: PropTypes.func.isRequired
@@ -36,7 +36,7 @@ export default function XPRewardInterface({
   rewardLevel,
   noPadding,
   onRewardSubmit,
-  stars = [],
+  rewards = [],
   uploaderId
 }) {
   const {
@@ -55,9 +55,9 @@ export default function XPRewardInterface({
     prevRewardLevel
   } = rewardForm;
 
-  const [rewarding, setRewarding] = useState(false);
   const mounted = useRef(true);
   const commentRef = useRef(prevComment);
+  const [rewarding, setRewarding] = useState(false);
   const [comment, setComment] = useState(prevComment);
   const starTabActiveRef = useRef(prevStarTabActive);
   const [starTabActive, setStarTabActive] = useState(prevStarTabActive);
@@ -80,7 +80,7 @@ export default function XPRewardInterface({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rewardLevel]);
 
-  const maxStars = useMemo(() => returnMaxStars({ rewardLevel }), [
+  const maxRewards = useMemo(() => returnMaxRewards({ rewardLevel }), [
     rewardLevel
   ]);
 
@@ -144,9 +144,9 @@ export default function XPRewardInterface({
         style={{ display: 'flex', flexDirection: 'column', width: '100%' }}
       >
         <MenuButtons
-          maxStars={maxStars}
+          maxRewards={maxRewards}
           selectedAmount={selectedAmount}
-          stars={stars}
+          rewards={rewards}
           starTabActive={starTabActive}
           onSetSelectedAmount={handleSetSelectedAmount}
           onSetStarTabActive={handleSetStarTabActive}
