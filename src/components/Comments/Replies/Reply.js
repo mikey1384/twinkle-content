@@ -151,7 +151,7 @@ function Reply({
         myId: userId,
         rewardLevel,
         xpRewardInterfaceShown: rewardInterfaceShown,
-        stars
+        rewards: stars
       }),
     [rewardLevel, stars, userId, rewardInterfaceShown]
   );
@@ -307,7 +307,7 @@ function Reply({
               <XPRewardInterface
                 innerRef={RewardInterfaceRef}
                 rewardLevel={rewardLevel}
-                stars={stars}
+                rewards={stars}
                 contentType="comment"
                 contentId={reply.id}
                 uploaderId={uploader.id}
@@ -334,7 +334,7 @@ function Reply({
                 fontSize: '1.5rem',
                 marginTop: reply.likes.length > 0 ? '0.5rem' : '1rem'
               }}
-              stars={stars}
+              rewards={stars}
               uploaderName={uploader.username}
             />
             <ReplyInputArea

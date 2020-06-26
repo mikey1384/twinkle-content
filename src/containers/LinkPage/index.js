@@ -265,7 +265,7 @@ export default function LinkPage({
             margin-right: -1px;
             margin-left: -1px;
           `}
-          stars={stars}
+          rewards={stars}
         />
         <div
           style={{
@@ -293,7 +293,7 @@ export default function LinkPage({
                 disabled={determineXpButtonDisabled({
                   myId: userId,
                   xpRewardInterfaceShown,
-                  stars
+                  rewards: stars
                 })}
                 style={{
                   fontSize: '2rem',
@@ -306,7 +306,7 @@ export default function LinkPage({
                   {determineXpButtonDisabled({
                     myId: userId,
                     xpRewardInterfaceShown,
-                    stars
+                    rewards: stars
                   }) || 'Reward'}
                 </span>
               </Button>
@@ -324,7 +324,7 @@ export default function LinkPage({
           <div style={{ padding: '0 1rem' }}>
             <XPRewardInterface
               innerRef={RewardInterfaceRef}
-              stars={stars}
+              rewards={stars}
               contentType="url"
               contentId={linkId}
               noPadding

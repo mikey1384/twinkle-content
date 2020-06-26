@@ -186,7 +186,7 @@ export default function Body({
   const xpButtonDisabled = useMemo(
     () =>
       determineXpButtonDisabled({
-        stars,
+        rewards: stars,
         rewardLevel: finalRewardLevel,
         myId: userId,
         xpRewardInterfaceShown
@@ -483,7 +483,7 @@ export default function Body({
             contentId={contentId}
             rewardLevel={finalRewardLevel}
             uploaderId={uploader.id}
-            stars={stars}
+            rewards={stars}
             onRewardSubmit={(data) => {
               onSetXpRewardInterfaceShown({
                 contentType,
@@ -498,7 +498,7 @@ export default function Body({
           contentType={contentType}
           rewardLevel={finalRewardLevel}
           onCommentEdit={onEditRewardComment}
-          stars={stars}
+          rewards={stars}
           className={css`
             margin-top: ${secretHidden && rewardLevel ? '1rem' : ''};
             margin-left: -1px;

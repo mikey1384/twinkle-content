@@ -265,7 +265,7 @@ function Comment({
       rewardLevel,
       myId: userId,
       xpRewardInterfaceShown: rewardInterfaceShown,
-      stars
+      rewards: stars
     });
   }, [isPreview, rewardInterfaceShown, rewardLevel, stars, userId]);
 
@@ -445,7 +445,7 @@ function Comment({
               <XPRewardInterface
                 innerRef={RewardInterfaceRef}
                 rewardLevel={rewardLevel}
-                stars={stars}
+                rewards={stars}
                 contentType="comment"
                 contentId={comment.id}
                 uploaderId={uploader.id}
@@ -473,7 +473,7 @@ function Comment({
                   fontSize: '1.5rem',
                   marginTop: comment.likes?.length > 0 ? '0.5rem' : '1rem'
                 }}
-                stars={stars}
+                rewards={stars}
                 uploaderName={uploader.username}
               />
             )}

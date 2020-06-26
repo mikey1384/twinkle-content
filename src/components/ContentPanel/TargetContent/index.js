@@ -105,13 +105,14 @@ export default function TargetContent({
           : 0
         : rootObj.rewardLevel;
     return subject?.rewardLevel || rootRewardLevel;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rootObj.rewardLevel, rootType, subject]);
 
   const xpButtonDisabled = useMemo(
     () =>
       determineXpButtonDisabled({
         rewardLevel: finalRewardLevel,
-        stars: comment.stars || [],
+        rewards: comment.stars || [],
         myId: userId,
         xpRewardInterfaceShown
       }),
@@ -131,6 +132,7 @@ export default function TargetContent({
     const secretShown =
       subjectState.secretShown || subject?.uploader?.id === userId;
     return hasSecretAnswer && !secretShown;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subject, subjectState.secretShown, userId]);
 
   return (
@@ -293,7 +295,7 @@ export default function TargetContent({
                   contentId={comment.id}
                   rewardLevel={finalRewardLevel}
                   uploaderId={comment.uploader.id}
-                  stars={comment.stars}
+                  rewards={comment.stars}
                   onRewardSubmit={(data) => {
                     onSetXpRewardInterfaceShown({
                       contentType: 'comment',
@@ -325,7 +327,7 @@ export default function TargetContent({
                 }}
                 rewardLevel={finalRewardLevel}
                 onCommentEdit={onEditRewardComment}
-                stars={comment.stars}
+                rewards={comment.stars}
                 uploaderName={uploader.username}
               />
               {replyInputShown && !contentHidden && (

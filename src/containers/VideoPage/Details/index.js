@@ -219,7 +219,7 @@ export default function Details({
               }}
               editedUrl={editedUrl}
               editedTitle={editedTitle}
-              onTitleChange={title =>
+              onTitleChange={(title) =>
                 onSetEditForm({
                   contentId: videoId,
                   contentType: 'video',
@@ -229,7 +229,7 @@ export default function Details({
                 })
               }
               innerRef={TitleRef}
-              onTitleKeyUp={event => {
+              onTitleKeyUp={(event) => {
                 if (event.key === ' ') {
                   onSetEditForm({
                     contentId: videoId,
@@ -240,7 +240,7 @@ export default function Details({
                   });
                 }
               }}
-              onUrlChange={text =>
+              onUrlChange={(text) =>
                 onSetEditForm({
                   contentId: videoId,
                   contentType: 'video',
@@ -254,7 +254,7 @@ export default function Details({
               onMouseOver={onMouseOver}
               onTitleClick={() => {
                 if (textIsOverflown(TitleRef.current)) {
-                  setTitleHovered(titleHovered => !titleHovered);
+                  setTitleHovered((titleHovered) => !titleHovered);
                 }
               }}
               title={title}
@@ -290,7 +290,7 @@ export default function Details({
           </div>
         </div>
         <Description
-          onChange={event =>
+          onChange={(event) =>
             onSetEditForm({
               contentId: videoId,
               contentType: 'video',
@@ -302,7 +302,7 @@ export default function Details({
           onEdit={isEditing}
           onEditCancel={handleEditCancel}
           onEditFinish={handleEditFinish}
-          onKeyUp={event => {
+          onKeyUp={(event) => {
             if (event.key === ' ') {
               onSetEditForm({
                 contentId: videoId,
@@ -350,7 +350,7 @@ export default function Details({
                 rewardLevel: byUser ? 5 : 0,
                 myId: userId,
                 xpRewardInterfaceShown,
-                stars
+                rewards: stars
               })}
               onClick={handleSetXpRewardInterfaceShown}
             >
@@ -360,7 +360,7 @@ export default function Details({
                   rewardLevel: byUser ? 5 : 0,
                   myId: userId,
                   xpRewardInterfaceShown,
-                  stars
+                  rewards: stars
                 }) || 'Reward'}
               </span>
             </Button>
@@ -370,12 +370,12 @@ export default function Details({
           <XPRewardInterface
             innerRef={RewardInterfaceRef}
             rewardLevel={byUser ? 5 : 0}
-            stars={stars}
+            rewards={stars}
             contentType="video"
             contentId={Number(videoId)}
             noPadding
             uploaderId={uploader.id}
-            onRewardSubmit={data => {
+            onRewardSubmit={(data) => {
               onSetXpRewardInterfaceShown({
                 contentId: videoId,
                 contentType: 'video',

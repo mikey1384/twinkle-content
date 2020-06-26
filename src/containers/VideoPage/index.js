@@ -388,7 +388,7 @@ export default function VideoPage({
                 style={{
                   fontSize: '1.4rem'
                 }}
-                stars={stars}
+                rewards={stars}
                 uploaderName={uploader.username}
               />
             </div>
