@@ -25,21 +25,21 @@ export default function MenuButtons({
 }) {
   const maxRewardable = useMemo(() => Math.ceil(maxRewards / 2), [maxRewards]);
   const myRewardables = useMemo(() => {
-    const prevRewards = rewards.reduce((prev, star) => {
-      if (star.rewarderId === userId) {
-        return prev + star.rewardAmount;
+    const prevRewards = rewards.reduce((prev, reward) => {
+      if (reward.rewarderId === userId) {
+        return prev + reward.rewardAmount;
       }
       return prev;
     }, 0);
     return maxRewardable - prevRewards;
   }, [maxRewardable, rewards, userId]);
   const remainingRewards = useMemo(() => {
-    let currentStars =
+    let currentRewards =
       rewards.length > 0
         ? rewards.reduce((prev, reward) => prev + reward.rewardAmount, 0)
         : 0;
-    currentStars = Math.min(currentStars, maxRewards);
-    return maxRewards - currentStars;
+    currentRewards = Math.min(currentRewards, maxRewards);
+    return maxRewards - currentRewards;
   }, [maxRewards, rewards]);
   const multiplier = starTabActive ? 5 : 1;
   const buttons = useMemo(() => {

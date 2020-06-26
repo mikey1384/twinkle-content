@@ -20,7 +20,7 @@ export const initialUserState = {
   canDelete: false,
   canEdit: false,
   canEditRewardLevel: false,
-  canStar: false,
+  canReward: false,
   canEditPlaylists: false,
   canPinPlaylists: false,
   defaultSearchFilter: '',

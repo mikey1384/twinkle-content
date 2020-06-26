@@ -33,7 +33,7 @@ const categoryObj = {
   },
   responses: {
     filter: 'comment',
-    orderBy: 'totalStars'
+    orderBy: 'totalRewards'
   },
   videos: {
     filter: 'video',

@@ -117,7 +117,7 @@ export default function Header({
   } = useViewContext();
 
   const {
-    actions: { onAttachStar, onLikeContent, onUploadComment }
+    actions: { onAttachReward, onLikeContent, onUploadComment }
   } = useContentContext();
 
   const prevProfilePicId = useRef(profilePicId);
@@ -337,7 +337,7 @@ export default function Header({
 
     function handleNewReward({ target, reward }) {
       if (reward.rewarderId !== userId) {
-        onAttachStar({
+        onAttachReward({
           data: reward,
           contentId: target.contentId,
           contentType: target.contentType

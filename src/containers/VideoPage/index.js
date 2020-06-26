@@ -80,7 +80,7 @@ export default function VideoPage({
   const {
     actions: {
       onAddTags,
-      onAttachStar,
+      onAttachReward,
       onDeleteComment,
       onDeleteContent,
       onEditComment,
@@ -131,7 +131,7 @@ export default function VideoPage({
     likes,
     loaded,
     questions = [],
-    stars,
+    rewards,
     subjects,
     subjectsLoaded,
     subjectsLoadMoreButton,
@@ -360,7 +360,6 @@ export default function VideoPage({
             >
               <Details
                 addTags={onAddTags}
-                attachStar={onAttachStar}
                 byUser={!!byUser}
                 changingPage={changingPage}
                 rewardLevel={rewardLevel}
@@ -369,10 +368,11 @@ export default function VideoPage({
                 content={content}
                 description={description}
                 changeByUserStatus={handleChangeByUserStatus}
+                onAttachReward={onAttachReward}
                 onEditFinish={handleEditVideoPage}
                 onDelete={() => setConfirmModalShown(true)}
                 onSetRewardLevel={handleSetRewardLevel}
-                stars={stars}
+                rewards={rewards}
                 tags={tags}
                 title={title}
                 timeStamp={timeStamp}
@@ -388,7 +388,7 @@ export default function VideoPage({
                 style={{
                   fontSize: '1.4rem'
                 }}
-                rewards={stars}
+                rewards={rewards}
                 uploaderName={uploader.username}
               />
             </div>
@@ -410,7 +410,7 @@ export default function VideoPage({
               contentType="video"
               rootRewardLevel={rewardLevel}
               commentActions={{
-                attachStar: onAttachStar,
+                onAttachReward,
                 editRewardComment: onEditRewardComment,
                 onDelete: onDeleteComment,
                 onEditDone: onEditComment,
@@ -446,7 +446,7 @@ export default function VideoPage({
                 inputTypeLabel={'comment'}
                 isLoading={loadingComments}
                 loadMoreButton={commentsLoadMoreButton}
-                onAttachStar={onAttachStar}
+                onAttachReward={onAttachReward}
                 onCommentSubmit={onUploadComment}
                 onDelete={onDeleteComment}
                 onEditDone={onEditComment}

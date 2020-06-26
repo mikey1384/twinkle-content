@@ -1,11 +1,9 @@
 export const defaultChatSubject = 'Welcome!';
-export const rewardValue = {
-  star: 200
-};
 export const cloudFrontURL = `https://${process.env.REACT_APP_CLOUDFRONT_KEY}.cloudfront.net`;
 export const S3URL = `https://${process.env.REACT_APP_AWS_S3_BUCKET_NAME}.s3.amazonaws.com`;
 export const clientVersion = '1.3.75';
 export const descriptionLengthForExtraRewardLevel = 1000;
+export const rewardValue = 200;
 export const priceTable = {
   chatSubject: 5,
   chatTheme: 10

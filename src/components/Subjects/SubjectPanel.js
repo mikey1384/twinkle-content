@@ -71,8 +71,8 @@ export default function SubjectPanel({
     userId: myId
   } = useMyState();
   const {
-    attachStar,
     editRewardComment,
+    onAttachReward,
     onDelete,
     onEditDone,
     onLikeClick,
@@ -300,7 +300,7 @@ export default function SubjectPanel({
               comments={comments}
               loadMoreButton={loadMoreCommentsButton}
               userId={myId}
-              onAttachStar={attachStar}
+              onAttachReward={onAttachReward}
               onCommentSubmit={handleCommentSubmit}
               onDelete={onDelete}
               onEditDone={onEditDone}

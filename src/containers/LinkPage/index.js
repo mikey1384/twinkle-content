@@ -49,13 +49,13 @@ export default function LinkPage({
       loadSubjects
     }
   } = useAppContext();
-  const { authLevel, canDelete, canEdit, canStar, userId } = useMyState();
+  const { authLevel, canDelete, canEdit, canReward, userId } = useMyState();
   const {
     actions: { onEditLinkPage, onLikeLink, onUpdateNumLinkComments }
   } = useExploreContext();
   const {
     actions: {
-      onAttachStar,
+      onAttachReward,
       onDeleteComment,
       onDeleteContent,
       onEditComment,
@@ -94,7 +94,7 @@ export default function LinkPage({
     subjects,
     subjectsLoaded,
     subjectsLoadMoreButton,
-    stars,
+    rewards,
     timeStamp,
     title,
     uploader,
@@ -194,9 +194,9 @@ export default function LinkPage({
     [authLevel, canDelete, canEdit, uploader]
   );
   const userCanRewardThis = useMemo(
-    () => canStar && authLevel > uploader?.authLevel && !userIsUploader,
+    () => canReward && authLevel > uploader?.authLevel && !userIsUploader,
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [authLevel, canStar, uploader, userIsUploader]
+    [authLevel, canReward, uploader, userIsUploader]
   );
 
   useEffect(() => {
@@ -265,7 +265,7 @@ export default function LinkPage({
             margin-right: -1px;
             margin-left: -1px;
           `}
-          rewards={stars}
+          rewards={rewards}
         />
         <div
           style={{
@@ -293,7 +293,7 @@ export default function LinkPage({
                 disabled={determineXpButtonDisabled({
                   myId: userId,
                   xpRewardInterfaceShown,
-                  rewards: stars
+                  rewards
                 })}
                 style={{
                   fontSize: '2rem',
@@ -306,7 +306,7 @@ export default function LinkPage({
                   {determineXpButtonDisabled({
                     myId: userId,
                     xpRewardInterfaceShown,
-                    rewards: stars
+                    rewards
                   }) || 'Reward'}
                 </span>
               </Button>
@@ -324,7 +324,7 @@ export default function LinkPage({
           <div style={{ padding: '0 1rem' }}>
             <XPRewardInterface
               innerRef={RewardInterfaceRef}
-              rewards={stars}
+              rewards={rewards}
               contentType="url"
               contentId={linkId}
               noPadding
@@ -335,7 +335,7 @@ export default function LinkPage({
                   contentId: linkId,
                   shown: false
                 });
-                onAttachStar({
+                onAttachReward({
                   data,
                   contentId: linkId,
                   contentType: 'url'
@@ -365,7 +365,7 @@ export default function LinkPage({
         uploadSubject={onUploadSubject}
         contentType="url"
         commentActions={{
-          attachStar: onAttachStar,
+          onAttachReward,
           editRewardComment: onEditRewardComment,
           onDelete: handleDeleteComment,
           onEditDone: onEditComment,
@@ -384,7 +384,7 @@ export default function LinkPage({
         inputTypeLabel="comment"
         key={'comments' + linkId}
         loadMoreButton={commentsLoadMoreButton}
-        onAttachStar={onAttachStar}
+        onAttachReward={onAttachReward}
         onCommentSubmit={handleUploadComment}
         onDelete={handleDeleteComment}
         onEditDone={onEditComment}

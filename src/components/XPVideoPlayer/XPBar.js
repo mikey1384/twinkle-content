@@ -36,9 +36,7 @@ export default function XPBar({
   xpEarned,
   xpLoaded
 }) {
-  const rewardAmount = useMemo(() => rewardLevel * rewardValue.star, [
-    rewardLevel
-  ]);
+  const rewardAmount = useMemo(() => rewardLevel * rewardValue, [rewardLevel]);
   const { progress = 0 } = useContentState({
     contentType: 'video',
     contentId: videoId

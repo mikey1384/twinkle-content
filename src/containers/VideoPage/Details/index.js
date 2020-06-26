@@ -25,7 +25,6 @@ import { css } from 'emotion';
 
 Details.propTypes = {
   addTags: PropTypes.func.isRequired,
-  attachStar: PropTypes.func.isRequired,
   changeByUserStatus: PropTypes.func.isRequired,
   byUser: PropTypes.bool,
   changingPage: PropTypes.bool,
@@ -33,12 +32,13 @@ Details.propTypes = {
   description: PropTypes.string,
   rewardLevel: PropTypes.number,
   likes: PropTypes.array.isRequired,
+  onAttachReward: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onEditFinish: PropTypes.func.isRequired,
   onLikeVideo: PropTypes.func.isRequired,
   onSetRewardLevel: PropTypes.func.isRequired,
   tags: PropTypes.array,
-  stars: PropTypes.array,
+  rewards: PropTypes.array,
   timeStamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   title: PropTypes.string.isRequired,
   uploader: PropTypes.object.isRequired,
@@ -49,7 +49,6 @@ Details.propTypes = {
 
 export default function Details({
   addTags,
-  attachStar,
   byUser,
   changeByUserStatus,
   changingPage,
@@ -60,12 +59,13 @@ export default function Details({
   title,
   description,
   likes,
+  onAttachReward,
   onDelete,
   onEditFinish,
   onLikeVideo,
   tags = [],
   onSetRewardLevel,
-  stars,
+  rewards,
   timeStamp,
   videoId,
   videoViews
@@ -75,7 +75,7 @@ export default function Details({
     canDelete,
     canEdit,
     canEditPlaylists,
-    canStar
+    canReward
   } = useMyState();
   const {
     actions: { onSetIsEditing, onSetXpRewardInterfaceShown }
@@ -118,7 +118,7 @@ export default function Details({
       contentId: videoId,
       shown:
         xpRewardInterfaceShown &&
-        canStar &&
+        canReward &&
         authLevel > uploader.authLevel &&
         !userIsUploader
     });
@@ -140,9 +140,12 @@ export default function Details({
 
   const rewardButtonShown = useMemo(() => {
     return (
-      !isEditing && canStar && !userIsUploader && authLevel > uploader.authLevel
+      !isEditing &&
+      canReward &&
+      !userIsUploader &&
+      authLevel > uploader.authLevel
     );
-  }, [authLevel, canStar, isEditing, uploader.authLevel, userIsUploader]);
+  }, [authLevel, canReward, isEditing, uploader.authLevel, userIsUploader]);
 
   const editMenuItems = useMemo(() => {
     const items = [];
@@ -209,7 +212,7 @@ export default function Details({
               className={css`
                 width: CALC(100% - 25rem);
                 @media (max-width: ${mobileMaxWidth}) {
-                  width: CALC(100% - ${canStar ? '15rem' : '12rem'});
+                  width: CALC(100% - ${canReward ? '15rem' : '12rem'});
                 }
               `}
               style={{
@@ -268,7 +271,7 @@ export default function Details({
               className={css`
                 width: 25rem;
                 @media (max-width: ${mobileMaxWidth}) {
-                  width: ${canStar ? '15rem' : '12rem'};
+                  width: ${canReward ? '15rem' : '12rem'};
                 }
               `}
               style={{
@@ -277,7 +280,7 @@ export default function Details({
                 flexDirection: 'column'
               }}
               byUser={byUser}
-              canStar={canStar}
+              canReward={canReward}
               changeByUserStatus={changeByUserStatus}
               rewardLevel={rewardLevel}
               likes={likes}
@@ -350,7 +353,7 @@ export default function Details({
                 rewardLevel: byUser ? 5 : 0,
                 myId: userId,
                 xpRewardInterfaceShown,
-                rewards: stars
+                rewards
               })}
               onClick={handleSetXpRewardInterfaceShown}
             >
@@ -360,7 +363,7 @@ export default function Details({
                   rewardLevel: byUser ? 5 : 0,
                   myId: userId,
                   xpRewardInterfaceShown,
-                  rewards: stars
+                  rewards
                 }) || 'Reward'}
               </span>
             </Button>
@@ -370,7 +373,7 @@ export default function Details({
           <XPRewardInterface
             innerRef={RewardInterfaceRef}
             rewardLevel={byUser ? 5 : 0}
-            rewards={stars}
+            rewards={rewards}
             contentType="video"
             contentId={Number(videoId)}
             noPadding
@@ -381,7 +384,11 @@ export default function Details({
                 contentType: 'video',
                 shown: false
               });
-              attachStar({ data, contentId: videoId, contentType: 'video' });
+              onAttachReward({
+                data,
+                contentId: videoId,
+                contentType: 'video'
+              });
             }}
           />
         )}

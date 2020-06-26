@@ -9,7 +9,7 @@ import { mobileMaxWidth } from 'constants/css';
 
 SideButtons.propTypes = {
   byUser: PropTypes.bool.isRequired,
-  canStar: PropTypes.bool,
+  canReward: PropTypes.bool,
   className: PropTypes.string,
   rewardLevel: PropTypes.number,
   likes: PropTypes.array.isRequired,
@@ -24,7 +24,7 @@ SideButtons.propTypes = {
 
 export default function SideButtons({
   byUser,
-  canStar,
+  canReward,
   changeByUserStatus,
   className,
   rewardLevel,
@@ -47,7 +47,7 @@ export default function SideButtons({
           width: '100%'
         }}
       >
-        {canStar && (
+        {canReward && (
           <div
             style={{
               position: 'relative',

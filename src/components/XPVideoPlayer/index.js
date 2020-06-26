@@ -97,7 +97,7 @@ function XPVideoPlayer({
   const rewardingXP = useRef(false);
   const themeColor = profileTheme || 'logoBlue';
   const rewardLevelRef = useRef(0);
-  const rewardAmountRef = useRef(rewardLevel * rewardValue.star);
+  const rewardAmountRef = useRef(rewardLevel * rewardValue);
 
   useEffect(() => {
     mounted.current = true;
@@ -134,7 +134,7 @@ function XPVideoPlayer({
 
   useEffect(() => {
     rewardLevelRef.current = rewardLevel;
-    rewardAmountRef.current = rewardLevel * rewardValue.star;
+    rewardAmountRef.current = rewardLevel * rewardValue;
 
     if (!!rewardLevel && userId && !xpLoaded) {
       handleCheckXPEarned();

@@ -80,7 +80,7 @@ export default function Main() {
             </tr>
           </thead>
           <tbody>
-            {moderators.map(moderator => (
+            {moderators.map((moderator) => (
               <tr
                 key={moderator.id}
                 style={{ cursor: canManage && 'pointer' }}
@@ -160,7 +160,7 @@ export default function Main() {
             </tr>
           </thead>
           <tbody>
-            {accountTypes.map(accountType => (
+            {accountTypes.map((accountType) => (
               <tr
                 onClick={() =>
                   canManage ? setAccountTypeModalTarget(accountType.label) : {}
@@ -184,7 +184,7 @@ export default function Main() {
                   <Check checked={!!accountType.canDelete} />
                 </td>
                 <td style={{ textAlign: 'center' }}>
-                  <Check checked={!!accountType.canStar} />
+                  <Check checked={!!accountType.canReward} />
                 </td>
                 <td style={{ textAlign: 'center' }}>
                   <Check checked={!!accountType.canPinPlaylists} />
@@ -214,7 +214,7 @@ export default function Main() {
         <EditAccountTypeModal
           target={
             accountTypes.filter(
-              accountType => accountType.label === accountTypeModalTarget
+              (accountType) => accountType.label === accountTypeModalTarget
             )[0]
           }
           onHide={() => setAccountTypeModalTarget(null)}

@@ -17,9 +17,9 @@ export default function ContentActions(dispatch) {
         tagTitle
       });
     },
-    onAttachStar({ data, contentId, contentType }) {
+    onAttachReward({ data, contentId, contentType }) {
       return dispatch({
-        type: 'ATTACH_STAR',
+        type: 'ATTACH_REWARD',
         data,
         contentId,
         contentType
