@@ -71,13 +71,14 @@ export default function SubjectPanel({
     userId: myId
   } = useMyState();
   const {
-    attachStar,
     editRewardComment,
+    onAttachReward,
     onDelete,
     onEditDone,
     onLikeClick,
     onLoadMoreComments,
     onLoadMoreReplies,
+    onLoadRepliesOfReply,
     onSubjectEditDone,
     onSubjectDelete,
     onLoadSubjectComments,
@@ -299,13 +300,14 @@ export default function SubjectPanel({
               comments={comments}
               loadMoreButton={loadMoreCommentsButton}
               userId={myId}
-              onAttachStar={attachStar}
+              onAttachReward={onAttachReward}
               onCommentSubmit={handleCommentSubmit}
               onDelete={onDelete}
               onEditDone={onEditDone}
               onLikeClick={onLikeClick}
               onLoadMoreComments={loadMoreComments}
               onLoadMoreReplies={onLoadMoreReplies}
+              onLoadRepliesOfReply={onLoadRepliesOfReply}
               onReplySubmit={onUploadReply}
               onRewardCommentEdit={editRewardComment}
               parent={{

@@ -39,7 +39,6 @@ export default function MainContent({
     byUser,
     content,
     description,
-    hasHqThumb,
     isEditing,
     rootContent,
     rootObj,
@@ -75,11 +74,6 @@ export default function MainContent({
             byUser={!!(rootObj.byUser || byUser)}
             onEdit={isEditing}
             title={rootObj.title || title}
-            hasHqThumb={
-              typeof rootObj.hasHqThumb === 'number'
-                ? rootObj.hasHqThumb
-                : hasHqThumb
-            }
             uploader={rootObj.uploader || uploader}
             videoId={contentType === 'video' ? contentId : rootId}
             videoCode={contentType === 'video' ? content : rootObj.content}

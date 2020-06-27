@@ -16,7 +16,7 @@ import Loading from 'components/Loading';
 import Description from './Description';
 import { css } from 'emotion';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { determineXpButtonDisabled } from 'helpers';
+import { determineXpButtonDisabled, isMobile } from 'helpers';
 import { useContentState, useMyState, useScrollPosition } from 'helpers/hooks';
 import { processedURL } from 'helpers/stringHelpers';
 import {
@@ -49,13 +49,13 @@ export default function LinkPage({
       loadSubjects
     }
   } = useAppContext();
-  const { authLevel, canDelete, canEdit, canStar, userId } = useMyState();
+  const { authLevel, canDelete, canEdit, canReward, userId } = useMyState();
   const {
     actions: { onEditLinkPage, onLikeLink, onUpdateNumLinkComments }
   } = useExploreContext();
   const {
     actions: {
-      onAttachStar,
+      onAttachReward,
       onDeleteComment,
       onDeleteContent,
       onEditComment,
@@ -71,6 +71,8 @@ export default function LinkPage({
       onLoadMoreSubjectComments,
       onLoadMoreSubjectReplies,
       onLoadMoreSubjects,
+      onLoadRepliesOfReply,
+      onLoadSubjectRepliesOfReply,
       onLoadSubjects,
       onLoadSubjectComments,
       onSetXpRewardInterfaceShown,
@@ -92,7 +94,7 @@ export default function LinkPage({
     subjects,
     subjectsLoaded,
     subjectsLoadMoreButton,
-    stars,
+    rewards,
     timeStamp,
     title,
     uploader,
@@ -105,7 +107,8 @@ export default function LinkPage({
   useScrollPosition({
     onRecordScrollPosition,
     pathname: location.pathname,
-    scrollPositions
+    scrollPositions,
+    isMobile: isMobile(navigator)
   });
   const [loadingComments, setLoadingComments] = useState(false);
   const [notFound, setNotFound] = useState(false);
@@ -179,16 +182,21 @@ export default function LinkPage({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
-  const userIsUploader = uploader?.id === userId;
+
+  const userIsUploader = useMemo(() => uploader?.id === userId, [
+    uploader?.id,
+    userId
+  ]);
+
   const userCanEditThis = useMemo(
     () => (canEdit || canDelete) && authLevel > uploader?.authLevel,
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [authLevel, canDelete, canEdit, uploader]
   );
   const userCanRewardThis = useMemo(
-    () => canStar && authLevel > uploader?.authLevel && !userIsUploader,
+    () => canReward && authLevel > uploader?.authLevel && !userIsUploader,
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [authLevel, canStar, uploader, userIsUploader]
+    [authLevel, canReward, uploader, userIsUploader]
   );
 
   useEffect(() => {
@@ -257,7 +265,7 @@ export default function LinkPage({
             margin-right: -1px;
             margin-left: -1px;
           `}
-          stars={stars}
+          rewards={rewards}
         />
         <div
           style={{
@@ -285,7 +293,7 @@ export default function LinkPage({
                 disabled={determineXpButtonDisabled({
                   myId: userId,
                   xpRewardInterfaceShown,
-                  stars
+                  rewards
                 })}
                 style={{
                   fontSize: '2rem',
@@ -298,7 +306,7 @@ export default function LinkPage({
                   {determineXpButtonDisabled({
                     myId: userId,
                     xpRewardInterfaceShown,
-                    stars
+                    rewards
                   }) || 'Reward'}
                 </span>
               </Button>
@@ -316,7 +324,7 @@ export default function LinkPage({
           <div style={{ padding: '0 1rem' }}>
             <XPRewardInterface
               innerRef={RewardInterfaceRef}
-              stars={stars}
+              rewards={rewards}
               contentType="url"
               contentId={linkId}
               noPadding
@@ -327,7 +335,7 @@ export default function LinkPage({
                   contentId: linkId,
                   shown: false
                 });
-                onAttachStar({
+                onAttachReward({
                   data,
                   contentId: linkId,
                   contentType: 'url'
@@ -357,13 +365,14 @@ export default function LinkPage({
         uploadSubject={onUploadSubject}
         contentType="url"
         commentActions={{
-          attachStar: onAttachStar,
+          onAttachReward,
           editRewardComment: onEditRewardComment,
           onDelete: handleDeleteComment,
           onEditDone: onEditComment,
           onLikeClick: onLikeComment,
           onLoadMoreComments: onLoadMoreSubjectComments,
           onLoadMoreReplies: onLoadMoreSubjectReplies,
+          onLoadRepliesOfReply: onLoadSubjectRepliesOfReply,
           onUploadComment: handleUploadComment,
           onUploadReply: handleUploadReply
         }}
@@ -375,13 +384,14 @@ export default function LinkPage({
         inputTypeLabel="comment"
         key={'comments' + linkId}
         loadMoreButton={commentsLoadMoreButton}
-        onAttachStar={onAttachStar}
+        onAttachReward={onAttachReward}
         onCommentSubmit={handleUploadComment}
         onDelete={handleDeleteComment}
         onEditDone={onEditComment}
         onLikeClick={onLikeComment}
         onLoadMoreComments={onLoadMoreComments}
         onLoadMoreReplies={onLoadMoreReplies}
+        onLoadRepliesOfReply={onLoadRepliesOfReply}
         onReplySubmit={handleUploadReply}
         onRewardCommentEdit={onEditRewardComment}
         parent={{ contentType: 'url', contentId: linkId }}

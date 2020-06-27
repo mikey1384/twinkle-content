@@ -59,7 +59,7 @@ export default function Body({
     previewLoaded,
     rootId,
     rootType,
-    stars = [],
+    rewards = [],
     rootObj = {},
     targetObj = {},
     contentType,
@@ -78,7 +78,7 @@ export default function Body({
     canDelete,
     canEdit,
     canEditRewardLevel,
-    canStar,
+    canReward,
     userId
   } = useMyState();
   const {
@@ -109,7 +109,7 @@ export default function Body({
   });
   const {
     commentsLoadLimit,
-    onAttachStar,
+    onAttachReward,
     onByUserStatusChange,
     onCommentSubmit,
     onDeleteComment,
@@ -186,12 +186,12 @@ export default function Body({
   const xpButtonDisabled = useMemo(
     () =>
       determineXpButtonDisabled({
-        stars,
+        rewards,
         rewardLevel: finalRewardLevel,
         myId: userId,
         xpRewardInterfaceShown
       }),
-    [finalRewardLevel, stars, userId, xpRewardInterfaceShown]
+    [finalRewardLevel, rewards, userId, xpRewardInterfaceShown]
   );
 
   const editMenuItems = useMemo(() => {
@@ -274,8 +274,8 @@ export default function Body({
   ]);
 
   const userCanRewardThis = useMemo(
-    () => canStar && authLevel > uploader.authLevel && userId !== uploader.id,
-    [authLevel, canStar, uploader.authLevel, uploader.id, userId]
+    () => canReward && authLevel > uploader.authLevel && userId !== uploader.id,
+    [authLevel, canReward, uploader.authLevel, uploader.id, userId]
   );
 
   useEffect(() => {
@@ -327,7 +327,6 @@ export default function Body({
             title={rootObj.title}
             style={{ marginBottom: '1rem' }}
             uploader={rootObj.uploader}
-            hasHqThumb={rootObj.hasHqThumb}
             videoId={rootId}
             videoCode={rootObj.content}
           />
@@ -345,7 +344,7 @@ export default function Body({
             style={{
               marginBottom:
                 likes.length > 0 &&
-                !(stars.length > 0) &&
+                !(rewards.length > 0) &&
                 !commentsShown &&
                 !xpRewardInterfaceShown &&
                 '0.5rem'
@@ -484,14 +483,14 @@ export default function Body({
             contentId={contentId}
             rewardLevel={finalRewardLevel}
             uploaderId={uploader.id}
-            stars={stars}
+            rewards={rewards}
             onRewardSubmit={(data) => {
               onSetXpRewardInterfaceShown({
                 contentType,
                 contentId,
                 shown: false
               });
-              onAttachStar({ data, contentId, contentType });
+              onAttachReward({ data, contentId, contentType });
             }}
           />
         )}
@@ -499,7 +498,7 @@ export default function Body({
           contentType={contentType}
           rewardLevel={finalRewardLevel}
           onCommentEdit={onEditRewardComment}
-          stars={stars}
+          rewards={rewards}
           className={css`
             margin-top: ${secretHidden && rewardLevel ? '1rem' : ''};
             margin-left: -1px;
@@ -526,7 +525,7 @@ export default function Body({
           inputTypeLabel={contentType === 'comment' ? 'reply' : 'comment'}
           isLoading={loadingComments}
           numPreviews={numPreviewComments}
-          onAttachStar={onAttachStar}
+          onAttachReward={onAttachReward}
           onCommentSubmit={handleCommentSubmit}
           onDelete={onDeleteComment}
           onEditDone={onEditComment}

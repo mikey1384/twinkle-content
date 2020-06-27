@@ -50,7 +50,7 @@ Comment.propTypes = {
     profilePicId: PropTypes.number,
     replies: PropTypes.array,
     replyId: PropTypes.number,
-    stars: PropTypes.array,
+    rewards: PropTypes.array,
     targetObj: PropTypes.object,
     targetUserName: PropTypes.string,
     targetUserId: PropTypes.number,
@@ -83,7 +83,7 @@ function Comment({
     id: commentId,
     replies = [],
     likes = [],
-    stars = [],
+    rewards = [],
     uploader,
     numReplies,
     attachmentRootType,
@@ -98,7 +98,7 @@ function Comment({
   const {
     requestHelpers: { checkIfUserResponded, editContent, loadReplies }
   } = useAppContext();
-  const { authLevel, canDelete, canEdit, canStar, userId } = useMyState();
+  const { authLevel, canDelete, canEdit, canReward, userId } = useMyState();
   const fileType = getFileInfoFromFileName(fileName) || '';
   const {
     actions: {
@@ -122,7 +122,7 @@ function Comment({
     contentId: subject.id
   });
   const {
-    onAttachStar,
+    onAttachReward,
     onDelete,
     onEditDone,
     onLikeClick,
@@ -260,7 +260,7 @@ function Comment({
   }, [canDelete, canEdit, comment.id, userIsUploader]);
   useEffect(() => {
     handleRewardInterfaceShown(
-      rewardInterfaceShown && userIsHigherAuth && canStar && !userIsUploader
+      rewardInterfaceShown && userIsHigherAuth && canReward && !userIsUploader
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
@@ -284,9 +284,9 @@ function Comment({
       rewardLevel,
       myId: userId,
       xpRewardInterfaceShown: rewardInterfaceShown,
-      stars
+      rewards
     });
-  }, [isPreview, rewardInterfaceShown, rewardLevel, stars, userId]);
+  }, [isPreview, rewardInterfaceShown, rewardLevel, rewards, userId]);
 
   useEffect(() => {
     mounted.current = true;
@@ -515,7 +515,7 @@ function Comment({
                               : ''}
                           </span>
                         </Button>
-                        {canStar && userIsHigherAuth && !userIsUploader && (
+                        {canReward && userIsHigherAuth && !userIsUploader && (
                           <Button
                             color="pink"
                             style={{ marginLeft: '0.7rem' }}
@@ -544,13 +544,18 @@ function Comment({
               <XPRewardInterface
                 innerRef={RewardInterfaceRef}
                 rewardLevel={rewardLevel}
-                stars={stars}
+                rewards={rewards}
                 contentType="comment"
                 contentId={comment.id}
                 uploaderId={uploader.id}
                 onRewardSubmit={(data) => {
                   handleRewardInterfaceShown(false);
-                  onAttachStar({
+                  onSetXpRewardInterfaceShown({
+                    contentId: comment.id,
+                    contentType: 'comment',
+                    shown: false
+                  });
+                  onAttachReward({
                     data,
                     contentId: comment.id,
                     contentType: 'comment'
@@ -567,7 +572,7 @@ function Comment({
                   fontSize: '1.5rem',
                   marginTop: comment.likes?.length > 0 ? '0.5rem' : '1rem'
                 }}
-                stars={stars}
+                rewards={rewards}
                 uploaderName={uploader.username}
               />
             )}
@@ -581,7 +586,7 @@ function Comment({
                   rootCommentId={comment.commentId}
                   style={{
                     marginTop:
-                      stars?.length > 0 || comment.likes?.length > 0
+                      rewards?.length > 0 || comment.likes?.length > 0
                         ? '0.5rem'
                         : '1rem'
                   }}

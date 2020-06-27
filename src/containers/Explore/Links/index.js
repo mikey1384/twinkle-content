@@ -4,6 +4,7 @@ import AddLinkModal from './AddLinkModal';
 import Button from 'components/Button';
 import SectionPanel from 'components/SectionPanel';
 import LinkGroup from './LinkGroup';
+import { isMobile } from 'helpers';
 import { useScrollPosition } from 'helpers/hooks';
 import { useAppContext, useViewContext, useExploreContext } from 'contexts';
 
@@ -28,7 +29,8 @@ export default function Links({ location }) {
   useScrollPosition({
     onRecordScrollPosition,
     pathname: location.pathname,
-    scrollPositions
+    scrollPositions,
+    isMobile: isMobile(navigator)
   });
   const [addLinkModalShown, setAddLinkModalShown] = useState(false);
   const mounted = useRef(true);

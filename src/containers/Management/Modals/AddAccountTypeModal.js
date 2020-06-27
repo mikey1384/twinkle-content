@@ -25,7 +25,7 @@ export default function AddAccountTypeModal({ onHide }) {
   const [perks, setPerks] = useState({
     canEdit: false,
     canDelete: false,
-    canStar: false,
+    canReward: false,
     canPinPlaylists: false,
     canEditDictionary: false,
     canEditPlaylists: false,
@@ -75,7 +75,7 @@ export default function AddAccountTypeModal({ onHide }) {
             type="text"
             style={{ marginLeft: '1rem', width: 'auto' }}
             value={authLevel}
-            onChange={text => {
+            onChange={(text) => {
               if (isNaN(Number(text))) return setAuthLevel(0);
               const numberString = String(text % 100);
               const number = Number(numberString.replace(/^0+/, ''));
@@ -99,7 +99,7 @@ export default function AddAccountTypeModal({ onHide }) {
           >
             <tr
               onClick={() =>
-                setPerks(perk => ({
+                setPerks((perk) => ({
                   ...perk,
                   canEdit: !perk.canEdit
                 }))
@@ -112,7 +112,7 @@ export default function AddAccountTypeModal({ onHide }) {
             </tr>
             <tr
               onClick={() =>
-                setPerks(perk => ({
+                setPerks((perk) => ({
                   ...perk,
                   canDelete: !perk.canDelete
                 }))
@@ -125,20 +125,20 @@ export default function AddAccountTypeModal({ onHide }) {
             </tr>
             <tr
               onClick={() =>
-                setPerks(perk => ({
+                setPerks((perk) => ({
                   ...perk,
-                  canStar: !perk.canStar
+                  canReward: !perk.canReward
                 }))
               }
             >
               <td style={{ fontWeight: 'bold' }}>Can Reward</td>
               <td style={{ textAlign: 'center' }}>
-                <Check checked={perks.canStar} />
+                <Check checked={perks.canReward} />
               </td>
             </tr>
             <tr
               onClick={() =>
-                setPerks(perk => ({
+                setPerks((perk) => ({
                   ...perk,
                   canPinPlaylists: !perk.canPinPlaylists
                 }))
@@ -151,7 +151,7 @@ export default function AddAccountTypeModal({ onHide }) {
             </tr>
             <tr
               onClick={() =>
-                setPerks(perk => ({
+                setPerks((perk) => ({
                   ...perk,
                   canEditPlaylists: !perk.canEditPlaylists
                 }))
@@ -164,7 +164,7 @@ export default function AddAccountTypeModal({ onHide }) {
             </tr>
             <tr
               onClick={() =>
-                setPerks(perk => ({
+                setPerks((perk) => ({
                   ...perk,
                   canEditDictionary: !perk.canEditDictionary
                 }))
@@ -177,7 +177,7 @@ export default function AddAccountTypeModal({ onHide }) {
             </tr>
             <tr
               onClick={() =>
-                setPerks(perk => ({
+                setPerks((perk) => ({
                   ...perk,
                   canEditRewardLevel: !perk.canEditRewardLevel
                 }))

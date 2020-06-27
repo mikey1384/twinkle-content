@@ -1,4 +1,4 @@
-import { returnMaxStars } from 'constants/defaultValues';
+import { returnMaxRewards } from 'constants/defaultValues';
 
 export function checkScrollIsAtTheBottom({ content, container }) {
   return content.offsetHeight <= container.offsetHeight + container.scrollTop;
@@ -6,26 +6,28 @@ export function checkScrollIsAtTheBottom({ content, container }) {
 
 export function determineXpButtonDisabled({
   rewardLevel,
-  stars,
+  rewards,
   myId,
   xpRewardInterfaceShown
 }) {
-  const maxStars = returnMaxStars({ rewardLevel });
+  const maxRewards = returnMaxRewards({ rewardLevel });
   if (xpRewardInterfaceShown) return 'Reward';
-  const numTotalStars = stars.reduce(
-    (prev, star) => prev + star.rewardAmount,
+  const numTotalRewards = rewards.reduce(
+    (prev, reward) => prev + reward.rewardAmount,
     0
   );
-  if (numTotalStars >= maxStars) return `${maxStars}/${maxStars} Twinkles`;
-  const numPrevStars = stars.reduce((prev, star) => {
-    if (star.rewarderId === myId) {
-      return prev + star.rewardAmount;
+  if (numTotalRewards >= maxRewards) {
+    return `${maxRewards}/${maxRewards} Twinkles`;
+  }
+  const numPrevRewards = rewards.reduce((prev, reward) => {
+    if (reward.rewarderId === myId) {
+      return prev + reward.rewardAmount;
     }
     return prev;
   }, 0);
-  const maxRewardableStars = Math.ceil(maxStars / 2);
-  if (numPrevStars >= maxRewardableStars) {
-    return `${maxRewardableStars}/${maxRewardableStars} Rewarded`;
+  const maxRewardables = Math.ceil(maxRewards / 2);
+  if (numPrevRewards >= maxRewardables) {
+    return `${maxRewardables}/${maxRewardables} Rewarded`;
   }
   return false;
 }

@@ -14,17 +14,17 @@ import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
 
 Comment.propTypes = {
-  maxRewardableStars: PropTypes.number.isRequired,
+  maxRewardables: PropTypes.number.isRequired,
   noMarginForEditButton: PropTypes.bool,
   onEditDone: PropTypes.func,
-  star: PropTypes.object.isRequired
+  reward: PropTypes.object.isRequired
 };
 
 function Comment({
-  maxRewardableStars,
+  maxRewardables,
   noMarginForEditButton,
   onEditDone = () => {},
-  star
+  reward
 }) {
   const {
     requestHelpers: { editRewardComment }
@@ -35,13 +35,13 @@ function Comment({
   const { authLevel, canEdit, userId } = useMyState();
   const { isEditing } = useContentState({
     contentType: 'reward',
-    contentId: star.id
+    contentId: reward.id
   });
-  const userIsUploader = star.rewarderId === userId;
+  const userIsUploader = reward.rewarderId === userId;
   const editButtonShown = useMemo(() => {
-    const userCanEditThis = canEdit && authLevel > star.rewarderAuthLevel;
+    const userCanEditThis = canEdit && authLevel > reward.rewarderAuthLevel;
     return userIsUploader || userCanEditThis;
-  }, [authLevel, canEdit, star.rewarderAuthLevel, userIsUploader]);
+  }, [authLevel, canEdit, reward.rewarderAuthLevel, userIsUploader]);
   const editMenuItems = useMemo(() => {
     const items = [];
     if (userIsUploader || canEdit) {
@@ -49,14 +49,14 @@ function Comment({
         label: 'Edit',
         onClick: () =>
           onSetIsEditing({
-            contentId: star.id,
+            contentId: reward.id,
             contentType: 'reward',
             isEditing: true
           })
       });
     }
     return items;
-  }, [canEdit, onSetIsEditing, star.id, userIsUploader]);
+  }, [canEdit, onSetIsEditing, reward.id, userIsUploader]);
 
   return (
     <ErrorBoundary>
@@ -73,8 +73,8 @@ function Comment({
           `}
         >
           <ProfilePic
-            userId={star.rewarderId}
-            profilePicId={star.rewarderProfilePicId}
+            userId={reward.rewarderId}
+            profilePicId={reward.rewarderProfilePicId}
             style={{ width: '5rem', height: '5rem' }}
           />
         </div>
@@ -95,7 +95,7 @@ function Comment({
               display: 'flex',
               flexDirection: 'column',
               justifyContent:
-                stringIsEmpty(star.rewardComment) && !isEditing && 'center'
+                stringIsEmpty(reward.rewardComment) && !isEditing && 'center'
             }}
           >
             <div
@@ -105,8 +105,8 @@ function Comment({
             >
               <UsernameText
                 user={{
-                  id: star.rewarderId,
-                  username: star.rewarderUsername
+                  id: reward.rewarderId,
+                  username: reward.rewarderUsername
                 }}
                 userId={userId}
               />{' '}
@@ -114,21 +114,21 @@ function Comment({
                 style={{
                   fontWeight: 'bold',
                   color:
-                    star.rewardAmount >= maxRewardableStars
+                    reward.rewardAmount >= maxRewardables
                       ? Color.gold()
-                      : star.rewardAmount >= 10
+                      : reward.rewardAmount >= 10
                       ? Color.orange()
-                      : star.rewardAmount >= 5
+                      : reward.rewardAmount >= 5
                       ? Color.pink()
                       : Color.logoBlue()
                 }}
               >
-                rewarded {star.rewardAmount === 1 ? 'a' : star.rewardAmount}{' '}
+                rewarded {reward.rewardAmount === 1 ? 'a' : reward.rewardAmount}{' '}
                 Twinkle
-                {star.rewardAmount > 1 ? 's' : ''}
+                {reward.rewardAmount > 1 ? 's' : ''}
               </span>{' '}
               <span style={{ fontSize: '1.2rem', color: Color.gray() }}>
-                ({timeSince(star.timeStamp)})
+                ({timeSince(reward.timeStamp)})
               </span>
             </div>
             <div
@@ -141,18 +141,18 @@ function Comment({
                 wordBreak: 'break-word'
               }}
             >
-              {!isEditing && <LongText>{star.rewardComment}</LongText>}
+              {!isEditing && <LongText>{reward.rewardComment}</LongText>}
               {isEditing && (
                 <EditTextArea
-                  contentId={star.id}
+                  contentId={reward.id}
                   contentType="reward"
                   allowEmptyText
                   autoFocus
                   rows={3}
-                  text={star.rewardComment}
+                  text={reward.rewardComment}
                   onCancel={() =>
                     onSetIsEditing({
-                      contentId: star.id,
+                      contentId: reward.id,
                       contentType: 'reward',
                       isEditing: false
                     })
@@ -176,10 +176,10 @@ function Comment({
   );
 
   async function handleSubmitEdit(editedComment) {
-    await editRewardComment({ editedComment, contentId: star.id });
-    onEditDone({ id: star.id, text: editedComment });
+    await editRewardComment({ editedComment, contentId: reward.id });
+    onEditDone({ id: reward.id, text: editedComment });
     onSetIsEditing({
-      contentId: star.id,
+      contentId: reward.id,
       contentType: 'reward',
       isEditing: false
     });

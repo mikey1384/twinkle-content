@@ -137,7 +137,7 @@ function Message({
     authLevel,
     canDelete,
     canEdit,
-    canStar,
+    canReward,
     isCreator,
     userId: myId,
     username: myUsername,
@@ -149,8 +149,8 @@ function Message({
     (((canEdit || canDelete) && authLevel > uploaderAuthLevel) ||
       userIsUploader);
   const userCanRewardThis = useMemo(
-    () => canStar && authLevel > uploaderAuthLevel && myId !== userId,
-    [authLevel, canStar, uploaderAuthLevel, userId, myId]
+    () => canReward && authLevel > uploaderAuthLevel && myId !== userId,
+    [authLevel, canReward, uploaderAuthLevel, userId, myId]
   );
   const {
     requestHelpers: { editMessage, saveMessage, setChessMoveViewTimeStamp }

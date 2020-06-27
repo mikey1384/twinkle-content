@@ -9,6 +9,7 @@ import { mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 import { useContentState, useMyState, useScrollPosition } from 'helpers/hooks';
 import { useViewContext } from 'contexts';
+import { isMobile } from 'helpers';
 
 ContentPage.propTypes = {
   match: PropTypes.object.isRequired,
@@ -33,7 +34,8 @@ export default function ContentPage({
   useScrollPosition({
     onRecordScrollPosition,
     pathname,
-    scrollPositions
+    scrollPositions,
+    isMobile: isMobile(navigator)
   });
   const contentType = url.split('/')[1].slice(0, -1);
   const { loaded, deleted } = useContentState({ contentType, contentId });

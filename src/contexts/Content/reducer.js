@@ -10,7 +10,7 @@ export default function ContentReducer(state, action) {
     contentId: action.contentId,
     isEditing: false,
     placeholderHeight: 0,
-    stars: [],
+    rewards: [],
     childComments: [],
     likes: [],
     subjects: [],
@@ -61,7 +61,7 @@ export default function ContentReducer(state, action) {
       }
       return newState;
     }
-    case 'ATTACH_STAR': {
+    case 'ATTACH_REWARD': {
       const newState = { ...state };
       const contentKeys = Object.keys(newState);
       for (let contentKey of contentKeys) {
@@ -71,25 +71,25 @@ export default function ContentReducer(state, action) {
           prevContentState.contentType === action.contentType;
         newState[contentKey] = {
           ...prevContentState,
-          stars: contentMatches
-            ? (prevContentState.stars || []).concat(action.data)
-            : prevContentState.stars,
+          rewards: contentMatches
+            ? (prevContentState.rewards || []).concat(action.data)
+            : prevContentState.rewards,
           childComments:
             action.contentType === 'comment'
               ? prevContentState.childComments?.map((comment) => {
                   const commentMatches = comment.id === action.contentId;
                   return {
                     ...comment,
-                    stars: commentMatches
-                      ? (comment.stars || []).concat(action.data)
-                      : comment.stars,
+                    rewards: commentMatches
+                      ? (comment.rewards || []).concat(action.data)
+                      : comment.rewards,
                     replies: (comment.replies || []).map((reply) => {
                       const replyMatches = reply.id === action.contentId;
                       return {
                         ...reply,
-                        stars: replyMatches
-                          ? (reply.stars || []).concat(action.data)
-                          : reply.stars
+                        rewards: replyMatches
+                          ? (reply.rewards || []).concat(action.data)
+                          : reply.rewards
                       };
                     })
                   };
@@ -101,25 +101,25 @@ export default function ContentReducer(state, action) {
               action.contentType === 'subject';
             return {
               ...subject,
-              stars: subjectMatches
-                ? (subject.stars || []).concat(action.data)
-                : subject.stars,
+              rewards: subjectMatches
+                ? (subject.rewards || []).concat(action.data)
+                : subject.rewards,
               comments:
                 action.contentType === 'comment'
                   ? subject.comments.map((comment) => {
                       const commentMatches = comment.id === action.contentId;
                       return {
                         ...comment,
-                        stars: commentMatches
-                          ? (comment.stars || []).concat(action.data)
-                          : comment.stars,
+                        rewards: commentMatches
+                          ? (comment.rewards || []).concat(action.data)
+                          : comment.rewards,
                         replies: (comment.replies || []).map((reply) => {
                           const replyMatches = reply.id === action.contentId;
                           return {
                             ...reply,
-                            stars: replyMatches
-                              ? (reply.stars || []).concat(action.data)
-                              : reply.stars
+                            rewards: replyMatches
+                              ? (reply.rewards || []).concat(action.data)
+                              : reply.rewards
                           };
                         })
                       };
@@ -133,25 +133,25 @@ export default function ContentReducer(state, action) {
                 comment: prevContentState.targetObj.comment
                   ? {
                       ...prevContentState.targetObj.comment,
-                      stars:
+                      rewards:
                         prevContentState.targetObj.comment.id ===
                           action.contentId && action.contentType === 'comment'
                           ? (
-                              prevContentState.targetObj.comment.stars || []
+                              prevContentState.targetObj.comment.rewards || []
                             ).concat(action.data)
-                          : prevContentState.targetObj.comment.stars
+                          : prevContentState.targetObj.comment.rewards
                     }
                   : undefined,
                 subject: prevContentState.targetObj.subject
                   ? {
                       ...prevContentState.targetObj.subject,
-                      stars:
+                      rewards:
                         prevContentState.targetObj.subject.id ===
                           action.contentId && action.contentType === 'subject'
                           ? (
-                              prevContentState.targetObj.subject.stars || []
+                              prevContentState.targetObj.subject.rewards || []
                             ).concat(action.data)
-                          : prevContentState.targetObj.subject.stars
+                          : prevContentState.targetObj.subject.rewards
                     }
                   : undefined
               }
@@ -495,24 +495,24 @@ export default function ContentReducer(state, action) {
         const prevContentState = newState[contentKey];
         newState[contentKey] = {
           ...prevContentState,
-          stars: prevContentState.stars?.map((star) => ({
-            ...star,
+          rewards: prevContentState.rewards?.map((reward) => ({
+            ...reward,
             rewardComment:
-              star.id === action.id ? action.text : star.rewardComment
+              reward.id === action.id ? action.text : reward.rewardComment
           })),
           childComments: prevContentState.childComments?.map((comment) => ({
             ...comment,
-            stars: comment.stars?.map((star) => ({
-              ...star,
+            rewards: comment.rewards?.map((reward) => ({
+              ...reward,
               rewardComment:
-                star.id === action.id ? action.text : star.rewardComment
+                reward.id === action.id ? action.text : reward.rewardComment
             })),
             replies: (comment.replies || []).map((reply) => ({
               ...reply,
-              stars: reply.stars?.map((star) => ({
-                ...star,
+              rewards: reply.rewards?.map((reward) => ({
+                ...reward,
                 rewardComment:
-                  star.id === action.id ? action.text : star.rewardComment
+                  reward.id === action.id ? action.text : reward.rewardComment
               }))
             }))
           })),
@@ -520,20 +520,24 @@ export default function ContentReducer(state, action) {
             ...subject,
             comments: subject.comments.map((comment) => ({
               ...comment,
-              stars: comment.stars
-                ? comment.stars.map((star) => ({
-                    ...star,
+              rewards: comment.rewards
+                ? comment.rewards.map((reward) => ({
+                    ...reward,
                     rewardComment:
-                      star.id === action.id ? action.text : star.rewardComment
+                      reward.id === action.id
+                        ? action.text
+                        : reward.rewardComment
                   }))
                 : [],
               replies: (comment.replies || []).map((reply) => ({
                 ...reply,
-                stars: reply.stars
-                  ? reply.stars.map((star) => ({
-                      ...star,
+                rewards: reply.rewards
+                  ? reply.rewards.map((reward) => ({
+                      ...reward,
                       rewardComment:
-                        star.id === action.id ? action.text : star.rewardComment
+                        reward.id === action.id
+                          ? action.text
+                          : reward.rewardComment
                     }))
                   : []
               }))
@@ -545,13 +549,13 @@ export default function ContentReducer(state, action) {
                 comment: prevContentState.targetObj.comment
                   ? {
                       ...prevContentState.targetObj.comment,
-                      stars: prevContentState.targetObj.comment.stars?.map(
-                        (star) => ({
-                          ...star,
+                      rewards: prevContentState.targetObj.comment.rewards?.map(
+                        (reward) => ({
+                          ...reward,
                           rewardComment:
-                            star.id === action.id
+                            reward.id === action.id
                               ? action.text
-                              : star.rewardComment
+                              : reward.rewardComment
                         })
                       )
                     }
@@ -875,6 +879,75 @@ export default function ContentReducer(state, action) {
           })
         }
       };
+    case 'LOAD_SUBJECT_REPLIES_OF_REPLY':
+      return {
+        ...state,
+        [contentKey]: {
+          ...prevContentState,
+          subjects: prevContentState.subjects.map((subject) => {
+            return {
+              ...subject,
+              comments: subject.comments.map((comment) => {
+                if (comment.id === action.commentId) {
+                  return {
+                    ...comment,
+                    replies: [
+                      ...(comment.replies || [])
+                        .filter((reply) => reply.id <= action.replyId)
+                        .map((reply) =>
+                          reply.id === action.replyId
+                            ? {
+                                ...reply,
+                                numReplies: 0
+                              }
+                            : reply
+                        ),
+                      ...action.replies,
+                      ...(comment.replies || []).filter(
+                        (reply) => reply.id > action.replyId
+                      )
+                    ]
+                  };
+                }
+                let containsRootReply = false;
+                for (let reply of comment.replies || []) {
+                  if (reply.id === action.replyId) {
+                    containsRootReply = true;
+                    break;
+                  }
+                }
+                if (containsRootReply) {
+                  const replies = (comment.replies || []).filter(
+                    (reply) => reply.id <= action.replyId
+                  );
+                  replies[replies.length - 1] = {
+                    ...replies[replies.length - 1],
+                    numReplies: 0
+                  };
+                  return {
+                    ...comment,
+                    replies: [
+                      ...replies.map((reply) =>
+                        reply.id === action.replyId
+                          ? {
+                              ...reply,
+                              numReplies: 0
+                            }
+                          : reply
+                      ),
+                      ...action.replies,
+                      ...(comment.replies || []).filter(
+                        (reply) => reply.id > action.replyId
+                      )
+                    ]
+                  };
+                }
+                return comment;
+              })
+            };
+          })
+        }
+      };
     case 'LOAD_SUBJECTS':
       return {
         ...state,
@@ -1132,14 +1205,6 @@ export default function ContentReducer(state, action) {
         [contentKey]: {
           ...prevContentState,
           online: action.online
-        }
-      };
-    case 'SET_VIDEO_IMAGE_URL':
-      return {
-        ...state,
-        [contentKey]: {
-          ...prevContentState,
-          imageUrl: action.url
         }
       };
     case 'SET_VIDEO_CURRENT_TIME':

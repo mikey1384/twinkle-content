@@ -21,13 +21,14 @@ Subjects.propTypes = {
   contentType: PropTypes.string,
   uploadSubject: PropTypes.func.isRequired,
   commentActions: PropTypes.shape({
-    attachStar: PropTypes.func.isRequired,
+    onAttachReward: PropTypes.func.isRequired,
     editRewardComment: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     onEditDone: PropTypes.func.isRequired,
     onLikeClick: PropTypes.func.isRequired,
     onLoadMoreComments: PropTypes.func.isRequired,
     onLoadMoreReplies: PropTypes.func.isRequired,
+    onLoadRepliesOfReply: PropTypes.func.isRequired,
     onUploadComment: PropTypes.func.isRequired,
     onUploadReply: PropTypes.func.isRequired
   })
@@ -48,13 +49,14 @@ export default function Subjects({
   onSubjectDelete,
   rootRewardLevel,
   commentActions: {
-    attachStar,
+    onAttachReward,
     editRewardComment,
     onDelete,
     onEditDone,
     onLikeClick,
     onLoadMoreComments,
     onLoadMoreReplies,
+    onLoadRepliesOfReply,
     onUploadComment,
     onUploadReply
   }
@@ -65,13 +67,14 @@ export default function Subjects({
   return (
     <LocalContext.Provider
       value={{
-        attachStar,
         editRewardComment,
+        onAttachReward,
         onDelete,
         onEditDone,
         onLikeClick,
         onLoadMoreComments,
         onLoadMoreReplies,
+        onLoadRepliesOfReply,
         onSubjectEditDone,
         onSubjectDelete,
         onLoadSubjectComments,

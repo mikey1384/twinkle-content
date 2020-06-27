@@ -19,6 +19,7 @@ import Details from './Details';
 import NavMenu from './NavMenu';
 import PageTab from './PageTab';
 import URL from 'constants/URL';
+import { isMobile } from 'helpers';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 import { fetchedVideoCodeFromURL } from 'helpers/stringHelpers';
@@ -79,7 +80,7 @@ export default function VideoPage({
   const {
     actions: {
       onAddTags,
-      onAttachStar,
+      onAttachReward,
       onDeleteComment,
       onDeleteContent,
       onEditComment,
@@ -94,6 +95,8 @@ export default function VideoPage({
       onLoadMoreSubjectComments,
       onLoadMoreSubjectReplies,
       onLoadMoreSubjects,
+      onLoadRepliesOfReply,
+      onLoadSubjectRepliesOfReply,
       onLoadSubjects,
       onLoadSubjectComments,
       onLoadTags,
@@ -112,7 +115,8 @@ export default function VideoPage({
   useScrollPosition({
     onRecordScrollPosition,
     pathname,
-    scrollPositions
+    scrollPositions,
+    isMobile: isMobile(navigator)
   });
 
   const {
@@ -124,11 +128,10 @@ export default function VideoPage({
     deleted,
     description,
     rewardLevel,
-    hasHqThumb,
     likes,
     loaded,
     questions = [],
-    stars,
+    rewards,
     subjects,
     subjectsLoaded,
     subjectsLoadMoreButton,
@@ -295,7 +298,6 @@ export default function VideoPage({
                     rewardLevel={rewardLevel}
                     byUser={!!byUser}
                     key={videoId}
-                    hasHqThumb={hasHqThumb}
                     videoId={videoId}
                     videoCode={content}
                     title={title}
@@ -358,7 +360,6 @@ export default function VideoPage({
             >
               <Details
                 addTags={onAddTags}
-                attachStar={onAttachStar}
                 byUser={!!byUser}
                 changingPage={changingPage}
                 rewardLevel={rewardLevel}
@@ -367,10 +368,11 @@ export default function VideoPage({
                 content={content}
                 description={description}
                 changeByUserStatus={handleChangeByUserStatus}
+                onAttachReward={onAttachReward}
                 onEditFinish={handleEditVideoPage}
                 onDelete={() => setConfirmModalShown(true)}
                 onSetRewardLevel={handleSetRewardLevel}
-                stars={stars}
+                rewards={rewards}
                 tags={tags}
                 title={title}
                 timeStamp={timeStamp}
@@ -386,7 +388,7 @@ export default function VideoPage({
                 style={{
                   fontSize: '1.4rem'
                 }}
-                stars={stars}
+                rewards={rewards}
                 uploaderName={uploader.username}
               />
             </div>
@@ -408,13 +410,14 @@ export default function VideoPage({
               contentType="video"
               rootRewardLevel={rewardLevel}
               commentActions={{
-                attachStar: onAttachStar,
+                onAttachReward,
                 editRewardComment: onEditRewardComment,
                 onDelete: onDeleteComment,
                 onEditDone: onEditComment,
                 onLikeClick: onLikeComment,
                 onLoadMoreComments: onLoadMoreSubjectComments,
                 onLoadMoreReplies: onLoadMoreSubjectReplies,
+                onLoadRepliesOfReply: onLoadSubjectRepliesOfReply,
                 onUploadComment,
                 onUploadReply
               }}
@@ -443,13 +446,14 @@ export default function VideoPage({
                 inputTypeLabel={'comment'}
                 isLoading={loadingComments}
                 loadMoreButton={commentsLoadMoreButton}
-                onAttachStar={onAttachStar}
+                onAttachReward={onAttachReward}
                 onCommentSubmit={onUploadComment}
                 onDelete={onDeleteComment}
                 onEditDone={onEditComment}
                 onLikeClick={onLikeComment}
                 onLoadMoreComments={onLoadMoreComments}
                 onLoadMoreReplies={onLoadMoreReplies}
+                onLoadRepliesOfReply={onLoadRepliesOfReply}
                 onReplySubmit={onUploadReply}
                 onRewardCommentEdit={onEditRewardComment}
                 parent={{

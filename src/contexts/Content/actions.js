@@ -17,9 +17,9 @@ export default function ContentActions(dispatch) {
         tagTitle
       });
     },
-    onAttachStar({ data, contentId, contentType }) {
+    onAttachReward({ data, contentId, contentType }) {
       return dispatch({
-        type: 'ATTACH_STAR',
+        type: 'ATTACH_REWARD',
         data,
         contentId,
         contentType
@@ -246,6 +246,22 @@ export default function ContentActions(dispatch) {
         contentId
       });
     },
+    onLoadSubjectRepliesOfReply({
+      replies,
+      commentId,
+      replyId,
+      contentType,
+      contentId
+    }) {
+      return dispatch({
+        type: 'LOAD_SUBJECT_REPLIES_OF_REPLY',
+        replies,
+        commentId,
+        replyId,
+        contentType,
+        contentId
+      });
+    },
     onLoadSubjects({ contentId, contentType, subjects, loadMoreButton }) {
       return dispatch({
         type: 'LOAD_SUBJECTS',
@@ -457,14 +473,6 @@ export default function ContentActions(dispatch) {
         contentType,
         contentId,
         currentTime
-      });
-    },
-    onSetVideoImageUrl({ videoId, url }) {
-      return dispatch({
-        type: 'SET_VIDEO_IMAGE_URL',
-        contentType: 'video',
-        contentId: videoId,
-        url
       });
     },
     onSetVideoQuestions({ questions, contentType, contentId }) {

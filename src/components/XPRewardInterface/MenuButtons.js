@@ -5,59 +5,58 @@ import Button from 'components/Button';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 
 MenuButtons.propTypes = {
-  maxStars: PropTypes.number.isRequired,
+  maxRewards: PropTypes.number.isRequired,
   onSetSelectedAmount: PropTypes.func.isRequired,
   onSetStarTabActive: PropTypes.func.isRequired,
   selectedAmount: PropTypes.number.isRequired,
-  stars: PropTypes.array.isRequired,
+  rewards: PropTypes.array.isRequired,
   starTabActive: PropTypes.bool.isRequired,
   userId: PropTypes.number
 };
 
 export default function MenuButtons({
-  maxStars,
+  maxRewards,
   onSetSelectedAmount,
   onSetStarTabActive,
   selectedAmount,
-  stars,
+  rewards,
   starTabActive,
   userId
 }) {
-  const maxRewardableStars = useMemo(() => Math.ceil(maxStars / 2), [maxStars]);
-  const myRewardableStars = useMemo(() => {
-    const prevRewardedStars = stars.reduce((prev, star) => {
-      if (star.rewarderId === userId) {
-        return prev + star.rewardAmount;
+  const maxRewardable = useMemo(() => Math.ceil(maxRewards / 2), [maxRewards]);
+  const myRewardables = useMemo(() => {
+    const prevRewards = rewards.reduce((prev, reward) => {
+      if (reward.rewarderId === userId) {
+        return prev + reward.rewardAmount;
       }
       return prev;
     }, 0);
-    return maxRewardableStars - prevRewardedStars;
-  }, [maxRewardableStars, stars, userId]);
-  const remainingStars = useMemo(() => {
-    let currentStars =
-      stars.length > 0
-        ? stars.reduce((prev, star) => prev + star.rewardAmount, 0)
+    return maxRewardable - prevRewards;
+  }, [maxRewardable, rewards, userId]);
+  const remainingRewards = useMemo(() => {
+    let currentRewards =
+      rewards.length > 0
+        ? rewards.reduce((prev, reward) => prev + reward.rewardAmount, 0)
         : 0;
-    currentStars = Math.min(currentStars, maxStars);
-    return maxStars - currentStars;
-  }, [maxStars, stars]);
+    currentRewards = Math.min(currentRewards, maxRewards);
+    return maxRewards - currentRewards;
+  }, [maxRewards, rewards]);
   const multiplier = starTabActive ? 5 : 1;
   const buttons = useMemo(() => {
     const result = [];
     for (
       let i = 1;
       i * multiplier <=
-      Math.min(remainingStars, myRewardableStars, starTabActive ? 25 : 4);
+      Math.min(remainingRewards, myRewardables, starTabActive ? 25 : 4);
       i++
     ) {
       result.push(
         <Button
           key={i * multiplier}
           color={
-            !(i === maxRewardableStars && maxRewardableStars < 5) &&
-            i * multiplier < 5
+            !(i === maxRewardable && maxRewardable < 5) && i * multiplier < 5
               ? 'logoBlue'
-              : (i === maxRewardableStars && maxRewardableStars < 5) ||
+              : (i === maxRewardable && maxRewardable < 5) ||
                 i * multiplier >= 25
               ? 'gold'
               : 'pink'
@@ -78,7 +77,7 @@ export default function MenuButtons({
         </Button>
       );
     }
-    if (!starTabActive && Math.min(remainingStars, myRewardableStars) >= 5) {
+    if (!starTabActive && Math.min(remainingRewards, myRewardables) >= 5) {
       result.push(
         <Button
           color="pink"
@@ -99,10 +98,10 @@ export default function MenuButtons({
     return result;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    maxRewardableStars,
+    maxRewardable,
     multiplier,
-    myRewardableStars,
-    remainingStars,
+    myRewardables,
+    remainingRewards,
     selectedAmount,
     starTabActive
   ]);
@@ -117,9 +116,9 @@ export default function MenuButtons({
         fontWeight: 'bold'
       }}
     >
-      Cannot reward more than {Math.min(remainingStars, myRewardableStars)}{' '}
+      Cannot reward more than {Math.min(remainingRewards, myRewardables)}{' '}
       Twinkle
-      {Math.min(remainingStars, myRewardableStars) > 1 ? 's' : ''}
+      {Math.min(remainingRewards, myRewardables) > 1 ? 's' : ''}
     </div>
   );
 

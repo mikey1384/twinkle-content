@@ -1,13 +1,11 @@
 import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import ReactPlayer from 'react-player';
-import ProgressBar from 'components/ProgressBar';
-import Icon from 'components/Icon';
+import ReactPlayer from 'react-player/youtube';
 import ErrorBoundary from 'components/ErrorBoundary';
+import XPBar from './XPBar';
+import { rewardValue } from 'constants/defaultValues';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
-import { rewardValue } from 'constants/defaultValues';
-import { addCommasToNumber } from 'helpers/stringHelpers';
 import { useContentState, useMyState } from 'helpers/hooks';
 import {
   useAppContext,
@@ -17,12 +15,10 @@ import {
 } from 'contexts';
 
 const intervalLength = 2000;
-const xp = rewardValue.star;
 
 XPVideoPlayer.propTypes = {
   isChat: PropTypes.bool,
   byUser: PropTypes.bool,
-  hasHqThumb: PropTypes.number,
   minimized: PropTypes.bool,
   onPlay: PropTypes.func,
   rewardLevel: PropTypes.number,
@@ -36,7 +32,6 @@ function XPVideoPlayer({
   isChat,
   byUser,
   rewardLevel,
-  hasHqThumb,
   minimized,
   onPlay,
   style = {},
@@ -48,14 +43,13 @@ function XPVideoPlayer({
     requestHelpers: {
       addVideoView,
       checkXPEarned,
-      fetchVideoThumbUrl,
       updateCurrentlyWatching,
       updateUserXP,
       updateTotalViewDuration,
       updateVideoXPEarned
     }
   } = useAppContext();
-  const { profileTheme, twinkleXP, userId } = useMyState();
+  const { profileTheme, userId } = useMyState();
   const {
     state: {
       videos: { currentVideoSlot }
@@ -69,7 +63,6 @@ function XPVideoPlayer({
     actions: {
       onChangeUserCoins,
       onChangeUserXP,
-      onSetVideoImageUrl,
       onSetVideoStarted,
       onSetVideoXpEarned,
       onSetVideoXpJustEarned,
@@ -86,7 +79,6 @@ function XPVideoPlayer({
     xpEarned,
     justEarned,
     imageUrl = '',
-    progress = 0,
     watchTime = 0,
     isEditing
   } = useContentState({ contentType: 'video', contentId: videoId });
@@ -94,8 +86,7 @@ function XPVideoPlayer({
   const [alreadyEarned, setAlreadyEarned] = useState(false);
   const [startingPosition, setStartingPosition] = useState(0);
   const [timeAt, setTimeAt] = useState(0);
-  const maxRequiredDuration = 150;
-  const requiredDurationCap = useRef(maxRequiredDuration);
+  const requiredDuration = 120;
   const PlayerRef = useRef(null);
   const timerRef = useRef(null);
   const timeWatchedRef = useRef(0);
@@ -106,7 +97,8 @@ function XPVideoPlayer({
   const rewardingXP = useRef(false);
   const themeColor = profileTheme || 'logoBlue';
   const rewardLevelRef = useRef(0);
-  const rewardAmountRef = useRef(rewardLevel * xp);
+  const rewardAmountRef = useRef(rewardLevel * rewardValue);
+
   useEffect(() => {
     mounted.current = true;
     setStartingPosition(currentTime);
@@ -141,25 +133,8 @@ function XPVideoPlayer({
   }, [timeAt]);
 
   useEffect(() => {
-    PlayerRef.current?.getInternalPlayer()?.pauseVideo?.();
-    requiredDurationCap.current =
-      60 + Math.min(twinkleXP / 1000, 60) || maxRequiredDuration;
-    userIdRef.current = userId;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId]);
-
-  useEffect(() => {
     rewardLevelRef.current = rewardLevel;
-    rewardAmountRef.current = rewardLevel * xp;
-    if (!imageUrl && videoCode && typeof hasHqThumb !== 'number') {
-      fetchVideoThumb();
-    } else {
-      const imageName = hasHqThumb ? 'maxresdefault' : 'mqdefault';
-      onSetVideoImageUrl({
-        videoId,
-        url: `https://img.youtube.com/vi/${videoCode}/${imageName}.jpg`
-      });
-    }
+    rewardAmountRef.current = rewardLevel * rewardValue;
 
     if (!!rewardLevel && userId && !xpLoaded) {
       handleCheckXPEarned();
@@ -172,18 +147,9 @@ function XPVideoPlayer({
         onSetVideoXpLoaded({ videoId, loaded: true });
       }
     }
-
-    async function fetchVideoThumb() {
-      const thumbUrl = await fetchVideoThumbUrl({ videoCode, videoId });
-      if (mounted.current) {
-        onSetVideoImageUrl({
-          videoId,
-          url: thumbUrl
-        });
-      }
-    }
+    userIdRef.current = userId;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rewardLevel, userId]);
+  }, [rewardLevel, userId, videoId, xpLoaded]);
 
   useEffect(() => {
     if (isEditing) {
@@ -206,15 +172,6 @@ function XPVideoPlayer({
   }, [userId, xpEarned, playing]);
 
   useEffect(() => {
-    const newImageName = hasHqThumb ? 'maxresdefault' : 'mqdefault';
-    onSetVideoImageUrl({
-      videoId,
-      url: `https://img.youtube.com/vi/${videoCode}/${newImageName}.jpg`
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [videoCode]);
-
-  useEffect(() => {
     const userWatchingMultipleVideo =
       currentVideoSlot &&
       watchCodeRef.current &&
@@ -234,22 +191,6 @@ function XPVideoPlayer({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageVisible]);
-
-  const meterColor = useMemo(
-    () =>
-      xpEarned
-        ? Color.green()
-        : rewardLevel === 5
-        ? Color.gold()
-        : rewardLevel === 4
-        ? Color.brownOrange()
-        : rewardLevel === 3
-        ? Color.orange()
-        : rewardLevel === 2
-        ? Color.pink()
-        : Color.logoBlue(),
-    [rewardLevel, xpEarned]
-  );
 
   const videoUrl = useMemo(
     () =>
@@ -345,7 +286,6 @@ function XPVideoPlayer({
           onPlay={() => {
             onPlay?.();
             onVideoPlay({
-              requiredDurationCap: requiredDurationCap.current,
               userId: userIdRef.current,
               watchTime
             });
@@ -354,70 +294,19 @@ function XPVideoPlayer({
           onEnded={handleVideoStop}
         />
       </div>
-      {startingPosition > 0 && !started ? (
-        <div
-          style={{
-            background: Color.darkBlue(),
-            padding: '0.5rem',
-            color: '#fff',
-            fontSize: '1.5rem',
-            fontWeight: 'bold',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer'
-          }}
-          onClick={() => PlayerRef.current?.getInternalPlayer()?.playVideo()}
-        >
-          Continue Watching...
-        </div>
-      ) : (!userId || xpLoaded) &&
-        !!rewardLevel &&
-        (!started || alreadyEarned) ? (
-        <div
-          className={css`
-            font-size: 1.5rem;
-            padding: 0.5rem;
-            @media (max-width: ${mobileMaxWidth}) {
-              padding: 0.3rem;
-              font-size: ${isChat ? '1rem' : '1.5rem'};
-            }
-          `}
-          style={{
-            background: meterColor,
-            color: '#fff',
-            fontWeight: 'bold',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-        >
-          {!alreadyEarned && (
-            <div>
-              {[...Array(rewardLevel)].map((elem, index) => (
-                <Icon key={index} icon="star" />
-              ))}
-            </div>
-          )}
-          <div style={{ marginLeft: '0.7rem' }}>
-            {alreadyEarned
-              ? 'You have earned XP from this video'
-              : `Watch and earn ${addCommasToNumber(rewardLevel * xp)} XP`}
-          </div>
-        </div>
-      ) : null}
-      {!alreadyEarned && !!rewardLevel && userId && started && (
-        <ProgressBar
-          progress={progress}
-          color={justEarned ? Color.green() : meterColor}
-          noBorderRadius
-          text={
-            justEarned
-              ? `Earned ${addCommasToNumber(rewardLevel * xp)} XP!`
-              : ''
-          }
-        />
-      )}
+      <XPBar
+        alreadyEarned={alreadyEarned}
+        isChat={isChat}
+        justEarned={justEarned}
+        onPlayVideo={() => PlayerRef.current?.getInternalPlayer()?.playVideo()}
+        rewardLevel={rewardLevel}
+        started={started}
+        startingPosition={startingPosition}
+        userId={userId}
+        videoId={videoId}
+        xpEarned={xpEarned}
+        xpLoaded={xpLoaded}
+      />
     </ErrorBoundary>
   );
 
@@ -427,7 +316,7 @@ function XPVideoPlayer({
       ?.getDuration();
   }
 
-  function onVideoPlay({ requiredDurationCap, userId, watchTime }) {
+  function onVideoPlay({ userId, watchTime }) {
     onSetVideoStarted({
       contentType: 'video',
       contentId: videoId,
@@ -444,7 +333,7 @@ function XPVideoPlayer({
       }
       clearInterval(timerRef.current);
       timerRef.current = setInterval(
-        () => increaseProgress({ requiredDurationCap, userId, watchTime }),
+        () => handleIncreaseXPMeter({ userId, watchTime }),
         intervalLength
       );
     }
@@ -461,7 +350,7 @@ function XPVideoPlayer({
     onEmptyCurrentVideoSlot();
   }
 
-  async function increaseProgress({ requiredDurationCap, userId, watchTime }) {
+  async function handleIncreaseXPMeter({ userId, watchTime }) {
     setTimeAt(PlayerRef.current.getCurrentTime());
     if (!totalDurationRef.current) {
       onVideoReady();
@@ -471,9 +360,9 @@ function XPVideoPlayer({
         PlayerRef.current.getInternalPlayer()?.unMute();
       }
       const requiredViewDuration =
-        totalDurationRef.current < requiredDurationCap + 10
-          ? Math.floor(totalDurationRef.current / 2) * 2 - 20
-          : requiredDurationCap;
+        totalDurationRef.current < requiredDuration + 10
+          ? Math.floor(totalDurationRef.current * 0.8)
+          : requiredDuration;
       if (
         rewardAmountRef.current &&
         timeWatchedRef.current >= requiredViewDuration &&

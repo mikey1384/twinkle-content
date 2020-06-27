@@ -1,11 +1,9 @@
 export const defaultChatSubject = 'Welcome!';
-export const rewardValue = {
-  star: 200
-};
 export const cloudFrontURL = `https://${process.env.REACT_APP_CLOUDFRONT_KEY}.cloudfront.net`;
 export const S3URL = `https://${process.env.REACT_APP_AWS_S3_BUCKET_NAME}.s3.amazonaws.com`;
-export const clientVersion = '1.3.72';
+export const clientVersion = '1.3.76';
 export const descriptionLengthForExtraRewardLevel = 1000;
+export const rewardValue = 200;
 export const priceTable = {
   chatSubject: 5,
   chatTheme: 10
@@ -104,12 +102,12 @@ export const LAST_ONLINE_FILTER_LABEL = 'Last Online';
 export const RANKING_FILTER_LABEL = 'Ranking';
 export const MAX_PROFILE_PIC_SIZE = 10000;
 
-export const returnMaxStars = ({ rewardLevel }) => {
-  let maxStars = 5;
+export const returnMaxRewards = ({ rewardLevel }) => {
+  let maxRewards = 5;
   if (rewardLevel > 0) {
-    maxStars = 10 * rewardLevel;
+    maxRewards = 10 * rewardLevel;
   }
-  return maxStars;
+  return maxRewards;
 };
 
 const intermediateWordFrequency = 4;

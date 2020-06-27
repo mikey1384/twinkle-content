@@ -7,7 +7,7 @@ import Button from 'components/Button';
 import QuestionsListGroup from './QuestionsListGroup';
 import { isMobile } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/youtube';
 import { css } from 'emotion';
 import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';

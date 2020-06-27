@@ -8,6 +8,7 @@ import SideMenu from './SideMenu';
 import NotFound from 'components/NotFound';
 import { css } from 'emotion';
 import { mobileMaxWidth } from 'constants/css';
+import { isMobile } from 'helpers';
 import {
   useInfiniteScroll,
   useProfileState,
@@ -61,7 +62,8 @@ export default function Posts({
   useScrollPosition({
     onRecordScrollPosition,
     pathname: location.pathname,
-    scrollPositions
+    scrollPositions,
+    isMobile: isMobile(navigator)
   });
   const [loading, setLoading] = useState(false);
   const [loadingFeeds, setLoadingFeeds] = useState(false);
