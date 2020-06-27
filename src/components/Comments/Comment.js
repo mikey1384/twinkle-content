@@ -61,7 +61,7 @@ Comment.propTypes = {
     attachmentRootType: PropTypes.string,
     filePath: PropTypes.string,
     fileName: PropTypes.string,
-    fileSize: PropTypes.number
+    fileSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
   }).isRequired,
   innerRef: PropTypes.func,
   isPreview: PropTypes.bool,
@@ -471,7 +471,7 @@ function Comment({
                           contentType={'comment'}
                           fileName={fileName}
                           filePath={filePath}
-                          fileSize={fileSize}
+                          fileSize={Number(fileSize)}
                           thumbUrl={filePath}
                           videoHeight="100%"
                           style={{

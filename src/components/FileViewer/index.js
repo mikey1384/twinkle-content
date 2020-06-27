@@ -39,7 +39,6 @@ export default function FileViewer({
   const src = `${fileType === 'video' ? S3URL : cloudFrontURL}/attachments/${
     contentType === 'subject' ? 'feed' : contentType
   }/${filePath}/${encodeURIComponent(fileName)}`;
-  console.log('Src: ' + src);
 
   return (
     <div

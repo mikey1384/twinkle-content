@@ -49,9 +49,12 @@ export default function InputForm({
     state
   ]);
   const textRef = useRef(prevText);
+  const mounted = useRef(true);
   const [text, setText] = useState(prevText);
   useEffect(() => {
-    handleSetText(prevText);
+    if (mounted.current) {
+      handleSetText(prevText);
+    }
   }, [prevText]);
   const commentExceedsCharLimit = useMemo(
     () =>
@@ -61,8 +64,10 @@ export default function InputForm({
       }),
     [text]
   );
+
   useEffect(() => {
     return function saveTextBeforeUnmount() {
+      mounted.current = false;
       onEnterComment({
         contentType,
         contentId,
@@ -141,8 +146,10 @@ export default function InputForm({
     setSubmitting(true);
     try {
       await onSubmit(finalizeEmoji(text));
-      handleSetText('');
-      setSubmitting(false);
+      if (mounted.current) {
+        handleSetText('');
+        setSubmitting(false);
+      }
     } catch (error) {
       setSubmitting(false);
       console.error(error);

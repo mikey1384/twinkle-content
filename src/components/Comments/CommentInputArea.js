@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import InputForm from 'components/Forms/InputForm';
-import { useInputContext, useAppContext, useContentContext } from 'contexts';
+import { useInputContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import Icon from '../Icon';
 import Attachment from 'components/Attachment';
@@ -18,12 +18,12 @@ CommentInputArea.propTypes = {
   InputFormRef: PropTypes.object,
   numInputRows: PropTypes.number,
   onSubmit: PropTypes.func.isRequired,
+  onSubmitWithAttachment: PropTypes.func,
   parent: PropTypes.object.isRequired,
   rootCommentId: PropTypes.number,
   subjectId: PropTypes.number,
   targetCommentId: PropTypes.number,
-  style: PropTypes.object,
-  onCommentSubmit: PropTypes.func.isRequired
+  style: PropTypes.object
 };
 
 export default function CommentInputArea({
@@ -33,34 +33,26 @@ export default function CommentInputArea({
   inputTypeLabel,
   InputFormRef,
   numInputRows = 4,
+  onSubmitWithAttachment,
   onSubmit,
   parent,
   rootCommentId,
   subjectId,
   style,
-  targetCommentId,
-  onCommentSubmit
+  targetCommentId
 }) {
   const {
-    requestHelpers: { uploadFile, uploadComment }
-  } = useAppContext();
-  const {
     state,
-    actions: { onSetSubjectAttachment, onEnterComment }
+    actions: { onSetSubjectAttachment }
   } = useInputContext();
   const {
     state: contentState,
-    actions: {
-      onSetCommentUploadingFile,
-      onClearCommentFileUploadProgress,
-      onUpdateCommentFileUploadProgress,
-      onSetCommentFileUploadComplete
-    }
+    actions: { onSetCommentUploadingFile }
   } = useContentContext();
   const { profileTheme } = useMyState();
   const filePathRef = useRef(null);
   const [attachContentModalShown, setAttachContentModalShown] = useState(false);
-  const [commentContent, setCommentContent] = useState('false');
+  const [commentContent, setCommentContent] = useState('');
   const contentType = targetCommentId ? 'comment' : parent.contentType;
   const contentId = targetCommentId || parent.contentId;
   const attachment = state[contentType + contentId]?.attachment;
@@ -86,18 +78,7 @@ export default function CommentInputArea({
             innerRef={innerRef}
             clickListenerState={clickListenerState}
             autoFocus={autoFocus}
-            onSubmit={(text) => {
-              setCommentContent(text);
-              onSubmit({
-                content: text,
-                subjectId,
-                rootCommentId,
-                targetCommentId,
-                attachment,
-                contentType,
-                contentId
-              });
-            }}
+            onSubmit={handleSubmit}
             parent={
               subjectId
                 ? { contentId: subjectId, contentType: 'subject' }
@@ -137,7 +118,7 @@ export default function CommentInputArea({
         <FileUploadStatusIndicator
           style={{ fontSize: '1.7rem', fontWeight: 'bold', marginTop: 0 }}
           fileName={attachment?.file?.name}
-          onFileUpload={handleFileUpload}
+          onFileUpload={handleFileUploadComplete}
           uploadComplete={fileUploadComplete}
           uploadProgress={fileUploadProgress}
         />
@@ -160,59 +141,40 @@ export default function CommentInputArea({
     </div>
   );
 
-  function handleFileUpload() {
+  function handleFileUploadComplete() {
     filePathRef.current = uuidv1();
-    onFileUpload({
+    onSubmitWithAttachment({
+      attachment,
+      commentContent,
+      contentId,
+      contentType,
       filePath: filePathRef.current,
-      file: attachment.file
+      file: attachment.file,
+      rootCommentId,
+      subjectId,
+      targetCommentId
     });
+    setCommentContent('');
     filePathRef.current = null;
   }
 
-  async function onFileUpload({ filePath, file }) {
-    try {
-      await uploadFile({
-        filePath,
-        file,
-        context: 'comment',
-        onUploadProgress: handleUploadProgress
-      });
-      onSetCommentFileUploadComplete({ contentType, contentId });
-      const data = await uploadComment({
-        content: commentContent,
-        parent,
-        rootCommentId,
-        subjectId,
-        targetCommentId,
-        attachment,
-        filePath,
-        fileName: file.name,
-        fileSize: file.size
-      });
-      onCommentSubmit({
-        ...data,
-        contentId: parent.contentId,
-        contentType: parent.contentType
-      });
-      onClearCommentFileUploadProgress({ contentType, contentId });
+  function handleSubmit(text) {
+    if (attachment?.contentType === 'file') {
+      setCommentContent(text);
       onSetCommentUploadingFile({
         contentType,
         contentId,
-        uploading: false
+        uploading: true
       });
-      onEnterComment('');
-      onSetSubjectAttachment({
-        attachment: undefined,
-        attachContentType: contentType + contentId
-      });
-    } catch (error) {
-      console.error(error);
-    }
-    function handleUploadProgress({ loaded, total }) {
-      onUpdateCommentFileUploadProgress({
+    } else {
+      onSubmit({
+        content: text,
+        subjectId,
+        rootCommentId,
+        targetCommentId,
+        attachment,
         contentType,
-        contentId,
-        progress: loaded / total
+        contentId
       });
     }
   }
