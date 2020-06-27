@@ -85,7 +85,7 @@ function XPVideoPlayer({
   const [playing, setPlaying] = useState(false);
   const [alreadyEarned, setAlreadyEarned] = useState(false);
   const [startingPosition, setStartingPosition] = useState(0);
-  const [timeAt, setTimeAt] = useState(0);
+  const timeAt = useRef(0);
   const requiredDuration = 120;
   const PlayerRef = useRef(null);
   const timerRef = useRef(null);
@@ -121,16 +121,16 @@ function XPVideoPlayer({
 
   useEffect(() => {
     return function setCurrentTimeBeforeUnmount() {
-      if (timeAt > 0) {
+      if (timeAt.current > 0) {
         onSetVideoCurrentTime({
           contentType: 'video',
           contentId: videoId,
-          currentTime: timeAt
+          currentTime: timeAt.current
         });
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timeAt]);
+  }, [timeAt.current]);
 
   useEffect(() => {
     rewardLevelRef.current = rewardLevel;
@@ -351,7 +351,7 @@ function XPVideoPlayer({
   }
 
   async function handleIncreaseXPMeter({ userId, watchTime }) {
-    setTimeAt(PlayerRef.current.getCurrentTime());
+    timeAt.current = PlayerRef.current.getCurrentTime();
     if (!totalDurationRef.current) {
       onVideoReady();
     }
