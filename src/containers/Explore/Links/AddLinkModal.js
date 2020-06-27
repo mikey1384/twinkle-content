@@ -70,6 +70,7 @@ export default function AddLinkModal({ onHide }) {
       };
     }
     return urlExceedsCharLimit?.style;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urlError, urlExceedsCharLimit]);
 
   return (
@@ -89,9 +90,9 @@ export default function AddLinkModal({ onHide }) {
         <Input
           style={{ marginTop: '1rem', ...(titleExceedsCharLimit?.style || {}) }}
           value={form.title}
-          onChange={text => setForm({ ...form, title: text })}
+          onChange={(text) => setForm({ ...form, title: text })}
           placeholder="Enter Title"
-          onKeyUp={event => {
+          onKeyUp={(event) => {
             if (event.key === ' ') {
               setForm({
                 ...form,
@@ -113,10 +114,10 @@ export default function AddLinkModal({ onHide }) {
           value={form.description}
           minRows={4}
           placeholder="Enter Description (Optional, you don't need to write this)"
-          onChange={event =>
+          onChange={(event) =>
             setForm({ ...form, description: event.target.value })
           }
-          onKeyUp={event => {
+          onKeyUp={(event) => {
             if (event.key === ' ') {
               setForm({
                 ...form,
