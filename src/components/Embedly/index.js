@@ -2,7 +2,7 @@ import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import request from 'axios';
 import Loading from 'components/Loading';
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/lazy';
 import Icon from 'components/Icon';
 import URL from 'constants/URL';
 import TwinkleVideo from './TwinkleVideo';
