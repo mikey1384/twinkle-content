@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import StackTrace from 'stacktrace-js';
+import { css } from 'emotion';
 import { Color } from 'constants/css';
 import { clientVersion } from 'constants/defaultValues';
 import URL from 'constants/URL';
@@ -50,11 +51,30 @@ export default class ErrorBoundary extends Component {
             width: '100%',
             height: '30%',
             display: 'flex',
+            flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center'
           }}
         >
-          Something went wrong
+          <div style={{ color: Color.orange() }}>
+            Something went wrong! Please tell Mikey what happened
+          </div>
+          <div
+            className={css`
+              &:hover {
+                text-decoration: underline;
+              }
+            `}
+            style={{
+              cursor: 'pointer',
+              color: Color.blue(),
+              fontSize: '2rem',
+              marginTop: '1rem'
+            }}
+            onClick={() => window.location.reload()}
+          >
+            Tap here to reload the website (sometimes this fixes things)
+          </div>
         </div>
       );
     }

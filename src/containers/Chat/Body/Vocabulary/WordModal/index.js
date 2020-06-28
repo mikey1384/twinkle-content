@@ -87,7 +87,7 @@ export default function WordModal({ onHide, word }) {
     return result;
   }, [partOfSpeeches]);
   const posOrder = partOfSpeechOrder.filter(
-    (pos) => Object.keys(posObj[pos]).length > 0
+    (pos) => Object.keys(posObj[pos] || {}).length > 0
   );
   const title = useMemo(() => {
     if (selectedTab === 'edit') return `Edit Definitions of "${word}"`;
