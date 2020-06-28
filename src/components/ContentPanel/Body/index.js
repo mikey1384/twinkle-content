@@ -14,6 +14,7 @@ import ConfirmModal from 'components/Modals/ConfirmModal';
 import XPRewardInterface from 'components/XPRewardInterface';
 import PromotionInterface from 'components/PromotionInterface';
 import RewardStatus from 'components/RewardStatus';
+import PromotionStatus from 'components/PromotionStatus';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FileViewer from 'components/FileViewer';
 import Icon from 'components/Icon';
@@ -58,6 +59,7 @@ export default function Body({
     commentsLoadMoreButton = false,
     likes = [],
     previewLoaded,
+    promotions = [],
     rootId,
     rootType,
     rewards = [],
@@ -539,6 +541,7 @@ export default function Body({
             onPromote={handlePromoteContent}
           />
         )}
+        <PromotionStatus contentType={contentType} promotions={promotions} />
         <RewardStatus
           contentType={contentType}
           rewardLevel={finalRewardLevel}
