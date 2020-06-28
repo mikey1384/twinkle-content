@@ -453,7 +453,7 @@ export default function contentRequestHelpers({ auth, handleError }) {
     async promoteContent({ contentId, contentType }) {
       try {
         const { data } = await request.post(
-          `${URL}/content/promote`,
+          `${URL}/content/recommend`,
           { contentId, contentType },
           auth()
         );
