@@ -12,9 +12,9 @@ import MainContent from './MainContent';
 import DropdownButton from 'components/Buttons/DropdownButton';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import XPRewardInterface from 'components/XPRewardInterface';
-import PromotionInterface from 'components/PromotionInterface';
+import RecommendationInterface from 'components/RecommendationInterface';
 import RewardStatus from 'components/RewardStatus';
-import PromotionStatus from 'components/PromotionStatus';
+import RecommendationStatus from 'components/RecommendationStatus';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FileViewer from 'components/FileViewer';
 import Icon from 'components/Icon';
@@ -59,7 +59,7 @@ export default function Body({
     commentsLoadMoreButton = false,
     likes = [],
     previewLoaded,
-    promotions = [],
+    recommendations = [],
     rootId,
     rootType,
     rewards = [],
@@ -89,7 +89,7 @@ export default function Body({
   const {
     actions: {
       onSetIsEditing,
-      onSetPromotionInterfaceShown,
+      onSetRecommendationInterfaceShown,
       onSetXpRewardInterfaceShown
     }
   } = useContentContext();
@@ -101,7 +101,7 @@ export default function Body({
     fileSize,
     thumbUrl,
     isEditing,
-    promotionInterfaceShown,
+    RecommendationInterfaceShown,
     secretAnswer,
     secretShown,
     xpRewardInterfaceShown
@@ -290,11 +290,6 @@ export default function Body({
     [authLevel, canReward, uploader.authLevel, uploader.id, userId]
   );
 
-  const userCanPromoteThis = useMemo(() => userId && !userCanRewardThis, [
-    userCanRewardThis,
-    userId
-  ]);
-
   useEffect(() => {
     onSetXpRewardInterfaceShown({
       contentType,
@@ -410,23 +405,20 @@ export default function Body({
                     </span>
                   </Button>
                 )}
-                {userCanPromoteThis && (
-                  <Button
-                    color="brownOrange"
-                    style={{ marginLeft: '1rem' }}
-                    disabled={promotionInterfaceShown}
-                    onClick={() =>
-                      onSetPromotionInterfaceShown({
-                        contentType,
-                        contentId,
-                        shown: true
-                      })
-                    }
-                  >
-                    <Icon icon="star" />
-                    <span style={{ marginLeft: '0.7rem' }}>Promote</span>
-                  </Button>
-                )}
+                <Button
+                  color="brownOrange"
+                  style={{ marginLeft: '1rem' }}
+                  disabled={RecommendationInterfaceShown}
+                  onClick={() =>
+                    onSetRecommendationInterfaceShown({
+                      contentType,
+                      contentId,
+                      shown: true
+                    })
+                  }
+                >
+                  <Icon icon="certificate" />
+                </Button>
                 {editButtonShown && (
                   <DropdownButton
                     transparent
@@ -528,20 +520,20 @@ export default function Body({
             }}
           />
         )}
-        {promotionInterfaceShown && (
-          <PromotionInterface
+        {RecommendationInterfaceShown && (
+          <RecommendationInterface
             contentType={contentType}
             onHide={() =>
-              onSetPromotionInterfaceShown({
+              onSetRecommendationInterfaceShown({
                 contentType,
                 contentId,
                 shown: false
               })
             }
-            onPromote={handlePromoteContent}
+            onRecommend={handleRecommendContent}
           />
         )}
-        <PromotionStatus contentType={contentType} promotions={promotions} />
+        <RecommendationStatus recommendations={recommendations} />
         <RewardStatus
           contentType={contentType}
           rewardLevel={finalRewardLevel}
@@ -633,10 +625,10 @@ export default function Body({
     }
   }
 
-  async function handlePromoteContent() {
+  async function handleRecommendContent() {
     const data = await promoteContent({ contentId, contentType });
     console.log(data);
-    onSetPromotionInterfaceShown({
+    onSetRecommendationInterfaceShown({
       contentType,
       contentId,
       shown: false
@@ -684,8 +676,21 @@ export default function Body({
     onSetCommentsShown({ contentId, contentType });
   }
 
-  async function handleLikeClick() {
-    if (!commentsShown) {
+  async function handleLikeClick({ isUnlike }) {
+    if (!xpButtonDisabled && userCanRewardThis) {
+      onSetXpRewardInterfaceShown({
+        contentType,
+        contentId,
+        shown: !isUnlike
+      });
+    } else {
+      onSetRecommendationInterfaceShown({
+        contentType,
+        contentId,
+        shown: !isUnlike
+      });
+    }
+    if (!isUnlike && !commentsShown) {
       handleExpandComments();
     }
   }

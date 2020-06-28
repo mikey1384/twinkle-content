@@ -60,7 +60,7 @@ function LikeButton({
             });
             if (userId) {
               onLikeContent({ likes: newLikes, contentType, contentId });
-              onClick(newLikes);
+              onClick({ likes: newLikes, isUnlike: liked });
             }
             setDisabled(false);
           } catch (error) {

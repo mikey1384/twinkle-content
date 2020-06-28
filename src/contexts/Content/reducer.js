@@ -1086,7 +1086,7 @@ export default function ContentReducer(state, action) {
         ...state,
         [contentKey]: {
           ...prevContentState,
-          promotionInterfaceShown: action.shown
+          RecommendationInterfaceShown: action.shown
         }
       };
     case 'SET_REWARD_LEVEL': {

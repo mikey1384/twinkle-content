@@ -540,7 +540,7 @@ function Comment({
     });
   }
 
-  function handleLikeClick(likes) {
+  function handleLikeClick({ likes }) {
     onLikeClick({ commentId: comment.id, likes });
   }
 

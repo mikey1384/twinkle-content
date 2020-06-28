@@ -467,7 +467,7 @@ export default function LinkPage({
     });
   }
 
-  function handleLikeLink(likes) {
+  function handleLikeLink({ likes }) {
     onLikeContent({ likes, contentType: 'url', contentId: linkId });
     onLikeLink({ likes, id: linkId });
   }

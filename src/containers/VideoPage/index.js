@@ -525,8 +525,8 @@ export default function VideoPage({
     onChangeVideoByUserStatus({ videoId, byUser });
   }
 
-  function handleLikeVideo(likes, videoId) {
-    onLikeVideo({ likes, videoId });
+  function handleLikeVideo({ likes }) {
+    onLikeVideo({ likes });
   }
 
   function numberCorrect() {

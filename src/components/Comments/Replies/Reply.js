@@ -384,7 +384,7 @@ function Reply({
     });
   }
 
-  function handleLikeClick(likes) {
+  function handleLikeClick({ likes }) {
     onLikeClick({ commentId: reply.id, likes });
   }
 

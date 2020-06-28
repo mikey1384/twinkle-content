@@ -2,16 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Button from 'components/Button';
-import Icon from 'components/Icon';
 import { Color } from 'constants/css';
 
-PromotionInterface.propTypes = {
+RecommendationInterface.propTypes = {
   contentType: PropTypes.string.isRequired,
   onHide: PropTypes.func.isRequired,
-  onPromote: PropTypes.func.isRequired
+  onRecommend: PropTypes.func.isRequired
 };
 
-export default function PromotionInterface({ contentType, onHide, onPromote }) {
+export default function RecommendationInterface({
+  contentType,
+  onHide,
+  onRecommend
+}) {
   return (
     <ErrorBoundary
       style={{
@@ -28,16 +31,13 @@ export default function PromotionInterface({ contentType, onHide, onPromote }) {
         <div>
           <span style={{ fontWeight: 'bold' }}>
             <span style={{ marginRight: '0.7rem' }}>
-              Promote this {contentType}?
+              Recommend this {contentType}?
             </span>
-            (
-            <Icon icon={['far', 'badge-dollar']} />
-            <span style={{ marginLeft: '0.3rem' }}>2</span>)
           </span>
         </div>
       </div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <Button onClick={onPromote} color="darkBlue" skeuomorphic>
+        <Button onClick={onRecommend} color="darkBlue" skeuomorphic>
           Yes
         </Button>
         <Button
