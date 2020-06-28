@@ -406,7 +406,7 @@ export default function ContentActions(dispatch) {
     },
     onSetRecommendationInterfaceShown({ contentId, contentType, shown }) {
       return dispatch({
-        type: 'SET_PROMOTION_INTERFACE_SHOWN',
+        type: 'SET_RECOMMENDATION_INTERFACE_SHOWN',
         contentId,
         contentType,
         shown

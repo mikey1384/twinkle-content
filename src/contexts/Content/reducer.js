@@ -1081,7 +1081,7 @@ export default function ContentReducer(state, action) {
           prevUrl: action.prevUrl
         }
       };
-    case 'SET_PROMOTION_INTERFACE_SHOWN':
+    case 'SET_RECOMMENDATION_INTERFACE_SHOWN':
       return {
         ...state,
         [contentKey]: {
