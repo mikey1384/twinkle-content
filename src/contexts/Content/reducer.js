@@ -974,6 +974,74 @@ export default function ContentReducer(state, action) {
           tags: action.tags
         }
       };
+    case 'RECOMMEND_CONTENT': {
+      const newState = { ...state };
+      const contentKeys = Object.keys(newState);
+      for (let contentKey of contentKeys) {
+        const prevContentState = newState[contentKey];
+        newState[contentKey] = {
+          ...prevContentState,
+          recommendations:
+            prevContentState.contentId === action.contentId &&
+            prevContentState.contentType === action.contentType
+              ? action.recommendations
+              : prevContentState.recommendations,
+          childComments:
+            action.contentType === 'comment'
+              ? prevContentState.childComments.map((comment) => ({
+                  ...comment,
+                  recommendations:
+                    comment.id === action.contentId
+                      ? action.recommendations
+                      : comment.recommendations,
+                  replies: (comment.replies || []).map((reply) => ({
+                    ...reply,
+                    recommendations:
+                      reply.id === action.contentId
+                        ? action.recommendations
+                        : reply.recommendations,
+                    replies: (reply.replies || []).map((reply) => ({
+                      ...reply,
+                      recommendations:
+                        reply.id === action.contentId
+                          ? action.recommendations
+                          : reply.recommendations
+                    }))
+                  }))
+                }))
+              : prevContentState.childComments,
+          rootObj: prevContentState.rootObj
+            ? {
+                ...prevContentState.rootObj,
+                recommendations:
+                  prevContentState.rootId === action.contentId &&
+                  prevContentState.rootType === action.contentType
+                    ? action.recommendations
+                    : prevContentState.rootObj.recommendations
+              }
+            : undefined,
+          targetObj: prevContentState.targetObj
+            ? {
+                ...prevContentState.targetObj,
+                [action.contentType]: prevContentState.targetObj[
+                  action.contentType
+                ]
+                  ? {
+                      ...prevContentState.targetObj[action.contentType],
+                      recommendations:
+                        prevContentState.targetObj[action.contentType].id ===
+                        action.contentId
+                          ? action.recommendations
+                          : prevContentState.targetObj[action.contentType]
+                              .recommendations
+                    }
+                  : undefined
+              }
+            : undefined
+        };
+      }
+      return newState;
+    }
     case 'RELOAD_CONTENT':
       return {
         ...state,

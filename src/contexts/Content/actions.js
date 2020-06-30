@@ -287,6 +287,14 @@ export default function ContentActions(dispatch) {
         tags
       });
     },
+    onRecommendContent({ recommendations, contentType, contentId }) {
+      return dispatch({
+        type: 'RECOMMEND_CONTENT',
+        recommendations,
+        contentType,
+        contentId: Number(contentId)
+      });
+    },
     onReloadContent({ contentId, contentType }) {
       return dispatch({
         type: 'RELOAD_CONTENT',

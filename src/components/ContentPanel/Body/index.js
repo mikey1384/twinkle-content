@@ -74,7 +74,7 @@ export default function Body({
   onChangeSpoilerStatus
 }) {
   const {
-    requestHelpers: { deleteContent, loadComments, promoteContent }
+    requestHelpers: { deleteContent, loadComments, recommendContent }
   } = useAppContext();
 
   const {
@@ -88,6 +88,7 @@ export default function Body({
 
   const {
     actions: {
+      onRecommendContent,
       onSetIsEditing,
       onSetRecommendationInterfaceShown,
       onSetXpRewardInterfaceShown
@@ -533,7 +534,10 @@ export default function Body({
             onRecommend={handleRecommendContent}
           />
         )}
-        <RecommendationStatus recommendations={recommendations} />
+        <RecommendationStatus
+          contentType={contentType}
+          recommendations={recommendations}
+        />
         <RewardStatus
           contentType={contentType}
           rewardLevel={finalRewardLevel}
@@ -626,13 +630,25 @@ export default function Body({
   }
 
   async function handleRecommendContent() {
-    const data = await promoteContent({ contentId, contentType });
-    console.log(data);
-    onSetRecommendationInterfaceShown({
-      contentType,
-      contentId,
-      shown: false
-    });
+    try {
+      const recommendations = await recommendContent({
+        contentId,
+        contentType
+      });
+      onRecommendContent({ contentId, contentType, recommendations });
+      onSetRecommendationInterfaceShown({
+        contentType,
+        contentId,
+        shown: false
+      });
+    } catch (error) {
+      console.error(error);
+      onSetRecommendationInterfaceShown({
+        contentType,
+        contentId,
+        shown: false
+      });
+    }
   }
 
   function handleSetXpRewardInterfaceShown() {

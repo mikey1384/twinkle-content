@@ -450,14 +450,16 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async promoteContent({ contentId, contentType }) {
+    async recommendContent({ contentId, contentType }) {
       try {
-        const { data } = await request.post(
+        const {
+          data: { recommendations }
+        } = await request.post(
           `${URL}/content/recommend`,
           { contentId, contentType },
           auth()
         );
-        return Promise.resolve(data);
+        return Promise.resolve(recommendations);
       } catch (error) {
         return handleError(error);
       }
