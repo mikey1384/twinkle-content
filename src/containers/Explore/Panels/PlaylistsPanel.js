@@ -38,6 +38,7 @@ export default function PlaylistsPanel({
   const {
     actions: { onLoadMorePlaylists }
   } = useExploreContext();
+
   return (
     <SectionPanel
       innerRef={innerRef}

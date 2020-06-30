@@ -23,7 +23,7 @@ export default function Videos({ history, location }) {
   const {
     requestHelpers: { loadPlaylists, searchContent }
   } = useAppContext();
-  const { userId } = useMyState();
+  const { authLevel, userId } = useMyState();
   const {
     state: {
       videos: {
@@ -96,14 +96,17 @@ export default function Videos({ history, location }) {
         innerRef={AllPlaylistsPanelRef}
         buttonGroup={() => (
           <ButtonGroup
-            style={{ marginLeft: 'auto' }}
+            style={{
+              marginLeft: 'auto',
+              opacity: !!userId && authLevel > 0 ? 1 : 0
+            }}
             buttons={[
               {
                 label: '+ Add Playlist',
                 onClick: onOpenAddPlaylistModal,
                 skeuomorphic: true,
                 color: 'darkerGray',
-                disabled: !userId
+                disabled: !userId || authLevel === 0
               }
             ]}
           />
