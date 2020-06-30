@@ -10,8 +10,11 @@ RecommendationStatus.propTypes = {
   recommendations: PropTypes.array.isRequired
 };
 
-export default function RecommendationStatus({ contentType, recommendations }) {
-  const { profileTheme } = useMyState();
+export default function RecommendationStatus({
+  contentType,
+  recommendations = []
+}) {
+  const { profileTheme, userId } = useMyState();
   const [userListModalShown, setUserListModalShown] = useState(false);
   const recommendationsByUsertype = useMemo(() => {
     const result = [...recommendations];
@@ -19,10 +22,19 @@ export default function RecommendationStatus({ contentType, recommendations }) {
     return result;
   }, [recommendations]);
 
-  const mostRecentRecommender = recommendationsByUsertype[0];
-  const isRecommendedByModerator = mostRecentRecommender?.authLevel > 0;
+  const me = recommendationsByUsertype.filter(
+    (recommendation) => recommendation.id === userId
+  )[0];
 
-  return recommendations && recommendations.length > 0 ? (
+  const recommendationsByUsertypeExceptMe = recommendationsByUsertype.filter(
+    (recommendation) => recommendation.id !== userId
+  );
+
+  const mostRecentRecommenderOtherThanMe = recommendationsByUsertypeExceptMe[0];
+  const isRecommendedByModerator =
+    mostRecentRecommenderOtherThanMe?.authLevel > 0;
+
+  return recommendations.length > 0 ? (
     <div
       style={{
         padding: '0.5rem',
@@ -38,27 +50,42 @@ export default function RecommendationStatus({ contentType, recommendations }) {
     >
       <div>
         Recommended by{' '}
-        <UsernameText
-          color={isRecommendedByModerator ? '#000' : ''}
-          user={{
-            username: mostRecentRecommender.username,
-            id: mostRecentRecommender.id
-          }}
-        />
-        {recommendations.length === 2 && (
+        {me && (
+          <b
+            style={{
+              color: isRecommendedByModerator ? '#000' : Color.black()
+            }}
+          >
+            you
+          </b>
+        )}
+        {mostRecentRecommenderOtherThanMe && (
           <>
-            {' '}
-            and{' '}
+            {me &&
+              (recommendationsByUsertypeExceptMe.length > 1 ? ', ' : ' and ')}
             <UsernameText
-              color={isRecommendedByModerator ? '#000' : ''}
+              color={isRecommendedByModerator ? '#000' : Color.black()}
               user={{
-                username: recommendationsByUsertype[1].username,
-                id: recommendationsByUsertype[1].id
+                username: mostRecentRecommenderOtherThanMe.username,
+                id: mostRecentRecommenderOtherThanMe.id
               }}
             />
           </>
         )}
-        {recommendations.length > 2 && (
+        {recommendationsByUsertypeExceptMe.length === 2 && (
+          <>
+            {' '}
+            and{' '}
+            <UsernameText
+              color={isRecommendedByModerator ? '#000' : Color.black()}
+              user={{
+                username: recommendationsByUsertypeExceptMe[1].username,
+                id: recommendationsByUsertypeExceptMe[1].id
+              }}
+            />
+          </>
+        )}
+        {recommendationsByUsertypeExceptMe.length > 2 && (
           <>
             {' '}
             and{' '}
@@ -66,7 +93,7 @@ export default function RecommendationStatus({ contentType, recommendations }) {
               style={{ cursor: 'pointer', fontWeight: 'bold', color: '#000' }}
               onClick={() => setUserListModalShown(true)}
             >
-              {recommendations.length - 1} others
+              {recommendationsByUsertypeExceptMe.length - 1} others
             </a>
           </>
         )}

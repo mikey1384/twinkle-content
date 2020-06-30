@@ -5,12 +5,14 @@ import Button from 'components/Button';
 import { Color } from 'constants/css';
 
 RecommendationInterface.propTypes = {
+  isRecommendedByUser: PropTypes.bool,
   contentType: PropTypes.string.isRequired,
   onHide: PropTypes.func.isRequired,
   onRecommend: PropTypes.func.isRequired
 };
 
 export default function RecommendationInterface({
+  isRecommendedByUser,
   contentType,
   onHide,
   onRecommend
@@ -32,7 +34,16 @@ export default function RecommendationInterface({
         <div>
           <span style={{ fontWeight: 'bold' }}>
             <span style={{ marginRight: '0.7rem' }}>
-              Recommend this {contentType}?
+              {isRecommendedByUser ? (
+                <>
+                  <span style={{ color: Color.rose(), fontWeight: 'bold' }}>
+                    Cancel
+                  </span>{' '}
+                  your recommendation?
+                </>
+              ) : (
+                `Recommend this ${contentType}?`
+              )}
             </span>
           </span>
         </div>

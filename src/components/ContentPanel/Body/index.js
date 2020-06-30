@@ -146,6 +146,12 @@ export default function Body({
   const CommentInputAreaRef = useRef(null);
   const RewardInterfaceRef = useRef(null);
 
+  const isRecommendedByUser = useMemo(() => {
+    return (
+      recommendations.filter((recommendation) => recommendation.id === userId)
+        .length > 0
+    );
+  }, [recommendations, userId]);
   const secretHidden = useMemo(() => {
     const contentSecretHidden = !(secretShown || uploader.id === userId);
     const targetSubjectSecretHidden = !(
@@ -406,20 +412,6 @@ export default function Body({
                     </span>
                   </Button>
                 )}
-                <Button
-                  color="brownOrange"
-                  style={{ marginLeft: '1rem' }}
-                  disabled={RecommendationInterfaceShown}
-                  onClick={() =>
-                    onSetRecommendationInterfaceShown({
-                      contentType,
-                      contentId,
-                      shown: true
-                    })
-                  }
-                >
-                  <Icon icon="certificate" />
-                </Button>
                 {editButtonShown && (
                   <DropdownButton
                     transparent
@@ -460,9 +452,25 @@ export default function Body({
                 className="right"
                 style={{ position: 'relative', marginRight: 0 }}
               >
+                <Button
+                  color="brownOrange"
+                  filled={isRecommendedByUser}
+                  style={{ marginLeft: '1rem' }}
+                  disabled={RecommendationInterfaceShown}
+                  onClick={() =>
+                    onSetRecommendationInterfaceShown({
+                      contentType,
+                      contentId,
+                      shown: true
+                    })
+                  }
+                >
+                  <Icon icon="star" />
+                </Button>
                 {canEditRewardLevel &&
                   (contentType === 'subject' || contentType === 'video') && (
                     <StarButton
+                      style={{ marginLeft: '1rem' }}
                       byUser={!!contentObj.byUser}
                       contentId={contentObj.id}
                       rewardLevel={rewardLevel}
@@ -531,6 +539,7 @@ export default function Body({
                 shown: false
               })
             }
+            isRecommendedByUser={isRecommendedByUser}
             onRecommend={handleRecommendContent}
           />
         )}
@@ -700,11 +709,13 @@ export default function Body({
         shown: !isUnlike
       });
     } else {
-      onSetRecommendationInterfaceShown({
-        contentType,
-        contentId,
-        shown: !isUnlike
-      });
+      if (!isRecommendedByUser) {
+        onSetRecommendationInterfaceShown({
+          contentType,
+          contentId,
+          shown: !isUnlike
+        });
+      }
     }
     if (!isUnlike && !commentsShown) {
       handleExpandComments();
