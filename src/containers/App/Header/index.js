@@ -117,7 +117,12 @@ export default function Header({
   } = useViewContext();
 
   const {
-    actions: { onAttachReward, onLikeContent, onUploadComment }
+    actions: {
+      onAttachReward,
+      onLikeContent,
+      onRecommendContent,
+      onUploadComment
+    }
   } = useContentContext();
 
   const prevProfilePicId = useRef(profilePicId);
@@ -317,10 +322,23 @@ export default function Header({
       onChangeSocketStatus(false);
     }
 
-    function handleNewNotification({ type, target, likes, comment }) {
+    function handleNewNotification({
+      type,
+      target,
+      likes,
+      comment,
+      recommendations
+    }) {
       if (type === 'like') {
         onLikeContent({
           likes,
+          contentId: target.contentId,
+          contentType: target.contentType
+        });
+      }
+      if (type === 'recommendation') {
+        onRecommendContent({
+          recommendations,
           contentId: target.contentId,
           contentType: target.contentType
         });

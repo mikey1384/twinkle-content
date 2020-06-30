@@ -49,6 +49,27 @@ export default function NotiItem({
           </>
         );
         break;
+      case 'recommendation':
+        notificationMessage = (
+          <>
+            <span style={{ color: Color.brownOrange(), fontWeight: 'bold' }}>
+              recommended
+            </span>{' '}
+            <span>your</span>{' '}
+            <ContentLink
+              contentType={targetObj.contentType}
+              content={{
+                id: targetObj.id,
+                title: `${
+                  targetObj.contentType === 'url'
+                    ? 'link'
+                    : targetObj.contentType
+                } (${truncateText({ text: targetObj.content, limit: 100 })})`
+              }}
+            />
+          </>
+        );
+        break;
       case 'reward':
         notificationMessage = (
           <>
@@ -193,6 +214,7 @@ export default function NotiItem({
         break;
     }
     return notificationMessage;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     actionObj.amount,
     actionObj.content,
