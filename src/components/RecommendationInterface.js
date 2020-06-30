@@ -18,8 +18,9 @@ export default function RecommendationInterface({
   return (
     <ErrorBoundary
       style={{
-        background: Color.brownOrange(),
-        color: '#fff',
+        border: `1px ${Color.borderGray()} solid`,
+        borderLeft: 'none',
+        borderRight: 'none',
         marginBottom: '1rem',
         display: 'flex',
         alignItems: 'center',
