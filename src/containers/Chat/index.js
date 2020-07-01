@@ -20,14 +20,9 @@ Chat.propTypes = {
 
 function Chat({ onFileUpload }) {
   const {
-    requestHelpers: {
-      createNewChat,
-      loadChatChannel,
-      loadDMChannel,
-      updateChatLastRead
-    }
+    requestHelpers: { createNewChat, loadChatChannel, updateChatLastRead }
   } = useAppContext();
-  const { userId, username } = useMyState();
+  const { userId } = useMyState();
   const {
     state: {
       chatType,
@@ -44,7 +39,6 @@ function Chat({ onFileUpload }) {
       onEnterChannelWithId,
       onEnterEmptyChat,
       onNotifyThatMemberLeftChannel,
-      onOpenDirectMessageChannel,
       onReceiveMessage,
       onReceiveMessageOnDifferentChannel,
       onSetChessModalShown,
@@ -253,40 +247,15 @@ function Chat({ onFileUpload }) {
     onEnterChannelWithId({ data });
   }
 
-  async function handleCreateNewChannel({
-    userId,
-    channelName,
-    isClosed,
-    selectedUsers
-  }) {
+  async function handleCreateNewChannel({ userId, channelName, isClosed }) {
     setCreatingChat(true);
-    if (selectedUsers.length === 1) {
-      const recepient = selectedUsers[0];
-      const data = await loadDMChannel({ recepient });
-      onOpenDirectMessageChannel({
-        user: { id: userId, username },
-        recepient,
-        channelData: data
-      });
-      setCreateNewChatModalShown(false);
-      return setCreatingChat(false);
-    }
-
     const { message, members } = await createNewChat({
       userId,
       channelName,
-      isClosed,
-      selectedUsers
+      isClosed
     });
     onCreateNewChannel({ message, isClosed, members });
-
-    const users = selectedUsers.map((user) => user.id);
     socket.emit('join_chat_group', message.channelId);
-    socket.emit('send_group_chat_invitation', users, {
-      message,
-      isClosed,
-      members
-    });
     setCreateNewChatModalShown(false);
     setCreatingChat(false);
   }
