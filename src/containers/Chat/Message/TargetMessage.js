@@ -7,6 +7,7 @@ import UsernameText from 'components/Texts/UsernameText';
 import Spoiler from './Spoiler';
 import Embedly from 'components/Embedly';
 import ExtractedThumb from 'components/ExtractedThumb';
+import LongText from 'components/Texts/LongText';
 import { v1 as uuidv1 } from 'uuid';
 import { unix } from 'moment';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
@@ -14,7 +15,6 @@ import {
   extractVideoIdFromTwinkleVideoUrl,
   fetchURLFromText,
   getFileInfoFromFileName,
-  processedStringWithURL,
   isValidSpoiler
 } from 'helpers/stringHelpers';
 import { css } from 'emotion';
@@ -97,18 +97,16 @@ export default function TargetMessage({ message, onSetScrollToBottom }) {
             onSpoilerClick={onSetScrollToBottom}
           />
         ) : (
-          <p
-            dangerouslySetInnerHTML={{
-              __html:
-                processedStringWithURL(message.content) || message.fileName
-            }}
+          <LongText
             style={{ marginTop: '0.5rem' }}
             className={css`
               @media (max-width: ${mobileMaxWidth}) {
                 font-size: 1.3rem;
               }
             `}
-          />
+          >
+            {message.content || message.fileName}
+          </LongText>
         )}
       </div>
       {embedlyShown && (
