@@ -35,6 +35,7 @@ export const MessageStyle = {
   messageWrapper: css`
     margin-top: 0.5rem;
     position: relative;
+    display: flex;
   `,
   timeStamp: css`
     font-size: 1rem;
