@@ -8,14 +8,16 @@ RecommendationInterface.propTypes = {
   isRecommendedByUser: PropTypes.bool,
   contentType: PropTypes.string.isRequired,
   onHide: PropTypes.func.isRequired,
-  onRecommend: PropTypes.func.isRequired
+  onRecommend: PropTypes.func.isRequired,
+  style: PropTypes.object
 };
 
 export default function RecommendationInterface({
   isRecommendedByUser,
   contentType,
   onHide,
-  onRecommend
+  onRecommend,
+  style
 }) {
   return (
     <ErrorBoundary
@@ -27,7 +29,8 @@ export default function RecommendationInterface({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '1rem'
+        padding: '1rem',
+        ...style
       }}
     >
       <div>

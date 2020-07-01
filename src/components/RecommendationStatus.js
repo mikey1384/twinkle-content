@@ -7,12 +7,14 @@ import { useMyState } from 'helpers/hooks';
 
 RecommendationStatus.propTypes = {
   contentType: PropTypes.string.isRequired,
-  recommendations: PropTypes.array.isRequired
+  recommendations: PropTypes.array.isRequired,
+  style: PropTypes.object
 };
 
 export default function RecommendationStatus({
   contentType,
-  recommendations = []
+  recommendations = [],
+  style
 }) {
   const { profileTheme, userId } = useMyState();
   const [userListModalShown, setUserListModalShown] = useState(false);
@@ -32,7 +34,7 @@ export default function RecommendationStatus({
 
   const mostRecentRecommenderOtherThanMe = recommendationsByUsertypeExceptMe[0];
   const isRecommendedByModerator =
-    mostRecentRecommenderOtherThanMe?.authLevel > 0;
+    me?.authLevel > 0 || mostRecentRecommenderOtherThanMe?.authLevel > 0;
 
   return recommendations.length > 0 ? (
     <div
@@ -45,7 +47,8 @@ export default function RecommendationStatus({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        fontSize: '1.5rem'
+        fontSize: '1.5rem',
+        ...style
       }}
     >
       <div>

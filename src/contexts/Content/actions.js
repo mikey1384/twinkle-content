@@ -412,14 +412,6 @@ export default function ContentActions(dispatch) {
         prevUrl
       });
     },
-    onSetRecommendationInterfaceShown({ contentId, contentType, shown }) {
-      return dispatch({
-        type: 'SET_RECOMMENDATION_INTERFACE_SHOWN',
-        contentId,
-        contentType,
-        shown
-      });
-    },
     onSetRewardLevel({ rewardLevel, contentType, contentId }) {
       return dispatch({
         type: 'SET_REWARD_LEVEL',

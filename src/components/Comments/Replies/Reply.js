@@ -21,6 +21,8 @@ import LikeButton from 'components/Buttons/LikeButton';
 import ReplyInputArea from './ReplyInputArea';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import LongText from 'components/Texts/LongText';
+import RecommendationInterface from 'components/RecommendationInterface';
+import RecommendationStatus from 'components/RecommendationStatus';
 import RewardStatus from 'components/RewardStatus';
 import XPRewardInterface from 'components/XPRewardInterface';
 import { commentContainer } from '../Styles';
@@ -46,6 +48,7 @@ Reply.propTypes = {
     likes: PropTypes.array,
     numReplies: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     originType: PropTypes.string,
+    recommendations: PropTypes.array,
     profilePicId: PropTypes.number,
     replyId: PropTypes.number,
     rewards: PropTypes.array,
@@ -68,17 +71,17 @@ function Reply({
   onLoadRepliesOfReply,
   parent,
   reply,
-  reply: { likes = [], rewards = [], uploader },
+  reply: { likes = [], recommendations = [], rewards = [], uploader },
   rootContent,
   onSubmitReply,
   subject
 }) {
   const {
-    requestHelpers: { editContent, loadReplies }
+    requestHelpers: { editContent, loadReplies, recommendContent }
   } = useAppContext();
   const { authLevel, canDelete, canEdit, canReward, userId } = useMyState();
   const {
-    actions: { onSetIsEditing, onSetXpRewardInterfaceShown }
+    actions: { onSetIsEditing, onRecommendContent, onSetXpRewardInterfaceShown }
   } = useContentContext();
   const {
     deleted,
@@ -101,10 +104,20 @@ function Reply({
   const [loadingReplies, setLoadingReplies] = useState(false);
   const [userListModalShown, setUserListModalShown] = useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
+  const [
+    recommendationInterfaceShown,
+    setRecommendationInterfaceShown
+  ] = useState(false);
   const ReplyInputAreaRef = useRef(null);
   const RewardInterfaceRef = useRef(null);
   const userIsUploader = userId === uploader.id;
   const userIsHigherAuth = authLevel > uploader.authLevel;
+  const isRecommendedByUser = useMemo(() => {
+    return (
+      recommendations.filter((recommendation) => recommendation.id === userId)
+        .length > 0
+    );
+  }, [recommendations, userId]);
   const editButtonShown = useMemo(() => {
     const userCanEditThis = (canEdit || canDelete) && userIsHigherAuth;
     return userIsUploader || userCanEditThis;
@@ -258,51 +271,86 @@ function Reply({
                   <LongText className="comment__content">
                     {reply.content}
                   </LongText>
-                  <div className="comment__buttons">
-                    <LikeButton
-                      contentId={reply.id}
-                      contentType="comment"
-                      onClick={handleLikeClick}
-                      likes={likes}
-                      small
-                    />
-                    <Button
-                      transparent
-                      style={{ marginLeft: '1rem' }}
-                      onClick={handleReplyClick}
-                      disabled={loadingReplies}
-                    >
-                      <Icon icon="comment-alt" />
-                      <span style={{ marginLeft: '0.7rem' }}>
-                        {reply.numReplies > 1 ? 'Replies' : 'Reply'}
-                        {reply.numReplies > 0 ? ` (${reply.numReplies})` : ''}
-                      </span>
-                    </Button>
-                    {rewardButtonShown && (
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                    <div>
+                      <div className="comment__buttons">
+                        <LikeButton
+                          contentId={reply.id}
+                          contentType="comment"
+                          onClick={handleLikeClick}
+                          likes={likes}
+                          small
+                        />
+                        <Button
+                          transparent
+                          style={{ marginLeft: '1rem' }}
+                          onClick={handleReplyClick}
+                          disabled={loadingReplies}
+                        >
+                          <Icon icon="comment-alt" />
+                          <span style={{ marginLeft: '0.7rem' }}>
+                            {reply.numReplies > 1 ? 'Replies' : 'Reply'}
+                            {reply.numReplies > 0
+                              ? ` (${reply.numReplies})`
+                              : ''}
+                          </span>
+                        </Button>
+                        {rewardButtonShown && (
+                          <Button
+                            color="pink"
+                            style={{ marginLeft: '1rem' }}
+                            onClick={() => handleRewardInterfaceShown(true)}
+                            disabled={!!xpButtonDisabled}
+                          >
+                            <Icon icon="certificate" />
+                            <span style={{ marginLeft: '0.7rem' }}>
+                              {xpButtonDisabled || 'Reward'}
+                            </span>
+                          </Button>
+                        )}
+                      </div>
+                      <small>
+                        <Likers
+                          className="comment__likes"
+                          userId={userId}
+                          likes={reply.likes}
+                          onLinkClick={() => setUserListModalShown(true)}
+                        />
+                      </small>
+                    </div>
+                    <div>
                       <Button
-                        color="pink"
-                        style={{ marginLeft: '1rem' }}
-                        onClick={() => handleRewardInterfaceShown(true)}
-                        disabled={!!xpButtonDisabled}
+                        color="brownOrange"
+                        filled={isRecommendedByUser}
+                        disabled={recommendationInterfaceShown}
+                        onClick={() => setRecommendationInterfaceShown(true)}
                       >
-                        <Icon icon="certificate" />
-                        <span style={{ marginLeft: '0.7rem' }}>
-                          {xpButtonDisabled || 'Reward'}
-                        </span>
+                        <Icon icon="star" />
                       </Button>
-                    )}
+                    </div>
                   </div>
-                  <small>
-                    <Likers
-                      className="comment__likes"
-                      userId={userId}
-                      likes={reply.likes}
-                      onLinkClick={() => setUserListModalShown(true)}
-                    />
-                  </small>
                 </div>
               )}
             </div>
+            <RecommendationStatus
+              style={{ marginTop: likes.length > 0 ? '0.5rem' : '1rem' }}
+              contentType="comment"
+              recommendations={recommendations}
+            />
+            {recommendationInterfaceShown && (
+              <RecommendationInterface
+                style={{ marginTop: likes.length > 0 ? '0.5rem' : '1rem' }}
+                contentType="comment"
+                onHide={() => setRecommendationInterfaceShown(false)}
+                isRecommendedByUser={isRecommendedByUser}
+                onRecommend={handleRecommend}
+              />
+            )}
             {rewardInterfaceShown && (
               <XPRewardInterface
                 innerRef={RewardInterfaceRef}
@@ -386,6 +434,24 @@ function Reply({
 
   function handleLikeClick({ likes }) {
     onLikeClick({ commentId: reply.id, likes });
+  }
+
+  async function handleRecommend() {
+    try {
+      const recommendations = await recommendContent({
+        contentId: reply.id,
+        contentType: 'comment'
+      });
+      onRecommendContent({
+        contentId: reply.id,
+        contentType: 'comment',
+        recommendations
+      });
+      setRecommendationInterfaceShown(false);
+    } catch (error) {
+      console.error(error);
+      setRecommendationInterfaceShown(false);
+    }
   }
 
   function handleRewardInterfaceShown(shown) {

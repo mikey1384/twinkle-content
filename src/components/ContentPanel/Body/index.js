@@ -87,12 +87,7 @@ export default function Body({
   } = useMyState();
 
   const {
-    actions: {
-      onRecommendContent,
-      onSetIsEditing,
-      onSetRecommendationInterfaceShown,
-      onSetXpRewardInterfaceShown
-    }
+    actions: { onRecommendContent, onSetIsEditing, onSetXpRewardInterfaceShown }
   } = useContentContext();
 
   const {
@@ -102,7 +97,6 @@ export default function Body({
     fileSize,
     thumbUrl,
     isEditing,
-    RecommendationInterfaceShown,
     secretAnswer,
     secretShown,
     xpRewardInterfaceShown
@@ -142,6 +136,10 @@ export default function Body({
   const [userListModalShown, setUserListModalShown] = useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   const [loadingComments, setLoadingComments] = useState(false);
+  const [
+    recommendationInterfaceShown,
+    setRecommendationInterfaceShown
+  ] = useState(false);
   const mounted = useRef(true);
   const CommentInputAreaRef = useRef(null);
   const RewardInterfaceRef = useRef(null);
@@ -455,15 +453,8 @@ export default function Body({
                 <Button
                   color="brownOrange"
                   filled={isRecommendedByUser}
-                  style={{ marginLeft: '1rem' }}
-                  disabled={RecommendationInterfaceShown}
-                  onClick={() =>
-                    onSetRecommendationInterfaceShown({
-                      contentType,
-                      contentId,
-                      shown: true
-                    })
-                  }
+                  disabled={recommendationInterfaceShown}
+                  onClick={() => setRecommendationInterfaceShown(true)}
                 >
                   <Icon icon="star" />
                 </Button>
@@ -511,6 +502,18 @@ export default function Body({
             </div>
           </div>
         )}
+        <RecommendationStatus
+          contentType={contentType}
+          recommendations={recommendations}
+        />
+        {recommendationInterfaceShown && (
+          <RecommendationInterface
+            contentType={contentType}
+            onHide={() => setRecommendationInterfaceShown(false)}
+            isRecommendedByUser={isRecommendedByUser}
+            onRecommend={handleRecommendContent}
+          />
+        )}
         {xpRewardInterfaceShown && (
           <XPRewardInterface
             innerRef={RewardInterfaceRef}
@@ -529,24 +532,6 @@ export default function Body({
             }}
           />
         )}
-        {RecommendationInterfaceShown && (
-          <RecommendationInterface
-            contentType={contentType}
-            onHide={() =>
-              onSetRecommendationInterfaceShown({
-                contentType,
-                contentId,
-                shown: false
-              })
-            }
-            isRecommendedByUser={isRecommendedByUser}
-            onRecommend={handleRecommendContent}
-          />
-        )}
-        <RecommendationStatus
-          contentType={contentType}
-          recommendations={recommendations}
-        />
         <RewardStatus
           contentType={contentType}
           rewardLevel={finalRewardLevel}
@@ -645,18 +630,10 @@ export default function Body({
         contentType
       });
       onRecommendContent({ contentId, contentType, recommendations });
-      onSetRecommendationInterfaceShown({
-        contentType,
-        contentId,
-        shown: false
-      });
+      setRecommendationInterfaceShown(false);
     } catch (error) {
       console.error(error);
-      onSetRecommendationInterfaceShown({
-        contentType,
-        contentId,
-        shown: false
-      });
+      setRecommendationInterfaceShown(false);
     }
   }
 
@@ -710,11 +687,7 @@ export default function Body({
       });
     } else {
       if (!isRecommendedByUser) {
-        onSetRecommendationInterfaceShown({
-          contentType,
-          contentId,
-          shown: !isUnlike
-        });
+        setRecommendationInterfaceShown(!isUnlike);
       }
     }
     if (!isUnlike && !commentsShown) {

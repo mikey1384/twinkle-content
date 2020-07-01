@@ -20,6 +20,8 @@ import LikeButton from 'components/Buttons/LikeButton';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import LongText from 'components/Texts/LongText';
 import RewardStatus from 'components/RewardStatus';
+import RecommendationInterface from 'components/RecommendationInterface';
+import RecommendationStatus from 'components/RecommendationStatus';
 import HiddenComment from 'components/HiddenComment';
 import XPRewardInterface from 'components/XPRewardInterface';
 import SubjectLink from './SubjectLink';
@@ -41,6 +43,8 @@ Comment.propTypes = {
     likes: PropTypes.array,
     numReplies: PropTypes.number,
     profilePicId: PropTypes.number,
+    recommendationInterfaceShown: PropTypes.bool,
+    recommendations: PropTypes.array,
     replies: PropTypes.array,
     replyId: PropTypes.number,
     rewards: PropTypes.array,
@@ -71,6 +75,7 @@ function Comment({
     id: commentId,
     replies = [],
     likes = [],
+    recommendations = [],
     rewards = [],
     uploader,
     numReplies
@@ -79,13 +84,19 @@ function Comment({
   subject = subject || comment.targetObj?.subject || {};
   const history = useHistory();
   const {
-    requestHelpers: { checkIfUserResponded, editContent, loadReplies }
+    requestHelpers: {
+      checkIfUserResponded,
+      editContent,
+      loadReplies,
+      recommendContent
+    }
   } = useAppContext();
   const { authLevel, canDelete, canEdit, canReward, userId } = useMyState();
   const {
     actions: {
       onChangeSpoilerStatus,
       onLoadReplies,
+      onRecommendContent,
       onSetIsEditing,
       onSetXpRewardInterfaceShown
     }
@@ -115,6 +126,10 @@ function Comment({
   const [rewardInterfaceShown, setRewardInterfaceShown] = useState(
     prevRewardInterfaceShown
   );
+  const [
+    recommendationInterfaceShown,
+    setRecommendationInterfaceShown
+  ] = useState(false);
   const rewardInterfaceShownRef = useRef(prevRewardInterfaceShown);
   const [userListModalShown, setUserListModalShown] = useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
@@ -125,6 +140,12 @@ function Comment({
   const ReplyRefs = {};
   const mounted = useRef(true);
   const RewardInterfaceRef = useRef(null);
+  const isRecommendedByUser = useMemo(() => {
+    return (
+      recommendations.filter((recommendation) => recommendation.id === userId)
+        .length > 0
+    );
+  }, [recommendations, userId]);
   const rewardLevel = useMemo(() => {
     if (isPreview) return 0;
     if (parent.contentType === 'subject' && parent.rewardLevel > 0) {
@@ -392,55 +413,90 @@ function Comment({
                     </LongText>
                   )}
                   {!isPreview && !isHidden && (
-                    <>
-                      <div className="comment__buttons">
-                        <LikeButton
-                          contentType="comment"
-                          contentId={comment.id}
-                          onClick={handleLikeClick}
-                          likes={likes}
-                        />
-                        <Button
-                          disabled={loadingReplies}
-                          transparent
-                          style={{ marginLeft: '1rem' }}
-                          onClick={handleReplyButtonClick}
-                        >
-                          <Icon icon="comment-alt" />
-                          <span style={{ marginLeft: '1rem' }}>
-                            {numReplies > 1 && parent.contentType === 'comment'
-                              ? 'Replies'
-                              : 'Reply'}{' '}
-                            {numReplies > 0 && parent.contentType === 'comment'
-                              ? ` (${numReplies})`
-                              : ''}
-                          </span>
-                        </Button>
-                        {canReward && userIsHigherAuth && !userIsUploader && (
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between'
+                      }}
+                    >
+                      <div>
+                        <div className="comment__buttons">
+                          <LikeButton
+                            contentType="comment"
+                            contentId={comment.id}
+                            onClick={handleLikeClick}
+                            likes={likes}
+                          />
                           <Button
-                            color="pink"
-                            style={{ marginLeft: '0.7rem' }}
-                            onClick={() => handleRewardInterfaceShown(true)}
-                            disabled={!!xpButtonDisabled}
+                            disabled={loadingReplies}
+                            transparent
+                            style={{ marginLeft: '1rem' }}
+                            onClick={handleReplyButtonClick}
                           >
-                            <Icon icon="certificate" />
-                            <span style={{ marginLeft: '0.7rem' }}>
-                              {xpButtonDisabled || 'Reward'}
+                            <Icon icon="comment-alt" />
+                            <span style={{ marginLeft: '1rem' }}>
+                              {numReplies > 1 &&
+                              parent.contentType === 'comment'
+                                ? 'Replies'
+                                : 'Reply'}{' '}
+                              {numReplies > 0 &&
+                              parent.contentType === 'comment'
+                                ? ` (${numReplies})`
+                                : ''}
                             </span>
                           </Button>
-                        )}
+                          {canReward && userIsHigherAuth && !userIsUploader && (
+                            <Button
+                              color="pink"
+                              style={{ marginLeft: '0.7rem' }}
+                              onClick={() => handleRewardInterfaceShown(true)}
+                              disabled={!!xpButtonDisabled}
+                            >
+                              <Icon icon="certificate" />
+                              <span style={{ marginLeft: '0.7rem' }}>
+                                {xpButtonDisabled || 'Reward'}
+                              </span>
+                            </Button>
+                          )}
+                        </div>
+                        <Likers
+                          className="comment__likes"
+                          userId={userId}
+                          likes={comment.likes}
+                          onLinkClick={() => setUserListModalShown(true)}
+                        />
                       </div>
-                      <Likers
-                        className="comment__likes"
-                        userId={userId}
-                        likes={comment.likes}
-                        onLinkClick={() => setUserListModalShown(true)}
-                      />
-                    </>
+                      <div>
+                        <Button
+                          color="brownOrange"
+                          filled={isRecommendedByUser}
+                          disabled={recommendationInterfaceShown}
+                          onClick={() => setRecommendationInterfaceShown(true)}
+                        >
+                          <Icon icon="star" />
+                        </Button>
+                      </div>
+                    </div>
                   )}
                 </div>
               )}
             </div>
+            {!isPreview && (
+              <RecommendationStatus
+                style={{ marginTop: likes.length > 0 ? '0.5rem' : '1rem' }}
+                contentType="comment"
+                recommendations={recommendations}
+              />
+            )}
+            {!isPreview && recommendationInterfaceShown && (
+              <RecommendationInterface
+                style={{ marginTop: likes.length > 0 ? '0.5rem' : '1rem' }}
+                contentType="comment"
+                onHide={() => setRecommendationInterfaceShown(false)}
+                isRecommendedByUser={isRecommendedByUser}
+                onRecommend={handleRecommend}
+              />
+            )}
             {!isPreview && rewardInterfaceShown && (
               <XPRewardInterface
                 innerRef={RewardInterfaceRef}
@@ -558,6 +614,23 @@ function Comment({
       setLoadingReplies(false);
     }
     ReplyInputAreaRef.current.focus();
+  }
+  async function handleRecommend() {
+    try {
+      const recommendations = await recommendContent({
+        contentId: commentId,
+        contentType: 'comment'
+      });
+      onRecommendContent({
+        contentId: commentId,
+        contentType: 'comment',
+        recommendations
+      });
+      setRecommendationInterfaceShown(false);
+    } catch (error) {
+      console.error(error);
+      setRecommendationInterfaceShown(false);
+    }
   }
 
   function handleRewardInterfaceShown(shown) {
