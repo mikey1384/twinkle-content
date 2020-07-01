@@ -12,7 +12,7 @@ export const priceTable = {
 export const charLimit = {
   chat: {
     subject: 200,
-    message: 5000
+    message: 3500
   },
   comment: 10000,
   playlist: {
