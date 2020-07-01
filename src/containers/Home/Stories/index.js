@@ -27,9 +27,10 @@ const categoryObj = {
     filter: 'all',
     orderBy: 'lastInteraction'
   },
-  challenges: {
-    filter: 'subject',
-    orderBy: 'rewardLevel'
+  recommended: {
+    filter: 'comment',
+    mustInclude: 'totalRecommendations',
+    orderBy: 'lastInteraction'
   },
   responses: {
     filter: 'comment',
@@ -274,6 +275,7 @@ export default function Stories({ location }) {
           category === 'uploads' ? subFilter : categoryObj[category].filter,
         order: displayOrder,
         orderBy: categoryObj[category].orderBy,
+        mustInclude: categoryObj[category].mustInclude,
         lastFeedId: feeds.length > 0 ? feeds[feeds.length - 1].feedId : null,
         lastRewardLevel:
           feeds.length > 0 ? feeds[feeds.length - 1].rewardLevel : null,
@@ -300,7 +302,8 @@ export default function Stories({ location }) {
     const { filter: loadedFilter, data } = await loadFeeds({
       order: 'desc',
       filter: categoryObj[newCategory].filter,
-      orderBy: categoryObj[newCategory].orderBy
+      orderBy: categoryObj[newCategory].orderBy,
+      mustInclude: categoryObj[newCategory].mustInclude
     });
     if (mounted.current) {
       if (

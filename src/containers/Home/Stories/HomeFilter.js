@@ -6,6 +6,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import { PropTypes } from 'prop-types';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
+import { isMobile } from 'helpers';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
 
@@ -15,8 +16,8 @@ const categoryObj = {
     desc: 'New to Old',
     asc: 'Old to New'
   },
-  challenges: {
-    label: 'High Reward Subjects'
+  recommended: {
+    label: isMobile(navigator) ? 'Recommended' : 'Recommended Comments'
   },
   videos: {
     label: 'XP Videos'
@@ -67,11 +68,11 @@ export default function HomeFilter({
           fontSize: '1.6rem'
         }}
       >
-        {['uploads', 'challenges', 'videos'].map((elem) => (
+        {['uploads', 'recommended', 'videos'].map((elem) => (
           <nav
             key={elem}
             className={activeTab === elem ? 'active' : ''}
-            style={{ width: elem !== 'challenges' ? '70%' : '100%' }}
+            style={{ width: elem !== 'recommended' ? '70%' : '100%' }}
             onClick={() => {
               document.getElementById('App').scrollTop = 0;
               changeCategory(elem);
