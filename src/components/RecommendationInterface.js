@@ -40,6 +40,26 @@ export default function RecommendationInterface({
     }
   }, [authLevel, isRecommendedByUser, twinkleCoins]);
 
+  const priceText = useMemo(() => {
+    if (authLevel > 0) {
+      return isRecommendedByUser ? (
+        <>
+          <span style={{ marginLeft: '1rem', color: Color.darkBlue() }}>
+            ({priceTable.recommendation} Twinkle Coins)
+          </span>
+        </>
+      ) : null;
+    } else {
+      return !isRecommendedByUser ? (
+        <>
+          <span style={{ marginLeft: '1rem', color: Color.darkBlue() }}>
+            ({priceTable.recommendation} Twinkle Coins)
+          </span>
+        </>
+      ) : null;
+    }
+  }, [authLevel, isRecommendedByUser]);
+
   return (
     <ErrorBoundary
       style={{
@@ -68,6 +88,7 @@ export default function RecommendationInterface({
               ) : (
                 `Recommend this ${contentType}?`
               )}
+              {priceText}
             </span>
           </span>
         </div>
