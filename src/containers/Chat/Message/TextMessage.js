@@ -88,6 +88,8 @@ function TextMessage({
               ) : (
                 <LongText
                   style={{
+                    marginTop: isSubject ? '0.5rem' : 0,
+                    marginBottom: isSubject ? '0.5rem' : 0,
                     color: isNotification ? Color.gray() : undefined
                   }}
                 >
