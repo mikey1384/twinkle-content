@@ -9,6 +9,8 @@ import Likers from 'components/Likers';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import UserListModal from 'components/Modals/UserListModal';
 import RewardStatus from 'components/RewardStatus';
+import RecommendationInterface from 'components/RecommendationInterface';
+import RecommendationStatus from 'components/RecommendationStatus';
 import XPRewardInterface from 'components/XPRewardInterface';
 import Icon from 'components/Icon';
 import NotFound from 'components/NotFound';
@@ -91,6 +93,7 @@ export default function LinkPage({
     description,
     likes = [],
     loaded,
+    recommendations = [],
     subjects,
     subjectsLoaded,
     subjectsLoadMoreButton,
@@ -114,6 +117,10 @@ export default function LinkPage({
   const [notFound, setNotFound] = useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   const [likesModalShown, setLikesModalShown] = useState(false);
+  const [
+    recommendationInterfaceShown,
+    setRecommendationInterfaceShown
+  ] = useState(false);
   const mounted = useRef(true);
   const prevDeleted = useRef(false);
   const RewardInterfaceRef = useRef(null);
@@ -182,6 +189,13 @@ export default function LinkPage({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
+
+  const isRecommendedByUser = useMemo(() => {
+    return (
+      recommendations.filter((recommendation) => recommendation.id === userId)
+        .length > 0
+    );
+  }, [recommendations, userId]);
 
   const userIsUploader = useMemo(() => uploader?.id === userId, [
     uploader?.id,
@@ -269,6 +283,7 @@ export default function LinkPage({
         />
         <div
           style={{
+            position: 'relative',
             paddingTop: '1.5rem',
             width: '100%',
             display: 'flex',
@@ -276,50 +291,84 @@ export default function LinkPage({
             alignItems: 'center'
           }}
         >
-          <div style={{ display: 'flex' }}>
-            <LikeButton
-              key={'like' + linkId}
-              filled
-              style={{ fontSize: '2rem' }}
-              contentType="url"
-              contentId={linkId}
-              onClick={handleLikeLink}
-              likes={likes}
-            />
-            {userCanRewardThis && (
-              <Button
-                color="pink"
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ display: 'flex' }}>
+              <LikeButton
+                key={'like' + linkId}
                 filled
-                disabled={determineXpButtonDisabled({
-                  myId: userId,
-                  xpRewardInterfaceShown,
-                  rewards
-                })}
-                style={{
-                  fontSize: '2rem',
-                  marginLeft: '1rem'
-                }}
-                onClick={handleSetXpRewardInterfaceShown}
-              >
-                <Icon icon="certificate" />
-                <span style={{ marginLeft: '0.7rem' }}>
-                  {determineXpButtonDisabled({
+                style={{ fontSize: '2rem' }}
+                contentType="url"
+                contentId={linkId}
+                onClick={handleLikeLink}
+                likes={likes}
+              />
+              {userCanRewardThis && (
+                <Button
+                  color="pink"
+                  filled
+                  disabled={determineXpButtonDisabled({
                     myId: userId,
                     xpRewardInterfaceShown,
                     rewards
-                  }) || 'Reward'}
-                </span>
-              </Button>
-            )}
+                  })}
+                  style={{
+                    fontSize: '2rem',
+                    marginLeft: '1rem'
+                  }}
+                  onClick={handleSetXpRewardInterfaceShown}
+                >
+                  <Icon icon="certificate" />
+                  <span style={{ marginLeft: '0.7rem' }}>
+                    {determineXpButtonDisabled({
+                      myId: userId,
+                      xpRewardInterfaceShown,
+                      rewards
+                    }) || 'Reward'}
+                  </span>
+                </Button>
+              )}
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <Likers
+                key={'likes' + linkId}
+                style={{ marginTop: '0.5rem', fontSize: '1.5rem' }}
+                likes={likes}
+                userId={userId}
+                onLinkClick={() => setLikesModalShown(true)}
+              />
+            </div>
           </div>
-          <Likers
-            key={'likes' + linkId}
-            style={{ marginTop: '0.5rem', fontSize: '1.3rem' }}
-            likes={likes}
-            userId={userId}
-            onLinkClick={() => setLikesModalShown(true)}
-          />
+          <Button
+            style={{ right: '1rem', bottom: '0.5rem', position: 'absolute' }}
+            color="brownOrange"
+            skeuomorphic
+            filled={isRecommendedByUser}
+            disabled={recommendationInterfaceShown}
+            onClick={() => setRecommendationInterfaceShown(true)}
+          >
+            <Icon icon="star" />
+          </Button>
         </div>
+        <RecommendationStatus
+          style={{
+            marginTop: likes.length > 0 ? '0.5rem' : '1rem',
+            marginBottom: recommendationInterfaceShown ? '1rem' : 0
+          }}
+          contentType="url"
+          recommendations={recommendations}
+        />
+        {recommendationInterfaceShown && (
+          <RecommendationInterface
+            style={{
+              marginTop: likes.length > 0 ? '0.5rem' : '1rem',
+              marginBottom: 0
+            }}
+            contentId={linkId}
+            contentType="url"
+            onHide={() => setRecommendationInterfaceShown(false)}
+            isRecommendedByUser={isRecommendedByUser}
+          />
+        )}
         {xpRewardInterfaceShown && (
           <div style={{ padding: '0 1rem' }}>
             <XPRewardInterface
