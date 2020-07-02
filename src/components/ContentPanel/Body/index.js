@@ -74,7 +74,7 @@ export default function Body({
   onChangeSpoilerStatus
 }) {
   const {
-    requestHelpers: { deleteContent, loadComments, recommendContent }
+    requestHelpers: { deleteContent, loadComments }
   } = useAppContext();
 
   const {
@@ -87,7 +87,7 @@ export default function Body({
   } = useMyState();
 
   const {
-    actions: { onRecommendContent, onSetIsEditing, onSetXpRewardInterfaceShown }
+    actions: { onSetIsEditing, onSetXpRewardInterfaceShown }
   } = useContentContext();
 
   const {
@@ -508,10 +508,10 @@ export default function Body({
         />
         {recommendationInterfaceShown && (
           <RecommendationInterface
+            contentId={contentId}
             contentType={contentType}
             onHide={() => setRecommendationInterfaceShown(false)}
             isRecommendedByUser={isRecommendedByUser}
-            onRecommend={handleRecommendContent}
           />
         )}
         {xpRewardInterfaceShown && (
@@ -620,20 +620,6 @@ export default function Body({
         }
         onChangeSpoilerStatus({ shown: true, subjectId: contentObj.id });
       }
-    }
-  }
-
-  async function handleRecommendContent() {
-    try {
-      const recommendations = await recommendContent({
-        contentId,
-        contentType
-      });
-      onRecommendContent({ contentId, contentType, recommendations });
-      setRecommendationInterfaceShown(false);
-    } catch (error) {
-      console.error(error);
-      setRecommendationInterfaceShown(false);
     }
   }
 

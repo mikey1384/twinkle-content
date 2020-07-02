@@ -131,6 +131,7 @@ export default function VideoPage({
     likes,
     loaded,
     questions = [],
+    recommendations,
     rewards,
     subjects,
     subjectsLoaded,
@@ -372,6 +373,7 @@ export default function VideoPage({
                 onEditFinish={handleEditVideoPage}
                 onDelete={() => setConfirmModalShown(true)}
                 onSetRewardLevel={handleSetRewardLevel}
+                recommendations={recommendations}
                 rewards={rewards}
                 tags={tags}
                 title={title}

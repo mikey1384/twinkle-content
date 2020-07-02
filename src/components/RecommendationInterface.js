@@ -3,22 +3,30 @@ import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Button from 'components/Button';
 import { Color } from 'constants/css';
+import { useAppContext, useContentContext } from 'contexts';
 
 RecommendationInterface.propTypes = {
   isRecommendedByUser: PropTypes.bool,
+  contentId: PropTypes.number.isRequired,
   contentType: PropTypes.string.isRequired,
   onHide: PropTypes.func.isRequired,
-  onRecommend: PropTypes.func.isRequired,
   style: PropTypes.object
 };
 
 export default function RecommendationInterface({
   isRecommendedByUser,
+  contentId,
   contentType,
   onHide,
-  onRecommend,
   style
 }) {
+  const {
+    requestHelpers: { recommendContent }
+  } = useAppContext();
+  const {
+    actions: { onRecommendContent }
+  } = useContentContext();
+
   return (
     <ErrorBoundary
       style={{
@@ -52,7 +60,7 @@ export default function RecommendationInterface({
         </div>
       </div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <Button onClick={onRecommend} color="darkBlue" skeuomorphic>
+        <Button onClick={handleRecommend} color="darkBlue" skeuomorphic>
           Yes
         </Button>
         <Button
@@ -66,4 +74,18 @@ export default function RecommendationInterface({
       </div>
     </ErrorBoundary>
   );
+
+  async function handleRecommend() {
+    try {
+      const recommendations = await recommendContent({
+        contentId,
+        contentType
+      });
+      onRecommendContent({ contentId, contentType, recommendations });
+      onHide();
+    } catch (error) {
+      console.error(error);
+      onHide();
+    }
+  }
 }

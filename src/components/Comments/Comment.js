@@ -84,19 +84,13 @@ function Comment({
   subject = subject || comment.targetObj?.subject || {};
   const history = useHistory();
   const {
-    requestHelpers: {
-      checkIfUserResponded,
-      editContent,
-      loadReplies,
-      recommendContent
-    }
+    requestHelpers: { checkIfUserResponded, editContent, loadReplies }
   } = useAppContext();
   const { authLevel, canDelete, canEdit, canReward, userId } = useMyState();
   const {
     actions: {
       onChangeSpoilerStatus,
       onLoadReplies,
-      onRecommendContent,
       onSetIsEditing,
       onSetXpRewardInterfaceShown
     }
@@ -491,10 +485,10 @@ function Comment({
             {!isPreview && recommendationInterfaceShown && (
               <RecommendationInterface
                 style={{ marginTop: likes.length > 0 ? '0.5rem' : '1rem' }}
+                contentId={commentId}
                 contentType="comment"
                 onHide={() => setRecommendationInterfaceShown(false)}
                 isRecommendedByUser={isRecommendedByUser}
-                onRecommend={handleRecommend}
               />
             )}
             {!isPreview && rewardInterfaceShown && (
@@ -614,23 +608,6 @@ function Comment({
       setLoadingReplies(false);
     }
     ReplyInputAreaRef.current.focus();
-  }
-  async function handleRecommend() {
-    try {
-      const recommendations = await recommendContent({
-        contentId: commentId,
-        contentType: 'comment'
-      });
-      onRecommendContent({
-        contentId: commentId,
-        contentType: 'comment',
-        recommendations
-      });
-      setRecommendationInterfaceShown(false);
-    } catch (error) {
-      console.error(error);
-      setRecommendationInterfaceShown(false);
-    }
   }
 
   function handleRewardInterfaceShown(shown) {

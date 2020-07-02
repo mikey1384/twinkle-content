@@ -77,11 +77,11 @@ function Reply({
   subject
 }) {
   const {
-    requestHelpers: { editContent, loadReplies, recommendContent }
+    requestHelpers: { editContent, loadReplies }
   } = useAppContext();
   const { authLevel, canDelete, canEdit, canReward, userId } = useMyState();
   const {
-    actions: { onSetIsEditing, onRecommendContent, onSetXpRewardInterfaceShown }
+    actions: { onSetIsEditing, onSetXpRewardInterfaceShown }
   } = useContentContext();
   const {
     deleted,
@@ -345,10 +345,10 @@ function Reply({
             {recommendationInterfaceShown && (
               <RecommendationInterface
                 style={{ marginTop: likes.length > 0 ? '0.5rem' : '1rem' }}
+                contentId={reply.id}
                 contentType="comment"
                 onHide={() => setRecommendationInterfaceShown(false)}
                 isRecommendedByUser={isRecommendedByUser}
-                onRecommend={handleRecommend}
               />
             )}
             {rewardInterfaceShown && (
@@ -434,24 +434,6 @@ function Reply({
 
   function handleLikeClick({ likes }) {
     onLikeClick({ commentId: reply.id, likes });
-  }
-
-  async function handleRecommend() {
-    try {
-      const recommendations = await recommendContent({
-        contentId: reply.id,
-        contentType: 'comment'
-      });
-      onRecommendContent({
-        contentId: reply.id,
-        contentType: 'comment',
-        recommendations
-      });
-      setRecommendationInterfaceShown(false);
-    } catch (error) {
-      console.error(error);
-      setRecommendationInterfaceShown(false);
-    }
   }
 
   function handleRewardInterfaceShown(shown) {

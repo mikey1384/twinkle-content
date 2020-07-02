@@ -9,6 +9,8 @@ import AlreadyPosted from 'components/AlreadyPosted';
 import BasicInfos from './BasicInfos';
 import SideButtons from './SideButtons';
 import Description from './Description';
+import RecommendationInterface from 'components/RecommendationInterface';
+import RecommendationStatus from 'components/RecommendationStatus';
 import TagStatus from 'components/TagStatus';
 import { Color, mobileMaxWidth } from 'constants/css';
 import {
@@ -37,6 +39,7 @@ Details.propTypes = {
   onEditFinish: PropTypes.func.isRequired,
   onLikeVideo: PropTypes.func.isRequired,
   onSetRewardLevel: PropTypes.func.isRequired,
+  recommendations: PropTypes.array.isRequired,
   tags: PropTypes.array,
   rewards: PropTypes.array,
   timeStamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -59,6 +62,7 @@ export default function Details({
   title,
   description,
   likes,
+  recommendations,
   onAttachReward,
   onDelete,
   onEditFinish,
@@ -88,6 +92,10 @@ export default function Details({
     contentType: 'video',
     contentId: videoId
   });
+  const [
+    recommendationInterfaceShown,
+    setRecommendationInterfaceShown
+  ] = useState(false);
   const [titleHovered, setTitleHovered] = useState(false);
   const TitleRef = useRef(null);
   const RewardInterfaceRef = useRef(null);
@@ -124,6 +132,13 @@ export default function Details({
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
+
+  const isRecommendedByUser = useMemo(() => {
+    return (
+      recommendations.filter((recommendation) => recommendation.id === userId)
+        .length > 0
+    );
+  }, [recommendations, userId]);
 
   const editForm = useMemo(() => inputState['edit' + 'video' + videoId] || {}, [
     inputState,
@@ -292,83 +307,136 @@ export default function Details({
             />
           </div>
         </div>
-        <Description
-          onChange={(event) =>
-            onSetEditForm({
-              contentId: videoId,
-              contentType: 'video',
-              form: {
-                editedDescription: event.target.value
-              }
-            })
-          }
-          onEdit={isEditing}
-          onEditCancel={handleEditCancel}
-          onEditFinish={handleEditFinish}
-          onKeyUp={(event) => {
-            if (event.key === ' ') {
-              onSetEditForm({
-                contentId: videoId,
-                contentType: 'video',
-                form: {
-                  editedDescription: addEmoji(event.target.value)
-                }
-              });
-            }
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '100%',
+            marginTop: '1rem'
           }}
-          description={description}
-          editedDescription={editedDescription}
-          descriptionExceedsCharLimit={descriptionExceedsCharLimit}
-          determineEditButtonDoneStatus={determineEditButtonDoneStatus}
-        />
-        {!isEditing && videoViews > 10 && (
+        >
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <Description
+              onChange={(event) =>
+                onSetEditForm({
+                  contentId: videoId,
+                  contentType: 'video',
+                  form: {
+                    editedDescription: event.target.value
+                  }
+                })
+              }
+              onEdit={isEditing}
+              onEditCancel={handleEditCancel}
+              onEditFinish={handleEditFinish}
+              onKeyUp={(event) => {
+                if (event.key === ' ') {
+                  onSetEditForm({
+                    contentId: videoId,
+                    contentType: 'video',
+                    form: {
+                      editedDescription: addEmoji(event.target.value)
+                    }
+                  });
+                }
+              }}
+              description={description}
+              editedDescription={editedDescription}
+              descriptionExceedsCharLimit={descriptionExceedsCharLimit}
+              determineEditButtonDoneStatus={determineEditButtonDoneStatus}
+            />
+            {!isEditing && videoViews > 10 && (
+              <div
+                style={{
+                  padding: '1rem 0',
+                  fontSize: '2rem',
+                  fontWeight: 'bold',
+                  color: Color.darkerGray()
+                }}
+              >
+                {addCommasToNumber(videoViews)} view
+                {`${videoViews > 1 ? 's' : ''}`}
+              </div>
+            )}
+            <div style={{ display: 'flex', marginTop: '1rem' }}>
+              {editButtonShown && !isEditing && (
+                <DropdownButton
+                  skeuomorphic
+                  color="darkerGray"
+                  style={{ marginRight: '1rem' }}
+                  direction="left"
+                  text="Edit or Delete"
+                  menuProps={editMenuItems}
+                />
+              )}
+              {rewardButtonShown && (
+                <Button
+                  skeuomorphic
+                  color="pink"
+                  disabled={determineXpButtonDisabled({
+                    rewardLevel: byUser ? 5 : 0,
+                    myId: userId,
+                    xpRewardInterfaceShown,
+                    rewards
+                  })}
+                  onClick={handleSetXpRewardInterfaceShown}
+                >
+                  <Icon icon="certificate" />
+                  <span style={{ marginLeft: '0.7rem' }}>
+                    {determineXpButtonDisabled({
+                      rewardLevel: byUser ? 5 : 0,
+                      myId: userId,
+                      xpRewardInterfaceShown,
+                      rewards
+                    }) || 'Reward'}
+                  </span>
+                </Button>
+              )}
+            </div>
+          </div>
           <div
             style={{
-              padding: '1rem 0',
-              fontSize: '2rem',
-              fontWeight: 'bold',
-              color: Color.darkerGray()
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-end'
             }}
           >
-            {addCommasToNumber(videoViews)} view
-            {`${videoViews > 1 ? 's' : ''}`}
-          </div>
-        )}
-        <div style={{ display: 'flex' }}>
-          {editButtonShown && !isEditing && (
-            <DropdownButton
-              skeuomorphic
-              color="darkerGray"
-              style={{ marginRight: '1rem' }}
-              direction="left"
-              text="Edit or Delete This Video"
-              menuProps={editMenuItems}
-            />
-          )}
-          {rewardButtonShown && (
             <Button
+              color="brownOrange"
               skeuomorphic
-              color="pink"
-              disabled={determineXpButtonDisabled({
-                rewardLevel: byUser ? 5 : 0,
-                myId: userId,
-                xpRewardInterfaceShown,
-                rewards
-              })}
-              onClick={handleSetXpRewardInterfaceShown}
+              filled={isRecommendedByUser}
+              disabled={recommendationInterfaceShown}
+              onClick={() => setRecommendationInterfaceShown(true)}
             >
-              <Icon icon="certificate" />
-              <span style={{ marginLeft: '0.7rem' }}>
-                {determineXpButtonDisabled({
-                  rewardLevel: byUser ? 5 : 0,
-                  myId: userId,
-                  xpRewardInterfaceShown,
-                  rewards
-                }) || 'Reward'}
-              </span>
+              <Icon icon="star" />
             </Button>
-          )}
+          </div>
         </div>
+        <RecommendationStatus
+          style={{
+            marginTop: '1rem',
+            marginBottom: 0,
+            marginLeft: '-1rem',
+            marginRight: '-1rem'
+          }}
+          contentType="video"
+          recommendations={recommendations}
+        />
+        {recommendationInterfaceShown && (
+          <RecommendationInterface
+            style={{
+              marginTop: '1rem',
+              fontSize: '1.7rem',
+              marginBottom: 0,
+              marginLeft: '-1rem',
+              marginRight: '-1rem'
+            }}
+            contentId={videoId}
+            contentType="video"
+            onHide={() => setRecommendationInterfaceShown(false)}
+            isRecommendedByUser={isRecommendedByUser}
+          />
+        )}
         {xpRewardInterfaceShown && (
           <XPRewardInterface
             innerRef={RewardInterfaceRef}

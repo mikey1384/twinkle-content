@@ -13,6 +13,7 @@ export default function ContentReducer(state, action) {
     rewards: [],
     childComments: [],
     likes: [],
+    recommendations: [],
     subjects: [],
     tags: [],
     commentsLoadMoreButton: false,

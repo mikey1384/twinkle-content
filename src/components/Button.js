@@ -56,7 +56,9 @@ function Button({
       line-height: 1;
       font-size: 1.5rem;
       padding: 1rem;
-      color: ${filled || opacity ? '#fff' : Color[colorKey](textOpacity)};
+      color: ${!skeuomorphic && (filled || opacity)
+        ? '#fff'
+        : Color[colorKey](textOpacity)};
       background: ${skeuomorphic
         ? '#fff'
         : Color[colorKey](
@@ -74,6 +76,9 @@ function Button({
         : ''} &:focus {
         outline: ${(transparent || disabled || skeuomorphic) && 0};
       }
+      ${skeuomorphic && filled
+        ? `box-shadow: 0 0 3px ${Color[colorKey]()};`
+        : ''}
       &:hover {
         background: ${skeuomorphic
           ? '#fff'
@@ -98,7 +103,9 @@ function Button({
             : Color[colorKey](
                 disabled ? backgroundDisabledOpacity : backgroundOpacity
               )};
-          color: ${filled || opacity ? '#fff' : Color[colorKey](textOpacity)};
+          color: ${!skeuomorphic && (filled || opacity)
+            ? '#fff'
+            : Color[colorKey](textOpacity)};
           border: 1px solid
             ${Color[colorKey](
               disabled ? backgroundDisabledOpacity : backgroundOpacity
