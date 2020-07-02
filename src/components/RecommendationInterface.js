@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Button from 'components/Button';
 import { Color } from 'constants/css';
+import { useMyState } from 'helpers/hooks';
+import { priceTable } from 'constants/defaultValues';
 import { useAppContext, useContentContext } from 'contexts';
 
 RecommendationInterface.propTypes = {
@@ -20,12 +22,23 @@ export default function RecommendationInterface({
   onHide,
   style
 }) {
+  const { authLevel, userId, twinkleCoins } = useMyState();
+
   const {
     requestHelpers: { recommendContent }
   } = useAppContext();
+
   const {
-    actions: { onRecommendContent }
+    actions: { onChangeUserCoins, onRecommendContent }
   } = useContentContext();
+
+  const disabled = useMemo(() => {
+    if (authLevel > 0) {
+      return isRecommendedByUser && twinkleCoins < priceTable.recommendation;
+    } else {
+      return !isRecommendedByUser && twinkleCoins < priceTable.recommendation;
+    }
+  }, [authLevel, isRecommendedByUser, twinkleCoins]);
 
   return (
     <ErrorBoundary
@@ -60,7 +73,12 @@ export default function RecommendationInterface({
         </div>
       </div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <Button onClick={handleRecommend} color="darkBlue" skeuomorphic>
+        <Button
+          disabled={disabled}
+          onClick={handleRecommend}
+          color="darkBlue"
+          skeuomorphic
+        >
           Yes
         </Button>
         <Button
@@ -77,10 +95,11 @@ export default function RecommendationInterface({
 
   async function handleRecommend() {
     try {
-      const recommendations = await recommendContent({
+      const { coins, recommendations } = await recommendContent({
         contentId,
         contentType
       });
+      onChangeUserCoins({ coins, userId });
       onRecommendContent({ contentId, contentType, recommendations });
       onHide();
     } catch (error) {

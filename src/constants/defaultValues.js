@@ -7,7 +7,7 @@ export const rewardValue = 200;
 export const priceTable = {
   chatSubject: 5,
   chatTheme: 10,
-  recommendation: 2
+  recommendation: 5
 };
 export const charLimit = {
   chat: {

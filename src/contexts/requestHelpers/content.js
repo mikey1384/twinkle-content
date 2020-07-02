@@ -456,13 +456,13 @@ export default function contentRequestHelpers({ auth, handleError }) {
     async recommendContent({ contentId, contentType }) {
       try {
         const {
-          data: { recommendations }
+          data: { coins, recommendations }
         } = await request.post(
           `${URL}/content/recommend`,
           { contentId, contentType },
           auth()
         );
-        return Promise.resolve(recommendations);
+        return Promise.resolve({ coins, recommendations });
       } catch (error) {
         return handleError(error);
       }
