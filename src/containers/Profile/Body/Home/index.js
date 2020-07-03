@@ -143,10 +143,10 @@ export default function Home({ location, profile, selectedTheme }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  const {
-    childComments = [],
-    commentsLoadMoreButton = false
-  } = useContentState({ contentType: 'user', contentId: profile.id });
+  const { comments = [], commentsLoadMoreButton = false } = useContentState({
+    contentType: 'user',
+    contentId: profile.id
+  });
 
   const bioExists = profileFirstRow || profileSecondRow || profileThirdRow;
   const usernameColor = Color[selectedTheme]();
@@ -433,16 +433,14 @@ export default function Home({ location, profile, selectedTheme }) {
           title={`Remove Status Message`}
         />
       )}
-      {(userId !== profile.id ||
-        childComments.length > 0 ||
-        loadingComments) && (
+      {(userId !== profile.id || comments.length > 0 || loadingComments) && (
         <SectionPanel
           customColorTheme={selectedTheme}
           loaded
           title="Message Board"
         >
           <Comments
-            comments={childComments}
+            comments={comments}
             commentsLoadLimit={20}
             commentsShown={true}
             contentId={id}

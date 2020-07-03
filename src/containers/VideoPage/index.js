@@ -121,7 +121,7 @@ export default function VideoPage({
 
   const {
     byUser,
-    childComments: comments,
+    comments,
     commentsLoaded,
     commentsLoadMoreButton,
     content,

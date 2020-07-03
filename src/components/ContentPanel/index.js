@@ -265,7 +265,7 @@ export default function ContentPanel({
                   {contentState.loaded && targetObj?.subject && (
                     <div>
                       <ContentListItem
-                        comments={contentState.childComments}
+                        comments={contentState.comments}
                         style={{
                           zIndex: 1,
                           position: 'relative'

@@ -85,7 +85,7 @@ export default function LinkPage({
     }
   } = useContentContext();
   const {
-    childComments,
+    comments,
     commentsLoaded,
     commentsLoadMoreButton,
     content,
@@ -428,7 +428,7 @@ export default function LinkPage({
       />
       <Comments
         autoExpand
-        comments={childComments}
+        comments={comments}
         isLoading={loadingComments}
         inputTypeLabel="comment"
         key={'comments' + linkId}

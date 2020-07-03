@@ -38,7 +38,7 @@ function ProfilePanel({ expandable, profileId }) {
   });
 
   const {
-    childComments = [],
+    comments = [],
     commentsLoaded,
     commentsLoadMoreButton,
     commentsShown,
@@ -397,7 +397,7 @@ function ProfilePanel({ expandable, profileId }) {
                             Edit Bio
                           </Button>
                           {profileId === userId &&
-                            childComments.length > 0 &&
+                            comments.length > 0 &&
                             renderMessagesButton({
                               style: { marginLeft: '0.5rem' }
                             })}
@@ -461,7 +461,7 @@ function ProfilePanel({ expandable, profileId }) {
               )}
               {loaded && (
                 <Comments
-                  comments={childComments}
+                  comments={comments}
                   commentsLoadLimit={5}
                   commentsShown={commentsShown}
                   contentId={profileId}

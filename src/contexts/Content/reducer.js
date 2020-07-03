@@ -11,7 +11,7 @@ export default function ContentReducer(state, action) {
     isEditing: false,
     placeholderHeight: 0,
     rewards: [],
-    childComments: [],
+    comments: [],
     likes: [],
     recommendations: [],
     subjects: [],
@@ -75,9 +75,9 @@ export default function ContentReducer(state, action) {
           rewards: contentMatches
             ? (prevContentState.rewards || []).concat(action.data)
             : prevContentState.rewards,
-          childComments:
+          comments:
             action.contentType === 'comment'
-              ? prevContentState.childComments?.map((comment) => {
+              ? prevContentState.comments?.map((comment) => {
                   const commentMatches = comment.id === action.contentId;
                   return {
                     ...comment,
@@ -95,7 +95,7 @@ export default function ContentReducer(state, action) {
                     })
                   };
                 })
-              : prevContentState.childComments,
+              : prevContentState.comments,
           subjects: prevContentState.subjects?.map((subject) => {
             const subjectMatches =
               subject.id === action.contentId &&
@@ -241,7 +241,7 @@ export default function ContentReducer(state, action) {
             prevContentState.deleted ||
             (prevContentState.contentId === action.commentId &&
               prevContentState.contentType === 'comment'),
-          childComments: prevContentState.childComments?.map((comment) =>
+          comments: prevContentState.comments?.map((comment) =>
             comment.id === action.commentId
               ? { ...comment, deleted: true }
               : {
@@ -334,7 +334,7 @@ export default function ContentReducer(state, action) {
             prevContentState.contentId === action.commentId
               ? action.editedComment
               : prevContentState.content,
-          childComments: prevContentState.childComments.map((comment) => ({
+          comments: prevContentState.comments.map((comment) => ({
             ...comment,
             content:
               comment.id === action.commentId
@@ -401,9 +401,9 @@ export default function ContentReducer(state, action) {
         newState[contentKey] = {
           ...prevContentState,
           ...(contentMatches ? action.data : {}),
-          childComments:
+          comments:
             action.contentType === 'comment'
-              ? prevContentState.childComments?.map((comment) => {
+              ? prevContentState.comments?.map((comment) => {
                   const commentMatches = comment.id === action.contentId;
                   return {
                     ...comment,
@@ -417,7 +417,7 @@ export default function ContentReducer(state, action) {
                     })
                   };
                 })
-              : prevContentState.childComments,
+              : prevContentState.comments,
           subjects: prevContentState.subjects?.map((subject) => {
             const subjectMatches =
               subject.id === action.contentId &&
@@ -492,7 +492,7 @@ export default function ContentReducer(state, action) {
             rewardComment:
               reward.id === action.id ? action.text : reward.rewardComment
           })),
-          childComments: prevContentState.childComments?.map((comment) => ({
+          comments: prevContentState.comments?.map((comment) => ({
             ...comment,
             rewards: comment.rewards?.map((reward) => ({
               ...reward,
@@ -588,7 +588,7 @@ export default function ContentReducer(state, action) {
         const prevContentState = newState[contentKey];
         newState[contentKey] = {
           ...prevContentState,
-          childComments: prevContentState.childComments.map((comment) => {
+          comments: prevContentState.comments.map((comment) => {
             return {
               ...comment,
               likes:
@@ -641,9 +641,9 @@ export default function ContentReducer(state, action) {
             prevContentState.contentType === action.contentType
               ? action.likes
               : prevContentState.likes,
-          childComments:
+          comments:
             action.contentType === 'comment'
-              ? prevContentState.childComments.map((comment) => ({
+              ? prevContentState.comments.map((comment) => ({
                   ...comment,
                   likes:
                     comment.id === action.contentId
@@ -664,7 +664,7 @@ export default function ContentReducer(state, action) {
                     }))
                   }))
                 }))
-              : prevContentState.childComments,
+              : prevContentState.comments,
           rootObj: prevContentState.rootObj
             ? {
                 ...prevContentState.rootObj,
@@ -703,7 +703,7 @@ export default function ContentReducer(state, action) {
           ...prevContentState,
           commentsLoaded: !action.isPreview,
           previewLoaded: true,
-          childComments: action.comments,
+          comments: action.comments,
           commentsLoadMoreButton: action.loadMoreButton
         }
       };
@@ -712,10 +712,10 @@ export default function ContentReducer(state, action) {
         ...state,
         [contentKey]: {
           ...prevContentState,
-          childComments:
+          comments:
             prevContentState.contentType === 'comment'
-              ? (action.comments || []).concat(prevContentState.childComments)
-              : (prevContentState.childComments || []).concat(action.comments),
+              ? (action.comments || []).concat(prevContentState.comments)
+              : (prevContentState.comments || []).concat(action.comments),
           commentsLoadMoreButton: action.loadMoreButton
         }
       };
@@ -725,7 +725,7 @@ export default function ContentReducer(state, action) {
         ...state,
         [contentKey]: {
           ...prevContentState,
-          childComments: prevContentState.childComments.map((comment) => ({
+          comments: prevContentState.comments.map((comment) => ({
             ...comment,
             replies:
               comment.id === action.commentId
@@ -780,21 +780,27 @@ export default function ContentReducer(state, action) {
           })
         }
       };
-    case 'LOAD_MORE_SUBJECTS':
+    case 'LOAD_MORE_SUBJECTS': {
+      const subjectStates = {};
+      for (let subject of action.results) {
+        subjectStates['subject' + subject.id] = subject;
+      }
       return {
         ...state,
         [contentKey]: {
           ...prevContentState,
+          ...subjectStates,
           subjects: (prevContentState.subjects || []).concat(action.results),
           subjectsLoadMoreButton: action.loadMoreButton
         }
       };
+    }
     case 'LOAD_REPLIES':
       return {
         ...state,
         [contentKey]: {
           ...prevContentState,
-          childComments: prevContentState.childComments.map((comment) => {
+          comments: prevContentState.comments.map((comment) => {
             if (comment.id === action.commentId) {
               return {
                 ...comment,
@@ -812,7 +818,7 @@ export default function ContentReducer(state, action) {
         ...state,
         [contentKey]: {
           ...prevContentState,
-          childComments: prevContentState.childComments.map((comment) => {
+          comments: prevContentState.comments.map((comment) => {
             if (comment.id === action.commentId) {
               return {
                 ...comment,
@@ -940,9 +946,14 @@ export default function ContentReducer(state, action) {
           })
         }
       };
-    case 'LOAD_SUBJECTS':
+    case 'LOAD_SUBJECTS': {
+      const subjectStates = {};
+      for (let subject of action.subjects) {
+        subjectStates['subject' + subject.id] = subject;
+      }
       return {
         ...state,
+        ...subjectStates,
         [contentKey]: {
           ...prevContentState,
           subjectsLoaded: true,
@@ -950,9 +961,15 @@ export default function ContentReducer(state, action) {
           subjectsLoadMoreButton: action.loadMoreButton
         }
       };
+    }
     case 'LOAD_SUBJECT_COMMENTS':
       return {
         ...state,
+        ['subject' + action.subjectId]: {
+          ...state['subject' + action.subjectId],
+          comments: action.comments,
+          loadMoreCommentsButton: action.loadMoreButton
+        },
         [contentKey]: {
           ...prevContentState,
           subjects: prevContentState.subjects?.map((subject) => {
@@ -987,9 +1004,9 @@ export default function ContentReducer(state, action) {
             prevContentState.contentType === action.contentType
               ? action.recommendations
               : prevContentState.recommendations,
-          childComments:
+          comments:
             action.contentType === 'comment'
-              ? prevContentState.childComments.map((comment) => ({
+              ? prevContentState.comments.map((comment) => ({
                   ...comment,
                   recommendations:
                     comment.id === action.contentId
@@ -1010,7 +1027,7 @@ export default function ContentReducer(state, action) {
                     }))
                   }))
                 }))
-              : prevContentState.childComments,
+              : prevContentState.comments,
           rootObj: prevContentState.rootObj
             ? {
                 ...prevContentState.rootObj,
@@ -1375,12 +1392,18 @@ export default function ContentReducer(state, action) {
     case 'UPLOAD_COMMENT':
       return {
         ...state,
+        ['subject' + action.data.subjectId]: {
+          ...state['subject' + action.data.subjectId],
+          comments: [action.data].concat(
+            state['subject' + action.data.subjectId].comments
+          )
+        },
         [contentKey]: {
           ...prevContentState,
-          childComments:
+          comments:
             prevContentState.contentType === 'comment'
-              ? (prevContentState.childComments || []).concat([action.data])
-              : [action.data].concat(prevContentState.childComments),
+              ? (prevContentState.comments || []).concat([action.data])
+              : [action.data].concat(prevContentState.comments),
           subjects: prevContentState.subjects?.map((subject) =>
             subject.id === action.data.subjectId
               ? {
@@ -1396,7 +1419,7 @@ export default function ContentReducer(state, action) {
         ...state,
         [contentKey]: {
           ...prevContentState,
-          childComments: prevContentState.childComments.map((comment) => {
+          comments: prevContentState.comments.map((comment) => {
             let match = false;
             let commentId = action.data.replyId || action.data.commentId;
             if (comment.id === commentId) {

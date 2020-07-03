@@ -23,7 +23,7 @@ export default function StartNewSubjectPanel({
   const {
     requestHelpers: { uploadSubject }
   } = useAppContext();
-  const { canEditRewardLevel, profileTheme } = useMyState();
+  const { canEditRewardLevel } = useMyState();
   const {
     actions: { onSetSubjectFormShown }
   } = useContentContext();
@@ -65,7 +65,7 @@ export default function StartNewSubjectPanel({
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <Button
               skeuomorphic
-              color={profileTheme}
+              color="black"
               style={{ fontSize: '2rem' }}
               onClick={() =>
                 onSetSubjectFormShown({ contentId, contentType, shown: true })

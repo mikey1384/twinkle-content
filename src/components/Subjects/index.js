@@ -94,9 +94,9 @@ export default function Subjects({
             subjects.map((subject) => (
               <SubjectPanel
                 key={subject.id}
-                contentId={Number(contentId)}
                 rootRewardLevel={rootRewardLevel}
-                contentType={contentType}
+                rootId={Number(contentId)}
+                rootType={contentType}
                 subjectId={subject.id}
                 {...subject}
               />

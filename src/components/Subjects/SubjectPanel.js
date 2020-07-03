@@ -14,14 +14,18 @@ import Link from 'components/Link';
 import SecretAnswer from 'components/SecretAnswer';
 import StarButton from 'components/Buttons/StarButton';
 import LocalContext from './Context';
-import { Color } from 'constants/css';
+import RewardStatus from 'components/RewardStatus';
+import XPRewardInterface from 'components/XPRewardInterface';
+import { css } from 'emotion';
+import { Color, mobileMaxWidth } from 'constants/css';
+import { descriptionLengthForExtraRewardLevel } from 'constants/defaultValues';
 import { stringIsEmpty, addEmoji, finalizeEmoji } from 'helpers/stringHelpers';
+import { determineXpButtonDisabled } from 'helpers';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
 
 SubjectPanel.propTypes = {
-  comments: PropTypes.array.isRequired,
   description: PropTypes.string,
   rewardLevel: PropTypes.number,
   loadMoreCommentsButton: PropTypes.bool.isRequired,
@@ -34,14 +38,14 @@ SubjectPanel.propTypes = {
   userId: PropTypes.number,
   username: PropTypes.string.isRequired,
   uploaderAuthLevel: PropTypes.number.isRequired,
-  contentType: PropTypes.string.isRequired,
-  contentId: PropTypes.number.isRequired,
+  rootType: PropTypes.string.isRequired,
+  rootId: PropTypes.number.isRequired,
   subjectId: PropTypes.number.isRequired
 };
 
 export default function SubjectPanel({
-  contentId,
-  contentType,
+  rootId,
+  rootType,
   description,
   title,
   rewardLevel,
@@ -50,7 +54,6 @@ export default function SubjectPanel({
   userId,
   timeStamp,
   numComments,
-  comments,
   loadMoreCommentsButton,
   rootRewardLevel,
   secretAnswer,
@@ -60,14 +63,18 @@ export default function SubjectPanel({
     requestHelpers: { deleteSubject, editSubject, loadComments }
   } = useAppContext();
   const {
-    actions: { onChangeSpoilerStatus }
+    actions: {
+      onChangeSpoilerStatus,
+      onEditRewardComment,
+      onSetXpRewardInterfaceShown
+    }
   } = useContentContext();
   const {
     authLevel,
     canDelete,
     canEdit,
     canEditRewardLevel,
-    profileTheme,
+    canReward,
     userId: myId
   } = useMyState();
   const {
@@ -87,7 +94,15 @@ export default function SubjectPanel({
     onUploadReply
   } = useContext(LocalContext);
 
-  const { deleted, secretShown, fileName, filePath } = useContentState({
+  const {
+    comments,
+    deleted,
+    secretShown,
+    fileName,
+    filePath,
+    rewards = [],
+    xpRewardInterfaceShown
+  } = useContentState({
     contentType: 'subject',
     contentId: subjectId
   });
@@ -102,6 +117,7 @@ export default function SubjectPanel({
   );
   const [editDoneButtonDisabled, setEditDoneButtonDisabled] = useState(true);
   const userIsUploader = myId === userId;
+
   const editButtonShown = useMemo(() => {
     const userHasHigherAuthLevel = authLevel > uploaderAuthLevel;
     const userCanEditThis = (canEdit || canDelete) && userHasHigherAuthLevel;
@@ -111,7 +127,17 @@ export default function SubjectPanel({
     () => !!secretAnswer && !(secretShown || userIsUploader),
     [secretAnswer, secretShown, userIsUploader]
   );
-  const CommentsRef = useRef(null);
+  const rewardButtonShown = useMemo(() => {
+    return (
+      !onEdit && canReward && !userIsUploader && authLevel > uploaderAuthLevel
+    );
+  }, [authLevel, canReward, onEdit, uploaderAuthLevel, userIsUploader]);
+  const finalRewardLevel = useMemo(() => {
+    return description?.length > descriptionLengthForExtraRewardLevel ||
+      filePath
+      ? 5
+      : rootRewardLevel;
+  }, [description?.length, filePath, rootRewardLevel]);
 
   useEffect(() => {
     const titleIsEmpty = stringIsEmpty(editedTitle);
@@ -124,6 +150,9 @@ export default function SubjectPanel({
     setEditDoneButtonDisabled(editDoneButtonDisabled);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editedTitle, editedDescription, editedSecretAnswer]);
+
+  const CommentsRef = useRef(null);
+  const RewardInterfaceRef = useRef(null);
 
   return !deleted ? (
     <div
@@ -264,18 +293,18 @@ export default function SubjectPanel({
         )}
         {!onEdit && (
           <div style={{ marginTop: '1rem' }}>
-            {!secretHidden && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  minHeight: '8rem'
-                }}
-              >
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                minHeight: '8rem'
+              }}
+            >
+              {!secretHidden && (
                 <Button
                   skeuomorphic
-                  color={profileTheme}
+                  color="black"
                   style={{ fontSize: '2rem' }}
                   onClick={handleExpand}
                 >
@@ -287,8 +316,75 @@ export default function SubjectPanel({
                       : ''}
                   </span>
                 </Button>
-              </div>
+              )}
+              {rewardButtonShown && (
+                <Button
+                  skeuomorphic
+                  color="pink"
+                  style={{ fontSize: '2rem', marginLeft: '1rem' }}
+                  disabled={determineXpButtonDisabled({
+                    rewardLevel: finalRewardLevel,
+                    myId: userId,
+                    xpRewardInterfaceShown,
+                    rewards
+                  })}
+                  onClick={() =>
+                    onSetXpRewardInterfaceShown({
+                      contentType: 'subject',
+                      contentId: subjectId,
+                      shown: true
+                    })
+                  }
+                >
+                  <Icon icon="certificate" />
+                  <span style={{ marginLeft: '0.7rem' }}>
+                    {determineXpButtonDisabled({
+                      rewardLevel: finalRewardLevel,
+                      myId: userId,
+                      xpRewardInterfaceShown,
+                      rewards
+                    }) || 'Reward'}
+                  </span>
+                </Button>
+              )}
+            </div>
+            {xpRewardInterfaceShown && (
+              <XPRewardInterface
+                innerRef={RewardInterfaceRef}
+                contentType="subject"
+                contentId={subjectId}
+                rewardLevel={finalRewardLevel}
+                uploaderId={userId}
+                rewards={rewards}
+                onRewardSubmit={(data) => {
+                  onSetXpRewardInterfaceShown({
+                    contentType: 'subject',
+                    contentId: subjectId,
+                    shown: false
+                  });
+                  onAttachReward({
+                    data,
+                    contentType: 'subject',
+                    contentId: subjectId
+                  });
+                }}
+              />
             )}
+            <RewardStatus
+              contentType="subject"
+              rewardLevel={finalRewardLevel}
+              onCommentEdit={onEditRewardComment}
+              rewards={rewards}
+              className={css`
+                margin-top: ${secretHidden && rewardLevel ? '1rem' : ''};
+                margin-left: CALC(-1rem - 1px);
+                margin-right: CALC(-1rem - 1px);
+                @media (max-width: ${mobileMaxWidth}) {
+                  margin-left: 0px;
+                  margin-right: 0px;
+                }
+              `}
+            />
             <Comments
               inputAreaInnerRef={CommentsRef}
               isLoading={loadingComments}
@@ -311,8 +407,8 @@ export default function SubjectPanel({
               onReplySubmit={onUploadReply}
               onRewardCommentEdit={editRewardComment}
               parent={{
-                contentId,
-                contentType,
+                contentId: rootId,
+                contentType: rootType,
                 rewardLevel: rootRewardLevel,
                 secretAnswer,
                 uploader: {
@@ -321,7 +417,7 @@ export default function SubjectPanel({
                 }
               }}
               rootContent={{
-                contentType
+                contentType: rootType
               }}
               subject={{
                 id: subjectId,
@@ -391,7 +487,12 @@ export default function SubjectPanel({
     if (secretHidden) {
       return handleExpand(true);
     }
-    onUploadComment({ ...params, subjectId, contentId, contentType });
+    onUploadComment({
+      ...params,
+      subjectId,
+      contentId: rootId,
+      contentType: rootType
+    });
   }
 
   async function handleExpand(revealingSecret) {
@@ -407,8 +508,8 @@ export default function SubjectPanel({
         onLoadSubjectComments({
           ...data,
           subjectId,
-          contentType,
-          contentId
+          contentType: rootType,
+          contentId: rootId
         });
       }
       setLoadingComments(false);

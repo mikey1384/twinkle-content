@@ -54,8 +54,8 @@ export default function Body({
     contentId,
     rewardLevel,
     id,
-    numChildComments,
-    childComments = [],
+    numComments,
+    comments = [],
     commentsLoadMoreButton = false,
     likes = [],
     previewLoaded,
@@ -391,9 +391,9 @@ export default function Body({
                       ? 'Respond'
                       : 'Reply'}
                   </span>
-                  {numChildComments > 0 && !commentsShown && !autoExpand && (
+                  {numComments > 0 && !commentsShown && !autoExpand && (
                     <span style={{ marginLeft: '0.5rem' }}>
-                      ({numChildComments})
+                      ({numComments})
                     </span>
                   )}
                 </Button>
@@ -554,7 +554,7 @@ export default function Body({
             (autoExpand && !secretHidden) ||
             (contentType === 'subject' && secretHidden)
           }
-          comments={childComments}
+          comments={comments}
           commentsLoadLimit={commentsLoadLimit}
           commentsShown={commentsShown && !secretHidden}
           contentId={contentId}
@@ -587,8 +587,7 @@ export default function Body({
           commentsHidden={secretHidden}
           style={{
             padding: '0 1rem',
-            paddingBottom:
-              childComments.length > 0 || commentsShown ? '0.5rem' : 0
+            paddingBottom: comments.length > 0 || commentsShown ? '0.5rem' : 0
           }}
           userId={userId}
         />
