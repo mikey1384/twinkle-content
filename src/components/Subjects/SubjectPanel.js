@@ -133,11 +133,8 @@ export default function SubjectPanel({
     );
   }, [authLevel, canReward, onEdit, uploaderAuthLevel, userIsUploader]);
   const finalRewardLevel = useMemo(() => {
-    return description?.length > descriptionLengthForExtraRewardLevel ||
-      filePath
-      ? 5
-      : 1;
-  }, [description?.length, filePath]);
+    return description?.length > descriptionLengthForExtraRewardLevel ? 5 : 0;
+  }, [description?.length]);
 
   useEffect(() => {
     const titleIsEmpty = stringIsEmpty(editedTitle);

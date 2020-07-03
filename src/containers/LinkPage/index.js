@@ -292,7 +292,7 @@ export default function LinkPage({
           }}
         >
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <div style={{ display: 'flex' }}>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
               <LikeButton
                 key={'like' + linkId}
                 filled

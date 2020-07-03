@@ -44,8 +44,8 @@ export default function RecommendationInterface({
     if (authLevel > 0) {
       return isRecommendedByUser ? (
         <>
-          <span style={{ marginLeft: '1rem', color: Color.darkBlue() }}>
-            ({priceTable.recommendation} Twinkle Coins)
+          <span style={{ marginLeft: '1rem', color: Color.rose() }}>
+            (-{priceTable.recommendation} Twinkle Coins)
           </span>
         </>
       ) : null;
@@ -53,7 +53,7 @@ export default function RecommendationInterface({
       return !isRecommendedByUser ? (
         <>
           <span style={{ marginLeft: '1rem', color: Color.darkBlue() }}>
-            ({priceTable.recommendation} Twinkle Coins)
+            (-{priceTable.recommendation} Twinkle Coins)
           </span>
         </>
       ) : null;
