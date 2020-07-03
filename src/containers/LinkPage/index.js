@@ -402,6 +402,7 @@ export default function LinkPage({
           }
         `}
         contentId={linkId}
+        contentType="url"
         loadMoreButton={subjectsLoadMoreButton}
         subjects={subjects}
         onLoadMoreSubjects={onLoadMoreSubjects}
@@ -412,7 +413,6 @@ export default function LinkPage({
         }
         onSetRewardLevel={onSetRewardLevel}
         uploadSubject={onUploadSubject}
-        contentType="url"
         commentActions={{
           onAttachReward,
           editRewardComment: onEditRewardComment,

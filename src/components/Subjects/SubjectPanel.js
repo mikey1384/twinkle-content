@@ -95,7 +95,7 @@ export default function SubjectPanel({
   } = useContext(LocalContext);
 
   const {
-    comments,
+    comments = [],
     deleted,
     secretShown,
     fileName,
