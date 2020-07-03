@@ -29,31 +29,6 @@ export const container = css`
       padding: 0 1rem 0 1rem;
       display: flex;
       flex-direction: column;
-      .buttons-bar {
-        margin-top: 1rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        .left {
-          display: flex;
-          align-items: center;
-          button,
-          span {
-            font-size: 1.4rem;
-          }
-          @media (max-width: ${mobileMaxWidth}) {
-            button,
-            span {
-              font-size: 1rem;
-            }
-          }
-        }
-        .right {
-          display: flex;
-          justify-content: flex-end;
-          align-items: center;
-        }
-      }
     }
   }
   .content-panel__likes {

@@ -264,31 +264,10 @@ export default function Body({
   }, []);
 
   const editButtonShown = useMemo(() => {
-    const isForSecretSubject =
-      (!!rootObj?.secretAnswer &&
-        !(
-          rootObj?.uploader?.id === userId ||
-          authLevel > rootObj?.uploader?.authLevel
-        )) ||
-      (!!targetObj?.subject?.secretAnswer &&
-        !(
-          targetObj?.subject?.uploader?.id === userId ||
-          authLevel > targetObj?.subject?.uploader?.authLevel
-        ));
     const userCanEditThis =
       (canEdit || canDelete) && authLevel > uploader.authLevel;
-    return (userId === uploader.id && !isForSecretSubject) || userCanEditThis;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    authLevel,
-    canDelete,
-    canEdit,
-    rootObj,
-    targetObj,
-    uploader.authLevel,
-    uploader.id,
-    userId
-  ]);
+    return userId === uploader.id || userCanEditThis;
+  }, [authLevel, canDelete, canEdit, uploader.authLevel, uploader.id, userId]);
 
   const userCanRewardThis = useMemo(
     () => canReward && authLevel > uploader.authLevel && userId !== uploader.id,
@@ -355,7 +334,7 @@ export default function Body({
           myId={userId}
           onClickSecretAnswer={onSecretAnswerClick}
         />
-        {!isEditing && !secretHidden && (
+        {!isEditing && (
           <div
             className="bottom-interface"
             style={{
@@ -367,37 +346,67 @@ export default function Body({
                 '0.5rem'
             }}
           >
-            <div className="buttons-bar">
+            <div
+              className={css`
+                margin-top: ${secretHidden ? 0 : '1.5rem'};
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                .left {
+                  display: flex;
+                  align-items: center;
+                  button,
+                  span {
+                    font-size: 1.4rem;
+                  }
+                  @media (max-width: ${mobileMaxWidth}) {
+                    button,
+                    span {
+                      font-size: 1rem;
+                    }
+                  }
+                }
+                .right {
+                  display: flex;
+                  justify-content: flex-end;
+                  align-items: center;
+                }
+              `}
+            >
               <div className="left">
-                <LikeButton
-                  contentType={contentType}
-                  contentId={contentId}
-                  likes={likes}
-                  key="likeButton"
-                  onClick={handleLikeClick}
-                  small
-                />
-                <Button
-                  transparent
-                  key="commentButton"
-                  style={{ marginLeft: '1rem' }}
-                  onClick={handleCommentButtonClick}
-                >
-                  <Icon icon="comment-alt" />
-                  <span style={{ marginLeft: '0.7rem' }}>
-                    {contentType === 'video' || contentType === 'url'
-                      ? 'Comment'
-                      : contentType === 'subject'
-                      ? 'Respond'
-                      : 'Reply'}
-                  </span>
-                  {numComments > 0 && !commentsShown && !autoExpand && (
-                    <span style={{ marginLeft: '0.5rem' }}>
-                      ({numComments})
+                {!secretHidden && (
+                  <LikeButton
+                    contentType={contentType}
+                    contentId={contentId}
+                    likes={likes}
+                    key="likeButton"
+                    onClick={handleLikeClick}
+                    small
+                  />
+                )}
+                {!secretHidden && (
+                  <Button
+                    transparent
+                    key="commentButton"
+                    style={{ marginLeft: '1rem' }}
+                    onClick={handleCommentButtonClick}
+                  >
+                    <Icon icon="comment-alt" />
+                    <span style={{ marginLeft: '0.7rem' }}>
+                      {contentType === 'video' || contentType === 'url'
+                        ? 'Comment'
+                        : contentType === 'subject'
+                        ? 'Respond'
+                        : 'Reply'}
                     </span>
-                  )}
-                </Button>
-                {userCanRewardThis && (
+                    {numComments > 0 && !commentsShown && !autoExpand && (
+                      <span style={{ marginLeft: '0.5rem' }}>
+                        ({numComments})
+                      </span>
+                    )}
+                  </Button>
+                )}
+                {userCanRewardThis && !secretHidden && (
                   <Button
                     color="pink"
                     disabled={!!xpButtonDisabled}
@@ -414,7 +423,10 @@ export default function Body({
                   <DropdownButton
                     transparent
                     direction="right"
-                    style={{ marginLeft: '0.5rem', display: 'inline-block' }}
+                    style={{
+                      marginLeft: secretHidden ? 0 : '0.5rem',
+                      display: 'inline-block'
+                    }}
                     size={contentType !== 'subject' ? 'sm' : null}
                     menuProps={editMenuItems}
                   />

@@ -271,16 +271,6 @@ export default function LinkPage({
           contentId={linkId}
           loadingHeight="30rem"
         />
-        <RewardStatus
-          contentType="url"
-          onCommentEdit={onEditRewardComment}
-          className={css`
-            font-size: 1.4rem;
-            margin-right: -1px;
-            margin-left: -1px;
-          `}
-          rewards={rewards}
-        />
         <div
           style={{
             position: 'relative',
@@ -349,14 +339,6 @@ export default function LinkPage({
             <Icon icon="star" />
           </Button>
         </div>
-        <RecommendationStatus
-          style={{
-            marginTop: likes.length > 0 ? '0.5rem' : '1rem',
-            marginBottom: recommendationInterfaceShown ? '1rem' : 0
-          }}
-          contentType="url"
-          recommendations={recommendations}
-        />
         {recommendationInterfaceShown && (
           <RecommendationInterface
             style={{
@@ -393,6 +375,25 @@ export default function LinkPage({
             />
           </div>
         )}
+        <RecommendationStatus
+          style={{
+            marginTop: likes.length > 0 ? '0.5rem' : '1rem',
+            marginBottom: recommendationInterfaceShown ? '1rem' : 0
+          }}
+          contentType="url"
+          recommendations={recommendations}
+        />
+        <RewardStatus
+          contentType="url"
+          onCommentEdit={onEditRewardComment}
+          className={css`
+            margin-top: 1rem;
+            font-size: 1.4rem;
+            margin-right: -1px;
+            margin-left: -1px;
+          `}
+          rewards={rewards}
+        />
       </div>
       <Subjects
         className={css`
