@@ -322,7 +322,10 @@ export default function SubjectPanel({
                   <Icon icon="comment-alt" />
                   <span style={{ marginLeft: '1rem' }}>
                     Comment{!expanded && numComments > 1 ? 's' : ''}
-                    {!expanded && numComments && numComments > 0
+                    {!expanded &&
+                    numComments &&
+                    numComments > 0 &&
+                    comments.length === 0
                       ? ` (${numComments})`
                       : ''}
                   </span>
