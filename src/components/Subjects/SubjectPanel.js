@@ -136,8 +136,8 @@ export default function SubjectPanel({
     return description?.length > descriptionLengthForExtraRewardLevel ||
       filePath
       ? 5
-      : rootRewardLevel;
-  }, [description?.length, filePath, rootRewardLevel]);
+      : 1;
+  }, [description?.length, filePath]);
 
   useEffect(() => {
     const titleIsEmpty = stringIsEmpty(editedTitle);
@@ -324,7 +324,7 @@ export default function SubjectPanel({
                   style={{ fontSize: '2rem', marginLeft: '1rem' }}
                   disabled={determineXpButtonDisabled({
                     rewardLevel: finalRewardLevel,
-                    myId: userId,
+                    myId,
                     xpRewardInterfaceShown,
                     rewards
                   })}
@@ -340,7 +340,7 @@ export default function SubjectPanel({
                   <span style={{ marginLeft: '0.7rem' }}>
                     {determineXpButtonDisabled({
                       rewardLevel: finalRewardLevel,
-                      myId: userId,
+                      myId,
                       xpRewardInterfaceShown,
                       rewards
                     }) || 'Reward'}
