@@ -1389,15 +1389,21 @@ export default function ContentReducer(state, action) {
           greeting: action.greeting
         }
       };
-    case 'UPLOAD_COMMENT':
+    case 'UPLOAD_COMMENT': {
+      const subjectState =
+        action.data.subjectId && state['subject' + action.data.subjectId]
+          ? {
+              ['subject' + action.data.subjectId]: {
+                ...state['subject' + action.data.subjectId],
+                comments: [action.data].concat(
+                  state['subject' + action.data.subjectId].comments
+                )
+              }
+            }
+          : {};
       return {
         ...state,
-        ['subject' + action.data.subjectId]: {
-          ...state['subject' + action.data.subjectId],
-          comments: [action.data].concat(
-            state['subject' + action.data.subjectId].comments
-          )
-        },
+        ...subjectState,
         [contentKey]: {
           ...prevContentState,
           comments:
@@ -1414,6 +1420,7 @@ export default function ContentReducer(state, action) {
           )
         }
       };
+    }
     case 'UPLOAD_REPLY':
       return {
         ...state,

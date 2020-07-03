@@ -293,15 +293,15 @@ export default function SubjectPanel({
         )}
         {!onEdit && (
           <div style={{ marginTop: '1rem' }}>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                minHeight: '8rem'
-              }}
-            >
-              {!secretHidden && (
+            {!secretHidden && (
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  minHeight: '8rem'
+                }}
+              >
                 <Button
                   skeuomorphic
                   color="black"
@@ -316,38 +316,39 @@ export default function SubjectPanel({
                       : ''}
                   </span>
                 </Button>
-              )}
-              {rewardButtonShown && (
-                <Button
-                  skeuomorphic
-                  color="pink"
-                  style={{ fontSize: '2rem', marginLeft: '1rem' }}
-                  disabled={determineXpButtonDisabled({
-                    rewardLevel: finalRewardLevel,
-                    myId,
-                    xpRewardInterfaceShown,
-                    rewards
-                  })}
-                  onClick={() =>
-                    onSetXpRewardInterfaceShown({
-                      contentType: 'subject',
-                      contentId: subjectId,
-                      shown: true
-                    })
-                  }
-                >
-                  <Icon icon="certificate" />
-                  <span style={{ marginLeft: '0.7rem' }}>
-                    {determineXpButtonDisabled({
+                {rewardButtonShown && (
+                  <Button
+                    skeuomorphic
+                    color="pink"
+                    style={{ fontSize: '2rem', marginLeft: '1rem' }}
+                    disabled={determineXpButtonDisabled({
                       rewardLevel: finalRewardLevel,
                       myId,
                       xpRewardInterfaceShown,
                       rewards
-                    }) || 'Reward'}
-                  </span>
-                </Button>
-              )}
-            </div>
+                    })}
+                    onClick={() =>
+                      onSetXpRewardInterfaceShown({
+                        contentType: 'subject',
+                        contentId: subjectId,
+                        shown: true
+                      })
+                    }
+                  >
+                    <Icon icon="certificate" />
+                    <span style={{ marginLeft: '0.7rem' }}>
+                      {determineXpButtonDisabled({
+                        rewardLevel: finalRewardLevel,
+                        myId,
+                        xpRewardInterfaceShown,
+                        rewards
+                      }) || 'Reward'}
+                    </span>
+                  </Button>
+                )}
+              </div>
+            )}
+
             {xpRewardInterfaceShown && (
               <XPRewardInterface
                 innerRef={RewardInterfaceRef}
