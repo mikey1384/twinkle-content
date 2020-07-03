@@ -16,6 +16,8 @@ import StarButton from 'components/Buttons/StarButton';
 import LocalContext from './Context';
 import RewardStatus from 'components/RewardStatus';
 import XPRewardInterface from 'components/XPRewardInterface';
+import RecommendationStatus from 'components/RecommendationStatus';
+import RecommendationInterface from 'components/RecommendationInterface';
 import { css } from 'emotion';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { descriptionLengthForExtraRewardLevel } from 'constants/defaultValues';
@@ -100,6 +102,7 @@ export default function SubjectPanel({
     secretShown,
     fileName,
     filePath,
+    recommendations = [],
     rewards = [],
     xpRewardInterfaceShown
   } = useContentState({
@@ -116,6 +119,10 @@ export default function SubjectPanel({
     secretAnswer || ''
   );
   const [editDoneButtonDisabled, setEditDoneButtonDisabled] = useState(true);
+  const [
+    recommendationInterfaceShown,
+    setRecommendationInterfaceShown
+  ] = useState(false);
   const userIsUploader = myId === userId;
 
   const editButtonShown = useMemo(() => {
@@ -135,6 +142,13 @@ export default function SubjectPanel({
   const finalRewardLevel = useMemo(() => {
     return description?.length > descriptionLengthForExtraRewardLevel ? 5 : 0;
   }, [description?.length]);
+
+  const isRecommendedByUser = useMemo(() => {
+    return (
+      recommendations.filter((recommendation) => recommendation.id === userId)
+        .length > 0
+    );
+  }, [recommendations, userId]);
 
   useEffect(() => {
     const titleIsEmpty = stringIsEmpty(editedTitle);
@@ -343,9 +357,40 @@ export default function SubjectPanel({
                     </span>
                   </Button>
                 )}
+                <Button
+                  color="brownOrange"
+                  style={{ fontSize: '2rem', marginLeft: '1rem' }}
+                  skeuomorphic
+                  filled={isRecommendedByUser}
+                  disabled={recommendationInterfaceShown}
+                  onClick={() => setRecommendationInterfaceShown(true)}
+                >
+                  <Icon icon="star" />
+                </Button>
               </div>
             )}
-
+            <RecommendationStatus
+              style={{
+                marginBottom: '1rem',
+                marginLeft: '-1rem',
+                marginRight: '-1rem'
+              }}
+              contentType="subject"
+              recommendations={recommendations}
+            />
+            {recommendationInterfaceShown && (
+              <RecommendationInterface
+                contentId={subjectId}
+                contentType="subject"
+                style={{
+                  marginLeft: '-1rem',
+                  marginRight: '-1rem',
+                  fontSize: '1.7rem'
+                }}
+                onHide={() => setRecommendationInterfaceShown(false)}
+                isRecommendedByUser={isRecommendedByUser}
+              />
+            )}
             {xpRewardInterfaceShown && (
               <XPRewardInterface
                 innerRef={RewardInterfaceRef}
@@ -374,7 +419,6 @@ export default function SubjectPanel({
               onCommentEdit={onEditRewardComment}
               rewards={rewards}
               className={css`
-                margin-top: ${secretHidden && rewardLevel ? '1rem' : ''};
                 margin-left: CALC(-1rem - 1px);
                 margin-right: CALC(-1rem - 1px);
                 @media (max-width: ${mobileMaxWidth}) {

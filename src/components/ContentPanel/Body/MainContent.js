@@ -253,12 +253,11 @@ export default function MainContent({
               }
             `}
             style={{
-              marginBottom:
-                isEditing || secretHidden
-                  ? '1rem'
-                  : rootType === 'url'
-                  ? '-0.5rem'
-                  : 0
+              marginBottom: isEditing
+                ? '1rem'
+                : rootType === 'url' && !secretHidden
+                ? '-0.5rem'
+                : 0
             }}
             rewardLevel={rewardLevel}
           />

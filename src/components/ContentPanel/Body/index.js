@@ -348,7 +348,7 @@ export default function Body({
           >
             <div
               className={css`
-                margin-top: ${secretHidden ? 0 : '1.5rem'};
+                margin-top: ${secretHidden ? '0.5rem' : '1.5rem'};
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
@@ -431,59 +431,63 @@ export default function Body({
                     menuProps={editMenuItems}
                   />
                 )}
-                <div style={{ position: 'relative', marginLeft: '1rem' }}>
-                  <Button
-                    transparent
-                    onClick={() => {
-                      setCopiedShown(true);
-                      handleCopyToClipboard();
-                      setTimeout(() => setCopiedShown(false), 700);
-                    }}
-                  >
-                    <Icon icon="copy" />
-                  </Button>
-                  <div
-                    style={{
-                      zIndex: 300,
-                      display: copiedShown ? 'block' : 'none',
-                      marginTop: '0.2rem',
-                      position: 'absolute',
-                      background: '#fff',
-                      fontSize: '1.2rem',
-                      padding: '1rem',
-                      border: `1px solid ${Color.borderGray()}`
-                    }}
-                  >
-                    Copied!
+                {!secretHidden && (
+                  <div style={{ position: 'relative', marginLeft: '1rem' }}>
+                    <Button
+                      transparent
+                      onClick={() => {
+                        setCopiedShown(true);
+                        handleCopyToClipboard();
+                        setTimeout(() => setCopiedShown(false), 700);
+                      }}
+                    >
+                      <Icon icon="copy" />
+                    </Button>
+                    <div
+                      style={{
+                        zIndex: 300,
+                        display: copiedShown ? 'block' : 'none',
+                        marginTop: '0.2rem',
+                        position: 'absolute',
+                        background: '#fff',
+                        fontSize: '1.2rem',
+                        padding: '1rem',
+                        border: `1px solid ${Color.borderGray()}`
+                      }}
+                    >
+                      Copied!
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
-              <div
-                className="right"
-                style={{ position: 'relative', marginRight: 0 }}
-              >
-                <Button
-                  color="brownOrange"
-                  filled={isRecommendedByUser}
-                  disabled={recommendationInterfaceShown}
-                  onClick={() => setRecommendationInterfaceShown(true)}
+              {!secretHidden && (
+                <div
+                  className="right"
+                  style={{ position: 'relative', marginRight: 0 }}
                 >
-                  <Icon icon="star" />
-                </Button>
-                {canEditRewardLevel &&
-                  (contentType === 'subject' || contentType === 'video') && (
-                    <StarButton
-                      style={{ marginLeft: '1rem' }}
-                      byUser={!!contentObj.byUser}
-                      contentId={contentObj.id}
-                      rewardLevel={rewardLevel}
-                      onSetRewardLevel={onSetRewardLevel}
-                      onToggleByUser={onToggleByUser}
-                      contentType={contentType}
-                      uploader={uploader}
-                    />
-                  )}
-              </div>
+                  <Button
+                    color="brownOrange"
+                    filled={isRecommendedByUser}
+                    disabled={recommendationInterfaceShown}
+                    onClick={() => setRecommendationInterfaceShown(true)}
+                  >
+                    <Icon icon="star" />
+                  </Button>
+                  {canEditRewardLevel &&
+                    (contentType === 'subject' || contentType === 'video') && (
+                      <StarButton
+                        style={{ marginLeft: '1rem' }}
+                        byUser={!!contentObj.byUser}
+                        contentId={contentObj.id}
+                        rewardLevel={rewardLevel}
+                        onSetRewardLevel={onSetRewardLevel}
+                        onToggleByUser={onToggleByUser}
+                        contentType={contentType}
+                        uploader={uploader}
+                      />
+                    )}
+                </div>
+              )}
             </div>
             <div
               style={{
@@ -491,7 +495,7 @@ export default function Body({
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 marginTop: '0.5rem',
-                marginBottom: '0.5rem'
+                marginBottom: secretShown ? 0 : '0.5rem'
               }}
             >
               <Likers
