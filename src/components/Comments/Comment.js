@@ -31,10 +31,6 @@ import { useContentState, useMyState } from 'helpers/hooks';
 import { determineXpButtonDisabled, scrollElementToCenter } from 'helpers';
 import { useAppContext, useContentContext } from 'contexts';
 import LocalContext from './Context';
-import { css } from 'emotion';
-import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
-import Embedly from 'components/Embedly';
-import TwinkleVideo from 'components/Embedly/TwinkleVideo';
 import LoginToViewContent from 'components/LoginToViewContent';
 import FileViewer from 'components/FileViewer';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
@@ -57,8 +53,6 @@ Comment.propTypes = {
     timeStamp: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
       .isRequired,
     uploader: PropTypes.object.isRequired,
-    attachmentRootId: PropTypes.number,
-    attachmentRootType: PropTypes.string,
     filePath: PropTypes.string,
     fileName: PropTypes.string,
     fileSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
@@ -86,8 +80,6 @@ function Comment({
     rewards = [],
     uploader,
     numReplies,
-    attachmentRootType,
-    attachmentRootId,
     filePath,
     fileName,
     fileSize
@@ -105,8 +97,7 @@ function Comment({
       onChangeSpoilerStatus,
       onLoadReplies,
       onSetIsEditing,
-      onSetXpRewardInterfaceShown,
-      onSetVideoStarted
+      onSetXpRewardInterfaceShown
     }
   } = useContentContext();
   const {
@@ -410,58 +401,6 @@ function Comment({
                       {comment.content}
                     </LongText>
                   )}
-                  {attachmentRootType === 'url' && !isHidden && (
-                    <div
-                      className={css`
-                        padding: 1rem;
-                        background: ${Color.whiteGray()};
-                        border: 1px solid ${Color.borderGray()};
-                        border-radius: ${borderRadius};
-                        margin-top: -1rem;
-                        transition: background 0.5s;
-                        &:hover {
-                          background: #fff;
-                        }
-                        @media (max-width: ${mobileMaxWidth}) {
-                          margin-top: -0.5rem;
-                          border-left: 0;
-                          border-right: 0;
-                        }
-                      `}
-                    >
-                      <Embedly small contentId={attachmentRootId} />
-                    </div>
-                  )}
-                  {attachmentRootType === 'video' && !isHidden && (
-                    <div
-                      className={css`
-                        padding: 1rem;
-                        background: ${Color.whiteGray()};
-                        border: 1px solid ${Color.borderGray()};
-                        border-radius: ${borderRadius};
-                        margin-top: -1rem;
-                        transition: background 0.5s;
-                        &:hover {
-                          background: #fff;
-                        }
-                        @media (max-width: ${mobileMaxWidth}) {
-                          margin-top: -0.5rem;
-                          border-left: 0;
-                          border-right: 0;
-                        }
-                      `}
-                    >
-                      <TwinkleVideo
-                        imageOnly={false}
-                        onPlay={handlePlay}
-                        style={{
-                          width: '29vw',
-                          height: 'CALC(20vw + 3rem)'
-                        }}
-                        videoId={attachmentRootId || 1}
-                      />
-                    </div>
-                  )}
                   {filePath &&
                     (userId ? (
                       <div style={{ width: '100%' }}>
@@ -667,14 +606,6 @@ function Comment({
   function submitReply(reply) {
     setReplying(true);
     onReplySubmit(reply);
-  }
-
-  function handlePlay() {
-    onSetVideoStarted({
-      video: 'video',
-      contentId: attachmentRootId,
-      started: true
-    });
   }
 }
 

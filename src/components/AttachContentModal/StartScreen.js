@@ -12,7 +12,7 @@ import {
   getFileInfoFromFileName
 } from 'helpers/stringHelpers';
 import { useInputContext } from 'contexts';
-import { FILE_UPLOAD_XP_REQUIREMENT } from 'constants/defaultValues';
+import { FILE_UPLOAD_XP_REQUIREMENT, mb } from 'constants/defaultValues';
 
 StartScreen.propTypes = {
   navigateTo: PropTypes.func.isRequired,
@@ -35,7 +35,6 @@ export default function StartScreen({
   const { authLevel, twinkleXP } = useMyState();
   const [alertModalShown, setAlertModalShown] = useState(false);
   const FileInputRef = useRef(null);
-  const mb = 1000;
   const maxSize = useMemo(
     () =>
       authLevel > 3

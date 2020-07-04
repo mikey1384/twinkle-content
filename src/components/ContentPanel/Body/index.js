@@ -290,7 +290,7 @@ export default function Body({
   return (
     <ErrorBoundary>
       <div style={{ width: '100%' }}>
-        {contentType === 'subject' &&
+        {(contentType === 'subject' || contentType === 'comment') &&
           filePath &&
           (userId ? (
             <FileViewer
