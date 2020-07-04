@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ProfilePic from 'components/ProfilePic';
 import UsernameText from 'components/Texts/UsernameText';
 import FileViewer from 'components/FileViewer';
+import LongText from 'components/Texts/LongText';
 import { MessageStyle } from '../../Styles';
 import { Color } from 'constants/css';
 import { unix } from 'moment';
@@ -69,15 +70,14 @@ export default function Message({
         )}
         <div>
           <div className={MessageStyle.messageWrapper}>
-            <span
+            <LongText
               style={{
                 color: isReloadedSubject && Color.green(),
                 fontWeight: isReloadedSubject && 'bold'
               }}
-              dangerouslySetInnerHTML={{
-                __html: isReloadedSubject ? 'Brought back the subject' : content
-              }}
-            />
+            >
+              {isReloadedSubject ? 'Brought back the subject' : content}
+            </LongText>
           </div>
         </div>
       </div>

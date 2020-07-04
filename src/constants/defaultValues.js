@@ -1,7 +1,7 @@
 export const defaultChatSubject = 'Welcome!';
 export const cloudFrontURL = `https://${process.env.REACT_APP_CLOUDFRONT_KEY}.cloudfront.net`;
 export const S3URL = `https://${process.env.REACT_APP_AWS_S3_BUCKET_NAME}.s3.amazonaws.com`;
-export const clientVersion = '1.3.76';
+export const clientVersion = '1.3.81';
 export const descriptionLengthForExtraRewardLevel = 1000;
 export const rewardValue = 200;
 export const priceTable = {
@@ -11,7 +11,7 @@ export const priceTable = {
 export const charLimit = {
   chat: {
     subject: 200,
-    message: 5000
+    message: 3500
   },
   comment: 10000,
   playlist: {

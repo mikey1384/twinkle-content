@@ -4,6 +4,7 @@ import MessagesContainer from './MessagesContainer';
 import Vocabulary from './Vocabulary';
 import Loading from 'components/Loading';
 import AboutClass from './AboutClass';
+import ErrorBoundary from 'components/ErrorBoundary';
 import { phoneMaxWidth, Color } from 'constants/css';
 import { css } from 'emotion';
 import { useChatContext } from 'contexts';
@@ -40,41 +41,43 @@ function Body({ channelName, chessOpponent, currentChannel }) {
   }, [selectedChannelId]);
 
   return (
-    <div
-      className={css`
-        height: 100%;
-        width: ${isViewingAboutClassPage ? '80vw' : '60vw'};
-        border-left: 1px solid ${Color.borderGray()};
-        padding: 0;
-        position: relative;
-        background: #fff;
-        @media (max-width: ${phoneMaxWidth}) {
-          width: ${chatType === 'vocabulary'
-            ? '77vw'
-            : isViewingAboutClassPage
-            ? '120vw'
-            : '85vw'};
-        }
-      `}
-    >
-      {loadingVocabulary ? (
-        <Loading text="Loading Vocabulary" />
-      ) : (
-        <>
-          {chatType === 'vocabulary' ? (
-            <Vocabulary />
-          ) : isViewingAboutClassPage ? (
-            <AboutClass />
-          ) : (
-            <MessagesContainer
-              channelName={channelName}
-              chessOpponent={chessOpponent}
-              currentChannel={currentChannel}
-            />
-          )}
-        </>
-      )}
-    </div>
+    <ErrorBoundary>
+      <div
+        className={css`
+          height: 100%;
+          width: ${isViewingAboutClassPage ? '80vw' : '60vw'};
+          border-left: 1px solid ${Color.borderGray()};
+          padding: 0;
+          position: relative;
+          background: #fff;
+          @media (max-width: ${phoneMaxWidth}) {
+            width: ${chatType === 'vocabulary'
+              ? '77vw'
+              : isViewingAboutClassPage
+              ? '120vw'
+              : '85vw'};
+          }
+        `}
+      >
+        {loadingVocabulary ? (
+          <Loading text="Loading Vocabulary" />
+        ) : (
+          <>
+            {chatType === 'vocabulary' ? (
+              <Vocabulary />
+            ) : isViewingAboutClassPage ? (
+              <AboutClass />
+            ) : (
+              <MessagesContainer
+                channelName={channelName}
+                chessOpponent={chessOpponent}
+                currentChannel={currentChannel}
+              />
+            )}
+          </>
+        )}
+      </div>
+    </ErrorBoundary>
   );
 }
 

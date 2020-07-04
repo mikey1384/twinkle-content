@@ -4,8 +4,9 @@ import Button from 'components/Button';
 import EditTextArea from 'components/Texts/EditTextArea';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Embedly from 'components/Embedly';
+import LongText from 'components/Texts/LongText';
 import { Color } from 'constants/css';
-import { processedStringWithURL, isValidSpoiler } from 'helpers/stringHelpers';
+import { isValidSpoiler } from 'helpers/stringHelpers';
 import { useAppContext, useChatContext } from 'contexts';
 import { socket } from 'constants/io';
 import Spoiler from './Spoiler';
@@ -85,12 +86,15 @@ function TextMessage({
                   onSpoilerClick={onSetScrollToBottom}
                 />
               ) : (
-                <span
-                  style={{ color: isNotification ? Color.gray() : undefined }}
-                  dangerouslySetInnerHTML={{
-                    __html: processedStringWithURL(content)
+                <LongText
+                  style={{
+                    marginTop: isSubject ? '0.5rem' : 0,
+                    marginBottom: isSubject ? '0.5rem' : 0,
+                    color: isNotification ? Color.gray() : undefined
                   }}
-                />
+                >
+                  {content}
+                </LongText>
               )}
             </div>
             {!!isReloadedSubject && !!numMsgs && numMsgs > 0 && (
