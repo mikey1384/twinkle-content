@@ -55,7 +55,8 @@ Comment.propTypes = {
     uploader: PropTypes.object.isRequired,
     filePath: PropTypes.string,
     fileName: PropTypes.string,
-    fileSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    fileSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    thumbUrl: PropTypes.string
   }).isRequired,
   innerRef: PropTypes.func,
   isPreview: PropTypes.bool,
@@ -82,7 +83,8 @@ function Comment({
     numReplies,
     filePath,
     fileName,
-    fileSize
+    fileSize,
+    thumbUrl
   }
 }) {
   subject = subject || comment.targetObj?.subject || {};
@@ -416,16 +418,15 @@ function Comment({
                         <FileViewer
                           autoPlay
                           contentId={comment.id}
-                          contentType={'comment'}
+                          contentType="comment"
                           fileName={fileName}
                           filePath={filePath}
                           fileSize={Number(fileSize)}
-                          thumbUrl={filePath}
+                          thumbUrl={thumbUrl}
                           videoHeight="100%"
                           style={{
                             display: 'flex',
                             justifyContent: 'center',
-                            marginTop: '1rem',
                             ...(fileType === 'audio'
                               ? {
                                   padding: '1rem'
