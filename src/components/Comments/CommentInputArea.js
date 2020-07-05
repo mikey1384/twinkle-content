@@ -82,21 +82,24 @@ export default function CommentInputArea({
     [authLevel]
   );
 
-  const disabled = useMemo(() => twinkleXP < FILE_UPLOAD_XP_REQUIREMENT, [
-    twinkleXP
-  ]);
+  const disabled = useMemo(
+    () => authLevel === 0 && twinkleXP < FILE_UPLOAD_XP_REQUIREMENT,
+    [authLevel, twinkleXP]
+  );
+
   return (
     <div style={{ ...style, position: 'relative' }} ref={InputFormRef}>
       {!uploadingFile && (
         <div
           style={{
             display: 'flex',
-            width: '100%'
+            width: '100%',
+            justifyContent: 'space-between'
           }}
         >
           <InputForm
             style={{
-              width: 'CALC(100% - ' + (attachment ? 12 : 5) + 'rem)'
+              width: '100%'
             }}
             innerRef={innerRef}
             clickListenerState={clickListenerState}
@@ -113,6 +116,7 @@ export default function CommentInputArea({
           />
           {attachment ? (
             <Attachment
+              style={{ marginLeft: '1rem', fontSize: '1rem' }}
               attachment={attachment}
               onClose={() =>
                 onSetCommentAttachment({
@@ -141,7 +145,7 @@ export default function CommentInputArea({
                     cursor: disabled ? 'default' : 'pointer'
                   }}
                 >
-                  <Icon size="lg" icon="plus" />
+                  <Icon size="lg" icon="upload" />
                 </Button>
               )}
               {userId && disabled && (
