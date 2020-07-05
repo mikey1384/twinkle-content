@@ -28,11 +28,13 @@ export default function UsernameSection({
       actions: { onClearUserSearch, onSearchUsers }
     }
   } = useAppContext();
+
   const { handleSearch, searching } = useSearch({
     onSearch: handleSearchUsers,
-    onSetSearchText: text => onSetSearchText(text.trim()),
+    onSetSearchText: (text) => onSetSearchText(text.trim()),
     onClear: onClearUserSearch
   });
+
   useEffect(() => {
     if (!stringIsEmpty(searchText)) {
       handleSearch(searchText);

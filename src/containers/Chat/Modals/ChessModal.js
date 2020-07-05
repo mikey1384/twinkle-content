@@ -96,8 +96,7 @@ export default function ChessModal({
       parsedState?.isCheckmate ||
       parsedState?.isStalemate ||
       parsedState?.isDraw,
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [parsedState]
+    [parsedState?.isCheckmate, parsedState?.isDraw, parsedState?.isStalemate]
   );
 
   return (

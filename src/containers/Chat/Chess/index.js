@@ -102,11 +102,11 @@ export default function Chess({
     }
   }, [parsedState]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const myColor = useMemo(() => parsedState?.playerColors[myId] || 'white', [
     myId,
-    parsedState
+    parsedState?.playerColors
   ]);
+
   const userMadeLastMove = move.by === myId;
   const isCheck = parsedState?.isCheck;
   const isCheckmate = parsedState?.isCheckmate;

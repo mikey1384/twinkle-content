@@ -146,15 +146,16 @@ export default function Body({
       : targetObj.subject?.secretAnswer
       ? targetSubjectSecretHidden
       : !!rootObj?.secretAnswer && rootObjSecretHidden;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     contentType,
-    rootObj,
+    rootObj?.secretAnswer,
+    rootObj?.uploader?.id,
     rootSecretShown,
     secretAnswer,
     secretShown,
     subjectSecretShown,
-    targetObj.subject,
+    targetObj.subject?.secretAnswer,
+    targetObj.subject?.uploader?.id,
     uploader.id,
     userId
   ]);
@@ -172,15 +173,14 @@ export default function Body({
       contentObj.byUser
       ? 5
       : targetObj.subject?.rewardLevel || rootRewardLevel;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     contentObj.byUser,
     contentType,
-    description,
+    description?.length,
     filePath,
     rootObj.rewardLevel,
     rootType,
-    targetObj.subject
+    targetObj.subject?.rewardLevel
   ]);
 
   const xpButtonDisabled = useMemo(
@@ -261,13 +261,16 @@ export default function Body({
     const userCanEditThis =
       (canEdit || canDelete) && authLevel > uploader.authLevel;
     return (userId === uploader.id && !isForSecretSubject) || userCanEditThis;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     authLevel,
     canDelete,
     canEdit,
-    rootObj,
-    targetObj,
+    rootObj?.secretAnswer,
+    rootObj?.uploader?.authLevel,
+    rootObj?.uploader?.id,
+    targetObj?.subject?.secretAnswer,
+    targetObj?.subject?.uploader?.authLevel,
+    targetObj?.subject?.uploader?.id,
     uploader.authLevel,
     uploader.id,
     userId

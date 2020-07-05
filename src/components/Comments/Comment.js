@@ -163,14 +163,13 @@ function Comment({
       }
     }
     return 0;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     isPreview,
     parent.contentType,
     parent.rewardLevel,
     rootContent.contentType,
     rootContent.rewardLevel,
-    subject
+    subject?.rewardLevel
   ]);
 
   useEffect(() => {
@@ -215,14 +214,19 @@ function Comment({
         ));
     const userCanEditThis = (canEdit || canDelete) && userIsHigherAuth;
     return (userIsUploader && !isForSecretSubject) || userCanEditThis;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     authLevel,
     canDelete,
     canEdit,
-    parent,
-    rootContent,
-    subject,
+    parent?.secretAnswer,
+    parent?.uploader?.authLevel,
+    parent?.uploader?.id,
+    rootContent?.secretAnswer,
+    rootContent?.uploader?.authLevel,
+    rootContent?.uploader?.id,
+    subject?.secretAnswer,
+    subject?.uploader?.authLevel,
+    subject?.uploader?.id,
     userId,
     userIsHigherAuth,
     userIsUploader
@@ -249,6 +253,7 @@ function Comment({
     return items;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canDelete, canEdit, comment.id, userIsUploader]);
+
   useEffect(() => {
     handleRewardInterfaceShown(
       rewardInterfaceShown && userIsHigherAuth && canReward && !userIsUploader
@@ -266,8 +271,12 @@ function Comment({
     const secretShown =
       subjectState.secretShown || subject?.uploader?.id === userId;
     return hasSecretAnswer && !secretShown;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [subject, subjectState.secretShown, userId]);
+  }, [
+    subject?.secretAnswer,
+    subject?.uploader?.id,
+    subjectState.secretShown,
+    userId
+  ]);
 
   const xpButtonDisabled = useMemo(() => {
     if (isPreview) return true;

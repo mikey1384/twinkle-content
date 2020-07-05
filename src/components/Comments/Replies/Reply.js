@@ -117,7 +117,7 @@ function Reply({
     if (parent.contentType === 'subject' && parent.rewardLevel > 0) {
       return parent.rewardLevel;
     }
-    if (parent.rootType === 'subject' && rootContent.rewardLevel > 0) {
+    if (parent.rootType === 'subject' && rootContent?.rewardLevel > 0) {
       return rootContent.rewardLevel;
     }
     if (parent.contentType === 'video' || parent.contentType === 'url') {
@@ -137,13 +137,12 @@ function Reply({
       }
     }
     return 0;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     parent.contentType,
     parent.rewardLevel,
     parent.rootType,
-    rootContent,
-    subject
+    rootContent?.rewardLevel,
+    subject?.rewardLevel
   ]);
   const xpButtonDisabled = useMemo(
     () =>

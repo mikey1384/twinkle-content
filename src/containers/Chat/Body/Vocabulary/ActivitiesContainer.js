@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Activity from './Activity';
 import Button from 'components/Button';
@@ -50,21 +50,12 @@ function ActivitiesContainer({ style }) {
     actions: { onLoadMoreVocabulary }
   } = useChatContext();
 
-  const fillerHeight = useMemo(
-    () =>
-      ActivitiesContainerRef.current?.offsetHeight >
-      ContentRef.current?.offsetHeight
-        ? ActivitiesContainerRef.current?.offsetHeight -
-          ContentRef.current?.offsetHeight
-        : 20,
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      ActivitiesContainerRef.current?.offsetHeight,
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      ContentRef.current?.offsetHeight
-    ]
-  );
+  const fillerHeight =
+    ActivitiesContainerRef.current?.offsetHeight >
+    ContentRef.current?.offsetHeight
+      ? ActivitiesContainerRef.current?.offsetHeight -
+        ContentRef.current?.offsetHeight
+      : 20;
 
   return (
     <div

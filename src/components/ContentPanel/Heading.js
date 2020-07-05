@@ -125,7 +125,6 @@ function Heading({
       }
       return null;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     action,
     commentId,
@@ -135,7 +134,7 @@ function Heading({
     replyId,
     rootObj,
     rootType,
-    targetObj,
+    targetObj?.comment,
     uploader
   ]);
 

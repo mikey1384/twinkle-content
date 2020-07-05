@@ -62,7 +62,7 @@ export default function TagInput({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
   useEffect(() => {
-    setResults(searchResults.filter(item => !selectedItems[item.id]));
+    setResults(searchResults.filter((item) => !selectedItems[item.id]));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchResults]);
 
@@ -99,7 +99,7 @@ export default function TagInput({
             inputRef={inputRef}
             value={value}
             placeholder={placeholder}
-            onChange={text => onChange(text)}
+            onChange={(text) => onChange(text)}
             onKeyDown={onKeyDown}
           />
         </div>
@@ -127,7 +127,7 @@ export default function TagInput({
   }
 
   function onKeyDown(event) {
-    searchResults = searchResults.filter(user => !selectedItems[user.id]);
+    searchResults = searchResults.filter((user) => !selectedItems[user.id]);
     let index = indexToHighlight;
     if (searchResults.length > 0) {
       if (event.keyCode === 40) {

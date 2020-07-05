@@ -105,8 +105,7 @@ export default function TargetContent({
           : 0
         : rootObj.rewardLevel;
     return subject?.rewardLevel || rootRewardLevel;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rootObj.rewardLevel, rootType, subject]);
+  }, [rootObj.rewardLevel, rootType, subject?.rewardLevel]);
 
   const xpButtonDisabled = useMemo(
     () =>
@@ -127,13 +126,18 @@ export default function TargetContent({
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
+
   const contentHidden = useMemo(() => {
     const hasSecretAnswer = subject?.secretAnswer;
     const secretShown =
       subjectState.secretShown || subject?.uploader?.id === userId;
     return hasSecretAnswer && !secretShown;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [subject, subjectState.secretShown, userId]);
+  }, [
+    subject?.secretAnswer,
+    subject?.uploader?.id,
+    subjectState.secretShown,
+    userId
+  ]);
 
   return (
     <ErrorBoundary

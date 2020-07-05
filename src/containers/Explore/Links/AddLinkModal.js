@@ -71,7 +71,6 @@ export default function AddLinkModal({ onHide }) {
       };
     }
     return urlExceedsCharLimit?.style;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urlError, urlExceedsCharLimit]);
 
   return (
