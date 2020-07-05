@@ -16,19 +16,10 @@ import { FILE_UPLOAD_XP_REQUIREMENT, mb } from 'constants/defaultValues';
 
 StartScreen.propTypes = {
   navigateTo: PropTypes.func.isRequired,
-  onHide: PropTypes.func.isRequired,
-  type: PropTypes.string,
-  contentType: PropTypes.string,
-  contentId: PropTypes.number
+  onHide: PropTypes.func.isRequired
 };
 
-export default function StartScreen({
-  navigateTo,
-  onHide,
-  type,
-  contentType,
-  contentId
-}) {
+export default function StartScreen({ navigateTo, onHide }) {
   const {
     actions: { onSetSubjectAttachment }
   } = useInputContext();
@@ -164,7 +155,6 @@ export default function StartScreen({
   );
 
   function handleUpload(event) {
-    const key = contentType + contentId;
     const fileObj = event.target.files[0];
     if (fileObj.size / mb > maxSize) {
       return setAlertModalShown(true);
@@ -176,13 +166,10 @@ export default function StartScreen({
         const payload = upload.target.result;
         if (fileObj.name.split('.')[1] === 'gif') {
           onSetSubjectAttachment({
-            attachment: {
-              file: fileObj,
-              contentType: 'file',
-              fileType,
-              imageUrl: payload
-            },
-            attachContentType: type === 'subject' ? 'subject' : key
+            file: fileObj,
+            contentType: 'file',
+            fileType,
+            imageUrl: payload
           });
           onHide();
         } else {
@@ -195,13 +182,10 @@ export default function StartScreen({
               const file = new File([buffer], fileObj.name);
 
               onSetSubjectAttachment({
-                attachment: {
-                  file,
-                  contentType: 'file',
-                  fileType,
-                  imageUrl
-                },
-                attachContentType: type === 'subject' ? 'subject' : key
+                file,
+                contentType: 'file',
+                fileType,
+                imageUrl
               });
               onHide();
             },
@@ -212,12 +196,9 @@ export default function StartScreen({
       reader.readAsDataURL(fileObj);
     } else {
       onSetSubjectAttachment({
-        attachment: {
-          file: fileObj,
-          contentType: 'file',
-          fileType
-        },
-        attachContentType: type === 'subject' ? 'subject' : key
+        file: fileObj,
+        contentType: 'file',
+        fileType
       });
       onHide();
     }

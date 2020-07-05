@@ -21,6 +21,14 @@ export default function InputActions(dispatch) {
         type: 'RESET_SUBJECT_INPUT'
       });
     },
+    onSetCommentAttachment({ attachment, contentType, contentId }) {
+      return dispatch({
+        type: 'SET_COMMENT_ATTACHMENT',
+        attachment,
+        contentType,
+        contentId
+      });
+    },
     onSetContentAlreadyPosted(alreadyPosted) {
       return dispatch({
         type: 'SET_CONTENT_ALREADY_POSTED',
@@ -166,11 +174,10 @@ export default function InputActions(dispatch) {
         secretAnswer
       });
     },
-    onSetSubjectAttachment({ attachment, attachContentType }) {
+    onSetSubjectAttachment(attachment) {
       return dispatch({
         type: 'SET_SUBJECT_ATTACHMENT',
-        attachment,
-        attachContentType
+        attachment
       });
     },
     onSetSubjectDescription(description) {

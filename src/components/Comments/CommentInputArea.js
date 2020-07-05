@@ -49,7 +49,7 @@ export default function CommentInputArea({
 }) {
   const {
     state,
-    actions: { onSetSubjectAttachment }
+    actions: { onSetCommentAttachment }
   } = useInputContext();
   const {
     state: contentState,
@@ -115,9 +115,10 @@ export default function CommentInputArea({
             <Attachment
               attachment={attachment}
               onClose={() =>
-                onSetSubjectAttachment({
+                onSetCommentAttachment({
                   attachment: undefined,
-                  attachContentType: contentType + contentId
+                  contentType,
+                  contentId
                 })
               }
             />
@@ -198,9 +199,10 @@ export default function CommentInputArea({
       targetCommentId
     });
     setCommentContent('');
-    onSetSubjectAttachment({
+    onSetCommentAttachment({
       attachment: undefined,
-      attachContentType: contentType + contentId
+      contentType,
+      contentId
     });
     filePathRef.current = null;
   }
@@ -237,14 +239,15 @@ export default function CommentInputArea({
       reader.onload = (upload) => {
         const payload = upload.target.result;
         if (fileObj.name.split('.')[1] === 'gif') {
-          onSetSubjectAttachment({
+          onSetCommentAttachment({
             attachment: {
               file: fileObj,
               contentType: 'file',
               fileType,
               imageUrl: payload
             },
-            attachContentType: contentType + contentId
+            contentType,
+            contentId
           });
         } else {
           window.loadImage(
@@ -255,14 +258,15 @@ export default function CommentInputArea({
               const buffer = Buffer.from(dataUri, 'base64');
               const file = new File([buffer], fileObj.name);
 
-              onSetSubjectAttachment({
+              onSetCommentAttachment({
                 attachment: {
                   file,
                   contentType: 'file',
                   fileType,
                   imageUrl
                 },
-                attachContentType: contentType + contentId
+                contentType,
+                contentId
               });
             },
             { orientation: true, canvas: true }
@@ -271,13 +275,14 @@ export default function CommentInputArea({
       };
       reader.readAsDataURL(fileObj);
     } else {
-      onSetSubjectAttachment({
+      onSetCommentAttachment({
         attachment: {
           file: fileObj,
           contentType: 'file',
           fileType
         },
-        attachContentType: contentType + contentId
+        contentType,
+        contentId
       });
     }
     event.target.value = null;

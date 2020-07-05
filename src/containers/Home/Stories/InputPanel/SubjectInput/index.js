@@ -161,12 +161,7 @@ function SubjectInput() {
               {attachment ? (
                 <Attachment
                   attachment={attachment}
-                  onClose={() =>
-                    onSetSubjectAttachment({
-                      attachment: undefined,
-                      attachContentType: 'subject'
-                    })
-                  }
+                  onClose={() => onSetSubjectAttachment(undefined)}
                 />
               ) : (
                 <Button
@@ -309,13 +304,9 @@ function SubjectInput() {
         <AttachContentModal
           onHide={() => setAttachContentModalShown(false)}
           onConfirm={(content) => {
-            onSetSubjectAttachment({
-              attachment: content,
-              attachContentType: 'subject'
-            });
+            onSetSubjectAttachment(content);
             setAttachContentModalShown(false);
           }}
-          type="subject"
         />
       )}
     </ErrorBoundary>

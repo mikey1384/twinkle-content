@@ -16,6 +16,14 @@ export default function InputReducer(state, action) {
           text: action.text
         }
       };
+    case 'SET_COMMENT_ATTACHMENT':
+      return {
+        ...state,
+        [contentKey]: {
+          ...state[contentKey],
+          attachment: action.attachment
+        }
+      };
     case 'SET_CONTENT_ALREADY_POSTED':
       return {
         ...state,
@@ -213,8 +221,8 @@ export default function InputReducer(state, action) {
     case 'SET_SUBJECT_ATTACHMENT':
       return {
         ...state,
-        [action.attachContentType]: {
-          ...state[action.attachContentType],
+        subject: {
+          ...state.subject,
           attachment: action.attachment
         }
       };

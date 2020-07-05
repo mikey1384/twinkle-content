@@ -7,31 +7,22 @@ import SelectAttachmentScreen from './SelectAttachmentScreen';
 
 const sectionObj = {
   start: {
-    title: 'Attach a content to your {type}'
+    title: 'Attach a content to your subject'
   },
   selectVideo: {
-    title: 'Select a Video'
+    title: 'Select a video'
   },
   selectLink: {
-    title: 'Select a Webpage'
+    title: 'Select a webpage'
   }
 };
 
 AttachContentModal.propTypes = {
   onConfirm: PropTypes.func.isRequired,
-  onHide: PropTypes.func.isRequired,
-  type: PropTypes.string,
-  contentType: PropTypes.string,
-  contentId: PropTypes.number
+  onHide: PropTypes.func.isRequired
 };
 
-export default function AttachContentModal({
-  onConfirm,
-  onHide,
-  type,
-  contentType,
-  contentId
-}) {
+export default function AttachContentModal({ onConfirm, onHide }) {
   const [section, setSection] = useState('start');
   const [selected, setSelected] = useState();
   return (
@@ -39,16 +30,10 @@ export default function AttachContentModal({
       large={section === 'selectVideo' || section === 'selectLink'}
       onHide={onHide}
     >
-      <header>{sectionObj[section].title.replace('{type}', type)}</header>
+      <header>{sectionObj[section].title}</header>
       <main>
         {section === 'start' && (
-          <StartScreen
-            navigateTo={setSection}
-            onHide={onHide}
-            type={type}
-            contentType={contentType}
-            contentId={contentId}
-          />
+          <StartScreen navigateTo={setSection} onHide={onHide} />
         )}
         {section === 'selectVideo' && (
           <SelectAttachmentScreen
@@ -96,7 +81,7 @@ export default function AttachContentModal({
             disabled={!selected}
             color="blue"
             style={{ marginLeft: '0.7rem' }}
-            onClick={() => onConfirm(selected, 'subject')}
+            onClick={() => onConfirm(selected)}
           >
             Confirm
           </Button>
