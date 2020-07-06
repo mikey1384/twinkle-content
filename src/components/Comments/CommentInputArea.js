@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import InputForm from 'components/Forms/InputForm';
-import { useInputContext, useContentContext } from 'contexts';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
+import { useInputContext, useContentContext } from 'contexts';
+import { useContentState } from 'helpers/hooks';
 import { v1 as uuidv1 } from 'uuid';
 
 CommentInputArea.propTypes = {
@@ -40,20 +41,22 @@ export default function CommentInputArea({
     state,
     actions: { onSetCommentAttachment }
   } = useInputContext();
+
   const {
-    state: contentState,
     actions: { onSetCommentUploadingFile }
   } = useContentContext();
+
+  const {
+    fileUploadComplete,
+    fileUploadProgress,
+    uploadingFile
+  } = useContentState({ contentId, contentType });
+
   const filePathRef = useRef(null);
   const [commentContent, setCommentContent] = useState('');
   const contentType = targetCommentId ? 'comment' : parent.contentType;
   const contentId = targetCommentId || parent.contentId;
   const attachment = state[contentType + contentId]?.attachment;
-  const uploadingFile = contentState[contentType + contentId].uploadingFile;
-  const fileUploadComplete =
-    contentState[contentType + contentId].fileUploadComplete;
-  const fileUploadProgress =
-    contentState[contentType + contentId].fileUploadProgress;
 
   return (
     <div style={{ ...style, position: 'relative' }} ref={InputFormRef}>
@@ -118,12 +121,9 @@ export default function CommentInputArea({
     } else {
       onSubmit({
         content: text,
-        subjectId,
         rootCommentId,
-        targetCommentId,
-        attachment,
-        contentType,
-        contentId
+        subjectId,
+        targetCommentId
       });
     }
   }

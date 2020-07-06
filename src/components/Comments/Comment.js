@@ -60,6 +60,7 @@ Comment.propTypes = {
   }).isRequired,
   innerRef: PropTypes.func,
   isPreview: PropTypes.bool,
+  onSubmitWithAttachment: PropTypes.func.isRequired,
   parent: PropTypes.object,
   rootContent: PropTypes.shape({
     contentType: PropTypes.string
@@ -71,6 +72,7 @@ function Comment({
   comment,
   innerRef,
   isPreview,
+  onSubmitWithAttachment,
   parent,
   rootContent = {},
   subject,
@@ -531,6 +533,7 @@ function Comment({
                   innerRef={ReplyInputAreaRef}
                   numReplies={replies?.length}
                   onSubmit={submitReply}
+                  onSubmitWithAttachment={onSubmitWithAttachment}
                   parent={parent}
                   rootCommentId={comment.commentId}
                   style={{

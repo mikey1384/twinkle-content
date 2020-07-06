@@ -212,6 +212,7 @@ function Comments({
                   subject={subject}
                   comment={comment}
                   key={comment.id}
+                  onSubmitWithAttachment={handleFileUpload}
                   userId={userId}
                 />
               ))}
