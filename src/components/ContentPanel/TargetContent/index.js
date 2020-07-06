@@ -13,15 +13,20 @@ import ContentLink from 'components/ContentLink';
 import RewardStatus from 'components/RewardStatus';
 import XPRewardInterface from 'components/XPRewardInterface';
 import ErrorBoundary from 'components/ErrorBoundary';
+import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
+import FileViewer from 'components/FileViewer';
 import HiddenComment from 'components/HiddenComment';
 import Icon from 'components/Icon';
+import LoginToViewContent from 'components/LoginToViewContent';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { determineXpButtonDisabled, isMobile } from 'helpers';
+import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 import { useContentState, useMyState } from 'helpers/hooks';
-import { useAppContext, useContentContext } from 'contexts';
+import { useAppContext, useContentContext, useInputContext } from 'contexts';
 import { useHistory } from 'react-router-dom';
+import { v1 as uuidv1 } from 'uuid';
 
 TargetContent.propTypes = {
   className: PropTypes.string,
@@ -52,11 +57,17 @@ export default function TargetContent({
 }) {
   const history = useHistory();
   const {
-    requestHelpers: { uploadComment }
+    requestHelpers: { uploadComment, uploadFile }
   } = useAppContext();
   const { authLevel, canReward, profilePicId, userId, username } = useMyState();
   const {
-    actions: { onSetXpRewardInterfaceShown }
+    actions: {
+      onSetCommentUploadingFile,
+      onSetXpRewardInterfaceShown,
+      onClearCommentFileUploadProgress,
+      onUpdateCommentFileUploadProgress,
+      onSetCommentFileUploadComplete
+    }
   } = useContentContext();
   const {
     onAttachReward,
@@ -65,7 +76,12 @@ export default function TargetContent({
     onEditRewardComment,
     onUploadTargetComment
   } = useContext(LocalContext);
-  const { xpRewardInterfaceShown } = useContentState({
+  const {
+    xpRewardInterfaceShown,
+    fileUploadComplete,
+    fileUploadProgress,
+    uploadingFile
+  } = useContentState({
     contentType: 'comment',
     contentId: comment.id
   });
@@ -73,9 +89,19 @@ export default function TargetContent({
     contentType: 'subject',
     contentId: subject?.id
   });
+  const {
+    state,
+    actions: { onEnterComment, onSetCommentAttachment }
+  } = useInputContext();
+  const attachment = state['comment' + comment.id]?.attachment;
+  const { fileType } = comment?.fileName
+    ? getFileInfoFromFileName(comment?.fileName)
+    : '';
+  const [commentContent, setCommentContent] = useState('');
   const [userListModalShown, setUserListModalShown] = useState(false);
   const InputFormRef = useRef(null);
   const RewardInterfaceRef = useRef(null);
+  const filePathRef = useRef(null);
   const userCanRewardThis = useMemo(() => {
     let userIsUploader;
     if (comment && !comment.notFound) {
@@ -229,6 +255,32 @@ export default function TargetContent({
                     </div>
                   </div>
                   <div style={{ marginTop: '1rem' }}>
+                    {comment &&
+                      comment.filePath &&
+                      (userId ? (
+                        <FileViewer
+                          autoPlay
+                          contentId={contentId}
+                          contentType={contentType}
+                          fileName={comment.fileName}
+                          filePath={comment.filePath}
+                          fileSize={comment.fileSize}
+                          thumbUrl={comment.thumbUrl}
+                          videoHeight="100%"
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            marginTop: '1rem',
+                            ...(fileType === 'audio'
+                              ? {
+                                  padding: '1rem'
+                                }
+                              : {})
+                          }}
+                        />
+                      ) : (
+                        <LoginToViewContent />
+                      ))}
                     {contentHidden ? (
                       <HiddenComment
                         onClick={() => history.push(`/subjects/${subject.id}`)}
@@ -257,7 +309,7 @@ export default function TargetContent({
                         <Button
                           style={{ marginLeft: '1rem' }}
                           transparent
-                          onClick={onReplyClick}
+                          onClick={handleReplyClick}
                         >
                           <Icon icon="comment-alt" />
                           <span style={{ marginLeft: '0.7rem' }}>Reply</span>
@@ -334,17 +386,30 @@ export default function TargetContent({
                 rewards={comment.rewards}
                 uploaderName={uploader.username}
               />
-              {replyInputShown && !contentHidden && (
+              {replyInputShown && !contentHidden && !uploadingFile && (
                 <InputForm
                   innerRef={InputFormRef}
                   style={{
                     marginTop: comment.likes.length > 0 ? '0.5rem' : '1rem',
                     padding: '0 1rem'
                   }}
-                  onSubmit={onSubmit}
+                  onSubmit={handleSubmit}
                   parent={{ contentType: 'comment', contentId: comment.id }}
                   rows={4}
                   placeholder={`Write a reply...`}
+                />
+              )}
+              {uploadingFile && (
+                <FileUploadStatusIndicator
+                  style={{
+                    fontSize: '1.7rem',
+                    fontWeight: 'bold',
+                    marginTop: 0
+                  }}
+                  fileName={attachment?.file?.name}
+                  onFileUpload={handleFileUploadComplete}
+                  uploadComplete={fileUploadComplete}
+                  uploadProgress={fileUploadProgress}
                 />
               )}
               {comments.length > 0 && (
@@ -391,22 +456,90 @@ export default function TargetContent({
     });
   }
 
-  function onReplyClick() {
+  function handleReplyClick() {
     if (!replyInputShown) onShowTCReplyInput({ contentId, contentType });
     if (!isMobile(navigator)) {
       setTimeout(() => InputFormRef.current.focus(), 0);
     }
   }
 
-  async function onSubmit(content) {
-    const data = await uploadComment({
-      content,
-      parent: {
-        contentType: rootType,
-        contentId: rootObj.id
-      },
-      targetCommentId: comment.id
+  async function handleFileUploadComplete() {
+    filePathRef.current = uuidv1();
+    try {
+      await uploadFile({
+        filePath: filePathRef.current,
+        file: attachment.file,
+        onUploadProgress: handleUploadProgress
+      });
+      onSetCommentFileUploadComplete({
+        contentType: 'comment',
+        contentId: comment.id
+      });
+      const data = await uploadComment({
+        content: commentContent,
+        parent: {
+          contentType: rootType,
+          contentId: rootObj.id
+        },
+        targetCommentId: comment.id,
+        attachment,
+        filePath: filePathRef.current,
+        fileName: attachment.file.name,
+        fileSize: attachment.file.size
+      });
+      onUploadTargetComment({ ...data, contentId, contentType });
+      onClearCommentFileUploadProgress({
+        contentType: 'comment',
+        contentId: comment.id
+      });
+      onSetCommentUploadingFile({
+        contentType: 'comment',
+        contentId: comment.id,
+        uploading: false
+      });
+      onEnterComment({
+        contentType: 'comment',
+        contentId: comment.id,
+        text: ''
+      });
+    } catch (error) {
+      console.error(error);
+    }
+    setCommentContent('');
+    onSetCommentAttachment({
+      attachment: undefined,
+      contentType: 'comment',
+      contentId: comment.id
     });
-    onUploadTargetComment({ ...data, contentId, contentType });
+    filePathRef.current = null;
+
+    function handleUploadProgress({ loaded, total }) {
+      onUpdateCommentFileUploadProgress({
+        contentType: 'comment',
+        contentId: comment.id,
+        progress: loaded / total
+      });
+    }
+  }
+
+  async function handleSubmit(text) {
+    if (attachment) {
+      setCommentContent(text);
+      onSetCommentUploadingFile({
+        contentType: 'comment',
+        contentId: comment.id,
+        uploading: true
+      });
+    } else {
+      const data = await uploadComment({
+        content: text,
+        parent: {
+          contentType: rootType,
+          contentId: rootObj.id
+        },
+        targetCommentId: comment.id
+      });
+      onUploadTargetComment({ ...data, contentId, contentType });
+    }
   }
 }

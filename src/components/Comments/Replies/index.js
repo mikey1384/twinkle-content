@@ -139,7 +139,6 @@ function Replies({
   }
 
   function handleSubmitWithAttachment(params) {
-    console.log('got here');
     setReplying(true);
     onSubmitWithAttachment(params);
   }

@@ -111,7 +111,7 @@ export default function CommentInputArea({
   }
 
   function handleSubmit(text) {
-    if (attachment?.contentType === 'file') {
+    if (attachment) {
       setCommentContent(text);
       onSetCommentUploadingFile({
         contentType,
