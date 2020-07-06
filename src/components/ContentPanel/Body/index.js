@@ -13,16 +13,11 @@ import ConfirmModal from 'components/Modals/ConfirmModal';
 import XPRewardInterface from 'components/XPRewardInterface';
 import RewardStatus from 'components/RewardStatus';
 import ErrorBoundary from 'components/ErrorBoundary';
-import FileViewer from 'components/FileViewer';
 import Icon from 'components/Icon';
-import LoginToViewContent from 'components/LoginToViewContent';
 import { css } from 'emotion';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { descriptionLengthForExtraRewardLevel } from 'constants/defaultValues';
-import {
-  addCommasToNumber,
-  getFileInfoFromFileName
-} from 'helpers/stringHelpers';
+import { addCommasToNumber } from 'helpers/stringHelpers';
 import {
   determineXpButtonDisabled,
   isMobile,
@@ -85,8 +80,6 @@ export default function Body({
     description,
     filePath,
     fileName,
-    fileSize,
-    thumbUrl,
     isEditing,
     secretAnswer,
     secretShown,
@@ -95,7 +88,6 @@ export default function Body({
     contentType,
     contentId
   });
-  const { fileType } = fileName ? getFileInfoFromFileName(fileName) : '';
   const { secretShown: rootSecretShown } = useContentState({
     contentId: rootId,
     contentType: rootType
@@ -290,39 +282,12 @@ export default function Body({
   return (
     <ErrorBoundary>
       <div style={{ width: '100%' }}>
-        {(contentType === 'subject' || contentType === 'comment') &&
-          filePath &&
-          (userId ? (
-            <FileViewer
-              autoPlay
-              contentId={contentId}
-              contentType={contentType}
-              isMuted={!autoExpand}
-              fileName={fileName}
-              filePath={filePath}
-              fileSize={fileSize}
-              thumbUrl={thumbUrl}
-              videoHeight="100%"
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                marginTop: '1rem',
-                ...(fileType === 'audio'
-                  ? {
-                      padding: '1rem'
-                    }
-                  : {}),
-                marginBottom: rewardLevel ? '1rem' : 0
-              }}
-            />
-          ) : (
-            <LoginToViewContent />
-          ))}
         <MainContent
+          autoExpand={autoExpand}
           contentId={contentId}
           contentType={contentType}
           secretHidden={secretHidden}
-          myId={userId}
+          userId={userId}
           onClickSecretAnswer={onSecretAnswerClick}
         />
         {!isEditing && !secretHidden && (

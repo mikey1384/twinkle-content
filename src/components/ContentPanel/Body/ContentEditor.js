@@ -21,6 +21,7 @@ ContentEditor.propTypes = {
   contentId: PropTypes.number.isRequired,
   contentType: PropTypes.string.isRequired,
   description: PropTypes.string,
+  filePath: PropTypes.string,
   onDismiss: PropTypes.func.isRequired,
   onEditContent: PropTypes.func.isRequired,
   secretAnswer: PropTypes.string,
@@ -34,6 +35,7 @@ export default function ContentEditor({
   contentId,
   contentType,
   description,
+  filePath,
   onDismiss,
   onEditContent,
   secretAnswer = '',
@@ -166,7 +168,10 @@ export default function ContentEditor({
         }
         return false;
       case 'comment':
-        if (stringIsEmpty(editedComment) || editedComment === comment) {
+        if (
+          (stringIsEmpty(editedComment) || editedComment === comment) &&
+          !filePath
+        ) {
           return true;
         }
         return false;
@@ -194,6 +199,7 @@ export default function ContentEditor({
     editedSecretAnswer,
     editedTitle,
     editedUrl,
+    filePath,
     secretAnswer,
     secretAnswerExceedsCharLimit,
     title,
