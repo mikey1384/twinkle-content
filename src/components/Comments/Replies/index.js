@@ -37,7 +37,8 @@ function Replies({
     onDelete,
     onLoadMoreReplies,
     onLoadRepliesOfReply,
-    onReplySubmit
+    onReplySubmit,
+    onSubmitWithAttachment
   } = useContext(LocalContext);
   const {
     requestHelpers: { loadReplies }
@@ -100,6 +101,7 @@ function Replies({
             userId={userId}
             deleteReply={handleDeleteReply}
             onLoadRepliesOfReply={onLoadRepliesOfReply}
+            onSubmitWithAttachment={handleSubmitWithAttachment}
             parent={parent}
             rootContent={rootContent}
             subject={subject}
@@ -134,6 +136,12 @@ function Replies({
   function handleSubmitReply(params) {
     setReplying(true);
     onReplySubmit(params);
+  }
+
+  function handleSubmitWithAttachment(params) {
+    console.log('got here');
+    setReplying(true);
+    onSubmitWithAttachment(params);
   }
 }
 

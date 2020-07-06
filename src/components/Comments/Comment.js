@@ -532,7 +532,7 @@ function Comment({
                   innerRef={ReplyInputAreaRef}
                   numReplies={replies?.length}
                   onSubmit={submitReply}
-                  onSubmitWithAttachment={onSubmitWithAttachment}
+                  onSubmitWithAttachment={handleSubmitWithAttachment}
                   parent={parent}
                   rootCommentId={comment.commentId}
                   style={{
@@ -613,6 +613,11 @@ function Comment({
   function handleRewardInterfaceShown(shown) {
     setRewardInterfaceShown(shown);
     rewardInterfaceShownRef.current = shown;
+  }
+
+  function handleSubmitWithAttachment(params) {
+    setReplying(true);
+    onSubmitWithAttachment(params);
   }
 
   function submitReply(reply) {

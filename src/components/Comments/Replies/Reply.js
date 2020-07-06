@@ -40,6 +40,7 @@ Reply.propTypes = {
   innerRef: PropTypes.func,
   deleteReply: PropTypes.func.isRequired,
   onLoadRepliesOfReply: PropTypes.func,
+  onSubmitWithAttachment: PropTypes.func.isRequired,
   parent: PropTypes.object.isRequired,
   reply: PropTypes.shape({
     commentId: PropTypes.number.isRequired,
@@ -73,6 +74,7 @@ function Reply({
   innerRef = () => {},
   deleteReply,
   onLoadRepliesOfReply,
+  onSubmitWithAttachment,
   parent,
   reply,
   reply: {
@@ -382,6 +384,7 @@ function Reply({
             <ReplyInputArea
               innerRef={ReplyInputAreaRef}
               onSubmit={onSubmitReply}
+              onSubmitWithAttachment={onSubmitWithAttachment}
               parent={parent}
               rootCommentId={reply.commentId}
               style={{

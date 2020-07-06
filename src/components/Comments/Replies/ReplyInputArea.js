@@ -1,9 +1,8 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import InputForm from 'components/Forms/InputForm';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
-import LocalContext from '../Context';
 import { useContentContext, useInputContext } from 'contexts';
 import { useContentState } from 'helpers/hooks';
 import { v1 as uuidv1 } from 'uuid';
@@ -12,6 +11,7 @@ ReplyInputArea.propTypes = {
   rootCommentId: PropTypes.number,
   innerRef: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
+  onSubmitWithAttachment: PropTypes.func.isRequired,
   parent: PropTypes.object.isRequired,
   rows: PropTypes.number,
   style: PropTypes.object,
@@ -21,6 +21,7 @@ ReplyInputArea.propTypes = {
 export default function ReplyInputArea({
   innerRef,
   onSubmit,
+  onSubmitWithAttachment,
   parent,
   rootCommentId,
   style,
@@ -28,7 +29,6 @@ export default function ReplyInputArea({
   rows = 1
 }) {
   const filePathRef = useRef(null);
-  const { onSubmitWithAttachment } = useContext(LocalContext);
   const {
     state,
     actions: { onSetCommentAttachment }

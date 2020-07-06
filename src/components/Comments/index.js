@@ -283,6 +283,7 @@ function Comments({
     isReply
   }) {
     try {
+      setCommentSubmitted(true);
       await uploadFile({
         filePath,
         file,
@@ -313,7 +314,6 @@ function Comments({
           contentType: parent.contentType
         });
       }
-
       onClearCommentFileUploadProgress({
         contentType: targetCommentId ? 'comment' : contentType,
         contentId: targetCommentId || contentId
