@@ -1,7 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useContext, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import InputForm from 'components/Forms/InputForm';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
+import LocalContext from './Context';
 import { useInputContext, useContentContext } from 'contexts';
 import { useContentState } from 'helpers/hooks';
 import { v1 as uuidv1 } from 'uuid';
@@ -14,7 +15,6 @@ CommentInputArea.propTypes = {
   InputFormRef: PropTypes.object,
   numInputRows: PropTypes.number,
   onSubmit: PropTypes.func.isRequired,
-  onSubmitWithAttachment: PropTypes.func,
   parent: PropTypes.object.isRequired,
   rootCommentId: PropTypes.number,
   subjectId: PropTypes.number,
@@ -29,7 +29,6 @@ export default function CommentInputArea({
   inputTypeLabel,
   InputFormRef,
   numInputRows = 4,
-  onSubmitWithAttachment,
   onSubmit,
   parent,
   rootCommentId,
@@ -37,6 +36,9 @@ export default function CommentInputArea({
   style,
   targetCommentId
 }) {
+  const contentType = targetCommentId ? 'comment' : parent.contentType;
+  const contentId = targetCommentId || parent.contentId;
+  const { onSubmitWithAttachment } = useContext(LocalContext);
   const {
     state,
     actions: { onSetCommentAttachment }
@@ -54,8 +56,6 @@ export default function CommentInputArea({
 
   const filePathRef = useRef(null);
   const [commentContent, setCommentContent] = useState('');
-  const contentType = targetCommentId ? 'comment' : parent.contentType;
-  const contentId = targetCommentId || parent.contentId;
   const attachment = state[contentType + contentId]?.attachment;
 
   return (

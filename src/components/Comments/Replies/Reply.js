@@ -21,14 +21,17 @@ import LikeButton from 'components/Buttons/LikeButton';
 import ReplyInputArea from './ReplyInputArea';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import LongText from 'components/Texts/LongText';
+import LoginToViewContent from 'components/LoginToViewContent';
 import RewardStatus from 'components/RewardStatus';
 import XPRewardInterface from 'components/XPRewardInterface';
+import FileViewer from 'components/FileViewer';
 import { commentContainer } from '../Styles';
 import { Link } from 'react-router-dom';
 import { determineXpButtonDisabled } from 'helpers';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { useAppContext, useContentContext } from 'contexts';
+import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 
 Reply.propTypes = {
   comment: PropTypes.shape({
@@ -42,6 +45,10 @@ Reply.propTypes = {
     commentId: PropTypes.number.isRequired,
     content: PropTypes.string.isRequired,
     deleted: PropTypes.bool,
+    filePath: PropTypes.string,
+    fileName: PropTypes.string,
+    fileSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    thumbUrl: PropTypes.string,
     id: PropTypes.number.isRequired,
     likes: PropTypes.array,
     numReplies: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -68,7 +75,15 @@ function Reply({
   onLoadRepliesOfReply,
   parent,
   reply,
-  reply: { likes = [], rewards = [], uploader },
+  reply: {
+    likes = [],
+    rewards = [],
+    uploader,
+    filePath,
+    fileName,
+    fileSize,
+    thumbUrl
+  },
   rootContent,
   onSubmitReply,
   subject
@@ -97,6 +112,7 @@ function Reply({
   const [rewardInterfaceShown, setRewardInterfaceShown] = useState(
     prevRewardInterfaceShown
   );
+  const fileType = getFileInfoFromFileName(fileName) || '';
   const rewardInterfaceShownRef = useRef(prevRewardInterfaceShown);
   const [loadingReplies, setLoadingReplies] = useState(false);
   const [userListModalShown, setUserListModalShown] = useState(false);
@@ -257,6 +273,33 @@ function Reply({
                   <LongText className="comment__content">
                     {reply.content}
                   </LongText>
+                  {filePath &&
+                    (userId ? (
+                      <div style={{ width: '100%' }}>
+                        <FileViewer
+                          autoPlay
+                          contentId={comment.id}
+                          contentType="comment"
+                          fileName={fileName}
+                          filePath={filePath}
+                          fileSize={Number(fileSize)}
+                          thumbUrl={thumbUrl}
+                          videoHeight="100%"
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            ...(fileType === 'audio'
+                              ? {
+                                  padding: '1rem'
+                                }
+                              : {}),
+                            marginBottom: rewardLevel ? '1rem' : 0
+                          }}
+                        />
+                      </div>
+                    ) : (
+                      <LoginToViewContent />
+                    ))}
                   <div className="comment__buttons">
                     <LikeButton
                       contentId={reply.id}

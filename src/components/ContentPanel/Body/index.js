@@ -6,7 +6,6 @@ import StarButton from 'components/Buttons/StarButton';
 import Button from 'components/Button';
 import Likers from 'components/Likers';
 import UserListModal from 'components/Modals/UserListModal';
-import XPVideoPlayer from 'components/XPVideoPlayer';
 import Comments from 'components/Comments';
 import MainContent from './MainContent';
 import DropdownButton from 'components/Buttons/DropdownButton';
@@ -34,7 +33,6 @@ import { useAppContext, useContentContext } from 'contexts';
 
 Body.propTypes = {
   autoExpand: PropTypes.bool,
-  attachedVideoShown: PropTypes.bool,
   contentObj: PropTypes.object.isRequired,
   commentsShown: PropTypes.bool,
   inputAtBottom: PropTypes.bool,
@@ -43,7 +41,6 @@ Body.propTypes = {
 };
 
 export default function Body({
-  attachedVideoShown,
   autoExpand,
   commentsShown,
   contentObj,
@@ -321,19 +318,6 @@ export default function Body({
           ) : (
             <LoginToViewContent />
           ))}
-        {contentType === 'comment' && attachedVideoShown && (
-          <XPVideoPlayer
-            stretch
-            autoplay
-            rewardLevel={rootObj.rewardLevel}
-            byUser={!!rootObj.byUser}
-            title={rootObj.title}
-            style={{ marginBottom: '1rem' }}
-            uploader={rootObj.uploader}
-            videoId={rootId}
-            videoCode={rootObj.content}
-          />
-        )}
         <MainContent
           contentId={contentId}
           contentType={contentType}

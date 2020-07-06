@@ -24,16 +24,16 @@ import HiddenComment from 'components/HiddenComment';
 import XPRewardInterface from 'components/XPRewardInterface';
 import SubjectLink from './SubjectLink';
 import Icon from 'components/Icon';
+import LoginToViewContent from 'components/LoginToViewContent';
+import FileViewer from 'components/FileViewer';
 import { Link, useHistory } from 'react-router-dom';
 import { commentContainer } from './Styles';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { determineXpButtonDisabled, scrollElementToCenter } from 'helpers';
 import { useAppContext, useContentContext } from 'contexts';
-import LocalContext from './Context';
-import LoginToViewContent from 'components/LoginToViewContent';
-import FileViewer from 'components/FileViewer';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
+import LocalContext from './Context';
 
 Comment.propTypes = {
   comment: PropTypes.shape({
@@ -60,7 +60,6 @@ Comment.propTypes = {
   }).isRequired,
   innerRef: PropTypes.func,
   isPreview: PropTypes.bool,
-  onSubmitWithAttachment: PropTypes.func.isRequired,
   parent: PropTypes.object,
   rootContent: PropTypes.shape({
     contentType: PropTypes.string
@@ -72,7 +71,6 @@ function Comment({
   comment,
   innerRef,
   isPreview,
-  onSubmitWithAttachment,
   parent,
   rootContent = {},
   subject,
@@ -123,7 +121,8 @@ function Comment({
     onLikeClick,
     onLoadMoreReplies,
     onReplySubmit,
-    onRewardCommentEdit
+    onRewardCommentEdit,
+    onSubmitWithAttachment
   } = useContext(LocalContext);
 
   const [rewardInterfaceShown, setRewardInterfaceShown] = useState(

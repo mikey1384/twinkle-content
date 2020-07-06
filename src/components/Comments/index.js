@@ -164,7 +164,8 @@ function Comments({
         onLoadMoreReplies,
         onRewardCommentEdit,
         onReplySubmit: handleSubmitReply,
-        onLoadRepliesOfReply
+        onLoadRepliesOfReply,
+        onSubmitWithAttachment: handleFileUpload
       }}
     >
       <div
@@ -212,7 +213,6 @@ function Comments({
                   subject={subject}
                   comment={comment}
                   key={comment.id}
-                  onSubmitWithAttachment={handleFileUpload}
                   userId={userId}
                 />
               ))}
@@ -238,7 +238,6 @@ function Comments({
         inputTypeLabel={inputTypeLabel}
         numInputRows={numInputRows}
         onSubmit={handleSubmitComment}
-        onSubmitWithAttachment={handleFileUpload}
         parent={parent}
         rootCommentId={
           parent.contentType === 'comment' ? parent.commentId : null
@@ -280,13 +279,13 @@ function Comments({
     file,
     rootCommentId,
     subjectId,
-    targetCommentId
+    targetCommentId,
+    isReply
   }) {
     try {
       await uploadFile({
         filePath,
         file,
-        context: 'comment',
         onUploadProgress: handleUploadProgress
       });
       onSetCommentFileUploadComplete({ contentType, contentId });
@@ -301,20 +300,32 @@ function Comments({
         fileName: file.name,
         fileSize: file.size
       });
-      onCommentSubmit({
-        ...data,
-        contentId: parent.contentId,
-        contentType: parent.contentType
+      if (isReply) {
+        onReplySubmit({
+          ...data,
+          contentId: parent.contentId,
+          contentType: parent.contentType
+        });
+      } else {
+        onCommentSubmit({
+          ...data,
+          contentId: parent.contentId,
+          contentType: parent.contentType
+        });
+      }
+
+      onClearCommentFileUploadProgress({
+        contentType: targetCommentId ? 'comment' : contentType,
+        contentId: targetCommentId || contentId
       });
-      onClearCommentFileUploadProgress({ contentType, contentId });
       onSetCommentUploadingFile({
-        contentType,
-        contentId,
+        contentType: targetCommentId ? 'comment' : contentType,
+        contentId: targetCommentId || contentId,
         uploading: false
       });
       onEnterComment({
-        contentType,
-        contentId,
+        contentType: targetCommentId ? 'comment' : contentType,
+        contentId: targetCommentId || contentId,
         text: ''
       });
     } catch (error) {
@@ -322,8 +333,8 @@ function Comments({
     }
     function handleUploadProgress({ loaded, total }) {
       onUpdateCommentFileUploadProgress({
-        contentType,
-        contentId,
+        contentType: targetCommentId ? 'comment' : contentType,
+        contentId: targetCommentId || contentId,
         progress: loaded / total
       });
     }
