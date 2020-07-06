@@ -265,8 +265,7 @@ function Message({
     } else {
       setSpoilerOff(true);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [channelId, moveViewTimeStamp]);
+  }, [chessState, moveViewTimeStamp, myId]);
 
   useEffect(() => {
     if (isLastMsg && (!isNewMessage || userIsUploader)) {

@@ -107,6 +107,7 @@ export default function Description({
   );
 
   const editButtonShown = userIsUploader || userCanEditThis;
+
   const editMenuItems = useMemo(() => {
     const items = [];
     if (userIsUploader || canEdit) {
@@ -195,7 +196,7 @@ export default function Description({
                 style={titleExceedsCharLimit?.style}
                 placeholder="Enter Title..."
                 value={editedTitle}
-                onChange={text => {
+                onChange={(text) => {
                   onSetEditForm({
                     contentId: linkId,
                     contentType: 'url',
@@ -204,7 +205,7 @@ export default function Description({
                     }
                   });
                 }}
-                onKeyUp={event => {
+                onKeyUp={(event) => {
                   if (event.key === ' ') {
                     onSetEditForm({
                       contentId: linkId,
@@ -259,7 +260,7 @@ export default function Description({
               `}
               style={urlExceedsCharLimit?.style}
               value={editedUrl}
-              onChange={text => {
+              onChange={(text) => {
                 onSetEditForm({
                   contentId: linkId,
                   contentType: 'url',
@@ -273,7 +274,7 @@ export default function Description({
               minRows={4}
               placeholder="Enter Description"
               value={editedDescription}
-              onChange={event => {
+              onChange={(event) => {
                 onSetEditForm({
                   contentId: linkId,
                   contentType: 'url',
@@ -282,7 +283,7 @@ export default function Description({
                   }
                 });
               }}
-              onKeyUp={event => {
+              onKeyUp={(event) => {
                 if (event.key === ' ') {
                   onSetEditForm({
                     contentId: linkId,

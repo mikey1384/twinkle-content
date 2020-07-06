@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Textarea from 'components/Texts/Textarea';
@@ -70,7 +71,6 @@ export default function AddLinkModal({ onHide }) {
       };
     }
     return urlExceedsCharLimit?.style;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urlError, urlExceedsCharLimit]);
 
   return (

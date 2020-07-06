@@ -32,8 +32,7 @@ export default function RestoreAccount({ username, onShowLoginForm, onHide }) {
       return searchedProfiles[0];
     }
     return null;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchText, searchedProfiles]);
+  }, [searchText?.toLowerCase, searchedProfiles]);
 
   const disabled = useMemo(() => {
     if (section === 'username') return !matchingAccount;
@@ -50,8 +49,7 @@ export default function RestoreAccount({ username, onShowLoginForm, onHide }) {
       }
     }
     return 'TBD';
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [matchingAccount, section]);
+  }, [matchingAccount?.email, matchingAccount?.verifiedEmail, section]);
 
   return (
     <ErrorBoundary>

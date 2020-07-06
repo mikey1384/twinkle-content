@@ -7,13 +7,15 @@ import FileContent from './FileContent';
 
 Attachment.propTypes = {
   attachment: PropTypes.object.isRequired,
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
+  style: PropTypes.object
 };
 
 export default function Attachment({
   attachment,
   attachment: { contentType, fileType },
-  onClose
+  onClose,
+  style
 }) {
   return (
     <ErrorBoundary
@@ -21,7 +23,8 @@ export default function Attachment({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        position: 'relative'
+        position: 'relative',
+        ...style
       }}
     >
       <Icon

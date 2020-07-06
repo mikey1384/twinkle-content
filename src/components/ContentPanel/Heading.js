@@ -134,7 +134,7 @@ function Heading({
     replyId,
     rootObj,
     rootType,
-    targetObj,
+    targetObj?.comment,
     uploader
   ]);
 

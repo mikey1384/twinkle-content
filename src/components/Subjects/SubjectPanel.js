@@ -122,8 +122,14 @@ export default function SubjectPanel({
       titleIsEmpty ||
       (!titleChanged && !descriptionChanged && !secretAnswerChanged);
     setEditDoneButtonDisabled(editDoneButtonDisabled);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editedTitle, editedDescription, editedSecretAnswer]);
+  }, [
+    editedTitle,
+    editedDescription,
+    editedSecretAnswer,
+    title,
+    description,
+    secretAnswer
+  ]);
 
   return !deleted ? (
     <div

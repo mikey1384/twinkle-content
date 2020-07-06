@@ -32,8 +32,18 @@ export default function PosBlock({ pos, wordObj }) {
       interjection,
       other
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [wordObj]);
+  }, [
+    adjective,
+    adverb,
+    conjunction,
+    interjection,
+    noun,
+    other,
+    preposition,
+    pronoun,
+    verb
+  ]);
+
   const posObj = useMemo(() => {
     const result = {
       adjective: {},

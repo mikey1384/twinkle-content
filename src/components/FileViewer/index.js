@@ -35,9 +35,11 @@ export default function FileViewer({
   thumbUrl,
   videoHeight
 }) {
+  const isDisplayedOnHome =
+    contentType === 'subject' || contentType === 'comment';
   const { fileType } = getFileInfoFromFileName(fileName);
   const src = `${fileType === 'video' ? S3URL : cloudFrontURL}/attachments/${
-    contentType === 'subject' ? 'feed' : contentType
+    isDisplayedOnHome ? 'feed' : contentType
   }/${filePath}/${encodeURIComponent(fileName)}`;
 
   return (
@@ -73,7 +75,7 @@ export default function FileViewer({
             <div
               style={{
                 width: '100%',
-                padding: contentType === 'subject' && '0 1rem 0 1rem'
+                padding: isDisplayedOnHome && '0 1rem 0 1rem'
               }}
             >
               <a

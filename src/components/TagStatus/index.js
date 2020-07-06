@@ -52,12 +52,12 @@ function TagStatus({
   }, [contentId]);
 
   const tagIds = useMemo(() => {
-    return tags.map(tag => tag.id);
+    return tags.map((tag) => tag.id);
   }, [tags]);
 
   const Tags = useMemo(
     () =>
-      tags.map(tag => (
+      tags.map((tag) => (
         <a
           style={{ marginRight: '0.5rem' }}
           key={tag.id}

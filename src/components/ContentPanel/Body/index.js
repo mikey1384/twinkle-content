@@ -6,7 +6,6 @@ import StarButton from 'components/Buttons/StarButton';
 import Button from 'components/Button';
 import Likers from 'components/Likers';
 import UserListModal from 'components/Modals/UserListModal';
-import XPVideoPlayer from 'components/XPVideoPlayer';
 import Comments from 'components/Comments';
 import MainContent from './MainContent';
 import DropdownButton from 'components/Buttons/DropdownButton';
@@ -34,7 +33,6 @@ import { useAppContext, useContentContext } from 'contexts';
 
 Body.propTypes = {
   autoExpand: PropTypes.bool,
-  attachedVideoShown: PropTypes.bool,
   contentObj: PropTypes.object.isRequired,
   commentsShown: PropTypes.bool,
   inputAtBottom: PropTypes.bool,
@@ -43,7 +41,6 @@ Body.propTypes = {
 };
 
 export default function Body({
-  attachedVideoShown,
   autoExpand,
   commentsShown,
   contentObj,
@@ -146,15 +143,16 @@ export default function Body({
       : targetObj.subject?.secretAnswer
       ? targetSubjectSecretHidden
       : !!rootObj?.secretAnswer && rootObjSecretHidden;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     contentType,
-    rootObj,
+    rootObj?.secretAnswer,
+    rootObj?.uploader?.id,
     rootSecretShown,
     secretAnswer,
     secretShown,
     subjectSecretShown,
-    targetObj.subject,
+    targetObj.subject?.secretAnswer,
+    targetObj.subject?.uploader?.id,
     uploader.id,
     userId
   ]);
@@ -172,15 +170,14 @@ export default function Body({
       contentObj.byUser
       ? 5
       : targetObj.subject?.rewardLevel || rootRewardLevel;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     contentObj.byUser,
     contentType,
-    description,
+    description?.length,
     filePath,
     rootObj.rewardLevel,
     rootType,
-    targetObj.subject
+    targetObj.subject?.rewardLevel
   ]);
 
   const xpButtonDisabled = useMemo(
@@ -261,13 +258,16 @@ export default function Body({
     const userCanEditThis =
       (canEdit || canDelete) && authLevel > uploader.authLevel;
     return (userId === uploader.id && !isForSecretSubject) || userCanEditThis;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     authLevel,
     canDelete,
     canEdit,
-    rootObj,
-    targetObj,
+    rootObj?.secretAnswer,
+    rootObj?.uploader?.authLevel,
+    rootObj?.uploader?.id,
+    targetObj?.subject?.secretAnswer,
+    targetObj?.subject?.uploader?.authLevel,
+    targetObj?.subject?.uploader?.id,
     uploader.authLevel,
     uploader.id,
     userId
@@ -290,7 +290,7 @@ export default function Body({
   return (
     <ErrorBoundary>
       <div style={{ width: '100%' }}>
-        {contentType === 'subject' &&
+        {(contentType === 'subject' || contentType === 'comment') &&
           filePath &&
           (userId ? (
             <FileViewer
@@ -318,19 +318,6 @@ export default function Body({
           ) : (
             <LoginToViewContent />
           ))}
-        {contentType === 'comment' && attachedVideoShown && (
-          <XPVideoPlayer
-            stretch
-            autoplay
-            rewardLevel={rootObj.rewardLevel}
-            byUser={!!rootObj.byUser}
-            title={rootObj.title}
-            style={{ marginBottom: '1rem' }}
-            uploader={rootObj.uploader}
-            videoId={rootId}
-            videoCode={rootObj.content}
-          />
-        )}
         <MainContent
           contentId={contentId}
           contentType={contentType}

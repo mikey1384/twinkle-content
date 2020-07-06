@@ -101,7 +101,6 @@ export default function ContentPanel({
     },
     delay: 1000
   });
-  const [videoShown, setVideoShown] = useState(false);
   const mounted = useRef(true);
   const loading = useRef(false);
   const inputAtBottom = contentType === 'comment';
@@ -231,8 +230,6 @@ export default function ContentPanel({
                               ? 'left a message to'
                               : 'commented on'
                           }
-                          onPlayVideoClick={() => setVideoShown(true)}
-                          attachedVideoShown={videoShown}
                         />
                         <div className="body">
                           <Body
@@ -240,7 +237,6 @@ export default function ContentPanel({
                             commentsShown={commentsShown}
                             contentObj={contentState}
                             inputAtBottom={inputAtBottom}
-                            attachedVideoShown={videoShown}
                             numPreviewComments={numPreviewComments}
                             onChangeSpoilerStatus={onChangeSpoilerStatus}
                           />

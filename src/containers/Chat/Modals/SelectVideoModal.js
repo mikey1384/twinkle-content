@@ -36,6 +36,7 @@ export default function SelectVideoModal({ onSend, onHide }) {
   });
   const mounted = useRef(true);
   const contentObjs = useRef({});
+
   useEffect(() => {
     mounted.current = true;
     initScreen();
@@ -52,7 +53,7 @@ export default function SelectVideoModal({ onSend, onHide }) {
             ...result
           });
         }
-        setAllUploads(results.map(result => result.id));
+        setAllUploads(results.map((result) => result.id));
         contentObjs.current = objectify(results);
         setLoadMoreButton(loadMoreButton);
         setLoaded(true);
@@ -84,7 +85,7 @@ export default function SelectVideoModal({ onSend, onHide }) {
           loadMoreButton={
             !stringIsEmpty(searchText) ? searchLoadMoreButton : loadMoreButton
           }
-          onSelect={uploadId => {
+          onSelect={(uploadId) => {
             setSelectedUpload([uploadId]);
           }}
           onDeselect={() => {
@@ -116,15 +117,15 @@ export default function SelectVideoModal({ onSend, onHide }) {
         filter: 'video',
         searchText,
         shownResults: searchedUploads.map(
-          uploadId => contentObjs.current[uploadId]
+          (uploadId) => contentObjs.current[uploadId]
         )
       });
       contentObjs.current = {
         ...contentObjs.current,
         ...objectify(results)
       };
-      setSearchedUploads(searchedUploads =>
-        searchedUploads.concat(results.map(result => result.id))
+      setSearchedUploads((searchedUploads) =>
+        searchedUploads.concat(results.map((result) => result.id))
       );
       setLoadingMore(false);
       setSearchLoadMoreButton(loadMoreButton);
@@ -145,8 +146,8 @@ export default function SelectVideoModal({ onSend, onHide }) {
         ...contentObjs.current,
         ...objectify(results)
       };
-      setAllUploads(allUploads =>
-        allUploads.concat(results.map(result => result.id))
+      setAllUploads((allUploads) =>
+        allUploads.concat(results.map((result) => result.id))
       );
       setLoadingMore(false);
       setLoadMoreButton(loadMoreButton);
@@ -162,7 +163,7 @@ export default function SelectVideoModal({ onSend, onHide }) {
       ...contentObjs.current,
       ...objectify(searchedUploads)
     };
-    setSearchedUploads(searchedUploads.map(upload => upload.id));
+    setSearchedUploads(searchedUploads.map((upload) => upload.id));
     setSearchLoadMoreButton(loadMoreButton);
   }
 }

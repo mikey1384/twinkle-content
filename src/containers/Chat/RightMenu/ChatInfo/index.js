@@ -65,13 +65,12 @@ function ChatInfo({
       currentChannel.isClass &&
       (callOngoing || currentChannel.creatorId === myId)
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     authLevel,
     callOngoing,
     currentChannel.creatorId,
     currentChannel.isClass,
-    currentChannel.members,
+    currentChannel.members?.length,
     currentChannel.twoPeople,
     myId
   ]);
@@ -110,9 +109,8 @@ function ChatInfo({
       ];
     }
     return [me, ...currentChannelOnlineMembersOtherThanMe];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    currentChannel,
+    currentChannel?.members,
     myId,
     username,
     profilePicId,

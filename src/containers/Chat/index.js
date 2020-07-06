@@ -159,8 +159,7 @@ function Chat({ onFileUpload }) {
         }
       }
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentChannel, selectedChannelId]);
+  }, [selectedChannelId]);
 
   return (
     <LocalContext.Provider

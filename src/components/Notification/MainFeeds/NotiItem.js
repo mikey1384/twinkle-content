@@ -193,6 +193,7 @@ export default function NotiItem({
         break;
     }
     return notificationMessage;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     actionObj.amount,
     actionObj.content,

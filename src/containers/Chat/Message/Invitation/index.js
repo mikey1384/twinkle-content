@@ -47,10 +47,11 @@ export default function Invitation({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const alreadyJoined = useMemo(() => {
     const memberIds = invitationDetail?.members.map((member) => member.id);
     return memberIds?.includes(userId);
-  }, [invitationDetail, userId]);
+  }, [invitationDetail?.members?.map, userId]);
 
   const desktopHeight = useMemo(() => {
     if (userId === sender.id) {

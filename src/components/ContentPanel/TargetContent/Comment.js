@@ -7,15 +7,22 @@ import EditTextArea from 'components/Texts/EditTextArea';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import LongText from 'components/Texts/LongText';
 import ErrorBoundary from 'components/ErrorBoundary';
+import FileViewer from 'components/FileViewer';
+import LoginToViewContent from 'components/LoginToViewContent';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { Color } from 'constants/css';
 import { useContentState } from 'helpers/hooks';
+import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext } from 'contexts';
 
 Comment.propTypes = {
   comment: PropTypes.shape({
     id: PropTypes.number,
     content: PropTypes.string,
+    filePath: PropTypes.string,
+    fileName: PropTypes.string,
+    fileSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    thumbUrl: PropTypes.string,
     timeStamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   }).isRequired,
   onDelete: PropTypes.func.isRequired,
@@ -27,7 +34,7 @@ Comment.propTypes = {
 
 function Comment({
   comment,
-  comment: { id, content, timeStamp },
+  comment: { id, content, fileName, filePath, fileSize, timeStamp, thumbUrl },
   onDelete,
   onEditDone,
   profilePicId,
@@ -44,6 +51,7 @@ function Comment({
     contentType: 'comment',
     contentId: id
   });
+  const fileType = getFileInfoFromFileName(fileName) || '';
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   return (
     <ErrorBoundary
@@ -134,6 +142,32 @@ function Comment({
               >
                 {content}
               </LongText>
+              {filePath &&
+                (userId ? (
+                  <div style={{ width: '100%' }}>
+                    <FileViewer
+                      autoPlay
+                      contentId={comment.id}
+                      contentType="comment"
+                      fileName={fileName}
+                      filePath={filePath}
+                      fileSize={Number(fileSize)}
+                      thumbUrl={thumbUrl}
+                      videoHeight="100%"
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        ...(fileType === 'audio'
+                          ? {
+                              padding: '1rem'
+                            }
+                          : {})
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <LoginToViewContent />
+                ))}
             </div>
           )}
         </div>

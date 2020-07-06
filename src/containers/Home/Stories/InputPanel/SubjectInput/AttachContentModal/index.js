@@ -10,10 +10,10 @@ const sectionObj = {
     title: 'Attach a content to your subject'
   },
   selectVideo: {
-    title: 'Select a Video'
+    title: 'Select a video'
   },
   selectLink: {
-    title: 'Select a Webpage'
+    title: 'Select a webpage'
   }
 };
 
@@ -38,11 +38,11 @@ export default function AttachContentModal({ onConfirm, onHide }) {
         {section === 'selectVideo' && (
           <SelectAttachmentScreen
             contentType="video"
-            onSelect={video =>
+            onSelect={(video) =>
               setSelected({
                 contentType: 'video',
                 id: video.id,
-                title: video.title
+                title: video?.title
               })
             }
             onDeselect={() => setSelected(undefined)}
@@ -51,11 +51,11 @@ export default function AttachContentModal({ onConfirm, onHide }) {
         {section === 'selectLink' && (
           <SelectAttachmentScreen
             contentType="url"
-            onSelect={link =>
+            onSelect={(link) =>
               setSelected({
                 contentType: 'url',
                 id: link.id,
-                title: link.title
+                title: link?.title
               })
             }
             onDeselect={() => setSelected(undefined)}
