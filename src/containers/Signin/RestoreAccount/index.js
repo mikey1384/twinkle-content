@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
@@ -33,7 +32,7 @@ export default function RestoreAccount({ username, onShowLoginForm, onHide }) {
       return searchedProfiles[0];
     }
     return null;
-  }, [searchText, searchedProfiles]);
+  }, [searchText?.toLowerCase, searchedProfiles]);
 
   const disabled = useMemo(() => {
     if (section === 'username') return !matchingAccount;
@@ -50,7 +49,7 @@ export default function RestoreAccount({ username, onShowLoginForm, onHide }) {
       }
     }
     return 'TBD';
-  }, [matchingAccount, section]);
+  }, [matchingAccount?.email, matchingAccount?.verifiedEmail, section]);
 
   return (
     <ErrorBoundary>
