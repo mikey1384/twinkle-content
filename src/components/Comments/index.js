@@ -153,6 +153,9 @@ function Comments({
         : [],
     [comments, commentsShown, numPreviews]
   );
+  const isPreview = useMemo(() => previewComments.length > 0, [
+    previewComments.length
+  ]);
 
   return (
     <Context.Provider
@@ -170,7 +173,7 @@ function Comments({
     >
       <div
         className={`${
-          previewComments.length > 0 && !(commentsShown || autoExpand)
+          isPreview && !(commentsShown || autoExpand)
             ? css`
                 &:hover {
                   background: ${Color.highlightGray()};
@@ -185,7 +188,7 @@ function Comments({
         } ${className}`}
         style={style}
         ref={ContainerRef}
-        onClick={previewComments.length > 0 ? onPreviewClick : () => {}}
+        onClick={isPreview ? onPreviewClick : () => {}}
       >
         {!inputAtBottom &&
           !noInput &&
@@ -200,12 +203,9 @@ function Comments({
             {isLoading && <Loading />}
             {inputAtBottom && loadMoreButton && renderLoadMoreButton()}
             {!isLoading &&
-              (previewComments.length > 0
-                ? previewComments
-                : comments
-              ).map((comment, index) => (
+              (isPreview ? previewComments : comments).map((comment, index) => (
                 <Comment
-                  isPreview={previewComments.length > 0}
+                  isPreview={isPreview}
                   index={index}
                   innerRef={(ref) => (CommentRefs[comment.id] = ref)}
                   parent={parent}

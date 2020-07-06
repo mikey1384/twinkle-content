@@ -216,11 +216,14 @@ function Comment({
           authLevel > subject?.uploader?.authLevel
         ));
     const userCanEditThis = (canEdit || canDelete) && userIsHigherAuth;
-    return (userIsUploader && !isForSecretSubject) || userCanEditThis;
+    return (
+      ((userIsUploader && !isForSecretSubject) || userCanEditThis) && !isPreview
+    );
   }, [
     authLevel,
     canDelete,
     canEdit,
+    isPreview,
     parent?.secretAnswer,
     parent?.uploader?.authLevel,
     parent?.uploader?.id,
