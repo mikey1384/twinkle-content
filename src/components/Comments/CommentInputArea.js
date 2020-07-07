@@ -36,8 +36,12 @@ export default function CommentInputArea({
   style,
   targetCommentId
 }) {
-  const contentType = targetCommentId ? 'comment' : parent.contentType;
-  const contentId = targetCommentId || parent.contentId;
+  const contentType = targetCommentId
+    ? 'comment'
+    : subjectId
+    ? 'subject'
+    : parent.contentType;
+  const contentId = targetCommentId || subjectId || parent.contentId;
   const { onSubmitWithAttachment } = useContext(LocalContext);
   const {
     state,
@@ -52,7 +56,10 @@ export default function CommentInputArea({
     fileUploadComplete,
     fileUploadProgress,
     uploadingFile
-  } = useContentState({ contentId, contentType });
+  } = useContentState({
+    contentId,
+    contentType
+  });
 
   const filePathRef = useRef(null);
   const [commentContent, setCommentContent] = useState('');
@@ -66,11 +73,7 @@ export default function CommentInputArea({
           clickListenerState={clickListenerState}
           autoFocus={autoFocus}
           onSubmit={handleSubmit}
-          parent={
-            subjectId
-              ? { contentId: subjectId, contentType: 'subject' }
-              : parent
-          }
+          parent={{ contentId, contentType }}
           rows={numInputRows}
           placeholder={`Enter your ${inputTypeLabel} here...`}
           targetCommentId={targetCommentId}

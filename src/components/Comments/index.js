@@ -282,6 +282,12 @@ function Comments({
     targetCommentId,
     isReply
   }) {
+    const finalContentType = targetCommentId
+      ? 'comment'
+      : subjectId
+      ? 'subject'
+      : contentType;
+    const finalContentId = targetCommentId || subjectId || contentId;
     try {
       setCommentSubmitted(true);
       await uploadFile({
@@ -289,7 +295,10 @@ function Comments({
         file,
         onUploadProgress: handleUploadProgress
       });
-      onSetCommentFileUploadComplete({ contentType, contentId });
+      onSetCommentFileUploadComplete({
+        contentType: finalContentType,
+        contentId: finalContentId
+      });
       const data = await uploadComment({
         content: commentContent,
         parent,
@@ -315,17 +324,17 @@ function Comments({
         });
       }
       onClearCommentFileUploadProgress({
-        contentType: targetCommentId ? 'comment' : contentType,
-        contentId: targetCommentId || contentId
+        contentType: finalContentType,
+        contentId: finalContentId
       });
       onSetCommentUploadingFile({
-        contentType: targetCommentId ? 'comment' : contentType,
-        contentId: targetCommentId || contentId,
+        contentType: finalContentType,
+        contentId: finalContentId,
         uploading: false
       });
       onEnterComment({
-        contentType: targetCommentId ? 'comment' : contentType,
-        contentId: targetCommentId || contentId,
+        contentType: finalContentType,
+        contentId: finalContentId,
         text: ''
       });
     } catch (error) {
@@ -333,8 +342,8 @@ function Comments({
     }
     function handleUploadProgress({ loaded, total }) {
       onUpdateCommentFileUploadProgress({
-        contentType: targetCommentId ? 'comment' : contentType,
-        contentId: targetCommentId || contentId,
+        contentType: finalContentType,
+        contentId: finalContentId,
         progress: loaded / total
       });
     }
