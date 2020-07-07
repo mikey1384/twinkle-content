@@ -87,8 +87,7 @@ function Reply({
     uploader,
     filePath,
     fileName,
-    fileSize,
-    thumbUrl
+    fileSize
   },
   rootContent,
   onSubmitReply,
@@ -104,6 +103,7 @@ function Reply({
   const {
     deleted,
     isEditing,
+    thumbUrl,
     xpRewardInterfaceShown: prevRewardInterfaceShown
   } = useContentState({
     contentType: 'comment',
@@ -118,7 +118,7 @@ function Reply({
   const [rewardInterfaceShown, setRewardInterfaceShown] = useState(
     prevRewardInterfaceShown
   );
-  const fileType = getFileInfoFromFileName(fileName) || '';
+  const { fileType } = getFileInfoFromFileName(fileName);
   const rewardInterfaceShownRef = useRef(prevRewardInterfaceShown);
   const [loadingReplies, setLoadingReplies] = useState(false);
   const [userListModalShown, setUserListModalShown] = useState(false);
@@ -293,8 +293,7 @@ function Reply({
                     (userId ? (
                       <div style={{ width: '100%' }}>
                         <FileViewer
-                          autoPlay
-                          contentId={comment.id}
+                          contentId={reply.id}
                           contentType="comment"
                           fileName={fileName}
                           filePath={filePath}
@@ -306,7 +305,7 @@ function Reply({
                             justifyContent: 'center',
                             ...(fileType === 'audio'
                               ? {
-                                  padding: '1rem'
+                                  paddingBottom: '2rem'
                                 }
                               : {}),
                             marginBottom: rewardLevel ? '1rem' : 0

@@ -51,7 +51,7 @@ function Comment({
     contentType: 'comment',
     contentId: id
   });
-  const fileType = getFileInfoFromFileName(fileName) || '';
+  const { fileType } = getFileInfoFromFileName(fileName);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   return (
     <ErrorBoundary
@@ -146,7 +146,6 @@ function Comment({
                 (userId ? (
                   <div style={{ width: '100%' }}>
                     <FileViewer
-                      autoPlay
                       contentId={comment.id}
                       contentType="comment"
                       fileName={fileName}

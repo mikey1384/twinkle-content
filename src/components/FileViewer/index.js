@@ -7,10 +7,8 @@ import { cloudFrontURL, S3URL } from 'constants/defaultValues';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 
 FileViewer.propTypes = {
-  autoPlay: PropTypes.bool,
   contentId: PropTypes.number,
   contentType: PropTypes.string.isRequired,
-  isMuted: PropTypes.bool,
   isThumb: PropTypes.bool,
   filePath: PropTypes.string.isRequired,
   fileName: PropTypes.string.isRequired,
@@ -22,10 +20,8 @@ FileViewer.propTypes = {
 };
 
 export default function FileViewer({
-  autoPlay,
   contentId,
   contentType,
-  isMuted = true,
   isThumb,
   filePath,
   fileName,
@@ -89,11 +85,9 @@ export default function FileViewer({
             </div>
           )}
           <MediaPlayer
-            autoPlay={autoPlay && fileType === 'video'}
             contentId={contentId}
             contentType={contentType}
             fileType={fileType}
-            isMuted={isMuted}
             isThumb={isThumb}
             src={src}
             thumbUrl={thumbUrl}

@@ -273,7 +273,7 @@ export function finalizeEmoji(string) {
 }
 
 export function getFileInfoFromFileName(fileName) {
-  if (typeof fileName !== 'string') return null;
+  if (typeof fileName !== 'string') return '';
   const fileNameArray = fileName.split('.');
   const extension =
     fileNameArray[fileNameArray.length - 1]?.toLowerCase() || '';

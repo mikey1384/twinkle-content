@@ -88,8 +88,7 @@ function Comment({
     numReplies,
     filePath,
     fileName,
-    fileSize,
-    thumbUrl
+    fileSize
   }
 }) {
   subject = subject || comment.targetObj?.subject || {};
@@ -98,7 +97,7 @@ function Comment({
     requestHelpers: { checkIfUserResponded, editContent, loadReplies }
   } = useAppContext();
   const { authLevel, canDelete, canEdit, canReward, userId } = useMyState();
-  const fileType = getFileInfoFromFileName(fileName) || '';
+  const { fileType } = getFileInfoFromFileName(fileName);
   const {
     actions: {
       onChangeSpoilerStatus,
@@ -110,6 +109,7 @@ function Comment({
   const {
     deleted,
     isEditing,
+    thumbUrl,
     xpRewardInterfaceShown: prevRewardInterfaceShown
   } = useContentState({
     contentType: 'comment',
@@ -435,7 +435,6 @@ function Comment({
                     (userId ? (
                       <div style={{ width: '100%' }}>
                         <FileViewer
-                          autoPlay
                           contentId={comment.id}
                           contentType="comment"
                           fileName={fileName}
@@ -448,7 +447,7 @@ function Comment({
                             justifyContent: 'center',
                             ...(fileType === 'audio'
                               ? {
-                                  padding: '1rem'
+                                  paddingBottom: '2rem'
                                 }
                               : {}),
                             marginBottom: rewardLevel ? '1rem' : 0
