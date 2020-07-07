@@ -1,7 +1,6 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import ExtractedThumb from 'components/ExtractedThumb';
-import Icon from 'components/Icon';
 import ReactPlayer from 'react-player/lazy';
 import { v1 as uuidv1 } from 'uuid';
 import { useAppContext, useContentContext } from 'contexts';
@@ -9,11 +8,9 @@ import { useContentState } from 'helpers/hooks';
 import { isMobile } from 'helpers';
 
 MediaPlayer.propTypes = {
-  autoPlay: PropTypes.bool,
   contentId: PropTypes.number,
   contentType: PropTypes.string,
   fileType: PropTypes.string,
-  isMuted: PropTypes.bool,
   isThumb: PropTypes.bool,
   src: PropTypes.string,
   thumbUrl: PropTypes.string,
@@ -21,11 +18,9 @@ MediaPlayer.propTypes = {
 };
 
 export default function MediaPlayer({
-  autoPlay,
   contentId,
   contentType,
   fileType,
-  isMuted,
   isThumb,
   src,
   thumbUrl,
@@ -35,59 +30,39 @@ export default function MediaPlayer({
     requestHelpers: { uploadThumb }
   } = useAppContext();
   const {
-    actions: { onSetThumbUrl, onSetVideoCurrentTime, onSetVideoStarted }
+    actions: { onSetThumbUrl, onSetVideoCurrentTime }
   } = useContentContext();
   const { currentTime = 0 } = useContentState({ contentType, contentId });
-  const [muted, setMuted] = useState(isMuted);
-  const [paused, setPaused] = useState(false);
-  const [timeAt, setTimeAt] = useState(0);
+  const timeAtRef = useRef(0);
   const PlayerRef = useRef(null);
   const mobile = isMobile(navigator);
-  const looping = useMemo(
-    () => !thumbUrl && !mobile && !currentTime && autoPlay && muted,
-    [autoPlay, currentTime, mobile, muted, thumbUrl]
-  );
 
   useEffect(() => {
     if (currentTime > 0) {
       PlayerRef.current?.seekTo(currentTime);
-      setPaused(true);
     }
-
-    return function cleanUp() {
-      onSetVideoStarted({
-        contentType,
-        contentId,
-        started: false
-      });
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     return function setCurrentTimeBeforeUnmount() {
-      if (timeAt > 0 && !looping) {
+      if (timeAtRef.current > 0) {
         onSetVideoCurrentTime({
           contentType,
           contentId,
-          currentTime: timeAt
+          currentTime: timeAtRef.current
         });
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timeAt, looping]);
+  }, []);
 
   const light = useMemo(() => {
-    if (
-      fileType === 'audio' ||
-      looping ||
-      currentTime ||
-      (!mobile && autoPlay && !thumbUrl)
-    ) {
+    if (fileType === 'audio' || currentTime || (!mobile && !thumbUrl)) {
       return false;
     }
     return thumbUrl;
-  }, [autoPlay, currentTime, fileType, looping, mobile, thumbUrl]);
+  }, [currentTime, fileType, mobile, thumbUrl]);
 
   return (
     <div
@@ -102,7 +77,6 @@ export default function MediaPlayer({
             ? '3rem'
             : ''
       }}
-      onClick={handlePlayerClick}
     >
       {fileType !== 'audio' && (
         <ExtractedThumb
@@ -115,17 +89,13 @@ export default function MediaPlayer({
       )}
       {!isThumb && (
         <ReactPlayer
-          loop={looping}
           light={light}
           ref={PlayerRef}
-          playing={autoPlay && !paused && !mobile}
           playsinline
-          muted={isThumb || looping}
-          onPlay={handlePlay}
+          muted={isThumb}
           onProgress={handleVideoProgress}
           onReady={handleReady}
           style={{
-            cursor: muted ? 'pointer' : 'default',
             position: 'absolute',
             width: '100%',
             height: '100%',
@@ -139,47 +109,11 @@ export default function MediaPlayer({
           width="100%"
           height={fileType === 'video' ? videoHeight || '100%' : '5rem'}
           url={src}
-          controls={!isThumb && !looping}
+          controls={!isThumb}
         />
-      )}
-      {!isThumb && looping && (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            height: '5rem',
-            fontWeight: 'bold',
-            background: '#fff',
-            color: '#000',
-            position: 'absolute',
-            top: '0',
-            fontSize: '2rem',
-            padding: '1rem'
-          }}
-        >
-          <Icon size="lg" icon="volume-mute" />
-          <span style={{ marginLeft: '0.7rem' }}>TAP TO UNMUTE</span>
-        </div>
       )}
     </div>
   );
-
-  function handlePlay() {
-    if (!looping) {
-      onSetVideoStarted({
-        contentType,
-        contentId,
-        started: true
-      });
-    }
-  }
-
-  function handlePlayerClick() {
-    if (looping) {
-      setMuted(false);
-      PlayerRef.current.getInternalPlayer()?.pause();
-    }
-  }
 
   function handleReady() {
     if (light) {
@@ -209,6 +143,6 @@ export default function MediaPlayer({
   }
 
   function handleVideoProgress() {
-    setTimeAt(PlayerRef.current.getCurrentTime());
+    timeAtRef.current = PlayerRef.current.getCurrentTime();
   }
 }

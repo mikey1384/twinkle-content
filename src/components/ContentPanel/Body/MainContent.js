@@ -80,7 +80,6 @@ export default function MainContent({
           !secretHidden &&
           (userId ? (
             <FileViewer
-              autoPlay
               contentId={contentId}
               contentType={contentType}
               isMuted={!autoExpand}

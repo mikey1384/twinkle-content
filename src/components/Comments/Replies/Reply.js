@@ -279,7 +279,6 @@ function Reply({
                     (userId ? (
                       <div style={{ width: '100%' }}>
                         <FileViewer
-                          autoPlay
                           contentId={comment.id}
                           contentType="comment"
                           fileName={fileName}

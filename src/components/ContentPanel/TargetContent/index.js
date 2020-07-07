@@ -259,9 +259,8 @@ export default function TargetContent({
                       comment.filePath &&
                       (userId ? (
                         <FileViewer
-                          autoPlay
-                          contentId={contentId}
-                          contentType={contentType}
+                          contentId={comment.id}
+                          contentType="comment"
                           fileName={comment.fileName}
                           filePath={comment.filePath}
                           fileSize={comment.fileSize}
