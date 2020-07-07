@@ -83,8 +83,7 @@ function Comment({
     numReplies,
     filePath,
     fileName,
-    fileSize,
-    thumbUrl
+    fileSize
   }
 }) {
   subject = subject || comment.targetObj?.subject || {};
@@ -105,6 +104,7 @@ function Comment({
   const {
     deleted,
     isEditing,
+    thumbUrl,
     xpRewardInterfaceShown: prevRewardInterfaceShown
   } = useContentState({
     contentType: 'comment',

@@ -77,15 +77,7 @@ function Reply({
   onSubmitWithAttachment,
   parent,
   reply,
-  reply: {
-    likes = [],
-    rewards = [],
-    uploader,
-    filePath,
-    fileName,
-    fileSize,
-    thumbUrl
-  },
+  reply: { likes = [], rewards = [], uploader, filePath, fileName, fileSize },
   rootContent,
   onSubmitReply,
   subject
@@ -100,6 +92,7 @@ function Reply({
   const {
     deleted,
     isEditing,
+    thumbUrl,
     xpRewardInterfaceShown: prevRewardInterfaceShown
   } = useContentState({
     contentType: 'comment',
@@ -279,7 +272,7 @@ function Reply({
                     (userId ? (
                       <div style={{ width: '100%' }}>
                         <FileViewer
-                          contentId={comment.id}
+                          contentId={reply.id}
                           contentType="comment"
                           fileName={fileName}
                           filePath={filePath}
