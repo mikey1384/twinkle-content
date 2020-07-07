@@ -70,16 +70,16 @@ export default function MainContent({
       onSetIsEditing
     }
   } = useContentContext();
-  const { fileType } = getFileInfoFromFileName(fileName);
+  const { fileType } = fileName ? getFileInfoFromFileName(fileName) : '';
 
   return (
     <ErrorBoundary>
       <div>
         {(contentType === 'subject' || contentType === 'comment') &&
           filePath &&
-          !secretHidden &&
           (userId ? (
             <FileViewer
+              autoPlay
               contentId={contentId}
               contentType={contentType}
               isMuted={!autoExpand}
@@ -154,7 +154,7 @@ export default function MainContent({
             contentId={contentId}
           />
         )}
-        {(!contentType !== 'comment' || content || isEditing) && (
+        {(contentType !== 'comment' || content || isEditing) && (
           <div
             style={{
               marginTop: '1rem',
