@@ -154,7 +154,7 @@ export default function MainContent({
             contentId={contentId}
           />
         )}
-        {(content || isEditing) && (
+        {(!contentType !== 'comment' || content || isEditing) && (
           <div
             style={{
               marginTop: '1rem',
