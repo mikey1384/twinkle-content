@@ -5,7 +5,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import ContentLink from 'components/ContentLink';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { Color } from 'constants/css';
-import { truncateText } from 'helpers/stringHelpers';
+import { truncateText, stringIsEmpty } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
 
 NotiItem.propTypes = {
@@ -43,7 +43,14 @@ export default function NotiItem({
                   targetObj.contentType === 'url'
                     ? 'link'
                     : targetObj.contentType
-                } (${truncateText({ text: targetObj.content, limit: 100 })})`
+                } ${
+                  !stringIsEmpty(targetObj.content)
+                    ? `(${truncateText({
+                        text: targetObj.content,
+                        limit: 100
+                      })})`
+                    : ''
+                }`
               }}
             />
           </>
@@ -162,18 +169,22 @@ export default function NotiItem({
                 }`
               }}
             />
-            :{' '}
-            <ContentLink
-              contentType="comment"
-              content={{
-                id: actionObj.id,
-                title: `"${truncateText({
-                  text: actionObj.content,
-                  limit: 100
-                })}"`
-              }}
-              style={{ color: Color.green() }}
-            />
+            {!stringIsEmpty(actionObj.content) && (
+              <>
+                :{' '}
+                <ContentLink
+                  contentType="comment"
+                  content={{
+                    id: actionObj.id,
+                    title: `"${truncateText({
+                      text: actionObj.content,
+                      limit: 100
+                    })}"`
+                  }}
+                  style={{ color: Color.green() }}
+                />
+              </>
+            )}
           </>
         );
         break;
