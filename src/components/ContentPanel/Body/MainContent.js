@@ -70,7 +70,7 @@ export default function MainContent({
       onSetIsEditing
     }
   } = useContentContext();
-  const { fileType } = fileName ? getFileInfoFromFileName(fileName) : '';
+  const { fileType } = getFileInfoFromFileName(fileName);
 
   return (
     <ErrorBoundary>

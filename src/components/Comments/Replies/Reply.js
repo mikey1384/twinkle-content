@@ -114,7 +114,7 @@ function Reply({
   const [rewardInterfaceShown, setRewardInterfaceShown] = useState(
     prevRewardInterfaceShown
   );
-  const fileType = getFileInfoFromFileName(fileName) || '';
+  const { fileType } = getFileInfoFromFileName(fileName);
   const rewardInterfaceShownRef = useRef(prevRewardInterfaceShown);
   const [loadingReplies, setLoadingReplies] = useState(false);
   const [userListModalShown, setUserListModalShown] = useState(false);
@@ -292,7 +292,7 @@ function Reply({
                             justifyContent: 'center',
                             ...(fileType === 'audio'
                               ? {
-                                  padding: '1rem'
+                                  paddingBottom: '2rem'
                                 }
                               : {}),
                             marginBottom: rewardLevel ? '1rem' : 0

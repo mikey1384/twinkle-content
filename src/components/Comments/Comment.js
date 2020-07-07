@@ -93,7 +93,7 @@ function Comment({
     requestHelpers: { checkIfUserResponded, editContent, loadReplies }
   } = useAppContext();
   const { authLevel, canDelete, canEdit, canReward, userId } = useMyState();
-  const fileType = getFileInfoFromFileName(fileName) || '';
+  const { fileType } = getFileInfoFromFileName(fileName);
   const {
     actions: {
       onChangeSpoilerStatus,
@@ -433,7 +433,7 @@ function Comment({
                             justifyContent: 'center',
                             ...(fileType === 'audio'
                               ? {
-                                  padding: '1rem'
+                                  paddingBottom: '2rem'
                                 }
                               : {}),
                             marginBottom: rewardLevel ? '1rem' : 0

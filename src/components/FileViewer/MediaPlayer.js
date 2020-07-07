@@ -104,13 +104,15 @@ export default function MediaPlayer({
       }}
       onClick={handlePlayerClick}
     >
-      <ExtractedThumb
-        src={src}
-        isHidden={!isThumb}
-        style={{ width: '100%', height: '7rem' }}
-        onThumbnailLoad={handleThumbnailLoad}
-        thumbUrl={thumbUrl}
-      />
+      {fileType !== 'audio' && (
+        <ExtractedThumb
+          src={src}
+          isHidden={!isThumb}
+          style={{ width: '100%', height: '7rem' }}
+          onThumbnailLoad={handleThumbnailLoad}
+          thumbUrl={thumbUrl}
+        />
+      )}
       {!isThumb && (
         <ReactPlayer
           loop={looping}

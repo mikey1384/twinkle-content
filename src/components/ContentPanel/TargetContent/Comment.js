@@ -51,7 +51,7 @@ function Comment({
     contentType: 'comment',
     contentId: id
   });
-  const fileType = getFileInfoFromFileName(fileName) || '';
+  const { fileType } = getFileInfoFromFileName(fileName);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   return (
     <ErrorBoundary
