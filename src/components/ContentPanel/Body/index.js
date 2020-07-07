@@ -6,7 +6,6 @@ import StarButton from 'components/Buttons/StarButton';
 import Button from 'components/Button';
 import Likers from 'components/Likers';
 import UserListModal from 'components/Modals/UserListModal';
-import XPVideoPlayer from 'components/XPVideoPlayer';
 import Comments from 'components/Comments';
 import MainContent from './MainContent';
 import DropdownButton from 'components/Buttons/DropdownButton';
@@ -16,16 +15,11 @@ import RecommendationInterface from 'components/RecommendationInterface';
 import RewardStatus from 'components/RewardStatus';
 import RecommendationStatus from 'components/RecommendationStatus';
 import ErrorBoundary from 'components/ErrorBoundary';
-import FileViewer from 'components/FileViewer';
 import Icon from 'components/Icon';
-import LoginToViewContent from 'components/LoginToViewContent';
 import { css } from 'emotion';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { descriptionLengthForExtraRewardLevel } from 'constants/defaultValues';
-import {
-  addCommasToNumber,
-  getFileInfoFromFileName
-} from 'helpers/stringHelpers';
+import { addCommasToNumber } from 'helpers/stringHelpers';
 import {
   determineXpButtonDisabled,
   isMobile,
@@ -36,7 +30,6 @@ import { useAppContext, useContentContext } from 'contexts';
 
 Body.propTypes = {
   autoExpand: PropTypes.bool,
-  attachedVideoShown: PropTypes.bool,
   contentObj: PropTypes.object.isRequired,
   commentsShown: PropTypes.bool,
   inputAtBottom: PropTypes.bool,
@@ -45,7 +38,6 @@ Body.propTypes = {
 };
 
 export default function Body({
-  attachedVideoShown,
   autoExpand,
   commentsShown,
   contentObj,
@@ -94,8 +86,6 @@ export default function Body({
     description,
     filePath,
     fileName,
-    fileSize,
-    thumbUrl,
     isEditing,
     secretAnswer,
     secretShown,
@@ -105,7 +95,6 @@ export default function Body({
     contentId
   });
 
-  const { fileType } = fileName ? getFileInfoFromFileName(fileName) : '';
   const { secretShown: rootSecretShown } = useContentState({
     contentId: rootId,
     contentType: rootType
@@ -163,15 +152,16 @@ export default function Body({
       : targetObj.subject?.secretAnswer
       ? targetSubjectSecretHidden
       : !!rootObj?.secretAnswer && rootObjSecretHidden;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     contentType,
-    rootObj,
+    rootObj?.secretAnswer,
+    rootObj?.uploader?.id,
     rootSecretShown,
     secretAnswer,
     secretShown,
     subjectSecretShown,
-    targetObj.subject,
+    targetObj.subject?.secretAnswer,
+    targetObj.subject?.uploader?.id,
     uploader.id,
     userId
   ]);
@@ -189,15 +179,14 @@ export default function Body({
       contentObj.byUser
       ? 5
       : targetObj.subject?.rewardLevel || rootRewardLevel;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     contentObj.byUser,
     contentType,
-    description,
+    description?.length,
     filePath,
     rootObj.rewardLevel,
     rootType,
-    targetObj.subject
+    targetObj.subject?.rewardLevel
   ]);
 
   const xpButtonDisabled = useMemo(
@@ -286,52 +275,12 @@ export default function Body({
   return (
     <ErrorBoundary>
       <div style={{ width: '100%' }}>
-        {contentType === 'subject' &&
-          filePath &&
-          (userId ? (
-            <FileViewer
-              autoPlay
-              contentId={contentId}
-              contentType={contentType}
-              isMuted={!autoExpand}
-              fileName={fileName}
-              filePath={filePath}
-              fileSize={fileSize}
-              thumbUrl={thumbUrl}
-              videoHeight="100%"
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                marginTop: '1rem',
-                ...(fileType === 'audio'
-                  ? {
-                      padding: '1rem'
-                    }
-                  : {}),
-                marginBottom: rewardLevel ? '1rem' : 0
-              }}
-            />
-          ) : (
-            <LoginToViewContent />
-          ))}
-        {contentType === 'comment' && attachedVideoShown && (
-          <XPVideoPlayer
-            stretch
-            autoplay
-            rewardLevel={rootObj.rewardLevel}
-            byUser={!!rootObj.byUser}
-            title={rootObj.title}
-            style={{ marginBottom: '1rem' }}
-            uploader={rootObj.uploader}
-            videoId={rootId}
-            videoCode={rootObj.content}
-          />
-        )}
         <MainContent
+          autoExpand={autoExpand}
           contentId={contentId}
           contentType={contentType}
           secretHidden={secretHidden}
-          myId={userId}
+          userId={userId}
           onClickSecretAnswer={onSecretAnswerClick}
         />
         {!isEditing && (

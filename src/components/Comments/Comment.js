@@ -26,12 +26,15 @@ import HiddenComment from 'components/HiddenComment';
 import XPRewardInterface from 'components/XPRewardInterface';
 import SubjectLink from './SubjectLink';
 import Icon from 'components/Icon';
+import LoginToViewContent from 'components/LoginToViewContent';
+import FileViewer from 'components/FileViewer';
 import { Link, useHistory } from 'react-router-dom';
 import { commentContainer } from './Styles';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { determineXpButtonDisabled, scrollElementToCenter } from 'helpers';
 import { useAppContext, useContentContext } from 'contexts';
+import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 import LocalContext from './Context';
 
 Comment.propTypes = {
@@ -53,7 +56,11 @@ Comment.propTypes = {
     targetUserId: PropTypes.number,
     timeStamp: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
       .isRequired,
-    uploader: PropTypes.object.isRequired
+    uploader: PropTypes.object.isRequired,
+    filePath: PropTypes.string,
+    fileName: PropTypes.string,
+    fileSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    thumbUrl: PropTypes.string
   }).isRequired,
   innerRef: PropTypes.func,
   isPreview: PropTypes.bool,
@@ -78,7 +85,11 @@ function Comment({
     recommendations = [],
     rewards = [],
     uploader,
-    numReplies
+    numReplies,
+    filePath,
+    fileName,
+    fileSize,
+    thumbUrl
   }
 }) {
   subject = subject || comment.targetObj?.subject || {};
@@ -87,6 +98,7 @@ function Comment({
     requestHelpers: { checkIfUserResponded, editContent, loadReplies }
   } = useAppContext();
   const { authLevel, canDelete, canEdit, canReward, userId } = useMyState();
+  const fileType = getFileInfoFromFileName(fileName) || '';
   const {
     actions: {
       onChangeSpoilerStatus,
@@ -114,7 +126,8 @@ function Comment({
     onLikeClick,
     onLoadMoreReplies,
     onReplySubmit,
-    onRewardCommentEdit
+    onRewardCommentEdit,
+    onSubmitWithAttachment
   } = useContext(LocalContext);
 
   const [rewardInterfaceShown, setRewardInterfaceShown] = useState(
@@ -168,14 +181,13 @@ function Comment({
       }
     }
     return 0;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     isPreview,
     parent.contentType,
     parent.rewardLevel,
     rootContent.contentType,
     rootContent.rewardLevel,
-    subject
+    subject?.rewardLevel
   ]);
 
   useEffect(() => {
@@ -219,15 +231,23 @@ function Comment({
           authLevel > subject?.uploader?.authLevel
         ));
     const userCanEditThis = (canEdit || canDelete) && userIsHigherAuth;
-    return (userIsUploader && !isForSecretSubject) || userCanEditThis;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return (
+      ((userIsUploader && !isForSecretSubject) || userCanEditThis) && !isPreview
+    );
   }, [
     authLevel,
     canDelete,
     canEdit,
-    parent,
-    rootContent,
-    subject,
+    isPreview,
+    parent?.secretAnswer,
+    parent?.uploader?.authLevel,
+    parent?.uploader?.id,
+    rootContent?.secretAnswer,
+    rootContent?.uploader?.authLevel,
+    rootContent?.uploader?.id,
+    subject?.secretAnswer,
+    subject?.uploader?.authLevel,
+    subject?.uploader?.id,
     userId,
     userIsHigherAuth,
     userIsUploader
@@ -254,6 +274,7 @@ function Comment({
     return items;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canDelete, canEdit, comment.id, userIsUploader]);
+
   useEffect(() => {
     handleRewardInterfaceShown(
       rewardInterfaceShown && userIsHigherAuth && canReward && !userIsUploader
@@ -271,8 +292,12 @@ function Comment({
     const secretShown =
       subjectState.secretShown || subject?.uploader?.id === userId;
     return hasSecretAnswer && !secretShown;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [subject, subjectState.secretShown, userId]);
+  }, [
+    subject?.secretAnswer,
+    subject?.uploader?.id,
+    subjectState.secretShown,
+    userId
+  ]);
 
   const xpButtonDisabled = useMemo(() => {
     if (isPreview) return true;
@@ -406,6 +431,33 @@ function Comment({
                       {comment.content}
                     </LongText>
                   )}
+                  {filePath &&
+                    (userId ? (
+                      <div style={{ width: '100%' }}>
+                        <FileViewer
+                          autoPlay
+                          contentId={comment.id}
+                          contentType="comment"
+                          fileName={fileName}
+                          filePath={filePath}
+                          fileSize={Number(fileSize)}
+                          thumbUrl={thumbUrl}
+                          videoHeight="100%"
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            ...(fileType === 'audio'
+                              ? {
+                                  padding: '1rem'
+                                }
+                              : {}),
+                            marginBottom: rewardLevel ? '1rem' : 0
+                          }}
+                        />
+                      </div>
+                    ) : (
+                      <LoginToViewContent />
+                    ))}
                   {!isPreview && !isHidden && (
                     <div
                       style={{
@@ -533,6 +585,7 @@ function Comment({
                   innerRef={ReplyInputAreaRef}
                   numReplies={replies?.length}
                   onSubmit={submitReply}
+                  onSubmitWithAttachment={handleSubmitWithAttachment}
                   parent={parent}
                   rootCommentId={comment.commentId}
                   style={{
@@ -613,6 +666,11 @@ function Comment({
   function handleRewardInterfaceShown(shown) {
     setRewardInterfaceShown(shown);
     rewardInterfaceShownRef.current = shown;
+  }
+
+  function handleSubmitWithAttachment(params) {
+    setReplying(true);
+    onSubmitWithAttachment(params);
   }
 
   function submitReply(reply) {

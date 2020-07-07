@@ -45,8 +45,7 @@ export default function LongText({
     ) {
       setIsOverflown(true);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ContainerRef.current]);
+  }, []);
 
   useEffect(() => {
     if (fullTextState[section]) {

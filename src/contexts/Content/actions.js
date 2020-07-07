@@ -25,6 +25,14 @@ export default function ContentActions(dispatch) {
         contentType
       });
     },
+    onClearCommentFileUploadProgress({ contentId, contentType, filePath }) {
+      return dispatch({
+        type: 'CLEAR_COMMENT_FILE_UPLOAD_PROGRESS',
+        filePath,
+        contentId,
+        contentType
+      });
+    },
     onChangeProfileTheme({ userId, theme }) {
       return dispatch({
         type: 'CHANGE_PROFILE_THEME',
@@ -348,11 +356,26 @@ export default function ContentActions(dispatch) {
         detail
       });
     },
+    onSetCommentFileUploadComplete({ contentId, contentType }) {
+      return dispatch({
+        type: 'SET_COMMENT_FILE_UPLOAD_COMPLETE',
+        contentId,
+        contentType
+      });
+    },
     onSetCommentsShown({ contentId, contentType }) {
       return dispatch({
         type: 'SET_COMMENTS_SHOWN',
         contentId,
         contentType
+      });
+    },
+    onSetCommentUploadingFile({ contentId, contentType, uploading }) {
+      return dispatch({
+        type: 'SET_COMMENT_UPLOADING_FILE',
+        contentId,
+        contentType,
+        uploading
       });
     },
     onSetEmbeddedUrl({ contentId, contentType, url }) {
@@ -545,6 +568,14 @@ export default function ContentActions(dispatch) {
         contentType: 'user',
         contentId: userId,
         bio
+      });
+    },
+    onUpdateCommentFileUploadProgress({ contentType, contentId, progress }) {
+      return dispatch({
+        type: 'UPDATE_COMMENT_FILE_UPLOAD_PROGRESS',
+        progress,
+        contentType,
+        contentId
       });
     },
     onUpdateGreeting({ greeting, userId }) {

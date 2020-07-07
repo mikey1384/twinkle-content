@@ -70,8 +70,7 @@ export default function Profile({ history, location, match }) {
       history.push(`/${username}`);
     }
     setSelectedTheme(profile?.profileTheme || 'logoBlue');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [match.params.username, profile, userId, username]);
+  }, [history, match.params.username, profile, userId, username]);
 
   return (
     <ErrorBoundary style={{ minHeight: '10rem' }}>
@@ -94,7 +93,7 @@ export default function Profile({ history, location, match }) {
             >
               <Cover
                 profile={profile}
-                onSelectTheme={theme => {
+                onSelectTheme={(theme) => {
                   setSelectedTheme(theme);
                 }}
                 selectedTheme={selectedTheme}

@@ -10,7 +10,7 @@ import Button from 'components/Button';
 import Input from 'components/Texts/Input';
 import Textarea from 'components/Texts/Textarea';
 import AttachContentModal from './AttachContentModal';
-import Attachment from './Attachment';
+import Attachment from 'components/Attachment';
 import ErrorBoundary from 'components/ErrorBoundary';
 import LocalContext from '../../../Context';
 import {

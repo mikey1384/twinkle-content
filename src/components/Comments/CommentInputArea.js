@@ -1,6 +1,11 @@
+import React, { useContext, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import React from 'react';
 import InputForm from 'components/Forms/InputForm';
+import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
+import LocalContext from './Context';
+import { useInputContext, useContentContext } from 'contexts';
+import { useContentState } from 'helpers/hooks';
+import { v1 as uuidv1 } from 'uuid';
 
 CommentInputArea.propTypes = {
   autoFocus: PropTypes.bool,
@@ -31,22 +36,98 @@ export default function CommentInputArea({
   style,
   targetCommentId
 }) {
+  const contentType = targetCommentId
+    ? 'comment'
+    : subjectId
+    ? 'subject'
+    : parent.contentType;
+  const contentId = targetCommentId || subjectId || parent.contentId;
+  const { onSubmitWithAttachment } = useContext(LocalContext);
+  const {
+    state,
+    actions: { onSetCommentAttachment }
+  } = useInputContext();
+
+  const {
+    actions: { onSetCommentUploadingFile }
+  } = useContentContext();
+
+  const {
+    fileUploadComplete,
+    fileUploadProgress,
+    uploadingFile
+  } = useContentState({
+    contentId,
+    contentType
+  });
+
+  const filePathRef = useRef(null);
+  const [commentContent, setCommentContent] = useState('');
+  const attachment = state[contentType + contentId]?.attachment;
+
   return (
     <div style={{ ...style, position: 'relative' }} ref={InputFormRef}>
-      <InputForm
-        innerRef={innerRef}
-        clickListenerState={clickListenerState}
-        autoFocus={autoFocus}
-        onSubmit={text =>
-          onSubmit({ content: text, subjectId, rootCommentId, targetCommentId })
-        }
-        parent={
-          subjectId ? { contentId: subjectId, contentType: 'subject' } : parent
-        }
-        rows={numInputRows}
-        placeholder={`Enter your ${inputTypeLabel} here...`}
-        targetCommentId={targetCommentId}
-      />
+      {!uploadingFile && (
+        <InputForm
+          innerRef={innerRef}
+          clickListenerState={clickListenerState}
+          autoFocus={autoFocus}
+          onSubmit={handleSubmit}
+          parent={{ contentId, contentType }}
+          rows={numInputRows}
+          placeholder={`Enter your ${inputTypeLabel} here...`}
+          targetCommentId={targetCommentId}
+        />
+      )}
+      {uploadingFile && (
+        <FileUploadStatusIndicator
+          style={{ fontSize: '1.7rem', fontWeight: 'bold', marginTop: 0 }}
+          fileName={attachment?.file?.name}
+          onFileUpload={handleFileUploadComplete}
+          uploadComplete={fileUploadComplete}
+          uploadProgress={fileUploadProgress}
+        />
+      )}
     </div>
   );
+
+  function handleFileUploadComplete() {
+    filePathRef.current = uuidv1();
+    onSubmitWithAttachment({
+      attachment,
+      commentContent,
+      contentId,
+      contentType,
+      filePath: filePathRef.current,
+      file: attachment.file,
+      rootCommentId,
+      subjectId,
+      targetCommentId
+    });
+    setCommentContent('');
+    onSetCommentAttachment({
+      attachment: undefined,
+      contentType,
+      contentId
+    });
+    filePathRef.current = null;
+  }
+
+  function handleSubmit(text) {
+    if (attachment) {
+      setCommentContent(text);
+      onSetCommentUploadingFile({
+        contentType,
+        contentId,
+        uploading: true
+      });
+    } else {
+      onSubmit({
+        content: text,
+        rootCommentId,
+        subjectId,
+        targetCommentId
+      });
+    }
+  }
 }

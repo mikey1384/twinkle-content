@@ -16,12 +16,12 @@ export const commentContainer = css`
     display: flex;
     width: 100%;
     position: relative;
-    aside {
+    > aside {
       width: 7rem;
       justify-content: center;
       display: flex;
     }
-    section {
+    > section {
       width: 100%;
       margin-left: 1rem;
     }

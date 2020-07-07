@@ -26,6 +26,7 @@ export default function Search({ history, pathname, style }) {
   const category = getSectionFromPathname(pathname)?.section;
   const prevSearchText = useRef(searchText);
   const SearchBoxRef = useRef(null);
+
   useEffect(() => {
     if (
       !stringIsEmpty(prevSearchText.current) &&

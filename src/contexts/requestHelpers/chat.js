@@ -58,11 +58,16 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async createNewChat({ channelName, isClass, isClosed }) {
+    async createNewChat({
+      channelName,
+      isClass,
+      isClosed,
+      selectedUsers = []
+    }) {
       try {
         const { data } = await request.post(
           `${URL}/chat/channel`,
-          { channelName, isClass, isClosed },
+          { channelName, isClass, isClosed, selectedUsers },
           auth()
         );
         return Promise.resolve(data);

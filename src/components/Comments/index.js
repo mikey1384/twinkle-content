@@ -8,7 +8,7 @@ import Loading from 'components/Loading';
 import { scrollElementToCenter } from 'helpers';
 import { css } from 'emotion';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { useAppContext } from 'contexts';
+import { useAppContext, useContentContext, useInputContext } from 'contexts';
 
 Comments.propTypes = {
   autoExpand: PropTypes.bool,
@@ -82,8 +82,19 @@ function Comments({
   userId
 }) {
   const {
-    requestHelpers: { deleteContent, loadComments, uploadComment }
+    requestHelpers: { deleteContent, loadComments, uploadComment, uploadFile }
   } = useAppContext();
+  const {
+    actions: { onEnterComment }
+  } = useInputContext();
+  const {
+    actions: {
+      onClearCommentFileUploadProgress,
+      onUpdateCommentFileUploadProgress,
+      onSetCommentFileUploadComplete,
+      onSetCommentUploadingFile
+    }
+  } = useContentContext();
   const [deleting, setDeleting] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [commentSubmitted, setCommentSubmitted] = useState(false);
@@ -142,6 +153,9 @@ function Comments({
         : [],
     [comments, commentsShown, numPreviews]
   );
+  const isPreview = useMemo(() => previewComments.length > 0, [
+    previewComments.length
+  ]);
 
   return (
     <Context.Provider
@@ -153,12 +167,13 @@ function Comments({
         onLoadMoreReplies,
         onRewardCommentEdit,
         onReplySubmit: handleSubmitReply,
-        onLoadRepliesOfReply
+        onLoadRepliesOfReply,
+        onSubmitWithAttachment: handleFileUpload
       }}
     >
       <div
         className={`${
-          previewComments.length > 0 && !(commentsShown || autoExpand)
+          isPreview && !(commentsShown || autoExpand)
             ? css`
                 &:hover {
                   background: ${Color.highlightGray()};
@@ -173,7 +188,7 @@ function Comments({
         } ${className}`}
         style={style}
         ref={ContainerRef}
-        onClick={previewComments.length > 0 ? onPreviewClick : () => {}}
+        onClick={isPreview ? onPreviewClick : () => {}}
       >
         {!inputAtBottom &&
           !noInput &&
@@ -188,12 +203,9 @@ function Comments({
             {isLoading && <Loading />}
             {inputAtBottom && loadMoreButton && renderLoadMoreButton()}
             {!isLoading &&
-              (previewComments.length > 0
-                ? previewComments
-                : comments
-              ).map((comment, index) => (
+              (isPreview ? previewComments : comments).map((comment, index) => (
                 <Comment
-                  isPreview={previewComments.length > 0}
+                  isPreview={isPreview}
                   index={index}
                   innerRef={(ref) => (CommentRefs[comment.id] = ref)}
                   parent={parent}
@@ -216,6 +228,126 @@ function Comments({
       </div>
     </Context.Provider>
   );
+
+  function renderInputArea(style) {
+    return (
+      <CommentInputArea
+        autoFocus={autoFocus}
+        InputFormRef={CommentInputAreaRef}
+        innerRef={inputAreaInnerRef}
+        inputTypeLabel={inputTypeLabel}
+        numInputRows={numInputRows}
+        onSubmit={handleSubmitComment}
+        parent={parent}
+        rootCommentId={
+          parent.contentType === 'comment' ? parent.commentId : null
+        }
+        subjectId={subject?.id}
+        style={style}
+        targetCommentId={
+          parent.contentType === 'comment' ? parent.contentId : null
+        }
+      />
+    );
+  }
+
+  function renderLoadMoreButton() {
+    return (autoExpand || commentsShown) && !isLoading ? (
+      <Button
+        filled
+        color="lightBlue"
+        disabled={isLoadingMore}
+        onClick={handleLoadMoreComments}
+        style={{
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          marginTop: inputAtBottom ? 0 : '1rem'
+        }}
+      >
+        Load More
+      </Button>
+    ) : null;
+  }
+
+  async function handleFileUpload({
+    attachment,
+    commentContent,
+    contentType,
+    contentId,
+    filePath,
+    file,
+    rootCommentId,
+    subjectId,
+    targetCommentId,
+    isReply
+  }) {
+    const finalContentType = targetCommentId
+      ? 'comment'
+      : subjectId
+      ? 'subject'
+      : contentType;
+    const finalContentId = targetCommentId || subjectId || contentId;
+    try {
+      setCommentSubmitted(true);
+      await uploadFile({
+        filePath,
+        file,
+        onUploadProgress: handleUploadProgress
+      });
+      onSetCommentFileUploadComplete({
+        contentType: finalContentType,
+        contentId: finalContentId
+      });
+      const data = await uploadComment({
+        content: commentContent,
+        parent,
+        rootCommentId,
+        subjectId,
+        targetCommentId,
+        attachment,
+        filePath,
+        fileName: file.name,
+        fileSize: file.size
+      });
+      if (isReply) {
+        onReplySubmit({
+          ...data,
+          contentId: parent.contentId,
+          contentType: parent.contentType
+        });
+      } else {
+        onCommentSubmit({
+          ...data,
+          contentId: parent.contentId,
+          contentType: parent.contentType
+        });
+      }
+      onClearCommentFileUploadProgress({
+        contentType: finalContentType,
+        contentId: finalContentId
+      });
+      onSetCommentUploadingFile({
+        contentType: finalContentType,
+        contentId: finalContentId,
+        uploading: false
+      });
+      onEnterComment({
+        contentType: finalContentType,
+        contentId: finalContentId,
+        text: ''
+      });
+    } catch (error) {
+      console.error(error);
+    }
+    function handleUploadProgress({ loaded, total }) {
+      onUpdateCommentFileUploadProgress({
+        contentType: finalContentType,
+        contentId: finalContentId,
+        progress: loaded / total
+      });
+    }
+  }
 
   async function handleSubmitComment({
     content,
@@ -291,47 +423,6 @@ function Comments({
     setDeleting(true);
     await deleteContent({ id: commentId, contentType: 'comment' });
     onDelete(commentId);
-  }
-
-  function renderInputArea(style) {
-    return (
-      <CommentInputArea
-        autoFocus={autoFocus}
-        InputFormRef={CommentInputAreaRef}
-        innerRef={inputAreaInnerRef}
-        inputTypeLabel={inputTypeLabel}
-        numInputRows={numInputRows}
-        onSubmit={handleSubmitComment}
-        parent={parent}
-        rootCommentId={
-          parent.contentType === 'comment' ? parent.commentId : null
-        }
-        subjectId={subject?.id}
-        style={style}
-        targetCommentId={
-          parent.contentType === 'comment' ? parent.contentId : null
-        }
-      />
-    );
-  }
-
-  function renderLoadMoreButton() {
-    return (autoExpand || commentsShown) && !isLoading ? (
-      <Button
-        filled
-        color="lightBlue"
-        disabled={isLoadingMore}
-        onClick={handleLoadMoreComments}
-        style={{
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'center',
-          marginTop: inputAtBottom ? 0 : '1rem'
-        }}
-      >
-        Load More
-      </Button>
-    ) : null;
   }
 }
 

@@ -19,7 +19,7 @@ import CallScreen from './CallScreen';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Icon from 'components/Icon';
 import { v1 as uuidv1 } from 'uuid';
-import { GENERAL_CHAT_ID, rewardReasons } from 'constants/defaultValues';
+import { GENERAL_CHAT_ID, rewardReasons, mb } from 'constants/defaultValues';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 import { css } from 'emotion';
 import { Color } from 'constants/css';
@@ -129,7 +129,6 @@ export default function MessagesContainer({
   const FileInputRef = useRef(null);
   const ChatInputRef = useRef(null);
   const timerRef = useRef(null);
-  const mb = 1000;
 
   const selectedChannelIsOnCall = useMemo(
     () => selectedChannelId === channelOnCall.id,

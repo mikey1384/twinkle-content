@@ -40,7 +40,7 @@ export default function Vocabulary() {
     actions: { onEnterComment }
   } = useInputContext();
   const { userId } = useMyState();
-  const inputText = state['vocabulary'] || '';
+  const inputText = state['vocabulary']?.text || '';
   const wordObj = useMemo(() => wordsObj[inputText] || {}, [
     inputText,
     wordsObj

@@ -21,6 +21,14 @@ export default function InputActions(dispatch) {
         type: 'RESET_SUBJECT_INPUT'
       });
     },
+    onSetCommentAttachment({ attachment, contentType, contentId }) {
+      return dispatch({
+        type: 'SET_COMMENT_ATTACHMENT',
+        attachment,
+        contentType,
+        contentId
+      });
+    },
     onSetContentAlreadyPosted(alreadyPosted) {
       return dispatch({
         type: 'SET_CONTENT_ALREADY_POSTED',
