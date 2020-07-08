@@ -522,6 +522,7 @@ export default function Details({
   }
 
   function handleLikeVideo({ likes, isUnlike }) {
+    onLikeVideo({ likes });
     if (!xpButtonDisabled && userCanRewardThis) {
       onSetXpRewardInterfaceShown({
         contentId: videoId,
@@ -533,7 +534,6 @@ export default function Details({
         setRecommendationInterfaceShown(!isUnlike);
       }
     }
-    onLikeVideo({ likes });
   }
 
   function handleSetXpRewardInterfaceShown() {

@@ -91,9 +91,9 @@ export default function LinkPage({
     content,
     deleted,
     description,
-    likes = [],
+    likes,
     loaded,
-    recommendations = [],
+    recommendations,
     subjects,
     subjectsLoaded,
     subjectsLoadMoreButton,
@@ -211,6 +211,16 @@ export default function LinkPage({
     [authLevel, canReward, uploader?.authLevel, userIsUploader]
   );
 
+  const xpButtonDisabled = useMemo(
+    () =>
+      determineXpButtonDisabled({
+        myId: userId,
+        xpRewardInterfaceShown,
+        rewards
+      }),
+    [rewards, userId, xpRewardInterfaceShown]
+  );
+
   useEffect(() => {
     onSetXpRewardInterfaceShown({
       contentType: 'url',
@@ -294,11 +304,7 @@ export default function LinkPage({
                 <Button
                   color="pink"
                   filled
-                  disabled={determineXpButtonDisabled({
-                    myId: userId,
-                    xpRewardInterfaceShown,
-                    rewards
-                  })}
+                  disabled={xpButtonDisabled}
                   style={{
                     fontSize: '2rem',
                     marginLeft: '1rem'
@@ -307,11 +313,7 @@ export default function LinkPage({
                 >
                   <Icon icon="certificate" />
                   <span style={{ marginLeft: '0.7rem' }}>
-                    {determineXpButtonDisabled({
-                      myId: userId,
-                      xpRewardInterfaceShown,
-                      rewards
-                    }) || 'Reward'}
+                    {xpButtonDisabled || 'Reward'}
                   </span>
                 </Button>
               )}
@@ -515,9 +517,20 @@ export default function LinkPage({
     });
   }
 
-  function handleLikeLink({ likes }) {
+  function handleLikeLink({ likes, isUnlike }) {
     onLikeContent({ likes, contentType: 'url', contentId: linkId });
     onLikeLink({ likes, id: linkId });
+    if (!xpButtonDisabled && userCanRewardThis) {
+      onSetXpRewardInterfaceShown({
+        contentId: linkId,
+        contentType: 'url',
+        shown: !isUnlike
+      });
+    } else {
+      if (!isRecommendedByUser && authLevel === 0) {
+        setRecommendationInterfaceShown(!isUnlike);
+      }
+    }
   }
 
   function handleSetXpRewardInterfaceShown() {

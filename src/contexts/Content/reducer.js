@@ -1,4 +1,7 @@
-const DEFAULT_PROFILE_THEME = 'logoBlue';
+import {
+  DEFAULT_PROFILE_THEME,
+  defaultContentState
+} from 'constants/defaultValues';
 
 export default function ContentReducer(state, action) {
   const contentKey =
@@ -8,18 +11,7 @@ export default function ContentReducer(state, action) {
   const defaultState = {
     contentType: action.contentType,
     contentId: action.contentId,
-    isEditing: false,
-    placeholderHeight: 0,
-    rewards: [],
-    comments: [],
-    likes: [],
-    recommendations: [],
-    subjects: [],
-    tags: [],
-    commentsLoadMoreButton: false,
-    subjectsLoadMoreButton: false,
-    rootObj: {},
-    profileTheme: 'logoBlue'
+    ...defaultContentState
   };
   const prevContentState = state[contentKey] || defaultState;
   switch (action.type) {

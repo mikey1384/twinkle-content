@@ -4,10 +4,13 @@ import { stringIsEmpty } from '../stringHelpers';
 import { useAppContext, useContentContext, useProfileContext } from 'contexts';
 export { default as useScrollToBottom } from './useScrollToBottom';
 export { default as useInfiniteScroll } from './useInfiniteScroll';
+import { defaultContentState } from 'constants/defaultValues';
 
 export function useContentState({ contentType, contentId }) {
   const { state } = useContentContext();
-  return state[contentType + contentId] || {};
+  return state[contentType + contentId]
+    ? { ...defaultContentState, ...state[contentType + contentId] }
+    : defaultContentState;
 }
 
 export function useInterval(callback, interval) {

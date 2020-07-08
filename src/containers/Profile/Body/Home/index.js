@@ -143,7 +143,7 @@ export default function Home({ location, profile, selectedTheme }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  const { comments = [], commentsLoadMoreButton = false } = useContentState({
+  const { comments, commentsLoadMoreButton } = useContentState({
     contentType: 'user',
     contentId: profile.id
   });

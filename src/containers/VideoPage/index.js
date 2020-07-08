@@ -129,7 +129,7 @@ export default function VideoPage({
     rewardLevel,
     likes,
     loaded,
-    questions = [],
+    questions,
     recommendations,
     rewards,
     subjects,

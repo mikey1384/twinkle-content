@@ -1,4 +1,20 @@
 export const defaultChatSubject = 'Welcome!';
+export const defaultContentState = {
+  isEditing: false,
+  placeholderHeight: 0,
+  rewards: [],
+  comments: [],
+  likes: [],
+  questions: [],
+  recommendations: [],
+  subjects: [],
+  tags: [],
+  commentsLoadMoreButton: false,
+  subjectsLoadMoreButton: false,
+  rootObj: {},
+  profileTheme: 'logoBlue'
+};
+
 export const cloudFrontURL = `https://${process.env.REACT_APP_CLOUDFRONT_KEY}.cloudfront.net`;
 export const S3URL = `https://${process.env.REACT_APP_AWS_S3_BUCKET_NAME}.s3.amazonaws.com`;
 export const clientVersion = '1.3.85';
@@ -98,6 +114,7 @@ export const rewardReasons = {
   }
 };
 
+export const DEFAULT_PROFILE_THEME = 'logoBlue';
 export const GENERAL_CHAT_ID = 2;
 export const FILE_UPLOAD_XP_REQUIREMENT = 100000;
 export const LAST_ONLINE_FILTER_LABEL = 'Last Online';
