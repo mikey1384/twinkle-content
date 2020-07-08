@@ -39,11 +39,8 @@ export default function SelectRewardAmount({
       rewards.length > 0
         ? rewards.reduce((prev, reward) => prev + reward.rewardAmount, 0)
         : 0;
-    return Math.min(
-      returnMaxRewards({ rewardLevel }) - currentRewards,
-      maxRewardAmountForOnePerson
-    );
-  }, [maxRewardAmountForOnePerson, rewardLevel, rewards]);
+    return returnMaxRewards({ rewardLevel }) - currentRewards;
+  }, [rewardLevel, rewards]);
 
   return (
     <div
