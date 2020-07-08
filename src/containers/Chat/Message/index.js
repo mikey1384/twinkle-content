@@ -21,7 +21,7 @@ import TargetSubject from './TargetSubject';
 import RewardMessage from './RewardMessage';
 import LocalContext from '../Context';
 import Invitation from './Invitation';
-import MessageRewardModal from './MessageRewardModal';
+import MessageRewardModal from '../Modals/MessageRewardModal';
 import { useInView } from 'react-intersection-observer';
 import { socket } from 'constants/io';
 import { unix } from 'moment';

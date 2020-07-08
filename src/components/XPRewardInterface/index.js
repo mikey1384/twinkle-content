@@ -1,8 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Textarea from 'components/Texts/Textarea';
-import MenuButtons from './MenuButtons';
-import { Color } from 'constants/css';
+import SelectRewardAmount from './SelectRewardAmount';
 import { css } from 'emotion';
 import {
   addEmoji,
@@ -10,10 +9,8 @@ import {
   finalizeEmoji,
   stringIsEmpty
 } from 'helpers/stringHelpers';
-import FilterBar from 'components/FilterBar';
 import Button from 'components/Button';
 import request from 'axios';
-import { returnMaxRewards } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useInputContext } from 'contexts';
 import URL from 'constants/URL';
@@ -23,7 +20,6 @@ XPRewardInterface.propTypes = {
   contentId: PropTypes.number.isRequired,
   innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   rewardLevel: PropTypes.number,
-  rewards: PropTypes.array,
   uploaderId: PropTypes.number.isRequired,
   noPadding: PropTypes.bool,
   onRewardSubmit: PropTypes.func.isRequired
@@ -36,7 +32,6 @@ export default function XPRewardInterface({
   rewardLevel,
   noPadding,
   onRewardSubmit,
-  rewards = [],
   uploaderId
 }) {
   const {
@@ -51,7 +46,6 @@ export default function XPRewardInterface({
   const {
     comment: prevComment = '',
     selectedAmount: prevSelectedAmount = 0,
-    starTabActive: prevStarTabActive = false,
     prevRewardLevel
   } = rewardForm;
 
@@ -59,8 +53,6 @@ export default function XPRewardInterface({
   const commentRef = useRef(prevComment);
   const [rewarding, setRewarding] = useState(false);
   const [comment, setComment] = useState(prevComment);
-  const starTabActiveRef = useRef(prevStarTabActive);
-  const [starTabActive, setStarTabActive] = useState(prevStarTabActive);
   const selectedAmountRef = useRef(prevSelectedAmount);
   const [selectedAmount, setSelectedAmount] = useState(prevSelectedAmount);
 
@@ -80,10 +72,6 @@ export default function XPRewardInterface({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rewardLevel]);
 
-  const maxRewards = useMemo(() => returnMaxRewards({ rewardLevel }), [
-    rewardLevel
-  ]);
-
   const rewardCommentExceedsCharLimit = useMemo(
     () =>
       exceedsCharLimit({
@@ -101,8 +89,7 @@ export default function XPRewardInterface({
         contentId,
         form: {
           comment: commentRef.current,
-          selectedAmount: selectedAmountRef.current,
-          starTabActive: starTabActiveRef.current
+          selectedAmount: selectedAmountRef.current
         }
       });
       mounted.current = false;
@@ -118,74 +105,74 @@ export default function XPRewardInterface({
         flexDirection: 'column',
         padding: noPadding ? '1rem 0 0 0' : '1rem',
         fontSize: '1.6rem',
-        alignItems: 'center',
-        color: Color.blue()
+        alignItems: 'center'
       }}
     >
-      <FilterBar style={{ background: 'none' }}>
-        <nav
-          className={!starTabActive ? 'active' : ''}
-          onClick={() => {
-            handleSetStarTabActive(false);
-          }}
-        >
-          Reward Twinkles
-        </nav>
-        <nav
-          className={starTabActive ? 'active' : ''}
-          onClick={() => {
-            handleSetStarTabActive(true);
-          }}
-        >
-          Reward Stars
-        </nav>
-      </FilterBar>
-      <section
-        style={{ display: 'flex', flexDirection: 'column', width: '100%' }}
-      >
-        <MenuButtons
-          maxRewards={maxRewards}
-          selectedAmount={selectedAmount}
-          rewards={rewards}
-          starTabActive={starTabActive}
-          onSetSelectedAmount={handleSetSelectedAmount}
-          onSetStarTabActive={handleSetStarTabActive}
-          userId={userId}
-        />
-      </section>
-      <Textarea
-        className={css`
-          margin-top: 1rem;
-        `}
-        minRows={3}
-        value={comment}
-        onChange={(event) => {
-          handleSetComment(addEmoji(event.target.value));
-        }}
-        placeholder={`Let the recipient know why you are rewarding XP for this ${
-          contentType === 'url' ? 'link' : contentType
-        } (optional)`}
-        style={rewardCommentExceedsCharLimit?.style}
-      />
+      <section style={{ fontWeight: 'bold' }}>Select reward amount</section>
       <section
         style={{
           display: 'flex',
-          flexDirection: 'row-reverse',
+          flexDirection: 'column',
           width: '100%',
-          marginTop: '1rem'
+          alignItems: 'center'
         }}
       >
-        <Button
-          color={selectedAmount > 4 ? 'pink' : 'logoBlue'}
-          filled
-          disabled={
-            !!rewardCommentExceedsCharLimit || rewarding || selectedAmount === 0
-          }
-          onClick={handleRewardSubmit}
-        >
-          Confirm
-        </Button>
+        <SelectRewardAmount
+          onSetSelectedAmount={handleSetSelectedAmount}
+          selectedAmount={selectedAmount}
+        />
+        {selectedAmount > 0 && (
+          <a
+            style={{
+              cursor: 'pointer',
+              fontWeight: 'bold',
+              marginTop: '-0.5rem'
+            }}
+            onClick={() => handleSetSelectedAmount(0)}
+          >
+            clear
+          </a>
+        )}
       </section>
+      {selectedAmount > 0 && (
+        <Textarea
+          className={css`
+            margin-top: 1rem;
+          `}
+          minRows={3}
+          value={comment}
+          onChange={(event) => {
+            handleSetComment(addEmoji(event.target.value));
+          }}
+          placeholder={`Let the recipient know why you are rewarding XP for this ${
+            contentType === 'url' ? 'link' : contentType
+          } (optional)`}
+          style={rewardCommentExceedsCharLimit?.style}
+        />
+      )}
+      {selectedAmount > 0 && (
+        <section
+          style={{
+            display: 'flex',
+            flexDirection: 'row-reverse',
+            width: '100%',
+            marginTop: '1rem'
+          }}
+        >
+          <Button
+            color={selectedAmount > 4 ? 'pink' : 'logoBlue'}
+            filled
+            disabled={
+              !!rewardCommentExceedsCharLimit ||
+              rewarding ||
+              selectedAmount === 0
+            }
+            onClick={handleRewardSubmit}
+          >
+            Confirm
+          </Button>
+        </section>
+      )}
     </div>
   ) : null;
 
@@ -208,7 +195,6 @@ export default function XPRewardInterface({
       if (mounted.current) {
         setRewarding(false);
         handleSetComment('');
-        handleSetStarTabActive(false);
         handleSetSelectedAmount(0);
         onSetRewardForm({
           contentType,
@@ -231,10 +217,5 @@ export default function XPRewardInterface({
   function handleSetSelectedAmount(amount) {
     setSelectedAmount(amount);
     selectedAmountRef.current = amount;
-  }
-
-  function handleSetStarTabActive(active) {
-    setStarTabActive(active);
-    starTabActiveRef.current = active;
   }
 }
