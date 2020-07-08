@@ -611,7 +611,7 @@ export default function ContentReducer(state, action) {
               })
             };
           }),
-          subjects: prevContentState.subjects.map((subject) => {
+          subjects: prevContentState.subjects?.map((subject) => {
             return {
               ...subject,
               comments: subject.comments.map((comment) => {
@@ -752,7 +752,7 @@ export default function ContentReducer(state, action) {
         ...state,
         [contentKey]: {
           ...prevContentState,
-          subjects: prevContentState.subjects.map((subject) => {
+          subjects: prevContentState.subjects?.map((subject) => {
             if (subject.id === action.subjectId) {
               return {
                 ...subject,
@@ -769,7 +769,7 @@ export default function ContentReducer(state, action) {
         ...state,
         [contentKey]: {
           ...prevContentState,
-          subjects: prevContentState.subjects.map((subject) => {
+          subjects: prevContentState.subjects?.map((subject) => {
             return {
               ...subject,
               comments: subject.comments.map((comment) => {
@@ -891,7 +891,7 @@ export default function ContentReducer(state, action) {
         ...state,
         [contentKey]: {
           ...prevContentState,
-          subjects: prevContentState.subjects.map((subject) => {
+          subjects: prevContentState.subjects?.map((subject) => {
             return {
               ...subject,
               comments: subject.comments.map((comment) => {
@@ -1479,7 +1479,7 @@ export default function ContentReducer(state, action) {
                 : comment.replies
             };
           }),
-          subjects: prevContentState.subjects.map((subject) => {
+          subjects: prevContentState.subjects?.map((subject) => {
             return {
               ...subject,
               comments: subject.comments.map((comment) =>

@@ -73,7 +73,6 @@ export default function VideoPage({
     actions: {
       onChangeVideoByUserStatus,
       onEditVideoThumbs,
-      onLikeVideo,
       onSetThumbRewardLevel
     }
   } = useExploreContext();
@@ -365,7 +364,6 @@ export default function VideoPage({
                 changingPage={changingPage}
                 rewardLevel={rewardLevel}
                 likes={likes}
-                onLikeVideo={handleLikeVideo}
                 content={content}
                 description={description}
                 changeByUserStatus={handleChangeByUserStatus}
@@ -525,10 +523,6 @@ export default function VideoPage({
   function handleChangeByUserStatus({ contentId, contentType, byUser }) {
     onSetByUserStatus({ contentId, contentType, byUser });
     onChangeVideoByUserStatus({ videoId, byUser });
-  }
-
-  function handleLikeVideo({ likes }) {
-    onLikeVideo({ likes });
   }
 
   function numberCorrect() {

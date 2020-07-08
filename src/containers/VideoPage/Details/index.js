@@ -22,7 +22,11 @@ import {
   isValidYoutubeUrl
 } from 'helpers/stringHelpers';
 import { useContentState, useMyState } from 'helpers/hooks';
-import { useContentContext, useInputContext } from 'contexts';
+import {
+  useContentContext,
+  useExploreContext,
+  useInputContext
+} from 'contexts';
 import { css } from 'emotion';
 
 Details.propTypes = {
@@ -37,7 +41,6 @@ Details.propTypes = {
   onAttachReward: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onEditFinish: PropTypes.func.isRequired,
-  onLikeVideo: PropTypes.func.isRequired,
   onSetRewardLevel: PropTypes.func.isRequired,
   recommendations: PropTypes.array.isRequired,
   tags: PropTypes.array,
@@ -66,7 +69,6 @@ export default function Details({
   onAttachReward,
   onDelete,
   onEditFinish,
-  onLikeVideo,
   tags = [],
   onSetRewardLevel,
   rewards,
@@ -88,6 +90,9 @@ export default function Details({
     state: inputState,
     actions: { onSetEditForm }
   } = useInputContext();
+  const {
+    actions: { onLikeVideo }
+  } = useExploreContext();
   const { isEditing, xpRewardInterfaceShown } = useContentState({
     contentType: 'video',
     contentId: videoId
@@ -153,14 +158,25 @@ export default function Details({
     return userIsUploader || userCanEditThis;
   }, [authLevel, canDelete, canEdit, uploader.authLevel, userIsUploader]);
 
+  const userCanRewardThis = useMemo(
+    () => canReward && !userIsUploader && authLevel > uploader.authLevel,
+    [authLevel, canReward, uploader.authLevel, userIsUploader]
+  );
+
   const rewardButtonShown = useMemo(() => {
-    return (
-      !isEditing &&
-      canReward &&
-      !userIsUploader &&
-      authLevel > uploader.authLevel
-    );
-  }, [authLevel, canReward, isEditing, uploader.authLevel, userIsUploader]);
+    return !isEditing && userCanRewardThis;
+  }, [isEditing, userCanRewardThis]);
+
+  const xpButtonDisabled = useMemo(
+    () =>
+      determineXpButtonDisabled({
+        rewardLevel: byUser ? 5 : 0,
+        myId: userId,
+        xpRewardInterfaceShown,
+        rewards
+      }),
+    [byUser, rewards, userId, xpRewardInterfaceShown]
+  );
 
   const editMenuItems = useMemo(() => {
     const items = [];
@@ -299,7 +315,7 @@ export default function Details({
               changeByUserStatus={changeByUserStatus}
               rewardLevel={rewardLevel}
               likes={likes}
-              onLikeVideo={onLikeVideo}
+              onLikeVideo={handleLikeVideo}
               onSetRewardLevel={onSetRewardLevel}
               uploader={uploader}
               userId={userId}
@@ -373,22 +389,12 @@ export default function Details({
                 <Button
                   skeuomorphic
                   color="pink"
-                  disabled={determineXpButtonDisabled({
-                    rewardLevel: byUser ? 5 : 0,
-                    myId: userId,
-                    xpRewardInterfaceShown,
-                    rewards
-                  })}
+                  disabled={xpButtonDisabled}
                   onClick={handleSetXpRewardInterfaceShown}
                 >
                   <Icon icon="certificate" />
                   <span style={{ marginLeft: '0.7rem' }}>
-                    {determineXpButtonDisabled({
-                      rewardLevel: byUser ? 5 : 0,
-                      myId: userId,
-                      xpRewardInterfaceShown,
-                      rewards
-                    }) || 'Reward'}
+                    {xpButtonDisabled || 'Reward'}
                   </span>
                 </Button>
               )}
@@ -513,6 +519,21 @@ export default function Details({
       contentType: 'video',
       isEditing: false
     });
+  }
+
+  function handleLikeVideo({ likes, isUnlike }) {
+    if (!xpButtonDisabled && userCanRewardThis) {
+      onSetXpRewardInterfaceShown({
+        contentId: videoId,
+        contentType: 'video',
+        shown: !isUnlike
+      });
+    } else {
+      if (!isRecommendedByUser && authLevel === 0) {
+        setRecommendationInterfaceShown(!isUnlike);
+      }
+    }
+    onLikeVideo({ likes });
   }
 
   function handleSetXpRewardInterfaceShown() {
