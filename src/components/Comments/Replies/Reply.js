@@ -141,7 +141,7 @@ function Reply({
     const userCanEditThis = (canEdit || canDelete) && userIsHigherAuth;
     return userIsUploader || userCanEditThis;
   }, [canDelete, canEdit, userIsHigherAuth, userIsUploader]);
-  const rewardButtonShown = useMemo(
+  const userCanRewardThis = useMemo(
     () => canReward && userIsHigherAuth && !userIsUploader,
     [canReward, userIsHigherAuth, userIsUploader]
   );
@@ -344,7 +344,7 @@ function Reply({
                               : ''}
                           </span>
                         </Button>
-                        {rewardButtonShown && (
+                        {userCanRewardThis && (
                           <Button
                             color="pink"
                             style={{ marginLeft: '1rem' }}
@@ -477,7 +477,18 @@ function Reply({
     });
   }
 
-  function handleLikeClick({ likes }) {
+  function handleLikeClick({ likes, isUnlike }) {
+    if (!xpButtonDisabled && userCanRewardThis) {
+      onSetXpRewardInterfaceShown({
+        contentId: comment.id,
+        contentType: 'comment',
+        shown: !isUnlike
+      });
+    } else {
+      if (!isRecommendedByUser && authLevel === 0) {
+        setRecommendationInterfaceShown(!isUnlike);
+      }
+    }
     onLikeClick({ commentId: reply.id, likes });
   }
 

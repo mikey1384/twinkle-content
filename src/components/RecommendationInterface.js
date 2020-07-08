@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Button from 'components/Button';
+import Icon from 'components/Icon';
 import { Color } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
 import { priceTable } from 'constants/defaultValues';
@@ -45,7 +46,8 @@ export default function RecommendationInterface({
       return isRecommendedByUser ? (
         <>
           <span style={{ marginLeft: '1rem', color: Color.rose() }}>
-            (-{priceTable.recommendation} Twinkle Coins)
+            (<Icon icon={['far', 'badge-dollar']} /> {priceTable.recommendation}
+            )
           </span>
         </>
       ) : null;
@@ -53,7 +55,8 @@ export default function RecommendationInterface({
       return !isRecommendedByUser ? (
         <>
           <span style={{ marginLeft: '1rem', color: Color.darkBlue() }}>
-            (-{priceTable.recommendation} Twinkle Coins)
+            (<Icon icon={['far', 'badge-dollar']} /> {priceTable.recommendation}
+            )
           </span>
         </>
       ) : null;

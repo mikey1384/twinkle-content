@@ -444,7 +444,7 @@ export default function Body({
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 marginTop: '0.5rem',
-                marginBottom: secretShown ? 0 : '0.5rem'
+                marginBottom: '0.5rem'
               }}
             >
               <Likers
@@ -637,7 +637,7 @@ export default function Body({
         shown: !isUnlike
       });
     } else {
-      if (!isRecommendedByUser) {
+      if (!isRecommendedByUser && authLevel === 0) {
         setRecommendationInterfaceShown(!isUnlike);
       }
     }

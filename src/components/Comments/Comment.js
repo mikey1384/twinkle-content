@@ -275,10 +275,13 @@ function Comment({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canDelete, canEdit, comment.id, userIsUploader]);
 
+  const userCanRewardThis = useMemo(
+    () => canReward && userIsHigherAuth && !userIsUploader,
+    [canReward, userIsHigherAuth, userIsUploader]
+  );
+
   useEffect(() => {
-    handleRewardInterfaceShown(
-      rewardInterfaceShown && userIsHigherAuth && canReward && !userIsUploader
-    );
+    handleRewardInterfaceShown(rewardInterfaceShown && userCanRewardThis);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
@@ -490,7 +493,7 @@ function Comment({
                                 : ''}
                             </span>
                           </Button>
-                          {canReward && userIsHigherAuth && !userIsUploader && (
+                          {userCanRewardThis && (
                             <Button
                               color="pink"
                               style={{ marginLeft: '0.7rem' }}
@@ -642,7 +645,18 @@ function Comment({
     });
   }
 
-  function handleLikeClick({ likes }) {
+  function handleLikeClick({ likes, isUnlike }) {
+    if (!xpButtonDisabled && userCanRewardThis) {
+      onSetXpRewardInterfaceShown({
+        contentId: comment.id,
+        contentType: 'comment',
+        shown: !isUnlike
+      });
+    } else {
+      if (!isRecommendedByUser && authLevel === 0) {
+        setRecommendationInterfaceShown(!isUnlike);
+      }
+    }
     onLikeClick({ commentId: comment.id, likes });
   }
 

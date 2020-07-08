@@ -5,8 +5,8 @@ export const commentContainer = css`
   display: flex;
   width: 100%;
   flex-direction: column;
-  margin-top: 1.5rem;
   position: relative;
+  padding-top: 1rem;
   font-size: 1.6rem;
   .dropdown-wrapper {
     right: 0;
@@ -17,6 +17,7 @@ export const commentContainer = css`
     width: 100%;
     position: relative;
     > aside {
+      margin-top: 1rem;
       width: 7rem;
       justify-content: center;
       display: flex;
@@ -46,7 +47,7 @@ export const commentContainer = css`
     overflow-wrap: break-word;
     word-break: break-word;
     line-height: 1.5;
-    padding: 1.5rem 0 2rem 0;
+    padding: 1.5rem 0 1.5rem 0;
   }
   .reply-button {
     margin-left: 0.5rem;
