@@ -20,7 +20,7 @@ export default function SelectRewardAmount({
   const { userId } = useMyState();
 
   const maxRewardAmountForOnePerson = useMemo(
-    () => Math.min(returnMaxRewards({ rewardLevel }) / 2, 10),
+    () => Math.min(Math.ceil(returnMaxRewards({ rewardLevel }) / 2), 10),
     [rewardLevel]
   );
 
