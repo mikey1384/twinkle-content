@@ -22,7 +22,8 @@ XPRewardInterface.propTypes = {
   rewardLevel: PropTypes.number,
   uploaderId: PropTypes.number.isRequired,
   noPadding: PropTypes.bool,
-  onRewardSubmit: PropTypes.func.isRequired
+  onRewardSubmit: PropTypes.func.isRequired,
+  rewards: PropTypes.array.isRequired
 };
 
 export default function XPRewardInterface({
@@ -32,6 +33,7 @@ export default function XPRewardInterface({
   rewardLevel,
   noPadding,
   onRewardSubmit,
+  rewards,
   uploaderId
 }) {
   const {
@@ -46,7 +48,7 @@ export default function XPRewardInterface({
   const {
     comment: prevComment = '',
     selectedAmount: prevSelectedAmount = 0,
-    prevRewardLevel
+    rewardLevel: prevRewardLevel
   } = rewardForm;
 
   const mounted = useRef(true);
@@ -66,7 +68,7 @@ export default function XPRewardInterface({
       contentId,
       form: {
         selectedAmount: rewardLevel !== prevRewardLevel ? 0 : selectedAmount,
-        prevRewardLevel: rewardLevel
+        rewardLevel
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -119,6 +121,8 @@ export default function XPRewardInterface({
       >
         <SelectRewardAmount
           onSetSelectedAmount={handleSetSelectedAmount}
+          rewardLevel={rewardLevel}
+          rewards={rewards}
           selectedAmount={selectedAmount}
         />
         {selectedAmount > 0 && (
