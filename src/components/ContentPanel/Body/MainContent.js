@@ -158,7 +158,9 @@ export default function MainContent({
           <div
             style={{
               marginTop: '1rem',
-              marginBottom: contentType !== 'video' && !secretHidden && '1rem',
+              marginBottom: isEditing
+                ? 0
+                : contentType !== 'video' && !secretHidden && '1rem',
               padding: '1rem',
               whiteSpace: 'pre-wrap',
               overflowWrap: 'break-word',
