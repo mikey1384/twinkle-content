@@ -285,9 +285,10 @@ function Comment({
         canReward,
         authLevel,
         uploader,
-        userId
+        userId,
+        recommendations
       }),
-    [authLevel, canReward, uploader, userId]
+    [authLevel, canReward, recommendations, uploader, userId]
   );
 
   useEffect(() => {

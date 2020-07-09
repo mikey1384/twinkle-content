@@ -7,11 +7,23 @@ export function checkScrollIsAtTheBottom({ content, container }) {
 export function determineUserCanRewardThis({
   canReward,
   authLevel,
+  recommendations = [],
   uploader,
   userId
 }) {
+  let studentsCanReward = false;
+  if (!authLevel) {
+    if (uploader?.authLevel > 0) return true;
+    for (let recommendation of recommendations) {
+      if (recommendation.authLevel > 0) {
+        studentsCanReward = true;
+        break;
+      }
+    }
+  }
   return (
-    canReward && authLevel > uploader?.authLevel && userId !== uploader?.id
+    (studentsCanReward || (canReward && authLevel > uploader?.authLevel)) &&
+    userId !== uploader?.id
   );
 }
 
