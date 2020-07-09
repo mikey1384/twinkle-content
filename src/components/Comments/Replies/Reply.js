@@ -295,6 +295,7 @@ function Reply({
                     ))}
                   <div
                     style={{
+                      marginTop: '1rem',
                       display: 'flex',
                       justifyContent: 'space-between'
                     }}
@@ -366,13 +367,13 @@ function Reply({
               )}
             </div>
             <RecommendationStatus
-              style={{ marginTop: likes.length > 0 ? '0.5rem' : '1rem' }}
+              style={{ marginTop: '0.5rem' }}
               contentType="comment"
               recommendations={recommendations}
             />
             {recommendationInterfaceShown && (
               <RecommendationInterface
-                style={{ marginTop: likes.length > 0 ? '0.5rem' : '1rem' }}
+                style={{ marginTop: '0.5rem' }}
                 contentId={reply.id}
                 contentType="comment"
                 onHide={() => setRecommendationInterfaceShown(false)}
@@ -407,7 +408,7 @@ function Reply({
               onCommentEdit={onRewardCommentEdit}
               style={{
                 fontSize: '1.5rem',
-                marginTop: reply.likes.length > 0 ? '0.5rem' : '1rem'
+                marginTop: '0.5rem'
               }}
               rewards={rewards}
               uploaderName={uploader.username}
