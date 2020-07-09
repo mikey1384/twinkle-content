@@ -6,6 +6,7 @@ import Icon from '../Icon';
 import Attachment from 'components/Attachment';
 import FullTextReveal from 'components/Texts/FullTextReveal';
 import AlertModal from 'components/Modals/AlertModal';
+import { Color } from 'constants/css';
 import { FILE_UPLOAD_XP_REQUIREMENT, mb } from 'constants/defaultValues';
 import {
   addCommasToNumber,
@@ -193,7 +194,9 @@ export default function InputForm({
                 width: '4rem',
                 marginLeft: '1rem',
                 opacity: disabled ? 0.2 : 1,
-                cursor: disabled ? 'default' : 'pointer'
+                cursor: disabled ? 'default' : 'pointer',
+                boxShadow: disabled ? 'none' : '',
+                borderColor: disabled ? Color[profileTheme](0.2) : ''
               }}
             >
               <Icon size="lg" icon="upload" />
@@ -201,6 +204,11 @@ export default function InputForm({
           )}
           {userId && disabled && (
             <FullTextReveal
+              style={{
+                fontSize: '1.3rem',
+                marginLeft: '1rem',
+                marginTop: '0.5rem'
+              }}
               text={
                 'Requires ' +
                 addCommasToNumber(FILE_UPLOAD_XP_REQUIREMENT) +
