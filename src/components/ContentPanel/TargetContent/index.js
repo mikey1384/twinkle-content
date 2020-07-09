@@ -333,7 +333,7 @@ export default function TargetContent({
                       />
                     </div>
                     <div>
-                      {canReward && userCanRewardThis && (
+                      {userCanRewardThis && (
                         <Button
                           color="pink"
                           disabled={!!xpButtonDisabled}
