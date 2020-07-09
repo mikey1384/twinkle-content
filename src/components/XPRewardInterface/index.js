@@ -2,7 +2,9 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Textarea from 'components/Texts/Textarea';
 import SelectRewardAmount from './SelectRewardAmount';
+import Icon from 'components/Icon';
 import { css } from 'emotion';
+import { Color } from 'constants/css';
 import {
   addCommasToNumber,
   addEmoji,
@@ -13,7 +15,7 @@ import {
 import Button from 'components/Button';
 import request from 'axios';
 import { useMyState } from 'helpers/hooks';
-import { useAppContext, useInputContext } from 'contexts';
+import { useAppContext, useContentContext, useInputContext } from 'contexts';
 import URL from 'constants/URL';
 
 XPRewardInterface.propTypes = {
@@ -45,6 +47,9 @@ export default function XPRewardInterface({
     state,
     actions: { onSetRewardForm }
   } = useInputContext();
+  const {
+    actions: { onSetXpRewardInterfaceShown }
+  } = useContentContext();
   const rewardForm = state['reward' + contentType + contentId] || {};
   const {
     comment: prevComment = '',
@@ -118,9 +123,28 @@ export default function XPRewardInterface({
         flexDirection: 'column',
         padding: noPadding ? '1rem 0 0 0' : '1rem',
         fontSize: '1.6rem',
-        alignItems: 'center'
+        alignItems: 'center',
+        position: 'relative'
       }}
     >
+      <Icon
+        style={{ position: 'absolute', right: '1rem', cursor: 'pointer' }}
+        className={css`
+          color: ${Color.darkGray()};
+          font-size: 2rem;
+          &:hover {
+            color: ${Color.black()};
+          }
+        `}
+        onClick={() =>
+          onSetXpRewardInterfaceShown({
+            contentId,
+            contentType,
+            shown: false
+          })
+        }
+        icon="times"
+      />
       <section style={{ fontWeight: 'bold' }}>{rewardStatusText}</section>
       <section
         style={{
