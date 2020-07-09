@@ -196,8 +196,11 @@ export default function SettingsModal({
                       fontSize: '1.2rem',
                       display: 'flex',
                       alignItems: 'center',
-                      opacity: insufficientFunds ? 0.2 : 1,
-                      cursor: insufficientFunds ? 'default' : 'pointer'
+                      background: insufficientFunds ? Color.logoBlue(0.2) : '',
+                      cursor: insufficientFunds ? 'default' : 'pointer',
+                      boxShadow: insufficientFunds ? 'none' : '',
+                      borderColor: insufficientFunds ? Color.logoBlue(0.2) : '',
+                      outline: insufficientFunds ? 'none' : ''
                     }}
                   >
                     <Icon size="lg" icon={['far', 'badge-dollar']} />
@@ -207,7 +210,7 @@ export default function SettingsModal({
                     <FullTextReveal
                       show
                       direction="left"
-                      style={{ color: '#000', marginTop: '2px' }}
+                      style={{ color: '#000', marginTop: '0.5rem' }}
                       text={`You need ${
                         priceTable.chatSubject - twinkleCoins
                       } more Twinkle Coins`}
