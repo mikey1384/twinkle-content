@@ -29,7 +29,7 @@ import XPRewardInterface from 'components/XPRewardInterface';
 import FileViewer from 'components/FileViewer';
 import { commentContainer } from '../Styles';
 import { Link } from 'react-router-dom';
-import { determineXpButtonDisabled } from 'helpers';
+import { determineUserCanRewardThis, determineXpButtonDisabled } from 'helpers';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { useAppContext, useContentContext } from 'contexts';
@@ -142,8 +142,14 @@ function Reply({
     return userIsUploader || userCanEditThis;
   }, [canDelete, canEdit, userIsHigherAuth, userIsUploader]);
   const userCanRewardThis = useMemo(
-    () => canReward && userIsHigherAuth && !userIsUploader,
-    [canReward, userIsHigherAuth, userIsUploader]
+    () =>
+      determineUserCanRewardThis({
+        canReward,
+        authLevel,
+        uploader,
+        userId
+      }),
+    [authLevel, canReward, uploader, userId]
   );
   const rewardLevel = useMemo(() => {
     if (parent.contentType === 'subject' && parent.rewardLevel > 0) {

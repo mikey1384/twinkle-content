@@ -21,6 +21,7 @@ import { Color, mobileMaxWidth } from 'constants/css';
 import { descriptionLengthForExtraRewardLevel } from 'constants/defaultValues';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import {
+  determineUserCanRewardThis,
   determineXpButtonDisabled,
   isMobile,
   scrollElementToCenter
@@ -259,8 +260,14 @@ export default function Body({
   }, [authLevel, canDelete, canEdit, uploader.authLevel, uploader.id, userId]);
 
   const userCanRewardThis = useMemo(
-    () => canReward && authLevel > uploader.authLevel && userId !== uploader.id,
-    [authLevel, canReward, uploader.authLevel, uploader.id, userId]
+    () =>
+      determineUserCanRewardThis({
+        canReward,
+        authLevel,
+        uploader,
+        userId
+      }),
+    [authLevel, canReward, uploader, userId]
   );
 
   useEffect(() => {

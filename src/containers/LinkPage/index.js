@@ -18,7 +18,11 @@ import Loading from 'components/Loading';
 import Description from './Description';
 import { css } from 'emotion';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { determineXpButtonDisabled, isMobile } from 'helpers';
+import {
+  determineUserCanRewardThis,
+  determineXpButtonDisabled,
+  isMobile
+} from 'helpers';
 import { useContentState, useMyState, useScrollPosition } from 'helpers/hooks';
 import { processedURL } from 'helpers/stringHelpers';
 import {
@@ -207,8 +211,14 @@ export default function LinkPage({
     [authLevel, canDelete, canEdit, uploader?.authLevel]
   );
   const userCanRewardThis = useMemo(
-    () => canReward && authLevel > uploader?.authLevel && !userIsUploader,
-    [authLevel, canReward, uploader?.authLevel, userIsUploader]
+    () =>
+      determineUserCanRewardThis({
+        canReward,
+        authLevel,
+        uploader,
+        userId
+      }),
+    [authLevel, canReward, uploader, userId]
   );
 
   const xpButtonDisabled = useMemo(

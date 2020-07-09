@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import DropdownButton from 'components/Buttons/DropdownButton';
 import Button from 'components/Button';
-import { isMobile, determineXpButtonDisabled, textIsOverflown } from 'helpers';
 import Icon from 'components/Icon';
 import XPRewardInterface from 'components/XPRewardInterface';
 import AlreadyPosted from 'components/AlreadyPosted';
@@ -12,6 +11,12 @@ import Description from './Description';
 import RecommendationInterface from 'components/RecommendationInterface';
 import RecommendationStatus from 'components/RecommendationStatus';
 import TagStatus from 'components/TagStatus';
+import {
+  isMobile,
+  determineUserCanRewardThis,
+  determineXpButtonDisabled,
+  textIsOverflown
+} from 'helpers';
 import { Color, mobileMaxWidth } from 'constants/css';
 import {
   addCommasToNumber,
@@ -159,8 +164,9 @@ export default function Details({
   }, [authLevel, canDelete, canEdit, uploader.authLevel, userIsUploader]);
 
   const userCanRewardThis = useMemo(
-    () => canReward && !userIsUploader && authLevel > uploader.authLevel,
-    [authLevel, canReward, uploader.authLevel, userIsUploader]
+    () =>
+      determineUserCanRewardThis({ canReward, authLevel, uploader, userId }),
+    [authLevel, canReward, uploader, userId]
   );
 
   const rewardButtonShown = useMemo(() => {

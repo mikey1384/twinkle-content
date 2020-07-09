@@ -4,6 +4,17 @@ export function checkScrollIsAtTheBottom({ content, container }) {
   return content.offsetHeight <= container.offsetHeight + container.scrollTop;
 }
 
+export function determineUserCanRewardThis({
+  canReward,
+  authLevel,
+  uploader,
+  userId
+}) {
+  return (
+    canReward && authLevel > uploader?.authLevel && userId !== uploader?.id
+  );
+}
+
 export function determineXpButtonDisabled({
   rewardLevel,
   rewards,

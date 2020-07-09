@@ -21,7 +21,11 @@ import LoginToViewContent from 'components/LoginToViewContent';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 import { timeSince } from 'helpers/timeStampHelpers';
-import { determineXpButtonDisabled, isMobile } from 'helpers';
+import {
+  determineUserCanRewardThis,
+  determineXpButtonDisabled,
+  isMobile
+} from 'helpers';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useInputContext } from 'contexts';
@@ -103,14 +107,14 @@ export default function TargetContent({
   const RewardInterfaceRef = useRef(null);
   const filePathRef = useRef(null);
   const userCanRewardThis = useMemo(() => {
-    let userIsUploader;
-    if (comment && !comment.notFound) {
-      userIsUploader = userId === comment.uploader.id;
-    }
     let canRewardThis;
     if (comment && !comment.notFound) {
-      canRewardThis =
-        !userIsUploader && canReward && authLevel > comment.uploader.authLevel;
+      canRewardThis = determineUserCanRewardThis({
+        canReward,
+        authLevel,
+        uploader: comment.uploader,
+        userId
+      });
     }
     return canRewardThis;
   }, [authLevel, canReward, comment, userId]);

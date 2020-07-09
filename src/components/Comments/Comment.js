@@ -32,7 +32,11 @@ import { Link, useHistory } from 'react-router-dom';
 import { commentContainer } from './Styles';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { useContentState, useMyState } from 'helpers/hooks';
-import { determineXpButtonDisabled, scrollElementToCenter } from 'helpers';
+import {
+  determineUserCanRewardThis,
+  determineXpButtonDisabled,
+  scrollElementToCenter
+} from 'helpers';
 import { useAppContext, useContentContext } from 'contexts';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 import LocalContext from './Context';
@@ -276,8 +280,14 @@ function Comment({
   }, [canDelete, canEdit, comment.id, userIsUploader]);
 
   const userCanRewardThis = useMemo(
-    () => canReward && userIsHigherAuth && !userIsUploader,
-    [canReward, userIsHigherAuth, userIsUploader]
+    () =>
+      determineUserCanRewardThis({
+        canReward,
+        authLevel,
+        uploader,
+        userId
+      }),
+    [authLevel, canReward, uploader, userId]
   );
 
   useEffect(() => {
