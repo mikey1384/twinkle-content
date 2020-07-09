@@ -4,6 +4,7 @@ import Textarea from 'components/Texts/Textarea';
 import SelectRewardAmount from './SelectRewardAmount';
 import { css } from 'emotion';
 import {
+  addCommasToNumber,
   addEmoji,
   exceedsCharLimit,
   finalizeEmoji,
@@ -99,6 +100,16 @@ export default function XPRewardInterface({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const rewardStatusText = useMemo(
+    () =>
+      selectedAmount > 0
+        ? `Reward ${selectedAmount} Twinkle${
+            selectedAmount > 1 ? 's' : ''
+          } (${addCommasToNumber(selectedAmount * 200)} XP)`
+        : 'Select reward amount',
+    [selectedAmount]
+  );
+
   return userId && uploaderId !== userId ? (
     <div
       ref={innerRef}
@@ -110,7 +121,7 @@ export default function XPRewardInterface({
         alignItems: 'center'
       }}
     >
-      <section style={{ fontWeight: 'bold' }}>Select reward amount</section>
+      <section style={{ fontWeight: 'bold' }}>{rewardStatusText}</section>
       <section
         style={{
           display: 'flex',
