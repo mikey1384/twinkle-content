@@ -146,10 +146,11 @@ function Reply({
       determineUserCanRewardThis({
         canReward,
         authLevel,
+        recommendations,
         uploader,
         userId
       }),
-    [authLevel, canReward, uploader, userId]
+    [authLevel, canReward, recommendations, uploader, userId]
   );
   const rewardLevel = useMemo(() => {
     if (parent.contentType === 'subject' && parent.rewardLevel > 0) {

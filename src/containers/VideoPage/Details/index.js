@@ -165,8 +165,14 @@ export default function Details({
 
   const userCanRewardThis = useMemo(
     () =>
-      determineUserCanRewardThis({ canReward, authLevel, uploader, userId }),
-    [authLevel, canReward, uploader, userId]
+      determineUserCanRewardThis({
+        authLevel,
+        canReward,
+        recommendations,
+        uploader,
+        userId
+      }),
+    [authLevel, canReward, recommendations, uploader, userId]
   );
 
   const rewardButtonShown = useMemo(() => {

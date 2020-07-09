@@ -112,6 +112,7 @@ export default function TargetContent({
       canRewardThis = determineUserCanRewardThis({
         canReward,
         authLevel,
+        recommendations: comment.recommendations,
         uploader: comment.uploader,
         userId
       });

@@ -213,12 +213,13 @@ export default function LinkPage({
   const userCanRewardThis = useMemo(
     () =>
       determineUserCanRewardThis({
-        canReward,
         authLevel,
+        canReward,
+        recommendations,
         uploader,
         userId
       }),
-    [authLevel, canReward, uploader, userId]
+    [authLevel, canReward, recommendations, uploader, userId]
   );
 
   const xpButtonDisabled = useMemo(
