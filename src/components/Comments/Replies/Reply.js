@@ -461,7 +461,7 @@ function Reply({
   function handleLikeClick({ likes, isUnlike }) {
     if (!xpButtonDisabled && userCanRewardThis) {
       onSetXpRewardInterfaceShown({
-        contentId: comment.id,
+        contentId: reply.id,
         contentType: 'comment',
         shown: !isUnlike
       });
