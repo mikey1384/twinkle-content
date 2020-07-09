@@ -114,7 +114,7 @@ function Comment({
     deleted,
     isEditing,
     thumbUrl,
-    xpRewardInterfaceShown: prevRewardInterfaceShown
+    xpRewardInterfaceShown
   } = useContentState({
     contentType: 'comment',
     contentId: comment.id
@@ -134,14 +134,10 @@ function Comment({
     onSubmitWithAttachment
   } = useContext(LocalContext);
 
-  const [rewardInterfaceShown, setRewardInterfaceShown] = useState(
-    prevRewardInterfaceShown
-  );
   const [
     recommendationInterfaceShown,
     setRecommendationInterfaceShown
   ] = useState(false);
-  const rewardInterfaceShownRef = useRef(prevRewardInterfaceShown);
   const [userListModalShown, setUserListModalShown] = useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   const [loadingReplies, setLoadingReplies] = useState(false);
@@ -193,10 +189,6 @@ function Comment({
     rootContent.rewardLevel,
     subject?.rewardLevel
   ]);
-
-  useEffect(() => {
-    handleRewardInterfaceShown(prevRewardInterfaceShown);
-  }, [prevRewardInterfaceShown]);
 
   useEffect(() => {
     if (!isPreview) {
@@ -291,11 +283,6 @@ function Comment({
     [authLevel, canReward, recommendations, uploader, userId]
   );
 
-  useEffect(() => {
-    handleRewardInterfaceShown(rewardInterfaceShown && userCanRewardThis);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId]);
-
   const isCommentForContentSubject = useMemo(
     () => parent.contentType !== 'subject' && !parent.subjectId && subject,
     [parent.contentType, parent.subjectId, subject]
@@ -318,10 +305,10 @@ function Comment({
     return determineXpButtonDisabled({
       rewardLevel,
       myId: userId,
-      xpRewardInterfaceShown: rewardInterfaceShown,
+      xpRewardInterfaceShown,
       rewards
     });
-  }, [isPreview, rewardInterfaceShown, rewardLevel, rewards, userId]);
+  }, [isPreview, rewardLevel, rewards, userId, xpRewardInterfaceShown]);
 
   useEffect(() => {
     mounted.current = true;
@@ -352,20 +339,6 @@ function Comment({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
-
-  useEffect(() => {
-    return function saveStateBeforeUnmount() {
-      mounted.current = false;
-      if (rewardInterfaceShownRef.current) {
-        onSetXpRewardInterfaceShown({
-          contentId: comment.id,
-          contentType: 'comment',
-          shown: true
-        });
-      }
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return !deleted && !comment.deleted ? (
     <>
@@ -508,7 +481,13 @@ function Comment({
                             <Button
                               color="pink"
                               style={{ marginLeft: '0.7rem' }}
-                              onClick={() => handleRewardInterfaceShown(true)}
+                              onClick={() =>
+                                onSetXpRewardInterfaceShown({
+                                  contentId: commentId,
+                                  contentType: 'comment',
+                                  shown: true
+                                })
+                              }
                               disabled={!!xpButtonDisabled}
                             >
                               <Icon icon="certificate" />
@@ -556,7 +535,7 @@ function Comment({
                 isRecommendedByUser={isRecommendedByUser}
               />
             )}
-            {!isPreview && rewardInterfaceShown && (
+            {!isPreview && xpRewardInterfaceShown && (
               <XPRewardInterface
                 innerRef={RewardInterfaceRef}
                 rewardLevel={rewardLevel}
@@ -565,7 +544,6 @@ function Comment({
                 contentId={comment.id}
                 uploaderId={uploader.id}
                 onRewardSubmit={(data) => {
-                  handleRewardInterfaceShown(false);
                   onSetXpRewardInterfaceShown({
                     contentId: comment.id,
                     contentType: 'comment',
@@ -602,10 +580,7 @@ function Comment({
                   parent={parent}
                   rootCommentId={comment.commentId}
                   style={{
-                    marginTop:
-                      rewards?.length > 0 || comment.likes?.length > 0
-                        ? '0.5rem'
-                        : '1rem'
+                    marginTop: '0.5rem'
                   }}
                   targetCommentId={comment.id}
                 />
@@ -685,11 +660,6 @@ function Comment({
       setLoadingReplies(false);
     }
     ReplyInputAreaRef.current.focus();
-  }
-
-  function handleRewardInterfaceShown(shown) {
-    setRewardInterfaceShown(shown);
-    rewardInterfaceShownRef.current = shown;
   }
 
   function handleSubmitWithAttachment(params) {

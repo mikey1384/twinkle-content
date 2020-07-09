@@ -136,13 +136,13 @@ export default function XPRewardInterface({
             color: ${Color.black()};
           }
         `}
-        onClick={() =>
+        onClick={() => {
           onSetXpRewardInterfaceShown({
             contentId,
             contentType,
             shown: false
-          })
-        }
+          });
+        }}
         icon="times"
       />
       <section style={{ fontWeight: 'bold' }}>{rewardStatusText}</section>

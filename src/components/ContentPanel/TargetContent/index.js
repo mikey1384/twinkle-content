@@ -10,6 +10,8 @@ import InputForm from 'components/Forms/InputForm';
 import Comment from './Comment';
 import LongText from 'components/Texts/LongText';
 import ContentLink from 'components/ContentLink';
+import RecommendationStatus from 'components/RecommendationStatus';
+import RecommendationInterface from 'components/RecommendationInterface';
 import RewardStatus from 'components/RewardStatus';
 import XPRewardInterface from 'components/XPRewardInterface';
 import ErrorBoundary from 'components/ErrorBoundary';
@@ -102,6 +104,10 @@ export default function TargetContent({
     ? getFileInfoFromFileName(comment?.fileName)
     : '';
   const [commentContent, setCommentContent] = useState('');
+  const [
+    recommendationInterfaceShown,
+    setRecommendationInterfaceShown
+  ] = useState(false);
   const [userListModalShown, setUserListModalShown] = useState(false);
   const InputFormRef = useRef(null);
   const RewardInterfaceRef = useRef(null);
@@ -137,6 +143,14 @@ export default function TargetContent({
         : rootObj.rewardLevel;
     return subject?.rewardLevel || rootRewardLevel;
   }, [rootObj.rewardLevel, rootType, subject?.rewardLevel]);
+
+  const isRecommendedByUser = useMemo(() => {
+    return comment
+      ? comment.recommendations.filter(
+          (recommendation) => recommendation.id === userId
+        ).length > 0
+      : false;
+  }, [comment, userId]);
 
   const xpButtonDisabled = useMemo(
     () =>
@@ -179,7 +193,7 @@ export default function TargetContent({
         word-break: break-word;
         border-radius: ${borderRadius};
         border: 1px solid ${Color.darkerBorderGray()};
-        padding: 2rem 0 1rem 0;
+        padding: 2rem 0 0.5rem 0;
         line-height: 1.5;
         background: ${Color.whiteGray()};
         margin-top: -1rem;
@@ -296,14 +310,25 @@ export default function TargetContent({
                   </div>
                 </div>
                 {!contentHidden && (
-                  <ErrorBoundary className="buttons">
-                    <div>
-                      <div
-                        style={{
-                          display: 'flex',
-                          marginBottom: comment.likes.length > 0 ? '0.5rem' : 0
-                        }}
-                      >
+                  <ErrorBoundary
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      marginTop: '1.5rem',
+                      paddingTop: '1rem'
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        paddingBottom:
+                          recommendationInterfaceShown || replyInputShown
+                            ? '1rem'
+                            : comment.likes.length === 0 && '0.5rem'
+                      }}
+                    >
+                      <div style={{ display: 'flex' }}>
                         <LikeButton
                           contentType="comment"
                           contentId={comment.id}
@@ -319,13 +344,26 @@ export default function TargetContent({
                           <Icon icon="comment-alt" />
                           <span style={{ marginLeft: '0.7rem' }}>Reply</span>
                         </Button>
+                        {userCanRewardThis && (
+                          <Button
+                            style={{ marginLeft: '1rem' }}
+                            color="pink"
+                            disabled={!!xpButtonDisabled}
+                            onClick={handleSetXpRewardInterfaceShown}
+                          >
+                            <Icon icon="certificate" />
+                            <span style={{ marginLeft: '0.7rem' }}>
+                              {xpButtonDisabled || 'Reward'}
+                            </span>
+                          </Button>
+                        )}
                       </div>
                       <Likers
                         className={css`
                           font-weight: bold;
                           color: ${Color.darkerGray()};
                           font-size: 1.2rem;
-                          line-height: 1;
+                          line-height: 2;
                         `}
                         userId={userId}
                         likes={comment.likes}
@@ -333,22 +371,39 @@ export default function TargetContent({
                       />
                     </div>
                     <div>
-                      {userCanRewardThis && (
-                        <Button
-                          color="pink"
-                          disabled={!!xpButtonDisabled}
-                          onClick={handleSetXpRewardInterfaceShown}
-                        >
-                          <Icon icon="certificate" />
-                          <span style={{ marginLeft: '0.7rem' }}>
-                            {xpButtonDisabled || 'Reward'}
-                          </span>
-                        </Button>
-                      )}
+                      <Button
+                        color="brownOrange"
+                        filled={isRecommendedByUser}
+                        disabled={recommendationInterfaceShown}
+                        onClick={() => setRecommendationInterfaceShown(true)}
+                      >
+                        <Icon icon="star" />
+                      </Button>
                     </div>
                   </ErrorBoundary>
                 )}
               </div>
+              {comment && (
+                <RecommendationStatus
+                  style={{
+                    marginTop: comment.likes.length > 0 ? '-1rem' : 0,
+                    marginBottom: xpRewardInterfaceShown ? 0 : '1rem'
+                  }}
+                  contentType="comment"
+                  recommendations={comment.recommendations}
+                />
+              )}
+              {recommendationInterfaceShown && (
+                <RecommendationInterface
+                  style={{
+                    marginTop: comment.likes.length > 0 ? '-1rem' : 0
+                  }}
+                  contentId={comment.id}
+                  contentType="comment"
+                  onHide={() => setRecommendationInterfaceShown(false)}
+                  isRecommendedByUser={isRecommendedByUser}
+                />
+              )}
               {xpRewardInterfaceShown && (
                 <XPRewardInterface
                   innerRef={RewardInterfaceRef}
@@ -395,7 +450,12 @@ export default function TargetContent({
                 <InputForm
                   innerRef={InputFormRef}
                   style={{
-                    marginTop: comment.likes.length > 0 ? '0.5rem' : '1rem',
+                    marginTop:
+                      comment.recommendations.length === 0 &&
+                      !recommendationInterfaceShown &&
+                      comment.likes.length > 0
+                        ? '-1rem'
+                        : 0,
                     padding: '0 1rem'
                   }}
                   onSubmit={handleSubmit}
@@ -418,7 +478,7 @@ export default function TargetContent({
                 />
               )}
               {comments.length > 0 && (
-                <div style={{ padding: '0 1rem' }}>
+                <div>
                   {comments
                     .filter((comment) => !comment.deleted)
                     .map((comment) => (

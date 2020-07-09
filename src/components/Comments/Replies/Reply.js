@@ -1,11 +1,4 @@
-import React, {
-  memo,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from 'react';
+import React, { memo, useContext, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import LocalContext from '../Context';
@@ -104,7 +97,7 @@ function Reply({
     deleted,
     isEditing,
     thumbUrl,
-    xpRewardInterfaceShown: prevRewardInterfaceShown
+    xpRewardInterfaceShown
   } = useContentState({
     contentType: 'comment',
     contentId: reply.id
@@ -115,11 +108,7 @@ function Reply({
     onLikeClick,
     onRewardCommentEdit
   } = useContext(LocalContext);
-  const [rewardInterfaceShown, setRewardInterfaceShown] = useState(
-    prevRewardInterfaceShown
-  );
   const { fileType } = getFileInfoFromFileName(fileName);
-  const rewardInterfaceShownRef = useRef(prevRewardInterfaceShown);
   const [loadingReplies, setLoadingReplies] = useState(false);
   const [userListModalShown, setUserListModalShown] = useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
@@ -188,18 +177,11 @@ function Reply({
       determineXpButtonDisabled({
         myId: userId,
         rewardLevel,
-        xpRewardInterfaceShown: rewardInterfaceShown,
+        xpRewardInterfaceShown,
         rewards
       }),
-    [rewardLevel, rewards, userId, rewardInterfaceShown]
+    [userId, rewardLevel, xpRewardInterfaceShown, rewards]
   );
-
-  useEffect(() => {
-    handleRewardInterfaceShown(
-      rewardInterfaceShown && userIsHigherAuth && canReward && !userIsUploader
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId]);
 
   const editMenuItems = useMemo(() => {
     const items = [];
@@ -223,17 +205,6 @@ function Reply({
     return items;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canDelete, canEdit, reply.id, userIsUploader]);
-
-  useEffect(() => {
-    return function saveStateBeforeUnmount() {
-      onSetXpRewardInterfaceShown({
-        contentType: 'comment',
-        contentId: reply.id,
-        shown: rewardInterfaceShownRef.current
-      });
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return !deleted && !reply.deleted ? (
     <ErrorBoundary>
@@ -355,7 +326,13 @@ function Reply({
                           <Button
                             color="pink"
                             style={{ marginLeft: '1rem' }}
-                            onClick={() => handleRewardInterfaceShown(true)}
+                            onClick={() =>
+                              onSetXpRewardInterfaceShown({
+                                contentId: reply.id,
+                                contentType: 'comment',
+                                shown: true
+                              })
+                            }
                             disabled={!!xpButtonDisabled}
                           >
                             <Icon icon="certificate" />
@@ -402,7 +379,7 @@ function Reply({
                 isRecommendedByUser={isRecommendedByUser}
               />
             )}
-            {rewardInterfaceShown && (
+            {xpRewardInterfaceShown && (
               <XPRewardInterface
                 innerRef={RewardInterfaceRef}
                 rewardLevel={rewardLevel}
@@ -411,7 +388,6 @@ function Reply({
                 contentId={reply.id}
                 uploaderId={uploader.id}
                 onRewardSubmit={(data) => {
-                  handleRewardInterfaceShown(false);
                   onSetXpRewardInterfaceShown({
                     contentId: reply.id,
                     contentType: 'comment',
@@ -443,10 +419,7 @@ function Reply({
               parent={parent}
               rootCommentId={reply.commentId}
               style={{
-                marginTop:
-                  rewards.length > 0 || reply.likes.length > 0
-                    ? '0.5rem'
-                    : '1rem'
+                marginTop: '0.5rem'
               }}
               targetCommentId={reply.id}
             />
@@ -497,11 +470,6 @@ function Reply({
       }
     }
     onLikeClick({ commentId: reply.id, likes });
-  }
-
-  function handleRewardInterfaceShown(shown) {
-    setRewardInterfaceShown(shown);
-    rewardInterfaceShownRef.current = shown;
   }
 
   async function handleReplyClick() {
