@@ -384,6 +384,9 @@ function Reply({
                 rewards={rewards}
                 contentType="comment"
                 contentId={reply.id}
+                onReward={() =>
+                  setRecommendationInterfaceShown(!isRecommendedByUser)
+                }
                 uploaderId={uploader.id}
               />
             )}

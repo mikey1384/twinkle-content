@@ -370,6 +370,9 @@ export default function LinkPage({
               contentType="url"
               contentId={linkId}
               noPadding
+              onReward={() =>
+                setRecommendationInterfaceShown(!isRecommendedByUser)
+              }
               uploaderId={uploader.id}
             />
           </div>

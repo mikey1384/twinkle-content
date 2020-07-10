@@ -405,6 +405,9 @@ export default function SubjectPanel({
                 innerRef={RewardInterfaceRef}
                 contentType="subject"
                 contentId={subjectId}
+                onReward={() =>
+                  setRecommendationInterfaceShown(!isRecommendedByUser)
+                }
                 rewardLevel={finalRewardLevel}
                 uploaderId={userId}
                 rewards={rewards}

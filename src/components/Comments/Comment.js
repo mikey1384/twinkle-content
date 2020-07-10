@@ -541,6 +541,9 @@ function Comment({
                 rewards={rewards}
                 contentType="comment"
                 contentId={comment.id}
+                onReward={() =>
+                  setRecommendationInterfaceShown(!isRecommendedByUser)
+                }
                 uploaderId={uploader.id}
               />
             )}

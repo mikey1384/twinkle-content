@@ -461,6 +461,9 @@ export default function Details({
             contentType="video"
             contentId={Number(videoId)}
             noPadding
+            onReward={() =>
+              setRecommendationInterfaceShown(!isRecommendedByUser)
+            }
             uploaderId={uploader.id}
           />
         )}
