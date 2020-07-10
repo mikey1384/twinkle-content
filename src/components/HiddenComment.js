@@ -5,7 +5,7 @@ import { css } from 'emotion';
 
 HiddenComment.propTypes = {
   onClick: PropTypes.func,
-  style: PropTypes.func
+  style: PropTypes.object
 };
 
 export default function HiddenComment({ onClick, style }) {
