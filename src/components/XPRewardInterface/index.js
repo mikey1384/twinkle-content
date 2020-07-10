@@ -215,7 +215,7 @@ export default function XPRewardInterface({
           contentId,
           form: undefined
         });
-        onRewardSubmit(data);
+        onRewardSubmit(data.reward);
       }
     } catch (error) {
       console.error({ error });
