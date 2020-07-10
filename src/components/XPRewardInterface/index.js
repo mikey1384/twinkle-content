@@ -43,7 +43,7 @@ export default function XPRewardInterface({
   const {
     requestHelpers: { auth }
   } = useAppContext();
-  const { authLevel, userId } = useMyState();
+  const { authLevel, twinkleCoins, userId } = useMyState();
   const {
     state,
     actions: { onSetRewardForm }
@@ -246,7 +246,8 @@ export default function XPRewardInterface({
             disabled={
               !!rewardCommentExceedsCharLimit ||
               rewarding ||
-              selectedAmount === 0
+              selectedAmount === 0 ||
+              (authLevel === 0 && twinkleCoins < selectedAmount)
             }
             onClick={handleRewardSubmit}
           >
