@@ -496,14 +496,6 @@ export default function Body({
             rewardLevel={finalRewardLevel}
             uploaderId={uploader.id}
             rewards={rewards}
-            onRewardSubmit={(data) => {
-              onSetXpRewardInterfaceShown({
-                contentType,
-                contentId,
-                shown: false
-              });
-              onAttachReward({ data, contentId, contentType });
-            }}
           />
         )}
         <RewardStatus

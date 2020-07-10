@@ -367,7 +367,6 @@ export default function VideoPage({
                 content={content}
                 description={description}
                 changeByUserStatus={handleChangeByUserStatus}
-                onAttachReward={onAttachReward}
                 onEditFinish={handleEditVideoPage}
                 onDelete={() => setConfirmModalShown(true)}
                 onSetRewardLevel={handleSetRewardLevel}

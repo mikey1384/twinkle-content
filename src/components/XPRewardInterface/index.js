@@ -25,7 +25,6 @@ XPRewardInterface.propTypes = {
   rewardLevel: PropTypes.number,
   uploaderId: PropTypes.number.isRequired,
   noPadding: PropTypes.bool,
-  onRewardSubmit: PropTypes.func.isRequired,
   rewards: PropTypes.array.isRequired
 };
 
@@ -35,7 +34,6 @@ export default function XPRewardInterface({
   innerRef,
   rewardLevel,
   noPadding,
-  onRewardSubmit,
   rewards,
   uploaderId
 }) {
@@ -48,7 +46,7 @@ export default function XPRewardInterface({
     actions: { onSetRewardForm }
   } = useInputContext();
   const {
-    actions: { onSetXpRewardInterfaceShown }
+    actions: { onAttachReward, onSetXpRewardInterfaceShown }
   } = useContentContext();
   const rewardForm = state['reward' + contentType + contentId] || {};
   const {
@@ -240,7 +238,16 @@ export default function XPRewardInterface({
           contentId,
           form: undefined
         });
-        onRewardSubmit(data);
+        onAttachReward({
+          data,
+          contentId,
+          contentType
+        });
+        onSetXpRewardInterfaceShown({
+          contentId,
+          contentType,
+          shown: false
+        });
       }
     } catch (error) {
       console.error({ error });

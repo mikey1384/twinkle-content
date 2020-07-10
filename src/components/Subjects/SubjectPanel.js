@@ -408,18 +408,6 @@ export default function SubjectPanel({
                 rewardLevel={finalRewardLevel}
                 uploaderId={userId}
                 rewards={rewards}
-                onRewardSubmit={(data) => {
-                  onSetXpRewardInterfaceShown({
-                    contentType: 'subject',
-                    contentId: subjectId,
-                    shown: false
-                  });
-                  onAttachReward({
-                    data,
-                    contentType: 'subject',
-                    contentId: subjectId
-                  });
-                }}
               />
             )}
             <RewardStatus

@@ -371,18 +371,6 @@ export default function LinkPage({
               contentId={linkId}
               noPadding
               uploaderId={uploader.id}
-              onRewardSubmit={(data) => {
-                onSetXpRewardInterfaceShown({
-                  contentType: 'url',
-                  contentId: linkId,
-                  shown: false
-                });
-                onAttachReward({
-                  data,
-                  contentId: linkId,
-                  contentType: 'url'
-                });
-              }}
             />
           </div>
         )}

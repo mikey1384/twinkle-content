@@ -124,7 +124,6 @@ function Comment({
     contentId: subject.id
   });
   const {
-    onAttachReward,
     onDelete,
     onEditDone,
     onLikeClick,
@@ -543,18 +542,6 @@ function Comment({
                 contentType="comment"
                 contentId={comment.id}
                 uploaderId={uploader.id}
-                onRewardSubmit={(data) => {
-                  onSetXpRewardInterfaceShown({
-                    contentId: comment.id,
-                    contentType: 'comment',
-                    shown: false
-                  });
-                  onAttachReward({
-                    data,
-                    contentId: comment.id,
-                    contentType: 'comment'
-                  });
-                }}
               />
             )}
             {!isPreview && (

@@ -76,7 +76,6 @@ export default function TargetContent({
     }
   } = useContentContext();
   const {
-    onAttachReward,
     onDeleteComment,
     onEditComment,
     onEditRewardComment,
@@ -412,18 +411,6 @@ export default function TargetContent({
                   rewardLevel={finalRewardLevel}
                   uploaderId={comment.uploader.id}
                   rewards={comment.rewards}
-                  onRewardSubmit={(data) => {
-                    onSetXpRewardInterfaceShown({
-                      contentType: 'comment',
-                      contentId: comment.id,
-                      shown: false
-                    });
-                    onAttachReward({
-                      data,
-                      contentId: comment.id,
-                      contentType: 'comment'
-                    });
-                  }}
                 />
               )}
               <RewardStatus

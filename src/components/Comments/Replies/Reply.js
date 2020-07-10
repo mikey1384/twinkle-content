@@ -102,12 +102,9 @@ function Reply({
     contentType: 'comment',
     contentId: reply.id
   });
-  const {
-    onAttachReward,
-    onEditDone,
-    onLikeClick,
-    onRewardCommentEdit
-  } = useContext(LocalContext);
+  const { onEditDone, onLikeClick, onRewardCommentEdit } = useContext(
+    LocalContext
+  );
   const { fileType } = getFileInfoFromFileName(fileName);
   const [loadingReplies, setLoadingReplies] = useState(false);
   const [userListModalShown, setUserListModalShown] = useState(false);
@@ -388,18 +385,6 @@ function Reply({
                 contentType="comment"
                 contentId={reply.id}
                 uploaderId={uploader.id}
-                onRewardSubmit={(data) => {
-                  onSetXpRewardInterfaceShown({
-                    contentId: reply.id,
-                    contentType: 'comment',
-                    shown: false
-                  });
-                  onAttachReward({
-                    data,
-                    contentId: reply.id,
-                    contentType: 'comment'
-                  });
-                }}
               />
             )}
             <RewardStatus

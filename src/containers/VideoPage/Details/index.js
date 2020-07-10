@@ -43,7 +43,6 @@ Details.propTypes = {
   description: PropTypes.string,
   rewardLevel: PropTypes.number,
   likes: PropTypes.array.isRequired,
-  onAttachReward: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onEditFinish: PropTypes.func.isRequired,
   onSetRewardLevel: PropTypes.func.isRequired,
@@ -71,7 +70,6 @@ export default function Details({
   description,
   likes,
   recommendations,
-  onAttachReward,
   onDelete,
   onEditFinish,
   tags = [],
@@ -464,18 +462,6 @@ export default function Details({
             contentId={Number(videoId)}
             noPadding
             uploaderId={uploader.id}
-            onRewardSubmit={(data) => {
-              onSetXpRewardInterfaceShown({
-                contentId: videoId,
-                contentType: 'video',
-                shown: false
-              });
-              onAttachReward({
-                data,
-                contentId: videoId,
-                contentType: 'video'
-              });
-            }}
           />
         )}
       </div>
