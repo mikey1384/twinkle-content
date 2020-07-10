@@ -1,47 +1,20 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
-import { returnMaxRewards } from 'constants/defaultValues';
-import { useMyState } from 'helpers/hooks';
 
 SelectRewardAmount.propTypes = {
   selectedAmount: PropTypes.number,
   onSetSelectedAmount: PropTypes.func,
-  rewardLevel: PropTypes.number,
-  rewards: PropTypes.array
+  remainingRewards: PropTypes.number,
+  myRewardables: PropTypes.number
 };
 
 export default function SelectRewardAmount({
   selectedAmount,
   onSetSelectedAmount,
-  rewardLevel,
-  rewards
+  remainingRewards,
+  myRewardables
 }) {
-  const { userId } = useMyState();
-
-  const maxRewardAmountForOnePerson = useMemo(
-    () => Math.min(Math.ceil(returnMaxRewards({ rewardLevel }) / 2), 10),
-    [rewardLevel]
-  );
-
-  const myRewardables = useMemo(() => {
-    const prevRewards = rewards.reduce((prev, reward) => {
-      if (reward.rewarderId === userId) {
-        return prev + reward.rewardAmount;
-      }
-      return prev;
-    }, 0);
-    return maxRewardAmountForOnePerson - prevRewards;
-  }, [maxRewardAmountForOnePerson, rewards, userId]);
-
-  const remainingRewards = useMemo(() => {
-    let currentRewards =
-      rewards.length > 0
-        ? rewards.reduce((prev, reward) => prev + reward.rewardAmount, 0)
-        : 0;
-    return returnMaxRewards({ rewardLevel }) - currentRewards;
-  }, [rewardLevel, rewards]);
-
   return (
     <div
       style={{

@@ -14,6 +14,7 @@ import {
 } from 'helpers/stringHelpers';
 import Button from 'components/Button';
 import request from 'axios';
+import { returnMaxRewards } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useInputContext } from 'contexts';
 import URL from 'constants/URL';
@@ -25,6 +26,7 @@ XPRewardInterface.propTypes = {
   rewardLevel: PropTypes.number,
   uploaderId: PropTypes.number.isRequired,
   noPadding: PropTypes.bool,
+  onReward: PropTypes.func,
   rewards: PropTypes.array.isRequired
 };
 
@@ -34,6 +36,7 @@ export default function XPRewardInterface({
   innerRef,
   rewardLevel,
   noPadding,
+  onReward,
   rewards,
   uploaderId
 }) {
@@ -54,6 +57,29 @@ export default function XPRewardInterface({
     selectedAmount: prevSelectedAmount = 0,
     rewardLevel: prevRewardLevel
   } = rewardForm;
+
+  const maxRewardAmountForOnePerson = useMemo(
+    () => Math.min(Math.ceil(returnMaxRewards({ rewardLevel }) / 2), 10),
+    [rewardLevel]
+  );
+
+  const myRewardables = useMemo(() => {
+    const prevRewards = rewards.reduce((prev, reward) => {
+      if (reward.rewarderId === userId) {
+        return prev + reward.rewardAmount;
+      }
+      return prev;
+    }, 0);
+    return maxRewardAmountForOnePerson - prevRewards;
+  }, [maxRewardAmountForOnePerson, rewards, userId]);
+
+  const remainingRewards = useMemo(() => {
+    let currentRewards =
+      rewards.length > 0
+        ? rewards.reduce((prev, reward) => prev + reward.rewardAmount, 0)
+        : 0;
+    return returnMaxRewards({ rewardLevel }) - currentRewards;
+  }, [rewardLevel, rewards]);
 
   const mounted = useRef(true);
   const commentRef = useRef(prevComment);
@@ -154,8 +180,8 @@ export default function XPRewardInterface({
       >
         <SelectRewardAmount
           onSetSelectedAmount={handleSetSelectedAmount}
-          rewardLevel={rewardLevel}
-          rewards={rewards}
+          remainingRewards={remainingRewards}
+          myRewardables={myRewardables}
           selectedAmount={selectedAmount}
         />
         {selectedAmount > 0 && (
@@ -231,8 +257,6 @@ export default function XPRewardInterface({
       );
       if (mounted.current) {
         setRewarding(false);
-        handleSetComment('');
-        handleSetSelectedAmount(0);
         onSetRewardForm({
           contentType,
           contentId,
@@ -243,6 +267,11 @@ export default function XPRewardInterface({
           contentId,
           contentType
         });
+        if (selectedAmount === myRewardables) {
+          onReward?.();
+        }
+        handleSetComment('');
+        handleSetSelectedAmount(0);
         onSetXpRewardInterfaceShown({
           contentId,
           contentType,

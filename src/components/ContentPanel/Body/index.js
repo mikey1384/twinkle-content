@@ -491,8 +491,12 @@ export default function Body({
         {xpRewardInterfaceShown && (
           <XPRewardInterface
             innerRef={RewardInterfaceRef}
+            isRecommendedByUser={isRecommendedByUser}
             contentType={contentType}
             contentId={contentId}
+            onReward={() =>
+              setRecommendationInterfaceShown(!isRecommendedByUser)
+            }
             rewardLevel={finalRewardLevel}
             uploaderId={uploader.id}
             rewards={rewards}
