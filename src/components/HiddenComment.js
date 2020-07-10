@@ -4,10 +4,11 @@ import { borderRadius, Color, desktopMinWidth } from 'constants/css';
 import { css } from 'emotion';
 
 HiddenComment.propTypes = {
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  style: PropTypes.func
 };
 
-export default function HiddenComment({ onClick }) {
+export default function HiddenComment({ onClick, style }) {
   return (
     <div
       style={{
@@ -17,7 +18,8 @@ export default function HiddenComment({ onClick }) {
         background: Color.white(),
         border: `1px solid ${Color.black()}`,
         fontSize: '1.7rem',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        ...style
       }}
       className={css`
         @media (min-width: ${desktopMinWidth}) {

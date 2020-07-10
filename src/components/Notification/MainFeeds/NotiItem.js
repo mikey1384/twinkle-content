@@ -83,9 +83,7 @@ export default function NotiItem({
             <span
               style={{
                 color:
-                  actionObj.amount === 25
-                    ? Color.gold()
-                    : actionObj.amount >= 10
+                  actionObj.amount >= 10
                     ? Color.rose()
                     : actionObj.amount >= 5
                     ? Color.orange()

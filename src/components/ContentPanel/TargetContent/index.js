@@ -301,6 +301,7 @@ export default function TargetContent({
                       ))}
                     {contentHidden ? (
                       <HiddenComment
+                        style={{ marginBottom: '1rem' }}
                         onClick={() => history.push(`/subjects/${subject.id}`)}
                       />
                     ) : (
@@ -321,10 +322,7 @@ export default function TargetContent({
                       style={{
                         display: 'flex',
                         flexDirection: 'column',
-                        paddingBottom:
-                          recommendationInterfaceShown || replyInputShown
-                            ? '1rem'
-                            : comment.likes.length === 0 && '0.5rem'
+                        paddingBottom: comment.likes.length === 0 && '1rem'
                       }}
                     >
                       <div style={{ display: 'flex' }}>
@@ -385,7 +383,7 @@ export default function TargetContent({
               {comment && (
                 <RecommendationStatus
                   style={{
-                    marginTop: comment.likes.length > 0 ? '-1rem' : 0,
+                    marginTop: 0,
                     marginBottom: xpRewardInterfaceShown ? 0 : '1rem'
                   }}
                   contentType="comment"
@@ -395,7 +393,7 @@ export default function TargetContent({
               {recommendationInterfaceShown && (
                 <RecommendationInterface
                   style={{
-                    marginTop: comment.likes.length > 0 ? '-1rem' : 0
+                    marginTop: '0.5rem'
                   }}
                   contentId={comment.id}
                   contentType="comment"
@@ -423,10 +421,7 @@ export default function TargetContent({
                   }
                 `}
                 style={{
-                  marginTop:
-                    comment.likes.length > 0 || xpRewardInterfaceShown
-                      ? '0.5rem'
-                      : '1rem'
+                  marginTop: 0
                 }}
                 rewardLevel={finalRewardLevel}
                 onCommentEdit={onEditRewardComment}
@@ -437,12 +432,7 @@ export default function TargetContent({
                 <InputForm
                   innerRef={InputFormRef}
                   style={{
-                    marginTop:
-                      comment.recommendations.length === 0 &&
-                      !recommendationInterfaceShown &&
-                      comment.likes.length > 0
-                        ? '-1rem'
-                        : 0,
+                    marginTop: '1rem',
                     padding: '0 1rem'
                   }}
                   onSubmit={handleSubmit}
