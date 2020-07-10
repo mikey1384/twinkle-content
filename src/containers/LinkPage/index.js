@@ -61,7 +61,6 @@ export default function LinkPage({
   } = useExploreContext();
   const {
     actions: {
-      onAttachReward,
       onDeleteComment,
       onDeleteContent,
       onEditComment,
@@ -417,7 +416,6 @@ export default function LinkPage({
         onSetRewardLevel={onSetRewardLevel}
         uploadSubject={onUploadSubject}
         commentActions={{
-          onAttachReward,
           editRewardComment: onEditRewardComment,
           onDelete: handleDeleteComment,
           onEditDone: onEditComment,
@@ -436,7 +434,6 @@ export default function LinkPage({
         inputTypeLabel="comment"
         key={'comments' + linkId}
         loadMoreButton={commentsLoadMoreButton}
-        onAttachReward={onAttachReward}
         onCommentSubmit={handleUploadComment}
         onDelete={handleDeleteComment}
         onEditDone={onEditComment}

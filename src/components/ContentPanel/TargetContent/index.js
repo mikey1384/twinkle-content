@@ -155,11 +155,11 @@ export default function TargetContent({
     () =>
       determineXpButtonDisabled({
         rewardLevel: finalRewardLevel,
-        rewards: comment.rewards || [],
+        rewards: comment?.rewards || [],
         myId: userId,
         xpRewardInterfaceShown
       }),
-    [comment, finalRewardLevel, userId, xpRewardInterfaceShown]
+    [comment?.rewards, finalRewardLevel, userId, xpRewardInterfaceShown]
   );
 
   useEffect(() => {

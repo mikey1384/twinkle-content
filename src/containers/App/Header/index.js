@@ -356,7 +356,7 @@ export default function Header({
     function handleNewReward({ target, reward }) {
       if (reward.rewarderId !== userId) {
         onAttachReward({
-          data: reward,
+          reward,
           contentId: target.contentId,
           contentType: target.contentType
         });

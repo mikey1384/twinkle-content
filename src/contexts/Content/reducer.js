@@ -65,7 +65,7 @@ export default function ContentReducer(state, action) {
         newState[contentKey] = {
           ...prevContentState,
           rewards: contentMatches
-            ? (prevContentState.rewards || []).concat(action.data)
+            ? (prevContentState.rewards || []).concat(action.reward)
             : prevContentState.rewards,
           comments:
             action.contentType === 'comment'
@@ -74,14 +74,14 @@ export default function ContentReducer(state, action) {
                   return {
                     ...comment,
                     rewards: commentMatches
-                      ? (comment.rewards || []).concat(action.data)
+                      ? (comment.rewards || []).concat(action.reward)
                       : comment.rewards,
                     replies: (comment.replies || []).map((reply) => {
                       const replyMatches = reply.id === action.contentId;
                       return {
                         ...reply,
                         rewards: replyMatches
-                          ? (reply.rewards || []).concat(action.data)
+                          ? (reply.rewards || []).concat(action.reward)
                           : reply.rewards
                       };
                     })
@@ -95,7 +95,7 @@ export default function ContentReducer(state, action) {
             return {
               ...subject,
               rewards: subjectMatches
-                ? (subject.rewards || []).concat(action.data)
+                ? (subject.rewards || []).concat(action.reward)
                 : subject.rewards,
               comments:
                 action.contentType === 'comment'
@@ -104,14 +104,14 @@ export default function ContentReducer(state, action) {
                       return {
                         ...comment,
                         rewards: commentMatches
-                          ? (comment.rewards || []).concat(action.data)
+                          ? (comment.rewards || []).concat(action.reward)
                           : comment.rewards,
                         replies: (comment.replies || []).map((reply) => {
                           const replyMatches = reply.id === action.contentId;
                           return {
                             ...reply,
                             rewards: replyMatches
-                              ? (reply.rewards || []).concat(action.data)
+                              ? (reply.rewards || []).concat(action.reward)
                               : reply.rewards
                           };
                         })
@@ -131,7 +131,7 @@ export default function ContentReducer(state, action) {
                           action.contentId && action.contentType === 'comment'
                           ? (
                               prevContentState.targetObj.comment.rewards || []
-                            ).concat(action.data)
+                            ).concat(action.reward)
                           : prevContentState.targetObj.comment.rewards
                     }
                   : undefined,
@@ -143,7 +143,7 @@ export default function ContentReducer(state, action) {
                           action.contentId && action.contentType === 'subject'
                           ? (
                               prevContentState.targetObj.subject.rewards || []
-                            ).concat(action.data)
+                            ).concat(action.reward)
                           : prevContentState.targetObj.subject.rewards
                     }
                   : undefined

@@ -261,7 +261,9 @@ export default function XPRewardInterface({
   async function handleRewardSubmit() {
     try {
       setRewarding(true);
-      const { data } = await request.post(
+      const {
+        data: { reward, netCoins }
+      } = await request.post(
         `${URL}/user/reward`,
         {
           rewardExplanation: finalizeEmoji(
@@ -282,7 +284,8 @@ export default function XPRewardInterface({
           form: undefined
         });
         onAttachReward({
-          data,
+          reward,
+          netCoins,
           contentId,
           contentType
         });

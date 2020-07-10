@@ -106,7 +106,6 @@ export default function Body({
   });
   const {
     commentsLoadLimit,
-    onAttachReward,
     onByUserStatusChange,
     onCommentSubmit,
     onDeleteComment,
@@ -533,7 +532,6 @@ export default function Body({
           inputTypeLabel={contentType === 'comment' ? 'reply' : 'comment'}
           isLoading={loadingComments}
           numPreviews={numPreviewComments}
-          onAttachReward={onAttachReward}
           onCommentSubmit={handleCommentSubmit}
           onDelete={onDeleteComment}
           onEditDone={onEditComment}

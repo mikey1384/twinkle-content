@@ -26,7 +26,6 @@ Comments.propTypes = {
   loadMoreButton: PropTypes.bool.isRequired,
   numInputRows: PropTypes.number,
   noInput: PropTypes.bool,
-  onAttachReward: PropTypes.func.isRequired,
   onCommentSubmit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onEditDone: PropTypes.func.isRequired,
@@ -64,7 +63,6 @@ function Comments({
   noInput,
   numInputRows,
   numPreviews,
-  onAttachReward,
   onCommentSubmit,
   onDelete,
   onEditDone,
@@ -160,7 +158,6 @@ function Comments({
   return (
     <Context.Provider
       value={{
-        onAttachReward,
         onDelete: handleDeleteComment,
         onEditDone,
         onLikeClick,

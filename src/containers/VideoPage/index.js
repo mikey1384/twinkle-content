@@ -79,7 +79,6 @@ export default function VideoPage({
   const {
     actions: {
       onAddTags,
-      onAttachReward,
       onDeleteComment,
       onDeleteContent,
       onEditComment,
@@ -409,7 +408,6 @@ export default function VideoPage({
               contentType="video"
               rootRewardLevel={rewardLevel}
               commentActions={{
-                onAttachReward,
                 editRewardComment: onEditRewardComment,
                 onDelete: onDeleteComment,
                 onEditDone: onEditComment,
@@ -445,7 +443,6 @@ export default function VideoPage({
                 inputTypeLabel={'comment'}
                 isLoading={loadingComments}
                 loadMoreButton={commentsLoadMoreButton}
-                onAttachReward={onAttachReward}
                 onCommentSubmit={onUploadComment}
                 onDelete={onDeleteComment}
                 onEditDone={onEditComment}

@@ -47,7 +47,6 @@ export default function ContentPanel({
     actions: {
       onAddTags,
       onAddTagToContents,
-      onAttachReward,
       onChangeSpoilerStatus,
       onDeleteComment,
       onDeleteContent,
@@ -168,7 +167,6 @@ export default function ContentPanel({
           commentsLoadLimit,
           onAddTags,
           onAddTagToContents,
-          onAttachReward,
           onByUserStatusChange: onSetByUserStatus,
           onCommentSubmit: onUploadComment,
           onDeleteComment,

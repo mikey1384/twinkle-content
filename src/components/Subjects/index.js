@@ -21,7 +21,6 @@ Subjects.propTypes = {
   contentType: PropTypes.string,
   uploadSubject: PropTypes.func.isRequired,
   commentActions: PropTypes.shape({
-    onAttachReward: PropTypes.func.isRequired,
     editRewardComment: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     onEditDone: PropTypes.func.isRequired,
@@ -49,7 +48,6 @@ export default function Subjects({
   onSubjectDelete,
   rootRewardLevel,
   commentActions: {
-    onAttachReward,
     editRewardComment,
     onDelete,
     onEditDone,
@@ -68,7 +66,6 @@ export default function Subjects({
     <LocalContext.Provider
       value={{
         editRewardComment,
-        onAttachReward,
         onDelete,
         onEditDone,
         onLikeClick,

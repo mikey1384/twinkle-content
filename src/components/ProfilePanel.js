@@ -63,7 +63,6 @@ function ProfilePanel({ expandable, profileId }) {
 
   const {
     actions: {
-      onAttachReward,
       onDeleteComment,
       onEditComment,
       onEditRewardComment,
@@ -471,7 +470,6 @@ function ProfilePanel({ expandable, profileId }) {
                   loadMoreButton={commentsLoadMoreButton}
                   noInput={profileId === userId}
                   numPreviews={1}
-                  onAttachReward={onAttachReward}
                   onCommentSubmit={onUploadComment}
                   onDelete={onDeleteComment}
                   onEditDone={onEditComment}
