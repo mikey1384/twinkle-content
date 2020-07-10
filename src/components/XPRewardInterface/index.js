@@ -43,7 +43,7 @@ export default function XPRewardInterface({
   const {
     requestHelpers: { auth }
   } = useAppContext();
-  const { userId } = useMyState();
+  const { authLevel, userId } = useMyState();
   const {
     state,
     actions: { onSetRewardForm }
@@ -113,6 +113,34 @@ export default function XPRewardInterface({
     [comment]
   );
 
+  const rewardStatusText = useMemo(
+    () =>
+      selectedAmount > 0
+        ? `Reward ${selectedAmount} Twinkle${
+            selectedAmount > 1 ? 's' : ''
+          } (${addCommasToNumber(selectedAmount * 200)} XP)`
+        : 'Select reward amount',
+    [selectedAmount]
+  );
+
+  const confirmText = useMemo(() => {
+    return (
+      <>
+        Reward
+        {!authLevel ? (
+          <>
+            <div style={{ marginLeft: '0.7rem' }}>
+              (<Icon icon={['far', 'badge-dollar']} />
+              <span style={{ marginLeft: '0.3rem' }}>{selectedAmount}</span>)
+            </div>
+          </>
+        ) : (
+          ''
+        )}
+      </>
+    );
+  }, [authLevel, selectedAmount]);
+
   useEffect(() => {
     mounted.current = true;
     return function cleanUp() {
@@ -128,16 +156,6 @@ export default function XPRewardInterface({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const rewardStatusText = useMemo(
-    () =>
-      selectedAmount > 0
-        ? `Reward ${selectedAmount} Twinkle${
-            selectedAmount > 1 ? 's' : ''
-          } (${addCommasToNumber(selectedAmount * 200)} XP)`
-        : 'Select reward amount',
-    [selectedAmount]
-  );
 
   return userId && uploaderId !== userId ? (
     <div
@@ -232,7 +250,7 @@ export default function XPRewardInterface({
             }
             onClick={handleRewardSubmit}
           >
-            Confirm
+            {confirmText}
           </Button>
         </section>
       )}

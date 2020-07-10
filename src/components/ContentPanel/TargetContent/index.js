@@ -384,7 +384,7 @@ export default function TargetContent({
                 <RecommendationStatus
                   style={{
                     marginTop: 0,
-                    marginBottom: xpRewardInterfaceShown ? 0 : '1rem'
+                    marginBottom: '1rem'
                   }}
                   contentType="comment"
                   recommendations={comment.recommendations}
