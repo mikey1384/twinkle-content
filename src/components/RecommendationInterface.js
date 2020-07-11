@@ -23,7 +23,7 @@ export default function RecommendationInterface({
   onHide,
   style
 }) {
-  const { authLevel, userId, twinkleCoins } = useMyState();
+  const { userId, twinkleCoins } = useMyState();
 
   const {
     requestHelpers: { recommendContent }
@@ -34,34 +34,18 @@ export default function RecommendationInterface({
   } = useContentContext();
 
   const disabled = useMemo(() => {
-    if (authLevel > 0) {
-      return isRecommendedByUser && twinkleCoins < priceTable.recommendation;
-    } else {
-      return !isRecommendedByUser && twinkleCoins < priceTable.recommendation;
-    }
-  }, [authLevel, isRecommendedByUser, twinkleCoins]);
+    return !isRecommendedByUser && twinkleCoins < priceTable.recommendation;
+  }, [isRecommendedByUser, twinkleCoins]);
 
   const priceText = useMemo(() => {
-    if (authLevel > 0) {
-      return isRecommendedByUser ? (
-        <>
-          <span style={{ marginLeft: '1rem', color: Color.rose() }}>
-            (<Icon icon={['far', 'badge-dollar']} /> {priceTable.recommendation}
-            )
-          </span>
-        </>
-      ) : null;
-    } else {
-      return !isRecommendedByUser ? (
-        <>
-          <span style={{ marginLeft: '1rem', color: Color.darkBlue() }}>
-            (<Icon icon={['far', 'badge-dollar']} /> {priceTable.recommendation}
-            )
-          </span>
-        </>
-      ) : null;
-    }
-  }, [authLevel, isRecommendedByUser]);
+    return !isRecommendedByUser ? (
+      <>
+        <span style={{ marginLeft: '1rem', color: Color.darkBlue() }}>
+          (<Icon icon={['far', 'badge-dollar']} /> {priceTable.recommendation})
+        </span>
+      </>
+    ) : null;
+  }, [isRecommendedByUser]);
 
   return (
     <ErrorBoundary
