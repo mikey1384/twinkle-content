@@ -1,4 +1,4 @@
-export const clientVersion = '1.3.87';
+export const clientVersion = '1.3.88';
 export const defaultChatSubject = 'Welcome!';
 export const defaultContentState = {
   isEditing: false,
@@ -24,7 +24,7 @@ export const mb = 1000;
 export const priceTable = {
   chatSubject: 5,
   chatTheme: 10,
-  recommendation: 5
+  recommendation: 1
 };
 export const charLimit = {
   chat: {
