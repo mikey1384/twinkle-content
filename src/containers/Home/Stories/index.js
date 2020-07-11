@@ -28,7 +28,7 @@ const categoryObj = {
     orderBy: 'lastInteraction'
   },
   recommended: {
-    filter: 'comment',
+    filter: 'all',
     mustInclude: 'totalRecommendations',
     orderBy: 'lastInteraction'
   },

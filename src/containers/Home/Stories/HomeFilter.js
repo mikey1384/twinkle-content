@@ -17,7 +17,7 @@ const categoryObj = {
     asc: 'Old to New'
   },
   recommended: {
-    label: isMobile(navigator) ? 'Recommended' : 'Recommended Comments'
+    label: isMobile(navigator) ? 'Recommended' : 'Recommended Posts'
   },
   videos: {
     label: 'XP Videos'
