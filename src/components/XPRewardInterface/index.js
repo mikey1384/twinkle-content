@@ -49,7 +49,7 @@ export default function XPRewardInterface({
     actions: { onSetRewardForm }
   } = useInputContext();
   const {
-    actions: { onAttachReward, onSetXpRewardInterfaceShown }
+    actions: { onAttachReward, onChangeUserCoins, onSetXpRewardInterfaceShown }
   } = useContentContext();
   const rewardForm = state['reward' + contentType + contentId] || {};
   const {
@@ -285,10 +285,12 @@ export default function XPRewardInterface({
         });
         onAttachReward({
           reward,
-          netCoins,
           contentId,
           contentType
         });
+        if (typeof netCoins === 'number') {
+          onChangeUserCoins({ coins: netCoins, userId });
+        }
         if (selectedAmount === myRewardables) {
           onReward?.();
         }

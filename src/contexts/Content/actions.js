@@ -17,11 +17,10 @@ export default function ContentActions(dispatch) {
         tagTitle
       });
     },
-    onAttachReward({ reward, netCoins, contentId, contentType }) {
+    onAttachReward({ reward, contentId, contentType }) {
       return dispatch({
         type: 'ATTACH_REWARD',
         reward,
-        netCoins,
         contentId,
         contentType
       });
