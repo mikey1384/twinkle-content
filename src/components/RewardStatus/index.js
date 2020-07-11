@@ -1,7 +1,7 @@
 import React, { memo, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { css } from 'emotion';
-import { Color } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { addCommasToNumber, stringIsEmpty } from 'helpers/stringHelpers';
 import { returnMaxRewards } from 'constants/defaultValues';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
@@ -74,7 +74,14 @@ function RewardStatus({
         `}`}
       >
         <Starmarks stars={amountRewarded} />
-        <div style={{ fontSize: '1.5rem' }}>
+        <div
+          className={css`
+            font-size: 1.5rem;
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: 1.2rem;
+            }
+          `}
+        >
           {amountRewarded} Twinkle
           {amountRewarded > 1 ? 's' : ''} (
           {addCommasToNumber(amountRewarded * 200)} XP) rewarded out of max{' '}

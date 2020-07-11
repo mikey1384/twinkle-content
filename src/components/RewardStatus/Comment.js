@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ProfilePic from 'components/ProfilePic';
 import UsernameText from 'components/Texts/UsernameText';
 import { css } from 'emotion';
-import { Color } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import LongText from 'components/Texts/LongText';
 import EditTextArea from 'components/Texts/EditTextArea';
 import DropdownButton from 'components/Buttons/DropdownButton';
@@ -86,6 +86,9 @@ function Comment({
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: 1.2rem;
+            }
           `}
         >
           <div

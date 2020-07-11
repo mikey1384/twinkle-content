@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
+import { css } from 'emotion';
+import { mobileMaxWidth } from 'constants/css';
 
 SelectRewardAmount.propTypes = {
   selectedAmount: PropTypes.number,
@@ -17,14 +19,17 @@ export default function SelectRewardAmount({
 }) {
   return (
     <div
-      style={{
-        padding: '1.5rem',
-        display: 'flex',
-        width: '100%',
-        fontSize: '3rem',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}
+      className={css`
+        padding: 1.5rem;
+        display: flex;
+        width: 100%;
+        font-size: 3rem;
+        justify-content: center;
+        align-items: center;
+        @media (max-width: ${mobileMaxWidth}) {
+          font-size: 2rem;
+        }
+      `}
     >
       {Array(Math.min(remainingRewards, myRewardables))
         .fill()

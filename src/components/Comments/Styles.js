@@ -23,7 +23,7 @@ export const commentContainer = css`
       display: flex;
     }
     > section {
-      width: 100%;
+      width: CALC(100% - 6rem);
       margin-left: 1rem;
     }
   }
