@@ -55,7 +55,14 @@ export default function LinkPage({
       loadSubjects
     }
   } = useAppContext();
-  const { authLevel, canDelete, canEdit, canReward, userId } = useMyState();
+  const {
+    authLevel,
+    canDelete,
+    canEdit,
+    canReward,
+    twinkleCoins,
+    userId
+  } = useMyState();
   const {
     actions: { onEditLinkPage, onLikeLink, onUpdateNumLinkComments }
   } = useExploreContext();
@@ -370,7 +377,9 @@ export default function LinkPage({
               contentId={linkId}
               noPadding
               onReward={() =>
-                setRecommendationInterfaceShown(!isRecommendedByUser)
+                setRecommendationInterfaceShown(
+                  !isRecommendedByUser && twinkleCoins > 0
+                )
               }
               uploaderId={uploader.id}
             />

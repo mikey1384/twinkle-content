@@ -77,6 +77,7 @@ export default function SubjectPanel({
     canEdit,
     canEditRewardLevel,
     canReward,
+    twinkleCoins,
     userId: myId
   } = useMyState();
   const {
@@ -405,7 +406,9 @@ export default function SubjectPanel({
                 contentType="subject"
                 contentId={subjectId}
                 onReward={() =>
-                  setRecommendationInterfaceShown(!isRecommendedByUser)
+                  setRecommendationInterfaceShown(
+                    !isRecommendedByUser && twinkleCoins > 0
+                  )
                 }
                 rewardLevel={finalRewardLevel}
                 uploaderId={userId}

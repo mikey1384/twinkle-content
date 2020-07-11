@@ -84,7 +84,8 @@ export default function Details({
     canDelete,
     canEdit,
     canEditPlaylists,
-    canReward
+    canReward,
+    twinkleCoins
   } = useMyState();
   const {
     actions: { onSetIsEditing, onSetXpRewardInterfaceShown }
@@ -462,7 +463,9 @@ export default function Details({
             contentId={Number(videoId)}
             noPadding
             onReward={() =>
-              setRecommendationInterfaceShown(!isRecommendedByUser)
+              setRecommendationInterfaceShown(
+                !isRecommendedByUser && twinkleCoins > 0
+              )
             }
             uploaderId={uploader.id}
           />

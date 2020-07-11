@@ -65,7 +65,14 @@ export default function TargetContent({
   const {
     requestHelpers: { uploadComment, uploadFile }
   } = useAppContext();
-  const { authLevel, canReward, profilePicId, userId, username } = useMyState();
+  const {
+    authLevel,
+    canReward,
+    profilePicId,
+    userId,
+    twinkleCoins,
+    username
+  } = useMyState();
   const {
     actions: {
       onSetCommentUploadingFile,
@@ -408,6 +415,11 @@ export default function TargetContent({
                   contentId={comment.id}
                   rewardLevel={finalRewardLevel}
                   uploaderId={comment.uploader.id}
+                  onReward={() =>
+                    setRecommendationInterfaceShown(
+                      !isRecommendedByUser && twinkleCoins > 0
+                    )
+                  }
                   rewards={comment.rewards}
                 />
               )}

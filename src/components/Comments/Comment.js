@@ -100,7 +100,14 @@ function Comment({
   const {
     requestHelpers: { checkIfUserResponded, editContent, loadReplies }
   } = useAppContext();
-  const { authLevel, canDelete, canEdit, canReward, userId } = useMyState();
+  const {
+    authLevel,
+    canDelete,
+    canEdit,
+    canReward,
+    twinkleCoins,
+    userId
+  } = useMyState();
   const { fileType } = getFileInfoFromFileName(fileName);
   const {
     actions: {
@@ -542,7 +549,9 @@ function Comment({
                 contentType="comment"
                 contentId={comment.id}
                 onReward={() =>
-                  setRecommendationInterfaceShown(!isRecommendedByUser)
+                  setRecommendationInterfaceShown(
+                    !isRecommendedByUser && twinkleCoins > 0
+                  )
                 }
                 uploaderId={uploader.id}
               />

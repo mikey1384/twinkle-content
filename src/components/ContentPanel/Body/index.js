@@ -76,6 +76,7 @@ export default function Body({
     canEdit,
     canEditRewardLevel,
     canReward,
+    twinkleCoins,
     userId
   } = useMyState();
 
@@ -494,7 +495,9 @@ export default function Body({
             contentType={contentType}
             contentId={contentId}
             onReward={() =>
-              setRecommendationInterfaceShown(!isRecommendedByUser)
+              setRecommendationInterfaceShown(
+                !isRecommendedByUser && twinkleCoins > 0
+              )
             }
             rewardLevel={finalRewardLevel}
             uploaderId={uploader.id}

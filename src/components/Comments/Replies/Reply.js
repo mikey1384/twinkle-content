@@ -89,7 +89,14 @@ function Reply({
   const {
     requestHelpers: { editContent, loadReplies }
   } = useAppContext();
-  const { authLevel, canDelete, canEdit, canReward, userId } = useMyState();
+  const {
+    authLevel,
+    canDelete,
+    canEdit,
+    canReward,
+    twinkleCoins,
+    userId
+  } = useMyState();
   const {
     actions: { onSetIsEditing, onSetXpRewardInterfaceShown }
   } = useContentContext();
@@ -385,7 +392,9 @@ function Reply({
                 contentType="comment"
                 contentId={reply.id}
                 onReward={() =>
-                  setRecommendationInterfaceShown(!isRecommendedByUser)
+                  setRecommendationInterfaceShown(
+                    !isRecommendedByUser && twinkleCoins > 0
+                  )
                 }
                 uploaderId={uploader.id}
               />
