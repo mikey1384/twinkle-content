@@ -339,10 +339,13 @@ export default function Details({
             display: 'flex',
             justifyContent: 'space-between',
             width: '100%',
-            marginTop: '1rem'
+            marginTop: '1rem',
+            position: 'relative'
           }}
         >
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div
+            style={{ display: 'flex', flexDirection: 'column', width: '100%' }}
+          >
             <Description
               onChange={(event) =>
                 onSetEditForm({
@@ -413,9 +416,9 @@ export default function Details({
           </div>
           <div
             style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'flex-end'
+              position: 'absolute',
+              bottom: 0,
+              right: 0
             }}
           >
             <Button

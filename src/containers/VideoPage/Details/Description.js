@@ -30,7 +30,7 @@ export default function Description({
   onEditFinish
 }) {
   return (
-    <div>
+    <div style={{ width: '100%' }}>
       {onEdit ? (
         <>
           <Textarea
@@ -40,6 +40,7 @@ export default function Description({
             onChange={onChange}
             onKeyUp={onKeyUp}
             style={{
+              width: '100%',
               marginTop: '1rem',
               ...(descriptionExceedsCharLimit(editedDescription)?.style || {})
             }}
