@@ -92,11 +92,7 @@ export default function ContentPage({
           display: flex;
           justify-content: center;
           margin-bottom: 1rem;
-          margin-top: 1rem;
           padding-bottom: 20rem;
-          @media (max-width: ${mobileMaxWidth}) {
-            margin-top: 0;
-          }
         `}
       >
         <section
