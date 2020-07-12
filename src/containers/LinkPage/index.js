@@ -207,6 +207,10 @@ export default function LinkPage({
     );
   }, [recommendations, userId]);
 
+  const isRewardedByUser = useMemo(() => {
+    return rewards.filter((reward) => reward.rewarderId === userId).length > 0;
+  }, [rewards, userId]);
+
   const userIsUploader = useMemo(() => uploader?.id === userId, [
     uploader?.id,
     userId
@@ -528,14 +532,14 @@ export default function LinkPage({
   function handleLikeLink({ likes, isUnlike }) {
     onLikeContent({ likes, contentType: 'url', contentId: linkId });
     onLikeLink({ likes, id: linkId });
-    if (!xpButtonDisabled && userCanRewardThis) {
+    if (!xpButtonDisabled && userCanRewardThis && !isRewardedByUser) {
       onSetXpRewardInterfaceShown({
         contentId: linkId,
         contentType: 'url',
         shown: !isUnlike
       });
     } else {
-      if (!isRecommendedByUser && authLevel === 0) {
+      if (!isRecommendedByUser && !canReward) {
         setRecommendationInterfaceShown(!isUnlike);
       }
     }

@@ -149,6 +149,10 @@ export default function Details({
     );
   }, [recommendations, userId]);
 
+  const isRewardedByUser = useMemo(() => {
+    return rewards.filter((reward) => reward.rewarderId === userId).length > 0;
+  }, [rewards, userId]);
+
   const editForm = useMemo(() => inputState['edit' + 'video' + videoId] || {}, [
     inputState,
     videoId
@@ -530,14 +534,14 @@ export default function Details({
 
   function handleLikeVideo({ likes, isUnlike }) {
     onLikeVideo({ likes });
-    if (!xpButtonDisabled && userCanRewardThis) {
+    if (!xpButtonDisabled && userCanRewardThis && !isRewardedByUser) {
       onSetXpRewardInterfaceShown({
         contentId: videoId,
         contentType: 'video',
         shown: !isUnlike
       });
     } else {
-      if (!isRecommendedByUser && authLevel === 0) {
+      if (!isRecommendedByUser && !canReward) {
         setRecommendationInterfaceShown(!isUnlike);
       }
     }

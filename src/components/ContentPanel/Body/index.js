@@ -140,6 +140,11 @@ export default function Body({
         .length > 0
     );
   }, [recommendations, userId]);
+
+  const isRewardedByUser = useMemo(() => {
+    return rewards.filter((reward) => reward.rewarderId === userId).length > 0;
+  }, [rewards, userId]);
+
   const secretHidden = useMemo(() => {
     const contentSecretHidden = !(secretShown || uploader.id === userId);
     const targetSubjectSecretHidden = !(
@@ -635,14 +640,14 @@ export default function Body({
   }
 
   async function handleLikeClick({ isUnlike }) {
-    if (!xpButtonDisabled && userCanRewardThis) {
+    if (!xpButtonDisabled && userCanRewardThis && !isRewardedByUser) {
       onSetXpRewardInterfaceShown({
         contentType,
         contentId,
         shown: !isUnlike
       });
     } else {
-      if (!isRecommendedByUser && authLevel === 0) {
+      if (!isRecommendedByUser && !canReward) {
         setRecommendationInterfaceShown(!isUnlike);
       }
     }

@@ -124,16 +124,23 @@ function Reply({
   const RewardInterfaceRef = useRef(null);
   const userIsUploader = userId === uploader.id;
   const userIsHigherAuth = authLevel > uploader.authLevel;
+
   const isRecommendedByUser = useMemo(() => {
     return (
       recommendations.filter((recommendation) => recommendation.id === userId)
         .length > 0
     );
   }, [recommendations, userId]);
+
+  const isRewardedByUser = useMemo(() => {
+    return rewards.filter((reward) => reward.rewarderId === userId).length > 0;
+  }, [rewards, userId]);
+
   const editButtonShown = useMemo(() => {
     const userCanEditThis = (canEdit || canDelete) && userIsHigherAuth;
     return userIsUploader || userCanEditThis;
   }, [canDelete, canEdit, userIsHigherAuth, userIsUploader]);
+
   const userCanRewardThis = useMemo(
     () =>
       determineUserCanRewardThis({
@@ -145,6 +152,7 @@ function Reply({
       }),
     [authLevel, canReward, recommendations, uploader, userId]
   );
+
   const rewardLevel = useMemo(() => {
     if (parent.contentType === 'subject' && parent.rewardLevel > 0) {
       return parent.rewardLevel;
@@ -176,6 +184,7 @@ function Reply({
     rootContent?.rewardLevel,
     subject?.rewardLevel
   ]);
+
   const xpButtonDisabled = useMemo(
     () =>
       determineXpButtonDisabled({
@@ -456,14 +465,14 @@ function Reply({
   }
 
   function handleLikeClick({ likes, isUnlike }) {
-    if (!xpButtonDisabled && userCanRewardThis) {
+    if (!xpButtonDisabled && userCanRewardThis && !isRewardedByUser) {
       onSetXpRewardInterfaceShown({
         contentId: reply.id,
         contentType: 'comment',
         shown: !isUnlike
       });
     } else {
-      if (!isRecommendedByUser && authLevel === 0) {
+      if (!isRecommendedByUser && !canReward) {
         setRecommendationInterfaceShown(!isUnlike);
       }
     }

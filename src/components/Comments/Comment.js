@@ -153,12 +153,18 @@ function Comment({
   const ReplyRefs = {};
   const mounted = useRef(true);
   const RewardInterfaceRef = useRef(null);
+
   const isRecommendedByUser = useMemo(() => {
     return (
       recommendations.filter((recommendation) => recommendation.id === userId)
         .length > 0
     );
   }, [recommendations, userId]);
+
+  const isRewardedByUser = useMemo(() => {
+    return rewards.filter((reward) => reward.rewarderId === userId).length > 0;
+  }, [rewards, userId]);
+
   const rewardLevel = useMemo(() => {
     if (isPreview) return 0;
     if (parent.contentType === 'subject' && parent.rewardLevel > 0) {
@@ -631,14 +637,14 @@ function Comment({
   }
 
   function handleLikeClick({ likes, isUnlike }) {
-    if (!xpButtonDisabled && userCanRewardThis) {
+    if (!xpButtonDisabled && userCanRewardThis && !isRewardedByUser) {
       onSetXpRewardInterfaceShown({
         contentId: comment.id,
         contentType: 'comment',
         shown: !isUnlike
       });
     } else {
-      if (!isRecommendedByUser && authLevel === 0) {
+      if (!isRecommendedByUser && !canReward) {
         setRecommendationInterfaceShown(!isUnlike);
       }
     }

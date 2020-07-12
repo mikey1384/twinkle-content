@@ -158,6 +158,13 @@ export default function TargetContent({
       : false;
   }, [comment, userId]);
 
+  const isRewardedByUser = useMemo(() => {
+    return comment
+      ? comment.rewards?.filter((reward) => reward.rewarderId === userId)
+          .length > 0
+      : false;
+  }, [comment, userId]);
+
   const xpButtonDisabled = useMemo(
     () =>
       determineXpButtonDisabled({
@@ -329,7 +336,7 @@ export default function TargetContent({
                       style={{
                         display: 'flex',
                         flexDirection: 'column',
-                        paddingBottom: comment.likes.length === 0 && '1rem'
+                        paddingBottom: comment.likes.length === 0 && '0.5rem'
                       }}
                     >
                       <div style={{ display: 'flex' }}>
@@ -496,7 +503,18 @@ export default function TargetContent({
     </ErrorBoundary>
   );
 
-  function handleLikeClick() {
+  function handleLikeClick({ isUnlike }) {
+    if (!xpButtonDisabled && userCanRewardThis && !isRewardedByUser) {
+      onSetXpRewardInterfaceShown({
+        contentType: 'comment',
+        contentId: comment.id,
+        shown: !isUnlike
+      });
+    } else {
+      if (!isRecommendedByUser && !canReward) {
+        setRecommendationInterfaceShown(!isUnlike);
+      }
+    }
     if (comments.length === 0) {
       onShowTCReplyInput({ contentId, contentType });
     }
