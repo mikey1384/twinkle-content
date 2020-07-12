@@ -444,7 +444,7 @@ export default function TargetContent({
                 <InputForm
                   innerRef={InputFormRef}
                   style={{
-                    marginTop: '1rem',
+                    marginTop: '0.5rem',
                     padding: '0 1rem'
                   }}
                   onSubmit={handleSubmit}
