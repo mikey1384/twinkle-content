@@ -11,6 +11,7 @@ export function determineUserCanRewardThis({
   uploader,
   userId
 }) {
+  if (!userId) return false;
   let studentsCanReward = false;
   if (!authLevel) {
     if (uploader?.authLevel > 0) return true;
