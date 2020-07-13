@@ -403,6 +403,16 @@ export default function Details({
                   menuProps={editMenuItems}
                 />
               )}
+            </div>
+          </div>
+          <div
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              right: 0
+            }}
+          >
+            <div style={{ display: 'flex' }}>
               {rewardButtonShown && (
                 <Button
                   skeuomorphic
@@ -416,24 +426,17 @@ export default function Details({
                   </span>
                 </Button>
               )}
+              <Button
+                color="brownOrange"
+                style={{ marginLeft: '1rem' }}
+                skeuomorphic
+                filled={isRecommendedByUser}
+                disabled={recommendationInterfaceShown}
+                onClick={() => setRecommendationInterfaceShown(true)}
+              >
+                <Icon icon="star" />
+              </Button>
             </div>
-          </div>
-          <div
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              right: 0
-            }}
-          >
-            <Button
-              color="brownOrange"
-              skeuomorphic
-              filled={isRecommendedByUser}
-              disabled={recommendationInterfaceShown}
-              onClick={() => setRecommendationInterfaceShown(true)}
-            >
-              <Icon icon="star" />
-            </Button>
           </div>
         </div>
         <RecommendationStatus
