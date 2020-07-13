@@ -139,7 +139,7 @@ function MainFeeds({
                 style={{ color: Color.green() }}
                 content={{
                   id: rootId,
-                  title: `this ${rootType}!`
+                  title: `this ${rootType}`
                 }}
                 contentType={rootType}
               />{' '}

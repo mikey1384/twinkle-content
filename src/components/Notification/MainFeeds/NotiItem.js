@@ -123,7 +123,7 @@ export default function NotiItem({
                 style={{ color: Color.green() }}
                 content={{
                   id: rewardRootId,
-                  title: `this ${rewardRootType}!`
+                  title: `this ${rewardRootType}`
                 }}
                 contentType={rewardRootType}
               />{' '}
