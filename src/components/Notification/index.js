@@ -58,7 +58,7 @@ function Notification({ children, className, location, style }) {
         setActiveTab('rankings');
       } else {
         const tab =
-          activeTab === 'reward' || rewards.length > 0
+          activeTab === 'reward' || totalRewardAmount > 0
             ? 'reward'
             : activeTab === 'notification' ||
               (location === 'home' && notifications.length > 0) ||
