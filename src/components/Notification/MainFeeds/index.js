@@ -134,24 +134,18 @@ function MainFeeds({
                 user={{ id: rewarderId, username: rewarderUsername }}
                 color={Color.blue()}
               />{' '}
-              <b style={{ color: Color.brownOrange() }}>
-                also recommended this
-              </b>{' '}
+              <b style={{ color: Color.pink() }}>also recommended</b>{' '}
               <ContentLink
                 style={{ color: Color.green() }}
                 content={{
                   id: rootId,
-                  title: rootType
+                  title: `this ${rootType}!`
                 }}
                 contentType={rootType}
-              />
-              <b style={{ color: Color.green() }}>.</b>{' '}
-              <span>
-                You earn{' '}
-                <b style={{ color: Color.brownOrange() }}>
-                  {rewardAmount} Twinkle Coins!
-                </b>
-              </span>
+              />{' '}
+              <p style={{ fontWeight: 'bold', color: Color.brownOrange() }}>
+                You earn {rewardAmount} Twinkle Coins!
+              </p>
             </div>
           );
         }

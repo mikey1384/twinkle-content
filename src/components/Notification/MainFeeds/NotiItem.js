@@ -19,7 +19,10 @@ export default function NotiItem({
     targetObj = {},
     targetSubject = {},
     timeStamp,
-    user = {}
+    user = {},
+    rewardType,
+    rewardRootId,
+    rewardRootType
   }
 }) {
   const { userId } = useMyState();
@@ -77,41 +80,61 @@ export default function NotiItem({
           </>
         );
         break;
-      case 'reward':
-        notificationMessage = (
-          <>
-            <span
-              style={{
-                color:
-                  actionObj.amount >= 10
-                    ? Color.rose()
-                    : actionObj.amount >= 5
-                    ? Color.orange()
-                    : actionObj.amount >= 3
-                    ? Color.pink()
-                    : Color.lightBlue(),
-                fontWeight: 'bold'
-              }}
-            >
-              rewarded you {actionObj.amount === 1 ? 'a' : actionObj.amount}{' '}
-              Twinkle
-              {actionObj.amount > 1 ? 's' : ''}
-            </span>{' '}
-            for your{' '}
-            <ContentLink
-              contentType={targetObj.contentType}
-              content={{
-                id: targetObj.id,
-                title: `${
-                  targetObj.contentType === 'url'
-                    ? 'link'
-                    : targetObj.contentType
-                } (${truncateText({ text: targetObj.content, limit: 100 })})`
-              }}
-            />
-          </>
-        );
+      case 'reward': {
+        if (rewardType === 'Twinkle') {
+          notificationMessage = (
+            <>
+              <span
+                style={{
+                  color:
+                    actionObj.amount >= 10
+                      ? Color.rose()
+                      : actionObj.amount >= 5
+                      ? Color.orange()
+                      : actionObj.amount >= 3
+                      ? Color.pink()
+                      : Color.lightBlue(),
+                  fontWeight: 'bold'
+                }}
+              >
+                rewarded you {actionObj.amount === 1 ? 'a' : actionObj.amount}{' '}
+                Twinkle
+                {actionObj.amount > 1 ? 's' : ''}
+              </span>{' '}
+              for your{' '}
+              <ContentLink
+                contentType={targetObj.contentType}
+                content={{
+                  id: targetObj.id,
+                  title: `${
+                    targetObj.contentType === 'url'
+                      ? 'link'
+                      : targetObj.contentType
+                  } (${truncateText({ text: targetObj.content, limit: 100 })})`
+                }}
+              />
+            </>
+          );
+        } else {
+          notificationMessage = (
+            <>
+              <b style={{ color: Color.pink() }}>also recommended</b>{' '}
+              <ContentLink
+                style={{ color: Color.green() }}
+                content={{
+                  id: rewardRootId,
+                  title: `this ${rewardRootType}!`
+                }}
+                contentType={rewardRootType}
+              />{' '}
+              <p style={{ fontWeight: 'bold', color: Color.brownOrange() }}>
+                You earn {actionObj.amount} Twinkle Coins!
+              </p>
+            </>
+          );
+        }
         break;
+      }
       case 'comment':
         notificationMessage = (
           <>
