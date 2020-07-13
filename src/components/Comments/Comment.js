@@ -147,8 +147,8 @@ function Comment({
   const [userListModalShown, setUserListModalShown] = useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   const [loadingReplies, setLoadingReplies] = useState(false);
-  const prevReplies = useRef(replies);
   const [replying, setReplying] = useState(false);
+  const prevReplies = useRef(replies);
   const ReplyInputAreaRef = useRef(null);
   const ReplyRefs = {};
   const mounted = useRef(true);
