@@ -13,11 +13,9 @@ import {
   stringIsEmpty
 } from 'helpers/stringHelpers';
 import Button from 'components/Button';
-import request from 'axios';
 import { returnMaxRewards } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useInputContext } from 'contexts';
-import URL from 'constants/URL';
 
 XPRewardInterface.propTypes = {
   contentType: PropTypes.string.isRequired,
@@ -41,7 +39,7 @@ export default function XPRewardInterface({
   uploaderId
 }) {
   const {
-    requestHelpers: { auth }
+    requestHelpers: { rewardUser }
   } = useAppContext();
   const { authLevel, twinkleCoins, userId } = useMyState();
   const {
@@ -261,21 +259,13 @@ export default function XPRewardInterface({
   async function handleRewardSubmit() {
     try {
       setRewarding(true);
-      const {
-        data: { reward, netCoins }
-      } = await request.post(
-        `${URL}/user/reward`,
-        {
-          rewardExplanation: finalizeEmoji(
-            stringIsEmpty(comment) ? '' : comment
-          ),
-          amount: selectedAmount,
-          contentType,
-          contentId,
-          uploaderId
-        },
-        auth()
-      );
+      const { reward, netCoins } = await rewardUser({
+        explanation: finalizeEmoji(stringIsEmpty(comment) ? '' : comment),
+        amount: selectedAmount,
+        contentType,
+        contentId,
+        uploaderId
+      });
       if (mounted.current) {
         setRewarding(false);
         onSetRewardForm({

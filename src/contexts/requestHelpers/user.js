@@ -204,6 +204,32 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
+    async rewardUser({
+      explanation,
+      amount,
+      contentType,
+      contentId,
+      uploaderId
+    }) {
+      try {
+        const {
+          data: { reward, netCoins }
+        } = await request.post(
+          `${URL}/user/reward`,
+          {
+            rewardExplanation: explanation,
+            amount,
+            contentType,
+            contentId,
+            uploaderId
+          },
+          auth()
+        );
+        return Promise.resolve({ reward, netCoins });
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async searchUsers(query) {
       try {
         const { data: users } = await request.get(
