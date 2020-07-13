@@ -144,7 +144,8 @@ function MainFeeds({
                 contentType={rootType}
               />{' '}
               <p style={{ fontWeight: 'bold', color: Color.brownOrange() }}>
-                You earn {rewardAmount} Twinkle Coins!
+                You earn {rewardAmount} Twinkle Coin
+                {rewardAmount > 1 ? 's' : ''}!
               </p>
             </div>
           );

@@ -546,6 +546,7 @@ function Comment({
                 contentType="comment"
                 onHide={() => setRecommendationInterfaceShown(false)}
                 recommendations={recommendations}
+                uploaderId={uploader.id}
               />
             )}
             {!isPreview && xpRewardInterfaceShown && (

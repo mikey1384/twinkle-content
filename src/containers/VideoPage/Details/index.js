@@ -463,6 +463,7 @@ export default function Details({
             contentType="video"
             onHide={() => setRecommendationInterfaceShown(false)}
             recommendations={recommendations}
+            uploaderId={uploader.id}
           />
         )}
         {xpRewardInterfaceShown && (

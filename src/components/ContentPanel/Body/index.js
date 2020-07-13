@@ -492,6 +492,7 @@ export default function Body({
             contentType={contentType}
             onHide={() => setRecommendationInterfaceShown(false)}
             recommendations={recommendations}
+            uploaderId={uploader.id}
           />
         )}
         {xpRewardInterfaceShown && (

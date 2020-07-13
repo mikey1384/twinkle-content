@@ -128,7 +128,8 @@ export default function NotiItem({
                 contentType={rewardRootType}
               />{' '}
               <p style={{ fontWeight: 'bold', color: Color.brownOrange() }}>
-                You earn {actionObj.amount} Twinkle Coins!
+                You earn {actionObj.amount} Twinkle Coin
+                {actionObj.amount > 1 ? 's' : ''}!
               </p>
             </>
           );

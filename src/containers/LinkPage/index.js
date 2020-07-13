@@ -371,6 +371,7 @@ export default function LinkPage({
             contentType="url"
             onHide={() => setRecommendationInterfaceShown(false)}
             recommendations={recommendations}
+            uploaderId={uploader.id}
           />
         )}
         {xpRewardInterfaceShown && (

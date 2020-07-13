@@ -399,6 +399,7 @@ export default function SubjectPanel({
                 }}
                 onHide={() => setRecommendationInterfaceShown(false)}
                 recommendations={recommendations}
+                uploaderId={userId}
               />
             )}
             {xpRewardInterfaceShown && (

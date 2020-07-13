@@ -13,7 +13,8 @@ RecommendationInterface.propTypes = {
   contentType: PropTypes.string.isRequired,
   onHide: PropTypes.func.isRequired,
   recommendations: PropTypes.array,
-  style: PropTypes.object
+  style: PropTypes.object,
+  uploaderId: PropTypes.number
 };
 
 export default function RecommendationInterface({
@@ -21,7 +22,8 @@ export default function RecommendationInterface({
   contentType,
   onHide,
   recommendations,
-  style
+  style,
+  uploaderId
 }) {
   const { canReward, userId, twinkleCoins } = useMyState();
 
@@ -123,7 +125,7 @@ export default function RecommendationInterface({
     if (!isRecommendedByUser && canReward && isOnlyRecommendedByStudents) {
       for (let recommendation of recommendations) {
         rewardUser({
-          amount: 2,
+          amount: recommendation.userId === uploaderId ? 1 : 2,
           contentType: 'recommendation',
           contentId: recommendation.id,
           rootType: contentType,
