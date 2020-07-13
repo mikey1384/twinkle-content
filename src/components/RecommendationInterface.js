@@ -9,18 +9,18 @@ import { priceTable } from 'constants/defaultValues';
 import { useAppContext, useContentContext } from 'contexts';
 
 RecommendationInterface.propTypes = {
-  isRecommendedByUser: PropTypes.bool,
   contentId: PropTypes.number.isRequired,
   contentType: PropTypes.string.isRequired,
   onHide: PropTypes.func.isRequired,
+  recommendations: PropTypes.array,
   style: PropTypes.object
 };
 
 export default function RecommendationInterface({
-  isRecommendedByUser,
   contentId,
   contentType,
   onHide,
+  recommendations,
   style
 }) {
   const { userId, twinkleCoins } = useMyState();
@@ -32,6 +32,13 @@ export default function RecommendationInterface({
   const {
     actions: { onChangeUserCoins, onRecommendContent }
   } = useContentContext();
+
+  const isRecommendedByUser = useMemo(() => {
+    return (
+      recommendations.filter((recommendation) => recommendation.id === userId)
+        .length > 0
+    );
+  }, [recommendations, userId]);
 
   const disabled = useMemo(() => {
     return !isRecommendedByUser && twinkleCoins < priceTable.recommendation;

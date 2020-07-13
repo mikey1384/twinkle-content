@@ -544,7 +544,7 @@ function Comment({
                 contentId={commentId}
                 contentType="comment"
                 onHide={() => setRecommendationInterfaceShown(false)}
-                isRecommendedByUser={isRecommendedByUser}
+                recommendations={recommendations}
               />
             )}
             {!isPreview && xpRewardInterfaceShown && (

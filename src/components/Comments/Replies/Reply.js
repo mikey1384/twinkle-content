@@ -390,7 +390,7 @@ function Reply({
                 contentId={reply.id}
                 contentType="comment"
                 onHide={() => setRecommendationInterfaceShown(false)}
-                isRecommendedByUser={isRecommendedByUser}
+                recommendations={recommendations}
               />
             )}
             {xpRewardInterfaceShown && (

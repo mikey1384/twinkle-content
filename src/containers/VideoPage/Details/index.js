@@ -461,7 +461,7 @@ export default function Details({
             contentId={videoId}
             contentType="video"
             onHide={() => setRecommendationInterfaceShown(false)}
-            isRecommendedByUser={isRecommendedByUser}
+            recommendations={recommendations}
           />
         )}
         {xpRewardInterfaceShown && (

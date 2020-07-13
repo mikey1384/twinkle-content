@@ -412,7 +412,7 @@ export default function TargetContent({
                   contentId={comment.id}
                   contentType="comment"
                   onHide={() => setRecommendationInterfaceShown(false)}
-                  isRecommendedByUser={isRecommendedByUser}
+                  recommendations={comment.recommendations}
                 />
               )}
               {xpRewardInterfaceShown && (

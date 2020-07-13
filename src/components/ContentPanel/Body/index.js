@@ -490,7 +490,7 @@ export default function Body({
             contentId={contentId}
             contentType={contentType}
             onHide={() => setRecommendationInterfaceShown(false)}
-            isRecommendedByUser={isRecommendedByUser}
+            recommendations={recommendations}
           />
         )}
         {xpRewardInterfaceShown && (

@@ -369,7 +369,7 @@ export default function LinkPage({
             contentId={linkId}
             contentType="url"
             onHide={() => setRecommendationInterfaceShown(false)}
-            isRecommendedByUser={isRecommendedByUser}
+            recommendations={recommendations}
           />
         )}
         {xpRewardInterfaceShown && (

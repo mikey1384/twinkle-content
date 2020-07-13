@@ -397,7 +397,7 @@ export default function SubjectPanel({
                   fontSize: '1.7rem'
                 }}
                 onHide={() => setRecommendationInterfaceShown(false)}
-                isRecommendedByUser={isRecommendedByUser}
+                recommendations={recommendations}
               />
             )}
             {xpRewardInterfaceShown && (
