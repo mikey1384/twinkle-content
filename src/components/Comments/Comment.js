@@ -156,8 +156,9 @@ function Comment({
 
   const isRecommendedByUser = useMemo(() => {
     return (
-      recommendations.filter((recommendation) => recommendation.id === userId)
-        .length > 0
+      recommendations.filter(
+        (recommendation) => recommendation.userId === userId
+      ).length > 0
     );
   }, [recommendations, userId]);
 

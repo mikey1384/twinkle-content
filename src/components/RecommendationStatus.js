@@ -25,11 +25,11 @@ export default function RecommendationStatus({
   }, [recommendations]);
 
   const me = recommendationsByUsertype.filter(
-    (recommendation) => recommendation.id === userId
+    (recommendation) => recommendation.userId === userId
   )[0];
 
   const recommendationsByUsertypeExceptMe = recommendationsByUsertype.filter(
-    (recommendation) => recommendation.id !== userId
+    (recommendation) => recommendation.userId !== userId
   );
 
   const mostRecentRecommenderOtherThanMe = recommendationsByUsertypeExceptMe[0];
@@ -70,7 +70,7 @@ export default function RecommendationStatus({
               color={isRecommendedByModerator ? '#000' : Color.black()}
               user={{
                 username: mostRecentRecommenderOtherThanMe.username,
-                id: mostRecentRecommenderOtherThanMe.id
+                id: mostRecentRecommenderOtherThanMe.userId
               }}
             />
           </>
@@ -83,7 +83,7 @@ export default function RecommendationStatus({
               color={isRecommendedByModerator ? '#000' : Color.black()}
               user={{
                 username: recommendationsByUsertypeExceptMe[1].username,
-                id: recommendationsByUsertypeExceptMe[1].id
+                id: recommendationsByUsertypeExceptMe[1].userId
               }}
             />
           </>

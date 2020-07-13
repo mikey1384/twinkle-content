@@ -153,7 +153,7 @@ export default function TargetContent({
   const isRecommendedByUser = useMemo(() => {
     return comment
       ? comment.recommendations?.filter(
-          (recommendation) => recommendation.id === userId
+          (recommendation) => recommendation.userId === userId
         ).length > 0
       : false;
   }, [comment, userId]);

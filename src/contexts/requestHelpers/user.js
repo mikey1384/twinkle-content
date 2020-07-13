@@ -209,7 +209,10 @@ export default function userRequestHelpers({ auth, handleError, token }) {
       amount,
       contentType,
       contentId,
-      uploaderId
+      rootType,
+      rootId,
+      uploaderId,
+      rewardType
     }) {
       try {
         const {
@@ -217,11 +220,14 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         } = await request.post(
           `${URL}/user/reward`,
           {
-            rewardExplanation: explanation,
+            rewardExplanation: explanation || '',
             amount,
             contentType,
             contentId,
-            uploaderId
+            rootType,
+            rootId,
+            uploaderId,
+            rewardType
           },
           auth()
         );
@@ -306,6 +312,16 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         } catch (error) {
           return handleError(error);
         }
+      }
+    },
+    async collectRewardedCoins() {
+      try {
+        const {
+          data: { coins }
+        } = await request.post(`${URL}/user/coin`, null, auth());
+        return Promise.resolve(coins);
+      } catch (error) {
+        return handleError(error);
       }
     },
     async updateUserXP({ amount, action, target, targetId, type, userId }) {

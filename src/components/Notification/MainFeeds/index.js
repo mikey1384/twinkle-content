@@ -39,10 +39,11 @@ function MainFeeds({
       fetchNotifications,
       loadMoreNotifications,
       loadMoreRewards,
-      updateUserXP
+      updateUserXP,
+      collectRewardedCoins
     }
   } = useAppContext();
-  const { userId, rank, twinkleXP } = useMyState();
+  const { userId, rank, twinkleXP, twinkleCoins } = useMyState();
   const {
     state: { numNewNotis, totalRewardAmount },
     actions: {
@@ -53,13 +54,15 @@ function MainFeeds({
     }
   } = useNotiContext();
   const {
-    actions: { onChangeUserXP }
+    actions: { onChangeUserCoins, onChangeUserXP }
   } = useContentContext();
   const [loading, setLoading] = useState(false);
   const [loadingNewFeeds, setLoadingNewFeeds] = useState(false);
   const [collectingReward, setCollectingReward] = useState(false);
-  const [originalTotalReward, setOriginalTotalReward] = useState(0);
+  const [originalTotalXPReward, setOriginalTotalXPReward] = useState(0);
   const [originalTwinkleXP, setOriginalTwinkleXP] = useState(0);
+  const [originalTotalCoinReward, setOriginalTotalCoinReward] = useState(0);
+  const [originalTwinkleCoins, setOriginalTwinkleCoins] = useState(0);
   const NotificationsItems = useMemo(() => {
     return notifications.map((notification) => {
       return (
@@ -73,60 +76,97 @@ function MainFeeds({
       );
     });
   }, [notifications]);
+
   const RewardListItems = useMemo(() => {
     return rewards.map(
       ({
         id,
         contentId,
         contentType,
+        rootId,
+        rootType,
         rewardAmount,
         rewardType,
         rewarderId,
         rewarderUsername,
         timeStamp
-      }) => (
-        <nav
-          style={{ background: '#fff' }}
-          className={notiFeedListItem}
-          key={id}
-        >
-          <div>
-            <UsernameText
-              user={{ id: rewarderId, username: rewarderUsername }}
-              color={Color.blue()}
-            />{' '}
-            <span
-              style={{
-                color:
-                  rewardAmount === 25
-                    ? Color.gold()
-                    : rewardAmount >= 10
-                    ? Color.rose()
-                    : rewardAmount >= 5
-                    ? Color.orange()
-                    : rewardAmount >= 3
-                    ? Color.pink()
-                    : Color.lightBlue(),
-                fontWeight: 'bold'
-              }}
-            >
-              rewarded you {rewardAmount === 1 ? 'a' : rewardAmount}{' '}
-              {rewardType}
-              {rewardAmount > 1 ? 's' : ''}
-            </span>{' '}
-            for your{' '}
-            <ContentLink
-              style={{ color: Color.green() }}
-              content={{
-                id: contentId,
-                title: contentType
-              }}
-              contentType={contentType}
-            />
-          </div>
-          <small>{timeSince(timeStamp)}</small>
-        </nav>
-      )
+      }) => {
+        let notiText = '';
+        if (rewardType === 'Twinkle') {
+          notiText = (
+            <div>
+              <UsernameText
+                user={{ id: rewarderId, username: rewarderUsername }}
+                color={Color.blue()}
+              />{' '}
+              <span
+                style={{
+                  color:
+                    rewardAmount >= 10
+                      ? Color.gold()
+                      : rewardAmount >= 5
+                      ? Color.rose()
+                      : rewardAmount >= 3
+                      ? Color.pink()
+                      : Color.lightBlue(),
+                  fontWeight: 'bold'
+                }}
+              >
+                rewarded you {rewardAmount === 1 ? 'a' : rewardAmount}{' '}
+                {rewardType}
+                {rewardAmount > 1 ? 's' : ''}
+              </span>{' '}
+              for your{' '}
+              <ContentLink
+                style={{ color: Color.green() }}
+                content={{
+                  id: contentId,
+                  title: contentType
+                }}
+                contentType={contentType}
+              />
+            </div>
+          );
+        } else {
+          notiText = (
+            <div>
+              <UsernameText
+                user={{ id: rewarderId, username: rewarderUsername }}
+                color={Color.blue()}
+              />{' '}
+              <b style={{ color: Color.brownOrange() }}>
+                also recommended this
+              </b>{' '}
+              <ContentLink
+                style={{ color: Color.green() }}
+                content={{
+                  id: rootId,
+                  title: rootType
+                }}
+                contentType={rootType}
+              />
+              <b style={{ color: Color.green() }}>.</b>{' '}
+              <span>
+                You earn{' '}
+                <b style={{ color: Color.brownOrange() }}>
+                  {rewardAmount} Twinkle Coins!
+                </b>
+              </span>
+            </div>
+          );
+        }
+
+        return (
+          <nav
+            style={{ background: '#fff' }}
+            className={notiFeedListItem}
+            key={id}
+          >
+            {notiText}
+            <small>{timeSince(timeStamp)}</small>
+          </nav>
+        );
+      }
     );
   }, [rewards]);
 
@@ -154,25 +194,40 @@ function MainFeeds({
           {totalRewardAmount > 0 && (
             <>
               <p>Tap to collect all your rewards</p>
-              <p style={{ fontSize: '1.5rem' }}>
-                ({totalRewardAmount} Twinkles x {rewardValue} XP/Twinkle ={' '}
-                {addCommasToNumber(totalRewardAmount * rewardValue)} XP)
-              </p>
             </>
           )}
-          {totalRewardAmount === 0 && (
-            <>
+          {totalRewardAmount === 0 && originalTotalXPReward > 0 && (
+            <div style={{ fontSize: '1.7rem' }}>
               <p>
-                {addCommasToNumber(originalTotalReward * rewardValue)} XP
-                Collected!
+                Your XP: {addCommasToNumber(originalTwinkleXP)} XP {'=>'}{' '}
+                {addCommasToNumber(
+                  originalTwinkleXP + originalTotalXPReward * rewardValue
+                )}{' '}
+                XP
               </p>
               <p style={{ fontSize: '1.5rem' }}>
-                Your XP: {addCommasToNumber(originalTwinkleXP)} {'=>'}{' '}
+                (+ {addCommasToNumber(originalTotalXPReward * rewardValue)} XP)
+              </p>
+            </div>
+          )}
+          {totalRewardAmount === 0 && originalTotalCoinReward > 0 && (
+            <div
+              style={{
+                fontSize: '1.7rem',
+                marginTop: originalTotalXPReward > 0 ? '1rem' : 0
+              }}
+            >
+              <p>
+                Your Twinkle Coins: {addCommasToNumber(originalTwinkleCoins)}{' '}
+                {'=>'}{' '}
                 {addCommasToNumber(
-                  originalTwinkleXP + originalTotalReward * rewardValue
+                  originalTwinkleCoins + originalTotalCoinReward
                 )}
               </p>
-            </>
+              <p style={{ fontSize: '1.5rem' }}>
+                (+ {addCommasToNumber(originalTotalCoinReward)})
+              </p>
+            </div>
           )}
         </Banner>
       )}
@@ -202,16 +257,30 @@ function MainFeeds({
   );
 
   async function onCollectReward() {
-    setOriginalTotalReward(totalRewardAmount);
+    setOriginalTotalXPReward(
+      rewards.reduce((sum, reward) => {
+        if (reward.rewardType === 'Twinkle') {
+          return sum + reward.rewardAmount;
+        }
+        return sum;
+      }, 0)
+    );
     setOriginalTwinkleXP(twinkleXP);
+    setOriginalTotalCoinReward(
+      rewards.reduce((sum, reward) => {
+        if (reward.rewardType === 'Twinkle Coin') {
+          return sum + reward.rewardAmount;
+        }
+        return sum;
+      }, 0)
+    );
+    setOriginalTwinkleCoins(twinkleCoins);
     setCollectingReward(true);
-    const { xp, alreadyDone, rank } = await updateUserXP({
+    const coins = await collectRewardedCoins();
+    const { xp, rank } = await updateUserXP({
       action: 'collect'
     });
-    if (alreadyDone) {
-      onClearRewards();
-      return setCollectingReward(false);
-    }
+    onChangeUserCoins({ coins, userId });
     onChangeUserXP({ xp, rank, userId });
     onClearRewards();
     setCollectingReward(false);

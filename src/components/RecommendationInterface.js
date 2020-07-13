@@ -26,7 +26,7 @@ export default function RecommendationInterface({
   const { canReward, userId, twinkleCoins } = useMyState();
 
   const {
-    requestHelpers: { recommendContent }
+    requestHelpers: { recommendContent, rewardUser }
   } = useAppContext();
 
   const {
@@ -45,8 +45,9 @@ export default function RecommendationInterface({
 
   const isRecommendedByUser = useMemo(() => {
     return (
-      recommendations.filter((recommendation) => recommendation.id === userId)
-        .length > 0
+      recommendations.filter(
+        (recommendation) => recommendation.userId === userId
+      ).length > 0
     );
   }, [recommendations, userId]);
 
@@ -120,7 +121,17 @@ export default function RecommendationInterface({
 
   async function handleRecommend() {
     if (!isRecommendedByUser && canReward && isOnlyRecommendedByStudents) {
-      console.log('send rewards to all the students');
+      for (let recommendation of recommendations) {
+        rewardUser({
+          amount: 2,
+          contentType: 'recommendation',
+          contentId: recommendation.id,
+          rootType: contentType,
+          rootId: contentId,
+          uploaderId: recommendation.userId,
+          rewardType: 'Twinkle Coin'
+        });
+      }
     }
     try {
       const { coins, recommendations } = await recommendContent({
