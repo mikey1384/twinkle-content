@@ -105,7 +105,10 @@ export default function RecommendationStatus({
         <UserListModal
           onHide={() => setUserListModalShown(false)}
           title={`People who recommended this ${contentType}`}
-          users={recommendationsByUsertype}
+          users={recommendationsByUsertype.map((user) => ({
+            ...user,
+            id: user.userId
+          }))}
         />
       )}
     </div>
