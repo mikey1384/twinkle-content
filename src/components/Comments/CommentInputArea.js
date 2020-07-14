@@ -81,7 +81,12 @@ export default function CommentInputArea({
       )}
       {uploadingFile && (
         <FileUploadStatusIndicator
-          style={{ fontSize: '1.7rem', fontWeight: 'bold', marginTop: 0 }}
+          style={{
+            fontSize: '1.7rem',
+            fontWeight: 'bold',
+            marginTop: 0,
+            paddingBottom: '1rem'
+          }}
           fileName={attachment?.file?.name}
           onFileUpload={handleFileUploadComplete}
           uploadComplete={fileUploadComplete}
