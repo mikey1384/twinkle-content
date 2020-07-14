@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Button from 'components/Button';
@@ -26,6 +26,7 @@ export default function RecommendationInterface({
   uploaderId
 }) {
   const { canReward, userId, twinkleCoins } = useMyState();
+  const [recommending, setRecommending] = useState(false);
 
   const {
     requestHelpers: { recommendContent, rewardUser }
@@ -67,7 +68,7 @@ export default function RecommendationInterface({
     ) : null;
   }, [isRecommendedByUser]);
 
-  return (
+  return recommending ? null : (
     <ErrorBoundary
       style={{
         border: `1px ${Color.borderGray()} solid`,
@@ -122,6 +123,7 @@ export default function RecommendationInterface({
   );
 
   async function handleRecommend() {
+    setRecommending(true);
     if (!isRecommendedByUser && canReward && isOnlyRecommendedByStudents) {
       for (let recommendation of recommendations) {
         rewardUser({
