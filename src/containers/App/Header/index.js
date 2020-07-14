@@ -117,6 +117,7 @@ export default function Header({
   } = useViewContext();
 
   const {
+    state,
     actions: {
       onAttachReward,
       onLikeContent,
@@ -352,11 +353,13 @@ export default function Header({
       target,
       newlyRecommended
     }) {
-      onRecommendContent({
-        recommendations,
-        contentId: target.contentId,
-        contentType: target.contentType
-      });
+      if (state[target.contentType + target.contentId]) {
+        onRecommendContent({
+          recommendations,
+          contentId: target.contentId,
+          contentType: target.contentType
+        });
+      }
       if (
         uploaderId === userId &&
         newlyRecommended &&
