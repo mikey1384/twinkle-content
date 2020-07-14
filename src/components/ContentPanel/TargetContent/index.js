@@ -289,6 +289,7 @@ export default function TargetContent({
                   <div style={{ marginTop: '1rem' }}>
                     {comment &&
                       comment.filePath &&
+                      !contentHidden &&
                       (userId ? (
                         <FileViewer
                           contentId={comment.id}
