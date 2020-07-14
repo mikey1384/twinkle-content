@@ -36,6 +36,7 @@ export default function XPBar({
 }) {
   const earned = alreadyEarned || justEarned;
   const rewardAmount = useMemo(() => rewardLevel * rewardValue, [rewardLevel]);
+  const canEarnCoins = rewardAmount >= 600;
   const { progress = 0 } = useContentState({
     contentType: 'video',
     contentId: videoId
@@ -135,45 +136,52 @@ export default function XPBar({
             />
           )
         )}
-        {xpLoaded && (
+        {xpLoaded && (!alreadyEarned || canEarnCoins) && (
           <div
             style={{
               height: '2.7rem',
-              width: '13rem',
+              width: canEarnCoins && !alreadyEarned ? '13rem' : '8rem',
               marginLeft: '1rem',
               display: 'flex',
               fontSize: '1.3rem'
             }}
           >
-            <div
-              style={{
-                height: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#fff',
-                flexGrow: 1,
-                fontWeight: 'bold',
-                background: earned ? Color.green() : xpLevelColor
-              }}
-            >
-              {rewardAmount} XP
-              {earned && <Icon icon="check" style={{ marginLeft: '0.5rem' }} />}
-            </div>
-            <div
-              style={{
-                height: '100%',
-                minWidth: '5rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontWeight: 'bold',
-                color: '#fff',
-                background: Color.brownOrange()
-              }}
-            >
-              <Icon size="lg" icon={['far', 'badge-dollar']} />
-            </div>
+            {!alreadyEarned && (
+              <div
+                style={{
+                  height: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#fff',
+                  flexGrow: 1,
+                  fontWeight: 'bold',
+                  background: earned ? Color.green() : xpLevelColor
+                }}
+              >
+                {rewardAmount} XP
+                {earned && (
+                  <Icon icon="check" style={{ marginLeft: '0.5rem' }} />
+                )}
+              </div>
+            )}
+            {canEarnCoins && (
+              <div
+                style={{
+                  height: '100%',
+                  width: alreadyEarned ? '100%' : '',
+                  minWidth: '5rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 'bold',
+                  color: '#fff',
+                  background: Color.brownOrange()
+                }}
+              >
+                <Icon size="lg" icon={['far', 'badge-dollar']} />
+              </div>
+            )}
           </div>
         )}
       </div>
