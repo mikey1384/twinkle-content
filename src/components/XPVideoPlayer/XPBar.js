@@ -19,7 +19,6 @@ XPBar.propTypes = {
   startingPosition: PropTypes.number,
   userId: PropTypes.number,
   videoId: PropTypes.number.isRequired,
-  xpEarned: PropTypes.bool,
   xpLoaded: PropTypes.bool
 };
 
@@ -33,20 +32,18 @@ export default function XPBar({
   startingPosition,
   userId,
   videoId,
-  xpEarned,
   xpLoaded
 }) {
+  const earned = alreadyEarned || justEarned;
   const rewardAmount = useMemo(() => rewardLevel * rewardValue, [rewardLevel]);
   const { progress = 0 } = useContentState({
     contentType: 'video',
     contentId: videoId
   });
 
-  const meterColor = useMemo(
+  const xpLevelColor = useMemo(
     () =>
-      xpEarned
-        ? Color.green()
-        : rewardLevel === 5
+      rewardLevel === 5
         ? Color.gold()
         : rewardLevel === 4
         ? Color.brownOrange()
@@ -55,73 +52,131 @@ export default function XPBar({
         : rewardLevel === 2
         ? Color.pink()
         : Color.logoBlue(),
-    [rewardLevel, xpEarned]
+    [rewardLevel]
+  );
+
+  const notWatched = useMemo(
+    () => !userId || (xpLoaded && !!rewardLevel && (!started || alreadyEarned)),
+    [alreadyEarned, rewardLevel, started, userId, xpLoaded]
   );
 
   return (
     <ErrorBoundary>
-      {startingPosition > 0 && !started ? (
-        <div
-          style={{
-            background: Color.darkBlue(),
-            padding: '0.5rem',
-            color: '#fff',
-            fontSize: '1.5rem',
-            fontWeight: 'bold',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer'
-          }}
-          onClick={onPlayVideo}
-        >
-          Continue Watching...
-        </div>
-      ) : (!userId || xpLoaded) &&
-        !!rewardLevel &&
-        (!started || alreadyEarned) ? (
-        <div
-          className={css`
-            font-size: 1.5rem;
-            padding: 0.5rem;
-            @media (max-width: ${mobileMaxWidth}) {
-              padding: 0.3rem;
-              font-size: ${isChat ? '1rem' : '1.5rem'};
-            }
-          `}
-          style={{
-            background: meterColor,
-            color: '#fff',
-            fontWeight: 'bold',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-        >
-          {!alreadyEarned && (
+      <div
+        style={{
+          display: 'flex',
+          marginTop: '1rem',
+          alignItems: 'center',
+          width: '100%',
+          justifyContent: 'space-between'
+        }}
+      >
+        {startingPosition > 0 && !started ? (
+          <div
+            style={{
+              height: '2.7rem',
+              background: Color.darkBlue(),
+              color: '#fff',
+              flexGrow: 1,
+              fontSize: '1.3rem',
+              fontWeight: 'bold',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer'
+            }}
+            onClick={onPlayVideo}
+          >
+            Continue Watching...
+          </div>
+        ) : notWatched ? (
+          <div
+            className={css`
+              height: 2.7rem;
+              font-size: 1.3rem;
+              @media (max-width: ${mobileMaxWidth}) {
+                padding: 0.3rem;
+                font-size: ${isChat ? '1rem' : '1.5rem'};
+              }
+            `}
+            style={{
+              background: Color.green(),
+              color: '#fff',
+              fontWeight: 'bold',
+              display: 'flex',
+              flexGrow: 1,
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
             <div>
               {[...Array(rewardLevel)].map((elem, index) => (
                 <Icon key={index} icon="star" />
               ))}
             </div>
-          )}
-          <div style={{ marginLeft: '0.7rem' }}>
-            {alreadyEarned
-              ? 'You have earned XP from this video'
-              : `Watch and earn ${addCommasToNumber(rewardAmount)} XP`}
+            <div style={{ marginLeft: '0.7rem' }}>
+              Watch and earn {addCommasToNumber(rewardAmount)} XP
+            </div>
           </div>
-        </div>
-      ) : null}
-      {!alreadyEarned && !!rewardLevel && userId && started && (
-        <ProgressBar
-          progress={progress}
-          color={justEarned ? Color.green() : meterColor}
-          noBorderRadius
-          text={
-            justEarned ? `Earned ${addCommasToNumber(rewardAmount)} XP!` : ''
-          }
-        />
-      )}
+        ) : (
+          !alreadyEarned &&
+          !!rewardLevel &&
+          userId &&
+          started && (
+            <ProgressBar
+              style={{
+                marginTop: 0,
+                flexGrow: 1,
+                height: '2.7rem'
+              }}
+              progress={progress}
+              color={Color.green()}
+              noBorderRadius
+            />
+          )
+        )}
+        {xpLoaded && (
+          <div
+            style={{
+              height: '2.7rem',
+              width: '13rem',
+              marginLeft: '1rem',
+              display: 'flex',
+              fontSize: '1.3rem'
+            }}
+          >
+            <div
+              style={{
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#fff',
+                flexGrow: 1,
+                fontWeight: 'bold',
+                background: earned ? Color.green() : xpLevelColor
+              }}
+            >
+              {rewardAmount} XP
+              {earned && <Icon icon="check" style={{ marginLeft: '0.5rem' }} />}
+            </div>
+            <div
+              style={{
+                height: '100%',
+                minWidth: '5rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontWeight: 'bold',
+                color: '#fff',
+                background: Color.brownOrange()
+              }}
+            >
+              <Icon size="lg" icon={['far', 'badge-dollar']} />
+            </div>
+          </div>
+        )}
+      </div>
     </ErrorBoundary>
   );
 }
