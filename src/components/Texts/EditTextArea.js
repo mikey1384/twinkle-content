@@ -21,6 +21,7 @@ EditTextArea.propTypes = {
   onEditDone: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
   rows: PropTypes.number,
+  style: PropTypes.object,
   text: PropTypes.string.isRequired
 };
 
@@ -35,6 +36,7 @@ export default function EditTextArea({
   onEditDone,
   placeholder = 'Enter text',
   rows = 4,
+  style,
   text
 }) {
   const {
@@ -86,7 +88,7 @@ export default function EditTextArea({
   }, []);
 
   return (
-    <div style={{ lineHeight: 1 }}>
+    <div style={{ lineHeight: 1, ...style }}>
       <Textarea
         placeholder={placeholder}
         autoFocus={autoFocus}

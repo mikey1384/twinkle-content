@@ -37,8 +37,8 @@ import {
   determineXpButtonDisabled,
   scrollElementToCenter
 } from 'helpers';
+import { getFileInfoFromFileName, stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext } from 'contexts';
-import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 import LocalContext from './Context';
 
 Comment.propTypes = {
@@ -96,6 +96,7 @@ function Comment({
   }
 }) {
   subject = subject || comment.targetObj?.subject || {};
+  const { fileType } = getFileInfoFromFileName(fileName);
   const history = useHistory();
   const {
     requestHelpers: { checkIfUserResponded, editContent, loadReplies }
@@ -108,7 +109,6 @@ function Comment({
     twinkleCoins,
     userId
   } = useMyState();
-  const { fileType } = getFileInfoFromFileName(fileName);
   const {
     actions: {
       onChangeSpoilerStatus,
@@ -403,8 +403,35 @@ function Comment({
                     />
                   </span>
                 )}
+              {filePath &&
+                (userId ? (
+                  <div style={{ width: '100%', paddingTop: '3rem' }}>
+                    <FileViewer
+                      contentId={comment.id}
+                      contentType="comment"
+                      fileName={fileName}
+                      filePath={filePath}
+                      fileSize={Number(fileSize)}
+                      thumbUrl={thumbUrl}
+                      videoHeight="100%"
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        marginBottom: stringIsEmpty(comment.content)
+                          ? fileType === 'audio'
+                            ? '2rem'
+                            : '1rem'
+                          : 0
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <LoginToViewContent />
+                ))}
               {isEditing ? (
                 <EditTextArea
+                  allowEmptyText
+                  style={{ marginBottom: '1rem' }}
                   contentType="comment"
                   contentId={comment.id}
                   text={comment.content}
@@ -427,36 +454,12 @@ function Comment({
                       onClick={() => history.push(`/subjects/${subject?.id}`)}
                     />
                   ) : (
-                    <LongText className="comment__content">
-                      {comment.content}
-                    </LongText>
+                    !stringIsEmpty(comment.content) && (
+                      <LongText className="comment__content">
+                        {comment.content}
+                      </LongText>
+                    )
                   )}
-                  {filePath &&
-                    (userId ? (
-                      <div style={{ width: '100%' }}>
-                        <FileViewer
-                          contentId={comment.id}
-                          contentType="comment"
-                          fileName={fileName}
-                          filePath={filePath}
-                          fileSize={Number(fileSize)}
-                          thumbUrl={thumbUrl}
-                          videoHeight="100%"
-                          style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            ...(fileType === 'audio'
-                              ? {
-                                  paddingBottom: '2rem'
-                                }
-                              : {}),
-                            marginBottom: rewardLevel ? '1rem' : 0
-                          }}
-                        />
-                      </div>
-                    ) : (
-                      <LoginToViewContent />
-                    ))}
                   {!isPreview && !isHidden && (
                     <div
                       style={{

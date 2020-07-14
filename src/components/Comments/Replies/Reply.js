@@ -26,7 +26,7 @@ import { determineUserCanRewardThis, determineXpButtonDisabled } from 'helpers';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { useAppContext, useContentContext } from 'contexts';
-import { getFileInfoFromFileName } from 'helpers/stringHelpers';
+import { getFileInfoFromFileName, stringIsEmpty } from 'helpers/stringHelpers';
 
 Reply.propTypes = {
   comment: PropTypes.shape({
@@ -262,8 +262,35 @@ function Reply({
                     </span>
                   </ErrorBoundary>
                 )}
+              {filePath &&
+                (userId ? (
+                  <div style={{ width: '100%' }}>
+                    <FileViewer
+                      contentId={reply.id}
+                      contentType="comment"
+                      fileName={fileName}
+                      filePath={filePath}
+                      fileSize={Number(fileSize)}
+                      thumbUrl={thumbUrl}
+                      videoHeight="100%"
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        marginBottom: stringIsEmpty(reply.content)
+                          ? fileType === 'audio'
+                            ? '2rem'
+                            : '1rem'
+                          : 0
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <LoginToViewContent />
+                ))}
               {isEditing ? (
                 <EditTextArea
+                  allowEmptyText
+                  style={{ marginBottom: '1rem' }}
                   contentId={reply.id}
                   contentType="comment"
                   text={reply.content}
@@ -281,32 +308,6 @@ function Reply({
                   <LongText className="comment__content">
                     {reply.content}
                   </LongText>
-                  {filePath &&
-                    (userId ? (
-                      <div style={{ width: '100%' }}>
-                        <FileViewer
-                          contentId={reply.id}
-                          contentType="comment"
-                          fileName={fileName}
-                          filePath={filePath}
-                          fileSize={Number(fileSize)}
-                          thumbUrl={thumbUrl}
-                          videoHeight="100%"
-                          style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            ...(fileType === 'audio'
-                              ? {
-                                  paddingBottom: '2rem'
-                                }
-                              : {}),
-                            marginBottom: rewardLevel ? '1rem' : 0
-                          }}
-                        />
-                      </div>
-                    ) : (
-                      <LoginToViewContent />
-                    ))}
                   <div
                     style={{
                       marginTop: '1rem',
