@@ -58,7 +58,6 @@ export default function Profile({ history, location, match }) {
       }
       setLoading(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [match.params.username, notExist, profile.loaded]);
 
   useEffect(() => {
@@ -70,7 +69,7 @@ export default function Profile({ history, location, match }) {
       history.push(`/${username}`);
     }
     setSelectedTheme(profile?.profileTheme || 'logoBlue');
-  }, [history, match.params.username, profile, userId, username]);
+  }, []);
 
   return (
     <ErrorBoundary style={{ minHeight: '10rem' }}>
@@ -97,7 +96,7 @@ export default function Profile({ history, location, match }) {
                   setSelectedTheme(theme);
                 }}
                 selectedTheme={selectedTheme}
-                onSetTheme={onSetTheme}
+                onSetTheme={handleSetTheme}
               />
               <Body
                 history={history}
@@ -118,7 +117,7 @@ export default function Profile({ history, location, match }) {
     </ErrorBoundary>
   );
 
-  async function onSetTheme() {
+  async function handleSetTheme() {
     await setTheme({ color: selectedTheme });
     onChangeProfileTheme({ userId, theme: selectedTheme });
   }
