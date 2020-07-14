@@ -158,6 +158,7 @@ export default function Header({
     socket.on('new_notification_received', handleNewNotification);
     socket.on('new_message_received', handleReceiveMessage);
     socket.on('new_reward_posted', handleNewReward);
+    socket.on('new_recommendation_posted', handleNewRecommendation);
     socket.on('peer_accepted', handlePeerAccepted);
     socket.on('peer_hung_up', handlePeerHungUp);
     socket.on('peer_stream_show_requested', handlePeerStreamShowRequest);
@@ -193,6 +194,10 @@ export default function Header({
       socket.removeListener('new_notification_received', handleNewNotification);
       socket.removeListener('new_message_received', handleReceiveMessage);
       socket.removeListener('new_reward_posted', handleNewReward);
+      socket.removeListener(
+        'new_recommendation_posted',
+        handleNewRecommendation
+      );
       socket.removeListener('peer_accepted', handlePeerAccepted);
       socket.removeListener('peer_hung_up', handlePeerHungUp);
       socket.removeListener(
@@ -322,23 +327,10 @@ export default function Header({
       onChangeSocketStatus(false);
     }
 
-    function handleNewNotification({
-      type,
-      target,
-      likes,
-      comment,
-      recommendations
-    }) {
+    function handleNewNotification({ type, target, likes, comment }) {
       if (type === 'like') {
         onLikeContent({
           likes,
-          contentId: target.contentId,
-          contentType: target.contentType
-        });
-      }
-      if (type === 'recommendation') {
-        onRecommendContent({
-          recommendations,
           contentId: target.contentId,
           contentType: target.contentType
         });
@@ -351,6 +343,27 @@ export default function Header({
         });
       }
       onIncreaseNumNewNotis();
+    }
+
+    function handleNewRecommendation({
+      uploaderId,
+      recommendations,
+      recommenderId,
+      target,
+      newlyRecommended
+    }) {
+      onRecommendContent({
+        recommendations,
+        contentId: target.contentId,
+        contentType: target.contentType
+      });
+      if (
+        uploaderId === userId &&
+        newlyRecommended &&
+        recommenderId !== userId
+      ) {
+        onIncreaseNumNewNotis();
+      }
     }
 
     function handleNewReward({ target, reward }) {
