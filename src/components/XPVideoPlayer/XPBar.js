@@ -35,6 +35,7 @@ export default function XPBar({
   xpLoaded
 }) {
   const earned = alreadyEarned || justEarned;
+  const watching = startingPosition > 0;
   const rewardAmount = useMemo(() => rewardLevel * rewardValue, [rewardLevel]);
   const canEarnCoins = rewardAmount >= 600;
   const { progress = 0 } = useContentState({
@@ -56,23 +57,24 @@ export default function XPBar({
     [rewardLevel]
   );
 
-  const notWatched = useMemo(
-    () => !userId || (xpLoaded && !!rewardLevel && (!started || alreadyEarned)),
-    [alreadyEarned, rewardLevel, started, userId, xpLoaded]
-  );
-
-  return (
-    <ErrorBoundary>
-      <div
-        style={{
-          display: 'flex',
-          marginTop: '1rem',
-          alignItems: 'center',
-          width: '100%',
-          justifyContent: 'space-between'
-        }}
-      >
-        {startingPosition > 0 && !started ? (
+  const Bar = useMemo(() => {
+    if (!userId || !xpLoaded) return null;
+    if (started) {
+      return (
+        <ProgressBar
+          style={{
+            marginTop: 0,
+            flexGrow: 1,
+            height: '2.7rem'
+          }}
+          progress={progress}
+          color={Color.green()}
+          noBorderRadius
+        />
+      );
+    } else {
+      if (watching) {
+        return (
           <div
             style={{
               height: '2.7rem',
@@ -90,7 +92,9 @@ export default function XPBar({
           >
             Continue Watching...
           </div>
-        ) : notWatched ? (
+        );
+      } else {
+        return (
           <div
             className={css`
               height: 2.7rem;
@@ -101,7 +105,11 @@ export default function XPBar({
               }
             `}
             style={{
-              background: Color.green(),
+              background: earned
+                ? canEarnCoins
+                  ? Color.brownOrange()
+                  : Color.green()
+                : xpLevelColor,
               color: '#fff',
               fontWeight: 'bold',
               display: 'flex',
@@ -110,66 +118,80 @@ export default function XPBar({
               justifyContent: 'center'
             }}
           >
-            <div>
-              {[...Array(rewardLevel)].map((elem, index) => (
-                <Icon key={index} icon="star" />
-              ))}
-            </div>
+            {!earned && (
+              <div>
+                {[...Array(rewardLevel)].map((elem, index) => (
+                  <Icon key={index} icon="star" />
+                ))}
+              </div>
+            )}
             <div style={{ marginLeft: '0.7rem' }}>
-              Watch and earn {addCommasToNumber(rewardAmount)} XP
+              {earned
+                ? canEarnCoins
+                  ? 'Watch and earn Twinkle Coins!'
+                  : 'You have earned XP from this vide'
+                : `Watch and earn ${addCommasToNumber(rewardAmount)} XP`}
             </div>
           </div>
-        ) : (
-          !alreadyEarned &&
-          !!rewardLevel &&
-          userId &&
-          started && (
-            <ProgressBar
-              style={{
-                marginTop: 0,
-                flexGrow: 1,
-                height: '2.7rem'
-              }}
-              progress={progress}
-              color={Color.green()}
-              noBorderRadius
-            />
-          )
-        )}
-        {xpLoaded && (!alreadyEarned || canEarnCoins) && (
+        );
+      }
+    }
+  }, [
+    canEarnCoins,
+    earned,
+    isChat,
+    onPlayVideo,
+    progress,
+    rewardAmount,
+    rewardLevel,
+    started,
+    userId,
+    watching,
+    xpLevelColor,
+    xpLoaded
+  ]);
+
+  return (
+    <ErrorBoundary>
+      <div
+        style={{
+          display: 'flex',
+          marginTop: '1rem',
+          alignItems: 'center',
+          width: '100%',
+          justifyContent: 'space-between'
+        }}
+      >
+        {Bar}
+        {started && (
           <div
             style={{
               height: '2.7rem',
-              width: canEarnCoins && !alreadyEarned ? '13rem' : '8rem',
+              width: '13rem',
               marginLeft: '1rem',
               display: 'flex',
               fontSize: '1.3rem'
             }}
           >
-            {!alreadyEarned && (
-              <div
-                style={{
-                  height: '100%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#fff',
-                  flexGrow: 1,
-                  fontWeight: 'bold',
-                  background: earned ? Color.green() : xpLevelColor
-                }}
-              >
-                {rewardAmount} XP
-                {earned && (
-                  <Icon icon="check" style={{ marginLeft: '0.5rem' }} />
-                )}
-              </div>
-            )}
+            <div
+              style={{
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#fff',
+                flexGrow: 1,
+                fontWeight: 'bold',
+                background: earned ? Color.green() : xpLevelColor
+              }}
+            >
+              {rewardAmount} XP
+              {earned && <Icon icon="check" style={{ marginLeft: '0.5rem' }} />}
+            </div>
             {canEarnCoins && (
               <div
                 style={{
                   height: '100%',
-                  width: alreadyEarned ? '100%' : '',
                   minWidth: '5rem',
                   display: 'flex',
                   alignItems: 'center',
