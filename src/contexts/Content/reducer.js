@@ -1338,7 +1338,7 @@ export default function ContentReducer(state, action) {
         ...state,
         [contentKey]: {
           ...prevContentState,
-          progress: action.progress
+          xpProgress: action.progress
         }
       };
     case 'SET_VISIBLE':

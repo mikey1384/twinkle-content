@@ -38,7 +38,7 @@ export default function XPBar({
   const watching = startingPosition > 0;
   const rewardAmount = useMemo(() => rewardLevel * rewardValue, [rewardLevel]);
   const canEarnCoins = rewardAmount >= 600;
-  const { progress = 0 } = useContentState({
+  const { xpProgress = 0 } = useContentState({
     contentType: 'video',
     contentId: videoId
   });
@@ -67,7 +67,7 @@ export default function XPBar({
             flexGrow: 1,
             height: '2.7rem'
           }}
-          progress={progress}
+          progress={xpProgress}
           color={Color.green()}
           noBorderRadius
         />
@@ -141,7 +141,7 @@ export default function XPBar({
     earned,
     isChat,
     onPlayVideo,
-    progress,
+    xpProgress,
     rewardAmount,
     rewardLevel,
     started,
