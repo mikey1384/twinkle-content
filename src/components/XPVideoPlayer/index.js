@@ -98,6 +98,7 @@ function XPVideoPlayer({
   const themeColor = profileTheme || 'logoBlue';
   const rewardLevelRef = useRef(0);
   const rewardAmountRef = useRef(rewardLevel * rewardValue);
+  const xpEarnedRef = useRef(xpEarned);
 
   useEffect(() => {
     mounted.current = true;
@@ -331,11 +332,13 @@ function XPVideoPlayer({
       if (!currentVideoSlot) {
         onFillCurrentVideoSlot(watchCodeRef.current);
       }
-      clearInterval(timerRef.current);
-      timerRef.current = setInterval(
-        () => handleIncreaseXPMeter({ userId, watchTime }),
-        intervalLength
-      );
+      if (!xpEarnedRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = setInterval(
+          () => handleIncreaseXPMeter({ userId, watchTime }),
+          intervalLength
+        );
+      }
     }
     if (!!rewardLevel && !(justEarned || xpEarned)) {
       updateCurrentlyWatching({
@@ -384,7 +387,9 @@ function XPVideoPlayer({
           onChangeUserXP({ xp, rank, userId });
           onSetVideoXpJustEarned({ videoId, justEarned: true });
           onSetVideoXpEarned({ videoId, earned: true });
+          xpEarnedRef.current = true;
           rewardingXP.current = false;
+          clearInterval(timerRef.current);
         } catch (error) {
           console.error(error.response || error);
         }
