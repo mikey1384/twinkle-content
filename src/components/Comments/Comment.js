@@ -516,7 +516,7 @@ function Comment({
                         <Likers
                           className="comment__likes"
                           userId={userId}
-                          likes={comment.likes}
+                          likes={likes}
                           onLinkClick={() => setUserListModalShown(true)}
                         />
                       </div>
@@ -574,7 +574,7 @@ function Comment({
                 onCommentEdit={onRewardCommentEdit}
                 style={{
                   fontSize: '1.5rem',
-                  marginTop: comment.likes?.length > 0 ? '0.5rem' : '1rem'
+                  marginTop: likes?.length > 0 ? '0.5rem' : '1rem'
                 }}
                 rewards={rewards}
                 uploaderName={uploader.username}
@@ -613,7 +613,7 @@ function Comment({
           <UserListModal
             onHide={() => setUserListModalShown(false)}
             title="People who liked this comment"
-            users={comment.likes}
+            users={likes}
           />
         )}
       </div>
