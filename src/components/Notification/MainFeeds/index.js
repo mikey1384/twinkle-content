@@ -59,10 +59,27 @@ function MainFeeds({
   const [loading, setLoading] = useState(false);
   const [loadingNewFeeds, setLoadingNewFeeds] = useState(false);
   const [collectingReward, setCollectingReward] = useState(false);
-  const [originalTotalXPReward, setOriginalTotalXPReward] = useState(0);
   const [originalTwinkleXP, setOriginalTwinkleXP] = useState(0);
-  const [originalTotalCoinReward, setOriginalTotalCoinReward] = useState(0);
   const [originalTwinkleCoins, setOriginalTwinkleCoins] = useState(0);
+
+  const totalXPReward = useMemo(() => {
+    return rewards.reduce((sum, reward) => {
+      if (reward.rewardType === 'Twinkle') {
+        return sum + reward.rewardAmount;
+      }
+      return sum;
+    }, 0);
+  }, [rewards]);
+
+  const totalCoinReward = useMemo(() => {
+    return rewards.reduce((sum, reward) => {
+      if (reward.rewardType === 'Twinkle Coin') {
+        return sum + reward.rewardAmount;
+      }
+      return sum;
+    }, 0);
+  }, [rewards]);
+
   const NotificationsItems = useMemo(() => {
     return notifications.map((notification) => {
       return (
@@ -189,38 +206,47 @@ function MainFeeds({
           {totalRewardAmount > 0 && (
             <>
               <p>Tap to collect all your rewards</p>
+              {totalXPReward > 0 && (
+                <p style={{ fontSize: '1.5rem' }}>
+                  * {totalXPReward} Twinkle{totalXPReward > 0 ? 's' : ''}
+                </p>
+              )}
+              {totalCoinReward > 0 && (
+                <p style={{ fontSize: '1.5rem' }}>
+                  * {totalCoinReward} Twinkle Coin
+                  {totalCoinReward > 0 ? 's' : ''}
+                </p>
+              )}
             </>
           )}
-          {totalRewardAmount === 0 && originalTotalXPReward > 0 && (
+          {totalRewardAmount === 0 && totalXPReward > 0 && (
             <div style={{ fontSize: '1.7rem' }}>
               <p>
                 Your XP: {addCommasToNumber(originalTwinkleXP)} XP {'=>'}{' '}
                 {addCommasToNumber(
-                  originalTwinkleXP + originalTotalXPReward * rewardValue
+                  originalTwinkleXP + totalXPReward * rewardValue
                 )}{' '}
                 XP
               </p>
               <p style={{ fontSize: '1.5rem' }}>
-                (+ {addCommasToNumber(originalTotalXPReward * rewardValue)} XP)
+                (+ {addCommasToNumber(totalXPReward * rewardValue)} XP)
               </p>
             </div>
           )}
-          {totalRewardAmount === 0 && originalTotalCoinReward > 0 && (
+          {totalRewardAmount === 0 && totalCoinReward > 0 && (
             <div
               style={{
                 fontSize: '1.7rem',
-                marginTop: originalTotalXPReward > 0 ? '1rem' : 0
+                marginTop: totalXPReward > 0 ? '1rem' : 0
               }}
             >
               <p>
                 Your Twinkle Coins: {addCommasToNumber(originalTwinkleCoins)}{' '}
                 {'=>'}{' '}
-                {addCommasToNumber(
-                  originalTwinkleCoins + originalTotalCoinReward
-                )}
+                {addCommasToNumber(originalTwinkleCoins + totalCoinReward)}
               </p>
               <p style={{ fontSize: '1.5rem' }}>
-                (+ {addCommasToNumber(originalTotalCoinReward)})
+                (+ {addCommasToNumber(totalCoinReward)})
               </p>
             </div>
           )}
@@ -252,23 +278,7 @@ function MainFeeds({
   );
 
   async function onCollectReward() {
-    setOriginalTotalXPReward(
-      rewards.reduce((sum, reward) => {
-        if (reward.rewardType === 'Twinkle') {
-          return sum + reward.rewardAmount;
-        }
-        return sum;
-      }, 0)
-    );
     setOriginalTwinkleXP(twinkleXP);
-    setOriginalTotalCoinReward(
-      rewards.reduce((sum, reward) => {
-        if (reward.rewardType === 'Twinkle Coin') {
-          return sum + reward.rewardAmount;
-        }
-        return sum;
-      }, 0)
-    );
     setOriginalTwinkleCoins(twinkleCoins);
     setCollectingReward(true);
     const coins = await collectRewardedCoins();
