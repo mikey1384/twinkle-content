@@ -74,7 +74,14 @@ export default function NotiItem({
                   targetObj.contentType === 'url'
                     ? 'link'
                     : targetObj.contentType
-                } (${truncateText({ text: targetObj.content, limit: 100 })})`
+                } ${
+                  stringIsEmpty(targetObj.content)
+                    ? ''
+                    : `(${truncateText({
+                        text: targetObj.content,
+                        limit: 100
+                      })})`
+                }`
               }}
             />
           </>
@@ -110,7 +117,14 @@ export default function NotiItem({
                     targetObj.contentType === 'url'
                       ? 'link'
                       : targetObj.contentType
-                  } (${truncateText({ text: targetObj.content, limit: 100 })})`
+                  } ${
+                    stringIsEmpty(targetObj.content)
+                      ? ''
+                      : `(${truncateText({
+                          text: targetObj.content,
+                          limit: 100
+                        })})`
+                  }`
                 }}
               />
             </>
