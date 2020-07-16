@@ -321,7 +321,7 @@ function XPVideoPlayer({
       ?.getDuration();
   }
 
-  async function onVideoPlay({ userId, watchTime }) {
+  async function onVideoPlay({ userId }) {
     onSetVideoStarted({
       contentType: 'video',
       contentId: videoId,
@@ -341,7 +341,7 @@ function XPVideoPlayer({
       }
       clearInterval(timerRef.current);
       timerRef.current = setInterval(
-        () => handleIncreaseMeter({ userId, watchTime }),
+        () => handleIncreaseMeter({ userId }),
         intervalLength
       );
     }
@@ -353,7 +353,7 @@ function XPVideoPlayer({
     onEmptyCurrentVideoSlot();
   }
 
-  async function handleIncreaseMeter({ userId, watchTime }) {
+  async function handleIncreaseMeter({ userId }) {
     timeAt.current = PlayerRef.current.getCurrentTime();
     if (!totalDurationRef.current) {
       onVideoReady();
@@ -395,19 +395,20 @@ function XPVideoPlayer({
         !rewardingCoin.current &&
         userId
       ) {
-        rewardingCoin.current = true;
+        timeWatchedRef.current = 0;
         onSetXpVideoWatchTime({
           videoId,
           watchTime: 0
         });
+        onSetVideoCoinProgress({
+          videoId,
+          progress: 0
+        });
+        rewardingCoin.current = true;
         rewardingCoin.current = false;
-        timeWatchedRef.current = 0;
         return;
       }
-      timeWatchedRef.current = Math.max(
-        timeWatchedRef.current + intervalLength / 1000,
-        watchTime
-      );
+      timeWatchedRef.current = timeWatchedRef.current + intervalLength / 1000;
       onSetXpVideoWatchTime({
         videoId,
         watchTime: timeWatchedRef.current
@@ -437,6 +438,11 @@ function XPVideoPlayer({
       ) {
         rewardingXP.current = true;
         try {
+          timeWatchedRef.current = 0;
+          onSetXpVideoWatchTime({
+            videoId,
+            watchTime: 0
+          });
           await updateVideoXPEarned(videoId);
           const { alreadyDone, xp, rank, coins } = await updateUserXP({
             action: 'watch',
@@ -450,22 +456,14 @@ function XPVideoPlayer({
           onChangeUserXP({ xp, rank, userId });
           onSetVideoXpJustEarned({ videoId, justEarned: true });
           onSetVideoXpEarned({ videoId, earned: true });
-          onSetXpVideoWatchTime({
-            videoId,
-            watchTime: 0
-          });
           xpEarnedRef.current = true;
           rewardingXP.current = false;
-          timeWatchedRef.current = 0;
           return;
         } catch (error) {
           console.error(error.response || error);
         }
       }
-      timeWatchedRef.current = Math.max(
-        timeWatchedRef.current + intervalLength / 1000,
-        watchTime
-      );
+      timeWatchedRef.current = timeWatchedRef.current + intervalLength / 1000;
       onSetXpVideoWatchTime({
         videoId,
         watchTime: timeWatchedRef.current
