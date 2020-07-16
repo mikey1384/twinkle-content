@@ -89,7 +89,7 @@ function XPVideoPlayer({
   const requiredDuration = 120;
   const PlayerRef = useRef(null);
   const timerRef = useRef(null);
-  const timeWatchedForXPRef = useRef(0);
+  const timeWatchedRef = useRef(0);
   const totalDurationRef = useRef(0);
   const userIdRef = useRef(null);
   const watchCodeRef = useRef(Math.floor(Math.random() * 10000));
@@ -117,7 +117,7 @@ function XPVideoPlayer({
   }, []);
 
   useEffect(() => {
-    timeWatchedForXPRef.current = watchTime;
+    timeWatchedRef.current = watchTime;
   }, [watchTime]);
 
   useEffect(() => {
@@ -138,7 +138,6 @@ function XPVideoPlayer({
     rewardAmountRef.current = rewardLevel * rewardValue;
 
     if (!!rewardLevel && userId) {
-      console.log('checking');
       handleCheckXPEarned();
     }
 
@@ -399,7 +398,7 @@ function XPVideoPlayer({
           : requiredDuration;
       if (
         rewardAmountRef.current &&
-        timeWatchedForXPRef.current >= requiredViewDuration &&
+        timeWatchedRef.current >= requiredViewDuration &&
         !rewardingXP.current &&
         userId
       ) {
@@ -418,28 +417,30 @@ function XPVideoPlayer({
           onChangeUserXP({ xp, rank, userId });
           onSetVideoXpJustEarned({ videoId, justEarned: true });
           onSetVideoXpEarned({ videoId, earned: true });
+          onSetXpVideoWatchTime({
+            videoId,
+            watchTime: 0
+          });
           xpEarnedRef.current = true;
           rewardingXP.current = false;
-          clearInterval(timerRef.current);
         } catch (error) {
           console.error(error.response || error);
         }
       }
-      timeWatchedForXPRef.current = Math.max(
-        timeWatchedForXPRef.current + intervalLength / 1000,
+      timeWatchedRef.current = Math.max(
+        timeWatchedRef.current + intervalLength / 1000,
         watchTime
       );
       onSetXpVideoWatchTime({
         videoId,
-        watchTime: timeWatchedForXPRef.current
+        watchTime: timeWatchedRef.current
       });
       onSetVideoXpProgress({
         videoId,
         progress:
           requiredViewDuration > 0
             ? Math.floor(
-                (Math.min(timeWatchedForXPRef.current, requiredViewDuration) *
-                  100) /
+                (Math.min(timeWatchedRef.current, requiredViewDuration) * 100) /
                   requiredViewDuration
               )
             : 0
