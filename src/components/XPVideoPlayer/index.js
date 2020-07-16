@@ -343,10 +343,12 @@ function XPVideoPlayer({
         onFillCurrentVideoSlot(watchCodeRef.current);
       }
       clearInterval(timerRef.current);
-      timerRef.current = setInterval(
-        () => handleIncreaseMeter({ userId }),
-        intervalLength
-      );
+      if (userId) {
+        timerRef.current = setInterval(
+          () => handleIncreaseMeter({ userId }),
+          intervalLength
+        );
+      }
     }
   }
 
