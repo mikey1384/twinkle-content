@@ -84,13 +84,12 @@ function XPVideoPlayer({
     isEditing
   } = useContentState({ contentType: 'video', contentId: videoId });
   const [playing, setPlaying] = useState(false);
-  const [alreadyEarned, setAlreadyEarned] = useState(false);
   const [startingPosition, setStartingPosition] = useState(0);
   const timeAt = useRef(0);
   const requiredDuration = 120;
   const PlayerRef = useRef(null);
   const timerRef = useRef(null);
-  const timeWatchedRef = useRef(0);
+  const timeWatchedForXPRef = useRef(0);
   const totalDurationRef = useRef(0);
   const userIdRef = useRef(null);
   const watchCodeRef = useRef(Math.floor(Math.random() * 10000));
@@ -118,7 +117,7 @@ function XPVideoPlayer({
   }, []);
 
   useEffect(() => {
-    timeWatchedRef.current = watchTime;
+    timeWatchedForXPRef.current = watchTime;
   }, [watchTime]);
 
   useEffect(() => {
@@ -138,7 +137,8 @@ function XPVideoPlayer({
     rewardLevelRef.current = rewardLevel;
     rewardAmountRef.current = rewardLevel * rewardValue;
 
-    if (!!rewardLevel && userId && !xpLoaded) {
+    if (!!rewardLevel && userId) {
+      console.log('checking');
       handleCheckXPEarned();
     }
 
@@ -151,7 +151,7 @@ function XPVideoPlayer({
     }
     userIdRef.current = userId;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rewardLevel, userId, videoId, xpLoaded]);
+  }, [rewardLevel, userId, videoId]);
 
   useEffect(() => {
     if (isEditing) {
@@ -162,11 +162,7 @@ function XPVideoPlayer({
 
   useEffect(() => {
     xpEarnedRef.current = xpEarned;
-    if (userId && xpEarned) {
-      setAlreadyEarned(true);
-    }
     if (!userId) {
-      setAlreadyEarned(false);
       onSetVideoXpEarned({ videoId, earned: false });
       onSetVideoXpJustEarned({ videoId, justEarned: false });
       onSetVideoXpLoaded({ videoId, loaded: false });
@@ -302,7 +298,7 @@ function XPVideoPlayer({
         />
       </div>
       <XPBar
-        alreadyEarned={alreadyEarned}
+        alreadyEarned={xpEarned}
         isChat={isChat}
         justEarned={justEarned}
         onPlayVideo={() => PlayerRef.current?.getInternalPlayer()?.playVideo()}
@@ -369,6 +365,28 @@ function XPVideoPlayer({
       userId
     ) {
       increaseXPMeter();
+    } else {
+      increaseCoinMeter();
+    }
+
+    async function checkAlreadyWatchingAnotherVideo() {
+      if (rewardLevelRef.current) {
+        const currentlyWatchingAnotherVideo = await checkCurrentlyWatchingAnotherVideo(
+          {
+            rewardLevel: rewardLevelRef.current,
+            watchCode: watchCodeRef.current
+          }
+        );
+        if (currentlyWatchingAnotherVideo) {
+          PlayerRef.current.getInternalPlayer()?.pauseVideo?.();
+        }
+      }
+    }
+
+    async function increaseCoinMeter() {
+      if (PlayerRef.current.getInternalPlayer()?.isMuted()) {
+        PlayerRef.current.getInternalPlayer()?.unMute();
+      }
     }
 
     async function increaseXPMeter() {
@@ -381,7 +399,7 @@ function XPVideoPlayer({
           : requiredDuration;
       if (
         rewardAmountRef.current &&
-        timeWatchedRef.current >= requiredViewDuration &&
+        timeWatchedForXPRef.current >= requiredViewDuration &&
         !rewardingXP.current &&
         userId
       ) {
@@ -407,39 +425,26 @@ function XPVideoPlayer({
           console.error(error.response || error);
         }
       }
-      timeWatchedRef.current = Math.max(
-        timeWatchedRef.current + intervalLength / 1000,
+      timeWatchedForXPRef.current = Math.max(
+        timeWatchedForXPRef.current + intervalLength / 1000,
         watchTime
       );
       onSetXpVideoWatchTime({
         videoId,
-        watchTime: timeWatchedRef.current
+        watchTime: timeWatchedForXPRef.current
       });
       onSetVideoXpProgress({
         videoId,
         progress:
           requiredViewDuration > 0
             ? Math.floor(
-                (Math.min(timeWatchedRef.current, requiredViewDuration) * 100) /
+                (Math.min(timeWatchedForXPRef.current, requiredViewDuration) *
+                  100) /
                   requiredViewDuration
               )
             : 0
       });
       updateTotalViewDuration({ videoId });
-    }
-
-    async function checkAlreadyWatchingAnotherVideo() {
-      if (rewardLevelRef.current) {
-        const currentlyWatchingAnotherVideo = await checkCurrentlyWatchingAnotherVideo(
-          {
-            rewardLevel: rewardLevelRef.current,
-            watchCode: watchCodeRef.current
-          }
-        );
-        if (currentlyWatchingAnotherVideo) {
-          PlayerRef.current.getInternalPlayer()?.pauseVideo?.();
-        }
-      }
     }
   }
 }

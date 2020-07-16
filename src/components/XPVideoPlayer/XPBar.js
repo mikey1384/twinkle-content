@@ -129,7 +129,9 @@ export default function XPBar({
               {earned
                 ? canEarnCoins
                   ? 'Watch and earn Twinkle Coins!'
-                  : 'You have earned XP from this vide'
+                  : `You have earned ${
+                      justEarned ? rewardAmount : ''
+                    } XP from this video`
                 : `Watch and earn ${addCommasToNumber(rewardAmount)} XP`}
             </div>
           </div>
@@ -137,18 +139,19 @@ export default function XPBar({
       }
     }
   }, [
-    canEarnCoins,
-    earned,
-    isChat,
-    onPlayVideo,
-    xpProgress,
-    rewardAmount,
-    rewardLevel,
-    started,
     userId,
-    watching,
+    xpLoaded,
+    started,
+    earned,
+    canEarnCoins,
+    xpProgress,
     xpLevelColor,
-    xpLoaded
+    watching,
+    onPlayVideo,
+    isChat,
+    rewardLevel,
+    justEarned,
+    rewardAmount
   ]);
 
   return userId && xpLoaded ? (
@@ -167,7 +170,7 @@ export default function XPBar({
           <div
             style={{
               height: '2.7rem',
-              width: '13rem',
+              width: canEarnCoins ? '13rem' : '7rem',
               marginLeft: '1rem',
               display: 'flex',
               fontSize: '1.3rem'
