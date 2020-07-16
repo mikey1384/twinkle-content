@@ -37,8 +37,12 @@ export default function XPBar({
   const xpEarned = alreadyEarned || justEarned;
   const watching = startingPosition > 0;
   const rewardAmount = useMemo(() => rewardLevel * rewardValue, [rewardLevel]);
-  const canEarnCoins = rewardAmount >= 600;
-  const { coinProgress = 0, xpProgress = 0 } = useContentState({
+  const canEarnCoins = rewardLevel >= 3;
+  const {
+    coinProgress = 0,
+    xpProgress = 0,
+    numCoinsEarned = 0
+  } = useContentState({
     contentType: 'video',
     contentId: videoId
   });
@@ -207,10 +211,15 @@ export default function XPBar({
                   justifyContent: 'center',
                   fontWeight: 'bold',
                   color: '#fff',
+                  fontSize: '1.5rem',
                   background: Color.brownOrange()
                 }}
               >
-                <Icon size="lg" icon={['far', 'badge-dollar']} />
+                {numCoinsEarned > 0 ? (
+                  `+ ${numCoinsEarned}`
+                ) : (
+                  <Icon size="lg" icon={['far', 'badge-dollar']} />
+                )}
               </div>
             )}
           </div>

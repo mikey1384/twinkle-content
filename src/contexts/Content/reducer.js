@@ -582,6 +582,14 @@ export default function ContentReducer(state, action) {
       }
       return newState;
     }
+    case 'INCREASE_NUM_COINS_EARNED':
+      return {
+        ...state,
+        [contentKey]: {
+          ...prevContentState,
+          numCoinsEarned: (prevContentState.numCoinsEarned || 0) + 1
+        }
+      };
     case 'LIKE_COMMENT': {
       const newState = { ...state };
       const contentKeys = Object.keys(newState);
