@@ -125,6 +125,9 @@ export default function XPBar({
                 ))}
               </div>
             )}
+            {xpEarned && canEarnCoins && (
+              <Icon icon={['far', 'badge-dollar']} />
+            )}
             <div style={{ marginLeft: '0.7rem' }}>
               {xpEarned
                 ? canEarnCoins
@@ -132,7 +135,7 @@ export default function XPBar({
                   : `You have earned ${
                       justEarned ? rewardAmount : ''
                     } XP from this video`
-                : `Watch and earn ${addCommasToNumber(rewardAmount)} XP`}
+                : `Watch and earn ${addCommasToNumber(rewardAmount)} XP!`}
             </div>
           </div>
         );

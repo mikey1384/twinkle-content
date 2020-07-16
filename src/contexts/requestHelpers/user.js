@@ -318,7 +318,21 @@ export default function userRequestHelpers({ auth, handleError, token }) {
       try {
         const {
           data: { coins }
-        } = await request.post(`${URL}/user/coin`, null, auth());
+        } = await request.post(`${URL}/user/coin/collect`, null, auth());
+        return Promise.resolve(coins);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
+    async updateUserCoins({ action, type, amount, target, targetId }) {
+      try {
+        const {
+          data: { coins }
+        } = await request.post(
+          `${URL}/user/coin`,
+          { amount, action, target, targetId, type },
+          auth()
+        );
         return Promise.resolve(coins);
       } catch (error) {
         return handleError(error);

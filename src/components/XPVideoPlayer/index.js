@@ -45,6 +45,7 @@ function XPVideoPlayer({
       checkXPEarned,
       checkCurrentlyWatchingAnotherVideo,
       updateCurrentlyWatching,
+      updateUserCoins,
       updateUserXP,
       updateTotalViewDuration,
       updateVideoXPEarned
@@ -405,7 +406,19 @@ function XPVideoPlayer({
           progress: 0
         });
         rewardingCoin.current = true;
-        rewardingCoin.current = false;
+        try {
+          await updateUserCoins({
+            action: 'watch',
+            target: 'video',
+            amount: 1,
+            targetId: videoId,
+            type: 'increase'
+          });
+          rewardingCoin.current = false;
+        } catch (error) {
+          console.error(error.response || error);
+          rewardingCoin.current = false;
+        }
         return;
       }
       timeWatchedRef.current = timeWatchedRef.current + intervalLength / 1000;
@@ -436,13 +449,13 @@ function XPVideoPlayer({
         !rewardingXP.current &&
         userId
       ) {
+        timeWatchedRef.current = 0;
+        onSetXpVideoWatchTime({
+          videoId,
+          watchTime: 0
+        });
         rewardingXP.current = true;
         try {
-          timeWatchedRef.current = 0;
-          onSetXpVideoWatchTime({
-            videoId,
-            watchTime: 0
-          });
           await updateVideoXPEarned(videoId);
           const { alreadyDone, xp, rank, coins } = await updateUserXP({
             action: 'watch',
@@ -458,10 +471,11 @@ function XPVideoPlayer({
           onSetVideoXpEarned({ videoId, earned: true });
           xpEarnedRef.current = true;
           rewardingXP.current = false;
-          return;
         } catch (error) {
           console.error(error.response || error);
+          rewardingXP.current = false;
         }
+        return;
       }
       timeWatchedRef.current = timeWatchedRef.current + intervalLength / 1000;
       onSetXpVideoWatchTime({
