@@ -1309,6 +1309,14 @@ export default function ContentReducer(state, action) {
           started: action.started
         }
       };
+    case 'SET_VIDEO_COIN_PROGRESS':
+      return {
+        ...state,
+        [contentKey]: {
+          ...prevContentState,
+          coinProgress: action.progress
+        }
+      };
     case 'SET_VIDEO_XP_EARNED':
       return {
         ...state,

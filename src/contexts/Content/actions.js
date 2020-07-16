@@ -475,6 +475,14 @@ export default function ContentActions(dispatch) {
         thumbUrl
       });
     },
+    onSetVideoCoinProgress({ videoId, progress }) {
+      return dispatch({
+        type: 'SET_VIDEO_COIN_PROGRESS',
+        contentType: 'video',
+        contentId: videoId,
+        progress
+      });
+    },
     onSetVideoCurrentTime({ contentType, contentId, currentTime }) {
       return dispatch({
         type: 'SET_VIDEO_CURRENT_TIME',
@@ -491,6 +499,14 @@ export default function ContentActions(dispatch) {
         contentId
       });
     },
+    onSetVideoStarted({ contentType, contentId, started }) {
+      return dispatch({
+        type: 'SET_VIDEO_STARTED',
+        contentType,
+        contentId,
+        started
+      });
+    },
     onSetVideoXpEarned({ videoId, earned }) {
       return dispatch({
         type: 'SET_VIDEO_XP_EARNED',
@@ -505,14 +521,6 @@ export default function ContentActions(dispatch) {
         contentType: 'video',
         contentId: videoId,
         justEarned
-      });
-    },
-    onSetVideoStarted({ contentType, contentId, started }) {
-      return dispatch({
-        type: 'SET_VIDEO_STARTED',
-        contentType,
-        contentId,
-        started
       });
     },
     onSetVideoXpLoaded({ videoId, loaded }) {

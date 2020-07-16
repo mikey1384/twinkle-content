@@ -34,11 +34,11 @@ export default function XPBar({
   videoId,
   xpLoaded
 }) {
-  const earned = alreadyEarned || justEarned;
+  const xpEarned = alreadyEarned || justEarned;
   const watching = startingPosition > 0;
   const rewardAmount = useMemo(() => rewardLevel * rewardValue, [rewardLevel]);
   const canEarnCoins = rewardAmount >= 600;
-  const { xpProgress = 0 } = useContentState({
+  const { coinProgress = 0, xpProgress = 0 } = useContentState({
     contentType: 'video',
     contentId: videoId
   });
@@ -48,7 +48,7 @@ export default function XPBar({
       rewardLevel === 5
         ? Color.gold()
         : rewardLevel === 4
-        ? Color.brownOrange()
+        ? Color.cranberry()
         : rewardLevel === 3
         ? Color.orange()
         : rewardLevel === 2
@@ -59,7 +59,7 @@ export default function XPBar({
 
   const Bar = useMemo(() => {
     if (!userId || !xpLoaded) return null;
-    if (started && !(earned && !canEarnCoins)) {
+    if (started && !(xpEarned && !canEarnCoins)) {
       return (
         <ProgressBar
           style={{
@@ -67,8 +67,8 @@ export default function XPBar({
             flexGrow: 1,
             height: '2.7rem'
           }}
-          progress={xpProgress}
-          color={xpLevelColor}
+          progress={xpEarned ? coinProgress : xpProgress}
+          color={xpEarned ? Color.brownOrange() : xpLevelColor}
           noBorderRadius
         />
       );
@@ -105,7 +105,7 @@ export default function XPBar({
               }
             `}
             style={{
-              background: earned
+              background: xpEarned
                 ? canEarnCoins
                   ? Color.brownOrange()
                   : Color.green()
@@ -118,7 +118,7 @@ export default function XPBar({
               justifyContent: 'center'
             }}
           >
-            {!earned && (
+            {!xpEarned && (
               <div>
                 {[...Array(rewardLevel)].map((elem, index) => (
                   <Icon key={index} icon="star" />
@@ -126,7 +126,7 @@ export default function XPBar({
               </div>
             )}
             <div style={{ marginLeft: '0.7rem' }}>
-              {earned
+              {xpEarned
                 ? canEarnCoins
                   ? 'Watch and earn Twinkle Coins!'
                   : `You have earned ${
@@ -142,8 +142,9 @@ export default function XPBar({
     userId,
     xpLoaded,
     started,
-    earned,
+    xpEarned,
     canEarnCoins,
+    coinProgress,
     xpProgress,
     xpLevelColor,
     watching,
@@ -166,7 +167,7 @@ export default function XPBar({
         }}
       >
         {Bar}
-        {started && !(earned && !canEarnCoins) && (
+        {started && !(xpEarned && !canEarnCoins) && (
           <div
             style={{
               height: '2.7rem',
@@ -185,11 +186,13 @@ export default function XPBar({
                 color: '#fff',
                 flexGrow: 1,
                 fontWeight: 'bold',
-                background: earned ? Color.green() : xpLevelColor
+                background: xpEarned ? Color.green() : xpLevelColor
               }}
             >
               {rewardAmount} XP
-              {earned && <Icon icon="check" style={{ marginLeft: '0.5rem' }} />}
+              {xpEarned && (
+                <Icon icon="check" style={{ marginLeft: '0.5rem' }} />
+              )}
             </div>
             {canEarnCoins && (
               <div

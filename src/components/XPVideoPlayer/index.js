@@ -64,6 +64,7 @@ function XPVideoPlayer({
     actions: {
       onChangeUserCoins,
       onChangeUserXP,
+      onSetVideoCoinProgress,
       onSetVideoStarted,
       onSetVideoXpEarned,
       onSetVideoXpJustEarned,
@@ -86,7 +87,8 @@ function XPVideoPlayer({
   const [playing, setPlaying] = useState(false);
   const [startingPosition, setStartingPosition] = useState(0);
   const timeAt = useRef(0);
-  const requiredDuration = 120;
+  const requiredDurationForCoin = 60;
+  const requiredDurationForXP = 120;
   const PlayerRef = useRef(null);
   const timerRef = useRef(null);
   const timeWatchedRef = useRef(0);
@@ -94,6 +96,7 @@ function XPVideoPlayer({
   const userIdRef = useRef(null);
   const watchCodeRef = useRef(Math.floor(Math.random() * 10000));
   const mounted = useRef(true);
+  const rewardingCoin = useRef(false);
   const rewardingXP = useRef(false);
   const themeColor = profileTheme || 'logoBlue';
   const rewardLevelRef = useRef(0);
@@ -386,6 +389,36 @@ function XPVideoPlayer({
       if (PlayerRef.current.getInternalPlayer()?.isMuted()) {
         PlayerRef.current.getInternalPlayer()?.unMute();
       }
+      if (
+        rewardAmountRef.current &&
+        timeWatchedRef.current >= requiredDurationForCoin &&
+        !rewardingCoin.current &&
+        userId
+      ) {
+        rewardingCoin.current = true;
+        onSetXpVideoWatchTime({
+          videoId,
+          watchTime: 0
+        });
+        rewardingCoin.current = false;
+        timeWatchedRef.current = 0;
+        return;
+      }
+      timeWatchedRef.current = Math.max(
+        timeWatchedRef.current + intervalLength / 1000,
+        watchTime
+      );
+      onSetXpVideoWatchTime({
+        videoId,
+        watchTime: timeWatchedRef.current
+      });
+      onSetVideoCoinProgress({
+        videoId,
+        progress: Math.floor(
+          (Math.min(timeWatchedRef.current, requiredDurationForCoin) * 100) /
+            requiredDurationForCoin
+        )
+      });
     }
 
     async function increaseXPMeter() {
@@ -393,9 +426,9 @@ function XPVideoPlayer({
         PlayerRef.current.getInternalPlayer()?.unMute();
       }
       const requiredViewDuration =
-        totalDurationRef.current < requiredDuration + 10
+        totalDurationRef.current < requiredDurationForXP + 10
           ? Math.floor(totalDurationRef.current * 0.8)
-          : requiredDuration;
+          : requiredDurationForXP;
       if (
         rewardAmountRef.current &&
         timeWatchedRef.current >= requiredViewDuration &&
@@ -423,6 +456,8 @@ function XPVideoPlayer({
           });
           xpEarnedRef.current = true;
           rewardingXP.current = false;
+          timeWatchedRef.current = 0;
+          return;
         } catch (error) {
           console.error(error.response || error);
         }
