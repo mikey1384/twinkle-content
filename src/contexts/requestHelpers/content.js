@@ -523,28 +523,31 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async updateTotalViewDuration({ videoId, rewardLevel, watchCode }) {
-      const authorization = auth();
-      const authExists = !!authorization.headers.authorization;
-      if (authExists) {
-        try {
-          const {
-            data: { currentlyWatchingAnotherVideo, success }
-          } = await request.put(
-            `${URL}/video/duration`,
-            {
-              videoId,
-              rewardLevel,
-              watchCode
-            },
-            authorization
-          );
-          return Promise.resolve({ currentlyWatchingAnotherVideo, success });
-        } catch (error) {
-          console.error(error.response || error);
-        }
-      } else {
-        return { notLoggedIn: true };
+    async checkCurrentlyWatchingAnotherVideo({ rewardLevel, watchCode }) {
+      try {
+        const {
+          data: { currentlyWatchingAnotherVideo }
+        } = await request.get(
+          `${URL}/video/currentlyWatching?watchCode=${watchCode}&rewardLevel=${rewardLevel}`,
+          auth()
+        );
+        return Promise.resolve(currentlyWatchingAnotherVideo);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
+    async updateTotalViewDuration({ videoId }) {
+      try {
+        await request.put(
+          `${URL}/video/duration`,
+          {
+            videoId
+          },
+          auth()
+        );
+        return Promise.resolve();
+      } catch (error) {
+        return handleError(error);
       }
     },
     async updateVideoXPEarned(videoId) {

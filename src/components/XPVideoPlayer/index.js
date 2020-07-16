@@ -43,6 +43,7 @@ function XPVideoPlayer({
     requestHelpers: {
       addVideoView,
       checkXPEarned,
+      checkCurrentlyWatchingAnotherVideo,
       updateCurrentlyWatching,
       updateUserXP,
       updateTotalViewDuration,
@@ -322,13 +323,16 @@ function XPVideoPlayer({
       ?.getDuration();
   }
 
-  function onVideoPlay({ userId, watchTime }) {
+  async function onVideoPlay({ userId, watchTime }) {
     onSetVideoStarted({
       contentType: 'video',
       contentId: videoId,
       started: true
     });
     if (!playing) {
+      await updateCurrentlyWatching({
+        watchCode: watchCodeRef.current
+      });
       setPlaying(true);
       const time = PlayerRef.current.getCurrentTime();
       if (Math.floor(time) === 0) {
@@ -343,11 +347,6 @@ function XPVideoPlayer({
         intervalLength
       );
     }
-    if (!!rewardLevel && !(justEarned || xpEarned)) {
-      updateCurrentlyWatching({
-        watchCode: watchCodeRef.current
-      });
-    }
   }
 
   function handleVideoStop() {
@@ -361,16 +360,18 @@ function XPVideoPlayer({
     if (!totalDurationRef.current) {
       onVideoReady();
     }
+    checkAlreadyWatchingAnotherVideo();
+
     if (
       !!rewardLevelRef.current &&
       !xpEarnedRef.current &&
       !justEarned &&
       userId
     ) {
-      handleIncreaseXPMeter();
+      increaseXPMeter();
     }
 
-    async function handleIncreaseXPMeter() {
+    async function increaseXPMeter() {
       if (PlayerRef.current.getInternalPlayer()?.isMuted()) {
         PlayerRef.current.getInternalPlayer()?.unMute();
       }
@@ -424,18 +425,20 @@ function XPVideoPlayer({
               )
             : 0
       });
-      const {
-        notLoggedIn,
-        success,
-        currentlyWatchingAnotherVideo
-      } = await updateTotalViewDuration({
-        videoId,
-        rewardLevel: rewardLevelRef.current,
-        watchCode: watchCodeRef.current
-      });
-      if (success || notLoggedIn) return;
-      if (currentlyWatchingAnotherVideo && !!rewardLevelRef.current) {
-        PlayerRef.current.getInternalPlayer()?.pauseVideo?.();
+      updateTotalViewDuration({ videoId });
+    }
+
+    async function checkAlreadyWatchingAnotherVideo() {
+      if (rewardLevelRef.current) {
+        const currentlyWatchingAnotherVideo = await checkCurrentlyWatchingAnotherVideo(
+          {
+            rewardLevel: rewardLevelRef.current,
+            watchCode: watchCodeRef.current
+          }
+        );
+        if (currentlyWatchingAnotherVideo) {
+          PlayerRef.current.getInternalPlayer()?.pauseVideo?.();
+        }
       }
     }
   }
