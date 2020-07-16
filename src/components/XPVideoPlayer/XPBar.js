@@ -59,7 +59,7 @@ export default function XPBar({
 
   const Bar = useMemo(() => {
     if (!userId || !xpLoaded) return null;
-    if (started) {
+    if (started && !(earned && !canEarnCoins)) {
       return (
         <ProgressBar
           style={{
@@ -73,7 +73,7 @@ export default function XPBar({
         />
       );
     } else {
-      if (watching) {
+      if (watching && !started) {
         return (
           <div
             style={{
@@ -163,7 +163,7 @@ export default function XPBar({
         }}
       >
         {Bar}
-        {started && (
+        {started && !(earned && !canEarnCoins) && (
           <div
             style={{
               height: '2.7rem',
