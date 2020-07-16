@@ -486,7 +486,7 @@ export default function Body({
           </div>
         )}
         <RecommendationStatus
-          style={{ marginBottom: xpRewardInterfaceShown ? 0 : '1rem' }}
+          style={{ marginBottom: '1rem' }}
           contentType={contentType}
           recommendations={recommendations}
         />
