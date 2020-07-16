@@ -26,7 +26,7 @@ export default function RewardLevelBar({ className, rewardLevel, style }) {
       rewardLevel === 5
         ? Color.gold()
         : rewardLevel === 4
-        ? Color.brownOrange()
+        ? Color.cranberry()
         : rewardLevel === 3
         ? Color.orange()
         : rewardLevel === 2
