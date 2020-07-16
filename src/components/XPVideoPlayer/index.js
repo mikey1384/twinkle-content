@@ -367,6 +367,10 @@ function XPVideoPlayer({
       !justEarned &&
       userId
     ) {
+      handleIncreaseXPMeter();
+    }
+
+    async function handleIncreaseXPMeter() {
       if (PlayerRef.current.getInternalPlayer()?.isMuted()) {
         PlayerRef.current.getInternalPlayer()?.unMute();
       }
@@ -430,12 +434,7 @@ function XPVideoPlayer({
         watchCode: watchCodeRef.current
       });
       if (success || notLoggedIn) return;
-      if (
-        currentlyWatchingAnotherVideo &&
-        !xpEarned &&
-        !!rewardLevelRef.current &&
-        !justEarned
-      ) {
+      if (currentlyWatchingAnotherVideo && !!rewardLevelRef.current) {
         PlayerRef.current.getInternalPlayer()?.pauseVideo?.();
       }
     }
