@@ -68,7 +68,7 @@ export default function XPBar({
             height: '2.7rem'
           }}
           progress={xpProgress}
-          color={Color.green()}
+          color={xpLevelColor}
           noBorderRadius
         />
       );
@@ -151,7 +151,7 @@ export default function XPBar({
     xpLoaded
   ]);
 
-  return (
+  return userId && xpLoaded ? (
     <ErrorBoundary>
       <div
         style={{
@@ -208,5 +208,5 @@ export default function XPBar({
         )}
       </div>
     </ErrorBoundary>
-  );
+  ) : null;
 }

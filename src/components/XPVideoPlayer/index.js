@@ -160,7 +160,8 @@ function XPVideoPlayer({
   }, [isEditing]);
 
   useEffect(() => {
-    if (userId && xpEarned && !playing) {
+    xpEarnedRef.current = xpEarned;
+    if (userId && xpEarned) {
       setAlreadyEarned(true);
     }
     if (!userId) {
@@ -170,7 +171,11 @@ function XPVideoPlayer({
       onSetVideoXpLoaded({ videoId, loaded: false });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId, xpEarned, playing]);
+  }, [userId, xpEarned]);
+
+  useEffect(() => {
+    PlayerRef.current.getInternalPlayer()?.pauseVideo?.();
+  }, [userId]);
 
   useEffect(() => {
     const userWatchingMultipleVideo =
@@ -332,13 +337,11 @@ function XPVideoPlayer({
       if (!currentVideoSlot) {
         onFillCurrentVideoSlot(watchCodeRef.current);
       }
-      if (!xpEarnedRef.current) {
-        clearInterval(timerRef.current);
-        timerRef.current = setInterval(
-          () => handleIncreaseXPMeter({ userId, watchTime }),
-          intervalLength
-        );
-      }
+      clearInterval(timerRef.current);
+      timerRef.current = setInterval(
+        () => handleIncreaseMeter({ userId, watchTime }),
+        intervalLength
+      );
     }
     if (!!rewardLevel && !(justEarned || xpEarned)) {
       updateCurrentlyWatching({
@@ -353,12 +356,17 @@ function XPVideoPlayer({
     onEmptyCurrentVideoSlot();
   }
 
-  async function handleIncreaseXPMeter({ userId, watchTime }) {
+  async function handleIncreaseMeter({ userId, watchTime }) {
     timeAt.current = PlayerRef.current.getCurrentTime();
     if (!totalDurationRef.current) {
       onVideoReady();
     }
-    if (!!rewardLevelRef.current && !xpEarned && !justEarned && userId) {
+    if (
+      !!rewardLevelRef.current &&
+      !xpEarnedRef.current &&
+      !justEarned &&
+      userId
+    ) {
       if (PlayerRef.current.getInternalPlayer()?.isMuted()) {
         PlayerRef.current.getInternalPlayer()?.unMute();
       }
@@ -419,7 +427,6 @@ function XPVideoPlayer({
       } = await updateTotalViewDuration({
         videoId,
         rewardLevel: rewardLevelRef.current,
-        xpEarned,
         watchCode: watchCodeRef.current
       });
       if (success || notLoggedIn) return;

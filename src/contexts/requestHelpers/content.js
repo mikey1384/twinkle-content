@@ -523,12 +523,7 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async updateTotalViewDuration({
-      videoId,
-      rewardLevel,
-      xpEarned,
-      watchCode
-    }) {
+    async updateTotalViewDuration({ videoId, rewardLevel, watchCode }) {
       const authorization = auth();
       const authExists = !!authorization.headers.authorization;
       if (authExists) {
@@ -540,7 +535,6 @@ export default function contentRequestHelpers({ auth, handleError }) {
             {
               videoId,
               rewardLevel,
-              xpEarned,
               watchCode
             },
             authorization
