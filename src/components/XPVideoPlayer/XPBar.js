@@ -66,11 +66,17 @@ export default function XPBar({
     if (started && !(xpEarned && !canEarnCoins)) {
       return (
         <ProgressBar
-          style={{
-            marginTop: 0,
-            flexGrow: 1,
-            height: '2.7rem'
-          }}
+          className={css`
+            margin-top: 0;
+            flex-grow: 1;
+            height: 2.7rem;
+            margin-top: 0 !important;
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: ${isChat ? '1rem' : '1.2rem'};
+              height: ${isChat ? '2rem' : '2.7rem'} !important;
+              font-size: ${isChat ? '0.8rem' : '1.2rem'}!important;
+            }
+          `}
           progress={xpEarned ? coinProgress : xpProgress}
           color={xpEarned ? Color.brownOrange() : xpLevelColor}
           noBorderRadius
@@ -80,18 +86,22 @@ export default function XPBar({
       if (watching && !started) {
         return (
           <div
-            style={{
-              height: '2.7rem',
-              background: Color.darkBlue(),
-              color: '#fff',
-              flexGrow: 1,
-              fontSize: '1.3rem',
-              fontWeight: 'bold',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer'
-            }}
+            className={css`
+              height: 2.7rem;
+              background: ${Color.darkBlue()};
+              color: #fff;
+              flex-grow: 1;
+              font-size: 1.3rem;
+              font-weight: bold;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              cursor: pointer;
+              @media (max-width: ${mobileMaxWidth}) {
+                height: ${isChat ? '2rem' : '2.7rem'};
+                font-size: ${isChat ? '1rem' : '1.3rem'};
+              }
+            `}
             onClick={onPlayVideo}
           >
             Continue Watching...
@@ -104,8 +114,8 @@ export default function XPBar({
               height: 2.7rem;
               font-size: 1.3rem;
               @media (max-width: ${mobileMaxWidth}) {
-                padding: 0.3rem;
-                font-size: ${isChat ? '1rem' : '1.5rem'};
+                height: ${isChat ? '2rem' : '2.7rem'};
+                font-size: ${isChat ? '1rem' : '1.3rem'};
               }
             `}
             style={{
@@ -130,7 +140,9 @@ export default function XPBar({
               </div>
             )}
             {xpEarned && canEarnCoins && (
-              <Icon icon={['far', 'badge-dollar']} />
+              <div>
+                <Icon icon={['far', 'badge-dollar']} />
+              </div>
             )}
             <div style={{ marginLeft: '0.7rem' }}>
               {xpEarned
@@ -176,25 +188,36 @@ export default function XPBar({
         {Bar}
         {started && !(xpEarned && !canEarnCoins) && (
           <div
-            style={{
-              height: '2.7rem',
-              width: canEarnCoins ? '13rem' : '7rem',
-              marginLeft: '1rem',
-              display: 'flex',
-              fontSize: '1.3rem'
-            }}
+            className={css`
+              height: 2.7rem;
+              width: ${canEarnCoins ? '13rem' : '7rem'};
+              margin-left: 1rem;
+              display: flex;
+              font-size: 1.3rem;
+              @media (max-width: ${mobileMaxWidth}) {
+                width: ${isChat
+                  ? canEarnCoins
+                    ? '8rem'
+                    : '4rem'
+                  : canEarnCoins
+                  ? '13rem'
+                  : '7rem'};
+                height: ${isChat ? '2rem' : '2.7rem'};
+                font-size: ${isChat ? '0.8rem' : '1.3rem'};
+              }
+            `}
           >
             <div
-              style={{
-                height: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#fff',
-                flexGrow: 1,
-                fontWeight: 'bold',
-                background: xpEarned ? Color.green() : xpLevelColor
-              }}
+              className={css`
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+                flex-grow: 1;
+                font-weight: bold;
+                background: ${xpEarned ? Color.green() : xpLevelColor};
+              `}
             >
               {rewardAmount} XP
               {xpEarned && (
@@ -203,17 +226,21 @@ export default function XPBar({
             </div>
             {canEarnCoins && (
               <div
-                style={{
-                  height: '100%',
-                  minWidth: '5rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontWeight: 'bold',
-                  color: '#fff',
-                  fontSize: '1.5rem',
-                  background: Color.brownOrange()
-                }}
+                className={css`
+                  height: 100%;
+                  min-width: 5rem;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-weight: bold;
+                  color: #fff;
+                  font-size: 1.5rem;
+                  background: ${Color.brownOrange()};
+                  @media (max-width: ${mobileMaxWidth}) {
+                    min-width: ${isChat ? '3rem' : '5rem'};
+                    font-size: ${isChat ? '0.8rem' : '1.5rem'};
+                  }
+                `}
               >
                 {numCoinsEarned > 0 ? (
                   `+ ${numCoinsEarned}`

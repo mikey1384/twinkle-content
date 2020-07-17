@@ -5,6 +5,7 @@ import { css } from 'emotion';
 import { useMyState } from 'helpers/hooks';
 
 ProgressBar.propTypes = {
+  className: PropTypes.string,
   noBorderRadius: PropTypes.bool,
   progress: PropTypes.number.isRequired,
   color: PropTypes.string,
@@ -13,6 +14,7 @@ ProgressBar.propTypes = {
 };
 
 export default function ProgressBar({
+  className,
   color,
   noBorderRadius,
   progress,
@@ -24,7 +26,7 @@ export default function ProgressBar({
 
   return (
     <div
-      className={css`
+      className={`${css`
         border: 1px solid ${Color.borderGray()};
         border-radius: ${borderRadius};
         height: 2.2rem;
@@ -33,6 +35,7 @@ export default function ProgressBar({
         flex-direction: column;
         justify-content: center;
         margin-top: 1rem;
+        font-size: 1.2rem;
         section {
           margin-left: 0;
           transition: width 0.5s;
@@ -44,7 +47,7 @@ export default function ProgressBar({
             ? innerBorderRadius
             : 0};
         }
-      `}
+      `} ${className}`}
       style={{
         ...style,
         borderLeft: noBorderRadius && 'none',
@@ -66,8 +69,7 @@ export default function ProgressBar({
       >
         <span
           style={{
-            color: '#fff',
-            fontSize: '1.2rem'
+            color: '#fff'
           }}
         >
           {text || `${progress}%`}
