@@ -45,10 +45,13 @@ export default function StarButton({
 
   return (
     <ErrorBoundary>
-      <div ref={StarButtonRef} style={style}>
+      <div ref={StarButtonRef}>
         <Button
+          style={style}
           skeuomorphic={!(!!rewardLevel || byUser || filled) && skeuomorphic}
-          color={!!rewardLevel && byUser ? 'gold' : byUser ? 'orange' : 'pink'}
+          color={
+            !!rewardLevel && byUser ? 'gold' : byUser ? 'cranberry' : 'pink'
+          }
           filled={!!rewardLevel || byUser || filled}
           onClick={onClick}
         >
@@ -58,16 +61,19 @@ export default function StarButton({
           <DropdownList
             direction={direction}
             style={{
+              marginTop: '0.5rem',
               position: 'absolute',
               right: 0,
               width: '25rem'
             }}
           >
-            <li onClick={showRewardLevelModal}>Set Reward Level</li>
+            {contentType === 'video' && (
+              <li onClick={showRewardLevelModal}>Set Reward Level</li>
+            )}
             <li onClick={toggleByUser}>
               {byUser
-                ? `This video wasn't made by ${uploader.username}`
-                : `This video was made by ${uploader.username}`}
+                ? `This wasn't made by ${uploader.username}`
+                : `This was made by ${uploader.username}`}
             </li>
           </DropdownList>
         )}
@@ -77,7 +83,7 @@ export default function StarButton({
           contentType={contentType}
           contentId={contentId}
           rewardLevel={rewardLevel}
-          onSubmit={data => {
+          onSubmit={(data) => {
             onSetRewardLevel({ ...data, contentType, contentId });
             setRewardLevelModalShown(false);
           }}
@@ -88,7 +94,7 @@ export default function StarButton({
   );
 
   function onClick() {
-    if (contentType === 'video') {
+    if (contentType === 'video' || contentType === 'url') {
       return setMenuShown(!menuShown);
     }
     return setRewardLevelModalShown(true);
@@ -100,7 +106,7 @@ export default function StarButton({
   }
 
   async function toggleByUser() {
-    const byUser = await setByUser({ contentId });
+    const byUser = await setByUser({ contentType, contentId });
     onToggleByUser(byUser);
     setMenuShown(false);
   }

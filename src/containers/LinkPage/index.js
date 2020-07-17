@@ -4,6 +4,7 @@ import Button from 'components/Button';
 import Embedly from 'components/Embedly';
 import Comments from 'components/Comments';
 import Subjects from 'components/Subjects';
+import StarButton from 'components/Buttons/StarButton';
 import LikeButton from 'components/Buttons/LikeButton';
 import Likers from 'components/Likers';
 import ConfirmModal from 'components/Modals/ConfirmModal';
@@ -87,6 +88,7 @@ export default function LinkPage({
       onLoadSubjectRepliesOfReply,
       onLoadSubjects,
       onLoadSubjectComments,
+      onSetByUserStatus,
       onSetXpRewardInterfaceShown,
       onSetRewardLevel,
       onUploadComment,
@@ -95,6 +97,7 @@ export default function LinkPage({
     }
   } = useContentContext();
   const {
+    byUser,
     comments,
     commentsLoaded,
     commentsLoadMoreButton,
@@ -236,11 +239,12 @@ export default function LinkPage({
   const xpButtonDisabled = useMemo(
     () =>
       determineXpButtonDisabled({
+        rewardLevel: byUser ? 5 : 0,
         myId: userId,
         xpRewardInterfaceShown,
         rewards
       }),
-    [rewards, userId, xpRewardInterfaceShown]
+    [byUser, rewards, userId, xpRewardInterfaceShown]
   );
 
   useEffect(() => {
@@ -339,6 +343,22 @@ export default function LinkPage({
                   </span>
                 </Button>
               )}
+              {canReward && (
+                <div style={{ position: 'relative' }}>
+                  <StarButton
+                    style={{
+                      fontSize: '2rem',
+                      marginLeft: '1rem'
+                    }}
+                    direction="left"
+                    byUser={!!byUser}
+                    contentId={linkId}
+                    onToggleByUser={handleSetByUserStatus}
+                    contentType="url"
+                    uploader={uploader}
+                  />
+                </div>
+              )}
             </div>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Likers
@@ -379,6 +399,7 @@ export default function LinkPage({
             <XPRewardInterface
               innerRef={RewardInterfaceRef}
               rewards={rewards}
+              rewardLevel={byUser ? 5 : 0}
               contentType="url"
               contentId={linkId}
               noPadding
@@ -553,6 +574,10 @@ export default function LinkPage({
       contentId: linkId,
       shown: true
     });
+  }
+
+  function handleSetByUserStatus(byUser) {
+    onSetByUserStatus({ contentId: linkId, contentType: 'url', byUser });
   }
 
   function handleUploadComment(params) {

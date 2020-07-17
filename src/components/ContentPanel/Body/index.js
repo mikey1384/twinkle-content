@@ -441,7 +441,9 @@ export default function Body({
                     <Icon icon="star" />
                   </Button>
                   {canEditRewardLevel &&
-                    (contentType === 'subject' || contentType === 'video') && (
+                    (contentType === 'subject' ||
+                      contentType === 'video' ||
+                      contentType === 'url') && (
                       <StarButton
                         style={{ marginLeft: '1rem' }}
                         byUser={!!contentObj.byUser}

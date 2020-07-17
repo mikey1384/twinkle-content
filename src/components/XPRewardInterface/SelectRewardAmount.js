@@ -7,15 +7,13 @@ import { mobileMaxWidth } from 'constants/css';
 SelectRewardAmount.propTypes = {
   selectedAmount: PropTypes.number,
   onSetSelectedAmount: PropTypes.func,
-  remainingRewards: PropTypes.number,
-  myRewardables: PropTypes.number
+  rewardables: PropTypes.number
 };
 
 export default function SelectRewardAmount({
   selectedAmount,
   onSetSelectedAmount,
-  remainingRewards,
-  myRewardables
+  rewardables
 }) {
   return (
     <div
@@ -31,7 +29,7 @@ export default function SelectRewardAmount({
         }
       `}
     >
-      {Array(Math.min(remainingRewards, myRewardables))
+      {Array(rewardables)
         .fill()
         .map((elem, index) => (
           <Icon

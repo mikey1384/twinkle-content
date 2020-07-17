@@ -501,11 +501,15 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async setByUser({ contentId }) {
+    async setByUser({ contentType, contentId }) {
       try {
         const {
           data: { byUser }
-        } = await request.put(`${URL}/content/byUser`, { contentId }, auth());
+        } = await request.put(
+          `${URL}/content/byUser`,
+          { contentType, contentId },
+          auth()
+        );
         return Promise.resolve(byUser);
       } catch (error) {
         return handleError(error);

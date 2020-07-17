@@ -79,12 +79,30 @@ export default function XPRewardInterface({
     return returnMaxRewards({ rewardLevel }) - currentRewards;
   }, [rewardLevel, rewards]);
 
+  const rewardables = useMemo(() => {
+    return Math.min(remainingRewards, myRewardables);
+  }, [myRewardables, remainingRewards]);
+
   const mounted = useRef(true);
   const commentRef = useRef(prevComment);
   const [rewarding, setRewarding] = useState(false);
   const [comment, setComment] = useState(prevComment);
   const selectedAmountRef = useRef(prevSelectedAmount);
   const [selectedAmount, setSelectedAmount] = useState(prevSelectedAmount);
+
+  useEffect(() => {
+    setSelectedAmount((selectedAmount) =>
+      Math.min(selectedAmount, rewardables)
+    );
+    if (rewardables === 0) {
+      onSetXpRewardInterfaceShown({
+        contentId,
+        contentType,
+        shown: false
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rewardables]);
 
   useEffect(() => {
     handleSetComment(prevComment);
@@ -196,8 +214,7 @@ export default function XPRewardInterface({
       >
         <SelectRewardAmount
           onSetSelectedAmount={handleSetSelectedAmount}
-          remainingRewards={remainingRewards}
-          myRewardables={myRewardables}
+          rewardables={rewardables}
           selectedAmount={selectedAmount}
         />
         {selectedAmount > 0 && (
