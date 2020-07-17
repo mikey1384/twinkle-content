@@ -387,7 +387,7 @@ function XPVideoPlayer({
           const coins = await updateUserCoins({
             action: 'watch',
             target: 'video',
-            amount: 1,
+            amount: 2,
             targetId: videoId,
             type: 'increase'
           });
@@ -428,7 +428,6 @@ function XPVideoPlayer({
         !rewardingXP.current &&
         userId
       ) {
-        onIncreaseNumCoinsEarned({ videoId });
         onSetVideoXpEarned({ videoId, earned: true });
         onSetVideoXpJustEarned({ videoId, justEarned: true });
         timeWatchedRef.current = 0;
@@ -439,7 +438,7 @@ function XPVideoPlayer({
         rewardingXP.current = true;
         try {
           await updateVideoXPEarned(videoId);
-          const { alreadyDone, xp, rank, coins } = await updateUserXP({
+          const { alreadyDone, xp, rank } = await updateUserXP({
             action: 'watch',
             target: 'video',
             amount: rewardAmountRef.current,
@@ -447,7 +446,6 @@ function XPVideoPlayer({
             type: 'increase'
           });
           if (alreadyDone) return;
-          onChangeUserCoins({ coins, userId });
           onChangeUserXP({ xp, rank, userId });
           xpEarnedRef.current = true;
           rewardingXP.current = false;
