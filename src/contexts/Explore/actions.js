@@ -93,17 +93,6 @@ export default function ExploreActions(dispatch) {
         params
       });
     },
-    onEmptyCurrentVideoSlot() {
-      return dispatch({
-        type: 'EMPTY_CURRENT_VIDEO_SLOT'
-      });
-    },
-    onFillCurrentVideoSlot(videoId) {
-      return dispatch({
-        type: 'FILL_CURRENT_VIDEO_SLOT',
-        videoId
-      });
-    },
     onFetchLinks({ links, loadMoreButton }) {
       return dispatch({
         type: 'LOAD_LINKS',

@@ -24,7 +24,6 @@ export const initialExploreState = {
     allPlaylists: [],
     allPlaylistsLoaded: false,
     allVideoThumbs: [],
-    currentVideoSlot: null,
     featuredPlaylists: [],
     featuredPlaylistsLoaded: false,
     searchedPlaylists: [],

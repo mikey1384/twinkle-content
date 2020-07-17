@@ -7,12 +7,7 @@ import { rewardValue } from 'constants/defaultValues';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 import { useContentState, useMyState } from 'helpers/hooks';
-import {
-  useAppContext,
-  useContentContext,
-  useExploreContext,
-  useViewContext
-} from 'contexts';
+import { useAppContext, useContentContext, useViewContext } from 'contexts';
 
 const intervalLength = 2000;
 
@@ -52,12 +47,6 @@ function XPVideoPlayer({
     }
   } = useAppContext();
   const { profileTheme, userId } = useMyState();
-  const {
-    state: {
-      videos: { currentVideoSlot }
-    },
-    actions: { onEmptyCurrentVideoSlot, onFillCurrentVideoSlot }
-  } = useExploreContext();
   const {
     state: { pageVisible }
   } = useViewContext();
@@ -177,19 +166,7 @@ function XPVideoPlayer({
 
   useEffect(() => {
     PlayerRef.current.getInternalPlayer()?.pauseVideo?.();
-  }, [userId]);
-
-  useEffect(() => {
-    const userWatchingMultipleVideo =
-      currentVideoSlot &&
-      watchCodeRef.current &&
-      currentVideoSlot !== watchCodeRef.current;
-    if (started && userWatchingMultipleVideo) {
-      handleVideoStop();
-      PlayerRef.current?.getInternalPlayer()?.pauseVideo?.();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentVideoSlot]);
+  }, [userId, rewardLevel]);
 
   useEffect(() => {
     const alreadyEarned = xpEarned || justEarned;
@@ -339,9 +316,6 @@ function XPVideoPlayer({
       if (Math.floor(time) === 0) {
         addVideoView({ videoId, userId });
       }
-      if (!currentVideoSlot) {
-        onFillCurrentVideoSlot(watchCodeRef.current);
-      }
       clearInterval(timerRef.current);
       if (userId) {
         timerRef.current = setInterval(
@@ -355,7 +329,6 @@ function XPVideoPlayer({
   function handleVideoStop() {
     setPlaying(false);
     clearInterval(timerRef.current);
-    onEmptyCurrentVideoSlot();
   }
 
   async function handleIncreaseMeter({ userId }) {
