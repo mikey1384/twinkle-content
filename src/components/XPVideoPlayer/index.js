@@ -348,6 +348,7 @@ function XPVideoPlayer({
     } else if (canEarnCoins) {
       increaseCoinMeter();
     }
+    updateTotalViewDuration({ videoId });
 
     async function checkAlreadyWatchingAnotherVideo() {
       if (rewardLevelRef.current) {
@@ -470,7 +471,6 @@ function XPVideoPlayer({
               )
             : 0
       });
-      updateTotalViewDuration({ videoId });
     }
   }
 }
