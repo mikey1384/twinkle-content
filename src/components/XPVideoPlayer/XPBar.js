@@ -69,7 +69,7 @@ export default function XPBar({
           className={css`
             margin-top: 0;
             flex-grow: 1;
-            height: 2.7rem;
+            height: 2.7rem !important;
             margin-top: 0 !important;
             @media (max-width: ${mobileMaxWidth}) {
               font-size: ${isChat ? '1rem' : '1.2rem'};
