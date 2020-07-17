@@ -49,9 +49,7 @@ export default function StarButton({
         <Button
           style={style}
           skeuomorphic={!(!!rewardLevel || byUser || filled) && skeuomorphic}
-          color={
-            !!rewardLevel && byUser ? 'gold' : byUser ? 'cranberry' : 'pink'
-          }
+          color={!!rewardLevel && byUser ? 'gold' : byUser ? 'orange' : 'pink'}
           filled={!!rewardLevel || byUser || filled}
           onClick={onClick}
         >

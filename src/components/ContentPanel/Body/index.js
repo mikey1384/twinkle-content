@@ -76,6 +76,7 @@ export default function Body({
     canEdit,
     canEditRewardLevel,
     canReward,
+    profileTheme,
     twinkleCoins,
     userId
   } = useMyState();
@@ -85,6 +86,7 @@ export default function Body({
   } = useContentContext();
 
   const {
+    byUser,
     description,
     filePath,
     fileName,
@@ -293,6 +295,24 @@ export default function Body({
           width: '100%'
         }}
       >
+        {contentType === 'url' && byUser && (
+          <div
+            style={{
+              padding: '0.7rem',
+              background: Color[profileTheme](0.9),
+              color: '#fff',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              fontWeight: 'bold',
+              fontSize: '1.7rem',
+              marginLeft: '-1px',
+              marginRight: '-1px'
+            }}
+          >
+            This was made by {uploader.username}
+          </div>
+        )}
         <MainContent
           autoExpand={autoExpand}
           contentId={contentId}

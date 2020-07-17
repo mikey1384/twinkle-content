@@ -61,6 +61,7 @@ export default function LinkPage({
     canDelete,
     canEdit,
     canReward,
+    profileTheme,
     twinkleCoins,
     userId
   } = useMyState();
@@ -299,6 +300,25 @@ export default function LinkPage({
           onEditDone={handleEditLinkPage}
           userIsUploader={userIsUploader}
         />
+        {byUser && (
+          <div
+            style={{
+              padding: '0.7rem',
+              background: Color[profileTheme](0.9),
+              color: '#fff',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              fontWeight: 'bold',
+              fontSize: '1.7rem',
+              marginLeft: '-1px',
+              marginRight: '-1px',
+              marginBottom: '1rem'
+            }}
+          >
+            This was made by {uploader.username}
+          </div>
+        )}
         <Embedly
           key={'link' + linkId}
           style={{ marginTop: '2rem' }}
