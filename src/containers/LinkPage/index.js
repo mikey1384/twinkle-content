@@ -311,6 +311,7 @@ export default function LinkPage({
               alignItems: 'center',
               fontWeight: 'bold',
               fontSize: '1.7rem',
+              marginTop: '2rem',
               marginLeft: '-1px',
               marginRight: '-1px',
               marginBottom: '1rem'
