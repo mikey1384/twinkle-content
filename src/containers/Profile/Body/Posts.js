@@ -89,8 +89,21 @@ export default function Posts({
     if (profileFeeds.length === 0) {
       handleLoadTab(section);
     }
+
+    async function handleLoadTab(tabName) {
+      selectedFilter.current = filterTable[tabName];
+      setLoadingFeeds(true);
+      const { data, filter: loadedFilter } = await loadFeeds({
+        username,
+        filter: filterTable[tabName]
+      });
+      if (loadedFilter === selectedFilter.current) {
+        onLoadPosts({ ...data, section: tabName, username });
+        setLoadingFeeds(false);
+      }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location]);
+  }, [location, profileFeeds.length, section, username]);
 
   return !loaded ? (
     <Loading style={{ marginBottom: '50vh' }} text="Loading..." />
@@ -235,19 +248,6 @@ export default function Posts({
       }
     } catch (error) {
       console.error(error);
-    }
-  }
-
-  async function handleLoadTab(tabName) {
-    selectedFilter.current = filterTable[tabName];
-    setLoadingFeeds(true);
-    const { data, filter: loadedFilter } = await loadFeeds({
-      username,
-      filter: filterTable[tabName]
-    });
-    if (loadedFilter === selectedFilter.current) {
-      onLoadPosts({ ...data, section: tabName, username });
-      setLoadingFeeds(false);
     }
   }
 
