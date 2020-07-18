@@ -178,6 +178,7 @@ export default function Posts({
                       marginBottom: '1rem',
                       zIndex: profileFeeds.length - index
                     }}
+                    zIndex={profileFeeds.length - index}
                     contentId={contentId}
                     contentType={contentType}
                     commentsLoadLimit={5}

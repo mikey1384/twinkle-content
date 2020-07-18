@@ -160,9 +160,9 @@ export default function Stories({ location }) {
       <ContentPanel
         key={category + subFilter + feed.contentId + feed.contentType}
         style={{
-          marginBottom: '1rem',
-          zIndex: feeds.length - index
+          marginBottom: '1rem'
         }}
+        zIndex={feeds.length - index}
         contentId={feed.contentId}
         contentType={feed.contentType}
         commentsLoadLimit={5}

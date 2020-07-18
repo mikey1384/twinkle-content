@@ -68,7 +68,8 @@ export default function Achievements({
           return (
             <ContentPanel
               key={contentType + contentId}
-              style={{ marginBottom: '1rem', zIndex: feeds.length - index }}
+              zIndex={feeds.length - index}
+              style={{ marginBottom: '1rem' }}
               contentId={contentId}
               contentType={contentType}
               commentsLoadLimit={5}

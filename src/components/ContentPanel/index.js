@@ -23,7 +23,8 @@ ContentPanel.propTypes = {
   contentId: PropTypes.number.isRequired,
   contentType: PropTypes.string.isRequired,
   numPreviewComments: PropTypes.number,
-  style: PropTypes.object
+  style: PropTypes.object,
+  zIndex: PropTypes.number
 };
 
 export default function ContentPanel({
@@ -32,7 +33,8 @@ export default function ContentPanel({
   contentId,
   contentType,
   numPreviewComments = 0,
-  style = {}
+  style = {},
+  zIndex = 1
 }) {
   const [ComponentRef, inView] = useInView({
     threshold: 0
@@ -201,7 +203,8 @@ export default function ContentPanel({
                   ref={PanelRef}
                   style={{
                     height: !loaded && '15rem',
-                    position: 'relative'
+                    position: 'relative',
+                    zIndex
                   }}
                 >
                   <div
