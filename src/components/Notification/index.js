@@ -29,7 +29,8 @@ function Notification({ children, className, location, style }) {
       notifications,
       numNewNotis,
       rewards,
-      totalRewardAmount,
+      totalRewardedTwinkles,
+      totalRewardedTwinkleCoins,
       currentChatSubject: { content = defaultChatSubject, loaded, ...subject }
     },
     actions: { onFetchNotifications, onGetRanks, onClearNotifications }
@@ -58,7 +59,7 @@ function Notification({ children, className, location, style }) {
         setActiveTab('rankings');
       } else {
         const tab =
-          activeTab === 'reward' || totalRewardAmount > 0
+          activeTab === 'reward' || totalRewardedTwinkles > 0
             ? 'reward'
             : activeTab === 'notification' ||
               (location === 'home' && notifications.length > 0) ||
@@ -158,7 +159,8 @@ function Notification({ children, className, location, style }) {
               {rewardTabShown && (
                 <nav
                   className={`${activeTab === 'reward' && 'active'} ${
-                    totalRewardAmount > 0 && 'alert'
+                    totalRewardedTwinkles + totalRewardedTwinkleCoins > 0 &&
+                    'alert'
                   }`}
                   onClick={() => {
                     userChangedTab.current = true;

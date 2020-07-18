@@ -240,7 +240,9 @@ export default function Posts({
             : null,
         lastTimeStamp:
           profileFeeds.length > 0
-            ? profileFeeds[profileFeeds.length - 1].lastInteraction
+            ? profileFeeds[profileFeeds.length - 1][
+                section === 'watched' ? 'viewTimeStamp' : 'lastInteraction'
+              ]
             : null
       });
       onLoadMorePosts({ ...data, section, username });

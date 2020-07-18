@@ -19,7 +19,8 @@ export const initialNotiState = {
   allRanks: [],
   top30s: [],
   socketConnected: false,
-  totalRewardAmount: 0,
+  totalRewardedTwinkles: 0,
+  totalRewardedTwinkleCoins: 0,
   updateDetail: '',
   updateNoticeShown: false
 };

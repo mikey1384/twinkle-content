@@ -24,7 +24,8 @@ export default function NotiReducer(state, action) {
     case 'CLEAR_REWARDS':
       return {
         ...state,
-        totalRewardAmount: 0,
+        totalRewardedTwinkles: 0,
+        totalRewardedTwinkleCoins: 0,
         loadMore: {
           ...state.loadMore,
           rewards: false

@@ -37,7 +37,7 @@ export default function NavMenu({ playlistId, videoId }) {
   } = useAppContext();
   const { hideWatched, profileTheme, userId } = useMyState();
   const {
-    state: { numNewNotis, totalRewardAmount },
+    state: { numNewNotis, totalRewardedTwinkles, totalRewardedTwinkleCoins },
     actions: { onClearNotifications, onFetchNotifications }
   } = useNotiContext();
 
@@ -131,8 +131,8 @@ export default function NavMenu({ playlistId, videoId }) {
   }, [videoId, hideWatched]);
 
   useEffect(() => {
-    setRewardsExist(totalRewardAmount > 0);
-  }, [totalRewardAmount]);
+    setRewardsExist(totalRewardedTwinkles + totalRewardedTwinkleCoins > 0);
+  }, [totalRewardedTwinkles, totalRewardedTwinkleCoins]);
 
   useEffect(() => {
     if (prevUserId.current !== userId) {

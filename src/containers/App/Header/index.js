@@ -100,7 +100,13 @@ export default function Header({
   } = useHomeContext();
 
   const {
-    state: { numNewNotis, numNewPosts, totalRewardAmount, versionMatch },
+    state: {
+      numNewNotis,
+      numNewPosts,
+      totalRewardedTwinkles,
+      totalRewardedTwinkleCoins,
+      versionMatch
+    },
     actions: {
       onChangeSocketStatus,
       onCheckVersion,
@@ -682,7 +688,9 @@ export default function Header({
             onChatButtonClick={onChatButtonClick}
             onMobileMenuOpen={onMobileMenuOpen}
             pathname={pathname}
-            totalRewardAmount={totalRewardAmount}
+            totalRewardAmount={
+              totalRewardedTwinkles + totalRewardedTwinkleCoins
+            }
           />
           <AccountMenu
             className={css`

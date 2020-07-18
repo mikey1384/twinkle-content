@@ -21,7 +21,8 @@ export default function notificationRequestHelpers({ auth, handleError }) {
           return Promise.resolve({
             notifications: [],
             rewards: [],
-            totalRewardAmount: 0,
+            totalRewardedTwinkles: 0,
+            totalRewardedTwinkleCoins: 0,
             currentChatSubject: data
           });
         } else {
