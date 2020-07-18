@@ -27,6 +27,7 @@ const filterTable = {
   all: 'all',
   comments: 'comment',
   likes: 'like',
+  watched: 'watched',
   subjects: 'subject',
   videos: 'video',
   links: 'url'
@@ -103,7 +104,7 @@ export default function Posts({
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location, profileFeeds.length, section, username]);
+  }, [location.pathname, profileFeeds.length, section, username]);
 
   return !loaded ? (
     <Loading style={{ marginBottom: '50vh' }} text="Loading..." />
