@@ -96,28 +96,34 @@ export default function Posts({
     <Loading style={{ marginBottom: '50vh' }} text="Loading..." />
   ) : (
     <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
-      <FilterBar
-        color={selectedTheme}
-        style={{ height: '5rem', marginTop: '-1rem' }}
-        className="mobile"
-      >
-        {[
-          { key: 'all', label: 'All' },
-          { key: 'subject', label: 'Subjects' },
-          { key: 'video', label: 'Videos' },
-          { key: 'url', label: 'Links' }
-        ].map((type) => {
-          return (
-            <nav
-              key={type.key}
-              className={filterTable[section] === type.key ? 'active' : ''}
-              onClick={() => onClickPostsMenu({ item: type.key })}
-            >
-              {type.label}
-            </nav>
-          );
-        })}
-      </FilterBar>
+      {section !== 'likes' && (
+        <FilterBar
+          color={selectedTheme}
+          style={{ height: '5rem', marginTop: '-1rem' }}
+          className={`mobile ${css`
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: 1.3rem;
+            }
+          `}`}
+        >
+          {[
+            { key: 'all', label: 'All' },
+            { key: 'subject', label: 'Subjects' },
+            { key: 'video', label: 'Videos' },
+            { key: 'url', label: 'Links' }
+          ].map((type) => {
+            return (
+              <nav
+                key={type.key}
+                className={filterTable[section] === type.key ? 'active' : ''}
+                onClick={() => onClickPostsMenu({ item: type.key })}
+              >
+                {type.label}
+              </nav>
+            );
+          })}
+        </FilterBar>
+      )}
       <div
         className={css`
           width: 100%;
@@ -154,6 +160,7 @@ export default function Posts({
                   <ContentPanel
                     key={filterTable[section] + feed.feedId}
                     style={{
+                      marginTop: index === 0 && '-1rem',
                       marginBottom: '1rem',
                       zIndex: profileFeeds.length - index
                     }}

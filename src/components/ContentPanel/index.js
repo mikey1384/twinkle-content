@@ -187,7 +187,7 @@ export default function ContentPanel({
         }}
       >
         {!contentState.deleted ? (
-          <div ref={ComponentRef}>
+          <div style={style} ref={ComponentRef}>
             <div
               ref={ContainerRef}
               style={{
@@ -201,8 +201,7 @@ export default function ContentPanel({
                   ref={PanelRef}
                   style={{
                     height: !loaded && '15rem',
-                    position: 'relative',
-                    ...style
+                    position: 'relative'
                   }}
                 >
                   <div
