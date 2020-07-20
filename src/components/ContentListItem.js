@@ -277,7 +277,7 @@ function ContentListItem({
                 style={{
                   display: 'flex',
                   width: '15rem',
-                  maxHeight: '10rem'
+                  height: '10rem'
                 }}
               />
             )}

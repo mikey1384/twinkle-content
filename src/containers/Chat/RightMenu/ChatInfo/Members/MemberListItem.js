@@ -55,7 +55,7 @@ function MemberListItem({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [member]);
 
-  const usernameWidth = useMemo(() => (isClass ? '20%' : '45%'), [isClass]);
+  const usernameWidth = useMemo(() => (isClass ? '20%' : '42%'), [isClass]);
   const peerIsStreaming = useMemo(
     () =>
       peerStreams?.[membersOnCallObj?.[memberId]] &&
@@ -105,7 +105,7 @@ function MemberListItem({
             width: auto;
             max-width: ${creatorId === memberId
               ? usernameWidth
-              : `CALC(${usernameWidth} + 3rem)`};
+              : `CALC(${usernameWidth} + 2rem)`};
           `}
           style={{
             color: Color.darkerGray(),
@@ -156,7 +156,7 @@ function MemberListItem({
       });
     } else {
       const numLivePeers = Object.keys(peerStreams)?.filter(
-        peerId => !channelOnCall.members[peerId]?.streamHidden
+        (peerId) => !channelOnCall.members[peerId]?.streamHidden
       ).length;
       if (numLivePeers >= 2) {
         return setConfirmModalShown(true);
