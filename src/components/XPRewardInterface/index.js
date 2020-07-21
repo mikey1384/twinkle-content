@@ -85,6 +85,7 @@ export default function XPRewardInterface({
 
   const mounted = useRef(true);
   const commentRef = useRef(prevComment);
+  const rewardingRef = useRef(false);
   const [rewarding, setRewarding] = useState(false);
   const [comment, setComment] = useState(prevComment);
   const selectedAmountRef = useRef(prevSelectedAmount);
@@ -94,7 +95,7 @@ export default function XPRewardInterface({
     setSelectedAmount((selectedAmount) =>
       Math.min(selectedAmount, rewardables)
     );
-    if (rewardables === 0) {
+    if (rewardables === 0 && !rewardingRef.current) {
       onSetXpRewardInterfaceShown({
         contentId,
         contentType,
@@ -275,6 +276,7 @@ export default function XPRewardInterface({
 
   async function handleRewardSubmit() {
     try {
+      rewardingRef.current = true;
       setRewarding(true);
       const { reward, netCoins } = await rewardUser({
         explanation: finalizeEmoji(stringIsEmpty(comment) ? '' : comment),
@@ -284,7 +286,6 @@ export default function XPRewardInterface({
         uploaderId
       });
       if (mounted.current) {
-        setRewarding(false);
         onSetRewardForm({
           contentType,
           contentId,
@@ -303,6 +304,8 @@ export default function XPRewardInterface({
         }
         handleSetComment('');
         handleSetSelectedAmount(0);
+        setRewarding(false);
+        rewardingRef.current = false;
         onSetXpRewardInterfaceShown({
           contentId,
           contentType,
