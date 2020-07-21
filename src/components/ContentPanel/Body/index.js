@@ -435,7 +435,15 @@ export default function Body({
                   />
                 )}
                 {!secretHidden && (
-                  <div style={{ position: 'relative', marginLeft: '1rem' }}>
+                  <div
+                    className={css`
+                      margin-left: 1rem;
+                      @media (max-width: ${mobileMaxWidth}) {
+                        margin-left: 0;
+                      }
+                    `}
+                    style={{ position: 'relative' }}
+                  >
                     <Button
                       transparent
                       onClick={() => {
