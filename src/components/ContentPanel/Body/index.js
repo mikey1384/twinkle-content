@@ -381,7 +381,12 @@ export default function Body({
                   <Button
                     transparent
                     key="commentButton"
-                    style={{ marginLeft: '1rem' }}
+                    className={css`
+                      margin-left: 1rem;
+                      @media (max-width: ${mobileMaxWidth}) {
+                        margin-left: 0.5rem;
+                      }
+                    `}
                     onClick={handleCommentButtonClick}
                   >
                     <Icon icon="comment-alt" />
@@ -403,7 +408,12 @@ export default function Body({
                   <Button
                     color="pink"
                     disabled={!!xpButtonDisabled}
-                    style={{ marginLeft: '1rem' }}
+                    className={css`
+                      margin-left: 1rem;
+                      @media (max-width: ${mobileMaxWidth}) {
+                        margin-left: 0.5rem;
+                      }
+                    `}
                     onClick={handleSetXpRewardInterfaceShown}
                   >
                     <Icon icon="certificate" />
