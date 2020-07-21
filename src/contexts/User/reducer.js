@@ -89,7 +89,7 @@ export default function UserReducer(state, action) {
     case 'SHOW_PROFILE_COMMENTS':
       return {
         ...state,
-        profiles: state.profiles.map(profile => ({
+        profiles: state.profiles.map((profile) => ({
           ...profile,
           commentsShown:
             profile.id === action.profileId ? true : profile.commentsShown

@@ -305,10 +305,16 @@ export default function Body({
               justifyContent: 'center',
               alignItems: 'center',
               fontWeight: 'bold',
-              fontSize: '1.7rem',
-              marginLeft: '-1px',
-              marginRight: '-1px'
+              fontSize: '1.7rem'
             }}
+            className={css`
+              margin-left: -1px;
+              margin-right: -1px;
+              @media (max-width: ${mobileMaxWidth}) {
+                margin-left: 0;
+                margin-right: 0;
+              }
+            `}
           >
             This was made by {uploader.username}
           </div>
