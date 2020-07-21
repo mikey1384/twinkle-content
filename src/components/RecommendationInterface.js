@@ -143,7 +143,9 @@ export default function RecommendationInterface({
         contentType
       });
       onChangeUserCoins({ coins, userId });
-      onRecommendContent({ contentId, contentType, recommendations });
+      if (recommendations) {
+        onRecommendContent({ contentId, contentType, recommendations });
+      }
       onHide();
     } catch (error) {
       console.error(error);

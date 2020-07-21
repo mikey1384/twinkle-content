@@ -291,11 +291,13 @@ export default function XPRewardInterface({
           contentId,
           form: undefined
         });
-        onAttachReward({
-          reward,
-          contentId,
-          contentType
-        });
+        if (reward) {
+          onAttachReward({
+            reward,
+            contentId,
+            contentType
+          });
+        }
         if (typeof netCoins === 'number') {
           onChangeUserCoins({ coins: netCoins, userId });
         }
