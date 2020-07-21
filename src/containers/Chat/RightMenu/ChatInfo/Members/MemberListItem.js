@@ -51,7 +51,9 @@ function MemberListItem({
   } = useChatContext();
 
   useEffect(() => {
-    onSetUserData(member);
+    if (member.id && member.username) {
+      onSetUserData(member);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [member]);
 
