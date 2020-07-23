@@ -200,6 +200,10 @@ export default function ExploreReducer(state, action) {
         ...state,
         links: {
           ...state.links,
+          recommendeds: state.links.recommendeds.map((link) => ({
+            ...link,
+            title: action.data.id === link.id ? action.data.title : link.title
+          })),
           links: state.links.links.map((link) => ({
             ...link,
             title: action.data.id === link.id ? action.data.title : link.title
