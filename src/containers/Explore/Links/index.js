@@ -136,7 +136,7 @@ export default function Links({ location }) {
   async function handleLoadMoreRecommendeds() {
     const { results, loadMoreButton } = await loadRecommendedUploads({
       contentType: 'url',
-      numberToLoad: 20,
+      numberToLoad: 10,
       lastRecommendationId: lastRecommendedId.current,
       lastInteraction: lastRecommendedTime.current
     });

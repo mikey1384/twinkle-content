@@ -117,7 +117,7 @@ export default function ExploreActions(dispatch) {
     onLoadMoreRecommendedLinks({ links, loadMoreButton }) {
       return dispatch({
         type: 'LOAD_MORE_RECOMMENDED_LINKS',
-        links,
+        recommendeds: links,
         loadMoreButton
       });
     },
