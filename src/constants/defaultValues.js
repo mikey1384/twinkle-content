@@ -77,7 +77,7 @@ export const rewardHash = {
   4: {
     label: 'advanced',
     rewardAmount: 100,
-    coinAmount: 10,
+    coinAmount: 5,
     color: 'red'
   },
   5: {
