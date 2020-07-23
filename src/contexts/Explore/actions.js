@@ -114,6 +114,13 @@ export default function ExploreActions(dispatch) {
         loadMoreButton
       });
     },
+    onLoadMoreRecommendedLinks({ links, loadMoreButton }) {
+      return dispatch({
+        type: 'LOAD_MORE_RECOMMENDED_LINKS',
+        links,
+        loadMoreButton
+      });
+    },
     onLoadFeaturedPlaylists(playlists) {
       return dispatch({
         type: 'LOAD_FEATURED_PLAYLISTS',

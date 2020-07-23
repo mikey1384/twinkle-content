@@ -27,7 +27,12 @@ export default function Links({ location }) {
         loadMoreLinksButtonShown
       }
     },
-    actions: { onLoadLinks, onLoadMoreLinks, onLoadRecommendedLinks }
+    actions: {
+      onLoadLinks,
+      onLoadMoreLinks,
+      onLoadRecommendedLinks,
+      onLoadMoreRecommendedLinks
+    }
   } = useExploreContext();
   const {
     actions: { onRecordScrollPosition },
@@ -129,13 +134,13 @@ export default function Links({ location }) {
   );
 
   async function handleLoadMoreRecommendeds() {
-    const { results: links, loadMoreButton } = await loadRecommendedUploads({
+    const { results, loadMoreButton } = await loadRecommendedUploads({
       contentType: 'url',
       numberToLoad: 20,
       lastRecommendationId: lastRecommendedId.current,
       lastInteraction: lastRecommendedTime.current
     });
-    return onLoadMoreLinks({ links, loadMoreButton });
+    return onLoadMoreRecommendedLinks({ links: results, loadMoreButton });
   }
 
   async function handleLoadMoreLinks() {

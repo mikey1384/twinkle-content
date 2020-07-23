@@ -363,6 +363,15 @@ export default function ExploreReducer(state, action) {
           loadMoreRecommendedsButtonShown: action.loadMoreButton
         }
       };
+    case 'LOAD_MORE_RECOMMENDED_LINKS':
+      return {
+        ...state,
+        links: {
+          ...state.links,
+          recommendeds: state.links.recommendeds.concat(action.recommendeds),
+          loadMoreRecommendedsButtonShown: action.loadMoreButton
+        }
+      };
     case 'LOAD_FEATURED_SUBJECTS':
       return {
         ...state,
