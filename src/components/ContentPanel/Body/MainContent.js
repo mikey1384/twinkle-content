@@ -155,48 +155,30 @@ export default function MainContent({
             contentId={contentId}
           />
         )}
-        {(contentType !== 'comment' || content || isEditing) && (
-          <div
-            style={{
-              marginTop: '1rem',
-              marginBottom: isEditing
-                ? 0
-                : contentType !== 'video' && !secretHidden && '1rem',
-              padding: '1rem',
-              whiteSpace: 'pre-wrap',
-              overflowWrap: 'break-word',
-              wordBrea: 'break-word'
-            }}
-          >
-            {!isEditing && (
-              <>
-                {contentType === 'comment' &&
-                  (secretHidden ? (
-                    <HiddenComment
-                      onClick={() =>
-                        history.push(
-                          `/subjects/${targetObj?.subject?.id || rootId}`
-                        )
-                      }
-                    />
-                  ) : (
-                    <div
-                      style={{
-                        whiteSpace: 'pre-wrap',
-                        overflowWrap: 'break-word',
-                        wordBreak: 'break-word'
-                      }}
-                    >
-                      <LongText
-                        contentId={contentId}
-                        contentType={contentType}
-                        section="hidden message"
-                      >
-                        {content}
-                      </LongText>
-                    </div>
-                  ))}
-                {contentType === 'subject' && (
+        <div
+          style={{
+            marginTop: '1rem',
+            marginBottom: isEditing
+              ? 0
+              : contentType !== 'video' && !secretHidden && '1rem',
+            padding: '1rem',
+            whiteSpace: 'pre-wrap',
+            overflowWrap: 'break-word',
+            wordBrea: 'break-word'
+          }}
+        >
+          {!isEditing && (
+            <>
+              {contentType === 'comment' &&
+                (secretHidden ? (
+                  <HiddenComment
+                    onClick={() =>
+                      history.push(
+                        `/subjects/${targetObj?.subject?.id || rootId}`
+                      )
+                    }
+                  />
+                ) : (
                   <div
                     style={{
                       whiteSpace: 'pre-wrap',
@@ -204,86 +186,102 @@ export default function MainContent({
                       wordBreak: 'break-word'
                     }}
                   >
-                    <Link
-                      style={{
-                        fontWeight: 'bold',
-                        fontSize: '2.2rem',
-                        color: Color.green(),
-                        textDecoration: 'none'
-                      }}
-                      to={`/subjects/${contentId}`}
+                    <LongText
+                      contentId={contentId}
+                      contentType={contentType}
+                      section="hidden message"
                     >
-                      Subject:
-                    </Link>
-                    <p
-                      style={{
-                        marginTop: '1rem',
-                        marginBottom: '1rem',
-                        fontWeight: 'bold',
-                        fontSize: '2.2rem'
-                      }}
-                    >
-                      {title}
-                    </p>
+                      {content}
+                    </LongText>
                   </div>
-                )}
+                ))}
+              {contentType === 'subject' && (
                 <div
                   style={{
-                    marginTop: contentType === 'url' ? '-1rem' : 0,
                     whiteSpace: 'pre-wrap',
                     overflowWrap: 'break-word',
-                    wordBreak: 'break-word',
-                    marginBottom:
-                      contentType === 'url' || contentType === 'subject'
-                        ? '1rem'
-                        : '0.5rem'
+                    wordBreak: 'break-word'
                   }}
                 >
-                  <LongText
-                    contentId={contentId}
-                    contentType={contentType}
-                    section="description"
+                  <Link
+                    style={{
+                      fontWeight: 'bold',
+                      fontSize: '2.2rem',
+                      color: Color.green(),
+                      textDecoration: 'none'
+                    }}
+                    to={`/subjects/${contentId}`}
                   >
-                    {!stringIsEmpty(description)
-                      ? description
-                      : contentType === 'video' || contentType === 'url'
-                      ? title
-                      : ''}
-                  </LongText>
+                    Subject:
+                  </Link>
+                  <p
+                    style={{
+                      marginTop: '1rem',
+                      marginBottom: '1rem',
+                      fontWeight: 'bold',
+                      fontSize: '2.2rem'
+                    }}
+                  >
+                    {title}
+                  </p>
                 </div>
-                {secretAnswer && (
-                  <SecretAnswer
-                    answer={secretAnswer}
-                    onClick={onClickSecretAnswer}
-                    subjectId={contentId}
-                    uploaderId={uploader.id}
-                  />
-                )}
-              </>
-            )}
-            {isEditing && (
-              <ContentEditor
-                comment={content}
-                content={content || rootContent}
-                contentId={contentId}
-                description={description}
-                filePath={filePath}
-                onDismiss={() =>
-                  onSetIsEditing({ contentId, contentType, isEditing: false })
-                }
-                onEditContent={handleEditContent}
-                secretAnswer={secretAnswer}
+              )}
+              <div
                 style={{
-                  marginTop:
-                    (contentType === 'video' || contentType === 'subject') &&
-                    '1rem'
+                  marginTop: contentType === 'url' ? '-1rem' : 0,
+                  whiteSpace: 'pre-wrap',
+                  overflowWrap: 'break-word',
+                  wordBreak: 'break-word',
+                  marginBottom:
+                    contentType === 'url' || contentType === 'subject'
+                      ? '1rem'
+                      : '0.5rem'
                 }}
-                title={title}
-                contentType={contentType}
-              />
-            )}
-          </div>
-        )}
+              >
+                <LongText
+                  contentId={contentId}
+                  contentType={contentType}
+                  section="description"
+                >
+                  {!stringIsEmpty(description)
+                    ? description
+                    : contentType === 'video' || contentType === 'url'
+                    ? title
+                    : ''}
+                </LongText>
+              </div>
+              {secretAnswer && (
+                <SecretAnswer
+                  answer={secretAnswer}
+                  onClick={onClickSecretAnswer}
+                  subjectId={contentId}
+                  uploaderId={uploader.id}
+                />
+              )}
+            </>
+          )}
+          {isEditing && (
+            <ContentEditor
+              comment={content}
+              content={content || rootContent}
+              contentId={contentId}
+              description={description}
+              filePath={filePath}
+              onDismiss={() =>
+                onSetIsEditing({ contentId, contentType, isEditing: false })
+              }
+              onEditContent={handleEditContent}
+              secretAnswer={secretAnswer}
+              style={{
+                marginTop:
+                  (contentType === 'video' || contentType === 'subject') &&
+                  '1rem'
+              }}
+              title={title}
+              contentType={contentType}
+            />
+          )}
+        </div>
         {!isEditing && contentType === 'url' && (
           <Embedly contentId={contentId} loadingHeight="30rem" />
         )}
