@@ -42,7 +42,17 @@ export default function Links({ location }) {
   const [addLinkModalShown, setAddLinkModalShown] = useState(false);
   const mounted = useRef(true);
   const lastId = useRef(null);
+  const lastRecommendedId = useRef(null);
+  const lastRecommendedTime = useRef(null);
   const prevLoaded = useRef(false);
+
+  useEffect(() => {
+    if (recommendeds.length > 0) {
+      lastRecommendedId.current = recommendeds[recommendeds.length - 1].feedId;
+      lastRecommendedTime.current =
+        recommendeds[recommendeds.length - 1].lastInteraction;
+    }
+  }, [recommendeds]);
 
   useEffect(() => {
     if (links.length > 0) {
@@ -122,7 +132,8 @@ export default function Links({ location }) {
     const { results: links, loadMoreButton } = await loadRecommendedUploads({
       contentType: 'url',
       numberToLoad: 20,
-      contentId: lastId.current
+      lastRecommendationId: lastRecommendedId.current,
+      lastInteraction: lastRecommendedTime.current
     });
     return onLoadMoreLinks({ links, loadMoreButton });
   }
