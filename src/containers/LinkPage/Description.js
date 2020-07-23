@@ -244,7 +244,8 @@ export default function Description({
         <AlreadyPosted
           style={{
             marginLeft: '-1rem',
-            marginRight: '-1rem'
+            marginRight: '-1rem',
+            ...(isEditing ? { marginBottom: '1rem' } : {})
           }}
           contentId={Number(linkId)}
           contentType="url"
