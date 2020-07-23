@@ -14,13 +14,20 @@ Links.propTypes = {
 
 export default function Links({ location }) {
   const {
-    requestHelpers: { loadUploads }
+    requestHelpers: { loadRecommendedUploads, loadUploads }
   } = useAppContext();
   const {
     state: {
-      links: { loaded, links, loadMoreLinksButtonShown }
+      links: {
+        loaded,
+        recommendedsLoaded,
+        recommendeds,
+        loadMoreRecommendedsButtonShown,
+        links,
+        loadMoreLinksButtonShown
+      }
     },
-    actions: { onFetchLinks, onFetchMoreLinks }
+    actions: { onLoadLinks, onLoadMoreLinks, onLoadRecommendedLinks }
   } = useExploreContext();
   const {
     actions: { onRecordScrollPosition },
@@ -48,11 +55,22 @@ export default function Links({ location }) {
     init();
     async function init() {
       if (!loaded) {
+        const {
+          results: recommendedLinks,
+          loadMoreButton: loadMoreRecommendsButton
+        } = await loadRecommendedUploads({
+          contentType: 'url',
+          numberToLoad: 10
+        });
         const { results: links, loadMoreButton } = await loadUploads({
           contentType: 'url',
-          numberToLoad: 20
+          numberToLoad: 10
         });
-        onFetchLinks({ links, loadMoreButton });
+        onLoadRecommendedLinks({
+          links: recommendedLinks,
+          loadMoreButton: loadMoreRecommendsButton
+        });
+        onLoadLinks({ links, loadMoreButton });
         prevLoaded.current = true;
       }
     }
@@ -65,6 +83,16 @@ export default function Links({ location }) {
 
   return (
     <div>
+      <SectionPanel
+        title="Recommended"
+        emptyMessage="No Recommended Links"
+        isEmpty={recommendeds.length === 0}
+        loaded={recommendedsLoaded}
+        loadMore={handleLoadMoreRecommendeds}
+        loadMoreButtonShown={loadMoreRecommendedsButtonShown}
+      >
+        <LinkGroup links={recommendeds} />
+      </SectionPanel>
       <SectionPanel
         title="All Links"
         button={
@@ -90,12 +118,21 @@ export default function Links({ location }) {
     </div>
   );
 
+  async function handleLoadMoreRecommendeds() {
+    const { results: links, loadMoreButton } = await loadRecommendedUploads({
+      contentType: 'url',
+      numberToLoad: 20,
+      contentId: lastId.current
+    });
+    return onLoadMoreLinks({ links, loadMoreButton });
+  }
+
   async function handleLoadMoreLinks() {
     const { results: links, loadMoreButton } = await loadUploads({
       contentType: 'url',
       numberToLoad: 20,
       contentId: lastId.current
     });
-    return onFetchMoreLinks({ links, loadMoreButton });
+    return onLoadMoreLinks({ links, loadMoreButton });
   }
 }

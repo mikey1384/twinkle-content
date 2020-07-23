@@ -8,7 +8,10 @@ export const initialExploreState = {
   links: {
     loaded: false,
     links: [],
-    loadMoreLinksButtonShown: false
+    loadMoreLinksButtonShown: false,
+    recommendedsLoaded: false,
+    recommendeds: [],
+    loadMoreRecommendedsButtonShown: false
   },
   subjects: {
     featured: [],

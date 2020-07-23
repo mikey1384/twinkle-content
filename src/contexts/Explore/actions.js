@@ -93,17 +93,24 @@ export default function ExploreActions(dispatch) {
         params
       });
     },
-    onFetchLinks({ links, loadMoreButton }) {
+    onLoadLinks({ links, loadMoreButton }) {
       return dispatch({
         type: 'LOAD_LINKS',
         links,
         loadMoreButton
       });
     },
-    onFetchMoreLinks({ links, loadMoreButton }) {
+    onLoadMoreLinks({ links, loadMoreButton }) {
       return dispatch({
         type: 'LOAD_MORE_LINKS',
         links,
+        loadMoreButton
+      });
+    },
+    onLoadRecommendedLinks({ links, loadMoreButton }) {
+      return dispatch({
+        type: 'LOAD_RECOMMENDED_LINKS',
+        recommendeds: links,
         loadMoreButton
       });
     },

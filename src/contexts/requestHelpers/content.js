@@ -428,6 +428,22 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async loadRecommendedUploads({ limit, lastRecommendationId, contentType }) {
+      try {
+        const {
+          data: { results, loadMoreButton }
+        } = await request.get(
+          `${URL}/content/uploads/recommended?numberToLoad=${limit}&contentType=${contentType}${
+            lastRecommendationId
+              ? `&lastRecommendationId=${lastRecommendationId}`
+              : ''
+          }`
+        );
+        return Promise.resolve({ results, loadMoreButton });
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async loadUploads({
       limit,
       contentId,
