@@ -6,6 +6,7 @@ import { rewardHash, returnWordLevel } from 'constants/defaultValues';
 import { css } from 'emotion';
 import { isMobile } from 'helpers';
 import Button from 'components/Button';
+import Icon from 'components/Icon';
 import WordModal from './WordModal';
 
 export default function WordRegisterStatus() {
@@ -94,6 +95,29 @@ export default function WordRegisterStatus() {
           <b style={{ color: Color[rewardHash[wordLevel].color]() }}>
             {addCommasToNumber(rewardHash[wordLevel].rewardAmount)} XP
           </b>
+          {wordLevel > 3 && (
+            <>
+              {' '}
+              <span>and</span>{' '}
+              <b
+                style={{
+                  marginLeft: '0.3rem'
+                }}
+              >
+                <Icon
+                  icon={['far', 'badge-dollar']}
+                  style={{
+                    color: Color.brownOrange()
+                  }}
+                />
+                <span
+                  style={{ color: Color.brownOrange(), marginLeft: '0.3rem' }}
+                >
+                  {addCommasToNumber(rewardHash[wordLevel].coinAmount)}
+                </span>
+              </b>
+            </>
+          )}
         </div>
       </div>
       <div

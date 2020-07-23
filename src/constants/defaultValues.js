@@ -1,4 +1,4 @@
-export const clientVersion = '1.4.3';
+export const clientVersion = '1.4.4';
 export const defaultChatSubject = 'Welcome!';
 export const defaultContentState = {
   isEditing: false,
@@ -77,11 +77,13 @@ export const rewardHash = {
   4: {
     label: 'advanced',
     rewardAmount: 100,
+    coinAmount: 10,
     color: 'red'
   },
   5: {
     label: 'epic',
     rewardAmount: 500,
+    coinAmount: 100,
     color: 'gold'
   }
 };
