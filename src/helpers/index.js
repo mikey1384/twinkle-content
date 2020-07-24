@@ -13,7 +13,7 @@ export function determineUserCanRewardThis({
 }) {
   if (!userId) return false;
   let studentsCanReward = false;
-  if (!canReward) {
+  if (authLevel <= 1) {
     for (let recommendation of recommendations) {
       if (recommendation.authLevel > 1) {
         studentsCanReward = true;

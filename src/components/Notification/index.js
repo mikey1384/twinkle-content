@@ -59,7 +59,8 @@ function Notification({ children, className, location, style }) {
         setActiveTab('rankings');
       } else {
         const tab =
-          activeTab === 'reward' || totalRewardedTwinkles > 0
+          activeTab === 'reward' ||
+          totalRewardedTwinkles + totalRewardedTwinkleCoins > 0
             ? 'reward'
             : activeTab === 'notification' ||
               (location === 'home' && notifications.length > 0) ||
