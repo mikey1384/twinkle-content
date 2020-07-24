@@ -33,14 +33,14 @@ export default function RecommendationStatus({
   );
 
   const mostRecentRecommenderOtherThanMe = recommendationsByUsertypeExceptMe[0];
-  const isRecommendedByModerator =
-    me?.authLevel > 0 || mostRecentRecommenderOtherThanMe?.authLevel > 0;
+  const isRecommendedByTeacher =
+    me?.authLevel > 1 || mostRecentRecommenderOtherThanMe?.authLevel > 1;
 
   return recommendations.length > 0 ? (
     <div
       style={{
         padding: '0.5rem',
-        background: isRecommendedByModerator && Color[profileTheme](0.1),
+        background: isRecommendedByTeacher && Color[profileTheme](0.1),
         borderTop: `1px solid ${Color.borderGray()}`,
         borderBottom: `1px solid ${Color.borderGray()}`,
         marginBottom: '1rem',
@@ -56,7 +56,7 @@ export default function RecommendationStatus({
         {me && (
           <b
             style={{
-              color: isRecommendedByModerator ? '#000' : Color.black()
+              color: isRecommendedByTeacher ? '#000' : Color.black()
             }}
           >
             you
@@ -67,7 +67,7 @@ export default function RecommendationStatus({
             {me &&
               (recommendationsByUsertypeExceptMe.length > 1 ? ', ' : ' and ')}
             <UsernameText
-              color={isRecommendedByModerator ? '#000' : Color.black()}
+              color={isRecommendedByTeacher ? '#000' : Color.black()}
               user={{
                 username: mostRecentRecommenderOtherThanMe.username,
                 id: mostRecentRecommenderOtherThanMe.userId
@@ -80,7 +80,7 @@ export default function RecommendationStatus({
             {' '}
             and{' '}
             <UsernameText
-              color={isRecommendedByModerator ? '#000' : Color.black()}
+              color={isRecommendedByTeacher ? '#000' : Color.black()}
               user={{
                 username: recommendationsByUsertypeExceptMe[1].username,
                 id: recommendationsByUsertypeExceptMe[1].userId

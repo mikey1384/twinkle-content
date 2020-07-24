@@ -39,7 +39,7 @@ export default function RecommendationInterface({
   const isOnlyRecommendedByStudents = useMemo(() => {
     let result = recommendations.length > 0;
     for (let recommendation of recommendations) {
-      if (recommendation.authLevel > 0) {
+      if (recommendation.authLevel > 1) {
         return false;
       }
     }
