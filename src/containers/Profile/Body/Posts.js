@@ -151,6 +151,7 @@ export default function Posts({
         {loadingFeeds ? (
           <Loading
             className={css`
+              margin-top: ${section === 'likes' ? '12rem' : '3rem'};
               width: ${section === 'likes' ? '55%' : '50%'};
               @media (max-width: ${mobileMaxWidth}) {
                 width: 100%;
