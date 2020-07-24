@@ -107,6 +107,20 @@ export default function ExploreActions(dispatch) {
         loadMoreButton
       });
     },
+    onLoadByUserLinks({ links, loadMoreButton }) {
+      return dispatch({
+        type: 'LOAD_BY_USER_LINKS',
+        links,
+        loadMoreButton
+      });
+    },
+    onLoadMoreByUserLinks({ links, loadMoreButton }) {
+      return dispatch({
+        type: 'LOAD_MORE_BY_USER_LINKS',
+        links,
+        loadMoreButton
+      });
+    },
     onLoadRecommendedLinks({ links, loadMoreButton }) {
       return dispatch({
         type: 'LOAD_RECOMMENDED_LINKS',

@@ -357,6 +357,25 @@ export default function ExploreReducer(state, action) {
           loadMoreLinksButtonShown: action.loadMoreButton
         }
       };
+    case 'LOAD_BY_USER_LINKS':
+      return {
+        ...state,
+        links: {
+          ...state.links,
+          byUserLoaded: true,
+          byUserLinks: action.links,
+          loadMoreByUserLinksButtonShown: action.loadMoreButton
+        }
+      };
+    case 'LOAD_MORE_BY_USER_LINKS':
+      return {
+        ...state,
+        links: {
+          ...state.links,
+          byUserLinks: state.links.byUserLinks.concat(action.links),
+          loadMoreByUserLinksButtonShown: action.loadMoreButton
+        }
+      };
     case 'LOAD_RECOMMENDED_LINKS':
       return {
         ...state,

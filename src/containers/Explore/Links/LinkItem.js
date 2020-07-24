@@ -126,12 +126,7 @@ export default function LinkItem({
           contentId={id}
         />
       </div>
-      <section
-        onMouseUp={() => {
-          if (!onEdit) history.push(`/links/${id}`);
-        }}
-        style={{ cursor: !onEdit && 'pointer' }}
-      >
+      <section>
         <div
           className={css`
             display: flex;
@@ -153,7 +148,11 @@ export default function LinkItem({
             >
               {!onEdit && (
                 <span
+                  onMouseUp={() => {
+                    if (!onEdit) history.push(`/links/${id}`);
+                  }}
                   style={{
+                    cursor: 'pointer',
                     color: Color.blue(),
                     fontSize: '2rem',
                     fontWeight: 'bold'

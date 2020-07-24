@@ -428,6 +428,20 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async loadByUserUploads({ contentType, lastId, limit }) {
+      try {
+        const {
+          data: { results, loadMoreButton }
+        } = await request.get(
+          `${URL}/content/uploads/byUser?numberToLoad=${limit}&contentType=${contentType}${
+            lastId ? `&lastId=${lastId}` : ''
+          }`
+        );
+        return Promise.resolve({ results, loadMoreButton });
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async loadRecommendedUploads({
       limit,
       lastRecommendationId,
