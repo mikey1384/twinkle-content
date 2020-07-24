@@ -127,7 +127,10 @@ export default function RecommendationInterface({
     if (!isRecommendedByUser && canReward && isOnlyRecommendedByStudents) {
       for (let recommendation of recommendations) {
         rewardUser({
-          amount: recommendation.userId === uploaderId ? 1 : 2,
+          amount:
+            recommendation.userId === uploaderId
+              ? priceTable.recommendation
+              : priceTable.recommendation * 3,
           contentType: 'recommendation',
           contentId: recommendation.id,
           rootType: contentType,
