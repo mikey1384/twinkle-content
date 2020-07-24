@@ -30,6 +30,7 @@ export default function NotiItem({
     let notificationMessage;
     const isReply = targetComment?.userId === userId;
     const isSubjectResponse = targetSubject?.userId === userId;
+
     switch (actionObj.contentType) {
       case 'like':
         notificationMessage = (
