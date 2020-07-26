@@ -1074,12 +1074,8 @@ export default function ContentReducer(state, action) {
       const contentKeys = Object.keys(newState);
       for (let contentKey of contentKeys) {
         const prevContentState = newState[contentKey];
-        const contentMatches =
-          prevContentState.contentId === action.subjectId &&
-          prevContentState.contentType === 'subject';
         newState[contentKey] = {
           ...prevContentState,
-          ...(contentMatches ? action.editedSubject : {}),
           subjects: prevContentState.subjects?.map((subject) =>
             subject.id === action.subjectId
               ? {
