@@ -12,6 +12,7 @@ RecommendationInterface.propTypes = {
   contentId: PropTypes.number.isRequired,
   contentType: PropTypes.string.isRequired,
   onHide: PropTypes.func.isRequired,
+  onRecommend: PropTypes.func,
   recommendations: PropTypes.array,
   style: PropTypes.object,
   uploaderId: PropTypes.number
@@ -21,6 +22,7 @@ export default function RecommendationInterface({
   contentId,
   contentType,
   onHide,
+  onRecommend,
   recommendations,
   style,
   uploaderId
@@ -149,6 +151,7 @@ export default function RecommendationInterface({
       if (recommendations) {
         onRecommendContent({ contentId, contentType, recommendations });
       }
+      onRecommend?.(recommendations);
       onHide();
     } catch (error) {
       console.error(error);
