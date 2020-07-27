@@ -2,6 +2,7 @@ import React from 'react';
 import Icon from 'components/Icon';
 import { css } from 'emotion';
 import { Color, phoneMaxWidth } from 'constants/css';
+import { GENERAL_CHAT_ID } from 'constants/defaultValues';
 import { useAppContext, useChatContext } from 'contexts';
 
 export default function Tabs() {
@@ -66,9 +67,9 @@ export default function Tabs() {
 
   async function handleSelectHomeTab() {
     if (!selectedChannelId && chatType !== 'vocabulary') {
-      const data = await loadChatChannel({ channelId: 2 });
-      onSelectChatTab('home');
-      return onEnterChannelWithId({ data });
+      const data = await loadChatChannel({ channelId: GENERAL_CHAT_ID });
+      onEnterChannelWithId({ data });
+      return onSelectChatTab('home');
     }
     onSelectChatTab('home');
   }

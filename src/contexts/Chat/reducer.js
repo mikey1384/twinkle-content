@@ -1,5 +1,6 @@
 import { initialChatState } from '.';
 import { defaultChatSubject } from 'constants/defaultValues';
+import { determineSelectedChatTab } from './helpers';
 
 export default function ChatReducer(state, action) {
   switch (action.type) {
@@ -305,11 +306,11 @@ export default function ChatReducer(state, action) {
       action.data.messages.reverse();
       return {
         ...state,
-        selectedChatTab:
-          state.selectedChatTab === 'class' && !selectedChannel.isClass
-            ? 'home'
-            : state.selectedChatTab,
-        chatType: null,
+        ...determineSelectedChatTab({
+          currentChatType: state.chatType,
+          currentSelectedChatTab: state.selectedChatTab,
+          selectedChannel
+        }),
         recentChessMessage: undefined,
         channelsObj: {
           ...state.channelsObj,
@@ -671,6 +672,7 @@ export default function ChatReducer(state, action) {
       }
       return {
         ...state,
+        selectedChatTab: 'home',
         chatType: null,
         loaded: true,
         recentChessMessage: undefined,
@@ -693,7 +695,6 @@ export default function ChatReducer(state, action) {
           )
         ),
         selectedChannelId: action.channelId,
-        selectedChatTab: 'home',
         messages: action.messages.reverse(),
         messagesLoadMoreButton,
         recepientId: action.recepient.id
@@ -967,8 +968,11 @@ export default function ChatReducer(state, action) {
     case 'SELECT_CHAT_TAB':
       return {
         ...state,
-        chatType: action.selectedChatTab === 'class' ? null : state.chatType,
-        selectedChatTab: action.selectedChatTab
+        ...determineSelectedChatTab({
+          currentSelectedChatTab: state.selectedChatTab,
+          selectedChatTab: action.selectedChatTab,
+          currentChatType: state.chatType
+        })
       };
     case 'SET_CALL': {
       return {

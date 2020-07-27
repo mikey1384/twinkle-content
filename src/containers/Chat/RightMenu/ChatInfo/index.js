@@ -9,6 +9,7 @@ import { Color, desktopMinWidth, mobileMaxWidth } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
 import { useChatContext } from 'contexts';
 import { socket } from 'constants/io';
+import { GENERAL_CHAT_ID } from 'constants/defaultValues';
 
 ChatInfo.propTypes = {
   channelName: PropTypes.string,
@@ -83,7 +84,7 @@ function ChatInfo({
     )
       .map(([, member]) => member)
       .filter((member) => !!member.id && member.id !== myId);
-    if (selectedChannelId !== 2) {
+    if (selectedChannelId !== GENERAL_CHAT_ID) {
       const totalChannelMemberIds = totalChannelMembers.map(
         (member) => member.id
       );
@@ -192,7 +193,7 @@ function ChatInfo({
               `}
             >
               {Object.keys(currentChannelOnlineMembers).length}
-              {currentChannel.id !== 2 &&
+              {currentChannel.id !== GENERAL_CHAT_ID &&
                 '/' + displayedChannelMembers.length}{' '}
               online
             </div>
