@@ -208,12 +208,12 @@ function MainFeeds({
                 <p style={{ fontSize: '1.5rem' }}>
                   * {totalTwinkles} Twinkle{totalTwinkles > 0 ? 's' : ''} (
                   {totalTwinkles} * {rewardValue} ={' '}
-                  {totalTwinkles * rewardValue} XP)
+                  {addCommasToNumber(totalTwinkles * rewardValue)} XP)
                 </p>
               )}
               {totalCoins > 0 && (
                 <p style={{ fontSize: '1.5rem' }}>
-                  * {totalCoins} Twinkle Coin
+                  * {addCommasToNumber(totalCoins)} Twinkle Coin
                   {totalCoins > 0 ? 's' : ''}
                 </p>
               )}
