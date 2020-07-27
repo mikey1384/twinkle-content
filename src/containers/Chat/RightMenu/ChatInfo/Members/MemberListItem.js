@@ -58,7 +58,7 @@ function MemberListItem({
   const showButtonShown = useMemo(() => {
     return isClass && imLive && creatorId === myId && member.id !== myId;
   }, [creatorId, imLive, isClass, member.id, myId]);
-  console.log(member);
+
   return (
     <div
       style={{
