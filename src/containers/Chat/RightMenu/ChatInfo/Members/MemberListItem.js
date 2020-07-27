@@ -37,7 +37,10 @@ function MemberListItem({
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   const { userId: myId } = useMyState();
   const {
-    state: { channelOnCall, ['user' + member.id]: { isAway, isBusy } = {} },
+    state: {
+      channelOnCall,
+      ['user' + member.id]: { isAway, isBusy, username, profilePicId } = {}
+    },
     actions: { onSetUserData }
   } = useChatContext();
 
@@ -86,7 +89,7 @@ function MemberListItem({
             }
           `}
           userId={member.id}
-          profilePicId={member.profilePicId}
+          profilePicId={profilePicId}
           online={!!onlineMembers[member.id]}
           isAway={isAway}
           isBusy={isBusy}
@@ -104,7 +107,7 @@ function MemberListItem({
             color: Color.darkerGray(),
             marginLeft: '2rem'
           }}
-          user={member}
+          user={{ id: member.id, username }}
         />
         {creatorId === member.id ? (
           <div
