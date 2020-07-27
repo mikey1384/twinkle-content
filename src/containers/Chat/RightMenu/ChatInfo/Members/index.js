@@ -48,7 +48,7 @@ function Members({
     membersOnCall.length
   ]);
 
-  return channelId ? (
+  return (
     <div style={{ width: '100%' }}>
       {callIsOnGoing && (
         <div
@@ -103,7 +103,7 @@ function Members({
         />
       ))}
     </div>
-  ) : null;
+  );
 }
 
 export default memo(Members);
