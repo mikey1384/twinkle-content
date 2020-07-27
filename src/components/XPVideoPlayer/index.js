@@ -279,19 +279,23 @@ function XPVideoPlayer({
           onEnded={handleVideoStop}
         />
       </div>
-      <XPBar
-        alreadyEarned={xpEarned}
-        isChat={isChat}
-        justEarned={justEarned}
-        onPlayVideo={() => PlayerRef.current?.getInternalPlayer()?.playVideo()}
-        rewardLevel={rewardLevel}
-        started={started}
-        startingPosition={startingPosition}
-        userId={userId}
-        videoId={videoId}
-        xpEarned={xpEarned}
-        xpLoaded={xpLoaded}
-      />
+      {(!!rewardLevel || (startingPosition > 0 && !started)) && (
+        <XPBar
+          alreadyEarned={xpEarned}
+          isChat={isChat}
+          justEarned={justEarned}
+          onPlayVideo={() =>
+            PlayerRef.current?.getInternalPlayer()?.playVideo()
+          }
+          rewardLevel={rewardLevel}
+          started={started}
+          startingPosition={startingPosition}
+          userId={userId}
+          videoId={videoId}
+          xpEarned={xpEarned}
+          xpLoaded={xpLoaded}
+        />
+      )}
     </ErrorBoundary>
   );
 
