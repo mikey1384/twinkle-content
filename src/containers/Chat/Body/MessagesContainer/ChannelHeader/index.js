@@ -323,6 +323,7 @@ export default function ChannelHeader({
               }}
               onReloadChatSubject={handleReloadChatSubject}
               searchResults={subjectSearchResults}
+              theme={theme}
             />
           )}
         </>
