@@ -1,9 +1,11 @@
 import React, { memo, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ContentLink from 'components/ContentLink';
+import { useHistory } from 'react-router-dom';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { Color } from 'constants/css';
 import ProfilePic from 'components/ProfilePic';
+import { css } from 'emotion';
 import UsernameText from 'components/Texts/UsernameText';
 
 Heading.propTypes = {
@@ -39,6 +41,7 @@ function Heading({
     uploader = {}
   }
 }) {
+  const history = useHistory();
   const MemoizedComponent = useMemo(() => {
     const contentLabel =
       rootType === 'url'
@@ -161,7 +164,19 @@ function Heading({
           }}
         >
           <span className="title">{MemoizedComponent}</span>
-          <small className="timestamp">
+          <small
+            className={`timestamp ${css`
+              cursor: pointer;
+              &:hover {
+                text-decoration: underline;
+              }
+            `}`}
+            onClick={() =>
+              history.push(
+                `/${contentType === 'url' ? 'link' : contentType}s/${id}`
+              )
+            }
+          >
             {timeStamp ? `(${timeSince(timeStamp)})` : ''}
           </small>
         </div>
