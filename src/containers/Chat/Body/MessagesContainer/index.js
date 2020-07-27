@@ -121,6 +121,7 @@ export default function MessagesContainer({
     false
   );
   const [placeholderHeight, setPlaceholderHeight] = useState(0);
+  const [hideModalShown, setHideModalShown] = useState(false);
 
   const ContentRef = useRef(null);
   const MessagesRef = useRef(null);
@@ -183,8 +184,22 @@ export default function MessagesContainer({
     if (currentChannel.twoPeople) {
       return [
         {
-          label: <span style={{ fontWeight: 'bold' }}>Hide Chat</span>,
-          onClick: handleHideChat
+          label: (
+            <>
+              <Icon icon="star" />
+              <span style={{ marginLeft: '1rem' }}>Favorite</span>
+            </>
+          ),
+          onClick: () => setInviteUsersModalShown(true)
+        },
+        {
+          label: (
+            <>
+              <Icon icon="minus" />
+              <span style={{ marginLeft: '1rem' }}>Hide</span>
+            </>
+          ),
+          onClick: () => setHideModalShown(true)
         }
       ];
     }
@@ -230,14 +245,6 @@ export default function MessagesContainer({
       }
     );
     return result;
-    async function handleHideChat() {
-      await hideChat(selectedChannelId);
-      onHideChat(selectedChannelId);
-      const data = await loadChatChannel({
-        channelId: GENERAL_CHAT_ID
-      });
-      onEnterChannelWithId({ data, showOnTop: true });
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     currentChannel.twoPeople,
@@ -509,6 +516,13 @@ export default function MessagesContainer({
             </Button>
           )}
         </div>
+        {hideModalShown && (
+          <ConfirmModal
+            onHide={() => setHideModalShown(false)}
+            title="Hide Chat"
+            onConfirm={handleHideChat}
+          />
+        )}
         {deleteModal.shown && (
           <ConfirmModal
             onHide={() =>
@@ -1017,6 +1031,16 @@ export default function MessagesContainer({
       filePath,
       messageId
     });
+  }
+
+  async function handleHideChat() {
+    await hideChat(selectedChannelId);
+    onHideChat(selectedChannelId);
+    const data = await loadChatChannel({
+      channelId: GENERAL_CHAT_ID
+    });
+    onEnterChannelWithId({ data, showOnTop: true });
+    setHideModalShown(false);
   }
 
   function handleImagePaste(file) {
