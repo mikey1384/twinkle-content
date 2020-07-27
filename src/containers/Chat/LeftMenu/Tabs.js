@@ -45,16 +45,14 @@ export default function Tabs() {
       >
         <Icon icon="home" />
       </nav>
-      {false && (
-        <nav
-          style={{
-            color: selectedChatTab === 'group' ? Color.black() : Color.gray()
-          }}
-          onClick={() => onSelectChatTab('group')}
-        >
-          <Icon icon="star" />
-        </nav>
-      )}
+      <nav
+        style={{
+          color: selectedChatTab === 'group' ? Color.black() : Color.gray()
+        }}
+        onClick={() => onSelectChatTab('group')}
+      >
+        <Icon icon="star" />
+      </nav>
       <nav
         style={{
           color: selectedChatTab === 'class' ? Color.black() : Color.gray()
