@@ -31,7 +31,7 @@ function Members({
   const membersOnCall = useMemo(
     () =>
       channelOnCallId === channelId
-        ? members.filter(member => !!membersOnCallObj[member.id])
+        ? members.filter((member) => !!membersOnCallObj[member.id])
         : [],
     [channelId, channelOnCallId, members, membersOnCallObj]
   );
@@ -39,7 +39,7 @@ function Members({
   const membersNotOnCall = useMemo(
     () =>
       channelOnCallId === channelId
-        ? members.filter(member => !membersOnCallObj[member.id])
+        ? members.filter((member) => !membersOnCallObj[member.id])
         : members,
     [channelId, channelOnCallId, members, membersOnCallObj]
   );
@@ -48,7 +48,7 @@ function Members({
     membersOnCall.length
   ]);
 
-  return (
+  return channelId ? (
     <div style={{ width: '100%' }}>
       {callIsOnGoing && (
         <div
@@ -64,9 +64,9 @@ function Members({
       )}
       {callIsOnGoing && (
         <div style={{ marginBottom: '2rem' }}>
-          {membersOnCall.map(member => (
+          {membersOnCall.map((member) => (
             <MemberListItem
-              key={`channel${channelId}-oncall-member${member.id}`}
+              key={`oncall-member-${member.id}`}
               channelId={channelId}
               creatorId={creatorId}
               onlineMembers={onlineMembers}
@@ -93,7 +93,7 @@ function Members({
       )}
       {membersNotOnCall.map((member, index) => (
         <MemberListItem
-          key={`channel${channelId}member${member.id}`}
+          key={`member-${member.id}`}
           creatorId={creatorId}
           onlineMembers={onlineMembers}
           member={member}
@@ -103,7 +103,7 @@ function Members({
         />
       ))}
     </div>
-  );
+  ) : null;
 }
 
 export default memo(Members);
