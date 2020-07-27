@@ -88,8 +88,8 @@ function MemberListItem({
           userId={member.id}
           profilePicId={member.profilePicId}
           online={!!onlineMembers[member.id]}
-          isAway={isAway || member.isAway}
-          isBusy={isBusy || member.isBusy}
+          isAway={isAway}
+          isBusy={isBusy}
           statusShown
         />
         <UsernameText
