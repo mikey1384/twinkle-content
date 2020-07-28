@@ -77,7 +77,7 @@ export default function MainContent({
       <div>
         {(contentType === 'subject' || contentType === 'comment') &&
           filePath &&
-          !secretHidden &&
+          !(contentType === 'comment' && secretHidden) &&
           (userId ? (
             <FileViewer
               autoPlay
