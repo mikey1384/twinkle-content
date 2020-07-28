@@ -2,17 +2,13 @@ import React from 'react';
 import Icon from 'components/Icon';
 import { css } from 'emotion';
 import { Color, phoneMaxWidth } from 'constants/css';
-import { GENERAL_CHAT_ID } from 'constants/defaultValues';
-import { useAppContext, useChatContext } from 'contexts';
+import { useChatContext } from 'contexts';
 
 export default function Tabs() {
   const {
-    state: { chatType, selectedChannelId, selectedChatTab },
-    actions: { onEnterChannelWithId, onSelectChatTab }
+    state: { selectedChatTab },
+    actions: { onSelectChatTab }
   } = useChatContext();
-  const {
-    requestHelpers: { loadChatChannel }
-  } = useAppContext();
 
   return (
     <div
@@ -42,7 +38,7 @@ export default function Tabs() {
         style={{
           color: selectedChatTab === 'home' ? Color.black() : Color.gray()
         }}
-        onClick={handleSelectHomeTab}
+        onClick={() => onSelectChatTab('home')}
       >
         <Icon icon="home" />
       </nav>
@@ -64,13 +60,4 @@ export default function Tabs() {
       </nav>
     </div>
   );
-
-  async function handleSelectHomeTab() {
-    if (!selectedChannelId && chatType !== 'vocabulary') {
-      const data = await loadChatChannel({ channelId: GENERAL_CHAT_ID });
-      onEnterChannelWithId({ data });
-      return onSelectChatTab('home');
-    }
-    onSelectChatTab('home');
-  }
 }

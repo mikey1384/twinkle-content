@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Channel from './Channel';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import ErrorBoundary from 'components/ErrorBoundary';
-import ClassMainMenu from './ClassMainMenu';
 import { useAppContext, useChatContext } from 'contexts';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 
@@ -94,9 +93,6 @@ function Channels({ onChannelEnter }) {
         height: '100%'
       }}
     >
-      {selectedChatTab === 'class' && (
-        <ClassMainMenu onChannelEnter={onChannelEnter} />
-      )}
       {channelIds
         ?.map((channelId) => channelsObj[channelId])
         .filter((channel) => !channel?.isHidden)
@@ -136,7 +132,8 @@ function Channels({ onChannelEnter }) {
       const channels = await loadMoreChannels({
         type: selectedChatTab,
         lastUpdated,
-        lastId
+        lastId,
+        currentChannelId: selectedChannelId
       });
       onLoadMoreChannels({ type: selectedChatTab, channels });
       setChannelsLoading(false);
