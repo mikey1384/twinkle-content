@@ -39,13 +39,7 @@ function MemberListItem({
   const {
     state: {
       channelOnCall,
-      ['user' + member.id]: {
-        isAway,
-        isBusy,
-        id: memberId,
-        profilePicId,
-        username
-      } = {}
+      ['user' + member.id]: { isAway, isBusy, username, profilePicId } = {}
     },
     actions: { onSetUserData }
   } = useChatContext();
@@ -60,13 +54,13 @@ function MemberListItem({
   const usernameWidth = useMemo(() => (isClass ? '20%' : '42%'), [isClass]);
   const peerIsStreaming = useMemo(
     () =>
-      peerStreams?.[membersOnCallObj?.[memberId]] &&
-      !channelOnCall.members[membersOnCallObj?.[memberId]]?.streamHidden,
-    [peerStreams, membersOnCallObj, memberId, channelOnCall.members]
+      peerStreams?.[membersOnCallObj?.[member.id]] &&
+      !channelOnCall.members[membersOnCallObj?.[member.id]]?.streamHidden,
+    [peerStreams, membersOnCallObj, member.id, channelOnCall.members]
   );
   const showButtonShown = useMemo(() => {
-    return isClass && imLive && creatorId === myId && memberId !== myId;
-  }, [creatorId, imLive, isClass, memberId, myId]);
+    return isClass && imLive && creatorId === myId && member.id !== myId;
+  }, [creatorId, imLive, isClass, member.id, myId]);
 
   return (
     <div
@@ -94,9 +88,9 @@ function MemberListItem({
               width: 3rem;
             }
           `}
-          userId={memberId}
+          userId={member.id}
           profilePicId={profilePicId}
-          online={!!onlineMembers[memberId]}
+          online={!!onlineMembers[member.id]}
           isAway={isAway}
           isBusy={isBusy}
           statusShown
@@ -105,7 +99,7 @@ function MemberListItem({
           truncate
           className={css`
             width: auto;
-            max-width: ${creatorId === memberId
+            max-width: ${creatorId === member.id
               ? usernameWidth
               : `CALC(${usernameWidth} + 2rem)`};
           `}
@@ -113,9 +107,9 @@ function MemberListItem({
             color: Color.darkerGray(),
             marginLeft: '2rem'
           }}
-          user={{ id: memberId, username }}
+          user={{ id: member.id, username }}
         />
-        {creatorId === memberId ? (
+        {creatorId === member.id ? (
           <div
             style={{
               marginLeft: '1rem'
@@ -146,14 +140,14 @@ function MemberListItem({
   );
 
   function handleConfirmShowPeer() {
-    socket.emit('show_peer_stream', memberId);
+    socket.emit('show_peer_stream', member.id);
     setConfirmModalShown(false);
   }
 
   function handleShowPeer() {
     if (peerIsStreaming) {
       socket.emit('close_peer_stream', {
-        memberId,
+        memberId: member.id,
         channelId
       });
     } else {
@@ -163,7 +157,7 @@ function MemberListItem({
       if (numLivePeers >= 2) {
         return setConfirmModalShown(true);
       }
-      socket.emit('show_peer_stream', memberId);
+      socket.emit('show_peer_stream', member.id);
     }
   }
 }

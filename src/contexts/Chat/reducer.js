@@ -431,6 +431,7 @@ export default function ChatReducer(state, action) {
       action.data.vocabActivities?.reverse();
 
       return {
+        ...state,
         ...initialChatState,
         chatType: action.data.chatType,
         loaded: true,

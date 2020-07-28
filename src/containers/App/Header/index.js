@@ -87,6 +87,7 @@ export default function Header({
       onSetMembersOnCall,
       onSetMyStream,
       onSetPeerStreams,
+      onSetUserData,
       onShowIncoming,
       onShowOutgoing,
       onTogglePeerStream,
@@ -240,6 +241,19 @@ export default function Header({
         onSetReconnecting(true);
         const data = await loadChat();
         onInitChat(data);
+        socket.emit(
+          'check_online_members',
+          selectedChannelId,
+          (err, { membersOnline }) => {
+            if (err) console.error(err);
+            const members = Object.entries(membersOnline).map(
+              ([, member]) => member
+            );
+            for (let member of members) {
+              onSetUserData(member);
+            }
+          }
+        );
       }
 
       async function handleCheckNewFeeds() {
