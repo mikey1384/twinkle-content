@@ -351,8 +351,8 @@ export default function BasicInfos({
       { label: 'email', value: email },
       { label: 'YouTube', value: youtubeUrl },
       { label: 'website', value: website }
-    ].filter(item => !item.value);
-    const emptyItemsArray = unfilledItems.map(item => item.label);
+    ].filter((item) => !item.value);
+    const emptyItemsArray = unfilledItems.map((item) => item.label);
     const emptyItemsString =
       emptyItemsArray.length === 3
         ? `${emptyItemsArray[0]}, ${emptyItemsArray[1]}, and ${emptyItemsArray[2]}`

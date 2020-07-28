@@ -21,6 +21,7 @@ function Channels({ onChannelEnter }) {
       channelsObj,
       classChannelIds,
       customChannelNames,
+      favoriteChannelIds,
       homeChannelIds,
       classLoadMoreButton,
       homeLoadMoreButton,
@@ -33,10 +34,19 @@ function Channels({ onChannelEnter }) {
   const [prevChannelIds, setPrevChannelIds] = useState(homeChannelIds);
   const ChannelListRef = useRef(null);
   const loading = useRef(false);
-  const channelIds = useMemo(
-    () => (selectedChatTab === 'home' ? homeChannelIds : classChannelIds),
-    [classChannelIds, homeChannelIds, selectedChatTab]
-  );
+  const channelIds = useMemo(() => {
+    switch (selectedChatTab) {
+      case 'home':
+        return homeChannelIds;
+      case 'favorite':
+        return favoriteChannelIds;
+      case 'class':
+        return classChannelIds;
+      default:
+        return [];
+    }
+  }, [classChannelIds, favoriteChannelIds, homeChannelIds, selectedChatTab]);
+
   const loadMoreButtonShown = useMemo(
     () =>
       selectedChatTab === 'home' ? homeLoadMoreButton : classLoadMoreButton,

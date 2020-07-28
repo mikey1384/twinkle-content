@@ -48,9 +48,9 @@ export default function Tabs() {
       </nav>
       <nav
         style={{
-          color: selectedChatTab === 'group' ? Color.black() : Color.gray()
+          color: selectedChatTab === 'favorite' ? Color.black() : Color.gray()
         }}
-        onClick={() => onSelectChatTab('group')}
+        onClick={() => onSelectChatTab('favorite')}
       >
         <Icon icon="star" />
       </nav>

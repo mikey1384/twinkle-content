@@ -436,6 +436,7 @@ export default function ChatReducer(state, action) {
         chatType: action.data.chatType,
         loaded: true,
         classChannelIds: action.data.classChannelIds,
+        favoriteChannelIds: action.data.favoriteChannelIds,
         homeChannelIds: action.data.homeChannelIds,
         channelsObj: {
           ...action.data.channelsObj,
