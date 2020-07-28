@@ -165,7 +165,7 @@ function XPVideoPlayer({
   }, [userId, xpEarned]);
 
   useEffect(() => {
-    PlayerRef.current.getInternalPlayer()?.pauseVideo?.();
+    PlayerRef.current?.getInternalPlayer()?.pauseVideo?.();
   }, [userId, rewardLevel]);
 
   useEffect(() => {
@@ -301,7 +301,7 @@ function XPVideoPlayer({
 
   function onVideoReady() {
     totalDurationRef.current = PlayerRef.current
-      .getInternalPlayer()
+      ?.getInternalPlayer()
       ?.getDuration();
   }
 
@@ -362,14 +362,14 @@ function XPVideoPlayer({
           }
         );
         if (currentlyWatchingAnotherVideo) {
-          PlayerRef.current.getInternalPlayer()?.pauseVideo?.();
+          PlayerRef.current?.getInternalPlayer()?.pauseVideo?.();
         }
       }
     }
 
     async function increaseCoinMeter() {
-      if (PlayerRef.current.getInternalPlayer()?.isMuted()) {
-        PlayerRef.current.getInternalPlayer()?.unMute();
+      if (PlayerRef.current?.getInternalPlayer()?.isMuted()) {
+        PlayerRef.current?.getInternalPlayer()?.unMute();
       }
       if (
         rewardAmountRef.current &&
@@ -419,8 +419,8 @@ function XPVideoPlayer({
     }
 
     async function increaseXPMeter() {
-      if (PlayerRef.current.getInternalPlayer()?.isMuted()) {
-        PlayerRef.current.getInternalPlayer()?.unMute();
+      if (PlayerRef.current?.getInternalPlayer()?.isMuted()) {
+        PlayerRef.current?.getInternalPlayer()?.unMute();
       }
       const requiredViewDuration =
         totalDurationRef.current < requiredDurationForXP + 10
