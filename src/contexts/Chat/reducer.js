@@ -304,6 +304,7 @@ export default function ChatReducer(state, action) {
         messagesLoadMoreButton = true;
       }
       action.data.messages.reverse();
+
       return {
         ...state,
         ...determineSelectedChatTab({
