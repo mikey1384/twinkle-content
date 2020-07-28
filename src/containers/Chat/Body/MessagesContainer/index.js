@@ -186,15 +186,6 @@ export default function MessagesContainer({
         {
           label: (
             <>
-              <Icon icon="star" />
-              <span style={{ marginLeft: '1rem' }}>Favorite</span>
-            </>
-          ),
-          onClick: () => setInviteUsersModalShown(true)
-        },
-        {
-          label: (
-            <>
               <Icon icon="minus" />
               <span style={{ marginLeft: '1rem' }}>Hide</span>
             </>

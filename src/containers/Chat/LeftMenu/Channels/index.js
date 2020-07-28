@@ -120,9 +120,13 @@ function Channels({ onChannelEnter }) {
     if (!loading.current) {
       setChannelsLoading(true);
       loading.current = true;
+      const { lastUpdated, id: lastId } = channelsObj[
+        homeChannelIds[homeChannelIds.length - 1]
+      ];
       const channels = await loadMoreChannels({
         type: selectedChatTab,
-        shownIds: homeChannelIds
+        lastUpdated,
+        lastId
       });
       onLoadMoreChannels({ type: selectedChatTab, channels });
       setChannelsLoading(false);
