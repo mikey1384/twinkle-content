@@ -307,8 +307,7 @@ export default function ChatReducer(state, action) {
 
       return {
         ...state,
-        ...determineSelectedChatTab({
-          currentChatType: state.chatType,
+        selectedChatTab: determineSelectedChatTab({
           currentSelectedChatTab: state.selectedChatTab,
           selectedChannel
         }),
@@ -971,10 +970,9 @@ export default function ChatReducer(state, action) {
     case 'SELECT_CHAT_TAB':
       return {
         ...state,
-        ...determineSelectedChatTab({
+        selectedChatTab: determineSelectedChatTab({
           currentSelectedChatTab: state.selectedChatTab,
-          selectedChatTab: action.selectedChatTab,
-          currentChatType: state.chatType
+          selectedChatTab: action.selectedChatTab
         })
       };
     case 'SET_CALL': {

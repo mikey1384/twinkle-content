@@ -1,5 +1,4 @@
 export function determineSelectedChatTab({
-  currentChatType,
   currentSelectedChatTab,
   selectedChatTab,
   selectedChannel
@@ -10,9 +9,5 @@ export function determineSelectedChatTab({
   } else if (currentSelectedChatTab === 'class' && !selectedChannel?.isClass) {
     newSelectedChatTab = 'home';
   }
-  return {
-    selectedChatTab: newSelectedChatTab,
-    chatType:
-      selectedChatTab !== 'home' || selectedChannel ? null : currentChatType
-  };
+  return newSelectedChatTab;
 }
