@@ -1,9 +1,8 @@
-import React, { memo, useMemo, useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import MessagesContainer from './MessagesContainer';
 import Vocabulary from './Vocabulary';
 import Loading from 'components/Loading';
-import AboutClass from './AboutClass';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { phoneMaxWidth, Color } from 'constants/css';
 import { css } from 'emotion';
@@ -17,22 +16,9 @@ Body.propTypes = {
 
 function Body({ channelName, chessOpponent, currentChannel }) {
   const {
-    state: {
-      chatType,
-      loadingVocabulary,
-      selectedChatTab,
-      selectedChannelId,
-      channelsObj
-    },
+    state: { chatType, loadingVocabulary, selectedChannelId },
     actions: { onSetReplyTarget, onSetIsRespondingToSubject }
   } = useChatContext();
-  const isViewingAboutClassPage = useMemo(
-    () =>
-      !chatType &&
-      selectedChatTab === 'class' &&
-      !channelsObj[selectedChannelId]?.isClass,
-    [channelsObj, chatType, selectedChannelId, selectedChatTab]
-  );
 
   useEffect(() => {
     onSetReplyTarget(null);
@@ -45,17 +31,13 @@ function Body({ channelName, chessOpponent, currentChannel }) {
       <div
         className={css`
           height: 100%;
-          width: ${isViewingAboutClassPage ? '80vw' : '60vw'};
+          width: 60vw;
           border-left: 1px solid ${Color.borderGray()};
           padding: 0;
           position: relative;
           background: #fff;
           @media (max-width: ${phoneMaxWidth}) {
-            width: ${chatType === 'vocabulary'
-              ? '77vw'
-              : isViewingAboutClassPage
-              ? '120vw'
-              : '85vw'};
+            width: ${chatType === 'vocabulary' ? '77vw' : '85vw'};
           }
         `}
       >
@@ -65,8 +47,6 @@ function Body({ channelName, chessOpponent, currentChannel }) {
           <>
             {chatType === 'vocabulary' ? (
               <Vocabulary />
-            ) : isViewingAboutClassPage ? (
-              <AboutClass />
             ) : (
               <MessagesContainer
                 channelName={channelName}
