@@ -42,6 +42,7 @@ export default function ChannelHeader({
   const {
     requestHelpers: {
       loadChatSubject,
+      putFavoriteChannel,
       reloadChatSubject,
       searchChatSubject,
       uploadChatSubject
@@ -274,7 +275,11 @@ export default function ChannelHeader({
                   }
                 `}
               >
-                <Button color="brownOrange" style={{ marginRight: '1rem' }}>
+                <Button
+                  color="brownOrange"
+                  style={{ marginRight: '1rem' }}
+                  onClick={handleFavoriteClick}
+                >
                   <Icon icon="star" />
                 </Button>
                 <Button
@@ -315,7 +320,7 @@ export default function ChannelHeader({
               maxLength={charLimit.chat.subject}
               currentSubjectId={subjectId}
               title={content}
-              onEditSubmit={onSubjectSubmit}
+              onEditSubmit={handleSubjectSubmit}
               onChange={handleSearchChatSubject}
               onClickOutSide={() => {
                 setOnEdit(false);
@@ -337,6 +342,11 @@ export default function ChannelHeader({
       )}
     </ErrorBoundary>
   );
+
+  async function handleFavoriteClick() {
+    const data = await putFavoriteChannel(currentChannel.id);
+    console.log(data);
+  }
 
   function handleMouseOver() {
     if (textIsOverflown(HeaderLabelRef.current) && !isMobile(navigator)) {
@@ -371,7 +381,7 @@ export default function ChannelHeader({
     onSearchChatSubject(data);
   }
 
-  async function onSubjectSubmit(text) {
+  async function handleSubjectSubmit(text) {
     if (!submitting) {
       setSubmitting(true);
       try {

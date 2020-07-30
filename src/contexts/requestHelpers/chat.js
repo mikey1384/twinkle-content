@@ -322,6 +322,18 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async putFavoriteChannel(channelId) {
+      try {
+        const { data } = await request.put(
+          `${URL}/chat/channel/favorite`,
+          { channelId },
+          auth()
+        );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async registerWord(definitions) {
       try {
         const { data } = await request.post(
