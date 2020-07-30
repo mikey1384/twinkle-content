@@ -6,7 +6,7 @@ import { useChatContext } from 'contexts';
 
 export default function Tabs() {
   const {
-    state: { selectedChatTab },
+    state: { favoriteChannelIds, classChannelIds, selectedChatTab },
     actions: { onSelectChatTab }
   } = useChatContext();
 
@@ -42,22 +42,26 @@ export default function Tabs() {
       >
         <Icon icon="home" />
       </nav>
-      <nav
-        style={{
-          color: selectedChatTab === 'favorite' ? Color.black() : Color.gray()
-        }}
-        onClick={() => onSelectChatTab('favorite')}
-      >
-        <Icon icon="star" />
-      </nav>
-      <nav
-        style={{
-          color: selectedChatTab === 'class' ? Color.black() : Color.gray()
-        }}
-        onClick={() => onSelectChatTab('class')}
-      >
-        <Icon icon="chalkboard-teacher" />
-      </nav>
+      {favoriteChannelIds.length > 0 && (
+        <nav
+          style={{
+            color: selectedChatTab === 'favorite' ? Color.black() : Color.gray()
+          }}
+          onClick={() => onSelectChatTab('favorite')}
+        >
+          <Icon icon="star" />
+        </nav>
+      )}
+      {classChannelIds.length > 0 && (
+        <nav
+          style={{
+            color: selectedChatTab === 'class' ? Color.black() : Color.gray()
+          }}
+          onClick={() => onSelectChatTab('class')}
+        >
+          <Icon icon="chalkboard-teacher" />
+        </nav>
+      )}
     </div>
   );
 }
