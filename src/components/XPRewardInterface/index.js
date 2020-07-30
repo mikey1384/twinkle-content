@@ -13,7 +13,7 @@ import {
   stringIsEmpty
 } from 'helpers/stringHelpers';
 import Button from 'components/Button';
-import { returnMaxRewards } from 'constants/defaultValues';
+import { returnMaxRewards, priceTable } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useInputContext } from 'contexts';
 
@@ -148,7 +148,10 @@ export default function XPRewardInterface({
           <>
             <div style={{ marginLeft: '0.7rem' }}>
               (<Icon icon={['far', 'badge-dollar']} />
-              <span style={{ marginLeft: '0.3rem' }}>{selectedAmount}</span>)
+              <span style={{ marginLeft: '0.3rem' }}>
+                {selectedAmount * priceTable.reward}
+              </span>
+              )
             </div>
           </>
         ) : (
@@ -263,7 +266,8 @@ export default function XPRewardInterface({
               !!rewardCommentExceedsCharLimit ||
               rewarding ||
               selectedAmount === 0 ||
-              (authLevel === 0 && twinkleCoins < selectedAmount)
+              (authLevel === 0 &&
+                twinkleCoins < selectedAmount * priceTable.reward)
             }
             onClick={handleRewardSubmit}
           >
