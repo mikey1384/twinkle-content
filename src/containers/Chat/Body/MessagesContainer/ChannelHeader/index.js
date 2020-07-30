@@ -274,6 +274,9 @@ export default function ChannelHeader({
                   }
                 `}
               >
+                <Button color="brownOrange" style={{ marginRight: '1rem' }}>
+                  <Icon icon="star" />
+                </Button>
                 <Button
                   color={theme || 'green'}
                   filled
@@ -283,9 +286,6 @@ export default function ChannelHeader({
                   }}
                 >
                   <Icon flip="both" icon="reply" />
-                  <span className="desktop" style={{ marginLeft: '0.5rem' }}>
-                    Respond
-                  </span>
                 </Button>
                 {menuButtonShown && !banned && (
                   <DropdownButton
