@@ -289,7 +289,6 @@ export default function ChannelHeader({
                   }}
                 >
                   <Icon flip="both" icon="reply" />
-                  <span style={{ marginLeft: '0.7rem' }}>Respond</span>
                 </Button>
                 {menuButtonShown && !banned && (
                   <DropdownButton
