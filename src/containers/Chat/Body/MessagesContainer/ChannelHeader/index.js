@@ -50,7 +50,7 @@ export default function ChannelHeader({
   } = useAppContext();
   const { authLevel, banned, profilePicId, userId, username } = useMyState();
   const {
-    state: { subjectObj, subjectSearchResults },
+    state: { favoriteChannelIds, subjectObj, subjectSearchResults },
     actions: {
       onClearSubjectSearchResults,
       onLoadChatSubject,
@@ -64,6 +64,10 @@ export default function ChannelHeader({
   const [onEdit, setOnEdit] = useState(false);
   const [onHover, setOnHover] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [addedToFavoritesShown, setAddedToFavoritesShown] = useState(false);
+  const favorited = useMemo(() => {
+    return favoriteChannelIds.includes(selectedChannelId);
+  }, [favoriteChannelIds, selectedChannelId]);
 
   const {
     content = defaultChatSubject,
@@ -277,13 +281,6 @@ export default function ChannelHeader({
                 `}
               >
                 <Button
-                  color="brownOrange"
-                  style={{ marginRight: '1rem' }}
-                  onClick={handleFavoriteClick}
-                >
-                  <Icon icon="star" />
-                </Button>
-                <Button
                   color={theme || 'green'}
                   filled
                   onClick={() => {
@@ -292,6 +289,7 @@ export default function ChannelHeader({
                   }}
                 >
                   <Icon flip="both" icon="reply" />
+                  <span style={{ marginLeft: '0.7rem' }}>Respond</span>
                 </Button>
                 {menuButtonShown && !banned && (
                   <DropdownButton
@@ -310,6 +308,30 @@ export default function ChannelHeader({
                     menuProps={menuProps}
                   />
                 )}
+                <div>
+                  <Button
+                    filled={favorited}
+                    color="brownOrange"
+                    style={{ marginLeft: '1rem' }}
+                    onClick={handleFavoriteClick}
+                  >
+                    <Icon icon="star" />
+                  </Button>
+                  <div
+                    style={{
+                      zIndex: 300,
+                      display: addedToFavoritesShown ? 'block' : 'none',
+                      marginTop: '0.2rem',
+                      position: 'absolute',
+                      background: '#fff',
+                      fontSize: '1.2rem',
+                      padding: '1rem',
+                      border: `1px solid ${Color.borderGray()}`
+                    }}
+                  >
+                    Added to favorites!
+                  </div>
+                </div>
               </div>
             </>
           )}
@@ -345,8 +367,12 @@ export default function ChannelHeader({
   );
 
   async function handleFavoriteClick() {
-    const favorited = await putFavoriteChannel(currentChannel.id);
-    onSetFavoriteChannel({ channelId: currentChannel.id, favorited });
+    const favorited = await putFavoriteChannel(selectedChannelId);
+    setAddedToFavoritesShown(favorited);
+    onSetFavoriteChannel({ channelId: selectedChannelId, favorited });
+    if (favorited) {
+      setTimeout(() => setAddedToFavoritesShown(false), 1000);
+    }
   }
 
   function handleMouseOver() {
