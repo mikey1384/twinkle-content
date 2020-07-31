@@ -23,6 +23,7 @@ import { useAppContext, useChatContext } from 'contexts';
 
 ChannelHeader.propTypes = {
   currentChannel: PropTypes.object.isRequired,
+  onFavoriteClick: PropTypes.func.isRequired,
   onInputFocus: PropTypes.func.isRequired,
   onSetInviteUsersModalShown: PropTypes.func,
   onSetLeaveConfirmModalShown: PropTypes.func,
@@ -33,6 +34,7 @@ ChannelHeader.propTypes = {
 export default function ChannelHeader({
   currentChannel,
   currentChannel: { theme },
+  onFavoriteClick,
   onInputFocus,
   onSetInviteUsersModalShown,
   onSetLeaveConfirmModalShown,
@@ -42,7 +44,6 @@ export default function ChannelHeader({
   const {
     requestHelpers: {
       loadChatSubject,
-      putFavoriteChannel,
       reloadChatSubject,
       searchChatSubject,
       uploadChatSubject
@@ -56,7 +57,6 @@ export default function ChannelHeader({
       onLoadChatSubject,
       onReloadChatSubject,
       onSearchChatSubject,
-      onSetFavoriteChannel,
       onSetIsRespondingToSubject,
       onUploadChatSubject
     }
@@ -307,14 +307,13 @@ export default function ChannelHeader({
                     menuProps={menuProps}
                   />
                 )}
-                <div>
+                <div style={{ marginLeft: '1.5rem' }}>
                   <div
                     style={{
-                      marginLeft: '1.5rem',
                       cursor: 'pointer',
                       fontSize: '2rem'
                     }}
-                    onClick={handleFavoriteClick}
+                    onClick={onFavoriteClick}
                     onMouseEnter={() => {
                       if (!favorited) {
                         setAddToFavoritesShown(true);
@@ -373,11 +372,6 @@ export default function ChannelHeader({
       )}
     </ErrorBoundary>
   );
-
-  async function handleFavoriteClick() {
-    const favorited = await putFavoriteChannel(selectedChannelId);
-    onSetFavoriteChannel({ channelId: selectedChannelId, favorited });
-  }
 
   function handleMouseOver() {
     if (textIsOverflown(HeaderLabelRef.current) && !isMobile(navigator)) {

@@ -7,6 +7,7 @@ import DropdownButton from 'components/Buttons/DropdownButton';
 import Loading from 'components/Loading';
 import Message from '../../Message';
 import ChannelHeader from './ChannelHeader';
+import FullTextReveal from 'components/Texts/FullTextReveal';
 import SubjectMsgsModal from '../../Modals/SubjectMsgsModal';
 import UploadModal from '../../Modals/UploadModal';
 import InviteUsersModal from '../../Modals/InviteUsers';
@@ -51,6 +52,7 @@ export default function MessagesContainer({
       leaveChannel,
       loadChatChannel,
       loadMoreChatMessages,
+      putFavoriteChannel,
       sendInvitationMessage,
       startNewDMChannel,
       updateUserXP
@@ -65,6 +67,7 @@ export default function MessagesContainer({
       channelLoading,
       chessModalShown,
       creatingNewDMChannel,
+      favoriteChannelIds,
       isRespondingToSubject,
       messagesLoadMoreButton,
       messages,
@@ -86,6 +89,7 @@ export default function MessagesContainer({
       onSendFirstDirectMessage,
       onSetChessModalShown,
       onSetCreatingNewDMChannel,
+      onSetFavoriteChannel,
       onSetReplyTarget,
       onSubmitMessage,
       onUpdateSelectedChannelId,
@@ -122,6 +126,7 @@ export default function MessagesContainer({
   );
   const [placeholderHeight, setPlaceholderHeight] = useState(0);
   const [hideModalShown, setHideModalShown] = useState(false);
+  const [addToFavoritesShown, setAddToFavoritesShown] = useState(false);
 
   const ContentRef = useRef(null);
   const MessagesRef = useRef(null);
@@ -130,6 +135,10 @@ export default function MessagesContainer({
   const FileInputRef = useRef(null);
   const ChatInputRef = useRef(null);
   const timerRef = useRef(null);
+
+  const favorited = useMemo(() => {
+    return favoriteChannelIds.includes(selectedChannelId);
+  }, [favoriteChannelIds, selectedChannelId]);
 
   const selectedChannelIsOnCall = useMemo(
     () => selectedChannelId === channelOnCall.id,
@@ -337,24 +346,63 @@ export default function MessagesContainer({
   return (
     <ErrorBoundary>
       {!channelHeaderShown && !banned && (
-        <DropdownButton
-          skeuomorphic
-          color="darkerGray"
-          opacity={0.7}
+        <div
           style={{
+            display: 'flex',
             position: 'absolute',
+            alignItems: 'center',
             zIndex: 15,
             top: '1rem',
             right: '1rem'
           }}
-          listStyle={{
-            width: '15rem'
-          }}
-          direction="left"
-          icon="bars"
-          text="Menu"
-          menuProps={menuProps}
-        />
+        >
+          <DropdownButton
+            skeuomorphic
+            color="darkerGray"
+            opacity={0.7}
+            listStyle={{
+              width: '15rem'
+            }}
+            direction="left"
+            icon="bars"
+            text="Menu"
+            menuProps={menuProps}
+          />
+          <div
+            style={{
+              marginLeft: '1.5rem'
+            }}
+          >
+            <div
+              style={{ cursor: 'pointer', fontSize: '2rem' }}
+              onClick={handleFavoriteClick}
+              onMouseEnter={() => {
+                if (!favorited) {
+                  setAddToFavoritesShown(true);
+                }
+              }}
+              onMouseLeave={() => setAddToFavoritesShown(false)}
+            >
+              <Icon
+                color={Color.brownOrange()}
+                icon={favorited ? 'star' : ['far', 'star']}
+              />
+            </div>
+            <FullTextReveal
+              direction="left"
+              show={addToFavoritesShown && !favorited}
+              text="Add to favorites"
+              style={{
+                marginTop: '0.5rem',
+                fontSize: '1.3rem',
+                width: 'auto',
+                minWidth: null,
+                maxWidth: null,
+                padding: '1rem'
+              }}
+            />
+          </div>
+        </div>
       )}
       <input
         ref={FileInputRef}
@@ -478,6 +526,7 @@ export default function MessagesContainer({
             onSetLeaveConfirmModalShown={setLeaveConfirmModalShown}
             onSetSettingsModalShown={setSettingsModalShown}
             selectedChannelId={selectedChannelId}
+            onFavoriteClick={handleFavoriteClick}
           />
         )}
         <div
@@ -908,6 +957,11 @@ export default function MessagesContainer({
         newMembers: [{ id: userId, username, profilePicId }]
       });
     }
+  }
+
+  async function handleFavoriteClick() {
+    const favorited = await putFavoriteChannel(selectedChannelId);
+    onSetFavoriteChannel({ channelId: selectedChannelId, favorited });
   }
 
   async function handleMessageSubmit({
