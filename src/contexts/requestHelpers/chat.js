@@ -324,12 +324,14 @@ export default function chatRequestHelpers({ auth, handleError }) {
     },
     async putFavoriteChannel(channelId) {
       try {
-        const { data } = await request.put(
+        const {
+          data: { favorited }
+        } = await request.put(
           `${URL}/chat/channel/favorite`,
           { channelId },
           auth()
         );
-        return Promise.resolve(data);
+        return Promise.resolve(favorited);
       } catch (error) {
         return handleError(error);
       }

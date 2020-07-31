@@ -56,6 +56,7 @@ export default function ChannelHeader({
       onLoadChatSubject,
       onReloadChatSubject,
       onSearchChatSubject,
+      onSetFavoriteChannel,
       onSetIsRespondingToSubject,
       onUploadChatSubject
     }
@@ -344,8 +345,8 @@ export default function ChannelHeader({
   );
 
   async function handleFavoriteClick() {
-    const data = await putFavoriteChannel(currentChannel.id);
-    console.log(data);
+    const favorited = await putFavoriteChannel(currentChannel.id);
+    onSetFavoriteChannel({ channelId: currentChannel.id, favorited });
   }
 
   function handleMouseOver() {

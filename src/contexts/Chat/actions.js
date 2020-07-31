@@ -430,6 +430,13 @@ export default function ChatActions(dispatch) {
         channelName
       });
     },
+    onSetFavoriteChannel({ channelId, favorited }) {
+      return dispatch({
+        type: 'SET_FAVORITE_CHANNEL',
+        channelId,
+        favorited
+      });
+    },
     onSetImLive(imLive) {
       return dispatch({
         type: 'SET_IM_LIVE',

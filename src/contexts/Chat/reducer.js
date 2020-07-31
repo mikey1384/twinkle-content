@@ -1004,6 +1004,16 @@ export default function ChatReducer(state, action) {
         ...state,
         currentChannelName: action.channelName
       };
+    case 'SET_FAVORITE_CHANNEL':
+      const filteredFavChannelIds = state.favoriteChannelIds.filter(
+        (channelId) => channelId !== action.channelId
+      );
+      return {
+        ...state,
+        favoriteChannelIds: action.favorited
+          ? filteredFavChannelIds.concat(action.channelId)
+          : filteredFavChannelIds
+      };
     case 'SET_IM_LIVE':
       return {
         ...state,
