@@ -64,7 +64,7 @@ export default function ChannelHeader({
   const [onEdit, setOnEdit] = useState(false);
   const [onHover, setOnHover] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [addedToFavoritesShown, setAddedToFavoritesShown] = useState(false);
+  const [addToFavoritesShown, setAddToFavoritesShown] = useState(false);
   const favorited = useMemo(() => {
     return favoriteChannelIds.includes(selectedChannelId);
   }, [favoriteChannelIds, selectedChannelId]);
@@ -308,28 +308,37 @@ export default function ChannelHeader({
                   />
                 )}
                 <div>
-                  <Button
-                    filled={favorited}
-                    color="brownOrange"
-                    style={{ marginLeft: '1rem' }}
-                    onClick={handleFavoriteClick}
-                  >
-                    <Icon icon="star" />
-                  </Button>
                   <div
                     style={{
-                      zIndex: 300,
-                      display: addedToFavoritesShown ? 'block' : 'none',
-                      marginTop: '0.2rem',
-                      position: 'absolute',
-                      background: '#fff',
-                      fontSize: '1.2rem',
-                      padding: '1rem',
-                      border: `1px solid ${Color.borderGray()}`
+                      marginLeft: '1.5rem',
+                      cursor: 'pointer',
+                      fontSize: '2rem'
                     }}
+                    onClick={handleFavoriteClick}
+                    onMouseEnter={() => {
+                      if (!favorited) {
+                        setAddToFavoritesShown(true);
+                      }
+                    }}
+                    onMouseLeave={() => setAddToFavoritesShown(false)}
                   >
-                    Added to favorites!
+                    <Icon
+                      color={Color.brownOrange()}
+                      icon={favorited ? 'star' : ['far', 'star']}
+                    />
                   </div>
+                  <FullTextReveal
+                    direction="left"
+                    show={addToFavoritesShown && !favorited}
+                    text="Add to favorites"
+                    style={{
+                      marginTop: '0.7rem',
+                      width: 'auto',
+                      minWidth: null,
+                      maxWidth: null,
+                      padding: '1rem'
+                    }}
+                  />
                 </div>
               </div>
             </>
@@ -367,11 +376,7 @@ export default function ChannelHeader({
 
   async function handleFavoriteClick() {
     const favorited = await putFavoriteChannel(selectedChannelId);
-    setAddedToFavoritesShown(favorited);
     onSetFavoriteChannel({ channelId: selectedChannelId, favorited });
-    if (favorited) {
-      setTimeout(() => setAddedToFavoritesShown(false), 1000);
-    }
   }
 
   function handleMouseOver() {
