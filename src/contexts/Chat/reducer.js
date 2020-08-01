@@ -434,6 +434,7 @@ export default function ChatReducer(state, action) {
       return {
         ...state,
         ...initialChatState,
+        allFavoriteChannelIds: action.data.allFavoriteChannelIds,
         chatType: action.data.chatType,
         loaded: true,
         classChannelIds: action.data.classChannelIds,
@@ -486,6 +487,13 @@ export default function ChatReducer(state, action) {
       return {
         ...state,
         messages: [],
+        allFavoriteChannelIds: {
+          ...state.allFavoriteChannelIds,
+          [action.channelId]: false
+        },
+        favoriteChannelIds: state.homeChannelIds.filter(
+          (channelId) => channelId !== action.channelId
+        ),
         homeChannelIds: state.homeChannelIds.filter(
           (channelId) => channelId !== action.channelId
         ),
@@ -869,6 +877,13 @@ export default function ChatReducer(state, action) {
         msgsWhileInvisible: action.pageVisible
           ? 0
           : state.msgsWhileInvisible + 1,
+        favoriteChannelIds: state.allFavoriteChannelIds[action.channel.id]
+          ? [action.channel.id].concat(
+              state.favoriteChannelIds.filter(
+                (channelId) => channelId !== action.channel.id
+              )
+            )
+          : state.favoriteChannelIds,
         homeChannelIds: [action.channel.id].concat(
           state.homeChannelIds.filter(
             (channelId) => channelId !== action.channel.id
@@ -1011,6 +1026,10 @@ export default function ChatReducer(state, action) {
       );
       return {
         ...state,
+        allFavoriteChannelIds: {
+          ...state.allFavoriteChannelIds,
+          [action.channelId]: action.favorited
+        },
         favoriteChannelIds: action.favorited
           ? [action.channelId].concat(filteredFavChannelIds)
           : filteredFavChannelIds
