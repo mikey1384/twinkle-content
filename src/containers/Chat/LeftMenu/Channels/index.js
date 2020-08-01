@@ -123,12 +123,17 @@ function Channels({ onChannelEnter }) {
   );
 
   async function handleLoadMoreChannels() {
+    const chatTabHash = {
+      home: homeChannelIds,
+      favorite: favoriteChannelIds,
+      class: classChannelIds
+    };
     if (!loading.current) {
       setChannelsLoading(true);
       loading.current = true;
-      const { lastUpdated, id: lastId } = channelsObj[
-        homeChannelIds[homeChannelIds.length - 1]
-      ];
+      const channelIds = chatTabHash[selectedChatTab];
+      const lastId = channelIds[channelIds.length - 1];
+      const { lastUpdated } = channelsObj[lastId];
       const channels = await loadMoreChannels({
         type: selectedChatTab,
         lastUpdated,

@@ -504,6 +504,11 @@ export default function ChatReducer(state, action) {
     case 'LOAD_MORE_CHANNELS': {
       let homeLoadMoreButton = false;
       let classLoadMoreButton = false;
+      const chatTabHash = {
+        home: 'homeChannelIds',
+        favorite: 'favoriteChannelIds',
+        class: 'classChannelIds'
+      };
       if (action.channelType === 'home' && action.channels.length > 20) {
         action.channels.pop();
         homeLoadMoreButton = true;
@@ -520,10 +525,8 @@ export default function ChatReducer(state, action) {
         ...state,
         classLoadMoreButton,
         homeLoadMoreButton,
-        [action.channelType === 'home'
-          ? 'homeChannelIds'
-          : 'classChannelIds']: state[
-          action.channelType === 'home' ? 'homeChannelIds' : 'classChannelIds'
+        [chatTabHash[action.channelType]]: state[
+          chatTabHash[action.channelType]
         ].concat(action.channels.map((channel) => channel.id)),
         channelsObj: {
           ...state.channelsObj,
