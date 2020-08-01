@@ -25,13 +25,11 @@ function Chat({ onFileUpload }) {
   const { userId } = useMyState();
   const {
     state: {
-      chatType,
       loaded,
       selectedChannelId,
       channelsObj,
       channelOnCall,
-      currentChannelName,
-      selectedChatTab
+      currentChannelName
     },
     actions: {
       onClearNumUnreads,
@@ -59,14 +57,6 @@ function Chat({ onFileUpload }) {
   const [userListModalShown, setUserListModalShown] = useState(false);
   const [partner, setPartner] = useState(null);
   const mounted = useRef(true);
-
-  const isViewingAboutClassPage = useMemo(
-    () =>
-      !chatType &&
-      selectedChatTab === 'class' &&
-      !channelsObj[selectedChannelId]?.isClass,
-    [channelsObj, chatType, selectedChannelId, selectedChatTab]
-  );
   const currentChannel = useMemo(() => channelsObj[selectedChannelId] || {}, [
     channelsObj,
     selectedChannelId
@@ -211,15 +201,13 @@ function Chat({ onFileUpload }) {
               chessOpponent={partner}
               currentChannel={currentChannel}
             />
-            {!isViewingAboutClassPage && (
-              <RightMenu
-                channelOnCall={channelOnCall}
-                channelName={currentChannelName}
-                currentChannel={currentChannel}
-                currentChannelOnlineMembers={currentChannelOnlineMembers}
-                selectedChannelId={selectedChannelId}
-              />
-            )}
+            <RightMenu
+              channelOnCall={channelOnCall}
+              channelName={currentChannelName}
+              currentChannel={currentChannel}
+              currentChannelOnlineMembers={currentChannelOnlineMembers}
+              selectedChannelId={selectedChannelId}
+            />
           </div>
         ) : (
           <Loading text="Loading Twinkle Chat" />
