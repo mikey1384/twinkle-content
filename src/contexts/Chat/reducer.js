@@ -408,6 +408,7 @@ export default function ChatReducer(state, action) {
       let originalNumUnreads = 0;
       let classLoadMoreButton = false;
       let homeLoadMoreButton = false;
+      let favoriteLoadMoreButton = false;
       let vocabActivitiesLoadMoreButton = false;
       const uploadStatusMessages = state.filesBeingUploaded[
         action.data.currentChannelId
@@ -424,6 +425,10 @@ export default function ChatReducer(state, action) {
       if (action.data.classChannelIds?.length > 20) {
         action.data.classChannelIds.pop();
         classLoadMoreButton = true;
+      }
+      if (action.data.favoriteChannelIds?.length > 20) {
+        action.data.favoriteChannelIds.pop();
+        favoriteLoadMoreButton = true;
       }
       if (action.data.vocabActivities.length > 20) {
         action.data.vocabActivities.pop();
@@ -448,6 +453,7 @@ export default function ChatReducer(state, action) {
           }
         },
         classLoadMoreButton,
+        favoriteLoadMoreButton,
         homeLoadMoreButton,
         customChannelNames: action.data.customChannelNames,
         vocabActivities: action.data.vocabActivities,
@@ -502,20 +508,37 @@ export default function ChatReducer(state, action) {
         )
       };
     case 'LOAD_MORE_CHANNELS': {
-      let homeLoadMoreButton = false;
-      let classLoadMoreButton = false;
+      let homeLoadMoreButton = state.homeLoadMoreButton;
+      let classLoadMoreButton = state.classLoadMoreButton;
+      let favoriteLoadMoreButton = state.favoriteChannelIds;
       const chatTabHash = {
         home: 'homeChannelIds',
         favorite: 'favoriteChannelIds',
         class: 'classChannelIds'
       };
-      if (action.channelType === 'home' && action.channels.length > 20) {
-        action.channels.pop();
-        homeLoadMoreButton = true;
+      if (action.channelType === 'home') {
+        if (action.channels.length > 20) {
+          action.channels.pop();
+          homeLoadMoreButton = true;
+        } else {
+          homeLoadMoreButton = false;
+        }
       }
-      if (action.channelType === 'class' && action.channels.length > 20) {
-        action.channels.pop();
-        classLoadMoreButton = true;
+      if (action.channelType === 'class') {
+        if (action.channels.length > 20) {
+          action.channels.pop();
+          classLoadMoreButton = true;
+        } else {
+          classLoadMoreButton = false;
+        }
+      }
+      if (action.channelType === 'favorite') {
+        if (action.channels.length > 20) {
+          action.channels.pop();
+          favoriteLoadMoreButton = true;
+        } else {
+          favoriteLoadMoreButton = false;
+        }
       }
       const channels = {};
       for (let channel of action.channels) {
@@ -525,6 +548,7 @@ export default function ChatReducer(state, action) {
         ...state,
         classLoadMoreButton,
         homeLoadMoreButton,
+        favoriteLoadMoreButton,
         [chatTabHash[action.channelType]]: state[
           chatTabHash[action.channelType]
         ].concat(action.channels.map((channel) => channel.id)),

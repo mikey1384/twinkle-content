@@ -23,6 +23,7 @@ function Channels({ onChannelEnter }) {
       favoriteChannelIds,
       homeChannelIds,
       classLoadMoreButton,
+      favoriteLoadMoreButton,
       homeLoadMoreButton,
       selectedChannelId,
       selectedChatTab
@@ -46,11 +47,19 @@ function Channels({ onChannelEnter }) {
     }
   }, [classChannelIds, favoriteChannelIds, homeChannelIds, selectedChatTab]);
 
-  const loadMoreButtonShown = useMemo(
-    () =>
-      selectedChatTab === 'home' ? homeLoadMoreButton : classLoadMoreButton,
-    [classLoadMoreButton, homeLoadMoreButton, selectedChatTab]
-  );
+  const loadMoreButtonShown = useMemo(() => {
+    const hash = {
+      home: homeLoadMoreButton,
+      class: classLoadMoreButton,
+      favorite: favoriteLoadMoreButton
+    };
+    return hash[selectedChatTab];
+  }, [
+    classLoadMoreButton,
+    favoriteLoadMoreButton,
+    homeLoadMoreButton,
+    selectedChatTab
+  ]);
 
   useEffect(() => {
     const ChannelList = ChannelListRef.current;

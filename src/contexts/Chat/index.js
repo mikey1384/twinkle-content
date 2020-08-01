@@ -9,6 +9,7 @@ export const initialChatState = {
   allFavoriteChannelIds: {},
   callMuted: false,
   classLoadMoreButton: false,
+  favoriteLoadMoreButton: false,
   homeLoadMoreButton: false,
   classChannelIds: [],
   favoriteChannelIds: [],
