@@ -9,6 +9,8 @@ import LongText from 'components/Texts/LongText';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FileViewer from 'components/FileViewer';
 import LoginToViewContent from 'components/LoginToViewContent';
+import { css } from 'emotion';
+import { useHistory } from 'react-router-dom';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { Color } from 'constants/css';
 import { useContentState } from 'helpers/hooks';
@@ -41,6 +43,7 @@ function Comment({
   userId,
   username
 }) {
+  const history = useHistory();
   const {
     requestHelpers: { deleteContent, editContent }
   } = useAppContext();
@@ -59,13 +62,15 @@ function Comment({
         display: 'flex',
         width: '100%',
         flexDirection: 'column',
-        paddingTop: '1rem'
+        paddingTop: '1rem',
+        padding: '1rem 1rem 0 1rem'
       }}
     >
       {!isEditing && (
         <div
           style={{
             width: '100%',
+            position: 'relative',
             display: 'flex',
             flexDirection: 'row-reverse'
           }}
@@ -109,7 +114,16 @@ function Comment({
                 id: userId
               }}
             />{' '}
-            <small style={{ color: Color.gray() }}>
+            <small
+              className={css`
+                cursor: pointer;
+                &:hover {
+                  text-decoration: underline;
+                }
+              `}
+              onClick={() => history.push(`/comments/${comment.id}`)}
+              style={{ color: Color.gray() }}
+            >
               &nbsp;
               {timeSince(timeStamp)}
             </small>

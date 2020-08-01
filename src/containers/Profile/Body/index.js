@@ -50,11 +50,19 @@ export default function Body({
             background: #fff;
             border-bottom: 1px solid ${Color.borderGray()};
             @media (max-width: ${mobileMaxWidth}) {
-              width: 25rem;
+              width: 20rem;
             }
           `}
         />
-        <FilterBar style={{ margin: 0 }} color={selectedTheme}>
+        <FilterBar
+          style={{ margin: 0 }}
+          color={selectedTheme}
+          className={css`
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: 1.3rem;
+            }
+          `}
+        >
           <nav
             className={
               location.pathname === `/users/${username}` ? 'active' : ''
@@ -63,6 +71,15 @@ export default function Body({
             onClick={() => history.push(`/users/${username}`)}
           >
             <a>Profile</a>
+          </nav>
+          <nav
+            className={
+              location.pathname === `/users/${username}/watched` ? 'active' : ''
+            }
+            style={{ cursor: 'pointer' }}
+            onClick={() => history.push(`${match.url}${`/watched`}`)}
+          >
+            <a>Watched</a>
           </nav>
           <nav
             className={
@@ -76,7 +93,8 @@ export default function Body({
           <nav
             className={
               location.pathname !== `/users/${username}` &&
-              location.pathname !== `/users/${username}/likes`
+              location.pathname !== `/users/${username}/likes` &&
+              location.pathname !== `/users/${username}/watched`
                 ? 'active'
                 : ''
             }

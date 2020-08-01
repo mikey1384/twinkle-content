@@ -277,7 +277,7 @@ function ContentListItem({
                 style={{
                   display: 'flex',
                   width: '15rem',
-                  maxHeight: '10rem'
+                  height: '10rem'
                 }}
               />
             )}
@@ -287,6 +287,7 @@ function ContentListItem({
               answer={secretAnswer}
               subjectId={contentId}
               uploaderId={uploader.id}
+              parent={contentObj}
             />
           )}
         </div>

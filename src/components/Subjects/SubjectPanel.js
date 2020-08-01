@@ -68,6 +68,7 @@ export default function SubjectPanel({
     actions: {
       onChangeSpoilerStatus,
       onEditRewardComment,
+      onRecommendSubject,
       onSetXpRewardInterfaceShown
     }
   } = useContentContext();
@@ -234,6 +235,10 @@ export default function SubjectPanel({
             subjectId={subjectId}
             onClick={handleExpand}
             uploaderId={userId}
+            parent={{
+              contentType: 'subject',
+              contentId: subjectId
+            }}
           />
         )}
         {onEdit && (
@@ -397,6 +402,9 @@ export default function SubjectPanel({
                   marginRight: '-1rem',
                   fontSize: '1.7rem'
                 }}
+                onRecommend={(recommendations) =>
+                  onRecommendSubject({ subjectId, recommendations })
+                }
                 onHide={() => setRecommendationInterfaceShown(false)}
                 recommendations={recommendations}
                 uploaderId={userId}

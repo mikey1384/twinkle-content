@@ -27,6 +27,7 @@ EditSubjectForm.propTypes = {
   onReloadChatSubject: PropTypes.func,
   searchResults: PropTypes.array,
   title: PropTypes.string.isRequired,
+  theme: PropTypes.string,
   userIsOwner: PropTypes.bool
 };
 
@@ -39,6 +40,7 @@ export default function EditSubjectForm({
   searchResults,
   onChange,
   onClickOutSide,
+  theme,
   userIsOwner,
   ...props
 }) {
@@ -140,7 +142,7 @@ export default function EditSubjectForm({
             <Button
               style={{ fontSize: '1.3rem' }}
               filled
-              color="green"
+              color={theme || 'green'}
               onClick={() => setSubjectsModalShown(true)}
             >
               View Subjects
@@ -226,7 +228,7 @@ export default function EditSubjectForm({
       <div>
         <div
           style={{
-            color: Color.green(),
+            color: Color[theme || 'green'](),
             fontWeight: 'bold'
           }}
         >

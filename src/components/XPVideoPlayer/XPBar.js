@@ -62,7 +62,9 @@ export default function XPBar({
   );
 
   const Bar = useMemo(() => {
-    if (!userId || !xpLoaded) return null;
+    if (!userId || !xpLoaded || (!(watching && !started) && !rewardLevel)) {
+      return null;
+    }
     if (started && !(xpEarned && !canEarnCoins)) {
       return (
         <ProgressBar
@@ -186,7 +188,7 @@ export default function XPBar({
         }}
       >
         {Bar}
-        {started && !(xpEarned && !canEarnCoins) && (
+        {started && !(xpEarned && !canEarnCoins) && !!rewardLevel && (
           <div
             className={css`
               height: 2.7rem;

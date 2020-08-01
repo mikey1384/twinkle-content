@@ -153,7 +153,7 @@ export default function InputForm({
             `}
           >
             <Button
-              style={{ marginTop: '1rem', marginBottom: '0.5rem' }}
+              style={{ marginTop: '0.5rem', marginBottom: '0.5rem' }}
               filled
               color="green"
               disabled={

@@ -12,6 +12,7 @@ RecommendationInterface.propTypes = {
   contentId: PropTypes.number.isRequired,
   contentType: PropTypes.string.isRequired,
   onHide: PropTypes.func.isRequired,
+  onRecommend: PropTypes.func,
   recommendations: PropTypes.array,
   style: PropTypes.object,
   uploaderId: PropTypes.number
@@ -21,6 +22,7 @@ export default function RecommendationInterface({
   contentId,
   contentType,
   onHide,
+  onRecommend,
   recommendations,
   style,
   uploaderId
@@ -39,7 +41,7 @@ export default function RecommendationInterface({
   const isOnlyRecommendedByStudents = useMemo(() => {
     let result = recommendations.length > 0;
     for (let recommendation of recommendations) {
-      if (recommendation.authLevel > 0) {
+      if (recommendation.authLevel > 1) {
         return false;
       }
     }
@@ -127,7 +129,10 @@ export default function RecommendationInterface({
     if (!isRecommendedByUser && canReward && isOnlyRecommendedByStudents) {
       for (let recommendation of recommendations) {
         rewardUser({
-          amount: recommendation.userId === uploaderId ? 1 : 2,
+          amount:
+            recommendation.userId === uploaderId
+              ? priceTable.recommendation
+              : priceTable.recommendation * 3,
           contentType: 'recommendation',
           contentId: recommendation.id,
           rootType: contentType,
@@ -143,7 +148,10 @@ export default function RecommendationInterface({
         contentType
       });
       onChangeUserCoins({ coins, userId });
-      onRecommendContent({ contentId, contentType, recommendations });
+      if (recommendations) {
+        onRecommendContent({ contentId, contentType, recommendations });
+      }
+      onRecommend?.(recommendations);
       onHide();
     } catch (error) {
       console.error(error);

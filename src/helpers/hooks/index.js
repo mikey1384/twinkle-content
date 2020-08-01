@@ -142,6 +142,7 @@ export function useProfileState(username) {
       likes: [],
       subjects: [],
       videos: [],
+      watched: [],
       links: []
     },
     profileId

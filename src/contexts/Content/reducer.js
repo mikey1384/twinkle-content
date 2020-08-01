@@ -1069,6 +1069,25 @@ export default function ContentReducer(state, action) {
       }
       return newState;
     }
+    case 'RECOMMEND_SUBJECT': {
+      const newState = { ...state };
+      const contentKeys = Object.keys(newState);
+      for (let contentKey of contentKeys) {
+        const prevContentState = newState[contentKey];
+        newState[contentKey] = {
+          ...prevContentState,
+          subjects: prevContentState.subjects?.map((subject) =>
+            subject.id === action.subjectId
+              ? {
+                  ...subject,
+                  recommendations: action.recommendations
+                }
+              : subject
+          )
+        };
+      }
+      return newState;
+    }
     case 'RELOAD_CONTENT':
       return {
         ...state,

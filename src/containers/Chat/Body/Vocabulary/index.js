@@ -33,7 +33,7 @@ export default function Vocabulary() {
     }
   } = useChatContext();
   const {
-    actions: { onChangeUserXP }
+    actions: { onChangeUserCoins, onChangeUserXP }
   } = useContentContext();
   const {
     state,
@@ -253,8 +253,11 @@ export default function Vocabulary() {
     if (isNew && !isSubmitting) {
       setIsSubmitting(true);
       try {
-        const { xp, rank, word, rankings } = await registerWord(definitions);
+        const { coins, xp, rank, word, rankings } = await registerWord(
+          definitions
+        );
         onChangeUserXP({ xp, rank, userId });
+        onChangeUserCoins({ coins, userId });
         onUpdateNumWordsCollected(word.numWordsCollected);
         onRegisterWord(word);
         onUpdateCollectorsRankings({ rankings });

@@ -149,6 +149,7 @@ export default function LinkPage({
   }, [deleted]);
 
   useEffect(() => {
+    mounted.current = true;
     if (!loaded) {
       handleLoadLinkPage();
     }
@@ -443,6 +444,7 @@ export default function LinkPage({
         />
         <RewardStatus
           contentType="url"
+          rewardLevel={byUser ? 5 : 0}
           onCommentEdit={onEditRewardComment}
           className={css`
             margin-top: 1rem;

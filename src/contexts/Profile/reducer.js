@@ -20,6 +20,9 @@ export default function ProfileReducer(state, action) {
       videos: [],
       videosLoaded: false,
       videosLoadMoreButton: false,
+      watched: [],
+      watchedLoaded: false,
+      watchedLoadMoreButton: false,
       links: [],
       linksLoaded: false,
       linksLoadMoreButton: false

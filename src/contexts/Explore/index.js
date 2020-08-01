@@ -6,9 +6,15 @@ import ExploreReducer from './reducer';
 export const ExploreContext = createContext();
 export const initialExploreState = {
   links: {
+    byUserLoaded: false,
+    byUserLinks: [],
+    loadMoreByUserLinksButtonShown: false,
     loaded: false,
     links: [],
-    loadMoreLinksButtonShown: false
+    loadMoreLinksButtonShown: false,
+    recommendedsLoaded: false,
+    recommendeds: [],
+    loadMoreRecommendedsButtonShown: false
   },
   subjects: {
     featured: [],

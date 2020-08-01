@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useState } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import ContentLink from 'components/ContentLink';
 import UsernameText from 'components/Texts/UsernameText';
@@ -45,7 +45,7 @@ function MainFeeds({
   } = useAppContext();
   const { userId, rank, twinkleXP, twinkleCoins } = useMyState();
   const {
-    state: { numNewNotis, totalRewardAmount },
+    state: { numNewNotis, totalRewardedTwinkles, totalRewardedTwinkleCoins },
     actions: {
       onClearRewards,
       onFetchNotifications,
@@ -61,24 +61,22 @@ function MainFeeds({
   const [collectingReward, setCollectingReward] = useState(false);
   const [originalTwinkleXP, setOriginalTwinkleXP] = useState(0);
   const [originalTwinkleCoins, setOriginalTwinkleCoins] = useState(0);
+  const [totalTwinkles, setTotalTwinkles] = useState(0);
+  const [totalCoins, setTotalCoins] = useState(0);
 
-  const totalXPReward = useMemo(() => {
-    return rewards.reduce((sum, reward) => {
-      if (reward.rewardType === 'Twinkle') {
-        return sum + reward.rewardAmount;
-      }
-      return sum;
-    }, 0);
-  }, [rewards]);
+  useEffect(() => {
+    if (totalRewardedTwinkles > 0) {
+      setTotalTwinkles(totalRewardedTwinkles);
+    }
+    if (totalRewardedTwinkleCoins > 0) {
+      setTotalCoins(totalRewardedTwinkleCoins);
+    }
+  }, [totalRewardedTwinkles, totalRewardedTwinkleCoins]);
 
-  const totalCoinReward = useMemo(() => {
-    return rewards.reduce((sum, reward) => {
-      if (reward.rewardType === 'Twinkle Coin') {
-        return sum + reward.rewardAmount;
-      }
-      return sum;
-    }, 0);
-  }, [rewards]);
+  const totalRewardAmount = useMemo(
+    () => totalRewardedTwinkles + totalRewardedTwinkleCoins,
+    [totalRewardedTwinkleCoins, totalRewardedTwinkles]
+  );
 
   const NotificationsItems = useMemo(() => {
     return notifications.map((notification) => {
@@ -206,47 +204,48 @@ function MainFeeds({
           {totalRewardAmount > 0 && (
             <>
               <p>Tap to collect all your rewards</p>
-              {totalXPReward > 0 && (
+              {totalTwinkles > 0 && (
                 <p style={{ fontSize: '1.5rem' }}>
-                  * {totalXPReward} Twinkle{totalXPReward > 0 ? 's' : ''}
+                  * {totalTwinkles} Twinkle{totalTwinkles > 0 ? 's' : ''} (
+                  {totalTwinkles} * {rewardValue} ={' '}
+                  {addCommasToNumber(totalTwinkles * rewardValue)} XP)
                 </p>
               )}
-              {totalCoinReward > 0 && (
+              {totalCoins > 0 && (
                 <p style={{ fontSize: '1.5rem' }}>
-                  * {totalCoinReward} Twinkle Coin
-                  {totalCoinReward > 0 ? 's' : ''}
+                  * {addCommasToNumber(totalCoins)} Twinkle Coin
+                  {totalCoins > 0 ? 's' : ''}
                 </p>
               )}
             </>
           )}
-          {totalRewardAmount === 0 && totalXPReward > 0 && (
+          {totalRewardAmount === 0 && totalTwinkles > 0 && (
             <div style={{ fontSize: '1.7rem' }}>
               <p>
                 Your XP: {addCommasToNumber(originalTwinkleXP)} XP {'=>'}{' '}
                 {addCommasToNumber(
-                  originalTwinkleXP + totalXPReward * rewardValue
+                  originalTwinkleXP + totalTwinkles * rewardValue
                 )}{' '}
                 XP
               </p>
               <p style={{ fontSize: '1.5rem' }}>
-                (+ {addCommasToNumber(totalXPReward * rewardValue)} XP)
+                (+ {addCommasToNumber(totalTwinkles * rewardValue)} XP)
               </p>
             </div>
           )}
-          {totalRewardAmount === 0 && totalCoinReward > 0 && (
+          {totalRewardAmount === 0 && totalCoins > 0 && (
             <div
               style={{
                 fontSize: '1.7rem',
-                marginTop: totalXPReward > 0 ? '1rem' : 0
+                marginTop: totalTwinkles > 0 ? '1rem' : 0
               }}
             >
               <p>
                 Your Twinkle Coins: {addCommasToNumber(originalTwinkleCoins)}{' '}
-                {'=>'}{' '}
-                {addCommasToNumber(originalTwinkleCoins + totalCoinReward)}
+                {'=>'} {addCommasToNumber(originalTwinkleCoins + totalCoins)}
               </p>
               <p style={{ fontSize: '1.5rem' }}>
-                (+ {addCommasToNumber(totalCoinReward)})
+                (+ {addCommasToNumber(totalCoins)})
               </p>
             </div>
           )}

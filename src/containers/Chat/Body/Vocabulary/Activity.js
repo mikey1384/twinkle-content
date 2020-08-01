@@ -11,6 +11,7 @@ import { unix } from 'moment';
 import { socket } from 'constants/io';
 import { useChatContext } from 'contexts';
 import { css } from 'emotion';
+import Icon from 'components/Icon';
 
 Activity.propTypes = {
   activity: PropTypes.object.isRequired,
@@ -140,6 +141,30 @@ export default function Activity({
             </span>{' '}
             <span style={{ color: Color.gold() }}>XP</span>
           </b>
+          {wordLevel > 3 && (
+            <>
+              {' '}
+              <span>and</span>{' '}
+              <b
+                style={{
+                  marginLeft: '0.3rem',
+                  fontSize: wordLevel === 5 ? '2.5rem' : '2.3rem'
+                }}
+              >
+                <Icon
+                  icon={['far', 'badge-dollar']}
+                  style={{
+                    color: Color.brownOrange()
+                  }}
+                />
+                <span
+                  style={{ color: Color.brownOrange(), marginLeft: '0.3rem' }}
+                >
+                  {addCommasToNumber(rewardHash[wordLevel].coinAmount)}
+                </span>
+              </b>
+            </>
+          )}
         </div>
       </div>
       {wordModalShown && (

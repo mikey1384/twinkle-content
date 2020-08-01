@@ -1,4 +1,4 @@
-export const clientVersion = '1.3.97';
+export const clientVersion = '1.4.15';
 export const defaultChatSubject = 'Welcome!';
 export const defaultContentState = {
   isEditing: false,
@@ -24,7 +24,8 @@ export const mb = 1000;
 export const priceTable = {
   chatSubject: 20,
   chatTheme: 30,
-  recommendation: 1
+  recommendation: 2,
+  reward: 2
 };
 export const charLimit = {
   chat: {
@@ -77,11 +78,13 @@ export const rewardHash = {
   4: {
     label: 'advanced',
     rewardAmount: 100,
+    coinAmount: 5,
     color: 'red'
   },
   5: {
     label: 'epic',
     rewardAmount: 500,
+    coinAmount: 100,
     color: 'gold'
   }
 };

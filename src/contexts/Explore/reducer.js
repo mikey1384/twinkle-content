@@ -125,6 +125,12 @@ export default function ExploreReducer(state, action) {
         ...state,
         links: {
           ...state.links,
+          byUserLinks: state.links.byUserLinks.filter(
+            (link) => link.id !== action.linkId
+          ),
+          recommendeds: state.links.recommendeds.filter(
+            (link) => link.id !== action.linkId
+          ),
           links: state.links.links.filter((link) => link.id !== action.linkId)
         }
       };
@@ -184,6 +190,24 @@ export default function ExploreReducer(state, action) {
         ...state,
         links: {
           ...state.links,
+          byUserLinks: state.links.byUserLinks.map((link) =>
+            link.id === action.id
+              ? {
+                  ...link,
+                  title: action.title,
+                  content: action.content
+                }
+              : link
+          ),
+          recommendeds: state.links.recommendeds.map((link) =>
+            link.id === action.id
+              ? {
+                  ...link,
+                  title: action.title,
+                  content: action.content
+                }
+              : link
+          ),
           links: state.links.links.map((link) =>
             link.id === action.id
               ? {
@@ -200,6 +224,14 @@ export default function ExploreReducer(state, action) {
         ...state,
         links: {
           ...state.links,
+          byUserLinks: state.links.byUserLinks.map((link) => ({
+            ...link,
+            title: action.data.id === link.id ? action.data.title : link.title
+          })),
+          recommendeds: state.links.recommendeds.map((link) => ({
+            ...link,
+            title: action.data.id === link.id ? action.data.title : link.title
+          })),
           links: state.links.links.map((link) => ({
             ...link,
             title: action.data.id === link.id ? action.data.title : link.title
@@ -276,6 +308,22 @@ export default function ExploreReducer(state, action) {
         ...state,
         links: {
           ...state.links,
+          byUserLinks: state.links.byUserLinks.map((link) =>
+            action.id === link.id
+              ? {
+                  ...link,
+                  likes: action.likes
+                }
+              : link
+          ),
+          recommendeds: state.links.recommendeds.map((link) =>
+            action.id === link.id
+              ? {
+                  ...link,
+                  likes: action.likes
+                }
+              : link
+          ),
           links: state.links.links.map((link) =>
             action.id === link.id
               ? {
@@ -351,6 +399,44 @@ export default function ExploreReducer(state, action) {
           ...state.links,
           links: state.links.links.concat(action.links),
           loadMoreLinksButtonShown: action.loadMoreButton
+        }
+      };
+    case 'LOAD_BY_USER_LINKS':
+      return {
+        ...state,
+        links: {
+          ...state.links,
+          byUserLoaded: true,
+          byUserLinks: action.links,
+          loadMoreByUserLinksButtonShown: action.loadMoreButton
+        }
+      };
+    case 'LOAD_MORE_BY_USER_LINKS':
+      return {
+        ...state,
+        links: {
+          ...state.links,
+          byUserLinks: state.links.byUserLinks.concat(action.links),
+          loadMoreByUserLinksButtonShown: action.loadMoreButton
+        }
+      };
+    case 'LOAD_RECOMMENDED_LINKS':
+      return {
+        ...state,
+        links: {
+          ...state.links,
+          recommendedsLoaded: true,
+          recommendeds: action.recommendeds,
+          loadMoreRecommendedsButtonShown: action.loadMoreButton
+        }
+      };
+    case 'LOAD_MORE_RECOMMENDED_LINKS':
+      return {
+        ...state,
+        links: {
+          ...state.links,
+          recommendeds: state.links.recommendeds.concat(action.recommendeds),
+          loadMoreRecommendedsButtonShown: action.loadMoreButton
         }
       };
     case 'LOAD_FEATURED_SUBJECTS':
@@ -549,6 +635,28 @@ export default function ExploreReducer(state, action) {
         ...state,
         links: {
           ...state.links,
+          byUserLinks: state.links.byUserLinks.map((link) =>
+            action.id === link.id
+              ? {
+                  ...link,
+                  numComments:
+                    action.updateType === 'increase'
+                      ? link.numComments + 1
+                      : link.numComments - 1
+                }
+              : link
+          ),
+          recommendeds: state.links.recommendeds.map((link) =>
+            action.id === link.id
+              ? {
+                  ...link,
+                  numComments:
+                    action.updateType === 'increase'
+                      ? link.numComments + 1
+                      : link.numComments - 1
+                }
+              : link
+          ),
           links: state.links.links.map((link) =>
             action.id === link.id
               ? {

@@ -40,7 +40,6 @@ import {
 import { getFileInfoFromFileName, stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext } from 'contexts';
 import LocalContext from './Context';
-import { Color } from 'constants/css';
 
 Comment.propTypes = {
   comment: PropTypes.shape({
@@ -460,9 +459,7 @@ function Comment({
                     !stringIsEmpty(comment.content) && (
                       <LongText
                         className="comment__content"
-                        style={{
-                          color: Color[isSystemMessage ? 'gray' : 'black']()
-                        }}
+                        isSystem={isSystemMessage}
                       >
                         {comment.content}
                       </LongText>

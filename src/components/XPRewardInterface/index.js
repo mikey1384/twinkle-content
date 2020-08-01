@@ -13,7 +13,7 @@ import {
   stringIsEmpty
 } from 'helpers/stringHelpers';
 import Button from 'components/Button';
-import { returnMaxRewards } from 'constants/defaultValues';
+import { returnMaxRewards, priceTable } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useInputContext } from 'contexts';
 
@@ -85,6 +85,7 @@ export default function XPRewardInterface({
 
   const mounted = useRef(true);
   const commentRef = useRef(prevComment);
+  const rewardingRef = useRef(false);
   const [rewarding, setRewarding] = useState(false);
   const [comment, setComment] = useState(prevComment);
   const selectedAmountRef = useRef(prevSelectedAmount);
@@ -94,7 +95,7 @@ export default function XPRewardInterface({
     setSelectedAmount((selectedAmount) =>
       Math.min(selectedAmount, rewardables)
     );
-    if (rewardables === 0) {
+    if (rewardables === 0 && !rewardingRef.current) {
       onSetXpRewardInterfaceShown({
         contentId,
         contentType,
@@ -147,7 +148,10 @@ export default function XPRewardInterface({
           <>
             <div style={{ marginLeft: '0.7rem' }}>
               (<Icon icon={['far', 'badge-dollar']} />
-              <span style={{ marginLeft: '0.3rem' }}>{selectedAmount}</span>)
+              <span style={{ marginLeft: '0.3rem' }}>
+                {selectedAmount * priceTable.reward}
+              </span>
+              )
             </div>
           </>
         ) : (
@@ -262,7 +266,8 @@ export default function XPRewardInterface({
               !!rewardCommentExceedsCharLimit ||
               rewarding ||
               selectedAmount === 0 ||
-              (authLevel === 0 && twinkleCoins < selectedAmount)
+              (authLevel === 0 &&
+                twinkleCoins < selectedAmount * priceTable.reward)
             }
             onClick={handleRewardSubmit}
           >
@@ -275,6 +280,7 @@ export default function XPRewardInterface({
 
   async function handleRewardSubmit() {
     try {
+      rewardingRef.current = true;
       setRewarding(true);
       const { reward, netCoins } = await rewardUser({
         explanation: finalizeEmoji(stringIsEmpty(comment) ? '' : comment),
@@ -284,17 +290,18 @@ export default function XPRewardInterface({
         uploaderId
       });
       if (mounted.current) {
-        setRewarding(false);
         onSetRewardForm({
           contentType,
           contentId,
           form: undefined
         });
-        onAttachReward({
-          reward,
-          contentId,
-          contentType
-        });
+        if (reward) {
+          onAttachReward({
+            reward,
+            contentId,
+            contentType
+          });
+        }
         if (typeof netCoins === 'number') {
           onChangeUserCoins({ coins: netCoins, userId });
         }
@@ -303,6 +310,8 @@ export default function XPRewardInterface({
         }
         handleSetComment('');
         handleSetSelectedAmount(0);
+        setRewarding(false);
+        rewardingRef.current = false;
         onSetXpRewardInterfaceShown({
           contentId,
           contentType,

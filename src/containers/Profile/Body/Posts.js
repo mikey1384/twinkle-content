@@ -27,6 +27,7 @@ const filterTable = {
   all: 'all',
   comments: 'comment',
   likes: 'like',
+  watched: 'watched',
   subjects: 'subject',
   videos: 'video',
   links: 'url'
@@ -89,35 +90,54 @@ export default function Posts({
     if (profileFeeds.length === 0) {
       handleLoadTab(section);
     }
+
+    async function handleLoadTab(tabName) {
+      selectedFilter.current = filterTable[tabName];
+      setLoadingFeeds(true);
+      const { data, filter: loadedFilter } = await loadFeeds({
+        username,
+        filter: filterTable[tabName]
+      });
+      if (loadedFilter === selectedFilter.current) {
+        onLoadPosts({ ...data, section: tabName, username });
+        setLoadingFeeds(false);
+      }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location]);
+  }, [location.pathname, profileFeeds.length, section, username]);
 
   return !loaded ? (
     <Loading style={{ marginBottom: '50vh' }} text="Loading..." />
   ) : (
     <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
-      <FilterBar
-        color={selectedTheme}
-        style={{ height: '5rem', marginTop: '-1rem' }}
-        className="mobile"
-      >
-        {[
-          { key: 'all', label: 'All' },
-          { key: 'subject', label: 'Subjects' },
-          { key: 'video', label: 'Videos' },
-          { key: 'url', label: 'Links' }
-        ].map((type) => {
-          return (
-            <nav
-              key={type.key}
-              className={filterTable[section] === type.key ? 'active' : ''}
-              onClick={() => onClickPostsMenu({ item: type.key })}
-            >
-              {type.label}
-            </nav>
-          );
-        })}
-      </FilterBar>
+      {section !== 'likes' && (
+        <FilterBar
+          color={selectedTheme}
+          style={{ height: '5rem', marginTop: '-1rem' }}
+          className={`mobile ${css`
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: 1.3rem;
+            }
+          `}`}
+        >
+          {[
+            { key: 'all', label: 'All' },
+            { key: 'subject', label: 'Subjects' },
+            { key: 'video', label: 'Videos' },
+            { key: 'url', label: 'Links' }
+          ].map((type) => {
+            return (
+              <nav
+                key={type.key}
+                className={filterTable[section] === type.key ? 'active' : ''}
+                onClick={() => onClickPostsMenu({ item: type.key })}
+              >
+                {type.label}
+              </nav>
+            );
+          })}
+        </FilterBar>
+      )}
       <div
         className={css`
           width: 100%;
@@ -131,6 +151,7 @@ export default function Posts({
         {loadingFeeds ? (
           <Loading
             className={css`
+              margin-top: ${section === 'likes' ? '12rem' : '3rem'};
               width: ${section === 'likes' ? '55%' : '50%'};
               @media (max-width: ${mobileMaxWidth}) {
                 width: 100%;
@@ -154,9 +175,11 @@ export default function Posts({
                   <ContentPanel
                     key={filterTable[section] + feed.feedId}
                     style={{
+                      marginTop: index === 0 && '-1rem',
                       marginBottom: '1rem',
                       zIndex: profileFeeds.length - index
                     }}
+                    zIndex={profileFeeds.length - index}
                     contentId={contentId}
                     contentType={contentType}
                     commentsLoadLimit={5}
@@ -219,7 +242,9 @@ export default function Posts({
             : null,
         lastTimeStamp:
           profileFeeds.length > 0
-            ? profileFeeds[profileFeeds.length - 1].lastInteraction
+            ? profileFeeds[profileFeeds.length - 1][
+                section === 'watched' ? 'viewTimeStamp' : 'lastInteraction'
+              ]
             : null
       });
       onLoadMorePosts({ ...data, section, username });
@@ -228,19 +253,6 @@ export default function Posts({
       }
     } catch (error) {
       console.error(error);
-    }
-  }
-
-  async function handleLoadTab(tabName) {
-    selectedFilter.current = filterTable[tabName];
-    setLoadingFeeds(true);
-    const { data, filter: loadedFilter } = await loadFeeds({
-      username,
-      filter: filterTable[tabName]
-    });
-    if (loadedFilter === selectedFilter.current) {
-      onLoadPosts({ ...data, section: tabName, username });
-      setLoadingFeeds(false);
     }
   }
 
@@ -264,6 +276,8 @@ export default function Posts({
         return `${username} has not uploaded a link, yet`;
       case 'videos':
         return `${username} has not uploaded a video, yet`;
+      case 'watched':
+        return `${username} has not watched any XP video so far`;
       case 'likes':
         return `${username} doesn't like any content so far`;
     }

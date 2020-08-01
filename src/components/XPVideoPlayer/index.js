@@ -165,7 +165,7 @@ function XPVideoPlayer({
   }, [userId, xpEarned]);
 
   useEffect(() => {
-    PlayerRef.current.getInternalPlayer()?.pauseVideo?.();
+    PlayerRef.current?.getInternalPlayer()?.pauseVideo?.();
   }, [userId, rewardLevel]);
 
   useEffect(() => {
@@ -279,25 +279,29 @@ function XPVideoPlayer({
           onEnded={handleVideoStop}
         />
       </div>
-      <XPBar
-        alreadyEarned={xpEarned}
-        isChat={isChat}
-        justEarned={justEarned}
-        onPlayVideo={() => PlayerRef.current?.getInternalPlayer()?.playVideo()}
-        rewardLevel={rewardLevel}
-        started={started}
-        startingPosition={startingPosition}
-        userId={userId}
-        videoId={videoId}
-        xpEarned={xpEarned}
-        xpLoaded={xpLoaded}
-      />
+      {(!!rewardLevel || (startingPosition > 0 && !started)) && (
+        <XPBar
+          alreadyEarned={xpEarned}
+          isChat={isChat}
+          justEarned={justEarned}
+          onPlayVideo={() =>
+            PlayerRef.current?.getInternalPlayer()?.playVideo()
+          }
+          rewardLevel={rewardLevel}
+          started={started}
+          startingPosition={startingPosition}
+          userId={userId}
+          videoId={videoId}
+          xpEarned={xpEarned}
+          xpLoaded={xpLoaded}
+        />
+      )}
     </ErrorBoundary>
   );
 
   function onVideoReady() {
     totalDurationRef.current = PlayerRef.current
-      .getInternalPlayer()
+      ?.getInternalPlayer()
       ?.getDuration();
   }
 
@@ -358,14 +362,14 @@ function XPVideoPlayer({
           }
         );
         if (currentlyWatchingAnotherVideo) {
-          PlayerRef.current.getInternalPlayer()?.pauseVideo?.();
+          PlayerRef.current?.getInternalPlayer()?.pauseVideo?.();
         }
       }
     }
 
     async function increaseCoinMeter() {
-      if (PlayerRef.current.getInternalPlayer()?.isMuted()) {
-        PlayerRef.current.getInternalPlayer()?.unMute();
+      if (PlayerRef.current?.getInternalPlayer()?.isMuted()) {
+        PlayerRef.current?.getInternalPlayer()?.unMute();
       }
       if (
         rewardAmountRef.current &&
@@ -415,8 +419,8 @@ function XPVideoPlayer({
     }
 
     async function increaseXPMeter() {
-      if (PlayerRef.current.getInternalPlayer()?.isMuted()) {
-        PlayerRef.current.getInternalPlayer()?.unMute();
+      if (PlayerRef.current?.getInternalPlayer()?.isMuted()) {
+        PlayerRef.current?.getInternalPlayer()?.unMute();
       }
       const requiredViewDuration =
         totalDurationRef.current < requiredDurationForXP + 10

@@ -281,7 +281,15 @@ export default function TargetContent({
                       />
                     </div>
                     <div>
-                      <span className="timestamp">
+                      <span
+                        className={`timestamp ${css`
+                          cursor: pointer;
+                          &:hover {
+                            text-decoration: underline;
+                          }
+                        `}`}
+                        onClick={() => history.push(`/comments/${comment.id}`)}
+                      >
                         ({timeSince(comment.timeStamp)})
                       </span>
                     </div>
@@ -337,7 +345,7 @@ export default function TargetContent({
                       style={{
                         display: 'flex',
                         flexDirection: 'column',
-                        paddingBottom: comment.likes.length === 0 && '0.5rem'
+                        paddingBottom: comment.likes.length === 0 && '1rem'
                       }}
                     >
                       <div style={{ display: 'flex' }}>
@@ -453,7 +461,6 @@ export default function TargetContent({
                 <InputForm
                   innerRef={InputFormRef}
                   style={{
-                    marginTop: '0.5rem',
                     padding: '0 1rem'
                   }}
                   onSubmit={handleSubmit}

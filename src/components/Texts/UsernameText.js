@@ -70,7 +70,7 @@ export default function UsernameText({
           <li onClick={() => history.push(`/users/${user.username}`)}>
             <a
               style={{ color: Color.darkerGray(), cursor: 'pointer' }}
-              onClick={e => e.preventDefault()}
+              onClick={(e) => e.preventDefault()}
             >
               Profile
             </a>

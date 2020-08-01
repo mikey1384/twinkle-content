@@ -29,6 +29,9 @@ export const container = css`
       padding: 0 1rem 0 1rem;
       display: flex;
       flex-direction: column;
+      @media (max-width: ${mobileMaxWidth}) {
+        padding: 0 0.5rem 0 0.5rem;
+      }
     }
   }
   .content-panel__likes {

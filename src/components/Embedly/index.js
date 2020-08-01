@@ -124,9 +124,9 @@ function Embedly({
       return setTwinkleVideoId(extractedVideoId);
     }
     if (
-      !thumbUrl &&
       url &&
-      (typeof siteUrl !== 'string' || (prevUrl && url !== prevUrl))
+      ((typeof siteUrl !== 'string' && !thumbUrl) ||
+        (prevUrl && url !== prevUrl))
     ) {
       fetchUrlData();
     }

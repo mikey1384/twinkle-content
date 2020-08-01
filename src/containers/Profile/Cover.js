@@ -212,10 +212,10 @@ export default function Cover({
           font-size: 2rem;
           z-index: 10;
           @media (max-width: ${mobileMaxWidth}) {
-            width: 12rem;
-            height: 12rem;
+            width: 10rem;
+            height: 10rem;
             left: 1rem;
-            top: 4rem;
+            top: 5rem;
           }
         `}
         style={{ position: 'absolute' }}
