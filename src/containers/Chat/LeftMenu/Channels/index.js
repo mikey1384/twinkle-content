@@ -83,6 +83,10 @@ function Channels({ onChannelEnter }) {
   });
 
   useEffect(() => {
+    ChannelListRef.current.scrollTop = 0;
+  }, [selectedChatTab]);
+
+  useEffect(() => {
     if (
       selectedChannelId === homeChannelIds[0] &&
       homeChannelIds[0] !== prevChannelIds[0]
