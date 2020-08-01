@@ -93,11 +93,14 @@ export default function Body({
     isEditing,
     secretAnswer,
     secretShown,
+    isSystemMessage,
     xpRewardInterfaceShown
   } = useContentState({
     contentType,
     contentId
   });
+
+  const isMsgSystem = contentId && isSystemMessage;
 
   const { secretShown: rootSecretShown } = useContentState({
     contentId: rootId,
@@ -321,7 +324,7 @@ export default function Body({
           userId={userId}
           onClickSecretAnswer={onSecretAnswerClick}
         />
-        {!isEditing && (
+        {!isEditing && !isMsgSystem && (
           <div
             className="bottom-interface"
             style={{

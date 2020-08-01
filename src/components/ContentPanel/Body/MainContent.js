@@ -19,6 +19,7 @@ import { css } from 'emotion';
 import { useContentState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
 import { useHistory } from 'react-router-dom';
+import ViewSecretAnswerButton from 'components/Subjects/ViewSecretAnswerButton';
 
 MainContent.propTypes = {
   autoExpand: PropTypes.bool,
@@ -44,6 +45,7 @@ export default function MainContent({
   const {
     byUser,
     content,
+    isSystemMessage,
     description,
     fileName,
     filePath,
@@ -57,10 +59,12 @@ export default function MainContent({
     rootId,
     rootType,
     secretAnswer,
+    secretShown,
     targetObj,
     tags,
     title
   } = useContentState({ contentId, contentType });
+  const spoilerShown = userId ? secretShown || uploader.id === userId : true;
   const {
     actions: {
       onAddTags,
@@ -191,6 +195,9 @@ export default function MainContent({
                         contentId={contentId}
                         contentType={contentType}
                         section="hidden message"
+                        style={{
+                          color: Color[isSystemMessage ? 'gray' : 'black']()
+                        }}
                       >
                         {content}
                       </LongText>
@@ -252,12 +259,37 @@ export default function MainContent({
                   </LongText>
                 </div>
                 {secretAnswer && (
-                  <SecretAnswer
-                    answer={secretAnswer}
-                    onClick={onClickSecretAnswer}
-                    subjectId={contentId}
-                    uploaderId={uploader.id}
-                  />
+                  <div
+                    style={{
+                      display: 'flex'
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: spoilerShown ? '100%' : '75%'
+                      }}
+                    >
+                      <SecretAnswer
+                        answer={secretAnswer}
+                        onClick={onClickSecretAnswer}
+                        subjectId={contentId}
+                        uploaderId={uploader.id}
+                      />
+                    </div>
+                    {!spoilerShown && (
+                      <div
+                        style={{
+                          width: '20%',
+                          marginLeft: '5%'
+                        }}
+                      >
+                        <ViewSecretAnswerButton
+                          parent={useContentState({ contentId, contentType })}
+                          subjectId={contentId}
+                        />
+                      </div>
+                    )}
+                  </div>
                 )}
               </>
             )}

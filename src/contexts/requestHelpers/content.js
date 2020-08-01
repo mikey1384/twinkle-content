@@ -571,7 +571,8 @@ export default function contentRequestHelpers({ auth, handleError }) {
       attachment,
       filePath,
       fileName,
-      fileSize
+      fileSize,
+      isSystemMessage
     }) {
       try {
         const { data } = await request.post(
@@ -585,7 +586,8 @@ export default function contentRequestHelpers({ auth, handleError }) {
             attachment,
             filePath,
             fileName,
-            fileSize
+            fileSize,
+            isSystemMessage
           },
           auth()
         );

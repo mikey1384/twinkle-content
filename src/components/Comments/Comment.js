@@ -40,6 +40,7 @@ import {
 import { getFileInfoFromFileName, stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext } from 'contexts';
 import LocalContext from './Context';
+import { Color } from 'constants/css';
 
 Comment.propTypes = {
   comment: PropTypes.shape({
@@ -64,7 +65,8 @@ Comment.propTypes = {
     filePath: PropTypes.string,
     fileName: PropTypes.string,
     fileSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    thumbUrl: PropTypes.string
+    thumbUrl: PropTypes.string,
+    isSystemMessage: PropTypes.bool
   }).isRequired,
   innerRef: PropTypes.func,
   isPreview: PropTypes.bool,
@@ -92,7 +94,8 @@ function Comment({
     numReplies,
     filePath,
     fileName,
-    fileSize
+    fileSize,
+    isSystemMessage
   }
 }) {
   subject = subject || comment.targetObj?.subject || {};
@@ -368,7 +371,7 @@ function Comment({
               profilePicId={uploader.profilePicId}
             />
           </aside>
-          {editButtonShown && !isEditing && (
+          {editButtonShown && !isEditing && !isSystemMessage && (
             <div className="dropdown-wrapper">
               <DropdownButton
                 skeuomorphic
@@ -455,7 +458,12 @@ function Comment({
                     />
                   ) : (
                     !stringIsEmpty(comment.content) && (
-                      <LongText className="comment__content">
+                      <LongText
+                        className="comment__content"
+                        style={{
+                          color: Color[isSystemMessage ? 'gray' : 'black']()
+                        }}
+                      >
                         {comment.content}
                       </LongText>
                     )
@@ -467,69 +475,75 @@ function Comment({
                         justifyContent: 'space-between'
                       }}
                     >
-                      <div>
-                        <div className="comment__buttons">
-                          <LikeButton
-                            contentType="comment"
-                            contentId={comment.id}
-                            onClick={handleLikeClick}
-                            likes={likes}
-                          />
-                          <Button
-                            disabled={loadingReplies}
-                            transparent
-                            style={{ marginLeft: '1rem' }}
-                            onClick={handleReplyButtonClick}
-                          >
-                            <Icon icon="comment-alt" />
-                            <span style={{ marginLeft: '1rem' }}>
-                              {numReplies > 1 &&
-                              parent.contentType === 'comment'
-                                ? 'Replies'
-                                : 'Reply'}{' '}
-                              {numReplies > 0 &&
-                              parent.contentType === 'comment'
-                                ? ` (${numReplies})`
-                                : ''}
-                            </span>
-                          </Button>
-                          {userCanRewardThis && (
+                      {!isSystemMessage && (
+                        <div>
+                          <div className="comment__buttons">
+                            <LikeButton
+                              contentType="comment"
+                              contentId={comment.id}
+                              onClick={handleLikeClick}
+                              likes={likes}
+                            />
                             <Button
-                              color="pink"
-                              style={{ marginLeft: '0.7rem' }}
-                              onClick={() =>
-                                onSetXpRewardInterfaceShown({
-                                  contentId: commentId,
-                                  contentType: 'comment',
-                                  shown: true
-                                })
-                              }
-                              disabled={!!xpButtonDisabled}
+                              disabled={loadingReplies}
+                              transparent
+                              style={{ marginLeft: '1rem' }}
+                              onClick={handleReplyButtonClick}
                             >
-                              <Icon icon="certificate" />
-                              <span style={{ marginLeft: '0.7rem' }}>
-                                {xpButtonDisabled || 'Reward'}
+                              <Icon icon="comment-alt" />
+                              <span style={{ marginLeft: '1rem' }}>
+                                {numReplies > 1 &&
+                                parent.contentType === 'comment'
+                                  ? 'Replies'
+                                  : 'Reply'}{' '}
+                                {numReplies > 0 &&
+                                parent.contentType === 'comment'
+                                  ? ` (${numReplies})`
+                                  : ''}
                               </span>
                             </Button>
-                          )}
+                            {userCanRewardThis && (
+                              <Button
+                                color="pink"
+                                style={{ marginLeft: '0.7rem' }}
+                                onClick={() =>
+                                  onSetXpRewardInterfaceShown({
+                                    contentId: commentId,
+                                    contentType: 'comment',
+                                    shown: true
+                                  })
+                                }
+                                disabled={!!xpButtonDisabled}
+                              >
+                                <Icon icon="certificate" />
+                                <span style={{ marginLeft: '0.7rem' }}>
+                                  {xpButtonDisabled || 'Reward'}
+                                </span>
+                              </Button>
+                            )}
+                          </div>
+                          <Likers
+                            className="comment__likes"
+                            userId={userId}
+                            likes={likes}
+                            onLinkClick={() => setUserListModalShown(true)}
+                          />
                         </div>
-                        <Likers
-                          className="comment__likes"
-                          userId={userId}
-                          likes={likes}
-                          onLinkClick={() => setUserListModalShown(true)}
-                        />
-                      </div>
-                      <div>
-                        <Button
-                          color="brownOrange"
-                          filled={isRecommendedByUser}
-                          disabled={recommendationInterfaceShown}
-                          onClick={() => setRecommendationInterfaceShown(true)}
-                        >
-                          <Icon icon="star" />
-                        </Button>
-                      </div>
+                      )}
+                      {!isSystemMessage && (
+                        <div>
+                          <Button
+                            color="brownOrange"
+                            filled={isRecommendedByUser}
+                            disabled={recommendationInterfaceShown}
+                            onClick={() =>
+                              setRecommendationInterfaceShown(true)
+                            }
+                          >
+                            <Icon icon="star" />
+                          </Button>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
@@ -580,7 +594,7 @@ function Comment({
                 uploaderName={uploader.username}
               />
             )}
-            {!isPreview && !isHidden && (
+            {!isPreview && !isSystemMessage && !isHidden && (
               <>
                 <ReplyInputArea
                   innerRef={ReplyInputAreaRef}
