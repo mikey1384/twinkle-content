@@ -51,7 +51,7 @@ export default function ChannelHeader({
   } = useAppContext();
   const { authLevel, banned, profilePicId, userId, username } = useMyState();
   const {
-    state: { favoriteChannelIds, subjectObj, subjectSearchResults },
+    state: { allFavoriteChannelIds, subjectObj, subjectSearchResults },
     actions: {
       onClearSubjectSearchResults,
       onLoadChatSubject,
@@ -66,8 +66,8 @@ export default function ChannelHeader({
   const [submitting, setSubmitting] = useState(false);
   const [addToFavoritesShown, setAddToFavoritesShown] = useState(false);
   const favorited = useMemo(() => {
-    return favoriteChannelIds.includes(selectedChannelId);
-  }, [favoriteChannelIds, selectedChannelId]);
+    return allFavoriteChannelIds[selectedChannelId];
+  }, [allFavoriteChannelIds, selectedChannelId]);
 
   const {
     content = defaultChatSubject,

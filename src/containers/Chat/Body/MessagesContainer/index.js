@@ -67,7 +67,7 @@ export default function MessagesContainer({
       channelLoading,
       chessModalShown,
       creatingNewDMChannel,
-      favoriteChannelIds,
+      allFavoriteChannelIds,
       isRespondingToSubject,
       messagesLoadMoreButton,
       messages,
@@ -137,8 +137,8 @@ export default function MessagesContainer({
   const timerRef = useRef(null);
 
   const favorited = useMemo(() => {
-    return favoriteChannelIds.includes(selectedChannelId);
-  }, [favoriteChannelIds, selectedChannelId]);
+    return allFavoriteChannelIds[selectedChannelId];
+  }, [allFavoriteChannelIds, selectedChannelId]);
 
   const selectedChannelIsOnCall = useMemo(
     () => selectedChannelId === channelOnCall.id,
