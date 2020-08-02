@@ -27,7 +27,7 @@ export default function RecommendationInterface({
   style,
   uploaderId
 }) {
-  const { canReward, userId, twinkleCoins } = useMyState();
+  const { authLevel, userId, twinkleCoins } = useMyState();
   const [recommending, setRecommending] = useState(false);
 
   const {
@@ -126,7 +126,7 @@ export default function RecommendationInterface({
 
   async function handleRecommend() {
     setRecommending(true);
-    if (!isRecommendedByUser && canReward && isOnlyRecommendedByStudents) {
+    if (!isRecommendedByUser && authLevel > 1 && isOnlyRecommendedByStudents) {
       for (let recommendation of recommendations) {
         rewardUser({
           amount:
