@@ -289,7 +289,7 @@ function Reply({
                 ))}
               {isEditing ? (
                 <EditTextArea
-                  allowEmptyText
+                  allowEmptyText={!!filePath}
                   style={{ marginBottom: '1rem' }}
                   contentId={reply.id}
                   contentType="comment"

@@ -430,7 +430,7 @@ function Comment({
                 ))}
               {isEditing ? (
                 <EditTextArea
-                  allowEmptyText
+                  allowEmptyText={!!filePath}
                   style={{ marginBottom: '1rem' }}
                   contentType="comment"
                   contentId={comment.id}
