@@ -27,7 +27,7 @@ import { Color } from 'constants/css';
 import { socket } from 'constants/io';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useChatContext, useNotiContext } from 'contexts';
-import { checkScrollIsAtTheBottom } from 'helpers';
+import { checkScrollIsAtTheBottom, isMobile } from 'helpers';
 
 MessagesContainer.propTypes = {
   channelName: PropTypes.string,
@@ -135,6 +135,7 @@ export default function MessagesContainer({
   const FileInputRef = useRef(null);
   const ChatInputRef = useRef(null);
   const timerRef = useRef(null);
+  const menuLabel = isMobile(navigator) ? '' : 'Menu';
 
   const favorited = useMemo(() => {
     return allFavoriteChannelIds[selectedChannelId];
@@ -365,7 +366,7 @@ export default function MessagesContainer({
             }}
             direction="left"
             icon="bars"
-            text="Menu"
+            text={menuLabel}
             menuProps={menuProps}
           />
           <div
@@ -390,6 +391,7 @@ export default function MessagesContainer({
             </div>
             <FullTextReveal
               direction="left"
+              className="desktop"
               show={addToFavoritesShown && !favorited}
               text="Add to favorites"
               style={{

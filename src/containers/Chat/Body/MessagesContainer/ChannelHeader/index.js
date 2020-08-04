@@ -68,6 +68,7 @@ export default function ChannelHeader({
   const favorited = useMemo(() => {
     return allFavoriteChannelIds[selectedChannelId];
   }, [allFavoriteChannelIds, selectedChannelId]);
+  const menuLabel = isMobile(navigator) ? '' : 'Menu';
 
   const {
     content = defaultChatSubject,
@@ -303,7 +304,7 @@ export default function ChannelHeader({
                     }}
                     direction="left"
                     icon="bars"
-                    text="Menu"
+                    text={menuLabel}
                     menuProps={menuProps}
                   />
                 )}
@@ -328,6 +329,7 @@ export default function ChannelHeader({
                   </div>
                   <FullTextReveal
                     direction="left"
+                    className="desktop"
                     show={addToFavoritesShown && !favorited}
                     text="Add to favorites"
                     style={{
