@@ -32,7 +32,7 @@ export default function RestoreAccount({ username, onShowLoginForm, onHide }) {
       return searchedProfiles[0];
     }
     return null;
-  }, [searchText?.toLowerCase, searchedProfiles]);
+  }, [searchText, searchedProfiles]);
 
   const disabled = useMemo(() => {
     if (section === 'username') return !matchingAccount;
@@ -49,7 +49,7 @@ export default function RestoreAccount({ username, onShowLoginForm, onHide }) {
       }
     }
     return 'TBD';
-  }, [matchingAccount?.email, matchingAccount?.verifiedEmail, section]);
+  }, [matchingAccount, section]);
 
   return (
     <ErrorBoundary>

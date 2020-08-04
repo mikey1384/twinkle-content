@@ -104,7 +104,7 @@ export default function Chess({
 
   const myColor = useMemo(() => parsedState?.playerColors[myId] || 'white', [
     myId,
-    parsedState?.playerColors
+    parsedState
   ]);
 
   const userMadeLastMove = move.by === myId;

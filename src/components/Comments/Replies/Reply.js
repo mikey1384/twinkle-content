@@ -182,8 +182,8 @@ function Reply({
     parent.contentType,
     parent.rewardLevel,
     parent.rootType,
-    rootContent?.rewardLevel,
-    subject?.rewardLevel
+    rootContent,
+    subject
   ]);
 
   const xpButtonDisabled = useMemo(

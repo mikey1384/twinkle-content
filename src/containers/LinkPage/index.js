@@ -218,13 +218,13 @@ export default function LinkPage({
   }, [rewards, userId]);
 
   const userIsUploader = useMemo(() => uploader?.id === userId, [
-    uploader?.id,
+    uploader,
     userId
   ]);
 
   const userCanEditThis = useMemo(
     () => (canEdit || canDelete) && authLevel > uploader?.authLevel,
-    [authLevel, canDelete, canEdit, uploader?.authLevel]
+    [authLevel, canDelete, canEdit, uploader]
   );
   const userCanRewardThis = useMemo(
     () =>

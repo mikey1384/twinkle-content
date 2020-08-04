@@ -71,7 +71,7 @@ function ChatInfo({
     callOngoing,
     currentChannel.creatorId,
     currentChannel.isClass,
-    currentChannel.members?.length,
+    currentChannel.members,
     currentChannel.twoPeople,
     myId
   ]);
@@ -111,7 +111,7 @@ function ChatInfo({
     }
     return [me, ...currentChannelOnlineMembersOtherThanMe];
   }, [
-    currentChannel?.members,
+    currentChannel,
     myId,
     username,
     profilePicId,

@@ -200,7 +200,7 @@ function Comment({
     parent.rewardLevel,
     rootContent.contentType,
     rootContent.rewardLevel,
-    subject?.rewardLevel
+    subject
   ]);
 
   useEffect(() => {
@@ -248,15 +248,9 @@ function Comment({
     canDelete,
     canEdit,
     isPreview,
-    parent?.secretAnswer,
-    parent?.uploader?.authLevel,
-    parent?.uploader?.id,
-    rootContent?.secretAnswer,
-    rootContent?.uploader?.authLevel,
-    rootContent?.uploader?.id,
-    subject?.secretAnswer,
-    subject?.uploader?.authLevel,
-    subject?.uploader?.id,
+    parent,
+    rootContent,
+    subject,
     userId,
     userIsHigherAuth,
     userIsUploader
@@ -306,12 +300,7 @@ function Comment({
     const secretShown =
       subjectState.secretShown || subject?.uploader?.id === userId;
     return hasSecretAnswer && !secretShown;
-  }, [
-    subject?.secretAnswer,
-    subject?.uploader?.id,
-    subjectState.secretShown,
-    userId
-  ]);
+  }, [subject, subjectState.secretShown, userId]);
 
   const xpButtonDisabled = useMemo(() => {
     if (isPreview) return true;
