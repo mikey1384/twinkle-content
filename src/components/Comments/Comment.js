@@ -466,82 +466,76 @@ function Comment({
                       </LongText>
                     )
                   )}
-                  {!isPreview && !isHidden && (
+                  {!isPreview && !isHidden && !isNotification && (
                     <div
                       style={{
                         display: 'flex',
                         justifyContent: 'space-between'
                       }}
                     >
-                      {!isNotification && (
-                        <div>
-                          <div className="comment__buttons">
-                            <LikeButton
-                              contentType="comment"
-                              contentId={comment.id}
-                              onClick={handleLikeClick}
-                              likes={likes}
-                            />
+                      <div>
+                        <div className="comment__buttons">
+                          <LikeButton
+                            contentType="comment"
+                            contentId={comment.id}
+                            onClick={handleLikeClick}
+                            likes={likes}
+                          />
+                          <Button
+                            disabled={loadingReplies}
+                            transparent
+                            style={{ marginLeft: '1rem' }}
+                            onClick={handleReplyButtonClick}
+                          >
+                            <Icon icon="comment-alt" />
+                            <span style={{ marginLeft: '1rem' }}>
+                              {numReplies > 1 &&
+                              parent.contentType === 'comment'
+                                ? 'Replies'
+                                : 'Reply'}{' '}
+                              {numReplies > 0 &&
+                              parent.contentType === 'comment'
+                                ? ` (${numReplies})`
+                                : ''}
+                            </span>
+                          </Button>
+                          {userCanRewardThis && (
                             <Button
-                              disabled={loadingReplies}
-                              transparent
-                              style={{ marginLeft: '1rem' }}
-                              onClick={handleReplyButtonClick}
+                              color="pink"
+                              style={{ marginLeft: '0.7rem' }}
+                              onClick={() =>
+                                onSetXpRewardInterfaceShown({
+                                  contentId: commentId,
+                                  contentType: 'comment',
+                                  shown: true
+                                })
+                              }
+                              disabled={!!xpButtonDisabled}
                             >
-                              <Icon icon="comment-alt" />
-                              <span style={{ marginLeft: '1rem' }}>
-                                {numReplies > 1 &&
-                                parent.contentType === 'comment'
-                                  ? 'Replies'
-                                  : 'Reply'}{' '}
-                                {numReplies > 0 &&
-                                parent.contentType === 'comment'
-                                  ? ` (${numReplies})`
-                                  : ''}
+                              <Icon icon="certificate" />
+                              <span style={{ marginLeft: '0.7rem' }}>
+                                {xpButtonDisabled || 'Reward'}
                               </span>
                             </Button>
-                            {userCanRewardThis && (
-                              <Button
-                                color="pink"
-                                style={{ marginLeft: '0.7rem' }}
-                                onClick={() =>
-                                  onSetXpRewardInterfaceShown({
-                                    contentId: commentId,
-                                    contentType: 'comment',
-                                    shown: true
-                                  })
-                                }
-                                disabled={!!xpButtonDisabled}
-                              >
-                                <Icon icon="certificate" />
-                                <span style={{ marginLeft: '0.7rem' }}>
-                                  {xpButtonDisabled || 'Reward'}
-                                </span>
-                              </Button>
-                            )}
-                          </div>
-                          <Likers
-                            className="comment__likes"
-                            userId={userId}
-                            likes={likes}
-                            onLinkClick={() => setUserListModalShown(true)}
-                          />
+                          )}
                         </div>
-                      )}
-                      {!isNotification && (
-                        <div>
-                          <Button
-                            color="brownOrange"
-                            filled={isRecommendedByUser}
-                            disabled={recommendationInterfaceShown}
-                            onClick={() =>
-                              setRecommendationInterfaceShown(true)
-                            }
-                          >
-                            <Icon icon="star" />
-                          </Button>
-                        </div>
-                      )}
+                        <Likers
+                          className="comment__likes"
+                          userId={userId}
+                          likes={likes}
+                          onLinkClick={() => setUserListModalShown(true)}
+                        />
+                      </div>
+                      <div>
+                        <Button
+                          color="brownOrange"
+                          filled={isRecommendedByUser}
+                          disabled={recommendationInterfaceShown}
+                          onClick={() => setRecommendationInterfaceShown(true)}
+                        >
+                          <Icon icon="star" />
+                        </Button>
+                      </div>
                     </div>
                   )}
                 </div>
