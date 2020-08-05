@@ -28,7 +28,8 @@ import SubjectLink from './SubjectLink';
 import Icon from 'components/Icon';
 import LoginToViewContent from 'components/LoginToViewContent';
 import FileViewer from 'components/FileViewer';
-import { Link, useHistory } from 'react-router-dom';
+import { css } from 'emotion';
+import { useHistory } from 'react-router-dom';
 import { commentContainer } from './Styles';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { useContentState, useMyState } from 'helpers/hooks';
@@ -244,12 +245,15 @@ function Comment({
         ));
     const userCanEditThis = (canEdit || canDelete) && userIsHigherAuth;
     return (
-      ((userIsUploader && !isForSecretSubject) || userCanEditThis) && !isPreview
+      ((userIsUploader && !(isForSecretSubject || isNotification)) ||
+        userCanEditThis) &&
+      !isPreview
     );
   }, [
     authLevel,
     canDelete,
     canEdit,
+    isNotification,
     isPreview,
     parent,
     rootContent,
@@ -375,10 +379,22 @@ function Comment({
             <div>
               <UsernameText className="username" user={uploader} />{' '}
               <small className="timestamp">
-                <Link to={`/comments/${comment.id}`}>
+                <a
+                  className={css`
+                    &:hover {
+                      text-decoration: ${isNotification ? 'none' : 'underline'};
+                    }
+                  `}
+                  style={{ cursor: isNotification ? 'default' : 'pointer' }}
+                  onClick={() =>
+                    isNotification
+                      ? null
+                      : history.push(`/comments/${comment.id}`)
+                  }
+                >
                   {parent.contentType === 'user' ? 'messag' : 'comment'}
                   ed {timeSince(comment.timeStamp)}
-                </Link>
+                </a>
               </small>
             </div>
             <div>
@@ -448,16 +464,13 @@ function Comment({
                   ) : isNotification ? (
                     <div
                       style={{
-                        color: Color.black(),
+                        color: Color.gray(),
                         fontWeight: 'bold',
-                        padding: '1rem',
                         margin: '1rem 0',
-                        background: Color.highlightGray(),
-                        textAlign: 'center',
                         borderRadius
                       }}
                     >
-                      {uploader.username} viewed the answer
+                      {uploader.username} viewed the secret message
                     </div>
                   ) : (
                     !stringIsEmpty(comment.content) && (

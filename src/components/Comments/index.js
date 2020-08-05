@@ -379,7 +379,7 @@ function Comments({
   async function handleViewSecretAnswer() {
     try {
       const data = await uploadComment({
-        content: 'viewed the answer',
+        content: 'viewed the secret message',
         parent:
           parent.contentType === 'subject'
             ? parent

@@ -14,7 +14,7 @@ import SecretAnswer from 'components/SecretAnswer';
 import Link from 'components/Link';
 import HiddenComment from 'components/HiddenComment';
 import { stringIsEmpty, getFileInfoFromFileName } from 'helpers/stringHelpers';
-import { Color, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 import { useContentState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
@@ -50,6 +50,7 @@ export default function MainContent({
     fileSize,
     thumbUrl,
     isEditing,
+    isNotification,
     rootContent,
     rootObj,
     uploader,
@@ -178,6 +179,16 @@ export default function MainContent({
                       )
                     }
                   />
+                ) : isNotification ? (
+                  <div
+                    style={{
+                      color: Color.gray(),
+                      fontWeight: 'bold',
+                      borderRadius
+                    }}
+                  >
+                    {uploader.username} viewed the secret message
+                  </div>
                 ) : (
                   <div
                     style={{
