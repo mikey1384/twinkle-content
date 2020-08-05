@@ -79,9 +79,6 @@ function SecretAnswer({ answer, onClick, style, subjectId, uploaderId }) {
           wordBreak: 'break-word',
           textAlign: spoilerShown ? '' : 'center',
           padding: '1rem',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
           ...style
         }}
       >
