@@ -6,25 +6,16 @@ import { borderRadius, Color, desktopMinWidth } from 'constants/css';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
 import { css } from 'emotion';
-import ViewSecretAnswerButton from './Subjects/ViewSecretAnswerButton';
 
 SecretAnswer.propTypes = {
   answer: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   style: PropTypes.object,
   subjectId: PropTypes.number,
-  uploaderId: PropTypes.number,
-  parent: PropTypes.object
+  uploaderId: PropTypes.number
 };
 
-function SecretAnswer({
-  answer,
-  onClick,
-  style,
-  subjectId,
-  uploaderId,
-  parent
-}) {
+function SecretAnswer({ answer, onClick, style, subjectId, uploaderId }) {
   const {
     requestHelpers: { checkIfUserResponded }
   } = useAppContext();
@@ -105,12 +96,7 @@ function SecretAnswer({
               }
             `}
           >
-            Submit your response to view the secret message. Tap here
-          </span>
-        )}
-        {!spoilerShown && (
-          <span style={{ display: 'flex' }}>
-            <ViewSecretAnswerButton subjectId={subjectId} parent={parent} />
+            Submit your response to view the secret message
           </span>
         )}
       </div>

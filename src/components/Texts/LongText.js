@@ -14,8 +14,7 @@ LongText.propTypes = {
   maxLines: PropTypes.number,
   section: PropTypes.string,
   style: PropTypes.object,
-  readMoreColor: PropTypes.string,
-  isSystem: PropTypes.bool
+  readMoreColor: PropTypes.string
 };
 
 export default function LongText({
@@ -27,8 +26,7 @@ export default function LongText({
   contentType,
   section,
   maxLines = 10,
-  readMoreColor = Color.blue(),
-  isSystem = false
+  readMoreColor = Color.blue()
 }) {
   const {
     actions: { onSetFullTextState }
@@ -36,12 +34,10 @@ export default function LongText({
   const ContainerRef = useRef(null);
   const contentState =
     contentType && section ? useContentState({ contentType, contentId }) : {};
-  const { fullTextState = {}, isSystemMessage = false } = contentState;
+  const { fullTextState = {} } = contentState;
   const fullTextRef = useRef(fullTextState[section]);
   const [fullText, setFullText] = useState(fullTextState[section]);
   const [isOverflown, setIsOverflown] = useState(false);
-
-  const isGeneratedBySystem = isSystemMessage || isSystem;
 
   useEffect(() => {
     if (
@@ -91,8 +87,7 @@ export default function LongText({
                 overflow: 'hidden',
                 display: '-webkit-box',
                 WebkitLineClamp: maxLines,
-                WebkitBoxOrient: 'vertical',
-                color: Color[isGeneratedBySystem ? 'gray' : 'black']()
+                WebkitBoxOrient: 'vertical'
               }}
               dangerouslySetInnerHTML={{
                 __html: limitBrs(

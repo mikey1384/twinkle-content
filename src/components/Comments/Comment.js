@@ -37,6 +37,7 @@ import {
   determineXpButtonDisabled,
   scrollElementToCenter
 } from 'helpers';
+import { borderRadius, Color } from 'constants/css';
 import { getFileInfoFromFileName, stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext } from 'contexts';
 import LocalContext from './Context';
@@ -65,7 +66,7 @@ Comment.propTypes = {
     fileName: PropTypes.string,
     fileSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     thumbUrl: PropTypes.string,
-    isSystemMessage: PropTypes.bool
+    isNotification: PropTypes.bool
   }).isRequired,
   innerRef: PropTypes.func,
   isPreview: PropTypes.bool,
@@ -94,7 +95,7 @@ function Comment({
     filePath,
     fileName,
     fileSize,
-    isSystemMessage
+    isNotification
   }
 }) {
   subject = subject || comment.targetObj?.subject || {};
@@ -259,7 +260,7 @@ function Comment({
   ]);
   const editMenuItems = useMemo(() => {
     const items = [];
-    if (userIsUploader || canEdit) {
+    if ((userIsUploader || canEdit) && !isNotification) {
       items.push({
         label: 'Edit',
         onClick: () =>
@@ -359,7 +360,7 @@ function Comment({
               profilePicId={uploader.profilePicId}
             />
           </aside>
-          {editButtonShown && !isEditing && !isSystemMessage && (
+          {editButtonShown && !isEditing && (
             <div className="dropdown-wrapper">
               <DropdownButton
                 skeuomorphic
@@ -444,12 +445,23 @@ function Comment({
                     <HiddenComment
                       onClick={() => history.push(`/subjects/${subject?.id}`)}
                     />
+                  ) : isNotification ? (
+                    <div
+                      style={{
+                        color: Color.black(),
+                        fontWeight: 'bold',
+                        padding: '1rem',
+                        margin: '1rem 0',
+                        background: Color.highlightGray(),
+                        textAlign: 'center',
+                        borderRadius
+                      }}
+                    >
+                      {uploader.username} viewed the answer
+                    </div>
                   ) : (
                     !stringIsEmpty(comment.content) && (
-                      <LongText
-                        className="comment__content"
-                        isSystem={isSystemMessage}
-                      >
+                      <LongText className="comment__content">
                         {comment.content}
                       </LongText>
                     )
@@ -461,7 +473,7 @@ function Comment({
                         justifyContent: 'space-between'
                       }}
                     >
-                      {!isSystemMessage && (
+                      {!isNotification && (
                         <div>
                           <div className="comment__buttons">
                             <LikeButton
@@ -516,7 +528,7 @@ function Comment({
                           />
                         </div>
                       )}
-                      {!isSystemMessage && (
+                      {!isNotification && (
                         <div>
                           <Button
                             color="brownOrange"
@@ -580,7 +592,7 @@ function Comment({
                 uploaderName={uploader.username}
               />
             )}
-            {!isPreview && !isSystemMessage && !isHidden && (
+            {!isPreview && !isNotification && !isHidden && (
               <>
                 <ReplyInputArea
                   innerRef={ReplyInputAreaRef}

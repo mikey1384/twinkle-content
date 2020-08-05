@@ -481,6 +481,7 @@ export default function SubjectPanel({
                   authLevel: uploaderAuthLevel
                 }
               }}
+              showSecretButtonAvailable={subjectId && secretAnswer}
             />
           </div>
         )}

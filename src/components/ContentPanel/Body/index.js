@@ -93,14 +93,14 @@ export default function Body({
     isEditing,
     secretAnswer,
     secretShown,
-    isSystemMessage,
+    isNotification,
     xpRewardInterfaceShown
   } = useContentState({
     contentType,
     contentId
   });
 
-  const isMsgSystem = contentId && isSystemMessage;
+  const isMsgSystem = contentId && isNotification;
 
   const { secretShown: rootSecretShown } = useContentState({
     contentId: rootId,
@@ -611,6 +611,7 @@ export default function Body({
           onRewardCommentEdit={onEditRewardComment}
           parent={contentObj}
           rootContent={rootObj}
+          showSecretButtonAvailable={contentType === 'subject' && secretHidden}
           subject={contentObj.targetObj?.subject}
           commentsHidden={secretHidden}
           style={{
