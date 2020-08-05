@@ -287,6 +287,7 @@ function ContentListItem({
               answer={secretAnswer}
               subjectId={contentId}
               uploaderId={uploader.id}
+              parent={contentObj}
             />
           )}
         </div>

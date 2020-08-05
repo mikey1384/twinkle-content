@@ -606,7 +606,8 @@ export default function contentRequestHelpers({ auth, handleError }) {
       attachment,
       filePath,
       fileName,
-      fileSize
+      fileSize,
+      isNotification
     }) {
       try {
         const { data } = await request.post(
@@ -620,7 +621,8 @@ export default function contentRequestHelpers({ auth, handleError }) {
             attachment,
             filePath,
             fileName,
-            fileSize
+            fileSize,
+            isNotification
           },
           auth()
         );

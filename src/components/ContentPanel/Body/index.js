@@ -50,6 +50,7 @@ export default function Body({
     numComments,
     comments = [],
     commentsLoadMoreButton = false,
+    isNotification,
     likes = [],
     previewLoaded,
     recommendations = [],
@@ -325,7 +326,7 @@ export default function Body({
           userId={userId}
           onClickSecretAnswer={onSecretAnswerClick}
         />
-        {!isEditing && (
+        {!isEditing && !isNotification && (
           <div
             className="bottom-interface"
             style={{
@@ -574,48 +575,53 @@ export default function Body({
             }
           `}
         />
-        <Comments
-          autoFocus={false}
-          autoExpand={
-            (autoExpand && !secretHidden) ||
-            (contentType === 'subject' && secretHidden)
-          }
-          comments={comments}
-          commentsLoadLimit={commentsLoadLimit}
-          commentsShown={commentsShown && !secretHidden}
-          contentId={contentId}
-          inputAreaInnerRef={CommentInputAreaRef}
-          inputAtBottom={inputAtBottom}
-          loadMoreButton={commentsLoadMoreButton}
-          inputTypeLabel={contentType === 'comment' ? 'reply' : 'comment'}
-          isLoading={loadingComments}
-          numPreviews={numPreviewComments}
-          onCommentSubmit={handleCommentSubmit}
-          onDelete={onDeleteComment}
-          onEditDone={onEditComment}
-          onLikeClick={({ commentId, likes }) =>
-            onLikeContent({
-              likes,
-              contentId: commentId,
-              contentType: 'comment'
-            })
-          }
-          onLoadMoreComments={onLoadMoreComments}
-          onLoadMoreReplies={onLoadMoreReplies}
-          onPreviewClick={handleExpandComments}
-          onLoadRepliesOfReply={onLoadRepliesOfReply}
-          onReplySubmit={onReplySubmit}
-          onRewardCommentEdit={onEditRewardComment}
-          parent={contentObj}
-          rootContent={rootObj}
-          subject={contentObj.targetObj?.subject}
-          commentsHidden={secretHidden}
-          style={{
-            padding: '0 1rem',
-            paddingBottom: comments.length > 0 || commentsShown ? '0.5rem' : 0
-          }}
-          userId={userId}
-        />
+        {!isNotification && (
+          <Comments
+            autoFocus={false}
+            autoExpand={
+              (autoExpand && !secretHidden) ||
+              (contentType === 'subject' && secretHidden)
+            }
+            comments={comments}
+            commentsLoadLimit={commentsLoadLimit}
+            commentsShown={commentsShown && !secretHidden}
+            contentId={contentId}
+            inputAreaInnerRef={CommentInputAreaRef}
+            inputAtBottom={inputAtBottom}
+            loadMoreButton={commentsLoadMoreButton}
+            inputTypeLabel={contentType === 'comment' ? 'reply' : 'comment'}
+            isLoading={loadingComments}
+            numPreviews={numPreviewComments}
+            onCommentSubmit={handleCommentSubmit}
+            onDelete={onDeleteComment}
+            onEditDone={onEditComment}
+            onLikeClick={({ commentId, likes }) =>
+              onLikeContent({
+                likes,
+                contentId: commentId,
+                contentType: 'comment'
+              })
+            }
+            onLoadMoreComments={onLoadMoreComments}
+            onLoadMoreReplies={onLoadMoreReplies}
+            onPreviewClick={handleExpandComments}
+            onLoadRepliesOfReply={onLoadRepliesOfReply}
+            onReplySubmit={onReplySubmit}
+            onRewardCommentEdit={onEditRewardComment}
+            parent={contentObj}
+            rootContent={rootObj}
+            showSecretButtonAvailable={
+              contentType === 'subject' && secretHidden
+            }
+            subject={contentObj.targetObj?.subject}
+            commentsHidden={secretHidden}
+            style={{
+              padding: '0 1rem',
+              paddingBottom: comments.length > 0 || commentsShown ? '0.5rem' : 0
+            }}
+            userId={userId}
+          />
+        )}
         {userListModalShown && (
           <UserListModal
             onHide={() => setUserListModalShown(false)}

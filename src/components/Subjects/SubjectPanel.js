@@ -235,6 +235,10 @@ export default function SubjectPanel({
             subjectId={subjectId}
             onClick={handleExpand}
             uploaderId={userId}
+            parent={{
+              contentType: 'subject',
+              contentId: subjectId
+            }}
           />
         )}
         {onEdit && (
@@ -477,6 +481,7 @@ export default function SubjectPanel({
                   authLevel: uploaderAuthLevel
                 }
               }}
+              showSecretButtonAvailable={subjectId && secretHidden}
             />
           </div>
         )}

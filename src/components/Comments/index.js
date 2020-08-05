@@ -42,6 +42,7 @@ Comments.propTypes = {
     contentType: PropTypes.string.isRequired
   }).isRequired,
   rootContent: PropTypes.object,
+  showSecretButtonAvailable: PropTypes.bool,
   style: PropTypes.object,
   subject: PropTypes.object,
   userId: PropTypes.number
@@ -75,6 +76,7 @@ function Comments({
   onRewardCommentEdit,
   parent,
   rootContent,
+  showSecretButtonAvailable,
   subject,
   style,
   userId
@@ -235,6 +237,9 @@ function Comments({
         inputTypeLabel={inputTypeLabel}
         numInputRows={numInputRows}
         onSubmit={handleSubmitComment}
+        onViewSecretAnswer={
+          showSecretButtonAvailable ? handleViewSecretAnswer : null
+        }
         parent={parent}
         rootCommentId={
           parent.contentType === 'comment' ? parent.commentId : null
@@ -367,7 +372,27 @@ function Comments({
         contentType: parent.contentType
       });
     } catch (error) {
-      return Promise.reject(error);
+      console.error(error);
+    }
+  }
+
+  async function handleViewSecretAnswer() {
+    try {
+      setCommentSubmitted(true);
+      const data = await uploadComment({
+        content: 'viewed the secret message',
+        parent,
+        subjectId:
+          parent.contentType === 'subject' ? parent.contentId : subject.id,
+        isNotification: true
+      });
+      onCommentSubmit({
+        ...data,
+        contentId: parent.contentId,
+        contentType: parent.contentType
+      });
+    } catch (error) {
+      console.error(error);
     }
   }
 

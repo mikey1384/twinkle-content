@@ -28,7 +28,8 @@ import SubjectLink from './SubjectLink';
 import Icon from 'components/Icon';
 import LoginToViewContent from 'components/LoginToViewContent';
 import FileViewer from 'components/FileViewer';
-import { Link, useHistory } from 'react-router-dom';
+import { css } from 'emotion';
+import { useHistory } from 'react-router-dom';
 import { commentContainer } from './Styles';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { useContentState, useMyState } from 'helpers/hooks';
@@ -37,6 +38,7 @@ import {
   determineXpButtonDisabled,
   scrollElementToCenter
 } from 'helpers';
+import { borderRadius, Color } from 'constants/css';
 import { getFileInfoFromFileName, stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext } from 'contexts';
 import LocalContext from './Context';
@@ -64,7 +66,8 @@ Comment.propTypes = {
     filePath: PropTypes.string,
     fileName: PropTypes.string,
     fileSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    thumbUrl: PropTypes.string
+    thumbUrl: PropTypes.string,
+    isNotification: PropTypes.oneOfType([PropTypes.number, PropTypes.bool])
   }).isRequired,
   innerRef: PropTypes.func,
   isPreview: PropTypes.bool,
@@ -92,7 +95,8 @@ function Comment({
     numReplies,
     filePath,
     fileName,
-    fileSize
+    fileSize,
+    isNotification
   }
 }) {
   subject = subject || comment.targetObj?.subject || {};
@@ -241,12 +245,15 @@ function Comment({
         ));
     const userCanEditThis = (canEdit || canDelete) && userIsHigherAuth;
     return (
-      ((userIsUploader && !isForSecretSubject) || userCanEditThis) && !isPreview
+      ((userIsUploader && !(isForSecretSubject || isNotification)) ||
+        userCanEditThis) &&
+      !isPreview
     );
   }, [
     authLevel,
     canDelete,
     canEdit,
+    isNotification,
     isPreview,
     parent,
     rootContent,
@@ -257,7 +264,7 @@ function Comment({
   ]);
   const editMenuItems = useMemo(() => {
     const items = [];
-    if (userIsUploader || canEdit) {
+    if ((userIsUploader || canEdit) && !isNotification) {
       items.push({
         label: 'Edit',
         onClick: () =>
@@ -372,10 +379,21 @@ function Comment({
             <div>
               <UsernameText className="username" user={uploader} />{' '}
               <small className="timestamp">
-                <Link to={`/comments/${comment.id}`}>
-                  {parent.contentType === 'user' ? 'messag' : 'comment'}
-                  ed {timeSince(comment.timeStamp)}
-                </Link>
+                <a
+                  className={css`
+                    &:hover {
+                      text-decoration: ${isNotification ? 'none' : 'underline'};
+                    }
+                  `}
+                  style={{ cursor: isNotification ? 'default' : 'pointer' }}
+                  onClick={() =>
+                    isNotification
+                      ? null
+                      : history.push(`/comments/${comment.id}`)
+                  }
+                >
+                  {timeSince(comment.timeStamp)}
+                </a>
               </small>
             </div>
             <div>
@@ -442,6 +460,17 @@ function Comment({
                     <HiddenComment
                       onClick={() => history.push(`/subjects/${subject?.id}`)}
                     />
+                  ) : isNotification ? (
+                    <div
+                      style={{
+                        color: Color.gray(),
+                        fontWeight: 'bold',
+                        margin: '1rem 0',
+                        borderRadius
+                      }}
+                    >
+                      {uploader.username} viewed the secret message
+                    </div>
                   ) : (
                     !stringIsEmpty(comment.content) && (
                       <LongText className="comment__content">
@@ -449,7 +478,7 @@ function Comment({
                       </LongText>
                     )
                   )}
-                  {!isPreview && !isHidden && (
+                  {!isPreview && !isHidden && !isNotification && (
                     <div
                       style={{
                         display: 'flex',
@@ -569,7 +598,7 @@ function Comment({
                 uploaderName={uploader.username}
               />
             )}
-            {!isPreview && !isHidden && (
+            {!isPreview && !isNotification && !isHidden && (
               <>
                 <ReplyInputArea
                   innerRef={ReplyInputAreaRef}

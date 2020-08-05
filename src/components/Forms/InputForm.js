@@ -29,6 +29,7 @@ InputForm.propTypes = {
   parent: PropTypes.object.isRequired,
   placeholder: PropTypes.string,
   rows: PropTypes.number,
+  onViewSecretAnswer: PropTypes.func,
   style: PropTypes.object,
   targetCommentId: PropTypes.number
 };
@@ -42,6 +43,7 @@ export default function InputForm({
   parent,
   placeholder,
   rows,
+  onViewSecretAnswer,
   style = {},
   targetCommentId
 }) {
@@ -145,6 +147,23 @@ export default function InputForm({
             </small>
           )}
         </div>
+        {!!onViewSecretAnswer && stringIsEmpty(text) && !attachment && (
+          <div
+            className={css`
+              display: flex;
+              justify-content: flex-end;
+            `}
+          >
+            <Button
+              style={{ marginTop: '0.5rem', marginBottom: '0.5rem' }}
+              color="rose"
+              filled
+              onClick={onViewSecretAnswer}
+            >
+              View without responding
+            </Button>
+          </div>
+        )}
         {(!stringIsEmpty(text) || attachment) && (
           <div
             className={css`

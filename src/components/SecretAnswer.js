@@ -93,7 +93,7 @@ function SecretAnswer({ answer, onClick, style, subjectId, uploaderId }) {
               }
             `}
           >
-            Submit your response to view the secret message. Tap here
+            Submit your response to view the secret message
           </span>
         )}
       </div>

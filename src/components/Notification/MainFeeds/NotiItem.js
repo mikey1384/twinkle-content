@@ -22,7 +22,8 @@ export default function NotiItem({
     user = {},
     rewardType,
     rewardRootId,
-    rewardRootType
+    rewardRootType,
+    isNotification
   }
 }) {
   const { userId } = useMyState();
@@ -152,7 +153,19 @@ export default function NotiItem({
         break;
       }
       case 'comment':
-        notificationMessage = (
+        notificationMessage = isNotification ? (
+          <>
+            viewed your{' '}
+            <ContentLink
+              contentType="subject"
+              content={{
+                id: isSubjectResponse ? targetSubject.id : targetObj.id,
+                title: `subject`
+              }}
+            />
+            {`'s secret message`}
+          </>
+        ) : (
           <>
             <ContentLink
               contentType="comment"
