@@ -142,7 +142,7 @@ export default function SubjectPanel({
   }, [authLevel, canReward, onEdit, uploaderAuthLevel, userIsUploader]);
   const finalRewardLevel = useMemo(() => {
     return description?.length > descriptionLengthForExtraRewardLevel ? 5 : 0;
-  }, [description?.length]);
+  }, [description]);
 
   const isRecommendedByUser = useMemo(() => {
     return (

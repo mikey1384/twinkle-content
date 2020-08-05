@@ -58,6 +58,7 @@ export default function Profile({ history, location, match }) {
       }
       setLoading(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [match.params.username, notExist, profile.loaded]);
 
   useEffect(() => {
@@ -69,6 +70,7 @@ export default function Profile({ history, location, match }) {
       history.push(`/${username}`);
     }
     setSelectedTheme(profile?.profileTheme || 'logoBlue');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

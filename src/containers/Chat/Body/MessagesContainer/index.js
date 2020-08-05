@@ -7,6 +7,7 @@ import DropdownButton from 'components/Buttons/DropdownButton';
 import Loading from 'components/Loading';
 import Message from '../../Message';
 import ChannelHeader from './ChannelHeader';
+import FullTextReveal from 'components/Texts/FullTextReveal';
 import SubjectMsgsModal from '../../Modals/SubjectMsgsModal';
 import UploadModal from '../../Modals/UploadModal';
 import InviteUsersModal from '../../Modals/InviteUsers';
@@ -26,7 +27,7 @@ import { Color } from 'constants/css';
 import { socket } from 'constants/io';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useChatContext, useNotiContext } from 'contexts';
-import { checkScrollIsAtTheBottom } from 'helpers';
+import { checkScrollIsAtTheBottom, isMobile } from 'helpers';
 
 MessagesContainer.propTypes = {
   channelName: PropTypes.string,
@@ -51,6 +52,7 @@ export default function MessagesContainer({
       leaveChannel,
       loadChatChannel,
       loadMoreChatMessages,
+      putFavoriteChannel,
       sendInvitationMessage,
       startNewDMChannel,
       updateUserXP
@@ -65,6 +67,7 @@ export default function MessagesContainer({
       channelLoading,
       chessModalShown,
       creatingNewDMChannel,
+      allFavoriteChannelIds,
       isRespondingToSubject,
       messagesLoadMoreButton,
       messages,
@@ -86,6 +89,7 @@ export default function MessagesContainer({
       onSendFirstDirectMessage,
       onSetChessModalShown,
       onSetCreatingNewDMChannel,
+      onSetFavoriteChannel,
       onSetReplyTarget,
       onSubmitMessage,
       onUpdateSelectedChannelId,
@@ -121,6 +125,8 @@ export default function MessagesContainer({
     false
   );
   const [placeholderHeight, setPlaceholderHeight] = useState(0);
+  const [hideModalShown, setHideModalShown] = useState(false);
+  const [addToFavoritesShown, setAddToFavoritesShown] = useState(false);
 
   const ContentRef = useRef(null);
   const MessagesRef = useRef(null);
@@ -129,6 +135,11 @@ export default function MessagesContainer({
   const FileInputRef = useRef(null);
   const ChatInputRef = useRef(null);
   const timerRef = useRef(null);
+  const menuLabel = isMobile(navigator) ? '' : 'Menu';
+
+  const favorited = useMemo(() => {
+    return allFavoriteChannelIds[selectedChannelId];
+  }, [allFavoriteChannelIds, selectedChannelId]);
 
   const selectedChannelIsOnCall = useMemo(
     () => selectedChannelId === channelOnCall.id,
@@ -183,8 +194,13 @@ export default function MessagesContainer({
     if (currentChannel.twoPeople) {
       return [
         {
-          label: <span style={{ fontWeight: 'bold' }}>Hide Chat</span>,
-          onClick: handleHideChat
+          label: (
+            <>
+              <Icon icon="minus" />
+              <span style={{ marginLeft: '1rem' }}>Hide</span>
+            </>
+          ),
+          onClick: () => setHideModalShown(true)
         }
       ];
     }
@@ -230,14 +246,6 @@ export default function MessagesContainer({
       }
     );
     return result;
-    async function handleHideChat() {
-      await hideChat(selectedChannelId);
-      onHideChat(selectedChannelId);
-      const data = await loadChatChannel({
-        channelId: GENERAL_CHAT_ID
-      });
-      onEnterChannelWithId({ data, showOnTop: true });
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     currentChannel.twoPeople,
@@ -339,24 +347,64 @@ export default function MessagesContainer({
   return (
     <ErrorBoundary>
       {!channelHeaderShown && !banned && (
-        <DropdownButton
-          skeuomorphic
-          color="darkerGray"
-          opacity={0.7}
+        <div
           style={{
+            display: 'flex',
             position: 'absolute',
+            alignItems: 'center',
             zIndex: 15,
             top: '1rem',
             right: '1rem'
           }}
-          listStyle={{
-            width: '15rem'
-          }}
-          direction="left"
-          icon="bars"
-          text="Menu"
-          menuProps={menuProps}
-        />
+        >
+          <DropdownButton
+            skeuomorphic
+            color="darkerGray"
+            opacity={0.7}
+            listStyle={{
+              width: '15rem'
+            }}
+            direction="left"
+            icon="bars"
+            text={menuLabel}
+            menuProps={menuProps}
+          />
+          <div
+            style={{
+              marginLeft: '1.5rem'
+            }}
+          >
+            <div
+              style={{ cursor: 'pointer', fontSize: '2rem' }}
+              onClick={handleFavoriteClick}
+              onMouseEnter={() => {
+                if (!favorited) {
+                  setAddToFavoritesShown(true);
+                }
+              }}
+              onMouseLeave={() => setAddToFavoritesShown(false)}
+            >
+              <Icon
+                color={Color.brownOrange()}
+                icon={favorited ? 'star' : ['far', 'star']}
+              />
+            </div>
+            <FullTextReveal
+              direction="left"
+              className="desktop"
+              show={addToFavoritesShown && !favorited}
+              text="Add to favorites"
+              style={{
+                marginTop: '0.5rem',
+                fontSize: '1.3rem',
+                width: 'auto',
+                minWidth: null,
+                maxWidth: null,
+                padding: '1rem'
+              }}
+            />
+          </div>
+        </div>
       )}
       <input
         ref={FileInputRef}
@@ -480,6 +528,7 @@ export default function MessagesContainer({
             onSetLeaveConfirmModalShown={setLeaveConfirmModalShown}
             onSetSettingsModalShown={setSettingsModalShown}
             selectedChannelId={selectedChannelId}
+            onFavoriteClick={handleFavoriteClick}
           />
         )}
         <div
@@ -509,6 +558,13 @@ export default function MessagesContainer({
             </Button>
           )}
         </div>
+        {hideModalShown && (
+          <ConfirmModal
+            onHide={() => setHideModalShown(false)}
+            title="Hide Chat"
+            onConfirm={handleHideChat}
+          />
+        )}
         {deleteModal.shown && (
           <ConfirmModal
             onHide={() =>
@@ -905,6 +961,11 @@ export default function MessagesContainer({
     }
   }
 
+  async function handleFavoriteClick() {
+    const favorited = await putFavoriteChannel(selectedChannelId);
+    onSetFavoriteChannel({ channelId: selectedChannelId, favorited });
+  }
+
   async function handleMessageSubmit({
     content,
     rewardAmount,
@@ -1017,6 +1078,16 @@ export default function MessagesContainer({
       filePath,
       messageId
     });
+  }
+
+  async function handleHideChat() {
+    await hideChat(selectedChannelId);
+    onHideChat(selectedChannelId);
+    const data = await loadChatChannel({
+      channelId: GENERAL_CHAT_ID
+    });
+    onEnterChannelWithId({ data, showOnTop: true });
+    setHideModalShown(false);
   }
 
   function handleImagePaste(file) {

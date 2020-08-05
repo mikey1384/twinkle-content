@@ -23,6 +23,7 @@ import { useAppContext, useChatContext } from 'contexts';
 
 ChannelHeader.propTypes = {
   currentChannel: PropTypes.object.isRequired,
+  onFavoriteClick: PropTypes.func.isRequired,
   onInputFocus: PropTypes.func.isRequired,
   onSetInviteUsersModalShown: PropTypes.func,
   onSetLeaveConfirmModalShown: PropTypes.func,
@@ -33,6 +34,7 @@ ChannelHeader.propTypes = {
 export default function ChannelHeader({
   currentChannel,
   currentChannel: { theme },
+  onFavoriteClick,
   onInputFocus,
   onSetInviteUsersModalShown,
   onSetLeaveConfirmModalShown,
@@ -49,7 +51,7 @@ export default function ChannelHeader({
   } = useAppContext();
   const { authLevel, banned, profilePicId, userId, username } = useMyState();
   const {
-    state: { subjectObj, subjectSearchResults },
+    state: { allFavoriteChannelIds, subjectObj, subjectSearchResults },
     actions: {
       onClearSubjectSearchResults,
       onLoadChatSubject,
@@ -62,6 +64,11 @@ export default function ChannelHeader({
   const [onEdit, setOnEdit] = useState(false);
   const [onHover, setOnHover] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [addToFavoritesShown, setAddToFavoritesShown] = useState(false);
+  const favorited = useMemo(() => {
+    return allFavoriteChannelIds[selectedChannelId];
+  }, [allFavoriteChannelIds, selectedChannelId]);
+  const menuLabel = isMobile(navigator) ? '' : 'Menu';
 
   const {
     content = defaultChatSubject,
@@ -283,9 +290,6 @@ export default function ChannelHeader({
                   }}
                 >
                   <Icon flip="both" icon="reply" />
-                  <span className="desktop" style={{ marginLeft: '0.5rem' }}>
-                    Respond
-                  </span>
                 </Button>
                 {menuButtonShown && !banned && (
                   <DropdownButton
@@ -300,10 +304,43 @@ export default function ChannelHeader({
                     }}
                     direction="left"
                     icon="bars"
-                    text="Menu"
+                    text={menuLabel}
                     menuProps={menuProps}
                   />
                 )}
+                <div style={{ marginLeft: '1.5rem' }}>
+                  <div
+                    style={{
+                      cursor: 'pointer',
+                      fontSize: '2rem'
+                    }}
+                    onClick={onFavoriteClick}
+                    onMouseEnter={() => {
+                      if (!favorited) {
+                        setAddToFavoritesShown(true);
+                      }
+                    }}
+                    onMouseLeave={() => setAddToFavoritesShown(false)}
+                  >
+                    <Icon
+                      color={Color.brownOrange()}
+                      icon={favorited ? 'star' : ['far', 'star']}
+                    />
+                  </div>
+                  <FullTextReveal
+                    direction="left"
+                    className="desktop"
+                    show={addToFavoritesShown && !favorited}
+                    text="Add to favorites"
+                    style={{
+                      marginTop: '0.7rem',
+                      width: 'auto',
+                      minWidth: null,
+                      maxWidth: null,
+                      padding: '1rem'
+                    }}
+                  />
+                </div>
               </div>
             </>
           )}
@@ -315,7 +352,7 @@ export default function ChannelHeader({
               maxLength={charLimit.chat.subject}
               currentSubjectId={subjectId}
               title={content}
-              onEditSubmit={onSubjectSubmit}
+              onEditSubmit={handleSubjectSubmit}
               onChange={handleSearchChatSubject}
               onClickOutSide={() => {
                 setOnEdit(false);
@@ -371,7 +408,7 @@ export default function ChannelHeader({
     onSearchChatSubject(data);
   }
 
-  async function onSubjectSubmit(text) {
+  async function handleSubjectSubmit(text) {
     if (!submitting) {
       setSubmitting(true);
       try {

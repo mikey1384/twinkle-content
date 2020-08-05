@@ -245,12 +245,10 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async loadMoreChannels({ currentChannelId, shownIds, type }) {
+    async loadMoreChannels({ currentChannelId, lastId, lastUpdated, type }) {
       try {
         const { data } = await request.get(
-          `${URL}/chat/more/channels?type=${type}&currentChannelId=${currentChannelId}&${shownIds
-            .map((shownId) => `shownIds[]=${shownId}`)
-            .join('&')}`,
+          `${URL}/chat/more/channels?type=${type}&currentChannelId=${currentChannelId}&lastUpdated=${lastUpdated}&lastId=${lastId}`,
           auth()
         );
         return Promise.resolve(data);
@@ -320,6 +318,20 @@ export default function chatRequestHelpers({ auth, handleError }) {
           auth()
         );
         return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
+    async putFavoriteChannel(channelId) {
+      try {
+        const {
+          data: { favorited }
+        } = await request.put(
+          `${URL}/chat/channel/favorite`,
+          { channelId },
+          auth()
+        );
+        return Promise.resolve(favorited);
       } catch (error) {
         return handleError(error);
       }

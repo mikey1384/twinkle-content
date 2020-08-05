@@ -2,16 +2,13 @@ import React from 'react';
 import Icon from 'components/Icon';
 import { css } from 'emotion';
 import { Color, phoneMaxWidth } from 'constants/css';
-import { useAppContext, useChatContext } from 'contexts';
+import { useChatContext } from 'contexts';
 
 export default function Tabs() {
   const {
-    state: { chatType, selectedChannelId, selectedChatTab },
-    actions: { onEnterChannelWithId, onSelectChatTab }
+    state: { favoriteChannelIds, classChannelIds, selectedChatTab },
+    actions: { onSelectChatTab }
   } = useChatContext();
-  const {
-    requestHelpers: { loadChatChannel }
-  } = useAppContext();
 
   return (
     <div
@@ -41,37 +38,30 @@ export default function Tabs() {
         style={{
           color: selectedChatTab === 'home' ? Color.black() : Color.gray()
         }}
-        onClick={handleSelectHomeTab}
+        onClick={() => onSelectChatTab('home')}
       >
         <Icon icon="home" />
       </nav>
-      {false && (
+      {favoriteChannelIds.length > 0 && (
         <nav
           style={{
-            color: selectedChatTab === 'group' ? Color.black() : Color.gray()
+            color: selectedChatTab === 'favorite' ? Color.black() : Color.gray()
           }}
-          onClick={() => onSelectChatTab('group')}
+          onClick={() => onSelectChatTab('favorite')}
         >
           <Icon icon="star" />
         </nav>
       )}
-      <nav
-        style={{
-          color: selectedChatTab === 'class' ? Color.black() : Color.gray()
-        }}
-        onClick={() => onSelectChatTab('class')}
-      >
-        <Icon icon="chalkboard-teacher" />
-      </nav>
+      {classChannelIds.length > 0 && (
+        <nav
+          style={{
+            color: selectedChatTab === 'class' ? Color.black() : Color.gray()
+          }}
+          onClick={() => onSelectChatTab('class')}
+        >
+          <Icon icon="chalkboard-teacher" />
+        </nav>
+      )}
     </div>
   );
-
-  async function handleSelectHomeTab() {
-    if (!selectedChannelId && chatType !== 'vocabulary') {
-      const data = await loadChatChannel({ channelId: 2 });
-      onSelectChatTab('home');
-      return onEnterChannelWithId({ data });
-    }
-    onSelectChatTab('home');
-  }
 }

@@ -1,5 +1,6 @@
 import { initialChatState } from '.';
 import { defaultChatSubject } from 'constants/defaultValues';
+import { determineSelectedChatTab } from './helpers';
 
 export default function ChatReducer(state, action) {
   switch (action.type) {
@@ -151,6 +152,7 @@ export default function ChatReducer(state, action) {
         chatType: null,
         subject: {},
         homeChannelIds: [channelId].concat(state.homeChannelIds),
+        favoriteChannelIds: [channelId].concat(state.favoriteChannelIds),
         classChannelIds: action.data.isClass
           ? [channelId].concat(state.classChannelIds)
           : state.classChannelIds,
@@ -303,13 +305,13 @@ export default function ChatReducer(state, action) {
         messagesLoadMoreButton = true;
       }
       action.data.messages.reverse();
+
       return {
         ...state,
-        selectedChatTab:
-          state.selectedChatTab === 'class' && !selectedChannel.isClass
-            ? 'home'
-            : state.selectedChatTab,
-        chatType: null,
+        selectedChatTab: determineSelectedChatTab({
+          currentSelectedChatTab: state.selectedChatTab,
+          selectedChannel
+        }),
         recentChessMessage: undefined,
         channelsObj: {
           ...state.channelsObj,
@@ -406,6 +408,7 @@ export default function ChatReducer(state, action) {
       let originalNumUnreads = 0;
       let classLoadMoreButton = false;
       let homeLoadMoreButton = false;
+      let favoriteLoadMoreButton = false;
       let vocabActivitiesLoadMoreButton = false;
       const uploadStatusMessages = state.filesBeingUploaded[
         action.data.currentChannelId
@@ -423,6 +426,10 @@ export default function ChatReducer(state, action) {
         action.data.classChannelIds.pop();
         classLoadMoreButton = true;
       }
+      if (action.data.favoriteChannelIds?.length > 20) {
+        action.data.favoriteChannelIds.pop();
+        favoriteLoadMoreButton = true;
+      }
       if (action.data.vocabActivities.length > 20) {
         action.data.vocabActivities.pop();
         vocabActivitiesLoadMoreButton = true;
@@ -432,9 +439,11 @@ export default function ChatReducer(state, action) {
       return {
         ...state,
         ...initialChatState,
+        allFavoriteChannelIds: action.data.allFavoriteChannelIds,
         chatType: action.data.chatType,
         loaded: true,
         classChannelIds: action.data.classChannelIds,
+        favoriteChannelIds: action.data.favoriteChannelIds,
         homeChannelIds: action.data.homeChannelIds,
         channelsObj: {
           ...action.data.channelsObj,
@@ -444,6 +453,7 @@ export default function ChatReducer(state, action) {
           }
         },
         classLoadMoreButton,
+        favoriteLoadMoreButton,
         homeLoadMoreButton,
         customChannelNames: action.data.customChannelNames,
         vocabActivities: action.data.vocabActivities,
@@ -483,6 +493,13 @@ export default function ChatReducer(state, action) {
       return {
         ...state,
         messages: [],
+        allFavoriteChannelIds: {
+          ...state.allFavoriteChannelIds,
+          [action.channelId]: false
+        },
+        favoriteChannelIds: state.homeChannelIds.filter(
+          (channelId) => channelId !== action.channelId
+        ),
         homeChannelIds: state.homeChannelIds.filter(
           (channelId) => channelId !== action.channelId
         ),
@@ -491,15 +508,37 @@ export default function ChatReducer(state, action) {
         )
       };
     case 'LOAD_MORE_CHANNELS': {
-      let homeLoadMoreButton = false;
-      let classLoadMoreButton = false;
-      if (action.channelType === 'home' && action.channels.length > 20) {
-        action.channels.pop();
-        homeLoadMoreButton = true;
+      let homeLoadMoreButton = state.homeLoadMoreButton;
+      let classLoadMoreButton = state.classLoadMoreButton;
+      let favoriteLoadMoreButton = state.favoriteChannelIds;
+      const chatTabHash = {
+        home: 'homeChannelIds',
+        favorite: 'favoriteChannelIds',
+        class: 'classChannelIds'
+      };
+      if (action.channelType === 'home') {
+        if (action.channels.length > 20) {
+          action.channels.pop();
+          homeLoadMoreButton = true;
+        } else {
+          homeLoadMoreButton = false;
+        }
       }
-      if (action.channelType === 'class' && action.channels.length > 20) {
-        action.channels.pop();
-        classLoadMoreButton = true;
+      if (action.channelType === 'class') {
+        if (action.channels.length > 20) {
+          action.channels.pop();
+          classLoadMoreButton = true;
+        } else {
+          classLoadMoreButton = false;
+        }
+      }
+      if (action.channelType === 'favorite') {
+        if (action.channels.length > 20) {
+          action.channels.pop();
+          favoriteLoadMoreButton = true;
+        } else {
+          favoriteLoadMoreButton = false;
+        }
       }
       const channels = {};
       for (let channel of action.channels) {
@@ -509,10 +548,9 @@ export default function ChatReducer(state, action) {
         ...state,
         classLoadMoreButton,
         homeLoadMoreButton,
-        [action.channelType === 'home'
-          ? 'homeChannelIds'
-          : 'classChannelIds']: state[
-          action.channelType === 'home' ? 'homeChannelIds' : 'classChannelIds'
+        favoriteLoadMoreButton,
+        [chatTabHash[action.channelType]]: state[
+          chatTabHash[action.channelType]
         ].concat(action.channels.map((channel) => channel.id)),
         channelsObj: {
           ...state.channelsObj,
@@ -672,6 +710,7 @@ export default function ChatReducer(state, action) {
       }
       return {
         ...state,
+        selectedChatTab: 'home',
         chatType: null,
         loaded: true,
         recentChessMessage: undefined,
@@ -694,7 +733,6 @@ export default function ChatReducer(state, action) {
           )
         ),
         selectedChannelId: action.channelId,
-        selectedChatTab: 'home',
         messages: action.messages.reverse(),
         messagesLoadMoreButton,
         recepientId: action.recepient.id
@@ -866,6 +904,13 @@ export default function ChatReducer(state, action) {
         msgsWhileInvisible: action.pageVisible
           ? 0
           : state.msgsWhileInvisible + 1,
+        favoriteChannelIds: state.allFavoriteChannelIds[action.channel.id]
+          ? [action.channel.id].concat(
+              state.favoriteChannelIds.filter(
+                (channelId) => channelId !== action.channel.id
+              )
+            )
+          : state.favoriteChannelIds,
         homeChannelIds: [action.channel.id].concat(
           state.homeChannelIds.filter(
             (channelId) => channelId !== action.channel.id
@@ -968,8 +1013,10 @@ export default function ChatReducer(state, action) {
     case 'SELECT_CHAT_TAB':
       return {
         ...state,
-        chatType: action.selectedChatTab === 'class' ? null : state.chatType,
-        selectedChatTab: action.selectedChatTab
+        selectedChatTab: determineSelectedChatTab({
+          currentSelectedChatTab: state.selectedChatTab,
+          selectedChatTab: action.selectedChatTab
+        })
       };
     case 'SET_CALL': {
       return {
@@ -999,6 +1046,20 @@ export default function ChatReducer(state, action) {
       return {
         ...state,
         currentChannelName: action.channelName
+      };
+    case 'SET_FAVORITE_CHANNEL':
+      const filteredFavChannelIds = state.favoriteChannelIds.filter(
+        (channelId) => channelId !== action.channelId
+      );
+      return {
+        ...state,
+        allFavoriteChannelIds: {
+          ...state.allFavoriteChannelIds,
+          [action.channelId]: action.favorited
+        },
+        favoriteChannelIds: action.favorited
+          ? [action.channelId].concat(filteredFavChannelIds)
+          : filteredFavChannelIds
       };
     case 'SET_IM_LIVE':
       return {

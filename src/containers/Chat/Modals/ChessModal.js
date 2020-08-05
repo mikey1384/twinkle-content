@@ -96,7 +96,7 @@ export default function ChessModal({
       parsedState?.isCheckmate ||
       parsedState?.isStalemate ||
       parsedState?.isDraw,
-    [parsedState?.isCheckmate, parsedState?.isDraw, parsedState?.isStalemate]
+    [parsedState]
   );
 
   return (

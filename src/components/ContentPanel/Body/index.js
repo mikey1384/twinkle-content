@@ -166,14 +166,12 @@ export default function Body({
       : !!rootObj?.secretAnswer && rootObjSecretHidden;
   }, [
     contentType,
-    rootObj?.secretAnswer,
-    rootObj?.uploader?.id,
+    rootObj,
     rootSecretShown,
     secretAnswer,
     secretShown,
     subjectSecretShown,
-    targetObj.subject?.secretAnswer,
-    targetObj.subject?.uploader?.id,
+    targetObj.subject,
     uploader.id,
     userId
   ]);
@@ -194,11 +192,11 @@ export default function Body({
   }, [
     contentObj.byUser,
     contentType,
-    description?.length,
+    description,
     filePath,
     rootObj.rewardLevel,
     rootType,
-    targetObj.subject?.rewardLevel
+    targetObj.subject
   ]);
 
   const xpButtonDisabled = useMemo(

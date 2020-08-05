@@ -4,6 +4,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import { Color } from 'constants/css';
 
 FullTextReveal.propTypes = {
+  className: PropTypes.string,
   direction: PropTypes.string,
   show: PropTypes.bool,
   style: PropTypes.object,
@@ -14,11 +15,13 @@ export default function FullTextReveal({
   direction = 'right',
   style,
   show,
-  text
+  text,
+  className
 }) {
   return (
     <ErrorBoundary style={{ position: 'relative' }}>
       <div
+        className={className}
         style={{
           float: 'left',
           marginTop: 0,

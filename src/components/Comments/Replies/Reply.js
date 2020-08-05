@@ -182,8 +182,8 @@ function Reply({
     parent.contentType,
     parent.rewardLevel,
     parent.rootType,
-    rootContent?.rewardLevel,
-    subject?.rewardLevel
+    rootContent,
+    subject
   ]);
 
   const xpButtonDisabled = useMemo(
@@ -289,7 +289,7 @@ function Reply({
                 ))}
               {isEditing ? (
                 <EditTextArea
-                  allowEmptyText
+                  allowEmptyText={!!filePath}
                   style={{ marginBottom: '1rem' }}
                   contentId={reply.id}
                   contentType="comment"

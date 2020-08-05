@@ -148,7 +148,7 @@ export default function TargetContent({
           : 0
         : rootObj.rewardLevel;
     return subject?.rewardLevel || rootRewardLevel;
-  }, [rootObj.rewardLevel, rootType, subject?.rewardLevel]);
+  }, [rootObj.rewardLevel, rootType, subject]);
 
   const isRecommendedByUser = useMemo(() => {
     return comment
@@ -173,7 +173,7 @@ export default function TargetContent({
         myId: userId,
         xpRewardInterfaceShown
       }),
-    [comment?.rewards, finalRewardLevel, userId, xpRewardInterfaceShown]
+    [comment, finalRewardLevel, userId, xpRewardInterfaceShown]
   );
 
   useEffect(() => {
@@ -190,12 +190,7 @@ export default function TargetContent({
     const secretShown =
       subjectState.secretShown || subject?.uploader?.id === userId;
     return hasSecretAnswer && !secretShown;
-  }, [
-    subject?.secretAnswer,
-    subject?.uploader?.id,
-    subjectState.secretShown,
-    userId
-  ]);
+  }, [subject, subjectState.secretShown, userId]);
 
   return (
     <ErrorBoundary

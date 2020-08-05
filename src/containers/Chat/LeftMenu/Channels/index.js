@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Channel from './Channel';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import ErrorBoundary from 'components/ErrorBoundary';
-import ClassMainMenu from './ClassMainMenu';
 import { useAppContext, useChatContext } from 'contexts';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 
@@ -21,8 +20,10 @@ function Channels({ onChannelEnter }) {
       channelsObj,
       classChannelIds,
       customChannelNames,
+      favoriteChannelIds,
       homeChannelIds,
       classLoadMoreButton,
+      favoriteLoadMoreButton,
       homeLoadMoreButton,
       selectedChannelId,
       selectedChatTab
@@ -33,15 +34,32 @@ function Channels({ onChannelEnter }) {
   const [prevChannelIds, setPrevChannelIds] = useState(homeChannelIds);
   const ChannelListRef = useRef(null);
   const loading = useRef(false);
-  const channelIds = useMemo(
-    () => (selectedChatTab === 'home' ? homeChannelIds : classChannelIds),
-    [classChannelIds, homeChannelIds, selectedChatTab]
-  );
-  const loadMoreButtonShown = useMemo(
-    () =>
-      selectedChatTab === 'home' ? homeLoadMoreButton : classLoadMoreButton,
-    [classLoadMoreButton, homeLoadMoreButton, selectedChatTab]
-  );
+  const channelIds = useMemo(() => {
+    switch (selectedChatTab) {
+      case 'home':
+        return homeChannelIds;
+      case 'favorite':
+        return favoriteChannelIds;
+      case 'class':
+        return classChannelIds;
+      default:
+        return [];
+    }
+  }, [classChannelIds, favoriteChannelIds, homeChannelIds, selectedChatTab]);
+
+  const loadMoreButtonShown = useMemo(() => {
+    const hash = {
+      home: homeLoadMoreButton,
+      class: classLoadMoreButton,
+      favorite: favoriteLoadMoreButton
+    };
+    return hash[selectedChatTab];
+  }, [
+    classLoadMoreButton,
+    favoriteLoadMoreButton,
+    homeLoadMoreButton,
+    selectedChatTab
+  ]);
 
   useEffect(() => {
     const ChannelList = ChannelListRef.current;
@@ -65,6 +83,10 @@ function Channels({ onChannelEnter }) {
   });
 
   useEffect(() => {
+    ChannelListRef.current.scrollTop = 0;
+  }, [selectedChatTab]);
+
+  useEffect(() => {
     if (
       selectedChannelId === homeChannelIds[0] &&
       homeChannelIds[0] !== prevChannelIds[0]
@@ -84,9 +106,6 @@ function Channels({ onChannelEnter }) {
         height: '100%'
       }}
     >
-      {selectedChatTab === 'class' && (
-        <ClassMainMenu onChannelEnter={onChannelEnter} />
-      )}
       {channelIds
         ?.map((channelId) => channelsObj[channelId])
         .filter((channel) => !channel?.isHidden)
@@ -117,12 +136,22 @@ function Channels({ onChannelEnter }) {
   );
 
   async function handleLoadMoreChannels() {
+    const chatTabHash = {
+      home: homeChannelIds,
+      favorite: favoriteChannelIds,
+      class: classChannelIds
+    };
     if (!loading.current) {
       setChannelsLoading(true);
       loading.current = true;
+      const channelIds = chatTabHash[selectedChatTab];
+      const lastId = channelIds[channelIds.length - 1];
+      const { lastUpdated } = channelsObj[lastId];
       const channels = await loadMoreChannels({
         type: selectedChatTab,
-        shownIds: homeChannelIds
+        lastUpdated,
+        lastId,
+        currentChannelId: selectedChannelId
       });
       onLoadMoreChannels({ type: selectedChatTab, channels });
       setChannelsLoading(false);
