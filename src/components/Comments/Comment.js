@@ -67,7 +67,7 @@ Comment.propTypes = {
     fileName: PropTypes.string,
     fileSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     thumbUrl: PropTypes.string,
-    isNotification: PropTypes.bool
+    isNotification: PropTypes.oneOfType([PropTypes.number, PropTypes.bool])
   }).isRequired,
   innerRef: PropTypes.func,
   isPreview: PropTypes.bool,

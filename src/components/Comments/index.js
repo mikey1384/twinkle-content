@@ -378,15 +378,10 @@ function Comments({
 
   async function handleViewSecretAnswer() {
     try {
+      setCommentSubmitted(true);
       const data = await uploadComment({
         content: 'viewed the secret message',
-        parent:
-          parent.contentType === 'subject'
-            ? parent
-            : {
-                contentId: subject.id,
-                contentType: 'subject'
-              },
+        parent,
         subjectId:
           parent.contentType === 'subject' ? parent.contentId : subject.id,
         isNotification: true
