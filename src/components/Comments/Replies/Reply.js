@@ -247,7 +247,7 @@ function Reply({
               <UsernameText className="username" user={uploader} />{' '}
               <small className="timestamp">
                 <Link to={`/comments/${reply.id}`}>
-                  replied {timeSince(reply.timeStamp)}
+                  {timeSince(reply.timeStamp)}
                 </Link>
               </small>
             </div>

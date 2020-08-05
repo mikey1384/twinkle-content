@@ -392,8 +392,7 @@ function Comment({
                       : history.push(`/comments/${comment.id}`)
                   }
                 >
-                  {parent.contentType === 'user' ? 'messag' : 'comment'}
-                  ed {timeSince(comment.timeStamp)}
+                  {timeSince(comment.timeStamp)}
                 </a>
               </small>
             </div>
