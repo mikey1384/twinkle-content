@@ -267,10 +267,6 @@ export default function MainContent({
                   onClick={onClickSecretAnswer}
                   subjectId={contentId}
                   uploaderId={uploader.id}
-                  parent={{
-                    contentType,
-                    contentId
-                  }}
                 />
               )}
             </>
