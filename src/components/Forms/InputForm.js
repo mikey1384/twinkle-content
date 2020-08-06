@@ -147,23 +147,26 @@ export default function InputForm({
             </small>
           )}
         </div>
-        {!!onViewSecretAnswer && stringIsEmpty(text) && !attachment && (
-          <div
-            className={css`
-              display: flex;
-              justify-content: flex-end;
-            `}
-          >
-            <Button
-              style={{ marginTop: '0.5rem', marginBottom: '0.5rem' }}
-              color="rose"
-              filled
-              onClick={onViewSecretAnswer}
+        {!!onViewSecretAnswer &&
+          stringIsEmpty(text) &&
+          !attachment &&
+          !submitting && (
+            <div
+              className={css`
+                display: flex;
+                justify-content: flex-end;
+              `}
             >
-              View without responding
-            </Button>
-          </div>
-        )}
+              <Button
+                style={{ marginTop: '0.5rem', marginBottom: '0.5rem' }}
+                color="rose"
+                filled
+                onClick={onViewSecretAnswer}
+              >
+                View without responding
+              </Button>
+            </div>
+          )}
         {(!stringIsEmpty(text) || attachment) && (
           <div
             className={css`
