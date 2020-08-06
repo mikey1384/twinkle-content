@@ -159,7 +159,7 @@ export default function NotiItem({
             <ContentLink
               contentType="subject"
               content={{
-                id: isSubjectResponse ? targetSubject.id : targetObj.id,
+                id: targetSubject.id,
                 title: `subject`
               }}
             />
