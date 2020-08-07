@@ -602,7 +602,7 @@ function Comment({
               <>
                 <ReplyInputArea
                   innerRef={ReplyInputAreaRef}
-                  numReplies={replies?.length}
+                  numReplies={numReplies}
                   onSubmit={submitReply}
                   onSubmitWithAttachment={handleSubmitWithAttachment}
                   parent={parent}
