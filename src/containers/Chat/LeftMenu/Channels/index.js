@@ -111,7 +111,7 @@ function Channels({ onChannelEnter }) {
         .filter((channel) => !channel?.isHidden)
         .map((channel) => (
           <Channel
-            key={channel.id}
+            key={selectedChatTab + channel.id}
             channel={channel}
             customChannelNames={customChannelNames}
             chatType={chatType}
