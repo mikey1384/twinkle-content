@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route } from 'react-router';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Notification from 'components/Notification';
 import SideMenu from 'components/SideMenu';
 import Search from './Search';
 import Categories from './Categories';
 import Icon from 'components/Icon';
+import { Switch, Route } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { css } from 'emotion';
 import { mobileMaxWidth } from 'constants/css';
@@ -153,7 +153,6 @@ export default function Explore({ history, location }) {
             display: none;
           }
         `}
-        location={location.pathname.substring(1)}
       />
     </ErrorBoundary>
   );
