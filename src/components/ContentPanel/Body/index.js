@@ -48,6 +48,7 @@ export default function Body({
     rewardLevel,
     id,
     numComments,
+    numReplies,
     comments = [],
     commentsLoadMoreButton = false,
     isNotification,
@@ -396,11 +397,13 @@ export default function Body({
                         ? 'Respond'
                         : 'Reply'}
                     </span>
-                    {numComments > 0 && !commentsShown && !autoExpand && (
-                      <span style={{ marginLeft: '0.5rem' }}>
-                        ({numComments})
-                      </span>
-                    )}
+                    {(numComments > 0 || numReplies > 0) &&
+                      !commentsShown &&
+                      !autoExpand && (
+                        <span style={{ marginLeft: '0.5rem' }}>
+                          ({numComments || numReplies})
+                        </span>
+                      )}
                   </Button>
                 )}
                 {userCanRewardThis && !secretHidden && (
