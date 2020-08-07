@@ -329,11 +329,13 @@ export default function MessagesContainer({
   });
 
   useEffect(() => {
-    if (messagesLoaded) {
+    if (messagesLoaded && mounted.current) {
       setTimeout(() => {
-        MessagesContainerRef.current.scrollTop =
-          ContentRef.current?.offsetHeight || 0;
-        onChannelLoadingDone();
+        if (mounted.current) {
+          MessagesContainerRef.current.scrollTop =
+            ContentRef.current?.offsetHeight || 0;
+          onChannelLoadingDone();
+        }
       }, 0);
       setScrollAtBottom(true);
     }
@@ -1058,16 +1060,18 @@ export default function MessagesContainer({
   }
 
   function handleSetScrollToBottom() {
-    MessagesContainerRef.current.scrollTop =
-      ContentRef.current?.offsetHeight || 0;
-    setTimeout(
-      () =>
-        (MessagesContainerRef.current.scrollTop =
-          ContentRef.current?.offsetHeight || 0),
-      10
-    );
-    if (ContentRef.current?.offsetHeight) {
-      setScrollAtBottom(true);
+    if (mounted.current) {
+      MessagesContainerRef.current.scrollTop =
+        ContentRef.current?.offsetHeight || 0;
+      setTimeout(
+        () =>
+          (MessagesContainerRef.current.scrollTop =
+            ContentRef.current?.offsetHeight || 0),
+        10
+      );
+      if (ContentRef.current?.offsetHeight) {
+        setScrollAtBottom(true);
+      }
     }
   }
 

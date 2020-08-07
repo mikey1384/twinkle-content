@@ -16,6 +16,7 @@ import Management from 'containers/Management';
 import MobileMenu from './MobileMenu';
 import Profile from 'containers/Profile';
 import ResetPassword from 'containers/ResetPassword';
+import Shop from 'containers/Shop';
 import Verify from 'containers/Verify';
 import VideoPage from 'containers/VideoPage';
 import Incoming from 'components/Stream/Incoming';
@@ -289,6 +290,7 @@ function App({ location, history }) {
             path="/chat"
             render={() => <Chat onFileUpload={handleFileUploadOnChat} />}
           />
+          <Route path="/shop" component={Shop} />
           <Route path="/management" component={Management} />
           <Route path="/reset" component={ResetPassword} />
           <Route path="/verify" component={Verify} />

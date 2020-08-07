@@ -58,6 +58,7 @@ import { faPlus } from '@fortawesome/pro-solid-svg-icons/faPlus';
 import { faReply } from '@fortawesome/pro-solid-svg-icons/faReply';
 import { faSearch } from '@fortawesome/pro-solid-svg-icons/faSearch';
 import { faSchool } from '@fortawesome/pro-solid-svg-icons/faSchool';
+import { faShoppingBag } from '@fortawesome/pro-solid-svg-icons/faShoppingBag';
 import { faSignOutAlt } from '@fortawesome/pro-solid-svg-icons/faSignOutAlt';
 import { faSlidersH } from '@fortawesome/pro-solid-svg-icons/faSlidersH';
 import { faSpinner } from '@fortawesome/pro-solid-svg-icons/faSpinner';
@@ -127,6 +128,7 @@ library.add(
   faPlus,
   faReply,
   faSchool,
+  faShoppingBag,
   faSearch,
   faSignOutAlt,
   faSlidersH,

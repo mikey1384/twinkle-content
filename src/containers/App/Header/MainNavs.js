@@ -216,6 +216,12 @@ function MainNavs({
         />
       )}
       <HeaderNav
+        to={`/shop`}
+        pathname={pathname}
+        className="mobile"
+        imgLabel="shopping-bag"
+      />
+      <HeaderNav
         to="/chat"
         pathname={pathname}
         className="mobile"
@@ -264,6 +270,15 @@ function MainNavs({
           {exploreSubNav.substring(0, exploreSubNav.length - 1).toUpperCase()}
         </HeaderNav>
       )}
+      <HeaderNav
+        to={`/shop`}
+        pathname={pathname}
+        className="desktop"
+        style={{ marginLeft: '2rem' }}
+        imgLabel="shopping-bag"
+      >
+        SHOP
+      </HeaderNav>
       <div
         className={css`
           margin-left: 2rem;
