@@ -299,12 +299,16 @@ function MainNavs({
       </div>
       {userId && typeof twinkleCoins === 'number' && (
         <div
+          className={`mobile ${css`
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: 1.3rem;
+            }
+          `}`}
           style={{
             display: 'flex',
             alignItems: 'center',
             paddingRight: '1rem'
           }}
-          className="mobile"
         >
           <Icon
             style={{ marginRight: '0.5rem' }}
