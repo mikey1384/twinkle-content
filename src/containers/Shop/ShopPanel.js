@@ -20,7 +20,7 @@ export default function ShopPanel({ children, style, title }) {
         ...style
       }}
     >
-      <h2>{title}</h2>
+      <h2>{title} (locked)</h2>
       <div style={{ marginTop: '1rem' }}>
         <div style={{ fontSize: '1.5rem' }}>50 Karma Points out of 1000</div>
         <ProgressBar color="blue" progress={50} />
