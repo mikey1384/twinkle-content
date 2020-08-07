@@ -1,6 +1,7 @@
 import React from 'react';
 import ErrorBoundary from 'components/ErrorBoundary';
 import SectionPanel from 'components/SectionPanel';
+import ShopPanel from './ShopPanel';
 import Notification from 'components/Notification';
 import { css } from 'emotion';
 import { mobileMaxWidth } from 'constants/css';
@@ -29,9 +30,9 @@ export default function Shop() {
           }
         `}
       >
-        <SectionPanel loaded title="Tier 1">
+        <ShopPanel style={{ marginBottom: '1rem' }} loaded title="Tier 1">
           <div>This is my section</div>
-        </SectionPanel>
+        </ShopPanel>
         <SectionPanel loaded title="Tier 2">
           <div>This is my section</div>
         </SectionPanel>
