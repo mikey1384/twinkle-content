@@ -30,7 +30,7 @@ export default function Shop() {
           }
         `}
       >
-        <ShopPanel style={{ marginBottom: '1rem' }} loaded title="Tier 1">
+        <ShopPanel title="Tier 1" style={{ marginBottom: '1rem' }} loaded>
           <div>This is my section</div>
         </ShopPanel>
         <SectionPanel loaded title="Tier 2">
