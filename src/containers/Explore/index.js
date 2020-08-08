@@ -17,6 +17,7 @@ import { useScrollToBottom } from 'helpers/hooks';
 import Videos from './Videos';
 import Links from './Links';
 import Subjects from './Subjects';
+import Shop from './Shop';
 
 Explore.propTypes = {
   history: PropTypes.object.isRequired,
@@ -121,6 +122,7 @@ export default function Explore({ history, location }) {
         <Switch>
           <Route path="/videos" component={Videos} />
           <Route path="/links" component={Links} />
+          <Route path="/shop" component={Shop} />
           <Route path="/subjects" component={Subjects} />
         </Switch>
         {categoriesShown && (
