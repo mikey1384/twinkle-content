@@ -75,7 +75,7 @@ export default function Categories({
           }
         `}
       >
-        {['subjects', 'videos', 'links'].map(contentType =>
+        {['subjects', 'videos', 'links', 'shop'].map((contentType) =>
           filter === contentType ? (
             <nav key={contentType}>
               <p style={{ display: 'flex', alignItems: 'center' }}>
@@ -143,6 +143,9 @@ export default function Categories({
     }
     if (contentType === 'links') {
       icon = 'book';
+    }
+    if (contentType === 'shop') {
+      icon = 'shopping-bag';
     }
     return <Icon style={{ marginRight: '1.5rem' }} icon={icon} />;
   }

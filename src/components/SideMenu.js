@@ -14,7 +14,7 @@ export default function SideMenu({ children, className, style }) {
     <div
       style={style}
       className={`${className ? `${className} ` : ''}${css`
-        top: CALC(50vh - 11rem);
+        top: CALC(50vh - 13rem);
         height: auto;
         width: 19rem;
         display: flex;

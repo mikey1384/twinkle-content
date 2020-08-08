@@ -128,7 +128,7 @@ function MainNavs({
     }
     if (!loaded.current && defaultSearchFilter) {
       onSetExploreCategory(
-        ['videos', 'subjects', 'links'].includes(defaultSearchFilter)
+        ['videos', 'subjects', 'links', 'shop'].includes(defaultSearchFilter)
           ? defaultSearchFilter
           : 'subjects'
       );

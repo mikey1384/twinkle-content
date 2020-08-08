@@ -77,100 +77,106 @@ export default function Explore({ history, location }) {
   });
 
   return (
-    <ErrorBoundary
-      ref={ContainerRef}
-      className={css`
-        width: 100%;
-        display: flex;
-        @media (max-width: ${mobileMaxWidth}) {
-          margin-top: 0;
-        }
-      `}
-    >
-      <SideMenu>
-        <NavLink to="/subjects" activeClassName="active">
-          <Icon icon="bolt" />
-          <span style={{ marginLeft: '1.1rem' }}>Subjects</span>
-        </NavLink>
-        <NavLink to="/videos" activeClassName="active">
-          <Icon icon="film" />
-          <span style={{ marginLeft: '1.1rem' }}>Videos</span>
-        </NavLink>
-        <NavLink to="/links" activeClassName="active">
-          <Icon icon="book" />
-          <span style={{ marginLeft: '1.1rem' }}>Links</span>
-        </NavLink>
-      </SideMenu>
+    <ErrorBoundary>
       <div
+        ref={ContainerRef}
         className={css`
-          width: CALC(100vw - 51rem - 2rem);
-          margin-left: 20rem;
+          width: 100%;
+          display: flex;
           @media (max-width: ${mobileMaxWidth}) {
-            width: 100%;
             margin-top: 0;
-            margin-left: 0;
-            margin-right: 0;
           }
         `}
       >
-        {stringIsEmpty(searchText) && (
-          <Categories
-            style={{ marginTop: '6rem', marginBottom: '4rem' }}
-            filter={category}
-            onSetDefaultSearchFilter={handleSetDefaultSearchFilter}
-          />
-        )}
-        {category !== 'shop' && (
-          <Search
-            history={history}
-            pathname={location.pathname}
-            innerRef={SearchBoxRef}
-            style={{
-              width: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              flexDirection: 'column',
-              marginBottom: '4rem'
-            }}
-          />
-        )}
-        <Switch>
-          <Route path="/videos" component={Videos} />
-          <Route path="/links" component={Links} />
-          <Route path="/shop" component={Shop} />
-          <Route path="/subjects" component={Subjects} />
-        </Switch>
-        {categoriesShown && (
-          <Categories
-            style={{ marginTop: '3rem', marginBottom: '4rem' }}
-            filter={category}
-          />
-        )}
+        <SideMenu>
+          <NavLink to="/subjects" activeClassName="active">
+            <Icon icon="bolt" />
+            <span style={{ marginLeft: '1.1rem' }}>Subjects</span>
+          </NavLink>
+          <NavLink to="/videos" activeClassName="active">
+            <Icon icon="film" />
+            <span style={{ marginLeft: '1.1rem' }}>Videos</span>
+          </NavLink>
+          <NavLink to="/links" activeClassName="active">
+            <Icon icon="book" />
+            <span style={{ marginLeft: '1.1rem' }}>Links</span>
+          </NavLink>
+          <NavLink to="/shop" activeClassName="active">
+            <Icon icon="shopping-bag" />
+            <span style={{ marginLeft: '1.1rem' }}>Shop</span>
+          </NavLink>
+        </SideMenu>
         <div
           className={css`
-            display: none;
+            width: CALC(100vw - 51rem - 2rem);
+            margin-left: 20rem;
             @media (max-width: ${mobileMaxWidth}) {
-              display: block;
               width: 100%;
-              height: 5rem;
+              margin-top: 0;
+              margin-left: 0;
+              margin-right: 0;
+            }
+          `}
+        >
+          {stringIsEmpty(searchText) && (
+            <Categories
+              style={{ marginTop: '5rem', marginBottom: '3rem' }}
+              filter={category}
+              onSetDefaultSearchFilter={handleSetDefaultSearchFilter}
+            />
+          )}
+          {category !== 'shop' && (
+            <Search
+              history={history}
+              pathname={location.pathname}
+              innerRef={SearchBoxRef}
+              style={{
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                flexDirection: 'column',
+                marginBottom: '3rem'
+              }}
+            />
+          )}
+          <Switch>
+            <Route path="/videos" component={Videos} />
+            <Route path="/links" component={Links} />
+            <Route path="/shop" component={Shop} />
+            <Route path="/subjects" component={Subjects} />
+          </Switch>
+          {categoriesShown && (
+            <Categories
+              style={{ marginTop: '3rem', marginBottom: '4rem' }}
+              filter={category}
+            />
+          )}
+          <div
+            className={css`
+              display: none;
+              @media (max-width: ${mobileMaxWidth}) {
+                display: block;
+                width: 100%;
+                height: 5rem;
+              }
+            `}
+          />
+        </div>
+        <Notification
+          className={css`
+            width: 31rem;
+            overflow-y: scroll;
+            -webkit-overflow-scrolling: touch;
+            right: 1rem;
+            top: 4.5rem;
+            bottom: 0;
+            position: absolute;
+            @media (max-width: ${mobileMaxWidth}) {
+              display: none;
             }
           `}
         />
       </div>
-      <Notification
-        className={css`
-          width: 31rem;
-          overflow-y: scroll;
-          -webkit-overflow-scrolling: touch;
-          right: 1rem;
-          top: 4.5rem;
-          bottom: 0;
-          position: absolute;
-          @media (max-width: ${mobileMaxWidth}) {
-            display: none;
-          }
-        `}
-      />
     </ErrorBoundary>
   );
 
