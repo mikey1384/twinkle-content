@@ -4,7 +4,6 @@ import { stringIsEmpty } from 'helpers/stringHelpers';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 import TopFilter from './TopFilter';
-import Categories from '../Categories';
 import Results from './Results';
 import SearchBox from './SearchBox';
 import { getSectionFromPathname } from 'helpers';
@@ -12,11 +11,12 @@ import { useExploreContext } from 'contexts';
 
 Search.propTypes = {
   history: PropTypes.object,
+  innerRef: PropTypes.object,
   pathname: PropTypes.string.isRequired,
   style: PropTypes.object
 };
 
-export default function Search({ history, pathname, style }) {
+export default function Search({ history, innerRef, pathname, style }) {
   const {
     state: {
       search: { searchText }
@@ -25,7 +25,6 @@ export default function Search({ history, pathname, style }) {
   } = useExploreContext();
   const category = getSectionFromPathname(pathname)?.section;
   const prevSearchText = useRef(searchText);
-  const SearchBoxRef = useRef(null);
 
   useEffect(() => {
     if (
@@ -41,13 +40,6 @@ export default function Search({ history, pathname, style }) {
 
   return (
     <div style={style}>
-      {stringIsEmpty(searchText) && (
-        <Categories
-          style={{ marginTop: '6rem', marginBottom: '4rem' }}
-          filter={category}
-          onSetDefaultSearchFilter={handleSetDefaultSearchFilter}
-        />
-      )}
       <SearchBox
         style={{
           width: '50%',
@@ -61,7 +53,7 @@ export default function Search({ history, pathname, style }) {
             font-size: 2.3rem;
           }
         `}
-        innerRef={SearchBoxRef}
+        innerRef={innerRef}
       />
       {!stringIsEmpty(searchText) && (
         <>
@@ -82,10 +74,4 @@ export default function Search({ history, pathname, style }) {
       )}
     </div>
   );
-
-  async function handleSetDefaultSearchFilter() {
-    if (stringIsEmpty(searchText)) {
-      SearchBoxRef.current?.focus();
-    }
-  }
 }

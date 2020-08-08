@@ -1,19 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Switch, Route } from 'react-router';
+import { NavLink } from 'react-router-dom';
+import { css } from 'emotion';
+import { mobileMaxWidth } from 'constants/css';
+import { socket } from 'constants/io';
+import { stringIsEmpty } from 'helpers/stringHelpers';
+import { getSectionFromPathname } from 'helpers';
+import { useExploreContext } from 'contexts';
+import { useScrollToBottom } from 'helpers/hooks';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Notification from 'components/Notification';
 import SideMenu from 'components/SideMenu';
 import Search from './Search';
 import Categories from './Categories';
 import Icon from 'components/Icon';
-import { Switch, Route } from 'react-router';
-import { NavLink } from 'react-router-dom';
-import { css } from 'emotion';
-import { mobileMaxWidth } from 'constants/css';
-import { socket } from 'constants/io';
-import { getSectionFromPathname } from 'helpers';
-import { useExploreContext } from 'contexts';
-import { useScrollToBottom } from 'helpers/hooks';
 import Videos from './Videos';
 import Links from './Links';
 import Subjects from './Subjects';
@@ -26,11 +27,15 @@ Explore.propTypes = {
 
 export default function Explore({ history, location }) {
   const {
+    state: {
+      search: { searchText }
+    },
     actions: { onClearLinksLoaded, onClearVideosLoaded, onReloadSubjects }
   } = useExploreContext();
   const mounted = useRef(true);
   const disconnected = useRef(false);
   const ContainerRef = useRef(null);
+  const SearchBoxRef = useRef(null);
   const [categoriesShown, setCategoriesShown] = useState(false);
   const { atBottom, scrollTop } = useScrollToBottom(ContainerRef, 30);
   const category = getSectionFromPathname(location.pathname)?.section;
@@ -108,17 +113,27 @@ export default function Explore({ history, location }) {
           }
         `}
       >
-        <Search
-          history={history}
-          pathname={location.pathname}
-          style={{
-            width: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            flexDirection: 'column',
-            marginBottom: '4rem'
-          }}
-        />
+        {stringIsEmpty(searchText) && (
+          <Categories
+            style={{ marginTop: '6rem', marginBottom: '4rem' }}
+            filter={category}
+            innerRef={SearchBoxRef}
+            onSetDefaultSearchFilter={handleSetDefaultSearchFilter}
+          />
+        )}
+        {category !== 'shop' && (
+          <Search
+            history={history}
+            pathname={location.pathname}
+            style={{
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              flexDirection: 'column',
+              marginBottom: '4rem'
+            }}
+          />
+        )}
         <Switch>
           <Route path="/videos" component={Videos} />
           <Route path="/links" component={Links} />
@@ -158,4 +173,10 @@ export default function Explore({ history, location }) {
       />
     </ErrorBoundary>
   );
+
+  async function handleSetDefaultSearchFilter() {
+    if (stringIsEmpty(searchText)) {
+      SearchBoxRef.current?.focus();
+    }
+  }
 }
