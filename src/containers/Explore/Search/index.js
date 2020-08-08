@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 import TopFilter from './TopFilter';
 import Results from './Results';
@@ -61,10 +60,6 @@ export default function Search({ history, innerRef, pathname, style }) {
             className={css`
               width: 100%;
               margin-top: 2rem;
-              @media (max-width: ${mobileMaxWidth}) {
-                margin-top: 0;
-                border-top: 0;
-              }
             `}
             history={history}
             selectedFilter={category}
