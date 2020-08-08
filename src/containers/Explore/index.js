@@ -117,7 +117,6 @@ export default function Explore({ history, location }) {
           <Categories
             style={{ marginTop: '6rem', marginBottom: '4rem' }}
             filter={category}
-            innerRef={SearchBoxRef}
             onSetDefaultSearchFilter={handleSetDefaultSearchFilter}
           />
         )}
@@ -125,6 +124,7 @@ export default function Explore({ history, location }) {
           <Search
             history={history}
             pathname={location.pathname}
+            innerRef={SearchBoxRef}
             style={{
               width: '100%',
               display: 'flex',
