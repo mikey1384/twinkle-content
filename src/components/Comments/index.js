@@ -366,7 +366,7 @@ function Comments({
         subjectId,
         targetCommentId
       });
-      onCommentSubmit({
+      await onCommentSubmit({
         ...data,
         contentId: parent.contentId,
         contentType: parent.contentType
