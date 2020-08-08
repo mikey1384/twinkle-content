@@ -535,7 +535,8 @@ export default function SubjectPanel({
       checked: true
     });
     if (secretHidden) {
-      return handleExpand(true);
+      await handleExpand(true);
+      return Promise.resolve();
     }
     onUploadComment({
       ...params,

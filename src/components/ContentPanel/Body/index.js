@@ -655,6 +655,7 @@ export default function Body({
         onChangeSpoilerStatus({ shown: true, subjectId: contentObj.id });
       }
     }
+    return Promise.resolve();
   }
 
   function handleSetXpRewardInterfaceShown() {
