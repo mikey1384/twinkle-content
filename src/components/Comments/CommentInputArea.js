@@ -121,7 +121,7 @@ export default function CommentInputArea({
     filePathRef.current = null;
   }
 
-  function handleSubmit(text) {
+  async function handleSubmit(text) {
     if (attachment) {
       setCommentContent(text);
       onSetCommentUploadingFile({
@@ -130,12 +130,13 @@ export default function CommentInputArea({
         uploading: true
       });
     } else {
-      onSubmit({
+      await onSubmit({
         content: text,
         rootCommentId,
         subjectId,
         targetCommentId
       });
+      return Promise.resolve();
     }
   }
 }

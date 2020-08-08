@@ -371,6 +371,7 @@ function Comments({
         contentId: parent.contentId,
         contentType: parent.contentType
       });
+      return Promise.resolve();
     } catch (error) {
       console.error(error);
     }
