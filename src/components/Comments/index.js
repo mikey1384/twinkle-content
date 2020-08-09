@@ -387,7 +387,7 @@ function Comments({
           parent.contentType === 'subject' ? parent.contentId : subject.id,
         isNotification: true
       });
-      onCommentSubmit({
+      await onCommentSubmit({
         ...data,
         contentId: parent.contentId,
         contentType: parent.contentType
