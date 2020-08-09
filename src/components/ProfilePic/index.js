@@ -79,6 +79,7 @@ export default function ProfilePic({
         <StatusTag
           status={isAway ? 'away' : isBusy ? 'busy' : 'online'}
           large={large}
+          isProfilePage={isProfilePage}
         />
       )}
     </div>

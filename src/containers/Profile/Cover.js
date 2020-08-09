@@ -225,8 +225,8 @@ export default function Cover({
         }
         profilePicId={profilePicId}
         online={!!online}
-        statusShown
         large
+        statusShown
       />
       {imageEditModalShown && (
         <ImageEditModal
