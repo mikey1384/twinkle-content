@@ -60,6 +60,10 @@ export default function InputForm({
     [authLevel]
   );
   const [submitting, setSubmitting] = useState(false);
+  const [
+    secretViewMessageSubmitting,
+    setSecretViewMessageSubmitting
+  ] = useState(false);
   const [alertModalShown, setAlertModalShown] = useState(false);
   const FileInputRef = useRef(null);
   const {
@@ -161,7 +165,8 @@ export default function InputForm({
                 style={{ marginTop: '0.5rem', marginBottom: '0.5rem' }}
                 color="rose"
                 filled
-                onClick={onViewSecretAnswer}
+                disabled={secretViewMessageSubmitting}
+                onClick={handleViewAnswer}
               >
                 View without responding
               </Button>
@@ -346,5 +351,16 @@ export default function InputForm({
       });
     }
     event.target.value = null;
+  }
+
+  async function handleViewAnswer() {
+    setSecretViewMessageSubmitting(true);
+    try {
+      await onViewSecretAnswer();
+      setSecretViewMessageSubmitting(false);
+    } catch (error) {
+      setSecretViewMessageSubmitting(false);
+      console.error(error);
+    }
   }
 }
