@@ -103,7 +103,7 @@ export default function SubjectPanel({
     secretShown,
     fileName,
     filePath,
-    recommendations,
+    recommendations = [],
     rewards,
     xpRewardInterfaceShown
   } = useContentState({
