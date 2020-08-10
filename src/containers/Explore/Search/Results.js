@@ -32,6 +32,7 @@ export default function Results({ filter, searchText }) {
 
   useEffect(() => {
     if (filter !== prevFilter.current) {
+      setSearching(true);
       handleSearchContent();
     }
     prevFilter.current = filter;
@@ -58,7 +59,6 @@ export default function Results({ filter, searchText }) {
   }, [searchText]);
 
   async function handleSearchContent() {
-    setSearching(true);
     const { results, loadMoreButton } = await searchContent({
       filter:
         filter === 'links' ? 'url' : filter.substring(0, filter.length - 1),
