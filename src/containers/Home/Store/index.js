@@ -26,7 +26,7 @@ export default function Store() {
         numApprovedRecommendations,
         numPostsRewarded
       } = await loadKarmaPoints();
-      if (!authLevel || authLevel < 2) {
+      if (authLevel < 2) {
         setKarmaPoints(
           numTwinklesRewarded +
             recommendationsMultiplier * numApprovedRecommendations
@@ -39,7 +39,7 @@ export default function Store() {
   }, [userId]);
 
   const instructionText = useMemo(() => {
-    if (!authLevel || authLevel < 2) {
+    if (authLevel < 2) {
       return (
         <span>
           Your Karma Points = Total number of{' '}
