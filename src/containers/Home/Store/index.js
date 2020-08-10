@@ -12,9 +12,11 @@ export default function Store() {
     if (!authLevel || authLevel < 2) {
       return (
         <span>
-          Your Karma Points = Total number of <b>Twinkles</b> you rewarded + (3
-          × Total number of <b>Twinkle Coins</b> you earned{' '}
-          <b>for recommending posts</b>)
+          Your Karma Points = Total number of{' '}
+          <b style={{ color: Color.pink() }}>Twinkles</b> you rewarded + (3 ×
+          Total number of{' '}
+          <b style={{ color: Color.brownOrange() }}>Twinkle Coins</b> you earned
+          for recommending posts)
         </span>
       );
     }
