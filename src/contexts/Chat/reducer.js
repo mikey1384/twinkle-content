@@ -497,7 +497,7 @@ export default function ChatReducer(state, action) {
           ...state.allFavoriteChannelIds,
           [action.channelId]: false
         },
-        favoriteChannelIds: state.homeChannelIds.filter(
+        favoriteChannelIds: state.favoriteChannelIds.filter(
           (channelId) => channelId !== action.channelId
         ),
         homeChannelIds: state.homeChannelIds.filter(
