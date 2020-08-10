@@ -13,10 +13,10 @@ export default function Store() {
       return (
         <span>
           Your Karma Points = Total number of{' '}
-          <b style={{ color: Color.pink() }}>Twinkles</b> you rewarded + (3 ×
-          Total number of{' '}
-          <b style={{ color: Color.brownOrange() }}>Twinkle Coins</b> you earned
-          for recommending posts)
+          <b style={{ color: Color.pink() }}>Twinkles</b> you rewarded + (10 ×
+          Total number of your{' '}
+          <b style={{ color: Color.brownOrange() }}>recommendations</b> which
+          were approved by teachers)
         </span>
       );
     }
