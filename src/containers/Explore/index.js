@@ -18,7 +18,6 @@ import Icon from 'components/Icon';
 import Videos from './Videos';
 import Links from './Links';
 import Subjects from './Subjects';
-import Shop from './Shop';
 
 Explore.propTypes = {
   history: PropTypes.object.isRequired,
@@ -101,10 +100,6 @@ export default function Explore({ history, location }) {
             <Icon icon="book" />
             <span style={{ marginLeft: '1.1rem' }}>Links</span>
           </NavLink>
-          <NavLink to="/shop" activeClassName="active">
-            <Icon icon="shopping-bag" />
-            <span style={{ marginLeft: '1.1rem' }}>Shop</span>
-          </NavLink>
         </SideMenu>
         <div
           className={css`
@@ -125,24 +120,21 @@ export default function Explore({ history, location }) {
               onSetDefaultSearchFilter={handleSetDefaultSearchFilter}
             />
           )}
-          {category !== 'shop' && (
-            <Search
-              history={history}
-              pathname={location.pathname}
-              innerRef={SearchBoxRef}
-              style={{
-                width: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                flexDirection: 'column',
-                marginBottom: '3rem'
-              }}
-            />
-          )}
+          <Search
+            history={history}
+            pathname={location.pathname}
+            innerRef={SearchBoxRef}
+            style={{
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              flexDirection: 'column',
+              marginBottom: '3rem'
+            }}
+          />
           <Switch>
             <Route path="/videos" component={Videos} />
             <Route path="/links" component={Links} />
-            <Route path="/shop" component={Shop} />
             <Route path="/subjects" component={Subjects} />
           </Switch>
           {categoriesShown && (

@@ -128,7 +128,7 @@ function MainNavs({
     }
     if (!loaded.current && defaultSearchFilter) {
       onSetExploreCategory(
-        ['videos', 'subjects', 'links', 'shop'].includes(defaultSearchFilter)
+        ['videos', 'subjects', 'links'].includes(defaultSearchFilter)
           ? defaultSearchFilter
           : 'subjects'
       );
@@ -149,8 +149,6 @@ function MainNavs({
         ? 'book'
         : exploreSubNav === 'subjects'
         ? 'bolt'
-        : exploreSubNav === 'shop'
-        ? 'shopping-bag'
         : 'comment-alt',
     [exploreSubNav]
   );

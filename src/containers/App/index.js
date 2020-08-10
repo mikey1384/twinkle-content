@@ -284,7 +284,6 @@ function App({ location, history }) {
           <Route path="/links" component={Explore} />
           <Route path="/subjects/:contentId" component={ContentPage} />
           <Route path="/subjects" component={Explore} />
-          <Route path="/shop" component={Explore} />
           <Route path="/playlists" component={PlaylistPage} />
           <Route
             path="/chat"
