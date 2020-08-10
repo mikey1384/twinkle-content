@@ -90,6 +90,7 @@ export default function XPRewardInterface({
   const [comment, setComment] = useState(prevComment);
   const selectedAmountRef = useRef(prevSelectedAmount);
   const [selectedAmount, setSelectedAmount] = useState(prevSelectedAmount);
+  const mustPayToReward = authLevel < 2;
 
   useEffect(() => {
     setSelectedAmount((selectedAmount) =>
@@ -144,7 +145,7 @@ export default function XPRewardInterface({
     return (
       <>
         Reward
-        {!authLevel ? (
+        {mustPayToReward ? (
           <>
             <div style={{ marginLeft: '0.7rem' }}>
               (<Icon icon={['far', 'badge-dollar']} />
@@ -159,7 +160,7 @@ export default function XPRewardInterface({
         )}
       </>
     );
-  }, [authLevel, selectedAmount]);
+  }, [mustPayToReward, selectedAmount]);
 
   useEffect(() => {
     mounted.current = true;
@@ -266,7 +267,7 @@ export default function XPRewardInterface({
               !!rewardCommentExceedsCharLimit ||
               rewarding ||
               selectedAmount === 0 ||
-              (authLevel === 0 &&
+              (mustPayToReward &&
                 twinkleCoins < selectedAmount * priceTable.reward)
             }
             onClick={handleRewardSubmit}
