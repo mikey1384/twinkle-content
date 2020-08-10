@@ -130,7 +130,7 @@ export default function MessagesContainer({
 
   const ContentRef = useRef(null);
   const MessagesRef = useRef(null);
-  const mounted = useRef(null);
+  const mounted = useRef(true);
   const MessagesContainerRef = useRef({});
   const FileInputRef = useRef(null);
   const ChatInputRef = useRef(null);
@@ -145,6 +145,14 @@ export default function MessagesContainer({
     () => selectedChannelId === channelOnCall.id,
     [channelOnCall.id, selectedChannelId]
   );
+
+  useEffect(() => {
+    mounted.current = true;
+
+    return function onUnmount() {
+      mounted.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     if (selectedChannelId === channelOnCall.id) {
@@ -310,12 +318,10 @@ export default function MessagesContainer({
 
   useEffect(() => {
     const MessagesContainer = MessagesContainerRef.current;
-    mounted.current = true;
     addEvent(MessagesContainer, 'scroll', handleScroll);
 
     return function cleanUp() {
       removeEvent(MessagesContainer, 'scroll', handleScroll);
-      mounted.current = false;
     };
 
     function handleScroll() {
