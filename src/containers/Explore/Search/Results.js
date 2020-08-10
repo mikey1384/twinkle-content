@@ -32,6 +32,7 @@ export default function Results({ filter, searchText }) {
 
   useEffect(() => {
     if (filter !== prevFilter.current) {
+      setSearching(true);
       handleSearchContent();
     }
     prevFilter.current = filter;
@@ -70,7 +71,7 @@ export default function Results({ filter, searchText }) {
   const availableFilters = useMemo(
     () =>
       ['videos', 'links', 'subjects'].filter(
-        availableFilter => availableFilter !== filter
+        (availableFilter) => availableFilter !== filter
       ),
     [filter]
   );
@@ -87,7 +88,7 @@ export default function Results({ filter, searchText }) {
       {(searching || filter !== prevFilter.current) && <Loading />}
       {!searching &&
         searchText.length > 1 &&
-        results.map(result => (
+        results.map((result) => (
           <ContentListItem
             key={result.id}
             style={{ marginBottom: '1rem' }}

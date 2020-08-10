@@ -12,6 +12,7 @@ import {
   isValidYoutubeUrl,
   extractVideoIdFromTwinkleVideoUrl
 } from 'helpers/stringHelpers';
+import { useHistory } from 'react-router-dom';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { useContentContext } from 'contexts';
 import { useContentState } from 'helpers/hooks';
@@ -53,6 +54,7 @@ function Embedly({
   videoWidth,
   videoHeight
 }) {
+  const history = useHistory();
   const translator = {
     actualDescription:
       contentType === 'url' ? 'actualDescription' : 'linkDescription',
@@ -194,7 +196,7 @@ function Embedly({
 
   const InnerContent = useMemo(() => {
     return (
-      <>
+      <div className={contentCss}>
         {!imageUrl || loading ? (
           <Loading
             className={css`
@@ -205,33 +207,40 @@ function Embedly({
             `}
           />
         ) : (
-          <section
-            className={css`
-              position: relative;
-              width: ${small ? '25%' : '100%'};
-              height: ${imageHeight};
-              &:after {
-                content: '';
-                display: block;
-                padding-bottom: ${small ? '100%' : '60%'};
-              }
-              @media (max-width: ${mobileMaxWidth}) {
-                height: ${imageMobileHeight};
-              }
-            `}
+          <a
+            style={{ width: small ? '25%' : '100%', height: '100%' }}
+            target="_blank"
+            rel="noopener noreferrer"
+            href={url}
           >
-            <img
+            <section
               className={css`
-                position: absolute;
+                position: relative;
                 width: 100%;
-                height: 100%;
-                object-fit: ${contentType === 'chat' ? 'contain' : 'cover'};
+                height: ${imageHeight};
+                &:after {
+                  content: '';
+                  display: block;
+                  padding-bottom: ${small ? '100%' : '60%'};
+                }
+                @media (max-width: ${mobileMaxWidth}) {
+                  height: ${imageMobileHeight};
+                }
               `}
-              src={imageUrl}
-              onError={handleImageLoadError}
-              alt={title}
-            />
-          </section>
+            >
+              <img
+                className={css`
+                  position: absolute;
+                  width: 100%;
+                  height: 100%;
+                  object-fit: ${contentType === 'chat' ? 'contain' : 'cover'};
+                `}
+                src={imageUrl}
+                onError={handleImageLoadError}
+                alt={title}
+              />
+            </section>
+          </a>
         )}
         {!imageOnly && (
           <section
@@ -239,10 +248,12 @@ function Embedly({
               width: 100%;
               line-height: 1.5;
               padding: 1rem;
+              cursor: ${small ? 'pointer' : ''};
               ${contentType === 'chat' ? 'margin-bottom: 1rem;' : ''}
               ${small ? 'margin-left: 1rem;' : ''}
               ${small ? '' : 'margin-top: 1rem;'}
             `}
+            onClick={small ? () => history.push(`/links/${contentId}`) : null}
           >
             <h3
               style={{
@@ -267,7 +278,7 @@ function Embedly({
             <p style={{ fontWeight: 'bold' }}>{siteUrl}</p>
           </section>
         )}
-      </>
+      </div>
     );
     function handleImageLoadError() {
       setImageUrl(
@@ -277,8 +288,11 @@ function Embedly({
   }, [
     actualDescription,
     actualTitle,
+    contentCss,
+    contentId,
     contentType,
     description,
+    history,
     imageHeight,
     imageMobileHeight,
     imageOnly,
@@ -289,7 +303,8 @@ function Embedly({
     siteUrl,
     small,
     thumbUrl,
-    title
+    title,
+    url
   ]);
 
   return (
@@ -376,14 +391,7 @@ function Embedly({
               onProgress={handleVideoProgress}
             />
           ) : (
-            <a
-              className={contentCss}
-              target="_blank"
-              rel="noopener noreferrer"
-              href={url}
-            >
-              {InnerContent}
-            </a>
+            InnerContent
           )}
         </div>
       </div>
