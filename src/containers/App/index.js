@@ -305,6 +305,12 @@ function App({ location, history }) {
             )}
           />
           <Route
+            path="/store"
+            render={({ history, location }) => (
+              <Home history={history} location={location} />
+            )}
+          />
+          <Route
             exact
             path="/users/"
             render={({ history, location }) => (

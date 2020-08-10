@@ -75,6 +75,15 @@ function MainNavs({
     [pathname]
   );
 
+  const storeMatch = useMemo(
+    () =>
+      matchPath(pathname, {
+        path: '/store',
+        exact: true
+      }),
+    [pathname]
+  );
+
   const explorePageMatch = useMemo(() => {
     const subjectPageMatch = matchPath(pathname, {
       path: '/subjects/:id',
@@ -116,7 +125,10 @@ function MainNavs({
       onSetHomeNav('/');
     } else if (usersMatch) {
       onSetHomeNav('/users');
+    } else if (storeMatch) {
+      onSetHomeNav('/store');
     }
+
     if (explorePageMatch) {
       if (exploreSubNav !== section) {
         onSetExploreSubNav(section);

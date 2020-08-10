@@ -37,7 +37,7 @@ export default function HomeMenuItems({ history, style = {} }) {
               className={match ? 'active' : ''}
               onClick={() => history.push('/')}
             >
-              <a href="/" onClick={e => e.preventDefault()}>
+              <a href="/" onClick={(e) => e.preventDefault()}>
                 <div
                   style={{
                     width: '3rem',
@@ -60,7 +60,7 @@ export default function HomeMenuItems({ history, style = {} }) {
               className={match ? 'active' : ''}
               onClick={handleOnPeopleClick}
             >
-              <a href="/users" onClick={e => e.preventDefault()}>
+              <a href="/users" onClick={(e) => e.preventDefault()}>
                 <div
                   style={{
                     width: '3rem',
@@ -75,6 +75,29 @@ export default function HomeMenuItems({ history, style = {} }) {
             </nav>
           )}
         />
+        <Route
+          exact
+          path="/store"
+          children={({ match }) => (
+            <nav
+              className={match ? 'active' : ''}
+              onClick={() => history.push('/store')}
+            >
+              <a href="/store" onClick={(e) => e.preventDefault()}>
+                <div
+                  style={{
+                    width: '3rem',
+                    display: 'flex',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <Icon icon="shopping-bag" size="1x" />
+                </div>
+                <span className="homemenu__label">Store</span>
+              </a>
+            </nav>
+          )}
+        />
         {managementLevel > 0 && isMobile(navigator) && (
           <Route
             exact
@@ -84,7 +107,7 @@ export default function HomeMenuItems({ history, style = {} }) {
                 className={match ? 'active' : ''}
                 onClick={() => history.push('/management')}
               >
-                <a href="/management" onClick={e => e.preventDefault()}>
+                <a href="/management" onClick={(e) => e.preventDefault()}>
                   <div
                     style={{
                       width: '3rem',
