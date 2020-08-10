@@ -14,6 +14,11 @@ export default function Store() {
   const { authLevel, userType, userId } = useMyState();
   const [loadingKarma, setLoadingKarma] = useState(false);
   const [karmaPoints, setKarmaPoints] = useState(0);
+  const [numTwinklesRewarded, setNumTwinklesRewarded] = useState(0);
+  const [numApprovedRecommendations, setNumApprovedRecommendations] = useState(
+    0
+  );
+  const [numPostsRewarded, setNumPostsRewarded] = useState(0);
   const recommendationsMultiplier = 10;
   const postsMultiplier = 5;
 
@@ -34,8 +39,11 @@ export default function Store() {
           numTwinklesRewarded +
             recommendationsMultiplier * numApprovedRecommendations
         );
+        setNumTwinklesRewarded(numTwinklesRewarded);
+        setNumApprovedRecommendations(numApprovedRecommendations);
       } else {
         setKarmaPoints(postsMultiplier * numPostsRewarded);
+        setNumPostsRewarded(numPostsRewarded);
       }
       setLoadingKarma(false);
     }
@@ -61,6 +69,44 @@ export default function Store() {
       </span>
     );
   }, [authLevel]);
+
+  const calculationText = useMemo(() => {
+    if (authLevel < 2) {
+      return (
+        <div style={{ fontSize: '1.5rem', marginTop: '3rem' }}>
+          <p>
+            Total number of <b style={{ color: Color.pink() }}>Twinkles</b> you
+            rewarded: {numTwinklesRewarded}
+          </p>
+          <p>
+            Total number of{' '}
+            <b style={{ color: Color.brownOrange() }}>recommendations</b>{' '}
+            approved by teachers: {numApprovedRecommendations}
+          </p>
+          <p style={{ marginTop: '1rem', fontSize: '1.7rem' }}>
+            {numTwinklesRewarded} + ({recommendationsMultiplier} ×{' '}
+            {numApprovedRecommendations}) ={' '}
+            <b>{addCommasToNumber(karmaPoints)} Karma Points</b>
+          </p>
+        </div>
+      );
+    }
+    return (
+      <div style={{ fontSize: '1.5rem', marginTop: '3rem' }}>
+        <p>Total number of posts you rewarded: {numPostsRewarded}</p>
+        <p style={{ marginTop: '1rem', fontSize: '1.7rem' }}>
+          {numPostsRewarded} × {postsMultiplier} ={' '}
+          <b>{addCommasToNumber(karmaPoints)} Karma Points</b>
+        </p>
+      </div>
+    );
+  }, [
+    authLevel,
+    karmaPoints,
+    numApprovedRecommendations,
+    numPostsRewarded,
+    numTwinklesRewarded
+  ]);
 
   return (
     <div>
@@ -113,6 +159,7 @@ export default function Store() {
                 >
                   {instructionText}
                 </p>
+                <p>{calculationText}</p>
               </div>
             </>
           )}
