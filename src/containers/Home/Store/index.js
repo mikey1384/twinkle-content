@@ -20,7 +20,11 @@ export default function Store() {
         </span>
       );
     }
-    return 'Your Karma Points = Total number of posts you rewarded × 5';
+    return (
+      <span>
+        Your Karma Points = Total number of <b>posts</b> you rewarded × 5
+      </span>
+    );
   }, [authLevel]);
 
   return (
