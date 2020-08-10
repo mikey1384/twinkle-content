@@ -2,7 +2,7 @@ import React from 'react';
 import Icon from 'components/Icon';
 import { css } from 'emotion';
 import { addCommasToNumber } from 'helpers/stringHelpers';
-import { borderRadius, Color } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 
 export default function Store() {
   return (
@@ -13,6 +13,12 @@ export default function Store() {
           padding: 1rem;
           border: 1px solid ${Color.borderGray()};
           border-radius: ${borderRadius};
+          @media (max-width: ${mobileMaxWidth}) {
+            border-radius: 0;
+            border-top: 0;
+            border-left: 0;
+            border-right: 0;
+          }
         `}
       >
         <p
@@ -35,6 +41,11 @@ export default function Store() {
           padding: 1rem;
           border: 1px solid ${Color.borderGray()};
           border-radius: ${borderRadius};
+          @media (max-width: ${mobileMaxWidth}) {
+            border-radius: 0;
+            border-left: 0;
+            border-right: 0;
+          }
         `}
       >
         <Icon
