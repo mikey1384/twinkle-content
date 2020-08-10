@@ -1,20 +1,50 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Icon from 'components/Icon';
 import { css } from 'emotion';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
+import { useAppContext } from 'contexts';
 
 export default function Store() {
+  const {
+    requestHelpers: { loadKarmaPoints }
+  } = useAppContext();
   const { authLevel, userType, userId } = useMyState();
+  const [karmaPoints, setKarmaPoints] = useState(0);
+  const recommendationsMultiplier = 10;
+  const postsMultiplier = 5;
+
+  useEffect(() => {
+    if (userId) {
+      handleLoadKarmaPoints();
+    }
+
+    async function handleLoadKarmaPoints() {
+      const {
+        numTwinklesRewarded,
+        numApprovedRecommendations,
+        numPostsRewarded
+      } = await loadKarmaPoints();
+      if (!authLevel || authLevel < 2) {
+        setKarmaPoints(
+          numTwinklesRewarded +
+            recommendationsMultiplier * numApprovedRecommendations
+        );
+      } else {
+        setKarmaPoints(postsMultiplier * numPostsRewarded);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
 
   const instructionText = useMemo(() => {
     if (!authLevel || authLevel < 2) {
       return (
         <span>
           Your Karma Points = Total number of{' '}
-          <b style={{ color: Color.pink() }}>Twinkles</b> you rewarded + (10 ×
-          Total number of your{' '}
+          <b style={{ color: Color.pink() }}>Twinkles</b> you rewarded + (
+          {recommendationsMultiplier} × total number of your{' '}
           <b style={{ color: Color.brownOrange() }}>recommendations</b> which
           were approved by teachers)
         </span>
@@ -22,7 +52,8 @@ export default function Store() {
     }
     return (
       <span>
-        Your Karma Points = Total number of <b>posts</b> you rewarded × 5
+        Your Karma Points = Total number of <b>posts</b> you rewarded ×{' '}
+        {postsMultiplier}
       </span>
     );
   }, [authLevel]);
@@ -50,7 +81,7 @@ export default function Store() {
               font-size: 2.3rem;
             `}
           >
-            You have {addCommasToNumber(1000)} Karma Points
+            You have {addCommasToNumber(karmaPoints)} Karma Points
           </p>
           <div
             className={css`

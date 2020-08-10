@@ -128,6 +128,24 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
+    async loadKarmaPoints() {
+      try {
+        const {
+          data: {
+            numTwinklesRewarded,
+            numApprovedRecommendations,
+            numPostsRewarded
+          }
+        } = await request.get(`${URL}/user/karma`, auth());
+        return Promise.resolve({
+          numTwinklesRewarded,
+          numApprovedRecommendations,
+          numPostsRewarded
+        });
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async loadModerators() {
       try {
         const { data } = await request.get(`${URL}/user/moderator`);
