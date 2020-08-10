@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import Icon from 'components/Icon';
+import Loading from 'components/Loading';
 import { css } from 'emotion';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
@@ -11,6 +12,7 @@ export default function Store() {
     requestHelpers: { loadKarmaPoints }
   } = useAppContext();
   const { authLevel, userType, userId } = useMyState();
+  const [loadingKarma, setLoadingKarma] = useState(false);
   const [karmaPoints, setKarmaPoints] = useState(0);
   const recommendationsMultiplier = 10;
   const postsMultiplier = 5;
@@ -21,6 +23,7 @@ export default function Store() {
     }
 
     async function handleLoadKarmaPoints() {
+      setLoadingKarma(true);
       const {
         numTwinklesRewarded,
         numApprovedRecommendations,
@@ -34,6 +37,7 @@ export default function Store() {
       } else {
         setKarmaPoints(postsMultiplier * numPostsRewarded);
       }
+      setLoadingKarma(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
@@ -75,37 +79,43 @@ export default function Store() {
             }
           `}
         >
-          <p
-            className={css`
-              font-weight: bold;
-              font-size: 2.3rem;
-            `}
-          >
-            You have {addCommasToNumber(karmaPoints)} Karma Points
-          </p>
-          <div
-            className={css`
-              margin-top: 2rem;
-            `}
-          >
-            {userType && (
+          {loadingKarma ? (
+            <Loading style={{ height: '10rem' }} />
+          ) : (
+            <>
               <p
                 className={css`
-                  font-size: 2rem;
                   font-weight: bold;
+                  font-size: 2.3rem;
                 `}
               >
-                {userType}
+                You have {addCommasToNumber(karmaPoints)} Karma Points
               </p>
-            )}
-            <p
-              className={css`
-                font-size: 1.7rem;
-              `}
-            >
-              {instructionText}
-            </p>
-          </div>
+              <div
+                className={css`
+                  margin-top: 2rem;
+                `}
+              >
+                {userType && (
+                  <p
+                    className={css`
+                      font-size: 2rem;
+                      font-weight: bold;
+                    `}
+                  >
+                    {userType}
+                  </p>
+                )}
+                <p
+                  className={css`
+                    font-size: 1.7rem;
+                  `}
+                >
+                  {instructionText}
+                </p>
+              </div>
+            </>
+          )}
         </div>
       )}
       <div
