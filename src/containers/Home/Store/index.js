@@ -45,7 +45,7 @@ export default function Store() {
           Your Karma Points = Total number of{' '}
           <b style={{ color: Color.pink() }}>Twinkles</b> you rewarded + (
           {recommendationsMultiplier} × total number of your{' '}
-          <b style={{ color: Color.brownOrange() }}>recommendations</b> which
+          <b style={{ color: Color.brownOrange() }}>recommendations</b> that
           were approved by teachers)
         </span>
       );
