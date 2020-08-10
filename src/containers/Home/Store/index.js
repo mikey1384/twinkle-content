@@ -76,12 +76,13 @@ export default function Store() {
         <div style={{ fontSize: '1.5rem', marginTop: '3rem' }}>
           <p>
             Total number of <b style={{ color: Color.pink() }}>Twinkles</b> you
-            rewarded: {numTwinklesRewarded}
+            rewarded: {addCommasToNumber(numTwinklesRewarded)}
           </p>
           <p>
             Total number of{' '}
             <b style={{ color: Color.brownOrange() }}>recommendations</b>{' '}
-            approved by teachers: {numApprovedRecommendations}
+            approved by teachers:{' '}
+            {addCommasToNumber(numApprovedRecommendations)}
           </p>
           <p style={{ marginTop: '1rem', fontSize: '1.7rem' }}>
             {numTwinklesRewarded} + ({recommendationsMultiplier} ×{' '}
@@ -93,7 +94,10 @@ export default function Store() {
     }
     return (
       <div style={{ fontSize: '1.5rem', marginTop: '3rem' }}>
-        <p>Total number of posts you rewarded: {numPostsRewarded}</p>
+        <p>
+          Total number of posts you rewarded:{' '}
+          {addCommasToNumber(numPostsRewarded)}
+        </p>
         <p style={{ marginTop: '1rem', fontSize: '1.7rem' }}>
           {numPostsRewarded} × {postsMultiplier} ={' '}
           <b>{addCommasToNumber(karmaPoints)} Karma Points</b>
