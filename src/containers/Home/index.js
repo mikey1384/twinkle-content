@@ -7,6 +7,7 @@ import ProfileWidget from 'components/ProfileWidget';
 import HomeMenuItems from 'components/HomeMenuItems';
 import Notification from 'components/Notification';
 import People from './People';
+import Store from './Store';
 import Stories from './Stories';
 import LocalContext from './Context';
 import { Route, Switch } from 'react-router-dom';
@@ -35,7 +36,7 @@ function Home({ history, location, onFileUpload }) {
             <ProfileWidget
               history={history}
               onShowAlert={() => setAlertModalShown(true)}
-              onLoadImage={upload => {
+              onLoadImage={(upload) => {
                 setImageEditModalShown(true);
                 setImageUri(upload.target.result);
               }}
@@ -52,6 +53,13 @@ function Home({ history, location, onFileUpload }) {
                 path="/users"
                 render={({ history, location }) => (
                   <People location={location} history={history} />
+                )}
+              />
+              <Route
+                exact
+                path="/store"
+                render={({ location, history }) => (
+                  <Store location={location} history={history} />
                 )}
               />
               <Route
