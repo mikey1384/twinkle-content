@@ -20,7 +20,7 @@ export default function Store() {
   );
   const [numPostsRewarded, setNumPostsRewarded] = useState(0);
   const recommendationsMultiplier = 10;
-  const postsMultiplier = 5;
+  const postsMultiplier = 3;
 
   useEffect(() => {
     if (userId) {
