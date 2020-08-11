@@ -192,8 +192,7 @@ export default function Store() {
           icon="shopping-bag"
         />
         <p style={{ marginTop: '2rem' }}>
-          Twinkle Store is currently under construction and will become
-          available later this year
+          Twinkle Store will open later this year
         </p>
       </div>
     </div>
