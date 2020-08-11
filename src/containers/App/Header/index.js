@@ -129,7 +129,8 @@ export default function Header({
       onAttachReward,
       onLikeContent,
       onRecommendContent,
-      onUploadComment
+      onUploadComment,
+      onUploadReply
     }
   } = useContentContext();
 
@@ -357,11 +358,18 @@ export default function Header({
         });
       }
       if (type === 'comment') {
-        onUploadComment({
-          contentId: target.contentId,
-          contentType: target.contentType,
-          ...comment
-        });
+        if (target.commentId || target.replyId) {
+          onUploadReply({
+            ...target,
+            ...comment
+          });
+        } else {
+          onUploadComment({
+            contentId: target.contentId,
+            contentType: target.contentType,
+            ...comment
+          });
+        }
       }
       onIncreaseNumNewNotis();
     }

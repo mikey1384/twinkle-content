@@ -24,10 +24,24 @@ export default function Banner({
   style = {}
 }) {
   const timerRef = useRef(null);
+  const mounted = useRef(null);
   const [spinnerShown, setSpinnerShown] = useState(false);
+
+  useEffect(() => {
+    mounted.current = true;
+
+    return function onUnmount() {
+      mounted.current = false;
+    };
+  }, []);
+
   useEffect(() => {
     if (loading) {
-      timerRef.current = setTimeout(() => setSpinnerShown(true), spinnerDelay);
+      timerRef.current = setTimeout(() => {
+        if (mounted.current) {
+          setSpinnerShown(true);
+        }
+      }, spinnerDelay);
     } else {
       clearTimeout(timerRef.current);
       setSpinnerShown(false);
