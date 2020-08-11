@@ -61,6 +61,15 @@ export default function TargetContent({
     contentType: type
   }
 }) {
+  const mounted = useRef(true);
+  useEffect(() => {
+    mounted.current = true;
+
+    return function onUnmount() {
+      mounted.current = false;
+    };
+  }, []);
+
   const history = useHistory();
   const {
     requestHelpers: { uploadComment, uploadFile }
@@ -75,7 +84,6 @@ export default function TargetContent({
   } = useMyState();
   const {
     actions: {
-      onSetCommentUploadingFile,
       onSetXpRewardInterfaceShown,
       onClearCommentFileUploadProgress,
       onUpdateCommentFileUploadProgress,
@@ -91,8 +99,7 @@ export default function TargetContent({
   const {
     xpRewardInterfaceShown,
     fileUploadComplete,
-    fileUploadProgress,
-    uploadingFile
+    fileUploadProgress
   } = useContentState({
     contentType: 'comment',
     contentId: comment.id
@@ -109,6 +116,7 @@ export default function TargetContent({
   const { fileType } = comment?.fileName
     ? getFileInfoFromFileName(comment?.fileName)
     : '';
+  const [uploadingFile, setUploadingFile] = useState(false);
   const [commentContent, setCommentContent] = useState('');
   const [
     recommendationInterfaceShown,
@@ -469,10 +477,12 @@ export default function TargetContent({
                   style={{
                     fontSize: '1.7rem',
                     fontWeight: 'bold',
-                    marginTop: 0
+                    marginTop: 0,
+                    marginLeft: '1rem',
+                    marginRight: '1rem'
                   }}
                   fileName={attachment?.file?.name}
-                  onFileUpload={handleFileUploadComplete}
+                  onFileUpload={handleFileUpload}
                   uploadComplete={fileUploadComplete}
                   uploadProgress={fileUploadProgress}
                 />
@@ -539,17 +549,13 @@ export default function TargetContent({
     }
   }
 
-  async function handleFileUploadComplete() {
+  async function handleFileUpload() {
     filePathRef.current = uuidv1();
     try {
       await uploadFile({
         filePath: filePathRef.current,
         file: attachment.file,
         onUploadProgress: handleUploadProgress
-      });
-      onSetCommentFileUploadComplete({
-        contentType: 'comment',
-        contentId: comment.id
       });
       const data = await uploadComment({
         content: commentContent,
@@ -563,31 +569,34 @@ export default function TargetContent({
         fileName: attachment.file.name,
         fileSize: attachment.file.size
       });
-      onUploadTargetComment({ ...data, contentId, contentType });
-      onClearCommentFileUploadProgress({
-        contentType: 'comment',
-        contentId: comment.id
-      });
-      onSetCommentUploadingFile({
-        contentType: 'comment',
-        contentId: comment.id,
-        uploading: false
-      });
-      onEnterComment({
-        contentType: 'comment',
-        contentId: comment.id,
-        text: ''
-      });
+      if (mounted.current) {
+        onSetCommentFileUploadComplete({
+          contentType: 'comment',
+          contentId: comment.id
+        });
+        setUploadingFile(false);
+        onUploadTargetComment({ ...data, contentId, contentType });
+        onClearCommentFileUploadProgress({
+          contentType: 'comment',
+          contentId: comment.id
+        });
+        setUploadingFile(false);
+        onEnterComment({
+          contentType: 'comment',
+          contentId: comment.id,
+          text: ''
+        });
+        setCommentContent('');
+        onSetCommentAttachment({
+          attachment: undefined,
+          contentType: 'comment',
+          contentId: comment.id
+        });
+        filePathRef.current = null;
+      }
     } catch (error) {
       console.error(error);
     }
-    setCommentContent('');
-    onSetCommentAttachment({
-      attachment: undefined,
-      contentType: 'comment',
-      contentId: comment.id
-    });
-    filePathRef.current = null;
 
     function handleUploadProgress({ loaded, total }) {
       onUpdateCommentFileUploadProgress({
@@ -601,11 +610,7 @@ export default function TargetContent({
   async function handleSubmit(text) {
     if (attachment) {
       setCommentContent(text);
-      onSetCommentUploadingFile({
-        contentType: 'comment',
-        contentId: comment.id,
-        uploading: true
-      });
+      setUploadingFile(true);
     } else {
       const data = await uploadComment({
         content: text,

@@ -91,8 +91,7 @@ function Comments({
     actions: {
       onClearCommentFileUploadProgress,
       onUpdateCommentFileUploadProgress,
-      onSetCommentFileUploadComplete,
-      onSetCommentUploadingFile
+      onSetCommentFileUploadComplete
     }
   } = useContentContext();
   const [deleting, setDeleting] = useState(false);
@@ -321,18 +320,13 @@ function Comments({
       } else {
         onCommentSubmit({
           ...data,
-          contentId: parent.contentId,
-          contentType: parent.contentType
+          contentId: targetCommentId || parent.contentId,
+          contentType: targetCommentId ? 'comment' : parent.contentType
         });
       }
       onClearCommentFileUploadProgress({
         contentType: finalContentType,
         contentId: finalContentId
-      });
-      onSetCommentUploadingFile({
-        contentType: finalContentType,
-        contentId: finalContentId,
-        uploading: false
       });
       onEnterComment({
         contentType: finalContentType,

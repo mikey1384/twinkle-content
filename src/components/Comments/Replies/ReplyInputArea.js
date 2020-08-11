@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import InputForm from 'components/Forms/InputForm';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
-import { useContentContext, useInputContext } from 'contexts';
+import { useInputContext } from 'contexts';
 import { useContentState } from 'helpers/hooks';
 import { v1 as uuidv1 } from 'uuid';
 
@@ -33,16 +33,13 @@ export default function ReplyInputArea({
     state,
     actions: { onSetCommentAttachment }
   } = useInputContext();
-  const {
-    fileUploadComplete,
-    fileUploadProgress,
-    uploadingFile
-  } = useContentState({ contentId: targetCommentId, contentType: 'comment' });
-  const {
-    actions: { onSetCommentUploadingFile }
-  } = useContentContext();
+  const { fileUploadComplete, fileUploadProgress } = useContentState({
+    contentId: targetCommentId,
+    contentType: 'comment'
+  });
 
   const [commentContent, setCommentContent] = useState('');
+  const [uploadingFile, setUploadingFile] = useState(false);
   const attachment = state['comment' + targetCommentId]?.attachment;
 
   return (
@@ -67,7 +64,7 @@ export default function ReplyInputArea({
               width: '100%'
             }}
             fileName={attachment?.file?.name}
-            onFileUpload={handleFileUploadComplete}
+            onFileUpload={handleFileUpload}
             uploadComplete={fileUploadComplete}
             uploadProgress={fileUploadProgress}
           />
@@ -76,20 +73,9 @@ export default function ReplyInputArea({
     </ErrorBoundary>
   );
 
-  function handleFileUploadComplete() {
+  function handleFileUpload() {
     filePathRef.current = uuidv1();
-    onSubmitWithAttachment({
-      attachment,
-      commentContent,
-      contentId: parent.contentId,
-      contentType: parent.contentType,
-      filePath: filePathRef.current,
-      file: attachment.file,
-      rootCommentId,
-      subjectId: parent.subjectId,
-      targetCommentId,
-      isReply: true
-    });
+    handleSubmitWithAttachment();
     setCommentContent('');
     onSetCommentAttachment({
       attachment: undefined,
@@ -97,16 +83,28 @@ export default function ReplyInputArea({
       contentId: targetCommentId
     });
     filePathRef.current = null;
+
+    async function handleSubmitWithAttachment() {
+      await onSubmitWithAttachment({
+        attachment,
+        commentContent,
+        contentId: parent.contentId,
+        contentType: parent.contentType,
+        filePath: filePathRef.current,
+        file: attachment.file,
+        rootCommentId,
+        subjectId: parent.subjectId,
+        targetCommentId,
+        isReply: true
+      });
+      setUploadingFile(false);
+    }
   }
 
   function handleSubmit(text) {
     if (attachment) {
       setCommentContent(text);
-      onSetCommentUploadingFile({
-        contentType: 'comment',
-        contentId: targetCommentId,
-        uploading: true
-      });
+      setUploadingFile(true);
     } else {
       onSubmit({
         content: text,

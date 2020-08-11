@@ -1451,7 +1451,9 @@ export default function ContentReducer(state, action) {
       };
     case 'UPLOAD_COMMENT': {
       const subjectState =
-        action.data.subjectId && state['subject' + action.data.subjectId]
+        action.data.subjectId &&
+        !action.data.commentId &&
+        state['subject' + action.data.subjectId]
           ? {
               ['subject' + action.data.subjectId]: {
                 ...state['subject' + action.data.subjectId],

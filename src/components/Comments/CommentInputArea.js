@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import InputForm from 'components/Forms/InputForm';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
 import LocalContext from './Context';
-import { useInputContext, useContentContext } from 'contexts';
+import { useInputContext } from 'contexts';
 import { useContentState } from 'helpers/hooks';
 import { v1 as uuidv1 } from 'uuid';
 
@@ -50,20 +50,13 @@ export default function CommentInputArea({
     actions: { onSetCommentAttachment }
   } = useInputContext();
 
-  const {
-    actions: { onSetCommentUploadingFile }
-  } = useContentContext();
-
-  const {
-    fileUploadComplete,
-    fileUploadProgress,
-    uploadingFile
-  } = useContentState({
+  const { fileUploadComplete, fileUploadProgress } = useContentState({
     contentId,
     contentType
   });
 
   const filePathRef = useRef(null);
+  const [uploadingFile, setUploadingFile] = useState(false);
   const [commentContent, setCommentContent] = useState('');
   const attachment = state[contentType + contentId]?.attachment;
 
@@ -91,7 +84,7 @@ export default function CommentInputArea({
             paddingBottom: '1rem'
           }}
           fileName={attachment?.file?.name}
-          onFileUpload={handleFileUploadComplete}
+          onFileUpload={handleFileUpload}
           uploadComplete={fileUploadComplete}
           uploadProgress={fileUploadProgress}
         />
@@ -99,19 +92,9 @@ export default function CommentInputArea({
     </div>
   );
 
-  function handleFileUploadComplete() {
+  function handleFileUpload() {
     filePathRef.current = uuidv1();
-    onSubmitWithAttachment({
-      attachment,
-      commentContent,
-      contentId,
-      contentType,
-      filePath: filePathRef.current,
-      file: attachment.file,
-      rootCommentId,
-      subjectId,
-      targetCommentId
-    });
+    handleSubmitWithAttachment();
     setCommentContent('');
     onSetCommentAttachment({
       attachment: undefined,
@@ -119,16 +102,27 @@ export default function CommentInputArea({
       contentId
     });
     filePathRef.current = null;
+
+    async function handleSubmitWithAttachment() {
+      await onSubmitWithAttachment({
+        attachment,
+        commentContent,
+        contentId,
+        contentType,
+        filePath: filePathRef.current,
+        file: attachment.file,
+        rootCommentId,
+        subjectId,
+        targetCommentId
+      });
+      setUploadingFile(false);
+    }
   }
 
   async function handleSubmit(text) {
     if (attachment) {
       setCommentContent(text);
-      onSetCommentUploadingFile({
-        contentType,
-        contentId,
-        uploading: true
-      });
+      setUploadingFile(true);
     } else {
       await onSubmit({
         content: text,

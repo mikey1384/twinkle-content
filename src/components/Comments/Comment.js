@@ -690,9 +690,9 @@ function Comment({
     ReplyInputAreaRef.current.focus();
   }
 
-  function handleSubmitWithAttachment(params) {
+  async function handleSubmitWithAttachment(params) {
     setReplying(true);
-    onSubmitWithAttachment(params);
+    await onSubmitWithAttachment(params);
   }
 
   function submitReply(reply) {
