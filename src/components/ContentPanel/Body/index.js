@@ -294,6 +294,13 @@ export default function Body({
         style={{
           width: '100%'
         }}
+        className={css`
+          @media (max-width: ${mobileMaxWidth}) {
+            button {
+              font-size: 1.2rem;
+            }
+          }
+        `}
       >
         {contentType === 'url' && !!byUser && (
           <div
