@@ -19,6 +19,7 @@ import { useInView } from 'react-intersection-observer';
 
 ContentPanel.propTypes = {
   autoExpand: PropTypes.bool,
+  className: PropTypes.string,
   commentsLoadLimit: PropTypes.number,
   contentId: PropTypes.number.isRequired,
   contentType: PropTypes.string.isRequired,
@@ -29,6 +30,7 @@ ContentPanel.propTypes = {
 
 export default function ContentPanel({
   autoExpand,
+  className,
   commentsLoadLimit,
   contentId,
   contentType,
@@ -189,12 +191,12 @@ export default function ContentPanel({
         }}
       >
         {!contentState.deleted ? (
-          <div style={style} ref={ComponentRef}>
+          <div style={style} className={className} ref={ComponentRef}>
             <div
               ref={ContainerRef}
               style={{
                 width: '100%',
-                margin: '1rem 0 1rem 0',
+                marginBottom: '1rem',
                 height: contentShown ? 'auto' : placeholderHeight || '15rem'
               }}
             >

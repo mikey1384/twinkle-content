@@ -107,6 +107,12 @@ export default function ContentPage({
           {exists ? (
             <ContentPanel
               key={contentType + contentId}
+              className={css`
+                margin-top: 1rem;
+                @media (max-width: ${mobileMaxWidth}) {
+                  margin-top: 0;
+                }
+              `}
               autoExpand
               commentsLoadLimit={5}
               contentId={Number(contentId)}
