@@ -72,5 +72,8 @@ export const commentContainer = css`
       font-weight: bold;
       color: ${Color.darkerGray()};
     }
+    button {
+      font-size: 1rem;
+    }
   }
 `;

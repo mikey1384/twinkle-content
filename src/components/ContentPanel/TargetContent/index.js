@@ -214,11 +214,19 @@ export default function TargetContent({
         background: ${Color.whiteGray()};
         margin-top: -1rem;
         transition: background 0.5s;
-        .buttons {
+        .left {
           margin-top: 2rem;
           display: flex;
           width: 100%;
           justify-content: space-between;
+          @media (max-width: ${mobileMaxWidth}) {
+            button,
+            span {
+              font-size: 1rem;
+            }
+          }
+        }
+        .right {
           @media (max-width: ${mobileMaxWidth}) {
             button,
             span {
@@ -345,6 +353,7 @@ export default function TargetContent({
                     }}
                   >
                     <div
+                      className="left"
                       style={{
                         display: 'flex',
                         flexDirection: 'column',
@@ -393,7 +402,10 @@ export default function TargetContent({
                         onLinkClick={() => setUserListModalShown(true)}
                       />
                     </div>
-                    <div>
+                    <div
+                      style={{ display: 'flex', alignItems: 'center' }}
+                      className="right"
+                    >
                       <Button
                         color="brownOrange"
                         filled={isRecommendedByUser}
