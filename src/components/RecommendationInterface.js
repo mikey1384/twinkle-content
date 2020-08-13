@@ -128,18 +128,17 @@ export default function RecommendationInterface({
     setRecommending(true);
     if (!isRecommendedByUser && authLevel > 1 && isOnlyRecommendedByStudents) {
       for (let recommendation of recommendations) {
-        rewardUser({
-          amount:
-            recommendation.userId === uploaderId
-              ? priceTable.recommendation
-              : priceTable.recommendation * 3,
-          contentType: 'recommendation',
-          contentId: recommendation.id,
-          rootType: contentType,
-          rootId: contentId,
-          uploaderId: recommendation.userId,
-          rewardType: 'Twinkle Coin'
-        });
+        if (recommendation.userId !== uploaderId) {
+          rewardUser({
+            amount: priceTable.recommendation,
+            contentType: 'recommendation',
+            contentId: recommendation.id,
+            rootType: contentType,
+            rootId: contentId,
+            uploaderId: recommendation.userId,
+            rewardType: 'Twinkle Coin'
+          });
+        }
       }
     }
     try {
