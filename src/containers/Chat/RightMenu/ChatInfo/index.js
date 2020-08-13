@@ -60,7 +60,7 @@ function ChatInfo({
   const videoChatButtonShown = useMemo(() => {
     if (currentChannel.twoPeople) {
       if (currentChannel.members?.length !== 2) return false;
-      return callOngoing || authLevel > 0;
+      return !!currentChannel.id && (callOngoing || authLevel > 0);
     }
     return (
       currentChannel.isClass &&
@@ -70,8 +70,9 @@ function ChatInfo({
     authLevel,
     callOngoing,
     currentChannel.creatorId,
+    currentChannel.id,
     currentChannel.isClass,
-    currentChannel.members,
+    currentChannel.members.length,
     currentChannel.twoPeople,
     myId
   ]);

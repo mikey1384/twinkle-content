@@ -510,7 +510,7 @@ export default function ChatReducer(state, action) {
     case 'LOAD_MORE_CHANNELS': {
       let homeLoadMoreButton = state.homeLoadMoreButton;
       let classLoadMoreButton = state.classLoadMoreButton;
-      let favoriteLoadMoreButton = state.favoriteChannelIds;
+      let favoriteLoadMoreButton = state.favoriteLoadMoreButton;
       const chatTabHash = {
         home: 'homeChannelIds',
         favorite: 'favoriteChannelIds',
