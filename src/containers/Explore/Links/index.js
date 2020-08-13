@@ -95,7 +95,7 @@ export default function Links({ location }) {
     async function handleLoadLinksMadeByUsers() {
       const { results, loadMoreButton } = await loadByUserUploads({
         contentType: 'url',
-        limit: 5
+        limit: 1
       });
       onLoadByUserLinks({
         links: results,
