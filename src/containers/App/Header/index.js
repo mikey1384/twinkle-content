@@ -19,11 +19,7 @@ import {
   useNotiContext,
   useChatContext
 } from 'contexts';
-import {
-  GENERAL_CHAT_ID,
-  TURN_USERNAME,
-  TURN_PASSWORD
-} from 'constants/defaultValues';
+import { GENERAL_CHAT_ID } from 'constants/defaultValues';
 
 Header.propTypes = {
   onChatButtonClick: PropTypes.func,
@@ -734,15 +730,9 @@ export default function Header({
 
   function handleNewPeer({ peerId, channelId, initiator, stream }) {
     if (initiator || channelOnCall.members[userId]) {
-      console.log(TURN_USERNAME, TURN_PASSWORD);
       peersRef.current[peerId] = new Peer({
         config: {
           iceServers: [
-            {
-              urls: 'turn:13.230.133.153:3478',
-              username: TURN_USERNAME,
-              credential: TURN_PASSWORD
-            },
             {
               urls: 'stun:stun.l.google.com:19302'
             }
