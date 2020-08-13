@@ -513,7 +513,7 @@ export default function Privacy() {
         If you have any questions about this Privacy Policy, please contact us:
       </p>
       <ul>
-        <li>By email: twinkle.mikey@gmail.com</li>
+        <li>By email: mikey@twin-kle.com</li>
       </ul>
     </div>
   );
