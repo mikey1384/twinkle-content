@@ -19,7 +19,11 @@ import {
   useNotiContext,
   useChatContext
 } from 'contexts';
-import { GENERAL_CHAT_ID } from 'constants/defaultValues';
+import {
+  GENERAL_CHAT_ID,
+  TURN_USERNAME,
+  TURN_PASSWORD
+} from 'constants/defaultValues';
 
 Header.propTypes = {
   onChatButtonClick: PropTypes.func,
@@ -735,6 +739,11 @@ export default function Header({
           iceServers: [
             {
               urls: 'stun:stun.l.google.com:19302'
+            },
+            {
+              urls: 'turn:13.230.133.153:3478',
+              username: TURN_USERNAME,
+              credential: TURN_PASSWORD
             }
           ]
         },
