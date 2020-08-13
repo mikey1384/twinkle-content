@@ -734,6 +734,7 @@ export default function Header({
 
   function handleNewPeer({ peerId, channelId, initiator, stream }) {
     if (initiator || channelOnCall.members[userId]) {
+      console.log(TURN_USERNAME, TURN_PASSWORD);
       peersRef.current[peerId] = new Peer({
         config: {
           iceServers: [
