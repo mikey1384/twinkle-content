@@ -651,16 +651,12 @@ export default function Body({
   );
 
   async function handleCommentSubmit(params) {
-    onCommentSubmit(params);
-    if (contentObj.secretAnswer) {
-      if (contentType === 'subject') {
-        if (!secretShown) {
-          await handleExpandComments();
-        }
-        onChangeSpoilerStatus({ shown: true, subjectId: contentObj.id });
-      }
+    if (contentType === 'subject' && contentObj.secretAnswer && !secretShown) {
+      await handleExpandComments();
+      onChangeSpoilerStatus({ shown: true, subjectId: contentObj.id });
+    } else {
+      onCommentSubmit(params);
     }
-    return Promise.resolve();
   }
 
   function handleSetXpRewardInterfaceShown() {
