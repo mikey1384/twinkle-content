@@ -46,7 +46,7 @@ function XPVideoPlayer({
       updateVideoXPEarned
     }
   } = useAppContext();
-  const { profileTheme, userId } = useMyState();
+  const { profileTheme, userId, twinkleCoins } = useMyState();
   const {
     state: { pageVisible }
   } = useViewContext();
@@ -94,6 +94,7 @@ function XPVideoPlayer({
   const rewardAmountRef = useRef(rewardLevel * rewardValue);
   const xpEarnedRef = useRef(xpEarned);
   const canEarnCoins = rewardLevelRef.current >= 3;
+  const coinRewardAmount = 2;
 
   useEffect(() => {
     mounted.current = true;
@@ -386,21 +387,23 @@ function XPVideoPlayer({
           videoId,
           progress: 0
         });
-        rewardingCoin.current = true;
-        try {
-          const coins = await updateUserCoins({
-            action: 'watch',
-            target: 'video',
-            amount: 2,
-            targetId: videoId,
-            type: 'increase'
-          });
-          onChangeUserCoins({ coins, userId });
-          onIncreaseNumCoinsEarned({ videoId });
-          rewardingCoin.current = false;
-        } catch (error) {
-          console.error(error.response || error);
-          rewardingCoin.current = false;
+        if (twinkleCoins + coinRewardAmount <= 1000) {
+          rewardingCoin.current = true;
+          try {
+            const coins = await updateUserCoins({
+              action: 'watch',
+              target: 'video',
+              amount: coinRewardAmount,
+              targetId: videoId,
+              type: 'increase'
+            });
+            onChangeUserCoins({ coins, userId });
+            onIncreaseNumCoinsEarned({ videoId });
+            rewardingCoin.current = false;
+          } catch (error) {
+            console.error(error.response || error);
+            rewardingCoin.current = false;
+          }
         }
         return;
       }
