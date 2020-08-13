@@ -738,12 +738,12 @@ export default function Header({
         config: {
           iceServers: [
             {
-              urls: 'stun:stun.l.google.com:19302'
-            },
-            {
               urls: 'turn:13.230.133.153:3478',
               username: TURN_USERNAME,
               credential: TURN_PASSWORD
+            },
+            {
+              urls: 'stun:stun.l.google.com:19302'
             }
           ]
         },
