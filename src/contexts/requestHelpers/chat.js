@@ -245,10 +245,16 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async loadMoreChannels({ currentChannelId, lastId, lastUpdated, type }) {
+    async loadMoreChannels({
+      currentChannelId,
+      lastId,
+      lastUpdated,
+      topChannelId,
+      type
+    }) {
       try {
         const { data } = await request.get(
-          `${URL}/chat/more/channels?type=${type}&currentChannelId=${currentChannelId}&lastUpdated=${lastUpdated}&lastId=${lastId}`,
+          `${URL}/chat/more/channels?type=${type}&currentChannelId=${currentChannelId}&lastUpdated=${lastUpdated}&lastId=${lastId}&topChannelId=${topChannelId}`,
           auth()
         );
         return Promise.resolve(data);

@@ -151,6 +151,7 @@ function Channels({ onChannelEnter }) {
         type: selectedChatTab,
         lastUpdated,
         lastId,
+        topChannelId: channelIds[0],
         currentChannelId: selectedChannelId
       });
       onLoadMoreChannels({ type: selectedChatTab, channels });

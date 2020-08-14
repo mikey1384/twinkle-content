@@ -66,16 +66,7 @@ function ChatInfo({
       currentChannel.isClass &&
       (callOngoing || currentChannel.creatorId === myId)
     );
-  }, [
-    authLevel,
-    callOngoing,
-    currentChannel.creatorId,
-    currentChannel.id,
-    currentChannel.isClass,
-    currentChannel.members.length,
-    currentChannel.twoPeople,
-    myId
-  ]);
+  }, [authLevel, callOngoing, currentChannel, myId]);
 
   const displayedChannelMembers = useMemo(() => {
     const totalChannelMembers = currentChannel?.members || [];
