@@ -242,42 +242,52 @@ function Embedly({
             </section>
           </a>
         )}
-        {!imageOnly && (
-          <section
-            className={css`
-              width: 100%;
-              line-height: 1.5;
-              padding: 1rem;
-              cursor: ${small ? 'pointer' : ''};
-              ${contentType === 'chat' ? 'margin-bottom: 1rem;' : ''}
-              ${small ? 'margin-left: 1rem;' : ''}
-              ${small ? '' : 'margin-top: 1rem;'}
-            `}
-            onClick={small ? () => history.push(`/links/${contentId}`) : null}
-          >
-            <h3
-              style={{
-                overflow: 'hidden',
-                display: '-webkit-box',
-                WebkitLineClamp: 1,
-                WebkitBoxOrient: 'vertical'
-              }}
-            >
-              {actualTitle || title}
-            </h3>
-            <p
-              style={{
-                overflow: 'hidden',
-                display: '-webkit-box',
-                WebkitLineClamp: 4,
-                WebkitBoxOrient: 'vertical'
-              }}
-            >
-              {actualDescription || description}
-            </p>
-            <p style={{ fontWeight: 'bold' }}>{siteUrl}</p>
-          </section>
-        )}
+        {!imageOnly &&
+          React.createElement(
+            contentType === 'chat' ? 'a' : 'section',
+            {
+              style: {
+                textDecoration: 'none',
+                color: Color.darkerGray()
+              },
+              target: contentType === 'chat' ? '_blank' : null,
+              rel: contentType === 'chat' ? 'noopener noreferrer' : null,
+              href: contentType === 'chat' ? url : null,
+              className: css`
+                width: 100%;
+                line-height: 1.5;
+                padding: 1rem;
+                cursor: ${contentType === 'chat' || small ? 'pointer' : ''};
+                ${contentType === 'chat' ? 'margin-bottom: 1rem;' : ''}
+                ${small ? 'margin-left: 1rem;' : ''}
+                ${small ? '' : 'margin-top: 1rem;'}
+              `,
+              onClick: small ? () => history.push(`/links/${contentId}`) : null
+            },
+            <>
+              <h3
+                style={{
+                  overflow: 'hidden',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 1,
+                  WebkitBoxOrient: 'vertical'
+                }}
+              >
+                {actualTitle || title}
+              </h3>
+              <p
+                style={{
+                  overflow: 'hidden',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 4,
+                  WebkitBoxOrient: 'vertical'
+                }}
+              >
+                {actualDescription || description}
+              </p>
+              <p style={{ fontWeight: 'bold' }}>{siteUrl}</p>
+            </>
+          )}
       </div>
     );
     function handleImageLoadError() {
