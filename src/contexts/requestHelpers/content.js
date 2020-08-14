@@ -488,13 +488,18 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async recommendContent({ contentId, contentType, currentRecommendations }) {
+    async recommendContent({
+      contentId,
+      contentType,
+      currentRecommendations,
+      uploaderId
+    }) {
       try {
         const {
           data: { coins, recommendations }
         } = await request.post(
           `${URL}/content/recommend`,
-          { contentId, contentType, currentRecommendations },
+          { contentId, contentType, currentRecommendations, uploaderId },
           auth()
         );
         return Promise.resolve({ coins, recommendations });
