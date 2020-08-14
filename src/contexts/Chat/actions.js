@@ -174,11 +174,10 @@ export default function ChatActions(dispatch) {
         theme
       });
     },
-    onEnterChannelWithId({ data, showOnTop }) {
+    onEnterChannelWithId({ data }) {
       return dispatch({
         type: 'ENTER_CHANNEL',
-        data,
-        showOnTop
+        data
       });
     },
     onEnterEmptyChat() {

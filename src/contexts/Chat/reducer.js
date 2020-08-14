@@ -317,20 +317,6 @@ export default function ChatReducer(state, action) {
           ...state.channelsObj,
           [selectedChannel.id]: selectedChannel
         },
-        homeChannelIds: state.homeChannelIds.reduce(
-          (prev, channelId, index) => {
-            if (action.showOnTop && index === state.homeChannelIds.length - 1) {
-              return [selectedChannel.id].concat(
-                prev.concat(channelId === selectedChannel.id ? [] : [channelId])
-              );
-            }
-            if (action.showOnTop && selectedChannel.id === channelId) {
-              return prev;
-            }
-            return prev.concat([channelId]);
-          },
-          []
-        ),
         messages: uploadStatusMessages
           ? [...action.data.messages, ...uploadStatusMessages]
           : action.data.messages,
@@ -727,11 +713,6 @@ export default function ChatReducer(state, action) {
             numUnreads: 0
           }
         },
-        homeChannelIds: [action.channelId].concat(
-          state.homeChannelIds.filter(
-            (channelId) => channelId !== action.channelId
-          )
-        ),
         selectedChannelId: action.channelId,
         messages: action.messages.reverse(),
         messagesLoadMoreButton,
@@ -1181,13 +1162,11 @@ export default function ChatReducer(state, action) {
       return {
         ...state,
         isRespondingToSubject: false,
-        homeChannelIds: state.homeChannelIds.reduce((prev, channelId) => {
-          const next =
-            channelId === action.message.channelId
-              ? [channelId].concat(prev)
-              : prev.concat([channelId]);
-          return next;
-        }, []),
+        homeChannelIds: [action.message.channelId].concat(
+          state.homeChannelIds.filter(
+            (channelId) => channelId !== action.message.channelId
+          )
+        ),
         channelsObj: {
           ...state.channelsObj,
           [action.message.channelId]: {

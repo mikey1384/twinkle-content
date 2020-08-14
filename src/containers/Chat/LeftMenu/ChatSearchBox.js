@@ -84,7 +84,7 @@ export default function ChatSearchBox({ style }) {
       const data = await loadChatChannel({
         channelId: item.channelId
       });
-      onEnterChannelWithId({ data, showOnTop: true });
+      onEnterChannelWithId({ data });
     } else {
       onOpenNewChatTab({
         user: { username, id: userId, profilePicId, authLevel },

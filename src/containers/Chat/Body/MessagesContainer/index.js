@@ -917,7 +917,7 @@ export default function MessagesContainer({
           profilePicId
         });
         const data = await loadChatChannel({ channelId: GENERAL_CHAT_ID });
-        onEnterChannelWithId({ data, showOnTop: true });
+        onEnterChannelWithId({ data });
         setLeaveConfirmModalShown(false);
         setLeaving(false);
       } catch (error) {
@@ -960,7 +960,7 @@ export default function MessagesContainer({
     );
     if (channel.id === invitationChannelId) {
       socket.emit('join_chat_group', channel.id);
-      onEnterChannelWithId({ data: { channel, messages }, showOnTop: true });
+      onEnterChannelWithId({ data: { channel, messages } });
       socket.emit('new_chat_message', {
         message: joinMessage,
         channel,
@@ -1096,7 +1096,7 @@ export default function MessagesContainer({
     const data = await loadChatChannel({
       channelId: GENERAL_CHAT_ID
     });
-    onEnterChannelWithId({ data, showOnTop: true });
+    onEnterChannelWithId({ data });
     setHideModalShown(false);
   }
 
