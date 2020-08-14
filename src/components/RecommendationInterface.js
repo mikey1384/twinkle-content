@@ -27,11 +27,11 @@ export default function RecommendationInterface({
   style,
   uploaderId
 }) {
-  const { authLevel, userId, twinkleCoins } = useMyState();
+  const { userId, twinkleCoins } = useMyState();
   const [recommending, setRecommending] = useState(false);
 
   const {
-    requestHelpers: { recommendContent, rewardUser }
+    requestHelpers: { recommendContent }
   } = useAppContext();
 
   const {
@@ -126,25 +126,16 @@ export default function RecommendationInterface({
 
   async function handleRecommend() {
     setRecommending(true);
-    if (!isRecommendedByUser && authLevel > 1 && isOnlyRecommendedByStudents) {
-      for (let recommendation of recommendations) {
-        if (recommendation.userId !== uploaderId) {
-          rewardUser({
-            amount: priceTable.recommendation,
-            contentType: 'recommendation',
-            contentId: recommendation.id,
-            rootType: contentType,
-            rootId: contentId,
-            uploaderId: recommendation.userId,
-            rewardType: 'Twinkle Coin'
-          });
-        }
-      }
-    }
+    const currentRecommendations =
+      !isRecommendedByUser && isOnlyRecommendedByStudents
+        ? recommendations
+        : [];
     try {
       const { coins, recommendations } = await recommendContent({
         contentId,
-        contentType
+        contentType,
+        uploaderId,
+        currentRecommendations
       });
       onChangeUserCoins({ coins, userId });
       if (recommendations) {
