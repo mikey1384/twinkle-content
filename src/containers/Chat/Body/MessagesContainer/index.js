@@ -873,6 +873,23 @@ export default function MessagesContainer({
       });
     }
     setInviteUsersModalShown(false);
+    if (!isClass) {
+      onSubmitMessage({
+        message: {
+          channelId: selectedChannelId,
+          userId,
+          username,
+          id: uuidv1(),
+          profilePicId,
+          content: `sent ${users.length === 1 ? 'an ' : ''}invitation message${
+            users.length > 1 ? 's' : ''
+          } to ${
+            users.length > 1 ? `${users.length} users` : users[0].username
+          }`,
+          isNotification: true
+        }
+      });
+    }
   }
 
   function handleLeaveConfirm() {
