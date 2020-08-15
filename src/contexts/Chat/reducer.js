@@ -1162,11 +1162,13 @@ export default function ChatReducer(state, action) {
       return {
         ...state,
         isRespondingToSubject: false,
-        homeChannelIds: [action.message.channelId].concat(
-          state.homeChannelIds.filter(
-            (channelId) => channelId !== action.message.channelId
-          )
-        ),
+        homeChannelIds: action.message.isNotification
+          ? state.homeChannelIds
+          : [action.message.channelId].concat(
+              state.homeChannelIds.filter(
+                (channelId) => channelId !== action.message.channelId
+              )
+            ),
         channelsObj: {
           ...state.channelsObj,
           [action.message.channelId]: {
