@@ -13,6 +13,7 @@ import { timeSince } from 'helpers/timeStampHelpers';
 import SubjectsModal from '../../../Modals/SubjectsModal';
 import Input from 'components/Texts/Input';
 import ErrorBoundary from 'components/ErrorBoundary';
+import Loading from 'components/Loading';
 import { edit } from 'constants/placeholders';
 import { css } from 'emotion';
 
@@ -59,6 +60,7 @@ export default function EditSubjectForm({
     clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => handleChangeInput(title), 300);
     async function handleChangeInput(input) {
+      setReadyForSubmit(false);
       await onChange(input);
       const content = input ? `${input[0].toUpperCase()}${input.slice(1)}` : '';
       for (let i = 0; i < searchResults.length; i++) {
@@ -128,6 +130,9 @@ export default function EditSubjectForm({
                   indexToHighlight={highlightedIndex}
                   searchResults={searchResults}
                 />
+              )}
+              {!readyForSubmit && (
+                <Loading style={{ position: 'absolute', top: '0.5rem' }} />
               )}
             </form>
           </div>
