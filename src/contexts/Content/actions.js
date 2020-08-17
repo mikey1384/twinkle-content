@@ -41,10 +41,11 @@ export default function ContentActions(dispatch) {
         theme
       });
     },
-    onChangeSpoilerStatus({ shown, subjectId }) {
+    onChangeSpoilerStatus({ prevSecretViewerId, shown, subjectId }) {
       return dispatch({
         type: 'CHANGE_SPOILER_STATUS',
         shown,
+        prevSecretViewerId,
         contentId: subjectId,
         contentType: 'subject'
       });
