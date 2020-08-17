@@ -184,7 +184,7 @@ export default function ContentReducer(state, action) {
           ...prevContentState,
           ...(contentMatches || targetSubjectMatches
             ? {
-                spoilerStatusChecked: action.checked,
+                prevSecretViewerId: action.prevSecretViewerId,
                 secretShown: action.shown
               }
             : {}),
@@ -208,7 +208,7 @@ export default function ContentReducer(state, action) {
           ...defaultState,
           contentType: 'subject',
           contentId: action.contentId,
-          spoilerStatusChecked: action.checked,
+          prevSecretViewerId: action.prevSecretViewerId,
           secretShown: action.shown
         };
       }

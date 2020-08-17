@@ -23,7 +23,7 @@ function SecretAnswer({ answer, onClick, style, subjectId, uploaderId }) {
   const {
     actions: { onChangeSpoilerStatus }
   } = useContentContext();
-  const { secretShown, spoilerStatusChecked } = useContentState({
+  const { secretShown, prevSecretViewerId } = useContentState({
     contentType: 'subject',
     contentId: subjectId
   });
@@ -31,30 +31,21 @@ function SecretAnswer({ answer, onClick, style, subjectId, uploaderId }) {
   const mounted = useRef(true);
   useEffect(() => {
     mounted.current = true;
-    if (userId && !spoilerStatusChecked) {
+    if (userId && userId !== prevSecretViewerId) {
       init();
     }
-    if (spoilerStatusChecked && spoilerShown) {
-      onChangeSpoilerStatus({
-        shown: true,
-        subjectId,
-        checked: true
-      });
-    }
     if (!userId) {
-      onChangeSpoilerStatus({ shown: false, subjectId, checked: false });
+      onChangeSpoilerStatus({ shown: false, subjectId });
     }
 
     async function init() {
-      if (!spoilerShown) {
-        const { responded } = await checkIfUserResponded(subjectId);
-        if (mounted.current) {
-          onChangeSpoilerStatus({
-            shown: responded,
-            subjectId,
-            checked: true
-          });
-        }
+      const { responded } = await checkIfUserResponded(subjectId);
+      if (mounted.current) {
+        onChangeSpoilerStatus({
+          shown: responded,
+          subjectId,
+          prevSecretViewerId: userId
+        });
       }
     }
 
@@ -62,7 +53,7 @@ function SecretAnswer({ answer, onClick, style, subjectId, uploaderId }) {
       mounted.current = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [spoilerShown, spoilerStatusChecked, userId]);
+  }, [spoilerShown, subjectId, userId]);
 
   return (
     <ErrorBoundary>

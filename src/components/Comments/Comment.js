@@ -322,28 +322,24 @@ function Comment({
   useEffect(() => {
     mounted.current = true;
     if (mounted.current) {
-      if (userId && subject && !subjectState.spoilerStatusChecked) {
+      if (userId && subject && subjectState.prevSecretViewerId !== userId) {
         checkSecretShown();
       }
       if (!userId) {
         onChangeSpoilerStatus({
           shown: false,
-          subjectId: subject?.id,
-          checked: false
+          subjectId: subject?.id
         });
       }
     }
 
     async function checkSecretShown() {
-      if (isHidden) {
-        const { responded } = await checkIfUserResponded(subject?.id);
-        if (mounted.current) {
-          onChangeSpoilerStatus({
-            shown: responded,
-            subjectId: subject?.id,
-            checked: true
-          });
-        }
+      const { responded } = await checkIfUserResponded(subject?.id);
+      if (mounted.current) {
+        onChangeSpoilerStatus({
+          shown: responded,
+          subjectId: subject?.id
+        });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

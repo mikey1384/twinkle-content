@@ -41,11 +41,10 @@ export default function ContentActions(dispatch) {
         theme
       });
     },
-    onChangeSpoilerStatus({ checked, shown, subjectId }) {
+    onChangeSpoilerStatus({ shown, subjectId }) {
       return dispatch({
         type: 'CHANGE_SPOILER_STATUS',
         shown,
-        checked,
         contentId: subjectId,
         contentType: 'subject'
       });
