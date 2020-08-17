@@ -322,8 +322,12 @@ function Comment({
   useEffect(() => {
     mounted.current = true;
     if (mounted.current) {
-      if (userId && subject && subjectState.prevSecretViewerId !== userId) {
-        checkSecretShown();
+      if (
+        userId &&
+        subjectState.id &&
+        subjectState.prevSecretViewerId !== userId
+      ) {
+        handleCheckSecretShown();
       }
       if (!userId) {
         onChangeSpoilerStatus({
@@ -333,12 +337,13 @@ function Comment({
       }
     }
 
-    async function checkSecretShown() {
-      const { responded } = await checkIfUserResponded(subject?.id);
+    async function handleCheckSecretShown() {
+      const { responded } = await checkIfUserResponded(subjectState.id);
       if (mounted.current) {
         onChangeSpoilerStatus({
           shown: responded,
-          subjectId: subject?.id
+          subjectId: subjectState.id,
+          prevSecretViewerId: userId
         });
       }
     }
