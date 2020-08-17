@@ -653,7 +653,11 @@ export default function Body({
   async function handleCommentSubmit(params) {
     if (contentType === 'subject' && contentObj.secretAnswer && !secretShown) {
       await handleExpandComments();
-      onChangeSpoilerStatus({ shown: true, subjectId: contentObj.id });
+      onChangeSpoilerStatus({
+        shown: true,
+        subjectId: contentObj.id,
+        prevSecretViewerId: userId
+      });
     } else {
       onCommentSubmit(params);
     }

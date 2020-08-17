@@ -532,7 +532,7 @@ export default function SubjectPanel({
     onChangeSpoilerStatus({
       shown: true,
       subjectId,
-      checked: true
+      prevSecretViewerId: userId
     });
     if (secretHidden) {
       await handleExpand(true);
