@@ -60,7 +60,6 @@ export default function EditSubjectForm({
     clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => handleChangeInput(title), 300);
     async function handleChangeInput(input) {
-      setReadyForSubmit(false);
       await onChange(input);
       const content = input ? `${input[0].toUpperCase()}${input.slice(1)}` : '';
       for (let i = 0; i < searchResults.length; i++) {
@@ -132,7 +131,7 @@ export default function EditSubjectForm({
                 />
               )}
               {!readyForSubmit && (
-                <Loading style={{ position: 'absolute', top: '0.5rem' }} />
+                <Loading style={{ position: 'absolute', top: 0 }} />
               )}
             </form>
           </div>
