@@ -308,6 +308,13 @@ export default function ChatReducer(state, action) {
 
       return {
         ...state,
+        homeChannelIds: action.showOnTop
+          ? [selectedChannel.id].concat(
+              state.homeChannelIds.filter(
+                (channelId) => channelId !== selectedChannel.id
+              )
+            )
+          : state.homeChannelIds,
         selectedChatTab: determineSelectedChatTab({
           currentSelectedChatTab: state.selectedChatTab,
           selectedChannel

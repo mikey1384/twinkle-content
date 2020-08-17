@@ -961,7 +961,7 @@ export default function MessagesContainer({
     );
     if (channel.id === invitationChannelId) {
       socket.emit('join_chat_group', channel.id);
-      onEnterChannelWithId({ data: { channel, messages } });
+      onEnterChannelWithId({ data: { channel, messages }, showOnTop: true });
       socket.emit('new_chat_message', {
         message: joinMessage,
         channel,
