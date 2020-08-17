@@ -53,7 +53,7 @@ function SecretAnswer({ answer, onClick, style, subjectId, uploaderId }) {
       mounted.current = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [spoilerShown, subjectId, userId]);
+  }, [prevSecretViewerId, subjectId, userId]);
 
   return (
     <ErrorBoundary>
