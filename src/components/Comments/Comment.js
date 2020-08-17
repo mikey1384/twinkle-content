@@ -332,7 +332,7 @@ function Comment({
       if (!userId) {
         onChangeSpoilerStatus({
           shown: false,
-          subjectId: subject?.id
+          subjectId: subjectState.id
         });
       }
     }
@@ -348,7 +348,7 @@ function Comment({
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId]);
+  }, [subjectState.id, subjectState.prevSecretViewerId, userId]);
 
   return !deleted && !comment.deleted ? (
     <>
