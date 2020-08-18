@@ -2,6 +2,8 @@ import React from 'react';
 import { css } from 'emotion';
 import { borderRadius, Color } from 'constants/css';
 import Screenshot from './screenshot.png';
+import Button from 'components/Button';
+import Icon from 'components/Icon';
 
 export default function CurrentTast() {
   return (
@@ -43,6 +45,18 @@ export default function CurrentTast() {
           >
             progress: 60%
           </div>
+        </div>
+        <div
+          style={{
+            marginTop: '3rem',
+            display: 'flex',
+            justifyContent: 'flex-end'
+          }}
+        >
+          <Button filled color="darkBlue">
+            <Icon icon="arrow-right" />
+            <span style={{ marginLeft: '1rem' }}>Resume</span>
+          </Button>
         </div>
       </div>
     </div>
