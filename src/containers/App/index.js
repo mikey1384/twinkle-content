@@ -11,6 +11,7 @@ import LinkPage from 'containers/LinkPage';
 import PlaylistPage from 'containers/PlaylistPage';
 import Privacy from 'containers/Privacy';
 import Redirect from 'containers/Redirect';
+import Tasks from 'containers/Tasks';
 import SigninModal from 'containers/Signin';
 import Management from 'containers/Management';
 import MobileMenu from './MobileMenu';
@@ -285,6 +286,7 @@ function App({ location, history }) {
           <Route path="/subjects/:contentId" component={ContentPage} />
           <Route path="/subjects" component={Explore} />
           <Route path="/playlists" component={PlaylistPage} />
+          <Route path="/tasks" component={Tasks} />
           <Route
             path="/chat"
             render={() => <Chat onFileUpload={handleFileUploadOnChat} />}
