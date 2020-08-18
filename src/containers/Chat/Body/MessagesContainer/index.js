@@ -337,7 +337,7 @@ export default function MessagesContainer({
   useEffect(() => {
     if (messagesLoaded && mounted.current) {
       setTimeout(() => {
-        if (mounted.current) {
+        if (mounted.current && MessagesContainerRef.current) {
           MessagesContainerRef.current.scrollTop =
             ContentRef.current?.offsetHeight || 0;
           onChannelLoadingDone();
@@ -554,12 +554,12 @@ export default function MessagesContainer({
               color="orange"
               onClick={() => {
                 setNewUnseenMessage(false);
-                setTimeout(
-                  () =>
-                    (MessagesContainerRef.current.scrollTop =
-                      ContentRef.current?.offsetHeight || 0),
-                  100
-                );
+                setTimeout(() => {
+                  if (MessagesContainerRef.current) {
+                    MessagesContainerRef.current.scrollTop =
+                      ContentRef.current?.offsetHeight || 0;
+                  }
+                }, 100);
               }}
             >
               New Message
@@ -941,10 +941,12 @@ export default function MessagesContainer({
             channelId: selectedChannelId
           });
           onLoadMoreMessages({ messages, loadedChannelId });
-          MessagesContainerRef.current.scrollTop = Math.max(
-            MessagesContainerRef.current.scrollTop,
-            (ContentRef.current?.offsetHeight || 0) - prevContentHeight
-          );
+          if (MessagesContainerRef.current) {
+            MessagesContainerRef.current.scrollTop = Math.max(
+              MessagesContainerRef.current.scrollTop,
+              (ContentRef.current?.offsetHeight || 0) - prevContentHeight
+            );
+          }
           setLoadMoreButtonLock(false);
         } catch (error) {
           console.error(error);
@@ -1067,15 +1069,15 @@ export default function MessagesContainer({
   }
 
   function handleSetScrollToBottom() {
-    if (mounted.current) {
+    if (mounted.current && MessagesContainerRef.current) {
       MessagesContainerRef.current.scrollTop =
         ContentRef.current?.offsetHeight || 0;
-      setTimeout(
-        () =>
-          (MessagesContainerRef.current.scrollTop =
-            ContentRef.current?.offsetHeight || 0),
-        10
-      );
+      setTimeout(() => {
+        if (MessagesContainerRef.current) {
+          MessagesContainerRef.current.scrollTop =
+            ContentRef.current?.offsetHeight || 0;
+        }
+      }, 10);
       if (ContentRef.current?.offsetHeight) {
         setScrollAtBottom(true);
       }
