@@ -162,6 +162,7 @@ export default function Posts({
         ) : (
           <div
             className={css`
+              margin-top: 1rem;
               width: ${section === 'likes' ? '55%' : '50%'};
               @media (max-width: ${mobileMaxWidth}) {
                 width: 100%;
