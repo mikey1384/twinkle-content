@@ -1072,12 +1072,12 @@ export default function MessagesContainer({
     if (mounted.current && MessagesContainerRef.current) {
       MessagesContainerRef.current.scrollTop =
         ContentRef.current?.offsetHeight || 0;
-      setTimeout(
-        () =>
-          (MessagesContainerRef.current.scrollTop =
-            ContentRef.current?.offsetHeight || 0),
-        10
-      );
+      setTimeout(() => {
+        if (MessagesContainerRef.current) {
+          MessagesContainerRef.current.scrollTop =
+            ContentRef.current?.offsetHeight || 0;
+        }
+      }, 10);
       if (ContentRef.current?.offsetHeight) {
         setScrollAtBottom(true);
       }
