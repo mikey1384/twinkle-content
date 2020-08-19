@@ -2,10 +2,11 @@ import React, { memo, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import MainFeeds from './MainFeeds';
 import ChatFeeds from './ChatFeeds';
-import { defaultChatSubject } from 'constants/defaultValues';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { container } from './Styles';
 import FilterBar from 'components/FilterBar';
+import Loading from 'components/Loading';
+import { container } from './Styles';
+import { defaultChatSubject } from 'constants/defaultValues';
 import { socket } from 'constants/io';
 import { css } from 'emotion';
 import { useMyState } from 'helpers/hooks';
@@ -35,6 +36,7 @@ function Notification({ children, className, location, style }) {
     },
     actions: { onFetchNotifications, onGetRanks, onClearNotifications }
   } = useNotiContext();
+  const [loadingNotifications, setLoadingNotifications] = useState(false);
   const [activeTab, setActiveTab] = useState('rankings');
   const [rewardTabShown, setRewardTabShown] = useState(false);
   const userChangedTab = useRef(false);
@@ -108,7 +110,7 @@ function Notification({ children, className, location, style }) {
   return (
     <ErrorBoundary>
       <div style={style} className={`${container} ${className}`}>
-        <section style={{ marginBottom: '1rem' }}>
+        <section style={{ marginBottom: '1rem', position: 'relative' }}>
           <div
             className={css`
               display: flex;
@@ -173,7 +175,11 @@ function Notification({ children, className, location, style }) {
               )}
             </FilterBar>
           )}
+          {loadingNotifications && activeTab === 'reward' && (
+            <Loading style={{ position: 'absolute', top: 0 }} />
+          )}
           <MainFeeds
+            loadingNotifications={loadingNotifications}
             loadMore={loadMore}
             activeTab={activeTab}
             notifications={notifications}
@@ -196,10 +202,12 @@ function Notification({ children, className, location, style }) {
     fetchRankings();
   }
   async function fetchNews() {
+    setLoadingNotifications(true);
     const data = await fetchNotifications();
     if (mounted.current) {
       onFetchNotifications(data);
     }
+    setLoadingNotifications(false);
   }
   async function fetchRankings() {
     const { all, top30s } = await loadRankings();

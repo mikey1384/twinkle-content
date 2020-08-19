@@ -18,6 +18,7 @@ import { useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useNotiContext } from 'contexts';
 
 MainFeeds.propTypes = {
+  loadingNotifications: PropTypes.bool.isRequired,
   loadMore: PropTypes.object.isRequired,
   activeTab: PropTypes.string,
   notifications: PropTypes.array.isRequired,
@@ -28,6 +29,7 @@ MainFeeds.propTypes = {
 
 function MainFeeds({
   activeTab,
+  loadingNotifications,
   loadMore,
   notifications,
   rewards,
@@ -194,7 +196,7 @@ function MainFeeds({
           {numNewNotis > 1 ? 's' : ''}
         </Banner>
       )}
-      {activeTab === 'reward' && (
+      {activeTab === 'reward' && !loadingNotifications && (
         <Banner
           loading={collectingReward}
           color={totalRewardAmount > 0 ? 'gold' : 'green'}
