@@ -175,7 +175,7 @@ function Notification({ children, className, location, style }) {
               )}
             </FilterBar>
           )}
-          {loadingNotifications && rewardTabShown && (
+          {loadingNotifications && activeTab === 'reward' && (
             <Loading style={{ position: 'absolute', top: 0 }} />
           )}
           <MainFeeds
