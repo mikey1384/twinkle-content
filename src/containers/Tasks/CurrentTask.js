@@ -1,22 +1,29 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { css } from 'emotion';
 import { borderRadius, Color } from 'constants/css';
 import Screenshot from './screenshot.png';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 
-export default function CurrentTast() {
+CurrentTask.propTypes = {
+  style: PropTypes.object,
+  className: PropTypes.string
+};
+
+export default function CurrentTask({ style, className }) {
   return (
-    <div
-      className={css`
-        font-size: 2.5rem;
-        font-weight: bold;
-      `}
-    >
-      Current Task
+    <div style={style} className={className}>
+      <p
+        className={css`
+          font-size: 2.5rem;
+          font-weight: bold;
+        `}
+      >
+        Current Task
+      </p>
       <div
         className={css`
-          width: 40%;
           display: flex;
           flex-direction: column;
           font-size: 3rem;
@@ -26,7 +33,7 @@ export default function CurrentTast() {
           border-radius: ${borderRadius};
         `}
       >
-        <div>Taking a Screen Shot</div>
+        <div style={{ fontWeight: 'bold' }}>Take a Screen Shot</div>
         <div style={{ marginTop: '2rem', display: 'flex', width: '100%' }}>
           <img
             className={css`
