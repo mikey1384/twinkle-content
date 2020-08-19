@@ -35,6 +35,7 @@ function Notification({ children, className, location, style }) {
     },
     actions: { onFetchNotifications, onGetRanks, onClearNotifications }
   } = useNotiContext();
+  const [loadingNotifications, setLoadingNotifications] = useState(false);
   const [activeTab, setActiveTab] = useState('rankings');
   const [rewardTabShown, setRewardTabShown] = useState(false);
   const userChangedTab = useRef(false);
@@ -174,6 +175,7 @@ function Notification({ children, className, location, style }) {
             </FilterBar>
           )}
           <MainFeeds
+            loadingNotifications={loadingNotifications}
             loadMore={loadMore}
             activeTab={activeTab}
             notifications={notifications}
@@ -196,10 +198,12 @@ function Notification({ children, className, location, style }) {
     fetchRankings();
   }
   async function fetchNews() {
+    setLoadingNotifications(true);
     const data = await fetchNotifications();
     if (mounted.current) {
       onFetchNotifications(data);
     }
+    setLoadingNotifications(false);
   }
   async function fetchRankings() {
     const { all, top30s } = await loadRankings();
