@@ -20,7 +20,7 @@ export default function TaskList({ style, className }) {
             <div style={{ marginTop: '1rem', display: 'flex' }}>
               <img src={Screenshot} style={{ width: '10rem' }} />
               <div style={{ marginLeft: '1rem', fontSize: '1.7rem' }}>
-                {`Take a picture of your computer screen for XP! If you don't know how, we will teach you!`}
+                {`Take a picture of your computer screen for XP! Don't worry if you don't know how to do this - we will teach you!`}
               </div>
             </div>
           </ListItem>
