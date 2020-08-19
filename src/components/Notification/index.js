@@ -2,10 +2,11 @@ import React, { memo, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import MainFeeds from './MainFeeds';
 import ChatFeeds from './ChatFeeds';
-import { defaultChatSubject } from 'constants/defaultValues';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { container } from './Styles';
 import FilterBar from 'components/FilterBar';
+import Loading from 'components/Loading';
+import { container } from './Styles';
+import { defaultChatSubject } from 'constants/defaultValues';
 import { socket } from 'constants/io';
 import { css } from 'emotion';
 import { useMyState } from 'helpers/hooks';
@@ -109,7 +110,7 @@ function Notification({ children, className, location, style }) {
   return (
     <ErrorBoundary>
       <div style={style} className={`${container} ${className}`}>
-        <section style={{ marginBottom: '1rem' }}>
+        <section style={{ marginBottom: '1rem', position: 'relative' }}>
           <div
             className={css`
               display: flex;
@@ -173,6 +174,9 @@ function Notification({ children, className, location, style }) {
                 </nav>
               )}
             </FilterBar>
+          )}
+          {loadingNotifications && (
+            <Loading style={{ position: 'absolute', top: 0 }} />
           )}
           <MainFeeds
             loadingNotifications={loadingNotifications}
