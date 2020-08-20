@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { css } from 'emotion';
 import { borderRadius, Color } from 'constants/css';
-import Screenshot from './screenshot.png';
+import Screenshot from './takingscreenshot.gif';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 

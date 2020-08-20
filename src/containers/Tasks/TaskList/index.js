@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ListItem from './ListItem';
-import Screenshot from '../screenshot.png';
+import Screenshot from '../takingscreenshot.gif';
+import CopyPaste from '../copypaste.gif';
+import HowToGoogle from '../howtogoogle.gif';
 
 TaskList.propTypes = {
   style: PropTypes.object,
@@ -18,7 +20,7 @@ export default function TaskList({ style, className }) {
               Copy and Paste
             </p>
             <div style={{ marginTop: '1rem', display: 'flex' }}>
-              <img src={Screenshot} style={{ width: '10rem' }} />
+              <img src={CopyPaste} style={{ width: '10rem' }} />
               <div style={{ marginLeft: '1rem', fontSize: '1.7rem' }}>
                 {`Copy a block of text and paste it somewhere else!`}
               </div>
@@ -38,7 +40,7 @@ export default function TaskList({ style, className }) {
           <ListItem style={{ marginTop: '1rem' }}>
             <p style={{ fontSize: '2rem', fontWeight: 'bold' }}>Google</p>
             <div style={{ marginTop: '1rem', display: 'flex' }}>
-              <img src={Screenshot} style={{ width: '10rem' }} />
+              <img src={HowToGoogle} style={{ width: '10rem' }} />
               <div style={{ marginLeft: '1rem', fontSize: '1.7rem' }}>
                 {`Search something you didn't know about on Google`}
               </div>
