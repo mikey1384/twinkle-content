@@ -20,29 +20,27 @@ export default function TaskList({ style, className }) {
             <div style={{ marginTop: '1rem', display: 'flex' }}>
               <img src={Screenshot} style={{ width: '10rem' }} />
               <div style={{ marginLeft: '1rem', fontSize: '1.7rem' }}>
-                {`Take a picture of your computer screen for XP! Don't worry if you don't know how to do this - we will teach you!`}
+                {`Take a picture of your computer screen!`}
               </div>
             </div>
           </ListItem>
           <ListItem style={{ marginTop: '1rem' }}>
             <p style={{ fontSize: '2rem', fontWeight: 'bold' }}>
-              Take a Screenshot
+              Copy and Paste
             </p>
             <div style={{ marginTop: '1rem', display: 'flex' }}>
               <img src={Screenshot} style={{ width: '10rem' }} />
               <div style={{ marginLeft: '1rem', fontSize: '1.7rem' }}>
-                {`Take a picture of your computer screen for XP! Don't worry if you don't know how to do this - we will teach you!`}
+                {`Copy a block of text and paste it somewhere else!`}
               </div>
             </div>
           </ListItem>
           <ListItem style={{ marginTop: '1rem' }}>
-            <p style={{ fontSize: '2rem', fontWeight: 'bold' }}>
-              Take a Screenshot
-            </p>
+            <p style={{ fontSize: '2rem', fontWeight: 'bold' }}>Google</p>
             <div style={{ marginTop: '1rem', display: 'flex' }}>
               <img src={Screenshot} style={{ width: '10rem' }} />
               <div style={{ marginLeft: '1rem', fontSize: '1.7rem' }}>
-                {`Take a picture of your computer screen for XP! Don't worry if you don't know how to do this - we will teach you!`}
+                {`Search something you didn't know about on Google`}
               </div>
             </div>
           </ListItem>
