@@ -32,6 +32,7 @@ import { faChess } from '@fortawesome/pro-solid-svg-icons/faChess';
 import { faChevronDown } from '@fortawesome/pro-solid-svg-icons/faChevronDown';
 import { faChevronLeft } from '@fortawesome/pro-solid-svg-icons/faChevronLeft';
 import { faChevronRight } from '@fortawesome/pro-solid-svg-icons/faChevronRight';
+import { faClipboardCheck } from '@fortawesome/pro-solid-svg-icons/faClipboardCheck';
 import { faComment } from '@fortawesome/pro-solid-svg-icons/faComment';
 import { faCommentAlt } from '@fortawesome/pro-solid-svg-icons/faCommentAlt';
 import { faComments } from '@fortawesome/pro-solid-svg-icons/faComments';
@@ -105,6 +106,7 @@ library.add(
   faChevronDown,
   faChevronLeft,
   faChevronRight,
+  faClipboardCheck,
   faComment,
   faCommentAlt,
   faComments,

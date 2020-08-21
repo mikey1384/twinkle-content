@@ -105,13 +105,18 @@ function MainNavs({
       path: '/comments/:id',
       exact: true
     });
+    const taskPageMatch = matchPath(pathname, {
+      path: '/tasks/:id',
+      exact: true
+    });
 
     return (
       !!subjectPageMatch ||
       !!playlistsMatch ||
       !!videoPageMatch ||
       !!linkPageMatch ||
-      !!commentPageMatch
+      !!commentPageMatch ||
+      !!taskPageMatch
     );
   }, [pathname]);
 
@@ -153,7 +158,7 @@ function MainNavs({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultSearchFilter, pathname]);
 
-  const subSectionIconType = useMemo(
+  const contentIconType = useMemo(
     () =>
       contentNav === 'videos' || contentNav === 'playlists'
         ? 'film'
@@ -161,6 +166,8 @@ function MainNavs({
         ? 'book'
         : contentNav === 'subjects'
         ? 'bolt'
+        : contentNav === 'tasks'
+        ? 'clipboard-check'
         : 'comment-alt',
     [contentNav]
   );
@@ -224,7 +231,7 @@ function MainNavs({
           to={`/${contentPath}`}
           pathname={pathname}
           className="mobile"
-          imgLabel={subSectionIconType}
+          imgLabel={contentIconType}
         />
       )}
       <HeaderNav
@@ -277,7 +284,7 @@ function MainNavs({
           pathname={pathname}
           className="desktop"
           style={{ marginLeft: '2rem' }}
-          imgLabel={subSectionIconType}
+          imgLabel={contentIconType}
         >
           {contentNav.substring(0, contentNav.length - 1).toUpperCase()}
         </HeaderNav>
