@@ -15,7 +15,7 @@ export default function TaskList({ style, className }) {
       <p style={{ fontWeight: 'bold', fontSize: '2.5rem' }}>All Tasks</p>
       <div>
         <div style={{ marginTop: '1rem' }}>
-          <ListItem>
+          <ListItem taskId={1}>
             <p style={{ fontSize: '2rem', fontWeight: 'bold' }}>
               Copy and Paste
             </p>
@@ -26,7 +26,7 @@ export default function TaskList({ style, className }) {
               </div>
             </div>
           </ListItem>
-          <ListItem style={{ marginTop: '1rem' }}>
+          <ListItem taskId={2} style={{ marginTop: '1rem' }}>
             <p style={{ fontSize: '2rem', fontWeight: 'bold' }}>
               Take a Screenshot
             </p>
@@ -37,7 +37,7 @@ export default function TaskList({ style, className }) {
               </div>
             </div>
           </ListItem>
-          <ListItem style={{ marginTop: '1rem' }}>
+          <ListItem taskId={3} style={{ marginTop: '1rem' }}>
             <p style={{ fontSize: '2rem', fontWeight: 'bold' }}>Google</p>
             <div style={{ marginTop: '1rem', display: 'flex' }}>
               <img src={HowToGoogle} style={{ width: '10rem' }} />

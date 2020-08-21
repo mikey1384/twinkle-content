@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { css } from 'emotion';
 import { borderRadius, Color } from 'constants/css';
 import Screenshot from './takingscreenshot.gif';
-import Button from 'components/Button';
-import Icon from 'components/Icon';
+import { useHistory } from 'react-router-dom';
 
 CurrentTask.propTypes = {
   style: PropTypes.object,
@@ -12,6 +11,7 @@ CurrentTask.propTypes = {
 };
 
 export default function CurrentTask({ style, className }) {
+  const history = useHistory();
   return (
     <div style={style} className={className}>
       <p
@@ -23,14 +23,19 @@ export default function CurrentTask({ style, className }) {
         Current Task
       </p>
       <div
+        onClick={() => history.push('/tasks/1')}
         className={css`
           display: flex;
           flex-direction: column;
           font-size: 3rem;
           margin-top: 1rem;
           border: 1px solid ${Color.borderGray()};
-          padding: 1rem;
+          padding: 1rem 1rem 3rem 1rem;
           border-radius: ${borderRadius};
+          cursor: pointer;
+          &:hover {
+            background: ${Color.highlightGray()};
+          }
         `}
       >
         <div style={{ fontWeight: 'bold' }}>Take a Screen Shot</div>
@@ -52,18 +57,6 @@ export default function CurrentTask({ style, className }) {
           >
             progress: 60%
           </div>
-        </div>
-        <div
-          style={{
-            marginTop: '3rem',
-            display: 'flex',
-            justifyContent: 'flex-end'
-          }}
-        >
-          <Button filled color="darkBlue">
-            <Icon icon="arrow-right" />
-            <span style={{ marginLeft: '1rem' }}>Resume</span>
-          </Button>
         </div>
       </div>
     </div>
