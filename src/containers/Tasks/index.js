@@ -8,7 +8,7 @@ export default function Tasks() {
   return (
     <div>
       <Cover />
-      <div style={{ margin: '3rem' }}>
+      <div style={{ margin: '5rem' }}>
         <div style={{ display: 'flex' }}>
           <CurrentTask
             className={css`
