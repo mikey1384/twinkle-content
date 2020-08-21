@@ -118,7 +118,7 @@ export default function LinkPage({
     xpRewardInterfaceShown
   } = useContentState({ contentType: 'url', contentId: linkId });
   const {
-    actions: { onRecordScrollPosition, onSetExploreSubNav },
+    actions: { onRecordScrollPosition, onSetContentNav },
     state: { scrollPositions }
   } = useViewContext();
   useScrollPosition({
@@ -141,7 +141,7 @@ export default function LinkPage({
 
   useEffect(() => {
     if (!prevDeleted.current && deleted) {
-      onSetExploreSubNav('');
+      onSetContentNav('');
       history.push('/links');
     }
     prevDeleted.current = deleted;

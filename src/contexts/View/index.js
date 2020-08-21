@@ -9,8 +9,8 @@ const initialViewState = {
   exploreCategory: ['subjects', 'videos', 'links'][
     Math.floor(Math.random() * 2)
   ],
-  explorePath: '',
-  exploreSubNav: '',
+  contentPath: '',
+  contentNav: '',
   profileNav: '',
   homeNav: '/',
   scrollPositions: {}

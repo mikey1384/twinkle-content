@@ -34,11 +34,11 @@ function MainNavs({
 }) {
   const { twinkleCoins, userId } = useMyState();
   const {
-    state: { exploreCategory, explorePath, exploreSubNav, profileNav, homeNav },
+    state: { exploreCategory, contentPath, contentNav, profileNav, homeNav },
     actions: {
       onSetExploreCategory,
-      onSetExplorePath,
-      onSetExploreSubNav,
+      onSetContentPath,
+      onSetContentNav,
       onSetProfileNav,
       onSetHomeNav
     }
@@ -84,7 +84,7 @@ function MainNavs({
     [pathname]
   );
 
-  const explorePageMatch = useMemo(() => {
+  const contentPageMatch = useMemo(() => {
     const subjectPageMatch = matchPath(pathname, {
       path: '/subjects/:id',
       exact: true
@@ -129,11 +129,11 @@ function MainNavs({
       onSetHomeNav('/store');
     }
 
-    if (explorePageMatch) {
-      if (exploreSubNav !== section) {
-        onSetExploreSubNav(section);
+    if (contentPageMatch) {
+      if (contentNav !== section) {
+        onSetContentNav(section);
       }
-      onSetExplorePath(pathname.substring(1));
+      onSetContentPath(pathname.substring(1));
     }
     if (profilePageMatch) {
       onSetProfileNav(pathname);
@@ -155,14 +155,14 @@ function MainNavs({
 
   const subSectionIconType = useMemo(
     () =>
-      exploreSubNav === 'videos' || exploreSubNav === 'playlists'
+      contentNav === 'videos' || contentNav === 'playlists'
         ? 'film'
-        : exploreSubNav === 'links'
+        : contentNav === 'links'
         ? 'book'
-        : exploreSubNav === 'subjects'
+        : contentNav === 'subjects'
         ? 'bolt'
         : 'comment-alt',
-    [exploreSubNav]
+    [contentNav]
   );
 
   const profileUsername = useMemo(() => {
@@ -219,9 +219,9 @@ function MainNavs({
         className="mobile"
         imgLabel="search"
       />
-      {exploreSubNav && (
+      {contentNav && (
         <HeaderNav
-          to={`/${explorePath}`}
+          to={`/${contentPath}`}
           pathname={pathname}
           className="mobile"
           imgLabel={subSectionIconType}
@@ -271,15 +271,15 @@ function MainNavs({
       >
         EXPLORE
       </HeaderNav>
-      {exploreSubNav && (
+      {contentNav && (
         <HeaderNav
-          to={`/${explorePath}`}
+          to={`/${contentPath}`}
           pathname={pathname}
           className="desktop"
           style={{ marginLeft: '2rem' }}
           imgLabel={subSectionIconType}
         >
-          {exploreSubNav.substring(0, exploreSubNav.length - 1).toUpperCase()}
+          {contentNav.substring(0, contentNav.length - 1).toUpperCase()}
         </HeaderNav>
       )}
       <HeaderNav

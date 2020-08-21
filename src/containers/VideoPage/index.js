@@ -107,7 +107,7 @@ export default function VideoPage({
     }
   } = useContentContext();
   const {
-    actions: { onRecordScrollPosition, onSetExploreSubNav },
+    actions: { onRecordScrollPosition, onSetContentNav },
     state: { scrollPositions }
   } = useViewContext();
   useScrollPosition({
@@ -143,7 +143,7 @@ export default function VideoPage({
 
   useEffect(() => {
     if (!prevDeleted.current && deleted) {
-      onSetExploreSubNav('');
+      onSetContentNav('');
       history.push('/videos');
     }
     prevDeleted.current = deleted;

@@ -28,7 +28,7 @@ export default function ContentPage({
   const contentId = Number(initialContentId);
   const { userId } = useMyState();
   const {
-    actions: { onRecordScrollPosition, onSetExploreSubNav },
+    actions: { onRecordScrollPosition, onSetContentNav },
     state: { scrollPositions }
   } = useViewContext();
   useScrollPosition({
@@ -45,7 +45,7 @@ export default function ContentPage({
 
   useEffect(() => {
     if (!prevDeleted.current && deleted) {
-      onSetExploreSubNav('');
+      onSetContentNav('');
       history.push('/');
     }
     prevDeleted.current = deleted;
