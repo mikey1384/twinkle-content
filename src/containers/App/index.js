@@ -11,6 +11,7 @@ import LinkPage from 'containers/LinkPage';
 import PlaylistPage from 'containers/PlaylistPage';
 import Privacy from 'containers/Privacy';
 import Redirect from 'containers/Redirect';
+import TaskPage from 'containers/TaskPage';
 import Tasks from 'containers/Tasks';
 import SigninModal from 'containers/Signin';
 import Management from 'containers/Management';
@@ -286,6 +287,7 @@ function App({ location, history }) {
           <Route path="/subjects/:contentId" component={ContentPage} />
           <Route path="/subjects" component={Explore} />
           <Route path="/playlists" component={PlaylistPage} />
+          <Route path="/tasks/:taskId" component={TaskPage} />
           <Route path="/tasks" component={Tasks} />
           <Route
             path="/chat"
