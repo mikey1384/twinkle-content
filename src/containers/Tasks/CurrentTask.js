@@ -7,10 +7,11 @@ import { useHistory } from 'react-router-dom';
 
 CurrentTask.propTypes = {
   style: PropTypes.object,
-  className: PropTypes.string
+  className: PropTypes.string,
+  taskId: PropTypes.number
 };
 
-export default function CurrentTask({ style, className }) {
+export default function CurrentTask({ style, className, taskId }) {
   const history = useHistory();
   return (
     <div style={style} className={className}>
@@ -23,7 +24,7 @@ export default function CurrentTask({ style, className }) {
         Current Task
       </p>
       <div
-        onClick={() => history.push('/tasks/1')}
+        onClick={() => history.push(`/tasks/${taskId}`)}
         className={css`
           display: flex;
           flex-direction: column;

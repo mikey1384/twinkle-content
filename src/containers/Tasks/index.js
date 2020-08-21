@@ -11,6 +11,7 @@ export default function Tasks() {
       <div style={{ margin: '5rem' }}>
         <div style={{ display: 'flex' }}>
           <CurrentTask
+            taskId={2}
             className={css`
               width: 45%;
             `}
