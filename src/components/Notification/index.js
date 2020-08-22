@@ -73,8 +73,16 @@ function Notification({ children, className, location, style }) {
       }
     }
     setRewardTabShown(rewards.length > 0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId, notifications]);
+  }, [
+    userId,
+    notifications,
+    rewards.length,
+    activeTab,
+    totalRewardedTwinkles,
+    totalRewardedTwinkleCoins,
+    location,
+    numNewNotis
+  ]);
 
   useEffect(() => {
     if (userId !== prevUserId.current) {
