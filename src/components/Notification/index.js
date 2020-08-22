@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import MainFeeds from './MainFeeds';
 import ChatFeeds from './ChatFeeds';
@@ -38,7 +38,6 @@ function Notification({ children, className, location, style }) {
   } = useNotiContext();
   const [loadingNotifications, setLoadingNotifications] = useState(false);
   const [activeTab, setActiveTab] = useState('rankings');
-  const [rewardTabShown, setRewardTabShown] = useState(false);
   const userChangedTab = useRef(false);
   const mounted = useRef(true);
   const prevUserId = useRef(userId);
@@ -72,10 +71,6 @@ function Notification({ children, className, location, style }) {
         setActiveTab(tab);
       }
     }
-    setRewardTabShown(
-      rewards.length > 0 &&
-        totalRewardedTwinkles + totalRewardedTwinkleCoins > 0
-    );
   }, [
     userId,
     notifications,
@@ -117,6 +112,12 @@ function Notification({ children, className, location, style }) {
       socket.removeListener('new_reward_posted', handleNewReward);
     };
   });
+
+  const rewardTabShown = useMemo(() => {
+    return (
+      (!loadingNotifications || activeTab === 'reward') && rewards.length > 0
+    );
+  }, [activeTab, loadingNotifications, rewards.length]);
 
   return (
     <ErrorBoundary>
