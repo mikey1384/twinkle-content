@@ -72,7 +72,10 @@ function Notification({ children, className, location, style }) {
         setActiveTab(tab);
       }
     }
-    setRewardTabShown(rewards.length > 0);
+    setRewardTabShown(
+      rewards.length > 0 &&
+        totalRewardedTwinkles + totalRewardedTwinkleCoins > 0
+    );
   }, [
     userId,
     notifications,
