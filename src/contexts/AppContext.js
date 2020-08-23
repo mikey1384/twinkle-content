@@ -11,6 +11,7 @@ import { InputContextProvider } from './Input';
 import { ManagementContextProvider } from './Management';
 import { NotiContextProvider } from './Notification';
 import { ProfileContextProvider } from './Profile';
+import { TasksContextProvider } from './Tasks';
 import { ViewContextProvider } from './View';
 import { LAST_ONLINE_FILTER_LABEL } from 'constants/defaultValues';
 
@@ -51,25 +52,27 @@ export function AppContextProvider({ children }) {
         <ExploreContextProvider>
           <ViewContextProvider>
             <NotiContextProvider>
-              <HomeContextProvider>
-                <ChatContextProvider>
-                  <InputContextProvider>
-                    <ContentContextProvider>
-                      <AppContext.Provider
-                        value={{
-                          user: {
-                            state: userState,
-                            actions: UserActions(userDispatch)
-                          },
-                          requestHelpers: requestHelpers(handleError)
-                        }}
-                      >
-                        {children}
-                      </AppContext.Provider>
-                    </ContentContextProvider>
-                  </InputContextProvider>
-                </ChatContextProvider>
-              </HomeContextProvider>
+              <TasksContextProvider>
+                <HomeContextProvider>
+                  <ChatContextProvider>
+                    <InputContextProvider>
+                      <ContentContextProvider>
+                        <AppContext.Provider
+                          value={{
+                            user: {
+                              state: userState,
+                              actions: UserActions(userDispatch)
+                            },
+                            requestHelpers: requestHelpers(handleError)
+                          }}
+                        >
+                          {children}
+                        </AppContext.Provider>
+                      </ContentContextProvider>
+                    </InputContextProvider>
+                  </ChatContextProvider>
+                </HomeContextProvider>
+              </TasksContextProvider>
             </NotiContextProvider>
           </ViewContextProvider>
         </ExploreContextProvider>
