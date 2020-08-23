@@ -8,6 +8,7 @@ export {
   useManagementContext,
   useNotiContext,
   useProfileContext,
+  useTasksContext,
   useViewContext
 } from './hooks';
 export { AppContextProvider } from './AppContext';

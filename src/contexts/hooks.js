@@ -8,6 +8,7 @@ import { InputContext } from './Input';
 import { ManagementContext } from './Management';
 import { NotiContext } from './Notification';
 import { ProfileContext } from './Profile';
+import { TasksContext } from './Tasks';
 import { ViewContext } from './View';
 
 export function useAppContext() {
@@ -36,6 +37,9 @@ export function useNotiContext() {
 }
 export function useProfileContext() {
   return useContext(ProfileContext);
+}
+export function useTasksContext() {
+  return useContext(TasksContext);
 }
 export function useViewContext() {
   return useContext(ViewContext);
