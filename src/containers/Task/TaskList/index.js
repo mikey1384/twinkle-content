@@ -4,7 +4,7 @@ import ListItem from './ListItem';
 import Screenshot from '../takingscreenshot.gif';
 import CopyPaste from '../copypaste.gif';
 import HowToGoogle from '../howtogoogle.gif';
-import { useTaskContext } from 'contexts';
+import { useAppContext, useTaskContext } from 'contexts';
 
 TaskList.propTypes = {
   style: PropTypes.object,
@@ -13,11 +13,20 @@ TaskList.propTypes = {
 
 export default function TaskList({ style, className }) {
   const {
+    requestHelpers: { loadTasks }
+  } = useAppContext();
+  const {
     actions: { onLoadTasks }
   } = useTaskContext();
 
   useEffect(() => {
-    onLoadTasks({ tasks: [], loadMoreButton: false });
+    init();
+
+    async function init() {
+      const data = await loadTasks();
+      console.log(data);
+      onLoadTasks({ tasks: [], loadMoreButton: false });
+    }
   }, []);
 
   return (
