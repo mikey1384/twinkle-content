@@ -23,10 +23,10 @@ export default function TaskList({ style, className }) {
     init();
 
     async function init() {
-      const data = await loadTasks();
-      console.log(data);
-      onLoadTasks({ tasks: [], loadMoreButton: false });
+      const { tasks, loadMoreButton } = await loadTasks();
+      onLoadTasks({ tasks, loadMoreButton });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
