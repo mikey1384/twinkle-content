@@ -143,7 +143,9 @@ function Notification({ className, location, style }) {
               bordered
               style={{
                 fontSize: '1.6rem',
-                height: '5rem'
+                height: '5rem',
+                marginBottom:
+                  loadingNotifications && activeTab === 'reward' ? 0 : null
               }}
             >
               <nav
