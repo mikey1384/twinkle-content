@@ -1,9 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { useTaskContext } from 'contexts';
 
-export default function TaskPage() {
+TaskPage.propTypes = {
+  match: PropTypes.object.isRequired
+};
+
+export default function TaskPage({
+  match: {
+    params: { taskId }
+  }
+}) {
+  const {
+    state: { taskObj }
+  } = useTaskContext();
+
+  useEffect(() => {
+    console.log(taskObj[taskId]?.loaded);
+  }, [taskId, taskObj]);
+
   return (
     <div>
-      <div>this is a task page</div>
+      <div>{taskId}</div>
     </div>
   );
 }
