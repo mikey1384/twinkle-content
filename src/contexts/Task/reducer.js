@@ -3,7 +3,7 @@ export default function TaskReducer(state, action) {
     case 'LOAD_TASKS': {
       const newTaskObj = {};
       for (let task of action.tasks) {
-        newTaskObj[task.id] = task;
+        newTaskObj[task.id] = { ...task, loaded: true };
       }
       return {
         ...state,
