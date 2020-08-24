@@ -21,7 +21,7 @@ export default function TaskList({ style, className }) {
     requestHelpers: { loadTasks }
   } = useAppContext();
   const {
-    state: { tasks },
+    state: { tasks, taskObj },
     actions: { onLoadTasks }
   } = useTaskContext();
 
@@ -40,17 +40,19 @@ export default function TaskList({ style, className }) {
       <p style={{ fontWeight: 'bold', fontSize: '2.5rem' }}>All Task</p>
       <div>
         <div style={{ marginTop: '1rem' }}>
-          {tasks.map(({ id, title, subtitle }, index) => (
+          {tasks.map((taskId, index) => (
             <ListItem
               style={{ marginTop: index > 0 ? '1rem' : 0 }}
-              key={id}
-              taskId={id}
+              key={taskId}
+              taskId={taskId}
             >
-              <p style={{ fontSize: '2rem', fontWeight: 'bold' }}>{title}</p>
+              <p style={{ fontSize: '2rem', fontWeight: 'bold' }}>
+                {taskObj[taskId].title}
+              </p>
               <div style={{ marginTop: '1rem', display: 'flex' }}>
-                <img src={gifTable[id]} style={{ width: '10rem' }} />
+                <img src={gifTable[taskId]} style={{ width: '10rem' }} />
                 <div style={{ marginLeft: '1rem', fontSize: '1.7rem' }}>
-                  {subtitle}
+                  {taskObj[taskId].subtitle}
                 </div>
               </div>
             </ListItem>

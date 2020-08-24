@@ -6,7 +6,8 @@ import TaskReducer from './reducer';
 export const TaskContext = createContext();
 export const initialTaskState = {
   tasks: [],
-  loadMoreButton: false
+  loadMoreButton: false,
+  taskObj: {}
 };
 
 TaskContextProvider.propTypes = {
