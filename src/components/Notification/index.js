@@ -8,7 +8,6 @@ import Loading from 'components/Loading';
 import { container } from './Styles';
 import { defaultChatSubject } from 'constants/defaultValues';
 import { socket } from 'constants/io';
-import { css } from 'emotion';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useNotiContext } from 'contexts';
 
@@ -122,16 +121,14 @@ function Notification({ children, className, location, style }) {
   return (
     <ErrorBoundary>
       <div style={style} className={`${container} ${className}`}>
-        <section style={{ marginBottom: '1rem', position: 'relative' }}>
-          <div
-            className={css`
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-            `}
-          >
-            {children && children}
-          </div>
+        <section
+          style={{
+            marginBottom: '1rem',
+            position: 'relative',
+            display: 'flex',
+            flexDirection: 'column'
+          }}
+        >
           {loaded && location === 'home' && (
             <ChatFeeds
               myId={userId}
@@ -187,16 +184,16 @@ function Notification({ children, className, location, style }) {
               )}
             </FilterBar>
           )}
-          <div style={{ position: 'relative' }}>
-            {loadingNotifications && activeTab === 'reward' && (
+          {loadingNotifications && activeTab === 'reward' && (
+            <div style={{ position: 'relative', marginTop: '1rem' }}>
               <Loading
                 style={{
                   position: 'absolute',
                   top: 0
                 }}
               />
-            )}
-          </div>
+            </div>
+          )}
           <MainFeeds
             loadingNotifications={loadingNotifications}
             loadMore={loadMore}
@@ -206,9 +203,6 @@ function Notification({ children, className, location, style }) {
             selectNotiTab={() => {
               userChangedTab.current = true;
               setActiveTab('notification');
-            }}
-            style={{
-              marginTop: loaded && userId && notifications.length > 0 && '1rem'
             }}
           />
         </section>
