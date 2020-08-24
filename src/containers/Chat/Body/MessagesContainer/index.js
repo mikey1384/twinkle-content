@@ -271,14 +271,16 @@ export default function MessagesContainer({
 
   useEffect(() => {
     setTimeout(() => {
-      setPlaceholderHeight(
-        `CALC(100vh - 10rem - ${MessagesRef.current?.offsetHeight || 0}px)`
-      );
-      if (
-        MessagesRef.current?.offsetHeight <
-        MessagesContainerRef.current?.offsetHeight + 30
-      ) {
-        handleSetScrollToBottom();
+      if (mounted.current) {
+        setPlaceholderHeight(
+          `CALC(100vh - 10rem - ${MessagesRef.current?.offsetHeight || 0}px)`
+        );
+        if (
+          MessagesRef.current?.offsetHeight <
+          MessagesContainerRef.current?.offsetHeight + 30
+        ) {
+          handleSetScrollToBottom();
+        }
       }
     }, 0);
   }, [loading, messages]);
@@ -327,7 +329,7 @@ export default function MessagesContainer({
     function handleScroll() {
       clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => {
-        if (MessagesContainerRef.current?.scrollTop === 0) {
+        if (mounted.current && MessagesContainerRef.current?.scrollTop === 0) {
           handleLoadMore();
         }
       }, 200);
@@ -555,7 +557,7 @@ export default function MessagesContainer({
               onClick={() => {
                 setNewUnseenMessage(false);
                 setTimeout(() => {
-                  if (MessagesContainerRef.current) {
+                  if (mounted.current && MessagesContainerRef.current) {
                     MessagesContainerRef.current.scrollTop =
                       ContentRef.current?.offsetHeight || 0;
                   }
@@ -1073,7 +1075,7 @@ export default function MessagesContainer({
       MessagesContainerRef.current.scrollTop =
         ContentRef.current?.offsetHeight || 0;
       setTimeout(() => {
-        if (MessagesContainerRef.current) {
+        if (mounted.current && MessagesContainerRef.current) {
           MessagesContainerRef.current.scrollTop =
             ContentRef.current?.offsetHeight || 0;
         }

@@ -188,7 +188,12 @@ function Notification({ children, className, location, style }) {
             </FilterBar>
           )}
           {loadingNotifications && activeTab === 'reward' && (
-            <Loading style={{ position: 'absolute', top: 0 }} />
+            <Loading
+              style={{
+                position: 'absolute',
+                top: location === 'home' ? '18rem' : 0
+              }}
+            />
           )}
           <MainFeeds
             loadingNotifications={loadingNotifications}
@@ -218,8 +223,8 @@ function Notification({ children, className, location, style }) {
     const data = await fetchNotifications();
     if (mounted.current) {
       onFetchNotifications(data);
+      setLoadingNotifications(false);
     }
-    setLoadingNotifications(false);
   }
   async function fetchRankings() {
     const { all, top30s } = await loadRankings();

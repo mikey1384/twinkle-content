@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useMemo, useState } from 'react';
+import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import ContentLink from 'components/ContentLink';
 import UsernameText from 'components/Texts/UsernameText';
@@ -65,8 +65,10 @@ function MainFeeds({
   const [originalTwinkleCoins, setOriginalTwinkleCoins] = useState(0);
   const [totalTwinkles, setTotalTwinkles] = useState(0);
   const [totalCoins, setTotalCoins] = useState(0);
+  const mounted = useRef(true);
 
   useEffect(() => {
+    mounted.current = true;
     if (totalRewardedTwinkles > 0) {
       setTotalTwinkles(totalRewardedTwinkles);
     }
@@ -74,6 +76,12 @@ function MainFeeds({
       setTotalCoins(totalRewardedTwinkleCoins);
     }
   }, [totalRewardedTwinkles, totalRewardedTwinkleCoins]);
+
+  useEffect(() => {
+    return function unmount() {
+      mounted.current = false;
+    };
+  }, []);
 
   const totalRewardAmount = useMemo(
     () => totalRewardedTwinkles + totalRewardedTwinkleCoins,
@@ -286,18 +294,22 @@ function MainFeeds({
     const { xp, rank } = await updateUserXP({
       action: 'collect'
     });
-    onChangeUserCoins({ coins, userId });
-    onChangeUserXP({ xp, rank, userId });
-    onClearRewards();
-    setCollectingReward(false);
+    if (mounted.current) {
+      onChangeUserCoins({ coins, userId });
+      onChangeUserXP({ xp, rank, userId });
+      onClearRewards();
+      setCollectingReward(false);
+    }
   }
 
   async function handleNewNotiAlertClick() {
     setLoadingNewFeeds(true);
     const data = await fetchNotifications();
-    onFetchNotifications(data);
-    selectNotiTab();
-    setLoadingNewFeeds(false);
+    if (mounted.current) {
+      onFetchNotifications(data);
+      selectNotiTab();
+      setLoadingNewFeeds(false);
+    }
   }
 
   async function onLoadMore() {
@@ -306,12 +318,18 @@ function MainFeeds({
       const data = await loadMoreNotifications(
         notifications[notifications.length - 1].id
       );
-      onLoadMoreNotifications(data);
+      if (mounted.current) {
+        onLoadMoreNotifications(data);
+      }
     } else {
       const data = await loadMoreRewards(rewards[rewards.length - 1].id);
-      onLoadMoreRewards(data);
+      if (mounted.current) {
+        onLoadMoreRewards(data);
+      }
     }
-    setLoading(false);
+    if (mounted.current) {
+      setLoading(false);
+    }
   }
 }
 
