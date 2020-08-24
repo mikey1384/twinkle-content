@@ -185,13 +185,15 @@ function Notification({ className, location, style }) {
             </FilterBar>
           )}
           <div style={{ position: 'relative' }}>
-            <Loading
-              style={{
-                position: 'absolute',
-                height: 0,
-                top: '2rem'
-              }}
-            />
+            {loadingNotifications && activeTab === 'reward' && (
+              <Loading
+                style={{
+                  position: 'absolute',
+                  height: 0,
+                  top: '2rem'
+                }}
+              />
+            )}
             <MainFeeds
               loadingNotifications={loadingNotifications}
               loadMore={loadMore}
