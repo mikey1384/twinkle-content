@@ -1,15 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ListItem from './ListItem';
 import Screenshot from '../takingscreenshot.gif';
 import CopyPaste from '../copypaste.gif';
 import HowToGoogle from '../howtogoogle.gif';
+import { useTasksContext } from 'contexts';
 
 TaskList.propTypes = {
   style: PropTypes.object,
   className: PropTypes.string
 };
+
 export default function TaskList({ style, className }) {
+  const {
+    actions: { onLoadTasks }
+  } = useTasksContext();
+
+  useEffect(() => {
+    onLoadTasks({ tasks: [], loadMoreButton: false });
+  }, []);
+
   return (
     <div style={style} className={className}>
       <p style={{ fontWeight: 'bold', fontSize: '2.5rem' }}>All Tasks</p>
