@@ -70,9 +70,6 @@ function Chat({ onFileUpload }) {
       }
       onClearNumUnreads(selectedChannelId);
     }
-    return function cleanUp() {
-      mounted.current = false;
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loaded, pageVisible, userId, selectedChannelId]);
 
@@ -150,6 +147,12 @@ function Chat({ onFileUpload }) {
       }
     );
   }, [selectedChannelId]);
+
+  useEffect(() => {
+    return function cleanUp() {
+      mounted.current = false;
+    };
+  }, []);
 
   return (
     <LocalContext.Provider
@@ -231,7 +234,9 @@ function Chat({ onFileUpload }) {
     }
     onUpdateSelectedChannelId(id);
     const data = await loadChatChannel({ channelId: id });
-    onEnterChannelWithId({ data });
+    if (mounted.current) {
+      onEnterChannelWithId({ data });
+    }
   }
 
   async function handleCreateNewChannel({ userId, channelName, isClosed }) {
