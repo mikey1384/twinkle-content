@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useTaskContext } from 'contexts';
+import Loading from 'components/Loading';
+import { useAppContext, useTaskContext } from 'contexts';
 
 TaskPage.propTypes = {
   match: PropTypes.object.isRequired
@@ -12,16 +13,29 @@ export default function TaskPage({
   }
 }) {
   const {
+    requestHelpers: { loadTask }
+  } = useAppContext();
+  const {
+    actions: { onLoadTask },
     state: { taskObj }
   } = useTaskContext();
 
   useEffect(() => {
-    console.log(taskObj[taskId]?.loaded);
+    if (!taskObj[taskId]?.loaded) {
+      init();
+    }
+    async function init() {
+      const task = await loadTask(taskId);
+      onLoadTask(task);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [taskId, taskObj]);
 
-  return (
+  return taskObj[taskId] ? (
     <div>
-      <div>{taskId}</div>
+      <div>{taskObj[taskId].title}</div>
     </div>
+  ) : (
+    <Loading />
   );
 }

@@ -1,8 +1,14 @@
 export default function TaskActions(dispatch) {
   return {
-    onLoadTasks({ tasks, loadMoreButton }) {
+    onLoadTask(task) {
       return dispatch({
-        type: 'LOAD_TASKS',
+        type: 'LOAD_TASK',
+        task
+      });
+    },
+    onLoadTaskList({ tasks, loadMoreButton }) {
+      return dispatch({
+        type: 'LOAD_TASK_LIST',
         tasks,
         loadMoreButton
       });

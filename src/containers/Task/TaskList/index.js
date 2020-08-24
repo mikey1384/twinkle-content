@@ -18,19 +18,19 @@ export default function TaskList({ style, className }) {
     3: HowToGoogle
   };
   const {
-    requestHelpers: { loadTasks }
+    requestHelpers: { loadTaskList }
   } = useAppContext();
   const {
     state: { tasks, taskObj },
-    actions: { onLoadTasks }
+    actions: { onLoadTaskList }
   } = useTaskContext();
 
   useEffect(() => {
     init();
 
     async function init() {
-      const { tasks, loadMoreButton } = await loadTasks();
-      onLoadTasks({ tasks, loadMoreButton });
+      const { tasks, loadMoreButton } = await loadTaskList();
+      onLoadTaskList({ tasks, loadMoreButton });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
