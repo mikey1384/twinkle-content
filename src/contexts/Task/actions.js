@@ -1,4 +1,4 @@
-export default function TasksActions(dispatch) {
+export default function TaskActions(dispatch) {
   return {
     onLoadTasks({ tasks, loadMoreButton }) {
       return dispatch({

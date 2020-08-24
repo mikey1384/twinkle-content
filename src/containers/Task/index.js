@@ -4,7 +4,7 @@ import CurrentTask from './CurrentTask';
 import TaskList from './TaskList';
 import { css } from 'emotion';
 
-export default function Tasks() {
+export default function Task() {
   return (
     <div>
       <Cover />

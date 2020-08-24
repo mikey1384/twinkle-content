@@ -1,4 +1,4 @@
-export default function TasksReducer(state, action) {
+export default function TaskReducer(state, action) {
   switch (action.type) {
     case 'LOAD_TASKS':
       return {

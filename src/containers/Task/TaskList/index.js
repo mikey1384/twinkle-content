@@ -4,7 +4,7 @@ import ListItem from './ListItem';
 import Screenshot from '../takingscreenshot.gif';
 import CopyPaste from '../copypaste.gif';
 import HowToGoogle from '../howtogoogle.gif';
-import { useTasksContext } from 'contexts';
+import { useTaskContext } from 'contexts';
 
 TaskList.propTypes = {
   style: PropTypes.object,
@@ -14,7 +14,7 @@ TaskList.propTypes = {
 export default function TaskList({ style, className }) {
   const {
     actions: { onLoadTasks }
-  } = useTasksContext();
+  } = useTaskContext();
 
   useEffect(() => {
     onLoadTasks({ tasks: [], loadMoreButton: false });
@@ -22,7 +22,7 @@ export default function TaskList({ style, className }) {
 
   return (
     <div style={style} className={className}>
-      <p style={{ fontWeight: 'bold', fontSize: '2.5rem' }}>All Tasks</p>
+      <p style={{ fontWeight: 'bold', fontSize: '2.5rem' }}>All Task</p>
       <div>
         <div style={{ marginTop: '1rem' }}>
           <ListItem taskId={1}>
