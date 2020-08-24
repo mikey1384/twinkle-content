@@ -187,7 +187,8 @@ function Notification({ className, location, style }) {
               <Loading
                 style={{
                   position: 'absolute',
-                  top: 0
+                  height: 0,
+                  top: '1rem'
                 }}
               />
             )}
