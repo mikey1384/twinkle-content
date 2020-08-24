@@ -124,6 +124,8 @@ export function addAdvancedEmoji(string) {
     .replace(/(\:infinity\:)/gi, '∞')
     .replace(/(\:japan\:)/gi, '🇯🇵')
     .replace(/(\:korea\:)/gi, '🇰🇷')
+    .replace(/(\:light\:)/gi, '💡')
+    .replace(/(\:lightbulb\:)/gi, '💡')
     .replace(/(\:lock\:)/gi, '🔒')
     .replace(/(\:lol\:)/gi, '🤣')
     .replace(/(\:love\:)/gi, '😍')
