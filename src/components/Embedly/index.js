@@ -23,8 +23,6 @@ Embedly.propTypes = {
   contentId: PropTypes.number,
   contentType: PropTypes.string,
   imageWidth: PropTypes.string,
-  imageHeight: PropTypes.string,
-  imageMobileHeight: PropTypes.string,
   imageOnly: PropTypes.bool,
   loadingHeight: PropTypes.string,
   mobileLoadingHeight: PropTypes.string,
@@ -41,8 +39,6 @@ function Embedly({
   contentId,
   contentType = 'url',
   imageWidth,
-  imageHeight = '100%',
-  imageMobileHeight = '100%',
   imageOnly,
   loadingHeight = '100%',
   mobileLoadingHeight = '100%',
@@ -217,14 +213,11 @@ function Embedly({
               className={css`
                 position: relative;
                 width: 100%;
-                height: ${imageHeight};
+                height: 100%;
                 &:after {
                   content: '';
                   display: block;
                   padding-bottom: ${small ? '100%' : '60%'};
-                }
-                @media (max-width: ${mobileMaxWidth}) {
-                  height: ${imageMobileHeight};
                 }
               `}
             >
@@ -303,8 +296,6 @@ function Embedly({
     contentType,
     description,
     history,
-    imageHeight,
-    imageMobileHeight,
     imageOnly,
     imageUrl,
     loading,
@@ -346,7 +337,9 @@ function Embedly({
         className={css`
           width: ${imageWidth || (contentType === 'chat' ? '50%' : '100%')};
           position: relative;
-          justify-content: ${contentType === 'chat' && imageOnly && 'flex-end'};
+          height: 100%;
+          align-items: center;
+          justify-content: ${contentType === 'chat' && imageOnly && 'center'};
           display: flex;
           @media (max-width: ${mobileMaxWidth}) {
             width: 100%;

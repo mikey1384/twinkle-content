@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Image from 'components/Image';
 import FileIcon from 'components/FileIcon';
@@ -19,7 +19,7 @@ import {
 } from 'helpers/stringHelpers';
 import { css } from 'emotion';
 import { cloudFrontURL } from 'constants/defaultValues';
-import { useAppContext } from 'contexts';
+import { useAppContext, useContentContext } from 'contexts';
 
 TargetMessage.propTypes = {
   message: PropTypes.object.isRequired,
@@ -30,7 +30,21 @@ export default function TargetMessage({ message, onSetScrollToBottom }) {
   const {
     requestHelpers: { uploadThumb }
   } = useAppContext();
+  const {
+    actions: { onSetEmbeddedUrl }
+  } = useContentContext();
   const [imageModalShown, setImageModalShown] = useState(false);
+
+  useEffect(() => {
+    if (fetchURLFromText(message.content)) {
+      onSetEmbeddedUrl({
+        contentId: message.id,
+        contentType: 'chat',
+        url: fetchURLFromText(message.content)
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [message.content, message.id]);
 
   const fileType = useMemo(() => {
     return message.fileName
@@ -52,7 +66,9 @@ export default function TargetMessage({ message, onSetScrollToBottom }) {
     return (
       fileType !== 'video' &&
       fileType !== 'audio' &&
-      (message.thumbUrl || extractedVideoId) &&
+      (message.thumbUrl ||
+        extractedVideoId ||
+        fetchURLFromText(message.content)) &&
       !message.attachmentHidden
     );
   }, [fileType, message.attachmentHidden, message.content, message.thumbUrl]);
@@ -110,22 +126,29 @@ export default function TargetMessage({ message, onSetScrollToBottom }) {
         )}
       </div>
       {embedlyShown && (
-        <Embedly
-          imageOnly
-          contentId={message.id}
-          contentType="chat"
-          imageWidth="100%"
-          imageHeight="20vw"
-          imageMobileHeight="25vw"
-          videoWidth="100%"
-          videoHeight="10rem"
-          loadingHeight="10rem"
-          mobileLoadingHeight="10rem"
+        <div
           style={{
-            width: '30rem',
-            height: '10rem'
+            width: '25%',
+            display: 'flex',
+            background: '#fff',
+            justifyContent: 'center'
           }}
-        />
+        >
+          <Embedly
+            imageOnly
+            contentId={message.id}
+            contentType="chat"
+            imageWidth="100%"
+            videoWidth="100%"
+            videoHeight="10rem"
+            loadingHeight="10rem"
+            mobileLoadingHeight="10rem"
+            style={{
+              width: '30rem',
+              height: '10rem'
+            }}
+          />
+        </div>
       )}
       {fileType && message.fileName && (
         <div

@@ -97,7 +97,6 @@ export default function LinkItem({
         width: 100%;
         section {
           width: 100%;
-          margin-left: 2rem;
           display: flex;
           justify-content: space-between;
         }
@@ -126,7 +125,7 @@ export default function LinkItem({
           contentId={id}
         />
       </div>
-      <section>
+      <section style={{ marginLeft: '2rem' }}>
         <div
           className={css`
             display: flex;
