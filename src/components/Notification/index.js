@@ -12,13 +12,12 @@ import { useMyState } from 'helpers/hooks';
 import { useAppContext, useNotiContext } from 'contexts';
 
 Notification.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   className: PropTypes.string,
   location: PropTypes.string,
   style: PropTypes.object
 };
 
-function Notification({ children, className, location, style }) {
+function Notification({ className, location, style }) {
   const {
     requestHelpers: { loadRankings, fetchNotifications }
   } = useAppContext();
@@ -134,7 +133,6 @@ function Notification({ children, className, location, style }) {
               myId={userId}
               content={content}
               style={{
-                marginTop: children ? '1rem' : '0',
                 marginBottom: '1rem'
               }}
               {...subject}
@@ -145,7 +143,9 @@ function Notification({ children, className, location, style }) {
               bordered
               style={{
                 fontSize: '1.6rem',
-                height: '5rem'
+                height: '5rem',
+                marginBottom:
+                  loadingNotifications && activeTab === 'reward' ? 0 : null
               }}
             >
               <nav
@@ -189,7 +189,8 @@ function Notification({ children, className, location, style }) {
               <Loading
                 style={{
                   position: 'absolute',
-                  top: 0
+                  height: 0,
+                  top: '2rem'
                 }}
               />
             </div>
