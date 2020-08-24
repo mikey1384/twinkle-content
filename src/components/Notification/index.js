@@ -184,8 +184,8 @@ function Notification({ className, location, style }) {
               )}
             </FilterBar>
           )}
-          {loadingNotifications && activeTab === 'reward' && (
-            <div style={{ position: 'relative', marginTop: '1rem' }}>
+          <div style={{ position: 'relative' }}>
+            {loadingNotifications && activeTab === 'reward' && (
               <Loading
                 style={{
                   position: 'absolute',
@@ -193,19 +193,19 @@ function Notification({ className, location, style }) {
                   top: '2rem'
                 }}
               />
-            </div>
-          )}
-          <MainFeeds
-            loadingNotifications={loadingNotifications}
-            loadMore={loadMore}
-            activeTab={activeTab}
-            notifications={notifications}
-            rewards={rewards}
-            selectNotiTab={() => {
-              userChangedTab.current = true;
-              setActiveTab('notification');
-            }}
-          />
+            )}
+            <MainFeeds
+              loadingNotifications={loadingNotifications}
+              loadMore={loadMore}
+              activeTab={activeTab}
+              notifications={notifications}
+              rewards={rewards}
+              selectNotiTab={() => {
+                userChangedTab.current = true;
+                setActiveTab('notification');
+              }}
+            />
+          </div>
         </section>
       </div>
     </ErrorBoundary>
