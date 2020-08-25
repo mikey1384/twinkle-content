@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
 import { useAppContext, useTaskContext } from 'contexts';
@@ -20,20 +20,22 @@ export default function TaskPage({
     state: { taskObj }
   } = useTaskContext();
 
+  const task = useMemo(() => taskObj[taskId] || {}, [taskId, taskObj]);
+
   useEffect(() => {
     if (!taskObj[taskId]?.loaded) {
       init();
     }
     async function init() {
-      const task = await loadTask(taskId);
-      onLoadTask(task);
+      const data = await loadTask(taskId);
+      onLoadTask(data);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [taskId, taskObj]);
 
-  return taskObj[taskId] ? (
+  return task ? (
     <div>
-      <div>{taskObj[taskId].title}</div>
+      <div>{task.title}</div>
     </div>
   ) : (
     <Loading />
