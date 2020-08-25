@@ -1,20 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
+import LongText from 'components/Texts/LongText';
 import { css } from 'emotion';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
+import { gifTable } from 'constants/defaultValues';
 
 Task.propTypes = {
   title: PropTypes.string,
   subtitle: PropTypes.string,
   description: PropTypes.string,
-  style: PropTypes.object
+  style: PropTypes.object,
+  taskId: PropTypes.number
 };
-export default function Task({ title, subtitle, description, style }) {
+export default function Task({ title, subtitle, description, style, taskId }) {
   return (
     <div
       className={css`
-        width: 50%;
+        width: 60%;
         padding: 1rem;
         border: 1px solid ${Color.borderGray()};
         border-radius: ${borderRadius};
@@ -24,9 +27,14 @@ export default function Task({ title, subtitle, description, style }) {
       `}
       style={style}
     >
-      <div>
-        <h1>{title}</h1>
-        <p style={{ fontSize: '1.7rem' }}>{subtitle}</p>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div>
+          <h1>{title}</h1>
+          <p style={{ fontSize: '1.7rem' }}>{subtitle}</p>
+        </div>
+        <div style={{ width: '20%' }}>
+          <img style={{ width: '100%' }} src={gifTable[taskId]} />
+        </div>
       </div>
       <div
         style={{
@@ -36,13 +44,13 @@ export default function Task({ title, subtitle, description, style }) {
           fontSize: '2rem'
         }}
       >
-        {description}
+        <LongText>{description}</LongText>
       </div>
       <div
-        style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem' }}
+        style={{ display: 'flex', justifyContent: 'center', marginTop: '5rem' }}
       >
         <Button
-          color="blue"
+          color="darkBlue"
           skeuomorphic
           style={{ fontSize: '2rem' }}
           onClick={() => console.log('clicked')}
@@ -50,11 +58,11 @@ export default function Task({ title, subtitle, description, style }) {
           Submit
         </Button>
         <Button
-          style={{ marginLeft: '1rem', fontSize: '1.7rem' }}
-          color="pink"
+          style={{ marginLeft: '1rem', fontSize: '2rem' }}
+          color="rose"
           skeuomorphic
         >
-          Help me
+          Help me!
         </Button>
       </div>
     </div>
