@@ -45,9 +45,6 @@ export default function TaskPage({
             description={task.description}
             subtitle={task.subtitle}
             title={task.title}
-            style={{
-              width: '50%'
-            }}
           />
         </div>
       ) : (
