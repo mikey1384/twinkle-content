@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
+import Task from './Task';
 import { useAppContext, useTaskContext } from 'contexts';
 
 TaskPage.propTypes = {
@@ -35,9 +36,14 @@ export default function TaskPage({
 
   return task ? (
     <div>
-      <div>{task.title}</div>
+      <Task
+        taskId={task.id}
+        description={task.description}
+        subtitle={task.subtitle}
+        title={task.title}
+      />
     </div>
   ) : (
-    <Loading />
+    <Loading text="Loading Task..." />
   );
 }
