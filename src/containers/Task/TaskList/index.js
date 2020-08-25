@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ListItem from './ListItem';
-import Screenshot from '../takingscreenshot.gif';
-import CopyPaste from '../copypaste.gif';
-import HowToGoogle from '../howtogoogle.gif';
 import { useAppContext, useTaskContext } from 'contexts';
+import { gifTable } from 'constants/defaultValues';
 
 TaskList.propTypes = {
   style: PropTypes.object,
@@ -12,11 +10,6 @@ TaskList.propTypes = {
 };
 
 export default function TaskList({ style, className }) {
-  const gifTable = {
-    1: CopyPaste,
-    2: Screenshot,
-    3: HowToGoogle
-  };
   const {
     requestHelpers: { loadTaskList }
   } = useAppContext();

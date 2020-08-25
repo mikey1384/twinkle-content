@@ -4,24 +4,23 @@ import { css } from 'emotion';
 import { Color, borderRadius } from 'constants/css';
 
 Task.propTypes = {
-  taskId: PropTypes.number,
   title: PropTypes.string,
   subtitle: PropTypes.string,
   description: PropTypes.string,
   style: PropTypes.object
 };
-export default function Task({ taskId, title, subtitle, description, style }) {
+export default function Task({ title, subtitle, description, style }) {
   return (
     <div
       className={css`
+        padding: 1rem;
         border: 1px solid ${Color.borderGray()};
         border-radius: ${borderRadius};
       `}
       style={style}
     >
-      <div>{title}</div>
-      <div>{subtitle}</div>
-      <div>{taskId}</div>
+      <h1>{title}</h1>
+      <p style={{ fontSize: '1.7rem' }}>{subtitle}</p>
       {description && <div>{description}</div>}
     </div>
   );

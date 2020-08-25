@@ -34,16 +34,25 @@ export default function TaskPage({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [taskId, taskObj]);
 
-  return task ? (
-    <div>
-      <Task
-        taskId={task.id}
-        description={task.description}
-        subtitle={task.subtitle}
-        title={task.title}
-      />
+  return (
+    <div style={{ paddingTop: '1rem' }}>
+      {task ? (
+        <div
+          style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+        >
+          <Task
+            taskId={task.id}
+            description={task.description}
+            subtitle={task.subtitle}
+            title={task.title}
+            style={{
+              width: '50%'
+            }}
+          />
+        </div>
+      ) : (
+        <Loading text="Loading Task..." />
+      )}
     </div>
-  ) : (
-    <Loading text="Loading Task..." />
   );
 }

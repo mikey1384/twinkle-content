@@ -1,3 +1,7 @@
+import Screenshot from './takingscreenshot.gif';
+import CopyPaste from './copypaste.gif';
+import HowToGoogle from './howtogoogle.gif';
+
 export const clientVersion = '1.4.25';
 export const defaultChatSubject = 'Welcome!';
 export const defaultContentState = {
@@ -14,6 +18,12 @@ export const defaultContentState = {
   subjectsLoadMoreButton: false,
   rootObj: {},
   profileTheme: 'logoBlue'
+};
+
+export const gifTable = {
+  1: CopyPaste,
+  2: Screenshot,
+  3: HowToGoogle
 };
 
 export const cloudFrontURL = `https://${process.env.REACT_APP_CLOUDFRONT_KEY}.cloudfront.net`;
