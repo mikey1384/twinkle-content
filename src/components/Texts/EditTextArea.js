@@ -74,15 +74,17 @@ export default function EditTextArea({
 
   useEffect(() => {
     return function saveTextBeforeUnmount() {
-      onSetEditForm({
-        contentId,
-        contentType,
-        form: editTextRef.current
-          ? {
-              editedComment: editTextRef.current
-            }
-          : undefined
-      });
+      if (editTextRef.current !== text) {
+        onSetEditForm({
+          contentId,
+          contentType,
+          form: editTextRef.current
+            ? {
+                editedComment: editTextRef.current
+              }
+            : undefined
+        });
+      }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

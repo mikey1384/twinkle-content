@@ -350,6 +350,12 @@ function Comment({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subjectState.id, subjectState.prevSecretViewerId, userId]);
 
+  useEffect(() => {
+    return function onUnmount() {
+      mounted.current = false;
+    };
+  }, []);
+
   return !deleted && !comment.deleted ? (
     <>
       <div
