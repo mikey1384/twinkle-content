@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import LongText from 'components/Texts/LongText';
-import { css } from 'emotion';
-import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
+import { panel } from './Styles';
 import { gifTable } from 'constants/defaultValues';
 
 Task.propTypes = {
@@ -15,18 +14,7 @@ Task.propTypes = {
 };
 export default function Task({ title, subtitle, description, style, taskId }) {
   return (
-    <div
-      className={css`
-        width: 60%;
-        padding: 1rem;
-        border: 1px solid ${Color.borderGray()};
-        border-radius: ${borderRadius};
-        @media (max-width: ${mobileMaxWidth}) {
-          width: 100%;
-        }
-      `}
-      style={style}
-    >
+    <div className={panel} style={style}>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div>
           <h1>{title}</h1>
