@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import StartPanel from './StartPanel';
 
@@ -7,6 +7,7 @@ Tutorial.propTypes = {
 };
 
 export default function Tutorial({ style }) {
+  const [started, setStarted] = useState(false);
   return (
     <div
       style={{
@@ -16,7 +17,8 @@ export default function Tutorial({ style }) {
         ...style
       }}
     >
-      <StartPanel />
+      {!started && <StartPanel onStartClick={() => setStarted(true)} />}
+      {started && <div>started</div>}
     </div>
   );
 }

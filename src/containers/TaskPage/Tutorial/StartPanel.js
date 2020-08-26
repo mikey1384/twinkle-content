@@ -1,8 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import { panel } from '../Styles';
 
-export default function StartPanel() {
+StartPanel.propTypes = {
+  onStartClick: PropTypes.func.isRequired
+};
+
+export default function StartPanel({ onStartClick }) {
   return (
     <div className={panel}>
       <h2>Need help?</h2>
@@ -17,6 +22,7 @@ export default function StartPanel() {
           style={{ marginLeft: '1rem', fontSize: '2rem' }}
           color="rose"
           skeuomorphic
+          onClick={onStartClick}
         >
           Start Tutorial
         </Button>
