@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import StartPanel from './StartPanel';
+import TutorialPanels from './TutorialPanels';
 
 Tutorial.propTypes = {
   style: PropTypes.object
@@ -18,7 +19,7 @@ export default function Tutorial({ style }) {
       }}
     >
       {!started && <StartPanel onStartClick={() => setStarted(true)} />}
-      {started && <div>started</div>}
+      {started && <TutorialPanels />}
     </div>
   );
 }
