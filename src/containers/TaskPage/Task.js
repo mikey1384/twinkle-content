@@ -55,14 +55,7 @@ export default function Task({ title, subtitle, description, style, taskId }) {
           style={{ fontSize: '2rem' }}
           onClick={() => console.log('clicked')}
         >
-          Submit
-        </Button>
-        <Button
-          style={{ marginLeft: '1rem', fontSize: '2rem' }}
-          color="rose"
-          skeuomorphic
-        >
-          Help me!
+          Submit Screenshot
         </Button>
       </div>
     </div>

@@ -2,6 +2,7 @@ import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
 import Task from './Task';
+import Tutorial from './Tutorial';
 import { useAppContext, useTaskContext } from 'contexts';
 
 TaskPage.propTypes = {
@@ -38,7 +39,13 @@ export default function TaskPage({
     <div style={{ paddingTop: '1rem' }}>
       {task ? (
         <div
-          style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+          style={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column'
+          }}
         >
           <Task
             taskId={task.id}
@@ -46,6 +53,7 @@ export default function TaskPage({
             subtitle={task.subtitle}
             title={task.title}
           />
+          <Tutorial style={{ marginTop: '5rem' }} />
         </div>
       ) : (
         <Loading text="Loading Task..." />
