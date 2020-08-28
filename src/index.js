@@ -11,6 +11,8 @@ import './styles.css';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faAlignJustify } from '@fortawesome/pro-solid-svg-icons/faAlignJustify';
+import { faAndroid } from '@fortawesome/free-brands-svg-icons/faAndroid';
+import { faApple } from '@fortawesome/free-brands-svg-icons/faApple';
 import { faArrowLeft } from '@fortawesome/pro-solid-svg-icons/faArrowLeft';
 import { faArrowRight } from '@fortawesome/pro-solid-svg-icons/faArrowRight';
 import { faArrowDown } from '@fortawesome/pro-solid-svg-icons/faArrowDown';
@@ -79,12 +81,15 @@ import { faUpload } from '@fortawesome/pro-solid-svg-icons/faUpload';
 import { faUserGraduate } from '@fortawesome/pro-solid-svg-icons/faUserGraduate';
 import { faUsers } from '@fortawesome/pro-solid-svg-icons/faUsers';
 import { faVolumeMute } from '@fortawesome/pro-solid-svg-icons/faVolumeMute';
+import { faWindows } from '@fortawesome/free-brands-svg-icons/faWindows';
 import App from './containers/App';
 import { AppContextProvider } from 'contexts';
 import * as serviceWorker from './serviceWorker';
 
 library.add(
   faAlignJustify,
+  faAndroid,
+  faApple,
   faBadgeDollar,
   farBadgeDollar,
   falBadgeDollar,
@@ -152,7 +157,8 @@ library.add(
   faUser,
   faUserGraduate,
   faUsers,
-  faVolumeMute
+  faVolumeMute,
+  faWindows
 );
 
 ReactDOM.render(

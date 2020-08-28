@@ -8,12 +8,12 @@ Tutorial.propTypes = {
 };
 
 export default function Tutorial({ style }) {
-  const [started, setStarted] = useState(false);
+  const [started, setStarted] = useState(true);
   return (
     <div
       style={{
-        display: 'flex',
         width: '100%',
+        display: 'flex',
         justifyContent: 'center',
         ...style
       }}
