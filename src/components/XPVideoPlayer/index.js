@@ -71,7 +71,6 @@ function XPVideoPlayer({
     xpLoaded,
     xpEarned,
     justEarned,
-    imageUrl = '',
     watchTime = 0,
     isEditing
   } = useContentState({ contentType: 'video', contentId: videoId });
@@ -241,20 +240,6 @@ function XPVideoPlayer({
           cursor: !isEditing && !started && 'pointer'
         }}
       >
-        <img
-          alt=""
-          src={imageUrl}
-          className={css`
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            right: 0;
-            left: 0;
-            bottom: 0;
-            cursor: pointer;
-          `}
-        />
         <ReactPlayer
           ref={PlayerRef}
           className={css`
