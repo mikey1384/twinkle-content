@@ -78,20 +78,23 @@ export default function TutorialPanels() {
           url="https://www.youtube.com/watch?v=ddxcVJPAf18"
           controls
         />
-        <div
-          style={{
-            marginTop: '8rem',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center'
-          }}
-        >
-          <p
-            style={{ fontSize: '2rem', fontWeight: 'bold' }}
-          >{`1. Tap the button at the bottom left corner of your screen (it's called the "Start Button")`}</p>
-          <div style={{ width: '80%', marginTop: '3rem' }}>
-            <img style={{ width: '100%' }} src={StartButton} />
-          </div>
+      </div>
+      <div
+        className={panel}
+        style={{
+          marginTop: '5rem',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          paddingBottom: '5rem'
+        }}
+      >
+        <p
+          style={{ fontSize: '2.5rem', fontWeight: 'bold' }}
+        >{`1. Tap the button at the bottom left corner of your screen (it's called the "Start Button")`}</p>
+        <div style={{ width: '80%', marginTop: '3rem' }}>
+          <img style={{ width: '100%' }} src={StartButton} />
         </div>
       </div>
     </div>
