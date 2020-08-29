@@ -2,6 +2,7 @@ import React from 'react';
 import { panel } from '../../Styles';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
+import ReactPlayer from 'react-player/lazy';
 
 export default function TutorialPanels() {
   return (
@@ -9,6 +10,8 @@ export default function TutorialPanels() {
       style={{
         width: '100%',
         display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
         justifyContent: 'center',
         paddingBottom: '10rem'
       }}
@@ -53,6 +56,23 @@ export default function TutorialPanels() {
             skeuomorphic
           >{`I don't know`}</Button>
         </div>
+      </div>
+      <div
+        className={panel}
+        style={{
+          marginTop: '5rem',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        <h1>Windows PC</h1>
+        <ReactPlayer
+          style={{ marginTop: '3rem' }}
+          url="https://www.youtube.com/watch?v=1muW9eVZfOM"
+          controls
+        />
       </div>
     </div>
   );
