@@ -3,8 +3,8 @@ import { panel } from '../../Styles';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import ReactPlayer from 'react-player/lazy';
-import StartButton from './start-button.png';
 import InstructionPanel from './InstructionPanel';
+import StartButton from './start-button.png';
 
 export default function TutorialPanels() {
   return (
