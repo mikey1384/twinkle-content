@@ -76,7 +76,7 @@ export default function ExtractedThumb({
     )
   ) : (
     <div style={style}>
-      {!isHidden && !loadingThumb && (
+      {!isHidden && loadingThumb && (
         <Loading style={{ width: '100%', height: '100%' }} />
       )}
       <canvas
