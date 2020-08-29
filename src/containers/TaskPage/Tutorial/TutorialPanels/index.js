@@ -3,7 +3,7 @@ import { panel } from '../../Styles';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import ReactPlayer from 'react-player/lazy';
-import StartButton from './start-button.jpg';
+import StartButton from './start-button.png';
 
 export default function TutorialPanels() {
   return (
@@ -88,8 +88,8 @@ export default function TutorialPanels() {
         >
           <p
             style={{ fontSize: '2rem', fontWeight: 'bold' }}
-          >{`1. Find a button in your keyboard which looks like this (it's called the "Start Button")`}</p>
-          <div style={{ width: '50%', marginTop: '3rem' }}>
+          >{`1. Tap the button at the bottom left corner of your screen (it's called the "Start Button")`}</p>
+          <div style={{ width: '80%', marginTop: '3rem' }}>
             <img style={{ width: '100%' }} src={StartButton} />
           </div>
         </div>
