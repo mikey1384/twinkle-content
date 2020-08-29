@@ -21,7 +21,7 @@ export default function ExtractedThumb({
   const [dataLoaded, setDataLoaded] = useState(false);
   const [metadataLoaded, setMetadataLoaded] = useState(false);
   const [seeked, setSeeked] = useState(false);
-  const [loadingThumb, setLoadingThumb] = useState(true);
+  const [loadingThumb, setLoadingThumb] = useState(false);
   const [thumbnail, setThumbnail] = useState(null);
   const [suspended, setSuspended] = useState(false);
   const videoRef = useRef({});
