@@ -4,6 +4,7 @@ import Button from 'components/Button';
 import Icon from 'components/Icon';
 import ReactPlayer from 'react-player/lazy';
 import StartButton from './start-button.png';
+import InstructionPanel from './InstructionPanel';
 
 export default function TutorialPanels() {
   return (
@@ -79,24 +80,11 @@ export default function TutorialPanels() {
           controls
         />
       </div>
-      <div
-        className={panel}
-        style={{
-          marginTop: '5rem',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          paddingBottom: '5rem'
-        }}
-      >
-        <p
-          style={{ fontSize: '2.5rem', fontWeight: 'bold' }}
-        >{`1. Tap the button at the bottom left corner of your screen (it's called the "Start Button")`}</p>
-        <div style={{ width: '80%', marginTop: '3rem' }}>
-          <img style={{ width: '100%' }} src={StartButton} />
-        </div>
-      </div>
+      <InstructionPanel
+        title={`1. Tap the button at the bottom left corner of your screen (that button is called the "Start Button")`}
+        image={StartButton}
+        style={{ marginTop: '5rem' }}
+      />
     </div>
   );
 }
