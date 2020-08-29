@@ -21,6 +21,7 @@ export default function ExtractedThumb({
   const [dataLoaded, setDataLoaded] = useState(false);
   const [metadataLoaded, setMetadataLoaded] = useState(false);
   const [seeked, setSeeked] = useState(false);
+  const [loadingThumb, setLoadingThumb] = useState(false);
   const [thumbnail, setThumbnail] = useState(null);
   const [suspended, setSuspended] = useState(false);
   const videoRef = useRef({});
@@ -40,6 +41,7 @@ export default function ExtractedThumb({
       }
     }
     function handleLoadThumbnail() {
+      setLoadingThumb(true);
       try {
         canvasRef.current.height = videoRef.current.videoHeight;
         canvasRef.current.width = videoRef.current.videoWidth;
@@ -55,8 +57,10 @@ export default function ExtractedThumb({
         if (onThumbnailLoad) {
           onThumbnailLoad(thumbnail);
         }
+        setLoadingThumb(false);
       } catch (error) {
         console.error(error);
+        setLoadingThumb(false);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -72,7 +76,9 @@ export default function ExtractedThumb({
     )
   ) : (
     <div style={style}>
-      {!isHidden && <Loading style={{ width: '100%', height: '100%' }} />}
+      {!isHidden && loadingThumb && (
+        <Loading style={{ width: '100%', height: '100%' }} />
+      )}
       <canvas
         className={css`
           display: block;
