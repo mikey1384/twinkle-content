@@ -80,7 +80,7 @@ export default function TutorialPanels() {
         />
         <div
           style={{
-            marginTop: '10rem',
+            marginTop: '8rem',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center'
