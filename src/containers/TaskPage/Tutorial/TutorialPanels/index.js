@@ -5,6 +5,7 @@ import Icon from 'components/Icon';
 import ReactPlayer from 'react-player/lazy';
 import InstructionPanel from './InstructionPanel';
 import StartButton from './start-button.png';
+import Applications from './applications.png';
 
 export default function TutorialPanels() {
   return (
@@ -83,6 +84,11 @@ export default function TutorialPanels() {
       <InstructionPanel
         title={`1. Tap the button at the bottom left corner of your screen (that button is called the "Start Button")`}
         image={StartButton}
+        style={{ marginTop: '5rem' }}
+      />
+      <InstructionPanel
+        title={`2. Then tap "All Apps"`}
+        image={Applications}
         style={{ marginTop: '5rem' }}
       />
     </div>
