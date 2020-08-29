@@ -3,6 +3,7 @@ import { panel } from '../../Styles';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import ReactPlayer from 'react-player/lazy';
+import StartButton from './start-button.jpg';
 
 export default function TutorialPanels() {
   return (
@@ -64,15 +65,34 @@ export default function TutorialPanels() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          paddingBottom: '5rem'
         }}
       >
         <h1>Windows PC</h1>
+        <p style={{ fontSize: '2rem', marginTop: '1.5rem' }}>
+          Watch this video or follow the instructions below (or both)
+        </p>
         <ReactPlayer
           style={{ marginTop: '3rem' }}
-          url="https://www.youtube.com/watch?v=1muW9eVZfOM"
+          url="https://www.youtube.com/watch?v=ddxcVJPAf18"
           controls
         />
+        <div
+          style={{
+            marginTop: '10rem',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}
+        >
+          <p
+            style={{ fontSize: '2rem', fontWeight: 'bold' }}
+          >{`1. Find a button in your keyboard which looks like this (it's called the "Start Button")`}</p>
+          <div style={{ width: '50%', marginTop: '3rem' }}>
+            <img style={{ width: '100%' }} src={StartButton} />
+          </div>
+        </div>
       </div>
     </div>
   );
