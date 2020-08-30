@@ -262,10 +262,27 @@ export default function Body({
   }, []);
 
   const editButtonShown = useMemo(() => {
+    const isForSecretSubject =
+      rootObj?.secretAnswer &&
+      !(
+        rootObj?.uploader?.id === userId ||
+        authLevel > rootObj?.uploader?.authLevel
+      );
     const userCanEditThis =
       (canEdit || canDelete) && authLevel > uploader.authLevel;
-    return userId === uploader.id || userCanEditThis;
-  }, [authLevel, canDelete, canEdit, uploader.authLevel, uploader.id, userId]);
+    return (
+      (userId === uploader.id && !(isForSecretSubject || isNotification)) ||
+      userCanEditThis
+    );
+  }, [
+    authLevel,
+    canDelete,
+    canEdit,
+    isNotification,
+    rootObj,
+    uploader,
+    userId
+  ]);
 
   const userCanRewardThis = useMemo(
     () =>
