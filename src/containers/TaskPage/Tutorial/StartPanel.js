@@ -9,12 +9,12 @@ StartPanel.propTypes = {
 
 export default function StartPanel({ onStartClick }) {
   return (
-    <div className={panel}>
+    <div className={panel} style={{ padding: '2rem' }}>
       <h2 style={{ textAlign: 'center' }}>Need help?</h2>
       <div
         style={{
           display: 'flex',
-          marginTop: '3rem',
+          marginTop: '2rem',
           justifyContent: 'center'
         }}
       >

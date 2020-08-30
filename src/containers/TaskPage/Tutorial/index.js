@@ -8,7 +8,7 @@ Tutorial.propTypes = {
 };
 
 export default function Tutorial({ style }) {
-  const [started, setStarted] = useState(true);
+  const [started, setStarted] = useState(false);
   return (
     <div
       style={{
