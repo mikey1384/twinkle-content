@@ -29,7 +29,7 @@ export default function Task({ title, subtitle, description, style, taskId }) {
           marginTop: '3rem',
           display: 'flex',
           justifyContent: 'center',
-          fontSize: '2rem'
+          fontSize: '2.3rem'
         }}
       >
         <LongText>{description}</LongText>
