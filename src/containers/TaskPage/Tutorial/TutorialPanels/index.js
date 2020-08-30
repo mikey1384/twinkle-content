@@ -6,6 +6,13 @@ import ReactPlayer from 'react-player/lazy';
 import InstructionPanel from './InstructionPanel';
 import StartButton from './start-button.png';
 import Applications from './applications.png';
+import ScrollDown from './scroll-down.png';
+import WindowsAccessories from './windows-accessories.png';
+import SnippingTool from './snipping-tool.png';
+import TapNew from './tap-new.png';
+import GrayOut from './gray-out.png';
+import DragTheBox from './drag-the-box.png';
+import TapToSave from './tap-to-save.png';
 
 export default function TutorialPanels() {
   return (
@@ -87,8 +94,43 @@ export default function TutorialPanels() {
         style={{ marginTop: '5rem' }}
       />
       <InstructionPanel
-        title={`2. Then tap "All Apps"`}
+        title={`2. Tap "All Apps (모든 어플리케이션)"`}
         image={Applications}
+        style={{ marginTop: '5rem' }}
+      />
+      <InstructionPanel
+        title={`3. Scroll down until you see "Windows Accessories"`}
+        image={ScrollDown}
+        style={{ marginTop: '5rem' }}
+      />
+      <InstructionPanel
+        title={`4. Tap "Windows Accessories"`}
+        image={WindowsAccessories}
+        style={{ marginTop: '5rem' }}
+      />
+      <InstructionPanel
+        title={`5. Tap "Snipping Tool"`}
+        image={SnippingTool}
+        style={{ marginTop: '5rem' }}
+      />
+      <InstructionPanel
+        title={`6. Tap "New"`}
+        image={TapNew}
+        style={{ marginTop: '5rem' }}
+      />
+      <InstructionPanel
+        title={`8. The screen will be grayed out`}
+        image={GrayOut}
+        style={{ marginTop: '5rem' }}
+      />
+      <InstructionPanel
+        title={`9. Drag a box around what you want to take a screen shot of`}
+        image={DragTheBox}
+        style={{ marginTop: '5rem' }}
+      />
+      <InstructionPanel
+        title={`10. Save your screenshot`}
+        image={TapToSave}
         style={{ marginTop: '5rem' }}
       />
     </div>
