@@ -262,12 +262,17 @@ export default function Body({
   }, []);
 
   const editButtonShown = useMemo(() => {
+    const secretAnswerExists =
+      targetObj?.subject?.secretAnswer || rootObj?.secretAnswer;
+    const isSecretAnswerPoster = rootObj?.secretAnswer
+      ? rootObj?.uploader?.id === userId
+      : targetObj?.subject?.uploader?.id === userId;
+    const isHigherAuthThanSecretAnswerPoster = rootObj?.secretAnswer
+      ? authLevel > rootObj?.uploader?.authLevel
+      : authLevel > targetObj?.subject?.uploader?.authLevel;
     const isForSecretSubject =
-      rootObj?.secretAnswer &&
-      !(
-        rootObj?.uploader?.id === userId ||
-        authLevel > rootObj?.uploader?.authLevel
-      );
+      secretAnswerExists &&
+      !(isSecretAnswerPoster || isHigherAuthThanSecretAnswerPoster);
     const userCanEditThis =
       (canEdit || canDelete) && authLevel > uploader.authLevel;
     return (
@@ -280,6 +285,7 @@ export default function Body({
     canEdit,
     isNotification,
     rootObj,
+    targetObj,
     uploader,
     userId
   ]);
