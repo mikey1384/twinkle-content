@@ -7,11 +7,12 @@ import Icon from 'components/Icon';
 Slide.propTypes = {
   style: PropTypes.object,
   heading: PropTypes.string,
+  description: PropTypes.string,
   options: PropTypes.array,
   src: PropTypes.string
 };
 
-export default function Slide({ style, heading, options, src }) {
+export default function Slide({ style, heading, description, options, src }) {
   return (
     <div
       className={panel}
@@ -26,6 +27,9 @@ export default function Slide({ style, heading, options, src }) {
     >
       {heading && (
         <p style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>{heading}</p>
+      )}
+      {description && (
+        <p style={{ fontSize: '2rem', marginTop: '1.5rem' }}>{description}</p>
       )}
       {src && (
         <div style={{ width: '80%', marginTop: '3rem' }}>

@@ -70,7 +70,7 @@ export default function TutorialPanels() {
       }
     }
   });
-  const [displayedSlides] = useState([1]);
+  const [displayedSlides] = useState([1, 2]);
 
   return (
     <div
@@ -83,11 +83,13 @@ export default function TutorialPanels() {
         paddingBottom: '10rem'
       }}
     >
-      {displayedSlides.map((panelId) => (
+      {displayedSlides.map((panelId, index) => (
         <Slide
           key={panelId}
           heading={slideObj[panelId].heading}
+          description={slideObj[panelId].description}
           options={slideObj[panelId].options}
+          style={{ marginTop: index === 0 ? 0 : '5rem' }}
         />
       ))}
       <div
