@@ -13,7 +13,6 @@ import TapToSave from './tap-to-save.png';
 export default function TutorialPanels() {
   const [slideObj] = useState({
     1: {
-      type: 'fork',
       id: 1,
       heading: 'Which device are you using?',
       options: [
@@ -45,11 +44,18 @@ export default function TutorialPanels() {
           id: 6,
           label: `I don't know`
         }
-      ]
+      ],
+      paths: {
+        1: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+        2: [],
+        3: [],
+        4: [],
+        5: [],
+        6: []
+      }
     },
     2: {
       id: 2,
-      type: 'intro',
       heading: 'Windows PC',
       description:
         'Watch this video or follow the instructions below (or both)',
@@ -60,7 +66,6 @@ export default function TutorialPanels() {
     },
     3: {
       id: 3,
-      type: 'slide',
       heading: `1. Tap the button at the bottom left corner of your screen (that button is called the "Start Button")`,
       attachment: {
         type: 'image',
@@ -68,8 +73,7 @@ export default function TutorialPanels() {
       }
     },
     4: {
-      id: 3,
-      type: 'slide',
+      id: 4,
       heading: `2. Tap "All Apps (모든 어플리케이션)"`,
       attachment: {
         type: 'image',
@@ -77,8 +81,7 @@ export default function TutorialPanels() {
       }
     },
     5: {
-      id: 3,
-      type: 'slide',
+      id: 5,
       heading: `3. Scroll down until you see "Windows Accessories"`,
       attachment: {
         type: 'image',
@@ -86,8 +89,7 @@ export default function TutorialPanels() {
       }
     },
     6: {
-      id: 3,
-      type: 'slide',
+      id: 6,
       heading: `4. Tap "Windows Accessories"`,
       attachment: {
         type: 'image',
@@ -95,8 +97,7 @@ export default function TutorialPanels() {
       }
     },
     7: {
-      id: 3,
-      type: 'slide',
+      id: 7,
       heading: `5. Tap "Snipping Tool"`,
       attachment: {
         type: 'image',
@@ -104,8 +105,7 @@ export default function TutorialPanels() {
       }
     },
     8: {
-      id: 3,
-      type: 'slide',
+      id: 8,
       heading: `6. Tap "New"`,
       attachment: {
         type: 'image',
@@ -113,8 +113,7 @@ export default function TutorialPanels() {
       }
     },
     9: {
-      id: 3,
-      type: 'slide',
+      id: 9,
       heading: `7. The screen will be grayed out`,
       attachment: {
         type: 'image',
@@ -122,8 +121,7 @@ export default function TutorialPanels() {
       }
     },
     10: {
-      id: 3,
-      type: 'slide',
+      id: 10,
       heading: `8. Drag a box around what you want to take a screen shot of`,
       attachment: {
         type: 'image',
@@ -131,8 +129,7 @@ export default function TutorialPanels() {
       }
     },
     11: {
-      id: 3,
-      type: 'slide',
+      id: 11,
       heading: `9. Save your screenshot`,
       attachment: {
         type: 'image',
