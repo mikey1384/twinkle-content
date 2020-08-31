@@ -2,7 +2,7 @@ import Screenshot from './takingscreenshot.gif';
 import CopyPaste from './copypaste.gif';
 import HowToGoogle from './howtogoogle.gif';
 
-export const clientVersion = '1.4.25';
+export const clientVersion = '1.4.26';
 export const defaultChatSubject = 'Welcome!';
 export const defaultContentState = {
   isEditing: false,

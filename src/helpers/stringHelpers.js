@@ -418,7 +418,6 @@ export function processedStringWithURL(string) {
   const italicWordRegex = /(\*\*[^\s*]+\*\*)/gi;
   const italicSentenceRegex = /((\*\*[^\*\s]){1}([^\*\n])+([^\*\s]\*\*){1})/gi;
   const underlineWordRegex = /(__[\S]+__)/gi;
-  const underlineSentenceRegex = /((__[\S]){1}([^\n])+([\S]__){1})/gi;
   const linethroughWordRegex = /(--[\S]+--)/gi;
   const linethroughSentenceRegex = /((--[\S]){1}([^\n])+([\S]--){1})/gi;
   let tempString = string
@@ -620,10 +619,6 @@ export function processedStringWithURL(string) {
     )
     .replace(
       underlineWordRegex,
-      (string) => `<u>${string.substring(2, string.length - 2)}</u>`
-    )
-    .replace(
-      underlineSentenceRegex,
       (string) => `<u>${string.substring(2, string.length - 2)}</u>`
     )
     .replace(
