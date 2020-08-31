@@ -115,7 +115,7 @@ export default function TutorialPanels() {
     9: {
       id: 3,
       type: 'slide',
-      heading: `8. The screen will be grayed out`,
+      heading: `7. The screen will be grayed out`,
       attachment: {
         type: 'image',
         src: GrayOut
@@ -124,7 +124,7 @@ export default function TutorialPanels() {
     10: {
       id: 3,
       type: 'slide',
-      heading: `9. Drag a box around what you want to take a screen shot of`,
+      heading: `8. Drag a box around what you want to take a screen shot of`,
       attachment: {
         type: 'image',
         src: DragTheBox
@@ -133,7 +133,7 @@ export default function TutorialPanels() {
     11: {
       id: 3,
       type: 'slide',
-      heading: `10. Save your screenshot`,
+      heading: `9. Save your screenshot`,
       attachment: {
         type: 'image',
         src: TapToSave
