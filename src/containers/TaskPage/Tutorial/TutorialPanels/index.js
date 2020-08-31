@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { panel as panelStyle } from '../../Styles';
-import ReactPlayer from 'react-player/lazy';
 import Slide from './Slide';
 import StartButton from './start-button.png';
 import Applications from './applications.png';
@@ -65,12 +63,84 @@ export default function TutorialPanels() {
       type: 'slide',
       heading: `1. Tap the button at the bottom left corner of your screen (that button is called the "Start Button")`,
       attachment: {
-        type: 'file',
+        type: 'image',
         src: StartButton
+      }
+    },
+    4: {
+      id: 3,
+      type: 'slide',
+      heading: `2. Tap "All Apps (모든 어플리케이션)"`,
+      attachment: {
+        type: 'image',
+        src: Applications
+      }
+    },
+    5: {
+      id: 3,
+      type: 'slide',
+      heading: `3. Scroll down until you see "Windows Accessories"`,
+      attachment: {
+        type: 'image',
+        src: ScrollDown
+      }
+    },
+    6: {
+      id: 3,
+      type: 'slide',
+      heading: `4. Tap "Windows Accessories"`,
+      attachment: {
+        type: 'image',
+        src: WindowsAccessories
+      }
+    },
+    7: {
+      id: 3,
+      type: 'slide',
+      heading: `5. Tap "Snipping Tool"`,
+      attachment: {
+        type: 'image',
+        src: SnippingTool
+      }
+    },
+    8: {
+      id: 3,
+      type: 'slide',
+      heading: `6. Tap "New"`,
+      attachment: {
+        type: 'image',
+        src: TapNew
+      }
+    },
+    9: {
+      id: 3,
+      type: 'slide',
+      heading: `8. The screen will be grayed out`,
+      attachment: {
+        type: 'image',
+        src: GrayOut
+      }
+    },
+    10: {
+      id: 3,
+      type: 'slide',
+      heading: `9. Drag a box around what you want to take a screen shot of`,
+      attachment: {
+        type: 'image',
+        src: DragTheBox
+      }
+    },
+    11: {
+      id: 3,
+      type: 'slide',
+      heading: `10. Save your screenshot`,
+      attachment: {
+        type: 'image',
+        src: TapToSave
       }
     }
   });
-  const [displayedSlides] = useState([1, 2]);
+  const [displayedSlides] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
 
   return (
     <div
@@ -89,75 +159,10 @@ export default function TutorialPanels() {
           heading={slideObj[panelId].heading}
           description={slideObj[panelId].description}
           options={slideObj[panelId].options}
+          attachment={slideObj[panelId].attachment}
           style={{ marginTop: index === 0 ? 0 : '5rem' }}
         />
       ))}
-      <div
-        className={panelStyle}
-        style={{
-          marginTop: '5rem',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          paddingBottom: '5rem'
-        }}
-      >
-        <h1>Windows PC</h1>
-        <p style={{ fontSize: '2rem', marginTop: '1.5rem' }}>
-          Watch this video or follow the instructions below (or both)
-        </p>
-        <ReactPlayer
-          style={{ marginTop: '3rem' }}
-          url="https://www.youtube.com/watch?v=ddxcVJPAf18"
-          controls
-        />
-      </div>
-      <Slide
-        heading={`1. Tap the button at the bottom left corner of your screen (that button is called the "Start Button")`}
-        src={StartButton}
-        style={{ marginTop: '5rem' }}
-      />
-      <Slide
-        heading={`2. Tap "All Apps (모든 어플리케이션)"`}
-        src={Applications}
-        style={{ marginTop: '5rem' }}
-      />
-      <Slide
-        heading={`3. Scroll down until you see "Windows Accessories"`}
-        src={ScrollDown}
-        style={{ marginTop: '5rem' }}
-      />
-      <Slide
-        heading={`4. Tap "Windows Accessories"`}
-        src={WindowsAccessories}
-        style={{ marginTop: '5rem' }}
-      />
-      <Slide
-        heading={`5. Tap "Snipping Tool"`}
-        src={SnippingTool}
-        style={{ marginTop: '5rem' }}
-      />
-      <Slide
-        heading={`6. Tap "New"`}
-        src={TapNew}
-        style={{ marginTop: '5rem' }}
-      />
-      <Slide
-        heading={`8. The screen will be grayed out`}
-        src={GrayOut}
-        style={{ marginTop: '5rem' }}
-      />
-      <Slide
-        heading={`9. Drag a box around what you want to take a screen shot of`}
-        src={DragTheBox}
-        style={{ marginTop: '5rem' }}
-      />
-      <Slide
-        heading={`10. Save your screenshot`}
-        src={TapToSave}
-        style={{ marginTop: '5rem' }}
-      />
     </div>
   );
 }

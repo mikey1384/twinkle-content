@@ -3,16 +3,23 @@ import PropTypes from 'prop-types';
 import { panel } from '../../../Styles';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
+import Attachment from './Attachment';
 
 Slide.propTypes = {
   style: PropTypes.object,
   heading: PropTypes.string,
   description: PropTypes.string,
   options: PropTypes.array,
-  src: PropTypes.string
+  attachment: PropTypes.object
 };
 
-export default function Slide({ style, heading, description, options, src }) {
+export default function Slide({
+  style,
+  heading,
+  description,
+  options,
+  attachment
+}) {
   return (
     <div
       className={panel}
@@ -31,11 +38,7 @@ export default function Slide({ style, heading, description, options, src }) {
       {description && (
         <p style={{ fontSize: '2rem', marginTop: '1.5rem' }}>{description}</p>
       )}
-      {src && (
-        <div style={{ width: '80%', marginTop: '3rem' }}>
-          <img style={{ width: '100%' }} src={src} />
-        </div>
-      )}
+      {attachment && <Attachment type={attachment.type} src={attachment.src} />}
       {options && (
         <div
           style={{
