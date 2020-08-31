@@ -9,7 +9,9 @@ Slide.propTypes = {
   style: PropTypes.object,
   heading: PropTypes.string,
   description: PropTypes.string,
+  onExpandPath: PropTypes.func,
   options: PropTypes.array,
+  paths: PropTypes.object,
   attachment: PropTypes.object
 };
 
@@ -17,7 +19,9 @@ export default function Slide({
   style,
   heading,
   description,
+  onExpandPath,
   options,
+  paths,
   attachment
 }) {
   return (
@@ -53,6 +57,7 @@ export default function Slide({
               key={option.id}
               skeuomorphic
               style={{ marginTop: index === 0 ? 0 : '1rem' }}
+              onClick={() => handleOptionClick(option.id)}
             >
               {option.icon && <Icon icon={['fab', 'windows']} />}
               <span style={{ marginLeft: '0.7rem' }}>{option.label}</span>
@@ -62,4 +67,10 @@ export default function Slide({
       )}
     </div>
   );
+
+  function handleOptionClick(optionId) {
+    if (onExpandPath) {
+      onExpandPath(paths[optionId]);
+    }
+  }
 }

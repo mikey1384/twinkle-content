@@ -14,6 +14,7 @@ export default function TutorialPanels() {
   const [slideObj] = useState({
     1: {
       id: 1,
+      isFork: true,
       heading: 'Which device are you using?',
       options: [
         {
@@ -137,7 +138,7 @@ export default function TutorialPanels() {
       }
     }
   });
-  const [displayedSlides] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+  const [displayedSlides] = useState([1]);
 
   return (
     <div
@@ -154,12 +155,18 @@ export default function TutorialPanels() {
         <Slide
           key={panelId}
           heading={slideObj[panelId].heading}
+          onExpandPath={slideObj[panelId].isFork ? handleExpandPath : null}
           description={slideObj[panelId].description}
           options={slideObj[panelId].options}
+          paths={slideObj[panelId].paths}
           attachment={slideObj[panelId].attachment}
           style={{ marginTop: index === 0 ? 0 : '5rem' }}
         />
       ))}
     </div>
   );
+
+  function handleExpandPath(path) {
+    console.log('expending', path);
+  }
 }
