@@ -1,9 +1,7 @@
-import React from 'react';
-import { panel } from '../../Styles';
-import Button from 'components/Button';
-import Icon from 'components/Icon';
+import React, { useState } from 'react';
+import { panel as panelStyle } from '../../Styles';
 import ReactPlayer from 'react-player/lazy';
-import InstructionPanel from './InstructionPanel';
+import Slide from './Slide';
 import StartButton from './start-button.png';
 import Applications from './applications.png';
 import ScrollDown from './scroll-down.png';
@@ -15,6 +13,65 @@ import DragTheBox from './drag-the-box.png';
 import TapToSave from './tap-to-save.png';
 
 export default function TutorialPanels() {
+  const [slideObj] = useState({
+    1: {
+      type: 'fork',
+      id: 1,
+      heading: 'Which device are you using?',
+      options: [
+        {
+          id: 1,
+          label: 'Windows PC',
+          icon: ['fab', 'windows']
+        },
+        {
+          id: 2,
+          label: 'Macintosh (Macbook / iMac)',
+          icon: ['fab', 'apple']
+        },
+        {
+          id: 3,
+          label: 'Android Smartphone/Tablet',
+          icon: ['fab', 'android']
+        },
+        {
+          id: 4,
+          label: 'iPhone / iPad',
+          icon: ['fab', 'apple']
+        },
+        {
+          id: 5,
+          label: 'Other'
+        },
+        {
+          id: 6,
+          label: `I don't know`
+        }
+      ]
+    },
+    2: {
+      id: 2,
+      type: 'intro',
+      heading: 'Windows PC',
+      description:
+        'Watch this video or follow the instructions below (or both)',
+      attachment: {
+        type: 'youtube',
+        src: 'https://www.youtube.com/watch?v=ddxcVJPAf18'
+      }
+    },
+    3: {
+      id: 3,
+      type: 'slide',
+      heading: `1. Tap the button at the bottom left corner of your screen (that button is called the "Start Button")`,
+      attachment: {
+        type: 'file',
+        src: StartButton
+      }
+    }
+  });
+  const [displayedSlides] = useState([1]);
+
   return (
     <div
       style={{
@@ -26,49 +83,15 @@ export default function TutorialPanels() {
         paddingBottom: '10rem'
       }}
     >
-      <div className={panel} style={{ paddingBottom: '5rem' }}>
-        <p style={{ fontWeight: 'bold', fontSize: '3rem' }}>
-          Which device are you using?
-        </p>
-        <div
-          style={{
-            marginTop: '5rem',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center'
-          }}
-        >
-          <Button skeuomorphic>
-            <Icon icon={['fab', 'windows']} />
-            <span style={{ marginLeft: '0.7rem' }}>Windows PC</span>
-          </Button>
-          <Button style={{ marginTop: '1rem' }} skeuomorphic>
-            <Icon icon={['fab', 'apple']} />
-            <span style={{ marginLeft: '0.7rem' }}>
-              Macintosh (Macbook / iMac)
-            </span>
-          </Button>
-          <Button style={{ marginTop: '1rem' }} skeuomorphic>
-            <Icon icon={['fab', 'android']} />
-            <span style={{ marginLeft: '0.7rem' }}>
-              Android Smartphone/Tablet
-            </span>
-          </Button>
-          <Button style={{ marginTop: '1rem' }} skeuomorphic>
-            <Icon icon={['fab', 'apple']} />
-            <span style={{ marginLeft: '0.7rem' }}>iPhone / iPad</span>
-          </Button>
-          <Button style={{ marginTop: '1rem' }} skeuomorphic>
-            <span>Other</span>
-          </Button>
-          <Button
-            style={{ marginTop: '1rem' }}
-            skeuomorphic
-          >{`I don't know`}</Button>
-        </div>
-      </div>
+      {displayedSlides.map((panelId) => (
+        <Slide
+          key={panelId}
+          heading={slideObj[panelId].heading}
+          options={slideObj[panelId].options}
+        />
+      ))}
       <div
-        className={panel}
+        className={panelStyle}
         style={{
           marginTop: '5rem',
           display: 'flex',
@@ -88,49 +111,49 @@ export default function TutorialPanels() {
           controls
         />
       </div>
-      <InstructionPanel
-        title={`1. Tap the button at the bottom left corner of your screen (that button is called the "Start Button")`}
-        image={StartButton}
+      <Slide
+        heading={`1. Tap the button at the bottom left corner of your screen (that button is called the "Start Button")`}
+        src={StartButton}
         style={{ marginTop: '5rem' }}
       />
-      <InstructionPanel
-        title={`2. Tap "All Apps (모든 어플리케이션)"`}
-        image={Applications}
+      <Slide
+        heading={`2. Tap "All Apps (모든 어플리케이션)"`}
+        src={Applications}
         style={{ marginTop: '5rem' }}
       />
-      <InstructionPanel
-        title={`3. Scroll down until you see "Windows Accessories"`}
-        image={ScrollDown}
+      <Slide
+        heading={`3. Scroll down until you see "Windows Accessories"`}
+        src={ScrollDown}
         style={{ marginTop: '5rem' }}
       />
-      <InstructionPanel
-        title={`4. Tap "Windows Accessories"`}
-        image={WindowsAccessories}
+      <Slide
+        heading={`4. Tap "Windows Accessories"`}
+        src={WindowsAccessories}
         style={{ marginTop: '5rem' }}
       />
-      <InstructionPanel
-        title={`5. Tap "Snipping Tool"`}
-        image={SnippingTool}
+      <Slide
+        heading={`5. Tap "Snipping Tool"`}
+        src={SnippingTool}
         style={{ marginTop: '5rem' }}
       />
-      <InstructionPanel
-        title={`6. Tap "New"`}
-        image={TapNew}
+      <Slide
+        heading={`6. Tap "New"`}
+        src={TapNew}
         style={{ marginTop: '5rem' }}
       />
-      <InstructionPanel
-        title={`8. The screen will be grayed out`}
-        image={GrayOut}
+      <Slide
+        heading={`8. The screen will be grayed out`}
+        src={GrayOut}
         style={{ marginTop: '5rem' }}
       />
-      <InstructionPanel
-        title={`9. Drag a box around what you want to take a screen shot of`}
-        image={DragTheBox}
+      <Slide
+        heading={`9. Drag a box around what you want to take a screen shot of`}
+        src={DragTheBox}
         style={{ marginTop: '5rem' }}
       />
-      <InstructionPanel
-        title={`10. Save your screenshot`}
-        image={TapToSave}
+      <Slide
+        heading={`10. Save your screenshot`}
+        src={TapToSave}
         style={{ marginTop: '5rem' }}
       />
     </div>
