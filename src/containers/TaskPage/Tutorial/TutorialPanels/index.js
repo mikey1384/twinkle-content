@@ -9,6 +9,9 @@ import TapNew from './tap-new.png';
 import GrayOut from './gray-out.png';
 import DragTheBox from './drag-the-box.png';
 import TapToSave from './tap-to-save.png';
+import MacEntireScreen from './mac-entire-screen.png';
+import MacPortionScreen from './mac-portion-screen.png';
+import MacDragRelease from './mac-drag-and-release.png';
 
 export default function TutorialPanels() {
   const [slideObj, setSlideObj] = useState({
@@ -49,7 +52,7 @@ export default function TutorialPanels() {
       ],
       paths: {
         1: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-        2: [13],
+        2: [13, 14, 15, 16, 17],
         3: [],
         4: [],
         5: [],
@@ -59,8 +62,7 @@ export default function TutorialPanels() {
     2: {
       id: 2,
       heading: 'Windows PC',
-      description:
-        'Watch this video or follow the instructions below (or both)',
+      description: 'Watch this video or read the instructions below (or both)',
       autoFocus: true,
       attachment: {
         type: 'youtube',
@@ -125,7 +127,7 @@ export default function TutorialPanels() {
     },
     10: {
       id: 10,
-      heading: `8. Drag a box around what you want to take a screen shot of`,
+      heading: `8. Drag a box around what you want to take a screenshot of`,
       attachment: {
         type: 'image',
         src: DragTheBox
@@ -151,9 +153,41 @@ export default function TutorialPanels() {
     13: {
       id: 13,
       heading: 'Macintosh (Macbook / iMac)',
-      description:
-        'Watch this video or follow the instructions below (or both)',
+      description: 'Watch this video or read the instructions below (or both)',
       autoFocus: true,
+      attachment: {
+        type: 'youtube',
+        src: 'https://www.youtube.com/watch?v=NbB3Cm2ejkg'
+      }
+    },
+    14: {
+      id: 14,
+      heading: `1. Press shift + command + 3 to take a screenshot of your entire screen`,
+      attachment: {
+        type: 'image',
+        src: MacEntireScreen
+      }
+    },
+    15: {
+      id: 15,
+      heading: `2. To take a screenshot of a portion of your screen, press shift + command + 4`,
+      attachment: {
+        type: 'image',
+        src: MacPortionScreen
+      }
+    },
+    16: {
+      id: 16,
+      heading: `3. ...then, drag a box around the area you want to take a screenshot of and release`,
+      attachment: {
+        type: 'image',
+        src: MacDragRelease
+      }
+    },
+    17: {
+      id: 17,
+      heading:
+        '4. Watch the video to learn about other ways to capture screenshots',
       attachment: {
         type: 'youtube',
         src: 'https://www.youtube.com/watch?v=NbB3Cm2ejkg'

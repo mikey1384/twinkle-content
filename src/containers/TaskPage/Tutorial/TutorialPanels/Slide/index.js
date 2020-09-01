@@ -5,6 +5,7 @@ import Button from 'components/Button';
 import Icon from 'components/Icon';
 import Attachment from './Attachment';
 import { scrollElementToCenter } from 'helpers';
+import { Color } from 'constants/css';
 
 Slide.propTypes = {
   autoFocus: PropTypes.bool,
@@ -77,7 +78,10 @@ export default function Slide({
               {option.icon && <Icon icon={option.icon} />}
               <span style={{ marginLeft: '0.7rem' }}>{option.label}</span>
               {selectedOptionId === option.id ? (
-                <Icon icon="check" style={{ marginLeft: '0.7rem' }} />
+                <Icon
+                  icon="check"
+                  style={{ marginLeft: '0.7rem', color: Color.green() }}
+                />
               ) : null}
             </Button>
           ))}
