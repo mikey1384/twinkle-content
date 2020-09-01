@@ -170,13 +170,20 @@ export default function TutorialPanels() {
   );
 
   function handleExpandPath({ newSlides, panelId, optionId }) {
-    setSlideObj((slideObj) => ({
-      ...slideObj,
-      [panelId]: {
-        ...slideObj[panelId],
-        selectedOptionId: optionId
+    if (optionId !== slideObj[panelId].selectedOptionId) {
+      if (slideObj[panelId].selectedOptionId) {
+        const index = displayedSlides.indexOf(panelId);
+        const newDisplayedSlides = [...displayedSlides];
+        setDisplayedSlides(newDisplayedSlides.slice(0, index + 1));
       }
-    }));
-    setDisplayedSlides((slides) => slides.concat(newSlides));
+      setSlideObj((slideObj) => ({
+        ...slideObj,
+        [panelId]: {
+          ...slideObj[panelId],
+          selectedOptionId: optionId
+        }
+      }));
+      setDisplayedSlides((slides) => slides.concat(newSlides));
+    }
   }
 }
