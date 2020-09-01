@@ -51,8 +51,7 @@ export default function TutorialPanels() {
         2: [13, 14, 15, 16, 17],
         3: [18],
         4: [19, 20],
-        5: [],
-        6: []
+        5: [21]
       }
     },
     2: {
@@ -217,6 +216,12 @@ export default function TutorialPanels() {
         type: 'youtube',
         src: 'https://www.youtube.com/watch?v=W1acdzGAQOY'
       }
+    },
+    21: {
+      id: 21,
+      heading: `Other / I don't know`,
+      description:
+        'Ask your parents the name of your device. If your device is not included in the list, send a chat message to Mikey about it'
     }
   });
   const [displayedSlides, setDisplayedSlides] = useState([1]);
