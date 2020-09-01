@@ -6,13 +6,15 @@ import Icon from 'components/Icon';
 import Attachment from './Attachment';
 
 Slide.propTypes = {
+  attachment: PropTypes.object,
   style: PropTypes.object,
   heading: PropTypes.string,
   description: PropTypes.string,
   onExpandPath: PropTypes.func,
   options: PropTypes.array,
+  panelId: PropTypes.number,
   paths: PropTypes.object,
-  attachment: PropTypes.object
+  selectedOptionId: PropTypes.number
 };
 
 export default function Slide({
@@ -21,8 +23,10 @@ export default function Slide({
   description,
   onExpandPath,
   options,
+  panelId,
   paths,
-  attachment
+  attachment,
+  selectedOptionId
 }) {
   return (
     <div
@@ -61,6 +65,9 @@ export default function Slide({
             >
               {option.icon && <Icon icon={['fab', 'windows']} />}
               <span style={{ marginLeft: '0.7rem' }}>{option.label}</span>
+              {selectedOptionId === option.id ? (
+                <Icon icon="check" style={{ marginLeft: '0.7rem' }} />
+              ) : null}
             </Button>
           ))}
         </div>
@@ -70,7 +77,7 @@ export default function Slide({
 
   function handleOptionClick(optionId) {
     if (onExpandPath) {
-      onExpandPath(paths[optionId]);
+      onExpandPath({ newSlides: paths[optionId], panelId, optionId });
     }
   }
 }

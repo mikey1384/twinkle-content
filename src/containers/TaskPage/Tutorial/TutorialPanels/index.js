@@ -11,11 +11,12 @@ import DragTheBox from './drag-the-box.png';
 import TapToSave from './tap-to-save.png';
 
 export default function TutorialPanels() {
-  const [slideObj] = useState({
+  const [slideObj, setSlideObj] = useState({
     1: {
       id: 1,
       isFork: true,
       heading: 'Which device are you using?',
+      selectedOptionId: null,
       options: [
         {
           id: 1,
@@ -138,7 +139,7 @@ export default function TutorialPanels() {
       }
     }
   });
-  const [displayedSlides] = useState([1]);
+  const [displayedSlides, setDisplayedSlides] = useState([1]);
 
   return (
     <div
@@ -158,6 +159,8 @@ export default function TutorialPanels() {
           onExpandPath={slideObj[panelId].isFork ? handleExpandPath : null}
           description={slideObj[panelId].description}
           options={slideObj[panelId].options}
+          selectedOptionId={slideObj[panelId].selectedOptionId}
+          panelId={panelId}
           paths={slideObj[panelId].paths}
           attachment={slideObj[panelId].attachment}
           style={{ marginTop: index === 0 ? 0 : '5rem' }}
@@ -166,7 +169,14 @@ export default function TutorialPanels() {
     </div>
   );
 
-  function handleExpandPath(path) {
-    console.log('expending', path);
+  function handleExpandPath({ newSlides, panelId, optionId }) {
+    setSlideObj((slideObj) => ({
+      ...slideObj,
+      [panelId]: {
+        ...slideObj[panelId],
+        selectedOptionId: optionId
+      }
+    }));
+    setDisplayedSlides((slides) => slides.concat(newSlides));
   }
 }
