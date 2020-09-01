@@ -277,13 +277,14 @@ function ContentListItem({
                 style={{
                   display: 'flex',
                   width: '15rem',
-                  height: '10rem'
+                  height: '11rem'
                 }}
               />
             )}
           </div>
           {contentType === 'subject' && secretAnswer && (
             <SecretAnswer
+              style={{ marginTop: filePath && userId ? '0.5rem' : 0 }}
               answer={secretAnswer}
               subjectId={contentId}
               uploaderId={uploader.id}
