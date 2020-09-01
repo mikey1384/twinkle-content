@@ -43,18 +43,14 @@ export default function TutorialPanels() {
         },
         {
           id: 5,
-          label: 'Other'
-        },
-        {
-          id: 6,
-          label: `I don't know`
+          label: `Other / I don't know`
         }
       ],
       paths: {
         1: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         2: [13, 14, 15, 16, 17],
         3: [18],
-        4: [],
+        4: [19, 20],
         5: [],
         6: []
       }
@@ -201,6 +197,25 @@ export default function TutorialPanels() {
       attachment: {
         type: 'youtube',
         src: 'https://www.youtube.com/watch?v=3eD1gdnfCdA'
+      }
+    },
+    19: {
+      id: 19,
+      heading: 'iPhone X or newer',
+      description: 'Watch this video',
+      autoFocus: true,
+      attachment: {
+        type: 'youtube',
+        src: 'https://www.youtube.com/watch?v=yCHiLTB2y24'
+      }
+    },
+    20: {
+      id: 20,
+      heading: 'Older iPhones',
+      description: 'Watch this video',
+      attachment: {
+        type: 'youtube',
+        src: 'https://www.youtube.com/watch?v=W1acdzGAQOY'
       }
     }
   });
