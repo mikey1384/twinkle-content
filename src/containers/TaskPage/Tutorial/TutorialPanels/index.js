@@ -33,7 +33,7 @@ export default function TutorialPanels() {
         },
         {
           id: 3,
-          label: 'Android Smartphone/Tablet',
+          label: 'Android smartphone / tablet',
           icon: ['fab', 'android']
         },
         {
@@ -53,7 +53,7 @@ export default function TutorialPanels() {
       paths: {
         1: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         2: [13, 14, 15, 16, 17],
-        3: [],
+        3: [18],
         4: [],
         5: [],
         6: []
@@ -191,6 +191,16 @@ export default function TutorialPanels() {
       attachment: {
         type: 'youtube',
         src: 'https://www.youtube.com/watch?v=NbB3Cm2ejkg'
+      }
+    },
+    18: {
+      id: 18,
+      heading: 'Android smartphone / tablet',
+      description: 'Watch this video',
+      autoFocus: true,
+      attachment: {
+        type: 'youtube',
+        src: 'https://www.youtube.com/watch?v=3eD1gdnfCdA'
       }
     }
   });
