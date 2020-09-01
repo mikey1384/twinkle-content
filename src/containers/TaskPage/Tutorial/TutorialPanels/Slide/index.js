@@ -74,7 +74,7 @@ export default function Slide({
               style={{ marginTop: index === 0 ? 0 : '1rem' }}
               onClick={() => handleOptionClick(option.id)}
             >
-              {option.icon && <Icon icon={['fab', 'windows']} />}
+              {option.icon && <Icon icon={option.icon} />}
               <span style={{ marginLeft: '0.7rem' }}>{option.label}</span>
               {selectedOptionId === option.id ? (
                 <Icon icon="check" style={{ marginLeft: '0.7rem' }} />
