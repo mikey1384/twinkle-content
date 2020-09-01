@@ -48,8 +48,8 @@ export default function TutorialPanels() {
         }
       ],
       paths: {
-        1: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-        2: [],
+        1: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        2: [13],
         3: [],
         4: [],
         5: [],
@@ -61,6 +61,7 @@ export default function TutorialPanels() {
       heading: 'Windows PC',
       description:
         'Watch this video or follow the instructions below (or both)',
+      autoFocus: true,
       attachment: {
         type: 'youtube',
         src: 'https://www.youtube.com/watch?v=ddxcVJPAf18'
@@ -137,6 +138,26 @@ export default function TutorialPanels() {
         type: 'image',
         src: TapToSave
       }
+    },
+    12: {
+      id: 12,
+      heading:
+        '10. Watch the video to learn about other ways to capture screenshots',
+      attachment: {
+        type: 'youtube',
+        src: 'https://www.youtube.com/watch?v=ddxcVJPAf18'
+      }
+    },
+    13: {
+      id: 13,
+      heading: 'Macintosh (Macbook / iMac)',
+      description:
+        'Watch this video or follow the instructions below (or both)',
+      autoFocus: true,
+      attachment: {
+        type: 'youtube',
+        src: 'https://www.youtube.com/watch?v=NbB3Cm2ejkg'
+      }
     }
   });
   const [displayedSlides, setDisplayedSlides] = useState([1]);
@@ -155,6 +176,7 @@ export default function TutorialPanels() {
       {displayedSlides.map((panelId, index) => (
         <Slide
           key={panelId}
+          autoFocus={slideObj[panelId].autoFocus}
           heading={slideObj[panelId].heading}
           onExpandPath={slideObj[panelId].isFork ? handleExpandPath : null}
           description={slideObj[panelId].description}

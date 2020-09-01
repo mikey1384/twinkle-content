@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { panel } from '../../../Styles';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import Attachment from './Attachment';
+import { scrollElementToCenter } from 'helpers';
 
 Slide.propTypes = {
+  autoFocus: PropTypes.bool,
   attachment: PropTypes.object,
   style: PropTypes.object,
   heading: PropTypes.string,
@@ -18,6 +20,7 @@ Slide.propTypes = {
 };
 
 export default function Slide({
+  autoFocus,
   style,
   heading,
   description,
@@ -28,8 +31,16 @@ export default function Slide({
   attachment,
   selectedOptionId
 }) {
+  const SlideRef = useRef(null);
+  useEffect(() => {
+    if (autoFocus) {
+      scrollElementToCenter(SlideRef.current);
+    }
+  }, [autoFocus]);
+
   return (
     <div
+      ref={SlideRef}
       className={panel}
       style={{
         display: 'flex',
