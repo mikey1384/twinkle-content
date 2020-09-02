@@ -45,7 +45,6 @@ export default function TutorialPanels() {
     2: {
       heading: 'Windows PC',
       description: 'Watch this video or read the instructions below (or both)',
-      autoFocus: true,
       attachment: {
         type: 'youtube',
         src: 'https://www.youtube.com/watch?v=ddxcVJPAf18'
@@ -125,7 +124,6 @@ export default function TutorialPanels() {
     13: {
       heading: 'Macintosh (Macbook / iMac)',
       description: 'Watch this video or read the instructions below (or both)',
-      autoFocus: true,
       attachment: {
         type: 'youtube',
         src: 'https://www.youtube.com/watch?v=NbB3Cm2ejkg'
@@ -163,7 +161,6 @@ export default function TutorialPanels() {
     18: {
       heading: 'Android smartphone / tablet',
       description: 'Watch this video',
-      autoFocus: true,
       attachment: {
         type: 'youtube',
         src: 'https://www.youtube.com/watch?v=3eD1gdnfCdA'
@@ -172,7 +169,6 @@ export default function TutorialPanels() {
     19: {
       heading: 'iPhone X or newer',
       description: 'Watch this video',
-      autoFocus: true,
       attachment: {
         type: 'youtube',
         src: 'https://www.youtube.com/watch?v=yCHiLTB2y24'
@@ -208,7 +204,7 @@ export default function TutorialPanels() {
       {displayedSlides.map((panelId, index) => (
         <Slide
           key={panelId}
-          autoFocus={slideObj[panelId].autoFocus}
+          autoFocus={index > 0 && slideObj[displayedSlides[index - 1]]?.isFork}
           heading={slideObj[panelId].heading}
           onExpandPath={slideObj[panelId].isFork ? handleExpandPath : null}
           description={slideObj[panelId].description}
