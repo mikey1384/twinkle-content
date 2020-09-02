@@ -78,7 +78,7 @@ function XPVideoPlayer({
   const [startingPosition, setStartingPosition] = useState(0);
   const timeAt = useRef(0);
   const requiredDurationForCoin = 60;
-  const requiredDurationForXP = 120;
+  const requiredDurationForXP = 180;
   const PlayerRef = useRef(null);
   const timerRef = useRef(null);
   const timeWatchedRef = useRef(0);
