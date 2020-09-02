@@ -46,7 +46,7 @@ function XPVideoPlayer({
       updateVideoXPEarned
     }
   } = useAppContext();
-  const { profileTheme, userId, twinkleCoins } = useMyState();
+  const { profileTheme, userId, twinkleCoins, twinkleXP } = useMyState();
   const {
     state: { pageVisible }
   } = useViewContext();
@@ -78,7 +78,8 @@ function XPVideoPlayer({
   const [startingPosition, setStartingPosition] = useState(0);
   const timeAt = useRef(0);
   const requiredDurationForCoin = 60;
-  const requiredDurationForXP = 120;
+  const thresholdXP = 3000 * 1000;
+  const requiredDurationForXP = twinkleXP > thresholdXP ? 180 : 120;
   const PlayerRef = useRef(null);
   const timerRef = useRef(null);
   const timeWatchedRef = useRef(0);
