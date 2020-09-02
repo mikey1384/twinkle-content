@@ -5,7 +5,6 @@ import { cloudFrontURL } from 'constants/defaultValues';
 export default function TutorialPanels() {
   const [slideObj, setSlideObj] = useState({
     1: {
-      id: 1,
       isFork: true,
       heading: 'Which device are you using?',
       selectedOptionId: null,
@@ -44,7 +43,6 @@ export default function TutorialPanels() {
       }
     },
     2: {
-      id: 2,
       heading: 'Windows PC',
       description: 'Watch this video or read the instructions below (or both)',
       autoFocus: true,
@@ -54,7 +52,6 @@ export default function TutorialPanels() {
       }
     },
     3: {
-      id: 3,
       heading: `1. Tap the button at the bottom left corner of your screen (that button is called the "Start Button")`,
       attachment: {
         type: 'image',
@@ -62,7 +59,6 @@ export default function TutorialPanels() {
       }
     },
     4: {
-      id: 4,
       heading: `2. Tap "All Apps (모든 어플리케이션)"`,
       attachment: {
         type: 'image',
@@ -70,7 +66,6 @@ export default function TutorialPanels() {
       }
     },
     5: {
-      id: 5,
       heading: `3. Scroll down until you see "Windows Accessories"`,
       attachment: {
         type: 'image',
@@ -78,7 +73,6 @@ export default function TutorialPanels() {
       }
     },
     6: {
-      id: 6,
       heading: `4. Tap "Windows Accessories"`,
       attachment: {
         type: 'image',
@@ -86,7 +80,6 @@ export default function TutorialPanels() {
       }
     },
     7: {
-      id: 7,
       heading: `5. Tap "Snipping Tool"`,
       attachment: {
         type: 'image',
@@ -94,7 +87,6 @@ export default function TutorialPanels() {
       }
     },
     8: {
-      id: 8,
       heading: `6. Tap "New"`,
       attachment: {
         type: 'image',
@@ -102,7 +94,6 @@ export default function TutorialPanels() {
       }
     },
     9: {
-      id: 9,
       heading: `7. The screen will be grayed out`,
       attachment: {
         type: 'image',
@@ -110,7 +101,6 @@ export default function TutorialPanels() {
       }
     },
     10: {
-      id: 10,
       heading: `8. Drag a box around what you want to take a screenshot of`,
       attachment: {
         type: 'image',
@@ -118,7 +108,6 @@ export default function TutorialPanels() {
       }
     },
     11: {
-      id: 11,
       heading: `9. Save your screenshot`,
       attachment: {
         type: 'image',
@@ -126,7 +115,6 @@ export default function TutorialPanels() {
       }
     },
     12: {
-      id: 12,
       heading:
         'Watch the video to learn about other ways to capture screenshots',
       attachment: {
@@ -135,7 +123,6 @@ export default function TutorialPanels() {
       }
     },
     13: {
-      id: 13,
       heading: 'Macintosh (Macbook / iMac)',
       description: 'Watch this video or read the instructions below (or both)',
       autoFocus: true,
@@ -145,7 +132,6 @@ export default function TutorialPanels() {
       }
     },
     14: {
-      id: 14,
       heading: `1. Press shift + command + 3 to take a screenshot of your entire screen`,
       attachment: {
         type: 'image',
@@ -153,7 +139,6 @@ export default function TutorialPanels() {
       }
     },
     15: {
-      id: 15,
       heading: `2. To take a screenshot of a portion of your screen, press shift + command + 4`,
       attachment: {
         type: 'image',
@@ -161,7 +146,6 @@ export default function TutorialPanels() {
       }
     },
     16: {
-      id: 16,
       heading: `3. ...then, drag a box around the area you want to take a screenshot of and release`,
       attachment: {
         type: 'image',
@@ -169,7 +153,6 @@ export default function TutorialPanels() {
       }
     },
     17: {
-      id: 17,
       heading:
         '4. Watch the video to learn about other ways to capture screenshots',
       attachment: {
@@ -178,7 +161,6 @@ export default function TutorialPanels() {
       }
     },
     18: {
-      id: 18,
       heading: 'Android smartphone / tablet',
       description: 'Watch this video',
       autoFocus: true,
@@ -188,7 +170,6 @@ export default function TutorialPanels() {
       }
     },
     19: {
-      id: 19,
       heading: 'iPhone X or newer',
       description: 'Watch this video',
       autoFocus: true,
@@ -198,7 +179,6 @@ export default function TutorialPanels() {
       }
     },
     20: {
-      id: 20,
       heading: 'Older iPhones',
       description: 'Watch this video',
       attachment: {
@@ -207,7 +187,6 @@ export default function TutorialPanels() {
       }
     },
     21: {
-      id: 21,
       heading: `Other / I don't know`,
       description:
         'Ask your parents the name of your device. If your device is not included in the list, send a chat message to Mikey about it'
