@@ -1,7 +1,3 @@
-import Screenshot from './takingscreenshot.gif';
-import CopyPaste from './copypaste.gif';
-import HowToGoogle from './howtogoogle.gif';
-
 export const clientVersion = '1.4.26';
 export const defaultChatSubject = 'Welcome!';
 export const defaultContentState = {
@@ -20,12 +16,6 @@ export const defaultContentState = {
   profileTheme: 'logoBlue'
 };
 
-export const gifTable = {
-  1: CopyPaste,
-  2: Screenshot,
-  3: HowToGoogle
-};
-
 export const cloudFrontURL = `https://${process.env.REACT_APP_CLOUDFRONT_KEY}.cloudfront.net`;
 export const S3URL = `https://${process.env.REACT_APP_AWS_S3_BUCKET_NAME}.s3.amazonaws.com`;
 export const TURN_USERNAME = process.env.REACT_APP_TURN_USERNAME;
@@ -33,6 +23,11 @@ export const TURN_PASSWORD = process.env.REACT_APP_TURN_PASSWORD;
 export const descriptionLengthForExtraRewardLevel = 1000;
 export const rewardValue = 200;
 export const mb = 1000;
+export const gifTable = {
+  1: `${cloudFrontURL}/tasks/copy-and-paste/thumb.gif`,
+  2: `${cloudFrontURL}/tasks/take-a-screenshot/thumb.gif`,
+  3: `${cloudFrontURL}/tasks/how-to-google/thumb.gif`
+};
 export const priceTable = {
   chatSubject: 20,
   chatTheme: 30,
