@@ -1,17 +1,6 @@
 import React, { useState } from 'react';
 import Slide from './Slide';
-import StartButton from './start-button.png';
-import Applications from './applications.png';
-import ScrollDown from './scroll-down.png';
-import WindowsAccessories from './windows-accessories.png';
-import SnippingTool from './snipping-tool.png';
-import TapNew from './tap-new.png';
-import GrayOut from './gray-out.png';
-import DragTheBox from './drag-the-box.png';
-import TapToSave from './tap-to-save.png';
-import MacEntireScreen from './mac-entire-screen.png';
-import MacPortionScreen from './mac-portion-screen.png';
-import MacDragRelease from './mac-drag-and-release.png';
+import { cloudFrontURL } from 'constants/defaultValues';
 
 export default function TutorialPanels() {
   const [slideObj, setSlideObj] = useState({
@@ -69,7 +58,7 @@ export default function TutorialPanels() {
       heading: `1. Tap the button at the bottom left corner of your screen (that button is called the "Start Button")`,
       attachment: {
         type: 'image',
-        src: StartButton
+        src: `${cloudFrontURL}/tasks/take-a-screenshot/tutorial/start-button.png`
       }
     },
     4: {
@@ -77,7 +66,7 @@ export default function TutorialPanels() {
       heading: `2. Tap "All Apps (모든 어플리케이션)"`,
       attachment: {
         type: 'image',
-        src: Applications
+        src: `${cloudFrontURL}/tasks/take-a-screenshot/tutorial/applications.png`
       }
     },
     5: {
@@ -85,7 +74,7 @@ export default function TutorialPanels() {
       heading: `3. Scroll down until you see "Windows Accessories"`,
       attachment: {
         type: 'image',
-        src: ScrollDown
+        src: `${cloudFrontURL}/tasks/take-a-screenshot/tutorial/scroll-down.png`
       }
     },
     6: {
@@ -93,7 +82,7 @@ export default function TutorialPanels() {
       heading: `4. Tap "Windows Accessories"`,
       attachment: {
         type: 'image',
-        src: WindowsAccessories
+        src: `${cloudFrontURL}/tasks/take-a-screenshot/tutorial/windows-accessories.png`
       }
     },
     7: {
@@ -101,7 +90,7 @@ export default function TutorialPanels() {
       heading: `5. Tap "Snipping Tool"`,
       attachment: {
         type: 'image',
-        src: SnippingTool
+        src: `${cloudFrontURL}/tasks/take-a-screenshot/tutorial/snipping-tool.png`
       }
     },
     8: {
@@ -109,7 +98,7 @@ export default function TutorialPanels() {
       heading: `6. Tap "New"`,
       attachment: {
         type: 'image',
-        src: TapNew
+        src: `${cloudFrontURL}/tasks/take-a-screenshot/tutorial/tap-new.png`
       }
     },
     9: {
@@ -117,7 +106,7 @@ export default function TutorialPanels() {
       heading: `7. The screen will be grayed out`,
       attachment: {
         type: 'image',
-        src: GrayOut
+        src: `${cloudFrontURL}/tasks/take-a-screenshot/tutorial/gray-out.png`
       }
     },
     10: {
@@ -125,7 +114,7 @@ export default function TutorialPanels() {
       heading: `8. Drag a box around what you want to take a screenshot of`,
       attachment: {
         type: 'image',
-        src: DragTheBox
+        src: `${cloudFrontURL}/tasks/take-a-screenshot/tutorial/drag-a-box.png`
       }
     },
     11: {
@@ -133,13 +122,13 @@ export default function TutorialPanels() {
       heading: `9. Save your screenshot`,
       attachment: {
         type: 'image',
-        src: TapToSave
+        src: `${cloudFrontURL}/tasks/take-a-screenshot/tutorial/tap-to-save.png`
       }
     },
     12: {
       id: 12,
       heading:
-        '10. Watch the video to learn about other ways to capture screenshots',
+        'Watch the video to learn about other ways to capture screenshots',
       attachment: {
         type: 'youtube',
         src: 'https://www.youtube.com/watch?v=ddxcVJPAf18'
@@ -160,7 +149,7 @@ export default function TutorialPanels() {
       heading: `1. Press shift + command + 3 to take a screenshot of your entire screen`,
       attachment: {
         type: 'image',
-        src: MacEntireScreen
+        src: `${cloudFrontURL}/tasks/take-a-screenshot/tutorial/mac-entire-screen.png`
       }
     },
     15: {
@@ -168,7 +157,7 @@ export default function TutorialPanels() {
       heading: `2. To take a screenshot of a portion of your screen, press shift + command + 4`,
       attachment: {
         type: 'image',
-        src: MacPortionScreen
+        src: `${cloudFrontURL}/tasks/take-a-screenshot/tutorial/mac-portion-screen.png`
       }
     },
     16: {
@@ -176,7 +165,7 @@ export default function TutorialPanels() {
       heading: `3. ...then, drag a box around the area you want to take a screenshot of and release`,
       attachment: {
         type: 'image',
-        src: MacDragRelease
+        src: `${cloudFrontURL}/tasks/take-a-screenshot/tutorial/mac-drag-and-release.png`
       }
     },
     17: {
