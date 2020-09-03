@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Slide from './Slide';
 
-export default function TutorialPanels() {
+export default function InteractiveContent() {
   const [slideObj, setSlideObj] = useState({
     1: {
       isFork: true,
