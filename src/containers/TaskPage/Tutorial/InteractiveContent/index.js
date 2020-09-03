@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Slide from './Slide';
-import { useAppContext } from 'contexts';
+import { useAppContext, useInteractiveContext } from 'contexts';
 
 InteractiveContent.propTypes = {
   contentId: PropTypes.number.isRequired
@@ -11,11 +11,15 @@ export default function InteractiveContent({ contentId }) {
   const {
     requestHelpers: { loadInteractive }
   } = useAppContext();
+  const {
+    actions: { onLoadInteractive }
+  } = useInteractiveContext();
+
   useEffect(() => {
     init();
     async function init() {
-      const data = await loadInteractive(contentId);
-      console.log(data);
+      const interactive = await loadInteractive(contentId);
+      onLoadInteractive(interactive);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contentId]);
