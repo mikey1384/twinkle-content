@@ -5,6 +5,7 @@ export {
   useExploreContext,
   useHomeContext,
   useInputContext,
+  useInteractiveContext,
   useManagementContext,
   useNotiContext,
   useProfileContext,

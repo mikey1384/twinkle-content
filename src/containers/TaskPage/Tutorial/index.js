@@ -19,7 +19,7 @@ export default function Tutorial({ style }) {
       }}
     >
       {!started && <StartPanel onStartClick={() => setStarted(true)} />}
-      {started && <InteractiveContent contentId={1} />}
+      {started && <InteractiveContent contentId={2} />}
     </div>
   );
 }

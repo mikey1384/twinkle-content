@@ -15,12 +15,12 @@ TaskContextProvider.propTypes = {
 };
 
 export function TaskContextProvider({ children }) {
-  const [tasksState, tasksDispatch] = useReducer(TaskReducer, initialTaskState);
+  const [taskState, taskDispatch] = useReducer(TaskReducer, initialTaskState);
   return (
     <TaskContext.Provider
       value={{
-        state: tasksState,
-        actions: TaskActions(tasksDispatch)
+        state: taskState,
+        actions: TaskActions(taskDispatch)
       }}
     >
       {children}

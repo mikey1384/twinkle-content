@@ -8,6 +8,7 @@ import { ContentContextProvider } from './Content';
 import { ExploreContextProvider } from './Explore';
 import { HomeContextProvider } from './Home';
 import { InputContextProvider } from './Input';
+import { InteractiveContextProvider } from './Interactive';
 import { ManagementContextProvider } from './Management';
 import { NotiContextProvider } from './Notification';
 import { ProfileContextProvider } from './Profile';
@@ -57,17 +58,19 @@ export function AppContextProvider({ children }) {
                   <ChatContextProvider>
                     <InputContextProvider>
                       <ContentContextProvider>
-                        <AppContext.Provider
-                          value={{
-                            user: {
-                              state: userState,
-                              actions: UserActions(userDispatch)
-                            },
-                            requestHelpers: requestHelpers(handleError)
-                          }}
-                        >
-                          {children}
-                        </AppContext.Provider>
+                        <InteractiveContextProvider>
+                          <AppContext.Provider
+                            value={{
+                              user: {
+                                state: userState,
+                                actions: UserActions(userDispatch)
+                              },
+                              requestHelpers: requestHelpers(handleError)
+                            }}
+                          >
+                            {children}
+                          </AppContext.Provider>
+                        </InteractiveContextProvider>
                       </ContentContextProvider>
                     </InputContextProvider>
                   </ChatContextProvider>
