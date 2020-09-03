@@ -1,7 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import Slide from './Slide';
+import { useAppContext } from 'contexts';
 
-export default function InteractiveContent() {
+InteractiveContent.propTypes = {
+  contentId: PropTypes.number.isRequired
+};
+
+export default function InteractiveContent({ contentId }) {
+  const {
+    requestHelpers: { loadInteractive }
+  } = useAppContext();
+  useEffect(() => {
+    init();
+    async function init() {
+      const data = await loadInteractive(contentId);
+      console.log(data);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [contentId]);
+
   const [slideObj, setSlideObj] = useState({
     1: {
       isFork: true,
