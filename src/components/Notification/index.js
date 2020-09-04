@@ -138,7 +138,7 @@ function Notification({ className, location, style }) {
               {...subject}
             />
           )}
-          {notifications.length > 0 && userId && (
+          {userId && (
             <FilterBar
               bordered
               style={{
@@ -194,17 +194,19 @@ function Notification({ className, location, style }) {
                 }}
               />
             )}
-            <MainFeeds
-              loadingNotifications={loadingNotifications}
-              loadMore={loadMore}
-              activeTab={activeTab}
-              notifications={notifications}
-              rewards={rewards}
-              selectNotiTab={() => {
-                userChangedTab.current = true;
-                setActiveTab('notification');
-              }}
-            />
+            {notifications.length > 0 && (
+              <MainFeeds
+                loadingNotifications={loadingNotifications}
+                loadMore={loadMore}
+                activeTab={activeTab}
+                notifications={notifications}
+                rewards={rewards}
+                selectNotiTab={() => {
+                  userChangedTab.current = true;
+                  setActiveTab('notification');
+                }}
+              />
+            )}
           </div>
         </section>
       </div>
