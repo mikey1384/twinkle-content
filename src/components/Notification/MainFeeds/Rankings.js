@@ -87,7 +87,7 @@ export default function Rankings() {
       )}
       {rankingsLoaded && users.length > 0 && (
         <RoundList style={{ marginTop: 0 }}>
-          {users.map(user => (
+          {users.map((user) => (
             <RankingsListItem key={user.id} user={user} myId={userId} />
           ))}
         </RoundList>

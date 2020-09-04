@@ -9,7 +9,6 @@ import Rankings from './Rankings';
 import NotiItem from './NotiItem';
 import MyRank from 'components/MyRank';
 import ErrorBoundary from 'components/ErrorBoundary';
-import Loading from 'components/Loading';
 import { Color } from 'constants/css';
 import { notiFeedListItem } from '../Styles';
 import { rewardValue } from 'constants/defaultValues';
@@ -264,9 +263,6 @@ function MainFeeds({
       )}
       {activeTab === 'reward' && !!userId && (
         <MyRank myId={userId} rank={rank} twinkleXP={twinkleXP} />
-      )}
-      {activeTab !== 'rankings' && loadingNotifications && (
-        <Loading style={{ position: 'absolute' }} />
       )}
       {userId && activeTab === 'notification' && notifications.length > 0 && (
         <RoundList style={{ marginTop: 0 }}>{NotificationsItems}</RoundList>

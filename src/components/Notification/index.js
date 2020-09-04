@@ -194,19 +194,17 @@ function Notification({ className, location, style }) {
                 }}
               />
             )}
-            {notifications.length > 0 && (
-              <MainFeeds
-                loadingNotifications={loadingNotifications}
-                loadMore={loadMore}
-                activeTab={activeTab}
-                notifications={notifications}
-                rewards={rewards}
-                selectNotiTab={() => {
-                  userChangedTab.current = true;
-                  setActiveTab('notification');
-                }}
-              />
-            )}
+            <MainFeeds
+              loadingNotifications={loadingNotifications}
+              loadMore={loadMore}
+              activeTab={activeTab}
+              notifications={notifications}
+              rewards={rewards}
+              selectNotiTab={() => {
+                userChangedTab.current = true;
+                setActiveTab('notification');
+              }}
+            />
           </div>
         </section>
       </div>
