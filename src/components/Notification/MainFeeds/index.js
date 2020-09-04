@@ -267,9 +267,7 @@ function MainFeeds({
       {userId && activeTab === 'notification' && notifications.length > 0 && (
         <RoundList style={{ marginTop: 0 }}>{NotificationsItems}</RoundList>
       )}
-      {activeTab === 'rankings' && (
-        <Rankings loadingNotifications={loadingNotifications} />
-      )}
+      {activeTab === 'rankings' && <Rankings />}
       {activeTab === 'reward' && rewards.length > 0 && (
         <RoundList style={{ marginTop: 0 }}>{RewardListItems}</RoundList>
       )}
