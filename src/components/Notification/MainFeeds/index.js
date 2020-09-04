@@ -192,7 +192,7 @@ function MainFeeds({
 
   return (
     <ErrorBoundary style={style}>
-      {numNewNotis > 0 && (
+      {numNewNotis > 0 && !(activeTab === 'reward' && totalRewardAmount > 0) && (
         <Banner
           loading={loadingNewFeeds}
           color="gold"
