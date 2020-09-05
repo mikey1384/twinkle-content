@@ -21,6 +21,7 @@ export default function RewardItem({
     rewardType,
     rewarderId,
     rewarderUsername,
+    targetObj,
     timeStamp
   }
 }) {
@@ -53,7 +54,15 @@ export default function RewardItem({
           style={{ color: Color.green() }}
           content={{
             id: contentId,
-            title: contentType
+            title: `${contentType}${
+              contentType === 'comment' && targetObj.filePath
+                ? ''
+                : ` (${
+                    contentType === 'comment'
+                      ? targetObj.content
+                      : targetObj.title
+                  })`
+            }`
           }}
           contentType={contentType}
         />
