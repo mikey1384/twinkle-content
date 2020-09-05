@@ -138,7 +138,7 @@ function Notification({ className, location, style }) {
               {...subject}
             />
           )}
-          {notifications.length > 0 && userId && (
+          {userId && (
             <FilterBar
               bordered
               style={{
