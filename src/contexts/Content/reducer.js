@@ -796,9 +796,9 @@ export default function ContentReducer(state, action) {
       }
       return {
         ...state,
+        ...subjectStates,
         [contentKey]: {
           ...prevContentState,
-          ...subjectStates,
           subjects: (prevContentState.subjects || []).concat(action.results),
           subjectsLoadMoreButton: action.loadMoreButton
         }
