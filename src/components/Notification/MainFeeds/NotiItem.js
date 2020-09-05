@@ -7,6 +7,7 @@ import { timeSince } from 'helpers/timeStampHelpers';
 import { Color } from 'constants/css';
 import { truncateText, stringIsEmpty } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
+import { notiFeedListItem } from '../Styles';
 
 NotiItem.propTypes = {
   notification: PropTypes.object.isRequired
@@ -14,6 +15,7 @@ NotiItem.propTypes = {
 
 export default function NotiItem({
   notification: {
+    id,
     actionObj = {},
     targetComment = {},
     targetObj = {},
@@ -291,12 +293,14 @@ export default function NotiItem({
 
   return (
     <ErrorBoundary>
-      <div>
-        <UsernameText user={user} color={Color.blue()} />
-        &nbsp;
-        {NotificationMessage}
-      </div>
-      <small style={{ color: Color.gray() }}>{timeSince(timeStamp)}</small>
+      <nav style={{ background: '#fff' }} className={notiFeedListItem} key={id}>
+        <div>
+          <UsernameText user={user} color={Color.blue()} />
+          &nbsp;
+          {NotificationMessage}
+        </div>
+        <small style={{ color: Color.gray() }}>{timeSince(timeStamp)}</small>
+      </nav>
     </ErrorBoundary>
   );
 }
