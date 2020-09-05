@@ -55,12 +55,12 @@ export default function RewardItem({
           content={{
             id: contentId,
             title: `${contentType}${
-              contentType === 'comment' && targetObj?.filePath
+              !targetObj || (contentType === 'comment' && targetObj?.filePath)
                 ? ''
                 : ` (${
                     contentType === 'comment'
-                      ? targetObj?.content
-                      : targetObj?.title
+                      ? targetObj.content
+                      : targetObj.title
                   })`
             }`
           }}
