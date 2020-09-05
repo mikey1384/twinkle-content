@@ -86,9 +86,9 @@ function MainFeeds({
   );
 
   const NotificationsItems = useMemo(() => {
-    return notifications.map((notification) => {
-      return <NotiItem key={notification.id} notification={notification} />;
-    });
+    return notifications.map((notification) => (
+      <NotiItem key={notification.id} notification={notification} />
+    ));
   }, [notifications]);
 
   const RewardListItems = useMemo(() => {
