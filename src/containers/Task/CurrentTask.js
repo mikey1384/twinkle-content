@@ -41,23 +41,7 @@ export default function CurrentTask({ style, className, taskId }) {
       >
         <div style={{ fontWeight: 'bold' }}>Take a Screen Shot</div>
         <div style={{ marginTop: '2rem', display: 'flex', width: '100%' }}>
-          <img
-            className={css`
-              width: 60%;
-            `}
-            src={gifTable[taskId]}
-          />
-          <div
-            className={css`
-              width: 40%;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              font-size: 2rem;
-            `}
-          >
-            progress: 60%
-          </div>
+          <img style={{ width: '100%' }} src={gifTable[taskId]} />
         </div>
       </div>
     </div>

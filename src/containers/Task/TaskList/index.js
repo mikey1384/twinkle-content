@@ -30,7 +30,7 @@ export default function TaskList({ style, className }) {
 
   return (
     <div style={style} className={className}>
-      <p style={{ fontWeight: 'bold', fontSize: '2.5rem' }}>All Task</p>
+      <p style={{ fontWeight: 'bold', fontSize: '2.5rem' }}>All Tasks</p>
       <div>
         <div style={{ marginTop: '1rem' }}>
           {tasks.map((taskId, index) => (
