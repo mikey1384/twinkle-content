@@ -5,6 +5,7 @@ import UsernameText from 'components/Texts/UsernameText';
 import { Color } from 'constants/css';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { notiFeedListItem } from '../Styles';
+import { truncateText } from 'helpers/stringHelpers';
 
 RewardItem.propTypes = {
   reward: PropTypes.object.isRequired
@@ -55,13 +56,17 @@ export default function RewardItem({
           content={{
             id: contentId,
             title: `${contentType}${
-              contentType === 'comment' && targetObj?.filePath
+              !targetObj || (contentType === 'comment' && targetObj?.filePath)
                 ? ''
-                : ` (${
-                    contentType === 'comment'
-                      ? targetObj?.content
-                      : targetObj?.title
-                  })`
+                : contentType === 'comment'
+                ? ` (${truncateText({
+                    text: targetObj.content,
+                    limit: 100
+                  })})`
+                : ` (${truncateText({
+                    text: targetObj.title,
+                    limit: 100
+                  })})`
             }`
           }}
           contentType={contentType}
