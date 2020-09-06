@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
 import Task from './Task';
 import Tutorial from './Tutorial';
-import { useAppContext, useTaskContext } from 'contexts';
+import { useMyState } from 'helpers/hooks';
+import { useAppContext, useContentContext, useTaskContext } from 'contexts';
 
 TaskPage.propTypes = {
   match: PropTypes.object.isRequired
@@ -14,9 +15,13 @@ export default function TaskPage({
     params: { taskId }
   }
 }) {
+  const { userId } = useMyState();
   const {
-    requestHelpers: { loadTask }
+    requestHelpers: { loadTask, updateCurrentTask }
   } = useAppContext();
+  const {
+    actions: { onUpdateCurrentTask }
+  } = useContentContext();
   const {
     actions: { onLoadTask },
     state: { taskObj }
@@ -25,12 +30,15 @@ export default function TaskPage({
   const task = useMemo(() => taskObj[taskId] || {}, [taskId, taskObj]);
 
   useEffect(() => {
-    if (!taskObj[taskId]?.loaded) {
-      init();
-    }
+    init();
+
     async function init() {
-      const data = await loadTask(taskId);
-      onLoadTask(data);
+      updateCurrentTask(taskId);
+      onUpdateCurrentTask({ taskId, userId });
+      if (!taskObj[taskId]?.loaded) {
+        const data = await loadTask(taskId);
+        onLoadTask(data);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [taskId, taskObj]);
@@ -52,6 +60,7 @@ export default function TaskPage({
             description={task.description}
             subtitle={task.subtitle}
             title={task.title}
+            buttonLabel={task.buttonLabel}
           />
           <Tutorial style={{ marginTop: '5rem' }} />
         </div>

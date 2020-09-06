@@ -21,6 +21,14 @@ export default function taskRequestHelpers({ auth, handleError }) {
       } catch (error) {
         return handleError(error);
       }
+    },
+    async updateCurrentTask(taskId) {
+      try {
+        await request.put(`${URL}/task/current`, { taskId }, auth());
+        return Promise.resolve();
+      } catch (error) {
+        return handleError(error);
+      }
     }
   };
 }

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { css } from 'emotion';
 import { borderRadius, Color } from 'constants/css';
 import { useHistory } from 'react-router-dom';
 import { gifTable } from 'constants/defaultValues';
+import { useTaskContext } from 'contexts';
 
 CurrentTask.propTypes = {
   style: PropTypes.object,
@@ -13,6 +14,11 @@ CurrentTask.propTypes = {
 
 export default function CurrentTask({ style, className, taskId }) {
   const history = useHistory();
+  const {
+    state: { taskObj }
+  } = useTaskContext();
+  const task = useMemo(() => taskObj[taskId] || {}, [taskId, taskObj]);
+
   return (
     <div style={style} className={className}>
       <p
@@ -39,7 +45,7 @@ export default function CurrentTask({ style, className, taskId }) {
           }
         `}
       >
-        <div style={{ fontWeight: 'bold' }}>Take a Screen Shot</div>
+        <div style={{ fontWeight: 'bold' }}>{task.title}</div>
         <div style={{ marginTop: '2rem', display: 'flex', width: '100%' }}>
           <img style={{ width: '100%' }} src={gifTable[taskId]} />
         </div>

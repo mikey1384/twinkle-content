@@ -6,13 +6,21 @@ import { panel } from './Styles';
 import { gifTable } from 'constants/defaultValues';
 
 Task.propTypes = {
+  buttonLabel: PropTypes.string,
   title: PropTypes.string,
   subtitle: PropTypes.string,
   description: PropTypes.string,
   style: PropTypes.object,
   taskId: PropTypes.number
 };
-export default function Task({ title, subtitle, description, style, taskId }) {
+export default function Task({
+  buttonLabel,
+  title,
+  subtitle,
+  description,
+  style,
+  taskId
+}) {
   return (
     <div className={panel} style={{ paddingBottom: '3rem', ...style }}>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -43,7 +51,7 @@ export default function Task({ title, subtitle, description, style, taskId }) {
           style={{ fontSize: '2rem' }}
           onClick={() => console.log('clicked')}
         >
-          Submit Screenshot
+          {buttonLabel || 'Submit'}
         </Button>
       </div>
     </div>

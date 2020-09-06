@@ -625,6 +625,14 @@ export default function ContentActions(dispatch) {
         contentId: userId
       });
     },
+    onUpdateCurrentTask({ userId, taskId }) {
+      return dispatch({
+        type: 'UPDATE_CURRENT_TASK',
+        contentId: userId,
+        contentType: 'user',
+        taskId
+      });
+    },
     onUploadComment({ contentId, contentType, ...data }) {
       return dispatch({
         type: 'UPLOAD_COMMENT',
