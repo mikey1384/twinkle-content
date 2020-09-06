@@ -30,18 +30,19 @@ export default function TaskPage({
   const task = useMemo(() => taskObj[taskId] || {}, [taskId, taskObj]);
 
   useEffect(() => {
-    init();
+    updateCurrentTask(taskId);
+    onUpdateCurrentTask({ taskId: Number(taskId), userId });
+    if (!taskObj[taskId]?.loaded) {
+      init();
+    }
 
     async function init() {
-      updateCurrentTask(taskId);
-      onUpdateCurrentTask({ taskId, userId });
-      if (!taskObj[taskId]?.loaded) {
-        const data = await loadTask(taskId);
-        onLoadTask(data);
-      }
+      const data = await loadTask(taskId);
+      onLoadTask(data);
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [taskId, taskObj]);
+  }, []);
 
   return (
     <div style={{ paddingTop: '1rem' }}>

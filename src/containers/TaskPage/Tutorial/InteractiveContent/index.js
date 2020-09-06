@@ -22,10 +22,9 @@ export default function InteractiveContent({ contentId }) {
     }
   } = useInteractiveContext();
 
-  const { loaded, slideObj = {}, displayedSlides } = useMemo(
-    () => state[contentId] || {},
-    [contentId, state]
-  );
+  const contentObj = useMemo(() => state[contentId] || {}, [contentId, state]);
+
+  const { loaded, slideObj = {}, displayedSlides } = contentObj;
 
   useEffect(() => {
     if (!loaded) {
@@ -36,7 +35,7 @@ export default function InteractiveContent({ contentId }) {
       onLoadInteractive(interactive);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [contentId]);
+  }, [contentId, loaded]);
 
   return loaded ? (
     <div
