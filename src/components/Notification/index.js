@@ -212,7 +212,9 @@ function Notification({ className, location, style }) {
   );
 
   function handleFetchNotifications() {
-    fetchNews();
+    if (notifications.length === 0) {
+      fetchNews();
+    }
     fetchRankings();
   }
   async function fetchNews() {
