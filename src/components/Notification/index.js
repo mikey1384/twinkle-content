@@ -32,7 +32,12 @@ function Notification({ className, location, style }) {
       totalRewardedTwinkleCoins,
       currentChatSubject: { content = defaultChatSubject, loaded, ...subject }
     },
-    actions: { onFetchNotifications, onGetRanks, onClearNotifications }
+    actions: {
+      onFetchNotifications,
+      onGetRanks,
+      onClearNotifications,
+      onResetRewards
+    }
   } = useNotiContext();
   const [loadingNotifications, setLoadingNotifications] = useState(false);
   const [activeTab, setActiveTab] = useState('rankings');
@@ -40,11 +45,14 @@ function Notification({ className, location, style }) {
   const mounted = useRef(true);
   const prevUserId = useRef(userId);
   const prevTwinkleXP = useRef(twinkleXP);
+
   useEffect(() => {
     mounted.current = true;
     return function cleanUp() {
+      onResetRewards();
       mounted.current = false;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     userChangedTab.current = false;
@@ -103,7 +111,7 @@ function Notification({ className, location, style }) {
     socket.on('new_reward_posted', handleNewReward);
     function handleNewReward({ receiverId }) {
       if (receiverId === userId) {
-        handleFetchNotifications();
+        fetchNews();
       }
     }
     return function cleanUp() {
