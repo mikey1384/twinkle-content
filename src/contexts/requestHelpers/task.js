@@ -5,10 +5,7 @@ export default function taskRequestHelpers({ auth, handleError }) {
   return {
     async loadTask(taskId) {
       try {
-        const { data } = await request.get(
-          `${URL}/task/page?taskId=${taskId}`,
-          auth()
-        );
+        const { data } = await request.get(`${URL}/task/page?taskId=${taskId}`);
         return Promise.resolve(data);
       } catch (error) {
         return handleError(error);
@@ -16,7 +13,7 @@ export default function taskRequestHelpers({ auth, handleError }) {
     },
     async loadTaskList() {
       try {
-        const { data } = await request.get(`${URL}/task`, auth());
+        const { data } = await request.get(`${URL}/task`);
         return Promise.resolve(data);
       } catch (error) {
         return handleError(error);

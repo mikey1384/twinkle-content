@@ -30,7 +30,13 @@ export default function TaskPage({
   const task = useMemo(() => taskObj[taskId] || {}, [taskId, taskObj]);
 
   useEffect(() => {
-    updateCurrentTask(taskId);
+    if (userId) {
+      updateCurrentTask(taskId);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
+
+  useEffect(() => {
     onUpdateCurrentTask({ taskId: Number(taskId), userId });
     if (!task.loaded) {
       init();
