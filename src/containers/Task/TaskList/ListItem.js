@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { css } from 'emotion';
 import { Color, borderRadius } from 'constants/css';
 import { useHistory } from 'react-router-dom';
+import { useAppContext } from 'contexts';
+import { useMyState } from 'helpers/hooks';
 
 ListItem.propTypes = {
   children: PropTypes.node,
@@ -11,9 +13,15 @@ ListItem.propTypes = {
 };
 export default function ListItem({ children, style, taskId }) {
   const history = useHistory();
+  const { userId } = useMyState();
+  const {
+    user: {
+      actions: { onOpenSigninModal }
+    }
+  } = useAppContext();
   return (
     <div
-      onClick={() => history.push(`/tasks/${taskId}`)}
+      onClick={handleLinkClick}
       style={style}
       className={css`
         padding: 1rem;
@@ -28,4 +36,12 @@ export default function ListItem({ children, style, taskId }) {
       {children}
     </div>
   );
+
+  function handleLinkClick() {
+    if (userId) {
+      history.push(`/tasks/${taskId}`);
+    } else {
+      onOpenSigninModal();
+    }
+  }
 }
