@@ -70,7 +70,6 @@ export default function TaskPage({
               subtitle={task.subtitle}
               taskType={task.taskType}
               title={task.title}
-              buttonLabel={task.buttonLabel}
             />
             <Tutorial
               style={{ marginTop: '5rem' }}
