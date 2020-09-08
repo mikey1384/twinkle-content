@@ -68,6 +68,11 @@ export default function NotiActions(dispatch) {
         type: 'RESET_NUM_NEW_POSTS'
       });
     },
+    onResetRewards() {
+      return dispatch({
+        type: 'RESET_REWARDS'
+      });
+    },
     onShowUpdateNotice(shown) {
       return dispatch({
         type: 'SHOW_UPDATE_NOTICE',

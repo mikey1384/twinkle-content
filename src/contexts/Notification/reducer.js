@@ -83,6 +83,14 @@ export default function NotiReducer(state, action) {
         ...state,
         numNewPosts: 0
       };
+    case 'RESET_REWARDS':
+      return {
+        ...state,
+        rewards:
+          state.totalRewardedTwinkles + state.totalRewardedTwinkleCoins === 0
+            ? []
+            : state.rewards
+      };
     case 'SHOW_UPDATE_NOTICE':
       return {
         ...state,
