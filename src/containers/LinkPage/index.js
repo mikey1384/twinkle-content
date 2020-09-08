@@ -14,7 +14,7 @@ import RecommendationInterface from 'components/RecommendationInterface';
 import RecommendationStatus from 'components/RecommendationStatus';
 import XPRewardInterface from 'components/XPRewardInterface';
 import Icon from 'components/Icon';
-import NotFound from 'components/NotFound';
+import InvalidPage from 'components/InvalidPage';
 import Loading from 'components/Loading';
 import Description from './Description';
 import { css } from 'emotion';
@@ -533,7 +533,7 @@ export default function LinkPage({
       )}
     </div>
   ) : notFound ? (
-    <NotFound />
+    <InvalidPage />
   ) : (
     <Loading text="Loading Page..." />
   );

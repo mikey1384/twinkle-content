@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import NotFound from 'components/NotFound';
+import InvalidPage from 'components/InvalidPage';
 import Routes from './Routes';
 import Loading from 'components/Loading';
 import { useMyState } from 'helpers/hooks';
@@ -26,7 +26,7 @@ export default function Management({ location }) {
   ) : managementLevel > 0 ? (
     <Routes location={location} />
   ) : (
-    <NotFound
+    <InvalidPage
       title="For moderators only"
       text="You are not authorized to view this page"
     />

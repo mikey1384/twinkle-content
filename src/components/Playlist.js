@@ -4,7 +4,7 @@ import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import Loading from 'components/Loading';
 import VideoThumbImage from 'components/VideoThumbImage';
 import Link from 'components/Link';
-import NotFound from 'components/NotFound';
+import InvalidPage from 'components/InvalidPage';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { Color } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
@@ -54,7 +54,7 @@ export default function Playlist({
     <ErrorBoundary>
       {videos.length === 0 ? (
         loaded ? (
-          <NotFound
+          <InvalidPage
             title="Playlist does not exist"
             text="It is either removed or never existed in the first place"
           />

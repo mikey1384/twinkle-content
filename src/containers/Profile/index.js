@@ -6,7 +6,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from 'emotion';
 import { useAppContext, useContentContext, useProfileContext } from 'contexts';
 import { useContentState, useMyState, useProfileState } from 'helpers/hooks';
-import NotFound from 'components/NotFound';
+import InvalidPage from 'components/InvalidPage';
 import Loading from 'components/Loading';
 import GoBack from 'components/GoBack';
 
@@ -111,7 +111,7 @@ export default function Profile({ history, location, match }) {
           )}
         </>
       ) : (
-        <NotFound
+        <InvalidPage
           title={!userId ? 'For Registered Users Only' : ''}
           text={!userId ? 'Please Log In or Sign Up' : ''}
         />

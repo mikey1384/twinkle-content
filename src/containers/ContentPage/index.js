@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ContentPanel from 'components/ContentPanel';
-import NotFound from 'components/NotFound';
+import InvalidPage from 'components/InvalidPage';
 import request from 'axios';
 import URL from 'constants/URL';
 import ErrorBoundary from 'components/ErrorBoundary';
@@ -120,7 +120,7 @@ export default function ContentPage({
               userId={userId}
             />
           ) : (
-            <NotFound />
+            <InvalidPage />
           )}
         </section>
       </div>

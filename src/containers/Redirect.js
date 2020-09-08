@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
-import NotFound from 'components/NotFound';
+import InvalidPage from 'components/InvalidPage';
 import request from 'axios';
 import URL from 'constants/URL';
 
@@ -30,5 +30,5 @@ export default function Redirect({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <div>{loaded ? <NotFound /> : <Loading text="Loading..." />}</div>;
+  return <div>{loaded ? <InvalidPage /> : <Loading text="Loading..." />}</div>;
 }

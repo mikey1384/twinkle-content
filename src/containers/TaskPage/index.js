@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
 import Task from './Task';
 import Tutorial from './Tutorial';
+import InvalidPage from 'components/InvalidPage';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useTaskContext } from 'contexts';
 
@@ -15,7 +16,7 @@ export default function TaskPage({
     params: { taskId }
   }
 }) {
-  const { userId } = useMyState();
+  const { loaded, userId } = useMyState();
   const {
     requestHelpers: { loadTask, updateCurrentTask }
   } = useAppContext();
@@ -50,33 +51,42 @@ export default function TaskPage({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return (
-    <div style={{ paddingTop: '1rem' }}>
-      {task ? (
-        <div
-          style={{
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            flexDirection: 'column'
-          }}
-        >
-          <Task
-            taskId={task.id}
-            description={task.description}
-            subtitle={task.subtitle}
-            title={task.title}
-            buttonLabel={task.buttonLabel}
-          />
-          <Tutorial
-            style={{ marginTop: '5rem' }}
-            tutorialId={task.tutorialId}
-          />
-        </div>
-      ) : (
-        <Loading text="Loading Task..." />
-      )}
-    </div>
+  return loaded ? (
+    userId ? (
+      <div style={{ paddingTop: '1rem' }}>
+        {task ? (
+          <div
+            style={{
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column'
+            }}
+          >
+            <Task
+              taskId={task.id}
+              description={task.description}
+              subtitle={task.subtitle}
+              title={task.title}
+              buttonLabel={task.buttonLabel}
+            />
+            <Tutorial
+              style={{ marginTop: '5rem' }}
+              tutorialId={task.tutorialId}
+            />
+          </div>
+        ) : (
+          <Loading text="Loading Task..." />
+        )}
+      </div>
+    ) : (
+      <InvalidPage
+        title="For Registered Users Only"
+        text="Please Log In or Sign Up"
+      />
+    )
+  ) : (
+    <Loading />
   );
 }

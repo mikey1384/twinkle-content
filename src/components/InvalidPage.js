@@ -2,13 +2,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { css } from 'emotion';
 
-NotFound.propTypes = {
+InvalidPage.propTypes = {
   style: PropTypes.object,
   text: PropTypes.string,
   title: PropTypes.string
 };
 
-export default function NotFound({ title, text, style }) {
+export default function InvalidPage({ title, text, style }) {
   return (
     <div
       style={style}
