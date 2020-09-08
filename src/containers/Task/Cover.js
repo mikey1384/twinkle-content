@@ -3,16 +3,9 @@ import { useMyState } from 'helpers/hooks';
 import { css } from 'emotion';
 import { Color } from 'constants/css';
 import ProfilePic from 'components/ProfilePic';
-import Button from 'components/Button';
 
 export default function Cover() {
-  const {
-    profileTheme,
-    profilePicId,
-    userId,
-    username,
-    canEdit
-  } = useMyState();
+  const { profileTheme, profilePicId, userId, username } = useMyState();
 
   return (
     <div
@@ -46,17 +39,6 @@ export default function Cover() {
           {username}
         </div>
       </div>
-      {canEdit && (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'flex-end',
-            paddingBottom: '1rem'
-          }}
-        >
-          <Button skeuomorphic>Add Tutorial</Button>
-        </div>
-      )}
     </div>
   );
 }
