@@ -142,7 +142,6 @@ export default function Main() {
             minmax(10rem, 1.1fr)
             minmax(17rem, 2fr)
             minmax(15rem, 1.6fr)
-            minmax(15rem, 1.6fr)
             minmax(17rem, 2fr)
           `}
         >
@@ -155,7 +154,6 @@ export default function Main() {
               <th style={{ textAlign: 'center' }}>Reward</th>
               <th style={{ textAlign: 'center' }}>Feature Contents</th>
               <th style={{ textAlign: 'center' }}>Edit Playlists</th>
-              <th style={{ textAlign: 'center' }}>Edit Dictionary</th>
               <th style={{ textAlign: 'center' }}>Edit Reward Level</th>
             </tr>
           </thead>
@@ -191,9 +189,6 @@ export default function Main() {
                 </td>
                 <td style={{ textAlign: 'center' }}>
                   <Check checked={!!accountType.canEditPlaylists} />
-                </td>
-                <td style={{ textAlign: 'center' }}>
-                  <Check checked={!!accountType.canEditDictionary} />
                 </td>
                 <td style={{ textAlign: 'center' }}>
                   <Check checked={!!accountType.canEditRewardLevel} />
