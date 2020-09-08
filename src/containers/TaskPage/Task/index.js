@@ -6,7 +6,6 @@ import { panel } from '../Styles';
 import { gifTable } from 'constants/defaultValues';
 
 Task.propTypes = {
-  buttonLabel: PropTypes.string,
   title: PropTypes.string,
   subtitle: PropTypes.string,
   description: PropTypes.string,
@@ -15,7 +14,6 @@ Task.propTypes = {
   taskId: PropTypes.number
 };
 export default function Task({
-  buttonLabel,
   title,
   subtitle,
   description,
@@ -44,7 +42,7 @@ export default function Task({
       >
         <LongText>{description}</LongText>
       </div>
-      <Submit taskType={taskType} buttonLabel={buttonLabel} />
+      <Submit taskType={taskType} />
     </div>
   );
 }
