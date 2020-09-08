@@ -68,6 +68,7 @@ export default function TaskPage({
               taskId={task.id}
               description={task.description}
               subtitle={task.subtitle}
+              taskType={task.taskType}
               title={task.title}
               buttonLabel={task.buttonLabel}
             />

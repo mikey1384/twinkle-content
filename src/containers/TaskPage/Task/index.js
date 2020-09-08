@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from 'components/Button';
 import LongText from 'components/Texts/LongText';
-import { panel } from './Styles';
+import Submit from './Submit';
+import { panel } from '../Styles';
 import { gifTable } from 'constants/defaultValues';
 
 Task.propTypes = {
@@ -11,6 +11,7 @@ Task.propTypes = {
   subtitle: PropTypes.string,
   description: PropTypes.string,
   style: PropTypes.object,
+  taskType: PropTypes.string,
   taskId: PropTypes.number
 };
 export default function Task({
@@ -19,6 +20,7 @@ export default function Task({
   subtitle,
   description,
   style,
+  taskType,
   taskId
 }) {
   return (
@@ -42,18 +44,7 @@ export default function Task({
       >
         <LongText>{description}</LongText>
       </div>
-      <div
-        style={{ display: 'flex', justifyContent: 'center', marginTop: '5rem' }}
-      >
-        <Button
-          color="darkBlue"
-          skeuomorphic
-          style={{ fontSize: '2rem' }}
-          onClick={() => console.log('clicked')}
-        >
-          {buttonLabel || 'Submit'}
-        </Button>
-      </div>
+      <Submit taskType={taskType} buttonLabel={buttonLabel} />
     </div>
   );
 }
