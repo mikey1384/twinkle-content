@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Cover from './Cover';
 import CurrentTask from './CurrentTask';
 import TaskList from './TaskList';
+import Loading from 'components/Loading';
 import { css } from 'emotion';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useTaskContext } from 'contexts';
 
 export default function Task() {
+  const [loading, setLoading] = useState(false);
   const { currentTaskId, userId } = useMyState();
   const {
     requestHelpers: { loadTaskList }
@@ -15,20 +17,31 @@ export default function Task() {
     state: { tasks, taskObj },
     actions: { onLoadTaskList }
   } = useTaskContext();
+  const mounted = useRef(true);
 
   useEffect(() => {
+    mounted.current = true;
     init();
 
     async function init() {
+      setLoading(true);
       const { tasks, loadMoreButton } = await loadTaskList();
-      onLoadTaskList({ tasks, loadMoreButton });
+      if (mounted.current) {
+        setLoading(false);
+        onLoadTaskList({ tasks, loadMoreButton });
+      }
     }
+
+    return function onUnmount() {
+      mounted.current = false;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div>
       {userId && <Cover />}
+      {tasks.length === 0 && loading && <Loading />}
       {tasks.length > 0 && (
         <div style={{ margin: '5rem' }}>
           <div style={{ display: 'flex' }}>
