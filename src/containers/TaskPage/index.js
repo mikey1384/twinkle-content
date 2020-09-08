@@ -32,7 +32,7 @@ export default function TaskPage({
   useEffect(() => {
     updateCurrentTask(taskId);
     onUpdateCurrentTask({ taskId: Number(taskId), userId });
-    if (!taskObj[taskId]?.loaded) {
+    if (!task.loaded) {
       init();
     }
 
@@ -63,7 +63,10 @@ export default function TaskPage({
             title={task.title}
             buttonLabel={task.buttonLabel}
           />
-          <Tutorial style={{ marginTop: '5rem' }} />
+          <Tutorial
+            style={{ marginTop: '5rem' }}
+            tutorialId={task.tutorialId}
+          />
         </div>
       ) : (
         <Loading text="Loading Task..." />

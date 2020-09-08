@@ -4,10 +4,11 @@ import StartPanel from './StartPanel';
 import InteractiveContent from './InteractiveContent';
 
 Tutorial.propTypes = {
-  style: PropTypes.object
+  style: PropTypes.object,
+  tutorialId: PropTypes.number
 };
 
-export default function Tutorial({ style }) {
+export default function Tutorial({ style, tutorialId }) {
   const [started, setStarted] = useState(false);
   return (
     <div
@@ -19,7 +20,7 @@ export default function Tutorial({ style }) {
       }}
     >
       {!started && <StartPanel onStartClick={() => setStarted(true)} />}
-      {started && <InteractiveContent contentId={2} />}
+      {started && <InteractiveContent contentId={tutorialId} />}
     </div>
   );
 }
