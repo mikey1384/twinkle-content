@@ -1,33 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import ListItem from './ListItem';
-import { useAppContext, useTaskContext } from 'contexts';
 import { gifTable } from 'constants/defaultValues';
 
 TaskList.propTypes = {
   style: PropTypes.object,
-  className: PropTypes.string
+  className: PropTypes.string,
+  tasks: PropTypes.array.isRequired,
+  taskObj: PropTypes.object.isRequired
 };
 
-export default function TaskList({ style, className }) {
-  const {
-    requestHelpers: { loadTaskList }
-  } = useAppContext();
-  const {
-    state: { tasks, taskObj },
-    actions: { onLoadTaskList }
-  } = useTaskContext();
-
-  useEffect(() => {
-    init();
-
-    async function init() {
-      const { tasks, loadMoreButton } = await loadTaskList();
-      onLoadTaskList({ tasks, loadMoreButton });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+export default function TaskList({ style, className, tasks, taskObj }) {
   return (
     <div style={style} className={className}>
       <p style={{ fontWeight: 'bold', fontSize: '2.5rem' }}>All Tasks</p>
