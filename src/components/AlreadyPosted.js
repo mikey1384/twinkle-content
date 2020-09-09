@@ -39,7 +39,7 @@ export default function AlreadyPosted({
   const mounted = useRef(true);
   useEffect(() => {
     mounted.current = true;
-    if (!existingContent) {
+    if (!existingContent && uploaderId) {
       checkExists();
     }
     async function checkExists() {
@@ -58,7 +58,7 @@ export default function AlreadyPosted({
       mounted.current = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url]);
+  }, [uploaderId, url]);
 
   const show = useMemo(() => {
     return (
