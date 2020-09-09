@@ -49,7 +49,8 @@ export default function EditPlaylistModal({
   const [modalVideos, setModalVideos] = useState([]);
   const [searchedVideos, setSearchedVideos] = useState([]);
   const [loadedOrSearchedVideos, setLoadedOrSearchedVideos] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [removedVideoIds, setRemovedVideoIds] = useState({});
   const [loadMoreButton, setLoadMoreButton] = useState(false);
@@ -59,22 +60,24 @@ export default function EditPlaylistModal({
   const [selectedVideos, setSelectedVideos] = useState([]);
   const [searchLoadMoreButton, setSearchLoadMoreButton] = useState(false);
   const [mainTabActive, setMainTabActive] = useState(true);
-  const [openedRemoveVideosTab, setOpenedRemoveVideosTab] = useState(false);
   const [searchText, setSearchText] = useState('');
   const { handleSearch, searching } = useSearch({
     onSearch: handleSearchVideo,
     onClear: () => setSearchedVideos([]),
     onSetSearchText: setSearchText
   });
+  const openedRemoveVideosTab = useRef(false);
   const playlistVideoObjects = useRef({});
   const initialSelectedVideos = useRef([]);
   const mounted = useRef(true);
 
   useEffect(() => {
     mounted.current = true;
-    setIsLoading(true);
-    init();
+    if (mainTabActive && !loaded) {
+      init();
+    }
     async function init() {
+      setLoading(true);
       const { results: modalVids, loadMoreButton: loadMoreShown } =
         modalType === 'change'
           ? await loadUploads({ contentType: 'video', limit: 18 })
@@ -92,13 +95,16 @@ export default function EditPlaylistModal({
       } else {
         initialSelectedVideos.current = modalVids.map((video) => video.id);
       }
-      setModalVideos(modalVids.map((video) => video.id));
-      setSelectedVideos(initialSelectedVideos.current);
-      setLoadMoreButton(loadMoreShown);
-      setIsLoading(false);
+      if (!openedRemoveVideosTab.current && mounted.current) {
+        setModalVideos(modalVids.map((video) => video.id));
+        setSelectedVideos(initialSelectedVideos.current);
+        setLoadMoreButton(loadMoreShown);
+        setLoading(false);
+        setLoaded(true);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [loaded, mainTabActive]);
 
   const videosToRearrange = useMemo(
     () =>
@@ -107,6 +113,12 @@ export default function EditPlaylistModal({
       ),
     [addedVideos, modalVideos, removedVideoIds]
   );
+
+  useEffect(() => {
+    return function onUnmount() {
+      mounted.current = false;
+    };
+  }, []);
 
   return (
     <ErrorBoundary>
@@ -123,6 +135,7 @@ export default function EditPlaylistModal({
                 className={mainTabActive ? 'active' : ''}
                 onClick={() => {
                   setMainTabActive(true);
+                  openedRemoveVideosTab.current = false;
                   setLoadingMore(false);
                 }}
                 style={{ cursor: 'pointer' }}
@@ -131,7 +144,7 @@ export default function EditPlaylistModal({
               </nav>
               <nav
                 className={mainTabActive ? '' : 'active'}
-                onClick={openRemoveVideosTab}
+                onClick={handleOpenRemoveVideosTab}
                 style={{ cursor: 'pointer' }}
               >
                 Remove Videos
@@ -149,7 +162,7 @@ export default function EditPlaylistModal({
                 onChange={handleSearch}
               />
             )}
-            {isLoading || searching ? (
+            {loading || searching ? (
               <Loading />
             ) : (
               <>
@@ -495,16 +508,16 @@ export default function EditPlaylistModal({
     setLoadMoreButton(reorderLoadMoreButton);
   }
 
-  async function openRemoveVideosTab() {
-    if (openedRemoveVideosTab) {
+  async function handleOpenRemoveVideosTab() {
+    if (openedRemoveVideosTab.current) {
       setMainTabActive(false);
       setLoadingMore(false);
       return;
     }
-    setOpenedRemoveVideosTab(true);
+    openedRemoveVideosTab.current = true;
     setLoadingMore(false);
     setMainTabActive(false);
-    setIsLoading(true);
+    setLoading(true);
     const { results: loadedVideos, loadMoreButton } = await loadPlaylistVideos({
       playlistId,
       limit: 18
@@ -513,20 +526,24 @@ export default function EditPlaylistModal({
       ...playlistVideoObjects.current,
       ...objectify(loadedVideos)
     };
-    for (let video of loadedVideos) {
-      if (!selectedVideos.includes(video.id) && !removedVideoIds[video.id]) {
-        setSelectedVideos((selectedVideos) => selectedVideos.concat(video.id));
+    if (mounted.current) {
+      for (let video of loadedVideos) {
+        if (!selectedVideos.includes(video.id) && !removedVideoIds[video.id]) {
+          setSelectedVideos((selectedVideos) =>
+            selectedVideos.concat(video.id)
+          );
+        }
       }
+      setLoadedOrSearchedVideos((loadedOrSearchedVideos) =>
+        loadedOrSearchedVideos.concat(
+          loadedVideos
+            .map((video) => video.id)
+            .filter((videoId) => !loadedOrSearchedVideos.includes(videoId))
+        )
+      );
+      setRemoveVideosLoadMoreButton(loadMoreButton);
+      setLoading(false);
     }
-    setLoadedOrSearchedVideos((loadedOrSearchedVideos) =>
-      loadedOrSearchedVideos.concat(
-        loadedVideos
-          .map((video) => video.id)
-          .filter((videoId) => !loadedOrSearchedVideos.includes(videoId))
-      )
-    );
-    setRemoveVideosLoadMoreButton(loadMoreButton);
-    setIsLoading(false);
   }
 
   async function handleSearchVideo(text) {
@@ -542,15 +559,17 @@ export default function EditPlaylistModal({
       ...playlistVideoObjects.current,
       ...objectify(searchResults)
     };
-    setSearchedVideos(searchResults.map((video) => video.id));
-    setSearchLoadMoreButton(loadMoreButton);
-    setSelectedVideos((selectedVideos) =>
-      selectedVideos.concat(
-        playlistVideos
-          .map((video) => video.id)
-          .filter((id) => !selectedVideos.includes(id))
-      )
-    );
-    setIsLoading(false);
+    if (mounted.current) {
+      setSearchedVideos(searchResults.map((video) => video.id));
+      setSearchLoadMoreButton(loadMoreButton);
+      setSelectedVideos((selectedVideos) =>
+        selectedVideos.concat(
+          playlistVideos
+            .map((video) => video.id)
+            .filter((id) => !selectedVideos.includes(id))
+        )
+      );
+      setLoading(false);
+    }
   }
 }
