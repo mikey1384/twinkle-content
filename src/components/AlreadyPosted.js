@@ -64,7 +64,7 @@ export default function AlreadyPosted({
     return (
       !changingPage &&
       !loading &&
-      existingContent &&
+      existingContent?.id &&
       existingContent.id !== contentId &&
       !(byUser && uploaderId !== existingContent.uploader)
     );
