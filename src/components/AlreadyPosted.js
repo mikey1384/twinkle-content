@@ -58,7 +58,7 @@ export default function AlreadyPosted({
       mounted.current = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [uploaderId, url]);
+  }, [url, uploaderId]);
 
   const show = useMemo(() => {
     return (
