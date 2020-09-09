@@ -84,6 +84,7 @@ function Channels({ onChannelEnter }) {
   });
 
   useEffect(() => {
+    setChannelsLoading(false);
     selectedChatTabRef.current = selectedChatTab;
     ChannelListRef.current.scrollTop = 0;
   }, [selectedChatTab]);
@@ -156,8 +157,8 @@ function Channels({ onChannelEnter }) {
         currentChannelId: selectedChannelId
       });
       loading.current = false;
-      setChannelsLoading(false);
       if (selectedChatTabRef.current === selectedChatTab) {
+        setChannelsLoading(false);
         onLoadMoreChannels({ type: selectedChatTab, channels });
       }
     }
