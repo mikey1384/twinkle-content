@@ -84,6 +84,7 @@ function Channels({ onChannelEnter }) {
   });
 
   useEffect(() => {
+    loading.current = false;
     setChannelsLoading(false);
     selectedChatTabRef.current = selectedChatTab;
     ChannelListRef.current.scrollTop = 0;
