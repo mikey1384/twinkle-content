@@ -83,6 +83,7 @@ function Channels({ onChannelEnter }) {
   });
 
   useEffect(() => {
+    loading.current = false;
     ChannelListRef.current.scrollTop = 0;
   }, [selectedChatTab]);
 
