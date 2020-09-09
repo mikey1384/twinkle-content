@@ -151,11 +151,13 @@ function Embedly({
           setLoading(false);
         }
       } catch (error) {
+        setLoading(false);
+        setImageUrl(fallbackImage);
         console.error(error.response || error);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [prevUrl, url, thumbLoaded, thumbUrl]);
+  }, [prevUrl, url, thumbLoaded, siteUrl, thumbUrl]);
 
   const videoUrl = useMemo(
     () => `${url}${startingPosition > 0 ? `?t=${startingPosition}` : ''}`,
@@ -253,7 +255,9 @@ function Embedly({
                 cursor: ${contentType === 'chat' || small ? 'pointer' : ''};
                 ${contentType === 'chat' ? 'margin-bottom: 1rem;' : ''}
                 ${small ? 'margin-left: 1rem;' : ''}
-                ${small ? '' : 'margin-top: 1rem;'}
+                ${small
+                  ? ''
+                  : 'margin-top: 1rem;'}
               `,
               onClick: small ? () => history.push(`/links/${contentId}`) : null
             },
