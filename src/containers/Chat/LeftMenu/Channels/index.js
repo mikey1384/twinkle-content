@@ -33,6 +33,7 @@ function Channels({ onChannelEnter }) {
   const [channelsLoading, setChannelsLoading] = useState(false);
   const [prevChannelIds, setPrevChannelIds] = useState(homeChannelIds);
   const ChannelListRef = useRef(null);
+  const selectedChatTabRef = useRef('home');
   const loading = useRef(false);
   const channelIds = useMemo(() => {
     switch (selectedChatTab) {
@@ -83,6 +84,7 @@ function Channels({ onChannelEnter }) {
   });
 
   useEffect(() => {
+    selectedChatTabRef.current = selectedChatTab;
     loading.current = false;
     ChannelListRef.current.scrollTop = 0;
   }, [selectedChatTab]);
@@ -154,9 +156,11 @@ function Channels({ onChannelEnter }) {
         lastId,
         currentChannelId: selectedChannelId
       });
-      onLoadMoreChannels({ type: selectedChatTab, channels });
-      setChannelsLoading(false);
-      loading.current = false;
+      if (selectedChatTabRef.current === selectedChatTab) {
+        onLoadMoreChannels({ type: selectedChatTab, channels });
+        setChannelsLoading(false);
+        loading.current = false;
+      }
     }
   }
 }
