@@ -294,7 +294,11 @@ export default function MainContent({
           )}
         </div>
         {!isEditing && contentType === 'url' && (
-          <Embedly contentId={contentId} loadingHeight="30rem" />
+          <Embedly
+            contentId={contentId}
+            loadingHeight="30rem"
+            mobileLoadingHeight="25rem"
+          />
         )}
         {contentType === 'subject' && !!rewardLevel && !!rootObj.id && (
           <RewardLevelBar
