@@ -156,8 +156,8 @@ function Channels({ onChannelEnter }) {
         currentChannelId: selectedChannelId
       });
       loading.current = false;
+      setChannelsLoading(false);
       if (selectedChatTabRef.current === selectedChatTab) {
-        setChannelsLoading(false);
         onLoadMoreChannels({ type: selectedChatTab, channels });
       }
     }
