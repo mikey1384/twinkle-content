@@ -1,15 +1,15 @@
 export default function MissionReducer(state, action) {
   switch (action.type) {
-    case 'LOAD_TASK': {
+    case 'LOAD_MISSION': {
       return {
         ...state,
         missionObj: {
           ...state.missionObj,
-          [action.mission.id]: action.task
+          [action.mission.id]: action.mission
         }
       };
     }
-    case 'LOAD_TASK_LIST': {
+    case 'LOAD_MISSION_LIST': {
       const newMissionObj = {};
       for (let mission of action.missions) {
         newMissionObj[mission.id] = {

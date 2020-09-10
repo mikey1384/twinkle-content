@@ -1,7 +1,7 @@
 import request from 'axios';
 import URL from 'constants/URL';
 
-export default function taskRequestHelpers({ auth, handleError }) {
+export default function missionRequestHelpers({ auth, handleError }) {
   return {
     async loadMission(missionId) {
       try {

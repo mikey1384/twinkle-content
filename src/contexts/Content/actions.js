@@ -627,7 +627,7 @@ export default function ContentActions(dispatch) {
     },
     onUpdateCurrentMission({ userId, missionId }) {
       return dispatch({
-        type: 'UPDATE_CURRENT_TASK',
+        type: 'UPDATE_CURRENT_MISSION',
         contentId: userId,
         contentType: 'user',
         missionId

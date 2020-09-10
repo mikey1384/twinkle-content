@@ -15,15 +15,15 @@ MissionContextProvider.propTypes = {
 };
 
 export function MissionContextProvider({ children }) {
-  const [taskState, taskDispatch] = useReducer(
+  const [missionState, missionDispatch] = useReducer(
     MissionReducer,
     initialMissionState
   );
   return (
     <MissionContext.Provider
       value={{
-        state: taskState,
-        actions: MissionActions(taskDispatch)
+        state: missionState,
+        actions: MissionActions(missionDispatch)
       }}
     >
       {children}
