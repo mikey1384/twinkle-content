@@ -25,10 +25,13 @@ export default function MissionPage({
   } = useContentContext();
   const {
     actions: { onLoadMission },
-    state: { taskObj }
+    state: { missionObj }
   } = useMissionContext();
 
-  const task = useMemo(() => taskObj[missionId] || {}, [missionId, taskObj]);
+  const mission = useMemo(() => missionObj[missionId] || {}, [
+    missionId,
+    missionObj
+  ]);
 
   useEffect(() => {
     if (userId) {
@@ -39,7 +42,7 @@ export default function MissionPage({
 
   useEffect(() => {
     onUpdateCurrentMission({ missionId: Number(missionId), userId });
-    if (!task.loaded) {
+    if (!mission.loaded) {
       init();
     }
 
@@ -54,7 +57,7 @@ export default function MissionPage({
   return loaded ? (
     userId ? (
       <div style={{ paddingTop: '1rem' }}>
-        {task ? (
+        {mission ? (
           <div
             style={{
               width: '100%',
@@ -65,15 +68,15 @@ export default function MissionPage({
             }}
           >
             <Mission
-              missionId={task.id}
-              description={task.description}
-              subtitle={task.subtitle}
-              missionType={task.missionType}
-              title={task.title}
+              missionId={mission.id}
+              description={mission.description}
+              subtitle={mission.subtitle}
+              missionType={mission.missionType}
+              title={mission.title}
             />
             <Tutorial
               style={{ marginTop: '5rem' }}
-              tutorialId={task.tutorialId}
+              tutorialId={mission.tutorialId}
             />
           </div>
         ) : (

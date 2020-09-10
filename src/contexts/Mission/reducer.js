@@ -3,9 +3,9 @@ export default function MissionReducer(state, action) {
     case 'LOAD_TASK': {
       return {
         ...state,
-        taskObj: {
-          ...state.taskObj,
-          [action.task.id]: action.task
+        missionObj: {
+          ...state.missionObj,
+          [action.mission.id]: action.task
         }
       };
     }
