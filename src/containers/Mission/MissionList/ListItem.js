@@ -9,9 +9,9 @@ import { useMyState } from 'helpers/hooks';
 ListItem.propTypes = {
   children: PropTypes.node,
   style: PropTypes.object,
-  taskId: PropTypes.number
+  missionId: PropTypes.number
 };
-export default function ListItem({ children, style, taskId }) {
+export default function ListItem({ children, style, missionId }) {
   const history = useHistory();
   const { userId } = useMyState();
   const {
@@ -39,7 +39,7 @@ export default function ListItem({ children, style, taskId }) {
 
   function handleLinkClick() {
     if (userId) {
-      history.push(`/tasks/${taskId}`);
+      history.push(`/missions/${missionId}`);
     } else {
       onOpenSigninModal();
     }

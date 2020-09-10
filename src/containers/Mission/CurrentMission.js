@@ -4,20 +4,23 @@ import { css } from 'emotion';
 import { borderRadius, Color } from 'constants/css';
 import { useHistory } from 'react-router-dom';
 import { gifTable } from 'constants/defaultValues';
-import { useTaskContext } from 'contexts';
+import { useMissionContext } from 'contexts';
 
-CurrentTask.propTypes = {
+CurrentMission.propTypes = {
   style: PropTypes.object,
   className: PropTypes.string,
-  taskId: PropTypes.number
+  missionId: PropTypes.number
 };
 
-export default function CurrentTask({ style, className, taskId }) {
+export default function CurrentMission({ style, className, missionId }) {
   const history = useHistory();
   const {
-    state: { taskObj }
-  } = useTaskContext();
-  const task = useMemo(() => taskObj[taskId] || {}, [taskId, taskObj]);
+    state: { missionObj }
+  } = useMissionContext();
+  const mission = useMemo(() => missionObj[missionId] || {}, [
+    missionId,
+    missionObj
+  ]);
 
   return (
     <div style={style} className={className}>
@@ -27,10 +30,10 @@ export default function CurrentTask({ style, className, taskId }) {
           font-weight: bold;
         `}
       >
-        Current Task
+        Current Mission
       </p>
       <div
-        onClick={() => history.push(`/tasks/${taskId}`)}
+        onClick={() => history.push(`/missions/${missionId}`)}
         className={css`
           display: flex;
           flex-direction: column;
@@ -45,9 +48,9 @@ export default function CurrentTask({ style, className, taskId }) {
           }
         `}
       >
-        <div style={{ fontWeight: 'bold' }}>{task.title}</div>
+        <div style={{ fontWeight: 'bold' }}>{mission.title}</div>
         <div style={{ marginTop: '2rem', display: 'flex', width: '100%' }}>
-          <img style={{ width: '100%' }} src={gifTable[taskId]} />
+          <img style={{ width: '100%' }} src={gifTable[missionId]} />
         </div>
       </div>
     </div>

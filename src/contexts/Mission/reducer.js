@@ -1,4 +1,4 @@
-export default function TaskReducer(state, action) {
+export default function MissionReducer(state, action) {
   switch (action.type) {
     case 'LOAD_TASK': {
       return {
@@ -10,14 +10,18 @@ export default function TaskReducer(state, action) {
       };
     }
     case 'LOAD_TASK_LIST': {
-      const newTaskObj = {};
-      for (let task of action.tasks) {
-        newTaskObj[task.id] = { ...newTaskObj[task.id], ...task, loaded: true };
+      const newMissionObj = {};
+      for (let mission of action.missions) {
+        newMissionObj[mission.id] = {
+          ...newMissionObj[mission.id],
+          ...mission,
+          loaded: true
+        };
       }
       return {
         ...state,
-        tasks: action.tasks.map(({ id }) => id),
-        taskObj: newTaskObj,
+        missions: action.missions.map(({ id }) => id),
+        missionObj: newMissionObj,
         loadMoreButton: action.loadMoreButton
       };
     }

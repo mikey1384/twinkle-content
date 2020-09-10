@@ -5,21 +5,21 @@ import Submit from './Submit';
 import { panel } from '../Styles';
 import { gifTable } from 'constants/defaultValues';
 
-Task.propTypes = {
+Mission.propTypes = {
   title: PropTypes.string,
   subtitle: PropTypes.string,
   description: PropTypes.string,
   style: PropTypes.object,
-  taskType: PropTypes.string,
-  taskId: PropTypes.number
+  missionType: PropTypes.string,
+  missionId: PropTypes.number
 };
-export default function Task({
+export default function Mission({
   title,
   subtitle,
   description,
   style,
-  taskType,
-  taskId
+  missionType,
+  missionId
 }) {
   return (
     <div className={panel} style={{ paddingBottom: '3rem', ...style }}>
@@ -29,7 +29,7 @@ export default function Task({
           <p style={{ fontSize: '1.7rem' }}>{subtitle}</p>
         </div>
         <div style={{ width: '20%' }}>
-          <img style={{ width: '100%' }} src={gifTable[taskId]} />
+          <img style={{ width: '100%' }} src={gifTable[missionId]} />
         </div>
       </div>
       <div
@@ -42,7 +42,7 @@ export default function Task({
       >
         <LongText>{description}</LongText>
       </div>
-      <Submit taskType={taskType} />
+      <Submit missionType={missionType} />
     </div>
   );
 }

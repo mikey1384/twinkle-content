@@ -625,12 +625,12 @@ export default function ContentActions(dispatch) {
         contentId: userId
       });
     },
-    onUpdateCurrentTask({ userId, taskId }) {
+    onUpdateCurrentMission({ userId, missionId }) {
       return dispatch({
         type: 'UPDATE_CURRENT_TASK',
         contentId: userId,
         contentType: 'user',
-        taskId
+        missionId
       });
     },
     onUploadComment({ contentId, contentType, ...data }) {

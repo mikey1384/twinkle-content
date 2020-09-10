@@ -1,51 +1,51 @@
 import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
-import Task from './Task';
+import Mission from './Mission';
 import Tutorial from './Tutorial';
 import InvalidPage from 'components/InvalidPage';
 import { useMyState } from 'helpers/hooks';
-import { useAppContext, useContentContext, useTaskContext } from 'contexts';
+import { useAppContext, useContentContext, useMissionContext } from 'contexts';
 
-TaskPage.propTypes = {
+MissionPage.propTypes = {
   match: PropTypes.object.isRequired
 };
 
-export default function TaskPage({
+export default function MissionPage({
   match: {
-    params: { taskId }
+    params: { missionId }
   }
 }) {
   const { loaded, userId } = useMyState();
   const {
-    requestHelpers: { loadTask, updateCurrentTask }
+    requestHelpers: { loadMission, updateCurrentMission }
   } = useAppContext();
   const {
-    actions: { onUpdateCurrentTask }
+    actions: { onUpdateCurrentMission }
   } = useContentContext();
   const {
-    actions: { onLoadTask },
+    actions: { onLoadMission },
     state: { taskObj }
-  } = useTaskContext();
+  } = useMissionContext();
 
-  const task = useMemo(() => taskObj[taskId] || {}, [taskId, taskObj]);
+  const task = useMemo(() => taskObj[missionId] || {}, [missionId, taskObj]);
 
   useEffect(() => {
     if (userId) {
-      updateCurrentTask(taskId);
+      updateCurrentMission(missionId);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
   useEffect(() => {
-    onUpdateCurrentTask({ taskId: Number(taskId), userId });
+    onUpdateCurrentMission({ missionId: Number(missionId), userId });
     if (!task.loaded) {
       init();
     }
 
     async function init() {
-      const data = await loadTask(taskId);
-      onLoadTask(data);
+      const data = await loadMission(missionId);
+      onLoadMission(data);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -64,11 +64,11 @@ export default function TaskPage({
               flexDirection: 'column'
             }}
           >
-            <Task
-              taskId={task.id}
+            <Mission
+              missionId={task.id}
               description={task.description}
               subtitle={task.subtitle}
-              taskType={task.taskType}
+              missionType={task.missionType}
               title={task.title}
             />
             <Tutorial
@@ -77,7 +77,7 @@ export default function TaskPage({
             />
           </div>
         ) : (
-          <Loading text="Loading Task..." />
+          <Loading text="Loading Mission..." />
         )}
       </div>
     ) : (

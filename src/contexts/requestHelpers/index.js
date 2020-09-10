@@ -2,7 +2,7 @@ import chatRequestHelpers from './chat';
 import contentRequestHelpers from './content';
 import interactiveRequestHelpers from './interactive';
 import notificationRequestHelpers from './notification';
-import taskRequestHelpers from './task';
+import taskRequestHelpers from './mission';
 import userRequestHelpers from './user';
 
 const token = () =>

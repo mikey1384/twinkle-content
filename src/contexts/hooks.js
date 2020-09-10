@@ -9,7 +9,7 @@ import { InteractiveContext } from './Interactive';
 import { ManagementContext } from './Management';
 import { NotiContext } from './Notification';
 import { ProfileContext } from './Profile';
-import { TaskContext } from './Task';
+import { MissionContext } from './Mission';
 import { ViewContext } from './View';
 
 export function useAppContext() {
@@ -42,8 +42,8 @@ export function useNotiContext() {
 export function useProfileContext() {
   return useContext(ProfileContext);
 }
-export function useTaskContext() {
-  return useContext(TaskContext);
+export function useMissionContext() {
+  return useContext(MissionContext);
 }
 export function useViewContext() {
   return useContext(ViewContext);

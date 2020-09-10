@@ -3,25 +3,27 @@ import URL from 'constants/URL';
 
 export default function taskRequestHelpers({ auth, handleError }) {
   return {
-    async loadTask(taskId) {
+    async loadMission(missionId) {
       try {
-        const { data } = await request.get(`${URL}/task/page?taskId=${taskId}`);
+        const { data } = await request.get(
+          `${URL}/mission/page?missionId=${missionId}`
+        );
         return Promise.resolve(data);
       } catch (error) {
         return handleError(error);
       }
     },
-    async loadTaskList() {
+    async loadMissionList() {
       try {
-        const { data } = await request.get(`${URL}/task`);
+        const { data } = await request.get(`${URL}/mission`);
         return Promise.resolve(data);
       } catch (error) {
         return handleError(error);
       }
     },
-    async updateCurrentTask(taskId) {
+    async updateCurrentMission(missionId) {
       try {
-        await request.put(`${URL}/task/current`, { taskId }, auth());
+        await request.put(`${URL}/mission/current`, { missionId }, auth());
         return Promise.resolve();
       } catch (error) {
         return handleError(error);

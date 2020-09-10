@@ -1,22 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Cover from './Cover';
-import CurrentTask from './CurrentTask';
-import TaskList from './TaskList';
+import CurrentMission from './CurrentMission';
+import MissionList from './MissionList';
 import Loading from 'components/Loading';
 import { css } from 'emotion';
 import { useMyState } from 'helpers/hooks';
-import { useAppContext, useTaskContext } from 'contexts';
+import { useAppContext, useMissionContext } from 'contexts';
 
-export default function Task() {
+export default function Mission() {
   const [loading, setLoading] = useState(false);
-  const { currentTaskId, userId } = useMyState();
+  const { currentMissionId, userId } = useMyState();
   const {
-    requestHelpers: { loadTaskList }
+    requestHelpers: { loadMissionList }
   } = useAppContext();
   const {
-    state: { tasks, taskObj },
-    actions: { onLoadTaskList }
-  } = useTaskContext();
+    state: { missions, missionObj },
+    actions: { onLoadMissionList }
+  } = useMissionContext();
   const mounted = useRef(true);
 
   useEffect(() => {
@@ -25,10 +25,10 @@ export default function Task() {
 
     async function init() {
       setLoading(true);
-      const { tasks, loadMoreButton } = await loadTaskList();
+      const { missions, loadMoreButton } = await loadMissionList();
       if (mounted.current) {
         setLoading(false);
-        onLoadTaskList({ tasks, loadMoreButton });
+        onLoadMissionList({ missions, loadMoreButton });
       }
     }
 
@@ -41,24 +41,24 @@ export default function Task() {
   return (
     <div>
       {userId && <Cover />}
-      {tasks.length === 0 && loading && <Loading />}
-      {tasks.length > 0 && (
+      {missions.length === 0 && loading && <Loading />}
+      {missions.length > 0 && (
         <div style={{ margin: '5rem' }}>
           <div style={{ display: 'flex' }}>
-            {currentTaskId && (
-              <CurrentTask
-                taskId={currentTaskId}
+            {currentMissionId && (
+              <CurrentMission
+                missionId={currentMissionId}
                 className={css`
                   width: 45%;
                 `}
               />
             )}
-            <TaskList
-              tasks={tasks}
-              taskObj={taskObj}
+            <MissionList
+              missions={missions}
+              missionObj={missionObj}
               style={{
                 marginLeft: '5rem',
-                width: `CALC(${currentTaskId ? '55%' : '80%'} - 5rem)`
+                width: `CALC(${currentMissionId ? '55%' : '80%'} - 5rem)`
               }}
             />
           </div>

@@ -1,15 +1,15 @@
-export default function TaskActions(dispatch) {
+export default function MissionActions(dispatch) {
   return {
-    onLoadTask(task) {
+    onLoadMission(task) {
       return dispatch({
         type: 'LOAD_TASK',
         task
       });
     },
-    onLoadTaskList({ tasks, loadMoreButton }) {
+    onLoadMissionList({ missions, loadMoreButton }) {
       return dispatch({
         type: 'LOAD_TASK_LIST',
-        tasks,
+        missions,
         loadMoreButton
       });
     }

@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import TakeScreenshot from './TakeScreenshot';
 
 Submit.propTypes = {
-  taskType: PropTypes.string
+  missionType: PropTypes.string
 };
 
-export default function Submit({ taskType }) {
+export default function Submit({ missionType }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      {taskType === 'screenshot' && <TakeScreenshot />}
+      {missionType === 'screenshot' && <TakeScreenshot />}
     </div>
   );
 }

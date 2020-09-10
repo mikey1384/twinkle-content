@@ -1421,7 +1421,7 @@ export default function ContentReducer(state, action) {
         ...state,
         [contentKey]: {
           ...prevContentState,
-          currentTaskId: action.taskId
+          currentMissionId: action.missionId
         }
       };
     case 'UPDATE_PROFILE_INFO':

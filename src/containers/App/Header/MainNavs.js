@@ -105,8 +105,8 @@ function MainNavs({
       path: '/comments/:id',
       exact: true
     });
-    const taskPageMatch = matchPath(pathname, {
-      path: '/tasks/:id',
+    const missionPageMatch = matchPath(pathname, {
+      path: '/missions/:id',
       exact: true
     });
 
@@ -116,7 +116,7 @@ function MainNavs({
       !!videoPageMatch ||
       !!linkPageMatch ||
       !!commentPageMatch ||
-      !!taskPageMatch
+      !!missionPageMatch
     );
   }, [pathname]);
 
@@ -166,7 +166,7 @@ function MainNavs({
         ? 'book'
         : contentNav === 'subjects'
         ? 'bolt'
-        : contentNav === 'tasks'
+        : contentNav === 'missions'
         ? 'clipboard-check'
         : 'comment-alt',
     [contentNav]
@@ -235,10 +235,10 @@ function MainNavs({
         />
       )}
       <HeaderNav
-        to={`/tasks`}
+        to={`/missions`}
         pathname={pathname}
         className="mobile"
-        imgLabel="tasks"
+        imgLabel="missions"
       />
       <HeaderNav
         to="/chat"
@@ -290,13 +290,13 @@ function MainNavs({
         </HeaderNav>
       )}
       <HeaderNav
-        to={`/tasks`}
+        to={`/missions`}
         pathname={pathname}
         className="desktop"
         style={{ marginLeft: '2rem' }}
         imgLabel="tasks"
       >
-        TASKS
+        MISSIONS
       </HeaderNav>
       <div
         className={css`

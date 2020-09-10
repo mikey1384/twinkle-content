@@ -12,7 +12,7 @@ import { InteractiveContextProvider } from './Interactive';
 import { ManagementContextProvider } from './Management';
 import { NotiContextProvider } from './Notification';
 import { ProfileContextProvider } from './Profile';
-import { TaskContextProvider } from './Task';
+import { MissionContextProvider } from './Mission';
 import { ViewContextProvider } from './View';
 import { LAST_ONLINE_FILTER_LABEL } from 'constants/defaultValues';
 
@@ -53,7 +53,7 @@ export function AppContextProvider({ children }) {
         <ExploreContextProvider>
           <ViewContextProvider>
             <NotiContextProvider>
-              <TaskContextProvider>
+              <MissionContextProvider>
                 <HomeContextProvider>
                   <ChatContextProvider>
                     <InputContextProvider>
@@ -75,7 +75,7 @@ export function AppContextProvider({ children }) {
                     </InputContextProvider>
                   </ChatContextProvider>
                 </HomeContextProvider>
-              </TaskContextProvider>
+              </MissionContextProvider>
             </NotiContextProvider>
           </ViewContextProvider>
         </ExploreContextProvider>

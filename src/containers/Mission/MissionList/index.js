@@ -3,32 +3,37 @@ import PropTypes from 'prop-types';
 import ListItem from './ListItem';
 import { gifTable } from 'constants/defaultValues';
 
-TaskList.propTypes = {
+MissionList.propTypes = {
   style: PropTypes.object,
   className: PropTypes.string,
-  tasks: PropTypes.array.isRequired,
-  taskObj: PropTypes.object.isRequired
+  missions: PropTypes.array.isRequired,
+  missionObj: PropTypes.object.isRequired
 };
 
-export default function TaskList({ style, className, tasks, taskObj }) {
+export default function MissionList({
+  style,
+  className,
+  missions,
+  missionObj
+}) {
   return (
     <div style={style} className={className}>
-      <p style={{ fontWeight: 'bold', fontSize: '2.5rem' }}>All Tasks</p>
+      <p style={{ fontWeight: 'bold', fontSize: '2.5rem' }}>All Missions</p>
       <div>
         <div style={{ marginTop: '1rem' }}>
-          {tasks.map((taskId, index) => (
+          {missions.map((missionId, index) => (
             <ListItem
               style={{ marginTop: index > 0 ? '1rem' : 0 }}
-              key={taskId}
-              taskId={taskId}
+              key={missionId}
+              missionId={missionId}
             >
               <p style={{ fontSize: '2rem', fontWeight: 'bold' }}>
-                {taskObj[taskId].title}
+                {missionObj[missionId].title}
               </p>
               <div style={{ marginTop: '1rem', display: 'flex' }}>
-                <img src={gifTable[taskId]} style={{ width: '10rem' }} />
+                <img src={gifTable[missionId]} style={{ width: '10rem' }} />
                 <div style={{ marginLeft: '1rem', fontSize: '1.7rem' }}>
-                  {taskObj[taskId].subtitle}
+                  {missionObj[missionId].subtitle}
                 </div>
               </div>
             </ListItem>
