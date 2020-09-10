@@ -28,7 +28,7 @@ export default function InteractiveContent({ contentId }) {
   const { loaded, slideObj = {}, displayedSlides, isPublished } = contentObj;
 
   useEffect(() => {
-    if (!loaded && contentId) {
+    if (!loaded) {
       init();
     }
     async function init() {
