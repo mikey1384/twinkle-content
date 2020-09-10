@@ -501,36 +501,28 @@ export default function ChatReducer(state, action) {
         )
       };
     case 'LOAD_MORE_CHANNELS': {
-      let homeLoadMoreButton = state.homeLoadMoreButton;
-      let classLoadMoreButton = state.classLoadMoreButton;
-      let favoriteLoadMoreButton = state.favoriteLoadMoreButton;
       const chatTabHash = {
         home: 'homeChannelIds',
         favorite: 'favoriteChannelIds',
         class: 'classChannelIds'
       };
+      let loadMoreButton = false;
       if (action.channelType === 'home') {
         if (action.channels.length > 20) {
           action.channels.pop();
-          homeLoadMoreButton = true;
-        } else {
-          homeLoadMoreButton = false;
+          loadMoreButton = true;
         }
       }
       if (action.channelType === 'class') {
         if (action.channels.length > 20) {
           action.channels.pop();
-          classLoadMoreButton = true;
-        } else {
-          classLoadMoreButton = false;
+          loadMoreButton = true;
         }
       }
       if (action.channelType === 'favorite') {
         if (action.channels.length > 20) {
           action.channels.pop();
-          favoriteLoadMoreButton = true;
-        } else {
-          favoriteLoadMoreButton = false;
+          loadMoreButton = true;
         }
       }
       const channels = {};
@@ -539,9 +531,7 @@ export default function ChatReducer(state, action) {
       }
       return {
         ...state,
-        classLoadMoreButton,
-        homeLoadMoreButton,
-        favoriteLoadMoreButton,
+        ...{ [`${action.channelType}LoadMoreButton`]: loadMoreButton },
         [chatTabHash[action.channelType]]: state[
           chatTabHash[action.channelType]
         ].concat(action.channels.map((channel) => channel.id)),
@@ -739,7 +729,7 @@ export default function ChatReducer(state, action) {
         selectedChannelId: 0,
         channelsObj: {
           ...state.channelsObj,
-          '0': {
+          0: {
             id: 0,
             channelName: action.recepient.username,
             lastMessage: {

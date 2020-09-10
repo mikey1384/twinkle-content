@@ -33,6 +33,8 @@ function Channels({ onChannelEnter }) {
   const [channelsLoading, setChannelsLoading] = useState(false);
   const [prevChannelIds, setPrevChannelIds] = useState(homeChannelIds);
   const ChannelListRef = useRef(null);
+  const timeoutRef = useRef(null);
+  const selectedChatTabRef = useRef('home');
   const loading = useRef(false);
   const channelIds = useMemo(() => {
     switch (selectedChatTab) {
@@ -66,15 +68,18 @@ function Channels({ onChannelEnter }) {
     addEvent(ChannelList, 'scroll', onListScroll);
 
     function onListScroll() {
-      if (
-        loadMoreButtonShown &&
-        ChannelListRef.current.scrollTop >=
-          (ChannelListRef.current.scrollHeight -
-            ChannelListRef.current.offsetHeight) *
-            0.7
-      ) {
-        handleLoadMoreChannels();
-      }
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = setTimeout(() => {
+        if (
+          loadMoreButtonShown &&
+          ChannelListRef.current.scrollTop >=
+            (ChannelListRef.current.scrollHeight -
+              ChannelListRef.current.offsetHeight) *
+              0.7
+        ) {
+          handleLoadMoreChannels();
+        }
+      }, 250);
     }
 
     return function cleanUp() {
@@ -83,6 +88,10 @@ function Channels({ onChannelEnter }) {
   });
 
   useEffect(() => {
+    clearTimeout(timeoutRef.current);
+    loading.current = false;
+    setChannelsLoading(false);
+    selectedChatTabRef.current = selectedChatTab;
     ChannelListRef.current.scrollTop = 0;
   }, [selectedChatTab]);
 
@@ -142,8 +151,8 @@ function Channels({ onChannelEnter }) {
       class: classChannelIds
     };
     if (!loading.current) {
-      setChannelsLoading(true);
       loading.current = true;
+      setChannelsLoading(true);
       const channelIds = chatTabHash[selectedChatTab];
       const lastId = channelIds[channelIds.length - 1];
       const { lastUpdated } = channelsObj[lastId];
@@ -153,8 +162,10 @@ function Channels({ onChannelEnter }) {
         lastId,
         currentChannelId: selectedChannelId
       });
-      onLoadMoreChannels({ type: selectedChatTab, channels });
-      setChannelsLoading(false);
+      if (selectedChatTabRef.current === selectedChatTab) {
+        setChannelsLoading(false);
+        onLoadMoreChannels({ type: selectedChatTab, channels });
+      }
       loading.current = false;
     }
   }
