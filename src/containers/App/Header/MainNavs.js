@@ -238,7 +238,7 @@ function MainNavs({
         to={`/missions`}
         pathname={pathname}
         className="mobile"
-        imgLabel="missions"
+        imgLabel="tasks"
       />
       <HeaderNav
         to="/chat"

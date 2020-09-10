@@ -24,7 +24,9 @@ export default function InteractiveContent({ contentId }) {
 
   const contentObj = useMemo(() => state[contentId] || {}, [contentId, state]);
 
-  const { loaded, slideObj = {}, displayedSlides } = contentObj;
+  const { loaded, slideObj = {}, displayedSlides, isPublished } = contentObj;
+
+  console.log(isPublished);
 
   useEffect(() => {
     if (!loaded) {
