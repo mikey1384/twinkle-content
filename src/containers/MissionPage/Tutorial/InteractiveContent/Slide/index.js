@@ -5,6 +5,7 @@ import { scrollElementToCenter } from 'helpers';
 import { useInteractiveContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import Content from './Content';
+import Editor from './Editor';
 import DropdownButton from 'components/Buttons/DropdownButton';
 
 Slide.propTypes = {
@@ -52,6 +53,7 @@ export default function Slide({
       ref={SlideRef}
       className={panel}
       style={{
+        position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         width: '100%',
@@ -67,6 +69,7 @@ export default function Slide({
             skeuomorphic
             color="darkerGray"
             direction="left"
+            style={{ position: 'absolute', right: '1rem', top: '1rem' }}
             opacity={0.8}
             menuProps={[
               {
@@ -87,7 +90,7 @@ export default function Slide({
         </div>
       )}
       {isEditing ? (
-        <div>is being edited</div>
+        <Editor />
       ) : (
         <Content
           attachment={attachment}
