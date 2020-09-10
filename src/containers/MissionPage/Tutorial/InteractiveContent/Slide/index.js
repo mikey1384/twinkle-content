@@ -46,6 +46,7 @@ export default function Slide({
       style={{
         display: 'flex',
         flexDirection: 'column',
+        width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
         paddingBottom: '5rem',

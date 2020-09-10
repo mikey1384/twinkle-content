@@ -2,6 +2,7 @@ import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Slide from './Slide';
 import Loading from 'components/Loading';
+import AddSlide from './AddSlide';
 import { useAppContext, useInteractiveContext } from 'contexts';
 
 InteractiveContent.propTypes = {
@@ -25,8 +26,6 @@ export default function InteractiveContent({ contentId }) {
   const contentObj = useMemo(() => state[contentId] || {}, [contentId, state]);
 
   const { loaded, slideObj = {}, displayedSlides, isPublished } = contentObj;
-
-  console.log(isPublished);
 
   useEffect(() => {
     if (!loaded) {
@@ -67,6 +66,7 @@ export default function InteractiveContent({ contentId }) {
           style={{ marginTop: index === 0 ? 0 : '5rem' }}
         />
       ))}
+      {loaded && !isPublished && <AddSlide />}
     </div>
   ) : (
     <Loading />
