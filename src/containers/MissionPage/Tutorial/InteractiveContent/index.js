@@ -74,20 +74,22 @@ export default function InteractiveContent({ contentId }) {
     >
       {(isPublished || canEdit) && (
         <>
-          {displayedSlides.map((panelId, index) => (
+          {displayedSlides.map((slideId, index) => (
             <Slide
-              key={panelId}
+              key={slideId}
               autoFocus={
                 index > 0 && !!slideObj[displayedSlides[index - 1]]?.isFork
               }
-              heading={slideObj[panelId].heading}
-              onExpandPath={slideObj[panelId].isFork ? handleExpandPath : null}
-              description={slideObj[panelId].description}
-              options={slideObj[panelId].options}
-              selectedOptionId={slideObj[panelId].selectedOptionId}
-              panelId={panelId}
-              paths={slideObj[panelId].paths}
-              attachment={slideObj[panelId].attachment}
+              contentId={contentId}
+              heading={slideObj[slideId].heading}
+              onExpandPath={slideObj[slideId].isFork ? handleExpandPath : null}
+              description={slideObj[slideId].description}
+              options={slideObj[slideId].options}
+              selectedOptionId={slideObj[slideId].selectedOptionId}
+              slideId={slideId}
+              paths={slideObj[slideId].paths}
+              attachment={slideObj[slideId].attachment}
+              isEditing={slideObj[slideId].isEditing}
               style={{ marginTop: index === 0 ? 0 : '5rem' }}
             />
           ))}
@@ -103,10 +105,10 @@ export default function InteractiveContent({ contentId }) {
     <Loading />
   );
 
-  function handleExpandPath({ newSlides, panelId, optionId }) {
-    if (optionId !== slideObj[panelId].selectedOptionId) {
-      if (slideObj[panelId].selectedOptionId) {
-        const index = displayedSlides.indexOf(panelId);
+  function handleExpandPath({ newSlides, slideId, optionId }) {
+    if (optionId !== slideObj[slideId].selectedOptionId) {
+      if (slideObj[slideId].selectedOptionId) {
+        const index = displayedSlides.indexOf(slideId);
         onSetDisplayedSlides({
           interactiveId: contentId,
           newSlides: displayedSlides.slice(0, index + 1)
@@ -114,7 +116,7 @@ export default function InteractiveContent({ contentId }) {
       }
       onSetInteractiveState({
         interactiveId: contentId,
-        slideId: panelId,
+        slideId,
         newState: { selectedOptionId: optionId }
       });
       onConcatDisplayedSlides({
