@@ -6,7 +6,7 @@ import AddSlide from './AddSlide';
 import { useAppContext, useInteractiveContext } from 'contexts';
 
 InteractiveContent.propTypes = {
-  contentId: PropTypes.number.isRequired
+  contentId: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 
 export default function InteractiveContent({ contentId }) {
@@ -28,12 +28,22 @@ export default function InteractiveContent({ contentId }) {
   const { loaded, slideObj = {}, displayedSlides, isPublished } = contentObj;
 
   useEffect(() => {
-    if (!loaded) {
+    if (!loaded && contentId) {
       init();
     }
     async function init() {
-      const interactive = await loadInteractive(contentId);
-      onLoadInteractive(interactive);
+      if (contentId !== 'new') {
+        const interactive = await loadInteractive(contentId);
+        onLoadInteractive(interactive);
+      } else {
+        onLoadInteractive({
+          id: 'new',
+          loaded: true,
+          displayedSlides: [],
+          slideObj: {},
+          isPublished: false
+        });
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contentId, loaded]);

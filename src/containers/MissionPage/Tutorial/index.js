@@ -5,7 +5,7 @@ import InteractiveContent from './InteractiveContent';
 
 Tutorial.propTypes = {
   style: PropTypes.object,
-  tutorialId: PropTypes.number
+  tutorialId: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 
 export default function Tutorial({ style, tutorialId }) {

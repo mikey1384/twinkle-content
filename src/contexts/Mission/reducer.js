@@ -5,7 +5,10 @@ export default function MissionReducer(state, action) {
         ...state,
         missionObj: {
           ...state.missionObj,
-          [action.mission.id]: action.mission
+          [action.mission.id]: {
+            ...action.mission,
+            tutorialId: action.mission.tutorialId || 'new'
+          }
         }
       };
     }
