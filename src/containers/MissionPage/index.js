@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
 import Mission from './Mission';
@@ -16,6 +16,7 @@ export default function MissionPage({
     params: { missionId }
   }
 }) {
+  const mounted = useRef(true);
   const { loaded, userId } = useMyState();
   const {
     requestHelpers: { loadMission, updateCurrentMission }
@@ -48,10 +49,20 @@ export default function MissionPage({
 
     async function init() {
       const data = await loadMission(missionId);
-      onLoadMission(data);
+      if (mounted.current) {
+        onLoadMission(data);
+      }
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    mounted.current = true;
+
+    return function onUnmount() {
+      mounted.current = false;
+    };
   }, []);
 
   return loaded ? (

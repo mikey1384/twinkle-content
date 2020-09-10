@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
+import { useMyState } from 'helpers/hooks';
 import PropTypes from 'prop-types';
 import Slide from './Slide';
 import Loading from 'components/Loading';
@@ -13,6 +14,7 @@ export default function InteractiveContent({ contentId }) {
   const {
     requestHelpers: { loadInteractive }
   } = useAppContext();
+  const { canEdit } = useMyState();
   const {
     state,
     actions: {
@@ -22,19 +24,30 @@ export default function InteractiveContent({ contentId }) {
       onSetInteractiveState
     }
   } = useInteractiveContext();
+  const mounted = useRef(true);
 
-  const contentObj = useMemo(() => state[contentId] || {}, [contentId, state]);
+  const { loaded, slideObj = {}, displayedSlides, isPublished } = useMemo(
+    () => state[contentId] || {},
+    [contentId, state]
+  );
 
-  const { loaded, slideObj = {}, displayedSlides, isPublished } = contentObj;
+  useEffect(() => {
+    mounted.current = true;
+    return function onUnmount() {
+      mounted.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     if (!loaded) {
       init();
     }
     async function init() {
-      if (contentId !== 'new') {
+      if (contentId && contentId !== 'new') {
         const interactive = await loadInteractive(contentId);
-        onLoadInteractive(interactive);
+        if (mounted.current) {
+          onLoadInteractive(interactive);
+        }
       } else {
         onLoadInteractive({
           id: 'new',
@@ -59,24 +72,32 @@ export default function InteractiveContent({ contentId }) {
         paddingBottom: '10rem'
       }}
     >
-      {displayedSlides.map((panelId, index) => (
-        <Slide
-          key={panelId}
-          autoFocus={
-            index > 0 && !!slideObj[displayedSlides[index - 1]]?.isFork
-          }
-          heading={slideObj[panelId].heading}
-          onExpandPath={slideObj[panelId].isFork ? handleExpandPath : null}
-          description={slideObj[panelId].description}
-          options={slideObj[panelId].options}
-          selectedOptionId={slideObj[panelId].selectedOptionId}
-          panelId={panelId}
-          paths={slideObj[panelId].paths}
-          attachment={slideObj[panelId].attachment}
-          style={{ marginTop: index === 0 ? 0 : '5rem' }}
+      {(isPublished || canEdit) && (
+        <>
+          {displayedSlides.map((panelId, index) => (
+            <Slide
+              key={panelId}
+              autoFocus={
+                index > 0 && !!slideObj[displayedSlides[index - 1]]?.isFork
+              }
+              heading={slideObj[panelId].heading}
+              onExpandPath={slideObj[panelId].isFork ? handleExpandPath : null}
+              description={slideObj[panelId].description}
+              options={slideObj[panelId].options}
+              selectedOptionId={slideObj[panelId].selectedOptionId}
+              panelId={panelId}
+              paths={slideObj[panelId].paths}
+              attachment={slideObj[panelId].attachment}
+              style={{ marginTop: index === 0 ? 0 : '5rem' }}
+            />
+          ))}
+        </>
+      )}
+      {loaded && !isPublished && canEdit && (
+        <AddSlide
+          style={{ marginTop: displayedSlides.length === 0 ? 0 : '5rem' }}
         />
-      ))}
-      {loaded && !isPublished && <AddSlide />}
+      )}
     </div>
   ) : (
     <Loading />

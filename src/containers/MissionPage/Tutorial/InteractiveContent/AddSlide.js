@@ -1,11 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import { borderRadius, Color } from 'constants/css';
 
-export default function AddSlide() {
+AddSlide.propTypes = {
+  style: PropTypes.object
+};
+
+export default function AddSlide({ style }) {
   return (
-    <div style={{ width: '100%' }}>
+    <div style={{ width: '100%', ...style }}>
       <div
         style={{
           borderRadius,
