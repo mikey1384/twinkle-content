@@ -37,7 +37,7 @@ export default function Slide({
   selectedOptionId
 }) {
   const {
-    actions: { onSetSlideEditStatus }
+    actions: { onSetInteractiveState }
   } = useInteractiveContext();
   const SlideRef = useRef(null);
   const { canEdit } = useMyState();
@@ -72,10 +72,10 @@ export default function Slide({
               {
                 label: 'Edit',
                 onClick: () =>
-                  onSetSlideEditStatus({
-                    contentId,
+                  onSetInteractiveState({
+                    interactiveId: contentId,
                     slideId,
-                    isEditing: true
+                    newState: { isEditing: true }
                   })
               },
               {
