@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import StartPanel from './StartPanel';
-import InteractiveContent from './InteractiveContent';
+import InteractiveContent from 'components/InteractiveContent';
 
 Tutorial.propTypes = {
   style: PropTypes.object,

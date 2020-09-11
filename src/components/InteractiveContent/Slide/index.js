@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { panel } from '../../../Styles';
 import { scrollElementToCenter } from 'helpers';
 import { useInteractiveContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
+import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
+import { css } from 'emotion';
 import Content from './Content';
 import Editor from './Editor';
 import DropdownButton from 'components/Buttons/DropdownButton';
@@ -51,7 +52,15 @@ export default function Slide({
   return (
     <div
       ref={SlideRef}
-      className={panel}
+      className={css`
+        width: 60%;
+        padding: 1rem;
+        border: 1px solid ${Color.borderGray()};
+        border-radius: ${borderRadius};
+        @media (max-width: ${mobileMaxWidth}) {
+          width: 100%;
+        }
+      `}
       style={{
         position: 'relative',
         display: 'flex',
