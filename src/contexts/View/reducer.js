@@ -18,15 +18,15 @@ export default function ViewReducer(state, action) {
         ...state,
         exploreCategory: action.category
       };
-    case 'SET_EXPLORE_PATH':
+    case 'SET_CONTENT_PATH':
       return {
         ...state,
-        explorePath: action.path
+        contentPath: action.path
       };
-    case 'SET_EXPLORE_SUB_NAV':
+    case 'SET_CONTENT_NAV':
       return {
         ...state,
-        exploreSubNav: action.nav
+        contentNav: action.nav
       };
     case 'SET_HOME_NAV':
       return {

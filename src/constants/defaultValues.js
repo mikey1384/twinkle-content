@@ -1,4 +1,4 @@
-export const clientVersion = '1.4.36';
+export const clientVersion = '1.4.35';
 export const defaultChatSubject = 'Welcome!';
 export const defaultContentState = {
   isEditing: false,
@@ -23,6 +23,11 @@ export const TURN_PASSWORD = process.env.REACT_APP_TURN_PASSWORD;
 export const descriptionLengthForExtraRewardLevel = 1000;
 export const rewardValue = 200;
 export const mb = 1000;
+export const gifTable = {
+  1: `${cloudFrontURL}/missions/copy-and-paste/thumb.gif`,
+  2: `${cloudFrontURL}/missions/take-a-screenshot/thumb.gif`,
+  3: `${cloudFrontURL}/missions/how-to-google/thumb.gif`
+};
 export const priceTable = {
   chatSubject: 20,
   chatTheme: 30,

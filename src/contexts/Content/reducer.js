@@ -1416,6 +1416,14 @@ export default function ContentReducer(state, action) {
           fileUploadProgress: action.progress
         }
       };
+    case 'UPDATE_CURRENT_MISSION':
+      return {
+        ...state,
+        [contentKey]: {
+          ...prevContentState,
+          currentMissionId: action.missionId
+        }
+      };
     case 'UPDATE_PROFILE_INFO':
       return {
         ...state,

@@ -269,25 +269,12 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async loadSubjects({ channelId }) {
-      try {
-        const {
-          data: { mySubjects, allSubjects }
-        } = await request.get(
-          `${URL}/chat/chatSubject/modal?channelId=${channelId}`,
-          auth()
-        );
-        return Promise.resolve({ mySubjects, allSubjects });
-      } catch (error) {
-        console.error(error.response || error);
-      }
-    },
-    async loadMoreSubjects({ channelId, mineOnly, lastSubject }) {
+    async loadMoreSubjects({ mineOnly, lastSubject }) {
       try {
         const {
           data: { subjects, loadMoreButton }
         } = await request.get(
-          `${URL}/chat/chatSubject/modal/more?channelId=${channelId}&lastTimeStamp=${
+          `${URL}/chat/chatSubject/modal/more?lastTimeStamp=${
             lastSubject.reloadTimeStamp || lastSubject.timeStamp
           }&lastId=${lastSubject.id}${mineOnly ? `&mineOnly=1` : ''}`,
           auth()

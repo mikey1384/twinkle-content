@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Carousel from 'components/Carousel';
 import Button from 'components/Button';
 import XPVideoPlayer from 'components/XPVideoPlayer';
-import NotFound from 'components/NotFound';
+import InvalidPage from 'components/InvalidPage';
 import CheckListGroup from 'components/CheckListGroup';
 import Comments from 'components/Comments';
 import ResultModal from './Modals/ResultModal';
@@ -107,7 +107,7 @@ export default function VideoPage({
     }
   } = useContentContext();
   const {
-    actions: { onRecordScrollPosition, onSetExploreSubNav },
+    actions: { onRecordScrollPosition, onSetContentNav },
     state: { scrollPositions }
   } = useViewContext();
   useScrollPosition({
@@ -143,7 +143,7 @@ export default function VideoPage({
 
   useEffect(() => {
     if (!prevDeleted.current && deleted) {
-      onSetExploreSubNav('');
+      onSetContentNav('');
       history.push('/videos');
     }
     prevDeleted.current = deleted;
@@ -244,7 +244,7 @@ export default function VideoPage({
       {(!loaded || videoUnavailable) && (
         <div>
           {videoUnavailable ? (
-            <NotFound text="Video does not exist" />
+            <InvalidPage text="Video does not exist" />
           ) : (
             <Loading text="Loading Video..." />
           )}

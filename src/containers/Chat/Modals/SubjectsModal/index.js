@@ -2,12 +2,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
+import request from 'axios';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import SubjectItem from './SubjectItem';
 import Loading from 'components/Loading';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import { Color } from 'constants/css';
 import { useAppContext } from 'contexts';
+import { useMyState } from 'helpers/hooks';
+import URL from 'constants/URL';
+
+const API_URL = `${URL}/chat`;
 
 SubjectsModal.propTypes = {
   channelId: PropTypes.number.isRequired,
@@ -25,8 +30,9 @@ export default function SubjectsModal({
   userIsOwner
 }) {
   const {
-    requestHelpers: { deleteChatSubject, loadSubjects, loadMoreSubjects }
+    requestHelpers: { deleteChatSubject, loadMoreSubjects }
   } = useAppContext();
+  const { userId } = useMyState();
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const [mySubjects, setMySubjects] = useState({
@@ -43,10 +49,14 @@ export default function SubjectsModal({
 
   useEffect(() => {
     mounted.current = true;
-    handleLoadSubjects();
-    async function handleLoadSubjects() {
+    loadSubjects();
+    async function loadSubjects() {
       try {
-        const { mySubjects, allSubjects } = await loadSubjects({ channelId });
+        const {
+          data: { mySubjects, allSubjects }
+        } = await request.get(
+          `${API_URL}/chatSubject/modal?userId=${userId}&channelId=${channelId}`
+        );
         if (mounted.current) {
           setMySubjects(mySubjects);
           setAllSubjects(allSubjects);
@@ -180,8 +190,7 @@ export default function SubjectsModal({
     const lastSubject = targetSubjects[targetSubjects.length - 1];
     const { subjects, loadMoreButton } = await loadMoreSubjects({
       mineOnly,
-      lastSubject,
-      channelId
+      lastSubject
     });
     if (mineOnly) {
       setMySubjects({

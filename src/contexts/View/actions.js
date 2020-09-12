@@ -19,15 +19,15 @@ export default function ViewActions(dispatch) {
         category
       });
     },
-    onSetExploreSubNav(nav) {
+    onSetContentNav(nav) {
       return dispatch({
-        type: 'SET_EXPLORE_SUB_NAV',
+        type: 'SET_CONTENT_NAV',
         nav
       });
     },
-    onSetExplorePath(path) {
+    onSetContentPath(path) {
       return dispatch({
-        type: 'SET_EXPLORE_PATH',
+        type: 'SET_CONTENT_PATH',
         path
       });
     },

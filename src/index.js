@@ -11,6 +11,8 @@ import './styles.css';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faAlignJustify } from '@fortawesome/pro-solid-svg-icons/faAlignJustify';
+import { faAndroid } from '@fortawesome/free-brands-svg-icons/faAndroid';
+import { faApple } from '@fortawesome/free-brands-svg-icons/faApple';
 import { faArrowLeft } from '@fortawesome/pro-solid-svg-icons/faArrowLeft';
 import { faArrowRight } from '@fortawesome/pro-solid-svg-icons/faArrowRight';
 import { faArrowDown } from '@fortawesome/pro-solid-svg-icons/faArrowDown';
@@ -32,6 +34,8 @@ import { faChess } from '@fortawesome/pro-solid-svg-icons/faChess';
 import { faChevronDown } from '@fortawesome/pro-solid-svg-icons/faChevronDown';
 import { faChevronLeft } from '@fortawesome/pro-solid-svg-icons/faChevronLeft';
 import { faChevronRight } from '@fortawesome/pro-solid-svg-icons/faChevronRight';
+import { faClipboardCheck } from '@fortawesome/pro-solid-svg-icons/faClipboardCheck';
+import { faCodeBranch } from '@fortawesome/pro-solid-svg-icons/faCodeBranch';
 import { faComment } from '@fortawesome/pro-solid-svg-icons/faComment';
 import { faCommentAlt } from '@fortawesome/pro-solid-svg-icons/faCommentAlt';
 import { faComments } from '@fortawesome/pro-solid-svg-icons/faComments';
@@ -67,6 +71,7 @@ import { faStarHalfAlt } from '@fortawesome/pro-solid-svg-icons/faStarHalfAlt';
 import { faStar as farStar } from '@fortawesome/pro-regular-svg-icons/faStar';
 import { faStarHalfAlt as farStarHalfAlt } from '@fortawesome/pro-regular-svg-icons/faStarHalfAlt';
 import { faSurprise } from '@fortawesome/pro-solid-svg-icons/faSurprise';
+import { faTasks } from '@fortawesome/pro-solid-svg-icons/faTasks';
 import { faThumbsUp } from '@fortawesome/pro-solid-svg-icons/faThumbsUp';
 import { faTimes } from '@fortawesome/pro-solid-svg-icons/faTimes';
 import { faTrashAlt } from '@fortawesome/pro-solid-svg-icons/faTrashAlt';
@@ -77,12 +82,18 @@ import { faUpload } from '@fortawesome/pro-solid-svg-icons/faUpload';
 import { faUserGraduate } from '@fortawesome/pro-solid-svg-icons/faUserGraduate';
 import { faUsers } from '@fortawesome/pro-solid-svg-icons/faUsers';
 import { faVolumeMute } from '@fortawesome/pro-solid-svg-icons/faVolumeMute';
+import { faWindows } from '@fortawesome/free-brands-svg-icons/faWindows';
 import App from './containers/App';
 import { AppContextProvider } from 'contexts';
 import * as serviceWorker from './serviceWorker';
 
 library.add(
   faAlignJustify,
+  faAndroid,
+  faApple,
+  faArrowLeft,
+  faArrowRight,
+  faArrowDown,
   faBadgeDollar,
   farBadgeDollar,
   falBadgeDollar,
@@ -90,9 +101,7 @@ library.add(
   faBolt,
   faBook,
   faBriefcase,
-  faArrowLeft,
-  faArrowRight,
-  faArrowDown,
+  faCodeBranch,
   faCameraAlt,
   faCaretDown,
   faCertificate,
@@ -104,6 +113,7 @@ library.add(
   faChevronDown,
   faChevronLeft,
   faChevronRight,
+  faClipboardCheck,
   faComment,
   faCommentAlt,
   faComments,
@@ -139,6 +149,7 @@ library.add(
   farStar,
   farStarHalfAlt,
   faSurprise,
+  faTasks,
   faThumbsUp,
   faTimes,
   faTrashAlt,
@@ -148,7 +159,8 @@ library.add(
   faUser,
   faUserGraduate,
   faUsers,
-  faVolumeMute
+  faVolumeMute,
+  faWindows
 );
 
 ReactDOM.render(

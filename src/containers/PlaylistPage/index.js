@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
-import NotFound from 'components/NotFound';
+import InvalidPage from 'components/InvalidPage';
 import { css } from 'emotion';
 import { mobileMaxWidth } from 'constants/css';
 import Content from './Content';
@@ -36,7 +36,7 @@ export default function Playlists({ match }) {
       >
         <Switch>
           <Route exact path={`${match.url}/:contentId`} component={Content} />
-          <Route component={NotFound} />
+          <Route component={InvalidPage} />
         </Switch>
       </section>
     </div>

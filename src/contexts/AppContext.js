@@ -8,9 +8,11 @@ import { ContentContextProvider } from './Content';
 import { ExploreContextProvider } from './Explore';
 import { HomeContextProvider } from './Home';
 import { InputContextProvider } from './Input';
+import { InteractiveContextProvider } from './Interactive';
 import { ManagementContextProvider } from './Management';
 import { NotiContextProvider } from './Notification';
 import { ProfileContextProvider } from './Profile';
+import { MissionContextProvider } from './Mission';
 import { ViewContextProvider } from './View';
 import { LAST_ONLINE_FILTER_LABEL } from 'constants/defaultValues';
 
@@ -51,25 +53,29 @@ export function AppContextProvider({ children }) {
         <ExploreContextProvider>
           <ViewContextProvider>
             <NotiContextProvider>
-              <HomeContextProvider>
-                <ChatContextProvider>
-                  <InputContextProvider>
-                    <ContentContextProvider>
-                      <AppContext.Provider
-                        value={{
-                          user: {
-                            state: userState,
-                            actions: UserActions(userDispatch)
-                          },
-                          requestHelpers: requestHelpers(handleError)
-                        }}
-                      >
-                        {children}
-                      </AppContext.Provider>
-                    </ContentContextProvider>
-                  </InputContextProvider>
-                </ChatContextProvider>
-              </HomeContextProvider>
+              <MissionContextProvider>
+                <HomeContextProvider>
+                  <ChatContextProvider>
+                    <InputContextProvider>
+                      <ContentContextProvider>
+                        <InteractiveContextProvider>
+                          <AppContext.Provider
+                            value={{
+                              user: {
+                                state: userState,
+                                actions: UserActions(userDispatch)
+                              },
+                              requestHelpers: requestHelpers(handleError)
+                            }}
+                          >
+                            {children}
+                          </AppContext.Provider>
+                        </InteractiveContextProvider>
+                      </ContentContextProvider>
+                    </InputContextProvider>
+                  </ChatContextProvider>
+                </HomeContextProvider>
+              </MissionContextProvider>
             </NotiContextProvider>
           </ViewContextProvider>
         </ExploreContextProvider>
