@@ -234,7 +234,6 @@ function MainNavs({
           imgLabel={contentIconType}
         />
       )}
-
       <HeaderNav
         to={`/missions`}
         pathname={pathname}
