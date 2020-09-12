@@ -87,9 +87,6 @@ function People({ location }) {
 
   useEffect(() => {
     mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
   }, []);
 
   useEffect(() => {
@@ -99,12 +96,20 @@ function People({ location }) {
         const data = await loadUsers({
           orderBy: orderUsersBy === RANKING_FILTER_LABEL ? 'twinkleXP' : ''
         });
-        onLoadUsers(data);
-        prevOrderUsersBy.current = orderUsersBy;
+        if (mounted.current) {
+          onLoadUsers(data);
+          prevOrderUsersBy.current = orderUsersBy;
+        }
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [orderUsersBy, profilesLoaded]);
+
+  useEffect(() => {
+    return function onUnmount() {
+      mounted.current = false;
+    };
+  }, []);
 
   return (
     <div style={{ height: '100%' }}>
@@ -191,7 +196,9 @@ function People({ location }) {
     const { data: users } = await request.get(
       `${URL}/user/users/search?queryString=${text}`
     );
-    onSearchUsers(users);
+    if (mounted.current) {
+      onSearchUsers(users);
+    }
   }
 
   async function loadMoreProfiles() {
@@ -205,8 +212,8 @@ function People({ location }) {
           profiles.length > 0 ? profiles[profiles.length - 1].twinkleXP : null,
         orderBy: orderUsersBy === RANKING_FILTER_LABEL ? 'twinkleXP' : ''
       });
-      onLoadMoreUsers(data);
       if (mounted.current) {
+        onLoadMoreUsers(data);
         setLoading(false);
       }
     } catch (error) {
