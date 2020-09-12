@@ -55,6 +55,7 @@ function Notification({ className, location, style }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
+    onResetRewards();
     userChangedTab.current = false;
     handleFetchNotifications();
     // eslint-disable-next-line react-hooks/exhaustive-deps
