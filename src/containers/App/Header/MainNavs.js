@@ -234,14 +234,13 @@ function MainNavs({
           imgLabel={contentIconType}
         />
       )}
-      {false && (
-        <HeaderNav
-          to={`/missions`}
-          pathname={pathname}
-          className="mobile"
-          imgLabel="tasks"
-        />
-      )}
+
+      <HeaderNav
+        to={`/missions`}
+        pathname={pathname}
+        className="mobile"
+        imgLabel="tasks"
+      />
       <HeaderNav
         to="/chat"
         pathname={pathname}
@@ -291,17 +290,15 @@ function MainNavs({
           {contentNav.substring(0, contentNav.length - 1).toUpperCase()}
         </HeaderNav>
       )}
-      {false && (
-        <HeaderNav
-          to={`/missions`}
-          pathname={pathname}
-          className="desktop"
-          style={{ marginLeft: '2rem' }}
-          imgLabel="tasks"
-        >
-          MISSIONS
-        </HeaderNav>
-      )}
+      <HeaderNav
+        to={`/missions`}
+        pathname={pathname}
+        className="desktop"
+        style={{ marginLeft: '2rem' }}
+        imgLabel="tasks"
+      >
+        MISSIONS
+      </HeaderNav>
       <div
         className={css`
           margin-left: 2rem;
