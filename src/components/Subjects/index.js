@@ -103,7 +103,7 @@ export default function Subjects({
               style={{ width: '100%', borderRadius: 0 }}
               filled
               color="lightBlue"
-              onClick={loadMoreSubjects}
+              onClick={handleLoadMoreSubjects}
             >
               Load More Subjects
             </Button>
@@ -113,7 +113,7 @@ export default function Subjects({
     </LocalContext.Provider>
   );
 
-  async function loadMoreSubjects() {
+  async function handleLoadMoreSubjects() {
     const data = await loadSubjects({
       contentType,
       contentId,
