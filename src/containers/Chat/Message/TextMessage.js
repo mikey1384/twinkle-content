@@ -58,7 +58,7 @@ function TextMessage({
     actions: { onHideAttachment }
   } = useChatContext();
   const {
-    requestHelpers: { hideAttachment }
+    requestHelpers: { hideChatAttachment }
   } = useAppContext();
 
   return (
@@ -126,7 +126,7 @@ function TextMessage({
   );
 
   async function handleHideAttachment() {
-    await hideAttachment(messageId);
+    await hideChatAttachment(messageId);
     onHideAttachment(messageId);
     socket.emit('hide_message_attachment', { channelId, messageId });
   }

@@ -153,7 +153,11 @@ function Message({
     [authLevel, canReward, uploaderAuthLevel, userId, myId]
   );
   const {
-    requestHelpers: { editMessage, saveMessage, setChessMoveViewTimeStamp }
+    requestHelpers: {
+      editChatMessage,
+      saveChatMessage,
+      setChessMoveViewTimeStamp
+    }
   } = useAppContext();
   const {
     actions: {
@@ -222,7 +226,7 @@ function Message({
       handleSaveMessage();
     }
     async function handleSaveMessage() {
-      const messageId = await saveMessage({
+      const messageId = await saveChatMessage({
         message: post,
         targetMessageId: targetMessage?.id,
         targetSubject
@@ -584,7 +588,7 @@ function Message({
 
   async function handleEditDone(editedMessage) {
     const messageIsSubject = !!isSubject || !!isReloadedSubject;
-    const subjectChanged = await editMessage({
+    const subjectChanged = await editChatMessage({
       editedMessage,
       messageId,
       isSubject: messageIsSubject,

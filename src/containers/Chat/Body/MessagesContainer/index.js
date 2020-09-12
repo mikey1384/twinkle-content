@@ -46,7 +46,7 @@ export default function MessagesContainer({
     requestHelpers: {
       acceptInvitation,
       changeChannelOwner,
-      deleteMessage,
+      deleteChatMessage,
       editChannelSettings,
       hideChat,
       leaveChannel,
@@ -789,7 +789,7 @@ export default function MessagesContainer({
 
   async function handleDelete() {
     const { fileName, filePath, messageId } = deleteModal;
-    await deleteMessage({ fileName, filePath, messageId });
+    await deleteChatMessage({ fileName, filePath, messageId });
     onDeleteMessage(messageId);
     setDeleteModal({
       shown: false,
