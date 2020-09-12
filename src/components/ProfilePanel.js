@@ -89,6 +89,7 @@ function ProfilePanel({ expandable, profileId }) {
     rootMargin: '50px 0px 0px 0px',
     threshold: 0
   });
+  const mounted = useRef(true);
   const PanelRef = useRef(null);
   const ContainerRef = useRef(null);
   const visibleRef = useRef(previousVisible);
@@ -154,12 +155,18 @@ function ProfilePanel({ expandable, profileId }) {
   const [alertModalShown, setAlertModalShown] = useState(false);
   const CommentInputAreaRef = useRef(null);
   const FileInputRef = useRef(null);
-  const mounted = useRef(true);
   const loading = useRef(false);
 
   useEffect(() => {
     mounted.current = true;
-    setTimeout(() => handleCheckIfUserOnline(), 100);
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (mounted.current) {
+        handleCheckIfUserOnline();
+      }
+    }, 100);
     if (!profile.loaded && !loading.current && profileId) {
       handleInitProfile();
     }
@@ -168,7 +175,9 @@ function ProfilePanel({ expandable, profileId }) {
     }
     async function handleCheckIfUserOnline() {
       const online = await checkIfUserOnline(profileId);
-      onSetOnline({ contentId: profileId, contentType: 'user', online });
+      if (mounted.current) {
+        onSetOnline({ contentId: profileId, contentType: 'user', online });
+      }
     }
     async function handleInitProfile() {
       loading.current = true;
@@ -197,11 +206,14 @@ function ProfilePanel({ expandable, profileId }) {
         console.error(error);
       }
     }
-    return function cleanUp() {
-      mounted.current = false;
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profileId, userId, profile.loaded, commentsLoaded, previewLoaded]);
+
+  useEffect(() => {
+    return function onUnmount() {
+      mounted.current = false;
+    };
+  }, []);
 
   const canEdit = userId === profileId || isCreator;
   const noBio = !profileFirstRow && !profileSecondRow && !profileThirdRow;
@@ -525,15 +537,19 @@ function ProfilePanel({ expandable, profileId }) {
   async function handleTalkClick() {
     if (!chatLoaded) {
       const initialData = await loadChat();
-      onInitChat(initialData);
+      if (mounted.current) {
+        onInitChat(initialData);
+      }
     }
     const data = await loadDMChannel({ recepient: profile });
-    onOpenDirectMessageChannel({
-      user: { id: userId, username },
-      recepient: profile,
-      channelData: data
-    });
-    history.push('/chat');
+    if (mounted.current) {
+      onOpenDirectMessageChannel({
+        user: { id: userId, username },
+        recepient: profile,
+        channelData: data
+      });
+      history.push('/chat');
+    }
   }
 
   function onChangeProfilePictureClick() {
@@ -548,20 +564,24 @@ function ProfilePanel({ expandable, profileId }) {
         contentType: 'user',
         limit: 5
       });
-      onLoadComments({
-        comments,
-        contentId: profileId,
-        contentType: 'user',
-        loadMoreButton
-      });
-      onSetCommentsShown({ contentId: profileId, contentType: 'user' });
-      setLoadingComments(false);
+      if (mounted.current) {
+        onLoadComments({
+          comments,
+          contentId: profileId,
+          contentType: 'user',
+          loadMoreButton
+        });
+        onSetCommentsShown({ contentId: profileId, contentType: 'user' });
+        setLoadingComments(false);
+      }
     }
   }
 
   async function onMessagesButtonClick() {
     await onExpandComments();
-    if (profileId !== userId) CommentInputAreaRef.current.focus();
+    if (mounted.current) {
+      if (profileId !== userId) CommentInputAreaRef.current.focus();
+    }
   }
 
   function renderMessagesButton() {
@@ -590,8 +610,10 @@ function ProfilePanel({ expandable, profileId }) {
       ...params,
       profileId
     });
-    onUpdateBio(data);
-    setBioEditModalShown(false);
+    if (mounted.current) {
+      onUpdateBio(data);
+      setBioEditModalShown(false);
+    }
   }
 }
 

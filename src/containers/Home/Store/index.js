@@ -163,7 +163,7 @@ export default function Store() {
                 >
                   {instructionText}
                 </p>
-                <p>{calculationText}</p>
+                <div>{calculationText}</div>
               </div>
             </>
           )}

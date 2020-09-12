@@ -750,6 +750,12 @@ export default function ContentReducer(state, action) {
     case 'LOAD_MORE_SUBJECT_COMMENTS':
       return {
         ...state,
+        ['subject' + action.subjectId]: {
+          ...state['subject' + action.subjectId],
+          comments: state['subject' + action.subjectId].comments.concat(
+            action.comments
+          )
+        },
         [contentKey]: {
           ...prevContentState,
           subjects: prevContentState.subjects?.map((subject) => {
@@ -767,6 +773,24 @@ export default function ContentReducer(state, action) {
     case 'LOAD_MORE_SUBJECT_REPLIES':
       return {
         ...state,
+        ['subject' + action.subjectId]: {
+          ...state['subject' + action.subjectId],
+          comments: state['subject' + action.subjectId].comments.map(
+            (comment) => {
+              return {
+                ...comment,
+                replies:
+                  comment.id === action.commentId
+                    ? action.replies.concat(comment.replies)
+                    : comment.replies,
+                loadMoreButton:
+                  comment.id === action.commentId
+                    ? action.loadMoreButton
+                    : comment.loadMoreButton
+              };
+            }
+          )
+        },
         [contentKey]: {
           ...prevContentState,
           subjects: prevContentState.subjects?.map((subject) => {
@@ -1491,9 +1515,30 @@ export default function ContentReducer(state, action) {
         }
       };
     }
-    case 'UPLOAD_REPLY':
+
+    case 'UPLOAD_REPLY': {
+      let subjectState = {};
+      if (action.data.subjectId) {
+        subjectState = {
+          ['subject' + action.data.subjectId]: {
+            ...state['subject' + action.data.subjectId],
+            comments: state['subject' + action.data.subjectId].comments.map(
+              (comment) =>
+                comment.id === action.data.commentId ||
+                comment.id === action.data.replyId
+                  ? {
+                      ...comment,
+                      replies: (comment.replies || []).concat([action.data])
+                    }
+                  : comment
+            )
+          }
+        };
+      }
+
       return {
         ...state,
+        ...subjectState,
         [contentKey]: {
           ...prevContentState,
           comments: prevContentState.comments.map((comment) => {
@@ -1532,6 +1577,7 @@ export default function ContentReducer(state, action) {
           })
         }
       };
+    }
     case 'UPLOAD_SUBJECT':
       return {
         ...state,

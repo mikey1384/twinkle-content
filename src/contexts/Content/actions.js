@@ -201,7 +201,8 @@ export default function ContentActions(dispatch) {
       loadMoreButton,
       replies,
       contentId,
-      contentType
+      contentType,
+      subjectId
     }) {
       return dispatch({
         type: 'LOAD_MORE_SUBJECT_REPLIES',
@@ -209,7 +210,8 @@ export default function ContentActions(dispatch) {
         loadMoreButton,
         replies,
         contentId,
-        contentType
+        contentType,
+        subjectId
       });
     },
     onLoadMoreSubjects({ results, loadMoreButton, contentId, contentType }) {

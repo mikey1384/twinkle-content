@@ -450,8 +450,10 @@ export default function SubjectPanel({
               onDelete={onDelete}
               onEditDone={onEditDone}
               onLikeClick={onLikeClick}
-              onLoadMoreComments={loadMoreComments}
-              onLoadMoreReplies={onLoadMoreReplies}
+              onLoadMoreComments={handleLoadMoreComments}
+              onLoadMoreReplies={(data) =>
+                onLoadMoreReplies({ ...data, subjectId })
+              }
               onLoadRepliesOfReply={onLoadRepliesOfReply}
               onReplySubmit={onUploadReply}
               onRewardCommentEdit={editRewardComment}
@@ -582,7 +584,7 @@ export default function SubjectPanel({
     setEditDoneButtonDisabled(true);
   }
 
-  function loadMoreComments(data) {
-    onLoadMoreComments({ data, subjectId });
+  function handleLoadMoreComments(data) {
+    onLoadMoreComments({ ...data, subjectId });
   }
 }
