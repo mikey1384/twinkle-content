@@ -1,0 +1,17 @@
+export default function MissionActions(dispatch) {
+  return {
+    onLoadMission(mission) {
+      return dispatch({
+        type: 'LOAD_MISSION',
+        mission
+      });
+    },
+    onLoadMissionList({ missions, loadMoreButton }) {
+      return dispatch({
+        type: 'LOAD_MISSION_LIST',
+        missions,
+        loadMoreButton
+      });
+    }
+  };
+}
