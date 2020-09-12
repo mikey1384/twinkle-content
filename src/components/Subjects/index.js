@@ -4,6 +4,7 @@ import SubjectPanel from './SubjectPanel';
 import StartNewSubjectPanel from './StartNewSubjectPanel';
 import Button from 'components/Button';
 import LocalContext from './Context';
+import ErrorBoundary from 'components/ErrorBoundary';
 import { useAppContext } from 'contexts';
 
 Subjects.propTypes = {
@@ -81,34 +82,36 @@ export default function Subjects({
       }}
     >
       <div className={className} style={style}>
-        <StartNewSubjectPanel
-          contentId={contentId}
-          contentType={contentType}
-          onUploadSubject={uploadSubject}
-        />
-        <div style={{ margin: '1rem 0' }}>
-          {subjects &&
-            subjects.map((subject) => (
-              <SubjectPanel
-                key={subject.id}
-                rootRewardLevel={rootRewardLevel}
-                rootId={Number(contentId)}
-                rootType={contentType}
-                subjectId={subject.id}
-                {...subject}
-              />
-            ))}
-          {loadMoreButton && (
-            <Button
-              style={{ width: '100%', borderRadius: 0 }}
-              filled
-              color="lightBlue"
-              onClick={handleLoadMoreSubjects}
-            >
-              Load More Subjects
-            </Button>
-          )}
-        </div>
+        <ErrorBoundary>
+          <StartNewSubjectPanel
+            contentId={contentId}
+            contentType={contentType}
+            onUploadSubject={uploadSubject}
+          />
+          <div style={{ margin: '1rem 0' }}>
+            {subjects &&
+              subjects.map((subject) => (
+                <SubjectPanel
+                  key={subject.id}
+                  rootRewardLevel={rootRewardLevel}
+                  rootId={Number(contentId)}
+                  rootType={contentType}
+                  subjectId={subject.id}
+                  {...subject}
+                />
+              ))}
+            {loadMoreButton && (
+              <Button
+                style={{ width: '100%', borderRadius: 0 }}
+                filled
+                color="lightBlue"
+                onClick={handleLoadMoreSubjects}
+              >
+                Load More Subjects
+              </Button>
+            )}
+          </div>
+        </ErrorBoundary>
       </div>
     </LocalContext.Provider>
   );
