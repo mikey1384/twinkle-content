@@ -86,7 +86,7 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async deleteMessage({ fileName = '', filePath = '', messageId }) {
+    async deleteChatMessage({ fileName = '', filePath = '', messageId }) {
       try {
         await request.delete(
           `${URL}/chat/message?messageId=${messageId}&filePath=${filePath}&fileName=${fileName}`,
@@ -105,7 +105,7 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async editMessage({ editedMessage, messageId, isSubject, subjectId }) {
+    async editChatMessage({ editedMessage, messageId, isSubject, subjectId }) {
       try {
         const {
           data: { subjectChanged }
@@ -162,7 +162,7 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async hideAttachment(messageId) {
+    async hideChatAttachment(messageId) {
       try {
         await request.put(`${URL}/chat/hide/attachment`, { messageId }, auth());
         return Promise.resolve();
@@ -361,7 +361,7 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async saveMessage({ message, targetMessageId, targetSubject }) {
+    async saveChatMessage({ message, targetMessageId, targetSubject }) {
       try {
         const {
           data: { messageId }
