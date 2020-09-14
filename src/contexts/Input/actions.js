@@ -139,6 +139,14 @@ export default function InputActions(dispatch) {
         form
       });
     },
+    onSetEditInteractiveForm({ interactiveId, slideId, form }) {
+      return dispatch({
+        type: 'SET_EDIT_INTERACTIVE_FORM',
+        interactiveId,
+        slideId,
+        form
+      });
+    },
     onSetHasSecretAnswer(hasSecretAnswer) {
       return dispatch({
         type: 'SET_HAS_SECRET_ANSWER',
