@@ -71,7 +71,7 @@ export default function Slide({
         paddingLeft: '1rem',
         paddingRight: '1rem',
         paddingTop: isEditing ? '2rem' : '1rem',
-        paddingBottom: isEditing ? '2rem' : '5rem',
+        paddingBottom: isEditing ? '1rem' : '5rem',
         ...style
       }}
     >

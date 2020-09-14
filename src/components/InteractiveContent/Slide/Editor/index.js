@@ -101,73 +101,81 @@ export default function Editor({
   return (
     <div
       style={{
-        width: '100%',
-        display: 'flex',
-        height: '100%',
-        justifyContent: 'center'
+        width: '100%'
       }}
     >
-      <form onSubmit={handleSubmit}>
-        <Input
-          onChange={(text) =>
-            handleSetInputState({
-              ...editForm,
-              editedHeading: text
-            })
-          }
-          placeholder={edit.heading}
-          value={editedHeading}
-          style={headingExceedsCharLimit?.style}
-        />
-        <Textarea
-          minRows={4}
-          onChange={(event) => {
-            const { value } = event.target;
-            handleSetInputState({
-              ...editForm,
-              editedDescription: value
-            });
-          }}
-          placeholder={edit.description}
-          value={editedDescription}
-          style={{ marginTop: '1rem', ...descriptionExceedsCharLimit?.style }}
-        />
-        {attachment && (
-          <AttachmentField
-            type={editedAttachment.type}
-            src={editedAttachment.src}
-            onEditedUrlChange={(text) =>
+      <form
+        style={{
+          display: 'flex',
+          height: '100%',
+          alignItems: 'center',
+          flexDirection: 'column'
+        }}
+        onSubmit={handleSubmit}
+      >
+        <div style={{ width: '70%' }}>
+          <Input
+            onChange={(text) =>
               handleSetInputState({
                 ...editForm,
-                attachment: {
-                  ...editForm.attachment,
-                  src: text
-                }
+                editedHeading: text
               })
             }
+            placeholder={edit.heading}
+            value={editedHeading}
+            style={headingExceedsCharLimit?.style}
           />
-        )}
-        <div
-          style={{
-            marginTop: '5rem',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center'
-          }}
-        >
-          {editedOptions.map((option, index) => (
-            <div
-              key={option.id}
-              style={{ marginTop: index === 0 ? 0 : '1rem' }}
-            >
-              {option.icon && <Icon icon={option.icon} />}
-              <span style={{ marginLeft: '0.7rem' }}>{option.label}</span>
-            </div>
-          ))}
+          <Textarea
+            minRows={4}
+            onChange={(event) => {
+              const { value } = event.target;
+              handleSetInputState({
+                ...editForm,
+                editedDescription: value
+              });
+            }}
+            placeholder={edit.description}
+            value={editedDescription}
+            style={{ marginTop: '1rem', ...descriptionExceedsCharLimit?.style }}
+          />
+          {attachment && (
+            <AttachmentField
+              type={editedAttachment.type}
+              src={editedAttachment.src}
+              onEditedUrlChange={(text) =>
+                handleSetInputState({
+                  ...editForm,
+                  attachment: {
+                    ...editForm.attachment,
+                    src: text
+                  }
+                })
+              }
+            />
+          )}
+          <div
+            style={{
+              marginTop: '5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center'
+            }}
+          >
+            {editedOptions.map((option, index) => (
+              <div
+                key={option.id}
+                style={{ marginTop: index === 0 ? 0 : '1rem' }}
+              >
+                {option.icon && <Icon icon={option.icon} />}
+                <span style={{ marginLeft: '0.7rem' }}>{option.label}</span>
+              </div>
+            ))}
+          </div>
         </div>
         <div
           style={{
             marginTop: '1rem',
+            width: '100%',
             display: 'flex',
             flexDirection: 'row-reverse'
           }}
