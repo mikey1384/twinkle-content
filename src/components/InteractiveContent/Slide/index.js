@@ -53,8 +53,8 @@ export default function Slide({
     <div
       ref={SlideRef}
       className={css`
+        background: #fff;
         width: 60%;
-        padding: 1rem;
         border: 1px solid ${Color.borderGray()};
         border-radius: ${borderRadius};
         @media (max-width: ${mobileMaxWidth}) {
@@ -68,7 +68,10 @@ export default function Slide({
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingBottom: '5rem',
+        paddingLeft: '1rem',
+        paddingRight: '1rem',
+        paddingTop: isEditing ? '2rem' : '1rem',
+        paddingBottom: isEditing ? '2rem' : '5rem',
         ...style
       }}
     >

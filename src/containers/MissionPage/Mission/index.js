@@ -22,7 +22,10 @@ export default function Mission({
   missionId
 }) {
   return (
-    <div className={panel} style={{ paddingBottom: '3rem', ...style }}>
+    <div
+      className={panel}
+      style={{ background: '#fff', paddingBottom: '3rem', ...style }}
+    >
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div>
           <h1>{title}</h1>

@@ -13,6 +13,7 @@ export default function AddSlide({ style }) {
     <div style={{ width: '100%', ...style }}>
       <div
         style={{
+          background: '#fff',
           borderRadius,
           padding: '1.5rem',
           display: 'flex',
@@ -35,6 +36,7 @@ export default function AddSlide({ style }) {
       </div>
       <div
         style={{
+          background: '#fff',
           marginTop: '1rem',
           borderRadius,
           padding: '1.5rem',

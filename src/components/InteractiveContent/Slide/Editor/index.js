@@ -4,6 +4,7 @@ import { useInputContext, useInteractiveContext } from 'contexts';
 import { exceedsCharLimit, finalizeEmoji } from 'helpers/stringHelpers';
 import { edit } from 'constants/placeholders';
 import Textarea from 'components/Texts/Textarea';
+import Input from 'components/Texts/Input';
 import AttachmentField from './AttachmentField';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
@@ -98,11 +99,26 @@ export default function Editor({
   }, [slideId]);
 
   return (
-    <div>
+    <div
+      style={{
+        width: '100%',
+        display: 'flex',
+        height: '100%',
+        justifyContent: 'center'
+      }}
+    >
       <form onSubmit={handleSubmit}>
-        {heading && (
-          <p style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>{heading}</p>
-        )}
+        <Input
+          onChange={(text) =>
+            handleSetInputState({
+              ...editForm,
+              editedHeading: text
+            })
+          }
+          placeholder={edit.heading}
+          value={editedHeading}
+          style={headingExceedsCharLimit?.style}
+        />
         <Textarea
           minRows={4}
           onChange={(event) => {
@@ -114,7 +130,7 @@ export default function Editor({
           }}
           placeholder={edit.description}
           value={editedDescription}
-          style={descriptionExceedsCharLimit?.style}
+          style={{ marginTop: '1rem', ...descriptionExceedsCharLimit?.style }}
         />
         {attachment && (
           <AttachmentField
