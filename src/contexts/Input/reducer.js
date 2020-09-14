@@ -176,6 +176,17 @@ export default function InputReducer(state, action) {
             }
           : undefined
       };
+    case 'SET_EDIT_INTERACTIVE_FORM':
+      return {
+        ...state,
+        ['edit' + `${action.interactiveId}-${action.slideId}`]: action.form
+          ? {
+              ...(state['edit' + `${action.interactiveId}-${action.slideId}`] ||
+                {}),
+              ...action.form
+            }
+          : undefined
+      };
     case 'SET_EMAIL_ERROR':
       return {
         ...state,
