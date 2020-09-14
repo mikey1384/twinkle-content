@@ -40,9 +40,10 @@ export default function Editor({
     actions: { onSetInteractiveState }
   } = useInteractiveContext();
   const prevInputState = useMemo(
-    () => state['edit' + `interactive-${interactiveId}-${slideId}`],
+    () => state[`edit-interactive-${interactiveId}-${slideId}`],
     [interactiveId, slideId, state]
   );
+
   const inputStateRef = useRef(prevInputState || defaultInputState);
   const [inputState, setInputState] = useState(
     prevInputState || defaultInputState

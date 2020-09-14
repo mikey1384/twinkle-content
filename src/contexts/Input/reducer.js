@@ -179,10 +179,11 @@ export default function InputReducer(state, action) {
     case 'SET_EDIT_INTERACTIVE_FORM':
       return {
         ...state,
-        ['edit' + `${action.interactiveId}-${action.slideId}`]: action.form
+        [`edit-interactive-${action.interactiveId}-${action.slideId}`]: action.form
           ? {
-              ...(state['edit' + `${action.interactiveId}-${action.slideId}`] ||
-                {}),
+              ...(state[
+                `edit-interactive-${action.interactiveId}-${action.slideId}`
+              ] || {}),
               ...action.form
             }
           : undefined
