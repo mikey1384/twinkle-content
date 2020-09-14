@@ -40,6 +40,10 @@ export const charLimit = {
     message: 3500
   },
   comment: 10000,
+  interactive: {
+    description: 5000,
+    youtube: 300
+  },
   playlist: {
     title: 200,
     description: 5000
