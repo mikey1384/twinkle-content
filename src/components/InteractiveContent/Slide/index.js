@@ -13,9 +13,10 @@ Slide.propTypes = {
   autoFocus: PropTypes.bool,
   attachment: PropTypes.object,
   contentId: PropTypes.number,
-  isEditing: PropTypes.bool,
   style: PropTypes.object,
   heading: PropTypes.string,
+  isEditing: PropTypes.bool,
+  isFork: PropTypes.bool,
   description: PropTypes.string,
   onExpandPath: PropTypes.func,
   options: PropTypes.array,
@@ -31,6 +32,7 @@ export default function Slide({
   heading,
   description,
   isEditing,
+  isFork,
   onExpandPath,
   options,
   slideId,
@@ -107,6 +109,7 @@ export default function Slide({
           description={description}
           heading={heading}
           interactiveId={contentId}
+          isFork={isFork}
           options={options}
           slideId={slideId}
         />

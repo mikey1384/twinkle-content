@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useInputContext, useInteractiveContext } from 'contexts';
 import { exceedsCharLimit, finalizeEmoji } from 'helpers/stringHelpers';
 import { edit } from 'constants/placeholders';
+import DropdownButton from 'components/Buttons/DropdownButton';
 import Textarea from 'components/Texts/Textarea';
 import Input from 'components/Texts/Input';
 import AttachmentField from './AttachmentField';
@@ -13,6 +14,7 @@ Editor.propTypes = {
   attachment: PropTypes.object,
   heading: PropTypes.string,
   description: PropTypes.string,
+  isFork: PropTypes.bool,
   options: PropTypes.array,
   interactiveId: PropTypes.number,
   slideId: PropTypes.number
@@ -23,16 +25,17 @@ export default function Editor({
   description,
   heading,
   interactiveId,
+  isFork,
   options,
   slideId
 }) {
   const defaultInputState = {
+    editedIsFork: isFork,
     editedAttachment: attachment || '',
     editedHeading: heading || '',
     editedDescription: description || '',
     editedOptions: options || []
   };
-
   const {
     state,
     actions: { onSetEditInteractiveForm }
@@ -51,6 +54,7 @@ export default function Editor({
   );
   const editForm = inputState || {};
   const {
+    editedIsFork,
     editedAttachment,
     editedHeading,
     editedDescription,
@@ -104,16 +108,32 @@ export default function Editor({
         width: '100%'
       }}
     >
-      <form
+      <div
         style={{
           display: 'flex',
           height: '100%',
           alignItems: 'center',
           flexDirection: 'column'
         }}
-        onSubmit={handleSubmit}
       >
         <div style={{ width: '70%' }}>
+          <DropdownButton
+            skeuomorphic
+            color="darkerGray"
+            direction="right"
+            icon="caret-down"
+            text={editedIsFork ? 'fork' : 'default'}
+            menuProps={[
+              {
+                label: editedIsFork ? 'default' : 'fork',
+                onClick: () =>
+                  handleSetInputState({
+                    ...editForm,
+                    editedIsFork: !editedIsFork
+                  })
+              }
+            ]}
+          />
           <Input
             onChange={(text) =>
               handleSetInputState({
@@ -180,7 +200,11 @@ export default function Editor({
             flexDirection: 'row-reverse'
           }}
         >
-          <Button color="blue" type="submit" disabled={doneButtonDisabled}>
+          <Button
+            color="blue"
+            onClick={handleSubmit}
+            disabled={doneButtonDisabled}
+          >
             Done
           </Button>
           <Button
@@ -197,7 +221,7 @@ export default function Editor({
             Cancel
           </Button>
         </div>
-      </form>
+      </div>
     </div>
   );
 
