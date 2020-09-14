@@ -117,23 +117,41 @@ export default function Editor({
         }}
       >
         <div style={{ width: '70%' }}>
-          <DropdownButton
-            skeuomorphic
-            color="darkerGray"
-            direction="right"
-            icon="caret-down"
-            text={editedIsFork ? 'fork' : 'default'}
-            menuProps={[
-              {
-                label: editedIsFork ? 'default' : 'fork',
-                onClick: () =>
-                  handleSetInputState({
-                    ...editForm,
-                    editedIsFork: !editedIsFork
-                  })
-              }
-            ]}
-          />
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginBottom: '2rem'
+            }}
+          >
+            <p
+              style={{
+                fontWeight: 'bold',
+                fontSize: '1.7rem',
+                marginRight: '1rem'
+              }}
+            >
+              Slide Type:
+            </p>
+            <DropdownButton
+              skeuomorphic
+              color="darkerGray"
+              direction="right"
+              icon="caret-down"
+              text={editedIsFork ? 'fork' : 'default'}
+              menuProps={[
+                {
+                  label: editedIsFork ? 'Default' : 'Fork',
+                  onClick: () =>
+                    handleSetInputState({
+                      ...editForm,
+                      editedIsFork: !editedIsFork
+                    })
+                }
+              ]}
+            />
+          </div>
           <Input
             onChange={(text) =>
               handleSetInputState({
