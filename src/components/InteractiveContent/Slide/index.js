@@ -99,7 +99,14 @@ export default function Slide({
         </div>
       )}
       {isEditing ? (
-        <Editor />
+        <Editor
+          attachment={attachment}
+          description={description}
+          heading={heading}
+          interactiveId={contentId}
+          options={options}
+          slideId={slideId}
+        />
       ) : (
         <Content
           attachment={attachment}
