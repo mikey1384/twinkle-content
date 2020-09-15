@@ -191,10 +191,12 @@ export default function Editor({
               }
             />
           )}
-          <OptionsField
-            style={{ marginTop: '2rem' }}
-            editedOptions={editedOptions}
-          />
+          {editedIsFork && (
+            <OptionsField
+              style={{ marginTop: '2rem' }}
+              editedOptions={editedOptions}
+            />
+          )}
         </div>
         <div
           style={{
