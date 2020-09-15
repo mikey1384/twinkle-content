@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
 import { Color } from 'constants/css';
+import { css } from 'emotion';
 
 OptionItem.propTypes = {
   option: PropTypes.object,
@@ -37,6 +38,18 @@ export default function OptionItem({ option, style }) {
         }}
       >
         <span>{option.label}</span>
+      </div>
+      <div style={{ fontSize: '1.7rem', marginLeft: '1.3rem' }}>
+        <Icon
+          className={css`
+            color: ${Color.darkerGray()};
+            &:hover {
+              color: ${Color.black()};
+            }
+          `}
+          style={{ cursor: 'pointer' }}
+          icon="times"
+        />
       </div>
     </div>
   );
