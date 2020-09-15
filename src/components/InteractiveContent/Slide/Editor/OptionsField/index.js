@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
-import { Color } from 'constants/css';
+import OptionItem from './OptionItem';
 
 OptionsField.propTypes = {
   editedOptions: PropTypes.array.isRequired,
@@ -20,18 +20,11 @@ export default function OptionsField({ editedOptions, style }) {
       }}
     >
       {editedOptions.map((option, index) => (
-        <div
+        <OptionItem
           key={option.id}
-          style={{
-            marginTop: index === 0 ? 0 : '1rem',
-            fontSize: '1.5rem',
-            padding: '1rem 2rem',
-            border: `1px solid ${Color.borderGray()}`
-          }}
-        >
-          {option.icon && <Icon icon={option.icon} />}
-          <span style={{ marginLeft: '0.7rem' }}>{option.label}</span>
-        </div>
+          option={option}
+          style={{ marginTop: index === 0 ? 0 : '1rem' }}
+        />
       ))}
       <div
         style={{
