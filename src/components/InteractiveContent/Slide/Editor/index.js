@@ -7,8 +7,8 @@ import DropdownButton from 'components/Buttons/DropdownButton';
 import Textarea from 'components/Texts/Textarea';
 import Input from 'components/Texts/Input';
 import AttachmentField from './AttachmentField';
-import Icon from 'components/Icon';
 import Button from 'components/Button';
+import OptionsField from './OptionsField';
 
 Editor.propTypes = {
   attachment: PropTypes.object,
@@ -191,28 +191,14 @@ export default function Editor({
               }
             />
           )}
-          <div
-            style={{
-              marginTop: '5rem',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center'
-            }}
-          >
-            {editedOptions.map((option, index) => (
-              <div
-                key={option.id}
-                style={{ marginTop: index === 0 ? 0 : '1rem' }}
-              >
-                {option.icon && <Icon icon={option.icon} />}
-                <span style={{ marginLeft: '0.7rem' }}>{option.label}</span>
-              </div>
-            ))}
-          </div>
+          <OptionsField
+            style={{ marginTop: '2rem' }}
+            editedOptions={editedOptions}
+          />
         </div>
         <div
           style={{
-            marginTop: '1rem',
+            marginTop: '2rem',
             width: '100%',
             display: 'flex',
             flexDirection: 'row-reverse'
