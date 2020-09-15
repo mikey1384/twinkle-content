@@ -184,15 +184,15 @@ export default function Editor({
             <AttachmentField
               type={editedAttachment.type}
               src={editedAttachment.src}
-              onEditedUrlChange={(text) =>
+              onEditedUrlChange={(text) => {
                 handleSetInputState({
                   ...editForm,
-                  attachment: {
-                    ...editForm.attachment,
+                  editedAttachment: {
+                    ...editForm.editedAttachment,
                     src: text
                   }
-                })
-              }
+                });
+              }}
             />
           )}
           {editedIsFork && (

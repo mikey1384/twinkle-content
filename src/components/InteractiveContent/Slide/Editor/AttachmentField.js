@@ -23,7 +23,7 @@ export default function AttachmentField({ type, src, onEditedUrlChange }) {
     return '';
   }, [src, type]);
   const urlError = useMemo(
-    () => !stringIsEmpty(editedUrl) && isValidYoutubeUrl(editedUrl),
+    () => !stringIsEmpty(editedUrl) && !isValidYoutubeUrl(editedUrl),
     [editedUrl]
   );
   const urlExceedsCharLimit = useMemo(
