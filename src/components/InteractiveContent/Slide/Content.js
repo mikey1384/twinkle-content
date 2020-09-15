@@ -9,7 +9,8 @@ Content.propTypes = {
   heading: PropTypes.string,
   description: PropTypes.string,
   attachment: PropTypes.object,
-  options: PropTypes.array,
+  optionIds: PropTypes.array,
+  optionsObj: PropTypes.object,
   onOptionClick: PropTypes.func,
   selectedOptionId: PropTypes.number
 };
@@ -17,7 +18,8 @@ export default function Content({
   heading,
   description,
   attachment,
-  options,
+  optionIds,
+  optionsObj,
   onOptionClick,
   selectedOptionId
 }) {
@@ -30,7 +32,7 @@ export default function Content({
         <p style={{ fontSize: '2rem', marginTop: '1.5rem' }}>{description}</p>
       )}
       {attachment && <Attachment type={attachment.type} src={attachment.src} />}
-      {options && (
+      {optionIds.length > 0 && (
         <div
           style={{
             marginTop: '5rem',
@@ -39,23 +41,26 @@ export default function Content({
             alignItems: 'center'
           }}
         >
-          {options.map((option, index) => (
-            <Button
-              key={option.id}
-              skeuomorphic
-              style={{ marginTop: index === 0 ? 0 : '1rem' }}
-              onClick={() => onOptionClick(option.id)}
-            >
-              {option.icon && <Icon icon={option.icon} />}
-              <span style={{ marginLeft: '0.7rem' }}>{option.label}</span>
-              {selectedOptionId === option.id ? (
-                <Icon
-                  icon="check"
-                  style={{ marginLeft: '0.7rem', color: Color.green() }}
-                />
-              ) : null}
-            </Button>
-          ))}
+          {optionIds.map((optionId, index) => {
+            const option = optionsObj[optionId];
+            return (
+              <Button
+                key={option.id}
+                skeuomorphic
+                style={{ marginTop: index === 0 ? 0 : '1rem' }}
+                onClick={() => onOptionClick(option.id)}
+              >
+                {option.icon && <Icon icon={option.icon} />}
+                <span style={{ marginLeft: '0.7rem' }}>{option.label}</span>
+                {selectedOptionId === option.id ? (
+                  <Icon
+                    icon="check"
+                    style={{ marginLeft: '0.7rem', color: Color.green() }}
+                  />
+                ) : null}
+              </Button>
+            );
+          })}
         </div>
       )}
     </>

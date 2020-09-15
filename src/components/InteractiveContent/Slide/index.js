@@ -19,7 +19,8 @@ Slide.propTypes = {
   isFork: PropTypes.bool,
   description: PropTypes.string,
   onExpandPath: PropTypes.func,
-  options: PropTypes.array,
+  optionIds: PropTypes.array,
+  optionsObj: PropTypes.object,
   slideId: PropTypes.number,
   paths: PropTypes.object,
   selectedOptionId: PropTypes.number
@@ -34,7 +35,8 @@ export default function Slide({
   isEditing,
   isFork,
   onExpandPath,
-  options,
+  optionIds,
+  optionsObj,
   slideId,
   paths,
   attachment,
@@ -110,7 +112,8 @@ export default function Slide({
           heading={heading}
           interactiveId={contentId}
           isFork={isFork}
-          options={options}
+          optionIds={optionIds}
+          optionsObj={optionsObj}
           slideId={slideId}
         />
       ) : (
@@ -118,7 +121,8 @@ export default function Slide({
           attachment={attachment}
           heading={heading}
           description={description}
-          options={options}
+          optionIds={optionIds}
+          optionsObj={optionsObj}
           onOptionClick={handleOptionClick}
           selectedOptionId={selectedOptionId}
         />

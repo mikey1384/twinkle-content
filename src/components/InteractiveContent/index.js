@@ -85,7 +85,8 @@ export default function InteractiveContent({ contentId }) {
               onExpandPath={slideObj[slideId].isFork ? handleExpandPath : null}
               description={slideObj[slideId].description}
               isFork={!!slideObj[slideId].isFork}
-              options={slideObj[slideId].options}
+              optionIds={slideObj[slideId].optionIds}
+              optionsObj={slideObj[slideId].optionsObj}
               selectedOptionId={slideObj[slideId].selectedOptionId}
               slideId={slideId}
               paths={slideObj[slideId].paths}

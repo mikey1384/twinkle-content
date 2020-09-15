@@ -15,7 +15,8 @@ Editor.propTypes = {
   heading: PropTypes.string,
   description: PropTypes.string,
   isFork: PropTypes.bool,
-  options: PropTypes.array,
+  optionIds: PropTypes.array,
+  optionsObj: PropTypes.object,
   interactiveId: PropTypes.number,
   slideId: PropTypes.number
 };
@@ -26,7 +27,8 @@ export default function Editor({
   heading,
   interactiveId,
   isFork,
-  options,
+  optionIds,
+  optionsObj,
   slideId
 }) {
   const defaultInputState = {
@@ -34,7 +36,8 @@ export default function Editor({
     editedAttachment: attachment || '',
     editedHeading: heading || '',
     editedDescription: description || '',
-    editedOptions: options || []
+    editedOptionIds: optionIds || [],
+    editedOptionsObj: optionsObj || {}
   };
   const {
     state,
@@ -58,7 +61,8 @@ export default function Editor({
     editedAttachment,
     editedHeading,
     editedDescription,
-    editedOptions
+    editedOptionIds,
+    editedOptionsObj
   } = editForm;
 
   const descriptionExceedsCharLimit = useMemo(
@@ -194,7 +198,14 @@ export default function Editor({
           {editedIsFork && (
             <OptionsField
               style={{ marginTop: '2rem' }}
-              editedOptions={editedOptions}
+              editedOptionIds={editedOptionIds}
+              editedOptionsObj={editedOptionsObj}
+              onSetInputState={(newState) =>
+                handleSetInputState({
+                  ...editForm,
+                  ...newState
+                })
+              }
             />
           )}
         </div>

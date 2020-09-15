@@ -5,11 +5,18 @@ import Button from 'components/Button';
 import OptionItem from './OptionItem';
 
 OptionsField.propTypes = {
-  editedOptions: PropTypes.array.isRequired,
+  editedOptionIds: PropTypes.array.isRequired,
+  editedOptionsObj: PropTypes.object.isRequired,
+  onSetInputState: PropTypes.func.isRequired,
   style: PropTypes.object
 };
 
-export default function OptionsField({ editedOptions, style }) {
+export default function OptionsField({
+  editedOptionIds,
+  editedOptionsObj,
+  onSetInputState,
+  style
+}) {
   return (
     <div
       style={{
@@ -19,13 +26,18 @@ export default function OptionsField({ editedOptions, style }) {
         ...style
       }}
     >
-      {editedOptions.map((option, index) => (
-        <OptionItem
-          key={option.id}
-          option={option}
-          style={{ marginTop: index === 0 ? 0 : '1rem' }}
-        />
-      ))}
+      {editedOptionIds.map((optionId, index) => {
+        const option = editedOptionsObj[optionId];
+        return (
+          <OptionItem
+            key={optionId}
+            editedOptionsObj={editedOptionsObj}
+            onSetInputState={onSetInputState}
+            option={option}
+            style={{ marginTop: index === 0 ? 0 : '1rem' }}
+          />
+        );
+      })}
       <div
         style={{
           marginTop: '3rem',
