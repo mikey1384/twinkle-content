@@ -8,6 +8,7 @@ import {
 } from 'helpers/stringHelpers';
 import { edit } from 'constants/placeholders';
 import Input from 'components/Texts/Input';
+import DropdownButton from 'components/Buttons/DropdownButton';
 
 AttachmentField.propTypes = {
   type: PropTypes.string,
@@ -36,31 +37,49 @@ export default function AttachmentField({ type, src, onEditedUrlChange }) {
     [editedUrl]
   );
 
-  switch (type) {
-    case 'image':
-      return (
-        <div style={{ width: '80%', marginTop: '3rem' }}>
+  return (
+    <div
+      style={{
+        width: '100%',
+        marginTop: type === 'image' ? '3rem' : '1rem',
+        display: 'flex',
+        flexDirection: 'column'
+      }}
+    >
+      <DropdownButton
+        skeuomorphic
+        color="darkerGray"
+        direction="right"
+        icon="caret-down"
+        text={type === 'youtube' ? 'youtube' : 'file'}
+        style={{ marginTop: '1rem', marginBottom: '1rem' }}
+        menuProps={[
+          {
+            label: type === 'youtube' ? 'File' : 'YouTube',
+            onClick: () => console.log('clicked')
+          }
+        ]}
+      />
+      <div style={{ width: '100%' }}>
+        {type === 'image' ? (
           <img style={{ width: '100%' }} src={`${cloudFrontURL}${src}`} />
-        </div>
-      );
-    case 'youtube':
-      return (
-        <div>
-          <Input
-            hasError={urlError}
-            onChange={onEditedUrlChange}
-            placeholder={edit.video}
-            value={editedUrl}
-            style={urlExceedsCharLimit?.style}
-          />
-          {(urlExceedsCharLimit || urlError) && (
-            <small style={{ color: 'red', lineHeight: 0.5 }}>
-              {urlExceedsCharLimit?.message || 'Please check the url'}
-            </small>
-          )}
-        </div>
-      );
-    default:
-      return null;
-  }
+        ) : type === 'youtube' ? (
+          <>
+            <Input
+              hasError={urlError}
+              onChange={onEditedUrlChange}
+              placeholder={edit.video}
+              value={editedUrl}
+              style={urlExceedsCharLimit?.style}
+            />
+            {(urlExceedsCharLimit || urlError) && (
+              <small style={{ color: 'red', lineHeight: 0.5 }}>
+                {urlExceedsCharLimit?.message || 'Please check the url'}
+              </small>
+            )}
+          </>
+        ) : null}
+      </div>
+    </div>
+  );
 }
