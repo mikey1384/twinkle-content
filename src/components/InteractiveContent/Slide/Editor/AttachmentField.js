@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { cloudFrontURL } from 'constants/defaultValues';
+import FileViewer from '../FileViewer';
 import {
   exceedsCharLimit,
   stringIsEmpty,
@@ -80,7 +80,7 @@ export default function AttachmentField({
       </div>
       <div style={{ width: '100%' }}>
         {type === 'file' ? (
-          <img style={{ width: '100%' }} src={`${cloudFrontURL}${src}`} />
+          <FileViewer src={src} />
         ) : type === 'link' ? (
           <>
             <Input
