@@ -282,7 +282,9 @@ export default function Editor({
     const newState = { isEditing: false };
     if (success) {
       for (let key of Object.keys(post)) {
-        let newStateKey = key.replace('edited', '').toLowerCase();
+        let newStateKey = key.replace('edited', '');
+        newStateKey =
+          newStateKey.charAt(0).toLowerCase() + newStateKey.slice(1);
         newState[newStateKey] = post[key];
       }
     }
