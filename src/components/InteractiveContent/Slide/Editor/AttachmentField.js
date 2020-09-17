@@ -46,20 +46,32 @@ export default function AttachmentField({ type, src, onEditedUrlChange }) {
         flexDirection: 'column'
       }}
     >
-      <DropdownButton
-        skeuomorphic
-        color="darkerGray"
-        direction="right"
-        icon="caret-down"
-        text={type === 'youtube' ? 'youtube' : 'file'}
-        style={{ marginTop: '1rem', marginBottom: '1rem' }}
-        menuProps={[
-          {
-            label: type === 'youtube' ? 'File' : 'YouTube',
-            onClick: () => console.log('clicked')
-          }
-        ]}
-      />
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          marginTop: '1rem',
+          marginBottom: '1rem'
+        }}
+      >
+        <p style={{ fontWeight: 'bold', fontSize: '1.7rem' }}>
+          Attachment Type:
+        </p>
+        <DropdownButton
+          skeuomorphic
+          color="darkerGray"
+          direction="right"
+          icon="caret-down"
+          text={type === 'youtube' ? 'youtube' : 'file'}
+          style={{ marginLeft: '1rem' }}
+          menuProps={[
+            {
+              label: type === 'youtube' ? 'File' : 'YouTube',
+              onClick: () => console.log('clicked')
+            }
+          ]}
+        />
+      </div>
       <div style={{ width: '100%' }}>
         {type === 'image' ? (
           <img style={{ width: '100%' }} src={`${cloudFrontURL}${src}`} />
