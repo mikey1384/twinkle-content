@@ -24,7 +24,7 @@ export default function AttachmentField({
   onEditedUrlChange
 }) {
   const editedUrl = useMemo(() => {
-    if (type === 'youtube') {
+    if (type === 'link') {
       return src;
     }
     return '';
@@ -37,7 +37,7 @@ export default function AttachmentField({
     () =>
       exceedsCharLimit({
         contentType: 'interactive',
-        inputType: 'youtube',
+        inputType: 'url',
         text: editedUrl
       }),
     [editedUrl]
@@ -47,7 +47,7 @@ export default function AttachmentField({
     <div
       style={{
         width: '100%',
-        marginTop: type === 'image' ? '3rem' : '1rem',
+        marginTop: type === 'file' ? '3rem' : '1rem',
         display: 'flex',
         flexDirection: 'column'
       }}
@@ -68,11 +68,11 @@ export default function AttachmentField({
           color="darkerGray"
           direction="right"
           icon="caret-down"
-          text={type === 'youtube' ? 'youtube' : 'file'}
+          text={type === 'link' ? 'link' : 'file'}
           style={{ marginLeft: '1rem' }}
           menuProps={[
             {
-              label: type === 'youtube' ? 'File' : 'YouTube',
+              label: type === 'link' ? 'File' : 'Link',
               onClick: onAttachmentTypeChange
             }
           ]}
@@ -81,7 +81,7 @@ export default function AttachmentField({
       <div style={{ width: '100%' }}>
         {type === 'file' ? (
           <img style={{ width: '100%' }} src={`${cloudFrontURL}${src}`} />
-        ) : type === 'youtube' ? (
+        ) : type === 'link' ? (
           <>
             <Input
               hasError={urlError}

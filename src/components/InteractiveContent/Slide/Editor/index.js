@@ -244,7 +244,7 @@ export default function Editor({
   );
 
   function handleAttachmentTypeChange() {
-    const newType = editedAttachment.type === 'youtube' ? 'file' : 'youtube';
+    const newType = editedAttachment.type === 'link' ? 'file' : 'link';
     handleSetInputState({
       ...editForm,
       editedAttachment: {

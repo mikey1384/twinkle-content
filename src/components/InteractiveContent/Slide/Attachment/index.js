@@ -16,7 +16,7 @@ export default function Attachment({ type, src }) {
           <img style={{ width: '100%' }} src={`${cloudFrontURL}${src}`} />
         </div>
       );
-    case 'youtube':
+    case 'link':
       return (
         <ReactPlayer
           style={{ marginTop: '3rem', maxWidth: '100%' }}
