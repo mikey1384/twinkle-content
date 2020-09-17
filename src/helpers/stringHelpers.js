@@ -419,7 +419,6 @@ export function processedStringWithURL(string) {
   const italicSentenceRegex = /((\*\*[^\*\s]){1}([^\*\n])+([^\*\s]\*\*){1})/gi;
   const underlineWordRegex = /(__[\S]+__)/gi;
   const linethroughWordRegex = /(--[\S]+--)/gi;
-  const linethroughSentenceRegex = /((--[\S]){1}([^\n])+([\S]--){1})/gi;
   let tempString = string
     .replace(/&/g, '&amp')
     .replace(/</g, '&lt')
@@ -623,10 +622,6 @@ export function processedStringWithURL(string) {
     )
     .replace(
       linethroughWordRegex,
-      (string) => `<strike>${string.substring(2, string.length - 2)}</strike>`
-    )
-    .replace(
-      linethroughSentenceRegex,
       (string) => `<strike>${string.substring(2, string.length - 2)}</strike>`
     )
     .replace(
