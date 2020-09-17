@@ -13,10 +13,16 @@ import DropdownButton from 'components/Buttons/DropdownButton';
 AttachmentField.propTypes = {
   type: PropTypes.string,
   src: PropTypes.string,
-  onEditedUrlChange: PropTypes.func
+  onAttachmentTypeChange: PropTypes.func.isRequired,
+  onEditedUrlChange: PropTypes.func.isRequired
 };
 
-export default function AttachmentField({ type, src, onEditedUrlChange }) {
+export default function AttachmentField({
+  type,
+  src,
+  onAttachmentTypeChange,
+  onEditedUrlChange
+}) {
   const editedUrl = useMemo(() => {
     if (type === 'youtube') {
       return src;
@@ -67,13 +73,13 @@ export default function AttachmentField({ type, src, onEditedUrlChange }) {
           menuProps={[
             {
               label: type === 'youtube' ? 'File' : 'YouTube',
-              onClick: () => console.log('clicked')
+              onClick: onAttachmentTypeChange
             }
           ]}
         />
       </div>
       <div style={{ width: '100%' }}>
-        {type === 'image' ? (
+        {type === 'file' ? (
           <img style={{ width: '100%' }} src={`${cloudFrontURL}${src}`} />
         ) : type === 'youtube' ? (
           <>

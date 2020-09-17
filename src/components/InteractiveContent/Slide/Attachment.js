@@ -10,7 +10,7 @@ Attachment.propTypes = {
 
 export default function Attachment({ type, src }) {
   switch (type) {
-    case 'image':
+    case 'file':
       return (
         <div style={{ width: '80%', marginTop: '3rem' }}>
           <img style={{ width: '100%' }} src={`${cloudFrontURL}${src}`} />

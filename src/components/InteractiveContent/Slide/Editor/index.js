@@ -184,6 +184,7 @@ export default function Editor({
             <AttachmentField
               type={editedAttachment.type}
               src={editedAttachment.src}
+              onAttachmentTypeChange={handleAttachmentTypeChange}
               onEditedUrlChange={(text) => {
                 handleSetInputState({
                   ...editForm,
@@ -241,6 +242,17 @@ export default function Editor({
       </div>
     </div>
   );
+
+  function handleAttachmentTypeChange() {
+    const newType = editedAttachment.type === 'youtube' ? 'file' : 'youtube';
+    handleSetInputState({
+      ...editForm,
+      editedAttachment: {
+        ...editForm.editedAttachment,
+        type: newType
+      }
+    });
+  }
 
   function handleSetInputState(newState) {
     setInputState(newState);
