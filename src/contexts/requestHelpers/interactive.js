@@ -13,6 +13,18 @@ export default function interactiveRequestHelpers({ auth, handleError }) {
       } catch (error) {
         return handleError(error);
       }
+    },
+    async editInteractiveSlide({ interactiveId, slideId, post }) {
+      try {
+        const { data } = await request.put(
+          `${URL}/interactive/slide`,
+          { interactiveId, slideId, post },
+          auth()
+        );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
     }
   };
 }

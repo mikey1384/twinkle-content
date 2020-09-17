@@ -1,6 +1,10 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useInputContext, useInteractiveContext } from 'contexts';
+import {
+  useAppContext,
+  useInputContext,
+  useInteractiveContext
+} from 'contexts';
 import { exceedsCharLimit, finalizeEmoji } from 'helpers/stringHelpers';
 import { edit } from 'constants/placeholders';
 import DropdownButton from 'components/Buttons/DropdownButton';
@@ -39,6 +43,9 @@ export default function Editor({
     editedOptionIds: optionIds || [],
     editedOptionsObj: optionsObj || {}
   };
+  const {
+    requestHelpers: { editInteractiveSlide }
+  } = useAppContext();
   const {
     state,
     actions: { onSetEditInteractiveForm }
@@ -266,7 +273,8 @@ export default function Editor({
       editedHeading: finalizeEmoji(editedHeading),
       editedDescription: finalizeEmoji(editedDescription)
     };
-    console.log(post);
+
+    await editInteractiveSlide({ interactiveId, slideId, post });
     onSetInteractiveState({
       interactiveId,
       slideId,
