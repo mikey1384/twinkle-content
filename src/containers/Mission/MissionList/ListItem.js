@@ -24,6 +24,7 @@ export default function ListItem({ children, style, missionId }) {
       onClick={handleLinkClick}
       style={style}
       className={css`
+        background: #fff;
         padding: 1rem;
         border: 1px solid ${Color.borderGray()};
         border-radius: ${borderRadius};

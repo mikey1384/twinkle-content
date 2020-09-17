@@ -35,6 +35,7 @@ export default function CurrentMission({ style, className, missionId }) {
       <div
         onClick={() => history.push(`/missions/${missionId}`)}
         className={css`
+          background: #fff;
           display: flex;
           flex-direction: column;
           font-size: 3rem;
