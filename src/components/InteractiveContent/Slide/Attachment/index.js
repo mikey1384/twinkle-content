@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player/lazy';
-import { cloudFrontURL } from 'constants/defaultValues';
+import FileViewer from '../FileViewer';
 
 Attachment.propTypes = {
   type: PropTypes.string,
@@ -13,7 +13,7 @@ export default function Attachment({ type, src }) {
     case 'file':
       return (
         <div style={{ width: '80%', marginTop: '3rem' }}>
-          <img style={{ width: '100%' }} src={`${cloudFrontURL}${src}`} />
+          <FileViewer src={src} />
         </div>
       );
     case 'link':
