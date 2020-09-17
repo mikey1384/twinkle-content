@@ -274,11 +274,22 @@ export default function Editor({
       editedDescription: finalizeEmoji(editedDescription)
     };
 
-    await editInteractiveSlide({ interactiveId, slideId, post });
+    const success = await editInteractiveSlide({
+      interactiveId,
+      slideId,
+      post
+    });
+    const newState = { isEditing: false };
+    if (success) {
+      for (let key of Object.keys(post)) {
+        let newStateKey = key.replace('edited', '').toLowerCase();
+        newState[newStateKey] = post[key];
+      }
+    }
     onSetInteractiveState({
       interactiveId,
       slideId,
-      newState: { isEditing: false }
+      newState
     });
   }
 }
