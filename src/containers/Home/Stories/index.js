@@ -24,7 +24,7 @@ import {
 
 const categoryObj = {
   uploads: {
-    filter: 'all',
+    filter: 'subject',
     orderBy: 'lastInteraction'
   },
   recommended: {
