@@ -24,7 +24,7 @@ import {
 
 const categoryObj = {
   uploads: {
-    filter: 'all',
+    filter: 'subject',
     orderBy: 'lastInteraction'
   },
   recommended: {
@@ -141,11 +141,13 @@ export default function Stories({ location }) {
     async function handleLoadFeeds() {
       setLoadingFeeds(true);
       categoryRef.current = 'uploads';
-      onChangeCategory('uploads');
+      onChangeCategory('recommended');
       onChangeSubFilter('all');
       onResetNumNewPosts();
       try {
-        const { data } = await loadFeeds();
+        const { data } = await loadFeeds({
+          mustInclude: 'totalRecommendations'
+        });
         onLoadFeeds(data);
         setLoadingFeeds(false);
       } catch (error) {
