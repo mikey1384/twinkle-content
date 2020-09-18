@@ -12,23 +12,25 @@ import DropdownButton from 'components/Buttons/DropdownButton';
 
 AttachmentField.propTypes = {
   type: PropTypes.string,
-  src: PropTypes.string,
+  fileUrl: PropTypes.string,
+  linkUrl: PropTypes.string,
   onAttachmentTypeChange: PropTypes.func.isRequired,
   onEditedUrlChange: PropTypes.func.isRequired
 };
 
 export default function AttachmentField({
   type,
-  src,
+  fileUrl,
+  linkUrl,
   onAttachmentTypeChange,
   onEditedUrlChange
 }) {
   const editedUrl = useMemo(() => {
     if (type === 'link') {
-      return src;
+      return linkUrl;
     }
     return '';
-  }, [src, type]);
+  }, [linkUrl, type]);
   const urlError = useMemo(
     () => !stringIsEmpty(editedUrl) && !isValidYoutubeUrl(editedUrl),
     [editedUrl]
@@ -80,7 +82,7 @@ export default function AttachmentField({
       </div>
       <div style={{ width: '100%' }}>
         {type === 'file' ? (
-          <FileViewer src={src} />
+          <FileViewer src={fileUrl} />
         ) : type === 'link' ? (
           <>
             <Input

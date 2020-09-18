@@ -31,7 +31,13 @@ export default function Content({
       {description && (
         <p style={{ fontSize: '2rem', marginTop: '1.5rem' }}>{description}</p>
       )}
-      {attachment && <Attachment type={attachment.type} src={attachment.src} />}
+      {attachment && (
+        <Attachment
+          type={attachment.type}
+          fileUrl={attachment.fileUrl}
+          linkUrl={attachment.linkUrl}
+        />
+      )}
       {optionIds.length > 0 && (
         <div
           style={{

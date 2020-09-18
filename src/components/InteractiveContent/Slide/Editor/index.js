@@ -190,7 +190,8 @@ export default function Editor({
           {attachment && (
             <AttachmentField
               type={editedAttachment.type}
-              src={editedAttachment.src}
+              fileUrl={editedAttachment.fileUrl}
+              linkUrl={editedAttachment.linkUrl}
               onAttachmentTypeChange={handleAttachmentTypeChange}
               onEditedUrlChange={(text) => {
                 handleSetInputState({

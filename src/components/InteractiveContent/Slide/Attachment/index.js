@@ -5,22 +5,23 @@ import FileViewer from '../FileViewer';
 
 Attachment.propTypes = {
   type: PropTypes.string,
-  src: PropTypes.string
+  fileUrl: PropTypes.string,
+  linkUrl: PropTypes.string
 };
 
-export default function Attachment({ type, src }) {
+export default function Attachment({ type, fileUrl, linkUrl }) {
   switch (type) {
     case 'file':
       return (
         <div style={{ width: '80%', marginTop: '3rem' }}>
-          <FileViewer src={src} />
+          <FileViewer src={fileUrl} />
         </div>
       );
     case 'link':
       return (
         <ReactPlayer
           style={{ marginTop: '3rem', maxWidth: '100%' }}
-          url={src}
+          url={linkUrl}
           controls
         />
       );
