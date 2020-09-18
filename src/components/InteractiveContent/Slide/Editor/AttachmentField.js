@@ -7,6 +7,9 @@ import {
   isValidYoutubeUrl
 } from 'helpers/stringHelpers';
 import { edit } from 'constants/placeholders';
+import { css } from 'emotion';
+import Icon from 'components/Icon';
+import Button from 'components/Button';
 import Input from 'components/Texts/Input';
 import DropdownButton from 'components/Buttons/DropdownButton';
 
@@ -82,7 +85,26 @@ export default function AttachmentField({
       </div>
       <div style={{ width: '100%' }}>
         {type === 'file' ? (
-          <FileViewer src={fileUrl} />
+          <div style={{ position: 'relative' }}>
+            <Button
+              skeuomorphic
+              className={css`
+                opacity: 0.9;
+                &:hover {
+                  opacity: 1;
+                }
+              `}
+              style={{
+                position: 'absolute',
+                right: 3,
+                top: 3,
+                padding: '0.6rem'
+              }}
+            >
+              <Icon icon="times" size="lg" />
+            </Button>
+            <FileViewer src={fileUrl} />
+          </div>
         ) : type === 'link' ? (
           <>
             <Input
