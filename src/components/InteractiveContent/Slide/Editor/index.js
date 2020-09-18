@@ -198,7 +198,7 @@ export default function Editor({
                   ...editForm,
                   editedAttachment: {
                     ...editForm.editedAttachment,
-                    src: text
+                    linkUrl: text
                   }
                 });
               }}
@@ -236,13 +236,14 @@ export default function Editor({
           <Button
             transparent
             style={{ marginRight: '1rem' }}
-            onClick={() =>
+            onClick={() => {
+              handleSetInputState(prevInputState);
               onSetInteractiveState({
                 interactiveId,
                 slideId,
                 newState: { isEditing: false }
-              })
-            }
+              });
+            }}
           >
             Cancel
           </Button>
