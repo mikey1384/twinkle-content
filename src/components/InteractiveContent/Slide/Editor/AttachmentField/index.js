@@ -29,7 +29,7 @@ export default function AttachmentField({
 }) {
   const editedUrl = useMemo(() => {
     if (type === 'link') {
-      return linkUrl;
+      return linkUrl || '';
     }
     return '';
   }, [linkUrl, type]);
