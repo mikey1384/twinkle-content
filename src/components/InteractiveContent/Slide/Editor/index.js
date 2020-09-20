@@ -202,6 +202,15 @@ export default function Editor({
                   }
                 });
               }}
+              onRemoveAttachment={() => {
+                handleSetInputState({
+                  ...editForm,
+                  editedAttachment: {
+                    ...editForm.editedAttachment,
+                    fileUrl: ''
+                  }
+                });
+              }}
             />
           )}
           {editedIsFork && (

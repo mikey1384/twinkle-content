@@ -18,7 +18,8 @@ AttachmentField.propTypes = {
   fileUrl: PropTypes.string,
   linkUrl: PropTypes.string,
   onAttachmentTypeChange: PropTypes.func.isRequired,
-  onEditedUrlChange: PropTypes.func.isRequired
+  onEditedUrlChange: PropTypes.func.isRequired,
+  onRemoveAttachment: PropTypes.func.isRequired
 };
 
 export default function AttachmentField({
@@ -26,7 +27,8 @@ export default function AttachmentField({
   fileUrl,
   linkUrl,
   onAttachmentTypeChange,
-  onEditedUrlChange
+  onEditedUrlChange,
+  onRemoveAttachment
 }) {
   const editedUrl = useMemo(() => {
     if (type === 'link') {
@@ -100,6 +102,7 @@ export default function AttachmentField({
                 top: 3,
                 padding: '0.6rem'
               }}
+              onClick={onRemoveAttachment}
             >
               <Icon icon="times" size="lg" />
             </Button>
