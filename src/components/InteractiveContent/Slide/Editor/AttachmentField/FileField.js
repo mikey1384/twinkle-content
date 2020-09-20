@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import FileViewer from '../../FileViewer';
+import AlertModal from 'components/Modals/AlertModal';
+import { mb } from 'constants/defaultValues';
+import { useMyState } from 'helpers/hooks';
+import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 import { css } from 'emotion';
 
 FileField.propTypes = {
@@ -11,6 +15,21 @@ FileField.propTypes = {
 };
 
 export default function FileField({ fileUrl, onRemoveAttachment }) {
+  const { authLevel } = useMyState();
+  const maxSize = useMemo(
+    () =>
+      authLevel > 3
+        ? 5000 * mb
+        : authLevel > 1
+        ? 3000 * mb
+        : authLevel === 1
+        ? 1000 * mb
+        : 300 * mb,
+    [authLevel]
+  );
+  const [alertModalShown, setAlertModalShown] = useState(false);
+  const FileInputRef = useRef(null);
+
   return (
     <div style={{ position: 'relative', width: '100%' }}>
       {fileUrl ? (
@@ -45,12 +64,82 @@ export default function FileField({ fileUrl, onRemoveAttachment }) {
             marginTop: '1rem'
           }}
         >
-          <Button skeuomorphic>
+          <Button onClick={() => FileInputRef.current.click()} skeuomorphic>
             <Icon icon="upload" />
             <span style={{ marginLeft: '0.7rem' }}>Select a file</span>
           </Button>
         </div>
       )}
+      <input
+        ref={FileInputRef}
+        style={{ display: 'none' }}
+        type="file"
+        onChange={handleUpload}
+      />
+      {alertModalShown && (
+        <AlertModal
+          title="File is too large"
+          content={`The file size is larger than your limit of ${
+            maxSize / mb
+          } MB`}
+          onHide={() => setAlertModalShown(false)}
+        />
+      )}
     </div>
   );
+
+  function handleUpload(event) {
+    const fileObj = event.target.files[0];
+    if (fileObj.size / mb > maxSize) {
+      return setAlertModalShown(true);
+    }
+    const { fileType } = getFileInfoFromFileName(fileObj.name);
+    if (fileType === 'image') {
+      const reader = new FileReader();
+      reader.onload = (upload) => {
+        const payload = upload.target.result;
+        if (fileObj.name.split('.')[1] === 'gif') {
+          /*
+          onSetCommentAttachment({
+            attachment: {
+              file: fileObj,
+              contentType: 'file',
+              fileType,
+              imageUrl: payload
+            },
+            contentType,
+            contentId
+          });
+          */
+        } else {
+          window.loadImage(
+            payload,
+            function (img) {
+              const imageUrl = img.toDataURL('image/jpeg');
+              const dataUri = imageUrl.replace(/^data:image\/\w+;base64,/, '');
+              const buffer = Buffer.from(dataUri, 'base64');
+              const file = new File([buffer], fileObj.name);
+
+              console.log(file);
+            },
+            { orientation: true, canvas: true }
+          );
+        }
+      };
+      reader.readAsDataURL(fileObj);
+    } else {
+      /*
+      onSetCommentAttachment({
+        attachment: {
+          file: fileObj,
+          contentType: 'file',
+          fileType
+        },
+        contentType,
+        contentId
+      });
+      */
+    }
+    event.target.value = null;
+  }
 }
