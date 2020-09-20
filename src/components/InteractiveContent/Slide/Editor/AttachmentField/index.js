@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import FileViewer from '../FileViewer';
+import FileViewer from '../../FileViewer';
 import {
   exceedsCharLimit,
   stringIsEmpty,
