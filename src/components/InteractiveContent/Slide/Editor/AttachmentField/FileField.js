@@ -12,26 +12,45 @@ FileField.propTypes = {
 
 export default function FileField({ fileUrl, onRemoveAttachment }) {
   return (
-    <div style={{ position: 'relative' }}>
-      <Button
-        skeuomorphic
-        className={css`
-          opacity: 0.9;
-          &:hover {
-            opacity: 1;
-          }
-        `}
-        style={{
-          position: 'absolute',
-          right: 3,
-          top: 3,
-          padding: '0.6rem'
-        }}
-        onClick={onRemoveAttachment}
-      >
-        <Icon icon="times" size="lg" />
-      </Button>
-      <FileViewer src={fileUrl} />
+    <div style={{ position: 'relative', width: '100%' }}>
+      {fileUrl ? (
+        <>
+          <Button
+            skeuomorphic
+            className={css`
+              opacity: 0.9;
+              &:hover {
+                opacity: 1;
+              }
+            `}
+            style={{
+              position: 'absolute',
+              right: 3,
+              top: 3,
+              padding: '0.6rem'
+            }}
+            onClick={onRemoveAttachment}
+          >
+            <Icon icon="times" size="lg" />
+          </Button>
+          <FileViewer src={fileUrl} />
+        </>
+      ) : (
+        <div
+          style={{
+            display: 'flex',
+            width: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '20rem'
+          }}
+        >
+          <Button skeuomorphic>
+            <Icon icon="upload" />
+            <span style={{ marginLeft: '0.7rem' }}>Attach a file</span>
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
