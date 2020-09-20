@@ -42,12 +42,12 @@ export default function FileField({ fileUrl, onRemoveAttachment }) {
             width: '100%',
             justifyContent: 'center',
             alignItems: 'center',
-            height: '20rem'
+            marginTop: '1rem'
           }}
         >
           <Button skeuomorphic>
             <Icon icon="upload" />
-            <span style={{ marginLeft: '0.7rem' }}>Attach a file</span>
+            <span style={{ marginLeft: '0.7rem' }}>Select a file</span>
           </Button>
         </div>
       )}

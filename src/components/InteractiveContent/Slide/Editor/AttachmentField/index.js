@@ -64,47 +64,47 @@ export default function AttachmentField({
           marginBottom: '1rem'
         }}
       >
-        <p style={{ fontWeight: 'bold', fontSize: '1.7rem' }}>
-          Attachment Type:
-        </p>
+        <p style={{ fontWeight: 'bold', fontSize: '1.7rem' }}>Attachment:</p>
         <DropdownButton
           skeuomorphic
           color="darkerGray"
           direction="right"
           icon="caret-down"
-          text={type === 'link' ? 'link' : 'file'}
+          text={type}
           style={{ marginLeft: '1rem' }}
-          menuProps={[
-            {
-              label: type === 'link' ? 'File' : 'Link',
-              onClick: onAttachmentTypeChange
-            }
-          ]}
+          menuProps={['none', 'link', 'file']
+            .filter((item) => item !== type)
+            .map((item) => ({
+              label: item.charAt(0).toUpperCase() + item.slice(1),
+              onClick: () => onAttachmentTypeChange(item)
+            }))}
         />
       </div>
-      <div style={{ width: '100%' }}>
-        {type === 'file' ? (
-          <FileField
-            fileUrl={fileUrl}
-            onRemoveAttachment={onRemoveAttachment}
-          />
-        ) : type === 'link' ? (
-          <>
-            <Input
-              hasError={urlError}
-              onChange={onEditedUrlChange}
-              placeholder={edit.video}
-              value={editedUrl}
-              style={urlExceedsCharLimit?.style}
+      {type !== 'none' && (
+        <div style={{ width: '100%', marginTop: '1rem' }}>
+          {type === 'file' ? (
+            <FileField
+              fileUrl={fileUrl}
+              onRemoveAttachment={onRemoveAttachment}
             />
-            {(urlExceedsCharLimit || urlError) && (
-              <small style={{ color: 'red', lineHeight: 0.5 }}>
-                {urlExceedsCharLimit?.message || 'Please check the url'}
-              </small>
-            )}
-          </>
-        ) : null}
-      </div>
+          ) : (
+            <>
+              <Input
+                hasError={urlError}
+                onChange={onEditedUrlChange}
+                placeholder={edit.url}
+                value={editedUrl}
+                style={urlExceedsCharLimit?.style}
+              />
+              {(urlExceedsCharLimit || urlError) && (
+                <small style={{ color: 'red', lineHeight: 0.5 }}>
+                  {urlExceedsCharLimit?.message || 'Please check the url'}
+                </small>
+              )}
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 }

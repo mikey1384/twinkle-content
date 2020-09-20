@@ -261,8 +261,7 @@ export default function Editor({
     </div>
   );
 
-  function handleAttachmentTypeChange() {
-    const newType = editedAttachment.type === 'link' ? 'file' : 'link';
+  function handleAttachmentTypeChange(newType) {
     handleSetInputState({
       ...editForm,
       editedAttachment: {
