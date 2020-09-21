@@ -66,39 +66,43 @@ export default function MissionPage({
   }, []);
 
   return loaded ? (
-    userId ? (
-      <div style={{ paddingTop: '1rem' }}>
-        {mission ? (
-          <div
-            style={{
-              width: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              flexDirection: 'column'
-            }}
-          >
-            <Mission
-              missionId={mission.id}
-              description={mission.description}
-              subtitle={mission.subtitle}
-              missionType={mission.missionType}
-              title={mission.title}
-            />
-            <Tutorial
-              style={{ marginTop: '5rem' }}
-              tutorialId={mission.tutorialId}
-            />
-          </div>
-        ) : (
-          <Loading text="Loading Mission..." />
-        )}
-      </div>
+    mission.id ? (
+      userId ? (
+        <div style={{ paddingTop: '1rem' }}>
+          {mission ? (
+            <div
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'column'
+              }}
+            >
+              <Mission
+                missionId={mission.id}
+                description={mission.description}
+                subtitle={mission.subtitle}
+                missionType={mission.missionType}
+                title={mission.title}
+              />
+              <Tutorial
+                style={{ marginTop: '5rem' }}
+                tutorialId={mission.tutorialId}
+              />
+            </div>
+          ) : (
+            <Loading text="Loading Mission..." />
+          )}
+        </div>
+      ) : (
+        <InvalidPage
+          title="For Registered Users Only"
+          text="Please Log In or Sign Up"
+        />
+      )
     ) : (
-      <InvalidPage
-        title="For Registered Users Only"
-        text="Please Log In or Sign Up"
-      />
+      <InvalidPage />
     )
   ) : (
     <Loading />

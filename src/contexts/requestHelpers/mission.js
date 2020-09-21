@@ -23,7 +23,11 @@ export default function missionRequestHelpers({ auth, handleError }) {
     },
     async updateCurrentMission(missionId) {
       try {
-        await request.put(`${URL}/mission/current`, { missionId }, auth());
+        await request.put(
+          `${URL}/mission/current`,
+          { missionId: Number(missionId) },
+          auth()
+        );
         return Promise.resolve();
       } catch (error) {
         return handleError(error);

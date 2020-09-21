@@ -202,6 +202,15 @@ export default function Editor({
                   }
                 });
               }}
+              onSetAttachment={({ fileUrl }) => {
+                handleSetInputState({
+                  ...editForm,
+                  editedAttachment: {
+                    ...editForm.editedAttachment,
+                    fileUrl
+                  }
+                });
+              }}
               onRemoveAttachment={() => {
                 handleSetInputState({
                   ...editForm,

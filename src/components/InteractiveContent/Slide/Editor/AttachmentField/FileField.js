@@ -11,10 +11,15 @@ import { css } from 'emotion';
 
 FileField.propTypes = {
   fileUrl: PropTypes.string,
-  onRemoveAttachment: PropTypes.func.isRequired
+  onRemoveAttachment: PropTypes.func.isRequired,
+  onSetAttachment: PropTypes.func.isRequired
 };
 
-export default function FileField({ fileUrl, onRemoveAttachment }) {
+export default function FileField({
+  fileUrl,
+  onRemoveAttachment,
+  onSetAttachment
+}) {
   const { authLevel } = useMyState();
   const maxSize = useMemo(
     () =>
@@ -74,7 +79,7 @@ export default function FileField({ fileUrl, onRemoveAttachment }) {
         ref={FileInputRef}
         style={{ display: 'none' }}
         type="file"
-        onChange={handleUpload}
+        onChange={handleFileSelection}
       />
       {alertModalShown && (
         <AlertModal
@@ -88,7 +93,7 @@ export default function FileField({ fileUrl, onRemoveAttachment }) {
     </div>
   );
 
-  function handleUpload(event) {
+  function handleFileSelection(event) {
     const fileObj = event.target.files[0];
     if (fileObj.size / mb > maxSize) {
       return setAlertModalShown(true);
@@ -99,18 +104,7 @@ export default function FileField({ fileUrl, onRemoveAttachment }) {
       reader.onload = (upload) => {
         const payload = upload.target.result;
         if (fileObj.name.split('.')[1] === 'gif') {
-          /*
-          onSetCommentAttachment({
-            attachment: {
-              file: fileObj,
-              contentType: 'file',
-              fileType,
-              imageUrl: payload
-            },
-            contentType,
-            contentId
-          });
-          */
+          onSetAttachment({ fileUrl: payload });
         } else {
           window.loadImage(
             payload,
@@ -120,7 +114,8 @@ export default function FileField({ fileUrl, onRemoveAttachment }) {
               const buffer = Buffer.from(dataUri, 'base64');
               const file = new File([buffer], fileObj.name);
 
-              console.log(file);
+              console.log(file, imageUrl);
+              onSetAttachment({ fileUrl: dataUri });
             },
             { orientation: true, canvas: true }
           );

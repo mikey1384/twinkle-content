@@ -16,7 +16,8 @@ AttachmentField.propTypes = {
   linkUrl: PropTypes.string,
   onAttachmentTypeChange: PropTypes.func.isRequired,
   onEditedUrlChange: PropTypes.func.isRequired,
-  onRemoveAttachment: PropTypes.func.isRequired
+  onRemoveAttachment: PropTypes.func.isRequired,
+  onSetAttachment: PropTypes.func.isRequired
 };
 
 export default function AttachmentField({
@@ -25,7 +26,8 @@ export default function AttachmentField({
   linkUrl,
   onAttachmentTypeChange,
   onEditedUrlChange,
-  onRemoveAttachment
+  onRemoveAttachment,
+  onSetAttachment
 }) {
   const editedUrl = useMemo(() => {
     if (type === 'link') {
@@ -86,6 +88,7 @@ export default function AttachmentField({
             <FileField
               fileUrl={fileUrl}
               onRemoveAttachment={onRemoveAttachment}
+              onSetAttachment={onSetAttachment}
             />
           ) : (
             <>
