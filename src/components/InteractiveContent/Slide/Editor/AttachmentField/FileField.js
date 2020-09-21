@@ -88,7 +88,13 @@ export default function FileField({
               </span>
             </Button>
             {fileUrl && (
-              <Button style={{ marginTop: '1rem' }} skeuomorphic>
+              <Button
+                onClick={() =>
+                  onSetAttachmentState({ isChanging: false, previewUri: '' })
+                }
+                style={{ marginTop: '1rem' }}
+                skeuomorphic
+              >
                 Cancel
               </Button>
             )}
