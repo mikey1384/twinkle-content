@@ -190,43 +190,17 @@ export default function Editor({
           {attachment && (
             <AttachmentField
               type={editedAttachment.type}
+              isChanging={editedAttachment.isChanging}
               fileUrl={editedAttachment.fileUrl}
               linkUrl={editedAttachment.linkUrl}
               previewUri={editedAttachment.previewUri}
               onAttachmentTypeChange={handleAttachmentTypeChange}
-              onEditedUrlChange={(text) => {
+              onSetAttachmentState={(newState) => {
                 handleSetInputState({
                   ...editForm,
                   editedAttachment: {
                     ...editForm.editedAttachment,
-                    linkUrl: text
-                  }
-                });
-              }}
-              onSetAttachment={({ fileUrl }) => {
-                handleSetInputState({
-                  ...editForm,
-                  editedAttachment: {
-                    ...editForm.editedAttachment,
-                    fileUrl
-                  }
-                });
-              }}
-              onRemoveAttachment={() => {
-                handleSetInputState({
-                  ...editForm,
-                  editedAttachment: {
-                    ...editForm.editedAttachment,
-                    fileUrl: ''
-                  }
-                });
-              }}
-              onSetPreviewUri={(previewUri) => {
-                handleSetInputState({
-                  ...editForm,
-                  editedAttachment: {
-                    ...editForm.editedAttachment,
-                    previewUri
+                    ...newState
                   }
                 });
               }}

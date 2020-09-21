@@ -6,5 +6,9 @@ Preview.propTypes = {
 };
 
 export default function Preview({ previewUri }) {
-  return <img src={previewUri} />;
+  return (
+    <div style={{ marginBottom: '1rem', width: '100%' }}>
+      <img src={previewUri} style={{ width: '100%' }} />
+    </div>
+  );
 }

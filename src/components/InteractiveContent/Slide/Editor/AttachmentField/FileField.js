@@ -11,19 +11,17 @@ import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 import { css } from 'emotion';
 
 FileField.propTypes = {
+  isChanging: PropTypes.bool,
   fileUrl: PropTypes.string,
   previewUri: PropTypes.string,
-  onRemoveAttachment: PropTypes.func.isRequired,
-  onSetAttachment: PropTypes.func.isRequired,
-  onSetPreviewUri: PropTypes.func.isRequired
+  onSetAttachmentState: PropTypes.func.isRequired
 };
 
 export default function FileField({
+  isChanging,
   fileUrl,
   previewUri,
-  onRemoveAttachment,
-  onSetAttachment,
-  onSetPreviewUri
+  onSetAttachmentState
 }) {
   const { authLevel } = useMyState();
   const maxSize = useMemo(
@@ -42,7 +40,7 @@ export default function FileField({
 
   return (
     <div style={{ position: 'relative', width: '100%' }}>
-      {fileUrl ? (
+      {!(isChanging || !fileUrl) ? (
         <>
           <Button
             skeuomorphic
@@ -58,7 +56,7 @@ export default function FileField({
               top: 3,
               padding: '0.6rem'
             }}
-            onClick={onRemoveAttachment}
+            onClick={() => onSetAttachmentState({ isChanging: true })}
           >
             <Icon icon="times" size="lg" />
           </Button>
@@ -76,10 +74,25 @@ export default function FileField({
           }}
         >
           {previewUri && <Preview previewUri={previewUri} />}
-          <Button onClick={() => FileInputRef.current.click()} skeuomorphic>
-            <Icon icon="upload" />
-            <span style={{ marginLeft: '0.7rem' }}>Select a file</span>
-          </Button>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              flexDirection: 'column'
+            }}
+          >
+            <Button onClick={() => FileInputRef.current.click()} skeuomorphic>
+              <Icon icon="upload" />
+              <span style={{ marginLeft: '0.7rem' }}>
+                Select {previewUri ? 'another' : 'a'} file
+              </span>
+            </Button>
+            {fileUrl && (
+              <Button style={{ marginTop: '1rem' }} skeuomorphic>
+                Cancel
+              </Button>
+            )}
+          </div>
         </div>
       )}
       <input
@@ -111,17 +124,17 @@ export default function FileField({
       reader.onload = (upload) => {
         const payload = upload.target.result;
         if (fileObj.name.split('.')[1] === 'gif') {
-          onSetAttachment({ fileUrl: payload });
+          onSetAttachmentState({ fileUrl: payload });
         } else {
           window.loadImage(
             payload,
             function (img) {
-              const imageUrl = img.toDataURL('image/jpeg');
-              const dataUri = imageUrl.replace(/^data:image\/\w+;base64,/, '');
+              const imageUri = img.toDataURL('image/jpeg');
+              const dataUri = imageUri.replace(/^data:image\/\w+;base64,/, '');
               const buffer = Buffer.from(dataUri, 'base64');
               const file = new File([buffer], fileObj.name);
               console.log(file);
-              onSetPreviewUri(imageUrl);
+              onSetAttachmentState({ previewUri: imageUri });
             },
             { orientation: true, canvas: true }
           );

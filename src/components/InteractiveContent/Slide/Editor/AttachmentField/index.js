@@ -11,27 +11,23 @@ import Input from 'components/Texts/Input';
 import DropdownButton from 'components/Buttons/DropdownButton';
 
 AttachmentField.propTypes = {
+  isChanging: PropTypes.bool,
   type: PropTypes.string,
   fileUrl: PropTypes.string,
   linkUrl: PropTypes.string,
   previewUri: PropTypes.string,
   onAttachmentTypeChange: PropTypes.func.isRequired,
-  onEditedUrlChange: PropTypes.func.isRequired,
-  onRemoveAttachment: PropTypes.func.isRequired,
-  onSetAttachment: PropTypes.func.isRequired,
-  onSetPreviewUri: PropTypes.func.isRequired
+  onSetAttachmentState: PropTypes.func.isRequired
 };
 
 export default function AttachmentField({
+  isChanging,
   type,
   fileUrl,
   linkUrl,
   previewUri,
   onAttachmentTypeChange,
-  onEditedUrlChange,
-  onRemoveAttachment,
-  onSetAttachment,
-  onSetPreviewUri
+  onSetAttachmentState
 }) {
   const editedUrl = useMemo(() => {
     if (type === 'link') {
@@ -90,17 +86,16 @@ export default function AttachmentField({
         <div style={{ width: '100%', marginTop: '1rem' }}>
           {type === 'file' ? (
             <FileField
+              isChanging={isChanging}
               fileUrl={fileUrl}
               previewUri={previewUri}
-              onRemoveAttachment={onRemoveAttachment}
-              onSetAttachment={onSetAttachment}
-              onSetPreviewUri={onSetPreviewUri}
+              onSetAttachmentState={onSetAttachmentState}
             />
           ) : (
             <>
               <Input
                 hasError={urlError}
-                onChange={onEditedUrlChange}
+                onChange={(text) => onSetAttachmentState({ linkUrl: text })}
                 placeholder={edit.url}
                 value={editedUrl}
                 style={urlExceedsCharLimit?.style}
