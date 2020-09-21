@@ -321,7 +321,11 @@ export default function Stories({ location }) {
 
   async function handleFetchNewFeeds() {
     onChangeSubFilter('all');
-    if (category !== 'uploads' || displayOrder === 'asc') {
+    if (
+      category !== 'uploads' ||
+      displayOrder === 'asc' ||
+      (category === 'uploads' && subFilter === 'subject')
+    ) {
       onResetNumNewPosts();
       categoryRef.current = 'uploads';
       onChangeCategory('uploads');
