@@ -194,7 +194,6 @@ export default function Editor({
               fileUrl={editedAttachment.fileUrl}
               linkUrl={editedAttachment.linkUrl}
               previewUri={editedAttachment.previewUri}
-              onAttachmentTypeChange={handleAttachmentTypeChange}
               onSetAttachmentState={(newState) => {
                 handleSetInputState({
                   ...editForm,
@@ -253,16 +252,6 @@ export default function Editor({
       </div>
     </div>
   );
-
-  function handleAttachmentTypeChange(newType) {
-    handleSetInputState({
-      ...editForm,
-      editedAttachment: {
-        ...editForm.editedAttachment,
-        type: newType
-      }
-    });
-  }
 
   function handleSetInputState(newState) {
     setInputState(newState);

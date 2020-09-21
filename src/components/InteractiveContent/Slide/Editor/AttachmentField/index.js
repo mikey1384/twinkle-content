@@ -16,7 +16,6 @@ AttachmentField.propTypes = {
   fileUrl: PropTypes.string,
   linkUrl: PropTypes.string,
   previewUri: PropTypes.string,
-  onAttachmentTypeChange: PropTypes.func.isRequired,
   onSetAttachmentState: PropTypes.func.isRequired
 };
 
@@ -26,7 +25,6 @@ export default function AttachmentField({
   fileUrl,
   linkUrl,
   previewUri,
-  onAttachmentTypeChange,
   onSetAttachmentState
 }) {
   const editedUrl = useMemo(() => {
@@ -78,7 +76,7 @@ export default function AttachmentField({
             .filter((item) => item !== type)
             .map((item) => ({
               label: item.charAt(0).toUpperCase() + item.slice(1),
-              onClick: () => onAttachmentTypeChange(item)
+              onClick: () => onSetAttachmentState({ type: item })
             }))}
         />
       </div>
