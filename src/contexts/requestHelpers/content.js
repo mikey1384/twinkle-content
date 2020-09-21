@@ -39,6 +39,16 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async checkIfHomeOutdated({ lastInteraction, category, subFilter }) {
+      try {
+        const { data } = await request.get(
+          `${URL}/content/outdated?lastInteraction=${lastInteraction}&category=${category}&subFilter=${subFilter}`
+        );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async checkIfUserResponded(subjectId) {
       try {
         const { data } = await request.get(

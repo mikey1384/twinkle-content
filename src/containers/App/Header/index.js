@@ -41,10 +41,10 @@ export default function Header({
   const usingChat = getSectionFromPathname(pathname)?.section === 'chat';
   const {
     requestHelpers: {
+      checkIfHomeOutdated,
       checkVersion,
       getNumberOfUnreadMessages,
       loadChat,
-      loadNewFeeds,
       loadRankings,
       updateChatLastRead
     }
@@ -234,7 +234,7 @@ export default function Header({
       onClearRecentChessMessage();
       onChangeSocketStatus(true);
       handleCheckVersion();
-      handleCheckNewFeeds();
+      handleCheckOutdated();
       if (userId) {
         handleGetNumberOfUnreadMessages();
         socket.emit('bind_uid_to_socket', { userId, username, profilePicId });
@@ -261,15 +261,16 @@ export default function Header({
         );
       }
 
-      async function handleCheckNewFeeds() {
+      async function handleCheckOutdated() {
         const firstFeed = feeds[0];
         if (
           firstFeed?.lastInteraction &&
-          category === 'uploads' &&
-          subFilter === 'all'
+          (category === 'uploads' || category === 'recommended')
         ) {
-          const outdated = await loadNewFeeds({
-            lastInteraction: feeds[0] ? feeds[0].lastInteraction : 0
+          const outdated = await checkIfHomeOutdated({
+            lastInteraction: feeds[0] ? feeds[0].lastInteraction : 0,
+            category,
+            subFilter
           });
           onSetFeedsOutdated(outdated.length > 0);
         }

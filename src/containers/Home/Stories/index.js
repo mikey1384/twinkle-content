@@ -325,12 +325,8 @@ export default function Stories({ location }) {
       onResetNumNewPosts();
       categoryRef.current = 'uploads';
       onChangeCategory('uploads');
-      const { data, filter } = await loadFeeds();
-      if (
-        filter === categoryObj.uploads.filter &&
-        categoryRef.current === 'uploads' &&
-        mounted.current
-      ) {
+      const { data } = await loadFeeds();
+      if (categoryRef.current === 'uploads' && mounted.current) {
         onLoadFeeds(data);
       }
       return;
