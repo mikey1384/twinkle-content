@@ -4,6 +4,7 @@ import Button from 'components/Button';
 import Icon from 'components/Icon';
 import FileViewer from '../../FileViewer';
 import AlertModal from 'components/Modals/AlertModal';
+import Preview from './Preview';
 import { mb } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
@@ -33,6 +34,7 @@ export default function FileField({
     [authLevel]
   );
   const [alertModalShown, setAlertModalShown] = useState(false);
+  const [previewUri, setPreviewUri] = useState('');
   const FileInputRef = useRef(null);
 
   return (
@@ -63,12 +65,14 @@ export default function FileField({
         <div
           style={{
             display: 'flex',
+            flexDirection: 'column',
             width: '100%',
             justifyContent: 'center',
             alignItems: 'center',
             marginTop: '1rem'
           }}
         >
+          {previewUri && <Preview previewUri={previewUri} />}
           <Button onClick={() => FileInputRef.current.click()} skeuomorphic>
             <Icon icon="upload" />
             <span style={{ marginLeft: '0.7rem' }}>Select a file</span>
@@ -114,8 +118,7 @@ export default function FileField({
               const buffer = Buffer.from(dataUri, 'base64');
               const file = new File([buffer], fileObj.name);
 
-              console.log(file, imageUrl);
-              onSetAttachment({ fileUrl: dataUri });
+              setPreviewUri(imageUrl, file);
             },
             { orientation: true, canvas: true }
           );
