@@ -12,14 +12,18 @@ import { css } from 'emotion';
 
 FileField.propTypes = {
   fileUrl: PropTypes.string,
+  previewUri: PropTypes.string,
   onRemoveAttachment: PropTypes.func.isRequired,
-  onSetAttachment: PropTypes.func.isRequired
+  onSetAttachment: PropTypes.func.isRequired,
+  onSetPreviewUri: PropTypes.func.isRequired
 };
 
 export default function FileField({
   fileUrl,
+  previewUri,
   onRemoveAttachment,
-  onSetAttachment
+  onSetAttachment,
+  onSetPreviewUri
 }) {
   const { authLevel } = useMyState();
   const maxSize = useMemo(
@@ -34,7 +38,6 @@ export default function FileField({
     [authLevel]
   );
   const [alertModalShown, setAlertModalShown] = useState(false);
-  const [previewUri, setPreviewUri] = useState('');
   const FileInputRef = useRef(null);
 
   return (
@@ -117,8 +120,8 @@ export default function FileField({
               const dataUri = imageUrl.replace(/^data:image\/\w+;base64,/, '');
               const buffer = Buffer.from(dataUri, 'base64');
               const file = new File([buffer], fileObj.name);
-
-              setPreviewUri(imageUrl, file);
+              console.log(file);
+              onSetPreviewUri(imageUrl);
             },
             { orientation: true, canvas: true }
           );

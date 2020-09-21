@@ -192,6 +192,7 @@ export default function Editor({
               type={editedAttachment.type}
               fileUrl={editedAttachment.fileUrl}
               linkUrl={editedAttachment.linkUrl}
+              previewUri={editedAttachment.previewUri}
               onAttachmentTypeChange={handleAttachmentTypeChange}
               onEditedUrlChange={(text) => {
                 handleSetInputState({
@@ -217,6 +218,15 @@ export default function Editor({
                   editedAttachment: {
                     ...editForm.editedAttachment,
                     fileUrl: ''
+                  }
+                });
+              }}
+              onSetPreviewUri={(previewUri) => {
+                handleSetInputState({
+                  ...editForm,
+                  editedAttachment: {
+                    ...editForm.editedAttachment,
+                    previewUri
                   }
                 });
               }}
