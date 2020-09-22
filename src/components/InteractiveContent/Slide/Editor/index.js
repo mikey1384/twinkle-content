@@ -12,6 +12,7 @@ import Textarea from 'components/Texts/Textarea';
 import Input from 'components/Texts/Input';
 import AttachmentField from './AttachmentField';
 import Button from 'components/Button';
+import Icon from 'components/Icon';
 import OptionsField from './OptionsField';
 
 Editor.propTypes = {
@@ -153,7 +154,14 @@ export default function Editor({
               text={editedIsFork ? 'fork' : 'default'}
               menuProps={[
                 {
-                  label: editedIsFork ? 'Default' : 'Fork',
+                  label: editedIsFork ? (
+                    'Default'
+                  ) : (
+                    <>
+                      <Icon icon="code-branch" />
+                      <span style={{ marginLeft: '0.7rem' }}>Fork</span>
+                    </>
+                  ),
                   onClick: () =>
                     handleSetInputState({
                       ...editForm,

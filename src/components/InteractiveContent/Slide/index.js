@@ -12,7 +12,7 @@ import DropdownButton from 'components/Buttons/DropdownButton';
 Slide.propTypes = {
   autoFocus: PropTypes.bool,
   attachment: PropTypes.object,
-  contentId: PropTypes.number,
+  interactiveId: PropTypes.number,
   style: PropTypes.object,
   heading: PropTypes.string,
   isEditing: PropTypes.bool,
@@ -28,7 +28,7 @@ Slide.propTypes = {
 
 export default function Slide({
   autoFocus,
-  contentId,
+  interactiveId,
   style,
   heading,
   description,
@@ -92,7 +92,7 @@ export default function Slide({
                 label: 'Edit',
                 onClick: () =>
                   onSetInteractiveState({
-                    interactiveId: contentId,
+                    interactiveId,
                     slideId,
                     newState: { isEditing: true }
                   })
@@ -110,7 +110,7 @@ export default function Slide({
           attachment={attachment}
           description={description}
           heading={heading}
-          interactiveId={contentId}
+          interactiveId={interactiveId}
           isFork={isFork}
           optionIds={optionIds}
           optionsObj={optionsObj}

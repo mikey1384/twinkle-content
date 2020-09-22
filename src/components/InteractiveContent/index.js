@@ -7,10 +7,10 @@ import AddSlide from './AddSlide';
 import { useAppContext, useInteractiveContext } from 'contexts';
 
 InteractiveContent.propTypes = {
-  contentId: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  interactiveId: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 
-export default function InteractiveContent({ contentId }) {
+export default function InteractiveContent({ interactiveId }) {
   const {
     requestHelpers: { loadInteractive }
   } = useAppContext();
@@ -27,8 +27,8 @@ export default function InteractiveContent({ contentId }) {
   const mounted = useRef(true);
 
   const { loaded, slideObj = {}, displayedSlides, isPublished } = useMemo(
-    () => state[contentId] || {},
-    [contentId, state]
+    () => state[interactiveId] || {},
+    [interactiveId, state]
   );
 
   useEffect(() => {
@@ -43,8 +43,8 @@ export default function InteractiveContent({ contentId }) {
       init();
     }
     async function init() {
-      if (contentId && contentId !== 'new') {
-        const interactive = await loadInteractive(contentId);
+      if (interactiveId && interactiveId !== 'new') {
+        const interactive = await loadInteractive(interactiveId);
         if (mounted.current) {
           onLoadInteractive(interactive);
         }
@@ -59,7 +59,7 @@ export default function InteractiveContent({ contentId }) {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [contentId, loaded]);
+  }, [interactiveId, loaded]);
 
   return loaded ? (
     <div
@@ -80,7 +80,7 @@ export default function InteractiveContent({ contentId }) {
               autoFocus={
                 index > 0 && !!slideObj[displayedSlides[index - 1]]?.isFork
               }
-              contentId={contentId}
+              interactiveId={interactiveId}
               heading={slideObj[slideId].heading}
               onExpandPath={slideObj[slideId].isFork ? handleExpandPath : null}
               description={slideObj[slideId].description}
@@ -112,17 +112,17 @@ export default function InteractiveContent({ contentId }) {
       if (slideObj[slideId].selectedOptionId) {
         const index = displayedSlides.indexOf(slideId);
         onSetDisplayedSlides({
-          interactiveId: contentId,
+          interactiveId,
           newSlides: displayedSlides.slice(0, index + 1)
         });
       }
       onSetInteractiveState({
-        interactiveId: contentId,
+        interactiveId,
         slideId,
         newState: { selectedOptionId: optionId }
       });
       onConcatDisplayedSlides({
-        interactiveId: contentId,
+        interactiveId,
         newSlides
       });
     }

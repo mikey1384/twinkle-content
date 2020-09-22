@@ -1,16 +1,16 @@
 export default function InteractiveActions(dispatch) {
   return {
-    onLoadInteractive(interactive) {
-      return dispatch({
-        type: 'LOAD_INTERACTIVE',
-        interactive
-      });
-    },
     onConcatDisplayedSlides({ interactiveId, newSlides }) {
       return dispatch({
         type: 'CONCAT_DISPLAYED_SLIDES',
         interactiveId,
         newSlides
+      });
+    },
+    onLoadInteractive(interactive) {
+      return dispatch({
+        type: 'LOAD_INTERACTIVE',
+        interactive
       });
     },
     onSetDisplayedSlides({ interactiveId, newSlides }) {
