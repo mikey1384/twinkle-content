@@ -3,6 +3,18 @@ import URL from 'constants/URL';
 
 export default function interactiveRequestHelpers({ auth, handleError }) {
   return {
+    async addInteractiveSlide(interactiveId) {
+      try {
+        const { data } = await request.post(
+          `${URL}/interactive/slide`,
+          { interactiveId },
+          auth()
+        );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async loadInteractive(contentId) {
       try {
         const { data } = await request.get(
