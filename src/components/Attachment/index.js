@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import ErrorBoundary from 'components/ErrorBoundary';
 import WebsiteContent from './WebsiteContent';
-import FileContent from './FileContent';
+import FileContent from 'components/FileContent';
 
 Attachment.propTypes = {
   attachment: PropTypes.object.isRequired,

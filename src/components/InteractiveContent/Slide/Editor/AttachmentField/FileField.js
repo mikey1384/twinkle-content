@@ -4,7 +4,7 @@ import Button from 'components/Button';
 import Icon from 'components/Icon';
 import FileViewer from '../../FileViewer';
 import AlertModal from 'components/Modals/AlertModal';
-import Preview from './Preview';
+import FileContent from 'components/FileContent';
 import { mb } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
@@ -13,14 +13,14 @@ import { css } from 'emotion';
 FileField.propTypes = {
   isChanging: PropTypes.bool,
   fileUrl: PropTypes.string,
-  previewUri: PropTypes.string,
+  preview: PropTypes.object,
   onSetAttachmentState: PropTypes.func.isRequired
 };
 
 export default function FileField({
   isChanging,
   fileUrl,
-  previewUri,
+  preview,
   onSetAttachmentState
 }) {
   const { authLevel } = useMyState();
@@ -73,7 +73,17 @@ export default function FileField({
             marginTop: '1rem'
           }}
         >
-          {previewUri && <Preview previewUri={previewUri} />}
+          {preview && (
+            <FileContent
+              file={preview.file}
+              fileType={preview.fileType}
+              imageUrl={preview.imageUrl}
+              fileIconSize="10x"
+              fileNameLength={50}
+              fileNameFontSize="1.5rem"
+              style={{ width: '100%', marginBottom: '2rem', height: 'auto' }}
+            />
+          )}
           <div
             style={{
               display: 'flex',
@@ -84,7 +94,7 @@ export default function FileField({
             <Button onClick={() => FileInputRef.current.click()} skeuomorphic>
               <Icon icon="upload" />
               <span style={{ marginLeft: '0.7rem' }}>
-                Select {previewUri ? 'another' : 'a'} file
+                Select {preview ? 'another' : 'a'} file
               </span>
             </Button>
             {fileUrl && (
@@ -130,7 +140,13 @@ export default function FileField({
       reader.onload = (upload) => {
         const payload = upload.target.result;
         if (fileObj.name.split('.')[1] === 'gif') {
-          onSetAttachmentState({ fileUrl: payload });
+          onSetAttachmentState({
+            preview: {
+              fileType,
+              file: fileObj,
+              imageUrl: payload
+            }
+          });
         } else {
           window.loadImage(
             payload,
@@ -139,8 +155,13 @@ export default function FileField({
               const dataUri = imageUri.replace(/^data:image\/\w+;base64,/, '');
               const buffer = Buffer.from(dataUri, 'base64');
               const file = new File([buffer], fileObj.name);
-              console.log(file);
-              onSetAttachmentState({ previewUri: imageUri });
+              onSetAttachmentState({
+                preview: {
+                  fileType,
+                  file,
+                  imageUrl: imageUri
+                }
+              });
             },
             { orientation: true, canvas: true }
           );
@@ -148,17 +169,13 @@ export default function FileField({
       };
       reader.readAsDataURL(fileObj);
     } else {
-      /*
-      onSetCommentAttachment({
-        attachment: {
+      onSetAttachmentState({
+        preview: {
           file: fileObj,
           contentType: 'file',
           fileType
-        },
-        contentType,
-        contentId
+        }
       });
-      */
     }
     event.target.value = null;
   }

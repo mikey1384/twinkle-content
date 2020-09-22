@@ -193,7 +193,7 @@ export default function Editor({
               isChanging={editedAttachment.isChanging}
               fileUrl={editedAttachment.fileUrl}
               linkUrl={editedAttachment.linkUrl}
-              previewUri={editedAttachment.previewUri}
+              preview={editedAttachment.preview}
               onSetAttachmentState={(newState) => {
                 handleSetInputState({
                   ...editForm,
