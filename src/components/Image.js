@@ -4,16 +4,17 @@ import Loading from 'components/Loading';
 import { Color } from 'constants/css';
 
 Image.propTypes = {
+  backgroundColor: PropTypes.string,
   imageUrl: PropTypes.string.isRequired
 };
 
-export default function Image({ imageUrl }) {
+export default function Image({ imageUrl, backgroundColor }) {
   return imageUrl ? (
     <div
       style={{
         width: '100%',
         height: '100%',
-        background: Color.black()
+        background: backgroundColor || Color.black()
       }}
     >
       <img

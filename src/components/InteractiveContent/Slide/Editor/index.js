@@ -193,7 +193,7 @@ export default function Editor({
               isChanging={editedAttachment.isChanging}
               fileUrl={editedAttachment.fileUrl}
               linkUrl={editedAttachment.linkUrl}
-              preview={editedAttachment.preview}
+              newAttachment={editedAttachment.newAttachment}
               onSetAttachmentState={(newState) => {
                 handleSetInputState({
                   ...editForm,
@@ -265,7 +265,11 @@ export default function Editor({
       editedHeading: finalizeEmoji(editedHeading),
       editedDescription: finalizeEmoji(editedDescription)
     };
+    if (editedAttachment?.newAttachment) {
+      return console.log(post);
+    }
 
+    console.log(post);
     const success = await editInteractiveSlide({
       interactiveId,
       slideId,

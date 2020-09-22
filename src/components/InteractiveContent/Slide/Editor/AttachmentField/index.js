@@ -15,7 +15,7 @@ AttachmentField.propTypes = {
   type: PropTypes.string,
   fileUrl: PropTypes.string,
   linkUrl: PropTypes.string,
-  preview: PropTypes.object,
+  newAttachment: PropTypes.object,
   onSetAttachmentState: PropTypes.func.isRequired
 };
 
@@ -24,7 +24,7 @@ export default function AttachmentField({
   type,
   fileUrl,
   linkUrl,
-  preview,
+  newAttachment,
   onSetAttachmentState
 }) {
   const editedUrl = useMemo(() => {
@@ -86,7 +86,7 @@ export default function AttachmentField({
             <FileField
               isChanging={isChanging}
               fileUrl={fileUrl}
-              preview={preview}
+              newAttachment={newAttachment}
               onSetAttachmentState={onSetAttachmentState}
             />
           ) : (

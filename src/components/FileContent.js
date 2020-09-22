@@ -11,7 +11,8 @@ FileContent.propTypes = {
   style: PropTypes.object,
   fileIconSize: PropTypes.string,
   fileNameStyle: PropTypes.object,
-  fileNameLength: PropTypes.number
+  fileNameLength: PropTypes.number,
+  imageBackgroundColor: PropTypes.string
 };
 
 export default function FileContent({
@@ -21,7 +22,8 @@ export default function FileContent({
   style,
   fileIconSize = '3x',
   fileNameStyle = {},
-  fileNameLength
+  fileNameLength,
+  imageBackgroundColor
 }) {
   return (
     <div
@@ -32,7 +34,7 @@ export default function FileContent({
       }}
     >
       {fileType === 'image' ? (
-        <Image imageUrl={imageUrl} />
+        <Image backgroundColor={imageBackgroundColor} imageUrl={imageUrl} />
       ) : (
         <FileIcon size={fileIconSize} fileType={fileType} />
       )}

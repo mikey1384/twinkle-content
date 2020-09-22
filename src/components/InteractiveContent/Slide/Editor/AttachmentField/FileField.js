@@ -13,14 +13,14 @@ import { css } from 'emotion';
 FileField.propTypes = {
   isChanging: PropTypes.bool,
   fileUrl: PropTypes.string,
-  preview: PropTypes.object,
+  newAttachment: PropTypes.object,
   onSetAttachmentState: PropTypes.func.isRequired
 };
 
 export default function FileField({
   isChanging,
   fileUrl,
-  preview,
+  newAttachment,
   onSetAttachmentState
 }) {
   const { authLevel } = useMyState();
@@ -73,14 +73,15 @@ export default function FileField({
             marginTop: '1rem'
           }}
         >
-          {preview && (
+          {newAttachment && (
             <FileContent
-              file={preview.file}
-              fileType={preview.fileType}
-              imageUrl={preview.imageUrl}
+              file={newAttachment.file}
+              fileType={newAttachment.fileType}
+              imageUrl={newAttachment.imageUrl}
               fileIconSize="10x"
               fileNameLength={50}
               fileNameStyle={{ fontSize: '1.5rem', lineHeight: 2.5 }}
+              imageBackgroundColor="#fff"
               style={{ width: '100%', marginBottom: '2rem', height: 'auto' }}
             />
           )}
@@ -94,13 +95,16 @@ export default function FileField({
             <Button onClick={() => FileInputRef.current.click()} skeuomorphic>
               <Icon icon="upload" />
               <span style={{ marginLeft: '0.7rem' }}>
-                Select {preview ? 'another' : 'a'} file
+                Select {newAttachment ? 'another' : 'a'} file
               </span>
             </Button>
             {fileUrl && (
               <Button
                 onClick={() =>
-                  onSetAttachmentState({ isChanging: false, previewUri: '' })
+                  onSetAttachmentState({
+                    isChanging: false,
+                    newAttachment: undefined
+                  })
                 }
                 style={{ marginTop: '1rem' }}
                 skeuomorphic
@@ -141,7 +145,7 @@ export default function FileField({
         const payload = upload.target.result;
         if (fileObj.name.split('.')[1] === 'gif') {
           onSetAttachmentState({
-            preview: {
+            newAttachment: {
               fileType,
               file: fileObj,
               imageUrl: payload
@@ -156,7 +160,7 @@ export default function FileField({
               const buffer = Buffer.from(dataUri, 'base64');
               const file = new File([buffer], fileObj.name);
               onSetAttachmentState({
-                preview: {
+                newAttachment: {
                   fileType,
                   file,
                   imageUrl: imageUri
@@ -170,7 +174,7 @@ export default function FileField({
       reader.readAsDataURL(fileObj);
     } else {
       onSetAttachmentState({
-        preview: {
+        newAttachment: {
           file: fileObj,
           contentType: 'file',
           fileType
