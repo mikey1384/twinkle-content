@@ -99,6 +99,7 @@ export default function InteractiveContent({ interactiveId }) {
       )}
       {loaded && !isPublished && canEdit && (
         <AddSlide
+          interactiveId={interactiveId}
           style={{ marginTop: displayedSlides.length === 0 ? 0 : '5rem' }}
         />
       )}

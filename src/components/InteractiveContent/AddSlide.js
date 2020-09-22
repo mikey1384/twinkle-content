@@ -3,12 +3,17 @@ import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import { borderRadius, Color } from 'constants/css';
+import { useAppContext } from 'contexts';
 
 AddSlide.propTypes = {
+  interactiveId: PropTypes.number.isRequired,
   style: PropTypes.object
 };
 
-export default function AddSlide({ style }) {
+export default function AddSlide({ interactiveId, style }) {
+  const {
+    requestHelpers: { addInteractiveSlide }
+  } = useAppContext();
   return (
     <div style={{ width: '100%', ...style }}>
       <div
@@ -24,7 +29,7 @@ export default function AddSlide({ style }) {
         }}
       >
         <div style={{ display: 'flex' }}>
-          <Button onClick={() => console.log('adding new slide')} skeuomorphic>
+          <Button onClick={handleAddNewSlide} skeuomorphic>
             <Icon icon="plus" />
             <span style={{ marginLeft: '0.7rem' }}>Add a Slide</span>
           </Button>
@@ -50,4 +55,8 @@ export default function AddSlide({ style }) {
       </div>
     </div>
   );
+
+  async function handleAddNewSlide() {
+    await addInteractiveSlide(interactiveId);
+  }
 }
