@@ -10,7 +10,7 @@ FileContent.propTypes = {
   fileType: PropTypes.string,
   style: PropTypes.object,
   fileIconSize: PropTypes.string,
-  fileNameFontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  fileNameStyle: PropTypes.object,
   fileNameLength: PropTypes.number
 };
 
@@ -20,7 +20,7 @@ export default function FileContent({
   fileType,
   style,
   fileIconSize = '3x',
-  fileNameFontSize = '1rem',
+  fileNameStyle = {},
   fileNameLength
 }) {
   return (
@@ -36,7 +36,12 @@ export default function FileContent({
       ) : (
         <FileIcon size={fileIconSize} fileType={fileType} />
       )}
-      <div style={{ textAlign: 'center', fontSize: fileNameFontSize }}>
+      <div
+        style={{
+          textAlign: 'center',
+          ...fileNameStyle
+        }}
+      >
         {truncateText({ text: file.name, limit: fileNameLength || 10 })}
       </div>
     </div>

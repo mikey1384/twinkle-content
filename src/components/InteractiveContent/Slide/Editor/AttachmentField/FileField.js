@@ -80,7 +80,7 @@ export default function FileField({
               imageUrl={preview.imageUrl}
               fileIconSize="10x"
               fileNameLength={50}
-              fileNameFontSize="1.5rem"
+              fileNameStyle={{ fontSize: '1.5rem', lineHeight: 2.5 }}
               style={{ width: '100%', marginBottom: '2rem', height: 'auto' }}
             />
           )}
