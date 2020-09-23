@@ -90,10 +90,11 @@ export default function InteractiveContent({ interactiveId }) {
                 index > 0 && !!slideObj[displayedSlides[index - 1]]?.isFork
               }
               interactiveId={interactiveId}
+              isPublished={!!slideObj[slideId].isPublished}
+              isFork={!!slideObj[slideId].isFork}
               heading={slideObj[slideId].heading}
               onExpandPath={slideObj[slideId].isFork ? handleExpandPath : null}
               description={slideObj[slideId].description}
-              isFork={!!slideObj[slideId].isFork}
               optionIds={slideObj[slideId].optionIds}
               optionsObj={slideObj[slideId].optionsObj}
               selectedOptionId={slideObj[slideId].selectedOptionId}

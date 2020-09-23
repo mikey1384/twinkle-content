@@ -16,6 +16,7 @@ Slide.propTypes = {
   style: PropTypes.object,
   heading: PropTypes.string,
   isEditing: PropTypes.bool,
+  isPublished: PropTypes.bool,
   isFork: PropTypes.bool,
   description: PropTypes.string,
   onExpandPath: PropTypes.func,
@@ -28,10 +29,10 @@ Slide.propTypes = {
 
 export default function Slide({
   autoFocus,
-  interactiveId,
-  style,
   heading,
   description,
+  interactiveId,
+  isPublished,
   isEditing,
   isFork,
   onExpandPath,
@@ -40,7 +41,8 @@ export default function Slide({
   slideId,
   paths,
   attachment,
-  selectedOptionId
+  selectedOptionId,
+  style
 }) {
   const {
     requestHelpers: { deleteInteractiveSlide }
@@ -121,6 +123,7 @@ export default function Slide({
         />
       ) : (
         <Content
+          isPublished={isPublished}
           attachment={attachment}
           heading={heading}
           description={description}

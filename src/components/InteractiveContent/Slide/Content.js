@@ -7,6 +7,7 @@ import { Color } from 'constants/css';
 
 Content.propTypes = {
   heading: PropTypes.string,
+  isPublished: PropTypes.bool,
   description: PropTypes.string,
   attachment: PropTypes.object,
   optionIds: PropTypes.array,
@@ -16,6 +17,7 @@ Content.propTypes = {
 };
 export default function Content({
   heading,
+  isPublished,
   description,
   attachment,
   optionIds,
@@ -25,6 +27,16 @@ export default function Content({
 }) {
   return (
     <>
+      {!isPublished && (
+        <div
+          style={{
+            padding: '0 1rem 1rem 1rem',
+            color: Color.rose(),
+            fontWeight: 'bold',
+            fontSize: '1.3rem'
+          }}
+        >{`(Draft)`}</div>
+      )}
       {heading && (
         <p style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>{heading}</p>
       )}
