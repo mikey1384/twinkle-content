@@ -279,7 +279,6 @@ export default function Editor({
 
     console.log(post);
     const success = await editInteractiveSlide({
-      interactiveId,
       slideId,
       post
     });

@@ -47,10 +47,14 @@ export default function Slide({
   style
 }) {
   const {
-    requestHelpers: { deleteInteractiveSlide }
+    requestHelpers: { deleteInteractiveSlide, publishInteractiveSlide }
   } = useAppContext();
   const {
-    actions: { onDeleteInteractiveSlide, onSetInteractiveState }
+    actions: {
+      onDeleteInteractiveSlide,
+      onPublishInteractiveSlide,
+      onSetInteractiveState
+    }
   } = useInteractiveContext();
   const SlideRef = useRef(null);
   const { canEdit } = useMyState();
@@ -137,7 +141,11 @@ export default function Slide({
       <div style={{ paddingBottom: isEditing ? '1rem' : '5rem' }} />
       {!isPublished && !isEditing && (
         <div>
-          <Button style={{ marginBottom: '1.5rem' }} skeuomorphic>
+          <Button
+            onClick={handlePublishSlide}
+            style={{ marginBottom: '1.5rem' }}
+            skeuomorphic
+          >
             <Icon icon="upload" />
             <span style={{ marginLeft: '0.7rem' }}>Publish Slide</span>
           </Button>
@@ -155,5 +163,10 @@ export default function Slide({
     if (onExpandPath) {
       onExpandPath({ newSlides: paths[optionId], slideId, optionId });
     }
+  }
+
+  async function handlePublishSlide() {
+    await publishInteractiveSlide(slideId);
+    onPublishInteractiveSlide({ interactiveId, slideId });
   }
 }

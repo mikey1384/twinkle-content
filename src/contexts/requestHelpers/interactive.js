@@ -37,13 +37,27 @@ export default function interactiveRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async editInteractiveSlide({ interactiveId, slideId, post }) {
+    async editInteractiveSlide({ slideId, post }) {
       try {
         const {
           data: { success }
         } = await request.put(
           `${URL}/interactive/slide`,
-          { interactiveId, slideId, post },
+          { slideId, post },
+          auth()
+        );
+        return Promise.resolve(success);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
+    async publishInteractiveSlide(slideId) {
+      try {
+        const {
+          data: { success }
+        } = await request.put(
+          `${URL}/interactive/slide/publish`,
+          { slideId },
           auth()
         );
         return Promise.resolve(success);
