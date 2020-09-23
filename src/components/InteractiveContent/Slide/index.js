@@ -135,7 +135,7 @@ export default function Slide({
         />
       )}
       <div style={{ paddingBottom: isEditing ? '1rem' : '5rem' }} />
-      {!isPublished && (
+      {!isPublished && !isEditing && (
         <div>
           <Button style={{ marginBottom: '1.5rem' }} skeuomorphic>
             <Icon icon="upload" />
