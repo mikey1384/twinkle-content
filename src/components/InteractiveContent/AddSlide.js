@@ -43,7 +43,7 @@ export default function AddSlide({ interactiveId, lastFork, style }) {
       <div
         style={{
           background: '#fff',
-          marginTop: '1rem',
+          marginTop: '3rem',
           borderRadius,
           padding: '1.5rem',
           display: 'flex',
@@ -55,7 +55,7 @@ export default function AddSlide({ interactiveId, lastFork, style }) {
       >
         <Button color="darkBlue" skeuomorphic style={{ marginLeft: '1rem' }}>
           <Icon icon="upload" />
-          <span style={{ marginLeft: '0.7rem' }}>Publish</span>
+          <span style={{ marginLeft: '0.7rem' }}>Publish Content</span>
         </Button>
       </div>
     </div>

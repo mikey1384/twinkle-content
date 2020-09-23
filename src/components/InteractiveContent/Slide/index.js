@@ -7,6 +7,8 @@ import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 import Content from './Content';
 import Editor from './Editor';
+import Button from 'components/Button';
+import Icon from 'components/Icon';
 import DropdownButton from 'components/Buttons/DropdownButton';
 
 Slide.propTypes = {
@@ -80,7 +82,6 @@ export default function Slide({
         paddingLeft: '1rem',
         paddingRight: '1rem',
         paddingTop: isEditing ? '2rem' : '1rem',
-        paddingBottom: isEditing ? '1rem' : '5rem',
         ...style
       }}
     >
@@ -132,6 +133,15 @@ export default function Slide({
           onOptionClick={handleOptionClick}
           selectedOptionId={selectedOptionId}
         />
+      )}
+      <div style={{ paddingBottom: isEditing ? '1rem' : '5rem' }} />
+      {!isPublished && (
+        <div>
+          <Button style={{ marginBottom: '1.5rem' }} skeuomorphic>
+            <Icon icon="upload" />
+            <span style={{ marginLeft: '0.7rem' }}>Publish Slide</span>
+          </Button>
+        </div>
       )}
     </div>
   );
