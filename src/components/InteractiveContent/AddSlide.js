@@ -59,14 +59,11 @@ export default function AddSlide({ interactiveId, lastFork, style }) {
 
   async function handleAddNewSlide() {
     if (!lastFork) {
-      return console.log('adding new slide...');
-    }
-    if (!lastFork.selectedOptionId) {
+      await addInteractiveSlide({ interactiveId });
+    } else if (!lastFork.selectedOptionId) {
       return console.log('please select the option first');
-    }
-    console.log(lastFork.selectedOptionId);
-    if (lastFork === '1') {
-      await addInteractiveSlide(interactiveId);
+    } else {
+      await addInteractiveSlide({ interactiveId, lastFork });
     }
   }
 }

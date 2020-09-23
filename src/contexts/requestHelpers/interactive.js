@@ -3,11 +3,11 @@ import URL from 'constants/URL';
 
 export default function interactiveRequestHelpers({ auth, handleError }) {
   return {
-    async addInteractiveSlide(interactiveId) {
+    async addInteractiveSlide({ interactiveId, lastFork }) {
       try {
         const { data } = await request.post(
           `${URL}/interactive/slide`,
-          { interactiveId },
+          { interactiveId, lastFork },
           auth()
         );
         return Promise.resolve(data);
