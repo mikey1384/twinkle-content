@@ -1,5 +1,12 @@
 export default function InteractiveActions(dispatch) {
   return {
+    onAddNewInteractiveSlide({ interactiveId, slide }) {
+      return dispatch({
+        type: 'ADD_NEW_INTERACTIVE_SLIDE',
+        interactiveId,
+        slide
+      });
+    },
     onConcatDisplayedSlides({ interactiveId, newSlides }) {
       return dispatch({
         type: 'CONCAT_DISPLAYED_SLIDES',

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import { borderRadius, Color } from 'constants/css';
-import { useAppContext } from 'contexts';
+import { useAppContext, useInteractiveContext } from 'contexts';
 
 AddSlide.propTypes = {
   interactiveId: PropTypes.number.isRequired,
@@ -15,6 +15,10 @@ export default function AddSlide({ interactiveId, lastFork, style }) {
   const {
     requestHelpers: { addInteractiveSlide }
   } = useAppContext();
+  const {
+    actions: { onAddNewInteractiveSlide }
+  } = useInteractiveContext();
+
   return (
     <div style={{ width: '100%', ...style }}>
       <div
@@ -58,12 +62,11 @@ export default function AddSlide({ interactiveId, lastFork, style }) {
   );
 
   async function handleAddNewSlide() {
-    if (!lastFork) {
-      await addInteractiveSlide({ interactiveId });
-    } else if (!lastFork.selectedOptionId) {
-      return console.log('please select the option first');
+    if (!lastFork || lastFork?.selectedOptionId) {
+      const slide = await addInteractiveSlide({ interactiveId, lastFork });
+      onAddNewInteractiveSlide({ interactiveId, slide });
     } else {
-      await addInteractiveSlide({ interactiveId, lastFork });
+      console.log('please select the option first');
     }
   }
 }

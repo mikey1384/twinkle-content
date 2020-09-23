@@ -1,5 +1,19 @@
 export default function InteractiveReducer(state, action) {
   switch (action.type) {
+    case 'ADD_NEW_INTERACTIVE_SLIDE':
+      return {
+        ...state,
+        [action.interactiveId]: {
+          ...state[action.interactiveId],
+          displayedSlides: state[action.interactiveId].displayedSlides.concat([
+            action.slide.id
+          ]),
+          slideObj: {
+            ...state[action.interactiveId].slideObj,
+            [action.slide.id]: action.slide
+          }
+        }
+      };
     case 'LOAD_INTERACTIVE': {
       return {
         ...state,
