@@ -50,11 +50,7 @@ export default function Slide({
     requestHelpers: { deleteInteractiveSlide, publishInteractiveSlide }
   } = useAppContext();
   const {
-    actions: {
-      onDeleteInteractiveSlide,
-      onPublishInteractiveSlide,
-      onSetInteractiveState
-    }
+    actions: { onDeleteInteractiveSlide, onSetInteractiveState }
   } = useInteractiveContext();
   const SlideRef = useRef(null);
   const { canEdit } = useMyState();
@@ -167,6 +163,10 @@ export default function Slide({
 
   async function handlePublishSlide() {
     await publishInteractiveSlide(slideId);
-    onPublishInteractiveSlide({ interactiveId, slideId });
+    onSetInteractiveState({
+      interactiveId,
+      slideId,
+      newState: { isPublished: true }
+    });
   }
 }
