@@ -7,10 +7,11 @@ import { useAppContext } from 'contexts';
 
 AddSlide.propTypes = {
   interactiveId: PropTypes.number.isRequired,
+  lastFork: PropTypes.object,
   style: PropTypes.object
 };
 
-export default function AddSlide({ interactiveId, style }) {
+export default function AddSlide({ interactiveId, lastFork, style }) {
   const {
     requestHelpers: { addInteractiveSlide }
   } = useAppContext();
@@ -57,6 +58,15 @@ export default function AddSlide({ interactiveId, style }) {
   );
 
   async function handleAddNewSlide() {
-    await addInteractiveSlide(interactiveId);
+    if (!lastFork) {
+      return console.log('adding new slide...');
+    }
+    if (!lastFork.selectedOptionId) {
+      return console.log('please select the option first');
+    }
+    console.log(lastFork.selectedOptionId);
+    if (lastFork === '1') {
+      await addInteractiveSlide(interactiveId);
+    }
   }
 }

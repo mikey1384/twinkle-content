@@ -31,6 +31,15 @@ export default function InteractiveContent({ interactiveId }) {
     [interactiveId, state]
   );
 
+  const lastFork = useMemo(() => {
+    const slides = displayedSlides?.map((slideId) => slideObj[slideId]);
+    const forks = slides?.filter((slide) => slide.isFork);
+    if (forks?.length > 0) {
+      return forks[forks.length - 1];
+    }
+    return null;
+  }, [displayedSlides, slideObj]);
+
   useEffect(() => {
     mounted.current = true;
     return function onUnmount() {
@@ -100,6 +109,7 @@ export default function InteractiveContent({ interactiveId }) {
       {loaded && !isPublished && canEdit && (
         <AddSlide
           interactiveId={interactiveId}
+          lastFork={lastFork}
           style={{ marginTop: displayedSlides.length === 0 ? 0 : '5rem' }}
         />
       )}
