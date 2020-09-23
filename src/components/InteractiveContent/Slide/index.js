@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { scrollElementToCenter } from 'helpers';
-import { useInteractiveContext } from 'contexts';
+import { useAppContext, useInteractiveContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
@@ -43,7 +43,10 @@ export default function Slide({
   selectedOptionId
 }) {
   const {
-    actions: { onSetInteractiveState }
+    requestHelpers: { deleteInteractiveSlide }
+  } = useAppContext();
+  const {
+    actions: { onDeleteInteractiveSlide, onSetInteractiveState }
   } = useInteractiveContext();
   const SlideRef = useRef(null);
   const { canEdit } = useMyState();
@@ -99,7 +102,7 @@ export default function Slide({
               },
               {
                 label: 'Remove',
-                onClick: () => console.log('delete')
+                onClick: handleDeleteSlide
               }
             ]}
           />
@@ -129,6 +132,11 @@ export default function Slide({
       )}
     </div>
   );
+
+  async function handleDeleteSlide() {
+    await deleteInteractiveSlide(slideId);
+    onDeleteInteractiveSlide({ interactiveId, slideId });
+  }
 
   function handleOptionClick(optionId) {
     if (onExpandPath) {
