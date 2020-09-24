@@ -38,7 +38,7 @@ export default function Editor({
 }) {
   const defaultInputState = {
     editedIsFork: isFork,
-    editedAttachment: attachment || '',
+    editedAttachment: attachment || null,
     editedHeading: heading || '',
     editedDescription: description || '',
     editedOptionIds: optionIds || [],
