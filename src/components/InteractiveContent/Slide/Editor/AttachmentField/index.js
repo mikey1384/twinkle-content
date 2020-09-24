@@ -6,12 +6,14 @@ import {
   isValidYoutubeUrl
 } from 'helpers/stringHelpers';
 import { edit } from 'constants/placeholders';
+import Checkbox from 'components/Checkbox';
 import FileField from './FileField';
 import Input from 'components/Texts/Input';
 import DropdownButton from 'components/Buttons/DropdownButton';
 
 AttachmentField.propTypes = {
   isChanging: PropTypes.bool,
+  isYouTubeVideo: PropTypes.bool,
   type: PropTypes.string,
   fileUrl: PropTypes.string,
   linkUrl: PropTypes.string,
@@ -21,6 +23,7 @@ AttachmentField.propTypes = {
 
 export default function AttachmentField({
   isChanging,
+  isYouTubeVideo,
   type,
   fileUrl,
   linkUrl,
@@ -103,6 +106,14 @@ export default function AttachmentField({
                   {urlExceedsCharLimit?.message || 'Please check the url'}
                 </small>
               )}
+              <Checkbox
+                label="YouTube Video:"
+                onClick={() =>
+                  onSetAttachmentState({ isYouTubeVideo: !isYouTubeVideo })
+                }
+                style={{ marginTop: '1rem' }}
+                checked={isYouTubeVideo}
+              />
             </>
           )}
         </div>

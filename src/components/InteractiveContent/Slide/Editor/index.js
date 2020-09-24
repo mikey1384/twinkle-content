@@ -44,6 +44,7 @@ export default function Editor({
     editedOptionIds: optionIds || [],
     editedOptionsObj: optionsObj || {}
   };
+
   const {
     requestHelpers: { editInteractiveSlide }
   } = useAppContext();
@@ -197,7 +198,8 @@ export default function Editor({
           />
           <AttachmentField
             type={editedAttachment?.type || 'none'}
-            isChanging={!!editedAttachment?.isChanging}
+            isChanging={editedAttachment?.isChanging}
+            isYouTubeVideo={editedAttachment?.isYouTubeVideo}
             fileUrl={editedAttachment?.fileUrl || ''}
             linkUrl={editedAttachment?.linkUrl || ''}
             newAttachment={editedAttachment?.newAttachment || null}
