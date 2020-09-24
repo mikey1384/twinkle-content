@@ -195,24 +195,22 @@ export default function Editor({
             value={editedDescription}
             style={{ marginTop: '1rem', ...descriptionExceedsCharLimit?.style }}
           />
-          {attachment && (
-            <AttachmentField
-              type={editedAttachment.type}
-              isChanging={editedAttachment.isChanging}
-              fileUrl={editedAttachment.fileUrl}
-              linkUrl={editedAttachment.linkUrl}
-              newAttachment={editedAttachment.newAttachment}
-              onSetAttachmentState={(newState) => {
-                handleSetInputState({
-                  ...editForm,
-                  editedAttachment: {
-                    ...editForm.editedAttachment,
-                    ...newState
-                  }
-                });
-              }}
-            />
-          )}
+          <AttachmentField
+            type={editedAttachment?.type || 'none'}
+            isChanging={!!editedAttachment?.isChanging}
+            fileUrl={editedAttachment?.fileUrl || ''}
+            linkUrl={editedAttachment?.linkUrl || ''}
+            newAttachment={editedAttachment?.newAttachment || null}
+            onSetAttachmentState={(newState) => {
+              handleSetInputState({
+                ...editForm,
+                editedAttachment: {
+                  ...editForm.editedAttachment,
+                  ...newState
+                }
+              });
+            }}
+          />
           {editedIsFork && (
             <OptionsField
               style={{ marginTop: '2rem' }}
