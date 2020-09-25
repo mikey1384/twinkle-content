@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import FileInfo from './FileInfo';
-import ReactPlayer from 'react-player/lazy';
+import ReactPlayer from 'react-player';
 import { cloudFrontURL } from 'constants/defaultValues';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 
