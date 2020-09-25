@@ -198,6 +198,14 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async fetchUrlEmbedData(url) {
+      try {
+        const { data } = await request.get(`${URL}/embed?url=${url}`);
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async likeContent({ id, contentType }) {
       try {
         const {
