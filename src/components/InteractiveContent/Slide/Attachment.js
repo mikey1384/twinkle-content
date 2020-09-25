@@ -9,6 +9,7 @@ Attachment.propTypes = {
   fileUrl: PropTypes.string,
   linkUrl: PropTypes.string,
   isYouTubeVideo: PropTypes.bool,
+  onEmbedDataLoad: PropTypes.func.isRequired,
   onSetEmbedProps: PropTypes.func.isRequired,
   thumbUrl: PropTypes.string,
   actualTitle: PropTypes.string,
@@ -21,6 +22,7 @@ export default function Attachment({
   fileUrl,
   linkUrl,
   isYouTubeVideo,
+  onEmbedDataLoad,
   onSetEmbedProps,
   thumbUrl,
   actualTitle,
@@ -46,6 +48,7 @@ export default function Attachment({
           style={{ width: '50%' }}
           url={linkUrl}
           onSetEmbedProps={onSetEmbedProps}
+          onEmbedDataLoad={onEmbedDataLoad}
           thumbUrl={thumbUrl}
           actualTitle={actualTitle}
           actualDescription={actualDescription}

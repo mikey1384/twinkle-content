@@ -64,6 +64,26 @@ export default function interactiveRequestHelpers({ auth, handleError }) {
       } catch (error) {
         return handleError(error);
       }
+    },
+    async updateEmbedData({
+      slideId,
+      thumbUrl,
+      actualTitle,
+      actualDescription,
+      siteUrl
+    }) {
+      try {
+        const {
+          data: { success }
+        } = await request.put(
+          `${URL}/interactive/slide/embed`,
+          { slideId, thumbUrl, actualTitle, actualDescription, siteUrl },
+          auth()
+        );
+        return Promise.resolve(success);
+      } catch (error) {
+        return handleError(error);
+      }
     }
   };
 }

@@ -47,7 +47,11 @@ export default function Slide({
   style
 }) {
   const {
-    requestHelpers: { deleteInteractiveSlide, publishInteractiveSlide }
+    requestHelpers: {
+      deleteInteractiveSlide,
+      publishInteractiveSlide,
+      updateEmbedData
+    }
   } = useAppContext();
   const {
     actions: { onDeleteInteractiveSlide, onSetInteractiveState }
@@ -131,6 +135,7 @@ export default function Slide({
           optionIds={optionIds}
           optionsObj={optionsObj}
           onOptionClick={handleOptionClick}
+          onEmbedDataLoad={handleEmbedDataLoad}
           onSetEmbedProps={handleSetEmbedProps}
           selectedOptionId={selectedOptionId}
         />
@@ -168,6 +173,21 @@ export default function Slide({
       interactiveId,
       slideId,
       newState: { isPublished: true }
+    });
+  }
+
+  async function handleEmbedDataLoad({
+    thumbUrl,
+    actualTitle,
+    actualDescription,
+    siteUrl
+  }) {
+    updateEmbedData({
+      slideId,
+      thumbUrl,
+      actualTitle,
+      actualDescription,
+      siteUrl
     });
   }
 

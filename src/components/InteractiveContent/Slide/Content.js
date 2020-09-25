@@ -13,6 +13,7 @@ Content.propTypes = {
   optionIds: PropTypes.array,
   optionsObj: PropTypes.object,
   onOptionClick: PropTypes.func,
+  onEmbedDataLoad: PropTypes.func,
   onSetEmbedProps: PropTypes.func,
   selectedOptionId: PropTypes.number
 };
@@ -24,6 +25,7 @@ export default function Content({
   optionIds,
   optionsObj,
   onOptionClick,
+  onEmbedDataLoad,
   onSetEmbedProps,
   selectedOptionId
 }) {
@@ -55,6 +57,7 @@ export default function Content({
           actualTitle={attachment.actualTitle}
           actualDescription={attachment.actualDescription}
           siteUrl={attachment.siteUrl}
+          onEmbedDataLoad={onEmbedDataLoad}
           onSetEmbedProps={onSetEmbedProps}
         />
       )}
