@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import {
   exceedsCharLimit,
   stringIsEmpty,
-  isValidYoutubeUrl
+  isValidYoutubeUrl,
+  isValidUrl
 } from 'helpers/stringHelpers';
 import { edit } from 'constants/placeholders';
 import Checkbox from 'components/Checkbox';
@@ -37,8 +38,11 @@ export default function AttachmentField({
     return '';
   }, [linkUrl, type]);
   const urlError = useMemo(
-    () => !stringIsEmpty(editedUrl) && !isValidYoutubeUrl(editedUrl),
-    [editedUrl]
+    () =>
+      !stringIsEmpty(editedUrl) &&
+      ((isYouTubeVideo && !isValidYoutubeUrl(editedUrl)) ||
+        !isValidUrl(editedUrl)),
+    [editedUrl, isYouTubeVideo]
   );
   const urlExceedsCharLimit = useMemo(
     () =>
@@ -96,7 +100,7 @@ export default function AttachmentField({
             <>
               <Input
                 hasError={urlError}
-                onChange={(text) => onSetAttachmentState({ linkUrl: text })}
+                onChange={handleUrlChange}
                 placeholder={edit.url}
                 value={editedUrl}
                 style={urlExceedsCharLimit?.style}
@@ -120,4 +124,11 @@ export default function AttachmentField({
       )}
     </div>
   );
+
+  function handleUrlChange(text) {
+    onSetAttachmentState({
+      linkUrl: text,
+      isYouTubeVideo: isValidYoutubeUrl(text)
+    });
+  }
 }
