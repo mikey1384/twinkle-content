@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import ReactPlayer from 'react-player/lazy';
+import ReactPlayer from 'react-player';
 import ErrorBoundary from 'components/ErrorBoundary';
 import XPBar from './XPBar';
 import { rewardValue } from 'constants/defaultValues';

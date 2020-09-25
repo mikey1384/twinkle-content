@@ -2,7 +2,7 @@ import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import request from 'axios';
 import Loading from 'components/Loading';
-import ReactPlayer from 'react-player/lazy';
+import ReactPlayer from 'react-player';
 import Icon from 'components/Icon';
 import URL from 'constants/URL';
 import TwinkleVideo from './TwinkleVideo';
@@ -255,9 +255,7 @@ function Embedly({
                 cursor: ${contentType === 'chat' || small ? 'pointer' : ''};
                 ${contentType === 'chat' ? 'margin-bottom: 1rem;' : ''}
                 ${small ? 'margin-left: 1rem;' : ''}
-                ${small
-                  ? ''
-                  : 'margin-top: 1rem;'}
+                ${small ? '' : 'margin-top: 1rem;'}
               `,
               onClick: small ? () => history.push(`/links/${contentId}`) : null
             },
