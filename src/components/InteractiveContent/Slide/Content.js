@@ -56,6 +56,7 @@ export default function Content({
           thumbUrl={attachment.thumbUrl}
           actualTitle={attachment.actualTitle}
           actualDescription={attachment.actualDescription}
+          prevUrl={attachment.prevUrl}
           siteUrl={attachment.siteUrl}
           onEmbedDataLoad={onEmbedDataLoad}
           onSetEmbedProps={onSetEmbedProps}

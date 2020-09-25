@@ -13,7 +13,8 @@ SlideEmbedly.propTypes = {
   thumbUrl: PropTypes.string,
   style: PropTypes.object,
   onSetEmbedProps: PropTypes.func.isRequired,
-  onEmbedDataLoad: PropTypes.func.isRequired
+  onEmbedDataLoad: PropTypes.func.isRequired,
+  prevUrl: PropTypes.string
 };
 
 function SlideEmbedly({
@@ -23,6 +24,7 @@ function SlideEmbedly({
   thumbUrl,
   actualTitle,
   actualDescription,
+  prevUrl,
   siteUrl,
   onEmbedDataLoad
 }) {
@@ -31,14 +33,12 @@ function SlideEmbedly({
   } = useAppContext();
   const [loading, setLoading] = useState(false);
   const mounted = useRef(true);
-  const prevUrl = useRef(url);
   const fallbackImage = '/img/link.png';
 
   useEffect(() => {
     mounted.current = true;
-    if (!thumbUrl || url !== prevUrl.current) {
+    if (!thumbUrl || url !== prevUrl) {
       fetchUrlData();
-      prevUrl.current = url;
     }
     async function fetchUrlData() {
       try {
@@ -52,7 +52,8 @@ function SlideEmbedly({
             thumbUrl: image.url,
             actualTitle: title,
             actualDescription: description,
-            siteUrl: site
+            siteUrl: site,
+            prevUrl: url
           });
           onEmbedDataLoad({
             thumbUrl: image.url,

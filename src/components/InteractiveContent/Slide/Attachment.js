@@ -14,6 +14,7 @@ Attachment.propTypes = {
   thumbUrl: PropTypes.string,
   actualTitle: PropTypes.string,
   actualDescription: PropTypes.string,
+  prevUrl: PropTypes.string,
   siteUrl: PropTypes.string
 };
 
@@ -27,6 +28,7 @@ export default function Attachment({
   thumbUrl,
   actualTitle,
   actualDescription,
+  prevUrl,
   siteUrl
 }) {
   switch (type) {
@@ -45,13 +47,14 @@ export default function Attachment({
         />
       ) : (
         <SlideEmbedly
-          style={{ width: '50%' }}
+          style={{ marginTop: '3rem', width: '50%' }}
           url={linkUrl}
           onSetEmbedProps={onSetEmbedProps}
           onEmbedDataLoad={onEmbedDataLoad}
           thumbUrl={thumbUrl}
           actualTitle={actualTitle}
           actualDescription={actualDescription}
+          prevUrl={prevUrl}
           siteUrl={siteUrl}
         />
       );
