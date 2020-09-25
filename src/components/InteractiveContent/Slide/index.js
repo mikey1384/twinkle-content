@@ -191,22 +191,14 @@ export default function Slide({
     });
   }
 
-  async function handleSetEmbedProps({
-    thumbUrl,
-    actualTitle,
-    actualDescription,
-    siteUrl
-  }) {
+  async function handleSetEmbedProps(params) {
     onSetInteractiveState({
       interactiveId,
       slideId,
       newState: {
         attachment: {
           ...attachment,
-          thumbUrl,
-          actualTitle,
-          actualDescription,
-          siteUrl
+          ...params
         }
       }
     });

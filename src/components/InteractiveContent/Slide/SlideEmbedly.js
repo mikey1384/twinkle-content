@@ -37,9 +37,10 @@ function SlideEmbedly({
 
   useEffect(() => {
     mounted.current = true;
-    if (!thumbUrl || url !== prevUrl) {
+    if (!thumbUrl || (prevUrl && url !== prevUrl)) {
       fetchUrlData();
     }
+    onSetEmbedProps({ prevUrl: url });
     async function fetchUrlData() {
       try {
         setLoading(true);
@@ -69,7 +70,7 @@ function SlideEmbedly({
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url, siteUrl, thumbUrl]);
+  }, [url, thumbUrl, prevUrl]);
 
   useEffect(() => {
     return function cleanUp() {
