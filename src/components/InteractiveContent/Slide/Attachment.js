@@ -27,7 +27,7 @@ export default function Attachment({ type, fileUrl, linkUrl, isYouTubeVideo }) {
           controls
         />
       ) : (
-        <SlideEmbedly url={linkUrl} />
+        <SlideEmbedly style={{ width: '100%' }} url={linkUrl} />
       );
     default:
       return null;
