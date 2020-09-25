@@ -8,10 +8,25 @@ Attachment.propTypes = {
   type: PropTypes.string,
   fileUrl: PropTypes.string,
   linkUrl: PropTypes.string,
-  isYouTubeVideo: PropTypes.bool
+  isYouTubeVideo: PropTypes.bool,
+  onSetEmbedProps: PropTypes.func.isRequired,
+  thumbUrl: PropTypes.string,
+  actualTitle: PropTypes.string,
+  actualDescription: PropTypes.string,
+  siteUrl: PropTypes.string
 };
 
-export default function Attachment({ type, fileUrl, linkUrl, isYouTubeVideo }) {
+export default function Attachment({
+  type,
+  fileUrl,
+  linkUrl,
+  isYouTubeVideo,
+  onSetEmbedProps,
+  thumbUrl,
+  actualTitle,
+  actualDescription,
+  siteUrl
+}) {
   switch (type) {
     case 'file':
       return (
@@ -27,7 +42,15 @@ export default function Attachment({ type, fileUrl, linkUrl, isYouTubeVideo }) {
           controls
         />
       ) : (
-        <SlideEmbedly style={{ width: '100%' }} url={linkUrl} />
+        <SlideEmbedly
+          style={{ width: '50%' }}
+          url={linkUrl}
+          onSetEmbedProps={onSetEmbedProps}
+          thumbUrl={thumbUrl}
+          actualTitle={actualTitle}
+          actualDescription={actualDescription}
+          siteUrl={siteUrl}
+        />
       );
     default:
       return null;

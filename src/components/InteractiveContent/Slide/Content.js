@@ -13,6 +13,7 @@ Content.propTypes = {
   optionIds: PropTypes.array,
   optionsObj: PropTypes.object,
   onOptionClick: PropTypes.func,
+  onSetEmbedProps: PropTypes.func,
   selectedOptionId: PropTypes.number
 };
 export default function Content({
@@ -23,6 +24,7 @@ export default function Content({
   optionIds,
   optionsObj,
   onOptionClick,
+  onSetEmbedProps,
   selectedOptionId
 }) {
   return (
@@ -49,6 +51,11 @@ export default function Content({
           isYouTubeVideo={attachment.isYouTubeVideo}
           fileUrl={attachment.fileUrl}
           linkUrl={attachment.linkUrl}
+          thumbUrl={attachment.thumbUrl}
+          actualTitle={attachment.actualTitle}
+          actualDescription={attachment.actualDescription}
+          siteUrl={attachment.siteUrl}
+          onSetEmbedProps={onSetEmbedProps}
         />
       )}
       {optionIds.length > 0 && (

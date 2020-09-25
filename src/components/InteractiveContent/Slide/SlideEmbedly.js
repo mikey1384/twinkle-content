@@ -6,17 +6,27 @@ import { mobileMaxWidth } from 'constants/css';
 import { useAppContext } from 'contexts';
 
 SlideEmbedly.propTypes = {
+  actualDescription: PropTypes.string,
+  actualTitle: PropTypes.string,
   url: PropTypes.string,
   siteUrl: PropTypes.string,
   thumbUrl: PropTypes.string,
-  style: PropTypes.object
+  style: PropTypes.object,
+  onSetEmbedProps: PropTypes.func.isRequired
 };
 
-function SlideEmbedly({ url, siteUrl, thumbUrl, style }) {
+function SlideEmbedly({
+  style,
+  onSetEmbedProps,
+  url,
+  thumbUrl,
+  actualTitle,
+  actualDescription,
+  siteUrl
+}) {
   const {
     requestHelpers: { fetchUrlEmbedData }
   } = useAppContext();
-  const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const mounted = useRef(true);
   const fallbackImage = '/img/link.png';
@@ -34,13 +44,17 @@ function SlideEmbedly({ url, siteUrl, thumbUrl, style }) {
         );
         if (mounted.current) {
           setLoading(false);
-          console.log(image.url);
-          setImageUrl(image.url);
-          console.log(image, title, description, site);
+          console.log(image, site);
+          onSetEmbedProps({
+            thumbUrl: image.url,
+            actualTitle: title,
+            actualDescription: description,
+            siteUrl: site
+          });
         }
       } catch (error) {
         setLoading(false);
-        setImageUrl(fallbackImage);
+        onSetEmbedProps({ thumbUrl: fallbackImage });
         console.error(error.response || error);
       }
     }
@@ -56,7 +70,7 @@ function SlideEmbedly({ url, siteUrl, thumbUrl, style }) {
 
   return (
     <div style={{ position: 'relative', ...style }}>
-      {!imageUrl || loading ? (
+      {loading ? (
         <Loading
           className={css`
             height: 30rem;
@@ -74,16 +88,40 @@ function SlideEmbedly({ url, siteUrl, thumbUrl, style }) {
         >
           <img
             style={{ width: '100%', objectFit: 'cover' }}
-            src={imageUrl}
+            src={thumbUrl}
             onError={handleImageLoadError}
+            alt={actualTitle || ''}
           />
         </a>
       )}
+      <div>
+        <h3
+          style={{
+            overflow: 'hidden',
+            display: '-webkit-box',
+            WebkitLineClamp: 1,
+            WebkitBoxOrient: 'vertical'
+          }}
+        >
+          {actualTitle}
+        </h3>
+        <p
+          style={{
+            overflow: 'hidden',
+            display: '-webkit-box',
+            WebkitLineClamp: 4,
+            WebkitBoxOrient: 'vertical'
+          }}
+        >
+          {actualDescription}
+        </p>
+        <p style={{ fontWeight: 'bold' }}>{siteUrl}</p>
+      </div>
     </div>
   );
 
   function handleImageLoadError() {
-    setImageUrl(!thumbUrl || imageUrl === thumbUrl ? fallbackImage : thumbUrl);
+    onSetEmbedProps({ thumbUrl: thumbUrl || fallbackImage });
   }
 }
 

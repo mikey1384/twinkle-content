@@ -131,6 +131,7 @@ export default function Slide({
           optionIds={optionIds}
           optionsObj={optionsObj}
           onOptionClick={handleOptionClick}
+          onSetEmbedProps={handleSetEmbedProps}
           selectedOptionId={selectedOptionId}
         />
       )}
@@ -167,6 +168,27 @@ export default function Slide({
       interactiveId,
       slideId,
       newState: { isPublished: true }
+    });
+  }
+
+  async function handleSetEmbedProps({
+    thumbUrl,
+    actualTitle,
+    actualDescription,
+    siteUrl
+  }) {
+    onSetInteractiveState({
+      interactiveId,
+      slideId,
+      newState: {
+        attachment: {
+          ...attachment,
+          thumbUrl,
+          actualTitle,
+          actualDescription,
+          siteUrl
+        }
+      }
     });
   }
 }
