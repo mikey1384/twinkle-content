@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import ExtractedThumb from 'components/ExtractedThumb';
-import ReactPlayer from 'react-player/lazy';
+import ReactPlayer from 'react-player';
 import { v1 as uuidv1 } from 'uuid';
 import { useAppContext, useContentContext } from 'contexts';
 import { useContentState } from 'helpers/hooks';
