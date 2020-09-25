@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player/lazy';
-import FileViewer from '../FileViewer';
+import FileViewer from './FileViewer';
+import SlideEmbedly from './SlideEmbedly';
 
 Attachment.propTypes = {
   type: PropTypes.string,
   fileUrl: PropTypes.string,
-  linkUrl: PropTypes.string
+  linkUrl: PropTypes.string,
+  isYouTubeVideo: PropTypes.bool
 };
 
-export default function Attachment({ type, fileUrl, linkUrl }) {
+export default function Attachment({ type, fileUrl, linkUrl, isYouTubeVideo }) {
   switch (type) {
     case 'file':
       return (
@@ -18,12 +20,14 @@ export default function Attachment({ type, fileUrl, linkUrl }) {
         </div>
       );
     case 'link':
-      return (
+      return isYouTubeVideo ? (
         <ReactPlayer
           style={{ marginTop: '3rem', maxWidth: '100%' }}
           url={linkUrl}
           controls
         />
+      ) : (
+        <SlideEmbedly url={linkUrl} />
       );
     default:
       return null;

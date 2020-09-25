@@ -46,6 +46,7 @@ export default function Content({
       {attachment && (
         <Attachment
           type={attachment.type}
+          isYouTubeVideo={attachment.isYouTubeVideo}
           fileUrl={attachment.fileUrl}
           linkUrl={attachment.linkUrl}
         />
