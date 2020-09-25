@@ -2,7 +2,7 @@ import React, { memo, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
 import { css } from 'emotion';
-import { mobileMaxWidth } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { useAppContext } from 'contexts';
 
 SlideEmbedly.propTypes = {
@@ -94,9 +94,11 @@ function SlideEmbedly({
           />
         </a>
       )}
-      <div>
+      <div style={{ color: Color.darkerGray() }}>
         <h3
           style={{
+            marginTop: '1rem',
+            fontSize: '1.7rem',
             overflow: 'hidden',
             display: '-webkit-box',
             WebkitLineClamp: 1,
@@ -107,6 +109,8 @@ function SlideEmbedly({
         </h3>
         <p
           style={{
+            marginTop: '1rem',
+            fontSize: '1.3rem',
             overflow: 'hidden',
             display: '-webkit-box',
             WebkitLineClamp: 4,
@@ -115,7 +119,11 @@ function SlideEmbedly({
         >
           {actualDescription}
         </p>
-        <p style={{ fontWeight: 'bold' }}>{siteUrl}</p>
+        <p
+          style={{ fontWeight: 'bold', marginTop: '1rem', fontSize: '1.3rem' }}
+        >
+          {siteUrl}
+        </p>
       </div>
     </div>
   );
