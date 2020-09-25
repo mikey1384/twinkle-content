@@ -40,9 +40,9 @@ function SlideEmbedly({ url, siteUrl, thumbUrl, style }) {
     async function fetchUrlData() {
       try {
         setLoading(true);
-        const {
-          data: { image, title, description, site }
-        } = await fetchUrlEmbedData(url);
+        const { image, title, description, site } = await fetchUrlEmbedData(
+          url
+        );
         if (mounted.current) {
           setLoading(false);
           console.log(image, title, description, site);

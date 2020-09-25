@@ -200,7 +200,7 @@ export default function contentRequestHelpers({ auth, handleError }) {
     },
     async fetchUrlEmbedData(url) {
       try {
-        const { data } = await request.get(`${URL}/embed?url=${url}`);
+        const { data } = await request.get(`${URL}/content/embed?url=${url}`);
         return Promise.resolve(data);
       } catch (error) {
         return handleError(error);
