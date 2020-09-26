@@ -39,14 +39,12 @@ export default function interactiveRequestHelpers({ auth, handleError }) {
     },
     async editInteractiveSlide({ slideId, post }) {
       try {
-        const {
-          data: { success }
-        } = await request.put(
+        const { data } = await request.put(
           `${URL}/interactive/slide`,
           { slideId, post },
           auth()
         );
-        return Promise.resolve(success);
+        return Promise.resolve(data);
       } catch (error) {
         return handleError(error);
       }

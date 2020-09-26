@@ -277,19 +277,11 @@ export default function Editor({
       return console.log(post);
     }
 
-    const success = await editInteractiveSlide({
+    const newState = await editInteractiveSlide({
       slideId,
       post
     });
-    const newState = { isEditing: false };
-    if (success) {
-      for (let key of Object.keys(post)) {
-        let newStateKey = key.replace('edited', '');
-        newStateKey =
-          newStateKey.charAt(0).toLowerCase() + newStateKey.slice(1);
-        newState[newStateKey] = post[key];
-      }
-    }
+    newState.isEditing = false;
     onSetInteractiveState({
       interactiveId,
       slideId,
