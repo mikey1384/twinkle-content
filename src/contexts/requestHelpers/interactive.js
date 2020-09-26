@@ -82,6 +82,23 @@ export default function interactiveRequestHelpers({ auth, handleError }) {
       } catch (error) {
         return handleError(error);
       }
+    },
+    async uploadThumbForInteractiveSlide({ slideId, file, path }) {
+      const { data: url } = await request.post(
+        `${URL}/interactive/slide/thumb`,
+        {
+          fileSize: file.size,
+          path
+        }
+      );
+      await request.put(url.signedRequest, file);
+      const {
+        data: { thumbUrl }
+      } = await request.put(`${URL}/interactive/slide/thumb`, {
+        path,
+        slideId
+      });
+      return Promise.resolve(thumbUrl);
     }
   };
 }

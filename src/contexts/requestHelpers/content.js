@@ -815,8 +815,6 @@ export default function contentRequestHelpers({ auth, handleError }) {
     async uploadThumb({ contentId, contentType, file, path }) {
       const { data: url } = await request.post(`${URL}/content/thumb`, {
         fileSize: file.size,
-        contentId,
-        contentType,
         path
       });
       await request.put(url.signedRequest, file);

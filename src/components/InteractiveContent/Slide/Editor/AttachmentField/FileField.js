@@ -15,6 +15,9 @@ FileField.propTypes = {
   fileUrl: PropTypes.string,
   newAttachment: PropTypes.object,
   onSetAttachmentState: PropTypes.func.isRequired,
+  onThumbnailUpload: PropTypes.func,
+  slideId: PropTypes.number,
+  thumbUrl: PropTypes.string,
   uploadingFile: PropTypes.bool
 };
 
@@ -23,6 +26,9 @@ export default function FileField({
   fileUrl,
   newAttachment,
   onSetAttachmentState,
+  onThumbnailUpload,
+  slideId,
+  thumbUrl,
   uploadingFile
 }) {
   const { authLevel } = useMyState();
@@ -62,7 +68,12 @@ export default function FileField({
           >
             <Icon icon="times" size="lg" />
           </Button>
-          <FileViewer src={fileUrl} />
+          <FileViewer
+            slideId={slideId}
+            thumbUrl={thumbUrl}
+            src={fileUrl}
+            onThumbnailUpload={onThumbnailUpload}
+          />
         </>
       ) : (
         <div

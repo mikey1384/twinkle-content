@@ -16,6 +16,8 @@ Content.propTypes = {
   onOptionClick: PropTypes.func,
   onEmbedDataLoad: PropTypes.func,
   onSetEmbedProps: PropTypes.func,
+  onThumbnailUpload: PropTypes.func,
+  slideId: PropTypes.number,
   selectedOptionId: PropTypes.number
 };
 export default function Content({
@@ -28,6 +30,8 @@ export default function Content({
   onOptionClick,
   onEmbedDataLoad,
   onSetEmbedProps,
+  onThumbnailUpload,
+  slideId,
   selectedOptionId
 }) {
   return (
@@ -69,8 +73,10 @@ export default function Content({
           actualDescription={attachment.actualDescription}
           prevUrl={attachment.prevUrl}
           siteUrl={attachment.siteUrl}
+          slideId={slideId}
           onEmbedDataLoad={onEmbedDataLoad}
           onSetEmbedProps={onSetEmbedProps}
+          onThumbnailUpload={onThumbnailUpload}
         />
       )}
       {optionIds.length > 0 && (

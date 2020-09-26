@@ -136,6 +136,7 @@ export default function Slide({
           optionIds={optionIds}
           optionsObj={optionsObj}
           slideId={slideId}
+          onThumbnailUpload={handleThumbnailUpload}
         />
       ) : (
         <Content
@@ -148,6 +149,8 @@ export default function Slide({
           onOptionClick={handleOptionClick}
           onEmbedDataLoad={handleEmbedDataLoad}
           onSetEmbedProps={handleSetEmbedProps}
+          onThumbnailUpload={handleThumbnailUpload}
+          slideId={slideId}
           selectedOptionId={selectedOptionId}
         />
       )}
@@ -210,6 +213,19 @@ export default function Slide({
         attachment: {
           ...attachment,
           ...params
+        }
+      }
+    });
+  }
+
+  function handleThumbnailUpload(thumbUrl) {
+    onSetInteractiveState({
+      interactiveId,
+      slideId,
+      newState: {
+        attachment: {
+          ...attachment,
+          thumbUrl
         }
       }
     });

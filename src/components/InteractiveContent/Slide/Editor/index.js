@@ -26,6 +26,7 @@ Editor.propTypes = {
   isFork: PropTypes.bool,
   optionIds: PropTypes.array,
   optionsObj: PropTypes.object,
+  onThumbnailUpload: PropTypes.func,
   interactiveId: PropTypes.number,
   slideId: PropTypes.number
 };
@@ -38,6 +39,7 @@ export default function Editor({
   heading,
   interactiveId,
   isFork,
+  onThumbnailUpload,
   optionIds,
   optionsObj,
   slideId
@@ -210,6 +212,8 @@ export default function Editor({
             isYouTubeVideo={editedAttachment?.isYouTubeVideo}
             fileUrl={editedAttachment?.fileUrl || ''}
             linkUrl={editedAttachment?.linkUrl || ''}
+            thumbUrl={editedAttachment?.thumbUrl || ''}
+            slideId={slideId}
             newAttachment={editedAttachment?.newAttachment || null}
             onSetAttachmentState={(newState) => {
               handleSetInputState({
@@ -220,6 +224,7 @@ export default function Editor({
                 }
               });
             }}
+            onThumbnailUpload={onThumbnailUpload}
             uploadingFile={uploadingFile}
           />
           {editedIsFork && (

@@ -14,7 +14,9 @@ Attachment.propTypes = {
   thumbUrl: PropTypes.string,
   actualTitle: PropTypes.string,
   actualDescription: PropTypes.string,
+  onThumbnailUpload: PropTypes.func,
   prevUrl: PropTypes.string,
+  slideId: PropTypes.number,
   siteUrl: PropTypes.string
 };
 
@@ -28,14 +30,21 @@ export default function Attachment({
   thumbUrl,
   actualTitle,
   actualDescription,
+  onThumbnailUpload,
   prevUrl,
+  slideId,
   siteUrl
 }) {
   switch (type) {
     case 'file':
       return (
         <div style={{ width: '80%', marginTop: '3rem' }}>
-          <FileViewer src={fileUrl} />
+          <FileViewer
+            slideId={slideId}
+            thumbUrl={thumbUrl}
+            src={fileUrl}
+            onThumbnailUpload={onThumbnailUpload}
+          />
         </div>
       );
     case 'link':

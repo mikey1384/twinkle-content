@@ -18,8 +18,11 @@ AttachmentField.propTypes = {
   type: PropTypes.string,
   fileUrl: PropTypes.string,
   linkUrl: PropTypes.string,
+  thumbUrl: PropTypes.string,
+  slideId: PropTypes.number,
   newAttachment: PropTypes.object,
   onSetAttachmentState: PropTypes.func.isRequired,
+  onThumbnailUpload: PropTypes.func,
   uploadingFile: PropTypes.bool
 };
 
@@ -29,8 +32,11 @@ export default function AttachmentField({
   type,
   fileUrl,
   linkUrl,
+  thumbUrl,
+  slideId,
   newAttachment,
   onSetAttachmentState,
+  onThumbnailUpload,
   uploadingFile
 }) {
   const editedUrl = useMemo(() => {
@@ -95,7 +101,10 @@ export default function AttachmentField({
             <FileField
               isChanging={isChanging}
               fileUrl={fileUrl}
+              thumbUrl={thumbUrl}
+              slideId={slideId}
               newAttachment={newAttachment}
+              onThumbnailUpload={onThumbnailUpload}
               onSetAttachmentState={onSetAttachmentState}
               uploadingFile={uploadingFile}
             />
