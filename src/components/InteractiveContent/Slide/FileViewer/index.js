@@ -45,7 +45,7 @@ export default function FileViewer({ src, style }) {
                 fileType === 'audio' || fileType === 'video' ? '1rem' : 0
             }}
             width="100%"
-            url={src}
+            url={`${cloudFrontURL}${src}`}
           />
         </div>
       ) : (

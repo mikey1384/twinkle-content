@@ -95,6 +95,8 @@ export default function InteractiveContent({ interactiveId }) {
               heading={slideObj[slideId].heading}
               onExpandPath={slideObj[slideId].isFork ? handleExpandPath : null}
               description={slideObj[slideId].description}
+              fileUploadComplete={slideObj[slideId].fileUploadComplete}
+              fileUploadProgress={slideObj[slideId].fileUploadProgress}
               optionIds={slideObj[slideId].optionIds}
               optionsObj={slideObj[slideId].optionsObj}
               selectedOptionId={slideObj[slideId].selectedOptionId}

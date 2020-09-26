@@ -14,14 +14,16 @@ FileField.propTypes = {
   isChanging: PropTypes.bool,
   fileUrl: PropTypes.string,
   newAttachment: PropTypes.object,
-  onSetAttachmentState: PropTypes.func.isRequired
+  onSetAttachmentState: PropTypes.func.isRequired,
+  uploadingFile: PropTypes.bool
 };
 
 export default function FileField({
   isChanging,
   fileUrl,
   newAttachment,
-  onSetAttachmentState
+  onSetAttachmentState,
+  uploadingFile
 }) {
   const { authLevel } = useMyState();
   const maxSize = useMemo(
@@ -73,7 +75,7 @@ export default function FileField({
             marginTop: '1rem'
           }}
         >
-          {newAttachment && (
+          {newAttachment && !uploadingFile && (
             <FileContent
               file={newAttachment.file}
               fileType={newAttachment.fileType}
@@ -85,34 +87,36 @@ export default function FileField({
               style={{ width: '100%', marginBottom: '2rem', height: 'auto' }}
             />
           )}
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              flexDirection: 'column'
-            }}
-          >
-            <Button onClick={() => FileInputRef.current.click()} skeuomorphic>
-              <Icon icon="upload" />
-              <span style={{ marginLeft: '0.7rem' }}>
-                Select {newAttachment ? 'another' : 'a'} file
-              </span>
-            </Button>
-            {fileUrl && (
-              <Button
-                onClick={() =>
-                  onSetAttachmentState({
-                    isChanging: false,
-                    newAttachment: undefined
-                  })
-                }
-                style={{ marginTop: '1rem' }}
-                skeuomorphic
-              >
-                Cancel
+          {!uploadingFile && (
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                flexDirection: 'column'
+              }}
+            >
+              <Button onClick={() => FileInputRef.current.click()} skeuomorphic>
+                <Icon icon="upload" />
+                <span style={{ marginLeft: '0.7rem' }}>
+                  Select {newAttachment ? 'another' : 'a'} file
+                </span>
               </Button>
-            )}
-          </div>
+              {fileUrl && (
+                <Button
+                  onClick={() =>
+                    onSetAttachmentState({
+                      isChanging: false,
+                      newAttachment: undefined
+                    })
+                  }
+                  style={{ marginTop: '1rem' }}
+                  skeuomorphic
+                >
+                  Cancel
+                </Button>
+              )}
+            </div>
+          )}
         </div>
       )}
       <input

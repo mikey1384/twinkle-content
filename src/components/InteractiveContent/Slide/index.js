@@ -15,6 +15,8 @@ import DropdownButton from 'components/Buttons/DropdownButton';
 Slide.propTypes = {
   autoFocus: PropTypes.bool,
   attachment: PropTypes.object,
+  fileUploadComplete: PropTypes.bool,
+  fileUploadProgress: PropTypes.number,
   interactiveId: PropTypes.number,
   style: PropTypes.object,
   heading: PropTypes.string,
@@ -34,6 +36,8 @@ export default function Slide({
   autoFocus,
   heading,
   description,
+  fileUploadComplete,
+  fileUploadProgress,
   interactiveId,
   isPublished,
   isEditing,
@@ -124,6 +128,8 @@ export default function Slide({
         <Editor
           attachment={attachment}
           description={description}
+          fileUploadComplete={fileUploadComplete}
+          fileUploadProgress={fileUploadProgress}
           heading={heading}
           interactiveId={interactiveId}
           isFork={isFork}

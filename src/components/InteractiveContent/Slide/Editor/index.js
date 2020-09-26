@@ -21,6 +21,8 @@ Editor.propTypes = {
   attachment: PropTypes.object,
   heading: PropTypes.string,
   description: PropTypes.string,
+  fileUploadComplete: PropTypes.bool,
+  fileUploadProgress: PropTypes.number,
   isFork: PropTypes.bool,
   optionIds: PropTypes.array,
   optionsObj: PropTypes.object,
@@ -31,6 +33,8 @@ Editor.propTypes = {
 export default function Editor({
   attachment,
   description,
+  fileUploadComplete,
+  fileUploadProgress,
   heading,
   interactiveId,
   isFork,
@@ -48,7 +52,7 @@ export default function Editor({
   };
 
   const {
-    requestHelpers: { editInteractiveSlide }
+    requestHelpers: { editInteractiveSlide, uploadFile }
   } = useAppContext();
   const {
     state,
@@ -216,6 +220,7 @@ export default function Editor({
                 }
               });
             }}
+            uploadingFile={uploadingFile}
           />
           {editedIsFork && (
             <OptionsField
@@ -238,10 +243,10 @@ export default function Editor({
                 marginTop: 0,
                 paddingBottom: '1rem'
               }}
-              fileName={editedAttachment.newAttachment.name}
+              fileName={editedAttachment.newAttachment.file?.name}
               onFileUpload={handleFileUpload}
-              uploadComplete={editedAttachment.fileUploadComplete}
-              uploadProgress={editedAttachment.fileUploadProgress}
+              uploadComplete={fileUploadComplete}
+              uploadProgress={fileUploadProgress}
             />
           )}
         </div>
@@ -285,8 +290,44 @@ export default function Editor({
     filePathRef.current = null;
 
     async function handleSubmitWithAttachment() {
-      console.log(filePathRef.current);
-      setUploadingFile(false);
+      const uploadedFilePath = await uploadFile({
+        context: 'interactive',
+        filePath: filePathRef.current,
+        file: editedAttachment.newAttachment.file,
+        onUploadProgress: handleUploadProgress
+      });
+      onSetInteractiveState({
+        interactiveId,
+        slideId,
+        newState: { fileUploadComplete: true }
+      });
+      const post = {
+        ...editForm,
+        editedAttachment: {
+          ...editForm.editedAttachment,
+          fileUrl: uploadedFilePath
+        },
+        editedHeading: finalizeEmoji(editedHeading),
+        editedDescription: finalizeEmoji(editedDescription)
+      };
+      const newState = await editInteractiveSlide({
+        slideId,
+        post
+      });
+      newState.isEditing = false;
+      onSetInteractiveState({
+        interactiveId,
+        slideId,
+        newState
+      });
+    }
+
+    function handleUploadProgress({ loaded, total }) {
+      onSetInteractiveState({
+        interactiveId,
+        slideId,
+        newState: { fileUploadProgress: loaded / total }
+      });
     }
   }
 

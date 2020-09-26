@@ -770,7 +770,7 @@ export default function contentRequestHelpers({ auth, handleError }) {
       await request.put(url.signedRequest, file, {
         onUploadProgress
       });
-      return Promise.resolve();
+      return Promise.resolve(url?.url?.split('.com')?.[1]);
     },
     async uploadPlaylist({ title, description, selectedVideos }) {
       try {
