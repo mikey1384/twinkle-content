@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { scrollElementToCenter } from 'helpers';
 import { useAppContext, useInteractiveContext } from 'contexts';
+import { scrollElementToCenter } from 'helpers';
+import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
@@ -64,6 +65,10 @@ export default function Slide({
     }
   }, [autoFocus]);
 
+  const paddingShown = useMemo(() => {
+    return !stringIsEmpty(heading) && !isEditing;
+  }, [heading, isEditing]);
+
   return (
     <div
       ref={SlideRef}
@@ -83,8 +88,8 @@ export default function Slide({
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingLeft: '1rem',
-        paddingRight: '1rem',
+        paddingLeft: '2rem',
+        paddingRight: '2rem',
         paddingTop: isEditing ? '2rem' : '1rem',
         ...style
       }}
@@ -140,7 +145,7 @@ export default function Slide({
           selectedOptionId={selectedOptionId}
         />
       )}
-      <div style={{ paddingBottom: isEditing ? '1rem' : '5rem' }} />
+      <div style={{ paddingBottom: paddingShown ? '5rem' : '2rem' }} />
       {!isPublished && !isEditing && (
         <div>
           <Button

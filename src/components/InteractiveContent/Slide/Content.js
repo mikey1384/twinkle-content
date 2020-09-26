@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Attachment from './Attachment';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
+import LongText from 'components/Texts/LongText';
 import { Color } from 'constants/css';
 
 Content.propTypes = {
@@ -42,10 +43,20 @@ export default function Content({
         >{`(Draft)`}</div>
       )}
       {heading && (
-        <p style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>{heading}</p>
+        <p
+          style={{
+            fontSize: '2.5rem',
+            fontWeight: 'bold',
+            marginTop: '1.5rem'
+          }}
+        >
+          {heading}
+        </p>
       )}
       {description && (
-        <p style={{ fontSize: '2rem', marginTop: '1.5rem' }}>{description}</p>
+        <div style={{ fontSize: '2rem', marginTop: '1.5rem' }}>
+          <LongText maxLines={100}>{description}</LongText>
+        </div>
       )}
       {attachment && (
         <Attachment
