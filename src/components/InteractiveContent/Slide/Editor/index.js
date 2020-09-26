@@ -11,9 +11,11 @@ import DropdownButton from 'components/Buttons/DropdownButton';
 import Textarea from 'components/Texts/Textarea';
 import Input from 'components/Texts/Input';
 import AttachmentField from './AttachmentField';
+import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import OptionsField from './OptionsField';
+import { v1 as uuidv1 } from 'uuid';
 
 Editor.propTypes = {
   attachment: PropTypes.object,
@@ -60,7 +62,9 @@ export default function Editor({
     [interactiveId, slideId, state]
   );
 
+  const filePathRef = useRef(null);
   const inputStateRef = useRef(prevInputState || defaultInputState);
+  const [uploadingFile, setUploadingFile] = useState(false);
   const [inputState, setInputState] = useState(
     prevInputState || defaultInputState
   );
@@ -226,6 +230,20 @@ export default function Editor({
               }
             />
           )}
+          {uploadingFile && (
+            <FileUploadStatusIndicator
+              style={{
+                fontSize: '1.7rem',
+                fontWeight: 'bold',
+                marginTop: 0,
+                paddingBottom: '1rem'
+              }}
+              fileName={editedAttachment.newAttachment.name}
+              onFileUpload={handleFileUpload}
+              uploadComplete={editedAttachment.fileUploadComplete}
+              uploadProgress={editedAttachment.fileUploadProgress}
+            />
+          )}
         </div>
         <div
           style={{
@@ -261,6 +279,17 @@ export default function Editor({
     </div>
   );
 
+  function handleFileUpload() {
+    filePathRef.current = uuidv1();
+    handleSubmitWithAttachment();
+    filePathRef.current = null;
+
+    async function handleSubmitWithAttachment() {
+      console.log(filePathRef.current);
+      setUploadingFile(false);
+    }
+  }
+
   function handleSetInputState(newState) {
     setInputState(newState);
     inputStateRef.current = newState;
@@ -274,9 +303,8 @@ export default function Editor({
       editedDescription: finalizeEmoji(editedDescription)
     };
     if (editedAttachment?.newAttachment) {
-      return console.log(post);
+      return setUploadingFile(true);
     }
-
     const newState = await editInteractiveSlide({
       slideId,
       post

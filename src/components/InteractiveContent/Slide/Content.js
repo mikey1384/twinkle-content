@@ -45,7 +45,7 @@ export default function Content({
       {heading && (
         <p
           style={{
-            fontSize: '2.5rem',
+            fontSize: '3rem',
             fontWeight: 'bold',
             marginTop: '1.5rem'
           }}
