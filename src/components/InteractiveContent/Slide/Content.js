@@ -8,6 +8,7 @@ import { Color } from 'constants/css';
 
 Content.propTypes = {
   heading: PropTypes.string,
+  isDeleted: PropTypes.bool,
   isPublished: PropTypes.bool,
   description: PropTypes.string,
   attachment: PropTypes.object,
@@ -22,6 +23,7 @@ Content.propTypes = {
 };
 export default function Content({
   heading,
+  isDeleted,
   isPublished,
   description,
   attachment,
@@ -35,10 +37,11 @@ export default function Content({
   selectedOptionId
 }) {
   return (
-    <>
+    <div style={{ width: '100%', opacity: isDeleted ? 0.1 : 1 }}>
       {!isPublished && (
         <div
           style={{
+            textAlign: 'center',
             padding: '0 1rem 1rem 1rem',
             color: Color.rose(),
             fontWeight: 'bold',
@@ -49,6 +52,7 @@ export default function Content({
       {heading && (
         <p
           style={{
+            textAlign: 'center',
             fontSize: '3rem',
             fontWeight: 'bold',
             marginTop: '1.5rem'
@@ -63,21 +67,25 @@ export default function Content({
         </div>
       )}
       {attachment && (
-        <Attachment
-          type={attachment.type}
-          isYouTubeVideo={attachment.isYouTubeVideo}
-          fileUrl={attachment.fileUrl}
-          linkUrl={attachment.linkUrl}
-          thumbUrl={attachment.thumbUrl}
-          actualTitle={attachment.actualTitle}
-          actualDescription={attachment.actualDescription}
-          prevUrl={attachment.prevUrl}
-          siteUrl={attachment.siteUrl}
-          slideId={slideId}
-          onEmbedDataLoad={onEmbedDataLoad}
-          onSetEmbedProps={onSetEmbedProps}
-          onThumbnailUpload={onThumbnailUpload}
-        />
+        <div
+          style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+        >
+          <Attachment
+            type={attachment.type}
+            isYouTubeVideo={attachment.isYouTubeVideo}
+            fileUrl={attachment.fileUrl}
+            linkUrl={attachment.linkUrl}
+            thumbUrl={attachment.thumbUrl}
+            actualTitle={attachment.actualTitle}
+            actualDescription={attachment.actualDescription}
+            prevUrl={attachment.prevUrl}
+            siteUrl={attachment.siteUrl}
+            slideId={slideId}
+            onEmbedDataLoad={onEmbedDataLoad}
+            onSetEmbedProps={onSetEmbedProps}
+            onThumbnailUpload={onThumbnailUpload}
+          />
+        </div>
       )}
       {optionIds.length > 0 && (
         <div
@@ -110,6 +118,6 @@ export default function Content({
           })}
         </div>
       )}
-    </>
+    </div>
   );
 }

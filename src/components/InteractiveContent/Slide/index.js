@@ -20,6 +20,7 @@ Slide.propTypes = {
   interactiveId: PropTypes.number,
   style: PropTypes.object,
   heading: PropTypes.string,
+  isDeleted: PropTypes.bool,
   isEditing: PropTypes.bool,
   isPublished: PropTypes.bool,
   isFork: PropTypes.bool,
@@ -39,6 +40,7 @@ export default function Slide({
   fileUploadComplete,
   fileUploadProgress,
   interactiveId,
+  isDeleted,
   isPublished,
   isEditing,
   isFork,
@@ -55,6 +57,7 @@ export default function Slide({
     requestHelpers: {
       deleteInteractiveSlide,
       publishInteractiveSlide,
+      unPublishInteractiveSlide,
       updateEmbedData
     }
   } = useAppContext();
@@ -104,7 +107,12 @@ export default function Slide({
             skeuomorphic
             color="darkerGray"
             direction="left"
-            style={{ position: 'absolute', right: '1rem', top: '1rem' }}
+            style={{
+              position: 'absolute',
+              right: '1rem',
+              top: '1rem',
+              zIndex: 10
+            }}
             opacity={0.8}
             menuProps={[
               {
@@ -117,8 +125,8 @@ export default function Slide({
                   })
               },
               {
-                label: 'Remove',
-                onClick: handleDeleteSlide
+                label: isPublished ? 'Unpublish' : 'Delete',
+                onClick: isPublished ? handleUnpublishSlide : handleDeleteSlide
               }
             ]}
           />
@@ -140,6 +148,7 @@ export default function Slide({
         />
       ) : (
         <Content
+          isDeleted={isDeleted}
           isPublished={isPublished}
           attachment={attachment}
           heading={heading}
@@ -155,7 +164,7 @@ export default function Slide({
         />
       )}
       <div style={{ paddingBottom: paddingShown ? '5rem' : '2rem' }} />
-      {!isPublished && !isEditing && (
+      {!isPublished && !isEditing && !isDeleted && (
         <div>
           <Button
             onClick={handlePublishSlide}
@@ -187,6 +196,15 @@ export default function Slide({
       interactiveId,
       slideId,
       newState: { isPublished: true }
+    });
+  }
+
+  async function handleUnpublishSlide() {
+    await unPublishInteractiveSlide(slideId);
+    onSetInteractiveState({
+      interactiveId,
+      slideId,
+      newState: { isPublished: false }
     });
   }
 

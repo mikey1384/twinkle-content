@@ -63,6 +63,20 @@ export default function interactiveRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async unPublishInteractiveSlide(slideId) {
+      try {
+        const {
+          data: { success }
+        } = await request.put(
+          `${URL}/interactive/slide/unpublish`,
+          { slideId },
+          auth()
+        );
+        return Promise.resolve(success);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async updateEmbedData({
       slideId,
       thumbUrl,

@@ -85,25 +85,17 @@ export default function InteractiveContent({ interactiveId }) {
         <>
           {displayedSlides.map((slideId, index) => (
             <Slide
+              {...slideObj[slideId]}
               key={slideId}
               autoFocus={
                 index > 0 && !!slideObj[displayedSlides[index - 1]]?.isFork
               }
-              interactiveId={interactiveId}
+              isDeleted={!!slideObj[slideId].isDeleted}
               isPublished={!!slideObj[slideId].isPublished}
               isFork={!!slideObj[slideId].isFork}
-              heading={slideObj[slideId].heading}
               onExpandPath={slideObj[slideId].isFork ? handleExpandPath : null}
-              description={slideObj[slideId].description}
-              fileUploadComplete={slideObj[slideId].fileUploadComplete}
-              fileUploadProgress={slideObj[slideId].fileUploadProgress}
-              optionIds={slideObj[slideId].optionIds}
-              optionsObj={slideObj[slideId].optionsObj}
-              selectedOptionId={slideObj[slideId].selectedOptionId}
+              interactiveId={interactiveId}
               slideId={slideId}
-              paths={slideObj[slideId].paths}
-              attachment={slideObj[slideId].attachment}
-              isEditing={slideObj[slideId].isEditing}
               style={{ marginTop: index === 0 ? 0 : '5rem' }}
             />
           ))}

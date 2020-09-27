@@ -19,9 +19,13 @@ export default function InteractiveReducer(state, action) {
         ...state,
         [action.interactiveId]: {
           ...state[action.interactiveId],
-          displayedSlides: state[action.interactiveId].displayedSlides.filter(
-            (slideId) => slideId !== action.slideId
-          )
+          slideObj: {
+            ...state[action.interactiveId].slideObj,
+            [action.slideId]: {
+              ...state[action.interactiveId].slideObj[action.slideId],
+              isDeleted: true
+            }
+          }
         }
       };
     }
