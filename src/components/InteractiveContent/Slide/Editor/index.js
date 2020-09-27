@@ -55,9 +55,11 @@ export default function Editor({
         ? optionsObj
         : {
             1: {
+              id: 1,
               label: 'option 1'
             },
             2: {
+              id: 2,
               label: 'option 2'
             }
           }

@@ -60,7 +60,7 @@ export default function OptionItem({
         }}
       >
         <Input
-          onChange={(text) =>
+          onChange={(text) => {
             onSetInputState({
               editedOptionsObj: {
                 ...editedOptionsObj,
@@ -69,8 +69,8 @@ export default function OptionItem({
                   label: text
                 }
               }
-            })
-          }
+            });
+          }}
           placeholder="Enter option label..."
           value={option.label}
           style={{ width: '100%', ...headingExceedsCharLimit?.style }}
