@@ -49,8 +49,18 @@ export default function Editor({
     editedAttachment: attachment || null,
     editedHeading: heading || '',
     editedDescription: description || '',
-    editedOptionIds: optionIds || [],
-    editedOptionsObj: optionsObj || {}
+    editedOptionIds: optionIds.length > 0 ? optionIds : [1, 2],
+    editedOptionsObj:
+      Object.keys(optionsObj).length > 0
+        ? optionsObj
+        : {
+            1: {
+              label: 'option 1'
+            },
+            2: {
+              label: 'option 2'
+            }
+          }
   };
 
   const {
