@@ -10,6 +10,7 @@ import { edit } from 'constants/placeholders';
 import Checkbox from 'components/Checkbox';
 import FileField from './FileField';
 import Input from 'components/Texts/Input';
+import Icon from 'components/Icon';
 import DropdownButton from 'components/Buttons/DropdownButton';
 
 AttachmentField.propTypes = {
@@ -87,11 +88,22 @@ export default function AttachmentField({
           icon="caret-down"
           text={type}
           style={{ marginLeft: '1rem' }}
-          menuProps={['none', 'link', 'file']
+          menuProps={[
+            { icon: 'ban', type: 'none' },
+            { icon: 'link', type: 'link' },
+            { icon: 'paperclip', type: 'file' }
+          ]
             .filter((item) => item !== type)
             .map((item) => ({
-              label: item.charAt(0).toUpperCase() + item.slice(1),
-              onClick: () => onSetAttachmentState({ type: item })
+              label: (
+                <>
+                  <Icon icon={item.icon} />
+                  <span style={{ marginLeft: '1rem' }}>
+                    {item.type.charAt(0).toUpperCase() + item.type.slice(1)}
+                  </span>
+                </>
+              ),
+              onClick: () => onSetAttachmentState({ type: item.type })
             }))}
         />
       </div>

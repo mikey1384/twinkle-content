@@ -56,6 +56,7 @@ import { faHeartSquare } from '@fortawesome/pro-solid-svg-icons/faHeartSquare';
 import { faHome } from '@fortawesome/pro-solid-svg-icons/faHome';
 import { faLock } from '@fortawesome/pro-solid-svg-icons/faLock';
 import { faMinus } from '@fortawesome/pro-solid-svg-icons/faMinus';
+import { faPaperclip } from '@fortawesome/pro-solid-svg-icons/faPaperclip';
 import { faPaperPlane } from '@fortawesome/pro-solid-svg-icons/faPaperPlane';
 import { faPencilAlt } from '@fortawesome/pro-solid-svg-icons/faPencilAlt';
 import { faPhoneVolume } from '@fortawesome/pro-solid-svg-icons/faPhoneVolume';
@@ -136,6 +137,7 @@ library.add(
   faLink,
   faLock,
   faMinus,
+  faPaperclip,
   faPaperPlane,
   faPencilAlt,
   faPhoneVolume,

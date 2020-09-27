@@ -107,7 +107,7 @@ export default function FileField({
               }}
             >
               <Button onClick={() => FileInputRef.current.click()} skeuomorphic>
-                <Icon icon="upload" />
+                <Icon icon="paperclip" />
                 <span style={{ marginLeft: '0.7rem' }}>
                   Select {newAttachment ? 'another' : 'a'} file
                 </span>
