@@ -323,7 +323,16 @@ export default function Editor({
       onSetInteractiveState({
         interactiveId,
         slideId,
-        newState
+        newState: {
+          ...newState,
+          fileUploadComplete: false,
+          fileUploadProgress: null
+        }
+      });
+      onSetEditInteractiveForm({
+        interactiveId,
+        slideId,
+        form: null
       });
     }
 
@@ -359,7 +368,16 @@ export default function Editor({
     onSetInteractiveState({
       interactiveId,
       slideId,
-      newState
+      newState: {
+        ...newState,
+        fileUploadComplete: false,
+        fileUploadProgress: null
+      }
+    });
+    onSetEditInteractiveForm({
+      interactiveId,
+      slideId,
+      form: null
     });
   }
 }

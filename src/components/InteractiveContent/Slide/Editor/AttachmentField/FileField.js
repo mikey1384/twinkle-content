@@ -45,7 +45,7 @@ export default function FileField({
   );
   const [alertModalShown, setAlertModalShown] = useState(false);
   const FileInputRef = useRef(null);
-  console.log(isChanging, fileUrl);
+
   return (
     <div style={{ position: 'relative', width: '100%' }}>
       {!(isChanging || !fileUrl) ? (
