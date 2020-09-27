@@ -40,7 +40,7 @@ export default function OptionItem({
         ...style
       }}
     >
-      <div style={{ padding: '1.5rem' }}>
+      <div style={{ padding: '1rem 1.5rem 1rem 0' }}>
         <Button skeuomorphic color={option.icon ? 'black' : 'blue'}>
           {option.icon ? (
             <Icon icon={option.icon} />

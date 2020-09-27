@@ -51,7 +51,7 @@ export default function Editor({
     editedDescription: description || '',
     editedOptionIds: optionIds.length > 0 ? optionIds : [1, 2],
     editedOptionsObj:
-      Object.keys(optionsObj).length > 0
+      optionsObj && Object.keys(optionsObj).length > 0
         ? optionsObj
         : {
             1: {
