@@ -63,7 +63,7 @@ export default function Slide({
     }
   } = useAppContext();
   const {
-    actions: { onSetInteractiveState }
+    actions: { onRemoveInteractiveSlide, onSetInteractiveState }
   } = useInteractiveContext();
   const SlideRef = useRef(null);
   const { canEdit } = useMyState();
@@ -80,6 +80,10 @@ export default function Slide({
   const dropdownMenuProps = useMemo(() => {
     return isDeleted
       ? [
+          {
+            label: 'Remove',
+            onClick: () => onRemoveInteractiveSlide({ interactiveId, slideId })
+          },
           {
             label: 'Undelete',
             onClick: handleUndeleteSlide

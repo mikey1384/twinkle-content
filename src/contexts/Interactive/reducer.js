@@ -34,6 +34,16 @@ export default function InteractiveReducer(state, action) {
         }
       };
     }
+    case 'REMOVE_INTERACTIVE_SLIDE': {
+      return {
+        [action.interactiveId]: {
+          ...state[action.interactiveId],
+          displayedSlides: state[action.interactiveId].displayedSlides.filter(
+            (slideId) => slideId !== action.slideId
+          )
+        }
+      };
+    }
     case 'SET_DISPLAYED_SLIDES': {
       return {
         ...state,
