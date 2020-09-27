@@ -40,7 +40,7 @@ export default function OptionItem({
         ...style
       }}
     >
-      <div style={{ padding: '1rem' }}>
+      <div style={{ padding: '1.5rem' }}>
         <Button skeuomorphic color={option.icon ? 'black' : 'blue'}>
           {option.icon ? (
             <Icon icon={option.icon} />
@@ -76,17 +76,26 @@ export default function OptionItem({
           style={{ width: '100%', ...headingExceedsCharLimit?.style }}
         />
       </div>
-      <div style={{ fontSize: '1.7rem', marginLeft: '1.3rem' }}>
-        <Icon
-          className={css`
-            color: ${Color.darkerGray()};
-            &:hover {
-              color: ${Color.black()};
-            }
-          `}
-          style={{ cursor: 'pointer' }}
-          icon="times"
-        />
+      <div
+        style={{
+          fontSize: '1.7rem',
+          width: '2.5rem',
+          display: 'flex',
+          justifyContent: 'flex-end'
+        }}
+      >
+        {option.id > 2 && (
+          <Icon
+            className={css`
+              color: ${Color.darkerGray()};
+              &:hover {
+                color: ${Color.black()};
+              }
+            `}
+            style={{ cursor: 'pointer' }}
+            icon="times"
+          />
+        )}
       </div>
     </div>
   );
