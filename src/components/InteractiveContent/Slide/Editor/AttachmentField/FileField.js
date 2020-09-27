@@ -45,7 +45,7 @@ export default function FileField({
   );
   const [alertModalShown, setAlertModalShown] = useState(false);
   const FileInputRef = useRef(null);
-
+  console.log(isChanging, fileUrl);
   return (
     <div style={{ position: 'relative', width: '100%' }}>
       {!(isChanging || !fileUrl) ? (
@@ -53,6 +53,7 @@ export default function FileField({
           <Button
             skeuomorphic
             className={css`
+              z-index: 10;
               opacity: 0.9;
               &:hover {
                 opacity: 1;

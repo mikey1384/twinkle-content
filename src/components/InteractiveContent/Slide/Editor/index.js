@@ -309,7 +309,7 @@ export default function Editor({
       const post = {
         ...editForm,
         editedAttachment: {
-          ...editForm.editedAttachment,
+          type: editForm.editedAttachment.type,
           fileUrl: uploadedFilePath
         },
         editedHeading: finalizeEmoji(editedHeading),
