@@ -19,6 +19,7 @@ import { faArrowDown } from '@fortawesome/pro-solid-svg-icons/faArrowDown';
 import { faBadgeDollar } from '@fortawesome/pro-solid-svg-icons/faBadgeDollar';
 import { faBadgeDollar as farBadgeDollar } from '@fortawesome/pro-regular-svg-icons/faBadgeDollar';
 import { faBadgeDollar as falBadgeDollar } from '@fortawesome/pro-light-svg-icons/faBadgeDollar';
+import { faBan } from '@fortawesome/pro-solid-svg-icons/faBan';
 import { faBars } from '@fortawesome/pro-solid-svg-icons/faBars';
 import { faBolt } from '@fortawesome/pro-solid-svg-icons/faBolt';
 import { faBook } from '@fortawesome/pro-solid-svg-icons/faBook';
@@ -75,6 +76,7 @@ import { faTasks } from '@fortawesome/pro-solid-svg-icons/faTasks';
 import { faThumbsUp } from '@fortawesome/pro-solid-svg-icons/faThumbsUp';
 import { faTimes } from '@fortawesome/pro-solid-svg-icons/faTimes';
 import { faTrashAlt } from '@fortawesome/pro-solid-svg-icons/faTrashAlt';
+import { faTrashRestore } from '@fortawesome/pro-solid-svg-icons/faTrashRestore';
 import { faTree } from '@fortawesome/pro-solid-svg-icons/faTree';
 import { faTrophy } from '@fortawesome/pro-solid-svg-icons/faTrophy';
 import { faUser } from '@fortawesome/pro-solid-svg-icons/faUser';
@@ -97,6 +99,7 @@ library.add(
   faBadgeDollar,
   farBadgeDollar,
   falBadgeDollar,
+  faBan,
   faBars,
   faBolt,
   faBook,
@@ -153,6 +156,7 @@ library.add(
   faThumbsUp,
   faTimes,
   faTrashAlt,
+  faTrashRestore,
   faTree,
   faTrophy,
   faUpload,

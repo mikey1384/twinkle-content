@@ -81,17 +81,32 @@ export default function Slide({
     return isDeleted
       ? [
           {
-            label: 'Remove',
+            label: (
+              <>
+                <Icon icon="minus" />
+                <span style={{ marginLeft: '1rem' }}>Remove</span>
+              </>
+            ),
             onClick: () => onRemoveInteractiveSlide({ interactiveId, slideId })
           },
           {
-            label: 'Undelete',
+            label: (
+              <>
+                <Icon icon="trash-restore" />
+                <span style={{ marginLeft: '1rem' }}>Undelete</span>
+              </>
+            ),
             onClick: handleUndeleteSlide
           }
         ]
       : [
           {
-            label: 'Edit',
+            label: (
+              <>
+                <Icon icon="pencil-alt" />
+                <span style={{ marginLeft: '1rem' }}>Edit</span>
+              </>
+            ),
             onClick: () =>
               onSetInteractiveState({
                 interactiveId,
@@ -99,8 +114,31 @@ export default function Slide({
                 newState: { isEditing: true }
               })
           },
+          ...(!isPublished
+            ? [
+                {
+                  label: (
+                    <>
+                      <Icon icon="upload" />
+                      <span style={{ marginLeft: '1rem' }}>Publish</span>
+                    </>
+                  ),
+                  onClick: handlePublishSlide
+                }
+              ]
+            : []),
           {
-            label: isPublished ? 'Unpublish' : 'Delete',
+            label: isPublished ? (
+              <>
+                <Icon icon="ban" />
+                <span style={{ marginLeft: '1rem' }}>Unpublish</span>
+              </>
+            ) : (
+              <>
+                <Icon icon="trash-alt" />
+                <span style={{ marginLeft: '1rem' }}>Delete</span>
+              </>
+            ),
             onClick: isPublished ? handleUnpublishSlide : handleDeleteSlide
           }
         ];
