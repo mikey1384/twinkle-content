@@ -46,7 +46,7 @@ export default function OptionsField({
           alignItems: 'center'
         }}
       >
-        <Button skeuomorphic>
+        <Button skeuomorphic onClick={handleAddOption}>
           <Icon icon="plus" />
           <span style={{ marginLeft: '0.7rem' }}>Add</span>
         </Button>
@@ -57,4 +57,18 @@ export default function OptionsField({
       </div>
     </div>
   );
+
+  function handleAddOption() {
+    const nextOptionId = editedOptionIds[editedOptionIds.length - 1] + 1;
+    onSetInputState({
+      editedOptionIds: [...editedOptionIds, nextOptionId],
+      editedOptionsObj: {
+        ...editedOptionsObj,
+        [nextOptionId]: {
+          id: nextOptionId,
+          label: `option ${nextOptionId}`
+        }
+      }
+    });
+  }
 }
