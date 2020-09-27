@@ -14,21 +14,6 @@ export default function InteractiveReducer(state, action) {
           }
         }
       };
-    case 'DELETE_INTERACTIVE_SLIDE': {
-      return {
-        ...state,
-        [action.interactiveId]: {
-          ...state[action.interactiveId],
-          slideObj: {
-            ...state[action.interactiveId].slideObj,
-            [action.slideId]: {
-              ...state[action.interactiveId].slideObj[action.slideId],
-              isDeleted: true
-            }
-          }
-        }
-      };
-    }
     case 'LOAD_INTERACTIVE': {
       return {
         ...state,

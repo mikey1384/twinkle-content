@@ -57,12 +57,13 @@ export default function Slide({
     requestHelpers: {
       deleteInteractiveSlide,
       publishInteractiveSlide,
+      undeleteInteractiveSlide,
       unPublishInteractiveSlide,
       updateEmbedData
     }
   } = useAppContext();
   const {
-    actions: { onDeleteInteractiveSlide, onSetInteractiveState }
+    actions: { onSetInteractiveState }
   } = useInteractiveContext();
   const SlideRef = useRef(null);
   const { canEdit } = useMyState();
@@ -75,6 +76,32 @@ export default function Slide({
   const paddingShown = useMemo(() => {
     return !stringIsEmpty(heading) && !isEditing;
   }, [heading, isEditing]);
+
+  const dropdownMenuProps = useMemo(() => {
+    return isDeleted
+      ? [
+          {
+            label: 'Undelete',
+            onClick: handleUndeleteSlide
+          }
+        ]
+      : [
+          {
+            label: 'Edit',
+            onClick: () =>
+              onSetInteractiveState({
+                interactiveId,
+                slideId,
+                newState: { isEditing: true }
+              })
+          },
+          {
+            label: isPublished ? 'Unpublish' : 'Delete',
+            onClick: isPublished ? handleUnpublishSlide : handleDeleteSlide
+          }
+        ];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [interactiveId, isPublished, isDeleted, slideId]);
 
   return (
     <div
@@ -114,21 +141,7 @@ export default function Slide({
               zIndex: 10
             }}
             opacity={0.8}
-            menuProps={[
-              {
-                label: 'Edit',
-                onClick: () =>
-                  onSetInteractiveState({
-                    interactiveId,
-                    slideId,
-                    newState: { isEditing: true }
-                  })
-              },
-              {
-                label: isPublished ? 'Unpublish' : 'Delete',
-                onClick: isPublished ? handleUnpublishSlide : handleDeleteSlide
-              }
-            ]}
+            menuProps={dropdownMenuProps}
           />
         </div>
       )}
@@ -181,7 +194,20 @@ export default function Slide({
 
   async function handleDeleteSlide() {
     await deleteInteractiveSlide(slideId);
-    onDeleteInteractiveSlide({ interactiveId, slideId });
+    onSetInteractiveState({
+      interactiveId,
+      slideId,
+      newState: { isDeleted: true }
+    });
+  }
+
+  async function handleUndeleteSlide() {
+    await undeleteInteractiveSlide(slideId);
+    onSetInteractiveState({
+      interactiveId,
+      slideId,
+      newState: { isDeleted: false }
+    });
   }
 
   function handleOptionClick(optionId) {

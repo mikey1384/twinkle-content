@@ -14,13 +14,6 @@ export default function InteractiveActions(dispatch) {
         newSlides
       });
     },
-    onDeleteInteractiveSlide({ interactiveId, slideId }) {
-      return dispatch({
-        type: 'DELETE_INTERACTIVE_SLIDE',
-        interactiveId,
-        slideId
-      });
-    },
     onLoadInteractive(interactive) {
       return dispatch({
         type: 'LOAD_INTERACTIVE',
