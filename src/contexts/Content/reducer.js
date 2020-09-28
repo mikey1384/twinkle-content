@@ -1518,7 +1518,7 @@ export default function ContentReducer(state, action) {
 
     case 'UPLOAD_REPLY': {
       let subjectState = {};
-      if (action.data.subjectId) {
+      if (action.data.subjectId && state['subject' + action.data.subjectId]) {
         subjectState = {
           ['subject' + action.data.subjectId]: {
             ...state['subject' + action.data.subjectId],
