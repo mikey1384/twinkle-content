@@ -376,12 +376,12 @@ export default function Editor({
       slideId,
       post
     });
-    newState.isEditing = false;
     onSetInteractiveState({
       interactiveId,
       slideId,
       newState: {
         ...newState,
+        isEditing: false,
         fileUploadComplete: false,
         fileUploadProgress: null
       }
