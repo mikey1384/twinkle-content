@@ -11,10 +11,12 @@ OptionItem.propTypes = {
   onSetInputState: PropTypes.func.isRequired,
   option: PropTypes.object,
   style: PropTypes.object,
+  editedOptionIds: PropTypes.array,
   editedOptionsObj: PropTypes.object
 };
 
 export default function OptionItem({
+  editedOptionIds,
   editedOptionsObj,
   option,
   style,
@@ -93,6 +95,13 @@ export default function OptionItem({
               }
             `}
             style={{ cursor: 'pointer' }}
+            onClick={() =>
+              onSetInputState({
+                editedOptionIds: editedOptionIds.filter(
+                  (optionId) => optionId !== option.id
+                )
+              })
+            }
             icon="times"
           />
         )}

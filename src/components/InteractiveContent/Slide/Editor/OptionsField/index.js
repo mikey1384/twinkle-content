@@ -31,6 +31,7 @@ export default function OptionsField({
         return (
           <OptionItem
             key={optionId}
+            editedOptionIds={editedOptionIds}
             editedOptionsObj={editedOptionsObj}
             onSetInputState={onSetInputState}
             option={option}
@@ -59,7 +60,13 @@ export default function OptionsField({
   );
 
   function handleAddOption() {
-    const nextOptionId = editedOptionIds[editedOptionIds.length - 1] + 1;
+    let nextOptionId = 0;
+    for (let i = 1; i <= editedOptionIds.length + 1; i++) {
+      if (!editedOptionIds.includes(i)) {
+        nextOptionId = i;
+        break;
+      }
+    }
     onSetInputState({
       editedOptionIds: [...editedOptionIds, nextOptionId],
       editedOptionsObj: {
