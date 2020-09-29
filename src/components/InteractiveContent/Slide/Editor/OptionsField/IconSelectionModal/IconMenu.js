@@ -89,7 +89,7 @@ export default function IconMenu({ onSelectIcon, selectedIcon }) {
   return (
     <div>
       {availableIcons.map((icon) => {
-        const buttonColor = isEqual(selectedIcon, icon) ? 'darkBlue' : 'black';
+        const buttonColor = isEqual(selectedIcon, icon) ? 'logoBlue' : 'black';
         return (
           <Button
             style={{
