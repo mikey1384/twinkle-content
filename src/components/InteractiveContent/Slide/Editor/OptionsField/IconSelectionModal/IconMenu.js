@@ -1,6 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
+import { isEqual } from 'lodash';
 
 const availableIcons = [
   'align-justify',
@@ -78,22 +80,33 @@ const availableIcons = [
   ['fab', 'windows']
 ];
 
-export default function IconMenu() {
+IconMenu.propTypes = {
+  onSelectIcon: PropTypes.func.isRequired,
+  selectedIcon: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
+};
+
+export default function IconMenu({ onSelectIcon, selectedIcon }) {
   return (
     <div>
-      {availableIcons.map((icon) => (
-        <Button
-          style={{
-            display: 'inline',
-            marginRight: '1rem',
-            marginBottom: '1rem'
-          }}
-          key={icon}
-          skeuomorphic
-        >
-          <Icon icon={icon} />
-        </Button>
-      ))}
+      {availableIcons.map((icon) => {
+        const buttonColor = isEqual(selectedIcon, icon) ? 'darkBlue' : 'black';
+        return (
+          <Button
+            style={{
+              display: 'inline',
+              marginRight: '1rem',
+              marginBottom: '1rem'
+            }}
+            key={icon}
+            skeuomorphic
+            onClick={() => onSelectIcon(icon)}
+            color={buttonColor}
+            filled={isEqual(selectedIcon, icon)}
+          >
+            <Icon icon={icon} />
+          </Button>
+        );
+      })}
     </div>
   );
 }

@@ -48,13 +48,9 @@ export default function OptionItem({
         <Button
           onClick={() => setIconSelectionModalShown(true)}
           skeuomorphic
-          color={option.icon ? 'black' : 'blue'}
+          color={option.icon ? 'black' : 'darkBlue'}
         >
-          {option.icon ? (
-            <Icon icon={option.icon} />
-          ) : (
-            <Icon icon="plus" style={{ color: Color.blue() }} />
-          )}
+          {option.icon ? <Icon icon={option.icon} /> : <Icon icon="plus" />}
         </Button>
       </div>
       <div
@@ -113,7 +109,21 @@ export default function OptionItem({
         )}
       </div>
       {iconSelectionModalShown && (
-        <IconSelectionModal onHide={() => setIconSelectionModalShown(false)} />
+        <IconSelectionModal
+          selectedIcon={option.icon}
+          onSelectIcon={(icon) =>
+            onSetInputState({
+              editedOptionsObj: {
+                ...editedOptionsObj,
+                [option.id]: {
+                  ...option,
+                  icon
+                }
+              }
+            })
+          }
+          onHide={() => setIconSelectionModalShown(false)}
+        />
       )}
     </div>
   );
