@@ -181,7 +181,7 @@ function MessageInput({
           </div>
         )}
         <AddButtons
-          disabled={loading || banned}
+          disabled={loading || !!banned}
           onUploadButtonClick={onUploadButtonClick}
           onSelectVideoButtonClick={onSelectVideoButtonClick}
         />
