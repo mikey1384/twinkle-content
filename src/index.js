@@ -16,6 +16,7 @@ import { faApple } from '@fortawesome/free-brands-svg-icons/faApple';
 import { faArrowLeft } from '@fortawesome/pro-solid-svg-icons/faArrowLeft';
 import { faArrowRight } from '@fortawesome/pro-solid-svg-icons/faArrowRight';
 import { faArrowDown } from '@fortawesome/pro-solid-svg-icons/faArrowDown';
+import { faArrowUp } from '@fortawesome/pro-solid-svg-icons/faArrowUp';
 import { faBadgeDollar } from '@fortawesome/pro-solid-svg-icons/faBadgeDollar';
 import { faBadgeDollar as farBadgeDollar } from '@fortawesome/pro-regular-svg-icons/faBadgeDollar';
 import { faBadgeDollar as falBadgeDollar } from '@fortawesome/pro-light-svg-icons/faBadgeDollar';
@@ -32,6 +33,7 @@ import { faChalkboardTeacher } from '@fortawesome/pro-solid-svg-icons/faChalkboa
 import { faCheck } from '@fortawesome/pro-solid-svg-icons/faCheck';
 import { faCheckCircle } from '@fortawesome/pro-solid-svg-icons/faCheckCircle';
 import { faChess } from '@fortawesome/pro-solid-svg-icons/faChess';
+import { faChevronUp } from '@fortawesome/pro-solid-svg-icons/faChevronUp';
 import { faChevronDown } from '@fortawesome/pro-solid-svg-icons/faChevronDown';
 import { faChevronLeft } from '@fortawesome/pro-solid-svg-icons/faChevronLeft';
 import { faChevronRight } from '@fortawesome/pro-solid-svg-icons/faChevronRight';
@@ -97,6 +99,7 @@ library.add(
   faArrowLeft,
   faArrowRight,
   faArrowDown,
+  faArrowUp,
   faBadgeDollar,
   farBadgeDollar,
   falBadgeDollar,
@@ -114,6 +117,7 @@ library.add(
   faCheck,
   faCheckCircle,
   faChess,
+  faChevronUp,
   faChevronDown,
   faChevronLeft,
   faChevronRight,
