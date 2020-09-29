@@ -625,7 +625,12 @@ export default function MessagesContainer({
             }}
             onUploadButtonClick={() => FileInputRef.current.click()}
             onSelectVideoButtonClick={() => setSelectVideoModalShown(true)}
-            recepientId={recepientId}
+            recepientId={
+              recepientId ||
+              currentChannel?.members
+                ?.map((member) => member.id)
+                ?.filter((memberId) => memberId !== userId)[0]
+            }
           />
         ) : (
           <div>
