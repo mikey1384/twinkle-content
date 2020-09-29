@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
@@ -19,25 +19,41 @@ export default function AddSlide({ interactiveId, lastFork, style }) {
     actions: { onAddNewInteractiveSlide }
   } = useInteractiveContext();
 
+  const forkOptionNotSelected = useMemo(() => {
+    return lastFork && !lastFork.selectedOptionId;
+  }, [lastFork]);
+
   return (
     <div style={{ width: '100%', ...style }}>
       <div
         style={{
-          background: '#fff',
+          background: forkOptionNotSelected ? Color.blue() : '#fff',
+          color: forkOptionNotSelected ? '#fff' : Color.black(),
           borderRadius,
           padding: '1.5rem',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           width: '100%',
-          border: `1px solid ${Color.borderGray()}`
+          border: `1px solid ${
+            forkOptionNotSelected ? Color.blue() : Color.borderGray()
+          }`
         }}
       >
         <div style={{ display: 'flex' }}>
-          <Button onClick={handleAddNewSlide} skeuomorphic>
-            <Icon icon="plus" />
-            <span style={{ marginLeft: '0.7rem' }}>Add a Slide</span>
-          </Button>
+          {forkOptionNotSelected ? (
+            <div style={{ fontSize: '2rem' }}>
+              <Icon icon="arrow-up" />
+              <span style={{ marginLeft: '1rem' }}>
+                Please select a fork path first
+              </span>
+            </div>
+          ) : (
+            <Button onClick={handleAddNewSlide} skeuomorphic>
+              <Icon icon="plus" />
+              <span style={{ marginLeft: '0.7rem' }}>Add a Slide</span>
+            </Button>
+          )}
         </div>
       </div>
       <div
@@ -62,11 +78,7 @@ export default function AddSlide({ interactiveId, lastFork, style }) {
   );
 
   async function handleAddNewSlide() {
-    if (!lastFork || lastFork?.selectedOptionId) {
-      const slide = await addInteractiveSlide({ interactiveId, lastFork });
-      onAddNewInteractiveSlide({ interactiveId, slide });
-    } else {
-      console.log('please select the option first');
-    }
+    const slide = await addInteractiveSlide({ interactiveId, lastFork });
+    onAddNewInteractiveSlide({ interactiveId, slide });
   }
 }
