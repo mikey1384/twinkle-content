@@ -1,8 +1,9 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
 import Input from 'components/Texts/Input';
+import IconSelectionModal from './IconSelectionModal';
 import { exceedsCharLimit } from 'helpers/stringHelpers';
 import { Color } from 'constants/css';
 import { css } from 'emotion';
@@ -22,6 +23,7 @@ export default function OptionItem({
   style,
   onSetInputState
 }) {
+  const [iconSelectionModalShown, setIconSelectionModalShown] = useState(false);
   const headingExceedsCharLimit = useMemo(
     () =>
       exceedsCharLimit({
@@ -43,7 +45,11 @@ export default function OptionItem({
       }}
     >
       <div style={{ padding: '1rem 1.5rem 1rem 0' }}>
-        <Button skeuomorphic color={option.icon ? 'black' : 'blue'}>
+        <Button
+          onClick={() => setIconSelectionModalShown(true)}
+          skeuomorphic
+          color={option.icon ? 'black' : 'blue'}
+        >
           {option.icon ? (
             <Icon icon={option.icon} />
           ) : (
@@ -106,6 +112,9 @@ export default function OptionItem({
           />
         )}
       </div>
+      {iconSelectionModalShown && (
+        <IconSelectionModal onHide={() => setIconSelectionModalShown(false)} />
+      )}
     </div>
   );
 }
