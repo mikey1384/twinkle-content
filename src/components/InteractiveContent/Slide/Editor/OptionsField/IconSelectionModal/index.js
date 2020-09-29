@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import IconMenu from './IconMenu';
+import { isEqual } from 'lodash';
 
 IconSelectionModal.propTypes = {
   onHide: PropTypes.func.isRequired,
@@ -15,14 +16,19 @@ export default function IconSelectionModal({
   onSelectIcon,
   selectedIcon: prevSelectedIcon
 }) {
-  const [selectedIcon, setSelectedIcon] = useState(null);
+  const [selectedIcon, setSelectedIcon] = useState(prevSelectedIcon);
   return (
     <Modal onHide={onHide}>
       <header>Select an icon</header>
       <main>
         <IconMenu
-          selectedIcon={selectedIcon || prevSelectedIcon}
-          onSelectIcon={(icon) => setSelectedIcon(icon)}
+          selectedIcon={selectedIcon}
+          onSelectIcon={(icon) =>
+            setSelectedIcon((prevIcon) => {
+              if (isEqual(prevIcon, icon)) return null;
+              return icon;
+            })
+          }
         />
       </main>
       <footer>

@@ -48,7 +48,7 @@ export default function OptionItem({
         <Button
           onClick={() => setIconSelectionModalShown(true)}
           skeuomorphic
-          color={option.icon ? 'black' : 'darkBlue'}
+          color={option.icon ? 'black' : 'orange'}
         >
           {option.icon ? <Icon icon={option.icon} /> : <Icon icon="plus" />}
         </Button>

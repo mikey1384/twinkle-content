@@ -56,6 +56,7 @@ const availableIcons = [
   'pencil-alt',
   'phone-volume',
   'plus',
+  'question',
   'reply',
   'search',
   'school',
@@ -89,7 +90,7 @@ export default function IconMenu({ onSelectIcon, selectedIcon }) {
   return (
     <div>
       {availableIcons.map((icon) => {
-        const buttonColor = isEqual(selectedIcon, icon) ? 'logoBlue' : 'black';
+        const buttonColor = isEqual(selectedIcon, icon) ? 'orange' : 'black';
         return (
           <Button
             style={{

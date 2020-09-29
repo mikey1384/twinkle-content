@@ -63,6 +63,7 @@ import { faPaperPlane } from '@fortawesome/pro-solid-svg-icons/faPaperPlane';
 import { faPencilAlt } from '@fortawesome/pro-solid-svg-icons/faPencilAlt';
 import { faPhoneVolume } from '@fortawesome/pro-solid-svg-icons/faPhoneVolume';
 import { faPlus } from '@fortawesome/pro-solid-svg-icons/faPlus';
+import { faQuestion } from '@fortawesome/pro-solid-svg-icons/faQuestion';
 import { faReply } from '@fortawesome/pro-solid-svg-icons/faReply';
 import { faSearch } from '@fortawesome/pro-solid-svg-icons/faSearch';
 import { faSchool } from '@fortawesome/pro-solid-svg-icons/faSchool';
@@ -147,6 +148,7 @@ library.add(
   faPhoneVolume,
   faPlus,
   faReply,
+  faQuestion,
   faSchool,
   faShoppingBag,
   faSearch,
