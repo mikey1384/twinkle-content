@@ -127,9 +127,10 @@ export default function InteractiveContent({ interactiveId }) {
         slideId,
         newState: { selectedOptionId: optionId }
       });
+      const validNewSlides = newSlides.filter((slideId) => !!slideObj[slideId]);
       onConcatDisplayedSlides({
         interactiveId,
-        newSlides
+        newSlides: validNewSlides
       });
     }
   }
