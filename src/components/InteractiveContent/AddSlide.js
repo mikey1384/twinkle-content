@@ -27,7 +27,7 @@ export default function AddSlide({ interactiveId, lastFork, style }) {
     <div style={{ width: '100%', ...style }}>
       <div
         style={{
-          background: forkOptionNotSelected ? Color.orange() : '#fff',
+          background: forkOptionNotSelected ? Color.logoBlue() : '#fff',
           color: forkOptionNotSelected ? '#fff' : Color.black(),
           borderRadius,
           padding: '1.5rem',
@@ -36,7 +36,7 @@ export default function AddSlide({ interactiveId, lastFork, style }) {
           justifyContent: 'center',
           width: '100%',
           border: `1px solid ${
-            forkOptionNotSelected ? Color.orange() : Color.borderGray()
+            forkOptionNotSelected ? Color.logoBlue() : Color.borderGray()
           }`
         }}
       >
@@ -45,7 +45,7 @@ export default function AddSlide({ interactiveId, lastFork, style }) {
             <div style={{ fontSize: '2.5rem' }}>
               <Icon icon="arrow-up" />
               <span style={{ marginLeft: '1rem' }}>
-                Please select a fork path first
+                Please select a branch first
               </span>
             </div>
           ) : (
