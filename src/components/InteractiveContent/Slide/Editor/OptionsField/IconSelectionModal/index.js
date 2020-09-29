@@ -16,7 +16,9 @@ export default function IconSelectionModal({ onHide }) {
         <Button transparent onClick={onHide} style={{ marginRight: '0.7rem' }}>
           Cancel
         </Button>
-        <Button onClick={() => console.log('clicked')}>Done</Button>
+        <Button color="blue" onClick={() => console.log('clicked')}>
+          Done
+        </Button>
       </footer>
     </Modal>
   );
