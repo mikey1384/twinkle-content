@@ -26,19 +26,21 @@ export default function InteractiveContent({ interactiveId }) {
   } = useInteractiveContext();
   const mounted = useRef(true);
 
-  const { loaded, slideObj = {}, displayedSlides, isPublished } = useMemo(
-    () => state[interactiveId] || {},
-    [interactiveId, state]
-  );
+  const {
+    loaded,
+    slideObj = {},
+    displayedSlideIds,
+    isPublished
+  } = useMemo(() => state[interactiveId] || {}, [interactiveId, state]);
 
   const lastFork = useMemo(() => {
-    const slides = displayedSlides?.map((slideId) => slideObj[slideId]);
+    const slides = displayedSlideIds?.map((slideId) => slideObj[slideId]);
     const forks = slides?.filter((slide) => slide.isFork);
     if (forks?.length > 0) {
       return forks[forks.length - 1];
     }
     return null;
-  }, [displayedSlides, slideObj]);
+  }, [displayedSlideIds, slideObj]);
 
   useEffect(() => {
     mounted.current = true;
@@ -61,7 +63,7 @@ export default function InteractiveContent({ interactiveId }) {
         onLoadInteractive({
           id: 'new',
           loaded: true,
-          displayedSlides: [],
+          displayedSlideIds: [],
           slideObj: {},
           isPublished: false
         });
@@ -83,12 +85,12 @@ export default function InteractiveContent({ interactiveId }) {
     >
       {(isPublished || canEdit) && (
         <>
-          {displayedSlides.map((slideId, index) => (
+          {displayedSlideIds.map((slideId, index) => (
             <Slide
               {...slideObj[slideId]}
               key={slideId}
               autoFocus={
-                index > 0 && !!slideObj[displayedSlides[index - 1]]?.isFork
+                index > 0 && !!slideObj[displayedSlideIds[index - 1]]?.isFork
               }
               isDeleted={!!slideObj[slideId].isDeleted}
               isPublished={!!slideObj[slideId].isPublished}
@@ -105,7 +107,7 @@ export default function InteractiveContent({ interactiveId }) {
         <BottomInterface
           interactiveId={interactiveId}
           lastFork={lastFork}
-          style={{ marginTop: displayedSlides.length === 0 ? 0 : '5rem' }}
+          style={{ marginTop: displayedSlideIds.length === 0 ? 0 : '5rem' }}
         />
       )}
     </div>
@@ -116,10 +118,10 @@ export default function InteractiveContent({ interactiveId }) {
   function handleExpandPath({ newSlides, slideId, optionId }) {
     if (optionId !== slideObj[slideId].selectedOptionId) {
       if (slideObj[slideId].selectedOptionId) {
-        const index = displayedSlides.indexOf(slideId);
+        const index = displayedSlideIds.indexOf(slideId);
         onSetDisplayedSlides({
           interactiveId,
-          newSlides: displayedSlides.slice(0, index + 1)
+          newSlides: displayedSlideIds.slice(0, index + 1)
         });
       }
       onSetInteractiveState({

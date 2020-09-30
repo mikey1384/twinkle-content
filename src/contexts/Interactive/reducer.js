@@ -5,9 +5,9 @@ export default function InteractiveReducer(state, action) {
         ...state,
         [action.interactiveId]: {
           ...state[action.interactiveId],
-          displayedSlides: state[action.interactiveId].displayedSlides.concat([
-            action.slide.id
-          ]),
+          displayedSlideIds: state[
+            action.interactiveId
+          ].displayedSlideIds.concat([action.slide.id]),
           slideObj: {
             ...state[action.interactiveId].slideObj,
             [action.slide.id]: action.slide
@@ -28,9 +28,9 @@ export default function InteractiveReducer(state, action) {
         ...state,
         [action.interactiveId]: {
           ...state[action.interactiveId],
-          displayedSlides: state[action.interactiveId].displayedSlides.concat(
-            action.newSlides
-          )
+          displayedSlideIds: state[
+            action.interactiveId
+          ].displayedSlideIds.concat(action.newSlides)
         }
       };
     }
@@ -38,9 +38,9 @@ export default function InteractiveReducer(state, action) {
       return {
         [action.interactiveId]: {
           ...state[action.interactiveId],
-          displayedSlides: state[action.interactiveId].displayedSlides.filter(
-            (slideId) => slideId !== action.slideId
-          )
+          displayedSlideIds: state[
+            action.interactiveId
+          ].displayedSlideIds.filter((slideId) => slideId !== action.slideId)
         }
       };
     }
@@ -49,7 +49,7 @@ export default function InteractiveReducer(state, action) {
         ...state,
         [action.interactiveId]: {
           ...state[action.interactiveId],
-          displayedSlides: action.newSlides
+          displayedSlideIds: action.newSlides
         }
       };
     }
