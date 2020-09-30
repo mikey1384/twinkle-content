@@ -7,7 +7,7 @@ import { borderRadius, Color } from 'constants/css';
 
 AddSlide.propTypes = {
   interactiveId: PropTypes.number.isRequired,
-  lastFork: PropTypes.bool.isRequired
+  lastFork: PropTypes.object.isRequired
 };
 
 export default function AddSlide({ interactiveId, lastFork }) {
