@@ -3,7 +3,7 @@ import { useMyState } from 'helpers/hooks';
 import PropTypes from 'prop-types';
 import Slide from './Slide';
 import Loading from 'components/Loading';
-import AddSlide from './AddSlide';
+import BottomInterface from './BottomInterface';
 import { useAppContext, useInteractiveContext } from 'contexts';
 
 InteractiveContent.propTypes = {
@@ -102,7 +102,7 @@ export default function InteractiveContent({ interactiveId }) {
         </>
       )}
       {loaded && !isPublished && canEdit && (
-        <AddSlide
+        <BottomInterface
           interactiveId={interactiveId}
           lastFork={lastFork}
           style={{ marginTop: displayedSlides.length === 0 ? 0 : '5rem' }}
