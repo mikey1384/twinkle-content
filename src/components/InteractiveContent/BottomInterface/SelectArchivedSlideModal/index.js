@@ -14,8 +14,12 @@ export default function SelectArchivedSlideModal({ onHide, archivedSlides }) {
     <Modal onHide={onHide}>
       <header>Select an icon</header>
       <main>
-        {archivedSlides.map((slide) => (
-          <ArchivedSlideItem slide={slide} key={slide.id} />
+        {archivedSlides.map((slide, index) => (
+          <ArchivedSlideItem
+            key={slide.id}
+            slide={slide}
+            style={{ marginTop: index === 0 ? 0 : '1rem' }}
+          />
         ))}
       </main>
       <footer>
