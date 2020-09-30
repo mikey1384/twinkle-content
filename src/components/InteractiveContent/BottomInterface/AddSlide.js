@@ -53,21 +53,34 @@ export default function AddSlide({ archivedSlides, interactiveId, lastFork }) {
             </span>
           </div>
         ) : (
-          <>
+          <div
+            style={{ width: '100%', display: 'flex', flexDirection: 'column' }}
+          >
             <Button onClick={handleAddNewSlide} skeuomorphic>
               <Icon icon="plus" />
-              <span style={{ marginLeft: '0.7rem' }}>Add a Slide</span>
+              <span style={{ marginLeft: '0.7rem' }}>Insert a New Slide</span>
             </Button>
+            <div
+              style={{
+                width: '100%',
+                fontSize: '1.5rem',
+                fontWeight: 'bold',
+                textAlign: 'center',
+                marginTop: '1rem'
+              }}
+            >
+              <Icon icon="minus" /> OR <Icon icon="minus" />
+            </div>
             {archivedSlides.length > 0 && (
               <Button
-                style={{ marginLeft: '1rem' }}
+                style={{ marginTop: '1rem' }}
                 onClick={() => setSelectArchivedSlideModalShown(true)}
                 skeuomorphic
               >
-                Select from archived slides
+                Choose from Archived Slides
               </Button>
             )}
-          </>
+          </div>
         )}
       </div>
       {selectArchivedSlideModalShown && (
