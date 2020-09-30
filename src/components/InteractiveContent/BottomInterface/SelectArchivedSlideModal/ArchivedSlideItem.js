@@ -47,6 +47,7 @@ export default function ArchivedSlideItem({ interactiveId, slide, style }) {
       <p style={{ fontWeight: 'bold', fontSize: '1.5rem' }}>{slide.heading}</p>
       <div
         style={{
+          width: '100%',
           fontSize: stringIsEmpty(slide.heading) ? '1.5rem' : '1.3rem',
           marginTop: stringIsEmpty(slide.heading) ? 0 : '0.5rem'
         }}

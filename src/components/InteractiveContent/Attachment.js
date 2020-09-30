@@ -17,7 +17,8 @@ Attachment.propTypes = {
   onThumbnailUpload: PropTypes.func,
   prevUrl: PropTypes.string,
   slideId: PropTypes.number,
-  siteUrl: PropTypes.string
+  siteUrl: PropTypes.string,
+  videoHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 
 export default function Attachment({
@@ -33,7 +34,8 @@ export default function Attachment({
   onThumbnailUpload,
   prevUrl,
   slideId,
-  siteUrl
+  siteUrl,
+  videoHeight
 }) {
   switch (type) {
     case 'file':
@@ -49,11 +51,28 @@ export default function Attachment({
       );
     case 'link':
       return isYouTubeVideo ? (
-        <ReactPlayer
-          style={{ marginTop: '3rem', maxWidth: '100%' }}
-          url={linkUrl}
-          controls
-        />
+        <div
+          style={{
+            width: '100%',
+            paddingTop: '57.25%',
+            marginTop: '1rem',
+            position: 'relative'
+          }}
+        >
+          <ReactPlayer
+            width="100%"
+            height={videoHeight || '100%'}
+            style={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              left: 0,
+              bottom: 0
+            }}
+            url={linkUrl}
+            controls
+          />
+        </div>
       ) : (
         <SlideEmbedly
           style={{ marginTop: '3rem', width: '50%' }}
