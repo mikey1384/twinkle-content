@@ -1,16 +1,18 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
+import SelectArchivedSlideModal from './SelectArchivedSlideModal';
 import { useAppContext, useInteractiveContext } from 'contexts';
 import { borderRadius, Color } from 'constants/css';
 
 AddSlide.propTypes = {
+  archivedSlides: PropTypes.array.isRequired,
   interactiveId: PropTypes.number.isRequired,
-  lastFork: PropTypes.object.isRequired
+  lastFork: PropTypes.object
 };
 
-export default function AddSlide({ interactiveId, lastFork }) {
+export default function AddSlide({ archivedSlides, interactiveId, lastFork }) {
   const {
     requestHelpers: { addInteractiveSlide }
   } = useAppContext();
@@ -20,6 +22,11 @@ export default function AddSlide({ interactiveId, lastFork }) {
   const forkOptionNotSelected = useMemo(() => {
     return lastFork && !lastFork.selectedOptionId;
   }, [lastFork]);
+
+  const [
+    selectArchivedSlideModalShown,
+    setSelectArchivedSlideModalShown
+  ] = useState(false);
 
   return (
     <div
@@ -46,12 +53,29 @@ export default function AddSlide({ interactiveId, lastFork }) {
             </span>
           </div>
         ) : (
-          <Button onClick={handleAddNewSlide} skeuomorphic>
-            <Icon icon="plus" />
-            <span style={{ marginLeft: '0.7rem' }}>Add a Slide</span>
-          </Button>
+          <>
+            <Button onClick={handleAddNewSlide} skeuomorphic>
+              <Icon icon="plus" />
+              <span style={{ marginLeft: '0.7rem' }}>Add a Slide</span>
+            </Button>
+            {archivedSlides.length > 0 && (
+              <Button
+                style={{ marginLeft: '1rem' }}
+                onClick={() => setSelectArchivedSlideModalShown(true)}
+                skeuomorphic
+              >
+                Select from archived slides
+              </Button>
+            )}
+          </>
         )}
       </div>
+      {selectArchivedSlideModalShown && (
+        <SelectArchivedSlideModal
+          archivedSlides={archivedSlides}
+          onHide={() => setSelectArchivedSlideModalShown(false)}
+        />
+      )}
     </div>
   );
 

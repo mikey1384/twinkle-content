@@ -7,7 +7,7 @@ export default function MissionReducer(state, action) {
           ...state.missionObj,
           [action.mission.id]: {
             ...action.mission,
-            tutorialId: action.mission.tutorialId || 'new'
+            tutorialId: action.mission.tutorialId || 0
           }
         }
       };
@@ -18,7 +18,7 @@ export default function MissionReducer(state, action) {
         newMissionObj[mission.id] = {
           ...newMissionObj[mission.id],
           ...mission,
-          tutorialId: mission.tutorialId || 'new',
+          tutorialId: mission.tutorialId || 0,
           loaded: true
         };
       }

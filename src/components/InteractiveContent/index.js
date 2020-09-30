@@ -29,6 +29,7 @@ export default function InteractiveContent({ interactiveId }) {
   const {
     loaded,
     slideObj = {},
+    archivedSlideIds,
     displayedSlideIds,
     isPublished
   } = useMemo(() => state[interactiveId] || {}, [interactiveId, state]);
@@ -54,15 +55,16 @@ export default function InteractiveContent({ interactiveId }) {
       init();
     }
     async function init() {
-      if (interactiveId && interactiveId !== 'new') {
+      if (interactiveId) {
         const interactive = await loadInteractive(interactiveId);
         if (mounted.current) {
           onLoadInteractive(interactive);
         }
       } else {
         onLoadInteractive({
-          id: 'new',
+          id: 0,
           loaded: true,
+          archivedSlideIds: [],
           displayedSlideIds: [],
           slideObj: {},
           isPublished: false
@@ -105,6 +107,7 @@ export default function InteractiveContent({ interactiveId }) {
       )}
       {loaded && !isPublished && canEdit && (
         <BottomInterface
+          archivedSlides={archivedSlideIds.map((slideId) => slideObj[slideId])}
           interactiveId={interactiveId}
           lastFork={lastFork}
           style={{ marginTop: displayedSlideIds.length === 0 ? 0 : '5rem' }}

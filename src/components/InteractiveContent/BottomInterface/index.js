@@ -8,13 +8,23 @@ import { borderRadius, Color } from 'constants/css';
 BottomInterface.propTypes = {
   interactiveId: PropTypes.number.isRequired,
   lastFork: PropTypes.object,
+  archivedSlides: PropTypes.array,
   style: PropTypes.object
 };
 
-export default function BottomInterface({ interactiveId, lastFork, style }) {
+export default function BottomInterface({
+  archivedSlides,
+  interactiveId,
+  lastFork,
+  style
+}) {
   return (
     <div style={{ width: '100%', ...style }}>
-      <AddSlide interactiveId={interactiveId} lastFork={lastFork} />
+      <AddSlide
+        archivedSlides={archivedSlides}
+        interactiveId={interactiveId}
+        lastFork={lastFork}
+      />
       <div
         style={{
           background: '#fff',
