@@ -2,7 +2,7 @@ import React, { useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
-import FileViewer from '../../FileViewer';
+import FileViewer from '../../../FileViewer';
 import AlertModal from 'components/Modals/AlertModal';
 import FileContent from 'components/FileContent';
 import { mb } from 'constants/defaultValues';

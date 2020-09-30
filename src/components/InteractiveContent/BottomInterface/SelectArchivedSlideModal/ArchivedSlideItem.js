@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { css } from 'emotion';
 import { borderRadius, Color } from 'constants/css';
+import { stringIsEmpty } from 'helpers/stringHelpers';
 
 ArchivedSlideItem.propTypes = {
   slide: PropTypes.object.isRequired,
@@ -33,8 +34,15 @@ export default function ArchivedSlideItem({ slide, style }) {
         }
       `}
     >
-      <div>{slide.heading}</div>
-      <div>{slide.description}</div>
+      <p style={{ fontWeight: 'bold', fontSize: '1.5rem' }}>{slide.heading}</p>
+      <div
+        style={{
+          fontSize: stringIsEmpty(slide.heading) ? '1.5rem' : '1.3rem',
+          marginTop: stringIsEmpty(slide.heading) ? 0 : '0.5rem'
+        }}
+      >
+        {slide.description}
+      </div>
     </div>
   );
 }
