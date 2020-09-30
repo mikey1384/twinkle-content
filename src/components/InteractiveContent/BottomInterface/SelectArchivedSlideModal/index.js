@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
+import ArchivedSlideItem from './ArchivedSlideItem';
 
 SelectArchivedSlideModal.propTypes = {
   onHide: PropTypes.func.isRequired,
@@ -14,10 +15,7 @@ export default function SelectArchivedSlideModal({ onHide, archivedSlides }) {
       <header>Select an icon</header>
       <main>
         {archivedSlides.map((slide) => (
-          <div key={slide.id}>
-            <div>{slide.header}</div>
-            <div>{slide.description}</div>
-          </div>
+          <ArchivedSlideItem slide={slide} key={slide.id} />
         ))}
       </main>
       <footer>
