@@ -9,6 +9,7 @@ import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 import { useAppContext } from 'contexts';
 
 FileViewer.propTypes = {
+  small: PropTypes.bool,
   slideId: PropTypes.number,
   src: PropTypes.string.isRequired,
   style: PropTypes.object,
@@ -18,6 +19,7 @@ FileViewer.propTypes = {
 
 export default function FileViewer({
   onThumbnailUpload,
+  small,
   src,
   style,
   slideId,
@@ -33,15 +35,23 @@ export default function FileViewer({
     <div
       style={{
         width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
         ...style
       }}
     >
       {fileType === 'image' ? (
-        <img style={{ width: '100%' }} src={`${cloudFrontURL}${src}`} />
+        <img
+          style={{
+            width: small ? '40rem' : '100%',
+            height: small ? '20rem' : 'auto'
+          }}
+          src={`${cloudFrontURL}${src}`}
+        />
       ) : fileType === 'video' || fileType === 'audio' ? (
         <div
           style={{
-            width: '100%',
+            width: small ? '40rem' : '100%',
             position: 'relative',
             paddingTop:
               fileType === 'video'

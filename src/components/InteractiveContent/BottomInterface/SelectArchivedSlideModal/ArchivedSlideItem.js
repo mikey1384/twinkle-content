@@ -59,6 +59,7 @@ export default function ArchivedSlideItem({ interactiveId, slide, style }) {
           style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
         >
           <Attachment
+            small
             type={slide.attachment.type}
             isYouTubeVideo={slide.attachment.isYouTubeVideo}
             fileUrl={slide.attachment.fileUrl}

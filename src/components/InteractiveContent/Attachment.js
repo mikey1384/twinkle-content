@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import FileViewer from './FileViewer';
 import SlideEmbedly from './SlideEmbedly';
+import { fetchedVideoCodeFromURL } from 'helpers/stringHelpers';
 
 Attachment.propTypes = {
+  small: PropTypes.bool,
   type: PropTypes.string,
   fileUrl: PropTypes.string,
   linkUrl: PropTypes.string,
@@ -22,6 +24,7 @@ Attachment.propTypes = {
 };
 
 export default function Attachment({
+  small,
   type,
   fileUrl,
   linkUrl,
@@ -40,8 +43,12 @@ export default function Attachment({
   switch (type) {
     case 'file':
       return (
-        <div style={{ width: '80%', marginTop: '3rem' }}>
+        <div
+          className="unselectable"
+          style={{ width: '80%', marginTop: '1rem' }}
+        >
           <FileViewer
+            small
             slideId={slideId}
             thumbUrl={thumbUrl}
             src={fileUrl}
@@ -51,30 +58,42 @@ export default function Attachment({
       );
     case 'link':
       return isYouTubeVideo ? (
-        <div
-          style={{
-            width: '100%',
-            paddingTop: '57.25%',
-            marginTop: '1rem',
-            position: 'relative'
-          }}
-        >
-          <ReactPlayer
-            width="100%"
-            height={videoHeight || '100%'}
-            style={{
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              left: 0,
-              bottom: 0
-            }}
-            url={linkUrl}
-            controls
+        small ? (
+          <img
+            className="unselectable"
+            style={{ marginTop: '1rem', height: '20rem' }}
+            src={`https://i.ytimg.com/vi/${fetchedVideoCodeFromURL(
+              linkUrl
+            )}/mqdefault.jpg`}
           />
-        </div>
+        ) : (
+          <div
+            className="unselectable"
+            style={{
+              width: '100%',
+              paddingTop: '57.25%',
+              marginTop: '1rem',
+              position: 'relative'
+            }}
+          >
+            <ReactPlayer
+              width="100%"
+              height={videoHeight || '100%'}
+              style={{
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                left: 0,
+                bottom: 0
+              }}
+              url={linkUrl}
+              controls
+            />
+          </div>
+        )
       ) : (
         <SlideEmbedly
+          className="unselectable"
           style={{ marginTop: '3rem', width: '50%' }}
           url={linkUrl}
           onSetEmbedProps={onSetEmbedProps}
