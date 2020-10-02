@@ -74,6 +74,18 @@ export default function interactiveRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async recoverArchivedSlide({ selectedSlideId, lastFork }) {
+      try {
+        const { data } = await request.put(
+          `${URL}/interactive/slide/recover`,
+          { selectedSlideId, lastFork },
+          auth()
+        );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async unPublishInteractiveSlide(slideId) {
       try {
         const {

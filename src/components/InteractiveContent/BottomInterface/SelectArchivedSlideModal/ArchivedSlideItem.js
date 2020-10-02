@@ -5,24 +5,40 @@ import { css } from 'emotion';
 import { borderRadius, Color } from 'constants/css';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useInteractiveContext } from 'contexts';
+import { useMyState } from 'helpers/hooks';
 
 ArchivedSlideItem.propTypes = {
   interactiveId: PropTypes.number.isRequired,
+  onSelect: PropTypes.func.isRequired,
+  selectedSlideId: PropTypes.number,
   slide: PropTypes.object.isRequired,
   style: PropTypes.object
 };
 
-export default function ArchivedSlideItem({ interactiveId, slide, style }) {
+export default function ArchivedSlideItem({
+  interactiveId,
+  onSelect,
+  selectedSlideId,
+  slide,
+  style
+}) {
+  const { profileTheme } = useMyState();
   const {
     requestHelpers: { updateEmbedData }
   } = useAppContext();
   const {
     actions: { onSetInteractiveState }
   } = useInteractiveContext();
+  const selected = selectedSlideId === slide.id;
 
   return (
     <div
-      style={style}
+      style={{
+        ...style,
+        boxShadow: selected ? `0 0 3px ${Color[profileTheme](0.5)}` : null,
+        border: selected ? `0.5rem solid ${Color[profileTheme](0.5)}` : null
+      }}
+      onClick={() => onSelect(slide.id)}
       className={css`
         width: 100%;
         cursor: pointer;

@@ -89,6 +89,7 @@ export default function AddSlide({ archivedSlides, interactiveId, lastFork }) {
         <SelectArchivedSlideModal
           interactiveId={interactiveId}
           archivedSlides={archivedSlides}
+          lastFork={lastFork}
           onHide={() => setSelectArchivedSlideModalShown(false)}
         />
       )}
