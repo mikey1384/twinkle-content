@@ -62,7 +62,7 @@ export default function SelectArchivedSlideModal({
   );
 
   async function handleDone() {
-    await recoverArchivedSlide({ selectedSlideId, lastFork });
+    await recoverArchivedSlide({ interactiveId, selectedSlideId, lastFork });
     onRecoverArchivedSlide({ interactiveId, slideId: selectedSlideId });
     onHide();
   }

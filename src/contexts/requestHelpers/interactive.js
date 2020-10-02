@@ -74,11 +74,11 @@ export default function interactiveRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async recoverArchivedSlide({ selectedSlideId, lastFork }) {
+    async recoverArchivedSlide({ interactiveId, selectedSlideId, lastFork }) {
       try {
         const { data } = await request.put(
           `${URL}/interactive/slide/recover`,
-          { selectedSlideId, lastFork },
+          { interactiveId, selectedSlideId, lastFork },
           auth()
         );
         return Promise.resolve(data);
