@@ -7,6 +7,7 @@ import { useMyState } from 'helpers/hooks';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 import Content from './Content';
+import Deleted from './Deleted';
 import Editor from './Editor';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
@@ -78,70 +79,49 @@ export default function Slide({
   }, [heading, isEditing]);
 
   const dropdownMenuProps = useMemo(() => {
-    return isDeleted
-      ? [
-          {
-            label: (
-              <>
-                <Icon icon="minus" />
-                <span style={{ marginLeft: '1rem' }}>Remove</span>
-              </>
-            ),
-            onClick: () => onRemoveInteractiveSlide({ interactiveId, slideId })
-          },
-          {
-            label: (
-              <>
-                <Icon icon="trash-restore" />
-                <span style={{ marginLeft: '1rem' }}>Undelete</span>
-              </>
-            ),
-            onClick: handleUndeleteSlide
-          }
-        ]
-      : [
-          {
-            label: (
-              <>
-                <Icon icon="pencil-alt" />
-                <span style={{ marginLeft: '1rem' }}>Edit</span>
-              </>
-            ),
-            onClick: () =>
-              onSetInteractiveState({
-                interactiveId,
-                slideId,
-                newState: { isEditing: true }
-              })
-          },
-          ...(!isPublished
-            ? [
-                {
-                  label: (
-                    <>
-                      <Icon icon="upload" />
-                      <span style={{ marginLeft: '1rem' }}>Publish</span>
-                    </>
-                  ),
-                  onClick: handlePublishSlide
-                }
-              ]
-            : []),
-          {
-            label: isPublished ? (
-              <>
-                <Icon icon="ban" />
-                <span style={{ marginLeft: '1rem' }}>Unpublish</span>
-              </>
-            ) : (
-              <>
-                <Icon icon="trash-alt" />
-                <span style={{ marginLeft: '1rem' }}>Delete</span>
-              </>
-            ),
-            onClick: isPublished ? handleUnpublishSlide : handleDeleteSlide
-          }
-        ];
+    return [
+      {
+        label: (
+          <>
+            <Icon icon="pencil-alt" />
+            <span style={{ marginLeft: '1rem' }}>Edit</span>
+          </>
+        ),
+        onClick: () =>
+          onSetInteractiveState({
+            interactiveId,
+            slideId,
+            newState: { isEditing: true }
+          })
+      },
+      ...(!isPublished
+        ? [
+            {
+              label: (
+                <>
+                  <Icon icon="upload" />
+                  <span style={{ marginLeft: '1rem' }}>Publish</span>
+                </>
+              ),
+              onClick: handlePublishSlide
+            }
+          ]
+        : []),
+      {
+        label: isPublished ? (
+          <>
+            <Icon icon="ban" />
+            <span style={{ marginLeft: '1rem' }}>Unpublish</span>
+          </>
+        ) : (
+          <>
+            <Icon icon="trash-alt" />
+            <span style={{ marginLeft: '1rem' }}>Delete</span>
+          </>
+        ),
+        onClick: isPublished ? handleUnpublishSlide : handleDeleteSlide
+      }
+    ];
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [interactiveId, isPublished, isDeleted, slideId]);
 
@@ -201,9 +181,15 @@ export default function Slide({
           slideId={slideId}
           onThumbnailUpload={handleThumbnailUpload}
         />
+      ) : isDeleted ? (
+        <Deleted
+          onRemoveInteractiveSlide={() =>
+            onRemoveInteractiveSlide({ interactiveId, slideId })
+          }
+          onUndeleteSlide={handleUndeleteSlide}
+        />
       ) : (
         <Content
-          isDeleted={isDeleted}
           isPublished={isPublished}
           attachment={attachment}
           heading={heading}
@@ -240,15 +226,6 @@ export default function Slide({
       interactiveId,
       slideId,
       newState: { isDeleted: true }
-    });
-  }
-
-  async function handleUndeleteSlide() {
-    await undeleteInteractiveSlide(slideId);
-    onSetInteractiveState({
-      interactiveId,
-      slideId,
-      newState: { isDeleted: false }
     });
   }
 
@@ -314,6 +291,15 @@ export default function Slide({
           thumbUrl
         }
       }
+    });
+  }
+
+  async function handleUndeleteSlide() {
+    await undeleteInteractiveSlide(slideId);
+    onSetInteractiveState({
+      interactiveId,
+      slideId,
+      newState: { isDeleted: false }
     });
   }
 }

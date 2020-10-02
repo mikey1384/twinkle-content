@@ -9,7 +9,7 @@ SelectArchivedSlideModal.propTypes = {
   interactiveId: PropTypes.number.isRequired,
   onHide: PropTypes.func.isRequired,
   archivedSlides: PropTypes.array.isRequired,
-  lastFork: PropTypes.object.isRequired
+  lastFork: PropTypes.object
 };
 
 export default function SelectArchivedSlideModal({
