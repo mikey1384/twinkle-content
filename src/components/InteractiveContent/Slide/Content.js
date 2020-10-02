@@ -87,7 +87,7 @@ export default function Content({
           />
         </div>
       )}
-      {optionIds.length > 0 && (
+      {optionIds?.length > 0 && (
         <div
           style={{
             marginTop: '5rem',

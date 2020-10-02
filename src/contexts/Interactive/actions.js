@@ -20,6 +20,13 @@ export default function InteractiveActions(dispatch) {
         interactive
       });
     },
+    onRecoverArchivedSlide({ interactiveId, slideId }) {
+      return dispatch({
+        type: 'RECOVER_ARCHIVED_SLIDE',
+        interactiveId,
+        slideId
+      });
+    },
     onRemoveInteractiveSlide({ interactiveId, slideId }) {
       return dispatch({
         type: 'REMOVE_INTERACTIVE_SLIDE',

@@ -48,7 +48,7 @@ export default function Attachment({
           style={{ width: '80%', marginTop: '1rem' }}
         >
           <FileViewer
-            small
+            small={small}
             slideId={slideId}
             thumbUrl={thumbUrl}
             src={fileUrl}

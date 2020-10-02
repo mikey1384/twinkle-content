@@ -34,6 +34,20 @@ export default function InteractiveReducer(state, action) {
         }
       };
     }
+    case 'RECOVER_ARCHIVED_SLIDE': {
+      return {
+        ...state,
+        [action.interactiveId]: {
+          ...state[action.interactiveId],
+          displayedSlideIds: state[
+            action.interactiveId
+          ].displayedSlideIds.concat(action.slideId),
+          archivedSlideIds: state[action.interactiveId].archivedSlideIds.filter(
+            (slideId) => slideId !== action.slideId
+          )
+        }
+      };
+    }
     case 'REMOVE_INTERACTIVE_SLIDE': {
       return {
         [action.interactiveId]: {

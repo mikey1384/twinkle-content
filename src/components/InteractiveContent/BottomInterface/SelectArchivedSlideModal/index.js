@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import ArchivedSlideItem from './ArchivedSlideItem';
-import { useAppContext } from 'contexts';
+import { useAppContext, useInteractiveContext } from 'contexts';
 
 SelectArchivedSlideModal.propTypes = {
   interactiveId: PropTypes.number.isRequired,
@@ -18,6 +18,9 @@ export default function SelectArchivedSlideModal({
   archivedSlides,
   lastFork
 }) {
+  const {
+    actions: { onRecoverArchivedSlide }
+  } = useInteractiveContext();
   const {
     requestHelpers: { recoverArchivedSlide }
   } = useAppContext();
@@ -60,6 +63,7 @@ export default function SelectArchivedSlideModal({
 
   async function handleDone() {
     await recoverArchivedSlide({ selectedSlideId, lastFork });
+    onRecoverArchivedSlide({ interactiveId, slideId: selectedSlideId });
     onHide();
   }
 }
