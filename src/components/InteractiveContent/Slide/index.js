@@ -150,7 +150,7 @@ export default function Slide({
         ...style
       }}
     >
-      {canEdit && !isEditing && (
+      {canEdit && !isEditing && !isDeleted && (
         <div className="dropdown-wrapper">
           <DropdownButton
             skeuomorphic
@@ -204,7 +204,11 @@ export default function Slide({
           selectedOptionId={selectedOptionId}
         />
       )}
-      <div style={{ paddingBottom: paddingShown ? '5rem' : '2rem' }} />
+      <div
+        style={{
+          paddingBottom: isDeleted ? '1rem' : paddingShown ? '5rem' : '2rem'
+        }}
+      />
       {!isPublished && !isEditing && !isDeleted && (
         <div>
           <Button
