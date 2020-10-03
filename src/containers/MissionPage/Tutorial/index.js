@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import AddTutorial from './AddTutorial';
 import ViewTutorial from './ViewTutorial';
 import InteractiveContent from 'components/InteractiveContent';
 import { useMyState } from 'helpers/hooks';
@@ -23,7 +24,7 @@ export default function Tutorial({ style, tutorialId, tutorialIsPublished }) {
         ...style
       }}
     >
-      {canEdit && !tutorialId && <div>Add a Tutorial</div>}
+      {canEdit && !tutorialId && <AddTutorial />}
       {!!tutorialId && (tutorialIsPublished || canEdit) && (
         <>
           {!started && (
