@@ -3,7 +3,7 @@ import URL from 'constants/URL';
 
 export default function interactiveRequestHelpers({ auth, handleError }) {
   return {
-    async addInteractiveSlide({ interactiveId, lastFork }) {
+    async appendInteractiveSlide({ interactiveId, lastFork }) {
       try {
         const { data } = await request.post(
           `${URL}/interactive/slide`,
@@ -19,6 +19,18 @@ export default function interactiveRequestHelpers({ auth, handleError }) {
       try {
         const { data } = await request.delete(
           `${URL}/interactive/slide?slideId=${slideId}`,
+          auth()
+        );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
+    async insertInteractiveSlide({ interactiveId, forkedFrom, slideId }) {
+      try {
+        const { data } = await request.post(
+          `${URL}/interactive/slide/insert`,
+          { interactiveId, forkedFrom, slideId },
           auth()
         );
         return Promise.resolve(data);

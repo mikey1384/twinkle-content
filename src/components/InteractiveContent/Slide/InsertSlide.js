@@ -2,14 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Color } from 'constants/css';
 import { css } from 'emotion';
+import { useAppContext } from 'contexts';
 import Icon from 'components/Icon';
 
 InsertSlide.propTypes = {
   forkedFrom: PropTypes.number,
+  interactiveId: PropTypes.number,
+  slideId: PropTypes.number,
   style: PropTypes.object
 };
 
-export default function InsertSlide({ forkedFrom, style }) {
+export default function InsertSlide({
+  interactiveId,
+  forkedFrom,
+  slideId,
+  style
+}) {
+  const {
+    requestHelpers: { insertInteractiveSlide }
+  } = useAppContext();
   return (
     <div
       className={`unselectable ${css`
@@ -34,7 +45,7 @@ export default function InsertSlide({ forkedFrom, style }) {
     </div>
   );
 
-  function handleInsertSlide() {
-    console.log(forkedFrom);
+  async function handleInsertSlide() {
+    await insertInteractiveSlide({ interactiveId, forkedFrom, slideId });
   }
 }

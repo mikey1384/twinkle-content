@@ -133,7 +133,12 @@ export default function Slide({
   return (
     <>
       {insertButtonShown && (
-        <InsertSlide forkedFrom={forkedFrom} style={{ marginTop: '2rem' }} />
+        <InsertSlide
+          forkedFrom={forkedFrom}
+          interactiveId={interactiveId}
+          slideId={slideId}
+          style={{ marginTop: '2rem' }}
+        />
       )}
       <div
         ref={SlideRef}

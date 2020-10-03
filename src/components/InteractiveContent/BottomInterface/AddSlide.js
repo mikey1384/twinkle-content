@@ -14,7 +14,7 @@ AddSlide.propTypes = {
 
 export default function AddSlide({ archivedSlides, interactiveId, lastFork }) {
   const {
-    requestHelpers: { addInteractiveSlide }
+    requestHelpers: { appendInteractiveSlide }
   } = useAppContext();
   const {
     actions: { onAddNewInteractiveSlide }
@@ -97,7 +97,7 @@ export default function AddSlide({ archivedSlides, interactiveId, lastFork }) {
   );
 
   async function handleAddNewSlide() {
-    const slide = await addInteractiveSlide({ interactiveId, lastFork });
+    const slide = await appendInteractiveSlide({ interactiveId, lastFork });
     onAddNewInteractiveSlide({ interactiveId, slide });
   }
 }
