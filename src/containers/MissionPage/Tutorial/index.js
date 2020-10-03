@@ -2,14 +2,17 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import StartTutorialPanel from './StartTutorialPanel';
 import InteractiveContent from 'components/InteractiveContent';
+import { useMyState } from 'helpers/hooks';
 
 Tutorial.propTypes = {
   style: PropTypes.object,
-  tutorialId: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  tutorialId: PropTypes.number,
+  tutorialIsPublished: PropTypes.bool
 };
 
-export default function Tutorial({ style, tutorialId }) {
+export default function Tutorial({ style, tutorialId, tutorialIsPublished }) {
   const [started, setStarted] = useState(false);
+  const { canEdit } = useMyState();
   return (
     <div
       style={{
@@ -19,8 +22,15 @@ export default function Tutorial({ style, tutorialId }) {
         ...style
       }}
     >
-      {!started && <StartTutorialPanel onStartClick={() => setStarted(true)} />}
-      {started && <InteractiveContent interactiveId={tutorialId} />}
+      {canEdit && !tutorialIsPublished && <div>Add a New Tutorial</div>}
+      {tutorialIsPublished && (
+        <>
+          {!started && (
+            <StartTutorialPanel onStartClick={() => setStarted(true)} />
+          )}
+          {started && <InteractiveContent interactiveId={tutorialId} />}
+        </>
+      )}
     </div>
   );
 }

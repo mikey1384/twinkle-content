@@ -89,6 +89,7 @@ export default function MissionPage({
               <Tutorial
                 style={{ marginTop: '5rem' }}
                 tutorialId={mission.tutorialId}
+                tutorialIsPublished={mission.tutorialIsPublished}
               />
             </div>
           ) : (
