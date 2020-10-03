@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import StartPanel from './StartPanel';
+import StartTutorialPanel from './StartTutorialPanel';
 import InteractiveContent from 'components/InteractiveContent';
 
 Tutorial.propTypes = {
@@ -9,7 +9,7 @@ Tutorial.propTypes = {
 };
 
 export default function Tutorial({ style, tutorialId }) {
-  const [started, setStarted] = useState(true);
+  const [started, setStarted] = useState(false);
   return (
     <div
       style={{
@@ -19,7 +19,7 @@ export default function Tutorial({ style, tutorialId }) {
         ...style
       }}
     >
-      {!started && <StartPanel onStartClick={() => setStarted(true)} />}
+      {!started && <StartTutorialPanel onStartClick={() => setStarted(true)} />}
       {started && <InteractiveContent interactiveId={tutorialId} />}
     </div>
   );

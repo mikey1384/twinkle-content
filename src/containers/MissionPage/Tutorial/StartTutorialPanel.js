@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import { panel } from '../Styles';
 
-StartPanel.propTypes = {
+StartTutorialPanel.propTypes = {
   onStartClick: PropTypes.func.isRequired
 };
 
-export default function StartPanel({ onStartClick }) {
+export default function StartTutorialPanel({ onStartClick }) {
   return (
-    <div className={panel} style={{ padding: '2rem' }}>
+    <div className={panel} style={{ padding: '2rem', width: '100%' }}>
       <h2 style={{ textAlign: 'center' }}>Need help?</h2>
       <div
         style={{
