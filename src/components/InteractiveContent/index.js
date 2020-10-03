@@ -98,6 +98,7 @@ export default function InteractiveContent({ interactiveId }) {
               isDeleted={!!slideObj[slideId].isDeleted}
               isPublished={!!slideObj[slideId].isPublished}
               isFork={!!slideObj[slideId].isFork}
+              forkedFrom={slideObj[slideId].forkedFrom}
               onExpandPath={slideObj[slideId].isFork ? handleExpandPath : null}
               interactiveId={interactiveId}
               slideId={slideId}

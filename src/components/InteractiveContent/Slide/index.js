@@ -27,6 +27,7 @@ Slide.propTypes = {
   isEditing: PropTypes.bool,
   isPublished: PropTypes.bool,
   isFork: PropTypes.bool,
+  forkedFrom: PropTypes.number,
   description: PropTypes.string,
   onExpandPath: PropTypes.func,
   optionIds: PropTypes.array,
@@ -48,6 +49,7 @@ export default function Slide({
   isPublished,
   isEditing,
   isFork,
+  forkedFrom,
   onExpandPath,
   optionIds,
   optionsObj,
@@ -130,7 +132,9 @@ export default function Slide({
 
   return (
     <>
-      {insertButtonShown && <InsertSlide style={{ marginTop: '2rem' }} />}
+      {insertButtonShown && (
+        <InsertSlide forkedFrom={forkedFrom} style={{ marginTop: '2rem' }} />
+      )}
       <div
         ref={SlideRef}
         className={css`

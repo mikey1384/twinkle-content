@@ -5,10 +5,11 @@ import { css } from 'emotion';
 import Icon from 'components/Icon';
 
 InsertSlide.propTypes = {
+  forkedFrom: PropTypes.number,
   style: PropTypes.object
 };
 
-export default function InsertSlide({ style }) {
+export default function InsertSlide({ forkedFrom, style }) {
   return (
     <div
       className={`unselectable ${css`
@@ -34,6 +35,6 @@ export default function InsertSlide({ style }) {
   );
 
   function handleInsertSlide() {
-    console.log('clicked');
+    console.log(forkedFrom);
   }
 }
