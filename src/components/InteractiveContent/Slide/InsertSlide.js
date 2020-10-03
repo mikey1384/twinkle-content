@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Color } from 'constants/css';
 import { css } from 'emotion';
-import { useAppContext } from 'contexts';
+import { useAppContext, useInteractiveContext } from 'contexts';
 import Icon from 'components/Icon';
 
 InsertSlide.propTypes = {
@@ -21,6 +21,10 @@ export default function InsertSlide({
   const {
     requestHelpers: { insertInteractiveSlide }
   } = useAppContext();
+  const {
+    actions: { onInsertInteractiveSlide }
+  } = useInteractiveContext();
+
   return (
     <div
       className={`unselectable ${css`
@@ -46,6 +50,11 @@ export default function InsertSlide({
   );
 
   async function handleInsertSlide() {
-    await insertInteractiveSlide({ interactiveId, forkedFrom, slideId });
+    const newSlide = await insertInteractiveSlide({
+      interactiveId,
+      forkedFrom,
+      slideId
+    });
+    onInsertInteractiveSlide({ interactiveId, slideId, newSlide });
   }
 }

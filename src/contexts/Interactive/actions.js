@@ -14,6 +14,14 @@ export default function InteractiveActions(dispatch) {
         newSlides
       });
     },
+    onInsertInteractiveSlide({ interactiveId, slideId, newSlide }) {
+      return dispatch({
+        type: 'INSERT_INTERACTIVE_SLIDE',
+        interactiveId,
+        slideId,
+        newSlide
+      });
+    },
     onLoadInteractive(interactive) {
       return dispatch({
         type: 'LOAD_INTERACTIVE',

@@ -14,6 +14,24 @@ export default function InteractiveReducer(state, action) {
           }
         }
       };
+    case 'INSERT_INTERACTIVE_SLIDE': {
+      const newDisplayedSlideIds = [
+        ...state[action.interactiveId].displayedSlideIds
+      ];
+      const index = newDisplayedSlideIds.indexOf(action.slideId);
+      newDisplayedSlideIds.splice(index, 0, action.newSlide.id);
+      return {
+        ...state,
+        [action.interactiveId]: {
+          ...state[action.interactiveId],
+          displayedSlideIds: newDisplayedSlideIds,
+          slideObj: {
+            ...state[action.interactiveId].slideObj,
+            [action.newSlide.id]: action.newSlide
+          }
+        }
+      };
+    }
     case 'LOAD_INTERACTIVE': {
       return {
         ...state,
