@@ -91,6 +91,7 @@ export default function InteractiveContent({ interactiveId }) {
             <Slide
               {...slideObj[slideId]}
               key={slideId}
+              insertButtonShown={index !== 0 && canEdit}
               autoFocus={
                 index > 0 && !!slideObj[displayedSlideIds[index - 1]]?.isFork
               }
@@ -100,7 +101,7 @@ export default function InteractiveContent({ interactiveId }) {
               onExpandPath={slideObj[slideId].isFork ? handleExpandPath : null}
               interactiveId={interactiveId}
               slideId={slideId}
-              style={{ marginTop: index === 0 ? 0 : '5rem' }}
+              style={{ marginTop: index === 0 ? 0 : canEdit ? '2rem' : '5rem' }}
             />
           ))}
         </>

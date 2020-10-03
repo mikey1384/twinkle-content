@@ -11,6 +11,7 @@ import Deleted from './Deleted';
 import Editor from './Editor';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
+import InsertSlide from './InsertSlide';
 import DropdownButton from 'components/Buttons/DropdownButton';
 
 Slide.propTypes = {
@@ -18,6 +19,7 @@ Slide.propTypes = {
   attachment: PropTypes.object,
   fileUploadComplete: PropTypes.bool,
   fileUploadProgress: PropTypes.number,
+  insertButtonShown: PropTypes.bool,
   interactiveId: PropTypes.number,
   style: PropTypes.object,
   heading: PropTypes.string,
@@ -40,6 +42,7 @@ export default function Slide({
   description,
   fileUploadComplete,
   fileUploadProgress,
+  insertButtonShown,
   interactiveId,
   isDeleted,
   isPublished,
@@ -126,102 +129,105 @@ export default function Slide({
   }, [interactiveId, isPublished, isDeleted, slideId]);
 
   return (
-    <div
-      ref={SlideRef}
-      className={css`
-        background: #fff;
-        width: 60%;
-        border: 1px solid ${Color.borderGray()};
-        border-radius: ${borderRadius};
-        @media (max-width: ${mobileMaxWidth}) {
-          width: 100%;
-        }
-      `}
-      style={{
-        position: 'relative',
-        display: 'flex',
-        flexDirection: 'column',
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingLeft: '2rem',
-        paddingRight: '2rem',
-        paddingTop: isEditing ? '2rem' : '1rem',
-        ...style
-      }}
-    >
-      {canEdit && !isEditing && !isDeleted && (
-        <div className="dropdown-wrapper">
-          <DropdownButton
-            skeuomorphic
-            color="darkerGray"
-            direction="left"
-            style={{
-              position: 'absolute',
-              right: '1rem',
-              top: '1rem',
-              zIndex: 10
-            }}
-            opacity={0.8}
-            menuProps={dropdownMenuProps}
-          />
-        </div>
-      )}
-      {isEditing ? (
-        <Editor
-          attachment={attachment}
-          description={description}
-          fileUploadComplete={fileUploadComplete}
-          fileUploadProgress={fileUploadProgress}
-          heading={heading}
-          interactiveId={interactiveId}
-          isFork={isFork}
-          optionIds={optionIds}
-          optionsObj={optionsObj}
-          slideId={slideId}
-          onThumbnailUpload={handleThumbnailUpload}
-        />
-      ) : isDeleted ? (
-        <Deleted
-          onRemoveInteractiveSlide={() =>
-            onRemoveInteractiveSlide({ interactiveId, slideId })
-          }
-          onUndeleteSlide={handleUndeleteSlide}
-        />
-      ) : (
-        <Content
-          isPublished={isPublished}
-          attachment={attachment}
-          heading={heading}
-          description={description}
-          optionIds={optionIds}
-          optionsObj={optionsObj}
-          onOptionClick={handleOptionClick}
-          onEmbedDataLoad={handleEmbedDataLoad}
-          onSetEmbedProps={handleSetEmbedProps}
-          onThumbnailUpload={handleThumbnailUpload}
-          slideId={slideId}
-          selectedOptionId={selectedOptionId}
-        />
-      )}
+    <>
+      {insertButtonShown && <InsertSlide style={{ marginTop: '2rem' }} />}
       <div
+        ref={SlideRef}
+        className={css`
+          background: #fff;
+          width: 60%;
+          border: 1px solid ${Color.borderGray()};
+          border-radius: ${borderRadius};
+          @media (max-width: ${mobileMaxWidth}) {
+            width: 100%;
+          }
+        `}
         style={{
-          paddingBottom: isDeleted ? '1rem' : paddingShown ? '5rem' : '2rem'
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+          width: '100%',
+          alignItems: 'center',
+          justifyContent: 'center',
+          paddingLeft: '2rem',
+          paddingRight: '2rem',
+          paddingTop: isEditing ? '2rem' : '1rem',
+          ...style
         }}
-      />
-      {!isPublished && !isEditing && !isDeleted && (
-        <div>
-          <Button
-            onClick={handlePublishSlide}
-            style={{ marginBottom: '1.5rem' }}
-            skeuomorphic
-          >
-            <Icon icon="upload" />
-            <span style={{ marginLeft: '0.7rem' }}>Publish Slide</span>
-          </Button>
-        </div>
-      )}
-    </div>
+      >
+        {canEdit && !isEditing && !isDeleted && (
+          <div className="dropdown-wrapper">
+            <DropdownButton
+              skeuomorphic
+              color="darkerGray"
+              direction="left"
+              style={{
+                position: 'absolute',
+                right: '1rem',
+                top: '1rem',
+                zIndex: 10
+              }}
+              opacity={0.8}
+              menuProps={dropdownMenuProps}
+            />
+          </div>
+        )}
+        {isEditing ? (
+          <Editor
+            attachment={attachment}
+            description={description}
+            fileUploadComplete={fileUploadComplete}
+            fileUploadProgress={fileUploadProgress}
+            heading={heading}
+            interactiveId={interactiveId}
+            isFork={isFork}
+            optionIds={optionIds}
+            optionsObj={optionsObj}
+            slideId={slideId}
+            onThumbnailUpload={handleThumbnailUpload}
+          />
+        ) : isDeleted ? (
+          <Deleted
+            onRemoveInteractiveSlide={() =>
+              onRemoveInteractiveSlide({ interactiveId, slideId })
+            }
+            onUndeleteSlide={handleUndeleteSlide}
+          />
+        ) : (
+          <Content
+            isPublished={isPublished}
+            attachment={attachment}
+            heading={heading}
+            description={description}
+            optionIds={optionIds}
+            optionsObj={optionsObj}
+            onOptionClick={handleOptionClick}
+            onEmbedDataLoad={handleEmbedDataLoad}
+            onSetEmbedProps={handleSetEmbedProps}
+            onThumbnailUpload={handleThumbnailUpload}
+            slideId={slideId}
+            selectedOptionId={selectedOptionId}
+          />
+        )}
+        <div
+          style={{
+            paddingBottom: isDeleted ? '1rem' : paddingShown ? '4rem' : '2rem'
+          }}
+        />
+        {!isPublished && !isEditing && !isDeleted && (
+          <div>
+            <Button
+              onClick={handlePublishSlide}
+              style={{ marginBottom: '1.5rem' }}
+              skeuomorphic
+            >
+              <Icon icon="upload" />
+              <span style={{ marginLeft: '0.7rem' }}>Publish Slide</span>
+            </Button>
+          </div>
+        )}
+      </div>
+    </>
   );
 
   async function handleDeleteSlide() {
