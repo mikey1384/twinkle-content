@@ -3,18 +3,22 @@ import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import { panel } from '../Styles';
 
-StartTutorialPanel.propTypes = {
+ViewTutorial.propTypes = {
+  userCanEdit: PropTypes.bool,
   onStartClick: PropTypes.func.isRequired
 };
 
-export default function StartTutorialPanel({ onStartClick }) {
+export default function ViewTutorial({ userCanEdit, onStartClick }) {
   return (
     <div className={panel} style={{ padding: '2rem', width: '100%' }}>
-      <h2 style={{ textAlign: 'center' }}>Need help?</h2>
+      {!userCanEdit && (
+        <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>
+          Need help?
+        </h2>
+      )}
       <div
         style={{
           display: 'flex',
-          marginTop: '2rem',
           justifyContent: 'center'
         }}
       >
@@ -24,7 +28,7 @@ export default function StartTutorialPanel({ onStartClick }) {
           skeuomorphic
           onClick={onStartClick}
         >
-          Start Tutorial
+          {userCanEdit ? 'Edit Tutorial' : 'Start Tutorial'}
         </Button>
       </div>
     </div>

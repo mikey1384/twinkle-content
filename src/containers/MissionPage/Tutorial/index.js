@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import StartTutorialPanel from './StartTutorialPanel';
+import ViewTutorial from './ViewTutorial';
 import InteractiveContent from 'components/InteractiveContent';
 import { useMyState } from 'helpers/hooks';
 
@@ -13,6 +13,7 @@ Tutorial.propTypes = {
 export default function Tutorial({ style, tutorialId, tutorialIsPublished }) {
   const [started, setStarted] = useState(false);
   const { canEdit } = useMyState();
+
   return (
     <div
       style={{
@@ -22,11 +23,14 @@ export default function Tutorial({ style, tutorialId, tutorialIsPublished }) {
         ...style
       }}
     >
-      {canEdit && !tutorialIsPublished && <div>Add a New Tutorial</div>}
-      {tutorialIsPublished && (
+      {canEdit && !tutorialId && <div>Add a Tutorial</div>}
+      {!!tutorialId && (tutorialIsPublished || canEdit) && (
         <>
           {!started && (
-            <StartTutorialPanel onStartClick={() => setStarted(true)} />
+            <ViewTutorial
+              userCanEdit={canEdit}
+              onStartClick={() => setStarted(true)}
+            />
           )}
           {started && <InteractiveContent interactiveId={tutorialId} />}
         </>
