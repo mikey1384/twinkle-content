@@ -52,6 +52,15 @@ export default function InteractiveReducer(state, action) {
         }
       };
     }
+    case 'PUBLISH_INTERACTIVE': {
+      return {
+        ...state,
+        [action.interactiveId]: {
+          ...state[action.interactiveId],
+          isPublished: true
+        }
+      };
+    }
     case 'RECOVER_ARCHIVED_SLIDE': {
       return {
         ...state,

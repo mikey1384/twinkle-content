@@ -28,6 +28,12 @@ export default function InteractiveActions(dispatch) {
         interactive
       });
     },
+    onPublishInteractive(interactiveId) {
+      return dispatch({
+        type: 'PUBLISH_INTERACTIVE',
+        interactiveId
+      });
+    },
     onRecoverArchivedSlide({ interactiveId, slideId }) {
       return dispatch({
         type: 'RECOVER_ARCHIVED_SLIDE',

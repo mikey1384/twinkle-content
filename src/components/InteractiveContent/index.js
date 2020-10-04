@@ -20,6 +20,7 @@ export default function InteractiveContent({ interactiveId }) {
     actions: {
       onLoadInteractive,
       onConcatDisplayedSlides,
+      onPublishInteractive,
       onSetDisplayedSlides,
       onSetInteractiveState
     }
@@ -110,8 +111,10 @@ export default function InteractiveContent({ interactiveId }) {
       {loaded && !isPublished && canEdit && (
         <BottomInterface
           archivedSlides={archivedSlideIds.map((slideId) => slideObj[slideId])}
+          isPublished={!!isPublished}
           interactiveId={interactiveId}
           lastFork={lastFork}
+          onPublishInteractive={onPublishInteractive}
           style={{ marginTop: displayedSlideIds.length === 0 ? 0 : '5rem' }}
         />
       )}

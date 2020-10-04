@@ -35,16 +35,14 @@ export default function Tutorial({
       {canEdit && !tutorialId && (
         <AddTutorial missionId={missionId} missionTitle={missionTitle} />
       )}
-      {!!tutorialId && (tutorialIsPublished || canEdit) && (
-        <>
-          {!started && (
-            <ViewTutorial
-              userCanEdit={canEdit}
-              onStartClick={() => setStarted(true)}
-            />
-          )}
-          {started && <InteractiveContent interactiveId={tutorialId} />}
-        </>
+      {!!tutorialId && tutorialIsPublished && !started && !canEdit && (
+        <ViewTutorial
+          userCanEdit={canEdit}
+          onStartClick={() => setStarted(true)}
+        />
+      )}
+      {(started || canEdit) && (
+        <InteractiveContent interactiveId={tutorialId} />
       )}
     </div>
   );
