@@ -12,6 +12,13 @@ export default function MissionActions(dispatch) {
         missions,
         loadMoreButton
       });
+    },
+    onSetMissionState({ missionId, newState }) {
+      return dispatch({
+        type: 'SET_MISSION_STATE',
+        missionId,
+        newState
+      });
     }
   };
 }

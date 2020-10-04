@@ -29,6 +29,18 @@ export default function MissionReducer(state, action) {
         loadMoreButton: action.loadMoreButton
       };
     }
+    case 'SET_MISSION_STATE': {
+      return {
+        ...state,
+        missionObj: {
+          ...state.missionObj,
+          [action.missionId]: {
+            ...state.missionObj[action.missionId],
+            ...action.newState
+          }
+        }
+      };
+    }
     default:
       return state;
   }

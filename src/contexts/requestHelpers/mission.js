@@ -5,7 +5,9 @@ export default function missionRequestHelpers({ auth, handleError }) {
   return {
     async attachMissionTutorial({ missionId, missionTitle }) {
       try {
-        const { data } = await request.post(
+        const {
+          data: { tutorialId }
+        } = await request.post(
           `${URL}/mission/tutorial`,
           {
             missionId,
@@ -13,7 +15,7 @@ export default function missionRequestHelpers({ auth, handleError }) {
           },
           auth()
         );
-        return Promise.resolve(data);
+        return Promise.resolve(tutorialId);
       } catch (error) {
         return handleError(error);
       }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import { panel } from '../Styles';
-import { useAppContext } from 'contexts';
+import { useAppContext, useMissionContext } from 'contexts';
 
 AddTutorial.propTypes = {
   missionId: PropTypes.number,
@@ -14,6 +14,9 @@ export default function AddTutorial({ missionId, missionTitle }) {
   const {
     requestHelpers: { attachMissionTutorial }
   } = useAppContext();
+  const {
+    actions: { onSetMissionState }
+  } = useMissionContext();
   return (
     <div
       className={panel}
@@ -27,6 +30,7 @@ export default function AddTutorial({ missionId, missionTitle }) {
   );
 
   async function handleAttachTutorial() {
-    await attachMissionTutorial({ missionId, missionTitle });
+    const tutorialId = await attachMissionTutorial({ missionId, missionTitle });
+    onSetMissionState({ missionId, newState: { tutorialId } });
   }
 }
