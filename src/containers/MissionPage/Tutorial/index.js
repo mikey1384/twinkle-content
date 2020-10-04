@@ -6,12 +6,20 @@ import InteractiveContent from 'components/InteractiveContent';
 import { useMyState } from 'helpers/hooks';
 
 Tutorial.propTypes = {
+  missionId: PropTypes.number,
+  missionTitle: PropTypes.string,
   style: PropTypes.object,
   tutorialId: PropTypes.number,
   tutorialIsPublished: PropTypes.bool
 };
 
-export default function Tutorial({ style, tutorialId, tutorialIsPublished }) {
+export default function Tutorial({
+  missionId,
+  missionTitle,
+  style,
+  tutorialId,
+  tutorialIsPublished
+}) {
   const [started, setStarted] = useState(false);
   const { canEdit } = useMyState();
 
@@ -24,7 +32,9 @@ export default function Tutorial({ style, tutorialId, tutorialIsPublished }) {
         ...style
       }}
     >
-      {canEdit && !tutorialId && <AddTutorial />}
+      {canEdit && !tutorialId && (
+        <AddTutorial missionId={missionId} missionTitle={missionTitle} />
+      )}
       {!!tutorialId && (tutorialIsPublished || canEdit) && (
         <>
           {!started && (

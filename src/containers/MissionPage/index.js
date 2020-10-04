@@ -87,6 +87,8 @@ export default function MissionPage({
                 title={mission.title}
               />
               <Tutorial
+                missionId={mission.id}
+                missionTitle={mission.title}
                 style={{ marginTop: '5rem' }}
                 tutorialId={mission.tutorialId}
                 tutorialIsPublished={mission.tutorialIsPublished}

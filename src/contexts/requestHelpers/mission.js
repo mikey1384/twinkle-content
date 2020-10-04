@@ -3,6 +3,17 @@ import URL from 'constants/URL';
 
 export default function missionRequestHelpers({ auth, handleError }) {
   return {
+    async attachMissionTutorial({ missionId, missionTitle }) {
+      try {
+        const { data } = await request.post(`${URL}/mission/tutorial`, {
+          missionId,
+          missionTitle
+        });
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async loadMission(missionId) {
       try {
         const { data } = await request.get(
