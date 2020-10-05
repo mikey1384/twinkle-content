@@ -93,8 +93,12 @@ export default function InteractiveContent({ interactiveId }) {
               {...slideObj[slideId]}
               key={slideId}
               insertButtonShown={index !== 0 && canEdit}
-              autoFocus={
-                index > 0 && !!slideObj[displayedSlideIds[index - 1]]?.isFork
+              cannotMoveUp={
+                index === 0 || !!slideObj[displayedSlideIds[index - 1]]?.isFork
+              }
+              cannotMoveDown={
+                index === displayedSlideIds.length - 1 ||
+                !!slideObj[displayedSlideIds[index + 1]]?.isFork
               }
               isDeleted={!!slideObj[slideId].isDeleted}
               isPublished={!!slideObj[slideId].isPublished}

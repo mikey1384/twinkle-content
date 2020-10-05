@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useAppContext, useInteractiveContext } from 'contexts';
-import { scrollElementToCenter } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
@@ -15,8 +14,9 @@ import InsertSlide from './InsertSlide';
 import DropdownButton from 'components/Buttons/DropdownButton';
 
 Slide.propTypes = {
-  autoFocus: PropTypes.bool,
   attachment: PropTypes.object,
+  cannotMoveUp: PropTypes.bool,
+  cannotMoveDown: PropTypes.bool,
   fileUploadComplete: PropTypes.bool,
   fileUploadProgress: PropTypes.number,
   insertButtonShown: PropTypes.bool,
@@ -38,7 +38,8 @@ Slide.propTypes = {
 };
 
 export default function Slide({
-  autoFocus,
+  cannotMoveUp,
+  cannotMoveDown,
   heading,
   description,
   fileUploadComplete,
@@ -73,16 +74,10 @@ export default function Slide({
   } = useInteractiveContext();
   const SlideRef = useRef(null);
   const { canEdit } = useMyState();
-  useEffect(() => {
-    if (autoFocus) {
-      scrollElementToCenter(SlideRef.current);
-    }
-  }, [autoFocus]);
 
   const paddingShown = useMemo(() => {
     return !stringIsEmpty(heading) && !isEditing;
   }, [heading, isEditing]);
-
   const dropdownMenuProps = useMemo(() => {
     return [
       {
@@ -99,8 +94,37 @@ export default function Slide({
             newState: { isEditing: true }
           })
       },
-      ...(!isPublished
-        ? [
+      ...(isFork
+        ? []
+        : [
+            ...(cannotMoveUp
+              ? []
+              : [
+                  {
+                    label: (
+                      <>
+                        <Icon icon="arrow-up" />
+                        <span style={{ marginLeft: '1rem' }}>Move Up</span>
+                      </>
+                    )
+                  }
+                ]),
+            ...(cannotMoveDown
+              ? []
+              : [
+                  {
+                    label: (
+                      <>
+                        <Icon icon="arrow-down" />
+                        <span style={{ marginLeft: '1rem' }}>Move Down</span>
+                      </>
+                    )
+                  }
+                ])
+          ]),
+      ...(isPublished
+        ? []
+        : [
             {
               label: (
                 <>
@@ -110,8 +134,7 @@ export default function Slide({
               ),
               onClick: handlePublishSlide
             }
-          ]
-        : []),
+          ]),
       {
         label: isPublished ? (
           <>
@@ -170,6 +193,7 @@ export default function Slide({
               skeuomorphic
               color="darkerGray"
               direction="left"
+              listStyle={{ width: '25ch' }}
               style={{
                 position: 'absolute',
                 right: '1rem',
