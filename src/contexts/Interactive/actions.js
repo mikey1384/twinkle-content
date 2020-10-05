@@ -28,6 +28,14 @@ export default function InteractiveActions(dispatch) {
         interactive
       });
     },
+    onMoveInteractiveSlide({ direction, interactiveId, slideId }) {
+      return dispatch({
+        type: 'MOVE_INTERACTIVE_SLIDE',
+        direction,
+        interactiveId,
+        slideId
+      });
+    },
     onPublishInteractive(interactiveId) {
       return dispatch({
         type: 'PUBLISH_INTERACTIVE',

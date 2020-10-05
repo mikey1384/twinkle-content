@@ -31,6 +31,7 @@ Slide.propTypes = {
   forkedFrom: PropTypes.number,
   description: PropTypes.string,
   onExpandPath: PropTypes.func,
+  onMoveSlide: PropTypes.func,
   optionIds: PropTypes.array,
   optionsObj: PropTypes.object,
   slideId: PropTypes.number,
@@ -54,6 +55,7 @@ export default function Slide({
   isFork,
   forkedFrom,
   onExpandPath,
+  onMoveSlide,
   optionIds,
   optionsObj,
   slideId,
@@ -107,7 +109,9 @@ export default function Slide({
                         <Icon icon="arrow-up" />
                         <span style={{ marginLeft: '1rem' }}>Move Up</span>
                       </>
-                    )
+                    ),
+                    onClick: () =>
+                      onMoveSlide({ slideId, direction: 'up', interactiveId })
                   }
                 ]),
             ...(cannotMoveDown
@@ -119,7 +123,9 @@ export default function Slide({
                         <Icon icon="arrow-down" />
                         <span style={{ marginLeft: '1rem' }}>Move Down</span>
                       </>
-                    )
+                    ),
+                    onClick: () =>
+                      onMoveSlide({ slideId, direction: 'down', interactiveId })
                   }
                 ])
           ]),

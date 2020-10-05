@@ -52,6 +52,27 @@ export default function InteractiveReducer(state, action) {
         }
       };
     }
+    case 'MOVE_INTERACTIVE_SLIDE': {
+      const { displayedSlideIds } = state[action.interactiveId];
+      const index = displayedSlideIds.indexOf(action.slideId);
+      const newDisplayedSlideIds = [...displayedSlideIds];
+      if (action.direction === 'up') {
+        const prevSlideId = displayedSlideIds[index - 1];
+        newDisplayedSlideIds[index - 1] = action.slideId;
+        newDisplayedSlideIds[index] = prevSlideId;
+      } else {
+        const nextSlideId = displayedSlideIds[index + 1];
+        newDisplayedSlideIds[index] = nextSlideId;
+        newDisplayedSlideIds[index + 1] = action.slideId;
+      }
+      return {
+        ...state,
+        [action.interactiveId]: {
+          ...state[action.interactiveId],
+          displayedSlideIds: newDisplayedSlideIds
+        }
+      };
+    }
     case 'PUBLISH_INTERACTIVE': {
       return {
         ...state,

@@ -21,6 +21,7 @@ export default function InteractiveContent({ interactiveId }) {
     actions: {
       onLoadInteractive,
       onConcatDisplayedSlides,
+      onMoveInteractiveSlide,
       onPublishInteractive,
       onSetDisplayedSlides,
       onSetInteractiveState
@@ -119,6 +120,7 @@ export default function InteractiveContent({ interactiveId }) {
               forkedFrom={slideObj[slideId].forkedFrom}
               interactiveId={interactiveId}
               onExpandPath={slideObj[slideId].isFork ? handleExpandPath : null}
+              onMoveSlide={onMoveInteractiveSlide}
               slideId={slideId}
               style={{ marginTop: index === 0 ? 0 : canEdit ? '2rem' : '5rem' }}
             />
