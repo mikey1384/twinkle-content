@@ -27,7 +27,7 @@ export default function InteractiveContent({ interactiveId }) {
     }
   } = useInteractiveContext();
   const mounted = useRef(true);
-  const prevDisplayedSlidesLengthRef = useRef(null);
+  const expanded = useRef(false);
   const SlideRefs = useRef({});
 
   const {
@@ -48,16 +48,13 @@ export default function InteractiveContent({ interactiveId }) {
   }, [displayedSlideIds, slideObj]);
 
   useEffect(() => {
-    if (
-      typeof prevDisplayedSlidesLengthRef.current === 'number' &&
-      displayedSlideIds?.length > prevDisplayedSlidesLengthRef.current
-    ) {
+    if (expanded.current && lastFork?.id) {
       scrollElementToCenter(
-        SlideRefs.current[prevDisplayedSlidesLengthRef.current]
+        SlideRefs.current[displayedSlideIds.indexOf(lastFork.id) + 1]
       );
     }
-    prevDisplayedSlidesLengthRef.current = displayedSlideIds?.length;
-  }, [displayedSlideIds]);
+    expanded.current = false;
+  }, [displayedSlideIds, lastFork]);
 
   useEffect(() => {
     mounted.current = true;
@@ -144,6 +141,7 @@ export default function InteractiveContent({ interactiveId }) {
   );
 
   function handleExpandPath({ newSlides, slideId, optionId }) {
+    expanded.current = true;
     if (optionId !== slideObj[slideId].selectedOptionId) {
       if (slideObj[slideId].selectedOptionId) {
         const index = displayedSlideIds.indexOf(slideId);
