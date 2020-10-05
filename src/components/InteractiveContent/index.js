@@ -13,7 +13,7 @@ InteractiveContent.propTypes = {
 
 export default function InteractiveContent({ interactiveId }) {
   const {
-    requestHelpers: { loadInteractive }
+    requestHelpers: { loadInteractive, moveInteractiveSlide }
   } = useAppContext();
   const { canEdit } = useMyState();
   const {
@@ -120,7 +120,7 @@ export default function InteractiveContent({ interactiveId }) {
               forkedFrom={slideObj[slideId].forkedFrom}
               interactiveId={interactiveId}
               onExpandPath={slideObj[slideId].isFork ? handleExpandPath : null}
-              onMoveSlide={onMoveInteractiveSlide}
+              onMoveSlide={handleMoveInteractiveSlide}
               slideId={slideId}
               style={{ marginTop: index === 0 ? 0 : canEdit ? '2rem' : '5rem' }}
             />
@@ -165,5 +165,19 @@ export default function InteractiveContent({ interactiveId }) {
         newSlides: validNewSlides
       });
     }
+  }
+
+  async function handleMoveInteractiveSlide({
+    direction,
+    interactiveId,
+    slideId
+  }) {
+    await moveInteractiveSlide({
+      direction,
+      forkedFrom: slideObj[slideId].forkedFrom,
+      interactiveId,
+      slideId
+    });
+    onMoveInteractiveSlide({ direction, interactiveId, slideId });
   }
 }

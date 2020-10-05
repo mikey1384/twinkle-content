@@ -158,7 +158,14 @@ export default function Slide({
       }
     ];
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [interactiveId, isPublished, isDeleted, slideId]);
+  }, [
+    interactiveId,
+    isPublished,
+    isDeleted,
+    slideId,
+    cannotMoveDown,
+    cannotMoveUp
+  ]);
 
   return (
     <>

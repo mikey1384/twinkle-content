@@ -72,6 +72,23 @@ export default function interactiveRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async moveInteractiveSlide({
+      direction,
+      forkedFrom,
+      interactiveId,
+      slideId
+    }) {
+      try {
+        const { data } = await request.put(
+          `${URL}/interactive/slide/move`,
+          { direction, forkedFrom, interactiveId, slideId },
+          auth()
+        );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async publishInteractive(interactiveId) {
       try {
         const {
