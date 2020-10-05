@@ -5,6 +5,7 @@ import Slide from './Slide';
 import Loading from 'components/Loading';
 import BottomInterface from './BottomInterface';
 import { useAppContext, useInteractiveContext } from 'contexts';
+import { scrollElementToCenter } from 'helpers';
 
 InteractiveContent.propTypes = {
   interactiveId: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
@@ -26,6 +27,8 @@ export default function InteractiveContent({ interactiveId }) {
     }
   } = useInteractiveContext();
   const mounted = useRef(true);
+  const prevDisplayedSlidesLengthRef = useRef(null);
+  const SlideRefs = useRef({});
 
   const {
     loaded,
@@ -43,6 +46,18 @@ export default function InteractiveContent({ interactiveId }) {
     }
     return null;
   }, [displayedSlideIds, slideObj]);
+
+  useEffect(() => {
+    if (
+      typeof prevDisplayedSlidesLengthRef.current === 'number' &&
+      displayedSlideIds?.length > prevDisplayedSlidesLengthRef.current
+    ) {
+      scrollElementToCenter(
+        SlideRefs.current[prevDisplayedSlidesLengthRef.current]
+      );
+    }
+    prevDisplayedSlidesLengthRef.current = displayedSlideIds?.length;
+  }, [displayedSlideIds]);
 
   useEffect(() => {
     mounted.current = true;
@@ -92,6 +107,7 @@ export default function InteractiveContent({ interactiveId }) {
             <Slide
               {...slideObj[slideId]}
               key={slideId}
+              innerRef={(ref) => (SlideRefs.current[index] = ref)}
               insertButtonShown={index !== 0 && canEdit}
               cannotMoveUp={
                 index === 0 || !!slideObj[displayedSlideIds[index - 1]]?.isFork
@@ -104,8 +120,8 @@ export default function InteractiveContent({ interactiveId }) {
               isPublished={!!slideObj[slideId].isPublished}
               isFork={!!slideObj[slideId].isFork}
               forkedFrom={slideObj[slideId].forkedFrom}
-              onExpandPath={slideObj[slideId].isFork ? handleExpandPath : null}
               interactiveId={interactiveId}
+              onExpandPath={slideObj[slideId].isFork ? handleExpandPath : null}
               slideId={slideId}
               style={{ marginTop: index === 0 ? 0 : canEdit ? '2rem' : '5rem' }}
             />
@@ -141,7 +157,9 @@ export default function InteractiveContent({ interactiveId }) {
         slideId,
         newState: { selectedOptionId: optionId }
       });
-      const validNewSlides = newSlides.filter((slideId) => !!slideObj[slideId]);
+      const validNewSlides = newSlides.filter(
+        (slideId) => !!slideObj[slideId] && !slideObj[slideId]?.isDeleted
+      );
       onConcatDisplayedSlides({
         interactiveId,
         newSlides: validNewSlides

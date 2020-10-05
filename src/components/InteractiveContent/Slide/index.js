@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useAppContext, useInteractiveContext } from 'contexts';
 import { stringIsEmpty } from 'helpers/stringHelpers';
@@ -19,6 +19,7 @@ Slide.propTypes = {
   cannotMoveDown: PropTypes.bool,
   fileUploadComplete: PropTypes.bool,
   fileUploadProgress: PropTypes.number,
+  innerRef: PropTypes.func,
   insertButtonShown: PropTypes.bool,
   interactiveId: PropTypes.number,
   style: PropTypes.object,
@@ -44,6 +45,7 @@ export default function Slide({
   description,
   fileUploadComplete,
   fileUploadProgress,
+  innerRef,
   insertButtonShown,
   interactiveId,
   isDeleted,
@@ -72,7 +74,6 @@ export default function Slide({
   const {
     actions: { onRemoveInteractiveSlide, onSetInteractiveState }
   } = useInteractiveContext();
-  const SlideRef = useRef(null);
   const { canEdit } = useMyState();
 
   const paddingShown = useMemo(() => {
@@ -164,7 +165,7 @@ export default function Slide({
         />
       )}
       <div
-        ref={SlideRef}
+        ref={(ref) => innerRef(ref)}
         className={css`
           background: #fff;
           width: 60%;
