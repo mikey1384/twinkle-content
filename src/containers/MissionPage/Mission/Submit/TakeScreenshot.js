@@ -1,6 +1,7 @@
 import React, { useRef, useMemo, useState } from 'react';
 import Button from 'components/Button';
 import AlertModal from 'components/Modals/AlertModal';
+import Icon from 'components/Icon';
 import { mb } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
@@ -57,7 +58,8 @@ export default function TakeScreenshot() {
             style={{ fontSize: '2rem' }}
             onClick={() => FileInputRef.current.click()}
           >
-            Select Screenshot
+            <Icon icon="image" />
+            <span style={{ marginLeft: '1rem' }}>Select Screenshot</span>
           </Button>
         )}
         {fileUrl && (
@@ -67,7 +69,8 @@ export default function TakeScreenshot() {
             style={{ fontSize: '2rem' }}
             onClick={() => console.log('submit')}
           >
-            Submit
+            <Icon icon="upload" />
+            <span style={{ marginLeft: '1rem' }}>Submit</span>
           </Button>
         )}
         <input
