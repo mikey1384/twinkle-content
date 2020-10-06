@@ -78,7 +78,7 @@ export default function TakeScreenshot({
               <img style={{ width: '100%' }} src={attachment?.preview} />
               <div style={{ marginTop: '1rem' }}>
                 <b>2.</b>{' '}
-                {`Make sure you selected the correct file and then tap "Submit"`}
+                {`Make sure you've selected the correct file and then tap "Submit"`}
               </div>
             </div>
           )}
