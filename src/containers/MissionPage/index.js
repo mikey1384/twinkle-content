@@ -93,6 +93,8 @@ export default function MissionPage({
                 missionId={mission.id}
                 missionTitle={mission.title}
                 style={{ marginTop: '5rem', marginBottom: '1rem' }}
+                tutorialStarted={mission.tutorialStarted}
+                onSetMissionState={onSetMissionState}
                 tutorialId={mission.tutorialId}
                 tutorialIsPublished={mission.tutorialIsPublished}
               />

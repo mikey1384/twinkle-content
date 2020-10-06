@@ -7,19 +7,19 @@ export default function MissionReducer(state, action) {
           ...state.missionObj,
           [action.mission.id]: {
             ...action.mission,
-            tutorialId: action.mission.tutorialId || 0
+            tutorialId: action.mission.tutorialId || 0,
+            loaded: true
           }
         }
       };
     }
     case 'LOAD_MISSION_LIST': {
-      const newMissionObj = {};
+      const newMissionObj = state.missionObj || {};
       for (let mission of action.missions) {
         newMissionObj[mission.id] = {
           ...newMissionObj[mission.id],
           ...mission,
-          tutorialId: mission.tutorialId || 0,
-          loaded: true
+          tutorialId: mission.tutorialId || 0
         };
       }
       return {

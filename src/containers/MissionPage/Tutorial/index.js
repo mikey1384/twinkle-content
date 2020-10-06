@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import AddTutorial from './AddTutorial';
 import ViewTutorial from './ViewTutorial';
@@ -8,7 +8,9 @@ import { useMyState } from 'helpers/hooks';
 Tutorial.propTypes = {
   missionId: PropTypes.number,
   missionTitle: PropTypes.string,
+  onSetMissionState: PropTypes.func,
   style: PropTypes.object,
+  tutorialStarted: PropTypes.bool,
   tutorialId: PropTypes.number,
   tutorialIsPublished: PropTypes.bool
 };
@@ -16,13 +18,13 @@ Tutorial.propTypes = {
 export default function Tutorial({
   missionId,
   missionTitle,
+  onSetMissionState,
   style,
   tutorialId,
+  tutorialStarted,
   tutorialIsPublished
 }) {
-  const [started, setStarted] = useState(false);
   const { canEdit } = useMyState();
-
   return (
     <div
       style={{
@@ -35,10 +37,17 @@ export default function Tutorial({
       {canEdit && !tutorialId && (
         <AddTutorial missionId={missionId} missionTitle={missionTitle} />
       )}
-      {!!tutorialId && tutorialIsPublished && !started && !canEdit && (
-        <ViewTutorial onStartClick={() => setStarted(true)} />
+      {!!tutorialId && tutorialIsPublished && !tutorialStarted && !canEdit && (
+        <ViewTutorial
+          onStartClick={() =>
+            onSetMissionState({
+              missionId,
+              newState: { tutorialStarted: true }
+            })
+          }
+        />
       )}
-      {(started || canEdit) && (
+      {(tutorialStarted || canEdit) && (
         <InteractiveContent interactiveId={tutorialId} />
       )}
     </div>
