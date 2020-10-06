@@ -9,6 +9,7 @@ Mission.propTypes = {
   title: PropTypes.string,
   subtitle: PropTypes.string,
   description: PropTypes.string,
+  objective: PropTypes.string,
   style: PropTypes.object,
   missionType: PropTypes.string,
   missionId: PropTypes.number
@@ -17,6 +18,7 @@ export default function Mission({
   title,
   subtitle,
   description,
+  objective,
   style,
   missionType,
   missionId
@@ -37,13 +39,21 @@ export default function Mission({
       </div>
       <div
         style={{
-          marginTop: '3rem',
-          display: 'flex',
-          justifyContent: 'center',
-          fontSize: '2.3rem'
+          marginTop: '3rem'
         }}
       >
-        <LongText>{description}</LongText>
+        <div>
+          <p style={{ fontWeight: 'bold', fontSize: '2rem' }}>Objective:</p>
+          <LongText
+            style={{
+              fontSize: '1.7rem',
+              marginTop: '0.5rem'
+            }}
+          >
+            {objective}
+          </LongText>
+        </div>
+        <LongText style={{ fontSize: '1.5rem' }}>{description}</LongText>
       </div>
       <Submit missionType={missionType} />
     </div>

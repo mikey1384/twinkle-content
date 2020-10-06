@@ -7,6 +7,7 @@ import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 
 export default function TakeScreenshot() {
   const { authLevel } = useMyState();
+  const [fileUrl, setFileUrl] = useState('');
   const [alertModalShown, setAlertModalShown] = useState(false);
   const FileInputRef = useRef(null);
   const maxSize = useMemo(
@@ -23,32 +24,69 @@ export default function TakeScreenshot() {
 
   return (
     <div
-      style={{ display: 'flex', justifyContent: 'center', marginTop: '5rem' }}
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        marginTop: '3rem',
+        fontSize: '1.7rem'
+      }}
     >
-      <Button
-        color="darkBlue"
-        skeuomorphic
-        style={{ fontSize: '2rem' }}
-        onClick={() => FileInputRef.current.click()}
-      >
-        Submit Screenshot
-      </Button>
-      <input
-        ref={FileInputRef}
-        style={{ display: 'none' }}
-        type="file"
-        accept="image/*"
-        onChange={handleFileSelection}
-      />
-      {alertModalShown && (
-        <AlertModal
-          title="File is too large"
-          content={`The file size is larger than your limit of ${
-            maxSize / mb
-          } MB`}
-          onHide={() => setAlertModalShown(false)}
-        />
+      <div>
+        <b>1.</b> Take a screenshot and tap the button below to select the
+        screenshot from your computer
+      </div>
+      {fileUrl && (
+        <div style={{ marginTop: '1rem' }}>
+          <img style={{ width: '100%' }} src={fileUrl} />
+          <div style={{ marginTop: '1rem' }}>
+            <b>2.</b>{' '}
+            {`Make sure you selected the correct file and then tap "Submit"`}
+          </div>
+        </div>
       )}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          marginTop: '2.5rem'
+        }}
+      >
+        {!fileUrl && (
+          <Button
+            skeuomorphic
+            style={{ fontSize: '2rem' }}
+            onClick={() => FileInputRef.current.click()}
+          >
+            Select Screenshot
+          </Button>
+        )}
+        {fileUrl && (
+          <Button
+            color="darkBlue"
+            skeuomorphic
+            style={{ fontSize: '2rem' }}
+            onClick={() => console.log('submit')}
+          >
+            Submit
+          </Button>
+        )}
+        <input
+          ref={FileInputRef}
+          style={{ display: 'none' }}
+          type="file"
+          accept="image/*"
+          onChange={handleFileSelection}
+        />
+        {alertModalShown && (
+          <AlertModal
+            title="File is too large"
+            content={`The file size is larger than your limit of ${
+              maxSize / mb
+            } MB`}
+            onHide={() => setAlertModalShown(false)}
+          />
+        )}
+      </div>
     </div>
   );
 
@@ -69,7 +107,8 @@ export default function TakeScreenshot() {
             const dataUri = imageUri.replace(/^data:image\/\w+;base64,/, '');
             const buffer = Buffer.from(dataUri, 'base64');
             const file = new File([buffer], fileObj.name);
-            console.log(fileType, file, imageUri);
+            console.log(file, imageUri);
+            setFileUrl(imageUri);
           },
           { orientation: true, canvas: true }
         );

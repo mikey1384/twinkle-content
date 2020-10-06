@@ -84,6 +84,7 @@ export default function MissionPage({
                 description={mission.description}
                 subtitle={mission.subtitle}
                 missionType={mission.missionType}
+                objective={mission.objective}
                 title={mission.title}
               />
               <Tutorial
