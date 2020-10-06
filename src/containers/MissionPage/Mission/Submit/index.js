@@ -3,23 +3,29 @@ import PropTypes from 'prop-types';
 import TakeScreenshot from './TakeScreenshot';
 
 Submit.propTypes = {
-  previewUri: PropTypes.string,
+  attachment: PropTypes.object,
+  fileUploadComplete: PropTypes.bool,
+  fileUploadProgress: PropTypes.number,
   missionId: PropTypes.number,
   missionType: PropTypes.string,
   onSetMissionState: PropTypes.func
 };
 
 export default function Submit({
-  previewUri,
+  attachment,
   missionId,
   missionType,
+  fileUploadComplete,
+  fileUploadProgress,
   onSetMissionState
 }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       {missionType === 'screenshot' && (
         <TakeScreenshot
-          previewUri={previewUri}
+          attachment={attachment}
+          fileUploadComplete={fileUploadComplete}
+          fileUploadProgress={fileUploadProgress}
           missionId={missionId}
           onSetMissionState={onSetMissionState}
         />

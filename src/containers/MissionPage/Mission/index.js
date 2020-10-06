@@ -6,7 +6,9 @@ import { panel } from '../Styles';
 import { gifTable } from 'constants/defaultValues';
 
 Mission.propTypes = {
-  previewUri: PropTypes.string,
+  attachment: PropTypes.object,
+  fileUploadComplete: PropTypes.bool,
+  fileUploadProgress: PropTypes.number,
   title: PropTypes.string,
   subtitle: PropTypes.string,
   description: PropTypes.string,
@@ -17,7 +19,9 @@ Mission.propTypes = {
   onSetMissionState: PropTypes.func
 };
 export default function Mission({
-  previewUri,
+  attachment,
+  fileUploadComplete,
+  fileUploadProgress,
   title,
   subtitle,
   description,
@@ -60,7 +64,9 @@ export default function Mission({
         <LongText style={{ fontSize: '1.5rem' }}>{description}</LongText>
       </div>
       <Submit
-        previewUri={previewUri}
+        attachment={attachment}
+        fileUploadComplete={fileUploadComplete}
+        fileUploadProgress={fileUploadProgress}
         missionId={missionId}
         missionType={missionType}
         onSetMissionState={onSetMissionState}

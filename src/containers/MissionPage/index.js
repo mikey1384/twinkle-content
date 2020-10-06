@@ -80,8 +80,10 @@ export default function MissionPage({
               }}
             >
               <Mission
+                fileUploadProgress={mission.fileUploadProgress}
+                fileUploadComplete={mission.fileUploadComplete}
                 missionId={mission.id}
-                previewUri={mission.previewUri}
+                attachment={mission.attachment}
                 description={mission.description}
                 subtitle={mission.subtitle}
                 missionType={mission.missionType}
