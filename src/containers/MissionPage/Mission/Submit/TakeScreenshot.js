@@ -36,7 +36,8 @@ export default function TakeScreenshot() {
       <input
         ref={FileInputRef}
         style={{ display: 'none' }}
-        type="image"
+        type="file"
+        accept="image/*"
         onChange={handleFileSelection}
       />
       {alertModalShown && (
