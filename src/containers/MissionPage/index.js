@@ -25,7 +25,7 @@ export default function MissionPage({
     actions: { onUpdateCurrentMission }
   } = useContentContext();
   const {
-    actions: { onLoadMission },
+    actions: { onLoadMission, onSetMissionState },
     state: { missionObj }
   } = useMissionContext();
 
@@ -81,10 +81,12 @@ export default function MissionPage({
             >
               <Mission
                 missionId={mission.id}
+                previewUri={mission.previewUri}
                 description={mission.description}
                 subtitle={mission.subtitle}
                 missionType={mission.missionType}
                 objective={mission.objective}
+                onSetMissionState={onSetMissionState}
                 title={mission.title}
               />
               <Tutorial

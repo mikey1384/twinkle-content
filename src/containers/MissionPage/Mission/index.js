@@ -6,22 +6,26 @@ import { panel } from '../Styles';
 import { gifTable } from 'constants/defaultValues';
 
 Mission.propTypes = {
+  previewUri: PropTypes.string,
   title: PropTypes.string,
   subtitle: PropTypes.string,
   description: PropTypes.string,
   objective: PropTypes.string,
   style: PropTypes.object,
   missionType: PropTypes.string,
-  missionId: PropTypes.number
+  missionId: PropTypes.number,
+  onSetMissionState: PropTypes.func
 };
 export default function Mission({
+  previewUri,
   title,
   subtitle,
   description,
   objective,
   style,
   missionType,
-  missionId
+  missionId,
+  onSetMissionState
 }) {
   return (
     <div
@@ -55,7 +59,12 @@ export default function Mission({
         </div>
         <LongText style={{ fontSize: '1.5rem' }}>{description}</LongText>
       </div>
-      <Submit missionType={missionType} />
+      <Submit
+        previewUri={previewUri}
+        missionId={missionId}
+        missionType={missionType}
+        onSetMissionState={onSetMissionState}
+      />
     </div>
   );
 }

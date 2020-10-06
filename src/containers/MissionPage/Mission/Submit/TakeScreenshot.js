@@ -1,4 +1,5 @@
 import React, { useRef, useMemo, useState } from 'react';
+import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import AlertModal from 'components/Modals/AlertModal';
 import Icon from 'components/Icon';
@@ -6,9 +7,18 @@ import { mb } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 
-export default function TakeScreenshot() {
+TakeScreenshot.propTypes = {
+  previewUri: PropTypes.string,
+  missionId: PropTypes.number,
+  onSetMissionState: PropTypes.func
+};
+
+export default function TakeScreenshot({
+  previewUri,
+  missionId,
+  onSetMissionState
+}) {
   const { authLevel } = useMyState();
-  const [fileUrl, setFileUrl] = useState('');
   const [alertModalShown, setAlertModalShown] = useState(false);
   const FileInputRef = useRef(null);
   const maxSize = useMemo(
@@ -36,9 +46,9 @@ export default function TakeScreenshot() {
         <b>1.</b> Take a screenshot and tap the button below to select the
         screenshot from your computer
       </div>
-      {fileUrl && (
+      {previewUri && (
         <div style={{ marginTop: '1rem' }}>
-          <img style={{ width: '100%' }} src={fileUrl} />
+          <img style={{ width: '100%' }} src={previewUri} />
           <div style={{ marginTop: '1rem' }}>
             <b>2.</b>{' '}
             {`Make sure you selected the correct file and then tap "Submit"`}
@@ -52,7 +62,7 @@ export default function TakeScreenshot() {
           marginTop: '2.5rem'
         }}
       >
-        {!fileUrl && (
+        {!previewUri && (
           <Button
             skeuomorphic
             style={{ fontSize: '2rem' }}
@@ -62,7 +72,7 @@ export default function TakeScreenshot() {
             <span style={{ marginLeft: '1rem' }}>Select Screenshot</span>
           </Button>
         )}
-        {fileUrl && (
+        {previewUri && (
           <Button
             color="darkBlue"
             skeuomorphic
@@ -111,7 +121,10 @@ export default function TakeScreenshot() {
             const buffer = Buffer.from(dataUri, 'base64');
             const file = new File([buffer], fileObj.name);
             console.log(file, imageUri);
-            setFileUrl(imageUri);
+            onSetMissionState({
+              missionId,
+              newState: { previewUri: imageUri }
+            });
           },
           { orientation: true, canvas: true }
         );
