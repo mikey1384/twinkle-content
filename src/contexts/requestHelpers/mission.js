@@ -23,7 +23,8 @@ export default function missionRequestHelpers({ auth, handleError }) {
     async loadMission(missionId) {
       try {
         const { data } = await request.get(
-          `${URL}/mission/page?missionId=${missionId}`
+          `${URL}/mission/page?missionId=${missionId}`,
+          auth()
         );
         return Promise.resolve(data);
       } catch (error) {
@@ -46,6 +47,21 @@ export default function missionRequestHelpers({ auth, handleError }) {
           auth()
         );
         return Promise.resolve();
+      } catch (error) {
+        return handleError(error);
+      }
+    },
+    async uploadMissionAttempt({ missionId, attempt }) {
+      try {
+        const { data } = await request.post(
+          `${URL}/mission/attempt`,
+          {
+            missionId: Number(missionId),
+            attempt
+          },
+          auth()
+        );
+        return Promise.resolve(data);
       } catch (error) {
         return handleError(error);
       }

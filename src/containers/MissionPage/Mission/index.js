@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import LongText from 'components/Texts/LongText';
 import Submit from './Submit';
+import PendingStatus from './PendingStatus';
 import { panel } from '../Styles';
 import { gifTable } from 'constants/defaultValues';
 
@@ -16,7 +17,8 @@ Mission.propTypes = {
   style: PropTypes.object,
   missionType: PropTypes.string,
   missionId: PropTypes.number,
-  onSetMissionState: PropTypes.func
+  onSetMissionState: PropTypes.func,
+  status: PropTypes.string
 };
 export default function Mission({
   attachment,
@@ -29,12 +31,17 @@ export default function Mission({
   style,
   missionType,
   missionId,
-  onSetMissionState
+  onSetMissionState,
+  status
 }) {
   return (
     <div
       className={panel}
-      style={{ background: '#fff', paddingBottom: '3rem', ...style }}
+      style={{
+        background: '#fff',
+        paddingBottom: '3rem',
+        ...style
+      }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div>
@@ -63,14 +70,18 @@ export default function Mission({
         </div>
         <LongText style={{ fontSize: '1.5rem' }}>{description}</LongText>
       </div>
-      <Submit
-        attachment={attachment}
-        fileUploadComplete={fileUploadComplete}
-        fileUploadProgress={fileUploadProgress}
-        missionId={missionId}
-        missionType={missionType}
-        onSetMissionState={onSetMissionState}
-      />
+      {status === 'pending' ? (
+        <PendingStatus style={{ marginTop: '3rem' }} />
+      ) : status !== 'success' ? (
+        <Submit
+          attachment={attachment}
+          fileUploadComplete={fileUploadComplete}
+          fileUploadProgress={fileUploadProgress}
+          missionId={missionId}
+          missionType={missionType}
+          onSetMissionState={onSetMissionState}
+        />
+      ) : null}
     </div>
   );
 }

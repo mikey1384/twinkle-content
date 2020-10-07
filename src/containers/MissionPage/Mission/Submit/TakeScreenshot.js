@@ -26,7 +26,7 @@ export default function TakeScreenshot({
   onSetMissionState
 }) {
   const {
-    requestHelpers: { uploadFile }
+    requestHelpers: { uploadFile, uploadMissionAttempt }
   } = useAppContext();
   const { authLevel } = useMyState();
   const [alertModalShown, setAlertModalShown] = useState(false);
@@ -69,6 +69,9 @@ export default function TakeScreenshot({
         />
       ) : (
         <>
+          <div style={{ marginBottom: '2rem', fontWeight: 'bold' }}>
+            Follow the instructions below
+          </div>
           <div>
             <b>1.</b> Take a screenshot and tap the button below to select the
             screenshot from your computer
@@ -88,7 +91,7 @@ export default function TakeScreenshot({
         style={{
           display: 'flex',
           justifyContent: 'center',
-          marginTop: '2.5rem'
+          marginTop: '3rem'
         }}
       >
         {!attachment?.preview && (
@@ -183,7 +186,17 @@ export default function TakeScreenshot({
       }
     });
     filePathRef.current = null;
-    console.log(uploadedFilePath);
+    const data = await uploadMissionAttempt({
+      missionId,
+      attempt: {
+        fileName: attachment.file.name,
+        fileSize: attachment.file.size,
+        filePath: uploadedFilePath
+      }
+    });
+
+    console.log(data);
+
     function handleUploadProgress({ loaded, total }) {
       onSetMissionState({
         missionId,

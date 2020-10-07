@@ -90,6 +90,7 @@ export default function MissionPage({
                 objective={mission.objective}
                 onSetMissionState={onSetMissionState}
                 title={mission.title}
+                status={mission.status}
               />
               <Tutorial
                 missionId={mission.id}
