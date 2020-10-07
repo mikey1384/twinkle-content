@@ -10,7 +10,10 @@ ViewTutorial.propTypes = {
 
 export default function ViewTutorial({ onStartClick }) {
   return (
-    <div className={panel} style={{ padding: '2rem', width: '100%' }}>
+    <div
+      className={panel}
+      style={{ padding: '2rem', width: '100%', background: '#fff' }}
+    >
       <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>Need help?</h2>
       <div
         style={{
