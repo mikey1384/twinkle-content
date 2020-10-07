@@ -28,6 +28,7 @@ export default function MissionPage({
     actions: { onLoadMission, onSetMissionState },
     state: { missionObj }
   } = useMissionContext();
+  const prevUserId = useRef(userId);
 
   const mission = useMemo(() => missionObj[missionId] || {}, [
     missionId,
@@ -43,9 +44,10 @@ export default function MissionPage({
 
   useEffect(() => {
     onUpdateCurrentMission({ missionId: Number(missionId), userId });
-    if (!mission.loaded) {
+    if (!mission.loaded || (userId && prevUserId.current !== userId)) {
       init();
     }
+    prevUserId.current = userId;
 
     async function init() {
       const data = await loadMission(missionId);
@@ -55,7 +57,7 @@ export default function MissionPage({
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     mounted.current = true;

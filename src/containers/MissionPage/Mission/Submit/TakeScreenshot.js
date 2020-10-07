@@ -186,7 +186,7 @@ export default function TakeScreenshot({
       }
     });
     filePathRef.current = null;
-    const data = await uploadMissionAttempt({
+    const success = await uploadMissionAttempt({
       missionId,
       attempt: {
         fileName: attachment.file.name,
@@ -195,7 +195,14 @@ export default function TakeScreenshot({
       }
     });
 
-    console.log(data);
+    if (success) {
+      onSetMissionState({
+        missionId,
+        newState: {
+          status: 'pending'
+        }
+      });
+    }
 
     function handleUploadProgress({ loaded, total }) {
       onSetMissionState({
