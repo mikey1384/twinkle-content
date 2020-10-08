@@ -4,6 +4,8 @@ import Loading from 'components/Loading';
 import Main from './Main';
 import RightMenu from './RightMenu';
 import InvalidPage from 'components/InvalidPage';
+import Management from './Management';
+import { Switch, Route } from 'react-router-dom';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useMissionContext } from 'contexts';
 
@@ -13,6 +15,7 @@ MissionPage.propTypes = {
 
 export default function MissionPage({
   match: {
+    path,
     params: { missionId }
   }
 }) {
@@ -78,7 +81,7 @@ export default function MissionPage({
             width: '100%'
           }}
         >
-          <Main
+          <div
             style={{
               display: 'flex',
               width: canEdit ? 'CALC(100% - 55rem)' : '60%',
@@ -90,10 +93,26 @@ export default function MissionPage({
                     flexDirection: 'column'
                   })
             }}
-            canEdit={canEdit}
-            onSetMissionState={onSetMissionState}
-            mission={mission}
-          />
+          >
+            <Switch>
+              <Route
+                exact
+                path={path}
+                render={() => (
+                  <Main
+                    canEdit={canEdit}
+                    onSetMissionState={onSetMissionState}
+                    mission={mission}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path={`${path}/manage`}
+                render={() => <Management />}
+              />
+            </Switch>
+          </div>
           {canEdit && (
             <RightMenu style={{ width: '25rem', marginLeft: '5rem' }} />
           )}

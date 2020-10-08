@@ -12,7 +12,7 @@ Main.propTypes = {
 
 export default function Main({ mission, onSetMissionState, style }) {
   return (
-    <div style={style}>
+    <div style={{ width: '100%', ...style }}>
       {mission ? (
         <div style={{ width: '100%' }}>
           <Mission
