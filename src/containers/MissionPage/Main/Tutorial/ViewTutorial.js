@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
-import { panel } from '../Styles';
+import { panel } from '../../Styles';
 
 ViewTutorial.propTypes = {
   onStartClick: PropTypes.func.isRequired

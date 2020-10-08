@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
 import Main from './Main';
+import RightMenu from './RightMenu';
 import InvalidPage from 'components/InvalidPage';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useMissionContext } from 'contexts';
@@ -16,7 +17,7 @@ export default function MissionPage({
   }
 }) {
   const mounted = useRef(true);
-  const { loaded, userId } = useMyState();
+  const { loaded, userId, canEdit } = useMyState();
   const {
     requestHelpers: { loadMission, updateCurrentMission }
   } = useAppContext();
@@ -69,8 +70,13 @@ export default function MissionPage({
   return loaded ? (
     mission.id ? (
       userId ? (
-        <div style={{ paddingTop: '1rem' }}>
-          <Main onSetMissionState={onSetMissionState} mission={mission} />
+        <div style={{ paddingTop: '1rem', display: 'flex' }}>
+          <Main
+            style={{ flexGrow: 1 }}
+            onSetMissionState={onSetMissionState}
+            mission={mission}
+          />
+          {canEdit && <RightMenu style={{ width: '50ch' }} />}
         </div>
       ) : (
         <InvalidPage

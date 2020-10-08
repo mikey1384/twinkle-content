@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import LongText from 'components/Texts/LongText';
 import Submit from './Submit';
 import PendingStatus from './PendingStatus';
-import { panel } from '../Styles';
+import { panel } from '../../Styles';
 import { gifTable } from 'constants/defaultValues';
 
 Mission.propTypes = {

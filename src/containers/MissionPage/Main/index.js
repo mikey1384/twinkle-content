@@ -6,12 +6,13 @@ import Loading from 'components/Loading';
 
 Main.propTypes = {
   mission: PropTypes.object.isRequired,
-  onSetMissionState: PropTypes.func.isRequired
+  onSetMissionState: PropTypes.func.isRequired,
+  style: PropTypes.object
 };
 
-export default function Main({ mission, onSetMissionState }) {
+export default function Main({ mission, onSetMissionState, style }) {
   return (
-    <>
+    <div style={style}>
       {mission ? (
         <div
           style={{
@@ -48,6 +49,6 @@ export default function Main({ mission, onSetMissionState }) {
       ) : (
         <Loading text="Loading Mission..." />
       )}
-    </>
+    </div>
   );
 }
