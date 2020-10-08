@@ -114,7 +114,10 @@ export default function MissionPage({
             </Switch>
           </div>
           {canEdit && (
-            <RightMenu style={{ width: '25rem', marginLeft: '5rem' }} />
+            <RightMenu
+              missionId={missionId}
+              style={{ width: '25rem', marginLeft: '5rem', marginTop: '3rem' }}
+            />
           )}
         </div>
       ) : (
