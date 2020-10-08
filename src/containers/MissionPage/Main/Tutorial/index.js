@@ -28,7 +28,6 @@ export default function Tutorial({
   return (
     <div
       style={{
-        width: '60%',
         display: 'flex',
         justifyContent: 'center',
         ...style

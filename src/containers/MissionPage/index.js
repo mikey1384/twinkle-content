@@ -70,9 +70,20 @@ export default function MissionPage({
   return loaded ? (
     mission.id ? (
       userId ? (
-        <div style={{ paddingTop: '1rem', display: 'flex' }}>
+        <div
+          style={{
+            paddingTop: '1rem',
+            display: 'flex',
+            justifyContent: 'center',
+            width: '100%'
+          }}
+        >
           <Main
-            style={{ flexGrow: 1 }}
+            style={{
+              width: canEdit ? '100%' : '80%',
+              display: 'flex'
+            }}
+            canEdit={canEdit}
             onSetMissionState={onSetMissionState}
             mission={mission}
           />
