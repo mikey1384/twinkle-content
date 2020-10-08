@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useAppContext } from 'contexts';
+import Attempt from './Attempt';
 
 Management.propTypes = {
   mission: PropTypes.object,
@@ -30,7 +31,7 @@ export default function Management({ mission, missionId, onSetMissionState }) {
   return (
     <div>
       {mission.attempts?.map((attempt) => (
-        <div key={attempt.id}>{attempt.fileName}</div>
+        <Attempt key={attempt.id} attempt={attempt} />
       ))}
     </div>
   );
