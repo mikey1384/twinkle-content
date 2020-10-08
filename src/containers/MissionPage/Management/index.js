@@ -3,26 +3,35 @@ import PropTypes from 'prop-types';
 import { useAppContext } from 'contexts';
 
 Management.propTypes = {
-  missionId: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  mission: PropTypes.object,
+  missionId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  onSetMissionState: PropTypes.func.isRequired
 };
 
-export default function Management({ missionId }) {
+export default function Management({ mission, missionId, onSetMissionState }) {
   const {
     requestHelpers: { loadMissionAttempts }
   } = useAppContext();
+
   useEffect(() => {
     init();
-
     async function init() {
       const data = await loadMissionAttempts(missionId);
-      console.log(data);
+      onSetMissionState({
+        missionId,
+        newState: {
+          attempts: data
+        }
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div>
-      <div>this is where you manage students submissions</div>
+      {mission.attempts?.map((attempt) => (
+        <div key={attempt.id}>{attempt.fileName}</div>
+      ))}
     </div>
   );
 }

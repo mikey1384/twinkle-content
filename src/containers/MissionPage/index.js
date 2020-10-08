@@ -109,7 +109,13 @@ export default function MissionPage({
               <Route
                 exact
                 path={`${path}/manage`}
-                render={() => <Management missionId={missionId} />}
+                render={() => (
+                  <Management
+                    missionId={missionId}
+                    mission={mission}
+                    onSetMissionState={onSetMissionState}
+                  />
+                )}
               />
             </Switch>
           </div>
