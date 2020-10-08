@@ -80,14 +80,23 @@ export default function MissionPage({
         >
           <Main
             style={{
-              width: canEdit ? '100%' : '80%',
-              display: 'flex'
+              display: 'flex',
+              width: canEdit ? 'CALC(100% - 55rem)' : '60%',
+              ...(canEdit
+                ? { marginLeft: '25rem' }
+                : {
+                    display: 'flex',
+                    justifyContent: 'center',
+                    flexDirection: 'column'
+                  })
             }}
             canEdit={canEdit}
             onSetMissionState={onSetMissionState}
             mission={mission}
           />
-          {canEdit && <RightMenu style={{ width: '50ch' }} />}
+          {canEdit && (
+            <RightMenu style={{ width: '25rem', marginLeft: '5rem' }} />
+          )}
         </div>
       ) : (
         <InvalidPage
