@@ -97,18 +97,21 @@ export default function Attempt({
         thumbUrl={attempt.thumbUrl}
         src={attempt.filePath}
       />
-      <Textarea
-        minRows={3}
-        value={feedback}
-        onChange={(event) => {
-          handleSetFeedback(addEmoji(event.target.value));
-        }}
-        placeholder={`Explain why you are approving/rejecting this mission attempt...`}
-        style={feedbackExceedsCharLimit?.style}
-      />
+      <div style={{ marginTop: '2rem' }}>
+        <div style={{ fontWeight: 'bold', fontSize: '2rem' }}>Feedback:</div>
+        <Textarea
+          minRows={3}
+          value={feedback}
+          onChange={(event) => {
+            handleSetFeedback(addEmoji(event.target.value));
+          }}
+          placeholder={`Explain why you are approving/rejecting this mission attempt...`}
+          style={{ marginTop: '1rem', ...feedbackExceedsCharLimit?.style }}
+        />
+      </div>
       <div
         style={{
-          marginTop: '5rem',
+          marginTop: '2rem',
           width: '100%',
           display: 'flex',
           justifyContent: 'center'
