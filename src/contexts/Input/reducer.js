@@ -204,6 +204,16 @@ export default function InputReducer(state, action) {
           hasSecretAnswer: action.hasSecretAnswer
         }
       };
+    case 'SET_MISSION_FEEDBACK_FORM':
+      return {
+        ...state,
+        ['mission-feedback-' + action.attemptId]: action.form
+          ? {
+              ...(state['mission-feedback-' + action.attemptId] || {}),
+              ...action.form
+            }
+          : undefined
+      };
     case 'SET_REWARD_FORM':
       return {
         ...state,

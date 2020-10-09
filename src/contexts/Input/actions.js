@@ -153,6 +153,13 @@ export default function InputActions(dispatch) {
         hasSecretAnswer
       });
     },
+    onSetMissionFeedbackForm({ attemptId, form }) {
+      return dispatch({
+        type: 'SET_MISSION_FEEDBACK_FORM',
+        attemptId,
+        form
+      });
+    },
     onSetRewardForm({ contentId, contentType, form }) {
       return dispatch({
         type: 'SET_REWARD_FORM',
