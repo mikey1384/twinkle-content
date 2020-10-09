@@ -78,6 +78,7 @@ import { faStar as farStar } from '@fortawesome/pro-regular-svg-icons/faStar';
 import { faStarHalfAlt as farStarHalfAlt } from '@fortawesome/pro-regular-svg-icons/faStarHalfAlt';
 import { faSurprise } from '@fortawesome/pro-solid-svg-icons/faSurprise';
 import { faTasks } from '@fortawesome/pro-solid-svg-icons/faTasks';
+import { faThumbsDown } from '@fortawesome/pro-solid-svg-icons/faThumbsDown';
 import { faThumbsUp } from '@fortawesome/pro-solid-svg-icons/faThumbsUp';
 import { faTimes } from '@fortawesome/pro-solid-svg-icons/faTimes';
 import { faTrashAlt } from '@fortawesome/pro-solid-svg-icons/faTrashAlt';
@@ -163,6 +164,7 @@ library.add(
   farStarHalfAlt,
   faSurprise,
   faTasks,
+  faThumbsDown,
   faThumbsUp,
   faTimes,
   faTrashAlt,
