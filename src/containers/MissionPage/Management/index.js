@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Attempt from './Attempt';
 import FilterBar from 'components/FilterBar';
+import Loading from 'components/Loading';
 import { useAppContext } from 'contexts';
 
 Management.propTypes = {
@@ -15,21 +16,30 @@ export default function Management({ mission, missionId, onSetMissionState }) {
     requestHelpers: { loadMissionAttempts }
   } = useAppContext();
   const { managementTab: activeTab = 'pending' } = mission;
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     init();
     async function init() {
-      const { attemptObj, attemptIds } = await loadMissionAttempts(missionId);
+      setLoading(true);
+      const {
+        attemptObj,
+        [`${activeTab}AttemptIds`]: attemptIds
+      } = await loadMissionAttempts({
+        activeTab,
+        missionId
+      });
       onSetMissionState({
         missionId,
         newState: {
-          attemptIds,
-          attemptObj
+          [`${activeTab}AttemptIds`]: attemptIds,
+          attemptObj: { ...mission.attemptObj, ...attemptObj }
         }
       });
+      setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [activeTab]);
 
   return (
     <div style={{ width: '100%', marginBottom: '10rem' }}>
@@ -74,16 +84,22 @@ export default function Management({ mission, missionId, onSetMissionState }) {
           Rewards
         </nav>
       </FilterBar>
-      {mission.attemptIds?.map((attemptId, index) => {
-        const attempt = mission.attemptObj[attemptId];
-        return (
-          <Attempt
-            key={attempt.id}
-            attempt={attempt}
-            style={{ marginTop: index > 0 ? '1rem' : 0 }}
-          />
-        );
-      })}
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          {mission[`${activeTab}AttemptIds`]?.map((attemptId, index) => {
+            const attempt = mission.attemptObj[attemptId];
+            return (
+              <Attempt
+                key={attempt.id}
+                attempt={attempt}
+                style={{ marginTop: index > 0 ? '1rem' : 0 }}
+              />
+            );
+          })}
+        </>
+      )}
     </div>
   );
 }

@@ -31,10 +31,10 @@ export default function missionRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async loadMissionAttempts(missionId) {
+    async loadMissionAttempts({ activeTab, missionId }) {
       try {
         const { data } = await request.get(
-          `${URL}/mission/attempt?missionId=${missionId}`,
+          `${URL}/mission/attempt?activeTab=${activeTab}&missionId=${missionId}`,
           auth()
         );
         return Promise.resolve(data);
