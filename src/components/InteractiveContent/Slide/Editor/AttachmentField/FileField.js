@@ -75,7 +75,6 @@ export default function FileField({
             <Icon icon="times" size="lg" />
           </Button>
           <FileViewer
-            slideId={slideId}
             thumbUrl={thumbUrl}
             src={fileUrl}
             onThumbnailLoad={handleThumbnailLoad}

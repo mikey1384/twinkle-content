@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { panel } from '../../Styles';
+import FileViewer from 'components/FileViewer';
+import { panel } from '../Styles';
 
 Attempt.propTypes = {
   attempt: PropTypes.object.isRequired,
@@ -11,7 +12,8 @@ export default function Attempt({ attempt, style }) {
   return (
     <div style={{ width: '100%', ...style }} className={panel}>
       <div>
-        {attempt.missionId} {attempt.filePath}
+        {attempt.userId}
+        <FileViewer thumbUrl={attempt.thumbUrl} src={attempt.filePath} />
       </div>
     </div>
   );

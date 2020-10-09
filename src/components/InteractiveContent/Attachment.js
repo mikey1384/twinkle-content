@@ -55,7 +55,6 @@ export default function Attachment({
         >
           <FileViewer
             small={small}
-            slideId={slideId}
             thumbUrl={thumbUrl}
             src={fileUrl}
             onThumbnailLoad={handleThumbnailLoad}

@@ -10,7 +10,7 @@ FileViewer.propTypes = {
   small: PropTypes.bool,
   src: PropTypes.string.isRequired,
   style: PropTypes.object,
-  onThumbnailLoad: PropTypes.func.isRequired,
+  onThumbnailLoad: PropTypes.func,
   thumbUrl: PropTypes.string
 };
 
