@@ -91,7 +91,6 @@ export default function Attempt({ attempt, style }) {
         src={attempt.filePath}
       />
       <div style={{ marginTop: '2rem' }}>
-        <div style={{ fontWeight: 'bold', fontSize: '2rem' }}>Feedback:</div>
         <div
           style={{
             marginTop: '2rem',
@@ -122,6 +121,9 @@ export default function Attempt({ attempt, style }) {
           <div
             style={{ display: 'flex', flexDirection: 'column', width: '100%' }}
           >
+            <div style={{ fontWeight: 'bold', fontSize: '2rem' }}>
+              Feedback:
+            </div>
             <Textarea
               minRows={3}
               value={feedback}

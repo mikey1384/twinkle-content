@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useAppContext } from 'contexts';
 import Attempt from './Attempt';
+import FilterBar from 'components/FilterBar';
+import { useAppContext } from 'contexts';
 
 Management.propTypes = {
   mission: PropTypes.object,
@@ -13,6 +14,7 @@ export default function Management({ mission, missionId, onSetMissionState }) {
   const {
     requestHelpers: { loadMissionAttempts }
   } = useAppContext();
+  const { managementTab: activeTab = 'pending' } = mission;
 
   useEffect(() => {
     init();
@@ -30,6 +32,47 @@ export default function Management({ mission, missionId, onSetMissionState }) {
 
   return (
     <div style={{ width: '100%', marginBottom: '10rem' }}>
+      <FilterBar
+        bordered
+        style={{
+          fontSize: '1.6rem',
+          height: '5rem'
+        }}
+      >
+        <nav
+          className={activeTab === 'pending' ? 'active' : null}
+          onClick={() => {
+            onSetMissionState({
+              missionId,
+              newState: { managementTab: 'pending' }
+            });
+          }}
+        >
+          Pending
+        </nav>
+        <nav
+          className={activeTab === 'approved' ? 'active' : null}
+          onClick={() => {
+            onSetMissionState({
+              missionId,
+              newState: { managementTab: 'approved' }
+            });
+          }}
+        >
+          Approved
+        </nav>
+        <nav
+          className={activeTab === 'rejected' ? 'active' : null}
+          onClick={() =>
+            onSetMissionState({
+              missionId,
+              newState: { managementTab: 'rejected' }
+            })
+          }
+        >
+          Rewards
+        </nav>
+      </FilterBar>
       {mission.attempts?.map((attempt, index) => (
         <Attempt
           key={attempt.id}
