@@ -3,33 +3,26 @@ import PropTypes from 'prop-types';
 import FileInfo from './FileInfo';
 import ReactPlayer from 'react-player';
 import ExtractedThumb from 'components/ExtractedThumb';
-import { v1 as uuidv1 } from 'uuid';
 import { cloudFrontURL } from 'constants/defaultValues';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
-import { useAppContext } from 'contexts';
 
 FileViewer.propTypes = {
   small: PropTypes.bool,
-  slideId: PropTypes.number,
   src: PropTypes.string.isRequired,
   style: PropTypes.object,
-  onThumbnailUpload: PropTypes.func.isRequired,
+  onThumbnailLoad: PropTypes.func.isRequired,
   thumbUrl: PropTypes.string
 };
 
 export default function FileViewer({
-  onThumbnailUpload,
+  onThumbnailLoad,
   small,
   src,
   style,
-  slideId,
   thumbUrl
 }) {
   const PlayerRef = useRef(null);
   const { fileType } = getFileInfoFromFileName(src);
-  const {
-    requestHelpers: { uploadThumbForInteractiveSlide }
-  } = useAppContext();
 
   return (
     <div
@@ -86,7 +79,7 @@ export default function FileViewer({
             <ExtractedThumb
               src={`${cloudFrontURL}${src}`}
               style={{ width: '1px', height: '1px' }}
-              onThumbnailLoad={handleThumbnailLoad}
+              onThumbnailLoad={onThumbnailLoad}
               thumbUrl={thumbUrl}
             />
           )}
@@ -99,21 +92,5 @@ export default function FileViewer({
 
   function handleReady() {
     PlayerRef.current?.getInternalPlayer()?.play();
-  }
-
-  function handleThumbnailLoad(thumb) {
-    const dataUri = thumb.replace(/^data:image\/\w+;base64,/, '');
-    const buffer = Buffer.from(dataUri, 'base64');
-    const file = new File([buffer], 'thumb.png');
-    handleUploadThumb();
-
-    async function handleUploadThumb() {
-      const thumbUrl = await uploadThumbForInteractiveSlide({
-        slideId,
-        file,
-        path: uuidv1()
-      });
-      onThumbnailUpload(thumbUrl);
-    }
   }
 }

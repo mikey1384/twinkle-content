@@ -9,6 +9,8 @@ import { mb } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 import { css } from 'emotion';
+import { useAppContext } from 'contexts';
+import { v1 as uuidv1 } from 'uuid';
 
 FileField.propTypes = {
   isChanging: PropTypes.bool,
@@ -31,6 +33,9 @@ export default function FileField({
   thumbUrl,
   uploadingFile
 }) {
+  const {
+    requestHelpers: { uploadThumbForInteractiveSlide }
+  } = useAppContext();
   const { authLevel } = useMyState();
   const maxSize = useMemo(
     () =>
@@ -73,7 +78,7 @@ export default function FileField({
             slideId={slideId}
             thumbUrl={thumbUrl}
             src={fileUrl}
-            onThumbnailUpload={onThumbnailUpload}
+            onThumbnailLoad={handleThumbnailLoad}
           />
         </>
       ) : (
@@ -198,5 +203,21 @@ export default function FileField({
       });
     }
     event.target.value = null;
+  }
+
+  function handleThumbnailLoad(thumb) {
+    const dataUri = thumb.replace(/^data:image\/\w+;base64,/, '');
+    const buffer = Buffer.from(dataUri, 'base64');
+    const file = new File([buffer], 'thumb.png');
+    handleUploadThumb();
+
+    async function handleUploadThumb() {
+      const thumbUrl = await uploadThumbForInteractiveSlide({
+        slideId,
+        file,
+        path: uuidv1()
+      });
+      onThumbnailUpload(thumbUrl);
+    }
   }
 }

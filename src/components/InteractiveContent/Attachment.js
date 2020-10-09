@@ -4,6 +4,8 @@ import ReactPlayer from 'react-player';
 import FileViewer from 'components/FileViewer';
 import SlideEmbedly from './SlideEmbedly';
 import { fetchedVideoCodeFromURL } from 'helpers/stringHelpers';
+import { useAppContext } from 'contexts';
+import { v1 as uuidv1 } from 'uuid';
 
 Attachment.propTypes = {
   small: PropTypes.bool,
@@ -40,6 +42,10 @@ export default function Attachment({
   siteUrl,
   videoHeight
 }) {
+  const {
+    requestHelpers: { uploadThumbForInteractiveSlide }
+  } = useAppContext();
+
   switch (type) {
     case 'file':
       return (
@@ -52,7 +58,7 @@ export default function Attachment({
             slideId={slideId}
             thumbUrl={thumbUrl}
             src={fileUrl}
-            onThumbnailUpload={onThumbnailUpload}
+            onThumbnailLoad={handleThumbnailLoad}
           />
         </div>
       );
@@ -107,5 +113,21 @@ export default function Attachment({
       );
     default:
       return null;
+  }
+
+  function handleThumbnailLoad(thumb) {
+    const dataUri = thumb.replace(/^data:image\/\w+;base64,/, '');
+    const buffer = Buffer.from(dataUri, 'base64');
+    const file = new File([buffer], 'thumb.png');
+    handleUploadThumb();
+
+    async function handleUploadThumb() {
+      const thumbUrl = await uploadThumbForInteractiveSlide({
+        slideId,
+        file,
+        path: uuidv1()
+      });
+      onThumbnailUpload(thumbUrl);
+    }
   }
 }
