@@ -34,9 +34,6 @@ export default function Management({ mission, missionId, onSetMissionState }) {
         <Attempt
           key={attempt.id}
           attempt={attempt}
-          missionId={Number(missionId)}
-          mission={mission}
-          onSetMissionState={onSetMissionState}
           style={{ marginTop: index > 0 ? '1rem' : 0 }}
         />
       ))}

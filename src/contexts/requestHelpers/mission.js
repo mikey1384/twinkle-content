@@ -78,6 +78,24 @@ export default function missionRequestHelpers({ auth, handleError }) {
       } catch (error) {
         return handleError(error);
       }
+    },
+    async uploadMissionFeedback({ attemptId, feedback, status }) {
+      try {
+        const {
+          data: { success }
+        } = await request.put(
+          `${URL}/mission/attempt`,
+          {
+            attemptId,
+            feedback,
+            status
+          },
+          auth()
+        );
+        return Promise.resolve(success);
+      } catch (error) {
+        return handleError(error);
+      }
     }
   };
 }

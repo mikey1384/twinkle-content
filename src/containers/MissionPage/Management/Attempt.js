@@ -8,24 +8,18 @@ import Textarea from 'components/Texts/Textarea';
 import { Color } from 'constants/css';
 import { panel } from '../Styles';
 import { timeSince } from 'helpers/timeStampHelpers';
-import { useInputContext } from 'contexts';
+import { useAppContext, useInputContext } from 'contexts';
 import { addEmoji, exceedsCharLimit } from 'helpers/stringHelpers';
 
 Attempt.propTypes = {
   attempt: PropTypes.object.isRequired,
-  mission: PropTypes.object.isRequired,
-  missionId: PropTypes.number.isRequired,
-  onSetMissionState: PropTypes.func.isRequired,
   style: PropTypes.object
 };
 
-export default function Attempt({
-  attempt,
-  mission,
-  missionId,
-  onSetMissionState,
-  style
-}) {
+export default function Attempt({ attempt, style }) {
+  const {
+    requestHelpers: { uploadMissionFeedback }
+  } = useAppContext();
   const mounted = useRef(true);
   const defaultInputState = {
     feedback: '',
@@ -56,7 +50,6 @@ export default function Attempt({
 
   useEffect(() => {
     mounted.current = true;
-    console.log(mission, missionId, onSetMissionState);
     return function cleanUp() {
       onSetMissionFeedbackForm({
         attemptId: attempt.id,
@@ -72,7 +65,7 @@ export default function Attempt({
 
   return (
     <div
-      style={{ width: '100%', paddingBottom: '2rem', ...style }}
+      style={{ width: '100%', paddingBottom: '1.5rem', ...style }}
       className={panel}
     >
       <div
@@ -99,46 +92,80 @@ export default function Attempt({
       />
       <div style={{ marginTop: '2rem' }}>
         <div style={{ fontWeight: 'bold', fontSize: '2rem' }}>Feedback:</div>
-        <Textarea
-          minRows={3}
-          value={feedback}
-          onChange={(event) => {
-            handleSetFeedback(addEmoji(event.target.value));
+        <div
+          style={{
+            marginTop: '2rem',
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center'
           }}
-          placeholder={`Explain why you are approving/rejecting this mission attempt...`}
-          style={{ marginTop: '1rem', ...feedbackExceedsCharLimit?.style }}
-        />
-      </div>
-      <div
-        style={{
-          marginTop: '2rem',
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'center'
-        }}
-      >
-        <Button
-          filled={status === 'rejected'}
-          onClick={() => handleSetStatus('rejected')}
-          color="rose"
-          skeuomorphic
         >
-          <Icon icon="thumbs-down" />
-          <span style={{ marginLeft: '1rem' }}>Reject</span>
-        </Button>
-        <Button
-          filled={status === 'approved'}
-          onClick={() => handleSetStatus('approved')}
-          color="darkBlue"
-          style={{ marginLeft: '1rem' }}
-          skeuomorphic
-        >
-          <Icon icon="thumbs-up" />
-          <span style={{ marginLeft: '1rem' }}>Approve</span>
-        </Button>
+          <Button
+            filled={status === 'rejected'}
+            onClick={() => handleSetStatus('rejected')}
+            color="rose"
+          >
+            <Icon icon="thumbs-down" />
+            <span style={{ marginLeft: '1rem' }}>Reject</span>
+          </Button>
+          <Button
+            filled={status === 'approved'}
+            onClick={() => handleSetStatus('approved')}
+            color="logoBlue"
+            style={{ marginLeft: '1rem' }}
+          >
+            <Icon icon="thumbs-up" />
+            <span style={{ marginLeft: '1rem' }}>Approve</span>
+          </Button>
+        </div>
+        {status && (
+          <div
+            style={{ display: 'flex', flexDirection: 'column', width: '100%' }}
+          >
+            <Textarea
+              minRows={3}
+              value={feedback}
+              onChange={(event) => {
+                handleSetFeedback(addEmoji(event.target.value));
+              }}
+              placeholder={`Explain why you are approving/rejecting this mission attempt...`}
+              style={{ marginTop: '1rem', ...feedbackExceedsCharLimit?.style }}
+            />
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                width: '100%'
+              }}
+            >
+              <Button
+                style={{ marginTop: '1.5rem', fontSize: '2rem' }}
+                color={status === 'approved' ? 'logoBlue' : 'rose'}
+                filled
+                onClick={handleConfirm}
+              >
+                <Icon
+                  icon={status === 'approved' ? 'thumbs-up' : 'thumbs-down'}
+                />
+                <span style={{ marginLeft: '1rem' }}>
+                  confirm {status === 'approved' ? 'approval' : 'rejection'}
+                </span>
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
+
+  async function handleConfirm() {
+    const data = await uploadMissionFeedback({
+      attemptId: attempt.id,
+      feedback,
+      status
+    });
+    console.log(data);
+  }
 
   function handleSetFeedback(text) {
     setFeedback(text);
