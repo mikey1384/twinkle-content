@@ -38,7 +38,6 @@ export default function Mission({
     <div
       className={panel}
       style={{
-        background: '#fff',
         paddingBottom: '3rem',
         ...style
       }}

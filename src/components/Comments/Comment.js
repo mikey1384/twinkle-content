@@ -27,7 +27,7 @@ import XPRewardInterface from 'components/XPRewardInterface';
 import SubjectLink from './SubjectLink';
 import Icon from 'components/Icon';
 import LoginToViewContent from 'components/LoginToViewContent';
-import FileViewer from 'components/FileViewer';
+import ContentFileViewer from 'components/ContentFileViewer';
 import { css } from 'emotion';
 import { useHistory } from 'react-router-dom';
 import { commentContainer } from './Styles';
@@ -420,7 +420,7 @@ function Comment({
               {filePath &&
                 (userId ? (
                   <div style={{ width: '100%', paddingTop: '3rem' }}>
-                    <FileViewer
+                    <ContentFileViewer
                       contentId={comment.id}
                       contentType="comment"
                       fileName={fileName}

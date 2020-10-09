@@ -19,7 +19,7 @@ import RecommendationStatus from 'components/RecommendationStatus';
 import LoginToViewContent from 'components/LoginToViewContent';
 import RewardStatus from 'components/RewardStatus';
 import XPRewardInterface from 'components/XPRewardInterface';
-import FileViewer from 'components/FileViewer';
+import ContentFileViewer from 'components/ContentFileViewer';
 import { commentContainer } from '../Styles';
 import { Link } from 'react-router-dom';
 import { determineUserCanRewardThis, determineXpButtonDisabled } from 'helpers';
@@ -265,7 +265,7 @@ function Reply({
               {filePath &&
                 (userId ? (
                   <div style={{ width: '100%' }}>
-                    <FileViewer
+                    <ContentFileViewer
                       contentId={reply.id}
                       contentType="comment"
                       fileName={fileName}

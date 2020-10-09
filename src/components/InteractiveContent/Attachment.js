@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
-import FileViewer from './FileViewer';
+import FileViewer from 'components/FileViewer';
 import SlideEmbedly from './SlideEmbedly';
 import { fetchedVideoCodeFromURL } from 'helpers/stringHelpers';
 

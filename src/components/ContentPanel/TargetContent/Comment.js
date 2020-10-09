@@ -7,7 +7,7 @@ import EditTextArea from 'components/Texts/EditTextArea';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import LongText from 'components/Texts/LongText';
 import ErrorBoundary from 'components/ErrorBoundary';
-import FileViewer from 'components/FileViewer';
+import ContentFileViewer from 'components/ContentFileViewer';
 import LoginToViewContent from 'components/LoginToViewContent';
 import { css } from 'emotion';
 import { useHistory } from 'react-router-dom';
@@ -159,7 +159,7 @@ function Comment({
               {filePath &&
                 (userId ? (
                   <div style={{ width: '100%' }}>
-                    <FileViewer
+                    <ContentFileViewer
                       contentId={comment.id}
                       contentType="comment"
                       fileName={fileName}

@@ -1,108 +1,119 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import FileInfo from './FileInfo';
-import ImagePreview from './ImagePreview';
-import MediaPlayer from './MediaPlayer';
-import { cloudFrontURL, S3URL } from 'constants/defaultValues';
+import ReactPlayer from 'react-player';
+import ExtractedThumb from 'components/ExtractedThumb';
+import { v1 as uuidv1 } from 'uuid';
+import { cloudFrontURL } from 'constants/defaultValues';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
+import { useAppContext } from 'contexts';
 
 FileViewer.propTypes = {
-  contentId: PropTypes.number,
-  contentType: PropTypes.string.isRequired,
-  isThumb: PropTypes.bool,
-  filePath: PropTypes.string.isRequired,
-  fileName: PropTypes.string.isRequired,
-  fileSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  modalOverModal: PropTypes.bool,
+  small: PropTypes.bool,
+  slideId: PropTypes.number,
+  src: PropTypes.string.isRequired,
   style: PropTypes.object,
-  thumbUrl: PropTypes.string,
-  videoHeight: PropTypes.string
+  onThumbnailUpload: PropTypes.func.isRequired,
+  thumbUrl: PropTypes.string
 };
 
 export default function FileViewer({
-  contentId,
-  contentType,
-  isThumb,
-  filePath,
-  fileName,
-  fileSize,
-  modalOverModal,
+  onThumbnailUpload,
+  small,
+  src,
   style,
-  thumbUrl,
-  videoHeight
+  slideId,
+  thumbUrl
 }) {
-  const isDisplayedOnHome =
-    contentType === 'subject' || contentType === 'comment';
-  const { fileType } = getFileInfoFromFileName(fileName);
-  const src = `${fileType === 'video' ? S3URL : cloudFrontURL}/attachments/${
-    isDisplayedOnHome ? 'feed' : contentType
-  }/${filePath}/${encodeURIComponent(fileName)}`;
+  const PlayerRef = useRef(null);
+  const { fileType } = getFileInfoFromFileName(src);
+  const {
+    requestHelpers: { uploadThumbForInteractiveSlide }
+  } = useAppContext();
 
   return (
     <div
       style={{
         width: '100%',
-        padding:
-          contentType !== 'chat' &&
-          !isThumb &&
-          !['image', 'video', 'audio'].includes(fileType)
-            ? '1rem'
-            : '',
+        display: 'flex',
+        justifyContent: 'center',
         ...style
       }}
     >
       {fileType === 'image' ? (
-        <ImagePreview
-          isThumb={isThumb}
-          modalOverModal={modalOverModal}
-          src={src}
-          fileName={fileName}
+        <img
+          style={{
+            width: small ? '40rem' : '100%',
+            height: small ? '20rem' : 'auto'
+          }}
+          src={`${cloudFrontURL}${src}`}
         />
-      ) : fileType === 'video' || (fileType === 'audio' && !isThumb) ? (
+      ) : fileType === 'video' || fileType === 'audio' ? (
         <div
           style={{
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            flexDirection: 'column'
+            width: small ? '40rem' : '100%',
+            position: 'relative',
+            paddingTop:
+              fileType === 'video'
+                ? '56.25%'
+                : fileType === 'audio'
+                ? '3rem'
+                : ''
           }}
         >
-          {!isThumb && (
-            <div
-              style={{
-                width: '100%',
-                padding: isDisplayedOnHome && '0 1rem 0 1rem'
-              }}
-            >
-              <a
-                style={{ fontWeight: 'bold' }}
-                href={src}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {fileName}
-              </a>
-            </div>
-          )}
-          <MediaPlayer
-            contentId={contentId}
-            contentType={contentType}
-            fileType={fileType}
-            isThumb={isThumb}
-            src={src}
-            thumbUrl={thumbUrl}
-            videoHeight={videoHeight}
+          <ReactPlayer
+            playsinline
+            ref={PlayerRef}
+            style={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              top: 0,
+              right: 0,
+              left: 0,
+              bottom: 0,
+              paddingBottom:
+                fileType === 'audio' || fileType === 'video' ? '1rem' : 0
+            }}
+            width="100%"
+            height="100%"
+            light={thumbUrl}
+            onReady={handleReady}
+            controls
+            url={`${cloudFrontURL}${src}`}
           />
+          {fileType !== 'audio' && (
+            <ExtractedThumb
+              src={`${cloudFrontURL}${src}`}
+              style={{ width: '1px', height: '1px' }}
+              onThumbnailLoad={handleThumbnailLoad}
+              thumbUrl={thumbUrl}
+            />
+          )}
         </div>
       ) : (
-        <FileInfo
-          isThumb={isThumb}
-          fileName={fileName}
-          fileType={fileType}
-          fileSize={fileSize}
-          src={src}
-        />
+        <FileInfo fileType={fileType} src={src} />
       )}
     </div>
   );
+
+  function handleReady() {
+    PlayerRef.current?.getInternalPlayer()?.play();
+  }
+
+  function handleThumbnailLoad(thumb) {
+    const dataUri = thumb.replace(/^data:image\/\w+;base64,/, '');
+    const buffer = Buffer.from(dataUri, 'base64');
+    const file = new File([buffer], 'thumb.png');
+    handleUploadThumb();
+
+    async function handleUploadThumb() {
+      const thumbUrl = await uploadThumbForInteractiveSlide({
+        slideId,
+        file,
+        path: uuidv1()
+      });
+      onThumbnailUpload(thumbUrl);
+    }
+  }
 }

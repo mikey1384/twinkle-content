@@ -12,7 +12,7 @@ import ProfilePic from 'components/ProfilePic';
 import UsernameText from 'components/Texts/UsernameText';
 import Chess from '../Chess';
 import GameOverMessage from './GameOverMessage';
-import FileViewer from 'components/FileViewer';
+import ContentFileViewer from 'components/ContentFileViewer';
 import TextMessage from './TextMessage';
 import Icon from 'components/Icon';
 import DropdownButton from 'components/Buttons/DropdownButton';
@@ -490,7 +490,7 @@ function Message({
                     />
                   )}
                   {filePath && (
-                    <FileViewer
+                    <ContentFileViewer
                       contentId={messageId}
                       contentType="chat"
                       content={content}

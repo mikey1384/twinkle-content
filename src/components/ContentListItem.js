@@ -5,7 +5,7 @@ import Embedly from 'components/Embedly';
 import RewardLevelBar from 'components/RewardLevelBar';
 import SecretAnswer from 'components/SecretAnswer';
 import Loading from 'components/Loading';
-import FileViewer from 'components/FileViewer';
+import ContentFileViewer from 'components/ContentFileViewer';
 import { useHistory } from 'react-router-dom';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
@@ -265,7 +265,7 @@ function ContentListItem({
               </div>
             )}
             {filePath && userId && (
-              <FileViewer
+              <ContentFileViewer
                 contentId={contentId}
                 contentType={contentType}
                 fileName={fileName}

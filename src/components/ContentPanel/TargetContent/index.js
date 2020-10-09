@@ -16,7 +16,7 @@ import RewardStatus from 'components/RewardStatus';
 import XPRewardInterface from 'components/XPRewardInterface';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
-import FileViewer from 'components/FileViewer';
+import ContentFileViewer from 'components/ContentFileViewer';
 import HiddenComment from 'components/HiddenComment';
 import Icon from 'components/Icon';
 import LoginToViewContent from 'components/LoginToViewContent';
@@ -310,7 +310,7 @@ export default function TargetContent({
                       comment.filePath &&
                       !contentHidden &&
                       (userId ? (
-                        <FileViewer
+                        <ContentFileViewer
                           contentId={comment.id}
                           contentType="comment"
                           fileName={comment.fileName}

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProfilePic from 'components/ProfilePic';
 import UsernameText from 'components/Texts/UsernameText';
-import FileViewer from 'components/FileViewer';
+import ContentFileViewer from 'components/ContentFileViewer';
 import LongText from 'components/Texts/LongText';
 import { MessageStyle } from '../../Styles';
 import { Color } from 'constants/css';
@@ -56,7 +56,7 @@ export default function Message({
           </span>
         </div>
         {filePath && (
-          <FileViewer
+          <ContentFileViewer
             modalOverModal
             contentId={messageId}
             contentType="chat"

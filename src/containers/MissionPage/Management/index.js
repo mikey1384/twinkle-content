@@ -29,9 +29,13 @@ export default function Management({ mission, missionId, onSetMissionState }) {
   }, []);
 
   return (
-    <div>
-      {mission.attempts?.map((attempt) => (
-        <Attempt key={attempt.id} attempt={attempt} />
+    <div style={{ width: '100%' }}>
+      {mission.attempts?.map((attempt, index) => (
+        <Attempt
+          key={attempt.id}
+          attempt={attempt}
+          style={{ marginTop: index > 0 ? '1rem' : 0 }}
+        />
       ))}
     </div>
   );

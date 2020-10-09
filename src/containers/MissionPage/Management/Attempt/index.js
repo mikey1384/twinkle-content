@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { panel } from '../../Styles';
 
 Attempt.propTypes = {
-  attempt: PropTypes.object.isRequired
+  attempt: PropTypes.object.isRequired,
+  style: PropTypes.object
 };
 
-export default function Attempt({ attempt }) {
+export default function Attempt({ attempt, style }) {
   return (
-    <div>
+    <div style={{ width: '100%', ...style }} className={panel}>
       <div>
-        {attempt.fileName} {attempt.filePath}
+        {attempt.missionId} {attempt.filePath}
       </div>
     </div>
   );

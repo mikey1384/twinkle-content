@@ -5,7 +5,7 @@ import LongText from 'components/Texts/LongText';
 import XPVideoPlayer from 'components/XPVideoPlayer';
 import ContentEditor from './ContentEditor';
 import ErrorBoundary from 'components/ErrorBoundary';
-import FileViewer from 'components/FileViewer';
+import ContentFileViewer from 'components/ContentFileViewer';
 import LoginToViewContent from 'components/LoginToViewContent';
 import RewardLevelBar from 'components/RewardLevelBar';
 import AlreadyPosted from 'components/AlreadyPosted';
@@ -80,7 +80,7 @@ export default function MainContent({
           filePath &&
           !(contentType === 'comment' && secretHidden) &&
           (userId ? (
-            <FileViewer
+            <ContentFileViewer
               autoPlay
               contentId={contentId}
               contentType={contentType}
