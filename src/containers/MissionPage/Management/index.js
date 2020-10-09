@@ -19,11 +19,12 @@ export default function Management({ mission, missionId, onSetMissionState }) {
   useEffect(() => {
     init();
     async function init() {
-      const data = await loadMissionAttempts(missionId);
+      const { attemptObj, attemptIds } = await loadMissionAttempts(missionId);
       onSetMissionState({
         missionId,
         newState: {
-          attempts: data
+          attemptIds,
+          attemptObj
         }
       });
     }
@@ -73,13 +74,16 @@ export default function Management({ mission, missionId, onSetMissionState }) {
           Rewards
         </nav>
       </FilterBar>
-      {mission.attempts?.map((attempt, index) => (
-        <Attempt
-          key={attempt.id}
-          attempt={attempt}
-          style={{ marginTop: index > 0 ? '1rem' : 0 }}
-        />
-      ))}
+      {mission.attemptIds?.map((attemptId, index) => {
+        const attempt = mission.attemptObj[attemptId];
+        return (
+          <Attempt
+            key={attempt.id}
+            attempt={attempt}
+            style={{ marginTop: index > 0 ? '1rem' : 0 }}
+          />
+        );
+      })}
     </div>
   );
 }
