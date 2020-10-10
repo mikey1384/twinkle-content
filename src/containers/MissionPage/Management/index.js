@@ -86,6 +86,19 @@ export default function Management({ mission, missionId, onSetMissionState }) {
       </FilterBar>
       {loading ? (
         <Loading />
+      ) : !mission[`${activeTab}AttemptIds`] ||
+        mission[`${activeTab}AttemptIds`].length === 0 ? (
+        <div
+          style={{
+            marginTop: '15rem',
+            fontSize: '2.5rem',
+            fontWeight: 'bold',
+            width: '100%',
+            textAlign: 'center'
+          }}
+        >
+          {`There are no ${activeTab} attempts`}
+        </div>
       ) : (
         <>
           {mission[`${activeTab}AttemptIds`]?.map((attemptId, index) => {
