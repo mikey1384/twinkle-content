@@ -81,7 +81,7 @@ export default function Management({ mission, missionId, onSetMissionState }) {
             })
           }
         >
-          Rewards
+          Rejected
         </nav>
       </FilterBar>
       {loading ? (
