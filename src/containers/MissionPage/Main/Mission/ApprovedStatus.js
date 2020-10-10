@@ -41,7 +41,7 @@ export default function ApprovedStatus({ myAttempt, style }) {
         <div
           style={{
             width: '100%',
-            marginTop: '1rem',
+            marginTop: '3rem',
             padding: '1rem',
             border: `1px solid ${Color.borderGray()}`,
             borderRadius
