@@ -223,6 +223,7 @@ export default function userRequestHelpers({ auth, handleError, token }) {
       }
     },
     async rewardUser({
+      maxRewardAmountForOnePerson,
       explanation,
       amount,
       contentType,
@@ -234,10 +235,11 @@ export default function userRequestHelpers({ auth, handleError, token }) {
     }) {
       try {
         const {
-          data: { reward, netCoins }
+          data: { alreadyRewarded, reward, netCoins }
         } = await request.post(
           `${URL}/user/reward`,
           {
+            maxRewardAmountForOnePerson,
             rewardExplanation: explanation || '',
             amount,
             contentType,
@@ -249,7 +251,7 @@ export default function userRequestHelpers({ auth, handleError, token }) {
           },
           auth()
         );
-        return Promise.resolve({ reward, netCoins });
+        return Promise.resolve({ alreadyRewarded, reward, netCoins });
       } catch (error) {
         return handleError(error);
       }

@@ -283,13 +283,17 @@ export default function XPRewardInterface({
     try {
       rewardingRef.current = true;
       setRewarding(true);
-      const { reward, netCoins } = await rewardUser({
+      const { alreadyRewarded, reward, netCoins } = await rewardUser({
+        maxRewardAmountForOnePerson,
         explanation: finalizeEmoji(stringIsEmpty(comment) ? '' : comment),
         amount: selectedAmount,
         contentType,
         contentId,
         uploaderId
       });
+      if (alreadyRewarded) {
+        return window.location.reload();
+      }
       if (mounted.current) {
         onSetRewardForm({
           contentType,
