@@ -76,7 +76,7 @@ export default function Mission({
       {myAttempt?.status === 'pending' ? (
         <PendingStatus style={{ marginTop: '3rem' }} />
       ) : myAttempt?.status === 'approved' ? (
-        <ApprovedStatus myAttempt={myAttempt} style={{ marginTop: '3rem' }} />
+        <ApprovedStatus myAttempt={myAttempt} style={{ marginTop: '2rem' }} />
       ) : (
         <Submit
           attachment={attachment}
