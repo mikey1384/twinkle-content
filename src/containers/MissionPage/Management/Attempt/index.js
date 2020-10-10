@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import FileViewer from 'components/FileViewer';
 import UsernameText from 'components/Texts/UsernameText';
 import ApproveInterface from './ApproveInterface';
-import { Color } from 'constants/css';
+import { Color, borderRadius } from 'constants/css';
 import { panel } from '../../Styles';
 import { timeSince } from 'helpers/timeStampHelpers';
+import { stringIsEmpty } from 'helpers/stringHelpers';
 
 Attempt.propTypes = {
   attempt: PropTypes.object.isRequired,
@@ -40,7 +41,41 @@ export default function Attempt({ attempt, style }) {
         thumbUrl={attempt.thumbUrl}
         src={attempt.filePath}
       />
-      <ApproveInterface attempt={attempt} />
+      {attempt.status === 'pending' && <ApproveInterface attempt={attempt} />}
+      {attempt.status === 'approved' && (
+        <div
+          style={{
+            marginTop: '2rem',
+            fontSize: '1.5rem',
+            display: 'flex',
+            flexDirection: 'column'
+          }}
+        >
+          {attempt.reviewer && (
+            <div>
+              <UsernameText
+                style={{ fontSize: '1.5rem' }}
+                color={Color.blue()}
+                user={attempt.reviewer}
+              />{' '}
+              <span>approved this attempt</span>{' '}
+              <span>{timeSince(attempt.reviewTimeStamp)}</span>
+            </div>
+          )}
+          {!stringIsEmpty(attempt.feedback) && (
+            <div
+              style={{
+                marginTop: '1rem',
+                padding: '1rem',
+                border: `1px solid ${Color.borderGray()}`,
+                borderRadius
+              }}
+            >
+              {attempt.feedback}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
