@@ -106,8 +106,7 @@ function MainNavs({
       exact: true
     });
     const missionPageMatch = matchPath(pathname, {
-      path: '/missions/:id',
-      exact: true
+      path: '/missions/:id'
     });
 
     return (
