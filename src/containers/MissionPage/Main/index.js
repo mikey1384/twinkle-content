@@ -27,7 +27,7 @@ export default function Main({ mission, onSetMissionState, style }) {
             objective={mission.objective}
             onSetMissionState={onSetMissionState}
             title={mission.title}
-            status={mission.status}
+            myAttempt={mission.myAttempt}
           />
           <Tutorial
             missionId={mission.id}

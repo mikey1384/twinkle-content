@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import LongText from 'components/Texts/LongText';
 import Submit from './Submit';
+import ApprovedStatus from './ApprovedStatus';
 import PendingStatus from './PendingStatus';
 import { panel } from '../../Styles';
 import { gifTable } from 'constants/defaultValues';
@@ -18,7 +19,7 @@ Mission.propTypes = {
   missionType: PropTypes.string,
   missionId: PropTypes.number,
   onSetMissionState: PropTypes.func,
-  status: PropTypes.string
+  myAttempt: PropTypes.object
 };
 export default function Mission({
   attachment,
@@ -32,7 +33,7 @@ export default function Mission({
   missionType,
   missionId,
   onSetMissionState,
-  status
+  myAttempt
 }) {
   return (
     <div
@@ -69,9 +70,14 @@ export default function Mission({
         </div>
         <LongText style={{ fontSize: '1.5rem' }}>{description}</LongText>
       </div>
-      {status === 'pending' ? (
+      {myAttempt?.status === 'rejected' && (
+        <div>Your previous attempt was rejected. Please try again</div>
+      )}
+      {myAttempt?.status === 'pending' ? (
         <PendingStatus style={{ marginTop: '3rem' }} />
-      ) : status !== 'success' ? (
+      ) : myAttempt?.status === 'approved' ? (
+        <ApprovedStatus myAttempt={myAttempt} style={{ marginTop: '3rem' }} />
+      ) : (
         <Submit
           attachment={attachment}
           fileUploadComplete={fileUploadComplete}
@@ -80,7 +86,7 @@ export default function Mission({
           missionType={missionType}
           onSetMissionState={onSetMissionState}
         />
-      ) : null}
+      )}
     </div>
   );
 }
