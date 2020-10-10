@@ -9,11 +9,20 @@ import { timeSince } from 'helpers/timeStampHelpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
 Attempt.propTypes = {
+  activeTab: PropTypes.string.isRequired,
   attempt: PropTypes.object.isRequired,
+  onSetMissionState: PropTypes.func.isRequired,
+  mission: PropTypes.object.isRequired,
   style: PropTypes.object
 };
 
-export default function Attempt({ attempt, style }) {
+export default function Attempt({
+  activeTab,
+  attempt,
+  onSetMissionState,
+  mission,
+  style
+}) {
   return (
     <div
       style={{ width: '100%', paddingBottom: '1.5rem', ...style }}
@@ -41,7 +50,14 @@ export default function Attempt({ attempt, style }) {
         thumbUrl={attempt.thumbUrl}
         src={attempt.filePath}
       />
-      {attempt.status === 'pending' && <ApproveInterface attempt={attempt} />}
+      {attempt.status === 'pending' && (
+        <ApproveInterface
+          activeTab={activeTab}
+          onSetMissionState={onSetMissionState}
+          mission={mission}
+          attempt={attempt}
+        />
+      )}
       {attempt.status === 'approved' && (
         <div
           style={{

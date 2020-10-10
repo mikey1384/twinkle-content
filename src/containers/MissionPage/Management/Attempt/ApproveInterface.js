@@ -7,10 +7,18 @@ import { useAppContext, useInputContext } from 'contexts';
 import { addEmoji, exceedsCharLimit } from 'helpers/stringHelpers';
 
 ApproveInterface.propTypes = {
+  activeTab: PropTypes.string.isRequired,
+  mission: PropTypes.object.isRequired,
+  onSetMissionState: PropTypes.func.isRequired,
   attempt: PropTypes.object.isRequired
 };
 
-export default function ApproveInterface({ attempt }) {
+export default function ApproveInterface({
+  activeTab,
+  attempt,
+  mission,
+  onSetMissionState
+}) {
   const mounted = useRef(true);
   const {
     requestHelpers: { uploadMissionFeedback }
@@ -125,12 +133,29 @@ export default function ApproveInterface({ attempt }) {
   );
 
   async function handleConfirm() {
-    const data = await uploadMissionFeedback({
+    const success = await uploadMissionFeedback({
       attemptId: attempt.id,
       feedback,
       status
     });
-    console.log(data);
+    if (success) {
+      onSetMissionState({
+        missionId: mission.id,
+        newState: {
+          [`${activeTab}AttemptIds`]: mission[`${activeTab}AttemptIds`].filter(
+            (attemptId) => attemptId !== attempt.id
+          ),
+          attemptObj: {
+            ...mission.attemptObj,
+            [attempt.id]: {
+              ...mission.attemptObj[attempt.id],
+              feedback,
+              status
+            }
+          }
+        }
+      });
+    }
   }
 
   function handleSetFeedback(text) {

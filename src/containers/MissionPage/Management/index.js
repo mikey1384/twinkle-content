@@ -106,8 +106,11 @@ export default function Management({ mission, missionId, onSetMissionState }) {
             return (
               <Attempt
                 key={attempt.id}
+                activeTab={activeTab}
                 attempt={attempt}
                 style={{ marginTop: index > 0 ? '1rem' : 0 }}
+                onSetMissionState={onSetMissionState}
+                mission={mission}
               />
             );
           })}
