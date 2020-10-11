@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Input from 'components/Texts/Input';
+import Button from 'components/Button';
 import { stringIsEmpty } from 'helpers/stringHelpers';
+import { Color } from 'constants/css';
 
 const missionText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce luctus
 commodo purus eget tempus. In suscipit euismod ex, sit amet maximus sem
@@ -27,7 +29,13 @@ export default function CopyAndPaste({ mission, onSetMissionState }) {
 
   useEffect(() => {
     if (!stringIsEmpty(content)) {
-      setStatus(content.localeCompare(missionText) === 0 ? 'success' : 'fail');
+      setStatus(
+        content.localeCompare(missionText) === 0
+          ? 'success'
+          : content.localeCompare(missionText) === -1
+          ? 'too short'
+          : 'too long'
+      );
     } else {
       setStatus('');
     }
@@ -49,7 +57,36 @@ export default function CopyAndPaste({ mission, onSetMissionState }) {
         placeholder="Paste the text here..."
       />
 
-      {status === 'success' && <div>success!</div>}
+      {!stringIsEmpty(status) && (
+        <div
+          style={{
+            marginTop: '1rem',
+            marginBottom: '-2rem',
+            display: 'flex',
+            justifyContent: 'flex-end'
+          }}
+        >
+          {status === 'success' && (
+            <Button onClick={handleSuccess} color="green" filled>
+              Success!
+            </Button>
+          )}
+          {status === 'too short' && (
+            <p style={{ fontSize: '1.5rem', color: Color.red() }}>
+              {`You shouldn't be typing! Copy and paste the text above`}
+            </p>
+          )}
+          {status === 'too long' && (
+            <p style={{ fontSize: '1.5rem', color: Color.red() }}>
+              You should copy and paste the text above!
+            </p>
+          )}
+        </div>
+      )}
     </div>
   );
+
+  function handleSuccess() {
+    console.log('yay');
+  }
 }
