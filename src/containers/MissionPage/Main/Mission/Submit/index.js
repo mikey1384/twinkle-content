@@ -1,34 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TakeScreenshot from './TakeScreenshot';
+import CopyAndPaste from './CopyAndPaste';
 
 Submit.propTypes = {
-  attachment: PropTypes.object,
   fileUploadComplete: PropTypes.bool,
   fileUploadProgress: PropTypes.number,
-  missionId: PropTypes.number,
-  missionType: PropTypes.string,
+  mission: PropTypes.object.isRequired,
   onSetMissionState: PropTypes.func
 };
 
 export default function Submit({
-  attachment,
-  missionId,
-  missionType,
+  mission,
   fileUploadComplete,
   fileUploadProgress,
   onSetMissionState
 }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      {missionType === 'screenshot' && (
+      {mission.missionType === 'screenshot' && (
         <TakeScreenshot
-          attachment={attachment}
+          attachment={mission.attachment}
           fileUploadComplete={fileUploadComplete}
           fileUploadProgress={fileUploadProgress}
-          missionId={missionId}
+          missionId={mission.id}
           onSetMissionState={onSetMissionState}
         />
+      )}
+      {mission.missionType === 'copy-and-paste' && (
+        <CopyAndPaste mission={mission} onSetMissionState={onSetMissionState} />
       )}
     </div>
   );

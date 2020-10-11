@@ -15,14 +15,12 @@ Mission.propTypes = {
 export default function Mission({
   mission,
   mission: {
-    attachment,
     fileUploadComplete,
     fileUploadProgress,
     title,
     subtitle,
     description,
     objective,
-    missionType,
     id: missionId,
     myAttempt
   },
@@ -75,11 +73,9 @@ export default function Mission({
         />
       ) : (
         <Submit
-          attachment={attachment}
+          mission={mission}
           fileUploadComplete={fileUploadComplete}
           fileUploadProgress={fileUploadProgress}
-          missionId={missionId}
-          missionType={missionType}
           onSetMissionState={onSetMissionState}
         />
       )}
