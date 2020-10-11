@@ -58,7 +58,7 @@ export default function Attempt({
           attempt={attempt}
         />
       )}
-      {attempt.status === 'approved' && (
+      {(attempt.status === 'approved' || attempt.status === 'rejected') && (
         <div
           style={{
             marginTop: '2rem',
