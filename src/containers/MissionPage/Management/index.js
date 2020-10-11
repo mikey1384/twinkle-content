@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import Attempt from './Attempt';
 import FilterBar from 'components/FilterBar';
 import Loading from 'components/Loading';
+import InvalidPage from 'components/InvalidPage';
 import { useAppContext } from 'contexts';
+import { useMyState } from 'helpers/hooks';
 
 Management.propTypes = {
   mission: PropTypes.object,
@@ -15,11 +17,14 @@ export default function Management({ mission, missionId, onSetMissionState }) {
   const {
     requestHelpers: { loadMissionAttempts }
   } = useAppContext();
+  const { canEdit } = useMyState();
   const { managementTab: activeTab = 'pending' } = mission;
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    init();
+    if (canEdit) {
+      init();
+    }
     async function init() {
       setLoading(true);
       const {
@@ -39,7 +44,16 @@ export default function Management({ mission, missionId, onSetMissionState }) {
       setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeTab]);
+  }, [activeTab, canEdit]);
+
+  if (!canEdit) {
+    return (
+      <InvalidPage
+        title="For moderators only"
+        text="You are not authorized to view this page"
+      />
+    );
+  }
 
   return (
     <div style={{ width: '100%', marginBottom: '10rem' }}>
