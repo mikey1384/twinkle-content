@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TakeScreenshot from './TakeScreenshot';
 import CopyAndPaste from './CopyAndPaste';
+import Googling from './Googling';
 
 Submit.propTypes = {
   fileUploadComplete: PropTypes.bool,
@@ -27,6 +28,7 @@ export default function Submit({
           onSetMissionState={onSetMissionState}
         />
       )}
+      {mission.missionType === 'google' && <Googling />}
       {mission.missionType === 'copy-and-paste' && (
         <CopyAndPaste mission={mission} onSetMissionState={onSetMissionState} />
       )}
