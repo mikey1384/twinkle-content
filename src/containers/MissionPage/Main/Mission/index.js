@@ -23,7 +23,7 @@ export default function Mission({
     description,
     objective,
     missionType,
-    missionId,
+    id: missionId,
     myAttempt
   },
   style,
