@@ -8,32 +8,26 @@ import { panel } from '../../Styles';
 import { gifTable } from 'constants/defaultValues';
 
 Mission.propTypes = {
-  attachment: PropTypes.object,
-  fileUploadComplete: PropTypes.bool,
-  fileUploadProgress: PropTypes.number,
-  title: PropTypes.string,
-  subtitle: PropTypes.string,
-  description: PropTypes.string,
-  objective: PropTypes.string,
   style: PropTypes.object,
-  missionType: PropTypes.string,
-  missionId: PropTypes.number,
   onSetMissionState: PropTypes.func,
-  myAttempt: PropTypes.object
+  mission: PropTypes.object
 };
 export default function Mission({
-  attachment,
-  fileUploadComplete,
-  fileUploadProgress,
-  title,
-  subtitle,
-  description,
-  objective,
+  mission,
+  mission: {
+    attachment,
+    fileUploadComplete,
+    fileUploadProgress,
+    title,
+    subtitle,
+    description,
+    objective,
+    missionType,
+    missionId,
+    myAttempt
+  },
   style,
-  missionType,
-  missionId,
-  onSetMissionState,
-  myAttempt
+  onSetMissionState
 }) {
   return (
     <div
@@ -70,13 +64,15 @@ export default function Mission({
         </div>
         <LongText style={{ fontSize: '1.5rem' }}>{description}</LongText>
       </div>
-      {myAttempt?.status === 'rejected' && (
-        <div>Your previous attempt was rejected. Please try again</div>
-      )}
       {myAttempt?.status === 'pending' ? (
         <PendingStatus style={{ marginTop: '3rem' }} />
-      ) : myAttempt?.status === 'approved' ? (
-        <ApprovedStatus myAttempt={myAttempt} style={{ marginTop: '2rem' }} />
+      ) : myAttempt?.status === 'approved' ||
+        myAttempt?.status === 'rejected' ? (
+        <ApprovedStatus
+          mission={mission}
+          onSetMissionState={onSetMissionState}
+          style={{ marginTop: '2rem' }}
+        />
       ) : (
         <Submit
           attachment={attachment}

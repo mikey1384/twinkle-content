@@ -17,17 +17,8 @@ export default function Main({ mission, onSetMissionState, style }) {
         <div style={{ width: '100%' }}>
           <Mission
             style={{ width: '100%' }}
-            fileUploadProgress={mission.fileUploadProgress}
-            fileUploadComplete={mission.fileUploadComplete}
-            missionId={mission.id}
-            attachment={mission.attachment}
-            description={mission.description}
-            subtitle={mission.subtitle}
-            missionType={mission.missionType}
-            objective={mission.objective}
+            mission={mission}
             onSetMissionState={onSetMissionState}
-            title={mission.title}
-            myAttempt={mission.myAttempt}
           />
           <Tutorial
             missionId={mission.id}

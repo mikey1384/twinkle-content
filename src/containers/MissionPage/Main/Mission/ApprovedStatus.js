@@ -2,16 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FileViewer from 'components/FileViewer';
 import UsernameText from 'components/Texts/UsernameText';
+import Button from 'components/Button';
 import { borderRadius, Color } from 'constants/css';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
 ApprovedStatus.propTypes = {
-  myAttempt: PropTypes.object.isRequired,
+  mission: PropTypes.object.isRequired,
+  onSetMissionState: PropTypes.func.isRequired,
   style: PropTypes.object
 };
 
-export default function ApprovedStatus({ myAttempt, style }) {
+export default function ApprovedStatus({ mission, onSetMissionState, style }) {
   return (
     <div
       style={{
@@ -26,18 +28,27 @@ export default function ApprovedStatus({ myAttempt, style }) {
       }}
     >
       <div
-        style={{ fontWeight: 'bold', fontSize: '2rem', color: Color.green() }}
+        style={{
+          fontWeight: 'bold',
+          fontSize: '2rem',
+          color:
+            mission.myAttempt.status === 'approved'
+              ? Color.green()
+              : Color.rose()
+        }}
       >
-        Mission Accomplished!
+        {mission.myAttempt.status === 'approved'
+          ? 'Mission Accomplished!'
+          : 'Mission Failed...'}
       </div>
-      {myAttempt.filePath && (
+      {mission.myAttempt.filePath && (
         <FileViewer
           style={{ marginTop: '1.5rem' }}
-          thumbUrl={myAttempt.thumbUrl}
-          src={myAttempt.filePath}
+          thumbUrl={mission.myAttempt.thumbUrl}
+          src={mission.myAttempt.filePath}
         />
       )}
-      {!stringIsEmpty(myAttempt.feedback) && (
+      {!stringIsEmpty(mission.myAttempt.feedback) && (
         <div
           style={{
             width: '100%',
@@ -47,7 +58,7 @@ export default function ApprovedStatus({ myAttempt, style }) {
             borderRadius
           }}
         >
-          {myAttempt.reviewer && (
+          {mission.myAttempt.reviewer && (
             <>
               <div
                 style={{
@@ -56,12 +67,37 @@ export default function ApprovedStatus({ myAttempt, style }) {
                   lineHeight: 1.5
                 }}
               >
-                <UsernameText color={Color.blue()} user={myAttempt.reviewer} />
-                <span>{timeSince(myAttempt.reviewTimeStamp)}</span>
+                <UsernameText
+                  color={Color.blue()}
+                  user={mission.myAttempt.reviewer}
+                />
+                <span>{timeSince(mission.myAttempt.reviewTimeStamp)}</span>
               </div>
-              <div>{myAttempt.feedback || 'Great job!'}</div>
+              <div>
+                {mission.myAttempt.feedback ||
+                  (mission.myAttempt.status === 'approved'
+                    ? 'Great job!'
+                    : 'Please try again')}
+              </div>
             </>
           )}
+        </div>
+      )}
+      {mission.myAttempt.status === 'rejected' && (
+        <div style={{ marginTop: '3rem' }}>
+          <Button
+            style={{ fontSize: '2.5rem' }}
+            color="green"
+            onClick={() =>
+              onSetMissionState({
+                missionId: mission.id,
+                newState: { myAttempt: null }
+              })
+            }
+            filled
+          >
+            Try again
+          </Button>
         </div>
       )}
     </div>
