@@ -199,7 +199,7 @@ export default function TakeScreenshot({
       onSetMissionState({
         missionId,
         newState: {
-          status: 'pending'
+          myAttempt: { status: 'pending' }
         }
       });
     }
