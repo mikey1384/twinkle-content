@@ -4,6 +4,7 @@ import Input from 'components/Texts/Input';
 import Button from 'components/Button';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { Color } from 'constants/css';
+import { useAppContext } from 'contexts';
 
 const missionText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce luctus
 commodo purus eget tempus. In suscipit euismod ex, sit amet maximus sem
@@ -24,6 +25,9 @@ CopyAndPaste.propTypes = {
 };
 
 export default function CopyAndPaste({ mission, onSetMissionState }) {
+  const {
+    requestHelpers: { uploadMissionAttempt }
+  } = useAppContext();
   const { content = '' } = mission;
   const [status, setStatus] = useState('');
 
@@ -86,7 +90,18 @@ export default function CopyAndPaste({ mission, onSetMissionState }) {
     </div>
   );
 
-  function handleSuccess() {
-    console.log('yay');
+  async function handleSuccess() {
+    const success = await uploadMissionAttempt({
+      missionId: mission.id,
+      attempt: { content, status: 'approved' }
+    });
+    if (success) {
+      onSetMissionState({
+        missionId: mission.id,
+        newState: {
+          myAttempt: { status: 'approved' }
+        }
+      });
+    }
   }
 }

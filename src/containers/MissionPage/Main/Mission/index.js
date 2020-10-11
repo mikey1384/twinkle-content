@@ -31,7 +31,7 @@ export default function Mission({
     <div
       className={panel}
       style={{
-        paddingBottom: '3rem',
+        paddingBottom: '2.5rem',
         ...style
       }}
     >
@@ -63,13 +63,13 @@ export default function Mission({
         <LongText style={{ fontSize: '1.5rem' }}>{description}</LongText>
       </div>
       {myAttempt?.status === 'pending' ? (
-        <PendingStatus style={{ marginTop: '3rem' }} />
+        <PendingStatus style={{ marginTop: '2rem' }} />
       ) : myAttempt?.status === 'approved' ||
         myAttempt?.status === 'rejected' ? (
         <ApprovedStatus
           mission={mission}
           onSetMissionState={onSetMissionState}
-          style={{ marginTop: '2rem' }}
+          style={{ marginTop: '3rem' }}
         />
       ) : (
         <Submit
