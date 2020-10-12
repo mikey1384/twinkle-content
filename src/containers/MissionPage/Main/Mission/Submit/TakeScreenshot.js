@@ -15,7 +15,8 @@ TakeScreenshot.propTypes = {
   fileUploadComplete: PropTypes.bool,
   fileUploadProgress: PropTypes.number,
   missionId: PropTypes.number,
-  onSetMissionState: PropTypes.func
+  onSetMissionState: PropTypes.func,
+  style: PropTypes.object
 };
 
 export default function TakeScreenshot({
@@ -23,7 +24,8 @@ export default function TakeScreenshot({
   fileUploadComplete,
   fileUploadProgress,
   missionId,
-  onSetMissionState
+  onSetMissionState,
+  style
 }) {
   const {
     requestHelpers: { uploadFile, uploadMissionAttempt }
@@ -50,8 +52,8 @@ export default function TakeScreenshot({
       style={{
         display: 'flex',
         flexDirection: 'column',
-        marginTop: '3rem',
-        fontSize: '1.7rem'
+        fontSize: '1.7rem',
+        ...style
       }}
     >
       {uploadingFile ? (

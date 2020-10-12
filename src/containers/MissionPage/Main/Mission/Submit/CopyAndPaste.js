@@ -21,10 +21,11 @@ nulla ut, convallis odio.`.replace(/\n/gi, ' ');
 
 CopyAndPaste.propTypes = {
   mission: PropTypes.object.isRequired,
-  onSetMissionState: PropTypes.func.isRequired
+  onSetMissionState: PropTypes.func.isRequired,
+  style: PropTypes.object
 };
 
-export default function CopyAndPaste({ mission, onSetMissionState }) {
+export default function CopyAndPaste({ mission, onSetMissionState, style }) {
   const {
     requestHelpers: { uploadMissionAttempt }
   } = useAppContext();
@@ -46,7 +47,7 @@ export default function CopyAndPaste({ mission, onSetMissionState }) {
   }, [content]);
 
   return (
-    <div style={{ marginTop: '2.5rem' }}>
+    <div style={style}>
       <div>{missionText}</div>
       <Input
         autoFocus

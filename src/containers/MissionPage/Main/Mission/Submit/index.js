@@ -18,7 +18,9 @@ export default function Submit({
   onSetMissionState
 }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <div
+      style={{ display: 'flex', flexDirection: 'column', marginTop: '2.5rem' }}
+    >
       {mission.missionType === 'screenshot' && (
         <TakeScreenshot
           attachment={mission.attachment}

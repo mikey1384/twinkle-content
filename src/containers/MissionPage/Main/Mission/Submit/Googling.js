@@ -1,18 +1,29 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { css } from 'emotion';
 
-export default function Googling() {
+Googling.propTypes = {
+  style: PropTypes.object
+};
+export default function Googling({ style }) {
   return (
-    <div>
-      <div>what is the rarest element on Earth</div>
-      <div>what day did the world war 2 begin</div>
-      <div>Who is the primie minister of India</div>
-      <div>when was isaac newton born</div>
-      <div>only planet to spin clockwise</div>
-      <div>Founding Fathers of the United States</div>
-      <div>What is the speed of light</div>
-      <div>군사분계선 in english</div>
-      <div>jak się nazywasz?</div>
-      <div>Where was Mozzarella cheese sticks invented</div>
+    <div
+      className={css`
+        > p {
+          font-size: 1.5rem;
+          font-weight: bold;
+        }
+      `}
+      style={style}
+    >
+      <p>What is the rarest element on Earth?</p>
+      <p>When did World War 2 begin?</p>
+      <p>Who was the third prime minister of India?</p>
+      <p>When was Isaac Newton born?</p>
+      <p>What is the speed of light?</p>
+      <p>What is 질산나트륨 in english?</p>
+      <p>{`What language is this, and what does it mean? "brilha Brilha Estrelinha"`}</p>
+      <p>Where was Mozzarella cheese sticks invented?</p>
     </div>
   );
 }
