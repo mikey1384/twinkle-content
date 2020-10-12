@@ -6,7 +6,7 @@ import { panel } from '../../Styles';
 import { useAppContext, useMissionContext } from 'contexts';
 
 AddTutorial.propTypes = {
-  missionId: PropTypes.number,
+  missionId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   missionTitle: PropTypes.string
 };
 

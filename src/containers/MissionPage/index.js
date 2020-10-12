@@ -53,9 +53,13 @@ export default function MissionPage({
     prevUserId.current = userId;
 
     async function init() {
-      const data = await loadMission(missionId);
-      if (mounted.current) {
-        onLoadMission(data);
+      if (userId) {
+        const data = await loadMission(missionId);
+        if (mounted.current) {
+          onLoadMission(data);
+        }
+      } else {
+        onLoadMission({ id: missionId });
       }
     }
 
@@ -70,9 +74,9 @@ export default function MissionPage({
     };
   }, []);
 
-  return loaded ? (
-    mission.id ? (
-      userId ? (
+  return loaded && mission.loaded ? (
+    userId ? (
+      mission.id ? (
         <div
           style={{
             paddingTop: '1rem',
@@ -127,13 +131,13 @@ export default function MissionPage({
           )}
         </div>
       ) : (
-        <InvalidPage
-          title="For Registered Users Only"
-          text="Please Log In or Sign Up"
-        />
+        <InvalidPage />
       )
     ) : (
-      <InvalidPage />
+      <InvalidPage
+        title="For Registered Users Only"
+        text="Please Log In or Sign Up"
+      />
     )
   ) : (
     <Loading />

@@ -14,7 +14,6 @@ export default function Question({ question, style }) {
         {question.content}
       </p>
       <Input
-        autoFocus
         value={answer}
         onChange={(text) => setAnswer(text)}
         style={{ marginTop: '0.5rem', marginBottom: '2rem' }}

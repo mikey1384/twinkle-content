@@ -6,7 +6,7 @@ import InteractiveContent from 'components/InteractiveContent';
 import { useMyState } from 'helpers/hooks';
 
 Tutorial.propTypes = {
-  missionId: PropTypes.number,
+  missionId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   missionTitle: PropTypes.string,
   onSetMissionState: PropTypes.func,
   style: PropTypes.object,
