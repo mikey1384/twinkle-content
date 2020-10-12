@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import FileViewer from 'components/FileViewer';
 import UsernameText from 'components/Texts/UsernameText';
 import ApproveInterface from './ApproveInterface';
+import LongText from 'components/Texts/LongText';
 import { Color, borderRadius } from 'constants/css';
 import { panel } from '../../Styles';
 import { timeSince } from 'helpers/timeStampHelpers';
@@ -45,11 +46,18 @@ export default function Attempt({
           {timeSince(attempt.uploadTimeStamp)}
         </div>
       </div>
-      <FileViewer
-        style={{ marginTop: '2rem' }}
-        thumbUrl={attempt.thumbUrl}
-        src={attempt.filePath}
-      />
+      {attempt.content && (
+        <div style={{ marginTop: '2rem' }}>
+          <LongText>{attempt.content}</LongText>
+        </div>
+      )}
+      {attempt.filePath && (
+        <FileViewer
+          style={{ marginTop: '2rem' }}
+          thumbUrl={attempt.thumbUrl}
+          src={attempt.filePath}
+        />
+      )}
       {attempt.status === 'pending' && (
         <ApproveInterface
           activeTab={activeTab}
