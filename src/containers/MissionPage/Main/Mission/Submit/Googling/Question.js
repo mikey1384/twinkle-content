@@ -3,14 +3,15 @@ import PropTypes from 'prop-types';
 import Input from 'components/Texts/Input';
 
 Question.propTypes = {
+  question: PropTypes.object.isRequired,
   style: PropTypes.object
 };
-export default function Question({ style }) {
+export default function Question({ question, style }) {
   const [answer, setAnswer] = useState('');
   return (
     <div style={style}>
       <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
-        What is the rarest element on Earth?
+        {question.content}
       </p>
       <Input
         autoFocus
