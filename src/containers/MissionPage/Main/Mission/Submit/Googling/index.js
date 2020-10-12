@@ -9,8 +9,15 @@ Googling.propTypes = {
 export default function Googling({ mission, style }) {
   return (
     <div style={style}>
-      {mission.questions.map((question) => (
-        <Question key={question.id} question={question} />
+      {mission.questions.map((question, index) => (
+        <Question
+          key={question.id}
+          question={question}
+          style={{
+            marginBottom:
+              index === mission.questions.length - 1 ? '-1rem' : '2rem'
+          }}
+        />
       ))}
     </div>
   );

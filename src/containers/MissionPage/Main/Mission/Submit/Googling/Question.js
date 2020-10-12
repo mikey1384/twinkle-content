@@ -16,7 +16,7 @@ export default function Question({ question, style }) {
       <Input
         value={answer}
         onChange={(text) => setAnswer(text)}
-        style={{ marginTop: '0.5rem', marginBottom: '2rem' }}
+        style={{ marginTop: '0.5rem' }}
         placeholder="Type your answer here..."
       />
     </div>
