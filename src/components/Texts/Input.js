@@ -44,7 +44,7 @@ export default function Input({
           ${hasError ? 'color: red; border: 1px solid red;' : ''};
         `} ${className}`}
         ref={inputRef}
-        onChange={event => onChange(renderText(event.target.value))}
+        onChange={(event) => onChange(renderText(event.target.value))}
       />
     </ErrorBoundary>
   );

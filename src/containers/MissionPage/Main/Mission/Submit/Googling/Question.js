@@ -4,20 +4,33 @@ import Input from 'components/Texts/Input';
 
 Question.propTypes = {
   answer: PropTypes.string,
+  hasError: PropTypes.bool,
+  innerRef: PropTypes.func,
   onInputChange: PropTypes.func.isRequired,
   question: PropTypes.object.isRequired,
   style: PropTypes.object
 };
-export default function Question({ answer, onInputChange, question, style }) {
+export default function Question({
+  innerRef,
+  answer,
+  hasError,
+  onInputChange,
+  question,
+  style
+}) {
   return (
     <div style={style}>
       <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
         {question.content}
       </p>
       <Input
+        inputRef={innerRef}
         value={answer}
         onChange={(text) => onInputChange(text)}
-        style={{ marginTop: '0.5rem' }}
+        style={{
+          marginTop: '0.5rem',
+          border: hasError ? '2px solid red' : null
+        }}
         placeholder="Type your answer here..."
       />
     </div>
