@@ -4,6 +4,7 @@ import Question from './Question';
 import Button from 'components/Button';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { scrollElementToCenter } from 'helpers';
+import { useAppContext } from 'contexts';
 
 Googling.propTypes = {
   mission: PropTypes.object.isRequired,
@@ -11,6 +12,9 @@ Googling.propTypes = {
   style: PropTypes.object
 };
 export default function Googling({ mission, onSetMissionState, style }) {
+  const {
+    requestHelpers: { uploadMissionAttempt }
+  } = useAppContext();
   const [answers, setAnswers] = useState(mission.answers || {});
   const answersRef = useRef(mission.answers || {});
   const [hasErrorObj, setHasErrorObj] = useState(mission.hasErrorObj || {});
@@ -90,7 +94,7 @@ export default function Googling({ mission, onSetMissionState, style }) {
     };
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     for (let { id: questionId } of mission.questions) {
       if (!answers[questionId] || stringIsEmpty(answers[questionId])) {
         handleSetHasErrorObj({
@@ -98,9 +102,16 @@ export default function Googling({ mission, onSetMissionState, style }) {
           hasError: true
         });
         scrollElementToCenter(QuestionRefs.current[questionId]);
-        QuestionRefs.current[questionId].focus();
-        break;
+        return QuestionRefs.current[questionId].focus();
       }
     }
+
+    const success = await uploadMissionAttempt({
+      missionId: mission.id,
+      attempt: {
+        answers
+      }
+    });
+    console.log(success);
   }
 }

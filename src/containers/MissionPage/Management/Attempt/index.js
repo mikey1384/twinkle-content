@@ -46,6 +46,22 @@ export default function Attempt({
           {timeSince(attempt.uploadTimeStamp)}
         </div>
       </div>
+      {attempt.answers && (
+        <div style={{ marginTop: '2rem', marginBottom: '3rem' }}>
+          {attempt.answers.map((answer, index) => (
+            <div
+              style={{
+                fontSize: '1.7rem',
+                marginTop: index === 0 ? 0 : '2rem'
+              }}
+              key={answer.questionId}
+            >
+              <p style={{ fontWeight: 'bold' }}>Q: {answer.question}</p>
+              <p>A: {answer.answer}</p>
+            </div>
+          ))}
+        </div>
+      )}
       {attempt.content && (
         <div style={{ marginTop: '2rem' }}>
           <LongText>{attempt.content}</LongText>
