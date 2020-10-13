@@ -30,7 +30,9 @@ export default function Submit({
           onSetMissionState={onSetMissionState}
         />
       )}
-      {mission.missionType === 'google' && <Googling mission={mission} />}
+      {mission.missionType === 'google' && (
+        <Googling mission={mission} onSetMissionState={onSetMissionState} />
+      )}
       {mission.missionType === 'copy-and-paste' && (
         <CopyAndPaste mission={mission} onSetMissionState={onSetMissionState} />
       )}
