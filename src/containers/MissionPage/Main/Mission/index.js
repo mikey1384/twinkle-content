@@ -44,26 +44,28 @@ export default function Mission({
           <img style={{ width: '100%' }} src={gifTable[missionId]} />
         </div>
       </div>
-      <div
-        style={{
-          marginTop: '3rem'
-        }}
-      >
-        <div>
-          <p style={{ fontWeight: 'bold', fontSize: '2rem' }}>Objective:</p>
-          <LongText
-            style={{
-              fontSize: '1.7rem',
-              marginTop: '0.5rem'
-            }}
-          >
-            {objective}
-          </LongText>
+      {myAttempt?.status !== 'pending' && (
+        <div
+          style={{
+            marginTop: '3rem'
+          }}
+        >
+          <div>
+            <p style={{ fontWeight: 'bold', fontSize: '2rem' }}>Objective:</p>
+            <LongText
+              style={{
+                fontSize: '1.7rem',
+                marginTop: '0.5rem'
+              }}
+            >
+              {objective}
+            </LongText>
+          </div>
+          <LongText style={{ fontSize: '1.5rem' }}>{description}</LongText>
         </div>
-        <LongText style={{ fontSize: '1.5rem' }}>{description}</LongText>
-      </div>
+      )}
       {myAttempt?.status === 'pending' ? (
-        <PendingStatus style={{ marginTop: '2rem' }} />
+        <PendingStatus style={{ marginTop: '7rem' }} />
       ) : myAttempt?.status === 'approved' ||
         myAttempt?.status === 'rejected' ? (
         <ApprovedStatus

@@ -29,12 +29,26 @@ export default function ApprovedStatus({ mission, onSetMissionState, style }) {
     >
       <div
         style={{
+          ...(mission.myAttempt.status === 'approved' ||
+          mission.myAttempt.status === 'rejected'
+            ? {
+                borderRadius,
+                boxShadow:
+                  mission.myAttempt.status === 'approved'
+                    ? `0 0 2px ${Color.brown()}`
+                    : null,
+                padding: '0.5rem 2rem'
+              }
+            : {}),
           fontWeight: 'bold',
           fontSize: '2rem',
-          color:
+          background:
             mission.myAttempt.status === 'approved'
-              ? Color.green()
-              : Color.rose()
+              ? Color.brownOrange()
+              : mission.myAttempt.status === 'rejected'
+              ? Color.black()
+              : null,
+          color: '#fff'
         }}
       >
         {mission.myAttempt.status === 'approved'
@@ -43,7 +57,7 @@ export default function ApprovedStatus({ mission, onSetMissionState, style }) {
       </div>
       {mission.myAttempt.filePath && (
         <FileViewer
-          style={{ marginTop: '1.5rem' }}
+          style={{ marginTop: '2rem' }}
           thumbUrl={mission.myAttempt.thumbUrl}
           src={mission.myAttempt.filePath}
         />
@@ -52,7 +66,7 @@ export default function ApprovedStatus({ mission, onSetMissionState, style }) {
         <div
           style={{
             width: '100%',
-            marginTop: '3rem',
+            marginTop: '2.5rem',
             padding: '1rem',
             border: `1px solid ${Color.borderGray()}`,
             borderRadius
