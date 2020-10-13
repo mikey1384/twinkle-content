@@ -112,6 +112,13 @@ export default function Googling({ mission, onSetMissionState, style }) {
         answers
       }
     });
-    console.log(success);
+    if (success) {
+      onSetMissionState({
+        missionId: mission.id,
+        newState: {
+          myAttempt: { status: 'pending' }
+        }
+      });
+    }
   }
 }

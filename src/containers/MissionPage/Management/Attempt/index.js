@@ -98,7 +98,7 @@ export default function Attempt({
                 color={Color.blue()}
                 user={attempt.reviewer}
               />{' '}
-              <span>approved this attempt</span>{' '}
+              <span>{attempt.status} this attempt</span>{' '}
               <span>{timeSince(attempt.reviewTimeStamp)}</span>
             </div>
           )}
