@@ -43,7 +43,7 @@ export default function Attempt({
           user={attempt.uploader}
         />
         <div style={{ fontSize: '1.5rem', color: Color.darkGray() }}>
-          {timeSince(attempt.uploadTimeStamp)}
+          {timeSince(attempt.timeStamp)}
         </div>
       </div>
       {attempt.answers && (
