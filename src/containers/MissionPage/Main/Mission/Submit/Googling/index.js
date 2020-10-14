@@ -106,7 +106,7 @@ export default function Googling({ mission, onSetMissionState, style }) {
       }
     }
 
-    const success = await uploadMissionAttempt({
+    const { success } = await uploadMissionAttempt({
       missionId: mission.id,
       attempt: {
         answers

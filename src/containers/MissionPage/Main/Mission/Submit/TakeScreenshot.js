@@ -188,7 +188,7 @@ export default function TakeScreenshot({
       }
     });
     filePathRef.current = null;
-    const success = await uploadMissionAttempt({
+    const { success } = await uploadMissionAttempt({
       missionId,
       attempt: {
         fileName: attachment.file.name,

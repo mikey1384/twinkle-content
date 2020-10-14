@@ -92,7 +92,7 @@ export default function CopyAndPaste({ mission, onSetMissionState, style }) {
   );
 
   async function handleSuccess() {
-    const success = await uploadMissionAttempt({
+    const { success } = await uploadMissionAttempt({
       missionId: mission.id,
       attempt: { content, status: 'approved' }
     });

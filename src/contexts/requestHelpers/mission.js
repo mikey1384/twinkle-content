@@ -65,7 +65,7 @@ export default function missionRequestHelpers({ auth, handleError }) {
     async uploadMissionAttempt({ missionId, attempt }) {
       try {
         const {
-          data: { success }
+          data: { success, newXpAndRank, newCoins }
         } = await request.post(
           `${URL}/mission/attempt`,
           {
@@ -74,7 +74,7 @@ export default function missionRequestHelpers({ auth, handleError }) {
           },
           auth()
         );
-        return Promise.resolve(success);
+        return Promise.resolve({ success, newXpAndRank, newCoins });
       } catch (error) {
         return handleError(error);
       }
