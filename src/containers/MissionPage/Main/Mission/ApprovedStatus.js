@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import FileViewer from 'components/FileViewer';
 import UsernameText from 'components/Texts/UsernameText';
 import Button from 'components/Button';
+import Icon from 'components/Icon';
 import { borderRadius, Color } from 'constants/css';
 import { timeSince } from 'helpers/timeStampHelpers';
-import { stringIsEmpty } from 'helpers/stringHelpers';
+import { stringIsEmpty, addCommasToNumber } from 'helpers/stringHelpers';
 
 ApprovedStatus.propTypes = {
   mission: PropTypes.object.isRequired,
@@ -55,6 +56,28 @@ export default function ApprovedStatus({ mission, onSetMissionState, style }) {
           ? 'Mission Accomplished!'
           : 'Mission Failed...'}
       </div>
+      {mission.myAttempt.status === 'approved' && (
+        <div
+          style={{
+            marginTop: '0.5rem',
+            color: Color.black()
+          }}
+        >
+          You were rewarded{' '}
+          <span style={{ color: Color.logoGreen(), fontWeight: 'bold' }}>
+            {addCommasToNumber(mission.xpReward)}
+          </span>{' '}
+          <span style={{ color: Color.gold(), fontWeight: 'bold' }}>XP</span>{' '}
+          and{' '}
+          <span style={{ color: Color.brownOrange(), fontWeight: 'bold' }}>
+            {mission.coinReward}
+          </span>{' '}
+          <Icon
+            style={{ color: Color.brownOrange(), fontWeight: 'bold' }}
+            icon={['far', 'badge-dollar']}
+          />
+        </div>
+      )}
       {mission.myAttempt.filePath && (
         <FileViewer
           style={{ marginTop: '2rem' }}
