@@ -4,7 +4,8 @@ import Input from 'components/Texts/Input';
 import Button from 'components/Button';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { Color } from 'constants/css';
-import { useAppContext } from 'contexts';
+import { useAppContext, useContentContext } from 'contexts';
+import { useMyState } from 'helpers/hooks';
 
 const missionText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce luctus
 commodo purus eget tempus. In suscipit euismod ex, sit amet maximus sem
@@ -26,9 +27,14 @@ CopyAndPaste.propTypes = {
 };
 
 export default function CopyAndPaste({ mission, onSetMissionState, style }) {
+  const { userId } = useMyState();
   const {
     requestHelpers: { uploadMissionAttempt }
   } = useAppContext();
+  const {
+    actions: { onChangeUserXP, onChangeUserCoins }
+  } = useContentContext();
+
   const { content = '' } = mission;
   const [status, setStatus] = useState('');
 
@@ -103,7 +109,16 @@ export default function CopyAndPaste({ mission, onSetMissionState, style }) {
           myAttempt: { status: 'approved' }
         }
       });
-      console.log(newXpAndRank, newCoins);
+      if (newXpAndRank.xp) {
+        onChangeUserXP({
+          xp: newXpAndRank.xp,
+          rank: newXpAndRank.rank,
+          userId
+        });
+      }
+      if (newCoins.netCoins) {
+        onChangeUserCoins({ coins: newCoins.netCoins, userId });
+      }
     }
   }
 }
