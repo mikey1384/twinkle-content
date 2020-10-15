@@ -16,6 +16,7 @@ import {
   useContentContext,
   useViewContext,
   useHomeContext,
+  useMissionContext,
   useNotiContext,
   useChatContext
 } from 'contexts';
@@ -138,6 +139,10 @@ export default function Header({
     }
   } = useContentContext();
 
+  const {
+    actions: { onResetMissionState }
+  } = useMissionContext();
+
   const prevProfilePicId = useRef(profilePicId);
   const peersRef = useRef({});
   const prevMyStreamRef = useRef(null);
@@ -146,8 +151,10 @@ export default function Header({
   const receivedCallSignals = useRef([]);
 
   useEffect(() => {
+    onResetMissionState();
     socket.disconnect();
     socket.connect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
   useEffect(() => {

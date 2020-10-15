@@ -29,6 +29,19 @@ export default function MissionReducer(state, action) {
         loadMoreButton: action.loadMoreButton
       };
     }
+    case 'RESET_MISSION_STATE': {
+      const newMissionObj = {};
+      for (let [key, mission] of Object.entries(state.missionObj)) {
+        newMissionObj[key] = {
+          ...mission,
+          loaded: false
+        };
+      }
+      return {
+        ...state,
+        missionObj: newMissionObj
+      };
+    }
     case 'SET_MISSION_STATE': {
       return {
         ...state,

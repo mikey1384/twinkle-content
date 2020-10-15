@@ -74,8 +74,8 @@ export default function MissionPage({
     };
   }, []);
 
-  return loaded && mission.loaded ? (
-    userId ? (
+  return userId ? (
+    loaded && mission.loaded ? (
       mission.id ? (
         <div
           style={{
@@ -134,12 +134,12 @@ export default function MissionPage({
         <InvalidPage />
       )
     ) : (
-      <InvalidPage
-        title="For Registered Users Only"
-        text="Please Log In or Sign Up"
-      />
+      <Loading />
     )
   ) : (
-    <Loading />
+    <InvalidPage
+      title="For Registered Users Only"
+      text="Please Log In or Sign Up"
+    />
   );
 }

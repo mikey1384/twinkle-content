@@ -19,6 +19,11 @@ export default function MissionActions(dispatch) {
         missionId,
         newState
       });
+    },
+    onResetMissionState() {
+      return dispatch({
+        type: 'RESET_MISSION_STATE'
+      });
     }
   };
 }
