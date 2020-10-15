@@ -77,7 +77,9 @@ export default function MainContent({
   return (
     <ErrorBoundary>
       <div>
-        {contentType === 'attempt' && <MissionContent rootObj={rootObj} />}
+        {contentType === 'attempt' && (
+          <MissionContent uploader={uploader} rootObj={rootObj} />
+        )}
         {(contentType === 'subject' || contentType === 'comment') &&
           filePath &&
           !(contentType === 'comment' && secretHidden) &&

@@ -1,12 +1,12 @@
 import React, { memo, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ContentLink from 'components/ContentLink';
+import ProfilePic from 'components/ProfilePic';
+import UsernameText from 'components/Texts/UsernameText';
 import { useHistory } from 'react-router-dom';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { Color } from 'constants/css';
-import ProfilePic from 'components/ProfilePic';
 import { css } from 'emotion';
-import UsernameText from 'components/Texts/UsernameText';
 
 Heading.propTypes = {
   action: PropTypes.string.isRequired,
@@ -101,9 +101,9 @@ function Heading({
           <>
             <UsernameText user={uploader} color={Color.blue()} /> completed a{' '}
             <ContentLink
-              content={{ id: rootObj.id, title: 'mission' }}
+              content={{ id: rootObj.id, title: `mission: ${rootObj.title}` }}
               contentType="mission"
-              style={{ color: Color.green() }}
+              style={{ color: Color.orange() }}
             />{' '}
           </>
         );

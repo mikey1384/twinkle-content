@@ -89,7 +89,7 @@ export default function ApprovedStatus({ mission, onSetMissionState, style }) {
         }}
       >
         {mission.myAttempt.status === 'approved'
-          ? 'Mission Accomplished!'
+          ? 'Mission Accomplished'
           : 'Mission Failed...'}
       </div>
       {rewardDetails}
