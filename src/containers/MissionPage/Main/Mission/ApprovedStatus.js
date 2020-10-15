@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import FileViewer from 'components/FileViewer';
 import UsernameText from 'components/Texts/UsernameText';
@@ -15,6 +15,31 @@ ApprovedStatus.propTypes = {
 };
 
 export default function ApprovedStatus({ mission, onSetMissionState, style }) {
+  const rewardDetails = useMemo(() => {
+    return mission.xpReward || mission.coinReward ? (
+      <>
+        {mission.xpReward ? (
+          <span style={{ color: Color.logoGreen(), fontWeight: 'bold' }}>
+            {addCommasToNumber(mission.xpReward)}{' '}
+          </span>
+        ) : null}
+        {mission.xpReward && mission.coinReward ? (
+          <>
+            <span style={{ color: Color.gold(), fontWeight: 'bold' }}>XP</span>{' '}
+            and{' '}
+          </>
+        ) : null}
+        {mission.coinReward ? (
+          <>
+            <span style={{ color: Color.brownOrange(), fontWeight: 'bold' }}>
+              {mission.coinReward}
+            </span>{' '}
+          </>
+        ) : null}
+      </>
+    ) : null;
+  }, [mission.coinReward, mission.xpReward]);
+
   return (
     <div
       style={{
@@ -63,15 +88,7 @@ export default function ApprovedStatus({ mission, onSetMissionState, style }) {
             color: Color.black()
           }}
         >
-          You were rewarded{' '}
-          <span style={{ color: Color.logoGreen(), fontWeight: 'bold' }}>
-            {addCommasToNumber(mission.xpReward)}
-          </span>{' '}
-          <span style={{ color: Color.gold(), fontWeight: 'bold' }}>XP</span>{' '}
-          and{' '}
-          <span style={{ color: Color.brownOrange(), fontWeight: 'bold' }}>
-            {mission.coinReward}
-          </span>{' '}
+          You were rewarded {rewardDetails}
           <Icon
             style={{ color: Color.brownOrange(), fontWeight: 'bold' }}
             icon={['far', 'badge-dollar']}

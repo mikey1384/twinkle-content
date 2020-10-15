@@ -101,10 +101,11 @@ function Heading({
           <>
             <UsernameText user={uploader} color={Color.blue()} /> completed a{' '}
             <ContentLink
-              content={{ id: rootObj.id, title: 'mission ' }}
+              content={{ id: rootObj.id, title: 'mission' }}
               contentType="mission"
               style={{ color: Color.green() }}
-            />
+            />{' '}
+            {rootObj.coinReward} {rootObj.xpReward}
           </>
         );
       default:
