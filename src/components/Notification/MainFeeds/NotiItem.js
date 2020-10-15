@@ -270,6 +270,24 @@ export default function NotiItem({
           </>
         );
         break;
+      case 'attempt':
+        notificationMessage = (
+          <>
+            <b style={{ color: Color.brownOrange() }}>Mission accomplished!</b>{' '}
+            <ContentLink
+              contentType="mission"
+              content={{
+                id: targetObj.id,
+                title: `(${truncateText({
+                  text: targetObj.content,
+                  limit: 100
+                })})`
+              }}
+              style={{ color: Color.blue() }}
+            />
+          </>
+        );
+        break;
       default:
         notificationMessage = (
           <span>There was an error - report to Mikey!</span>
@@ -295,8 +313,12 @@ export default function NotiItem({
     <ErrorBoundary>
       <nav style={{ background: '#fff' }} className={notiFeedListItem} key={id}>
         <div>
-          <UsernameText user={user} color={Color.blue()} />
-          &nbsp;
+          {actionObj.contentType !== 'attempt' && (
+            <>
+              <UsernameText user={user} color={Color.blue()} />
+              &nbsp;
+            </>
+          )}
           {NotificationMessage}
         </div>
         <small style={{ color: Color.gray() }}>{timeSince(timeStamp)}</small>
