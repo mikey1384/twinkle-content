@@ -13,6 +13,7 @@ import TagStatus from 'components/TagStatus';
 import SecretAnswer from 'components/SecretAnswer';
 import Link from 'components/Link';
 import HiddenComment from 'components/HiddenComment';
+import MissionContent from './MissionContent';
 import { stringIsEmpty, getFileInfoFromFileName } from 'helpers/stringHelpers';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
@@ -76,6 +77,7 @@ export default function MainContent({
   return (
     <ErrorBoundary>
       <div>
+        {contentType === 'attempt' && <MissionContent rootObj={rootObj} />}
         {(contentType === 'subject' || contentType === 'comment') &&
           filePath &&
           !(contentType === 'comment' && secretHidden) &&

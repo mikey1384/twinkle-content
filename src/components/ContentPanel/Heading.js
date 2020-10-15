@@ -105,7 +105,6 @@ function Heading({
               contentType="mission"
               style={{ color: Color.green() }}
             />{' '}
-            {rootObj.coinReward} {rootObj.xpReward}
           </>
         );
       default:
@@ -185,7 +184,13 @@ function Heading({
             `}`}
             onClick={() =>
               history.push(
-                `/${contentType === 'url' ? 'link' : contentType}s/${id}`
+                `/${
+                  contentType === 'attempt'
+                    ? 'mission'
+                    : contentType === 'url'
+                    ? 'link'
+                    : contentType
+                }s/${contentType === 'attempt' ? rootObj.id : id}`
               )
             }
           >
