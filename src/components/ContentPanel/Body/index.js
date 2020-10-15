@@ -383,6 +383,7 @@ export default function Body({
                   }
                 }
                 .right {
+                  flex-grow: 1;
                   display: flex;
                   justify-content: flex-end;
                   align-items: center;
@@ -394,113 +395,115 @@ export default function Body({
                 }
               `}
             >
-              <div className="left">
-                {!secretHidden && (
-                  <LikeButton
-                    contentType={contentType}
-                    contentId={contentId}
-                    likes={likes}
-                    key="likeButton"
-                    onClick={handleLikeClick}
-                    small
-                  />
-                )}
-                {!secretHidden && (
-                  <Button
-                    transparent
-                    key="commentButton"
-                    className={css`
-                      margin-left: 1rem;
-                      @media (max-width: ${mobileMaxWidth}) {
-                        margin-left: 0.5rem;
-                      }
-                    `}
-                    onClick={handleCommentButtonClick}
-                  >
-                    <Icon icon="comment-alt" />
-                    <span style={{ marginLeft: '0.7rem' }}>
-                      {contentType === 'video' || contentType === 'url'
-                        ? 'Comment'
-                        : contentType === 'subject'
-                        ? 'Respond'
-                        : 'Reply'}
-                    </span>
-                    {(numComments > 0 || numReplies > 0) &&
-                      !commentsShown &&
-                      !autoExpand && (
-                        <span style={{ marginLeft: '0.5rem' }}>
-                          ({numComments || numReplies})
-                        </span>
-                      )}
-                  </Button>
-                )}
-                {userCanRewardThis && !secretHidden && (
-                  <Button
-                    color="pink"
-                    disabled={!!xpButtonDisabled}
-                    className={css`
-                      margin-left: 1rem;
-                      @media (max-width: ${mobileMaxWidth}) {
-                        margin-left: 0.5rem;
-                      }
-                    `}
-                    onClick={handleSetXpRewardInterfaceShown}
-                  >
-                    <Icon icon="certificate" />
-                    <span style={{ marginLeft: '0.7rem' }}>
-                      {xpButtonDisabled || 'Reward'}
-                    </span>
-                  </Button>
-                )}
-                {editButtonShown && (
-                  <DropdownButton
-                    transparent
-                    direction="right"
-                    style={{
-                      marginLeft: secretHidden ? 0 : '0.5rem',
-                      display: 'inline-block'
-                    }}
-                    size={contentType !== 'subject' ? 'sm' : null}
-                    menuProps={editMenuItems}
-                  />
-                )}
-                {!secretHidden && (
-                  <div
-                    className={css`
-                      margin-left: 1rem;
-                      @media (max-width: ${mobileMaxWidth}) {
-                        margin-left: 0;
-                      }
-                    `}
-                    style={{ position: 'relative' }}
-                  >
+              {contentType !== 'attempt' && (
+                <div className="left">
+                  {!secretHidden && (
+                    <LikeButton
+                      contentType={contentType}
+                      contentId={contentId}
+                      likes={likes}
+                      key="likeButton"
+                      onClick={handleLikeClick}
+                      small
+                    />
+                  )}
+                  {!secretHidden && (
                     <Button
                       transparent
-                      onClick={() => {
-                        setCopiedShown(true);
-                        handleCopyToClipboard();
-                        setTimeout(() => setCopiedShown(false), 700);
-                      }}
+                      key="commentButton"
+                      className={css`
+                        margin-left: 1rem;
+                        @media (max-width: ${mobileMaxWidth}) {
+                          margin-left: 0.5rem;
+                        }
+                      `}
+                      onClick={handleCommentButtonClick}
                     >
-                      <Icon icon="copy" />
+                      <Icon icon="comment-alt" />
+                      <span style={{ marginLeft: '0.7rem' }}>
+                        {contentType === 'video' || contentType === 'url'
+                          ? 'Comment'
+                          : contentType === 'subject'
+                          ? 'Respond'
+                          : 'Reply'}
+                      </span>
+                      {(numComments > 0 || numReplies > 0) &&
+                        !commentsShown &&
+                        !autoExpand && (
+                          <span style={{ marginLeft: '0.5rem' }}>
+                            ({numComments || numReplies})
+                          </span>
+                        )}
                     </Button>
-                    <div
-                      style={{
-                        zIndex: 300,
-                        display: copiedShown ? 'block' : 'none',
-                        marginTop: '0.2rem',
-                        position: 'absolute',
-                        background: '#fff',
-                        fontSize: '1.2rem',
-                        padding: '1rem',
-                        border: `1px solid ${Color.borderGray()}`
-                      }}
+                  )}
+                  {userCanRewardThis && !secretHidden && (
+                    <Button
+                      color="pink"
+                      disabled={!!xpButtonDisabled}
+                      className={css`
+                        margin-left: 1rem;
+                        @media (max-width: ${mobileMaxWidth}) {
+                          margin-left: 0.5rem;
+                        }
+                      `}
+                      onClick={handleSetXpRewardInterfaceShown}
                     >
-                      Copied!
+                      <Icon icon="certificate" />
+                      <span style={{ marginLeft: '0.7rem' }}>
+                        {xpButtonDisabled || 'Reward'}
+                      </span>
+                    </Button>
+                  )}
+                  {editButtonShown && (
+                    <DropdownButton
+                      transparent
+                      direction="right"
+                      style={{
+                        marginLeft: secretHidden ? 0 : '0.5rem',
+                        display: 'inline-block'
+                      }}
+                      size={contentType !== 'subject' ? 'sm' : null}
+                      menuProps={editMenuItems}
+                    />
+                  )}
+                  {!secretHidden && (
+                    <div
+                      className={css`
+                        margin-left: 1rem;
+                        @media (max-width: ${mobileMaxWidth}) {
+                          margin-left: 0;
+                        }
+                      `}
+                      style={{ position: 'relative' }}
+                    >
+                      <Button
+                        transparent
+                        onClick={() => {
+                          setCopiedShown(true);
+                          handleCopyToClipboard();
+                          setTimeout(() => setCopiedShown(false), 700);
+                        }}
+                      >
+                        <Icon icon="copy" />
+                      </Button>
+                      <div
+                        style={{
+                          zIndex: 300,
+                          display: copiedShown ? 'block' : 'none',
+                          marginTop: '0.2rem',
+                          position: 'absolute',
+                          background: '#fff',
+                          fontSize: '1.2rem',
+                          padding: '1rem',
+                          border: `1px solid ${Color.borderGray()}`
+                        }}
+                      >
+                        Copied!
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
+                  )}
+                </div>
+              )}
               {!secretHidden && (
                 <div
                   className="right"

@@ -56,7 +56,7 @@ export default function MissionContent({ uploader, rootObj: mission }) {
         alignItems: 'center',
         flexDirection: 'column',
         marginTop: '2rem',
-        marginBottom: '-2rem'
+        marginBottom: '-4rem'
       }}
     >
       <ContentLink
