@@ -9,6 +9,7 @@ import Checkbox from 'components/Checkbox';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Loading from 'components/Loading';
 import { PanelStyle } from './Styles';
+import { Color } from 'constants/css';
 import { css } from 'emotion';
 import { scrollElementToCenter } from 'helpers';
 import {
@@ -142,7 +143,7 @@ function ContentInput() {
         <div style={{ fontSize: '1.6rem', marginTop: '0.5rem' }}>
           This content has{' '}
           <Link
-            style={{ fontWeight: 'bold' }}
+            style={{ fontWeight: 'bold', color: Color.rose() }}
             to={`/${alreadyPosted.contentType === 'url' ? 'link' : 'video'}s/${
               alreadyPosted.id
             }`}
