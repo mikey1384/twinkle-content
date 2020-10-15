@@ -96,6 +96,17 @@ function Heading({
             )}
           </>
         );
+      case 'attempt':
+        return (
+          <>
+            <UsernameText user={uploader} color={Color.blue()} /> completed a{' '}
+            <ContentLink
+              content={{ id: rootObj.id, title: 'mission ' }}
+              contentType="mission"
+              style={{ color: Color.green() }}
+            />
+          </>
+        );
       default:
         return <span>Error</span>;
     }
