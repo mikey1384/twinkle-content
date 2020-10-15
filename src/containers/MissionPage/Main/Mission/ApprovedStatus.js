@@ -16,8 +16,15 @@ ApprovedStatus.propTypes = {
 
 export default function ApprovedStatus({ mission, onSetMissionState, style }) {
   const rewardDetails = useMemo(() => {
-    return mission.xpReward || mission.coinReward ? (
-      <>
+    return (mission.xpReward || mission.coinReward) &&
+      mission.myAttempt.status === 'approved' ? (
+      <div
+        style={{
+          marginTop: '0.5rem',
+          color: Color.black()
+        }}
+      >
+        You were rewarded{' '}
         {mission.xpReward ? (
           <span style={{ color: Color.logoGreen(), fontWeight: 'bold' }}>
             {addCommasToNumber(mission.xpReward)}{' '}
@@ -34,11 +41,15 @@ export default function ApprovedStatus({ mission, onSetMissionState, style }) {
             <span style={{ color: Color.brownOrange(), fontWeight: 'bold' }}>
               {mission.coinReward}
             </span>{' '}
+            <Icon
+              style={{ color: Color.brownOrange(), fontWeight: 'bold' }}
+              icon={['far', 'badge-dollar']}
+            />
           </>
         ) : null}
-      </>
+      </div>
     ) : null;
-  }, [mission.coinReward, mission.xpReward]);
+  }, [mission.coinReward, mission.myAttempt.status, mission.xpReward]);
 
   return (
     <div
@@ -81,20 +92,7 @@ export default function ApprovedStatus({ mission, onSetMissionState, style }) {
           ? 'Mission Accomplished!'
           : 'Mission Failed...'}
       </div>
-      {mission.myAttempt.status === 'approved' && (
-        <div
-          style={{
-            marginTop: '0.5rem',
-            color: Color.black()
-          }}
-        >
-          You were rewarded {rewardDetails}
-          <Icon
-            style={{ color: Color.brownOrange(), fontWeight: 'bold' }}
-            icon={['far', 'badge-dollar']}
-          />
-        </div>
-      )}
+      {rewardDetails}
       {mission.myAttempt.filePath && (
         <FileViewer
           style={{ marginTop: '2rem' }}
