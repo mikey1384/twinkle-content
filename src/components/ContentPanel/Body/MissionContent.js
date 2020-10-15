@@ -50,12 +50,12 @@ export default function MissionContent({ uploader, rootObj: mission }) {
   return (
     <div
       style={{
+        marginTop: '2.5rem',
         padding: '1rem',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-        marginTop: '2rem',
         marginBottom: '-4rem'
       }}
     >
