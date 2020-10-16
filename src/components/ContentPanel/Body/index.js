@@ -395,7 +395,7 @@ export default function Body({
                 }
               `}
             >
-              {contentType !== 'attempt' && (
+              {contentType !== 'success' && (
                 <div className="left">
                   {!secretHidden && (
                     <LikeButton

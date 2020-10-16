@@ -96,7 +96,7 @@ function Heading({
             )}
           </>
         );
-      case 'attempt':
+      case 'success':
         return (
           <>
             <UsernameText user={uploader} color={Color.blue()} /> completed a{' '}
@@ -185,12 +185,12 @@ function Heading({
             onClick={() =>
               history.push(
                 `/${
-                  contentType === 'attempt'
+                  contentType === 'success'
                     ? 'mission'
                     : contentType === 'url'
                     ? 'link'
                     : contentType
-                }s/${contentType === 'attempt' ? rootObj.id : id}`
+                }s/${contentType === 'success' ? rootObj.id : id}`
               )
             }
           >
