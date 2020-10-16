@@ -47,6 +47,7 @@ export default function Header({
       getNumberOfUnreadMessages,
       loadChat,
       loadRankings,
+      loadXP,
       updateChatLastRead
     }
   } = useAppContext();
@@ -132,6 +133,7 @@ export default function Header({
     state,
     actions: {
       onAttachReward,
+      onChangeUserXP,
       onLikeContent,
       onRecommendContent,
       onUploadComment,
@@ -549,11 +551,7 @@ export default function Header({
         });
       }
       if (message.targetMessage?.userId === userId && message.rewardAmount) {
-        fetchRankings();
-      }
-      async function fetchRankings() {
-        const { all, top30s } = await loadRankings();
-        onGetRanks({ all, top30s });
+        handleUpdateMyXp();
       }
     }
 
@@ -784,5 +782,12 @@ export default function Header({
         console.error('Peer error %s:', peerId, e);
       });
     }
+  }
+
+  async function handleUpdateMyXp() {
+    const { all, top30s } = await loadRankings();
+    onGetRanks({ all, top30s });
+    const { xp, rank } = await loadXP();
+    onChangeUserXP({ xp, rank, userId });
   }
 }

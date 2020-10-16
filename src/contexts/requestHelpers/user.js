@@ -210,6 +210,16 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
+    async loadXP() {
+      try {
+        const {
+          data: { rank, xp }
+        } = await request.get(`${URL}/user/xp`, auth());
+        return Promise.resolve({ rank, xp });
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async login(params) {
       try {
         const { data } = await request.post(`${URL}/user/login`, params);
