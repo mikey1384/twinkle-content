@@ -6,24 +6,12 @@ import InteractiveContent from 'components/InteractiveContent';
 import { useMyState } from 'helpers/hooks';
 
 Tutorial.propTypes = {
-  missionId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  missionTitle: PropTypes.string,
   onSetMissionState: PropTypes.func,
   style: PropTypes.object,
-  tutorialStarted: PropTypes.bool,
-  tutorialId: PropTypes.number,
-  tutorialIsPublished: PropTypes.bool
+  mission: PropTypes.object.isRequired
 };
 
-export default function Tutorial({
-  missionId,
-  missionTitle,
-  onSetMissionState,
-  style,
-  tutorialId,
-  tutorialStarted,
-  tutorialIsPublished
-}) {
+export default function Tutorial({ onSetMissionState, style, mission }) {
   const { canEdit } = useMyState();
   return (
     <div
@@ -33,21 +21,27 @@ export default function Tutorial({
         ...style
       }}
     >
-      {canEdit && !tutorialId && (
-        <AddTutorial missionId={missionId} missionTitle={missionTitle} />
+      {canEdit && !mission.tutorialId && (
+        <AddTutorial missionId={mission.id} missionTitle={mission.title} />
       )}
-      {!!tutorialId && tutorialIsPublished && !tutorialStarted && !canEdit && (
-        <ViewTutorial
-          onStartClick={() =>
-            onSetMissionState({
-              missionId,
-              newState: { tutorialStarted: true }
-            })
-          }
-        />
-      )}
-      {(tutorialStarted || canEdit) && (
-        <InteractiveContent interactiveId={tutorialId} />
+      {!!mission.tutorialId &&
+        mission.tutorialIsPublished &&
+        !mission.tutorialStarted &&
+        mission.myAttempt.status !== 'approved' &&
+        !canEdit && (
+          <ViewTutorial
+            onStartClick={() =>
+              onSetMissionState({
+                missionId: mission.id,
+                newState: { tutorialStarted: true }
+              })
+            }
+          />
+        )}
+      {(mission.tutorialStarted ||
+        canEdit ||
+        mission.myAttempt.status === 'approved') && (
+        <InteractiveContent interactiveId={mission.tutorialId} />
       )}
     </div>
   );

@@ -21,13 +21,9 @@ export default function Main({ mission, onSetMissionState, style }) {
             onSetMissionState={onSetMissionState}
           />
           <Tutorial
-            missionId={mission.id}
-            missionTitle={mission.title}
+            mission={mission}
             style={{ marginTop: '5rem', marginBottom: '1rem', width: '100%' }}
-            tutorialStarted={mission.tutorialStarted}
             onSetMissionState={onSetMissionState}
-            tutorialId={mission.tutorialId}
-            tutorialIsPublished={mission.tutorialIsPublished}
           />
         </div>
       ) : (
