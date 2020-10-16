@@ -13,6 +13,12 @@ Management.propTypes = {
   onSetMissionState: PropTypes.func.isRequired
 };
 
+const displayedStatus = {
+  fail: 'rejected',
+  pending: 'pending',
+  pass: 'approved'
+};
+
 export default function Management({ mission, missionId, onSetMissionState }) {
   const {
     requestHelpers: { loadMissionAttempts }
@@ -76,22 +82,22 @@ export default function Management({ mission, missionId, onSetMissionState }) {
           Pending
         </nav>
         <nav
-          className={activeTab === 'approved' ? 'active' : null}
+          className={activeTab === 'pass' ? 'active' : null}
           onClick={() => {
             onSetMissionState({
               missionId,
-              newState: { managementTab: 'approved' }
+              newState: { managementTab: 'pass' }
             });
           }}
         >
           Approved
         </nav>
         <nav
-          className={activeTab === 'rejected' ? 'active' : null}
+          className={activeTab === 'fail' ? 'active' : null}
           onClick={() =>
             onSetMissionState({
               missionId,
-              newState: { managementTab: 'rejected' }
+              newState: { managementTab: 'fail' }
             })
           }
         >
@@ -111,7 +117,7 @@ export default function Management({ mission, missionId, onSetMissionState }) {
             textAlign: 'center'
           }}
         >
-          {`There are no ${activeTab} attempts`}
+          {`There are no ${displayedStatus[activeTab]} attempts`}
         </div>
       ) : (
         <>

@@ -270,7 +270,7 @@ export default function NotiItem({
           </>
         );
         break;
-      case 'success':
+      case 'pass':
         notificationMessage = (
           <>
             <b style={{ color: Color.brownOrange() }}>Mission accomplished!</b>{' '}
@@ -288,7 +288,7 @@ export default function NotiItem({
           </>
         );
         break;
-      case 'failure':
+      case 'fail':
         notificationMessage = (
           <>
             <b style={{ color: Color.darkerGray() }}>Mission failed...</b>{' '}
@@ -331,8 +331,8 @@ export default function NotiItem({
     <ErrorBoundary>
       <nav style={{ background: '#fff' }} className={notiFeedListItem} key={id}>
         <div>
-          {actionObj.contentType !== 'success' &&
-            actionObj.contentType !== 'failure' && (
+          {actionObj.contentType !== 'pass' &&
+            actionObj.contentType !== 'fail' && (
               <>
                 <UsernameText user={user} color={Color.blue()} />
                 &nbsp;

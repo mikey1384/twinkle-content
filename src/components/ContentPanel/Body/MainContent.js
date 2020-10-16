@@ -77,7 +77,7 @@ export default function MainContent({
   return (
     <ErrorBoundary>
       <div>
-        {contentType === 'success' && (
+        {contentType === 'pass' && (
           <MissionContent uploader={uploader} rootObj={rootObj} />
         )}
         {(contentType === 'subject' || contentType === 'comment') &&

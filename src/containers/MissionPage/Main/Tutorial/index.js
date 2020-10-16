@@ -27,7 +27,7 @@ export default function Tutorial({ onSetMissionState, style, mission }) {
       {!!mission.tutorialId &&
         mission.tutorialIsPublished &&
         !mission.tutorialStarted &&
-        mission.myAttempt.status !== 'approved' &&
+        mission.myAttempt.status !== 'pass' &&
         !canEdit && (
           <ViewTutorial
             onStartClick={() =>
@@ -40,7 +40,7 @@ export default function Tutorial({ onSetMissionState, style, mission }) {
         )}
       {(mission.tutorialStarted ||
         canEdit ||
-        mission.myAttempt.status === 'approved') && (
+        mission.myAttempt.status === 'pass') && (
         <InteractiveContent interactiveId={mission.tutorialId} />
       )}
     </div>

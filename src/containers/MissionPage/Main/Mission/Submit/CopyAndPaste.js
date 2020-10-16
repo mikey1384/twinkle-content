@@ -42,7 +42,7 @@ export default function CopyAndPaste({ mission, onSetMissionState, style }) {
     if (!stringIsEmpty(content)) {
       setStatus(
         content.localeCompare(missionText) === 0
-          ? 'success'
+          ? 'pass'
           : content.localeCompare(missionText) === -1
           ? 'too short'
           : 'too long'
@@ -77,7 +77,7 @@ export default function CopyAndPaste({ mission, onSetMissionState, style }) {
             justifyContent: 'flex-end'
           }}
         >
-          {status === 'success' && (
+          {status === 'pass' && (
             <Button onClick={handleSuccess} color="green" filled>
               Success!
             </Button>
@@ -100,13 +100,13 @@ export default function CopyAndPaste({ mission, onSetMissionState, style }) {
   async function handleSuccess() {
     const { success, newXpAndRank, newCoins } = await uploadMissionAttempt({
       missionId: mission.id,
-      attempt: { content, status: 'approved' }
+      attempt: { content, status: 'pass' }
     });
     if (success) {
       onSetMissionState({
         missionId: mission.id,
         newState: {
-          myAttempt: { status: 'approved' }
+          myAttempt: { status: 'pass' }
         }
       });
       if (newXpAndRank.xp) {

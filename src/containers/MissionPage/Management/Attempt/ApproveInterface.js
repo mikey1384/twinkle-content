@@ -75,16 +75,16 @@ export default function ApproveInterface({
         }}
       >
         <Button
-          filled={status === 'rejected'}
-          onClick={() => handleSetStatus('rejected')}
+          filled={status === 'fail'}
+          onClick={() => handleSetStatus('fail')}
           color="rose"
         >
           <Icon icon="thumbs-down" />
           <span style={{ marginLeft: '1rem' }}>Reject</span>
         </Button>
         <Button
-          filled={status === 'approved'}
-          onClick={() => handleSetStatus('approved')}
+          filled={status === 'pass'}
+          onClick={() => handleSetStatus('pass')}
           color="logoBlue"
           style={{ marginLeft: '1rem' }}
         >
@@ -115,15 +115,13 @@ export default function ApproveInterface({
           >
             <Button
               style={{ marginTop: '1.5rem', fontSize: '2rem' }}
-              color={status === 'approved' ? 'logoBlue' : 'rose'}
+              color={status === 'pass' ? 'logoBlue' : 'rose'}
               filled
               onClick={handleConfirm}
             >
-              <Icon
-                icon={status === 'approved' ? 'thumbs-up' : 'thumbs-down'}
-              />
+              <Icon icon={status === 'pass' ? 'thumbs-up' : 'thumbs-down'} />
               <span style={{ marginLeft: '1rem' }}>
-                confirm {status === 'approved' ? 'approval' : 'rejection'}
+                confirm {status === 'pass' ? 'approval' : 'rejection'}
               </span>
             </Button>
           </div>

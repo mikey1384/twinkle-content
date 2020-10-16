@@ -17,7 +17,7 @@ ApprovedStatus.propTypes = {
 export default function ApprovedStatus({ mission, onSetMissionState, style }) {
   const rewardDetails = useMemo(() => {
     return (mission.xpReward || mission.coinReward) &&
-      mission.myAttempt.status === 'approved' ? (
+      mission.myAttempt.status === 'pass' ? (
       <div
         style={{
           marginTop: '0.5rem',
@@ -66,12 +66,12 @@ export default function ApprovedStatus({ mission, onSetMissionState, style }) {
     >
       <div
         style={{
-          ...(mission.myAttempt.status === 'approved' ||
-          mission.myAttempt.status === 'rejected'
+          ...(mission.myAttempt.status === 'pass' ||
+          mission.myAttempt.status === 'fail'
             ? {
                 borderRadius,
                 boxShadow:
-                  mission.myAttempt.status === 'approved'
+                  mission.myAttempt.status === 'pass'
                     ? `0 0 2px ${Color.brown()}`
                     : null,
                 padding: '0.5rem 2rem'
@@ -80,15 +80,15 @@ export default function ApprovedStatus({ mission, onSetMissionState, style }) {
           fontWeight: 'bold',
           fontSize: '2rem',
           background:
-            mission.myAttempt.status === 'approved'
+            mission.myAttempt.status === 'pass'
               ? Color.brownOrange()
-              : mission.myAttempt.status === 'rejected'
+              : mission.myAttempt.status === 'fail'
               ? Color.black()
               : null,
           color: '#fff'
         }}
       >
-        {mission.myAttempt.status === 'approved'
+        {mission.myAttempt.status === 'pass'
           ? 'Mission Accomplished'
           : 'Mission Failed...'}
       </div>
@@ -127,7 +127,7 @@ export default function ApprovedStatus({ mission, onSetMissionState, style }) {
               </div>
               <div>
                 {mission.myAttempt.feedback ||
-                  (mission.myAttempt.status === 'approved'
+                  (mission.myAttempt.status === 'pass'
                     ? 'Great job!'
                     : 'Please try again')}
               </div>
@@ -135,7 +135,7 @@ export default function ApprovedStatus({ mission, onSetMissionState, style }) {
           )}
         </div>
       )}
-      {mission.myAttempt.status === 'rejected' && (
+      {mission.myAttempt.status === 'fail' && (
         <div style={{ marginTop: '3rem' }}>
           <Button
             style={{ fontSize: '2.5rem' }}

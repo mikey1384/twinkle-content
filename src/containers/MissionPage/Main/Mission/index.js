@@ -66,8 +66,7 @@ export default function Mission({
       )}
       {myAttempt?.status === 'pending' ? (
         <PendingStatus style={{ marginTop: '7rem' }} />
-      ) : myAttempt?.status === 'approved' ||
-        myAttempt?.status === 'rejected' ? (
+      ) : myAttempt?.status === 'pass' || myAttempt?.status === 'fail' ? (
         <ApprovedStatus
           mission={mission}
           onSetMissionState={onSetMissionState}
