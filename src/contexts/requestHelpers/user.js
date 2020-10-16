@@ -210,6 +210,16 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
+    async loadCoins() {
+      try {
+        const {
+          data: { coins }
+        } = await request.get(`${URL}/user/coin`, auth());
+        return Promise.resolve(coins);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async loadXP() {
       try {
         const {

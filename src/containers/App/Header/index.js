@@ -47,6 +47,7 @@ export default function Header({
       getNumberOfUnreadMessages,
       loadChat,
       loadRankings,
+      loadCoins,
       loadXP,
       updateChatLastRead
     }
@@ -133,6 +134,7 @@ export default function Header({
     state,
     actions: {
       onAttachReward,
+      onChangeUserCoins,
       onChangeUserXP,
       onLikeContent,
       onRecommendContent,
@@ -174,6 +176,7 @@ export default function Header({
     socket.on('connect', handleConnect);
     socket.on('disconnect', handleDisconnect);
     socket.on('message_attachment_hid', onHideAttachment);
+    socket.on('mission_rewards_received', handleMissionRewards);
     socket.on('new_call_member', handleNewCallMember);
     socket.on('new_call_started', handleNewCall);
     socket.on('new_post_uploaded', onIncreaseNumNewPosts);
@@ -210,6 +213,7 @@ export default function Header({
       socket.removeListener('connect', handleConnect);
       socket.removeListener('disconnect', handleDisconnect);
       socket.removeListener('message_attachment_hid', onHideAttachment);
+      socket.removeListener('mission_rewards_received', handleMissionRewards);
       socket.removeListener('new_call_member', handleNewCallMember);
       socket.removeListener('new_call_started', handleNewCall);
       socket.removeListener('new_post_uploaded', onIncreaseNumNewPosts);
@@ -361,6 +365,15 @@ export default function Header({
     function handleDisconnect(reason) {
       console.log('disconnected from socket. reason: ', reason);
       onChangeSocketStatus(false);
+    }
+
+    function handleMissionRewards({ includesCoinReward, includesXpReward }) {
+      if (includesCoinReward) {
+        handleUpdateMyCoins();
+      }
+      if (includesXpReward) {
+        handleUpdateMyXp();
+      }
     }
 
     function handleNewNotification({ type, target, likes, comment }) {
@@ -782,6 +795,11 @@ export default function Header({
         console.error('Peer error %s:', peerId, e);
       });
     }
+  }
+
+  async function handleUpdateMyCoins() {
+    const coins = await loadCoins();
+    onChangeUserCoins({ coins, userId });
   }
 
   async function handleUpdateMyXp() {
