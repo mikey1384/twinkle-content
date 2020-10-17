@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import AddSlide from './AddSlide';
-import { borderRadius, Color } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { useAppContext } from 'contexts';
+import { css } from 'emotion';
 
 BottomInterface.propTypes = {
   className: PropTypes.string,
@@ -37,17 +38,23 @@ export default function BottomInterface({
       />
       {!isPublished && (
         <div
-          style={{
-            background: '#fff',
-            marginTop: '3rem',
-            borderRadius,
-            padding: '1.5rem',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '100%',
-            border: `1px solid ${Color.borderGray()}`
-          }}
+          className={css`
+            background: #fff;
+            margin-top: 3rem;
+            border-radius: ${borderRadius};
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            border: 1px solid ${Color.borderGray()};
+            @media (max-width: ${mobileMaxWidth}) {
+              border-radius: 0;
+              margin-top: 2rem;
+              border-left: 0;
+              border-right: 0;
+            }
+          `}
         >
           <Button
             onClick={handlePublish}
