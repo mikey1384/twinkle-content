@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { css } from 'emotion';
+import { mobileMaxWidth } from 'constants/css';
 
 InvalidPage.propTypes = {
   style: PropTypes.object,
@@ -13,6 +14,7 @@ export default function InvalidPage({ title, text, style }) {
     <div
       style={style}
       className={css`
+        padding: 1rem;
         padding-top: 25rem;
         display: flex;
         flex-direction: column;
@@ -22,6 +24,9 @@ export default function InvalidPage({ title, text, style }) {
         p {
           font-size: 4rem;
           font-weight: bold;
+          @media (max-width: ${mobileMaxWidth}) {
+            font-size: 3rem;
+          }
         }
         span {
           margin-top: 1rem;

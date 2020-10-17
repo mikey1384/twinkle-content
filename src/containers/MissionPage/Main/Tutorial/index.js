@@ -7,14 +7,21 @@ import { useMyState } from 'helpers/hooks';
 
 Tutorial.propTypes = {
   onSetMissionState: PropTypes.func,
+  className: PropTypes.string,
   style: PropTypes.object,
   mission: PropTypes.object.isRequired
 };
 
-export default function Tutorial({ onSetMissionState, style, mission }) {
+export default function Tutorial({
+  className,
+  onSetMissionState,
+  style,
+  mission
+}) {
   const { canEdit } = useMyState();
   return (
     <div
+      className={className}
       style={{
         display: 'flex',
         justifyContent: 'center',

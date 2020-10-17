@@ -105,6 +105,7 @@ export default function InteractiveContent({ interactiveId }) {
             <Slide
               {...slideObj[slideId]}
               key={slideId}
+              index={index}
               innerRef={(ref) => (SlideRefs.current[index] = ref)}
               insertButtonShown={index !== 0 && canEdit}
               cannotMoveUp={
@@ -122,7 +123,6 @@ export default function InteractiveContent({ interactiveId }) {
               onExpandPath={slideObj[slideId].isFork ? handleExpandPath : null}
               onMoveSlide={handleMoveInteractiveSlide}
               slideId={slideId}
-              style={{ marginTop: index === 0 ? 0 : canEdit ? '2rem' : '5rem' }}
             />
           ))}
         </>

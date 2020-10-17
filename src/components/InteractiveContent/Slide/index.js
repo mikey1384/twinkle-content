@@ -20,6 +20,7 @@ Slide.propTypes = {
   fileUploadComplete: PropTypes.bool,
   fileUploadProgress: PropTypes.number,
   innerRef: PropTypes.func,
+  index: PropTypes.number,
   insertButtonShown: PropTypes.bool,
   interactiveId: PropTypes.number,
   style: PropTypes.object,
@@ -43,6 +44,7 @@ export default function Slide({
   cannotMoveUp,
   cannotMoveDown,
   heading,
+  index,
   description,
   fileUploadComplete,
   fileUploadProgress,
@@ -174,32 +176,38 @@ export default function Slide({
           forkedFrom={forkedFrom}
           interactiveId={interactiveId}
           slideId={slideId}
-          style={{ marginTop: '2rem' }}
+          className={css`
+            margin-top: 2rem;
+            @media (max-width: ${mobileMaxWidth}) {
+              margin-top: 1rem;
+            }
+          `}
         />
       )}
       <div
         ref={(ref) => innerRef(ref)}
         className={css`
+          width: 100%;
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding-left: 2rem;
+          padding-right: 2rem;
+          padding-top: ${isEditing ? '2rem' : '1rem'};
+          margin-top: ${index === 0 ? 0 : canEdit ? '2rem' : '5rem'};
           background: #fff;
-          width: 60%;
           border: 1px solid ${Color.borderGray()};
           border-radius: ${borderRadius};
           @media (max-width: ${mobileMaxWidth}) {
-            width: 100%;
+            margin-top: ${index === 0 ? 0 : canEdit ? '1rem' : '2rem'};
+            border-left: 0;
+            border-right: 0;
+            border-radius: 0;
           }
         `}
-        style={{
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'column',
-          width: '100%',
-          alignItems: 'center',
-          justifyContent: 'center',
-          paddingLeft: '2rem',
-          paddingRight: '2rem',
-          paddingTop: isEditing ? '2rem' : '1rem',
-          ...style
-        }}
+        style={style}
       >
         {canEdit && !isEditing && !isDeleted && (
           <div className="dropdown-wrapper">

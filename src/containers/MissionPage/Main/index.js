@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import Mission from './Mission';
 import Tutorial from './Tutorial';
 import Loading from 'components/Loading';
+import { css } from 'emotion';
+import { mobileMaxWidth } from 'constants/css';
 
 Main.propTypes = {
   mission: PropTypes.object.isRequired,
@@ -22,7 +24,14 @@ export default function Main({ mission, onSetMissionState, style }) {
           />
           <Tutorial
             mission={mission}
-            style={{ marginTop: '5rem', marginBottom: '1rem', width: '100%' }}
+            className={css`
+              margin-top: 5rem;
+              margin-bottom: 1rem;
+              width: 100%;
+              @media (max-width: ${mobileMaxWidth}) {
+                margin-top: 2rem;
+              }
+            `}
             onSetMissionState={onSetMissionState}
           />
         </div>

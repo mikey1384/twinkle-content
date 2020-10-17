@@ -9,6 +9,7 @@ InsertSlide.propTypes = {
   forkedFrom: PropTypes.number,
   interactiveId: PropTypes.number,
   slideId: PropTypes.number,
+  className: PropTypes.string,
   style: PropTypes.object
 };
 
@@ -16,6 +17,7 @@ export default function InsertSlide({
   interactiveId,
   forkedFrom,
   slideId,
+  className,
   style
 }) {
   const {
@@ -27,7 +29,7 @@ export default function InsertSlide({
 
   return (
     <div
-      className={`unselectable ${css`
+      className={`unselectable ${className || ''} ${css`
         &:hover {
           font-weight: bold;
         }
