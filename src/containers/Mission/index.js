@@ -3,6 +3,7 @@ import Cover from './Cover';
 import CurrentMission from './CurrentMission';
 import MissionList from './MissionList';
 import Loading from 'components/Loading';
+import { mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useMissionContext } from 'contexts';
@@ -43,23 +44,45 @@ export default function Mission() {
       {userId && <Cover />}
       {missions.length === 0 && loading && <Loading />}
       {missions.length > 0 && (
-        <div style={{ margin: '5rem' }}>
-          <div style={{ display: 'flex' }}>
+        <div
+          className={css`
+            margin: 5rem;
+            @media (max-width: ${mobileMaxWidth}) {
+              margin: 2rem;
+            }
+          `}
+        >
+          <div
+            className={css`
+              display: flex;
+              @media (max-width: ${mobileMaxWidth}) {
+                flex-direction: column;
+              }
+            `}
+          >
             {currentMissionId && (
               <CurrentMission
                 missionId={currentMissionId}
                 className={css`
                   width: 45%;
+                  @media (max-width: ${mobileMaxWidth}) {
+                    width: 100%;
+                  }
                 `}
               />
             )}
             <MissionList
               missions={missions}
               missionObj={missionObj}
-              style={{
-                marginLeft: '5rem',
-                width: `CALC(${currentMissionId ? '55%' : '80%'} - 5rem)`
-              }}
+              className={css`
+                margin-left: 5rem;
+                width: CALC(${currentMissionId ? '55%' : '80%'} - 5rem);
+                @media (max-width: ${mobileMaxWidth}) {
+                  margin-left: 0;
+                  margin-top: 3rem;
+                  width: 100%;
+                }
+              `}
             />
           </div>
         </div>
