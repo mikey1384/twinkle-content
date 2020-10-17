@@ -7,6 +7,7 @@ import { borderRadius, Color } from 'constants/css';
 import { useAppContext } from 'contexts';
 
 BottomInterface.propTypes = {
+  className: PropTypes.string,
   interactiveId: PropTypes.number.isRequired,
   isPublished: PropTypes.bool,
   lastFork: PropTypes.object,
@@ -17,6 +18,7 @@ BottomInterface.propTypes = {
 
 export default function BottomInterface({
   archivedSlides,
+  className,
   interactiveId,
   isPublished,
   lastFork,
@@ -27,7 +29,7 @@ export default function BottomInterface({
     requestHelpers: { publishInteractive }
   } = useAppContext();
   return (
-    <div style={{ width: '100%', ...style }}>
+    <div className={className} style={{ width: '100%', ...style }}>
       <AddSlide
         archivedSlides={archivedSlides}
         interactiveId={interactiveId}

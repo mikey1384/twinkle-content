@@ -6,6 +6,8 @@ import Loading from 'components/Loading';
 import BottomInterface from './BottomInterface';
 import { useAppContext, useInteractiveContext } from 'contexts';
 import { scrollElementToCenter } from 'helpers';
+import { mobileMaxWidth } from 'constants/css';
+import { css } from 'emotion';
 
 InteractiveContent.propTypes = {
   interactiveId: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
@@ -134,7 +136,12 @@ export default function InteractiveContent({ interactiveId }) {
           interactiveId={interactiveId}
           lastFork={lastFork}
           onPublishInteractive={onPublishInteractive}
-          style={{ marginTop: displayedSlideIds.length === 0 ? 0 : '5rem' }}
+          className={css`
+            margin-top: ${displayedSlideIds.length === 0 ? 0 : '5rem'};
+            @media (max-width: ${mobileMaxWidth}) {
+              margin-top: ${displayedSlideIds.length === 0 ? 0 : '2rem'};
+            }
+          `}
         />
       )}
     </div>

@@ -4,7 +4,8 @@ import Button from 'components/Button';
 import Icon from 'components/Icon';
 import SelectArchivedSlideModal from './SelectArchivedSlideModal';
 import { useAppContext, useInteractiveContext } from 'contexts';
-import { borderRadius, Color } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
+import { css } from 'emotion';
 
 AddSlide.propTypes = {
   archivedSlides: PropTypes.array.isRequired,
@@ -30,19 +31,23 @@ export default function AddSlide({ archivedSlides, interactiveId, lastFork }) {
 
   return (
     <div
-      style={{
-        background: forkOptionNotSelected ? Color.logoBlue() : '#fff',
-        color: forkOptionNotSelected ? '#fff' : Color.black(),
-        borderRadius,
-        padding: '1.5rem',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        border: `1px solid ${
-          forkOptionNotSelected ? Color.logoBlue() : Color.borderGray()
-        }`
-      }}
+      className={css`
+        background: ${forkOptionNotSelected ? Color.logoBlue() : '#fff'};
+        color: ${forkOptionNotSelected ? '#fff' : Color.black()};
+        border-radius: ${borderRadius};
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        border: 1px solid
+          ${forkOptionNotSelected ? Color.logoBlue() : Color.borderGray()};
+        @media (max-width: ${mobileMaxWidth}) {
+          border-radius: 0;
+          border-left: 0;
+          border-right: 0;
+        }
+      `}
     >
       <div style={{ display: 'flex' }}>
         {forkOptionNotSelected ? (
