@@ -233,12 +233,14 @@ function MainNavs({
           imgLabel={contentIconType}
         />
       )}
-      <HeaderNav
-        to={`/missions`}
-        pathname={pathname}
-        className="mobile"
-        imgLabel="tasks"
-      />
+      {false && (
+        <HeaderNav
+          to={`/missions`}
+          pathname={pathname}
+          className="mobile"
+          imgLabel="tasks"
+        />
+      )}
       <HeaderNav
         to="/chat"
         pathname={pathname}
