@@ -24,6 +24,7 @@ export default function Tutorial({
       className={className}
       style={{
         display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'center',
         ...style
       }}
@@ -45,11 +46,12 @@ export default function Tutorial({
             }
           />
         )}
-      {(mission.tutorialStarted ||
-        canEdit ||
-        mission.myAttempt.status === 'pass') && (
-        <InteractiveContent interactiveId={mission.tutorialId} />
-      )}
+      {!!mission.tutorialId &&
+        (mission.tutorialStarted ||
+          canEdit ||
+          mission.myAttempt.status === 'pass') && (
+          <InteractiveContent interactiveId={mission.tutorialId} />
+        )}
     </div>
   );
 }

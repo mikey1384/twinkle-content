@@ -20,7 +20,12 @@ export default function AddTutorial({ missionId, missionTitle }) {
   return (
     <div
       className={panel}
-      style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+      style={{
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        marginBottom: '5rem'
+      }}
     >
       <Button skeuomorphic onClick={handleAttachTutorial}>
         <Icon icon="plus" />
