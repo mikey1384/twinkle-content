@@ -5,9 +5,10 @@ import Main from './Main';
 import RightMenu from './RightMenu';
 import InvalidPage from 'components/InvalidPage';
 import Management from './Management';
+import FilterBar from 'components/FilterBar';
 import { css } from 'emotion';
 import { mobileMaxWidth } from 'constants/css';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useMissionContext } from 'contexts';
 
@@ -22,6 +23,8 @@ export default function MissionPage({
   }
 }) {
   const mounted = useRef(true);
+  const history = useHistory();
+  const location = useLocation();
   const { loaded, userId, canEdit } = useMyState();
   const {
     requestHelpers: { loadMission, updateCurrentMission }
@@ -79,61 +82,99 @@ export default function MissionPage({
   return userId ? (
     loaded && mission.loaded ? (
       mission.id ? (
-        <div
-          style={{
-            paddingTop: '1rem',
-            display: 'flex',
-            justifyContent: 'center',
-            width: '100%'
-          }}
-        >
+        <div style={{ width: '100%' }}>
+          <FilterBar
+            className="mobile"
+            bordered
+            style={{
+              fontSize: '1.6rem',
+              height: '5rem'
+            }}
+          >
+            <nav
+              className={
+                location.pathname === `/missions/${missionId}` ? 'active' : ''
+              }
+              onClick={() => history.push(`/missions/${missionId}`)}
+            >
+              Mission
+            </nav>
+            <nav
+              className={
+                location.pathname === `/missions/${missionId}/manage`
+                  ? 'active'
+                  : ''
+              }
+              onClick={() => history.push(`/missions/${missionId}/manage`)}
+            >
+              Manage
+            </nav>
+          </FilterBar>
           <div
             className={css`
-              display: flex;
-              width: ${canEdit ? 'CALC(100% - 55rem)' : '60%'};
-              ${canEdit
-                ? 'margin-left: 25rem;'
-                : `
-                    justify-content: center;
-                    flex-direction: column;`}
+              padding-top: 1rem;
               @media (max-width: ${mobileMaxWidth}) {
-                margin-left: 0;
-                width: 100%;
+                padding-top: 0.5rem;
               }
             `}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              width: '100%'
+            }}
           >
-            <Switch>
-              <Route
-                exact
-                path={path}
-                render={() => (
-                  <Main
-                    canEdit={canEdit}
-                    onSetMissionState={onSetMissionState}
-                    mission={mission}
-                  />
-                )}
+            <div
+              className={css`
+                display: flex;
+                width: ${canEdit ? 'CALC(100% - 55rem)' : '60%'};
+                ${canEdit
+                  ? 'margin-left: 25rem;'
+                  : `
+                    justify-content: center;
+                    flex-direction: column;`}
+                @media (max-width: ${mobileMaxWidth}) {
+                  margin-left: 0;
+                  width: 100%;
+                }
+              `}
+            >
+              <Switch>
+                <Route
+                  exact
+                  path={path}
+                  render={() => (
+                    <Main
+                      canEdit={canEdit}
+                      onSetMissionState={onSetMissionState}
+                      mission={mission}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path={`${path}/manage`}
+                  render={() => (
+                    <Management
+                      missionId={missionId}
+                      mission={mission}
+                      onSetMissionState={onSetMissionState}
+                    />
+                  )}
+                />
+              </Switch>
+            </div>
+            {canEdit && (
+              <RightMenu
+                className="desktop"
+                missionId={missionId}
+                style={{
+                  width: '25rem',
+                  marginLeft: '5rem',
+                  marginTop: '3rem'
+                }}
               />
-              <Route
-                exact
-                path={`${path}/manage`}
-                render={() => (
-                  <Management
-                    missionId={missionId}
-                    mission={mission}
-                    onSetMissionState={onSetMissionState}
-                  />
-                )}
-              />
-            </Switch>
+            )}
           </div>
-          {canEdit && (
-            <RightMenu
-              className="desktop"
-              missionId={missionId}
-              style={{ width: '25rem', marginLeft: '5rem', marginTop: '3rem' }}
-            />
-          )}
         </div>
       ) : (
         <InvalidPage />
