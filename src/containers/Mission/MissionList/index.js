@@ -41,7 +41,10 @@ export default function MissionList({
                 {missionObj[missionId].title}
               </p>
               <div style={{ marginTop: '1rem', display: 'flex' }}>
-                <img src={gifTable[missionId]} style={{ width: '10rem' }} />
+                <img
+                  src={gifTable[missionId]}
+                  style={{ width: '10rem', height: '6rem' }}
+                />
                 <div
                   className={css`
                     margin-left: 1rem;
