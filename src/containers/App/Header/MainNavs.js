@@ -288,15 +288,17 @@ function MainNavs({
           {contentNav.substring(0, contentNav.length - 1).toUpperCase()}
         </HeaderNav>
       )}
-      <HeaderNav
-        to={`/missions`}
-        pathname={pathname}
-        className="desktop"
-        style={{ marginLeft: '2rem' }}
-        imgLabel="tasks"
-      >
-        MISSIONS
-      </HeaderNav>
+      {false && (
+        <HeaderNav
+          to={`/missions`}
+          pathname={pathname}
+          className="desktop"
+          style={{ marginLeft: '2rem' }}
+          imgLabel="tasks"
+        >
+          MISSIONS
+        </HeaderNav>
+      )}
       <div
         className={css`
           margin-left: 2rem;
