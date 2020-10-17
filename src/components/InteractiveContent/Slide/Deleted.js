@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
+import { css } from 'emotion';
+import { mobileMaxWidth } from 'constants/css';
+import { isMobile } from 'helpers';
 
 Deleted.propTypes = {
   onRemoveInteractiveSlide: PropTypes.func.isRequired,
@@ -19,13 +22,16 @@ export default function Deleted({ onRemoveInteractiveSlide, onUndeleteSlide }) {
       }}
     >
       <div
-        style={{
-          fontSize: '1.7rem',
-          fontWeight: 'bold',
-          display: 'flex',
-          flexGrow: 1,
-          justifyContent: 'center'
-        }}
+        className={css`
+          font-size: 1.7rem;
+          font-weight: bold;
+          display: flex;
+          flex-grow: 1;
+          justify-content: center;
+          @media (max-width: ${mobileMaxWidth}) {
+            font-size: 1.5rem;
+          }
+        `}
       >
         This slide has been deleted
       </div>
@@ -44,7 +50,9 @@ export default function Deleted({ onRemoveInteractiveSlide, onUndeleteSlide }) {
           onClick={onRemoveInteractiveSlide}
         >
           <Icon icon="minus" />
-          <span style={{ marginLeft: '1rem' }}>Hide this message</span>
+          <span style={{ marginLeft: '1rem' }}>
+            Hide{isMobile(navigator) ? '' : ' this message'}
+          </span>
         </Button>
       </div>
     </div>
