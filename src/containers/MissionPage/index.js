@@ -83,38 +83,40 @@ export default function MissionPage({
     loaded && mission.loaded ? (
       mission.id ? (
         <div style={{ width: '100%' }}>
-          <FilterBar
-            className="mobile"
-            bordered
-            style={{
-              fontSize: '1.6rem',
-              height: '5rem'
-            }}
-          >
-            <nav
-              className={
-                location.pathname === `/missions/${missionId}` ? 'active' : ''
-              }
-              onClick={() => history.push(`/missions/${missionId}`)}
+          {canEdit && (
+            <FilterBar
+              className="mobile"
+              bordered
+              style={{
+                fontSize: '1.6rem',
+                height: '5rem'
+              }}
             >
-              Mission
-            </nav>
-            <nav
-              className={
-                location.pathname === `/missions/${missionId}/manage`
-                  ? 'active'
-                  : ''
-              }
-              onClick={() => history.push(`/missions/${missionId}/manage`)}
-            >
-              Manage
-            </nav>
-          </FilterBar>
+              <nav
+                className={
+                  location.pathname === `/missions/${missionId}` ? 'active' : ''
+                }
+                onClick={() => history.push(`/missions/${missionId}`)}
+              >
+                Mission
+              </nav>
+              <nav
+                className={
+                  location.pathname === `/missions/${missionId}/manage`
+                    ? 'active'
+                    : ''
+                }
+                onClick={() => history.push(`/missions/${missionId}/manage`)}
+              >
+                Manage
+              </nav>
+            </FilterBar>
+          )}
           <div
             className={css`
               padding-top: 1rem;
               @media (max-width: ${mobileMaxWidth}) {
-                padding-top: 0.5rem;
+                padding-top: ${canEdit ? '0.5rem' : 0};
               }
             `}
             style={{

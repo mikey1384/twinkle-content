@@ -6,6 +6,9 @@ import ApprovedStatus from './ApprovedStatus';
 import PendingStatus from './PendingStatus';
 import { panel } from '../../Styles';
 import { gifTable } from 'constants/defaultValues';
+import { mobileMaxWidth } from 'constants/css';
+import { css } from 'emotion';
+import { useMyState } from 'helpers/hooks';
 
 Mission.propTypes = {
   style: PropTypes.object,
@@ -27,9 +30,18 @@ export default function Mission({
   style,
   onSetMissionState
 }) {
+  const { canEdit } = useMyState();
   return (
     <div
-      className={panel}
+      className={`${panel} ${
+        canEdit
+          ? ''
+          : css`
+              @media (max-width: ${mobileMaxWidth}) {
+                border-top: 0;
+              }
+            `
+      }`}
       style={{
         paddingBottom: '2.5rem',
         ...style
