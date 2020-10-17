@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { css } from 'emotion';
-import { borderRadius, Color } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { useHistory } from 'react-router-dom';
 import { gifTable } from 'constants/defaultValues';
 import { useMissionContext } from 'contexts';
@@ -46,6 +46,9 @@ export default function CurrentMission({ style, className, missionId }) {
           cursor: pointer;
           &:hover {
             background: ${Color.highlightGray()};
+          }
+          @media (max-width: ${mobileMaxWidth}) {
+            font-size: 2.3rem;
           }
         `}
       >

@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ListItem from './ListItem';
 import { gifTable } from 'constants/defaultValues';
+import { css } from 'emotion';
+import { mobileMaxWidth } from 'constants/css';
 
 MissionList.propTypes = {
   style: PropTypes.object,
@@ -27,12 +29,28 @@ export default function MissionList({
               key={missionId}
               missionId={missionId}
             >
-              <p style={{ fontSize: '2rem', fontWeight: 'bold' }}>
+              <p
+                className={css`
+                  font-size: 2rem;
+                  font-weight: bold;
+                  @media (max-width: ${mobileMaxWidth}) {
+                    font-size: 1.7rem;
+                  }
+                `}
+              >
                 {missionObj[missionId].title}
               </p>
               <div style={{ marginTop: '1rem', display: 'flex' }}>
                 <img src={gifTable[missionId]} style={{ width: '10rem' }} />
-                <div style={{ marginLeft: '1rem', fontSize: '1.7rem' }}>
+                <div
+                  className={css`
+                    margin-left: 1rem;
+                    font-size: 1.7rem;
+                    @media (max-width: ${mobileMaxWidth}) {
+                      font-size: 1.3rem;
+                    }
+                  `}
+                >
                   {missionObj[missionId].subtitle}
                 </div>
               </div>

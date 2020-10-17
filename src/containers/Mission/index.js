@@ -48,7 +48,7 @@ export default function Mission() {
           className={css`
             margin: 5rem;
             @media (max-width: ${mobileMaxWidth}) {
-              margin: 2rem;
+              margin: 1rem;
             }
           `}
         >
@@ -56,6 +56,7 @@ export default function Mission() {
             className={css`
               display: flex;
               @media (max-width: ${mobileMaxWidth}) {
+                margin-top: 2rem;
                 flex-direction: column;
               }
             `}

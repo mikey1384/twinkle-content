@@ -5,6 +5,8 @@ import Main from './Main';
 import RightMenu from './RightMenu';
 import InvalidPage from 'components/InvalidPage';
 import Management from './Management';
+import { css } from 'emotion';
+import { mobileMaxWidth } from 'constants/css';
 import { Switch, Route } from 'react-router-dom';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useMissionContext } from 'contexts';
@@ -86,17 +88,19 @@ export default function MissionPage({
           }}
         >
           <div
-            style={{
-              display: 'flex',
-              width: canEdit ? 'CALC(100% - 55rem)' : '60%',
-              ...(canEdit
-                ? { marginLeft: '25rem' }
-                : {
-                    display: 'flex',
-                    justifyContent: 'center',
-                    flexDirection: 'column'
-                  })
-            }}
+            className={css`
+              display: flex;
+              width: ${canEdit ? 'CALC(100% - 55rem)' : '60%'};
+              ${canEdit
+                ? 'margin-left: 25rem;'
+                : `
+                    justify-content: center;
+                    flex-direction: column;`}
+              @media (max-width: ${mobileMaxWidth}) {
+                margin-left: 0;
+                width: 100%;
+              }
+            `}
           >
             <Switch>
               <Route
@@ -125,6 +129,7 @@ export default function MissionPage({
           </div>
           {canEdit && (
             <RightMenu
+              className="desktop"
               missionId={missionId}
               style={{ width: '25rem', marginLeft: '5rem', marginTop: '3rem' }}
             />
