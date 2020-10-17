@@ -9,5 +9,8 @@ export const panel = css`
   border-radius: ${borderRadius};
   @media (max-width: ${mobileMaxWidth}) {
     width: 100%;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
   }
 `;
