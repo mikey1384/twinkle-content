@@ -104,12 +104,15 @@ export default function Content({
       )}
       {optionIds?.length > 0 && (
         <div
-          style={{
-            marginTop: '5rem',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center'
-          }}
+          className={css`
+            margin-top: 5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            @media (max-width: ${mobileMaxWidth}) {
+              margin-top: 3rem;
+            }
+          `}
         >
           {optionIds.map((optionId, index) => {
             const option = optionsObj[optionId];
