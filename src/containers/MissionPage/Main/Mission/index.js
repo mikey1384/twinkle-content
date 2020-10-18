@@ -16,6 +16,7 @@ Mission.propTypes = {
   onSetMissionState: PropTypes.func,
   mission: PropTypes.object
 };
+
 export default function Mission({
   mission,
   mission: {
