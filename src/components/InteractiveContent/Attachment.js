@@ -53,7 +53,6 @@ export default function Attachment({
           className="unselectable"
           style={{
             width: '80%',
-            maxHeight: '30rem',
             height: '100%',
             marginTop: '1rem'
           }}
