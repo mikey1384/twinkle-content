@@ -8,19 +8,19 @@ Submit.propTypes = {
   fileUploadComplete: PropTypes.bool,
   fileUploadProgress: PropTypes.number,
   mission: PropTypes.object.isRequired,
-  onSetMissionState: PropTypes.func
+  onSetMissionState: PropTypes.func,
+  style: PropTypes.object
 };
 
 export default function Submit({
   mission,
   fileUploadComplete,
   fileUploadProgress,
-  onSetMissionState
+  onSetMissionState,
+  style
 }) {
   return (
-    <div
-      style={{ display: 'flex', flexDirection: 'column', marginTop: '2.5rem' }}
-    >
+    <div style={{ display: 'flex', flexDirection: 'column', ...style }}>
       {mission.missionType === 'screenshot' && (
         <TakeScreenshot
           attachment={mission.attachment}
