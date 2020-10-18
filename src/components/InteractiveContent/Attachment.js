@@ -51,7 +51,7 @@ export default function Attachment({
       return (
         <div
           className="unselectable"
-          style={{ width: '100%', height: '100%', marginTop: '1rem' }}
+          style={{ width: '80%', height: '100%', marginTop: '1rem' }}
         >
           <FileViewer
             small={small}
