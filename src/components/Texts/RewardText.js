@@ -9,23 +9,19 @@ RewardText.propTypes = {
   xpReward: PropTypes.number,
   coinReward: PropTypes.number,
   labelClassName: PropTypes.string,
-  rewardClassName: PropTypes.string
+  rewardClassName: PropTypes.string,
+  style: PropTypes.object
 };
 
 export default function RewardText({
   xpReward,
   coinReward,
   labelClassName,
-  rewardClassName
+  rewardClassName,
+  style
 }) {
   return xpReward || coinReward ? (
-    <div
-      style={{
-        marginTop: '2rem',
-        display: 'flex',
-        alignItems: 'center'
-      }}
-    >
+    <div style={{ ...style, display: 'flex' }}>
       <p
         className={
           labelClassName ||
@@ -44,7 +40,7 @@ export default function RewardText({
             font-size: 1.5rem;
           `
         }
-        style={{ display: 'flex', alignItems: 'center', marginLeft: '1rem' }}
+        style={{ display: 'flex', alignItems: 'center', marginLeft: '0.7rem' }}
       >
         {xpReward && (
           <div>

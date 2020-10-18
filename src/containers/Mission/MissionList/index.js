@@ -60,7 +60,7 @@ export default function MissionList({
                   <RewardText
                     labelClassName={css`
                       color: ${Color.darkerGray()};
-                      font-size: 1.5rem;
+                      font-size: 1.4rem;
                       @media (max-width: ${mobileMaxWidth}) {
                         font-size: 1.3rem;
                       }
@@ -71,6 +71,7 @@ export default function MissionList({
                         font-size: 1.2rem;
                       }
                     `}
+                    style={{ marginTop: '1.5rem' }}
                     rewardStyle={{ fontSize: '1.2rem' }}
                     coinReward={missionObj[missionId].coinReward}
                     xpReward={missionObj[missionId].xpReward}
