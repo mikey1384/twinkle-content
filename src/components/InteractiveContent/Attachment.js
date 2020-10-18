@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import FileViewer from 'components/FileViewer';
 import SlideEmbedly from './SlideEmbedly';
+import { mobileMaxWidth } from 'constants/css';
 import { fetchedVideoCodeFromURL } from 'helpers/stringHelpers';
 import { useAppContext } from 'contexts';
 import { v1 as uuidv1 } from 'uuid';
+import { css } from 'emotion';
 
 Attachment.propTypes = {
   small: PropTypes.bool,
@@ -50,12 +52,14 @@ export default function Attachment({
     case 'file':
       return (
         <div
-          className="unselectable"
-          style={{
-            width: '80%',
-            height: '100%',
-            marginTop: '1rem'
-          }}
+          className={`unselectable ${css`
+            width: 80%;
+            height: 100%;
+            margin-top: 1rem;
+            @media (max-width: ${mobileMaxWidth}) {
+              width: 100%;
+            }
+          `}`}
         >
           <FileViewer
             small={small}
