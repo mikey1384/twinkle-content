@@ -77,7 +77,11 @@ export default function Mission({
               {objective}
             </LongText>
           </div>
-          <RewardText xpReward={xpReward} coinReward={coinReward} />
+          <RewardText
+            style={{ marginTop: '2rem' }}
+            xpReward={xpReward}
+            coinReward={coinReward}
+          />
         </div>
       )}
       {myAttempt?.status === 'pending' ? (
