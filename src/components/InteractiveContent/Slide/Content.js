@@ -4,7 +4,8 @@ import Attachment from '../Attachment';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import LongText from 'components/Texts/LongText';
-import { Color } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
+import { css } from 'emotion';
 
 Content.propTypes = {
   heading: PropTypes.string,
@@ -49,18 +50,29 @@ export default function Content({
       )}
       {heading && (
         <p
-          style={{
-            textAlign: 'center',
-            fontSize: '3rem',
-            fontWeight: 'bold',
-            marginTop: '1.5rem'
-          }}
+          className={css`
+            text-align: center;
+            font-size: 3rem;
+            font-weight: bold;
+            margin-top: 1.5rem;
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: 1.7rem;
+            }
+          `}
         >
           {heading}
         </p>
       )}
       {description && (
-        <div style={{ fontSize: '2rem', marginTop: '1.5rem' }}>
+        <div
+          className={css`
+            font-size: 2rem;
+            margin-top: 1.5rem;
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: 1.5rem;
+            }
+          `}
+        >
           <LongText maxLines={100}>{description}</LongText>
         </div>
       )}
