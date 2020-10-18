@@ -64,6 +64,13 @@ export default function CurrentMission({ style, className, missionId }) {
           <img style={{ width: '100%' }} src={gifTable[missionId]} />
         </div>
         <RewardText
+          labelClassName={css`
+            font-size: 1.7rem;
+            color: ${Color.darkerGray()};
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: 1.5rem;
+            }
+          `}
           coinReward={mission.coinReward}
           xpReward={mission.xpReward}
         />

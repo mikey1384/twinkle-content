@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ListItem from './ListItem';
+import RewardText from 'components/Texts/RewardText';
 import { gifTable } from 'constants/defaultValues';
 import { css } from 'emotion';
-import { mobileMaxWidth } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 
 MissionList.propTypes = {
   style: PropTypes.object,
@@ -45,16 +46,35 @@ export default function MissionList({
                   src={gifTable[missionId]}
                   style={{ width: '10rem', height: '6rem' }}
                 />
-                <div
-                  className={css`
-                    margin-left: 1rem;
-                    font-size: 1.7rem;
-                    @media (max-width: ${mobileMaxWidth}) {
+                <div style={{ marginLeft: '1rem' }}>
+                  <div
+                    className={css`
+                      font-size: 1.7rem;
+                      @media (max-width: ${mobileMaxWidth}) {
+                        font-size: 1.3rem;
+                      }
+                    `}
+                  >
+                    {missionObj[missionId].subtitle}
+                  </div>
+                  <RewardText
+                    labelClassName={css`
+                      color: ${Color.darkerGray()};
+                      font-size: 1.5rem;
+                      @media (max-width: ${mobileMaxWidth}) {
+                        font-size: 1.3rem;
+                      }
+                    `}
+                    rewardClassName={css`
                       font-size: 1.3rem;
-                    }
-                  `}
-                >
-                  {missionObj[missionId].subtitle}
+                      @media (max-width: ${mobileMaxWidth}) {
+                        font-size: 1.2rem;
+                      }
+                    `}
+                    rewardStyle={{ fontSize: '1.2rem' }}
+                    coinReward={missionObj[missionId].coinReward}
+                    xpReward={missionObj[missionId].xpReward}
+                  />
                 </div>
               </div>
             </ListItem>
