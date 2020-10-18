@@ -38,7 +38,7 @@ export default function FileViewer({
         <img
           style={{
             width: small ? '40rem' : '100%',
-            height: small ? '20rem' : 'auto',
+            height: small ? '20rem' : '100%',
             objectFit: 'contain'
           }}
           src={`${cloudFrontURL}${src}`}
