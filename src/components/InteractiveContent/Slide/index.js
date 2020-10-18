@@ -188,6 +188,7 @@ export default function Slide({
         ref={(ref) => innerRef(ref)}
         className={css`
           width: 100%;
+          height: auto;
           position: relative;
           display: flex;
           flex-direction: column;
