@@ -35,7 +35,7 @@ export default function Content({
   selectedOptionId
 }) {
   return (
-    <div style={{ width: '100%' }}>
+    <div style={{ width: '100%', height: '100%' }}>
       {!isPublished && (
         <div
           style={{
@@ -66,7 +66,12 @@ export default function Content({
       )}
       {attachment && (
         <div
-          style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+          style={{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center'
+          }}
         >
           <Attachment
             type={attachment.type}
