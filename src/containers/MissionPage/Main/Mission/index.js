@@ -4,12 +4,11 @@ import LongText from 'components/Texts/LongText';
 import Submit from './Submit';
 import ApprovedStatus from './ApprovedStatus';
 import PendingStatus from './PendingStatus';
-import Icon from 'components/Icon';
+import RewardText from 'components/Texts/RewardText';
 import { panel } from '../../Styles';
 import { gifTable } from 'constants/defaultValues';
-import { Color, mobileMaxWidth } from 'constants/css';
+import { mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
-import { addCommasToNumber } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
 
 Mission.propTypes = {
@@ -78,50 +77,7 @@ export default function Mission({
               {objective}
             </LongText>
           </div>
-          {(xpReward || coinReward) && (
-            <div
-              style={{
-                marginTop: '2rem',
-                display: 'flex',
-                alignItems: 'center'
-              }}
-            >
-              <p style={{ fontWeight: 'bold', fontSize: '1.7rem' }}>Reward:</p>
-              <div
-                style={{
-                  fontSize: '1.5rem',
-                  marginLeft: '1rem',
-                  display: 'flex',
-                  alignItems: 'center'
-                }}
-              >
-                {xpReward && (
-                  <div>
-                    <span
-                      style={{ fontWeight: 'bold', color: Color.logoGreen() }}
-                    >
-                      {addCommasToNumber(xpReward)}
-                    </span>{' '}
-                    <span style={{ color: Color.gold(), fontWeight: 'bold' }}>
-                      XP
-                    </span>
-                    {coinReward && ','}
-                  </div>
-                )}
-                {coinReward && (
-                  <div
-                    style={{
-                      color: Color.brownOrange(),
-                      marginLeft: xpReward ? '0.8rem' : 0,
-                      fontWeight: 'bold'
-                    }}
-                  >
-                    <Icon icon={['far', 'badge-dollar']} /> {coinReward}
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
+          <RewardText xpReward={xpReward} coinReward={coinReward} />
         </div>
       )}
       {myAttempt?.status === 'pending' ? (

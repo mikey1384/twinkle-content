@@ -63,6 +63,7 @@ export default function Mission() {
           >
             {currentMissionId && (
               <CurrentMission
+                mission={missionObj[currentMissionId]}
                 missionId={currentMissionId}
                 className={css`
                   width: 45%;

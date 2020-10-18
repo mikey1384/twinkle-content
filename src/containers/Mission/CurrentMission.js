@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
+import RewardText from 'components/Texts/RewardText';
 import { css } from 'emotion';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { useHistory } from 'react-router-dom';
@@ -38,7 +39,6 @@ export default function CurrentMission({ style, className, missionId }) {
           background: #fff;
           display: flex;
           flex-direction: column;
-          font-size: 3rem;
           margin-top: 1rem;
           border: 1px solid ${Color.borderGray()};
           padding: 1rem 1rem 3rem 1rem;
@@ -47,15 +47,26 @@ export default function CurrentMission({ style, className, missionId }) {
           &:hover {
             background: ${Color.highlightGray()};
           }
-          @media (max-width: ${mobileMaxWidth}) {
-            font-size: 2.3rem;
-          }
         `}
       >
-        <div style={{ fontWeight: 'bold' }}>{mission.title}</div>
+        <div
+          className={css`
+            font-size: 3rem;
+            font-weight: bold;
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: 2.3rem;
+            }
+          `}
+        >
+          {mission.title}
+        </div>
         <div style={{ marginTop: '2rem', display: 'flex', width: '100%' }}>
           <img style={{ width: '100%' }} src={gifTable[missionId]} />
         </div>
+        <RewardText
+          coinReward={mission.coinReward}
+          xpReward={mission.xpReward}
+        />
       </div>
     </div>
   );
