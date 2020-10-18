@@ -64,7 +64,7 @@ export default function CurrentMission({ style, className, missionId }) {
         <div style={{ marginTop: '2rem', display: 'flex', width: '100%' }}>
           <img style={{ width: '100%' }} src={gifTable[missionId]} />
         </div>
-        <div style={{ marginTop: '2rem', fontSize: '1.5rem' }}>
+        <div style={{ marginTop: '2rem', fontSize: '1.7rem' }}>
           <LongText>{mission.subtitle}</LongText>
         </div>
         <RewardText
