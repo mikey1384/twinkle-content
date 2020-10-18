@@ -34,13 +34,13 @@ export default function MissionContent({ uploader, rootObj: mission }) {
         ) : null}
         {mission.coinReward ? (
           <>
-            <span style={{ color: Color.brownOrange(), fontWeight: 'bold' }}>
-              {mission.coinReward}
-            </span>{' '}
             <Icon
               style={{ color: Color.brownOrange(), fontWeight: 'bold' }}
               icon={['far', 'badge-dollar']}
-            />
+            />{' '}
+            <span style={{ color: Color.brownOrange(), fontWeight: 'bold' }}>
+              {mission.coinReward}
+            </span>
           </>
         ) : null}
       </div>
