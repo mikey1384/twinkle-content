@@ -44,6 +44,7 @@ import { faCommentAlt } from '@fortawesome/pro-solid-svg-icons/faCommentAlt';
 import { faComments } from '@fortawesome/pro-solid-svg-icons/faComments';
 import { faCopy } from '@fortawesome/pro-solid-svg-icons/faCopy';
 import { faCrown } from '@fortawesome/pro-solid-svg-icons/faCrown';
+import { faDesktop } from '@fortawesome/pro-solid-svg-icons/faDesktop';
 import { faExchangeAlt } from '@fortawesome/pro-solid-svg-icons/faExchangeAlt';
 import { faFilm } from '@fortawesome/pro-solid-svg-icons/faFilm';
 import { faFile } from '@fortawesome/pro-solid-svg-icons/faFile';
@@ -59,6 +60,7 @@ import { faHome } from '@fortawesome/pro-solid-svg-icons/faHome';
 import { faImage } from '@fortawesome/pro-solid-svg-icons/faImage';
 import { faLock } from '@fortawesome/pro-solid-svg-icons/faLock';
 import { faMinus } from '@fortawesome/pro-solid-svg-icons/faMinus';
+import { faMobileAlt } from '@fortawesome/pro-solid-svg-icons/faMobileAlt';
 import { faPaperclip } from '@fortawesome/pro-solid-svg-icons/faPaperclip';
 import { faPaperPlane } from '@fortawesome/pro-solid-svg-icons/faPaperPlane';
 import { faPencilAlt } from '@fortawesome/pro-solid-svg-icons/faPencilAlt';
@@ -130,6 +132,7 @@ library.add(
   faComments,
   faCopy,
   faCrown,
+  faDesktop,
   faExchangeAlt,
   faFile,
   faFileArchive,
@@ -145,6 +148,7 @@ library.add(
   faLink,
   faLock,
   faMinus,
+  faMobileAlt,
   faPaperclip,
   faPaperPlane,
   faPencilAlt,
