@@ -129,7 +129,7 @@ export default function InteractiveContent({ interactiveId }) {
           ))}
         </>
       )}
-      {loaded && !isPublished && canEdit && (
+      {loaded && canEdit && (
         <BottomInterface
           archivedSlides={archivedSlideIds.map((slideId) => slideObj[slideId])}
           isPublished={!!isPublished}
