@@ -15,10 +15,11 @@ export default function InteractiveActions(dispatch) {
         newSlides
       });
     },
-    onInsertInteractiveSlide({ interactiveId, slideId, newSlide }) {
+    onInsertInteractiveSlide({ interactiveId, forkedFrom, slideId, newSlide }) {
       return dispatch({
         type: 'INSERT_INTERACTIVE_SLIDE',
         interactiveId,
+        forkedFrom,
         slideId,
         newSlide
       });

@@ -39,6 +39,22 @@ export default function InteractiveReducer(state, action) {
       ];
       const index = newDisplayedSlideIds.indexOf(action.slideId);
       newDisplayedSlideIds.splice(index, 0, action.newSlide.id);
+      let newLastFork;
+      if (action.forkedFrom) {
+        const lastFork =
+          state[action.interactiveId].slideObj[action.forkedFrom];
+        const { selectedOptionId, paths } = lastFork;
+        let newPath = [...lastFork.paths[selectedOptionId]];
+        const index = newPath.indexOf(action.slideId);
+        newPath.splice(index, 0, action.newSlide.id);
+        newLastFork = {
+          ...lastFork,
+          paths: {
+            ...paths,
+            [selectedOptionId]: newPath
+          }
+        };
+      }
       return {
         ...state,
         [action.interactiveId]: {
@@ -46,6 +62,11 @@ export default function InteractiveReducer(state, action) {
           displayedSlideIds: newDisplayedSlideIds,
           slideObj: {
             ...state[action.interactiveId].slideObj,
+            ...(newLastFork
+              ? {
+                  [newLastFork.id]: newLastFork
+                }
+              : {}),
             [action.newSlide.id]: action.newSlide
           }
         }

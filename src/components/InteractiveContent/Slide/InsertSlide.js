@@ -57,6 +57,11 @@ export default function InsertSlide({
       forkedFrom,
       slideId
     });
-    onInsertInteractiveSlide({ interactiveId, slideId, newSlide });
+    onInsertInteractiveSlide({
+      interactiveId,
+      forkedFrom,
+      slideId,
+      newSlide
+    });
   }
 }
