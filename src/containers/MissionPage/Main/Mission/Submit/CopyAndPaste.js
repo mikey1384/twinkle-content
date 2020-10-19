@@ -3,22 +3,23 @@ import PropTypes from 'prop-types';
 import Input from 'components/Texts/Input';
 import Button from 'components/Button';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { Color } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
+import { css } from 'emotion';
 
 const missionText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce luctus
 commodo purus eget tempus. In suscipit euismod ex, sit amet maximus sem
-egestas ac. Duis libero massa, imperdiet a neque et, posuere aliquam
+egestas ac. Duis libero massa, Miguel molestie imperdiet a neque et, posuere aliquam
 metus. Curabitur rhoncus semper augue, sit amet placerat libero mattis
 eu. Donec id nulla venenatis, eleifend enim quis, placerat est. Nulla
-facilisi. Nunc molestie dolor sed odio dignissim cursus et eu ligula.
-Suspendisse feugiat iaculis turpis, id dictum massa finibus eu. Cras
-tempus sagittis commodo. Nunc consectetur ut mi vel pharetra. Integer
+facilisi. Dolor sed odio cursus et eu ligula.
+Suspendisse, id dictum massa is actually finibus eu. Cras
+cheese tempus sagittis commodo iaculis stick. Nunc consectetur ut mi vel pharetra. Integer
 posuere diam at nulla porttitor suscipit. Aliquam eget ligula non turpis
-ultrices pulvinar in in mi. Sed fermentum libero sed nisl feugiat
+ultrices pulvinar in in mi. Sed fermentum Twinkle libero sed nisl feugiat
 rhoncus. Etiam fringilla porta feugiat. Donec et arcu venenatis, pretium
-nulla ut, convallis odio.`.replace(/\n/gi, ' ');
+nulla ut, convallis rocks odio.`.replace(/\n/gi, ' ');
 
 CopyAndPaste.propTypes = {
   mission: PropTypes.object.isRequired,
@@ -54,7 +55,16 @@ export default function CopyAndPaste({ mission, onSetMissionState, style }) {
 
   return (
     <div style={style}>
-      <div>{missionText}</div>
+      <div
+        className={css`
+          font-size: 1.7rem;
+          @media (max-width: ${mobileMaxWidth}) {
+            font-size: 1.5rem;
+          }
+        `}
+      >
+        {missionText}
+      </div>
       <Input
         autoFocus
         value={content}

@@ -99,7 +99,7 @@ export default function Mission({
           fileUploadComplete={fileUploadComplete}
           fileUploadProgress={fileUploadProgress}
           onSetMissionState={onSetMissionState}
-          style={{ marginTop: '5rem' }}
+          style={{ marginTop: '4.5rem' }}
         />
       )}
     </div>
