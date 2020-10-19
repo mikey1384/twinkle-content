@@ -1,6 +1,19 @@
 export default function InteractiveReducer(state, action) {
   switch (action.type) {
-    case 'ADD_NEW_INTERACTIVE_SLIDE':
+    case 'ADD_NEW_INTERACTIVE_SLIDE': {
+      let newLastFork;
+      if (action.lastFork) {
+        const { selectedOptionId, paths } = action.lastFork;
+        newLastFork = {
+          ...action.lastFork,
+          paths: {
+            ...paths,
+            [selectedOptionId]: paths[selectedOptionId].concat([
+              action.slide.id
+            ])
+          }
+        };
+      }
       return {
         ...state,
         [action.interactiveId]: {
@@ -10,10 +23,16 @@ export default function InteractiveReducer(state, action) {
           ].displayedSlideIds.concat([action.slide.id]),
           slideObj: {
             ...state[action.interactiveId].slideObj,
+            ...(newLastFork
+              ? {
+                  [action.lastFork.id]: newLastFork
+                }
+              : {}),
             [action.slide.id]: action.slide
           }
         }
       };
+    }
     case 'INSERT_INTERACTIVE_SLIDE': {
       const newDisplayedSlideIds = [
         ...state[action.interactiveId].displayedSlideIds

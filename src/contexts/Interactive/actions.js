@@ -1,9 +1,10 @@
 export default function InteractiveActions(dispatch) {
   return {
-    onAddNewInteractiveSlide({ interactiveId, slide }) {
+    onAddNewInteractiveSlide({ interactiveId, lastFork, slide }) {
       return dispatch({
         type: 'ADD_NEW_INTERACTIVE_SLIDE',
         interactiveId,
+        lastFork,
         slide
       });
     },

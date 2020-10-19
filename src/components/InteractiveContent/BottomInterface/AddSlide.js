@@ -103,6 +103,6 @@ export default function AddSlide({ archivedSlides, interactiveId, lastFork }) {
 
   async function handleAddNewSlide() {
     const slide = await appendInteractiveSlide({ interactiveId, lastFork });
-    onAddNewInteractiveSlide({ interactiveId, slide });
+    onAddNewInteractiveSlide({ interactiveId, lastFork, slide });
   }
 }
