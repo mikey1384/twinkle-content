@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
 import OptionItem from './OptionItem';
+import ReorderOptionsModal from './ReorderOptionsModal';
 
 OptionsField.propTypes = {
   editedOptionIds: PropTypes.array.isRequired,
@@ -17,6 +18,9 @@ export default function OptionsField({
   onSetInputState,
   style
 }) {
+  const [reorderOptionsModalShown, setReorderOptionsModalShown] = useState(
+    false
+  );
   return (
     <div
       style={{
@@ -51,11 +55,22 @@ export default function OptionsField({
           <Icon icon="plus" />
           <span style={{ marginLeft: '0.7rem' }}>Add</span>
         </Button>
-        <Button style={{ marginTop: '1rem' }} skeuomorphic>
+        <Button
+          style={{ marginTop: '1rem' }}
+          skeuomorphic
+          onClick={() => setReorderOptionsModalShown(true)}
+        >
           <Icon icon="bars" />
           <span style={{ marginLeft: '0.7rem' }}>Reorder</span>
         </Button>
       </div>
+      {reorderOptionsModalShown && (
+        <ReorderOptionsModal
+          optionIds={editedOptionIds}
+          optionsObj={editedOptionsObj}
+          onHide={() => setReorderOptionsModalShown(false)}
+        />
+      )}
     </div>
   );
 
