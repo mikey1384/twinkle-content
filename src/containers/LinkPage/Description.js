@@ -6,7 +6,6 @@ import LongText from 'components/Texts/LongText';
 import Button from 'components/Button';
 import Textarea from 'components/Texts/Textarea';
 import Input from 'components/Texts/Input';
-import AlreadyPosted from 'components/AlreadyPosted';
 import { timeSince } from 'helpers/timeStampHelpers';
 import {
   exceedsCharLimit,
@@ -241,17 +240,6 @@ export default function Description({
           wordBreak: 'break-word'
         }}
       >
-        <AlreadyPosted
-          style={{
-            marginLeft: '-1rem',
-            marginRight: '-1rem',
-            ...(isEditing ? { marginBottom: '1rem' } : {})
-          }}
-          contentId={Number(linkId)}
-          contentType="url"
-          url={url}
-          uploaderId={uploader.id}
-        />
         {isEditing ? (
           <div>
             <Input

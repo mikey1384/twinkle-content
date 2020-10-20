@@ -141,7 +141,7 @@ export default function MainContent({
             rewardLevel={rewardLevel}
           />
         )}
-        {(contentType === 'url' || contentType === 'video') && (
+        {contentType === 'video' && (
           <AlreadyPosted
             style={{ marginTop: '-0.5rem' }}
             uploaderId={(uploader || {}).id}
