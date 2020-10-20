@@ -124,7 +124,9 @@ export default function Content({
                 onClick={() => onOptionClick(option.id)}
               >
                 {option.icon && <Icon icon={option.icon} />}
-                <span style={{ marginLeft: '0.7rem' }}>{option.label}</span>
+                <span style={{ marginLeft: option.icon ? '0.7rem' : 0 }}>
+                  {option.label}
+                </span>
                 {selectedOptionId === option.id ? (
                   <Icon
                     icon="check"
