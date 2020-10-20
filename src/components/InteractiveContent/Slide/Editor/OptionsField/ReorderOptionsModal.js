@@ -27,11 +27,12 @@ export default function ReorderOptionsModal({
   return (
     <ErrorBoundary>
       <DndProvider backend={Backend}>
-        <Modal large onHide={onHide}>
+        <Modal small onHide={onHide}>
           <header>Reorder Options</header>
           <main>
             <SortableListGroup
               listItemObj={optionsObj}
+              listItemLabel="label"
               onMove={handleMove}
               itemIds={optionIds}
             />

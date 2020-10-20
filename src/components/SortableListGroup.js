@@ -10,6 +10,7 @@ import { css } from 'emotion';
 
 SortableListGroup.propTypes = {
   listItemObj: PropTypes.object.isRequired,
+  listItemLabel: PropTypes.string,
   onMove: PropTypes.func.isRequired,
   itemIds: PropTypes.array.isRequired,
   numbered: PropTypes.bool,
@@ -20,6 +21,7 @@ const Backend = isMobile(navigator) ? TouchBackend : HTML5Backend;
 
 export default function SortableListGroup({
   listItemObj,
+  listItemLabel = 'title',
   onMove,
   itemIds,
   numbered,
@@ -59,7 +61,7 @@ export default function SortableListGroup({
               key={id}
               index={index}
               listItemId={id}
-              listItemLabel={listItemObj[id]?.title}
+              listItemLabel={listItemObj[id]?.[listItemLabel]}
               onMove={onMove}
             />
           );
