@@ -27,6 +27,7 @@ Editor.propTypes = {
   optionIds: PropTypes.array,
   optionsObj: PropTypes.object,
   onThumbnailUpload: PropTypes.func,
+  paths: PropTypes.object,
   interactiveId: PropTypes.number,
   slideId: PropTypes.number
 };
@@ -42,6 +43,7 @@ export default function Editor({
   onThumbnailUpload,
   optionIds,
   optionsObj,
+  paths,
   slideId
 }) {
   const defaultInputState = {
@@ -366,6 +368,7 @@ export default function Editor({
     event.preventDefault();
     const post = {
       ...editForm,
+      editedPaths: paths,
       editedHeading: finalizeEmoji(editedHeading),
       editedDescription: finalizeEmoji(editedDescription)
     };

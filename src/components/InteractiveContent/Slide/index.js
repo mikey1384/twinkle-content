@@ -239,6 +239,7 @@ export default function Slide({
             isFork={isFork}
             optionIds={optionIds}
             optionsObj={optionsObj}
+            paths={paths}
             slideId={slideId}
             onThumbnailUpload={handleThumbnailUpload}
           />
