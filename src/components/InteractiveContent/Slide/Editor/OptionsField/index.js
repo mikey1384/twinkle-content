@@ -68,6 +68,11 @@ export default function OptionsField({
         <ReorderOptionsModal
           optionIds={editedOptionIds}
           optionsObj={editedOptionsObj}
+          onSubmit={(optionIds) =>
+            onSetInputState({
+              editedOptionIds: optionIds
+            })
+          }
           onHide={() => setReorderOptionsModalShown(false)}
         />
       )}

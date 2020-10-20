@@ -15,13 +15,15 @@ const Backend = isMobile(navigator) ? TouchBackend : HTML5Backend;
 ReorderOptionsModal.propTypes = {
   onHide: PropTypes.func.isRequired,
   optionsObj: PropTypes.object.isRequired,
-  optionIds: PropTypes.array.isRequired
+  optionIds: PropTypes.array.isRequired,
+  onSubmit: PropTypes.func.isRequired
 };
 
 export default function ReorderOptionsModal({
   onHide,
   optionsObj,
-  optionIds: initialOptionIds
+  optionIds: initialOptionIds,
+  onSubmit
 }) {
   const [optionIds, setOptionIds] = useState(initialOptionIds);
   return (
@@ -67,7 +69,7 @@ export default function ReorderOptionsModal({
   }
 
   async function handleSubmit() {
-    console.log('done');
+    onSubmit(optionIds);
     onHide();
   }
 }
