@@ -32,7 +32,6 @@ export default function ReorderOptionsModal({
           <main>
             <SortableListGroup
               listItemObj={optionsObj}
-              listItemLabel="label"
               onMove={handleMove}
               itemIds={optionIds}
             />

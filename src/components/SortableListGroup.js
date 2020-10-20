@@ -21,7 +21,7 @@ const Backend = isMobile(navigator) ? TouchBackend : HTML5Backend;
 
 export default function SortableListGroup({
   listItemObj,
-  listItemLabel = 'title',
+  listItemLabel = 'label',
   onMove,
   itemIds,
   numbered,

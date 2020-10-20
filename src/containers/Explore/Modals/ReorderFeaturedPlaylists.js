@@ -34,6 +34,7 @@ export default function ReorderFeaturedPlaylists({
       <header>Reorder Featured Playlists</header>
       <main>
         <SortableListGroup
+          listItemLabel="title"
           listItemObj={listItemObj}
           onMove={handleMove}
           itemIds={playlistIds}
@@ -47,7 +48,7 @@ export default function ReorderFeaturedPlaylists({
           disabled={
             isEqual(
               playlistIds,
-              featuredPlaylists.map(playlist => playlist.id)
+              featuredPlaylists.map((playlist) => playlist.id)
             ) || disabled
           }
           color="blue"
