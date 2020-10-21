@@ -125,6 +125,7 @@ export default function InteractiveContent({ interactiveId }) {
               onExpandPath={slideObj[slideId].isFork ? handleExpandPath : null}
               onMoveSlide={handleMoveInteractiveSlide}
               slideId={slideId}
+              isLastSlide={index === displayedSlideIds.length - 1}
             />
           ))}
         </>

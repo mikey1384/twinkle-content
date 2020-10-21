@@ -7,11 +7,11 @@ import {
 } from 'contexts';
 import { exceedsCharLimit, finalizeEmoji } from 'helpers/stringHelpers';
 import { edit } from 'constants/placeholders';
-import DropdownButton from 'components/Buttons/DropdownButton';
 import Textarea from 'components/Texts/Textarea';
 import Input from 'components/Texts/Input';
 import AttachmentField from './AttachmentField';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
+import SwitchButton from 'components/Buttons/SwitchButton';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import OptionsField from './OptionsField';
@@ -29,7 +29,8 @@ Editor.propTypes = {
   onThumbnailUpload: PropTypes.func,
   paths: PropTypes.object,
   interactiveId: PropTypes.number,
-  slideId: PropTypes.number
+  slideId: PropTypes.number,
+  isLastSlide: PropTypes.bool
 };
 
 export default function Editor({
@@ -40,6 +41,7 @@ export default function Editor({
   heading,
   interactiveId,
   isFork,
+  isLastSlide,
   onThumbnailUpload,
   optionIds,
   optionsObj,
@@ -154,48 +156,6 @@ export default function Editor({
         }}
       >
         <div style={{ width: '70%' }}>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginBottom: '2rem'
-            }}
-          >
-            <p
-              style={{
-                fontWeight: 'bold',
-                fontSize: '1.7rem',
-                marginRight: '1rem'
-              }}
-            >
-              Slide Type:
-            </p>
-            <DropdownButton
-              skeuomorphic
-              color="darkerGray"
-              direction="right"
-              icon="caret-down"
-              text={editedIsFork ? 'fork' : 'default'}
-              menuProps={[
-                {
-                  label: editedIsFork ? (
-                    'Default'
-                  ) : (
-                    <>
-                      <Icon icon="code-branch" />
-                      <span style={{ marginLeft: '0.7rem' }}>Fork</span>
-                    </>
-                  ),
-                  onClick: () =>
-                    handleSetInputState({
-                      ...editForm,
-                      editedIsFork: !editedIsFork
-                    })
-                }
-              ]}
-            />
-          </div>
           <Input
             onChange={(text) =>
               handleSetInputState({
@@ -241,9 +201,35 @@ export default function Editor({
             onThumbnailUpload={onThumbnailUpload}
             uploadingFile={uploadingFile}
           />
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            {isLastSlide && !isFork && (
+              <SwitchButton
+                labelStyle={{ fontSize: '1.7rem', fontWeight: 'bold' }}
+                label={
+                  <>
+                    <Icon icon="code-branch" />
+                    <span style={{ marginLeft: '1rem' }}>is fork</span>
+                  </>
+                }
+                checked={editedIsFork}
+                onChange={() =>
+                  handleSetInputState({
+                    ...editForm,
+                    editedIsFork: !editedIsFork
+                  })
+                }
+              />
+            )}
+          </div>
           {editedIsFork && (
             <OptionsField
-              style={{ marginTop: '2rem' }}
+              style={{ marginTop: '1rem' }}
               editedOptionIds={editedOptionIds}
               editedOptionsObj={editedOptionsObj}
               onSetInputState={(newState) =>

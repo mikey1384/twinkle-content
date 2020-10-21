@@ -28,6 +28,7 @@ Slide.propTypes = {
   isDeleted: PropTypes.bool,
   isEditing: PropTypes.bool,
   isPublished: PropTypes.bool,
+  isLastSlide: PropTypes.bool,
   isFork: PropTypes.bool,
   forkedFrom: PropTypes.number,
   description: PropTypes.string,
@@ -52,6 +53,7 @@ export default function Slide({
   insertButtonShown,
   interactiveId,
   isDeleted,
+  isLastSlide,
   isPublished,
   isEditing,
   isFork,
@@ -237,6 +239,7 @@ export default function Slide({
             heading={heading}
             interactiveId={interactiveId}
             isFork={isFork}
+            isLastSlide={isLastSlide}
             optionIds={optionIds}
             optionsObj={optionsObj}
             paths={paths}
