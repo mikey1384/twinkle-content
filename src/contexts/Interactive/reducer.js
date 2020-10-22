@@ -75,10 +75,7 @@ export default function InteractiveReducer(state, action) {
     case 'LOAD_INTERACTIVE': {
       return {
         ...state,
-        [action.interactive.id]: {
-          ...action.interactive,
-          loaded: true
-        }
+        [action.interactive.id]: action.interactive
       };
     }
     case 'CONCAT_DISPLAYED_SLIDES': {

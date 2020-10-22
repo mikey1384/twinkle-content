@@ -34,6 +34,7 @@ export default function InteractiveContent({ interactiveId }) {
   const SlideRefs = useRef({});
 
   const {
+    currentUserId,
     loaded,
     slideObj = {},
     archivedSlideIds,
@@ -67,28 +68,32 @@ export default function InteractiveContent({ interactiveId }) {
   }, []);
 
   useEffect(() => {
-    if (!loaded && userId) {
-      init();
-    }
+    init();
+
     async function init() {
-      if (interactiveId && userId) {
+      if (interactiveId && userId && currentUserId !== userId) {
         const interactive = await loadInteractive(interactiveId);
         if (mounted.current) {
-          onLoadInteractive(interactive);
+          onLoadInteractive({
+            ...interactive,
+            loaded: true,
+            currentUserId: userId
+          });
         }
       } else {
         onLoadInteractive({
           id: 0,
-          loaded: !!userId,
+          loaded: true,
           archivedSlideIds: [],
           displayedSlideIds: [],
           slideObj: {},
-          isPublished: false
+          isPublished: false,
+          currentUserId: userId
         });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [interactiveId, loaded, userId]);
+  }, [currentUserId, interactiveId, loaded, userId]);
 
   return loaded ? (
     <div
