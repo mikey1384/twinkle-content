@@ -44,7 +44,7 @@ export default function InteractiveContent({ interactiveId }) {
 
   const lastFork = useMemo(() => {
     const slides = displayedSlideIds?.map((slideId) => slideObj[slideId]);
-    const forks = slides?.filter((slide) => slide.isFork);
+    const forks = slides?.filter((slide) => slide.isFork && !slide.isDeleted);
     if (forks?.length > 0) {
       return forks[forks.length - 1];
     }
