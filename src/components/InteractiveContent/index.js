@@ -17,7 +17,7 @@ export default function InteractiveContent({ interactiveId }) {
   const {
     requestHelpers: { loadInteractive, moveInteractiveSlide }
   } = useAppContext();
-  const { canEdit } = useMyState();
+  const { canEdit, userId } = useMyState();
   const {
     state,
     actions: {
@@ -67,11 +67,11 @@ export default function InteractiveContent({ interactiveId }) {
   }, []);
 
   useEffect(() => {
-    if (!loaded) {
+    if (!loaded && userId) {
       init();
     }
     async function init() {
-      if (interactiveId) {
+      if (interactiveId && userId) {
         const interactive = await loadInteractive(interactiveId);
         if (mounted.current) {
           onLoadInteractive(interactive);
@@ -79,7 +79,7 @@ export default function InteractiveContent({ interactiveId }) {
       } else {
         onLoadInteractive({
           id: 0,
-          loaded: true,
+          loaded: !!userId,
           archivedSlideIds: [],
           displayedSlideIds: [],
           slideObj: {},
@@ -88,7 +88,7 @@ export default function InteractiveContent({ interactiveId }) {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [interactiveId, loaded]);
+  }, [interactiveId, loaded, userId]);
 
   return loaded ? (
     <div

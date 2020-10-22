@@ -210,7 +210,11 @@ export default function Editor({
           >
             {isLastSlide && !isFork && (
               <SwitchButton
-                labelStyle={{ fontSize: '1.7rem', fontWeight: 'bold' }}
+                style={{ marginTop: '2rem' }}
+                labelStyle={{
+                  fontSize: '1.7rem',
+                  fontWeight: 'bold'
+                }}
                 label={
                   <>
                     <Icon icon="code-branch" />
