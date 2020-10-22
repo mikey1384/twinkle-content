@@ -112,6 +112,7 @@ export default function InteractiveContent({ interactiveId }) {
             <Slide
               {...slideObj[slideId]}
               key={slideId}
+              displayedSlideIds={displayedSlideIds}
               index={index}
               innerRef={(ref) => (SlideRefs.current[index] = ref)}
               insertButtonShown={index !== 0 && canEdit}
@@ -130,6 +131,7 @@ export default function InteractiveContent({ interactiveId }) {
               onExpandPath={slideObj[slideId].isFork ? handleExpandPath : null}
               onMoveSlide={handleMoveInteractiveSlide}
               slideId={slideId}
+              slideObj={slideObj}
               isLastSlide={index === displayedSlideIds.length - 1}
             />
           ))}

@@ -17,6 +17,7 @@ Slide.propTypes = {
   attachment: PropTypes.object,
   cannotMoveUp: PropTypes.bool,
   cannotMoveDown: PropTypes.bool,
+  displayedSlideIds: PropTypes.array,
   fileUploadComplete: PropTypes.bool,
   fileUploadProgress: PropTypes.number,
   innerRef: PropTypes.func,
@@ -37,6 +38,7 @@ Slide.propTypes = {
   optionIds: PropTypes.array,
   optionsObj: PropTypes.object,
   slideId: PropTypes.number,
+  slideObj: PropTypes.object,
   paths: PropTypes.object,
   selectedOptionId: PropTypes.number
 };
@@ -44,6 +46,7 @@ Slide.propTypes = {
 export default function Slide({
   cannotMoveUp,
   cannotMoveDown,
+  displayedSlideIds,
   heading,
   index,
   description,
@@ -66,6 +69,7 @@ export default function Slide({
   paths,
   attachment,
   selectedOptionId,
+  slideObj,
   style
 }) {
   const {
@@ -295,8 +299,13 @@ export default function Slide({
     onSetInteractiveState({
       interactiveId,
       slideId,
-      newState: { isDeleted: true }
+      newState: { isDeleted: true, selectedOptionId: null }
     });
+    for (let id of displayedSlideIds) {
+      if (slideObj[id].forkedFrom === slideId) {
+        onRemoveInteractiveSlide({ interactiveId, slideId: id });
+      }
+    }
   }
 
   function handleOptionClick(optionId) {
