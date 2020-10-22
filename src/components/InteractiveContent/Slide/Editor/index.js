@@ -201,49 +201,6 @@ export default function Editor({
             onThumbnailUpload={onThumbnailUpload}
             uploadingFile={uploadingFile}
           />
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-          >
-            {isLastSlide && !isFork && (
-              <SwitchButton
-                style={{ marginTop: '2rem' }}
-                labelStyle={{
-                  fontSize: '1.7rem',
-                  fontWeight: 'bold'
-                }}
-                label={
-                  <>
-                    <Icon icon="code-branch" />
-                    <span style={{ marginLeft: '1rem' }}>is fork</span>
-                  </>
-                }
-                checked={editedIsFork}
-                onChange={() =>
-                  handleSetInputState({
-                    ...editForm,
-                    editedIsFork: !editedIsFork
-                  })
-                }
-              />
-            )}
-          </div>
-          {editedIsFork && (
-            <OptionsField
-              style={{ marginTop: '1rem' }}
-              editedOptionIds={editedOptionIds}
-              editedOptionsObj={editedOptionsObj}
-              onSetInputState={(newState) =>
-                handleSetInputState({
-                  ...editForm,
-                  ...newState
-                })
-              }
-            />
-          )}
           {uploadingFile && (
             <FileUploadStatusIndicator
               style={{
@@ -258,6 +215,51 @@ export default function Editor({
               uploadProgress={fileUploadProgress}
             />
           )}
+          <div style={{ marginTop: '2rem', width: '100%' }}>
+            <div
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}
+            >
+              {isLastSlide && !isFork && (
+                <SwitchButton
+                  labelStyle={{
+                    fontSize: '1.7rem',
+                    fontWeight: 'bold'
+                  }}
+                  label={
+                    <>
+                      <Icon icon="code-branch" />
+                      <span style={{ marginLeft: '1rem' }}>is fork</span>
+                    </>
+                  }
+                  checked={editedIsFork}
+                  onChange={() =>
+                    handleSetInputState({
+                      ...editForm,
+                      editedIsFork: !editedIsFork
+                    })
+                  }
+                />
+              )}
+            </div>
+            {editedIsFork && (
+              <OptionsField
+                style={{ marginTop: '1rem' }}
+                editedOptionIds={editedOptionIds}
+                editedOptionsObj={editedOptionsObj}
+                onSetInputState={(newState) =>
+                  handleSetInputState({
+                    ...editForm,
+                    ...newState
+                  })
+                }
+              />
+            )}
+          </div>
         </div>
         <div
           style={{
