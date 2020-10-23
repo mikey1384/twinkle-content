@@ -356,7 +356,7 @@ function XPVideoPlayer({
 
     async function increaseCoinMeter() {
       if (PlayerRef.current?.getInternalPlayer()?.isMuted()) {
-        PlayerRef.current?.getInternalPlayer()?.unMute();
+        return;
       }
       if (
         rewardAmountRef.current &&
@@ -409,7 +409,7 @@ function XPVideoPlayer({
 
     async function increaseXPMeter() {
       if (PlayerRef.current?.getInternalPlayer()?.isMuted()) {
-        PlayerRef.current?.getInternalPlayer()?.unMute();
+        return;
       }
       const requiredViewDuration =
         totalDurationRef.current < requiredDurationForXP + 10
