@@ -8,6 +8,13 @@ export default function InteractiveActions(dispatch) {
         slide
       });
     },
+    onArchiveSlide({ interactiveId, slideId }) {
+      return dispatch({
+        type: 'ARCHIVE_SLIDE',
+        interactiveId,
+        slideId
+      });
+    },
     onConcatDisplayedSlides({ interactiveId, newSlides }) {
       return dispatch({
         type: 'CONCAT_DISPLAYED_SLIDES',

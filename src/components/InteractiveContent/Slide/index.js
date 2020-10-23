@@ -82,7 +82,7 @@ export default function Slide({
     }
   } = useAppContext();
   const {
-    actions: { onRemoveInteractiveSlide, onSetInteractiveState }
+    actions: { onArchiveSlide, onRemoveInteractiveSlide, onSetInteractiveState }
   } = useInteractiveContext();
   const { canEdit } = useMyState();
 
@@ -302,9 +302,9 @@ export default function Slide({
       slideId,
       newState: { isDeleted: true, selectedOptionId: null }
     });
-    for (let id of displayedSlideIds) {
-      if (slideObj[id].forkedFrom === slideId) {
-        onRemoveInteractiveSlide({ interactiveId, slideId: id });
+    for (let [key, slide] of Object.entries(slideObj)) {
+      if (slide.forkedFrom === slideId) {
+        onArchiveSlide({ interactiveId, slideId: Number(key) });
       }
     }
   }

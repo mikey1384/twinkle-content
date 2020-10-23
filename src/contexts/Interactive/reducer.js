@@ -33,6 +33,21 @@ export default function InteractiveReducer(state, action) {
         }
       };
     }
+    case 'ARCHIVE_SLIDE': {
+      return {
+        [action.interactiveId]: {
+          ...state[action.interactiveId],
+          archivedSlideIds: state[
+            action.interactiveId
+          ].archivedSlideIds.concat([action.slideId]),
+          displayedSlideIds: state[
+            action.interactiveId
+          ].displayedSlideIds.filter((slideId) => {
+            return slideId !== action.slideId;
+          })
+        }
+      };
+    }
     case 'INSERT_INTERACTIVE_SLIDE': {
       const newDisplayedSlideIds = [
         ...state[action.interactiveId].displayedSlideIds
