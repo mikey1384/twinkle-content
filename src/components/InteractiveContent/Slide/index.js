@@ -167,6 +167,7 @@ export default function Slide({
     ];
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
+    displayedSlideIds,
     interactiveId,
     isPublished,
     isDeleted,
@@ -302,7 +303,7 @@ export default function Slide({
       newState: { isDeleted: true, selectedOptionId: null }
     });
     for (let id of displayedSlideIds) {
-      if (slideObj[id].forkedFrom === slideId) {
+      if (slideObj[id].forkedFrom === 171) {
         onRemoveInteractiveSlide({ interactiveId, slideId: id });
       }
     }

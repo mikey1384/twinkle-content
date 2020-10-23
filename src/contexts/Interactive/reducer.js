@@ -139,7 +139,9 @@ export default function InteractiveReducer(state, action) {
           ...state[action.interactiveId],
           displayedSlideIds: state[
             action.interactiveId
-          ].displayedSlideIds.filter((slideId) => slideId !== action.slideId)
+          ].displayedSlideIds.filter((slideId) => {
+            return slideId !== action.slideId;
+          })
         }
       };
     }
