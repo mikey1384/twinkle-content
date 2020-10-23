@@ -18,9 +18,12 @@ export default function InteractiveReducer(state, action) {
         ...state,
         [action.interactiveId]: {
           ...state[action.interactiveId],
-          displayedSlideIds: state[
-            action.interactiveId
-          ].displayedSlideIds.concat([action.slide.id]),
+          displayedSlideIds: state[action.interactiveId].displayedSlideIds
+            .concat([action.slide.id])
+            .filter((slideId) => {
+              const slide = state[action.interactiveId].slideObj[slideId];
+              return !(slide?.isFork && slide?.isDeleted);
+            }),
           slideObj: {
             ...state[action.interactiveId].slideObj,
             ...(newLastFork
