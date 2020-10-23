@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
-import SelectArchivedSlideModal from './SelectArchivedSlideModal';
+import SelectArchivedSlideModal from '../SelectArchivedSlideModal';
 import { useAppContext, useInteractiveContext } from 'contexts';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
