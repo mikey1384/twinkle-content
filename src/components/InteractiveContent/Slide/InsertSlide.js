@@ -12,6 +12,7 @@ InsertSlide.propTypes = {
   interactiveId: PropTypes.number,
   slideId: PropTypes.number,
   className: PropTypes.string,
+  slideObj: PropTypes.object,
   style: PropTypes.object
 };
 
@@ -20,14 +21,15 @@ export default function InsertSlide({
   interactiveId,
   forkedFrom,
   slideId,
+  slideObj,
   className,
   style
 }) {
   const {
-    requestHelpers: { insertInteractiveSlide }
+    requestHelpers: { insertArchivedSlide, insertInteractiveSlide }
   } = useAppContext();
   const {
-    actions: { onInsertInteractiveSlide }
+    actions: { onInsertInteractiveSlide, onRecoverArchivedSlide }
   } = useInteractiveContext();
   const [
     selectArchivedSlideModalShown,
@@ -101,7 +103,20 @@ export default function InsertSlide({
   );
 
   async function handleInsertArchivedSlide(selectedSlideId) {
-    console.log(selectedSlideId);
+    await insertArchivedSlide({
+      interactiveId,
+      slideId,
+      selectedSlideId,
+      forkedFrom
+    });
+    onInsertInteractiveSlide({
+      interactiveId,
+      forkedFrom,
+      slideId,
+      newSlide: slideObj[selectedSlideId]
+    });
+    onRecoverArchivedSlide({ interactiveId, slideId: selectedSlideId });
+    setSelectArchivedSlideModalShown(false);
   }
 
   async function handleInsertSlide() {

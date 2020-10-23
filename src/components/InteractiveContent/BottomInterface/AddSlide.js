@@ -18,7 +18,11 @@ export default function AddSlide({ archivedSlides, interactiveId, lastFork }) {
     requestHelpers: { appendInteractiveSlide, recoverArchivedSlide }
   } = useAppContext();
   const {
-    actions: { onAddNewInteractiveSlide, onRecoverArchivedSlide }
+    actions: {
+      onAddNewInteractiveSlide,
+      onConcatDisplayedSlides,
+      onRecoverArchivedSlide
+    }
   } = useInteractiveContext();
   const forkOptionNotSelected = useMemo(() => {
     return lastFork && !lastFork.selectedOptionId;
@@ -107,6 +111,10 @@ export default function AddSlide({ archivedSlides, interactiveId, lastFork }) {
   async function handleRecoverArchivedSlide(selectedSlideId) {
     await recoverArchivedSlide({ interactiveId, selectedSlideId, lastFork });
     onRecoverArchivedSlide({ interactiveId, slideId: selectedSlideId });
+    onConcatDisplayedSlides({
+      interactiveId,
+      newSlides: [selectedSlideId]
+    });
     setSelectArchivedSlideModalShown(false);
   }
 

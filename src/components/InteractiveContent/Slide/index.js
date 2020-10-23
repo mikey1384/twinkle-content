@@ -186,6 +186,7 @@ export default function Slide({
           forkedFrom={forkedFrom}
           interactiveId={interactiveId}
           slideId={slideId}
+          slideObj={slideObj}
           className={css`
             margin-top: 2rem;
             @media (max-width: ${mobileMaxWidth}) {

@@ -31,7 +31,10 @@ export default function InteractiveReducer(state, action) {
                   [action.lastFork.id]: newLastFork
                 }
               : {}),
-            [action.slide.id]: action.slide
+            [action.slide.id]: {
+              ...action.slide,
+              ...(action.lastFork ? { forkedFrom: action.lastFork.id } : {})
+            }
           }
         }
       };
@@ -142,9 +145,6 @@ export default function InteractiveReducer(state, action) {
         ...state,
         [action.interactiveId]: {
           ...state[action.interactiveId],
-          displayedSlideIds: state[
-            action.interactiveId
-          ].displayedSlideIds.concat(action.slideId),
           archivedSlideIds: state[action.interactiveId].archivedSlideIds.filter(
             (slideId) => slideId !== action.slideId
           )

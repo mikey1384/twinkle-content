@@ -26,6 +26,23 @@ export default function interactiveRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async insertArchivedSlide({
+      interactiveId,
+      slideId,
+      selectedSlideId,
+      forkedFrom
+    }) {
+      try {
+        const { data } = await request.post(
+          `${URL}/interactive/slide/recover`,
+          { interactiveId, slideId, selectedSlideId, forkedFrom },
+          auth()
+        );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async insertInteractiveSlide({ interactiveId, forkedFrom, slideId }) {
       try {
         const { data } = await request.post(
