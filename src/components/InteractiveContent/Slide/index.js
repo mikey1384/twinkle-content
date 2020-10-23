@@ -14,6 +14,7 @@ import InsertSlide from './InsertSlide';
 import DropdownButton from 'components/Buttons/DropdownButton';
 
 Slide.propTypes = {
+  archivedSlides: PropTypes.array,
   attachment: PropTypes.object,
   cannotMoveUp: PropTypes.bool,
   cannotMoveDown: PropTypes.bool,
@@ -44,6 +45,7 @@ Slide.propTypes = {
 };
 
 export default function Slide({
+  archivedSlides,
   cannotMoveUp,
   cannotMoveDown,
   displayedSlideIds,
@@ -180,6 +182,7 @@ export default function Slide({
     <>
       {insertButtonShown && (
         <InsertSlide
+          archivedSlides={archivedSlides}
           forkedFrom={forkedFrom}
           interactiveId={interactiveId}
           slideId={slideId}

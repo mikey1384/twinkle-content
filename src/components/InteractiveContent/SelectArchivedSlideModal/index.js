@@ -3,27 +3,20 @@ import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import ArchivedSlideItem from './ArchivedSlideItem';
-import { useAppContext, useInteractiveContext } from 'contexts';
 
 SelectArchivedSlideModal.propTypes = {
   interactiveId: PropTypes.number.isRequired,
   onHide: PropTypes.func.isRequired,
   archivedSlides: PropTypes.array.isRequired,
-  lastFork: PropTypes.object
+  onDone: PropTypes.func.isRequired
 };
 
 export default function SelectArchivedSlideModal({
   interactiveId,
+  onDone,
   onHide,
-  archivedSlides,
-  lastFork
+  archivedSlides
 }) {
-  const {
-    actions: { onRecoverArchivedSlide }
-  } = useInteractiveContext();
-  const {
-    requestHelpers: { recoverArchivedSlide }
-  } = useAppContext();
   const mounted = useRef(true);
   const [selectedSlideId, setSelectedSlideId] = useState(null);
 
@@ -54,16 +47,10 @@ export default function SelectArchivedSlideModal({
         <Button transparent onClick={onHide} style={{ marginRight: '0.7rem' }}>
           Cancel
         </Button>
-        <Button color="blue" onClick={handleDone}>
+        <Button color="blue" onClick={() => onDone(selectedSlideId)}>
           Done
         </Button>
       </footer>
     </Modal>
   );
-
-  async function handleDone() {
-    await recoverArchivedSlide({ interactiveId, selectedSlideId, lastFork });
-    onRecoverArchivedSlide({ interactiveId, slideId: selectedSlideId });
-    onHide();
-  }
 }

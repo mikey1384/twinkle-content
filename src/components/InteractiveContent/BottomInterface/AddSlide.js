@@ -15,10 +15,10 @@ AddSlide.propTypes = {
 
 export default function AddSlide({ archivedSlides, interactiveId, lastFork }) {
   const {
-    requestHelpers: { appendInteractiveSlide }
+    requestHelpers: { appendInteractiveSlide, recoverArchivedSlide }
   } = useAppContext();
   const {
-    actions: { onAddNewInteractiveSlide }
+    actions: { onAddNewInteractiveSlide, onRecoverArchivedSlide }
   } = useInteractiveContext();
   const forkOptionNotSelected = useMemo(() => {
     return lastFork && !lastFork.selectedOptionId;
@@ -83,7 +83,10 @@ export default function AddSlide({ archivedSlides, interactiveId, lastFork }) {
                   onClick={() => setSelectArchivedSlideModalShown(true)}
                   skeuomorphic
                 >
-                  Choose from Archived Slides
+                  <Icon icon="archive" />
+                  <span style={{ marginLeft: '0.7rem' }}>
+                    Choose from Archived Slides
+                  </span>
                 </Button>
               </>
             )}
@@ -94,12 +97,18 @@ export default function AddSlide({ archivedSlides, interactiveId, lastFork }) {
         <SelectArchivedSlideModal
           interactiveId={interactiveId}
           archivedSlides={archivedSlides}
-          lastFork={lastFork}
+          onDone={handleRecoverArchivedSlide}
           onHide={() => setSelectArchivedSlideModalShown(false)}
         />
       )}
     </div>
   );
+
+  async function handleRecoverArchivedSlide(selectedSlideId) {
+    await recoverArchivedSlide({ interactiveId, selectedSlideId, lastFork });
+    onRecoverArchivedSlide({ interactiveId, slideId: selectedSlideId });
+    setSelectArchivedSlideModalShown(false);
+  }
 
   async function handleAddNewSlide() {
     const slide = await appendInteractiveSlide({ interactiveId, lastFork });

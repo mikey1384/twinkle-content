@@ -51,6 +51,10 @@ export default function InteractiveContent({ interactiveId }) {
     return null;
   }, [displayedSlideIds, slideObj]);
 
+  const archivedSlides = useMemo(() => {
+    return archivedSlideIds?.map((slideId) => slideObj[slideId]);
+  }, [archivedSlideIds, slideObj]);
+
   useEffect(() => {
     if (expanded.current && lastFork?.id) {
       scrollElementToCenter(
@@ -112,6 +116,7 @@ export default function InteractiveContent({ interactiveId }) {
             <Slide
               {...slideObj[slideId]}
               key={slideId}
+              archivedSlides={archivedSlides}
               displayedSlideIds={displayedSlideIds}
               index={index}
               innerRef={(ref) => (SlideRefs.current[index] = ref)}
@@ -139,7 +144,7 @@ export default function InteractiveContent({ interactiveId }) {
       )}
       {loaded && canEdit && (
         <BottomInterface
-          archivedSlides={archivedSlideIds.map((slideId) => slideObj[slideId])}
+          archivedSlides={archivedSlides}
           isPublished={!!isPublished}
           interactiveId={interactiveId}
           lastFork={lastFork}
