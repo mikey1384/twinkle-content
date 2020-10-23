@@ -303,7 +303,7 @@ export default function Slide({
       newState: { isDeleted: true, selectedOptionId: null }
     });
     for (let id of displayedSlideIds) {
-      if (slideObj[id].forkedFrom === 171) {
+      if (slideObj[id].forkedFrom === slideId) {
         onRemoveInteractiveSlide({ interactiveId, slideId: id });
       }
     }
