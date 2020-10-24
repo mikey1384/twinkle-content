@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Slide from './Slide';
 import Loading from 'components/Loading';
 import BottomInterface from './BottomInterface';
-import { useAppContext, useInteractiveContext } from 'contexts';
+import { useAppContext, useInteractiveContext, useViewContext } from 'contexts';
 import { scrollElementToCenter } from 'helpers';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
@@ -15,9 +15,15 @@ InteractiveContent.propTypes = {
 
 export default function InteractiveContent({ interactiveId }) {
   const {
-    requestHelpers: { loadInteractive, moveInteractiveSlide }
+    requestHelpers: {
+      checkInteractiveNumUpdates,
+      loadInteractive,
+      moveInteractiveSlide
+    }
   } = useAppContext();
-  const { canEdit, userId } = useMyState();
+  const {
+    state: { pageVisible }
+  } = useViewContext();
   const {
     state,
     actions: {
@@ -30,11 +36,14 @@ export default function InteractiveContent({ interactiveId }) {
       onSetSlideState
     }
   } = useInteractiveContext();
+  const { canEdit, userId } = useMyState();
+
   const mounted = useRef(true);
   const expanded = useRef(false);
   const SlideRefs = useRef({});
 
   const {
+    numUpdates,
     currentUserId,
     loaded,
     slideObj = {},
@@ -55,6 +64,29 @@ export default function InteractiveContent({ interactiveId }) {
   const archivedSlides = useMemo(() => {
     return archivedSlideIds?.map((slideId) => slideObj[slideId]);
   }, [archivedSlideIds, slideObj]);
+
+  useEffect(() => {
+    if (pageVisible) {
+      handleCheckNumUpdates();
+    }
+
+    async function handleCheckNumUpdates() {
+      if (loaded) {
+        const newNumUpdates = await checkInteractiveNumUpdates(interactiveId);
+        if (newNumUpdates > numUpdates) {
+          const interactive = await loadInteractive(interactiveId);
+          if (mounted.current) {
+            onLoadInteractive({
+              ...interactive,
+              loaded: true,
+              currentUserId: userId
+            });
+          }
+        }
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageVisible]);
 
   useEffect(() => {
     if (expanded.current && lastFork?.id) {
@@ -89,6 +121,7 @@ export default function InteractiveContent({ interactiveId }) {
         onLoadInteractive({
           id: 0,
           loaded: true,
+          numUpdates: 0,
           archivedSlideIds: [],
           displayedSlideIds: [],
           slideObj: {},

@@ -17,6 +17,19 @@ export default function interactiveRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async checkInteractiveNumUpdates(interactiveId) {
+      try {
+        const {
+          data: { numUpdates }
+        } = await request.get(
+          `${URL}/interactive/numUpdates?interactiveId=${interactiveId}`,
+          auth()
+        );
+        return Promise.resolve(numUpdates);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async deleteInteractiveSlide(slideId) {
       try {
         const {
