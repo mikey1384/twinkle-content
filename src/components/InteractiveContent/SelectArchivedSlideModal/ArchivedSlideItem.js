@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Attachment from '../../Attachment';
+import Attachment from '../Attachment';
 import { css } from 'emotion';
 import { borderRadius, Color } from 'constants/css';
 import { stringIsEmpty } from 'helpers/stringHelpers';
