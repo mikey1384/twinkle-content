@@ -137,7 +137,7 @@ export default function InteractiveReducer(state, action) {
         [action.interactiveId]: {
           ...state[action.interactiveId],
           isPublished: true,
-          numIterations: action.numIterations
+          numUpdates: action.numUpdates
         }
       };
     }

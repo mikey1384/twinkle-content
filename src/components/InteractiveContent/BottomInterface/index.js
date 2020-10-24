@@ -71,7 +71,7 @@ export default function BottomInterface({
   );
 
   async function handlePublish() {
-    const numIterations = await publishInteractive(interactiveId);
-    onPublishInteractive({ interactiveId, numIterations });
+    const numUpdates = await publishInteractive(interactiveId);
+    onPublishInteractive({ interactiveId, numUpdates });
   }
 }
