@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Attachment from '../Attachment';
+import Attachment from '../../Attachment';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import LongText from 'components/Texts/LongText';
