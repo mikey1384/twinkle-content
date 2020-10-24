@@ -109,13 +109,13 @@ export default function interactiveRequestHelpers({ auth, handleError }) {
     async publishInteractive(interactiveId) {
       try {
         const {
-          data: { success }
+          data: { numIterations }
         } = await request.put(
           `${URL}/interactive/publish`,
           { interactiveId },
           auth()
         );
-        return Promise.resolve(success);
+        return Promise.resolve(numIterations);
       } catch (error) {
         return handleError(error);
       }

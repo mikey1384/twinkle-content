@@ -45,10 +45,11 @@ export default function InteractiveActions(dispatch) {
         slideId
       });
     },
-    onPublishInteractive(interactiveId) {
+    onPublishInteractive({ interactiveId, numIterations }) {
       return dispatch({
         type: 'PUBLISH_INTERACTIVE',
-        interactiveId
+        interactiveId,
+        numIterations
       });
     },
     onRecoverArchivedSlide({ interactiveId, slideId }) {
