@@ -17,11 +17,13 @@ export default function interactiveRequestHelpers({ auth, handleError }) {
     },
     async deleteInteractiveSlide(slideId) {
       try {
-        const { data } = await request.delete(
+        const {
+          data: { numUpdates }
+        } = await request.delete(
           `${URL}/interactive/slide?slideId=${slideId}`,
           auth()
         );
-        return Promise.resolve(data);
+        return Promise.resolve(numUpdates);
       } catch (error) {
         return handleError(error);
       }

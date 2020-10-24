@@ -26,7 +26,7 @@ export default function InteractiveContent({ interactiveId }) {
       onMoveInteractiveSlide,
       onPublishInteractive,
       onSetDisplayedSlides,
-      onSetInteractiveState
+      onSetSlideState
     }
   } = useInteractiveContext();
   const mounted = useRef(true);
@@ -172,7 +172,7 @@ export default function InteractiveContent({ interactiveId }) {
           newSlides: displayedSlideIds.slice(0, index + 1)
         });
       }
-      onSetInteractiveState({
+      onSetSlideState({
         interactiveId,
         slideId,
         newState: { selectedOptionId: optionId }

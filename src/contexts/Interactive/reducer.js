@@ -54,6 +54,14 @@ export default function InteractiveReducer(state, action) {
         }
       };
     }
+    case 'CHANGE_NUM_UPDATES': {
+      return {
+        [action.interactiveId]: {
+          ...state[action.interactiveId],
+          numUpdates: action.numUpdates
+        }
+      };
+    }
     case 'INSERT_INTERACTIVE_SLIDE': {
       const newDisplayedSlideIds = [
         ...state[action.interactiveId].displayedSlideIds
@@ -173,7 +181,7 @@ export default function InteractiveReducer(state, action) {
         }
       };
     }
-    case 'SET_INTERACTIVE_STATE': {
+    case 'SET_SLIDE_STATE': {
       return {
         ...state,
         [action.interactiveId]: {

@@ -27,7 +27,7 @@ export default function ArchivedSlideItem({
     requestHelpers: { updateEmbedData }
   } = useAppContext();
   const {
-    actions: { onSetInteractiveState }
+    actions: { onSetSlideState }
   } = useInteractiveContext();
   const selected = selectedSlideId === slide.id;
 
@@ -111,7 +111,7 @@ export default function ArchivedSlideItem({
   }
 
   async function handleSetEmbedProps(params) {
-    onSetInteractiveState({
+    onSetSlideState({
       interactiveId,
       slideId: slide.id,
       newState: {
@@ -124,7 +124,7 @@ export default function ArchivedSlideItem({
   }
 
   function handleThumbnailUpload(thumbUrl) {
-    onSetInteractiveState({
+    onSetSlideState({
       interactiveId,
       slideId: slide.id,
       newState: {

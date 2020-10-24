@@ -77,7 +77,7 @@ export default function Editor({
     actions: { onSetEditInteractiveForm }
   } = useInputContext();
   const {
-    actions: { onSetInteractiveState }
+    actions: { onSetSlideState }
   } = useInteractiveContext();
   const prevInputState = useMemo(
     () => state[`edit-interactive-${interactiveId}-${slideId}`],
@@ -281,7 +281,7 @@ export default function Editor({
             style={{ marginRight: '1rem' }}
             onClick={() => {
               handleSetInputState(prevInputState);
-              onSetInteractiveState({
+              onSetSlideState({
                 interactiveId,
                 slideId,
                 newState: { isEditing: false }
@@ -307,7 +307,7 @@ export default function Editor({
         file: editedAttachment.newAttachment.file,
         onUploadProgress: handleUploadProgress
       });
-      onSetInteractiveState({
+      onSetSlideState({
         interactiveId,
         slideId,
         newState: { fileUploadComplete: true }
@@ -326,7 +326,7 @@ export default function Editor({
         post
       });
       newState.isEditing = false;
-      onSetInteractiveState({
+      onSetSlideState({
         interactiveId,
         slideId,
         newState: {
@@ -343,7 +343,7 @@ export default function Editor({
     }
 
     function handleUploadProgress({ loaded, total }) {
-      onSetInteractiveState({
+      onSetSlideState({
         interactiveId,
         slideId,
         newState: { fileUploadProgress: loaded / total }
@@ -371,7 +371,7 @@ export default function Editor({
       slideId,
       post
     });
-    onSetInteractiveState({
+    onSetSlideState({
       interactiveId,
       slideId,
       newState: {

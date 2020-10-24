@@ -15,6 +15,13 @@ export default function InteractiveActions(dispatch) {
         slideId
       });
     },
+    onChangeNumUpdates({ interactiveId, numUpdates }) {
+      return dispatch({
+        type: 'CHANGE_NUM_UPDATES',
+        interactiveId,
+        numUpdates
+      });
+    },
     onConcatDisplayedSlides({ interactiveId, newSlides }) {
       return dispatch({
         type: 'CONCAT_DISPLAYED_SLIDES',
@@ -73,9 +80,9 @@ export default function InteractiveActions(dispatch) {
         newSlides
       });
     },
-    onSetInteractiveState({ interactiveId, slideId, newState }) {
+    onSetSlideState({ interactiveId, slideId, newState }) {
       return dispatch({
-        type: 'SET_INTERACTIVE_STATE',
+        type: 'SET_SLIDE_STATE',
         interactiveId,
         slideId,
         newState

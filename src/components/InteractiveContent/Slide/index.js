@@ -84,7 +84,12 @@ export default function Slide({
     }
   } = useAppContext();
   const {
-    actions: { onArchiveSlide, onRemoveInteractiveSlide, onSetInteractiveState }
+    actions: {
+      onArchiveSlide,
+      onChangeNumUpdates,
+      onRemoveInteractiveSlide,
+      onSetSlideState
+    }
   } = useInteractiveContext();
   const { canEdit } = useMyState();
 
@@ -101,7 +106,7 @@ export default function Slide({
           </>
         ),
         onClick: () =>
-          onSetInteractiveState({
+          onSetSlideState({
             interactiveId,
             slideId,
             newState: { isEditing: true }
@@ -300,8 +305,9 @@ export default function Slide({
   );
 
   async function handleDeleteSlide() {
-    await deleteInteractiveSlide(slideId);
-    onSetInteractiveState({
+    const numUpdates = await deleteInteractiveSlide(slideId);
+    onChangeNumUpdates({ interactiveId, numUpdates });
+    onSetSlideState({
       interactiveId,
       slideId,
       newState: { isDeleted: true, selectedOptionId: null }
@@ -321,7 +327,7 @@ export default function Slide({
 
   async function handlePublishSlide() {
     await publishInteractiveSlide(slideId);
-    onSetInteractiveState({
+    onSetSlideState({
       interactiveId,
       slideId,
       newState: { isPublished: true }
@@ -330,7 +336,7 @@ export default function Slide({
 
   async function handleUnpublishSlide() {
     await unPublishInteractiveSlide(slideId);
-    onSetInteractiveState({
+    onSetSlideState({
       interactiveId,
       slideId,
       newState: { isPublished: false }
@@ -353,7 +359,7 @@ export default function Slide({
   }
 
   async function handleSetEmbedProps(params) {
-    onSetInteractiveState({
+    onSetSlideState({
       interactiveId,
       slideId,
       newState: {
@@ -366,7 +372,7 @@ export default function Slide({
   }
 
   function handleThumbnailUpload(thumbUrl) {
-    onSetInteractiveState({
+    onSetSlideState({
       interactiveId,
       slideId,
       newState: {
@@ -380,7 +386,7 @@ export default function Slide({
 
   async function handleUndeleteSlide() {
     await undeleteInteractiveSlide(slideId);
-    onSetInteractiveState({
+    onSetSlideState({
       interactiveId,
       slideId,
       newState: { isDeleted: false }
