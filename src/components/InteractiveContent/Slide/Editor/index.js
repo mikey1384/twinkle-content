@@ -24,6 +24,7 @@ Editor.propTypes = {
   fileUploadComplete: PropTypes.bool,
   fileUploadProgress: PropTypes.number,
   isFork: PropTypes.bool,
+  isPortal: PropTypes.bool,
   optionIds: PropTypes.array,
   optionsObj: PropTypes.object,
   onThumbnailUpload: PropTypes.func,
@@ -41,6 +42,7 @@ export default function Editor({
   heading,
   interactiveId,
   isFork,
+  isPortal,
   isLastSlide,
   onThumbnailUpload,
   optionIds,
@@ -50,6 +52,7 @@ export default function Editor({
 }) {
   const defaultInputState = {
     editedIsFork: isFork,
+    editedIsPortal: isPortal,
     editedAttachment: attachment || null,
     editedHeading: heading || '',
     editedDescription: description || '',
@@ -60,11 +63,11 @@ export default function Editor({
         : {
             1: {
               id: 1,
-              label: 'option 1'
+              label: 'path 1'
             },
             2: {
               id: 2,
-              label: 'option 2'
+              label: 'path 2'
             }
           }
   };
@@ -93,6 +96,7 @@ export default function Editor({
   const editForm = inputState || {};
   const {
     editedIsFork,
+    editedIsPortal,
     editedAttachment,
     editedHeading,
     editedDescription,
@@ -233,7 +237,7 @@ export default function Editor({
                   label={
                     <>
                       <Icon icon="code-branch" />
-                      <span style={{ marginLeft: '1rem' }}>is fork</span>
+                      <span style={{ marginLeft: '0.5rem' }}>fork</span>
                     </>
                   }
                   checked={editedIsFork}
@@ -259,6 +263,33 @@ export default function Editor({
                 }
               />
             )}
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginTop: '1.5rem'
+            }}
+          >
+            <SwitchButton
+              labelStyle={{
+                fontSize: '1.7rem',
+                fontWeight: 'bold'
+              }}
+              label={
+                <>
+                  <Icon icon="history" />
+                  <span style={{ marginLeft: '0.5rem' }}>go back</span>
+                </>
+              }
+              checked={editedIsPortal}
+              onChange={() =>
+                handleSetInputState({
+                  ...editForm,
+                  editedIsPortal: !editedIsPortal
+                })
+              }
+            />
           </div>
         </div>
         <div

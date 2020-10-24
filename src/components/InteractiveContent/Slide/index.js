@@ -32,6 +32,7 @@ Slide.propTypes = {
   isPublished: PropTypes.bool,
   isLastSlide: PropTypes.bool,
   isFork: PropTypes.bool,
+  isPortal: PropTypes.bool,
   forkedFrom: PropTypes.number,
   description: PropTypes.string,
   onExpandPath: PropTypes.func,
@@ -62,6 +63,7 @@ export default function Slide({
   isPublished,
   isEditing,
   isFork,
+  isPortal,
   forkedFrom,
   onExpandPath,
   onMoveSlide,
@@ -253,6 +255,7 @@ export default function Slide({
             heading={heading}
             interactiveId={interactiveId}
             isFork={isFork}
+            isPortal={isPortal}
             isLastSlide={isLastSlide}
             optionIds={optionIds}
             optionsObj={optionsObj}
