@@ -112,9 +112,12 @@ export default function InteractiveReducer(state, action) {
         ...state,
         [action.interactiveId]: {
           ...state[action.interactiveId],
-          displayedSlideIds: state[
-            action.interactiveId
-          ].displayedSlideIds.concat(action.newSlides)
+          displayedSlideIds: state[action.interactiveId].displayedSlideIds
+            .concat(action.newSlides)
+            .filter((slideId) => {
+              const slide = state[action.interactiveId].slideObj[slideId];
+              return !(slide?.isFork && slide?.isDeleted);
+            })
         }
       };
     }
