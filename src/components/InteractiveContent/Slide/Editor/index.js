@@ -77,7 +77,7 @@ export default function Editor({
     actions: { onSetEditInteractiveForm }
   } = useInputContext();
   const {
-    actions: { onSetSlideState }
+    actions: { onChangeNumUpdates, onSetSlideState }
   } = useInteractiveContext();
   const prevInputState = useMemo(
     () => state[`edit-interactive-${interactiveId}-${slideId}`],
@@ -321,10 +321,11 @@ export default function Editor({
         editedHeading: finalizeEmoji(editedHeading),
         editedDescription: finalizeEmoji(editedDescription)
       };
-      const newState = await editInteractiveSlide({
+      const { slide: newState, numUpdates } = await editInteractiveSlide({
         slideId,
         post
       });
+      onChangeNumUpdates({ interactiveId, numUpdates });
       newState.isEditing = false;
       onSetSlideState({
         interactiveId,
@@ -367,10 +368,11 @@ export default function Editor({
     if (editedAttachment?.newAttachment) {
       return setUploadingFile(true);
     }
-    const newState = await editInteractiveSlide({
+    const { slide: newState, numUpdates } = await editInteractiveSlide({
       slideId,
       post
     });
+    onChangeNumUpdates({ interactiveId, numUpdates });
     onSetSlideState({
       interactiveId,
       slideId,

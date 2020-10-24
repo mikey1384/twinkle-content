@@ -22,6 +22,7 @@ export default function InteractiveContent({ interactiveId }) {
     state,
     actions: {
       onLoadInteractive,
+      onChangeNumUpdates,
       onConcatDisplayedSlides,
       onMoveInteractiveSlide,
       onPublishInteractive,
@@ -192,12 +193,13 @@ export default function InteractiveContent({ interactiveId }) {
     interactiveId,
     slideId
   }) {
-    await moveInteractiveSlide({
+    const numUpdates = await moveInteractiveSlide({
       direction,
       forkedFrom: slideObj[slideId].forkedFrom,
       interactiveId,
       slideId
     });
+    onChangeNumUpdates({ interactiveId, numUpdates });
     onMoveInteractiveSlide({ direction, interactiveId, slideId });
   }
 }

@@ -270,6 +270,7 @@ export default function Slide({
         ) : (
           <Content
             isPublished={isPublished}
+            interactiveId={interactiveId}
             attachment={attachment}
             heading={heading}
             description={description}
@@ -326,7 +327,8 @@ export default function Slide({
   }
 
   async function handlePublishSlide() {
-    await publishInteractiveSlide(slideId);
+    const numUpdates = await publishInteractiveSlide(slideId);
+    onChangeNumUpdates({ interactiveId, numUpdates });
     onSetSlideState({
       interactiveId,
       slideId,
@@ -335,7 +337,8 @@ export default function Slide({
   }
 
   async function handleUnpublishSlide() {
-    await unPublishInteractiveSlide(slideId);
+    const numUpdates = await unPublishInteractiveSlide(slideId);
+    onChangeNumUpdates({ interactiveId, numUpdates });
     onSetSlideState({
       interactiveId,
       slideId,
@@ -349,13 +352,14 @@ export default function Slide({
     actualDescription,
     siteUrl
   }) {
-    updateEmbedData({
+    const numUpdates = await updateEmbedData({
       slideId,
       thumbUrl,
       actualTitle,
       actualDescription,
       siteUrl
     });
+    onChangeNumUpdates({ interactiveId, numUpdates });
   }
 
   async function handleSetEmbedProps(params) {
@@ -385,7 +389,8 @@ export default function Slide({
   }
 
   async function handleUndeleteSlide() {
-    await undeleteInteractiveSlide(slideId);
+    const numUpdates = await undeleteInteractiveSlide(slideId);
+    onChangeNumUpdates({ interactiveId, numUpdates });
     onSetSlideState({
       interactiveId,
       slideId,

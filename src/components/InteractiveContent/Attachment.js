@@ -5,7 +5,7 @@ import FileViewer from 'components/FileViewer';
 import SlideEmbedly from './SlideEmbedly';
 import { mobileMaxWidth } from 'constants/css';
 import { fetchedVideoCodeFromURL } from 'helpers/stringHelpers';
-import { useAppContext } from 'contexts';
+import { useAppContext, useInteractiveContext } from 'contexts';
 import { v1 as uuidv1 } from 'uuid';
 import { css } from 'emotion';
 
@@ -13,6 +13,7 @@ Attachment.propTypes = {
   small: PropTypes.bool,
   type: PropTypes.string,
   fileUrl: PropTypes.string,
+  interactiveId: PropTypes.number,
   linkUrl: PropTypes.string,
   isYouTubeVideo: PropTypes.bool,
   onEmbedDataLoad: PropTypes.func.isRequired,
@@ -31,6 +32,7 @@ export default function Attachment({
   small,
   type,
   fileUrl,
+  interactiveId,
   linkUrl,
   isYouTubeVideo,
   onEmbedDataLoad,
@@ -47,6 +49,9 @@ export default function Attachment({
   const {
     requestHelpers: { uploadThumbForInteractiveSlide }
   } = useAppContext();
+  const {
+    actions: { onChangeNumUpdates }
+  } = useInteractiveContext();
 
   switch (type) {
     case 'file':
@@ -129,11 +134,12 @@ export default function Attachment({
     handleUploadThumb();
 
     async function handleUploadThumb() {
-      const thumbUrl = await uploadThumbForInteractiveSlide({
+      const { thumbUrl, numUpdates } = await uploadThumbForInteractiveSlide({
         slideId,
         file,
         path: uuidv1()
       });
+      onChangeNumUpdates({ interactiveId, numUpdates });
       onThumbnailUpload(thumbUrl);
     }
   }

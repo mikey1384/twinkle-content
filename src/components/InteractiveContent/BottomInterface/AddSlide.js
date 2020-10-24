@@ -20,6 +20,7 @@ export default function AddSlide({ archivedSlides, interactiveId, lastFork }) {
   const {
     actions: {
       onAddNewInteractiveSlide,
+      onChangeNumUpdates,
       onConcatDisplayedSlides,
       onRecoverArchivedSlide
     }
@@ -109,7 +110,12 @@ export default function AddSlide({ archivedSlides, interactiveId, lastFork }) {
   );
 
   async function handleRecoverArchivedSlide(selectedSlideId) {
-    await recoverArchivedSlide({ interactiveId, selectedSlideId, lastFork });
+    const numUpdates = await recoverArchivedSlide({
+      interactiveId,
+      selectedSlideId,
+      lastFork
+    });
+    onChangeNumUpdates({ interactiveId, numUpdates });
     onRecoverArchivedSlide({ interactiveId, slideId: selectedSlideId });
     onConcatDisplayedSlides({
       interactiveId,
@@ -119,7 +125,11 @@ export default function AddSlide({ archivedSlides, interactiveId, lastFork }) {
   }
 
   async function handleAddNewSlide() {
-    const slide = await appendInteractiveSlide({ interactiveId, lastFork });
+    const { slide, numUpdates } = await appendInteractiveSlide({
+      interactiveId,
+      lastFork
+    });
+    onChangeNumUpdates({ interactiveId, numUpdates });
     onAddNewInteractiveSlide({ interactiveId, lastFork, slide });
   }
 }

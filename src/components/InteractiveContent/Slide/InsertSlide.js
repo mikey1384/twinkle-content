@@ -29,7 +29,11 @@ export default function InsertSlide({
     requestHelpers: { insertArchivedSlide, insertInteractiveSlide }
   } = useAppContext();
   const {
-    actions: { onInsertInteractiveSlide, onRecoverArchivedSlide }
+    actions: {
+      onChangeNumUpdates,
+      onInsertInteractiveSlide,
+      onRecoverArchivedSlide
+    }
   } = useInteractiveContext();
   const [
     selectArchivedSlideModalShown,
@@ -103,12 +107,13 @@ export default function InsertSlide({
   );
 
   async function handleInsertArchivedSlide(selectedSlideId) {
-    await insertArchivedSlide({
+    const numUpdates = await insertArchivedSlide({
       interactiveId,
       slideId,
       selectedSlideId,
       forkedFrom
     });
+    onChangeNumUpdates({ interactiveId, numUpdates });
     onInsertInteractiveSlide({
       interactiveId,
       forkedFrom,
@@ -120,16 +125,17 @@ export default function InsertSlide({
   }
 
   async function handleInsertSlide() {
-    const newSlide = await insertInteractiveSlide({
+    const { slide, numUpdates } = await insertInteractiveSlide({
       interactiveId,
       forkedFrom,
       slideId
     });
+    onChangeNumUpdates({ interactiveId, numUpdates });
     onInsertInteractiveSlide({
       interactiveId,
       forkedFrom,
       slideId,
-      newSlide
+      newSlide: slide
     });
   }
 }

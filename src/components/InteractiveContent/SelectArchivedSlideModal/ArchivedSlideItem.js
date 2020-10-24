@@ -27,7 +27,7 @@ export default function ArchivedSlideItem({
     requestHelpers: { updateEmbedData }
   } = useAppContext();
   const {
-    actions: { onSetSlideState }
+    actions: { onChangeNumUpdates, onSetSlideState }
   } = useInteractiveContext();
   const selected = selectedSlideId === slide.id;
 
@@ -79,6 +79,7 @@ export default function ArchivedSlideItem({
             type={slide.attachment.type}
             isYouTubeVideo={slide.attachment.isYouTubeVideo}
             fileUrl={slide.attachment.fileUrl}
+            interactiveId={interactiveId}
             linkUrl={slide.attachment.linkUrl}
             thumbUrl={slide.attachment.thumbUrl}
             actualTitle={slide.attachment.actualTitle}
@@ -101,13 +102,14 @@ export default function ArchivedSlideItem({
     actualDescription,
     siteUrl
   }) {
-    updateEmbedData({
+    const numUpdates = await updateEmbedData({
       slideId: slide.id,
       thumbUrl,
       actualTitle,
       actualDescription,
       siteUrl
     });
+    onChangeNumUpdates({ interactiveId, numUpdates });
   }
 
   async function handleSetEmbedProps(params) {

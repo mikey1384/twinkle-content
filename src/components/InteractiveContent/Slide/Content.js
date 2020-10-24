@@ -9,6 +9,7 @@ import { css } from 'emotion';
 
 Content.propTypes = {
   heading: PropTypes.string,
+  interactiveId: PropTypes.number,
   isPublished: PropTypes.bool,
   description: PropTypes.string,
   attachment: PropTypes.object,
@@ -23,6 +24,7 @@ Content.propTypes = {
 };
 export default function Content({
   heading,
+  interactiveId,
   isPublished,
   description,
   attachment,
@@ -87,6 +89,7 @@ export default function Content({
         >
           <Attachment
             type={attachment.type}
+            interactiveId={interactiveId}
             isYouTubeVideo={attachment.isYouTubeVideo}
             fileUrl={attachment.fileUrl}
             linkUrl={attachment.linkUrl}
