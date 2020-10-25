@@ -8,18 +8,18 @@ import { exceedsCharLimit } from 'helpers/stringHelpers';
 import { Color } from 'constants/css';
 import { css } from 'emotion';
 
-OptionItem.propTypes = {
+ForkButtonItem.propTypes = {
   onSetInputState: PropTypes.func.isRequired,
-  option: PropTypes.object,
+  forkButton: PropTypes.object,
   style: PropTypes.object,
-  editedOptionIds: PropTypes.array,
-  editedOptionsObj: PropTypes.object
+  editedForkButtonIds: PropTypes.array,
+  editedForkButtonsObj: PropTypes.object
 };
 
-export default function OptionItem({
-  editedOptionIds,
-  editedOptionsObj,
-  option,
+export default function ForkButtonItem({
+  editedForkButtonIds,
+  editedForkButtonsObj,
+  forkButton,
   style,
   onSetInputState
 }) {
@@ -29,9 +29,9 @@ export default function OptionItem({
       exceedsCharLimit({
         contentType: 'interactive',
         inputType: 'heading',
-        text: option.label
+        text: forkButton.label
       }),
-    [option.label]
+    [forkButton.label]
   );
 
   return (
@@ -48,13 +48,17 @@ export default function OptionItem({
         <Button
           onClick={() => setIconSelectionModalShown(true)}
           skeuomorphic
-          color={option.icon ? 'black' : 'orange'}
+          color={forkButton.icon ? 'black' : 'orange'}
         >
-          {option.icon ? <Icon icon={option.icon} /> : <Icon icon="plus" />}
+          {forkButton.icon ? (
+            <Icon icon={forkButton.icon} />
+          ) : (
+            <Icon icon="plus" />
+          )}
         </Button>
       </div>
       <div
-        key={option.id}
+        key={forkButton.id}
         style={{
           fontSize: '1.5rem',
           padding: '1rem 2rem',
@@ -66,17 +70,17 @@ export default function OptionItem({
         <Input
           onChange={(text) => {
             onSetInputState({
-              editedOptionsObj: {
-                ...editedOptionsObj,
-                [option.id]: {
-                  ...option,
+              editedForkButtonsObj: {
+                ...editedForkButtonsObj,
+                [forkButton.id]: {
+                  ...forkButton,
                   label: text
                 }
               }
             });
           }}
           placeholder="Enter option label..."
-          value={option.label}
+          value={forkButton.label}
           style={{ width: '100%', ...headingExceedsCharLimit?.style }}
         />
       </div>
@@ -88,7 +92,7 @@ export default function OptionItem({
           justifyContent: 'flex-end'
         }}
       >
-        {option.id > 2 && (
+        {forkButton.id > 2 && (
           <Icon
             className={css`
               color: ${Color.darkerGray()};
@@ -99,8 +103,8 @@ export default function OptionItem({
             style={{ cursor: 'pointer' }}
             onClick={() =>
               onSetInputState({
-                editedOptionIds: editedOptionIds.filter(
-                  (optionId) => optionId !== option.id
+                editedForkButtonIds: editedForkButtonIds.filter(
+                  (forkButtonId) => forkButtonId !== forkButton.id
                 )
               })
             }
@@ -110,13 +114,13 @@ export default function OptionItem({
       </div>
       {iconSelectionModalShown && (
         <IconSelectionModal
-          selectedIcon={option.icon}
+          selectedIcon={forkButton.icon}
           onSelectIcon={(icon) =>
             onSetInputState({
-              editedOptionsObj: {
-                ...editedOptionsObj,
-                [option.id]: {
-                  ...option,
+              editedForkButtonsObj: {
+                ...editedForkButtonsObj,
+                [forkButton.id]: {
+                  ...forkButton,
                   icon
                 }
               }

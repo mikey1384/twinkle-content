@@ -1,5 +1,5 @@
 import 'regenerator-runtime/runtime'; // for async await
-import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Chat from 'containers/Chat';
 import ContentPage from 'containers/ContentPage';
@@ -447,4 +447,4 @@ function App({ location, history }) {
   }
 }
 
-export default memo(App);
+export default App;

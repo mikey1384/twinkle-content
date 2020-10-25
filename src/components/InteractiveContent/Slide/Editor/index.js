@@ -18,7 +18,7 @@ import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
 import SwitchButton from 'components/Buttons/SwitchButton';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
-import OptionsField from './OptionsField';
+import ForkButtonsField from './ForkButtonsField';
 import GoBackField from './GoBackField';
 import { v1 as uuidv1 } from 'uuid';
 
@@ -30,8 +30,8 @@ Editor.propTypes = {
   fileUploadProgress: PropTypes.number,
   isFork: PropTypes.bool,
   isPortal: PropTypes.bool,
-  optionIds: PropTypes.array,
-  optionsObj: PropTypes.object,
+  forkButtonIds: PropTypes.array,
+  forkButtonsObj: PropTypes.object,
   onThumbnailUpload: PropTypes.func,
   paths: PropTypes.object,
   interactiveId: PropTypes.number,
@@ -50,8 +50,8 @@ export default function Editor({
   isPortal,
   isLastSlide,
   onThumbnailUpload,
-  optionIds,
-  optionsObj,
+  forkButtonIds,
+  forkButtonsObj,
   paths,
   slideId
 }) {
@@ -62,10 +62,10 @@ export default function Editor({
     editedAttachment: attachment || null,
     editedHeading: heading || '',
     editedDescription: description || '',
-    editedOptionIds: optionIds.length > 0 ? optionIds : [1, 2],
-    editedOptionsObj:
-      optionsObj && Object.keys(optionsObj).length > 0
-        ? optionsObj
+    editedForkButtonIds: forkButtonIds.length > 0 ? forkButtonIds : [1, 2],
+    editedForkButtonsObj:
+      forkButtonsObj && Object.keys(forkButtonsObj).length > 0
+        ? forkButtonsObj
         : {
             1: {
               id: 1,
@@ -107,8 +107,8 @@ export default function Editor({
     editedAttachment,
     editedHeading,
     editedDescription,
-    editedOptionIds,
-    editedOptionsObj
+    editedForkButtonIds,
+    editedForkButtonsObj
   } = editForm;
 
   const descriptionExceedsCharLimit = useMemo(
@@ -139,13 +139,13 @@ export default function Editor({
       return true;
     }
     if (editedIsFork) {
-      for (let [, option] of Object.entries(editedOptionsObj)) {
+      for (let [, button] of Object.entries(editedForkButtonsObj)) {
         if (
-          stringIsEmpty(option.label) ||
+          stringIsEmpty(button.label) ||
           exceedsCharLimit({
             contentType: 'interactive',
             inputType: 'heading',
-            text: option.label
+            text: button.label
           })
         ) {
           return true;
@@ -156,7 +156,7 @@ export default function Editor({
   }, [
     descriptionExceedsCharLimit,
     editedIsFork,
-    editedOptionsObj,
+    editedForkButtonsObj,
     headingExceedsCharLimit
   ]);
 
@@ -277,10 +277,10 @@ export default function Editor({
               )}
             </div>
             {editedIsFork && (
-              <OptionsField
+              <ForkButtonsField
                 style={{ marginTop: '1rem' }}
-                editedOptionIds={editedOptionIds}
-                editedOptionsObj={editedOptionsObj}
+                editedForkButtonIds={editedForkButtonIds}
+                editedForkButtonsObj={editedForkButtonsObj}
                 onSetInputState={(newState) =>
                   handleSetInputState({
                     ...editForm,

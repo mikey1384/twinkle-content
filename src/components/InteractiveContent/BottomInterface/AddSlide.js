@@ -26,7 +26,7 @@ export default function AddSlide({ archivedSlides, interactiveId, lastFork }) {
     }
   } = useInteractiveContext();
   const forkOptionNotSelected = useMemo(() => {
-    return lastFork && !lastFork.selectedOptionId;
+    return lastFork && !lastFork.selectedForkButtonId;
   }, [lastFork]);
 
   const [

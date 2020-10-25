@@ -12,30 +12,30 @@ import { isMobile } from 'helpers';
 
 const Backend = isMobile(navigator) ? TouchBackend : HTML5Backend;
 
-ReorderOptionsModal.propTypes = {
+ReorderButtonsModal.propTypes = {
   onHide: PropTypes.func.isRequired,
-  optionsObj: PropTypes.object.isRequired,
-  optionIds: PropTypes.array.isRequired,
+  forkButtonsObj: PropTypes.object.isRequired,
+  forkButtonIds: PropTypes.array.isRequired,
   onSubmit: PropTypes.func.isRequired
 };
 
-export default function ReorderOptionsModal({
+export default function ReorderButtonsModal({
   onHide,
-  optionsObj,
-  optionIds: initialOptionIds,
+  forkButtonsObj,
+  forkButtonIds: initialButtonIds,
   onSubmit
 }) {
-  const [optionIds, setOptionIds] = useState(initialOptionIds);
+  const [forkButtonIds, setForkButtonIds] = useState(initialButtonIds);
   return (
     <ErrorBoundary>
       <DndProvider backend={Backend}>
         <Modal small onHide={onHide}>
-          <header>Reorder Options</header>
+          <header>Reorder Buttons</header>
           <main>
             <SortableListGroup
-              listItemObj={optionsObj}
+              listItemObj={forkButtonsObj}
               onMove={handleMove}
-              itemIds={optionIds}
+              itemIds={forkButtonIds}
             />
           </main>
           <footer>
@@ -47,7 +47,7 @@ export default function ReorderOptionsModal({
               Cancel
             </Button>
             <Button
-              disabled={isEqual(initialOptionIds, optionIds)}
+              disabled={isEqual(initialButtonIds, forkButtonIds)}
               color="blue"
               onClick={handleSubmit}
             >
@@ -60,16 +60,16 @@ export default function ReorderOptionsModal({
   );
 
   function handleMove({ sourceId, targetId }) {
-    const sourceIndex = optionIds.indexOf(sourceId);
-    const targetIndex = optionIds.indexOf(targetId);
-    const newOptionIds = [...optionIds];
-    newOptionIds.splice(sourceIndex, 1);
-    newOptionIds.splice(targetIndex, 0, sourceId);
-    setOptionIds(newOptionIds);
+    const sourceIndex = forkButtonIds.indexOf(sourceId);
+    const targetIndex = forkButtonIds.indexOf(targetId);
+    const newForkButtonIds = [...forkButtonIds];
+    newForkButtonIds.splice(sourceIndex, 1);
+    newForkButtonIds.splice(targetIndex, 0, sourceId);
+    setForkButtonIds(newForkButtonIds);
   }
 
   async function handleSubmit() {
-    onSubmit(optionIds);
+    onSubmit(forkButtonIds);
     onHide();
   }
 }

@@ -37,12 +37,12 @@ Slide.propTypes = {
   description: PropTypes.string,
   onExpandPath: PropTypes.func,
   onMoveSlide: PropTypes.func,
-  optionIds: PropTypes.array,
-  optionsObj: PropTypes.object,
+  forkButtonIds: PropTypes.array,
+  forkButtonsObj: PropTypes.object,
   slideId: PropTypes.number,
   slideObj: PropTypes.object,
   paths: PropTypes.object,
-  selectedOptionId: PropTypes.number
+  selectedForkButtonId: PropTypes.number
 };
 
 export default function Slide({
@@ -67,12 +67,12 @@ export default function Slide({
   forkedFrom,
   onExpandPath,
   onMoveSlide,
-  optionIds,
-  optionsObj,
+  forkButtonIds,
+  forkButtonsObj,
   slideId,
   paths,
   attachment,
-  selectedOptionId,
+  selectedForkButtonId,
   slideObj,
   style
 }) {
@@ -257,8 +257,8 @@ export default function Slide({
             isFork={isFork}
             isPortal={isPortal}
             isLastSlide={isLastSlide}
-            optionIds={optionIds}
-            optionsObj={optionsObj}
+            forkButtonIds={forkButtonIds}
+            forkButtonsObj={forkButtonsObj}
             paths={paths}
             slideId={slideId}
             onThumbnailUpload={handleThumbnailUpload}
@@ -277,14 +277,14 @@ export default function Slide({
             attachment={attachment}
             heading={heading}
             description={description}
-            optionIds={optionIds}
-            optionsObj={optionsObj}
-            onOptionClick={handleOptionClick}
+            forkButtonIds={forkButtonIds}
+            forkButtonsObj={forkButtonsObj}
+            onForkButtonClick={handleForkButtonClick}
             onEmbedDataLoad={handleEmbedDataLoad}
             onSetEmbedProps={handleSetEmbedProps}
             onThumbnailUpload={handleThumbnailUpload}
             slideId={slideId}
-            selectedOptionId={selectedOptionId}
+            selectedForkButtonId={selectedForkButtonId}
           />
         )}
         <div
@@ -314,7 +314,7 @@ export default function Slide({
     onSetSlideState({
       interactiveId,
       slideId,
-      newState: { isDeleted: true, selectedOptionId: null }
+      newState: { isDeleted: true, selectedForkButtonId: null }
     });
     for (let [key, slide] of Object.entries(slideObj)) {
       if (slide.forkedFrom === slideId) {
@@ -323,9 +323,9 @@ export default function Slide({
     }
   }
 
-  function handleOptionClick(optionId) {
+  function handleForkButtonClick(buttonId) {
     if (onExpandPath) {
-      onExpandPath({ newSlides: paths[optionId], slideId, optionId });
+      onExpandPath({ newSlides: paths[buttonId], slideId, buttonId });
     }
   }
 

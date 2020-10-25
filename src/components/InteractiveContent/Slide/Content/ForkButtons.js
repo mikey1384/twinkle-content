@@ -6,17 +6,17 @@ import { css } from 'emotion';
 import { Color, mobileMaxWidth } from 'constants/css';
 
 ForkButtons.propTypes = {
-  optionIds: PropTypes.array.isRequired,
-  optionsObj: PropTypes.object.isRequired,
-  onOptionClick: PropTypes.func.isRequired,
-  selectedOptionId: PropTypes.number
+  forkButtonIds: PropTypes.array.isRequired,
+  forkButtonsObj: PropTypes.object.isRequired,
+  onForkButtonClick: PropTypes.func.isRequired,
+  selectedForkButtonId: PropTypes.number
 };
 
 export default function ForkButtons({
-  optionIds,
-  optionsObj,
-  onOptionClick,
-  selectedOptionId
+  forkButtonIds,
+  forkButtonsObj,
+  onForkButtonClick,
+  selectedForkButtonId
 }) {
   return (
     <div
@@ -30,20 +30,20 @@ export default function ForkButtons({
         }
       `}
     >
-      {optionIds.map((optionId, index) => {
-        const option = optionsObj[optionId];
+      {forkButtonIds.map((buttonId, index) => {
+        const button = forkButtonsObj[buttonId];
         return (
           <Button
-            key={option.id}
+            key={button.id}
             skeuomorphic
             style={{ marginTop: index === 0 ? 0 : '1rem' }}
-            onClick={() => onOptionClick(option.id)}
+            onClick={() => onForkButtonClick(button.id)}
           >
-            {option.icon && <Icon icon={option.icon} />}
-            <span style={{ marginLeft: option.icon ? '0.7rem' : 0 }}>
-              {option.label}
+            {button.icon && <Icon icon={button.icon} />}
+            <span style={{ marginLeft: button.icon ? '0.7rem' : 0 }}>
+              {button.label}
             </span>
-            {selectedOptionId === option.id ? (
+            {selectedForkButtonId === button.id ? (
               <Icon
                 icon="check"
                 style={{ marginLeft: '0.7rem', color: Color.green() }}

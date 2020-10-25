@@ -3,12 +3,12 @@ export default function InteractiveReducer(state, action) {
     case 'ADD_NEW_INTERACTIVE_SLIDE': {
       let newLastFork;
       if (action.lastFork) {
-        const { selectedOptionId, paths } = action.lastFork;
+        const { selectedForkButtonId, paths } = action.lastFork;
         newLastFork = {
           ...action.lastFork,
           paths: {
             ...paths,
-            [selectedOptionId]: paths[selectedOptionId].concat([
+            [selectedForkButtonId]: paths[selectedForkButtonId].concat([
               action.slide.id
             ])
           }
@@ -72,15 +72,15 @@ export default function InteractiveReducer(state, action) {
       if (action.forkedFrom) {
         const lastFork =
           state[action.interactiveId].slideObj[action.forkedFrom];
-        const { selectedOptionId, paths } = lastFork;
-        let newPath = [...lastFork.paths[selectedOptionId]];
+        const { selectedForkButtonId, paths } = lastFork;
+        let newPath = [...lastFork.paths[selectedForkButtonId]];
         const index = newPath.indexOf(action.slideId);
         newPath.splice(index, 0, action.newSlide.id);
         newLastFork = {
           ...lastFork,
           paths: {
             ...paths,
-            [selectedOptionId]: newPath
+            [selectedForkButtonId]: newPath
           }
         };
       }

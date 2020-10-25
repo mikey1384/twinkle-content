@@ -12,14 +12,14 @@ Content.propTypes = {
   isPublished: PropTypes.bool,
   description: PropTypes.string,
   attachment: PropTypes.object,
-  optionIds: PropTypes.array,
-  optionsObj: PropTypes.object,
-  onOptionClick: PropTypes.func,
+  forkButtonIds: PropTypes.array,
+  forkButtonsObj: PropTypes.object,
+  onForkButtonClick: PropTypes.func,
   onEmbedDataLoad: PropTypes.func,
   onSetEmbedProps: PropTypes.func,
   onThumbnailUpload: PropTypes.func,
   slideId: PropTypes.number,
-  selectedOptionId: PropTypes.number
+  selectedForkButtonId: PropTypes.number
 };
 export default function Content({
   heading,
@@ -27,14 +27,14 @@ export default function Content({
   isPublished,
   description,
   attachment,
-  optionIds,
-  optionsObj,
-  onOptionClick,
+  forkButtonIds,
+  forkButtonsObj,
+  onForkButtonClick,
   onEmbedDataLoad,
   onSetEmbedProps,
   onThumbnailUpload,
   slideId,
-  selectedOptionId
+  selectedForkButtonId
 }) {
   return (
     <div style={{ width: '100%', height: '100%' }}>
@@ -104,12 +104,12 @@ export default function Content({
           />
         </div>
       )}
-      {optionIds?.length > 0 && (
+      {forkButtonIds?.length > 0 && (
         <ForkButtons
-          optionIds={optionIds}
-          optionsObj={optionsObj}
-          onOptionClick={onOptionClick}
-          selectedOptionId={selectedOptionId}
+          forkButtonIds={forkButtonIds}
+          forkButtonsObj={forkButtonsObj}
+          onForkButtonClick={onForkButtonClick}
+          selectedForkButtonId={selectedForkButtonId}
         />
       )}
     </div>

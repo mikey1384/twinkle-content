@@ -197,10 +197,10 @@ export default function InteractiveContent({ interactiveId }) {
     <Loading />
   );
 
-  function handleExpandPath({ newSlides, slideId, optionId }) {
+  function handleExpandPath({ newSlides, slideId, buttonId }) {
     expanded.current = true;
-    if (optionId !== slideObj[slideId].selectedOptionId) {
-      if (slideObj[slideId].selectedOptionId) {
+    if (buttonId !== slideObj[slideId].selectedForkButtonId) {
+      if (slideObj[slideId].selectedForkButtonId) {
         const index = displayedSlideIds.indexOf(slideId);
         onSetDisplayedSlides({
           interactiveId,
@@ -210,7 +210,7 @@ export default function InteractiveContent({ interactiveId }) {
       onSetSlideState({
         interactiveId,
         slideId,
-        newState: { selectedOptionId: optionId }
+        newState: { selectedForkButtonId: buttonId }
       });
       const validNewSlides = newSlides.filter(
         (slideId) => !!slideObj[slideId] && !slideObj[slideId]?.isDeleted
