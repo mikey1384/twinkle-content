@@ -45,7 +45,7 @@ export default function RestoreAccount({ username, onShowLoginForm, onHide }) {
       if (matchingAccount?.email || matchingAccount?.verifiedEmail) {
         return `Email confirmation`;
       } else {
-        return `No email address found. Ask your teacher for help`;
+        return `No email address found. Ask your Twinkle teacher for help. If you no longer attend Twinkle, send an email to mikey at mikey1384@gmail.com for help`;
       }
     }
     return 'TBD';
