@@ -1,19 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import ContentListItem from 'components/ContentListItem';
 import SectionPanel from 'components/SectionPanel';
 import SelectFeaturedSubjects from './Modals/SelectFeaturedSubjects';
 import Button from 'components/Button';
-import { useMyState, useScrollPosition } from 'helpers/hooks';
-import { useAppContext, useViewContext, useExploreContext } from 'contexts';
-import { isMobile } from 'helpers';
+import { useMyState } from 'helpers/hooks';
+import { useAppContext, useExploreContext } from 'contexts';
 
-Subjects.propTypes = {
-  location: PropTypes.object.isRequired
-};
-
-export default function Subjects({ location }) {
+export default function Subjects() {
   const {
     requestHelpers: { loadFeaturedSubjects }
   } = useAppContext();
@@ -24,16 +18,6 @@ export default function Subjects({ location }) {
     },
     actions: { onLoadFeaturedSubjects }
   } = useExploreContext();
-  const {
-    actions: { onRecordScrollPosition },
-    state: { scrollPositions }
-  } = useViewContext();
-  useScrollPosition({
-    onRecordScrollPosition,
-    pathname: location.pathname,
-    scrollPositions,
-    isMobile: isMobile(navigator)
-  });
   const [modalShown, setModalShown] = useState(false);
   const prevLoaded = useRef(false);
   useEffect(() => {

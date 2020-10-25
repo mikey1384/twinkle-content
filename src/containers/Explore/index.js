@@ -33,7 +33,7 @@ export default function Explore({ history, location }) {
   } = useExploreContext();
   const mounted = useRef(true);
   const disconnected = useRef(false);
-  const ContainerRef = useRef(null);
+  const ContainerRef = useRef({});
   const SearchBoxRef = useRef(null);
   const [categoriesShown, setCategoriesShown] = useState(false);
   const { atBottom, scrollTop } = useScrollToBottom(ContainerRef, 30);

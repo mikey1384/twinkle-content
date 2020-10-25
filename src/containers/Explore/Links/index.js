@@ -1,18 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import AddLinkModal from './AddLinkModal';
 import Button from 'components/Button';
 import SectionPanel from 'components/SectionPanel';
 import LinkGroup from './LinkGroup';
-import { isMobile } from 'helpers';
-import { useScrollPosition } from 'helpers/hooks';
-import { useAppContext, useViewContext, useExploreContext } from 'contexts';
+import { useAppContext, useExploreContext } from 'contexts';
 
-Links.propTypes = {
-  location: PropTypes.object
-};
-
-export default function Links({ location }) {
+export default function Links() {
   const {
     requestHelpers: { loadByUserUploads, loadRecommendedUploads, loadUploads }
   } = useAppContext();
@@ -39,16 +32,6 @@ export default function Links({ location }) {
       onLoadMoreRecommendedLinks
     }
   } = useExploreContext();
-  const {
-    actions: { onRecordScrollPosition },
-    state: { scrollPositions }
-  } = useViewContext();
-  useScrollPosition({
-    onRecordScrollPosition,
-    pathname: location.pathname,
-    scrollPositions,
-    isMobile: isMobile(navigator)
-  });
   const [addLinkModalShown, setAddLinkModalShown] = useState(false);
   const mounted = useRef(true);
   const lastId = useRef(null);

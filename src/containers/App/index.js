@@ -28,7 +28,8 @@ import { css } from 'emotion';
 import { socket } from 'constants/io';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 import { finalizeEmoji } from 'helpers/stringHelpers';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useScrollPosition } from 'helpers/hooks';
+import { isMobile } from 'helpers';
 import {
   useAppContext,
   useContentContext,
@@ -99,8 +100,8 @@ function App({ location, history }) {
     state: { updateDetail, updateNoticeShown }
   } = useNotiContext();
   const {
-    state: { pageVisible },
-    actions: { onChangePageVisibility }
+    state: { pageVisible, scrollPositions },
+    actions: { onChangePageVisibility, onRecordScrollPosition }
   } = useViewContext();
   const {
     state: { subject },
@@ -120,6 +121,13 @@ function App({ location, history }) {
   const hiddenRef = useRef(null);
   const authRef = useRef(null);
   const mounted = useRef(true);
+
+  useScrollPosition({
+    onRecordScrollPosition,
+    pathname: location.pathname,
+    scrollPositions,
+    isMobile: isMobile(navigator)
+  });
 
   useEffect(() => {
     mounted.current = true;

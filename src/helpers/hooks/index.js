@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { addEvent, removeEvent } from '../listenerHelpers';
 import { stringIsEmpty } from '../stringHelpers';
 import { useAppContext, useContentContext, useProfileContext } from 'contexts';
@@ -180,35 +180,31 @@ export function useSearch({
 export function useScrollPosition({
   onRecordScrollPosition,
   pathname,
-  scrollPositions = {},
-  isMobile
+  scrollPositions = {}
 }) {
   const BodyRef = useRef(document.scrollingElement || document.documentElement);
 
-  useEffect(() => {
-    setTimeout(() => {
-      document.getElementById('App').scrollTop = scrollPositions[pathname] || 0;
-      BodyRef.current.scrollTop = scrollPositions[pathname] || 0;
-    }, 0);
-    // prevents bug on mobile devices where tapping stops working after user swipes left to go to previous page
-    if (isMobile) {
-      setTimeout(() => {
-        document.getElementById('App').scrollTop =
-          scrollPositions[pathname] || 0;
-        BodyRef.current.scrollTop = scrollPositions[pathname] || 0;
-      }, 500);
-    }
+  useLayoutEffect(() => {
+    document.getElementById('App').scrollTop = scrollPositions[pathname] || 0;
+    BodyRef.current.scrollTop = scrollPositions[pathname] || 0;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
 
-    return function recordScrollPositionAndCleanUp() {
+  useLayoutEffect(() => {
+    addEvent(window, 'scroll', handleScroll);
+    addEvent(document.getElementById('App'), 'scroll', handleScroll);
+
+    return function cleanUp() {
+      removeEvent(window, 'scroll', handleScroll);
+      removeEvent(document.getElementById('App'), 'scroll', handleScroll);
+    };
+
+    function handleScroll() {
       const position = Math.max(
         document.getElementById('App').scrollTop,
         BodyRef.current.scrollTop
       );
       onRecordScrollPosition({ section: pathname, position });
-      document.getElementById('App').scrollTop = 0;
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      BodyRef.current.scrollTop = 0;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname]);
+    }
+  });
 }

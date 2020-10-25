@@ -9,14 +9,8 @@ import FilterBar from 'components/FilterBar';
 import { css } from 'emotion';
 import { mobileMaxWidth } from 'constants/css';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
-import { useMyState, useScrollPosition } from 'helpers/hooks';
-import { isMobile } from 'helpers';
-import {
-  useAppContext,
-  useContentContext,
-  useMissionContext,
-  useViewContext
-} from 'contexts';
+import { useMyState } from 'helpers/hooks';
+import { useAppContext, useContentContext, useMissionContext } from 'contexts';
 
 MissionPage.propTypes = {
   match: PropTypes.object.isRequired
@@ -39,20 +33,9 @@ export default function MissionPage({
     actions: { onUpdateCurrentMission }
   } = useContentContext();
   const {
-    actions: { onRecordScrollPosition },
-    state: { scrollPositions }
-  } = useViewContext();
-  const {
     actions: { onLoadMission, onSetMissionState },
     state: { currentUserId, missionObj }
   } = useMissionContext();
-
-  useScrollPosition({
-    onRecordScrollPosition,
-    pathname: location.pathname,
-    scrollPositions,
-    isMobile: isMobile(navigator)
-  });
 
   const mission = useMemo(() => missionObj[missionId] || {}, [
     missionId,

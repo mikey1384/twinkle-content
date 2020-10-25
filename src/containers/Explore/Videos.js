@@ -5,21 +5,15 @@ import FeaturedPlaylistsPanel from './Panels/FeaturedPlaylistsPanel';
 import PlaylistsPanel from './Panels/PlaylistsPanel';
 import AddPlaylistModal from 'components/Modals/AddPlaylistModal';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { isMobile, scrollElementToCenter } from 'helpers';
-import { useMyState, useSearch, useScrollPosition } from 'helpers/hooks';
-import {
-  useAppContext,
-  useViewContext,
-  useExploreContext,
-  useInputContext
-} from 'contexts';
+import { scrollElementToCenter } from 'helpers';
+import { useMyState, useSearch } from 'helpers/hooks';
+import { useAppContext, useExploreContext, useInputContext } from 'contexts';
 
 Videos.propTypes = {
-  history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired
 };
 
-export default function Videos({ history, location }) {
+export default function Videos({ history }) {
   const {
     requestHelpers: { loadPlaylists, searchContent }
   } = useAppContext();
@@ -47,16 +41,6 @@ export default function Videos({ history, location }) {
     state: { playlistSearchText },
     actions: { onSetSearchText }
   } = useInputContext();
-  const {
-    actions: { onRecordScrollPosition },
-    state: { scrollPositions }
-  } = useViewContext();
-  useScrollPosition({
-    onRecordScrollPosition,
-    pathname: location.pathname,
-    scrollPositions,
-    isMobile: isMobile(navigator)
-  });
   const { handleSearch, searching } = useSearch({
     onSearch: handleSearchPlaylist,
     onClear: () =>

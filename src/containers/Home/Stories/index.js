@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import InputPanel from './InputPanel';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import Loading from 'components/Loading';
@@ -7,20 +6,10 @@ import Banner from 'components/Banner';
 import ErrorBoundary from 'components/ErrorBoundary';
 import HomeFilter from './HomeFilter';
 import ContentPanel from 'components/ContentPanel';
-import { isMobile } from 'helpers';
 import { css } from 'emotion';
 import { mobileMaxWidth } from 'constants/css';
-import {
-  useInfiniteScroll,
-  useMyState,
-  useScrollPosition
-} from 'helpers/hooks';
-import {
-  useAppContext,
-  useHomeContext,
-  useViewContext,
-  useNotiContext
-} from 'contexts';
+import { useInfiniteScroll, useMyState } from 'helpers/hooks';
+import { useAppContext, useHomeContext, useNotiContext } from 'contexts';
 
 const categoryObj = {
   uploads: {
@@ -42,11 +31,7 @@ const categoryObj = {
   }
 };
 
-Stories.propTypes = {
-  location: PropTypes.object
-};
-
-export default function Stories({ location }) {
+export default function Stories() {
   const {
     requestHelpers: { loadFeeds, loadNewFeeds }
   } = useAppContext();
@@ -74,17 +59,6 @@ export default function Stories({ location }) {
       onSetDisplayOrder
     }
   } = useHomeContext();
-
-  const {
-    actions: { onRecordScrollPosition },
-    state: { scrollPositions }
-  } = useViewContext();
-  useScrollPosition({
-    onRecordScrollPosition,
-    pathname: location.pathname,
-    scrollPositions,
-    isMobile: isMobile(navigator)
-  });
 
   const [loadingFeeds, setLoadingFeeds] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);

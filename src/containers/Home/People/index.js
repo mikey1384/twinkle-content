@@ -1,5 +1,4 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import SearchInput from 'components/Texts/SearchInput';
 import ProfilePanel from 'components/ProfilePanel';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
@@ -8,14 +7,8 @@ import PeopleFilterBar from './PeopleFilterBar';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { css } from 'emotion';
 import { mobileMaxWidth } from 'constants/css';
-import { useAppContext, useInputContext, useViewContext } from 'contexts';
-import { isMobile } from 'helpers';
-import {
-  useInfiniteScroll,
-  useMyState,
-  useSearch,
-  useScrollPosition
-} from 'helpers/hooks';
+import { useAppContext, useInputContext } from 'contexts';
+import { useInfiniteScroll, useMyState, useSearch } from 'helpers/hooks';
 import request from 'axios';
 import URL from 'constants/URL';
 import {
@@ -23,11 +16,7 @@ import {
   RANKING_FILTER_LABEL
 } from 'constants/defaultValues';
 
-People.propTypes = {
-  location: PropTypes.object.isRequired
-};
-
-function People({ location }) {
+function People() {
   const {
     user: {
       actions: {
@@ -49,16 +38,6 @@ function People({ location }) {
   } = useAppContext();
   const { profileTheme } = useMyState();
   const {
-    actions: { onRecordScrollPosition },
-    state: { scrollPositions }
-  } = useViewContext();
-  useScrollPosition({
-    onRecordScrollPosition,
-    pathname: location.pathname,
-    scrollPositions,
-    isMobile: isMobile(navigator)
-  });
-  const {
     state: { userSearchText },
     actions: { onSetSearchText }
   } = useInputContext();
@@ -76,6 +55,10 @@ function People({ location }) {
       ? RANKING_FILTER_LABEL
       : LAST_ONLINE_FILTER_LABEL;
 
+  useEffect(() => {
+    mounted.current = true;
+  }, []);
+
   useInfiniteScroll({
     scrollable: profiles.length > 0 && stringIsEmpty(userSearchText),
     loadable: loadMoreButton,
@@ -84,10 +67,6 @@ function People({ location }) {
     onScrollToBottom: () => setLoading(true),
     onLoad: loadMoreProfiles
   });
-
-  useEffect(() => {
-    mounted.current = true;
-  }, []);
 
   useEffect(() => {
     init();

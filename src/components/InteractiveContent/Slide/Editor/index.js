@@ -56,6 +56,7 @@ export default function Editor({
   slideId
 }) {
   const defaultInputState = {
+    editedGoBackButton: { label: 'Go Back' },
     editedIsFork: isFork,
     editedIsPortal: isPortal,
     editedAttachment: attachment || null,
@@ -100,6 +101,7 @@ export default function Editor({
   );
   const editForm = inputState || {};
   const {
+    editedGoBackButton,
     editedIsFork,
     editedIsPortal,
     editedAttachment,
@@ -316,7 +318,21 @@ export default function Editor({
                 })
               }
             />
-            {editedIsPortal && <GoBackField style={{ marginTop: '2rem' }} />}
+            {editedIsPortal && (
+              <GoBackField
+                button={editedGoBackButton}
+                onSetButtonState={(newState) =>
+                  handleSetInputState({
+                    ...editForm,
+                    editedGoBackButton: {
+                      ...editForm.editedGoBackButton,
+                      ...newState
+                    }
+                  })
+                }
+                style={{ marginTop: '2rem' }}
+              />
+            )}
           </div>
         </div>
         <div

@@ -12,7 +12,6 @@ import ConfirmModal from 'components/Modals/ConfirmModal';
 import BioEditModal from 'components/Modals/BioEditModal';
 import DropDownButton from 'components/Buttons/DropdownButton';
 import LoginToViewContent from 'components/LoginToViewContent';
-import { isMobile } from 'helpers';
 import { css } from 'emotion';
 import {
   addEmoji,
@@ -25,35 +24,19 @@ import URL from 'constants/URL';
 import Bio from 'components/Texts/Bio';
 import BasicInfos from './BasicInfos';
 import Achievements from './Achievements';
-import { useContentState, useMyState, useScrollPosition } from 'helpers/hooks';
-import {
-  useAppContext,
-  useContentContext,
-  useInputContext,
-  useViewContext
-} from 'contexts';
+import { useContentState, useMyState } from 'helpers/hooks';
+import { useAppContext, useContentContext, useInputContext } from 'contexts';
 
 Home.propTypes = {
-  location: PropTypes.object,
   profile: PropTypes.object,
   selectedTheme: PropTypes.string.isRequired
 };
 
-export default function Home({ location, profile, selectedTheme }) {
+export default function Home({ profile, selectedTheme }) {
   const {
     requestHelpers: { auth, loadComments, uploadGreeting, uploadBio }
   } = useAppContext();
   const { userId } = useMyState();
-  const {
-    actions: { onRecordScrollPosition },
-    state: { scrollPositions }
-  } = useViewContext();
-  useScrollPosition({
-    onRecordScrollPosition,
-    pathname: location.pathname,
-    scrollPositions,
-    isMobile: isMobile(navigator)
-  });
   const {
     actions: {
       onDeleteComment,

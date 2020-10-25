@@ -11,7 +11,7 @@ export default function useScrollToBottom(containerRef, threshold = 0) {
 
   useEffect(() => {
     mounted.current = true;
-    if (containerRef?.current?.clientHeight - scrollTop < window.innerHeight) {
+    if (containerRef.current?.clientHeight - scrollTop < window.innerHeight) {
       setAtBottom(true);
     }
     addEvent(window, 'scroll', onScroll);
@@ -21,7 +21,7 @@ export default function useScrollToBottom(containerRef, threshold = 0) {
       clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => {
         if (
-          containerRef.current.clientHeight -
+          containerRef.current?.clientHeight -
             document.getElementById('App').scrollTop <
           window.innerHeight + threshold
         ) {

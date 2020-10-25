@@ -8,13 +8,8 @@ import SideMenu from './SideMenu';
 import InvalidPage from 'components/InvalidPage';
 import { css } from 'emotion';
 import { mobileMaxWidth } from 'constants/css';
-import { isMobile } from 'helpers';
-import {
-  useInfiniteScroll,
-  useProfileState,
-  useScrollPosition
-} from 'helpers/hooks';
-import { useAppContext, useProfileContext, useViewContext } from 'contexts';
+import { useInfiniteScroll, useProfileState } from 'helpers/hooks';
+import { useAppContext, useProfileContext } from 'contexts';
 
 Posts.propTypes = {
   history: PropTypes.object.isRequired,
@@ -56,16 +51,6 @@ export default function Posts({
   } = useProfileState(username);
   if (!profileFeeds) return <InvalidPage style={{ paddingTop: '13rem' }} />;
 
-  const {
-    actions: { onRecordScrollPosition },
-    state: { scrollPositions }
-  } = useViewContext();
-  useScrollPosition({
-    onRecordScrollPosition,
-    pathname: location.pathname,
-    scrollPositions,
-    isMobile: isMobile(navigator)
-  });
   const [loading, setLoading] = useState(false);
   const [loadingFeeds, setLoadingFeeds] = useState(false);
   const mounted = useRef(true);

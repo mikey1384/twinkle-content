@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { addEvent, removeEvent } from '../listenerHelpers';
 
 export default function useInfiniteScroll({
@@ -15,7 +15,7 @@ export default function useInfiniteScroll({
   const scrollPositionRef = useRef({ desktop: 0, mobile: 0 });
   const timerRef = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     addEvent(window, 'scroll', onScroll);
     addEvent(document.getElementById('App'), 'scroll', onScroll);
 

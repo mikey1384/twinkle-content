@@ -19,12 +19,8 @@ import Loading from 'components/Loading';
 import Description from './Description';
 import { css } from 'emotion';
 import { Color, mobileMaxWidth } from 'constants/css';
-import {
-  determineUserCanRewardThis,
-  determineXpButtonDisabled,
-  isMobile
-} from 'helpers';
-import { useContentState, useMyState, useScrollPosition } from 'helpers/hooks';
+import { determineUserCanRewardThis, determineXpButtonDisabled } from 'helpers';
+import { useContentState, useMyState } from 'helpers/hooks';
 import { processedURL } from 'helpers/stringHelpers';
 import {
   useAppContext,
@@ -118,15 +114,8 @@ export default function LinkPage({
     xpRewardInterfaceShown
   } = useContentState({ contentType: 'url', contentId: linkId });
   const {
-    actions: { onRecordScrollPosition, onSetContentNav },
-    state: { scrollPositions }
+    actions: { onSetContentNav }
   } = useViewContext();
-  useScrollPosition({
-    onRecordScrollPosition,
-    pathname: location.pathname,
-    scrollPositions,
-    isMobile: isMobile(navigator)
-  });
   const [loadingComments, setLoadingComments] = useState(false);
   const [notFound, setNotFound] = useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);

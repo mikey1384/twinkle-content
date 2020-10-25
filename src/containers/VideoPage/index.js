@@ -19,11 +19,10 @@ import Details from './Details';
 import NavMenu from './NavMenu';
 import PageTab from './PageTab';
 import URL from 'constants/URL';
-import { isMobile } from 'helpers';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 import { fetchedVideoCodeFromURL } from 'helpers/stringHelpers';
-import { useContentState, useMyState, useScrollPosition } from 'helpers/hooks';
+import { useContentState, useMyState } from 'helpers/hooks';
 import {
   useAppContext,
   useContentContext,
@@ -39,7 +38,7 @@ VideoPage.propTypes = {
 
 export default function VideoPage({
   history,
-  location: { pathname, search },
+  location: { search },
   match: {
     params: { videoId: initialVideoId }
   }
@@ -107,15 +106,8 @@ export default function VideoPage({
     }
   } = useContentContext();
   const {
-    actions: { onRecordScrollPosition, onSetContentNav },
-    state: { scrollPositions }
+    actions: { onSetContentNav }
   } = useViewContext();
-  useScrollPosition({
-    onRecordScrollPosition,
-    pathname,
-    scrollPositions,
-    isMobile: isMobile(navigator)
-  });
 
   const {
     byUser,
