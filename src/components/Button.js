@@ -53,7 +53,7 @@ function Button({
       font-family: sans-serif, Arial, Helvetica;
       text-transform: uppercase;
       font-weight: bold;
-      line-height: 1.5;
+      line-height: 1;
       font-size: 1.5rem;
       padding: 1rem;
       color: ${!skeuomorphic && (filled || opacity)

@@ -36,7 +36,7 @@ export default function ForkButtons({
           <Button
             key={button.id}
             skeuomorphic
-            style={{ marginTop: index === 0 ? 0 : '1rem' }}
+            style={{ marginTop: index === 0 ? 0 : '1rem', lineHeight: 1.5 }}
             onClick={() => onForkButtonClick(button.id)}
           >
             {button.icon && <Icon icon={button.icon} />}
