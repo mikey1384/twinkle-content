@@ -96,9 +96,9 @@ import { faUserGraduate } from '@fortawesome/pro-solid-svg-icons/faUserGraduate'
 import { faUsers } from '@fortawesome/pro-solid-svg-icons/faUsers';
 import { faVolumeMute } from '@fortawesome/pro-solid-svg-icons/faVolumeMute';
 import { faWindows } from '@fortawesome/free-brands-svg-icons/faWindows';
+import { AppContextProvider } from 'contexts';
 import App from './containers/App';
 import reportWebVitals from './reportWebVitals';
-import { AppContextProvider } from 'contexts';
 
 library.add(
   faAlignJustify,
