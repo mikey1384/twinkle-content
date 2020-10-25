@@ -90,7 +90,10 @@ export default function ChessModal({
     }
   }, [channelId, countdownNumber]);
 
-  const parsedState = initialState ? JSON.parse(initialState) : {};
+  const parsedState = useMemo(
+    () => (initialState ? JSON.parse(initialState) : {}),
+    [initialState]
+  );
   const gameFinished = useMemo(
     () =>
       parsedState?.isCheckmate ||

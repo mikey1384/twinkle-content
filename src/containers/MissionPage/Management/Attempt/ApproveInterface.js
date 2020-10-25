@@ -27,13 +27,13 @@ export default function ApproveInterface({
     state,
     actions: { onSetMissionFeedbackForm }
   } = useInputContext();
-  const defaultInputState = {
-    feedback: '',
-    status: ''
-  };
   const inputState = useMemo(
-    () => state[`mission-feedback-${attempt.id}`] || defaultInputState,
-    [attempt.id, defaultInputState, state]
+    () =>
+      state[`mission-feedback-${attempt.id}`] || {
+        feedback: '',
+        status: ''
+      },
+    [attempt.id, state]
   );
   const statusRef = useRef(inputState.status || '');
   const [status, setStatus] = useState(inputState.status || '');

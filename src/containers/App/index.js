@@ -25,7 +25,6 @@ import Outgoing from 'components/Stream/Outgoing';
 import { Switch, Route } from 'react-router-dom';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
-import { hot } from 'react-hot-loader';
 import { socket } from 'constants/io';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 import { finalizeEmoji } from 'helpers/stringHelpers';
@@ -440,6 +439,4 @@ function App({ location, history }) {
   }
 }
 
-export default process.env.NODE_ENV === 'development'
-  ? hot(module)(memo(App))
-  : memo(App);
+export default memo(App);

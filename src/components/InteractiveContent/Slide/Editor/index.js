@@ -316,7 +316,7 @@ export default function Editor({
                 })
               }
             />
-            {editedIsPortal && <GoBackField />}
+            {editedIsPortal && <GoBackField style={{ marginTop: '2rem' }} />}
           </div>
         </div>
         <div
