@@ -182,6 +182,7 @@ export function useScrollPosition({
   pathname,
   scrollPositions = {}
 }) {
+  const timerRef = useRef(null);
   const BodyRef = useRef(document.scrollingElement || document.documentElement);
 
   useLayoutEffect(() => {
@@ -200,11 +201,14 @@ export function useScrollPosition({
     };
 
     function handleScroll() {
-      const position = Math.max(
-        document.getElementById('App').scrollTop,
-        BodyRef.current.scrollTop
-      );
-      onRecordScrollPosition({ section: pathname, position });
+      clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(() => {
+        const position = Math.max(
+          document.getElementById('App').scrollTop,
+          BodyRef.current.scrollTop
+        );
+        onRecordScrollPosition({ section: pathname, position });
+      }, 10);
     }
   });
 }
