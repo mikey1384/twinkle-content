@@ -5,7 +5,11 @@ import {
   useInputContext,
   useInteractiveContext
 } from 'contexts';
-import { exceedsCharLimit, finalizeEmoji } from 'helpers/stringHelpers';
+import {
+  exceedsCharLimit,
+  finalizeEmoji,
+  stringIsEmpty
+} from 'helpers/stringHelpers';
 import { edit } from 'constants/placeholders';
 import Textarea from 'components/Texts/Textarea';
 import Input from 'components/Texts/Input';
@@ -15,6 +19,7 @@ import SwitchButton from 'components/Buttons/SwitchButton';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import OptionsField from './OptionsField';
+import GoBackField from './GoBackField';
 import { v1 as uuidv1 } from 'uuid';
 
 Editor.propTypes = {
@@ -131,8 +136,20 @@ export default function Editor({
     if (headingExceedsCharLimit) {
       return true;
     }
+    if (editedIsFork) {
+      for (let [, option] of Object.entries(editedOptionsObj)) {
+        if (stringIsEmpty(option.label)) {
+          return true;
+        }
+      }
+    }
     return false;
-  }, [descriptionExceedsCharLimit, headingExceedsCharLimit]);
+  }, [
+    descriptionExceedsCharLimit,
+    editedIsFork,
+    editedOptionsObj,
+    headingExceedsCharLimit
+  ]);
 
   useEffect(() => {
     return function saveInputStateBeforeUnmount() {
@@ -237,7 +254,7 @@ export default function Editor({
                   label={
                     <>
                       <Icon icon="code-branch" />
-                      <span style={{ marginLeft: '0.5rem' }}>fork</span>
+                      <span style={{ marginLeft: '0.7rem' }}>fork buttons</span>
                     </>
                   }
                   checked={editedIsFork}
@@ -279,7 +296,7 @@ export default function Editor({
               label={
                 <>
                   <Icon icon="history" />
-                  <span style={{ marginLeft: '0.5rem' }}>go back</span>
+                  <span style={{ marginLeft: '0.7rem' }}>go back button</span>
                 </>
               }
               checked={editedIsPortal}
@@ -290,6 +307,7 @@ export default function Editor({
                 })
               }
             />
+            {editedIsPortal && <GoBackField />}
           </div>
         </div>
         <div

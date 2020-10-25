@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
 import Input from 'components/Texts/Input';
-import IconSelectionModal from './IconSelectionModal';
+import IconSelectionModal from '../IconSelectionModal';
 import { exceedsCharLimit } from 'helpers/stringHelpers';
 import { Color } from 'constants/css';
 import { css } from 'emotion';
