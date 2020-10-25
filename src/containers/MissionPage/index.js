@@ -44,9 +44,8 @@ export default function MissionPage({
   } = useViewContext();
   const {
     actions: { onLoadMission, onSetMissionState },
-    state: { missionObj }
+    state: { currentUserId, missionObj }
   } = useMissionContext();
-  const prevUserId = useRef(userId);
 
   useScrollPosition({
     onRecordScrollPosition,
@@ -69,19 +68,18 @@ export default function MissionPage({
 
   useEffect(() => {
     onUpdateCurrentMission({ missionId: Number(missionId), userId });
-    if (!mission.loaded || (userId && prevUserId.current !== userId)) {
+    if (!mission.loaded || (userId && currentUserId !== userId)) {
       init();
     }
-    prevUserId.current = userId;
 
     async function init() {
       if (userId) {
         const data = await loadMission(missionId);
         if (mounted.current) {
-          onLoadMission(data);
+          onLoadMission({ ...data, currentUserId: userId });
         }
       } else {
-        onLoadMission({ id: missionId });
+        onLoadMission({ id: missionId, currentUserId: userId });
       }
     }
 

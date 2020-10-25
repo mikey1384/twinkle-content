@@ -41,6 +41,7 @@ export const charLimit = {
   },
   comment: 10000,
   interactive: {
+    heading: 100,
     description: 5000,
     youtube: 300
   },

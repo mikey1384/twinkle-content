@@ -138,7 +138,14 @@ export default function Editor({
     }
     if (editedIsFork) {
       for (let [, option] of Object.entries(editedOptionsObj)) {
-        if (stringIsEmpty(option.label)) {
+        if (
+          stringIsEmpty(option.label) ||
+          exceedsCharLimit({
+            contentType: 'interactive',
+            inputType: 'heading',
+            text: option.label
+          })
+        ) {
           return true;
         }
       }
@@ -285,6 +292,8 @@ export default function Editor({
             style={{
               display: 'flex',
               justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
               marginTop: '1.5rem'
             }}
           >
