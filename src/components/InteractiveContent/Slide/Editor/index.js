@@ -32,6 +32,7 @@ Editor.propTypes = {
   isPortal: PropTypes.bool,
   forkButtonIds: PropTypes.array,
   forkButtonsObj: PropTypes.object,
+  portalButton: PropTypes.object,
   onThumbnailUpload: PropTypes.func,
   paths: PropTypes.object,
   interactiveId: PropTypes.number,
@@ -52,11 +53,12 @@ export default function Editor({
   onThumbnailUpload,
   forkButtonIds,
   forkButtonsObj,
+  portalButton,
   paths,
   slideId
 }) {
   const defaultInputState = {
-    editedGoBackButton: { label: 'Go Back' },
+    editedPortalButton: portalButton || { label: 'Go Back', icon: 'history' },
     editedIsFork: isFork,
     editedIsPortal: isPortal,
     editedAttachment: attachment || null,
@@ -101,7 +103,7 @@ export default function Editor({
   );
   const editForm = inputState || {};
   const {
-    editedGoBackButton,
+    editedPortalButton,
     editedIsFork,
     editedIsPortal,
     editedAttachment,
@@ -320,12 +322,12 @@ export default function Editor({
             />
             {editedIsPortal && (
               <GoBackField
-                button={editedGoBackButton}
+                button={editedPortalButton}
                 onSetButtonState={(newState) =>
                   handleSetInputState({
                     ...editForm,
-                    editedGoBackButton: {
-                      ...editForm.editedGoBackButton,
+                    editedPortalButton: {
+                      ...editForm.editedPortalButton,
                       ...newState
                     }
                   })

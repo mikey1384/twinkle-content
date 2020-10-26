@@ -39,6 +39,7 @@ Slide.propTypes = {
   onMoveSlide: PropTypes.func,
   forkButtonIds: PropTypes.array,
   forkButtonsObj: PropTypes.object,
+  portalButton: PropTypes.object,
   slideId: PropTypes.number,
   slideObj: PropTypes.object,
   paths: PropTypes.object,
@@ -69,6 +70,7 @@ export default function Slide({
   onMoveSlide,
   forkButtonIds,
   forkButtonsObj,
+  portalButton,
   slideId,
   paths,
   attachment,
@@ -260,6 +262,7 @@ export default function Slide({
             forkButtonIds={forkButtonIds}
             forkButtonsObj={forkButtonsObj}
             paths={paths}
+            portalButton={portalButton}
             slideId={slideId}
             onThumbnailUpload={handleThumbnailUpload}
           />
