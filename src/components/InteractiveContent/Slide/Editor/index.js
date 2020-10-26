@@ -292,7 +292,7 @@ export default function Editor({
                 />
               )}
             </div>
-            {editedIsFork && (
+            {((editedIsFork && forkSwitchShown) || isFork) && (
               <ForkButtonsField
                 style={{ marginTop: '1rem' }}
                 editedForkButtonIds={editedForkButtonIds}
@@ -313,7 +313,7 @@ export default function Editor({
                 justifyContent: 'center',
                 alignItems: 'center',
                 flexDirection: 'column',
-                marginTop: '1.5rem'
+                marginTop: '2rem'
               }}
             >
               <SwitchButton
@@ -350,7 +350,7 @@ export default function Editor({
                     })
                   }
                   slideObj={slideObj}
-                  style={{ marginTop: '2rem' }}
+                  style={{ marginTop: '1rem' }}
                 />
               )}
             </div>
