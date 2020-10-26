@@ -4,16 +4,27 @@ import Button from 'components/Button';
 import Icon from 'components/Icon';
 import Input from 'components/Texts/Input';
 import IconSelectionModal from './IconSelectionModal';
+import SlideListItem from '../../SlideListItem';
 import { Color } from 'constants/css';
 import { exceedsCharLimit } from 'helpers/stringHelpers';
 
 GoBackField.propTypes = {
   style: PropTypes.object,
   button: PropTypes.object,
-  onSetButtonState: PropTypes.func.isRequired
+  forkedFrom: PropTypes.number,
+  interactiveId: PropTypes.number,
+  onSetButtonState: PropTypes.func.isRequired,
+  slideObj: PropTypes.object
 };
 
-export default function GoBackField({ style, button, onSetButtonState }) {
+export default function GoBackField({
+  style,
+  button,
+  forkedFrom,
+  interactiveId,
+  onSetButtonState,
+  slideObj
+}) {
   const textExceedsCharLimit = useMemo(
     () =>
       exceedsCharLimit({
@@ -70,7 +81,12 @@ export default function GoBackField({ style, button, onSetButtonState }) {
           />
         )}
       </div>
-      <div>Destination goes here</div>
+      <SlideListItem
+        style={{ marginTop: '1rem' }}
+        slide={slideObj[forkedFrom]}
+        interactiveId={interactiveId}
+        onClick={() => console.log('clicked')}
+      />
     </div>
   );
 }

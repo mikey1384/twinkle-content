@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
-import SlideListItem from '../SlideListItem';
+import SlideListItem from './SlideListItem';
 
 SelectArchivedSlideModal.propTypes = {
   interactiveId: PropTypes.number.isRequired,
@@ -38,7 +38,7 @@ export default function SelectArchivedSlideModal({
             selectedSlideId={selectedSlideId}
             interactiveId={interactiveId}
             slide={slide}
-            onSelect={(slideId) => setSelectedSlideId(slideId)}
+            onClick={(slideId) => setSelectedSlideId(slideId)}
             style={{ marginTop: index === 0 ? 0 : '1rem' }}
           />
         ))}

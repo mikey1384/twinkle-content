@@ -38,6 +38,7 @@ Editor.propTypes = {
   paths: PropTypes.object,
   interactiveId: PropTypes.number,
   slideId: PropTypes.number,
+  slideObj: PropTypes.object,
   isLastSlide: PropTypes.bool
 };
 
@@ -57,7 +58,8 @@ export default function Editor({
   forkButtonsObj,
   portalButton,
   paths,
-  slideId
+  slideId,
+  slideObj
 }) {
   const defaultInputState = {
     editedPortalButton: portalButton || { label: 'Go Back', icon: 'history' },
@@ -332,6 +334,8 @@ export default function Editor({
               {editedIsPortal && (
                 <GoBackField
                   button={editedPortalButton}
+                  forkedFrom={forkedFrom}
+                  interactiveId={interactiveId}
                   onSetButtonState={(newState) =>
                     handleSetInputState({
                       ...editForm,
@@ -341,6 +345,7 @@ export default function Editor({
                       }
                     })
                   }
+                  slideObj={slideObj}
                   style={{ marginTop: '2rem' }}
                 />
               )}

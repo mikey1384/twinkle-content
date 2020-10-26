@@ -9,7 +9,7 @@ import { useMyState } from 'helpers/hooks';
 
 SlideListItem.propTypes = {
   interactiveId: PropTypes.number.isRequired,
-  onSelect: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
   selectedSlideId: PropTypes.number,
   slide: PropTypes.object.isRequired,
   style: PropTypes.object
@@ -17,7 +17,7 @@ SlideListItem.propTypes = {
 
 export default function SlideListItem({
   interactiveId,
-  onSelect,
+  onClick,
   selectedSlideId,
   slide,
   style
@@ -38,7 +38,7 @@ export default function SlideListItem({
         boxShadow: selected ? `0 0 3px ${Color[profileTheme](0.5)}` : null,
         border: selected ? `0.5rem solid ${Color[profileTheme](0.5)}` : null
       }}
-      onClick={() => onSelect(slide.id)}
+      onClick={() => onClick(slide.id)}
       className={css`
         width: 100%;
         cursor: pointer;
@@ -65,7 +65,10 @@ export default function SlideListItem({
         style={{
           width: '100%',
           fontSize: stringIsEmpty(slide.heading) ? '1.5rem' : '1.3rem',
-          marginTop: stringIsEmpty(slide.heading) ? 0 : '0.5rem'
+          marginTop:
+            stringIsEmpty(slide.heading) || stringIsEmpty(slide.description)
+              ? 0
+              : '0.5rem'
         }}
       >
         {slide.description}
