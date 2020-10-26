@@ -89,13 +89,20 @@ export default function InteractiveContent({ interactiveId }) {
   }, [pageVisible]);
 
   useEffect(() => {
-    if (expanded.current && lastFork?.id) {
+    if (
+      expanded.current &&
+      slideObj[displayedSlideIds[displayedSlideIds.length - 1]]?.forkedFrom
+    ) {
       scrollElementToCenter(
-        SlideRefs.current[displayedSlideIds.indexOf(lastFork.id) + 1]
+        SlideRefs.current[
+          displayedSlideIds.indexOf(
+            slideObj[displayedSlideIds[displayedSlideIds.length - 1]].forkedFrom
+          ) + 1
+        ]
       );
     }
     expanded.current = false;
-  }, [displayedSlideIds, lastFork]);
+  }, [displayedSlideIds, slideObj]);
 
   useEffect(() => {
     mounted.current = true;
@@ -199,27 +206,32 @@ export default function InteractiveContent({ interactiveId }) {
   );
 
   function handleExpandPath({ newSlides, slideId, buttonId }) {
-    expanded.current = true;
     if (buttonId !== slideObj[slideId].selectedForkButtonId) {
-      if (slideObj[slideId].selectedForkButtonId) {
-        const index = displayedSlideIds.indexOf(slideId);
-        onSetDisplayedSlides({
-          interactiveId,
-          newSlides: displayedSlideIds.slice(0, index + 1)
-        });
-      }
       onSetSlideState({
         interactiveId,
         slideId,
         newState: { selectedForkButtonId: buttonId }
       });
-      const validNewSlides = newSlides.filter(
-        (slideId) => !!slideObj[slideId] && !slideObj[slideId]?.isDeleted
-      );
-      onConcatDisplayedSlides({
-        interactiveId,
-        newSlides: validNewSlides
-      });
+      if (
+        newSlides.filter((slideId) => !slideObj[slideId].isDeleted).length > 0
+      ) {
+        console.log(newSlides);
+        expanded.current = true;
+        if (slideObj[slideId].selectedForkButtonId) {
+          const index = displayedSlideIds.indexOf(slideId);
+          onSetDisplayedSlides({
+            interactiveId,
+            newSlides: displayedSlideIds.slice(0, index + 1)
+          });
+        }
+        const validNewSlides = newSlides.filter(
+          (slideId) => !!slideObj[slideId] && !slideObj[slideId]?.isDeleted
+        );
+        onConcatDisplayedSlides({
+          interactiveId,
+          newSlides: validNewSlides
+        });
+      }
     }
   }
 

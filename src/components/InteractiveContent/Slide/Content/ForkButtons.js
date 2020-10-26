@@ -34,16 +34,16 @@ export default function ForkButtons({
         const button = forkButtonsObj[buttonId];
         return (
           <Button
-            key={button.id}
+            key={buttonId}
             skeuomorphic
             style={{ marginTop: index === 0 ? 0 : '1rem', lineHeight: 1.5 }}
-            onClick={() => onForkButtonClick(button.id)}
+            onClick={() => onForkButtonClick(buttonId)}
           >
             {button.icon && <Icon icon={button.icon} />}
             <span style={{ marginLeft: button.icon ? '0.7rem' : 0 }}>
               {button.label}
             </span>
-            {selectedForkButtonId === button.id ? (
+            {selectedForkButtonId === buttonId ? (
               <Icon
                 icon="check"
                 style={{ marginLeft: '0.7rem', color: Color.green() }}
