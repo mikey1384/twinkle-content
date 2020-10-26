@@ -28,6 +28,7 @@ Editor.propTypes = {
   description: PropTypes.string,
   fileUploadComplete: PropTypes.bool,
   fileUploadProgress: PropTypes.number,
+  forkedFrom: PropTypes.number,
   isFork: PropTypes.bool,
   isPortal: PropTypes.bool,
   forkButtonIds: PropTypes.array,
@@ -45,6 +46,7 @@ export default function Editor({
   description,
   fileUploadComplete,
   fileUploadProgress,
+  forkedFrom,
   heading,
   interactiveId,
   isFork,
@@ -112,6 +114,12 @@ export default function Editor({
     editedForkButtonIds,
     editedForkButtonsObj
   } = editForm;
+
+  const forkSwitchShown = useMemo(() => isLastSlide && !isFork, [
+    isFork,
+    isLastSlide
+  ]);
+  const portalSwitchShown = !!forkedFrom;
 
   const descriptionExceedsCharLimit = useMemo(
     () =>
@@ -256,7 +264,7 @@ export default function Editor({
                 alignItems: 'center'
               }}
             >
-              {isLastSlide && !isFork && (
+              {forkSwitchShown && (
                 <SwitchButton
                   labelStyle={{
                     fontSize: '1.7rem',
@@ -292,54 +300,56 @@ export default function Editor({
               />
             )}
           </div>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              flexDirection: 'column',
-              marginTop: '1.5rem'
-            }}
-          >
-            <SwitchButton
-              labelStyle={{
-                fontSize: '1.7rem',
-                fontWeight: 'bold'
+          {portalSwitchShown && (
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'column',
+                marginTop: '1.5rem'
               }}
-              label={
-                <>
-                  <Icon icon="history" />
-                  <span style={{ marginLeft: '0.7rem' }}>go back button</span>
-                </>
-              }
-              checked={editedIsPortal}
-              onChange={() =>
-                handleSetInputState({
-                  ...editForm,
-                  editedIsPortal: !editedIsPortal
-                })
-              }
-            />
-            {editedIsPortal && (
-              <GoBackField
-                button={editedPortalButton}
-                onSetButtonState={(newState) =>
+            >
+              <SwitchButton
+                labelStyle={{
+                  fontSize: '1.7rem',
+                  fontWeight: 'bold'
+                }}
+                label={
+                  <>
+                    <Icon icon="history" />
+                    <span style={{ marginLeft: '0.7rem' }}>go back button</span>
+                  </>
+                }
+                checked={editedIsPortal}
+                onChange={() =>
                   handleSetInputState({
                     ...editForm,
-                    editedPortalButton: {
-                      ...editForm.editedPortalButton,
-                      ...newState
-                    }
+                    editedIsPortal: !editedIsPortal
                   })
                 }
-                style={{ marginTop: '2rem' }}
               />
-            )}
-          </div>
+              {editedIsPortal && (
+                <GoBackField
+                  button={editedPortalButton}
+                  onSetButtonState={(newState) =>
+                    handleSetInputState({
+                      ...editForm,
+                      editedPortalButton: {
+                        ...editForm.editedPortalButton,
+                        ...newState
+                      }
+                    })
+                  }
+                  style={{ marginTop: '2rem' }}
+                />
+              )}
+            </div>
+          )}
         </div>
         <div
           style={{
-            marginTop: '2rem',
+            marginTop: forkSwitchShown || portalSwitchShown ? '2rem' : 0,
             width: '100%',
             display: 'flex',
             flexDirection: 'row-reverse'

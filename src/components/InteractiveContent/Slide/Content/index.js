@@ -9,6 +9,7 @@ import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 
 Content.propTypes = {
+  forkedFrom: PropTypes.number,
   heading: PropTypes.string,
   interactiveId: PropTypes.number,
   isPublished: PropTypes.bool,
@@ -27,6 +28,7 @@ Content.propTypes = {
 };
 
 export default function Content({
+  forkedFrom,
   heading,
   interactiveId,
   isPublished,
@@ -119,7 +121,7 @@ export default function Content({
           selectedForkButtonId={selectedForkButtonId}
         />
       )}
-      {isPortal && portalButton && (
+      {isPortal && portalButton && !!forkedFrom && (
         <div
           style={{
             width: '100%',
@@ -129,7 +131,7 @@ export default function Content({
             marginBottom: '-2rem'
           }}
         >
-          <Button skeuomorphic>
+          <Button onClick={handlePortalButtonClick} skeuomorphic>
             <Icon icon={portalButton.icon} />
             <span style={{ marginLeft: '0.7rem' }}>{portalButton.label}</span>
           </Button>
@@ -137,4 +139,8 @@ export default function Content({
       )}
     </div>
   );
+
+  function handlePortalButtonClick() {
+    console.log('clicked');
+  }
 }

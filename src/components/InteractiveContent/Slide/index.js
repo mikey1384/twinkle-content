@@ -254,6 +254,7 @@ export default function Slide({
             description={description}
             fileUploadComplete={fileUploadComplete}
             fileUploadProgress={fileUploadProgress}
+            forkedFrom={forkedFrom}
             heading={heading}
             interactiveId={interactiveId}
             isFork={isFork}
@@ -275,6 +276,7 @@ export default function Slide({
           />
         ) : (
           <Content
+            forkedFrom={forkedFrom}
             isPublished={isPublished}
             isPortal={isPortal}
             portalButton={portalButton}
