@@ -7,6 +7,7 @@ import IconSelectionModal from '../IconSelectionModal';
 import SlideListItem from '../../../SlideListItem';
 import { Color } from 'constants/css';
 import { exceedsCharLimit } from 'helpers/stringHelpers';
+import SelectForkModal from './SelectForkModal';
 
 GoBackField.propTypes = {
   style: PropTypes.object,
@@ -35,6 +36,7 @@ export default function GoBackField({
     [button.label]
   );
   const [iconSelectionModalShown, setIconSelectionModalShown] = useState(false);
+  const [selectForkModalShown, setSelectForkModalShown] = useState(false);
 
   return (
     <div
@@ -89,9 +91,23 @@ export default function GoBackField({
           style={{ marginTop: '1rem' }}
           slide={slideObj[button.destination || forkedFrom]}
           interactiveId={interactiveId}
-          onClick={() => console.log('clicked')}
+          onClick={() => setSelectForkModalShown(true)}
         />
       </div>
+      {selectForkModalShown && (
+        <SelectForkModal
+          onHide={() => setSelectForkModalShown(false)}
+          onDone={handleSelectDestination}
+          originForkId={forkedFrom}
+          interactiveId={interactiveId}
+          slideObj={slideObj}
+        />
+      )}
     </div>
   );
+
+  function handleSelectDestination(selectedId) {
+    onSetButtonState({ destination: selectedId });
+    setSelectForkModalShown(false);
+  }
 }

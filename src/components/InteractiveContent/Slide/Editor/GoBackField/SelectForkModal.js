@@ -7,18 +7,34 @@ import SlideListItem from '../../../SlideListItem';
 SelectForkModal.propTypes = {
   interactiveId: PropTypes.number.isRequired,
   onHide: PropTypes.func.isRequired,
-  archivedSlides: PropTypes.array.isRequired,
-  onDone: PropTypes.func.isRequired
+  onDone: PropTypes.func.isRequired,
+  originForkId: PropTypes.number,
+  slideObj: PropTypes.object
 };
 
 export default function SelectForkModal({
   interactiveId,
   onDone,
   onHide,
-  archivedSlides
+  originForkId,
+  slideObj
 }) {
   const mounted = useRef(true);
+  const [forkIds, setForkIds] = useState([]);
   const [selectedSlideId, setSelectedSlideId] = useState(null);
+
+  useEffect(() => {
+    addForkIds(originForkId);
+
+    function addForkIds(forkId) {
+      setForkIds((forkIds) =>
+        forkIds.includes(forkId) ? forkIds : forkIds.concat(forkId)
+      );
+      if (slideObj[forkId]?.forkedFrom) {
+        addForkIds(slideObj[forkId].forkedFrom);
+      }
+    }
+  }, [originForkId, slideObj]);
 
   useEffect(() => {
     mounted.current = true;
@@ -32,14 +48,14 @@ export default function SelectForkModal({
     <Modal onHide={onHide}>
       <header>Select a Slide</header>
       <main>
-        {archivedSlides.map((slide, index) => (
+        {forkIds.map((id) => (
           <SlideListItem
-            key={slide.id}
-            selectedSlideId={selectedSlideId}
+            key={id}
+            style={{ marginTop: '1rem' }}
+            slide={slideObj[id]}
             interactiveId={interactiveId}
-            slide={slide}
+            selectedSlideId={selectedSlideId}
             onClick={(slideId) => setSelectedSlideId(slideId)}
-            style={{ marginTop: index === 0 ? 0 : '1rem' }}
           />
         ))}
       </main>
@@ -47,7 +63,11 @@ export default function SelectForkModal({
         <Button transparent onClick={onHide} style={{ marginRight: '0.7rem' }}>
           Cancel
         </Button>
-        <Button color="blue" onClick={() => onDone(selectedSlideId)}>
+        <Button
+          disabled={!selectedSlideId}
+          color="blue"
+          onClick={() => onDone(selectedSlideId)}
+        >
           Done
         </Button>
       </footer>

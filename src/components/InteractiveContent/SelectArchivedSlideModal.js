@@ -47,7 +47,11 @@ export default function SelectArchivedSlideModal({
         <Button transparent onClick={onHide} style={{ marginRight: '0.7rem' }}>
           Cancel
         </Button>
-        <Button color="blue" onClick={() => onDone(selectedSlideId)}>
+        <Button
+          disabled={!selectedSlideId}
+          color="blue"
+          onClick={() => onDone(selectedSlideId)}
+        >
           Done
         </Button>
       </footer>
