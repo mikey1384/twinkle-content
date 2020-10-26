@@ -178,6 +178,7 @@ export function useSearch({
 }
 
 export function useScrollPosition({
+  isMobile,
   onRecordScrollPosition,
   pathname,
   scrollPositions = {}
@@ -187,6 +188,14 @@ export function useScrollPosition({
   useLayoutEffect(() => {
     document.getElementById('App').scrollTop = scrollPositions[pathname] || 0;
     BodyRef.current.scrollTop = scrollPositions[pathname] || 0;
+    // prevents bug on mobile devices where tapping stops working after user swipes left to go to previous page
+    if (isMobile) {
+      setTimeout(() => {
+        document.getElementById('App').scrollTop =
+          scrollPositions[pathname] || 0;
+        BodyRef.current.scrollTop = scrollPositions[pathname] || 0;
+      }, 500);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
