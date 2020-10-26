@@ -68,17 +68,20 @@ export default function InteractiveReducer(state, action) {
       ];
       const forkIndex = newDisplayedSlideIds.indexOf(action.forkId);
       newDisplayedSlideIds.length = forkIndex + 1;
+      const newSlideObj = { ...state[action.interactiveId].slideObj };
+      for (let key of Object.keys(newSlideObj)) {
+        if (
+          !newDisplayedSlideIds.includes(key) ||
+          Number(key) === action.forkId
+        ) {
+          newSlideObj[key].selectedForkButtonId = null;
+        }
+      }
       return {
         [action.interactiveId]: {
           ...state[action.interactiveId],
           displayedSlideIds: newDisplayedSlideIds,
-          slideObj: {
-            ...state[action.interactiveId].slideObj,
-            [action.forkId]: {
-              ...state[action.interactiveId].slideObj[action.forkId],
-              selectedForkButtonId: null
-            }
-          }
+          slideObj: newSlideObj
         }
       };
     }
