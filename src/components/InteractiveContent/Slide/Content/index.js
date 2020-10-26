@@ -133,7 +133,12 @@ export default function Content({
             marginBottom: '-2rem'
           }}
         >
-          <Button onClick={() => onPortalButtonClick(forkedFrom)} skeuomorphic>
+          <Button
+            onClick={() =>
+              onPortalButtonClick(portalButton.destination || forkedFrom)
+            }
+            skeuomorphic
+          >
             <Icon icon={portalButton.icon} />
             <span style={{ marginLeft: '0.7rem' }}>{portalButton.label}</span>
           </Button>
