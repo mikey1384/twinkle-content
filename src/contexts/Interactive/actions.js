@@ -29,6 +29,13 @@ export default function InteractiveActions(dispatch) {
         newSlides
       });
     },
+    onGoBack({ interactiveId, forkId }) {
+      return dispatch({
+        type: 'GO_BACK',
+        interactiveId,
+        forkId
+      });
+    },
     onInsertInteractiveSlide({ interactiveId, forkedFrom, slideId, newSlide }) {
       return dispatch({
         type: 'INSERT_INTERACTIVE_SLIDE',

@@ -91,6 +91,7 @@ export default function Slide({
     actions: {
       onArchiveSlide,
       onChangeNumUpdates,
+      onGoBack,
       onRemoveInteractiveSlide,
       onSetSlideState
     }
@@ -288,6 +289,9 @@ export default function Slide({
             forkButtonsObj={forkButtonsObj}
             onForkButtonClick={handleForkButtonClick}
             onEmbedDataLoad={handleEmbedDataLoad}
+            onPortalButtonClick={(forkId) =>
+              onGoBack({ interactiveId, forkId })
+            }
             onSetEmbedProps={handleSetEmbedProps}
             onThumbnailUpload={handleThumbnailUpload}
             slideId={slideId}

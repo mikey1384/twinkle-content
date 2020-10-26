@@ -20,6 +20,7 @@ Content.propTypes = {
   forkButtonsObj: PropTypes.object,
   onForkButtonClick: PropTypes.func,
   onEmbedDataLoad: PropTypes.func,
+  onPortalButtonClick: PropTypes.func,
   onSetEmbedProps: PropTypes.func,
   onThumbnailUpload: PropTypes.func,
   portalButton: PropTypes.object,
@@ -39,6 +40,7 @@ export default function Content({
   forkButtonsObj,
   onForkButtonClick,
   onEmbedDataLoad,
+  onPortalButtonClick,
   onSetEmbedProps,
   onThumbnailUpload,
   portalButton,
@@ -131,7 +133,7 @@ export default function Content({
             marginBottom: '-2rem'
           }}
         >
-          <Button onClick={handlePortalButtonClick} skeuomorphic>
+          <Button onClick={() => onPortalButtonClick(forkedFrom)} skeuomorphic>
             <Icon icon={portalButton.icon} />
             <span style={{ marginLeft: '0.7rem' }}>{portalButton.label}</span>
           </Button>
@@ -139,8 +141,4 @@ export default function Content({
       )}
     </div>
   );
-
-  function handlePortalButtonClick() {
-    console.log('clicked');
-  }
 }
