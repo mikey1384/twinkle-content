@@ -276,6 +276,8 @@ export default function Slide({
         ) : (
           <Content
             isPublished={isPublished}
+            isPortal={isPortal}
+            portalButton={portalButton}
             interactiveId={interactiveId}
             attachment={attachment}
             heading={heading}
