@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import Input from 'components/Texts/Input';
-import IconSelectionModal from './IconSelectionModal';
-import SlideListItem from '../../SlideListItem';
+import IconSelectionModal from '../IconSelectionModal';
+import SlideListItem from '../../../SlideListItem';
 import { Color } from 'constants/css';
 import { exceedsCharLimit } from 'helpers/stringHelpers';
 
@@ -81,12 +81,17 @@ export default function GoBackField({
           />
         )}
       </div>
-      <SlideListItem
-        style={{ marginTop: '1rem' }}
-        slide={slideObj[forkedFrom]}
-        interactiveId={interactiveId}
-        onClick={() => console.log('clicked')}
-      />
+      <div style={{ marginTop: '2rem' }}>
+        <p
+          style={{ fontWeight: 'bold', fontSize: '1.7rem' }}
+        >{`Go Back Button's Destination:`}</p>
+        <SlideListItem
+          style={{ marginTop: '1rem' }}
+          slide={slideObj[button.destination || forkedFrom]}
+          interactiveId={interactiveId}
+          onClick={() => console.log('clicked')}
+        />
+      </div>
     </div>
   );
 }

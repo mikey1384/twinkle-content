@@ -62,7 +62,11 @@ export default function Editor({
   slideObj
 }) {
   const defaultInputState = {
-    editedPortalButton: portalButton || { label: 'Go Back', icon: 'history' },
+    editedPortalButton: portalButton || {
+      label: 'Go Back',
+      icon: 'history',
+      destination: forkedFrom
+    },
     editedIsFork: isFork,
     editedIsPortal: isPortal,
     editedAttachment: attachment || null,
