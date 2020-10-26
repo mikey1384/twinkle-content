@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Attachment from '../Attachment';
+import Attachment from './Attachment';
 import { css } from 'emotion';
 import { borderRadius, Color } from 'constants/css';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useInteractiveContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
-ArchivedSlideItem.propTypes = {
+SlideListItem.propTypes = {
   interactiveId: PropTypes.number.isRequired,
   onSelect: PropTypes.func.isRequired,
   selectedSlideId: PropTypes.number,
@@ -15,7 +15,7 @@ ArchivedSlideItem.propTypes = {
   style: PropTypes.object
 };
 
-export default function ArchivedSlideItem({
+export default function SlideListItem({
   interactiveId,
   onSelect,
   selectedSlideId,

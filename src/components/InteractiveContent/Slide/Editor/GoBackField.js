@@ -29,45 +29,48 @@ export default function GoBackField({ style, button, onSetButtonState }) {
     <div
       style={{
         display: 'flex',
-        alignItems: 'center',
+        flexDirection: 'column',
         width: '100%',
         height: '100%',
         ...style
       }}
     >
-      <div style={{ padding: '1rem 1.5rem 1rem 0' }}>
-        <Button
-          onClick={() => setIconSelectionModalShown(true)}
-          skeuomorphic
-          color={button.icon ? 'black' : 'orange'}
+      <div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
+        <div style={{ padding: '1rem 1.5rem 1rem 0' }}>
+          <Button
+            onClick={() => setIconSelectionModalShown(true)}
+            skeuomorphic
+            color={button.icon ? 'black' : 'orange'}
+          >
+            {button.icon ? <Icon icon={button.icon} /> : <Icon icon="plus" />}
+          </Button>
+        </div>
+        <div
+          key={button.id}
+          style={{
+            fontSize: '1.5rem',
+            padding: '1rem 2rem',
+            display: 'flex',
+            flexGrow: 1,
+            border: `1px solid ${Color.borderGray()}`
+          }}
         >
-          {button.icon ? <Icon icon={button.icon} /> : <Icon icon="plus" />}
-        </Button>
+          <Input
+            onChange={(text) => onSetButtonState({ label: text })}
+            placeholder="Enter button label..."
+            value={button.label}
+            style={{ width: '100%', ...textExceedsCharLimit?.style }}
+          />
+        </div>
+        {iconSelectionModalShown && (
+          <IconSelectionModal
+            selectedIcon={button.icon}
+            onSelectIcon={(icon) => onSetButtonState({ icon })}
+            onHide={() => setIconSelectionModalShown(false)}
+          />
+        )}
       </div>
-      <div
-        key={button.id}
-        style={{
-          fontSize: '1.5rem',
-          padding: '1rem 2rem',
-          display: 'flex',
-          flexGrow: 1,
-          border: `1px solid ${Color.borderGray()}`
-        }}
-      >
-        <Input
-          onChange={(text) => onSetButtonState({ label: text })}
-          placeholder="Enter button label..."
-          value={button.label}
-          style={{ width: '100%', ...textExceedsCharLimit?.style }}
-        />
-      </div>
-      {iconSelectionModalShown && (
-        <IconSelectionModal
-          selectedIcon={button.icon}
-          onSelectIcon={(icon) => onSetButtonState({ icon })}
-          onHide={() => setIconSelectionModalShown(false)}
-        />
-      )}
+      <div>Destination goes here</div>
     </div>
   );
 }

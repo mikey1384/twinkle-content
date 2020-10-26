@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
-import ArchivedSlideItem from './ArchivedSlideItem';
+import SlideListItem from '../SlideListItem';
 
 SelectArchivedSlideModal.propTypes = {
   interactiveId: PropTypes.number.isRequired,
@@ -33,7 +33,7 @@ export default function SelectArchivedSlideModal({
       <header>Select a Slide</header>
       <main>
         {archivedSlides.map((slide, index) => (
-          <ArchivedSlideItem
+          <SlideListItem
             key={slide.id}
             selectedSlideId={selectedSlideId}
             interactiveId={interactiveId}
