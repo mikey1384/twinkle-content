@@ -11,10 +11,11 @@ import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 
 InteractiveContent.propTypes = {
+  autoFocus: PropTypes.bool,
   interactiveId: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 
-export default function InteractiveContent({ interactiveId }) {
+export default function InteractiveContent({ autoFocus, interactiveId }) {
   const {
     requestHelpers: {
       checkInteractiveNumUpdates,
@@ -92,12 +93,12 @@ export default function InteractiveContent({ interactiveId }) {
   }, [pageVisible]);
 
   useEffect(() => {
-    if (displayedSlideIds?.length === 1) {
+    if (autoFocus && displayedSlideIds?.length === 1) {
       scrollElementToCenter(
         SlideRefs.current[slideObj[displayedSlideIds[0]].id]
       );
     }
-  }, [displayedSlideIds, slideObj]);
+  }, [autoFocus, displayedSlideIds, slideObj]);
 
   useEffect(() => {
     if (
