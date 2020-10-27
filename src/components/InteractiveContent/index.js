@@ -194,38 +194,40 @@ export default function InteractiveContent({ interactiveId }) {
           ))}
         </>
       )}
-      {loaded && displayedSlideIds.length > 0 && !lastFork && (
-        <div
-          style={{
-            width: '100%',
-            padding: '1rem',
-            background: '#fff',
-            display: 'flex',
-            justifyContent: 'center'
-          }}
-          className={css`
-            margin-top: 5rem;
-            border: 1px solid ${Color.borderGray()};
-            border-radius: ${borderRadius};
-            @media (max-width: ${mobileMaxWidth}) {
-              margin-top: 2rem;
-              border-left: 0;
-              border-right: 0;
-              border-radius: 0;
-            }
-          `}
-        >
-          <Button
-            skeuomorphic
-            onClick={() => {
-              document.getElementById('App').scrollTop = 0;
-              BodyRef.current.scrollTop = 0;
+      {loaded &&
+        displayedSlideIds.length > 0 &&
+        !slideObj[displayedSlideIds[displayedSlideIds.length - 1].isFork] && (
+          <div
+            style={{
+              width: '100%',
+              padding: '1rem',
+              background: '#fff',
+              display: 'flex',
+              justifyContent: 'center'
             }}
+            className={css`
+              margin-top: 5rem;
+              border: 1px solid ${Color.borderGray()};
+              border-radius: ${borderRadius};
+              @media (max-width: ${mobileMaxWidth}) {
+                margin-top: 2rem;
+                border-left: 0;
+                border-right: 0;
+                border-radius: 0;
+              }
+            `}
           >
-            Back to Top
-          </Button>
-        </div>
-      )}
+            <Button
+              skeuomorphic
+              onClick={() => {
+                document.getElementById('App').scrollTop = 0;
+                BodyRef.current.scrollTop = 0;
+              }}
+            >
+              Back to Top
+            </Button>
+          </div>
+        )}
       {loaded && canEdit && (
         <BottomInterface
           archivedSlides={archivedSlides}
