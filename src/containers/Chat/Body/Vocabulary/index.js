@@ -179,7 +179,7 @@ export default function Vocabulary() {
                 `}
                 style={{
                   display: 'flex',
-                  width: '20%',
+                  width: '100%',
                   alignItems: 'center',
                   padding: '1rem'
                 }}
