@@ -1,7 +1,8 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Input from 'components/Texts/Input';
 import Button from 'components/Button';
+import PasswordInputModal from './PasswordInputModal';
 import {
   isValidEmail,
   isValidUrl,
@@ -27,6 +28,8 @@ export default function InfoEditForm({
   youtubeName,
   youtubeUrl
 }) {
+  const [checking, setChecking] = useState(false);
+  const [passwordInputModalShown, setPasswordInputModalShown] = useState(false);
   const {
     state: { userInfo },
     actions: {
@@ -73,7 +76,7 @@ export default function InfoEditForm({
           maxLength={50}
           placeholder="YouTube Channel Name"
           style={{ marginTop: '1rem' }}
-          onChange={text => onSetEditedYoutubeName(text)}
+          onChange={(text) => onSetEditedYoutubeName(text)}
           value={editedYoutubeName}
         />
       )}
@@ -97,9 +100,19 @@ export default function InfoEditForm({
         </Button>
         <Button
           color="blue"
-          disabled={emailError || websiteError || youtubeError || noChange()}
+          disabled={
+            checking || emailError || websiteError || youtubeError || noChange()
+          }
           style={{ marginLeft: '0.5rem' }}
-          onClick={() =>
+          onClick={() => setPasswordInputModalShown(true)}
+        >
+          Done
+        </Button>
+      </div>
+      {passwordInputModalShown && (
+        <PasswordInputModal
+          onHide={() => setPasswordInputModalShown(false)}
+          onConfirm={() =>
             onSubmit({
               email: editedEmail,
               website: editedWebsite,
@@ -107,10 +120,8 @@ export default function InfoEditForm({
               youtubeUrl: editedYoutubeUrl
             })
           }
-        >
-          Done
-        </Button>
-      </div>
+        />
+      )}
     </div>
   );
 
@@ -131,15 +142,15 @@ export default function InfoEditForm({
 
   function checkEmail(text) {
     clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(
-      () =>
-        onSetEmailError(
-          !stringIsEmpty(text) && !isValidEmail(text)
-            ? 'That is not a valid email'
-            : ''
-        ),
-      500
-    );
+    setChecking(true);
+    timerRef.current = setTimeout(() => {
+      onSetEmailError(
+        !stringIsEmpty(text) && !isValidEmail(text)
+          ? 'That is not a valid email'
+          : ''
+      );
+      setChecking(false);
+    }, 500);
   }
 
   function onWebsiteInputChange(text) {
@@ -150,15 +161,15 @@ export default function InfoEditForm({
 
   function checkWebsiteUrl(text) {
     clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(
-      () =>
-        onSetWebsiteError(
-          !stringIsEmpty(text) && !isValidUrl(text)
-            ? 'That is not a valid website address'
-            : ''
-        ),
-      500
-    );
+    setChecking(true);
+    timerRef.current = setTimeout(() => {
+      onSetWebsiteError(
+        !stringIsEmpty(text) && !isValidUrl(text)
+          ? 'That is not a valid website address'
+          : ''
+      );
+      setChecking(false);
+    }, 500);
   }
 
   function onYoutubeInputChange(text) {
@@ -169,14 +180,14 @@ export default function InfoEditForm({
 
   function checkYoutubeUrl(text) {
     clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(
-      () =>
-        onSetYoutubeError(
-          !stringIsEmpty(text) && !isValidYoutubeChannelUrl(text)
-            ? 'That is not a valid YouTube channel address'
-            : ''
-        ),
-      500
-    );
+    setChecking(true);
+    timerRef.current = setTimeout(() => {
+      onSetYoutubeError(
+        !stringIsEmpty(text) && !isValidYoutubeChannelUrl(text)
+          ? 'That is not a valid YouTube channel address'
+          : ''
+      );
+      setChecking(false);
+    }, 500);
   }
 }

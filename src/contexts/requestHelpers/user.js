@@ -63,6 +63,20 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
+    async confirmPassword(password) {
+      try {
+        const {
+          data: { success }
+        } = await request.post(
+          `${URL}/user/password/confirm`,
+          { password },
+          auth()
+        );
+        return Promise.resolve(success);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async deleteAccountType(accountTypeLabel) {
       try {
         const {
