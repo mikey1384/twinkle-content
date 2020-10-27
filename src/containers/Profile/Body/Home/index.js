@@ -88,6 +88,12 @@ export default function Home({ profile, selectedTheme }) {
   const StatusInputRef = useRef(null);
 
   useEffect(() => {
+    return function cleanUp() {
+      mounted.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
     onSetEditedStatusColor('');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
@@ -117,10 +123,6 @@ export default function Home({ profile, selectedTheme }) {
         console.error(error);
       }
     }
-
-    return function cleanUp() {
-      mounted.current = false;
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 

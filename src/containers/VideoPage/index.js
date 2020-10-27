@@ -57,6 +57,12 @@ export default function VideoPage({
   const CommentInputAreaRef = useRef(null);
   const prevDeleted = useRef(false);
 
+  useEffect(() => {
+    return function cleanUp() {
+      mounted.current = false;
+    };
+  }, []);
+
   const {
     requestHelpers: {
       deleteContent,
@@ -209,9 +215,6 @@ export default function VideoPage({
         onLoadTags({ tags, contentId: videoId, contentType: 'video' });
       }
     }
-    return function cleanUp() {
-      mounted.current = false;
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [videoId]);
   const { playlist: playlistId } = queryString.parse(search);

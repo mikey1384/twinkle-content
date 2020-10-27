@@ -26,6 +26,11 @@ export default function AlreadyPosted({
   videoCode
 }) {
   const mounted = useRef(true);
+  useEffect(() => {
+    return function cleanUp() {
+      mounted.current = false;
+    };
+  }, []);
   const {
     requestHelpers: { checkContentUrl }
   } = useAppContext();
@@ -51,10 +56,6 @@ export default function AlreadyPosted({
     if (!existingContent && uploaderId) {
       checkExists();
     }
-
-    return function cleanUp() {
-      mounted.current = false;
-    };
 
     async function checkExists() {
       setLoading(true);

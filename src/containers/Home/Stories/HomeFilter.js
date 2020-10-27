@@ -50,11 +50,15 @@ export default function HomeFilter({
   const { hideWatched, userId } = useMyState();
   const [activeTab, setActiveTab] = useState();
   const mounted = useRef(true);
+
   useEffect(() => {
-    setActiveTab(category);
     return function cleanUp() {
       mounted.current = false;
     };
+  }, []);
+
+  useEffect(() => {
+    setActiveTab(category);
   }, [category]);
 
   return (

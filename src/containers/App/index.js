@@ -133,7 +133,7 @@ function App({ location, history }) {
     return function cleanUp() {
       mounted.current = false;
     };
-  });
+  }, []);
 
   useEffect(() => {
     if (!auth()?.headers?.authorization && !signinModalShown) {

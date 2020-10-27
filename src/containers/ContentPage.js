@@ -34,6 +34,12 @@ export default function ContentPage({
   const prevDeleted = useRef(false);
 
   useEffect(() => {
+    return function cleanUp() {
+      mounted.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
     if (!prevDeleted.current && deleted) {
       onSetContentNav('');
       history.push('/');
@@ -61,9 +67,6 @@ export default function ContentPage({
         setExists(false);
       }
     }
-    return function cleanUp() {
-      mounted.current = false;
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contentId, url]);
 

@@ -129,6 +129,12 @@ export default function LinkPage({
   const RewardInterfaceRef = useRef(null);
 
   useEffect(() => {
+    return function cleanUp() {
+      mounted.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
     if (!prevDeleted.current && deleted) {
       onSetContentNav('');
       history.push('/links');
@@ -187,9 +193,6 @@ export default function LinkPage({
         loadMoreButton
       });
     }
-    return function cleanUp() {
-      mounted.current = false;
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 

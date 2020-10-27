@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Icon from 'components/Icon';
 import Loading from 'components/Loading';
 import { css } from 'emotion';
@@ -11,6 +11,7 @@ export default function Store() {
   const {
     requestHelpers: { loadKarmaPoints }
   } = useAppContext();
+  const mounted = useRef(true);
   const { authLevel, userType, userId } = useMyState();
   const [loadingKarma, setLoadingKarma] = useState(false);
   const [karmaPoints, setKarmaPoints] = useState(0);
@@ -21,6 +22,12 @@ export default function Store() {
   const [numPostsRewarded, setNumPostsRewarded] = useState(0);
   const recommendationsMultiplier = 10;
   const postsMultiplier = 3;
+
+  useEffect(() => {
+    return function cleanUp() {
+      mounted.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     if (userId) {
@@ -34,18 +41,20 @@ export default function Store() {
         numApprovedRecommendations,
         numPostsRewarded
       } = await loadKarmaPoints();
-      if (authLevel < 2) {
-        setKarmaPoints(
-          numTwinklesRewarded +
-            recommendationsMultiplier * numApprovedRecommendations
-        );
-        setNumTwinklesRewarded(numTwinklesRewarded);
-        setNumApprovedRecommendations(numApprovedRecommendations);
-      } else {
-        setKarmaPoints(postsMultiplier * numPostsRewarded);
-        setNumPostsRewarded(numPostsRewarded);
+      if (mounted.current) {
+        if (authLevel < 2) {
+          setKarmaPoints(
+            numTwinklesRewarded +
+              recommendationsMultiplier * numApprovedRecommendations
+          );
+          setNumTwinklesRewarded(numTwinklesRewarded);
+          setNumApprovedRecommendations(numApprovedRecommendations);
+        } else {
+          setKarmaPoints(postsMultiplier * numPostsRewarded);
+          setNumPostsRewarded(numPostsRewarded);
+        }
+        setLoadingKarma(false);
       }
-      setLoadingKarma(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);

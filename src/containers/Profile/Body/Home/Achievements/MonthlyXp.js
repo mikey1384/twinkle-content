@@ -19,6 +19,12 @@ export default function MonthlyXp({ selectedTheme, userId }) {
   const mounted = useRef(true);
 
   useEffect(() => {
+    return function cleanUp() {
+      mounted.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
     init();
     async function init() {
       const data = await loadMonthlyXp(userId);
@@ -27,9 +33,6 @@ export default function MonthlyXp({ selectedTheme, userId }) {
         setLoaded(true);
       }
     }
-    return function cleanUp() {
-      mounted.current = false;
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 

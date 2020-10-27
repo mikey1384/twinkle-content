@@ -35,6 +35,12 @@ function TagStatus({
   const mounted = useRef(true);
 
   useEffect(() => {
+    return function cleanUp() {
+      mounted.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
     if (onLoadTags) {
       loadTags();
     }
@@ -44,9 +50,6 @@ function TagStatus({
         onLoadTags({ tags, contentId, contentType: 'video' });
       }
     }
-    return function cleanUp() {
-      mounted.current = false;
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contentId]);
 

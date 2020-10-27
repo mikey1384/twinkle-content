@@ -31,6 +31,12 @@ export default function Achievements({
   const mounted = useRef(true);
 
   useEffect(() => {
+    return function cleanUp() {
+      mounted.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
     if (!loaded) {
       initNotables();
     }
@@ -44,9 +50,6 @@ export default function Achievements({
         setLoading(false);
       }
     }
-    return function cleanUp() {
-      mounted.current = false;
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, loaded, profile.id, username]);
 

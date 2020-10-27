@@ -87,7 +87,7 @@ export default function BasicInfos({
     return function cleanUp() {
       mounted.current = false;
     };
-  });
+  }, []);
 
   return (
     <div className={className} style={style}>

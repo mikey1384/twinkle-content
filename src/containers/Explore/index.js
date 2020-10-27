@@ -40,6 +40,12 @@ export default function Explore({ history, location }) {
   const category = getSectionFromPathname(location.pathname)?.section;
 
   useEffect(() => {
+    return function cleanUp() {
+      mounted.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
     if (scrollTop === 0) {
       setCategoriesShown(false);
     } else if (atBottom) {
@@ -70,7 +76,6 @@ export default function Explore({ history, location }) {
     return function cleanUp() {
       socket.removeListener('connect', onConnect);
       socket.removeListener('disconnect', onDisconnect);
-      mounted.current = false;
     };
   });
 

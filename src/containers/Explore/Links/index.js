@@ -41,6 +41,12 @@ export default function Links() {
   const prevLoaded = useRef(false);
 
   useEffect(() => {
+    return function cleanUp() {
+      mounted.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
     if (recommendeds.length > 0) {
       lastRecommendedId.current = recommendeds[recommendeds.length - 1].feedId;
       lastRecommendedTime.current =
@@ -69,10 +75,6 @@ export default function Links() {
         handleLoadLinks();
       }
     }
-
-    return function cleanUp() {
-      mounted.current = false;
-    };
 
     async function handleLoadLinksMadeByUsers() {
       const { results, loadMoreButton } = await loadByUserUploads({

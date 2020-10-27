@@ -58,6 +58,12 @@ export default function NavMenu({ playlistId, videoId }) {
   const mounted = useRef(true);
   const prevUserId = useRef(userId);
 
+  useEffect(() => {
+    return function cleanUp() {
+      mounted.current = false;
+    };
+  }, []);
+
   const noVideos = useMemo(() => {
     return (
       nextVideos.length +
@@ -78,7 +84,6 @@ export default function NavMenu({ playlistId, videoId }) {
 
     return function cleanUp() {
       socket.removeListener('new_reward_posted', handleNewReward);
-      mounted.current = false;
     };
 
     async function handleNewReward({ receiverId }) {

@@ -10,6 +10,12 @@ export default function useScrollToBottom(containerRef, threshold = 0) {
   );
 
   useEffect(() => {
+    return function cleanUp() {
+      mounted.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
     if (containerRef.current?.clientHeight - scrollTop < window.innerHeight) {
       setAtBottom(true);
     }
@@ -33,7 +39,6 @@ export default function useScrollToBottom(containerRef, threshold = 0) {
     }
 
     return function cleanUp() {
-      mounted.current = false;
       removeEvent(window, 'scroll', onScroll);
       removeEvent(document.getElementById('App'), 'scroll', onScroll);
     };
