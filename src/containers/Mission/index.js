@@ -21,7 +21,6 @@ export default function Mission() {
   const mounted = useRef(true);
 
   useEffect(() => {
-    mounted.current = true;
     init();
 
     async function init() {

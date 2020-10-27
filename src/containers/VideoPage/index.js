@@ -143,7 +143,6 @@ export default function VideoPage({
   }, [deleted, loaded]);
 
   useEffect(() => {
-    mounted.current = true;
     setChangingPage(true);
     setCurrentSlide(0);
     setWatchTabActive(true);

@@ -66,7 +66,6 @@ export default function AddPlaylistModal({
   const mounted = useRef(true);
 
   useEffect(() => {
-    mounted.current = true;
     loadVideos();
     async function loadVideos() {
       const { results: loadedVideos, loadMoreButton } = await loadUploads({

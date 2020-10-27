@@ -46,7 +46,6 @@ export default function SubjectsModal({
   const mounted = useRef(true);
 
   useEffect(() => {
-    mounted.current = true;
     handleLoadSubjects();
     async function handleLoadSubjects() {
       try {

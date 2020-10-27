@@ -93,7 +93,6 @@ export default function Home({ profile, selectedTheme }) {
   }, [userId]);
 
   useEffect(() => {
-    mounted.current = true;
     if (!commentsLoaded) {
       initComments();
     }

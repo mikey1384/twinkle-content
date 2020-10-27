@@ -42,7 +42,6 @@ export default function SelectAttachmentScreen({
   });
 
   useEffect(() => {
-    mounted.current = true;
     initScreen();
     async function initScreen() {
       const { results, loadMoreButton } = await loadUploads({

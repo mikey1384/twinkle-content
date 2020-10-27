@@ -51,7 +51,6 @@ export default function HomeFilter({
   const [activeTab, setActiveTab] = useState();
   const mounted = useRef(true);
   useEffect(() => {
-    mounted.current = true;
     setActiveTab(category);
     return function cleanUp() {
       mounted.current = false;

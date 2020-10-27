@@ -55,10 +55,6 @@ function People() {
       ? RANKING_FILTER_LABEL
       : LAST_ONLINE_FILTER_LABEL;
 
-  useEffect(() => {
-    mounted.current = true;
-  }, []);
-
   useInfiniteScroll({
     scrollable: profiles.length > 0 && stringIsEmpty(userSearchText),
     loadable: loadMoreButton,

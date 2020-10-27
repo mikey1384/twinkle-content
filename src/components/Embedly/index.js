@@ -113,7 +113,6 @@ function Embedly({
   );
 
   useEffect(() => {
-    mounted.current = true;
     if (isYouTube) {
       setStartingPosition(currentTime);
     }

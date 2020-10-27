@@ -130,7 +130,6 @@ function App({ location, history }) {
   });
 
   useEffect(() => {
-    mounted.current = true;
     return function cleanUp() {
       mounted.current = false;
     };

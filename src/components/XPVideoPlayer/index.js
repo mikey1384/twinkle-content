@@ -97,7 +97,6 @@ function XPVideoPlayer({
   const coinRewardAmount = 2;
 
   useEffect(() => {
-    mounted.current = true;
     setStartingPosition(currentTime);
     return function cleanUp() {
       handleVideoStop();

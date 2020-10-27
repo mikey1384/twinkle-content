@@ -162,10 +162,6 @@ function ProfilePanel({ expandable, profileId }) {
   const loading = useRef(false);
 
   useEffect(() => {
-    mounted.current = true;
-  }, []);
-
-  useEffect(() => {
     setTimeout(() => {
       if (mounted.current) {
         handleCheckIfUserOnline();

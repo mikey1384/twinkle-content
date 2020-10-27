@@ -54,7 +54,6 @@ export default function Explore({ history, location }) {
   }, [category]);
 
   useEffect(() => {
-    mounted.current = true;
     socket.on('connect', onConnect);
     socket.on('disconnect', onDisconnect);
     function onConnect() {

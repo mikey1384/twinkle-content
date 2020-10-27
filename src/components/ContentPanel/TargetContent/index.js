@@ -63,8 +63,6 @@ export default function TargetContent({
 }) {
   const mounted = useRef(true);
   useEffect(() => {
-    mounted.current = true;
-
     return function onUnmount() {
       mounted.current = false;
     };

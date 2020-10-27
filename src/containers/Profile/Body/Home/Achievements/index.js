@@ -31,7 +31,6 @@ export default function Achievements({
   const mounted = useRef(true);
 
   useEffect(() => {
-    mounted.current = true;
     if (!loaded) {
       initNotables();
     }

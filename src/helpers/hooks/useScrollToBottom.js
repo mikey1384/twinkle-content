@@ -10,7 +10,6 @@ export default function useScrollToBottom(containerRef, threshold = 0) {
   );
 
   useEffect(() => {
-    mounted.current = true;
     if (containerRef.current?.clientHeight - scrollTop < window.innerHeight) {
       setAtBottom(true);
     }

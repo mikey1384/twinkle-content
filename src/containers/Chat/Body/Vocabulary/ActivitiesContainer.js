@@ -16,7 +16,6 @@ function ActivitiesContainer({ style }) {
   const [scrollAtBottom, setScrollAtBottom] = useState(false);
   const ActivitiesContainerRef = useRef(null);
   const ContentRef = useRef(null);
-  const mounted = useRef(null);
   const timerRef = useRef(null);
   const { userId } = useMyState();
   useEffect(() => {
@@ -25,11 +24,9 @@ function ActivitiesContainer({ style }) {
   }, []);
   useEffect(() => {
     const ActivitiesContainer = ActivitiesContainerRef.current;
-    mounted.current = true;
     addEvent(ActivitiesContainer, 'scroll', handleScroll);
 
     return function cleanUp() {
-      mounted.current = false;
       removeEvent(ActivitiesContainer, 'scroll', handleScroll);
     };
 

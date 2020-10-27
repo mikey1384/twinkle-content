@@ -19,7 +19,6 @@ export default function MonthlyXp({ selectedTheme, userId }) {
   const mounted = useRef(true);
 
   useEffect(() => {
-    mounted.current = true;
     init();
     async function init() {
       const data = await loadMonthlyXp(userId);

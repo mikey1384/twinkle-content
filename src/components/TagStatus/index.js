@@ -35,7 +35,6 @@ function TagStatus({
   const mounted = useRef(true);
 
   useEffect(() => {
-    mounted.current = true;
     if (onLoadTags) {
       loadTags();
     }

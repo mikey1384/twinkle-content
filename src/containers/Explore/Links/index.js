@@ -61,7 +61,6 @@ export default function Links() {
   }, [byUserLinks]);
 
   useEffect(() => {
-    mounted.current = true;
     init();
     async function init() {
       if (!loaded) {

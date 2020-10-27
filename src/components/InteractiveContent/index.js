@@ -113,7 +113,6 @@ export default function InteractiveContent({ interactiveId }) {
   }, [displayedSlideIds]);
 
   useEffect(() => {
-    mounted.current = true;
     return function onUnmount() {
       mounted.current = false;
     };

@@ -63,7 +63,6 @@ function Chat({ onFileUpload }) {
   ]);
 
   useEffect(() => {
-    mounted.current = true;
     if (userId && (loaded || !userId || !socket.connected)) {
       if (userId && selectedChannelId) {
         updateChatLastRead(selectedChannelId);

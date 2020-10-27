@@ -36,7 +36,6 @@ function SlideEmbedly({
   const fallbackImage = '/img/link.png';
 
   useEffect(() => {
-    mounted.current = true;
     if (!thumbUrl || (prevUrl && url !== prevUrl)) {
       fetchUrlData();
     }

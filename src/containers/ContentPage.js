@@ -30,7 +30,7 @@ export default function ContentPage({
   const contentType = url.split('/')[1].slice(0, -1);
   const { loaded, deleted } = useContentState({ contentType, contentId });
   const [exists, setExists] = useState(true);
-  const mounted = useRef(null);
+  const mounted = useRef(true);
   const prevDeleted = useRef(false);
 
   useEffect(() => {
@@ -43,7 +43,6 @@ export default function ContentPage({
   }, [deleted, loaded]);
 
   useEffect(() => {
-    mounted.current = true;
     if (!loaded) {
       initContent();
     }

@@ -138,7 +138,6 @@ export default function LinkPage({
   }, [deleted]);
 
   useEffect(() => {
-    mounted.current = true;
     if (!loaded) {
       handleLoadLinkPage();
     }

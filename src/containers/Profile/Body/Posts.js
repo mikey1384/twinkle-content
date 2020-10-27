@@ -65,7 +65,6 @@ export default function Posts({
   });
 
   useEffect(() => {
-    mounted.current = true;
     return function cleanUp() {
       mounted.current = false;
     };

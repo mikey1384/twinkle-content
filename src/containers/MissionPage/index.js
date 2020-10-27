@@ -70,8 +70,6 @@ export default function MissionPage({
   }, [userId]);
 
   useEffect(() => {
-    mounted.current = true;
-
     return function onUnmount() {
       mounted.current = false;
     };

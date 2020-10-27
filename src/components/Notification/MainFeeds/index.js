@@ -65,7 +65,6 @@ function MainFeeds({
   const mounted = useRef(true);
 
   useEffect(() => {
-    mounted.current = true;
     if (totalRewardedTwinkles > 0) {
       setTotalTwinkles(totalRewardedTwinkles);
     }

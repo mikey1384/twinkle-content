@@ -74,7 +74,6 @@ export default function NavMenu({ playlistId, videoId }) {
   ]);
 
   useEffect(() => {
-    mounted.current = true;
     socket.on('new_reward_posted', handleNewReward);
 
     return function cleanUp() {

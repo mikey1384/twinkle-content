@@ -115,7 +115,6 @@ export default function ContentPanel({
   });
 
   useEffect(() => {
-    mounted.current = true;
     const container = ContainerRef.current;
     return function cleanUp() {
       onSetPlaceholderHeight({

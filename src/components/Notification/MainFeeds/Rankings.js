@@ -20,7 +20,6 @@ export default function Rankings() {
   const prevId = useRef(userId);
 
   useEffect(() => {
-    mounted.current = true;
     userChangedTab.current = false;
     if (!rankingsLoaded && mounted.current) {
       setAllSelected(!!userId);

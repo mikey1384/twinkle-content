@@ -38,7 +38,6 @@ export default function SelectVideoModal({ onSend, onHide }) {
   const contentObjs = useRef({});
 
   useEffect(() => {
-    mounted.current = true;
     initScreen();
     async function initScreen() {
       const { results, loadMoreButton } = await loadUploads({

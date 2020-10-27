@@ -50,7 +50,6 @@ export default function ApproveInterface({
   );
 
   useEffect(() => {
-    mounted.current = true;
     return function cleanUp() {
       onSetMissionFeedbackForm({
         attemptId: attempt.id,
