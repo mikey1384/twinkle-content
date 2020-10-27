@@ -218,6 +218,7 @@ export default function InteractiveContent({ interactiveId }) {
             `}
           >
             <Button
+              style={{ fontSize: '1.7rem' }}
               skeuomorphic
               onClick={() => {
                 document.getElementById('App').scrollTop = 0;
