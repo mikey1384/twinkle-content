@@ -255,9 +255,6 @@ export default function Body({
         setLoadingComments(false);
       }
     }
-    return function cleanUp() {
-      mounted.current = false;
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -310,6 +307,12 @@ export default function Body({
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
+
+  useEffect(() => {
+    return function cleanUp() {
+      mounted.current = false;
+    };
+  }, []);
 
   return (
     <ErrorBoundary>
@@ -679,11 +682,13 @@ export default function Body({
   async function handleCommentSubmit(params) {
     if (contentType === 'subject' && contentObj.secretAnswer && !secretShown) {
       await handleExpandComments();
-      onChangeSpoilerStatus({
-        shown: true,
-        subjectId: contentObj.id,
-        prevSecretViewerId: userId
-      });
+      if (mounted.current) {
+        onChangeSpoilerStatus({
+          shown: true,
+          subjectId: contentObj.id,
+          prevSecretViewerId: userId
+        });
+      }
     } else {
       onCommentSubmit(params);
     }
@@ -726,8 +731,10 @@ export default function Body({
       contentId,
       limit: commentsLoadLimit
     });
-    onLoadComments({ ...data, contentId, contentType });
-    onSetCommentsShown({ contentId, contentType });
+    if (mounted.current) {
+      onLoadComments({ ...data, contentId, contentType });
+      onSetCommentsShown({ contentId, contentType });
+    }
   }
 
   async function handleLikeClick({ isUnlike }) {
