@@ -41,6 +41,7 @@ export default function InteractiveContent({ interactiveId }) {
   const mounted = useRef(true);
   const expanded = useRef(false);
   const SlideRefs = useRef({});
+  const prevDisplayedSlideIds = useRef([]);
 
   const {
     numUpdates,
@@ -103,6 +104,13 @@ export default function InteractiveContent({ interactiveId }) {
     }
     expanded.current = false;
   }, [displayedSlideIds, slideObj]);
+
+  useEffect(() => {
+    if (displayedSlideIds?.length < prevDisplayedSlideIds?.current?.length) {
+      scrollElementToCenter(SlideRefs.current[displayedSlideIds.length - 1]);
+    }
+    prevDisplayedSlideIds.current = displayedSlideIds;
+  }, [displayedSlideIds]);
 
   useEffect(() => {
     mounted.current = true;
@@ -215,7 +223,6 @@ export default function InteractiveContent({ interactiveId }) {
       if (
         newSlides.filter((slideId) => !slideObj[slideId].isDeleted).length > 0
       ) {
-        console.log(newSlides);
         expanded.current = true;
         if (slideObj[slideId].selectedForkButtonId) {
           const index = displayedSlideIds.indexOf(slideId);
