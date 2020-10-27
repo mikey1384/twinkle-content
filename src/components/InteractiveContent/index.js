@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import Slide from './Slide';
 import Loading from 'components/Loading';
 import BottomInterface from './BottomInterface';
+import Button from 'components/Button';
 import { useAppContext, useInteractiveContext, useViewContext } from 'contexts';
 import { scrollElementToCenter } from 'helpers';
-import { mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 
 InteractiveContent.propTypes = {
@@ -42,6 +43,7 @@ export default function InteractiveContent({ interactiveId }) {
   const expanded = useRef(false);
   const SlideRefs = useRef({});
   const prevDisplayedSlideIds = useRef([]);
+  const BodyRef = useRef(document.scrollingElement || document.documentElement);
 
   const {
     numUpdates,
@@ -191,6 +193,38 @@ export default function InteractiveContent({ interactiveId }) {
             />
           ))}
         </>
+      )}
+      {loaded && displayedSlideIds.length > 0 && !lastFork && (
+        <div
+          style={{
+            width: '100%',
+            padding: '1rem',
+            background: '#fff',
+            display: 'flex',
+            justifyContent: 'center'
+          }}
+          className={css`
+            margin-top: 5rem;
+            border: 1px solid ${Color.borderGray()};
+            border-radius: ${borderRadius};
+            @media (max-width: ${mobileMaxWidth}) {
+              margin-top: 2rem;
+              border-left: 0;
+              border-right: 0;
+              border-radius: 0;
+            }
+          `}
+        >
+          <Button
+            skeuomorphic
+            onClick={() => {
+              document.getElementById('App').scrollTop = 0;
+              BodyRef.current.scrollTop = 0;
+            }}
+          >
+            Back to Top
+          </Button>
+        </div>
       )}
       {loaded && canEdit && (
         <BottomInterface
