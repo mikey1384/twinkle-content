@@ -96,23 +96,34 @@ export default function InteractiveContent({ interactiveId }) {
       expanded.current &&
       slideObj[displayedSlideIds[displayedSlideIds.length - 1]]?.forkedFrom
     ) {
-      scrollElementToCenter(
-        SlideRefs.current[
-          displayedSlideIds.indexOf(
-            slideObj[displayedSlideIds[displayedSlideIds.length - 1]].forkedFrom
-          ) + 1
-        ]
-      );
+      setTimeout(() => {
+        scrollElementToCenter(
+          SlideRefs.current[
+            slideObj[
+              displayedSlideIds[
+                displayedSlideIds.indexOf(
+                  slideObj[displayedSlideIds[displayedSlideIds.length - 1]]
+                    .forkedFrom
+                ) + 1
+              ]
+            ].id
+          ]
+        );
+      }, 10);
     }
     expanded.current = false;
   }, [displayedSlideIds, slideObj]);
 
   useEffect(() => {
     if (displayedSlideIds?.length < prevDisplayedSlideIds?.current?.length) {
-      scrollElementToCenter(SlideRefs.current[displayedSlideIds.length - 1]);
+      scrollElementToCenter(
+        SlideRefs.current[
+          slideObj[displayedSlideIds[displayedSlideIds.length - 1]].id
+        ]
+      );
     }
     prevDisplayedSlideIds.current = displayedSlideIds;
-  }, [displayedSlideIds]);
+  }, [displayedSlideIds, slideObj]);
 
   useEffect(() => {
     return function onUnmount() {
@@ -169,7 +180,7 @@ export default function InteractiveContent({ interactiveId }) {
               archivedSlides={archivedSlides}
               displayedSlideIds={displayedSlideIds}
               index={index}
-              innerRef={(ref) => (SlideRefs.current[index] = ref)}
+              innerRef={(ref) => (SlideRefs.current[slideId] = ref)}
               insertButtonShown={index !== 0 && canEdit}
               cannotMoveUp={
                 index === 0 || !!slideObj[displayedSlideIds[index - 1]]?.isFork
