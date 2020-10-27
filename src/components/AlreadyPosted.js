@@ -26,11 +26,6 @@ export default function AlreadyPosted({
   videoCode
 }) {
   const mounted = useRef(true);
-  useEffect(() => {
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
   const {
     requestHelpers: { checkContentUrl }
   } = useAppContext();
@@ -57,6 +52,10 @@ export default function AlreadyPosted({
       checkExists();
     }
 
+    return function cleanUp() {
+      mounted.current = false;
+    };
+
     async function checkExists() {
       setLoading(true);
       const { content } = await checkContentUrl({
@@ -64,12 +63,12 @@ export default function AlreadyPosted({
         url,
         videoCode
       });
-      setTimeout(() => {
-        if (mounted.current) {
-          onSetExistingContent({ contentId, contentType, content });
-          setLoading(false);
-        }
-      }, 10);
+      if (mounted.current) {
+        onSetExistingContent({ contentId, contentType, content });
+      }
+      if (mounted.current) {
+        setLoading(false);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url, uploaderId]);

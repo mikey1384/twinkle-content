@@ -235,16 +235,12 @@ export default function Body({
   }, [canDelete, canEdit, contentId, contentType, uploader.id, userId]);
 
   useEffect(() => {
-    if (
-      !commentsLoaded &&
-      !(numPreviewComments > 0 && previewLoaded) &&
-      mounted.current
-    ) {
+    if (!commentsLoaded && !(numPreviewComments > 0 && previewLoaded)) {
       loadInitialComments(numPreviewComments);
     }
 
     async function loadInitialComments(numPreviewComments) {
-      if (!numPreviewComments && mounted.current) {
+      if (!numPreviewComments) {
         setLoadingComments(true);
       }
       const isPreview = !!numPreviewComments;
@@ -254,22 +250,18 @@ export default function Body({
         limit: numPreviewComments || commentsLoadLimit,
         isPreview
       });
-      setTimeout(() => {
-        if (mounted.current) {
-          onLoadComments({
-            ...data,
-            contentId,
-            contentType,
-            isPreview
-          });
-          setLoadingComments(false);
-        }
-      }, 100);
+      if (mounted.current) {
+        onLoadComments({
+          ...data,
+          contentId,
+          contentType,
+          isPreview
+        });
+      }
+      if (mounted.current) {
+        setLoadingComments(false);
+      }
     }
-
-    return function cleanUp() {
-      mounted.current = false;
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
