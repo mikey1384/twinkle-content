@@ -60,7 +60,11 @@ function People() {
     loadable: loadMoreButton,
     loading,
     feedsLength: profiles.length,
-    onScrollToBottom: () => setLoading(true),
+    onScrollToBottom: () => {
+      if (mounted.current) {
+        setLoading(true);
+      }
+    },
     onLoad: loadMoreProfiles
   });
 

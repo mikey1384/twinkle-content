@@ -73,7 +73,11 @@ export default function Stories() {
     feedsLength: feeds.length,
     loadable: loadMoreButton,
     loading: loadingMore,
-    onScrollToBottom: () => setLoadingMore(true),
+    onScrollToBottom: () => {
+      if (mounted.current) {
+        setLoadingMore(true);
+      }
+    },
     onLoad: handleLoadMoreFeeds
   });
 
@@ -121,8 +125,12 @@ export default function Stories() {
         const { data } = await loadFeeds({
           mustInclude: 'totalRecommendations'
         });
-        onLoadFeeds(data);
-        setLoadingFeeds(false);
+        if (mounted.current) {
+          onLoadFeeds(data);
+        }
+        if (mounted.current) {
+          setLoadingFeeds(false);
+        }
       } catch (error) {
         console.error(error);
       }
@@ -237,9 +245,15 @@ export default function Stories() {
       categoryRef.current === 'uploads' &&
       mounted.current
     ) {
-      onLoadFeeds(data);
-      onSetDisplayOrder('desc');
-      setLoadingFeeds(false);
+      if (mounted.current) {
+        onLoadFeeds(data);
+      }
+      if (mounted.current) {
+        onSetDisplayOrder('desc');
+      }
+      if (mounted.current) {
+        setLoadingFeeds(false);
+      }
     }
   }
 
@@ -261,6 +275,8 @@ export default function Stories() {
       });
       if (mounted.current) {
         onLoadMoreFeeds(data);
+      }
+      if (mounted.current) {
         setLoadingMore(false);
       }
     } catch (error) {
@@ -285,9 +301,15 @@ export default function Stories() {
         loadedFilter === categoryObj[categoryRef.current].filter &&
         categoryRef.current === newCategory
       ) {
-        onLoadFeeds(data);
-        onSetDisplayOrder('desc');
-        setLoadingFeeds(false);
+        if (mounted.current) {
+          onLoadFeeds(data);
+        }
+        if (mounted.current) {
+          onSetDisplayOrder('desc');
+        }
+        if (mounted.current) {
+          setLoadingFeeds(false);
+        }
       }
     }
   }
@@ -314,8 +336,12 @@ export default function Stories() {
       const data = await loadNewFeeds({
         lastInteraction: feeds[0] ? feeds[0].lastInteraction : 0
       });
-      if (data && mounted.current) onLoadNewFeeds(data);
-      setLoadingNewFeeds(false);
+      if (data && mounted.current) {
+        onLoadNewFeeds(data);
+      }
+      if (mounted.current) {
+        setLoadingNewFeeds(false);
+      }
     }
   }
 
@@ -329,10 +355,16 @@ export default function Stories() {
       orderBy: categoryObj[category].orderBy,
       filter: initialFilter
     });
-    if (filter === initialFilter && mounted.current) {
-      onLoadFeeds(data);
-      onSetDisplayOrder(newDisplayOrder);
-      setLoadingFeeds(false);
+    if (filter === initialFilter) {
+      if (mounted.current) {
+        onLoadFeeds(data);
+      }
+      if (mounted.current) {
+        onSetDisplayOrder(newDisplayOrder);
+      }
+      if (mounted.current) {
+        setLoadingFeeds(false);
+      }
     }
   }
 }
