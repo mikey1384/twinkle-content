@@ -31,6 +31,13 @@ ProfilePanel.propTypes = {
 };
 
 function ProfilePanel({ expandable, profileId }) {
+  const mounted = useRef(true);
+  useEffect(() => {
+    return function cleanUp() {
+      mounted.current = false;
+    };
+  }, []);
+
   const history = useHistory();
   const profile = useContentState({
     contentType: 'user',
@@ -89,7 +96,6 @@ function ProfilePanel({ expandable, profileId }) {
     rootMargin: '50px 0px 0px 0px',
     threshold: 0
   });
-  const mounted = useRef(true);
   const PanelRef = useRef(null);
   const ContainerRef = useRef(null);
   const visibleRef = useRef(previousVisible);
@@ -109,7 +115,6 @@ function ProfilePanel({ expandable, profileId }) {
   });
 
   useEffect(() => {
-    mounted.current = true;
     const container = ContainerRef.current;
     return function cleanUp() {
       onSetPlaceholderHeight({
@@ -122,7 +127,6 @@ function ProfilePanel({ expandable, profileId }) {
         contentId: profileId,
         visible: visibleRef.current
       });
-      mounted.current = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -208,12 +212,6 @@ function ProfilePanel({ expandable, profileId }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profileId, userId, profile.loaded, commentsLoaded, previewLoaded]);
-
-  useEffect(() => {
-    return function onUnmount() {
-      mounted.current = false;
-    };
-  }, []);
 
   const canEdit = userId === profileId || isCreator;
   const noBio = !profileFirstRow && !profileSecondRow && !profileThirdRow;

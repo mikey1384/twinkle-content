@@ -99,6 +99,13 @@ function Comment({
     isNotification
   }
 }) {
+  const mounted = useRef(true);
+  useEffect(() => {
+    return function cleanUp() {
+      mounted.current = false;
+    };
+  }, []);
+
   subject = subject || comment.targetObj?.subject || {};
   const { fileType } = getFileInfoFromFileName(fileName);
   const history = useHistory();
@@ -155,7 +162,6 @@ function Comment({
   const prevReplies = useRef(replies);
   const ReplyInputAreaRef = useRef(null);
   const ReplyRefs = {};
-  const mounted = useRef(true);
   const RewardInterfaceRef = useRef(null);
 
   const isRecommendedByUser = useMemo(() => {
@@ -320,7 +326,6 @@ function Comment({
   }, [isPreview, rewardLevel, rewards, userId, xpRewardInterfaceShown]);
 
   useEffect(() => {
-    mounted.current = true;
     if (mounted.current) {
       if (
         userId &&
@@ -349,12 +354,6 @@ function Comment({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subjectState.id, subjectState.prevSecretViewerId, userId]);
-
-  useEffect(() => {
-    return function onUnmount() {
-      mounted.current = false;
-    };
-  }, []);
 
   return !deleted && !comment.deleted ? (
     <>

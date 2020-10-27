@@ -16,6 +16,13 @@ SecretAnswer.propTypes = {
 };
 
 function SecretAnswer({ answer, onClick, style, subjectId, uploaderId }) {
+  const mounted = useRef(true);
+  useEffect(() => {
+    return function cleanUp() {
+      mounted.current = false;
+    };
+  }, []);
+
   const {
     requestHelpers: { checkIfUserResponded }
   } = useAppContext();
@@ -28,9 +35,7 @@ function SecretAnswer({ answer, onClick, style, subjectId, uploaderId }) {
     contentId: subjectId
   });
   const spoilerShown = secretShown || uploaderId === userId;
-  const mounted = useRef(true);
   useEffect(() => {
-    mounted.current = true;
     if (userId && userId !== prevSecretViewerId) {
       init();
     }
@@ -48,10 +53,6 @@ function SecretAnswer({ answer, onClick, style, subjectId, uploaderId }) {
         });
       }
     }
-
-    return function cleanUp() {
-      mounted.current = false;
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prevSecretViewerId, subjectId, userId]);
 

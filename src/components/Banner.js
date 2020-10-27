@@ -23,17 +23,15 @@ export default function Banner({
   spinnerDelay = 1000,
   style = {}
 }) {
-  const timerRef = useRef(null);
-  const mounted = useRef(null);
-  const [spinnerShown, setSpinnerShown] = useState(false);
-
+  const mounted = useRef(true);
   useEffect(() => {
-    mounted.current = true;
-
-    return function onUnmount() {
+    return function cleanUp() {
       mounted.current = false;
     };
   }, []);
+
+  const timerRef = useRef(null);
+  const [spinnerShown, setSpinnerShown] = useState(false);
 
   useEffect(() => {
     if (loading) {

@@ -32,6 +32,12 @@ export default function EditPlaylistModal({
   onHide,
   playlistId
 }) {
+  const mounted = useRef(true);
+  useEffect(() => {
+    return function cleanUp() {
+      mounted.current = false;
+    };
+  }, []);
   const {
     requestHelpers: {
       editPlaylistVideos,
@@ -69,10 +75,8 @@ export default function EditPlaylistModal({
   const openedRemoveVideosTab = useRef(false);
   const playlistVideoObjects = useRef({});
   const initialSelectedVideos = useRef([]);
-  const mounted = useRef(true);
 
   useEffect(() => {
-    mounted.current = true;
     if (mainTabActive && !loaded) {
       init();
     }
@@ -113,12 +117,6 @@ export default function EditPlaylistModal({
       ),
     [addedVideos, modalVideos, removedVideoIds]
   );
-
-  useEffect(() => {
-    return function onUnmount() {
-      mounted.current = false;
-    };
-  }, []);
 
   return (
     <ErrorBoundary>

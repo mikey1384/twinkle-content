@@ -27,14 +27,19 @@ export default function VideoThumbImage({
   style,
   videoId
 }) {
+  const mounted = useRef(true);
+  useEffect(() => {
+    return function cleanUp() {
+      mounted.current = false;
+    };
+  }, []);
+
   const {
     requestHelpers: { auth }
   } = useAppContext();
   const { userId } = useMyState();
   const [xpEarned, setXpEarned] = useState(false);
-  const mounted = useRef(true);
   useEffect(() => {
-    mounted.current = true;
     checkXpStatus();
     async function checkXpStatus() {
       const authorization = auth();
@@ -55,9 +60,6 @@ export default function VideoThumbImage({
         setXpEarned(false);
       }
     }
-    return function cleanUp() {
-      mounted.current = false;
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [videoId, rewardLevel, userId]);
 

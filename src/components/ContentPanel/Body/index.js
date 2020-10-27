@@ -68,6 +68,13 @@ export default function Body({
   numPreviewComments,
   onChangeSpoilerStatus
 }) {
+  const mounted = useRef(true);
+  useEffect(() => {
+    return function cleanUp() {
+      mounted.current = false;
+    };
+  }, []);
+
   const {
     requestHelpers: { deleteContent, loadComments }
   } = useAppContext();
@@ -134,7 +141,6 @@ export default function Body({
     recommendationInterfaceShown,
     setRecommendationInterfaceShown
   ] = useState(false);
-  const mounted = useRef(true);
   const CommentInputAreaRef = useRef(null);
   const RewardInterfaceRef = useRef(null);
 
@@ -229,13 +235,16 @@ export default function Body({
   }, [canDelete, canEdit, contentId, contentType, uploader.id, userId]);
 
   useEffect(() => {
-    mounted.current = true;
-    if (!commentsLoaded && !(numPreviewComments > 0 && previewLoaded)) {
+    if (
+      !commentsLoaded &&
+      !(numPreviewComments > 0 && previewLoaded) &&
+      mounted.current
+    ) {
       loadInitialComments(numPreviewComments);
     }
 
     async function loadInitialComments(numPreviewComments) {
-      if (!numPreviewComments) {
+      if (!numPreviewComments && mounted.current) {
         setLoadingComments(true);
       }
       const isPreview = !!numPreviewComments;
@@ -245,16 +254,22 @@ export default function Body({
         limit: numPreviewComments || commentsLoadLimit,
         isPreview
       });
-      if (mounted.current) {
-        onLoadComments({
-          ...data,
-          contentId,
-          contentType,
-          isPreview
-        });
-        setLoadingComments(false);
-      }
+      setTimeout(() => {
+        if (mounted.current) {
+          onLoadComments({
+            ...data,
+            contentId,
+            contentType,
+            isPreview
+          });
+          setLoadingComments(false);
+        }
+      }, 100);
     }
+
+    return function cleanUp() {
+      mounted.current = false;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -307,12 +322,6 @@ export default function Body({
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
-
-  useEffect(() => {
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
 
   return (
     <ErrorBoundary>
