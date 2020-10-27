@@ -92,6 +92,14 @@ export default function InteractiveContent({ interactiveId }) {
   }, [pageVisible]);
 
   useEffect(() => {
+    if (displayedSlideIds?.length === 1) {
+      scrollElementToCenter(
+        SlideRefs.current[slideObj[displayedSlideIds[0]].id]
+      );
+    }
+  }, [displayedSlideIds, slideObj]);
+
+  useEffect(() => {
     if (
       expanded.current &&
       slideObj[displayedSlideIds[displayedSlideIds.length - 1]]?.forkedFrom
