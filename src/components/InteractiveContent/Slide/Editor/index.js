@@ -421,21 +421,17 @@ export default function Editor({
         post
       });
       onChangeNumUpdates({ interactiveId, numUpdates });
-      newState.isEditing = false;
       onSetSlideState({
         interactiveId,
         slideId,
         newState: {
           ...newState,
+          isEditing: false,
           fileUploadComplete: false,
           fileUploadProgress: null
         }
       });
-      onSetEditInteractiveForm({
-        interactiveId,
-        slideId,
-        form: null
-      });
+      handleSetInputState(post);
     }
 
     function handleUploadProgress({ loaded, total }) {
@@ -478,10 +474,6 @@ export default function Editor({
         fileUploadProgress: null
       }
     });
-    onSetEditInteractiveForm({
-      interactiveId,
-      slideId,
-      form: null
-    });
+    handleSetInputState(post);
   }
 }
