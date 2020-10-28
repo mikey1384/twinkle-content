@@ -280,21 +280,21 @@ export default function InteractiveContent({ autoFocus, interactiveId }) {
         newSlides.filter((slideId) => !slideObj[slideId].isDeleted).length > 0
       ) {
         expanded.current = true;
-        if (slideObj[slideId].selectedForkButtonId) {
-          const index = displayedSlideIds.indexOf(slideId);
-          onSetDisplayedSlides({
-            interactiveId,
-            newSlides: displayedSlideIds.slice(0, index + 1)
-          });
-        }
-        const validNewSlides = newSlides.filter(
-          (slideId) => !!slideObj[slideId] && !slideObj[slideId]?.isDeleted
-        );
-        onConcatDisplayedSlides({
+      }
+      if (slideObj[slideId].selectedForkButtonId) {
+        const index = displayedSlideIds.indexOf(slideId);
+        onSetDisplayedSlides({
           interactiveId,
-          newSlides: validNewSlides
+          newSlides: displayedSlideIds.slice(0, index + 1)
         });
       }
+      const validNewSlides = newSlides.filter(
+        (slideId) => !!slideObj[slideId] && !slideObj[slideId]?.isDeleted
+      );
+      onConcatDisplayedSlides({
+        interactiveId,
+        newSlides: validNewSlides
+      });
     }
   }
 
