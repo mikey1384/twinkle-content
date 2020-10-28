@@ -291,6 +291,13 @@ export default function InteractiveContent({ autoFocus, interactiveId }) {
       const validNewSlides = newSlides.filter(
         (slideId) => !!slideObj[slideId] && !slideObj[slideId]?.isDeleted
       );
+      for (let slideId of validNewSlides) {
+        onSetSlideState({
+          interactiveId,
+          slideId,
+          newState: { selectedForkButtonId: null }
+        });
+      }
       onConcatDisplayedSlides({
         interactiveId,
         newSlides: validNewSlides
