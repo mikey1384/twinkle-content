@@ -71,7 +71,7 @@ export default function InteractiveReducer(state, action) {
       const newSlideObj = { ...state[action.interactiveId].slideObj };
       for (let key of Object.keys(newSlideObj)) {
         if (
-          !newDisplayedSlideIds.includes(key) ||
+          !newDisplayedSlideIds.includes(Number(key)) ||
           Number(key) === action.forkId
         ) {
           newSlideObj[key].selectedForkButtonId = null;
