@@ -125,11 +125,16 @@ export default function InteractiveContent({ autoFocus, interactiveId }) {
 
   useEffect(() => {
     if (displayedSlideIds?.length < prevDisplayedSlideIds?.current?.length) {
-      scrollElementToCenter(
-        SlideRefs.current[
-          slideObj[displayedSlideIds[displayedSlideIds.length - 1]].id
-        ]
-      );
+      if (
+        displayedSlideIds[displayedSlideIds.length - 1] !==
+        prevDisplayedSlideIds.current[prevDisplayedSlideIds.current.length - 1]
+      ) {
+        scrollElementToCenter(
+          SlideRefs.current[
+            slideObj[displayedSlideIds[displayedSlideIds.length - 1]].id
+          ]
+        );
+      }
     }
     prevDisplayedSlideIds.current = displayedSlideIds;
   }, [displayedSlideIds, slideObj]);
