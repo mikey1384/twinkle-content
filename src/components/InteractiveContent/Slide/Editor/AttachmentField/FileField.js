@@ -111,7 +111,11 @@ export default function FileField({
                 flexDirection: 'column'
               }}
             >
-              <Button onClick={() => FileInputRef.current.click()} skeuomorphic>
+              <Button
+                color="orange"
+                onClick={() => FileInputRef.current.click()}
+                skeuomorphic
+              >
                 <Icon icon="paperclip" />
                 <span style={{ marginLeft: '0.7rem' }}>
                   Select {newAttachment ? 'another' : 'a'} file
