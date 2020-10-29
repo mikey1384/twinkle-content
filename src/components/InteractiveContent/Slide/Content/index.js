@@ -91,6 +91,7 @@ export default function Content({
       {attachment && (
         <div
           style={{
+            marginTop: '1rem',
             width: '100%',
             height: '100%',
             display: 'flex',
