@@ -72,6 +72,7 @@ const availableIcons = [
   'surprise',
   'tasks',
   'thumbs-up',
+  'thumbs-down',
   'times',
   'trash-alt',
   'trash-restore',
