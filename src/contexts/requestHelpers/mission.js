@@ -20,6 +20,19 @@ export default function missionRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async checkMissionStatus(missionId) {
+      try {
+        const {
+          data: { status }
+        } = await request.get(
+          `${URL}/mission/status?missionId=${missionId}`,
+          auth()
+        );
+        return Promise.resolve(status);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async loadMission(missionId) {
       try {
         const { data } = await request.get(

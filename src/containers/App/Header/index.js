@@ -16,6 +16,7 @@ import {
   useContentContext,
   useViewContext,
   useHomeContext,
+  useMissionContext,
   useNotiContext,
   useChatContext
 } from 'contexts';
@@ -141,6 +142,10 @@ export default function Header({
       onUploadReply
     }
   } = useContentContext();
+
+  const {
+    actions: { onSetMissionState }
+  } = useMissionContext();
 
   const prevProfilePicId = useRef(profilePicId);
   const peersRef = useRef({});
@@ -361,13 +366,23 @@ export default function Header({
       onChangeSocketStatus(false);
     }
 
-    function handleMissionRewards({ includesCoinReward, includesXpReward }) {
+    function handleMissionRewards({
+      includesCoinReward,
+      includesXpReward,
+      missionId
+    }) {
       if (includesCoinReward) {
         handleUpdateMyCoins();
       }
       if (includesXpReward) {
         handleUpdateMyXp();
       }
+      onSetMissionState({
+        missionId,
+        newState: {
+          myAttempt: { status: 'pass' }
+        }
+      });
     }
 
     function handleNewNotification({ type, target, likes, comment }) {

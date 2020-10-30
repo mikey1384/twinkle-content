@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import LongText from 'components/Texts/LongText';
 import Submit from './Submit';
@@ -10,6 +10,7 @@ import { panel } from '../../Styles';
 import { gifTable } from 'constants/defaultValues';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
+import { useViewContext, useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
 Mission.propTypes = {
@@ -35,6 +36,32 @@ export default function Mission({
   style,
   onSetMissionState
 }) {
+  const {
+    requestHelpers: { checkMissionStatus }
+  } = useAppContext();
+  const {
+    state: { pageVisible }
+  } = useViewContext();
+
+  useEffect(() => {
+    if (pageVisible) {
+      handleCheckMissionStatus();
+    }
+
+    async function handleCheckMissionStatus() {
+      const status = await checkMissionStatus(missionId);
+      if (status) {
+        onSetMissionState({
+          missionId,
+          newState: {
+            myAttempt: { status }
+          }
+        });
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageVisible]);
+
   const { canEdit } = useMyState();
   return (
     <ErrorBoundary
