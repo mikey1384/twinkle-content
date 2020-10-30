@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Attachment from '../../Attachment';
 import ForkButtons from './ForkButtons';
@@ -7,6 +7,7 @@ import Icon from 'components/Icon';
 import Button from 'components/Button';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
+import { stringIsEmpty } from 'helpers/stringHelpers';
 
 Content.propTypes = {
   forkedFrom: PropTypes.number,
@@ -23,6 +24,7 @@ Content.propTypes = {
   onPortalButtonClick: PropTypes.func,
   onSetEmbedProps: PropTypes.func,
   onThumbnailUpload: PropTypes.func,
+  paddingShown: PropTypes.bool,
   portalButton: PropTypes.object,
   slideId: PropTypes.number,
   selectedForkButtonId: PropTypes.number
@@ -43,10 +45,16 @@ export default function Content({
   onPortalButtonClick,
   onSetEmbedProps,
   onThumbnailUpload,
+  paddingShown,
   portalButton,
   slideId,
   selectedForkButtonId
 }) {
+  const headingShown = useMemo(() => !stringIsEmpty(heading), [heading]);
+  const descriptionShown = useMemo(() => !stringIsEmpty(description), [
+    description
+  ]);
+
   return (
     <div style={{ width: '100%', height: '100%' }}>
       {!isPublished && (
@@ -60,7 +68,7 @@ export default function Content({
           }}
         >{`(Draft)`}</div>
       )}
-      {heading && (
+      {headingShown && (
         <p
           className={css`
             text-align: center;
@@ -75,7 +83,7 @@ export default function Content({
           {heading}
         </p>
       )}
-      {description && (
+      {descriptionShown && (
         <div
           className={css`
             font-size: 2rem;
@@ -118,6 +126,7 @@ export default function Content({
       )}
       {forkButtonIds?.length > 0 && (
         <ForkButtons
+          descriptionShown={descriptionShown}
           forkButtonIds={forkButtonIds}
           forkButtonsObj={forkButtonsObj}
           onForkButtonClick={onForkButtonClick}
@@ -131,7 +140,7 @@ export default function Content({
             display: 'flex',
             justifyContent: 'center',
             marginTop: '3rem',
-            marginBottom: '-2rem'
+            marginBottom: paddingShown ? '-2rem' : 0
           }}
         >
           <Button

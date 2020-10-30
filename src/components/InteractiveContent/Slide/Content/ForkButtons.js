@@ -6,6 +6,7 @@ import { css } from 'emotion';
 import { Color, mobileMaxWidth } from 'constants/css';
 
 ForkButtons.propTypes = {
+  descriptionShown: PropTypes.bool,
   forkButtonIds: PropTypes.array.isRequired,
   forkButtonsObj: PropTypes.object.isRequired,
   onForkButtonClick: PropTypes.func.isRequired,
@@ -13,6 +14,7 @@ ForkButtons.propTypes = {
 };
 
 export default function ForkButtons({
+  descriptionShown,
   forkButtonIds,
   forkButtonsObj,
   onForkButtonClick,
@@ -21,7 +23,7 @@ export default function ForkButtons({
   return (
     <div
       className={css`
-        margin-top: 5rem;
+        margin-top: ${descriptionShown ? '5rem' : '3rem'};
         display: flex;
         flex-direction: column;
         align-items: center;

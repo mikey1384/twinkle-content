@@ -295,6 +295,7 @@ export default function Slide({
             }
             onSetEmbedProps={handleSetEmbedProps}
             onThumbnailUpload={handleThumbnailUpload}
+            paddingShown={paddingShown}
             slideId={slideId}
             selectedForkButtonId={selectedForkButtonId}
           />
