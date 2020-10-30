@@ -4,6 +4,7 @@ import FileViewer from 'components/FileViewer';
 import UsernameText from 'components/Texts/UsernameText';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
+import LongText from 'components/Texts/LongText';
 import { borderRadius, Color } from 'constants/css';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { stringIsEmpty, addCommasToNumber } from 'helpers/stringHelpers';
@@ -125,12 +126,12 @@ export default function ApprovedStatus({ mission, onSetMissionState, style }) {
                 />
                 <span>{timeSince(mission.myAttempt.reviewTimeStamp)}</span>
               </div>
-              <div>
+              <LongText>
                 {mission.myAttempt.feedback ||
                   (mission.myAttempt.status === 'pass'
                     ? 'Great job!'
                     : 'Please try again')}
-              </div>
+              </LongText>
             </>
           )}
         </div>

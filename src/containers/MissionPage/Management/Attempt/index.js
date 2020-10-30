@@ -98,7 +98,10 @@ export default function Attempt({
                 color={Color.blue()}
                 user={attempt.reviewer}
               />{' '}
-              <span>{attempt.status} this attempt</span>{' '}
+              <span>
+                {attempt.status === 'pass' ? 'approved' : 'rejected'} this
+                attempt
+              </span>{' '}
               <span>{timeSince(attempt.reviewTimeStamp)}</span>
             </div>
           )}
@@ -111,7 +114,7 @@ export default function Attempt({
                 borderRadius
               }}
             >
-              {attempt.feedback}
+              <LongText>{attempt.feedback}</LongText>
             </div>
           )}
         </div>
