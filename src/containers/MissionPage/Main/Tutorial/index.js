@@ -35,7 +35,7 @@ export default function Tutorial({
       {!!mission.tutorialId &&
         mission.tutorialIsPublished &&
         !mission.tutorialStarted &&
-        mission.myAttempt.status !== 'pass' &&
+        mission.myAttempt?.status !== 'pass' &&
         !canEdit && (
           <ViewTutorial
             onStartClick={() =>
@@ -49,7 +49,7 @@ export default function Tutorial({
       {!!mission.tutorialId &&
         (mission.tutorialStarted ||
           canEdit ||
-          mission.myAttempt.status === 'pass') && (
+          mission.myAttempt?.status === 'pass') && (
           <InteractiveContent
             autoFocus={!canEdit}
             interactiveId={mission.tutorialId}
