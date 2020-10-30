@@ -5,6 +5,7 @@ import Submit from './Submit';
 import ApprovedStatus from './ApprovedStatus';
 import PendingStatus from './PendingStatus';
 import RewardText from 'components/Texts/RewardText';
+import ErrorBoundary from 'components/ErrorBoundary';
 import { panel } from '../../Styles';
 import { gifTable } from 'constants/defaultValues';
 import { mobileMaxWidth } from 'constants/css';
@@ -36,7 +37,7 @@ export default function Mission({
 }) {
   const { canEdit } = useMyState();
   return (
-    <div
+    <ErrorBoundary
       className={`${panel} ${
         canEdit
           ? ''
@@ -102,6 +103,6 @@ export default function Mission({
           style={{ marginTop: '4.5rem' }}
         />
       )}
-    </div>
+    </ErrorBoundary>
   );
 }

@@ -6,6 +6,7 @@ import RightMenu from './RightMenu';
 import InvalidPage from 'components/InvalidPage';
 import Management from './Management';
 import FilterBar from 'components/FilterBar';
+import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from 'emotion';
 import { mobileMaxWidth } from 'constants/css';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
@@ -78,7 +79,7 @@ export default function MissionPage({
   return userId ? (
     loaded && mission.loaded ? (
       mission.id ? (
-        <div style={{ width: '100%' }}>
+        <ErrorBoundary style={{ width: '100%' }}>
           {canEdit && (
             <FilterBar
               className="mobile"
@@ -173,7 +174,7 @@ export default function MissionPage({
               />
             )}
           </div>
-        </div>
+        </ErrorBoundary>
       ) : (
         <InvalidPage />
       )

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Mission from './Mission';
 import Tutorial from './Tutorial';
 import Loading from 'components/Loading';
+import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from 'emotion';
 import { mobileMaxWidth } from 'constants/css';
 
@@ -14,7 +15,7 @@ Main.propTypes = {
 
 export default function Main({ mission, onSetMissionState, style }) {
   return (
-    <div style={{ width: '100%', ...style }}>
+    <ErrorBoundary style={{ width: '100%', ...style }}>
       {mission ? (
         <div style={{ width: '100%' }}>
           <Mission
@@ -38,6 +39,6 @@ export default function Main({ mission, onSetMissionState, style }) {
       ) : (
         <Loading text="Loading Mission..." />
       )}
-    </div>
+    </ErrorBoundary>
   );
 }

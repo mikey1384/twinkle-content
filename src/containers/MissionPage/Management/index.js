@@ -4,6 +4,7 @@ import Attempt from './Attempt';
 import FilterBar from 'components/FilterBar';
 import Loading from 'components/Loading';
 import InvalidPage from 'components/InvalidPage';
+import ErrorBoundary from 'components/ErrorBoundary';
 import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
@@ -62,7 +63,7 @@ export default function Management({ mission, missionId, onSetMissionState }) {
   }
 
   return (
-    <div style={{ width: '100%', marginBottom: '10rem' }}>
+    <ErrorBoundary style={{ width: '100%', marginBottom: '10rem' }}>
       <FilterBar
         bordered
         style={{
@@ -136,6 +137,6 @@ export default function Management({ mission, missionId, onSetMissionState }) {
           })}
         </>
       )}
-    </div>
+    </ErrorBoundary>
   );
 }

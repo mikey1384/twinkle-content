@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import AddTutorial from './AddTutorial';
 import ViewTutorial from './ViewTutorial';
 import InteractiveContent from 'components/InteractiveContent';
+import ErrorBoundary from 'components/ErrorBoundary';
 import { useMyState } from 'helpers/hooks';
 
 Tutorial.propTypes = {
@@ -20,7 +21,7 @@ export default function Tutorial({
 }) {
   const { canEdit } = useMyState();
   return (
-    <div
+    <ErrorBoundary
       className={className}
       style={{
         display: 'flex',
@@ -55,6 +56,6 @@ export default function Tutorial({
             interactiveId={mission.tutorialId}
           />
         )}
-    </div>
+    </ErrorBoundary>
   );
 }
