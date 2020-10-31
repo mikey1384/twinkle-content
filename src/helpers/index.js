@@ -102,6 +102,23 @@ export function scrollElementToCenter(element, adjustment = -50) {
   }
 }
 
+export function scrollElementTo({ element, amount }) {
+  if (!element) return;
+  let offsetTop = 0;
+  const body = document
+    ? document.scrollingElement || document.documentElement
+    : {};
+  addAllOffsetTop(element);
+  body.scrollTop = offsetTop + amount - 350;
+  document.getElementById('App').scrollTop = offsetTop + amount - 350;
+  function addAllOffsetTop(element) {
+    offsetTop += element.offsetTop;
+    if (element.offsetParent) {
+      addAllOffsetTop(element.offsetParent);
+    }
+  }
+}
+
 export function textIsOverflown(element) {
   return (
     element.scrollHeight > element.clientHeight ||

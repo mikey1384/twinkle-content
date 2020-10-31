@@ -6,7 +6,7 @@ import Loading from 'components/Loading';
 import BottomInterface from './BottomInterface';
 import Button from 'components/Button';
 import { useAppContext, useInteractiveContext, useViewContext } from 'contexts';
-import { scrollElementToCenter } from 'helpers';
+import { scrollElementToCenter, scrollElementTo } from 'helpers';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 
@@ -106,18 +106,20 @@ export default function InteractiveContent({ autoFocus, interactiveId }) {
       slideObj[displayedSlideIds[displayedSlideIds.length - 1]]?.forkedFrom
     ) {
       setTimeout(() => {
-        scrollElementToCenter(
-          SlideRefs.current[
-            slideObj[
-              displayedSlideIds[
-                displayedSlideIds.indexOf(
-                  slideObj[displayedSlideIds[displayedSlideIds.length - 1]]
-                    .forkedFrom
-                ) + 1
-              ]
-            ].id
-          ]
-        );
+        scrollElementTo({
+          element:
+            SlideRefs.current[
+              slideObj[
+                displayedSlideIds[
+                  displayedSlideIds.indexOf(
+                    slideObj[displayedSlideIds[displayedSlideIds.length - 1]]
+                      .forkedFrom
+                  ) + 1
+                ]
+              ].id
+            ],
+          amount: 50
+        });
       }, 10);
     }
     expanded.current = false;
