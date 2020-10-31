@@ -97,8 +97,8 @@ export default function MissionList({
                           coinReward={mission.coinReward}
                           xpReward={mission.xpReward}
                         />
-                        {mission.myAttempt.status &&
-                          mission.myAttempt.status !== 'pending' && (
+                        {mission.myAttempt?.status &&
+                          mission.myAttempt?.status !== 'pending' && (
                             <div
                               className={css`
                                 font-size: 1.3rem;
@@ -109,12 +109,12 @@ export default function MissionList({
                               style={{
                                 fontWeight: 'bold',
                                 color:
-                                  mission.myAttempt.status === 'pass'
+                                  mission.myAttempt?.status === 'pass'
                                     ? Color.green()
                                     : Color.rose()
                               }}
                             >
-                              {mission.myAttempt.status}ed
+                              {mission.myAttempt?.status}ed
                             </div>
                           )}
                       </div>
