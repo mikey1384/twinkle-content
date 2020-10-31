@@ -144,7 +144,7 @@ export default function ApprovedStatus({ mission, onSetMissionState, style }) {
             onClick={() =>
               onSetMissionState({
                 missionId: mission.id,
-                newState: { myAttempt: null }
+                newState: { tryingAgain: true }
               })
             }
             filled

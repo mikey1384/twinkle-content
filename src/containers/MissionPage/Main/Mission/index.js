@@ -31,7 +31,8 @@ export default function Mission({
     id: missionId,
     myAttempt,
     xpReward,
-    coinReward
+    coinReward,
+    tryingAgain
   },
   style,
   onSetMissionState
@@ -50,11 +51,12 @@ export default function Mission({
 
     async function handleCheckMissionStatus() {
       const status = await checkMissionStatus(missionId);
-      if (status && myAttempt) {
+      if (status && !(status === 'fail' && tryingAgain)) {
         onSetMissionState({
           missionId,
           newState: {
-            myAttempt: { status }
+            myAttempt: { status },
+            tryingAgain: false
           }
         });
       }
@@ -115,7 +117,8 @@ export default function Mission({
       )}
       {myAttempt?.status === 'pending' ? (
         <PendingStatus style={{ marginTop: '7rem' }} />
-      ) : myAttempt?.status === 'pass' || myAttempt?.status === 'fail' ? (
+      ) : myAttempt?.status === 'pass' ||
+        (myAttempt?.status === 'fail' && !tryingAgain) ? (
         <ApprovedStatus
           mission={mission}
           onSetMissionState={onSetMissionState}
