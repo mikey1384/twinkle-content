@@ -35,7 +35,7 @@ export default function MissionPage({
   } = useContentContext();
   const {
     actions: { onLoadMission, onSetMissionState },
-    state: { missionObj }
+    state: { missionObj, prevUserId }
   } = useMissionContext();
 
   const mission = useMemo(() => missionObj[missionId] || {}, [
@@ -52,7 +52,7 @@ export default function MissionPage({
 
   useEffect(() => {
     onUpdateCurrentMission({ missionId: Number(missionId), userId });
-    if (!mission.loaded || (userId && mission.currentUserId !== userId)) {
+    if (!mission.loaded || (userId && prevUserId !== userId)) {
       init();
     }
 
@@ -60,15 +60,15 @@ export default function MissionPage({
       if (userId) {
         const data = await loadMission(missionId);
         if (mounted.current) {
-          onLoadMission({ ...data, currentUserId: userId });
+          onLoadMission({ mission: data, prevUserId: userId });
         }
       } else {
-        onLoadMission({ id: missionId, currentUserId: userId });
+        onLoadMission({ mission: { id: missionId }, prevUserId: userId });
       }
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId, mission.currentUserId]);
+  }, [userId, prevUserId]);
 
   useEffect(() => {
     return function onUnmount() {

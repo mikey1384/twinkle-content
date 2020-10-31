@@ -7,7 +7,8 @@ export const MissionContext = createContext();
 export const initialMissionState = {
   missions: [],
   loadMoreButton: false,
-  missionObj: {}
+  missionObj: {},
+  prevUserId: null
 };
 
 MissionContextProvider.propTypes = {

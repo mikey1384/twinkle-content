@@ -16,28 +16,32 @@ export default function Mission() {
     requestHelpers: { loadMissionList }
   } = useAppContext();
   const {
-    state: { missions, missionObj },
+    state: { missions, missionObj, prevUserId, listLoaded },
     actions: { onLoadMissionList }
   } = useMissionContext();
   const mounted = useRef(true);
 
   useEffect(() => {
-    init();
+    return function cleanUp() {
+      mounted.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!listLoaded || userId !== prevUserId) {
+      init();
+    }
 
     async function init() {
       setLoading(true);
       const { missions, loadMoreButton } = await loadMissionList();
       if (mounted.current) {
         setLoading(false);
-        onLoadMissionList({ missions, loadMoreButton });
+        onLoadMissionList({ missions, loadMoreButton, prevUserId: userId });
       }
     }
-
-    return function onUnmount() {
-      mounted.current = false;
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [listLoaded, prevUserId, userId]);
 
   return (
     <ErrorBoundary>

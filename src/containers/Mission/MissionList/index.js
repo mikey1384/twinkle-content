@@ -26,62 +26,68 @@ export default function MissionList({
         <p style={{ fontWeight: 'bold', fontSize: '2.5rem' }}>All Missions</p>
         <div>
           <div style={{ marginTop: '1rem' }}>
-            {missions.map((missionId, index) => (
-              <ListItem
-                style={{ marginTop: index > 0 ? '1rem' : 0 }}
-                key={missionId}
-                missionId={missionId}
-              >
-                <p
-                  className={css`
-                    font-size: 2rem;
-                    font-weight: bold;
-                    @media (max-width: ${mobileMaxWidth}) {
-                      font-size: 1.7rem;
-                    }
-                  `}
+            {missions.map((missionId, index) => {
+              const mission = missionObj[missionId];
+              return (
+                <ListItem
+                  style={{ marginTop: index > 0 ? '1rem' : 0 }}
+                  key={missionId}
+                  missionId={missionId}
                 >
-                  {missionObj[missionId].title}
-                </p>
-                <div style={{ marginTop: '1rem', display: 'flex' }}>
-                  <img
-                    src={gifTable[missionId]}
-                    style={{ width: '10rem', height: '6rem' }}
-                  />
-                  <div style={{ marginLeft: '1rem' }}>
-                    <div
-                      className={css`
+                  <p
+                    className={css`
+                      font-size: 2rem;
+                      font-weight: bold;
+                      @media (max-width: ${mobileMaxWidth}) {
                         font-size: 1.7rem;
-                        @media (max-width: ${mobileMaxWidth}) {
-                          font-size: 1.3rem;
-                        }
-                      `}
-                    >
-                      {missionObj[missionId].subtitle}
-                    </div>
-                    <RewardText
-                      labelClassName={css`
-                        color: ${Color.darkerGray()};
-                        font-size: 1.4rem;
-                        @media (max-width: ${mobileMaxWidth}) {
-                          font-size: 1.3rem;
-                        }
-                      `}
-                      rewardClassName={css`
-                        font-size: 1.3rem;
-                        @media (max-width: ${mobileMaxWidth}) {
-                          font-size: 1.2rem;
-                        }
-                      `}
-                      style={{ marginTop: '1.5rem' }}
-                      rewardStyle={{ fontSize: '1.2rem' }}
-                      coinReward={missionObj[missionId].coinReward}
-                      xpReward={missionObj[missionId].xpReward}
+                      }
+                    `}
+                  >
+                    {mission.title}
+                  </p>
+                  <div style={{ marginTop: '1rem', display: 'flex' }}>
+                    <img
+                      src={gifTable[missionId]}
+                      style={{ width: '10rem', height: '6rem' }}
                     />
+                    <div style={{ marginLeft: '1rem' }}>
+                      <div
+                        className={css`
+                          font-size: 1.7rem;
+                          @media (max-width: ${mobileMaxWidth}) {
+                            font-size: 1.3rem;
+                          }
+                        `}
+                      >
+                        {mission.subtitle}
+                      </div>
+                      <RewardText
+                        labelClassName={css`
+                          color: ${Color.darkerGray()};
+                          font-size: 1.4rem;
+                          @media (max-width: ${mobileMaxWidth}) {
+                            font-size: 1.3rem;
+                          }
+                        `}
+                        rewardClassName={css`
+                          font-size: 1.3rem;
+                          @media (max-width: ${mobileMaxWidth}) {
+                            font-size: 1.2rem;
+                          }
+                        `}
+                        style={{ marginTop: '1.5rem' }}
+                        rewardStyle={{ fontSize: '1.2rem' }}
+                        coinReward={mission.coinReward}
+                        xpReward={mission.xpReward}
+                      />
+                    </div>
+                    {mission.myAttempt.status && (
+                      <div>{mission.myAttempt.status}</div>
+                    )}
                   </div>
-                </div>
-              </ListItem>
-            ))}
+                </ListItem>
+              );
+            })}
           </div>
         </div>
       </div>

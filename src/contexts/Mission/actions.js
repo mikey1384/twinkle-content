@@ -1,16 +1,18 @@
 export default function MissionActions(dispatch) {
   return {
-    onLoadMission(mission) {
+    onLoadMission({ mission, prevUserId }) {
       return dispatch({
         type: 'LOAD_MISSION',
-        mission
+        mission,
+        prevUserId
       });
     },
-    onLoadMissionList({ missions, loadMoreButton }) {
+    onLoadMissionList({ missions, loadMoreButton, prevUserId }) {
       return dispatch({
         type: 'LOAD_MISSION_LIST',
         missions,
-        loadMoreButton
+        loadMoreButton,
+        prevUserId
       });
     },
     onSetMissionState({ missionId, newState }) {

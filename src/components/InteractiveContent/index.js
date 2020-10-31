@@ -48,7 +48,7 @@ export default function InteractiveContent({ autoFocus, interactiveId }) {
 
   const {
     numUpdates,
-    currentUserId,
+    prevUserId,
     loaded,
     slideObj = {},
     archivedSlideIds,
@@ -83,7 +83,7 @@ export default function InteractiveContent({ autoFocus, interactiveId }) {
             onLoadInteractive({
               ...interactive,
               loaded: true,
-              currentUserId: userId
+              prevUserId: userId
             });
           }
         }
@@ -149,13 +149,13 @@ export default function InteractiveContent({ autoFocus, interactiveId }) {
     init();
 
     async function init() {
-      if (interactiveId && userId && currentUserId !== userId) {
+      if (interactiveId && userId && prevUserId !== userId) {
         const interactive = await loadInteractive(interactiveId);
         if (mounted.current) {
           onLoadInteractive({
             ...interactive,
             loaded: true,
-            currentUserId: userId
+            prevUserId: userId
           });
         }
       } else {
@@ -167,12 +167,12 @@ export default function InteractiveContent({ autoFocus, interactiveId }) {
           displayedSlideIds: [],
           slideObj: {},
           isPublished: false,
-          currentUserId: userId
+          prevUserId: userId
         });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUserId, interactiveId, loaded, userId]);
+  }, [prevUserId, interactiveId, loaded, userId]);
 
   return loaded ? (
     <div

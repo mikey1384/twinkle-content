@@ -57,7 +57,7 @@ export default function missionRequestHelpers({ auth, handleError }) {
     },
     async loadMissionList() {
       try {
-        const { data } = await request.get(`${URL}/mission`);
+        const { data } = await request.get(`${URL}/mission`, auth());
         return Promise.resolve(data);
       } catch (error) {
         return handleError(error);

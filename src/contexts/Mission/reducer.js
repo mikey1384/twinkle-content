@@ -3,6 +3,7 @@ export default function MissionReducer(state, action) {
     case 'LOAD_MISSION': {
       return {
         ...state,
+        prevUserId: action.prevUserId,
         missionObj: {
           ...state.missionObj,
           [action.mission.id]: {
@@ -24,6 +25,8 @@ export default function MissionReducer(state, action) {
       }
       return {
         ...state,
+        listLoaded: true,
+        prevUserId: action.prevUserId,
         missions: action.missions.map(({ id }) => id),
         missionObj: newMissionObj,
         loadMoreButton: action.loadMoreButton
