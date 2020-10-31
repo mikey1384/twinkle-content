@@ -9,6 +9,8 @@ import { useMyState } from 'helpers/hooks';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 import { useAppContext } from 'contexts';
 import { v1 as uuidv1 } from 'uuid';
+import { css } from 'emotion';
+import { mobileMaxWidth } from 'constants/css';
 
 TakeScreenshot.propTypes = {
   attachment: PropTypes.object,
@@ -30,7 +32,7 @@ export default function TakeScreenshot({
   const {
     requestHelpers: { uploadFile, uploadMissionAttempt }
   } = useAppContext();
-  const { authLevel } = useMyState();
+  const { authLevel, username } = useMyState();
   const [alertModalShown, setAlertModalShown] = useState(false);
   const [uploadingFile, setUploadingFile] = useState(false);
   const FileInputRef = useRef(null);
@@ -56,6 +58,45 @@ export default function TakeScreenshot({
         ...style
       }}
     >
+      <div
+        className={css`
+          font-size: 1.3rem;
+          @media (max-width: ${mobileMaxWidth}) {
+            font-size: 1.1rem;
+          }
+        `}
+        style={{
+          marginBottom: '5rem',
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            width: '60%',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}
+        >
+          <p
+            className={css`
+              font-size: 1.5rem;
+              @media (max-width: ${mobileMaxWidth}) {
+                font-size: 1.3rem;
+              }
+            `}
+            style={{ fontWeight: 'bold' }}
+          >
+            Your screenshot must include this section
+          </p>
+          <p style={{ marginTop: '1.5rem' }}>
+            <b>{username}</b> captured this screenshot on {returnNow()}
+          </p>
+        </div>
+      </div>
       {uploadingFile ? (
         <FileUploadStatusIndicator
           style={{
@@ -75,8 +116,9 @@ export default function TakeScreenshot({
             Follow the instructions below
           </div>
           <div>
-            <b>1.</b> Take a screenshot and tap the button below to select the
-            screenshot from your computer
+            <b>1.</b> Take a screenshot of the screen you are looking at right
+            now and tap the button below to select the screenshot from your
+            computer
           </div>
           {attachment?.preview && (
             <div style={{ marginTop: '1rem' }}>
@@ -136,6 +178,11 @@ export default function TakeScreenshot({
       </div>
     </div>
   );
+
+  function returnNow() {
+    const now = new Date(Date.now());
+    return now.toString();
+  }
 
   function handleFileSelection(event) {
     const fileObj = event.target.files[0];
