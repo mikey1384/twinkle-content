@@ -50,7 +50,7 @@ export default function Mission({
 
     async function handleCheckMissionStatus() {
       const status = await checkMissionStatus(missionId);
-      if (status) {
+      if (status && myAttempt) {
         onSetMissionState({
           missionId,
           newState: {
