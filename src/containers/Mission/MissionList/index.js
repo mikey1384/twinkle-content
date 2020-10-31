@@ -4,8 +4,8 @@ import ListItem from './ListItem';
 import RewardText from 'components/Texts/RewardText';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { gifTable } from 'constants/defaultValues';
-import { css } from 'emotion';
 import { Color, mobileMaxWidth } from 'constants/css';
+import { css } from 'emotion';
 
 MissionList.propTypes = {
   style: PropTypes.object,
@@ -50,8 +50,17 @@ export default function MissionList({
                       src={gifTable[missionId]}
                       style={{ width: '10rem', height: '6rem' }}
                     />
-                    <div style={{ marginLeft: '1rem' }}>
+                    <div
+                      style={{
+                        marginLeft: '1rem',
+                        flexGrow: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between'
+                      }}
+                    >
                       <div
+                        style={{ width: '100%' }}
                         className={css`
                           font-size: 1.7rem;
                           @media (max-width: ${mobileMaxWidth}) {
@@ -61,29 +70,54 @@ export default function MissionList({
                       >
                         {mission.subtitle}
                       </div>
-                      <RewardText
-                        labelClassName={css`
-                          color: ${Color.darkerGray()};
-                          font-size: 1.4rem;
-                          @media (max-width: ${mobileMaxWidth}) {
+                      <div
+                        style={{
+                          width: '100%',
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'flex-end',
+                          marginTop: '1.5rem'
+                        }}
+                      >
+                        <RewardText
+                          labelClassName={css`
+                            color: ${Color.darkerGray()};
+                            font-size: 1.4rem;
+                            @media (max-width: ${mobileMaxWidth}) {
+                              font-size: 1.3rem;
+                            }
+                          `}
+                          rewardClassName={css`
                             font-size: 1.3rem;
-                          }
-                        `}
-                        rewardClassName={css`
-                          font-size: 1.3rem;
-                          @media (max-width: ${mobileMaxWidth}) {
-                            font-size: 1.2rem;
-                          }
-                        `}
-                        style={{ marginTop: '1.5rem' }}
-                        rewardStyle={{ fontSize: '1.2rem' }}
-                        coinReward={mission.coinReward}
-                        xpReward={mission.xpReward}
-                      />
+                            @media (max-width: ${mobileMaxWidth}) {
+                              font-size: 1.2rem;
+                            }
+                          `}
+                          rewardStyle={{ fontSize: '1.2rem' }}
+                          coinReward={mission.coinReward}
+                          xpReward={mission.xpReward}
+                        />
+                        {mission.myAttempt.status && (
+                          <div
+                            className={css`
+                              font-size: 1.3rem;
+                              @media (max-width: ${mobileMaxWidth}) {
+                                font-size: 1.1rem;
+                              }
+                            `}
+                            style={{
+                              fontWeight: 'bold',
+                              color:
+                                mission.myAttempt.status === 'pass'
+                                  ? Color.green()
+                                  : Color.rose()
+                            }}
+                          >
+                            {mission.myAttempt.status}ed
+                          </div>
+                        )}
+                      </div>
                     </div>
-                    {mission.myAttempt.status && (
-                      <div>{mission.myAttempt.status}</div>
-                    )}
                   </div>
                 </ListItem>
               );
