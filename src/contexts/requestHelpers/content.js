@@ -506,6 +506,18 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async makeThumbnailSecure({ contentId, contentType, thumbUrl }) {
+      try {
+        const { data } = await request.put(
+          `${URL}/content/thumb/secure`,
+          { contentId, contentType, thumbUrl },
+          auth()
+        );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async recommendContent({
       contentId,
       contentType,

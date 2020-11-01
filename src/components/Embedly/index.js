@@ -14,8 +14,9 @@ import {
 } from 'helpers/stringHelpers';
 import { useHistory } from 'react-router-dom';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { useContentContext } from 'contexts';
+import { useAppContext, useContentContext } from 'contexts';
 import { useContentState } from 'helpers/hooks';
+import { cloudFrontURL } from 'constants/defaultValues';
 
 const API_URL = `${URL}/content`;
 
@@ -51,6 +52,9 @@ function Embedly({
   videoHeight
 }) {
   const history = useHistory();
+  const {
+    requestHelpers: { makeThumbnailSecure }
+  } = useAppContext();
   const translator = {
     actualDescription:
       contentType === 'url' ? 'actualDescription' : 'linkDescription',
@@ -73,7 +77,7 @@ function Embedly({
     currentTime = 0,
     description,
     prevUrl,
-    thumbUrl,
+    thumbUrl: rawThumbUrl,
     title,
     thumbLoaded,
     [translator.actualDescription]: actualDescription,
@@ -81,6 +85,13 @@ function Embedly({
     [translator.siteUrl]: siteUrl,
     [translator.url]: url
   } = useContentState({ contentType, contentId });
+
+  const thumbUrl = useMemo(() => {
+    if (rawThumbUrl?.split('/')[1] === 'thumbs') {
+      return `${cloudFrontURL}${rawThumbUrl}`;
+    }
+    return rawThumbUrl;
+  }, [rawThumbUrl]);
 
   const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(false);
@@ -164,11 +175,22 @@ function Embedly({
   );
 
   useEffect(() => {
-    setImageUrl(
-      url && getFileInfoFromFileName(url)?.fileType === 'image'
-        ? url
-        : thumbUrl || fallbackImage
-    );
+    if (
+      url &&
+      url !== thumbUrl &&
+      getFileInfoFromFileName(url)?.fileType === 'image'
+    ) {
+      if (url.includes('http://')) {
+        makeThumbnailSecure({ contentId, contentType, thumbUrl: url });
+      }
+      setImageUrl(url);
+    } else {
+      if (thumbUrl?.includes('http://')) {
+        makeThumbnailSecure({ contentId, contentType, thumbUrl });
+      }
+      setImageUrl(thumbUrl || fallbackImage);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [thumbUrl, url]);
 
   useEffect(() => {
