@@ -177,12 +177,9 @@ function Embedly({
   useEffect(() => {
     if (
       url &&
-      url !== thumbUrl &&
+      !url.includes('http://') &&
       getFileInfoFromFileName(url)?.fileType === 'image'
     ) {
-      if (url.includes('http://')) {
-        makeThumbnailSecure({ contentId, contentType, thumbUrl: url });
-      }
       setImageUrl(url);
     } else {
       if (thumbUrl?.includes('http://')) {
