@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import Icon from 'components/Icon';
 import Loading from 'components/Loading';
 import { css } from 'emotion';
 import { addCommasToNumber } from 'helpers/stringHelpers';
@@ -35,24 +34,37 @@ export default function Store() {
     }
 
     async function handleLoadKarmaPoints() {
-      setLoadingKarma(true);
+      if (mounted.current) {
+        setLoadingKarma(true);
+      }
       const {
         numTwinklesRewarded,
         numApprovedRecommendations,
         numPostsRewarded
       } = await loadKarmaPoints();
-      if (mounted.current) {
-        if (authLevel < 2) {
+
+      if (authLevel < 2) {
+        if (mounted.current) {
           setKarmaPoints(
             numTwinklesRewarded +
               recommendationsMultiplier * numApprovedRecommendations
           );
+        }
+        if (mounted.current) {
           setNumTwinklesRewarded(numTwinklesRewarded);
+        }
+        if (mounted.current) {
           setNumApprovedRecommendations(numApprovedRecommendations);
-        } else {
+        }
+      } else {
+        if (mounted.current) {
           setKarmaPoints(postsMultiplier * numPostsRewarded);
+        }
+        if (mounted.current) {
           setNumPostsRewarded(numPostsRewarded);
         }
+      }
+      if (mounted.current) {
         setLoadingKarma(false);
       }
     }
@@ -178,32 +190,6 @@ export default function Store() {
           )}
         </div>
       )}
-      <div
-        className={css`
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          margin-top: 1rem;
-          font-size: 2rem;
-          background: #fff;
-          padding: 1rem;
-          border: 1px solid ${Color.borderGray()};
-          border-radius: ${borderRadius};
-          @media (max-width: ${mobileMaxWidth}) {
-            border-radius: 0;
-            border-left: 0;
-            border-right: 0;
-          }
-        `}
-      >
-        <Icon
-          style={{ fontSize: '8rem', marginTop: '1rem' }}
-          icon="shopping-bag"
-        />
-        <p style={{ marginTop: '2rem' }}>
-          Twinkle Store will open later this year
-        </p>
-      </div>
     </div>
   );
 }
