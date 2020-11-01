@@ -340,8 +340,8 @@ export default function MessagesContainer({
         if (mounted.current && MessagesContainerRef.current) {
           MessagesContainerRef.current.scrollTop =
             ContentRef.current?.offsetHeight || 0;
-          onChannelLoadingDone();
         }
+        onChannelLoadingDone();
       }, 0);
       setScrollAtBottom(true);
     }
