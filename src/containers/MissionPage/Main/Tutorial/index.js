@@ -50,7 +50,7 @@ export default function Tutorial({
       {!!mission.tutorialId &&
         (mission.tutorialStarted || canEdit || !!mission.myAttempt?.status) && (
           <InteractiveContent
-            autoFocus={!canEdit}
+            autoFocus={!canEdit && !mission.myAttempt?.status}
             interactiveId={mission.tutorialId}
           />
         )}
