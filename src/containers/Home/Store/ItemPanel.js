@@ -17,6 +17,7 @@ export default function ItemPanel({ style }) {
         }
       `}
       style={{
+        background: '#fff',
         border: `1px solid ${Color.borderGray()}`,
         padding: '1rem',
         ...style
