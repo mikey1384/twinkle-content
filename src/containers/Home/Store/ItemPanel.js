@@ -4,10 +4,11 @@ import { css } from 'emotion';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 
 ItemPanel.propTypes = {
+  itemName: PropTypes.string.isRequired,
   style: PropTypes.object
 };
 
-export default function ItemPanel({ style }) {
+export default function ItemPanel({ itemName, style }) {
   return (
     <div
       className={css`
@@ -23,7 +24,7 @@ export default function ItemPanel({ style }) {
         ...style
       }}
     >
-      <div>This is an item</div>
+      <div style={{ fontWeight: 'bold', fontSize: '1.7rem' }}>{itemName}</div>
     </div>
   );
 }

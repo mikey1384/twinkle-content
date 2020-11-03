@@ -6,7 +6,10 @@ export default function Store() {
   return (
     <div>
       <KarmaStatus />
-      <ItemPanel style={{ marginTop: '1rem' }} />
+      <ItemPanel
+        itemName="Change your username"
+        style={{ marginTop: '1rem' }}
+      />
     </div>
   );
 }
