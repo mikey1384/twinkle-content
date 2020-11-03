@@ -16,7 +16,7 @@ export default function Googling({ mission, onSetMissionState, style }) {
     requestHelpers: { uploadMissionAttempt }
   } = useAppContext();
   const {
-    actions: { onUpdateMissionStatus }
+    actions: { onUpdateMissionAttempt }
   } = useMissionContext();
   const [answers, setAnswers] = useState(mission.answers || {});
   const answersRef = useRef(mission.answers || {});
@@ -116,9 +116,9 @@ export default function Googling({ mission, onSetMissionState, style }) {
       }
     });
     if (success) {
-      onUpdateMissionStatus({
+      onUpdateMissionAttempt({
         missionId: mission.id,
-        status: 'pending'
+        newState: { status: 'pending', tryingAgain: false }
       });
     }
   }

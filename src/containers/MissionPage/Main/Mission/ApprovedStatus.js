@@ -5,17 +5,20 @@ import UsernameText from 'components/Texts/UsernameText';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import LongText from 'components/Texts/LongText';
+import { useMissionContext } from 'contexts';
 import { borderRadius, Color } from 'constants/css';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 
 ApprovedStatus.propTypes = {
   mission: PropTypes.object.isRequired,
-  onSetMissionState: PropTypes.func.isRequired,
   style: PropTypes.object
 };
 
-export default function ApprovedStatus({ mission, onSetMissionState, style }) {
+export default function ApprovedStatus({ mission, style }) {
+  const {
+    actions: { onUpdateMissionAttempt }
+  } = useMissionContext();
   const rewardDetails = useMemo(() => {
     return (mission.xpReward || mission.coinReward) &&
       mission.myAttempt.status === 'pass' ? (
@@ -138,7 +141,7 @@ export default function ApprovedStatus({ mission, onSetMissionState, style }) {
             style={{ fontSize: '2.5rem' }}
             color="green"
             onClick={() =>
-              onSetMissionState({
+              onUpdateMissionAttempt({
                 missionId: mission.id,
                 newState: { tryingAgain: true }
               })

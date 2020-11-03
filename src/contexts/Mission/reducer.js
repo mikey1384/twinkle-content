@@ -17,6 +17,10 @@ export default function MissionReducer(state, action) {
     case 'LOAD_MISSION_LIST': {
       const newMissionObj = state.missionObj || {};
       for (let mission of action.missions) {
+        if (newMissionObj[mission.id]?.myAttempt?.tryingAgain) {
+          mission.myAttempt.tryingAgain =
+            newMissionObj[mission.id]?.myAttempt?.tryingAgain;
+        }
         newMissionObj[mission.id] = {
           ...newMissionObj[mission.id],
           ...mission,
@@ -57,7 +61,7 @@ export default function MissionReducer(state, action) {
         }
       };
     }
-    case 'UPDATE_MISSION_STATUS': {
+    case 'UPDATE_MISSION_ATTEMPT': {
       return {
         ...state,
         missionObj: {
@@ -66,7 +70,7 @@ export default function MissionReducer(state, action) {
             ...state.missionObj[action.missionId],
             myAttempt: {
               ...state.missionObj[action.missionId].myAttempt,
-              status: action.status
+              ...action.newState
             }
           }
         }
