@@ -102,6 +102,7 @@ export default function SectionPanel({
           border-left: 0;
           border-right: 0;
           > header {
+            font-size: 2rem;
             border-radius: 0;
           }
         }
@@ -196,7 +197,18 @@ export default function SectionPanel({
             value={searchQuery}
           />
         )}
-        <div style={{ gridArea: 'buttons', justifySelf: 'end' }}>{button}</div>
+        <div
+          style={{ gridArea: 'buttons', justifySelf: 'end' }}
+          className={css`
+            @media (max-width: ${mobileMaxWidth}) {
+              button {
+                font-size: 1.3rem;
+              }
+            }
+          `}
+        >
+          {button}
+        </div>
       </header>
       <main style={{ width: '100%', ...style }}>
         {loaded ? (
