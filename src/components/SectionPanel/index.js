@@ -192,7 +192,7 @@ export default function SectionPanel({
               justifySelf: 'center',
               zIndex: 0
             }}
-            onChange={search}
+            onChange={onSearch}
             placeholder={searchPlaceholder}
             value={searchQuery}
           />
@@ -255,10 +255,6 @@ export default function SectionPanel({
   async function onChangeTitle(title) {
     await onEditTitle(title);
     setOnEdit(false);
-  }
-
-  function search(text) {
-    onSearch(text);
   }
 
   async function onLoadMore() {
