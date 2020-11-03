@@ -144,7 +144,7 @@ export default function Header({
   } = useContentContext();
 
   const {
-    actions: { onSetMissionState }
+    actions: { onUpdateMissionStatus }
   } = useMissionContext();
 
   const prevProfilePicId = useRef(profilePicId);
@@ -377,12 +377,7 @@ export default function Header({
       if (includesXpReward) {
         handleUpdateMyXp();
       }
-      onSetMissionState({
-        missionId,
-        newState: {
-          myAttempt: { status: 'pass' }
-        }
-      });
+      onUpdateMissionStatus({ missionId, status: 'pass' });
     }
 
     function handleNewNotification({ type, target, likes, comment }) {

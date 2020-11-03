@@ -7,7 +7,7 @@ import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
 import { mb } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
-import { useAppContext } from 'contexts';
+import { useAppContext, useMissionContext } from 'contexts';
 import { v1 as uuidv1 } from 'uuid';
 import { css } from 'emotion';
 import { mobileMaxWidth } from 'constants/css';
@@ -32,6 +32,9 @@ export default function TakeScreenshot({
   const {
     requestHelpers: { uploadFile, uploadMissionAttempt }
   } = useAppContext();
+  const {
+    actions: { onUpdateMissionStatus }
+  } = useMissionContext();
   const { authLevel, username } = useMyState();
   const [alertModalShown, setAlertModalShown] = useState(false);
   const [uploadingFile, setUploadingFile] = useState(false);
@@ -245,11 +248,9 @@ export default function TakeScreenshot({
     });
 
     if (success) {
-      onSetMissionState({
+      onUpdateMissionStatus({
         missionId,
-        newState: {
-          myAttempt: { status: 'pending' }
-        }
+        status: 'pending'
       });
     }
 
