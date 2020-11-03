@@ -31,8 +31,7 @@ export default function Mission({
     id: missionId,
     myAttempt,
     xpReward,
-    coinReward,
-    tryingAgain
+    coinReward
   },
   style,
   onSetMissionState
@@ -41,7 +40,7 @@ export default function Mission({
     requestHelpers: { checkMissionStatus }
   } = useAppContext();
   const {
-    actions: { onUpdateMissionStatus }
+    actions: { onUpdateMissionAttempt }
   } = useMissionContext();
   const {
     state: { pageVisible }
@@ -54,8 +53,8 @@ export default function Mission({
 
     async function handleCheckMissionStatus() {
       const status = await checkMissionStatus(missionId);
-      if (status && !(status === 'fail' && tryingAgain)) {
-        onUpdateMissionStatus({ missionId, status });
+      if (status && !(status === 'fail' && myAttempt?.tryingAgain)) {
+        onUpdateMissionAttempt({ missionId, newState: { status } });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -115,12 +114,8 @@ export default function Mission({
       {myAttempt?.status === 'pending' ? (
         <PendingStatus style={{ marginTop: '7rem' }} />
       ) : myAttempt?.status === 'pass' ||
-        (myAttempt?.status === 'fail' && !tryingAgain) ? (
-        <ApprovedStatus
-          mission={mission}
-          onSetMissionState={onSetMissionState}
-          style={{ marginTop: '3rem' }}
-        />
+        (myAttempt?.status === 'fail' && !myAttempt?.tryingAgain) ? (
+        <ApprovedStatus mission={mission} style={{ marginTop: '3rem' }} />
       ) : (
         <Submit
           mission={mission}

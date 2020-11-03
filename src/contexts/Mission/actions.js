@@ -27,11 +27,11 @@ export default function MissionActions(dispatch) {
         type: 'RESET_MISSION_STATE'
       });
     },
-    onUpdateMissionStatus({ missionId, status }) {
+    onUpdateMissionAttempt({ missionId, newState }) {
       return dispatch({
-        type: 'UPDATE_MISSION_STATUS',
+        type: 'UPDATE_MISSION_ATTEMPT',
         missionId,
-        status
+        newState
       });
     }
   };

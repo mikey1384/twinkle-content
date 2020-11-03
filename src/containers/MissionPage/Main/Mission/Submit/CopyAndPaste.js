@@ -33,7 +33,7 @@ export default function CopyAndPaste({ mission, onSetMissionState, style }) {
     requestHelpers: { uploadMissionAttempt }
   } = useAppContext();
   const {
-    actions: { onUpdateMissionStatus }
+    actions: { onUpdateMissionAttempt }
   } = useMissionContext();
   const {
     actions: { onChangeUserXP, onChangeUserCoins }
@@ -116,9 +116,9 @@ export default function CopyAndPaste({ mission, onSetMissionState, style }) {
       attempt: { content, status: 'pass' }
     });
     if (success) {
-      onUpdateMissionStatus({
+      onUpdateMissionAttempt({
         missionId: mission.id,
-        status: 'pass'
+        newState: { status: 'pass', tryingAgain: false }
       });
       if (newXpAndRank.xp) {
         onChangeUserXP({

@@ -33,7 +33,7 @@ export default function TakeScreenshot({
     requestHelpers: { uploadFile, uploadMissionAttempt }
   } = useAppContext();
   const {
-    actions: { onUpdateMissionStatus }
+    actions: { onUpdateMissionAttempt }
   } = useMissionContext();
   const { authLevel, username } = useMyState();
   const [alertModalShown, setAlertModalShown] = useState(false);
@@ -248,9 +248,9 @@ export default function TakeScreenshot({
     });
 
     if (success) {
-      onUpdateMissionStatus({
+      onUpdateMissionAttempt({
         missionId,
-        status: 'pending'
+        newState: { status: 'pending', tryingAgain: false }
       });
     }
 
