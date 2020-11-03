@@ -7,7 +7,7 @@ import Icon from 'components/Icon';
 import LongText from 'components/Texts/LongText';
 import { borderRadius, Color } from 'constants/css';
 import { timeSince } from 'helpers/timeStampHelpers';
-import { stringIsEmpty, addCommasToNumber } from 'helpers/stringHelpers';
+import { addCommasToNumber } from 'helpers/stringHelpers';
 
 ApprovedStatus.propTypes = {
   mission: PropTypes.object.isRequired,
@@ -101,7 +101,7 @@ export default function ApprovedStatus({ mission, onSetMissionState, style }) {
           src={mission.myAttempt.filePath}
         />
       )}
-      {!stringIsEmpty(mission.myAttempt.feedback) && (
+      {mission.myAttempt.reviewer && (
         <div
           style={{
             width: '100%',
@@ -111,29 +111,25 @@ export default function ApprovedStatus({ mission, onSetMissionState, style }) {
             borderRadius
           }}
         >
-          {mission.myAttempt.reviewer && (
-            <>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  lineHeight: 1.5
-                }}
-              >
-                <UsernameText
-                  color={Color.blue()}
-                  user={mission.myAttempt.reviewer}
-                />
-                <span>{timeSince(mission.myAttempt.reviewTimeStamp)}</span>
-              </div>
-              <LongText>
-                {mission.myAttempt.feedback ||
-                  (mission.myAttempt.status === 'pass'
-                    ? 'Great job!'
-                    : 'Please try again')}
-              </LongText>
-            </>
-          )}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              lineHeight: 1.5
+            }}
+          >
+            <UsernameText
+              color={Color.blue()}
+              user={mission.myAttempt.reviewer}
+            />
+            <span>{timeSince(mission.myAttempt.reviewTimeStamp)}</span>
+          </div>
+          <LongText>
+            {mission.myAttempt.feedback ||
+              (mission.myAttempt.status === 'pass'
+                ? 'Great job!'
+                : 'Please try again')}
+          </LongText>
         </div>
       )}
       {mission.myAttempt.status === 'fail' && (

@@ -4,7 +4,7 @@ import Input from 'components/Texts/Input';
 import Button from 'components/Button';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { useAppContext, useContentContext } from 'contexts';
+import { useAppContext, useContentContext, useMissionContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { css } from 'emotion';
 
@@ -32,6 +32,9 @@ export default function CopyAndPaste({ mission, onSetMissionState, style }) {
   const {
     requestHelpers: { uploadMissionAttempt }
   } = useAppContext();
+  const {
+    actions: { onUpdateMissionStatus }
+  } = useMissionContext();
   const {
     actions: { onChangeUserXP, onChangeUserCoins }
   } = useContentContext();
@@ -113,11 +116,9 @@ export default function CopyAndPaste({ mission, onSetMissionState, style }) {
       attempt: { content, status: 'pass' }
     });
     if (success) {
-      onSetMissionState({
+      onUpdateMissionStatus({
         missionId: mission.id,
-        newState: {
-          myAttempt: { status: 'pass' }
-        }
+        status: 'pass'
       });
       if (newXpAndRank.xp) {
         onChangeUserXP({

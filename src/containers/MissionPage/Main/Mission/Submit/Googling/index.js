@@ -4,7 +4,7 @@ import Question from './Question';
 import Button from 'components/Button';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { scrollElementToCenter } from 'helpers';
-import { useAppContext } from 'contexts';
+import { useAppContext, useMissionContext } from 'contexts';
 
 Googling.propTypes = {
   mission: PropTypes.object.isRequired,
@@ -15,6 +15,9 @@ export default function Googling({ mission, onSetMissionState, style }) {
   const {
     requestHelpers: { uploadMissionAttempt }
   } = useAppContext();
+  const {
+    actions: { onUpdateMissionStatus }
+  } = useMissionContext();
   const [answers, setAnswers] = useState(mission.answers || {});
   const answersRef = useRef(mission.answers || {});
   const [hasErrorObj, setHasErrorObj] = useState(mission.hasErrorObj || {});
@@ -113,11 +116,9 @@ export default function Googling({ mission, onSetMissionState, style }) {
       }
     });
     if (success) {
-      onSetMissionState({
+      onUpdateMissionStatus({
         missionId: mission.id,
-        newState: {
-          myAttempt: { status: 'pending' }
-        }
+        status: 'pending'
       });
     }
   }

@@ -10,7 +10,7 @@ import { panel } from '../../Styles';
 import { gifTable } from 'constants/defaultValues';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
-import { useViewContext, useAppContext } from 'contexts';
+import { useViewContext, useAppContext, useMissionContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
 Mission.propTypes = {
@@ -41,6 +41,9 @@ export default function Mission({
     requestHelpers: { checkMissionStatus }
   } = useAppContext();
   const {
+    actions: { onUpdateMissionStatus }
+  } = useMissionContext();
+  const {
     state: { pageVisible }
   } = useViewContext();
 
@@ -52,13 +55,7 @@ export default function Mission({
     async function handleCheckMissionStatus() {
       const status = await checkMissionStatus(missionId);
       if (status && !(status === 'fail' && tryingAgain)) {
-        onSetMissionState({
-          missionId,
-          newState: {
-            myAttempt: { status },
-            tryingAgain: false
-          }
-        });
+        onUpdateMissionStatus({ missionId, status });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

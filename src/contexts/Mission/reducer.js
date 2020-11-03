@@ -57,6 +57,21 @@ export default function MissionReducer(state, action) {
         }
       };
     }
+    case 'UPDATE_MISSION_STATUS': {
+      return {
+        ...state,
+        missionObj: {
+          ...state.missionObj,
+          [action.missionId]: {
+            ...state.missionObj[action.missionId],
+            myAttempt: {
+              ...state.missionObj[action.missionId].myAttempt,
+              status: action.status
+            }
+          }
+        }
+      };
+    }
     default:
       return state;
   }
