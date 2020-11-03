@@ -55,7 +55,7 @@ export default function Mission({
         onSetMissionState({
           missionId,
           newState: {
-            myAttempt: { status },
+            myAttempt: { ...myAttempt, status },
             tryingAgain: false
           }
         });
