@@ -414,7 +414,6 @@ export function processedStringWithURL(string) {
   const boldItalicWordRegex = /(\*\*\*[^\s]+\*\*\*)/gi;
   const boldItalicSentenceRegex = /((\*\*\*[^\*\s]){1}([^\*\n])+([^\*\s]\*\*\*){1})/gi;
   const boldWordRegex = /(\*[^\s*]+\*)/gi;
-  const boldSentenceRegex = /((\*[^\*\s]){1}([^\*\n])+([^\*\s]\*){1})/gi;
   const italicWordRegex = /(\*\*[^\s*]+\*\*)/gi;
   const italicSentenceRegex = /((\*\*[^\*\s]){1}([^\*\n])+([^\*\s]\*\*){1})/gi;
   const underlineWordRegex = /(__[\S]+__)/gi;
@@ -642,10 +641,6 @@ export function processedStringWithURL(string) {
     )
     .replace(
       boldWordRegex,
-      (string) => `<b>${string.substring(1, string.length - 1)}</b>`
-    )
-    .replace(
-      boldSentenceRegex,
       (string) => `<b>${string.substring(1, string.length - 1)}</b>`
     )
     .replace(/\r?\n/g, '<br>');
