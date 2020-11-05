@@ -57,6 +57,7 @@ export default function InfoEditForm({
     <div>
       <Input
         maxLength={50}
+        autoComplete="new-password"
         placeholder="Email Address"
         onChange={onEmailInputChange}
         value={editedEmail}
@@ -82,6 +83,7 @@ export default function InfoEditForm({
       )}
       <Input
         maxLength={150}
+        autoComplete="new-password"
         placeholder="Website URL"
         style={{ marginTop: '1rem', borderColor: websiteError && 'red' }}
         onChange={onWebsiteInputChange}
