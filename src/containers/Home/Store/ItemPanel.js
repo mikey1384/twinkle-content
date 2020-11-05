@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
 import ProgressBar from 'components/ProgressBar';
+import { useMyState } from 'helpers/hooks';
 import { css } from 'emotion';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 
@@ -21,6 +22,11 @@ export default function ItemPanel({
   karmaPoints,
   requiredKarmaPoints
 }) {
+  const { profileTheme } = useMyState();
+  const unlockProgress = useMemo(() => {
+    return Math.min((karmaPoints * 100) / requiredKarmaPoints, 100);
+  }, [karmaPoints, requiredKarmaPoints]);
+
   return (
     <div
       className={css`
@@ -64,11 +70,10 @@ export default function ItemPanel({
         </div>
       </div>
       <ProgressBar
-        text="karma points"
-        color="blue"
-        progress={Math.min((karmaPoints * requiredKarmaPoints) / 100, 100)}
+        color={unlockProgress === 100 ? Color.green() : Color[profileTheme]()}
+        progress={unlockProgress}
       />
-      <div>You have {karmaPoints} karma points</div>
+      <p style={{ marginTop: '0.5rem' }}>You have {karmaPoints} karma points</p>
     </div>
   );
 }
