@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useMemo, useState } from 'react';
+import PropTypes from 'prop-types';
 import { css } from 'emotion';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
@@ -6,7 +7,12 @@ import { useMyState } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
 import Loading from 'components/Loading';
 
-export default function KarmaStatus() {
+KarmaStatus.propTypes = {
+  karmaPoints: PropTypes.number,
+  onSetKarmaPoints: PropTypes.func.isRequired
+};
+
+export default function KarmaStatus({ karmaPoints, onSetKarmaPoints }) {
   const recommendationsMultiplier = 10;
   const postsMultiplier = 3;
   const {
@@ -15,7 +21,6 @@ export default function KarmaStatus() {
   const mounted = useRef(true);
   const { authLevel, userType, userId } = useMyState();
   const [loadingKarma, setLoadingKarma] = useState(false);
-  const [karmaPoints, setKarmaPoints] = useState(0);
   const [numTwinklesRewarded, setNumTwinklesRewarded] = useState(0);
   const [numApprovedRecommendations, setNumApprovedRecommendations] = useState(
     0
@@ -44,7 +49,7 @@ export default function KarmaStatus() {
 
       if (authLevel < 2) {
         if (mounted.current) {
-          setKarmaPoints(
+          onSetKarmaPoints(
             numTwinklesRewarded +
               recommendationsMultiplier * numApprovedRecommendations
           );
@@ -57,7 +62,7 @@ export default function KarmaStatus() {
         }
       } else {
         if (mounted.current) {
-          setKarmaPoints(postsMultiplier * numPostsRewarded);
+          onSetKarmaPoints(postsMultiplier * numPostsRewarded);
         }
         if (mounted.current) {
           setNumPostsRewarded(numPostsRewarded);

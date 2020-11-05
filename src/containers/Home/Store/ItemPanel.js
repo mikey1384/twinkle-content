@@ -5,10 +5,11 @@ import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 
 ItemPanel.propTypes = {
   itemName: PropTypes.string.isRequired,
+  karmaPoints: PropTypes.number,
   style: PropTypes.object
 };
 
-export default function ItemPanel({ itemName, style }) {
+export default function ItemPanel({ itemName, style, karmaPoints }) {
   return (
     <div
       className={css`
@@ -24,6 +25,7 @@ export default function ItemPanel({ itemName, style }) {
         ...style
       }}
     >
+      <div>You have {karmaPoints} karma points</div>
       <div style={{ fontWeight: 'bold', fontSize: '1.7rem' }}>{itemName}</div>
     </div>
   );
