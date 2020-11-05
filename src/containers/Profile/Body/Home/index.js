@@ -278,8 +278,8 @@ export default function Home({ profile, selectedTheme }) {
                 @media (max-width: ${mobileMaxWidth}) {
                   margin-top: ${(!greeting || greeting.length) < 20 &&
                   userId === profile.id
-                    ? '-2rem'
-                    : 0};
+                    ? '-6rem'
+                    : '-2rem'};
                 }
               `}
               style={{
