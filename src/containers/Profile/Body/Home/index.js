@@ -270,16 +270,18 @@ export default function Home({ profile, selectedTheme }) {
             <BasicInfos
               profileTheme={profileTheme}
               className={css`
+                font-size: 1.7rem;
                 margin-top: ${(!greeting || greeting.length) < 50
                   ? userId === profile.id
                     ? '-5rem'
                     : '-2rem'
                   : 0};
                 @media (max-width: ${mobileMaxWidth}) {
+                  font-size: 1.5rem;
                   margin-top: ${(!greeting || greeting.length) < 20 &&
                   userId === profile.id
                     ? '-6rem'
-                    : '-2rem'};
+                    : '-3rem'};
                 }
               `}
               style={{
@@ -288,7 +290,6 @@ export default function Home({ profile, selectedTheme }) {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 width: 'CALC(50% - 1rem)',
-                fontSize: '1.7rem',
                 marginLeft: '1rem',
                 marginBottom: '1rem'
               }}
