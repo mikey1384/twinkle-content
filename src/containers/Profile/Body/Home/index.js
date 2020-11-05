@@ -276,10 +276,9 @@ export default function Home({ profile, selectedTheme }) {
                     : '-2rem'
                   : 0};
                 @media (max-width: ${mobileMaxWidth}) {
-                  margin-top: ${(!greeting || greeting.length) < 20
-                    ? userId === profile.id
-                      ? '-5rem'
-                      : '-2rem'
+                  margin-top: ${(!greeting || greeting.length) < 20 &&
+                  userId === profile.id
+                    ? '-2rem'
                     : 0};
                 }
               `}
