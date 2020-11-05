@@ -91,16 +91,6 @@ export default function BasicInfos({
 
   return (
     <div className={className} style={style}>
-      <div
-        style={{
-          color: Color[selectedTheme](),
-          fontWeight: 'bold',
-          marginBottom: '1rem',
-          fontSize: '2rem'
-        }}
-      >
-        About {username}
-      </div>
       <div style={{ marginBottom: '0.5rem' }}>
         Member since {unix(joinDate).format('LL')}
       </div>

@@ -272,14 +272,14 @@ export default function Home({ profile, selectedTheme }) {
               className={css`
                 margin-top: ${(!greeting || greeting.length) < 50
                   ? userId === profile.id
-                    ? '-7rem'
-                    : '-4rem'
+                    ? '-5rem'
+                    : '-2rem'
                   : 0};
                 @media (max-width: ${mobileMaxWidth}) {
                   margin-top: ${(!greeting || greeting.length) < 20
                     ? userId === profile.id
-                      ? '-7rem'
-                      : '-4rem'
+                      ? '-5rem'
+                      : '-2rem'
                     : 0};
                 }
               `}
