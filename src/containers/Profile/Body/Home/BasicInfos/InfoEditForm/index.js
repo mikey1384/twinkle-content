@@ -144,7 +144,7 @@ export default function InfoEditForm({
           : ''
       );
       setChecking(false);
-    }, 500);
+    }, 1000);
   }
 
   function onWebsiteInputChange(text) {
@@ -163,7 +163,7 @@ export default function InfoEditForm({
           : ''
       );
       setChecking(false);
-    }, 500);
+    }, 1000);
   }
 
   function onYoutubeInputChange(text) {
