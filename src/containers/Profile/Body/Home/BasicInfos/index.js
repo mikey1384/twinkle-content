@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import InfoEditForm from './InfoEditForm';
+import PasswordInputModal from './PasswordInputModal';
 import { css } from 'emotion';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { stringIsEmpty, trimUrl } from 'helpers/stringHelpers';
@@ -75,6 +76,7 @@ export default function BasicInfos({
     },
     actions: { onSetUserInfoOnEdit }
   } = useInputContext();
+  const [passwordInputModalShown, setPasswordInputModalShown] = useState(false);
   const [emailCheckHighlighted, setEmailCheckHighlighted] = useState(false);
   const [verificationEmailSent, setVerificationEmailSent] = useState(false);
   const mounted = useRef(true);
@@ -244,7 +246,7 @@ export default function BasicInfos({
               marginBottom: '0.5rem'
             }}
             transparent
-            onClick={() => onSetUserInfoOnEdit(true)}
+            onClick={() => setPasswordInputModalShown(true)}
           >
             <Icon icon="pencil-alt" />
             <span style={{ marginLeft: '0.7rem' }}>Edit</span>
@@ -287,6 +289,12 @@ export default function BasicInfos({
           </div>
         </div>
       ) : null}
+      {passwordInputModalShown && (
+        <PasswordInputModal
+          onHide={() => setPasswordInputModalShown(false)}
+          onConfirm={() => onSetUserInfoOnEdit(true)}
+        />
+      )}
     </div>
   );
 
