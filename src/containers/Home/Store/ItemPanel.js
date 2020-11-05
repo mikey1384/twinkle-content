@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
+import ProgressBar from 'components/ProgressBar';
 import { css } from 'emotion';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 
@@ -9,6 +10,7 @@ ItemPanel.propTypes = {
   itemName: PropTypes.string.isRequired,
   itemDescription: PropTypes.string.isRequired,
   karmaPoints: PropTypes.number,
+  requiredKarmaPoints: PropTypes.number,
   style: PropTypes.object
 };
 
@@ -16,7 +18,8 @@ export default function ItemPanel({
   itemName,
   itemDescription,
   style,
-  karmaPoints
+  karmaPoints,
+  requiredKarmaPoints
 }) {
   return (
     <div
@@ -60,6 +63,11 @@ export default function ItemPanel({
           </Button>
         </div>
       </div>
+      <ProgressBar
+        text="karma points"
+        color="blue"
+        progress={Math.min((karmaPoints * requiredKarmaPoints) / 100, 100)}
+      />
       <div>You have {karmaPoints} karma points</div>
     </div>
   );
