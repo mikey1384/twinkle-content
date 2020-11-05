@@ -14,6 +14,7 @@ export default function Store() {
       <ItemPanel
         karmaPoints={karmaPoints}
         itemName="Change your username"
+        itemDescription="Unlock this item to change your username anytime"
         style={{ marginTop: '1rem' }}
       />
     </div>
