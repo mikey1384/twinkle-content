@@ -23,7 +23,7 @@ export default function PasswordInputModal({ onHide, onConfirm }) {
       <header>Enter Your Password</header>
       <main>
         <Input
-          autoComplete="new-password"
+          autoComplete="off"
           value={password}
           onChange={(text) => {
             setErrorMsg('');
@@ -65,6 +65,7 @@ export default function PasswordInputModal({ onHide, onConfirm }) {
     const success = await confirmPassword(password);
     if (success) {
       onConfirm();
+      onHide();
     } else {
       setErrorMsg('wrong password');
     }

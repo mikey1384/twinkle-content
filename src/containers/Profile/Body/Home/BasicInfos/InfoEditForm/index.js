@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Input from 'components/Texts/Input';
 import Button from 'components/Button';
-import PasswordInputModal from './PasswordInputModal';
 import {
   isValidEmail,
   isValidUrl,
@@ -29,7 +28,6 @@ export default function InfoEditForm({
   youtubeUrl
 }) {
   const [checking, setChecking] = useState(false);
-  const [passwordInputModalShown, setPasswordInputModalShown] = useState(false);
   const {
     state: { userInfo },
     actions: {
@@ -83,7 +81,7 @@ export default function InfoEditForm({
       )}
       <Input
         maxLength={150}
-        autoComplete="new-password"
+        autoComplete="off"
         placeholder="Website URL"
         style={{ marginTop: '1rem', borderColor: websiteError && 'red' }}
         onChange={onWebsiteInputChange}
@@ -106,15 +104,7 @@ export default function InfoEditForm({
             checking || emailError || websiteError || youtubeError || noChange()
           }
           style={{ marginLeft: '0.5rem' }}
-          onClick={() => setPasswordInputModalShown(true)}
-        >
-          Done
-        </Button>
-      </div>
-      {passwordInputModalShown && (
-        <PasswordInputModal
-          onHide={() => setPasswordInputModalShown(false)}
-          onConfirm={() =>
+          onClick={() =>
             onSubmit({
               email: editedEmail,
               website: editedWebsite,
@@ -122,8 +112,10 @@ export default function InfoEditForm({
               youtubeUrl: editedYoutubeUrl
             })
           }
-        />
-      )}
+        >
+          Done
+        </Button>
+      </div>
     </div>
   );
 
