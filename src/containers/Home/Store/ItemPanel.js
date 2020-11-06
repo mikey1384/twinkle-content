@@ -23,7 +23,7 @@ export default function ItemPanel({
   karmaPoints,
   requiredKarmaPoints
 }) {
-  const { profileTheme, userId } = useMyState();
+  const { profileTheme, userId, canChangeUsername } = useMyState();
   const unlockProgress = useMemo(() => {
     return Math.min((karmaPoints * 100) / requiredKarmaPoints, 100);
   }, [karmaPoints, requiredKarmaPoints]);
@@ -44,57 +44,64 @@ export default function ItemPanel({
       }}
     >
       <div style={{ fontWeight: 'bold', fontSize: '2rem' }}>{itemName}</div>
-      <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
-        Requires {addCommasToNumber(requiredKarmaPoints)} KP
-      </p>
-      <p style={{ fontSize: '1.3rem', marginTop: '0.5rem' }}>
-        {itemDescription}
-      </p>
-      {userId && (
+      {!canChangeUsername && (
         <>
-          <div
-            style={{
-              marginTop: '2rem',
-              display: 'flex',
-              flexDirection: 'column',
-              width: '100%',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '1.7rem'
-            }}
-          >
-            <Icon size="3x" icon="lock" />
-            <div
-              style={{
-                marginTop: '1rem',
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'center'
-              }}
-            >
-              <Button
-                disabled={unlockProgress < 100}
-                skeuomorphic
-                color="green"
-              >
-                <Icon icon="unlock" />
-                <span style={{ marginLeft: '0.7rem' }}>Unlock</span>
-              </Button>
-            </div>
-          </div>
-          <ProgressBar
-            color={
-              unlockProgress === 100 ? Color.green() : Color[profileTheme]()
-            }
-            progress={unlockProgress}
-          />
-          <p style={{ fontSize: '1.2rem', marginTop: '0.5rem' }}>
-            You need{' '}
-            <b>{addCommasToNumber(requiredKarmaPoints)} karma points</b> to
-            unlock this item. You have <b>{karmaPoints} karma points</b>
+          <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
+            Requires {addCommasToNumber(requiredKarmaPoints)} KP
+          </p>
+          <p style={{ fontSize: '1.3rem', marginTop: '0.5rem' }}>
+            {itemDescription}
           </p>
         </>
       )}
+      {userId &&
+        (canChangeUsername ? (
+          <div>Change username component goes here</div>
+        ) : (
+          <>
+            <div
+              style={{
+                marginTop: '2rem',
+                display: 'flex',
+                flexDirection: 'column',
+                width: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '1.7rem'
+              }}
+            >
+              <Icon size="3x" icon="lock" />
+              <div
+                style={{
+                  marginTop: '1rem',
+                  display: 'flex',
+                  width: '100%',
+                  justifyContent: 'center'
+                }}
+              >
+                <Button
+                  disabled={unlockProgress < 100}
+                  skeuomorphic
+                  color="green"
+                >
+                  <Icon icon="unlock" />
+                  <span style={{ marginLeft: '0.7rem' }}>Unlock</span>
+                </Button>
+              </div>
+            </div>
+            <ProgressBar
+              color={
+                unlockProgress === 100 ? Color.green() : Color[profileTheme]()
+              }
+              progress={unlockProgress}
+            />
+            <p style={{ fontSize: '1.2rem', marginTop: '0.5rem' }}>
+              You need{' '}
+              <b>{addCommasToNumber(requiredKarmaPoints)} karma points</b> to
+              unlock this item. You have <b>{karmaPoints} karma points</b>
+            </p>
+          </>
+        ))}
     </div>
   );
 }
