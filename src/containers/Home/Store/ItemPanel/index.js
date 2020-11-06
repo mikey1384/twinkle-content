@@ -57,7 +57,7 @@ export default function ItemPanel({
       )}
       {userId &&
         (canChangeUsername ? (
-          <ChangeUsername />
+          <ChangeUsername style={{ marginTop: '1rem' }} />
         ) : (
           <>
             <div
