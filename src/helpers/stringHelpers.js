@@ -342,6 +342,16 @@ export function isValidUrl(url = '') {
   return regex.test(url);
 }
 
+export function isValidUsername(username) {
+  const pattern = new RegExp(/^[a-zA-Z0-9_]+$/);
+  return (
+    !!username &&
+    username.length < 20 &&
+    username.length > 2 &&
+    pattern.test(username)
+  );
+}
+
 export function isValidYoutubeUrl(url = '') {
   const regex = /^(http[s]?:\/\/(www\.)?|ftp:\/\/(www\.)?|www\.){1}([0-9A-Za-z-\.@:%_\+~#=]+)+((\.[a-zA-Z]{2,3})+)(\/(.)*)?(\?(.)*)?/g;
   if (!url.includes('://') && !url.includes('www.')) {

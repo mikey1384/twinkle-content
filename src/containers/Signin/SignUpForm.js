@@ -2,11 +2,11 @@ import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Button from 'components/Button';
-import { stringIsEmpty } from 'helpers/stringHelpers';
 import Input from 'components/Texts/Input';
 import { css } from 'emotion';
 import { Color } from 'constants/css';
 import Banner from 'components/Banner';
+import { isValidUsername, stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext } from 'contexts';
 
 SignUpForm.propTypes = {
@@ -74,11 +74,11 @@ export default function SignUpForm({
             <Input
               value={username}
               placeholder="Enter the username you wish to use. It has to be at least 3 characters long"
-              onChange={text => {
+              onChange={(text) => {
                 setErrorMessage('');
                 onSetUsername(text.trim());
               }}
-              onKeyPress={event => {
+              onKeyPress={(event) => {
                 if (event.key === 'Enter' && !submitDisabled) {
                   onSubmit();
                 }
@@ -90,11 +90,11 @@ export default function SignUpForm({
             <Input
               value={password}
               placeholder="Password (You MUST remember your password. Write it down somewhere!)"
-              onChange={text => {
+              onChange={(text) => {
                 setErrorMessage('');
                 setPassword(text.trim());
               }}
-              onKeyPress={event => {
+              onKeyPress={(event) => {
                 if (event.key === 'Enter' && !submitDisabled) {
                   onSubmit();
                 }
@@ -108,11 +108,11 @@ export default function SignUpForm({
               maxLength={30}
               value={firstname}
               placeholder="What is your first name?"
-              onChange={text => {
+              onChange={(text) => {
                 setErrorMessage('');
                 setFirstname(text.trim());
               }}
-              onKeyPress={event => {
+              onKeyPress={(event) => {
                 if (event.key === 'Enter' && !submitDisabled) {
                   onSubmit();
                 }
@@ -125,11 +125,11 @@ export default function SignUpForm({
               maxLength={30}
               value={lastname}
               placeholder="What is your last name?"
-              onChange={text => {
+              onChange={(text) => {
                 setErrorMessage('');
                 setLastname(text.trim());
               }}
-              onKeyPress={event => {
+              onKeyPress={(event) => {
                 if (event.key === 'Enter' && !submitDisabled) {
                   onSubmit();
                 }
@@ -141,11 +141,11 @@ export default function SignUpForm({
             <Input
               value={keyphrase}
               placeholder="Who is Cheesestick?"
-              onChange={text => {
+              onChange={(text) => {
                 setErrorMessage('');
                 setKeyphrase(text);
               }}
-              onKeyPress={event => {
+              onKeyPress={(event) => {
                 if (event.key === 'Enter' && !submitDisabled) {
                   onSubmit();
                 }
@@ -162,11 +162,11 @@ export default function SignUpForm({
             <Input
               value={email}
               placeholder="Email is not required, but if you have one, enter it here"
-              onChange={text => {
+              onChange={(text) => {
                 setErrorMessage('');
                 setEmail(text);
               }}
-              onKeyPress={event => {
+              onKeyPress={(event) => {
                 if (event.key === 'Enter' && !submitDisabled) {
                   onSubmit();
                 }
@@ -254,16 +254,6 @@ function isValidEmailAddress(email) {
 function isValidRealname(realName) {
   const pattern = new RegExp(/^[a-zA-Z]+$/);
   return pattern.test(realName);
-}
-
-function isValidUsername(username) {
-  const pattern = new RegExp(/^[a-zA-Z0-9_]+$/);
-  return (
-    !!username &&
-    username.length < 20 &&
-    username.length > 2 &&
-    pattern.test(username)
-  );
 }
 
 function isValidPassword(password) {
