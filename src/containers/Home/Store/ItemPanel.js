@@ -77,7 +77,8 @@ export default function ItemPanel({
                 skeuomorphic
                 color="green"
               >
-                Unlock
+                <Icon icon="unlock" />
+                <span style={{ marginLeft: '0.7rem' }}>Unlock</span>
               </Button>
             </div>
           </div>
