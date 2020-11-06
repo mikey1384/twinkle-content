@@ -42,6 +42,7 @@ export default function KarmaStatus({ karmaPoints, onSetKarmaPoints }) {
         setLoadingKarma(true);
       }
       const {
+        karmaPoints: kp,
         numTwinklesRewarded,
         numApprovedRecommendations,
         numPostsRewarded
@@ -49,10 +50,7 @@ export default function KarmaStatus({ karmaPoints, onSetKarmaPoints }) {
 
       if (authLevel < 2) {
         if (mounted.current) {
-          onSetKarmaPoints(
-            numTwinklesRewarded +
-              recommendationsMultiplier * numApprovedRecommendations
-          );
+          onSetKarmaPoints(kp);
         }
         if (mounted.current) {
           setNumTwinklesRewarded(numTwinklesRewarded);
@@ -74,6 +72,7 @@ export default function KarmaStatus({ karmaPoints, onSetKarmaPoints }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
+
   const instructionText = useMemo(() => {
     if (authLevel < 2) {
       return (
