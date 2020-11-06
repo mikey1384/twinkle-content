@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
 import ProgressBar from 'components/ProgressBar';
+import ChangeUsername from './ChangeUsername';
 import { useMyState } from 'helpers/hooks';
 import { css } from 'emotion';
 import { addCommasToNumber } from 'helpers/stringHelpers';
@@ -56,7 +57,7 @@ export default function ItemPanel({
       )}
       {userId &&
         (canChangeUsername ? (
-          <div>Change username component goes here</div>
+          <ChangeUsername />
         ) : (
           <>
             <div
