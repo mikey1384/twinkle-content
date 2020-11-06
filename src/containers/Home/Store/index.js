@@ -15,7 +15,7 @@ export default function Store() {
         karmaPoints={karmaPoints}
         requiredKarmaPoints={100}
         itemName="Change your username"
-        itemDescription="Unlock this item to change your username anytime"
+        itemDescription="Unlock this item to change your username anytime you want"
         style={{ marginTop: '1rem' }}
       />
     </div>
