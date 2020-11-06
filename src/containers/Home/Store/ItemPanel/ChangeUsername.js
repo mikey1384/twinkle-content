@@ -1,8 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function ChangeUsername() {
+ChangeUsername.propTypes = {
+  style: PropTypes.object
+};
+
+export default function ChangeUsername({ style }) {
   return (
-    <div>
+    <div style={style}>
       <div>Change!</div>
     </div>
   );
