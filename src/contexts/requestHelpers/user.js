@@ -78,9 +78,9 @@ export default function userRequestHelpers({ auth, handleError, token }) {
     async changeUsername(newUsername) {
       try {
         const {
-          data: { alreadyExists, username }
+          data: { alreadyExists, coins }
         } = await request.put(`${URL}/user/username`, { newUsername }, auth());
-        return Promise.resolve({ alreadyExists, username });
+        return Promise.resolve({ alreadyExists, coins });
       } catch (error) {
         return handleError(error);
       }

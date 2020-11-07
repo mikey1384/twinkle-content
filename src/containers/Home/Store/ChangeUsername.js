@@ -108,12 +108,12 @@ export default function ChangeUsername({ style }) {
   );
 
   async function handleChangeUsername() {
-    const { username, alreadyExists } = await changeUsername(newUsername);
+    const { coins, alreadyExists } = await changeUsername(newUsername);
     if (alreadyExists) {
       setUsernameAvailable(false);
       setErrorMessage(`That username is already taken`);
     } else {
-      console.log(username);
+      console.log(coins);
     }
   }
 }
