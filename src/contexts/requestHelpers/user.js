@@ -53,6 +53,18 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
+    async checkIfUsernameExists(username) {
+      try {
+        const {
+          data: { exists }
+        } = await request.get(
+          `${URL}/user/username/exists?username=${username}`
+        );
+        return Promise.resolve(exists);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async checkIfUserOnline(userId) {
       try {
         const {
