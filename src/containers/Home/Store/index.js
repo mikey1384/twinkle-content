@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import KarmaStatus from './KarmaStatus';
 import ItemPanel from './ItemPanel';
 import ChangeUsername from './ChangeUsername';
-import { useAppContext } from 'contexts';
+import { useAppContext, useContentContext } from 'contexts';
 import { priceTable } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 
@@ -10,7 +10,10 @@ export default function Store() {
   const {
     requestHelpers: { unlockUsernameChange }
   } = useAppContext();
-  const { canChangeUsername } = useMyState();
+  const {
+    actions: { onUpdateProfileInfo }
+  } = useContentContext();
+  const { canChangeUsername, userId } = useMyState();
   const [karmaPoints, setKarmaPoints] = useState(0);
 
   return (
@@ -34,6 +37,9 @@ export default function Store() {
   );
 
   async function handleUnlockUsernameChange() {
-    await unlockUsernameChange();
+    const success = await unlockUsernameChange();
+    if (success) {
+      onUpdateProfileInfo({ userId, canChangeUsername: true });
+    }
   }
 }

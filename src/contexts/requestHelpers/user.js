@@ -477,12 +477,10 @@ export default function userRequestHelpers({ auth, handleError, token }) {
     },
     async unlockUsernameChange() {
       try {
-        const { data } = await request.put(
-          `${URL}/user/unlock/username`,
-          null,
-          auth()
-        );
-        return Promise.resolve(data);
+        const {
+          data: { success }
+        } = await request.put(`${URL}/user/unlock/username`, null, auth());
+        return Promise.resolve(success);
       } catch (error) {
         return handleError(error);
       }
