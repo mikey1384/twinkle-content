@@ -55,7 +55,6 @@ export default function ChangeUsername({ style }) {
       <Input
         maxLength={20}
         placeholder="Enter new username"
-        style={{ marginTop: '1rem' }}
         onChange={(text) => setNewUsername(text)}
         value={newUsername}
       />
