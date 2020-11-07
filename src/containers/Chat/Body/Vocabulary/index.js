@@ -33,7 +33,7 @@ export default function Vocabulary() {
     }
   } = useChatContext();
   const {
-    actions: { onChangeUserCoins, onChangeUserXP }
+    actions: { onUpdateUserCoins, onChangeUserXP }
   } = useContentContext();
   const {
     state,
@@ -257,7 +257,7 @@ export default function Vocabulary() {
           definitions
         );
         onChangeUserXP({ xp, rank, userId });
-        onChangeUserCoins({ coins, userId });
+        onUpdateUserCoins({ coins, userId });
         onUpdateNumWordsCollected(word.numWordsCollected);
         onRegisterWord(word);
         onUpdateCollectorsRankings({ rankings });

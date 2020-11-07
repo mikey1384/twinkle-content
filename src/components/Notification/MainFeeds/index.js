@@ -53,7 +53,7 @@ function MainFeeds({
     }
   } = useNotiContext();
   const {
-    actions: { onChangeUserCoins, onChangeUserXP }
+    actions: { onUpdateUserCoins, onChangeUserXP }
   } = useContentContext();
   const [loading, setLoading] = useState(false);
   const [loadingNewFeeds, setLoadingNewFeeds] = useState(false);
@@ -205,7 +205,7 @@ function MainFeeds({
       action: 'collect'
     });
     if (mounted.current) {
-      onChangeUserCoins({ coins, userId });
+      onUpdateUserCoins({ coins, userId });
       onChangeUserXP({ xp, rank, userId });
       onClearRewards();
       setCollectingReward(false);

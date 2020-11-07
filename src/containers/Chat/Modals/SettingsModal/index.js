@@ -57,7 +57,7 @@ export default function SettingsModal({
     actions: { onEnableChatSubject, onEnableTheme }
   } = useChatContext();
   const {
-    actions: { onChangeUserCoins }
+    actions: { onUpdateUserCoins }
   } = useContentContext();
   const { twinkleCoins, userId } = useMyState();
   const [hovered, setHovered] = useState(false);
@@ -357,7 +357,7 @@ export default function SettingsModal({
     try {
       const { coins } = await buyChatSubject(channelId);
       onEnableChatSubject(channelId);
-      onChangeUserCoins({ coins, userId });
+      onUpdateUserCoins({ coins, userId });
       onPurchaseSubject();
       setEditedCanChangeSubject('owner');
       onSetScrollToBottom();
@@ -375,7 +375,7 @@ export default function SettingsModal({
         theme: themeToPurchase
       });
       onEnableTheme({ channelId, theme: themeToPurchase });
-      onChangeUserCoins({ coins, userId });
+      onUpdateUserCoins({ coins, userId });
       setThemeToPurchase('');
     } catch (error) {
       console.error(error);

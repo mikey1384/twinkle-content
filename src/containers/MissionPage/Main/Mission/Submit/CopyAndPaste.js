@@ -36,7 +36,7 @@ export default function CopyAndPaste({ mission, onSetMissionState, style }) {
     actions: { onUpdateMissionAttempt }
   } = useMissionContext();
   const {
-    actions: { onChangeUserXP, onChangeUserCoins }
+    actions: { onChangeUserXP, onUpdateUserCoins }
   } = useContentContext();
 
   const { content = '' } = mission;
@@ -128,7 +128,7 @@ export default function CopyAndPaste({ mission, onSetMissionState, style }) {
         });
       }
       if (newCoins.netCoins) {
-        onChangeUserCoins({ coins: newCoins.netCoins, userId });
+        onUpdateUserCoins({ coins: newCoins.netCoins, userId });
       }
     }
   }

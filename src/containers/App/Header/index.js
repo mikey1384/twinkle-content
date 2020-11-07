@@ -134,7 +134,8 @@ export default function Header({
     state,
     actions: {
       onAttachReward,
-      onChangeUserCoins,
+      onUpdateProfileInfo,
+      onUpdateUserCoins,
       onChangeUserXP,
       onLikeContent,
       onRecommendContent,
@@ -189,6 +190,7 @@ export default function Header({
     socket.on('peer_stream_close_requested', handlePeerStreamCloseRequest);
     socket.on('peer_stream_enabled', handlePeerStreamEnable);
     socket.on('subject_changed', handleSubjectChange);
+    socket.on('username_changed', handleUsernameChange);
     socket.on('new_vocab_activity_received', handleReceiveVocabActivity);
 
     return function cleanUp() {
@@ -235,6 +237,7 @@ export default function Header({
       );
       socket.removeListener('peer_stream_enabled', handlePeerStreamEnable);
       socket.removeListener('subject_changed', handleSubjectChange);
+      socket.removeListener('username_changed', handleUsernameChange);
       socket.removeListener(
         'new_vocab_activity_received',
         handleReceiveVocabActivity
@@ -575,6 +578,10 @@ export default function Header({
       }
     }
 
+    function handleUsernameChange({ userId, newUsername }) {
+      onUpdateProfileInfo({ userId, username: newUsername });
+    }
+
     function handleReceiveVocabActivity(activity) {
       const senderIsNotTheUser = activity.userId !== userId;
       if (senderIsNotTheUser) {
@@ -806,7 +813,7 @@ export default function Header({
 
   async function handleUpdateMyCoins() {
     const coins = await loadCoins();
-    onChangeUserCoins({ coins, userId });
+    onUpdateUserCoins({ coins, userId });
   }
 
   async function handleUpdateMyXp() {

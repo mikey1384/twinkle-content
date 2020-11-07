@@ -52,7 +52,7 @@ function XPVideoPlayer({
   } = useViewContext();
   const {
     actions: {
-      onChangeUserCoins,
+      onUpdateUserCoins,
       onChangeUserXP,
       onIncreaseNumCoinsEarned,
       onSetVideoCoinProgress,
@@ -382,7 +382,7 @@ function XPVideoPlayer({
               targetId: videoId,
               type: 'increase'
             });
-            onChangeUserCoins({ coins, userId });
+            onUpdateUserCoins({ coins, userId });
             onIncreaseNumCoinsEarned({ videoId });
             rewardingCoin.current = false;
           } catch (error) {

@@ -214,7 +214,7 @@ export default function ContentReducer(state, action) {
       }
       return newState;
     }
-    case 'CHANGE_USER_COINS':
+    case 'UPDATE_USER_COINS':
       return {
         ...state,
         [contentKey]: {

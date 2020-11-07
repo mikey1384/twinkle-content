@@ -35,7 +35,7 @@ export default function RecommendationInterface({
   } = useAppContext();
 
   const {
-    actions: { onChangeUserCoins, onRecommendContent }
+    actions: { onUpdateUserCoins, onRecommendContent }
   } = useContentContext();
 
   const isOnlyRecommendedByStudents = useMemo(() => {
@@ -139,7 +139,7 @@ export default function RecommendationInterface({
         uploaderId,
         currentRecommendations
       });
-      onChangeUserCoins({ coins, userId });
+      onUpdateUserCoins({ coins, userId });
       if (recommendations) {
         onRecommendContent({ contentId, contentType, recommendations });
       }

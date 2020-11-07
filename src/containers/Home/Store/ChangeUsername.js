@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import Input from 'components/Texts/Input';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
+import { socket } from 'constants/io';
 import { Color } from 'constants/css';
-import { useAppContext } from 'contexts';
+import { useAppContext, useContentContext } from 'contexts';
 import { priceTable } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { isValidUsername, stringIsEmpty } from 'helpers/stringHelpers';
@@ -17,7 +18,10 @@ export default function ChangeUsername({ style }) {
   const {
     requestHelpers: { changeUsername, checkIfUsernameExists }
   } = useAppContext();
-  const { twinkleCoins } = useMyState();
+  const {
+    actions: { onUpdateUserCoins }
+  } = useContentContext();
+  const { twinkleCoins, userId } = useMyState();
   const [newUsername, setNewUsername] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [usernameAvailable, setUsernameAvailable] = useState(false);
@@ -113,7 +117,9 @@ export default function ChangeUsername({ style }) {
       setUsernameAvailable(false);
       setErrorMessage(`That username is already taken`);
     } else {
-      console.log(coins);
+      socket.emit('change_username', newUsername);
+      onUpdateUserCoins({ coins, userId });
+      setNewUsername('');
     }
   }
 }
