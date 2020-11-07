@@ -1,9 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Input from 'components/Texts/Input';
 import Button from 'components/Button';
+import Icon from 'components/Icon';
 import { Color } from 'constants/css';
 import { useAppContext } from 'contexts';
+import { priceTable } from 'constants/defaultValues';
+import { useMyState } from 'helpers/hooks';
 import { isValidUsername, stringIsEmpty } from 'helpers/stringHelpers';
 
 ChangeUsername.propTypes = {
@@ -14,10 +17,14 @@ export default function ChangeUsername({ style }) {
   const {
     requestHelpers: { changeUsername, checkIfUsernameExists }
   } = useAppContext();
+  const { twinkleCoins } = useMyState();
   const [newUsername, setNewUsername] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [usernameAvailable, setUsernameAvailable] = useState(false);
   const timerRef = useRef(null);
+  const disabled = useMemo(() => {
+    return !usernameAvailable || twinkleCoins < priceTable.username;
+  }, [twinkleCoins, usernameAvailable]);
 
   useEffect(() => {
     setUsernameAvailable(false);
@@ -43,8 +50,12 @@ export default function ChangeUsername({ style }) {
         if (exists) {
           setErrorMessage(`That username is already taken`);
         } else {
-          setErrorMessage('');
-          setUsernameAvailable(true);
+          if (twinkleCoins < priceTable.username) {
+            setErrorMessage(`You don't have enough Twinkle Coins`);
+          } else {
+            setErrorMessage('');
+            setUsernameAvailable(true);
+          }
         }
       }
     }
@@ -53,45 +64,46 @@ export default function ChangeUsername({ style }) {
 
   return (
     <div style={style}>
-      <Input
-        maxLength={20}
-        placeholder="Enter new username"
-        onChange={(text) => setNewUsername(text)}
-        value={newUsername}
-      />
-      {errorMessage && (
-        <p style={{ color: 'red', fontSize: '1.3rem', marginTop: '0.5rem' }}>
-          {errorMessage}
-        </p>
-      )}
-      {usernameAvailable && (
+      <div>
+        <Input
+          maxLength={20}
+          placeholder="Enter new username"
+          onChange={(text) => setNewUsername(text)}
+          value={newUsername}
+        />
+      </div>
+      <div
+        style={{
+          position: 'relative',
+          height: '4rem',
+          marginTop: '0.5rem'
+        }}
+      >
         <div
           style={{
-            width: '100%',
-            position: 'relative',
-            height: '4rem',
-            marginTop: '0.5rem'
+            color: usernameAvailable ? Color.green() : 'red',
+            fontSize: '1.3rem',
+            fontWeight: usernameAvailable ? 'bold' : 'normal'
           }}
         >
-          <p
-            style={{
-              color: Color.green(),
-              fontWeight: 'bold',
-              fontSize: '1.3rem'
-            }}
-          >
-            {`This username is available. Press "Change"`}
-          </p>
-          <Button
-            style={{ position: 'absolute', top: '0.5rem', right: 0 }}
-            filled
-            color="green"
-            onClick={handleChangeUsername}
-          >
-            Change
-          </Button>
+          {usernameAvailable
+            ? `This username is available. Press "Change"`
+            : errorMessage}
         </div>
-      )}
+        <Button
+          style={{ position: 'absolute', top: '0.5rem', right: 0 }}
+          filled
+          color="green"
+          disabled={disabled}
+          onClick={handleChangeUsername}
+        >
+          Change
+          <div style={{ marginLeft: '0.7rem' }}>
+            (<Icon icon={['far', 'badge-dollar']} />
+            <span style={{ marginLeft: '0.3rem' }}>{priceTable.username}</span>)
+          </div>
+        </Button>
+      </div>
     </div>
   );
 

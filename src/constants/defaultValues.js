@@ -31,6 +31,7 @@ export const gifTable = {
 export const priceTable = {
   chatSubject: 20,
   chatTheme: 30,
+  username: 10,
   recommendation: 2,
   reward: 2
 };
