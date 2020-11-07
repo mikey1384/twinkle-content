@@ -26,7 +26,7 @@ function Channel({
   onChannelEnter,
   selectedChannelId
 }) {
-  const { profileTheme, userId, username } = useMyState();
+  const { profileTheme, userId } = useMyState();
   const effectiveChannelName = useMemo(
     () => customChannelNames[id] || channelName,
     [channelName, customChannelNames, id]
@@ -43,9 +43,11 @@ function Channel({
   );
   const otherMember = twoPeople
     ? members
-        ?.map(({ username }) => username)
-        ?.filter((memberUsername) => memberUsername !== username)?.[0]
+        ?.map(({ id, username }) => ({ id, username }))
+        ?.filter(({ id: memberId }) => memberId !== userId)
+        ?.map(({ username }) => username)?.[0]
     : undefined;
+
   const ChannelName = useMemo(
     () => otherMember || effectiveChannelName || '(Deleted)',
     [effectiveChannelName, otherMember]
