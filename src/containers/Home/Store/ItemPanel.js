@@ -5,17 +5,17 @@ import Button from 'components/Button';
 import ProgressBar from 'components/ProgressBar';
 import { useMyState } from 'helpers/hooks';
 import { css } from 'emotion';
-import { addCommasToNumber } from 'helpers/stringHelpers';
+import { addCommasToNumber, stringIsEmpty } from 'helpers/stringHelpers';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 
 ItemPanel.propTypes = {
   children: PropTypes.node,
   itemName: PropTypes.string.isRequired,
-  itemDescription: PropTypes.string.isRequired,
+  itemDescription: PropTypes.string,
   karmaPoints: PropTypes.number,
   locked: PropTypes.bool,
   requiredKarmaPoints: PropTypes.number,
-  onUnlock: PropTypes.func.isRequired,
+  onUnlock: PropTypes.func,
   style: PropTypes.object
 };
 
@@ -55,45 +55,64 @@ export default function ItemPanel({
           <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
             Requires {addCommasToNumber(requiredKarmaPoints)} KP
           </p>
-          <p style={{ fontSize: '1.3rem', marginTop: '0.5rem' }}>
-            {itemDescription}
-          </p>
+          {!stringIsEmpty(itemDescription) && (
+            <p style={{ fontSize: '1.3rem', marginTop: '0.5rem' }}>
+              {itemDescription}
+            </p>
+          )}
         </>
       )}
       {userId &&
         (locked ? (
           <>
-            <div
-              style={{
-                marginTop: '2rem',
-                display: 'flex',
-                flexDirection: 'column',
-                width: '100%',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '1.7rem'
-              }}
-            >
-              <Icon size="3x" icon="lock" />
+            {onUnlock ? (
               <div
                 style={{
-                  marginTop: '1rem',
+                  marginTop: '2rem',
                   display: 'flex',
+                  flexDirection: 'column',
                   width: '100%',
-                  justifyContent: 'center'
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '1.7rem'
                 }}
               >
-                <Button
-                  disabled={unlockProgress < 100}
-                  skeuomorphic
-                  color="green"
-                  onClick={onUnlock}
+                <Icon size="3x" icon="lock" />
+                <div
+                  style={{
+                    marginTop: '1rem',
+                    display: 'flex',
+                    width: '100%',
+                    justifyContent: 'center'
+                  }}
                 >
-                  <Icon icon="unlock" />
-                  <span style={{ marginLeft: '0.7rem' }}>Unlock</span>
-                </Button>
+                  <Button
+                    disabled={unlockProgress < 100}
+                    skeuomorphic
+                    color="green"
+                    onClick={onUnlock}
+                  >
+                    <Icon icon="unlock" />
+                    <span style={{ marginLeft: '0.7rem' }}>Unlock</span>
+                  </Button>
+                </div>
               </div>
-            </div>
+            ) : (
+              <div
+                style={{
+                  marginTop: '2rem',
+                  marginBottom: '2rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  width: '100%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '1.7rem'
+                }}
+              >
+                <Icon size="3x" icon="question" />
+              </div>
+            )}
             <ProgressBar
               color={
                 unlockProgress === 100 ? Color.green() : Color[profileTheme]()

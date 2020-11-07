@@ -17,7 +17,7 @@ export default function Store() {
   const [karmaPoints, setKarmaPoints] = useState(0);
 
   return (
-    <div>
+    <div style={{ paddingBottom: '15rem' }}>
       <KarmaStatus
         karmaPoints={karmaPoints}
         onSetKarmaPoints={setKarmaPoints}
@@ -29,10 +29,31 @@ export default function Store() {
         itemName="Change your username"
         itemDescription={`Unlock this item to change your username anytime you want for ${priceTable.username} Twinkle Coins`}
         onUnlock={handleUnlockUsernameChange}
-        style={{ marginTop: '1rem' }}
+        style={{ marginTop: '5rem' }}
       >
         <ChangeUsername style={{ marginTop: '1rem' }} />
       </ItemPanel>
+      <ItemPanel
+        karmaPoints={karmaPoints}
+        requiredKarmaPoints={1000}
+        locked
+        itemName="Coming soon..."
+        style={{ marginTop: '5rem' }}
+      />
+      <ItemPanel
+        karmaPoints={karmaPoints}
+        requiredKarmaPoints={5000}
+        locked
+        itemName="Coming soon..."
+        style={{ marginTop: '5rem' }}
+      />
+      <ItemPanel
+        karmaPoints={karmaPoints}
+        requiredKarmaPoints={10000}
+        locked
+        itemName="Coming soon..."
+        style={{ marginTop: '5rem' }}
+      />
     </div>
   );
 

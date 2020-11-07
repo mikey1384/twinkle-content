@@ -58,7 +58,8 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         const {
           data: { exists }
         } = await request.get(
-          `${URL}/user/username/exists?username=${username}`
+          `${URL}/user/username/exists?username=${username}`,
+          auth()
         );
         return Promise.resolve(exists);
       } catch (error) {
