@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Input from 'components/Texts/Input';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
+import Loading from 'components/Loading';
 import { socket } from 'constants/io';
 import { Color } from 'constants/css';
 import { useAppContext, useContentContext } from 'contexts';
@@ -22,6 +23,7 @@ export default function ChangeUsername({ style }) {
     actions: { onUpdateUserCoins }
   } = useContentContext();
   const { twinkleCoins, userId } = useMyState();
+  const [loading, setLoading] = useState(false);
   const [newUsername, setNewUsername] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [usernameAvailable, setUsernameAvailable] = useState(false);
@@ -31,10 +33,12 @@ export default function ChangeUsername({ style }) {
   }, [twinkleCoins, usernameAvailable]);
 
   useEffect(() => {
+    setLoading(false);
     setUsernameAvailable(false);
     setErrorMessage('');
     clearTimeout(timerRef.current);
     if (!stringIsEmpty(newUsername)) {
+      setLoading(true);
       timerRef.current = setTimeout(() => {
         handleUsernameInput(newUsername);
       }, 1000);
@@ -49,6 +53,7 @@ export default function ChangeUsername({ style }) {
               : ''
           }`
         );
+        setLoading(false);
       } else {
         const exists = await checkIfUsernameExists(username);
         if (exists) {
@@ -61,6 +66,7 @@ export default function ChangeUsername({ style }) {
             setUsernameAvailable(true);
           }
         }
+        setLoading(false);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -83,6 +89,9 @@ export default function ChangeUsername({ style }) {
           marginTop: '0.5rem'
         }}
       >
+        {loading && (
+          <Loading style={{ position: 'absolute', height: 0, top: '2rem' }} />
+        )}
         <div
           style={{
             color: usernameAvailable ? Color.green() : 'red',
@@ -91,7 +100,7 @@ export default function ChangeUsername({ style }) {
           }}
         >
           {usernameAvailable
-            ? `This username is available. Press "Change"`
+            ? `This username is available. Tap "Change"`
             : errorMessage}
         </div>
         <Button
