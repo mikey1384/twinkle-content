@@ -43,7 +43,6 @@ function Channel({
   );
   const otherMember = twoPeople
     ? members
-        ?.map(({ id, username }) => ({ id, username }))
         ?.filter(({ id: memberId }) => memberId !== userId)
         ?.map(({ username }) => username)?.[0]
     : undefined;
