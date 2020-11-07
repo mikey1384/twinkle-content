@@ -3,28 +3,31 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
 import ProgressBar from 'components/ProgressBar';
-import ChangeUsername from './ChangeUsername';
 import { useMyState } from 'helpers/hooks';
 import { css } from 'emotion';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 
 ItemPanel.propTypes = {
+  children: PropTypes.node,
   itemName: PropTypes.string.isRequired,
   itemDescription: PropTypes.string.isRequired,
   karmaPoints: PropTypes.number,
+  locked: PropTypes.bool,
   requiredKarmaPoints: PropTypes.number,
   style: PropTypes.object
 };
 
 export default function ItemPanel({
+  children,
   itemName,
   itemDescription,
+  locked,
   style,
   karmaPoints,
   requiredKarmaPoints
 }) {
-  const { profileTheme, userId, canChangeUsername } = useMyState();
+  const { profileTheme, userId } = useMyState();
   const unlockProgress = useMemo(() => {
     return Math.min((karmaPoints * 100) / requiredKarmaPoints, 100);
   }, [karmaPoints, requiredKarmaPoints]);
@@ -45,7 +48,7 @@ export default function ItemPanel({
       }}
     >
       <div style={{ fontWeight: 'bold', fontSize: '2rem' }}>{itemName}</div>
-      {!canChangeUsername && (
+      {locked && (
         <>
           <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
             Requires {addCommasToNumber(requiredKarmaPoints)} KP
@@ -56,9 +59,7 @@ export default function ItemPanel({
         </>
       )}
       {userId &&
-        (canChangeUsername ? (
-          <ChangeUsername style={{ marginTop: '1rem' }} />
-        ) : (
+        (locked ? (
           <>
             <div
               style={{
@@ -102,6 +103,8 @@ export default function ItemPanel({
               unlock this item. You have <b>{karmaPoints} karma points</b>
             </p>
           </>
+        ) : (
+          children
         ))}
     </div>
   );

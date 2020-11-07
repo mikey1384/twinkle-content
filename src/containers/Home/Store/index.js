@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import KarmaStatus from './KarmaStatus';
 import ItemPanel from './ItemPanel';
+import ChangeUsername from './ChangeUsername';
+import { useMyState } from 'helpers/hooks';
 
 export default function Store() {
+  const { canChangeUsername } = useMyState();
   const [karmaPoints, setKarmaPoints] = useState(0);
 
   return (
@@ -14,10 +17,13 @@ export default function Store() {
       <ItemPanel
         karmaPoints={karmaPoints}
         requiredKarmaPoints={100}
+        locked={!canChangeUsername}
         itemName="Change your username"
         itemDescription="Unlock this item to change your username anytime you want"
         style={{ marginTop: '1rem' }}
-      />
+      >
+        <ChangeUsername style={{ marginTop: '1rem' }} />
+      </ItemPanel>
     </div>
   );
 }
