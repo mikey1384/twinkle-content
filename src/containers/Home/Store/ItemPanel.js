@@ -122,7 +122,8 @@ export default function ItemPanel({
             <p style={{ fontSize: '1.2rem', marginTop: '0.5rem' }}>
               You need{' '}
               <b>{addCommasToNumber(requiredKarmaPoints)} karma points</b> to
-              unlock this item. You have <b>{karmaPoints} karma points</b>
+              unlock this item. You have{' '}
+              <b>{addCommasToNumber(karmaPoints)} karma points</b>
             </p>
           </>
         ) : (
