@@ -75,6 +75,16 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
+    async changeUsername(newUsername) {
+      try {
+        const {
+          data: { alreadyExists, username }
+        } = await request.put(`${URL}/user/username`, { newUsername }, auth());
+        return Promise.resolve({ alreadyExists, username });
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async confirmPassword(password) {
       try {
         const {

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Input from 'components/Texts/Input';
 import Button from 'components/Button';
+import { Color } from 'constants/css';
 import { useAppContext } from 'contexts';
 import { isValidUsername, stringIsEmpty } from 'helpers/stringHelpers';
 
@@ -11,7 +12,7 @@ ChangeUsername.propTypes = {
 
 export default function ChangeUsername({ style }) {
   const {
-    requestHelpers: { checkIfUsernameExists }
+    requestHelpers: { changeUsername, checkIfUsernameExists }
   } = useAppContext();
   const [newUsername, setNewUsername] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -65,10 +66,24 @@ export default function ChangeUsername({ style }) {
       )}
       {usernameAvailable && (
         <div
-          style={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}
+          style={{
+            width: '100%',
+            position: 'relative',
+            height: '4rem',
+            marginTop: '0.5rem'
+          }}
         >
+          <p
+            style={{
+              color: Color.green(),
+              fontWeight: 'bold',
+              fontSize: '1.3rem'
+            }}
+          >
+            {`This username is available. Press "Change"`}
+          </p>
           <Button
-            style={{ marginTop: '1rem' }}
+            style={{ position: 'absolute', top: '0.5rem', right: 0 }}
             filled
             color="green"
             onClick={handleChangeUsername}
@@ -80,7 +95,13 @@ export default function ChangeUsername({ style }) {
     </div>
   );
 
-  function handleChangeUsername() {
-    console.log(newUsername);
+  async function handleChangeUsername() {
+    const { username, alreadyExists } = await changeUsername(newUsername);
+    if (alreadyExists) {
+      setUsernameAvailable(false);
+      setErrorMessage(`That username is already taken`);
+    } else {
+      console.log(username);
+    }
   }
 }
