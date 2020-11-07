@@ -475,6 +475,18 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
+    async unlockUsernameChange() {
+      try {
+        const { data } = await request.put(
+          `${URL}/user/unlock/username`,
+          null,
+          auth()
+        );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async verifyEmail({ token, forPasswordReset }) {
       try {
         const {

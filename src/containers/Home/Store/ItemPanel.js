@@ -15,6 +15,7 @@ ItemPanel.propTypes = {
   karmaPoints: PropTypes.number,
   locked: PropTypes.bool,
   requiredKarmaPoints: PropTypes.number,
+  onUnlock: PropTypes.func.isRequired,
   style: PropTypes.object
 };
 
@@ -25,6 +26,7 @@ export default function ItemPanel({
   locked,
   style,
   karmaPoints,
+  onUnlock,
   requiredKarmaPoints
 }) {
   const { profileTheme, userId } = useMyState();
@@ -85,6 +87,7 @@ export default function ItemPanel({
                   disabled={unlockProgress < 100}
                   skeuomorphic
                   color="green"
+                  onClick={onUnlock}
                 >
                   <Icon icon="unlock" />
                   <span style={{ marginLeft: '0.7rem' }}>Unlock</span>
