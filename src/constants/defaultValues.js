@@ -35,6 +35,9 @@ export const priceTable = {
   recommendation: 2,
   reward: 2
 };
+export const karmaPointTable = {
+  username: 100
+};
 export const charLimit = {
   chat: {
     subject: 200,
