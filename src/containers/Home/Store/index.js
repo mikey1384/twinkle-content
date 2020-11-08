@@ -37,7 +37,8 @@ export default function Store() {
         karmaPoints={karmaPoints}
         requiredKarmaPoints={1000}
         locked
-        itemName="Coming soon..."
+        itemName="Expand upload size limit - 500 MB"
+        itemDescription="Unlock this item to upload files up to 500 MB"
         style={{ marginTop: '5rem' }}
       />
       <ItemPanel
