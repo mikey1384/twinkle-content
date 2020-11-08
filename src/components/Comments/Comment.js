@@ -96,7 +96,8 @@ function Comment({
     filePath,
     fileName,
     fileSize,
-    isNotification
+    isNotification,
+    thumbUrl: originalThumbUrl
   }
 }) {
   const mounted = useRef(true);
@@ -131,12 +132,18 @@ function Comment({
   const {
     deleted,
     isEditing,
-    thumbUrl,
+    thumbUrl: thumbUrlFromContext,
     xpRewardInterfaceShown
   } = useContentState({
     contentType: 'comment',
     contentId: comment.id
   });
+
+  const thumbUrl = useMemo(() => thumbUrlFromContext || originalThumbUrl, [
+    originalThumbUrl,
+    thumbUrlFromContext
+  ]);
+
   const subjectState = useContentState({
     contentType: 'subject',
     contentId: subject.id
