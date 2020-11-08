@@ -37,7 +37,15 @@ export const priceTable = {
 };
 export const karmaPointTable = {
   username: 100,
-  fileLv1: 500
+  file: {
+    0: 500,
+    1: 2000,
+    2: 3500,
+    3: 5000,
+    4: 6500,
+    5: 8000,
+    6: 10000
+  }
 };
 export const charLimit = {
   chat: {

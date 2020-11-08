@@ -13,7 +13,7 @@ export default function Store() {
   const {
     actions: { onUpdateProfileInfo }
   } = useContentContext();
-  const { canChangeUsername, userId } = useMyState();
+  const { canChangeUsername, fileUploadLvl = 0, userId } = useMyState();
   const [karmaPoints, setKarmaPoints] = useState(0);
 
   return (
@@ -34,11 +34,35 @@ export default function Store() {
         <ChangeUsername style={{ marginTop: '1rem' }} />
       </ItemPanel>
       <ItemPanel
+        isLeveled
+        currentLvl={fileUploadLvl}
+        maxLvl={7}
         karmaPoints={karmaPoints}
-        requiredKarmaPoints={karmaPointTable.fileLv1}
-        locked
-        itemName="Expand upload file size limit - 500 MB"
-        itemDescription="Unlock this item to upload files up to 500 MB in size"
+        requiredKarmaPoints={karmaPointTable.file[fileUploadLvl]}
+        locked={!fileUploadLvl}
+        onUnlock={() => console.log('unlocking')}
+        itemName={
+          {
+            0: 'Expand upload file size limit (level 1)',
+            1: 'Expand upload file size limit (level 2)',
+            2: 'Expand upload file size limit (level 3)',
+            3: 'Expand upload file size limit (level 4)',
+            4: 'Expand upload file size limit (level 5)',
+            5: 'Expand upload file size limit (level 6)',
+            6: 'Expand upload file size limit (level 7)'
+          }[fileUploadLvl]
+        }
+        itemDescription={
+          {
+            0: 'Unlock this item to upload files up to 500 MB in size',
+            1: 'Unlock this item to upload files up to 750 MB in size',
+            2: 'Unlock this item to upload files up to 1 GB in size',
+            3: 'Unlock this item to upload files up to 1.25 GB in size',
+            4: 'Unlock this item to upload files up to 1.5 GB in size',
+            5: 'Unlock this item to upload files up to 1.75 GB in size',
+            6: 'Unlock this item to upload files up to 2 GB in size'
+          }[fileUploadLvl]
+        }
         style={{ marginTop: '5rem' }}
       />
       <ItemPanel

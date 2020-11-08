@@ -10,8 +10,11 @@ import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 
 ItemPanel.propTypes = {
   children: PropTypes.node,
+  currentLvl: PropTypes.number,
   itemName: PropTypes.string.isRequired,
   itemDescription: PropTypes.string,
+  isLeveled: PropTypes.bool,
+  maxLvl: PropTypes.number,
   karmaPoints: PropTypes.number,
   locked: PropTypes.bool,
   requiredKarmaPoints: PropTypes.number,
@@ -21,9 +24,12 @@ ItemPanel.propTypes = {
 
 export default function ItemPanel({
   children,
+  currentLvl,
   itemName,
   itemDescription,
-  locked,
+  isLeveled,
+  locked: initialLocked,
+  maxLvl,
   style,
   karmaPoints,
   onUnlock,
@@ -33,6 +39,9 @@ export default function ItemPanel({
   const unlockProgress = useMemo(() => {
     return Math.min((karmaPoints * 100) / requiredKarmaPoints, 100);
   }, [karmaPoints, requiredKarmaPoints]);
+  const locked = useMemo(() => {
+    return initialLocked || (isLeveled && currentLvl < maxLvl);
+  }, [currentLvl, initialLocked, isLeveled, maxLvl]);
 
   return (
     <div
