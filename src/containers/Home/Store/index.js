@@ -42,26 +42,26 @@ export default function Store() {
         locked={!fileUploadLvl}
         onUnlock={() => console.log('unlocking')}
         itemName={
-          {
-            0: 'Expand upload file size limit (level 1)',
-            1: 'Expand upload file size limit (level 2)',
-            2: 'Expand upload file size limit (level 3)',
-            3: 'Expand upload file size limit (level 4)',
-            4: 'Expand upload file size limit (level 5)',
-            5: 'Expand upload file size limit (level 6)',
-            6: 'Expand upload file size limit (level 7)'
-          }[fileUploadLvl]
+          [
+            'Expand upload file size limit',
+            'Expand upload file size limit (level 2)',
+            'Expand upload file size limit (level 3)',
+            'Expand upload file size limit (level 4)',
+            'Expand upload file size limit (level 5)',
+            'Expand upload file size limit (level 6)',
+            'Expand upload file size limit (level 7)'
+          ][fileUploadLvl]
         }
         itemDescription={
-          {
-            0: 'Unlock this item to upload files up to 500 MB in size',
-            1: 'Unlock this item to upload files up to 750 MB in size',
-            2: 'Unlock this item to upload files up to 1 GB in size',
-            3: 'Unlock this item to upload files up to 1.25 GB in size',
-            4: 'Unlock this item to upload files up to 1.5 GB in size',
-            5: 'Unlock this item to upload files up to 1.75 GB in size',
-            6: 'Unlock this item to upload files up to 2 GB in size'
-          }[fileUploadLvl]
+          [
+            'Unlock this item to upload files up to 500 MB in size',
+            'Upgrade this item to upload files up to 750 MB in size',
+            'Upgrade this item to upload files up to 1 GB in size',
+            'Upgrade this item to upload files up to 1.25 GB in size',
+            'Upgrade this item to upload files up to 1.5 GB in size',
+            'Upgrade this item to upload files up to 1.75 GB in size',
+            'Upgrade this item to upload files up to 2 GB in size'
+          ][fileUploadLvl]
         }
         style={{ marginTop: '5rem' }}
       />
