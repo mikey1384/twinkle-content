@@ -94,7 +94,7 @@ export default function Posts({
     <Loading style={{ marginBottom: '50vh' }} text="Loading..." />
   ) : (
     <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
-      {section !== 'likes' && (
+      {!['likes', 'watched'].includes(section) && (
         <FilterBar
           color={selectedTheme}
           style={{ height: '5rem', marginTop: '-1rem' }}
@@ -135,8 +135,10 @@ export default function Posts({
         {loadingFeeds ? (
           <Loading
             className={css`
-              margin-top: ${section === 'likes' ? '12rem' : '3rem'};
-              width: ${section === 'likes' ? '55%' : '50%'};
+              margin-top: ${['likes', 'watched'].includes(section)
+                ? '12rem'
+                : '3rem'};
+              width: ${['likes', 'watched'].includes(section) ? '55%' : '50%'};
               @media (max-width: ${mobileMaxWidth}) {
                 width: 100%;
               }
@@ -147,7 +149,7 @@ export default function Posts({
           <div
             className={css`
               margin-top: 1rem;
-              width: ${section === 'likes' ? '55%' : '50%'};
+              width: ${['likes', 'watched'].includes(section) ? '55%' : '50%'};
               @media (max-width: ${mobileMaxWidth}) {
                 width: 100%;
               }
@@ -196,7 +198,7 @@ export default function Posts({
             )}
           </div>
         )}
-        {section !== 'likes' && (
+        {!['likes', 'watched'].includes(section) && (
           <SideMenu
             className={`desktop ${css`
               width: 10%;
