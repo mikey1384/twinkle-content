@@ -26,17 +26,9 @@ export default function StartScreen({ navigateTo, onHide }) {
   const { authLevel, twinkleXP } = useMyState();
   const [alertModalShown, setAlertModalShown] = useState(false);
   const FileInputRef = useRef(null);
-  const maxSize = useMemo(
-    () =>
-      authLevel > 3
-        ? 5000 * mb
-        : authLevel > 1
-        ? 3000 * mb
-        : authLevel === 1
-        ? 1000 * mb
-        : 300 * mb,
-    [authLevel]
-  );
+  const maxSize = useMemo(() => (authLevel > 1 ? 1000 * mb : 300 * mb), [
+    authLevel
+  ]);
   const disabled = useMemo(() => {
     if (authLevel > 1) return false;
     if (twinkleXP >= FILE_UPLOAD_XP_REQUIREMENT) return false;

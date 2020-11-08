@@ -48,17 +48,9 @@ export default function InputForm({
   targetCommentId
 }) {
   const { userId, profileTheme, authLevel, twinkleXP } = useMyState();
-  const maxSize = useMemo(
-    () =>
-      authLevel > 3
-        ? 5000 * mb
-        : authLevel > 1
-        ? 3000 * mb
-        : authLevel === 1
-        ? 1000 * mb
-        : 300 * mb,
-    [authLevel]
-  );
+  const maxSize = useMemo(() => (authLevel > 1 ? 1000 * mb : 300 * mb), [
+    authLevel
+  ]);
   const [submitting, setSubmitting] = useState(false);
   const [
     secretViewMessageSubmitting,

@@ -36,7 +36,8 @@ export const priceTable = {
   reward: 2
 };
 export const karmaPointTable = {
-  username: 100
+  username: 100,
+  fileLv1: 500
 };
 export const charLimit = {
   chat: {

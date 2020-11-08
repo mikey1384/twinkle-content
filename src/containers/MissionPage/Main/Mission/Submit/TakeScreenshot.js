@@ -40,17 +40,9 @@ export default function TakeScreenshot({
   const [uploadingFile, setUploadingFile] = useState(false);
   const FileInputRef = useRef(null);
   const filePathRef = useRef(null);
-  const maxSize = useMemo(
-    () =>
-      authLevel > 3
-        ? 5000 * mb
-        : authLevel > 1
-        ? 3000 * mb
-        : authLevel === 1
-        ? 1000 * mb
-        : 300 * mb,
-    [authLevel]
-  );
+  const maxSize = useMemo(() => (authLevel > 1 ? 1000 * mb : 300 * mb), [
+    authLevel
+  ]);
 
   return (
     <div
