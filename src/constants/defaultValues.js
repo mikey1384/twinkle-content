@@ -38,13 +38,13 @@ export const priceTable = {
 export const karmaPointTable = {
   username: 100,
   file: {
-    0: 5,
-    1: 20,
-    2: 35,
-    3: 50,
-    4: 65,
-    5: 80,
-    6: 100
+    0: 500,
+    1: 1000,
+    2: 2500,
+    3: 5000,
+    4: 10000,
+    5: 25000,
+    6: 50000
   }
 };
 export const charLimit = {
@@ -158,7 +158,7 @@ export const returnMaxRewards = ({ rewardLevel }) => {
 };
 
 export const returnMaxUploadSize = (fileUploadLvl) => {
-  const maxSizes = [300, 500, 750, 1000, 1250, 1500, 1750, 2000];
+  const maxSizes = [300, 400, 500, 650, 800, 1000, 1500, 2000];
   return maxSizes[fileUploadLvl] * mb;
 };
 
