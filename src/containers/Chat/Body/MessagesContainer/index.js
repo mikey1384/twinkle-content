@@ -20,7 +20,12 @@ import CallScreen from './CallScreen';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Icon from 'components/Icon';
 import { v1 as uuidv1 } from 'uuid';
-import { GENERAL_CHAT_ID, rewardReasons, mb } from 'constants/defaultValues';
+import {
+  GENERAL_CHAT_ID,
+  rewardReasons,
+  mb,
+  returnMaxUploadSize
+} from 'constants/defaultValues';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 import { css } from 'emotion';
 import { Color } from 'constants/css';
@@ -184,9 +189,7 @@ export default function MessagesContainer({
     [channelLoading, creatingNewDMChannel, reconnecting]
   );
 
-  const maxSize = useMemo(() => (authLevel > 1 ? 1000 * mb : 300 * mb), [
-    authLevel
-  ]);
+  const maxSize = useMemo(() => returnMaxUploadSize(authLevel), [authLevel]);
 
   const menuProps = useMemo(() => {
     if (currentChannel.twoPeople) {

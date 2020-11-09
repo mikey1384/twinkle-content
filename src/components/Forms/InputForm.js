@@ -7,7 +7,11 @@ import Attachment from 'components/Attachment';
 import FullTextReveal from 'components/Texts/FullTextReveal';
 import AlertModal from 'components/Modals/AlertModal';
 import { Color } from 'constants/css';
-import { FILE_UPLOAD_XP_REQUIREMENT, mb } from 'constants/defaultValues';
+import {
+  FILE_UPLOAD_XP_REQUIREMENT,
+  mb,
+  returnMaxUploadSize
+} from 'constants/defaultValues';
 import {
   addCommasToNumber,
   exceedsCharLimit,
@@ -48,9 +52,7 @@ export default function InputForm({
   targetCommentId
 }) {
   const { userId, profileTheme, authLevel, twinkleXP } = useMyState();
-  const maxSize = useMemo(() => (authLevel > 1 ? 1000 * mb : 300 * mb), [
-    authLevel
-  ]);
+  const maxSize = useMemo(() => returnMaxUploadSize(authLevel), [authLevel]);
   const [submitting, setSubmitting] = useState(false);
   const [
     secretViewMessageSubmitting,

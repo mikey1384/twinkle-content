@@ -5,7 +5,7 @@ import Icon from 'components/Icon';
 import FileViewer from 'components/FileViewer';
 import AlertModal from 'components/Modals/AlertModal';
 import FileContent from 'components/FileContent';
-import { mb } from 'constants/defaultValues';
+import { mb, returnMaxUploadSize } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 import { css } from 'emotion';
@@ -37,9 +37,7 @@ export default function FileField({
     requestHelpers: { uploadThumbForInteractiveSlide }
   } = useAppContext();
   const { authLevel } = useMyState();
-  const maxSize = useMemo(() => (authLevel > 1 ? 1000 * mb : 300 * mb), [
-    authLevel
-  ]);
+  const maxSize = useMemo(() => returnMaxUploadSize(authLevel), [authLevel]);
   const [alertModalShown, setAlertModalShown] = useState(false);
   const FileInputRef = useRef(null);
 

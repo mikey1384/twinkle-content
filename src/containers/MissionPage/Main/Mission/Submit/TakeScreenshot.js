@@ -4,7 +4,7 @@ import Button from 'components/Button';
 import AlertModal from 'components/Modals/AlertModal';
 import Icon from 'components/Icon';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
-import { mb } from 'constants/defaultValues';
+import { mb, returnMaxUploadSize } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 import { useAppContext, useMissionContext } from 'contexts';
@@ -40,9 +40,7 @@ export default function TakeScreenshot({
   const [uploadingFile, setUploadingFile] = useState(false);
   const FileInputRef = useRef(null);
   const filePathRef = useRef(null);
-  const maxSize = useMemo(() => (authLevel > 1 ? 1000 * mb : 300 * mb), [
-    authLevel
-  ]);
+  const maxSize = useMemo(() => returnMaxUploadSize(authLevel), [authLevel]);
 
   return (
     <div

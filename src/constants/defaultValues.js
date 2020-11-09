@@ -157,11 +157,15 @@ export const returnMaxRewards = ({ rewardLevel }) => {
   return maxRewards;
 };
 
-const intermediateWordFrequency = 4;
-const advancedWordFrequency = 2.5;
-const epicWordFrequency = 1.6;
+export const returnMaxUploadSize = (authLevel) => {
+  return authLevel > 1 ? 1000 * mb : 10 * mb;
+};
 
 export function returnWordLevel({ frequency, word }) {
+  const intermediateWordFrequency = 4;
+  const advancedWordFrequency = 2.5;
+  const epicWordFrequency = 1.6;
+
   if (!frequency) return 3;
   if (frequency > intermediateWordFrequency) {
     if (word.length < 7) return 1;
