@@ -8,13 +8,13 @@ import { karmaPointTable } from 'constants/defaultValues';
 const item = {
   maxLvl: 7,
   name: [
-    'Expand upload file size limit',
-    'Expand upload file size limit (level 2)',
-    'Expand upload file size limit (level 3)',
-    'Expand upload file size limit (level 4)',
-    'Expand upload file size limit (level 5)',
-    'Expand upload file size limit (level 6)',
-    'Expand upload file size limit (level 7)'
+    'Expand maximum upload file size',
+    'Expand maximum upload file size (level 2)',
+    'Expand maximum upload file size (level 3)',
+    'Expand maximum upload file size (level 4)',
+    'Expand maximum upload file size (level 5)',
+    'Expand maximum upload file size (level 6)',
+    'Expand maximum upload file size (level 7)'
   ],
   description: [
     'Unlock this item to expand your maximum upload file size to 500 MB (from 300 MB)',
