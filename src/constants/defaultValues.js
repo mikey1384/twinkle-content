@@ -38,13 +38,13 @@ export const priceTable = {
 export const karmaPointTable = {
   username: 100,
   file: {
-    0: 500,
-    1: 2000,
-    2: 3500,
-    3: 5000,
-    4: 6500,
-    5: 8000,
-    6: 10000
+    0: 50,
+    1: 200,
+    2: 350,
+    3: 500,
+    4: 650,
+    5: 800,
+    6: 1000
   }
 };
 export const charLimit = {

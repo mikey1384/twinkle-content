@@ -28,7 +28,7 @@ export default function ItemPanel({
   itemName,
   itemDescription,
   isLeveled,
-  locked: initialLocked,
+  locked: notUnlocked,
   maxLvl,
   style,
   karmaPoints,
@@ -40,8 +40,11 @@ export default function ItemPanel({
     return Math.min((karmaPoints * 100) / requiredKarmaPoints, 100);
   }, [karmaPoints, requiredKarmaPoints]);
   const locked = useMemo(() => {
-    return initialLocked || (isLeveled && currentLvl < maxLvl);
-  }, [currentLvl, initialLocked, isLeveled, maxLvl]);
+    return notUnlocked || (isLeveled && currentLvl < maxLvl);
+  }, [currentLvl, notUnlocked, isLeveled, maxLvl]);
+  const notUpgraded = useMemo(() => {
+    return !notUnlocked && isLeveled && currentLvl < maxLvl;
+  }, [currentLvl, isLeveled, maxLvl, notUnlocked]);
 
   return (
     <div
@@ -101,8 +104,10 @@ export default function ItemPanel({
                     color="green"
                     onClick={onUnlock}
                   >
-                    <Icon icon="unlock" />
-                    <span style={{ marginLeft: '0.7rem' }}>Unlock</span>
+                    <Icon icon={notUpgraded ? 'level-up' : 'unlock'} />
+                    <span style={{ marginLeft: '0.7rem' }}>
+                      {notUpgraded ? 'Upgrade' : 'Unlock'}
+                    </span>
                   </Button>
                 </div>
               </div>
@@ -130,8 +135,8 @@ export default function ItemPanel({
             />
             <p style={{ fontSize: '1.2rem', marginTop: '0.5rem' }}>
               You need{' '}
-              <b>{addCommasToNumber(requiredKarmaPoints)} karma points</b> to
-              unlock this item. You have{' '}
+              <b>{addCommasToNumber(requiredKarmaPoints)} karma points</b> to{' '}
+              {notUpgraded ? 'upgrade' : 'unlock'} this item. You have{' '}
               <b>{addCommasToNumber(karmaPoints)} karma points</b>
             </p>
           </>
