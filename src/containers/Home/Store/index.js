@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import KarmaStatus from './KarmaStatus';
 import ItemPanel from './ItemPanel';
 import ChangeUsername from './ChangeUsername';
+import FileSizeItem from './FileSizeItem';
 import { useAppContext, useContentContext } from 'contexts';
 import { priceTable, karmaPointTable } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
@@ -13,7 +14,7 @@ export default function Store() {
   const {
     actions: { onUpdateProfileInfo }
   } = useContentContext();
-  const { canChangeUsername, fileUploadLvl = 0, userId } = useMyState();
+  const { canChangeUsername, userId } = useMyState();
   const [karmaPoints, setKarmaPoints] = useState(0);
 
   return (
@@ -33,38 +34,7 @@ export default function Store() {
       >
         <ChangeUsername style={{ marginTop: '1rem' }} />
       </ItemPanel>
-      <ItemPanel
-        isLeveled
-        currentLvl={fileUploadLvl}
-        maxLvl={7}
-        karmaPoints={karmaPoints}
-        requiredKarmaPoints={karmaPointTable.file[fileUploadLvl]}
-        locked={!fileUploadLvl}
-        onUnlock={() => console.log('unlocking')}
-        itemName={
-          [
-            'Expand upload file size limit',
-            'Expand upload file size limit (level 2)',
-            'Expand upload file size limit (level 3)',
-            'Expand upload file size limit (level 4)',
-            'Expand upload file size limit (level 5)',
-            'Expand upload file size limit (level 6)',
-            'Expand upload file size limit (level 7)'
-          ][fileUploadLvl]
-        }
-        itemDescription={
-          [
-            'Unlock this item to upload files up to 500 MB in size',
-            'Upgrade this item to upload files up to 750 MB in size',
-            'Upgrade this item to upload files up to 1 GB in size',
-            'Upgrade this item to upload files up to 1.25 GB in size',
-            'Upgrade this item to upload files up to 1.5 GB in size',
-            'Upgrade this item to upload files up to 1.75 GB in size',
-            'Upgrade this item to upload files up to 2 GB in size'
-          ][fileUploadLvl]
-        }
-        style={{ marginTop: '5rem' }}
-      />
+      <FileSizeItem />
       <ItemPanel
         karmaPoints={karmaPoints}
         requiredKarmaPoints={1000}
