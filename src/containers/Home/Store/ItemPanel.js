@@ -37,7 +37,7 @@ export default function ItemPanel({
 }) {
   const { profileTheme, userId } = useMyState();
   const unlockProgress = useMemo(() => {
-    return Math.min((karmaPoints * 100) / requiredKarmaPoints, 100);
+    return Math.floor(Math.min((karmaPoints * 100) / requiredKarmaPoints, 100));
   }, [karmaPoints, requiredKarmaPoints]);
   const locked = useMemo(() => {
     return notUnlocked || (isLeveled && currentLvl < maxLvl);

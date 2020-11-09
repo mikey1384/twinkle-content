@@ -1,5 +1,6 @@
 import React from 'react';
 import ItemPanel from './ItemPanel';
+import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { karmaPointTable } from 'constants/defaultValues';
 
@@ -27,6 +28,9 @@ const item = {
 
 export default function FileSizeItem() {
   const { fileUploadLvl = 0, karmaPoints } = useMyState();
+  const {
+    requestHelpers: { upgradeFileUploadSize }
+  } = useAppContext();
   return (
     <ItemPanel
       isLeveled
@@ -35,10 +39,14 @@ export default function FileSizeItem() {
       karmaPoints={karmaPoints}
       requiredKarmaPoints={karmaPointTable.file[fileUploadLvl]}
       locked={!fileUploadLvl}
-      onUnlock={() => console.log('unlocking')}
+      onUnlock={handleUpgrade}
       itemName={item.name[fileUploadLvl]}
       itemDescription={item.description[fileUploadLvl]}
       style={{ marginTop: '5rem' }}
     />
   );
+
+  async function handleUpgrade() {
+    upgradeFileUploadSize();
+  }
 }

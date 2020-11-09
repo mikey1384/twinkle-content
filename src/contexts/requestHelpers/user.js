@@ -486,6 +486,16 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
+    async upgradeFileUploadSize() {
+      try {
+        const {
+          data: { success }
+        } = await request.put(`${URL}/user/upgrade/uploadSize`, null, auth());
+        return Promise.resolve(success);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async verifyEmail({ token, forPasswordReset }) {
       try {
         const {
