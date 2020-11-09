@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
@@ -37,6 +37,7 @@ export default function ItemPanel({
   requiredKarmaPoints,
   upgradeIcon
 }) {
+  const [highlighted, setHighlighted] = useState(false);
   const { profileTheme, userId } = useMyState();
   const unlockProgress = useMemo(() => {
     return Math.floor(Math.min((karmaPoints * 100) / requiredKarmaPoints, 100));
@@ -57,8 +58,14 @@ export default function ItemPanel({
         }
       `}
       style={{
+        ...(highlighted
+          ? {
+              boxShadow: `0 0 5px ${Color.gold(0.8)}`,
+              border: `2px solid ${Color.gold(0.8)}`
+            }
+          : { border: `1px solid ${Color.borderGray()}` }),
         background: '#fff',
-        border: `1px solid ${Color.borderGray()}`,
+        transition: 'border 0.5s',
         padding: '1rem',
         ...style
       }}
@@ -108,7 +115,13 @@ export default function ItemPanel({
                     disabled={unlockProgress < 100}
                     skeuomorphic
                     color="green"
-                    onClick={onUnlock}
+                    onClick={() => {
+                      onUnlock();
+                      if (isLeveled) {
+                        setHighlighted(true);
+                        setTimeout(() => setHighlighted(false), [500]);
+                      }
+                    }}
                   >
                     <Icon icon={notUpgraded ? 'level-up' : 'unlock'} />
                     <span style={{ marginLeft: '0.7rem' }}>
