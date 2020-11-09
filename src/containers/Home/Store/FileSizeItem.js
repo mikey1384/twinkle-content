@@ -17,13 +17,13 @@ const item = {
     'Expand upload file size limit (level 7)'
   ],
   description: [
-    'Unlock this item to upload files up to 500 MB in size',
-    'Upgrade this item to upload files up to 750 MB in size',
-    'Upgrade this item to upload files up to 1 GB in size',
-    'Upgrade this item to upload files up to 1.25 GB in size',
-    'Upgrade this item to upload files up to 1.5 GB in size',
-    'Upgrade this item to upload files up to 1.75 GB in size',
-    'Upgrade this item to upload files up to 2 GB in size'
+    'Unlock this item to expand your maximum upload file size to 500 MB (from 300 MB)',
+    'Upgrade this item to expand your maximum upload file size to 750 MB (from 500 MB)',
+    'Upgrade this item to expand your maximum upload file size to 1 GB (from 750 MB)',
+    'Upgrade this item to expand your maximum upload file size to 1.25 GB (from 1 GB)',
+    'Upgrade this item to expand your maximum upload file size to 1.5 GB (from 1.25 GB)',
+    'Upgrade this item to expand your maximum upload file size to 1.75 GB (from 1.5 GB)',
+    'Upgrade this item to expand your maximum upload file size to 2 GB (from 1.75 GB)'
   ]
 };
 

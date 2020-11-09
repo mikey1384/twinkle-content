@@ -36,8 +36,10 @@ export default function FileField({
   const {
     requestHelpers: { uploadThumbForInteractiveSlide }
   } = useAppContext();
-  const { authLevel } = useMyState();
-  const maxSize = useMemo(() => returnMaxUploadSize(authLevel), [authLevel]);
+  const { fileUploadLvl } = useMyState();
+  const maxSize = useMemo(() => returnMaxUploadSize(fileUploadLvl), [
+    fileUploadLvl
+  ]);
   const [alertModalShown, setAlertModalShown] = useState(false);
   const FileInputRef = useRef(null);
 

@@ -157,8 +157,9 @@ export const returnMaxRewards = ({ rewardLevel }) => {
   return maxRewards;
 };
 
-export const returnMaxUploadSize = (authLevel) => {
-  return authLevel > 1 ? 1000 * mb : 10 * mb;
+export const returnMaxUploadSize = (fileUploadLvl) => {
+  const maxSizes = [300, 500, 750, 1000, 1250, 1500, 1750, 2000];
+  return maxSizes[fileUploadLvl] * mb;
 };
 
 export function returnWordLevel({ frequency, word }) {

@@ -101,7 +101,13 @@ export default function MessagesContainer({
       onUpdateLastMessages
     }
   } = useChatContext();
-  const { authLevel, banned, profilePicId, userId, username } = useMyState();
+  const {
+    fileUploadLvl,
+    banned,
+    profilePicId,
+    userId,
+    username
+  } = useMyState();
   const [chessCountdownObj, setChessCountdownObj] = useState({});
   const [textAreaHeight, setTextAreaHeight] = useState(0);
   const [fileObj, setFileObj] = useState(null);
@@ -189,7 +195,9 @@ export default function MessagesContainer({
     [channelLoading, creatingNewDMChannel, reconnecting]
   );
 
-  const maxSize = useMemo(() => returnMaxUploadSize(authLevel), [authLevel]);
+  const maxSize = useMemo(() => returnMaxUploadSize(fileUploadLvl), [
+    fileUploadLvl
+  ]);
 
   const menuProps = useMemo(() => {
     if (currentChannel.twoPeople) {

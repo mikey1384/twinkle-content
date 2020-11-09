@@ -35,12 +35,14 @@ export default function TakeScreenshot({
   const {
     actions: { onUpdateMissionAttempt }
   } = useMissionContext();
-  const { authLevel, username } = useMyState();
+  const { fileUploadLvl, username } = useMyState();
   const [alertModalShown, setAlertModalShown] = useState(false);
   const [uploadingFile, setUploadingFile] = useState(false);
   const FileInputRef = useRef(null);
   const filePathRef = useRef(null);
-  const maxSize = useMemo(() => returnMaxUploadSize(authLevel), [authLevel]);
+  const maxSize = useMemo(() => returnMaxUploadSize(fileUploadLvl), [
+    fileUploadLvl
+  ]);
 
   return (
     <div
