@@ -48,7 +48,9 @@ export default function FileSizeItem() {
       itemDescription={item.description[fileUploadLvl]}
       style={{ marginTop: '5rem' }}
       upgradeIcon={<Icon size="3x" icon="upload" />}
-    />
+    >
+      <div>Max Level Reached</div>
+    </ItemPanel>
   );
 
   async function handleUpgrade() {
