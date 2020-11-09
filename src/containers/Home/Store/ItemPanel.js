@@ -19,7 +19,8 @@ ItemPanel.propTypes = {
   locked: PropTypes.bool,
   requiredKarmaPoints: PropTypes.number,
   onUnlock: PropTypes.func,
-  style: PropTypes.object
+  style: PropTypes.object,
+  upgradeIcon: PropTypes.node
 };
 
 export default function ItemPanel({
@@ -33,7 +34,8 @@ export default function ItemPanel({
   style,
   karmaPoints,
   onUnlock,
-  requiredKarmaPoints
+  requiredKarmaPoints,
+  upgradeIcon
 }) {
   const { profileTheme, userId } = useMyState();
   const unlockProgress = useMemo(() => {
@@ -89,7 +91,11 @@ export default function ItemPanel({
                   fontSize: '1.7rem'
                 }}
               >
-                <Icon size="3x" icon="lock" />
+                {upgradeIcon && notUpgraded ? (
+                  upgradeIcon
+                ) : (
+                  <Icon size="3x" icon="lock" />
+                )}
                 <div
                   style={{
                     marginTop: '1rem',

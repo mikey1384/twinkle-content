@@ -1,5 +1,6 @@
 import React from 'react';
 import ItemPanel from './ItemPanel';
+import Icon from 'components/Icon';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { karmaPointTable } from 'constants/defaultValues';
@@ -46,6 +47,7 @@ export default function FileSizeItem() {
       itemName={item.name[fileUploadLvl]}
       itemDescription={item.description[fileUploadLvl]}
       style={{ marginTop: '5rem' }}
+      upgradeIcon={<Icon size="3x" icon="upload" />}
     />
   );
 
