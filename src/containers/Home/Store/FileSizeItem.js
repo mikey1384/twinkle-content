@@ -1,6 +1,6 @@
 import React from 'react';
 import ItemPanel from './ItemPanel';
-import { useAppContext } from 'contexts';
+import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { karmaPointTable } from 'constants/defaultValues';
 
@@ -27,7 +27,10 @@ const item = {
 };
 
 export default function FileSizeItem() {
-  const { fileUploadLvl = 0, karmaPoints } = useMyState();
+  const { fileUploadLvl = 0, karmaPoints, userId } = useMyState();
+  const {
+    actions: { onUpdateProfileInfo }
+  } = useContentContext();
   const {
     requestHelpers: { upgradeFileUploadSize }
   } = useAppContext();
@@ -47,6 +50,9 @@ export default function FileSizeItem() {
   );
 
   async function handleUpgrade() {
-    upgradeFileUploadSize();
+    const success = await upgradeFileUploadSize();
+    if (success) {
+      onUpdateProfileInfo({ userId, fileUploadLvl: fileUploadLvl + 1 });
+    }
   }
 }
