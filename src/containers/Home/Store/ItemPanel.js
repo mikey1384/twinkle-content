@@ -117,10 +117,8 @@ export default function ItemPanel({
                     color="green"
                     onClick={() => {
                       onUnlock();
-                      if (isLeveled) {
-                        setHighlighted(true);
-                        setTimeout(() => setHighlighted(false), 500);
-                      }
+                      setHighlighted(true);
+                      setTimeout(() => setHighlighted(false), 500);
                     }}
                   >
                     <Icon icon={notUpgraded ? 'level-up' : 'unlock'} />
