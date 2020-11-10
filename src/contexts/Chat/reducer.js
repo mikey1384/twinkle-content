@@ -153,6 +153,10 @@ export default function ChatReducer(state, action) {
         subject: {},
         homeChannelIds: [channelId].concat(state.homeChannelIds),
         favoriteChannelIds: [channelId].concat(state.favoriteChannelIds),
+        allFavoriteChannelIds: {
+          ...state.allFavoriteChannelIds,
+          [channelId]: true
+        },
         classChannelIds: action.data.isClass
           ? [channelId].concat(state.classChannelIds)
           : state.classChannelIds,
