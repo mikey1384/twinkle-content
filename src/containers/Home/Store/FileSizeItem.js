@@ -49,7 +49,35 @@ export default function FileSizeItem() {
       style={{ marginTop: '5rem' }}
       upgradeIcon={<Icon size="3x" icon="upload" />}
     >
-      <div>Max Level Reached</div>
+      <div
+        style={{
+          padding: '2rem',
+          display: 'flex',
+          justifyContent: 'center'
+        }}
+      >
+        <div
+          style={{ display: 'flex', alignItems: 'center', fontSize: '2rem' }}
+        >
+          <Icon size="3x" icon="upload" />
+          <div
+            style={{
+              marginLeft: '2.5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <p style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>
+              Upload File Size Level 7 (max)
+            </p>
+            <p style={{ fontSize: '1.7rem' }}>
+              You can now upload files up to 2 GB in size
+            </p>
+          </div>
+        </div>
+      </div>
     </ItemPanel>
   );
 
