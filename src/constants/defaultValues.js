@@ -157,8 +157,9 @@ export const returnMaxRewards = ({ rewardLevel }) => {
   return maxRewards;
 };
 
+export const maxSizes = [300, 400, 500, 650, 800, 1000, 1500, 2000];
+
 export const returnMaxUploadSize = (fileUploadLvl) => {
-  const maxSizes = [300, 400, 500, 650, 800, 1000, 1500, 2000];
   return maxSizes[fileUploadLvl] * mb;
 };
 

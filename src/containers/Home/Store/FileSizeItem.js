@@ -3,7 +3,8 @@ import ItemPanel from './ItemPanel';
 import Icon from 'components/Icon';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
-import { karmaPointTable } from 'constants/defaultValues';
+import { translateMBToGB } from 'helpers/stringHelpers';
+import { karmaPointTable, maxSizes } from 'constants/defaultValues';
 
 const item = {
   maxLvl: 7,
@@ -16,15 +17,16 @@ const item = {
     'Expand maximum upload file size (level 6)',
     'Expand maximum upload file size (level 7)'
   ],
-  description: [
-    'Unlock this item to expand your maximum upload file size to 500 MB (from 300 MB)',
-    'Upgrade this item to expand your maximum upload file size to 750 MB (from 500 MB)',
-    'Upgrade this item to expand your maximum upload file size to 1 GB (from 750 MB)',
-    'Upgrade this item to expand your maximum upload file size to 1.25 GB (from 1 GB)',
-    'Upgrade this item to expand your maximum upload file size to 1.5 GB (from 1.25 GB)',
-    'Upgrade this item to expand your maximum upload file size to 1.75 GB (from 1.5 GB)',
-    'Upgrade this item to expand your maximum upload file size to 2 GB (from 1.75 GB)'
-  ]
+  description: maxSizes.map((currentSize, index) => {
+    if (index === 0) {
+      return `Unlock this item to expand your maximum upload file size to ${translateMBToGB(
+        maxSizes[1]
+      )} (from ${translateMBToGB(currentSize)})`;
+    }
+    return `Upgrade this item to expand your maximum upload file size to ${translateMBToGB(
+      maxSizes[index + 1]
+    )} (from ${translateMBToGB(currentSize)})`;
+  })
 };
 
 export default function FileSizeItem() {
@@ -70,10 +72,11 @@ export default function FileSizeItem() {
             }}
           >
             <p style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>
-              Upload File Size Level 7 (max)
+              Maximum upload file size - Level 7
             </p>
             <p style={{ fontSize: '1.7rem' }}>
-              You can now upload files up to 2 GB in size
+              You can now upload files up to{' '}
+              {translateMBToGB(maxSizes[maxSizes.length - 1])} in size
             </p>
           </div>
         </div>
