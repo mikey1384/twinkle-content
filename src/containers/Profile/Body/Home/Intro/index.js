@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import SectionPanel from 'components/SectionPanel';
 import StatusMsg from 'components/UserDetails/StatusMsg';
@@ -50,6 +50,10 @@ export default function Intro({ profile, selectedTheme }) {
   const { userId } = useMyState();
   const [bioEditModalShown, setBioEditModalShown] = useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
+  useEffect(() => {
+    onSetEditedStatusColor('');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
 
   const {
     email,

@@ -7,7 +7,7 @@ import { css } from 'emotion';
 import { mobileMaxWidth } from 'constants/css';
 import Achievements from './Achievements';
 import { useContentState, useMyState } from 'helpers/hooks';
-import { useAppContext, useContentContext, useInputContext } from 'contexts';
+import { useAppContext, useContentContext } from 'contexts';
 
 Home.propTypes = {
   profile: PropTypes.object,
@@ -33,9 +33,6 @@ export default function Home({ profile, selectedTheme }) {
       onUploadReply
     }
   } = useContentContext();
-  const {
-    actions: { onSetEditedStatusColor }
-  } = useInputContext();
   const { commentsLoaded, id, username } = profile;
   const [loadingComments, setLoadingComments] = useState(false);
   const mounted = useRef(true);
@@ -46,11 +43,6 @@ export default function Home({ profile, selectedTheme }) {
       mounted.current = false;
     };
   }, []);
-
-  useEffect(() => {
-    onSetEditedStatusColor('');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId]);
 
   useEffect(() => {
     if (!commentsLoaded) {
