@@ -87,6 +87,9 @@ export default function Home({ profile, selectedTheme }) {
       `}
     >
       <Intro profile={profile} selectedTheme={selectedTheme} />
+      <SectionPanel customColorTheme={selectedTheme} loaded title="Pictures">
+        <div>Some pics</div>
+      </SectionPanel>
       <Achievements
         selectedTheme={selectedTheme}
         profile={profile}
