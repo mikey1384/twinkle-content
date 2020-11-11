@@ -8,6 +8,7 @@ import { mobileMaxWidth } from 'constants/css';
 import Achievements from './Achievements';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
+import Pictures from './Pictures';
 
 Home.propTypes = {
   profile: PropTypes.object,
@@ -87,9 +88,7 @@ export default function Home({ profile, selectedTheme }) {
       `}
     >
       <Intro profile={profile} selectedTheme={selectedTheme} />
-      <SectionPanel customColorTheme={selectedTheme} loaded title="Pictures">
-        <div>Some pics</div>
-      </SectionPanel>
+      <Pictures selectedTheme={selectedTheme} />
       <Achievements
         selectedTheme={selectedTheme}
         profile={profile}
