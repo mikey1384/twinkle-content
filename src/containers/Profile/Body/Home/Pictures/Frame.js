@@ -27,6 +27,7 @@ export default function Frame({ picture }) {
     >
       {imageUrl && (
         <img
+          draggable={false}
           style={{
             cursor: 'pointer',
             borderRadius: innerBorderRadius,

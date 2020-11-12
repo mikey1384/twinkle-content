@@ -151,27 +151,28 @@ export default function SectionPanel({
             )}
             {canEdit && onEditTitle && !onEdit ? (
               <div
-                className={css`
-                  &:hover {
-                    text-decoration: underline;
-                  }
-                `}
                 style={{
                   color: Color.gray(),
                   fontWeight: 'normal',
                   marginTop: '0.5rem',
                   fontSize: '1.5rem',
-                  cursor: 'pointer',
                   display: 'flex',
                   lineHeight: '1.7rem',
                   alignItems: 'flex-end'
                 }}
-                onClick={() => {
-                  setOnEdit(true);
-                  setEditedTitle(title);
-                }}
               >
-                <span>
+                <span
+                  className={css`
+                    &:hover {
+                      text-decoration: underline;
+                    }
+                  `}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    setOnEdit(true);
+                    setEditedTitle(title);
+                  }}
+                >
                   <Icon icon="pencil-alt" />
                   &nbsp;&nbsp;Edit
                 </span>
