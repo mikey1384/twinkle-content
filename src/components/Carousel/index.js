@@ -97,7 +97,6 @@ export default function Carousel({
         className={className}
         style={{
           position: 'relative',
-          display: 'block',
           fontSize: '1.5rem',
           width: '100%',
           height: 'auto',
@@ -298,36 +297,38 @@ export default function Carousel({
             )}
           </Animate>
         </div>
-        {!progressBar && [
-          <NavButton
-            left
-            key={0}
-            disabled={currentSlide === 0}
-            nextSlide={previousSlide}
-          />,
-          <div key={1}>
-            {showAllButton ? (
-              <Button
-                skeuomorphic
-                color="darkerGray"
-                style={{
-                  position: 'absolute',
-                  top: '7rem',
-                  right: '-0.5rem',
-                  opacity: 0.9
-                }}
-                onClick={onShowAll}
-              >
-                Show All
-              </Button>
-            ) : (
-              <NavButton
-                disabled={currentSlide + slidesToScroll >= slideCount}
-                nextSlide={nextSlide}
-              />
-            )}
-          </div>
-        ]}
+        {!progressBar && (
+          <>
+            <NavButton
+              left
+              key={0}
+              disabled={currentSlide === 0}
+              nextSlide={previousSlide}
+            />
+            <div key={1}>
+              {showAllButton ? (
+                <Button
+                  skeuomorphic
+                  color="darkerGray"
+                  style={{
+                    position: 'absolute',
+                    top: 'CALC(50% - 2rem)',
+                    right: '-0.5rem',
+                    opacity: 0.9
+                  }}
+                  onClick={onShowAll}
+                >
+                  Show All
+                </Button>
+              ) : (
+                <NavButton
+                  disabled={currentSlide + slidesToScroll >= slideCount}
+                  nextSlide={nextSlide}
+                />
+              )}
+            </div>
+          </>
+        )}
       </div>
     </ErrorBoundary>
   );

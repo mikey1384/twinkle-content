@@ -88,7 +88,7 @@ export default function Home({ profile, selectedTheme }) {
       `}
     >
       <Intro profile={profile} selectedTheme={selectedTheme} />
-      <Pictures selectedTheme={selectedTheme} />
+      {userId && <Pictures selectedTheme={selectedTheme} />}
       <Achievements
         selectedTheme={selectedTheme}
         profile={profile}

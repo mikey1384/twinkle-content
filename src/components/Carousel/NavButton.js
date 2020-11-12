@@ -18,7 +18,7 @@ export default function NavButton({ disabled, nextSlide, left }) {
         className={css`
           position: absolute;
           opacity: 0.9;
-          top: 7rem;
+          top: CALC(50% - 2rem);
           ${left ? 'left: -0.5rem;' : 'right: -0.5rem;'};
         `}
         skeuomorphic
