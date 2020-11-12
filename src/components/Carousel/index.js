@@ -10,6 +10,7 @@ import { Animate } from 'react-move';
 import { Color } from 'constants/css';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 import { useExploreContext } from 'contexts';
+import { css } from 'emotion';
 
 Carousel.propTypes = {
   afterSlide: PropTypes.func,
@@ -94,11 +95,15 @@ export default function Carousel({
   return (
     <ErrorBoundary>
       <div
-        className={className}
+        className={
+          className ||
+          css`
+            width: 100%;
+          `
+        }
         style={{
           position: 'relative',
           fontSize: '1.5rem',
-          width: '100%',
           height: 'auto',
           boxSizing: 'border-box',
           visibility: slideWidth ? 'visible' : 'hidden',

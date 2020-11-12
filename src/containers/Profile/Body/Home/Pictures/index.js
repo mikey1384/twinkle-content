@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import SectionPanel from 'components/SectionPanel';
 import Carousel from 'components/Carousel';
 import Frame from './Frame';
+import { mobileMaxWidth } from 'constants/css';
+import { css } from 'emotion';
 
 Pictures.propTypes = {
   selectedTheme: PropTypes.string
@@ -19,7 +21,12 @@ export default function Pictures({ selectedTheme }) {
         }}
       >
         <Carousel
-          style={{ width: '80%' }}
+          className={css`
+            width: 80%;
+            @media (max-width: ${mobileMaxWidth}) {
+              width: 100%;
+            }
+          `}
           allowDrag={false}
           slidesToShow={3}
           slidesToScroll={1}
