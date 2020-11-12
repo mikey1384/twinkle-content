@@ -28,6 +28,7 @@ export default function Frame({ picture }) {
       {imageUrl && (
         <img
           style={{
+            cursor: 'pointer',
             borderRadius: innerBorderRadius,
             position: 'absolute',
             top: 0,
