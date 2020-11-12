@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Color, borderRadius } from 'constants/css';
+import { Color, borderRadius, innerBorderRadius } from 'constants/css';
 import { cloudFrontURL } from 'constants/defaultValues';
 
 Frame.propTypes = {
@@ -23,7 +23,14 @@ export default function Frame({ picture }) {
       }}
     >
       {imageUrl && (
-        <img style={{ width: '100%', height: '100%' }} src={imageUrl} />
+        <img
+          style={{
+            width: '100%',
+            height: '100%',
+            borderRadius: innerBorderRadius
+          }}
+          src={imageUrl}
+        />
       )}
     </div>
   );
