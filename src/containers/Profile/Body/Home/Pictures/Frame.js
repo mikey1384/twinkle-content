@@ -1,5 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
+import ImageModal from 'components/Modals/ImageModal';
 import { Color, borderRadius, innerBorderRadius } from 'constants/css';
 import { cloudFrontURL } from 'constants/defaultValues';
 
@@ -11,6 +12,7 @@ export default function Frame({ picture }) {
   const imageUrl = useMemo(() => {
     return picture?.url ? `${cloudFrontURL}${picture?.url}` : '';
   }, [picture]);
+  const [imageModalShown, setImageModalShown] = useState(false);
 
   return (
     <div
@@ -25,12 +27,17 @@ export default function Frame({ picture }) {
       {imageUrl && (
         <img
           style={{
+            cursor: 'pointer',
             width: '100%',
             height: '100%',
             borderRadius: innerBorderRadius
           }}
+          onClick={() => setImageModalShown(true)}
           src={imageUrl}
         />
+      )}
+      {imageModalShown && (
+        <ImageModal src={imageUrl} onHide={() => setImageModalShown(false)} />
       )}
     </div>
   );
