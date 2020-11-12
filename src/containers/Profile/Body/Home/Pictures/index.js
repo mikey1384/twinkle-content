@@ -11,7 +11,13 @@ Pictures.propTypes = {
 export default function Pictures({ selectedTheme }) {
   return (
     <SectionPanel customColorTheme={selectedTheme} loaded title="Pictures">
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          marginTop: '-1rem'
+        }}
+      >
         <Carousel
           style={{ width: '80%' }}
           allowDrag={false}
