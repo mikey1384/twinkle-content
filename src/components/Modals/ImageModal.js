@@ -2,15 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Modal from 'components/Modal';
+import LongText from 'components/Texts/LongText';
 
 ImageModal.propTypes = {
+  caption: PropTypes.string,
+  downloadable: PropTypes.bool,
   modalOverModal: PropTypes.bool,
   onHide: PropTypes.func.isRequired,
   fileName: PropTypes.string,
   src: PropTypes.string
 };
 
-export default function ImageModal({ modalOverModal, onHide, fileName, src }) {
+export default function ImageModal({
+  caption,
+  modalOverModal,
+  onHide,
+  fileName,
+  src,
+  downloadable = true
+}) {
   return (
     <Modal modalOverModal={modalOverModal} large onHide={onHide}>
       <header>{fileName}</header>
@@ -20,11 +30,16 @@ export default function ImageModal({ modalOverModal, onHide, fileName, src }) {
           src={src}
           rel={fileName}
         />
+        {caption && (
+          <LongText style={{ marginTop: '2rem' }}>{caption}</LongText>
+        )}
       </main>
       <footer>
-        <Button color="orange" onClick={() => window.open(src)}>
-          Download
-        </Button>
+        {downloadable && (
+          <Button color="orange" onClick={() => window.open(src)}>
+            Download
+          </Button>
+        )}
         <Button style={{ marginLeft: '1rem' }} color="blue" onClick={onHide}>
           Close
         </Button>

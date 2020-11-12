@@ -37,7 +37,12 @@ export default function Frame({ picture }) {
         />
       )}
       {imageModalShown && (
-        <ImageModal src={imageUrl} onHide={() => setImageModalShown(false)} />
+        <ImageModal
+          caption={picture?.caption}
+          downloadable={false}
+          src={imageUrl}
+          onHide={() => setImageModalShown(false)}
+        />
       )}
     </div>
   );

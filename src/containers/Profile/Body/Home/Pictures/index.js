@@ -24,7 +24,12 @@ export default function Pictures({ selectedTheme }) {
           slidesToShow={3}
           slidesToScroll={1}
         >
-          <Frame picture={{ url: '/test/profile/1550.jpg' }} />
+          <Frame
+            picture={{
+              url: '/test/profile/1550.jpg',
+              caption: 'this is my first profile pic back in 2014'
+            }}
+          />
           <Frame picture={{ url: '/test/profile/1550.jpg' }} />
           <Frame picture={{ url: '/test/profile/1550.jpg' }} />
           <Frame picture={{ url: '/test/profile/1550.jpg' }} />
