@@ -7,11 +7,12 @@ import { mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 
 Pictures.propTypes = {
+  pictures: PropTypes.array,
   selectedTheme: PropTypes.string
 };
 
-export default function Pictures({ selectedTheme }) {
-  return (
+export default function Pictures({ pictures, selectedTheme }) {
+  return pictures ? (
     <SectionPanel customColorTheme={selectedTheme} loaded title="Pictures">
       <div
         style={{
@@ -31,17 +32,13 @@ export default function Pictures({ selectedTheme }) {
           slidesToShow={3}
           slidesToScroll={1}
         >
-          <Frame
-            picture={{
-              url: '/test/profile/1550.jpg',
-              caption: 'this is my first profile pic back in 2014'
-            }}
-          />
-          <Frame picture={{ url: '/test/profile/1550.jpg' }} />
-          <Frame picture={{ url: '/test/profile/1550.jpg' }} />
-          <Frame picture={{ url: '/test/profile/1550.jpg' }} />
+          {pictures.map((picture, index) => (
+            <Frame key={index} picture={picture} />
+          ))}
         </Carousel>
       </div>
     </SectionPanel>
+  ) : (
+    <div>No Pictures</div>
   );
 }

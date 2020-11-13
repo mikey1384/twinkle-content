@@ -34,7 +34,7 @@ export default function Home({ profile, selectedTheme }) {
       onUploadReply
     }
   } = useContentContext();
-  const { commentsLoaded, id, username } = profile;
+  const { commentsLoaded, id, username, pictures } = profile;
   const [loadingComments, setLoadingComments] = useState(false);
   const mounted = useRef(true);
   const CommentInputAreaRef = useRef(null);
@@ -88,7 +88,7 @@ export default function Home({ profile, selectedTheme }) {
       `}
     >
       <Intro profile={profile} selectedTheme={selectedTheme} />
-      {userId && <Pictures selectedTheme={selectedTheme} />}
+      {userId && <Pictures pictures={pictures} selectedTheme={selectedTheme} />}
       <Achievements
         selectedTheme={selectedTheme}
         profile={profile}

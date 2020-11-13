@@ -11,7 +11,7 @@ Frame.propTypes = {
 
 export default function Frame({ picture }) {
   const imageUrl = useMemo(() => {
-    return picture?.url ? `${cloudFrontURL}${picture?.url}` : '';
+    return picture?.src ? `${cloudFrontURL}${picture?.src}` : '';
   }, [picture]);
   const [imageModalShown, setImageModalShown] = useState(false);
 
