@@ -141,7 +141,7 @@ function Message({
     isCreator,
     userId: myId,
     username: myUsername,
-    profilePicId: myProfilePicId
+    profilePicUrl: myProfilePicUrl
   } = useMyState();
   const userIsUploader = myId === userId;
   const userCanEditThis =
@@ -198,7 +198,7 @@ function Message({
   } = useNotiContext();
   let {
     username,
-    profilePicId,
+    profilePicUrl,
     targetMessage,
     targetSubject,
     ...post
@@ -210,7 +210,7 @@ function Message({
   if (fileToUpload && !userId) {
     userId = myId;
     username = myUsername;
-    profilePicId = myProfilePicId;
+    profilePicUrl = myProfilePicUrl;
   }
   useEffect(() => {
     if (!message.id && message.isChessMsg) {
@@ -425,7 +425,7 @@ function Message({
             <ProfilePic
               style={{ width: '100%', height: '100%' }}
               userId={userId}
-              profilePicId={profilePicId}
+              profilePicUrl={profilePicUrl}
             />
           </div>
           <div className={MessageStyle.contentWrapper}>

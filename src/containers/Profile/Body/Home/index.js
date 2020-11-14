@@ -69,7 +69,7 @@ export default function Home({ profile, selectedTheme }) {
     lastActive,
     online,
     statusMsg,
-    profilePicId,
+    profilePicUrl,
     profileFirstRow,
     profileSecondRow,
     profileTheme,
@@ -298,7 +298,7 @@ export default function Home({ profile, selectedTheme }) {
               joinDate={joinDate}
               online={online}
               lastActive={lastActive}
-              profilePicId={profilePicId}
+              profilePicUrl={profilePicUrl}
               userId={id}
               username={username}
               selectedTheme={selectedTheme}

@@ -643,12 +643,12 @@ export default function ContentActions(dispatch) {
         contentType
       });
     },
-    onUploadProfilePic({ userId, imageId }) {
+    onUploadProfilePic({ userId, imageUrl }) {
       return dispatch({
         type: 'EDIT_PROFILE_PICTURE',
         contentId: userId,
         contentType: 'user',
-        imageId
+        imageUrl
       });
     },
     onUploadReply({ contentId, contentType, ...data }) {

@@ -479,7 +479,7 @@ export default function ChatReducer(state, action) {
               action.data.selectedUsers.map((user) => ({
                 id: user.id,
                 username: user.username,
-                profilePicId: user.profilePicId
+                profilePicUrl: user.profilePicUrl
               }))
             )
           }
@@ -684,7 +684,7 @@ export default function ChatReducer(state, action) {
             isNotification: true,
             username: action.data.username,
             userId: action.data.userId,
-            profilePicId: action.data.profilePicId
+            profilePicUrl: action.data.profilePicUrl
           }
         ])
       };
@@ -857,7 +857,7 @@ export default function ChatReducer(state, action) {
                 timeStamp: action.message.timeStamp,
                 username: action.message.username,
                 userId: action.message.userId,
-                profilePicId: action.message.profilePicId
+                profilePicUrl: action.message.profilePicUrl
               }
             ]
           : state.messages,

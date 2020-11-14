@@ -158,8 +158,11 @@ export default function ImageEditModal({ onHide, imageUri }) {
       file,
       onUploadProgress: handleUploadProgress
     });
-    await uploadUserPic({ src: `/profile/${filePath}`, isProfilePic: true });
-    onUploadProfilePic({ userId });
+    await uploadUserPic({
+      src: `/profile/${filePath}`,
+      isProfilePic: true
+    });
+    onUploadProfilePic({ userId, imageUrl: `/profile/${filePath}` });
     setUploadComplete(true);
     setProcessing(false);
     setTimeout(() => onHide(), 500);

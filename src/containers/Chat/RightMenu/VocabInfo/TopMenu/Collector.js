@@ -63,7 +63,7 @@ export default function Collector({ myId, style, user }) {
         >
           <ProfilePic
             style={{ width: '3rem', height: '3rem' }}
-            profilePicId={user.profilePicId}
+            profilePicUrl={user.profilePicUrl}
             userId={user.id}
           />
           <UsernameText

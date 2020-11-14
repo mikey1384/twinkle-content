@@ -104,7 +104,7 @@ export default function MessagesContainer({
   const {
     fileUploadLvl,
     banned,
-    profilePicId,
+    profilePicUrl,
     userId,
     username
   } = useMyState();
@@ -766,7 +766,7 @@ export default function MessagesContainer({
         onSubmitMessage({
           message: {
             ...params,
-            profilePicId,
+            profilePicUrl,
             username,
             content,
             channelId: selectedChannelId
@@ -888,7 +888,7 @@ export default function MessagesContainer({
           userId,
           username,
           id: uuidv1(),
-          profilePicId,
+          profilePicUrl,
           content: `sent ${users.length === 1 ? 'an ' : ''}invitation message${
             users.length > 1 ? 's' : ''
           } to ${
@@ -923,7 +923,7 @@ export default function MessagesContainer({
           channelId: selectedChannelId,
           userId,
           username,
-          profilePicId
+          profilePicUrl
         });
         const data = await loadChatChannel({ channelId: GENERAL_CHAT_ID });
         onEnterChannelWithId({ data });
@@ -975,7 +975,7 @@ export default function MessagesContainer({
       socket.emit('new_chat_message', {
         message: joinMessage,
         channel,
-        newMembers: [{ id: userId, username, profilePicId }]
+        newMembers: [{ id: userId, username, profilePicUrl }]
       });
     }
   }
@@ -1014,7 +1014,7 @@ export default function MessagesContainer({
     const message = {
       userId,
       username,
-      profilePicId,
+      profilePicUrl,
       content,
       channelId: selectedChannelId,
       subjectId: isRespondingToSubject
@@ -1066,7 +1066,7 @@ export default function MessagesContainer({
       channelId: selectedChannelId,
       userId,
       username,
-      profilePicId,
+      profilePicUrl,
       newOwner,
       notificationMsg
     });

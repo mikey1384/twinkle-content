@@ -63,7 +63,7 @@ export default function RankingsListItem({ myId, small, style, user }) {
             margin-right: 1rem;
             text-align: center;
             color: ${rankColor ||
-              (user.rank <= 10 ? Color.logoBlue() : Color.darkGray())};
+            (user.rank <= 10 ? Color.logoBlue() : Color.darkGray())};
           `}
         >
           {user.rank ? `#${user.rank}` : '--'}
@@ -77,7 +77,7 @@ export default function RankingsListItem({ myId, small, style, user }) {
         >
           <ProfilePic
             style={{ width: profileSize, height: profileSize }}
-            profilePicId={user.profilePicId}
+            profilePicUrl={user.profilePicUrl}
             userId={user.id}
           />
           <UsernameText

@@ -57,7 +57,7 @@ export default function Header({
     userId,
     username,
     loggedIn,
-    profilePicId
+    profilePicUrl
   } = useMyState();
   const {
     state: {
@@ -148,7 +148,7 @@ export default function Header({
     actions: { onUpdateMissionAttempt }
   } = useMissionContext();
 
-  const prevProfilePicId = useRef(profilePicId);
+  const prevProfilePicUrl = useRef(profilePicUrl);
   const peersRef = useRef({});
   const prevMyStreamRef = useRef(null);
   const prevIncomingShown = useRef(false);
@@ -252,7 +252,7 @@ export default function Header({
       handleCheckOutdated();
       if (userId) {
         handleGetNumberOfUnreadMessages();
-        socket.emit('bind_uid_to_socket', { userId, username, profilePicId });
+        socket.emit('bind_uid_to_socket', { userId, username, profilePicUrl });
         socket.emit('enter_my_notification_channel', userId);
         handleLoadChat();
       }
@@ -592,7 +592,7 @@ export default function Header({
         onUpdateCollectorsRankings({
           id: activity.userId,
           username: activity.username,
-          profilePicId: activity.profilePicId,
+          profilePicUrl: activity.profilePicUrl,
           numWordsCollected: activity.numWordsCollected,
           rank: activity.rank
         });
@@ -633,11 +633,11 @@ export default function Header({
   }, [selectedChannelId]);
 
   useEffect(() => {
-    if (userId && profilePicId !== prevProfilePicId.current) {
-      socket.emit('change_profile_pic', profilePicId);
+    if (userId && profilePicUrl !== prevProfilePicUrl.current) {
+      socket.emit('change_profile_pic', profilePicUrl);
     }
-    prevProfilePicId.current = profilePicId;
-  }, [profilePicId, userId, username]);
+    prevProfilePicUrl.current = profilePicUrl;
+  }, [profilePicUrl, userId, username]);
 
   useEffect(() => {
     if (

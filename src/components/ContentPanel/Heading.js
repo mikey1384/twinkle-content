@@ -157,7 +157,7 @@ function Heading({
       <ProfilePic
         style={{ width: '6rem', height: '6rem' }}
         userId={uploader.id}
-        profilePicId={uploader.profilePicId}
+        profilePicUrl={uploader.profilePicUrl}
       />
       <div
         style={{

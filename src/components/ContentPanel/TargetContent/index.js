@@ -75,7 +75,7 @@ export default function TargetContent({
   const {
     authLevel,
     canReward,
-    profilePicId,
+    profilePicUrl,
     userId,
     twinkleCoins,
     username
@@ -507,7 +507,7 @@ export default function TargetContent({
                         comment={comment}
                         username={username}
                         userId={userId}
-                        profilePicId={profilePicId}
+                        profilePicUrl={profilePicUrl}
                         onDelete={onDeleteComment}
                         onEditDone={onEditComment}
                       />

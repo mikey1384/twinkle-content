@@ -13,7 +13,7 @@ ProfilePic.propTypes = {
   large: PropTypes.bool,
   onClick: PropTypes.func,
   online: PropTypes.bool,
-  profilePicId: PropTypes.number,
+  profilePicUrl: PropTypes.number,
   statusShown: PropTypes.bool,
   style: PropTypes.object,
   userId: PropTypes.number
@@ -28,18 +28,16 @@ export default function ProfilePic({
   onClick = () => {},
   userId,
   online,
-  profilePicId,
+  profilePicUrl,
   statusShown,
   style
 }) {
   const { userId: myId } = useMyState();
   const [changePictureShown, setChangePictureShown] = useState(false);
-  const [src, setSrc] = useState(
-    `${cloudFrontURL}/pictures/${userId}/${profilePicId}.jpg`
-  );
+  const [src, setSrc] = useState(`${cloudFrontURL}${profilePicUrl}`);
   useEffect(() => {
-    setSrc(`${cloudFrontURL}/pictures/${userId}/${profilePicId}.jpg`);
-  }, [profilePicId, userId]);
+    setSrc(`${cloudFrontURL}${profilePicUrl}`);
+  }, [profilePicUrl, userId]);
   const statusTagShown = useMemo(
     () => (online || myId === userId) && statusShown,
     [myId, online, statusShown, userId]
@@ -69,7 +67,7 @@ export default function ProfilePic({
           height: '100%',
           borderRadius: '50%'
         }}
-        src={profilePicId ? src : '/img/default.png'}
+        src={profilePicUrl ? src : '/img/default.png'}
         onError={() => setSrc('/img/default.png')}
       />
       <ChangePicture

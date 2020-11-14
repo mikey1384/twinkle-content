@@ -60,7 +60,7 @@ function App({ location, history }) {
   } = useAppContext();
   const {
     authLevel,
-    profilePicId,
+    profilePicUrl,
     signinModalShown,
     userId,
     username
@@ -379,7 +379,7 @@ function App({ location, history }) {
       channelId,
       userId,
       username,
-      profilePicId,
+      profilePicUrl,
       targetMessage: replyTarget
     };
     onDisplayAttachedFile(params);

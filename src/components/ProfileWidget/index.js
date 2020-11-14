@@ -23,7 +23,7 @@ export default function ProfileWidget({ history, onLoadImage, onShowAlert }) {
       actions: { onOpenSigninModal }
     }
   } = useAppContext();
-  const { profilePicId, realName, userId, username } = useMyState();
+  const { profilePicUrl, realName, userId, username } = useMyState();
   const FileInputRef = useRef(null);
 
   return (
@@ -42,7 +42,7 @@ export default function ProfileWidget({ history, onLoadImage, onShowAlert }) {
                 cursor: userId ? 'pointer' : 'default'
               }}
               userId={userId}
-              profilePicId={profilePicId}
+              profilePicUrl={profilePicUrl}
               onClick={() => {
                 if (userId) history.push(`/users/${username}`);
               }}

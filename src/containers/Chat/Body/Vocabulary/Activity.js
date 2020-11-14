@@ -29,7 +29,7 @@ export default function Activity({
     isNewActivity,
     userId,
     username,
-    profilePicId,
+    profilePicUrl,
     timeStamp
   },
   setScrollToBottom,
@@ -82,7 +82,7 @@ export default function Activity({
         <ProfilePic
           style={{ width: '100%', height: '100%' }}
           userId={userId}
-          profilePicId={profilePicId}
+          profilePicUrl={profilePicUrl}
         />
       </div>
       <div className={MessageStyle.contentWrapper}>

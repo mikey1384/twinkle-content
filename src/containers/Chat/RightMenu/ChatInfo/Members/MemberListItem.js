@@ -39,7 +39,7 @@ function MemberListItem({
   const {
     state: {
       channelOnCall,
-      ['user' + member.id]: { isAway, isBusy, username, profilePicId } = {}
+      ['user' + member.id]: { isAway, isBusy, username, profilePicUrl } = {}
     },
     actions: { onSetUserData }
   } = useChatContext();
@@ -89,7 +89,7 @@ function MemberListItem({
             }
           `}
           userId={member.id}
-          profilePicId={profilePicId}
+          profilePicUrl={profilePicUrl}
           online={!!onlineMembers[member.id]}
           isAway={isAway}
           isBusy={isBusy}
