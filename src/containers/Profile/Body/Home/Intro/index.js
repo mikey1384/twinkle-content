@@ -63,7 +63,7 @@ export default function Intro({ profile, selectedTheme }) {
     joinDate,
     lastActive,
     online,
-    profilePicId,
+    profilePicUrl,
     profileTheme,
     profileFirstRow,
     profileSecondRow,
@@ -237,7 +237,7 @@ export default function Intro({ profile, selectedTheme }) {
               joinDate={joinDate}
               online={online}
               lastActive={lastActive}
-              profilePicId={profilePicId}
+              profilePicUrl={profilePicUrl}
               userId={id}
               username={username}
               selectedTheme={selectedTheme}
