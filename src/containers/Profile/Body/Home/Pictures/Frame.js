@@ -22,6 +22,7 @@ export default function Frame({ picture }) {
         border: 1px solid ${Color.borderGray()};
         border-radius: ${borderRadius};
         width: CALC(100% - 2rem);
+        height: 100%;
         padding-bottom: CALC(100% - 2rem - 2px);
       `}
     >
@@ -37,6 +38,7 @@ export default function Frame({ picture }) {
             left: 0,
             right: 0,
             width: '100%',
+            height: '100%',
             objectFit: 'cover',
             objectPosition: 'center'
           }}

@@ -26,7 +26,7 @@ export default function ImageModal({
       <header>{fileName}</header>
       <main>
         <img
-          style={{ maxWidth: '100%', objectFit: 'contain' }}
+          style={{ maxWidth: '100%', maxHeight: '80vh', objectFit: 'contain' }}
           src={src}
           rel={fileName}
         />
