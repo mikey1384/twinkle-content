@@ -13,7 +13,7 @@ ProfilePic.propTypes = {
   large: PropTypes.bool,
   onClick: PropTypes.func,
   online: PropTypes.bool,
-  profilePicUrl: PropTypes.number,
+  profilePicUrl: PropTypes.string,
   statusShown: PropTypes.bool,
   style: PropTypes.object,
   userId: PropTypes.number
