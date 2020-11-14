@@ -74,7 +74,7 @@ export default function UserListModal({
                       cursor: 'pointer'
                     }}
                     userId={user.id}
-                    profilePicId={user.profilePicId}
+                    profilePicUrl={user.profilePicUrl}
                     online={!!user.online}
                     onClick={() => history.push(`/users/${user.username}`)}
                     statusShown

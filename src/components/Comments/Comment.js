@@ -51,7 +51,7 @@ Comment.propTypes = {
     id: PropTypes.number.isRequired,
     likes: PropTypes.array,
     numReplies: PropTypes.number,
-    profilePicId: PropTypes.number,
+    profilePicUrl: PropTypes.string,
     recommendationInterfaceShown: PropTypes.bool,
     recommendations: PropTypes.array,
     replies: PropTypes.array,
@@ -374,7 +374,7 @@ function Comment({
             <ProfilePic
               style={{ height: '5rem', width: '5rem' }}
               userId={uploader?.id}
-              profilePicId={uploader.profilePicId}
+              profilePicUrl={uploader.profilePicUrl}
             />
           </aside>
           {editButtonShown && !isEditing && (

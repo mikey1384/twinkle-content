@@ -23,7 +23,7 @@ BasicInfos.propTypes = {
   email: PropTypes.string,
   verifiedEmail: PropTypes.string,
   online: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
-  profilePicId: PropTypes.number,
+  profilePicUrl: PropTypes.string,
   profileTheme: PropTypes.string,
   joinDate: PropTypes.string,
   lastActive: PropTypes.string,
@@ -43,7 +43,7 @@ export default function BasicInfos({
   online,
   joinDate,
   lastActive,
-  profilePicId,
+  profilePicUrl,
   profileTheme,
   selectedTheme,
   userId,
@@ -308,7 +308,7 @@ export default function BasicInfos({
     });
     onOpenDirectMessageChannel({
       user: { id: myId, username: myUsername },
-      recepient: { id: userId, username, profilePicId },
+      recepient: { id: userId, username, profilePicUrl },
       channelData: data
     });
     history.push('/chat');

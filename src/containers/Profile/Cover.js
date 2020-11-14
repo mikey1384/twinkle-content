@@ -31,7 +31,7 @@ export default function Cover({
   const { userId } = useMyState();
   const {
     id,
-    profilePicId,
+    profilePicUrl,
     online,
     profileTheme,
     realName,
@@ -223,7 +223,7 @@ export default function Cover({
         onClick={
           userId === profile.id ? () => FileInputRef.current.click() : undefined
         }
-        profilePicId={profilePicId}
+        profilePicUrl={profilePicUrl}
         online={!!online}
         large
         statusShown

@@ -99,12 +99,12 @@ function Chat({ onFileUpload }) {
       const forCurrentChannel = channelId === selectedChannelId;
       if (forCurrentChannel) {
         if (leftChannel) {
-          const { userId, username, profilePicId } = leftChannel;
+          const { userId, username, profilePicUrl } = leftChannel;
           onNotifyThatMemberLeftChannel({
             channelId,
             userId,
             username,
-            profilePicId
+            profilePicUrl
           });
         }
         setCurrentChannelOnlineMembers(membersOnline);

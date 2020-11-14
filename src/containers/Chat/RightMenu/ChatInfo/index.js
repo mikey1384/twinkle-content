@@ -27,7 +27,7 @@ function ChatInfo({
   currentChannelOnlineMembers,
   channelName
 }) {
-  const { userId: myId, username, profilePicId, authLevel } = useMyState();
+  const { userId: myId, username, profilePicUrl, authLevel } = useMyState();
   const {
     state: { myStream },
     actions: { onSetCall, onHangUp }
@@ -70,7 +70,7 @@ function ChatInfo({
 
   const displayedChannelMembers = useMemo(() => {
     const totalChannelMembers = currentChannel?.members || [];
-    const me = { id: myId, username, profilePicId };
+    const me = { id: myId, username, profilePicUrl };
     let currentChannelOnlineMembersOtherThanMe = Object.entries(
       currentChannelOnlineMembers
     )
@@ -106,7 +106,7 @@ function ChatInfo({
     currentChannel,
     myId,
     username,
-    profilePicId,
+    profilePicUrl,
     currentChannelOnlineMembers,
     selectedChannelId
   ]);

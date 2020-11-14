@@ -59,7 +59,7 @@ function ProfilePanel({ expandable, profileId }) {
     profileFirstRow,
     profileSecondRow,
     profileThirdRow,
-    profilePicId,
+    profilePicUrl,
     profileTheme,
     twinkleXP,
     username: profileName,
@@ -314,7 +314,7 @@ function ProfilePanel({ expandable, profileId }) {
                             cursor: 'pointer'
                           }}
                           userId={profileId}
-                          profilePicId={profilePicId}
+                          profilePicUrl={profilePicUrl}
                           online={!!online}
                           statusShown
                           large

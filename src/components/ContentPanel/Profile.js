@@ -38,7 +38,7 @@ export default function Profile({ profile }) {
           <ProfilePic
             style={{ width: '15rem', height: '15rem', cursor: 'pointer' }}
             userId={profile.id}
-            profilePicId={profile.profilePicId}
+            profilePicUrl={profile.profilePicUrl}
             online={userId === profile.id || !!profile.online}
             statusShown
             large

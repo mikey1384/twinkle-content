@@ -464,11 +464,11 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
-    async uploadProfilePic() {
+    async uploadUserPic({ src, isProfilePic }) {
       try {
         const { data } = await request.post(
           `${URL}/user/picture`,
-          null,
+          { src, isProfilePic },
           auth()
         );
         return Promise.resolve(data);
@@ -499,14 +499,14 @@ export default function userRequestHelpers({ auth, handleError, token }) {
     async verifyEmail({ token, forPasswordReset }) {
       try {
         const {
-          data: { profilePicId, userId, username, errorMsg }
+          data: { profilePicUrl, userId, username, errorMsg }
         } = await request.get(
           `${URL}/user/email/verify?token=${token}${
             forPasswordReset ? '&forPasswordReset=1' : ''
           }`,
           auth()
         );
-        return Promise.resolve({ profilePicId, userId, username, errorMsg });
+        return Promise.resolve({ profilePicUrl, userId, username, errorMsg });
       } catch (error) {
         return handleError(error);
       }

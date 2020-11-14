@@ -5,7 +5,7 @@ import { Color, mobileMaxWidth } from 'constants/css';
 import ProfilePic from 'components/ProfilePic';
 
 export default function Cover() {
-  const { profileTheme, profilePicId, userId, username } = useMyState();
+  const { profileTheme, profilePicUrl, userId, username } = useMyState();
 
   return (
     <div
@@ -35,7 +35,7 @@ export default function Cover() {
             }
           `}
           userId={userId}
-          profilePicId={profilePicId}
+          profilePicUrl={profilePicUrl}
         />
         <div
           className={css`

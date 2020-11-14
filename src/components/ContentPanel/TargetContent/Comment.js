@@ -29,7 +29,7 @@ Comment.propTypes = {
   }).isRequired,
   onDelete: PropTypes.func.isRequired,
   onEditDone: PropTypes.func.isRequired,
-  profilePicId: PropTypes.number,
+  profilePicUrl: PropTypes.string,
   userId: PropTypes.number,
   username: PropTypes.string.isRequired
 };
@@ -39,7 +39,7 @@ function Comment({
   comment: { id, content, fileName, filePath, fileSize, timeStamp, thumbUrl },
   onDelete,
   onEditDone,
-  profilePicId,
+  profilePicUrl,
   userId,
   username
 }) {
@@ -103,7 +103,7 @@ function Comment({
         <ProfilePic
           style={{ width: '5rem', height: '5rem' }}
           userId={userId}
-          profilePicId={profilePicId}
+          profilePicUrl={profilePicUrl}
         />
         <div style={{ width: '90%', marginLeft: '2%' }}>
           <div>

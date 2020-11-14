@@ -74,7 +74,7 @@ function Comment({
         >
           <ProfilePic
             userId={reward.rewarderId}
-            profilePicId={reward.rewarderProfilePicId}
+            profilePicUrl={reward.rewarderProfilePicUrl}
             style={{ width: '5rem', height: '5rem' }}
           />
         </div>

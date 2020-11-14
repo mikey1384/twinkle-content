@@ -49,7 +49,7 @@ export default function ChannelHeader({
       uploadChatSubject
     }
   } = useAppContext();
-  const { authLevel, banned, profilePicId, userId, username } = useMyState();
+  const { authLevel, banned, profilePicUrl, userId, username } = useMyState();
   const {
     state: { allFavoriteChannelIds, subjectObj, subjectSearchResults },
     actions: {
@@ -430,7 +430,7 @@ export default function ChannelHeader({
           timeStamp
         };
         const message = {
-          profilePicId,
+          profilePicUrl,
           userId,
           username,
           content,

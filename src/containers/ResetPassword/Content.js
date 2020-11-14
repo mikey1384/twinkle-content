@@ -13,7 +13,7 @@ export default function Content({ match }) {
     requestHelpers: { verifyEmail }
   } = useAppContext();
   const [loaded, setLoaded] = useState(false);
-  const [profilePicId, setProfilePicId] = useState(null);
+  const [profilePicUrl, setProfilePicUrl] = useState(null);
   const [userId, setUserId] = useState(null);
   const [username, setUsername] = useState('');
   const [expired, setExpired] = useState(false);
@@ -23,12 +23,14 @@ export default function Content({ match }) {
     init();
     async function init() {
       try {
-        const { profilePicId, userId, username, errorMsg } = await verifyEmail({
-          token: match?.params?.token.replace(/\+/g, '.'),
-          forPasswordReset: true
-        });
+        const { profilePicUrl, userId, username, errorMsg } = await verifyEmail(
+          {
+            token: match?.params?.token.replace(/\+/g, '.'),
+            forPasswordReset: true
+          }
+        );
         setLoaded(true);
-        setProfilePicId(profilePicId);
+        setProfilePicUrl(profilePicUrl);
         setUserId(userId);
         setUsername(username);
         if (errorMsg) {
@@ -56,7 +58,7 @@ export default function Content({ match }) {
         <div style={{ textAlign: 'center' }}>
           {userId && username ? (
             <PasswordForm
-              profilePicId={profilePicId}
+              profilePicUrl={profilePicUrl}
               userId={userId}
               username={username}
             />

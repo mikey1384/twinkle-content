@@ -50,7 +50,7 @@ Reply.propTypes = {
     numReplies: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     originType: PropTypes.string,
     recommendations: PropTypes.array,
-    profilePicId: PropTypes.number,
+    profilePicUrl: PropTypes.string,
     replyId: PropTypes.number,
     rewards: PropTypes.array,
     targetObj: PropTypes.object,
@@ -228,7 +228,7 @@ function Reply({
             <ProfilePic
               style={{ height: '5rem', width: '5rem' }}
               userId={uploader.id}
-              profilePicId={uploader.profilePicId}
+              profilePicUrl={uploader.profilePicUrl}
             />
           </aside>
           {editButtonShown && !isEditing && (

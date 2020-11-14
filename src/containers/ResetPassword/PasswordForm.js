@@ -7,12 +7,12 @@ import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useHistory } from 'react-router-dom';
 
 PasswordForm.propTypes = {
-  profilePicId: PropTypes.number,
+  profilePicUrl: PropTypes.number,
   userId: PropTypes.number.isRequired,
   username: PropTypes.string.isRequired
 };
 
-export default function PasswordForm({ profilePicId, userId, username }) {
+export default function PasswordForm({ profilePicUrl, userId, username }) {
   const history = useHistory();
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
@@ -34,7 +34,7 @@ export default function PasswordForm({ profilePicId, userId, username }) {
           autoFocus
           value={password}
           placeholder="Enter your new Password"
-          onChange={text => {
+          onChange={(text) => {
             setErrorMsg('');
             setPassword(text.trim());
           }}
@@ -83,7 +83,7 @@ export default function PasswordForm({ profilePicId, userId, username }) {
     onInitContent({
       contentType: 'user',
       contentId: userId,
-      profilePicId,
+      profilePicUrl,
       userId,
       username
     });

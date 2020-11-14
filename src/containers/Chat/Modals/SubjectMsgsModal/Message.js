@@ -15,7 +15,7 @@ Message.propTypes = {
   filePath: PropTypes.string,
   fileSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   isReloadedSubject: PropTypes.number,
-  profilePicId: PropTypes.number,
+  profilePicUrl: PropTypes.string,
   timeStamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   thumbUrl: PropTypes.string,
   userId: PropTypes.number,
@@ -30,7 +30,7 @@ export default function Message({
   fileSize,
   userId,
   username,
-  profilePicId,
+  profilePicUrl,
   thumbUrl,
   timeStamp,
   isReloadedSubject
@@ -40,7 +40,7 @@ export default function Message({
       <ProfilePic
         className={MessageStyle.profilePic}
         userId={userId}
-        profilePicId={profilePicId}
+        profilePicUrl={profilePicUrl}
       />
       <div className={MessageStyle.contentWrapper}>
         <div>

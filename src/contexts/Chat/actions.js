@@ -112,7 +112,7 @@ export default function ChatActions(dispatch) {
       fileSize,
       userId,
       username,
-      profilePicId,
+      profilePicUrl,
       uploaderAuthLevel
     }) {
       return dispatch({
@@ -122,7 +122,7 @@ export default function ChatActions(dispatch) {
         fileInfo: {
           userId,
           username,
-          profilePicId,
+          profilePicUrl,
           uploaderAuthLevel,
           fileSize
         }

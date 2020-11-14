@@ -477,7 +477,7 @@ export default function ContentReducer(state, action) {
         ...state,
         [contentKey]: {
           ...prevContentState,
-          profilePicId: action.imageId
+          profilePicUrl: action.imageUrl
         }
       };
     }

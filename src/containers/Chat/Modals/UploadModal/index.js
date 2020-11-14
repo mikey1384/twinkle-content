@@ -20,7 +20,7 @@ UploadModal.propTypes = {
 };
 
 export default function UploadModal({ channelId, fileObj, onHide }) {
-  const { profilePicId, userId, username } = useMyState();
+  const { profilePicUrl, userId, username } = useMyState();
   const {
     state: { replyTarget },
     actions: { onSubmitMessage }
@@ -114,7 +114,7 @@ export default function UploadModal({ channelId, fileObj, onHide }) {
           fileToUpload: selectedFile,
           filePath: uuidv1(),
           fileName: selectedFile.name,
-          profilePicId,
+          profilePicUrl,
           userId,
           username
         },
