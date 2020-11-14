@@ -7,6 +7,8 @@ import 'react-image-crop/dist/ReactCrop.css';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Loading from 'components/Loading';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
+import { v1 as uuidv1 } from 'uuid';
+import { useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
 
 ImageEditModal.propTypes = {
@@ -16,11 +18,12 @@ ImageEditModal.propTypes = {
 
 export default function ImageEditModal({ onHide, imageUri }) {
   const {
-    requestHelpers: { uploadFile, uploadProfilePic }
+    requestHelpers: { uploadFile, uploadUserPic }
   } = useAppContext();
   const {
     actions: { onUploadProfilePic }
   } = useContentContext();
+  const { userId } = useMyState();
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(null);
   const [uploadComplete, setUploadComplete] = useState(false);
@@ -143,18 +146,20 @@ export default function ImageEditModal({ onHide, imageUri }) {
 
   async function handleFileUpload() {
     setProcessing(true);
-    const { imageId, userId } = await uploadProfilePic();
+    const path = uuidv1();
     const dataUri = croppedImageUrl.replace(/^data:image\/\w+;base64,/, '');
     const buffer = Buffer.from(dataUri, 'base64');
-    const fileName = `${imageId}.jpg`;
+    const fileName = `${path}.jpg`;
     const file = new File([buffer], fileName);
+    const filePath = `${userId}/${fileName}`;
     await uploadFile({
       context: 'profilePic',
-      filePath: userId,
+      filePath,
       file,
       onUploadProgress: handleUploadProgress
     });
-    onUploadProfilePic({ userId, imageId });
+    await uploadUserPic({ src: `/profile/${filePath}`, isProfilePic: true });
+    onUploadProfilePic({ userId });
     setUploadComplete(true);
     setProcessing(false);
     setTimeout(() => onHide(), 500);

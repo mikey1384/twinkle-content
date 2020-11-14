@@ -464,11 +464,11 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
-    async uploadProfilePic() {
+    async uploadUserPic({ src, isProfilePic }) {
       try {
         const { data } = await request.post(
           `${URL}/user/picture`,
-          null,
+          { src, isProfilePic },
           auth()
         );
         return Promise.resolve(data);
