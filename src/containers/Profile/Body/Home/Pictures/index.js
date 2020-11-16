@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SectionPanel from 'components/SectionPanel';
+import ButtonGroup from 'components/Buttons/ButtonGroup';
 import Carousel from 'components/Carousel';
 import Frame from './Frame';
 import { mobileMaxWidth } from 'constants/css';
@@ -13,7 +14,30 @@ Pictures.propTypes = {
 
 export default function Pictures({ pictures, selectedTheme }) {
   return pictures ? (
-    <SectionPanel customColorTheme={selectedTheme} loaded title="Pictures">
+    <SectionPanel
+      button={
+        <ButtonGroup
+          style={{ marginLeft: 'auto' }}
+          buttons={[
+            {
+              label: 'Add Picture',
+              onClick: () => console.log('clicked'),
+              skeuomorphic: true,
+              color: 'darkerGray'
+            },
+            {
+              label: 'Reorder Pictures',
+              onClick: () => console.log('clicked too'),
+              skeuomorphic: true,
+              color: 'darkerGray'
+            }
+          ]}
+        />
+      }
+      customColorTheme={selectedTheme}
+      loaded
+      title="Pictures"
+    >
       <div
         style={{
           display: 'flex',
