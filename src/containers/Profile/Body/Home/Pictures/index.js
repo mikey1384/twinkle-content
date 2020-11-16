@@ -9,11 +9,12 @@ import { mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 
 Pictures.propTypes = {
+  numFrames: PropTypes.number,
   pictures: PropTypes.array,
   selectedTheme: PropTypes.string
 };
 
-export default function Pictures({ pictures, selectedTheme }) {
+export default function Pictures({ numFrames, pictures, selectedTheme }) {
   return pictures ? (
     <SectionPanel
       button={
@@ -24,7 +25,9 @@ export default function Pictures({ pictures, selectedTheme }) {
               label: (
                 <>
                   <Icon icon="plus" />
-                  <span style={{ marginLeft: '0.7rem' }}>Add Picture</span>
+                  <span style={{ marginLeft: '0.7rem' }}>
+                    Add Picture ({numFrames})
+                  </span>
                 </>
               ),
               onClick: () => console.log('clicked'),
