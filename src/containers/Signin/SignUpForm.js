@@ -153,10 +153,10 @@ export default function SignUpForm({
             />
           </section>
           <section style={{ marginTop: '2rem' }}>
-            <label style={{ fontWeight: 'normal' }}>
+            <label>
               {'Email '}
               <span
-                style={{ color: Color.gray() }}
+                style={{ color: Color.gray(), fontWeight: 'normal' }}
               >{`(if you don't have an email, enter your parent's email)`}</span>
             </label>
             <Input
