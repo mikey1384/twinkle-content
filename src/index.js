@@ -46,6 +46,7 @@ import { faComments } from '@fortawesome/pro-solid-svg-icons/faComments';
 import { faCopy } from '@fortawesome/pro-solid-svg-icons/faCopy';
 import { faCrown } from '@fortawesome/pro-solid-svg-icons/faCrown';
 import { faDesktop } from '@fortawesome/pro-solid-svg-icons/faDesktop';
+import { faEllipsisH } from '@fortawesome/pro-solid-svg-icons/faEllipsisH';
 import { faExchangeAlt } from '@fortawesome/pro-solid-svg-icons/faExchangeAlt';
 import { faFilm } from '@fortawesome/pro-solid-svg-icons/faFilm';
 import { faFile } from '@fortawesome/pro-solid-svg-icons/faFile';
@@ -139,6 +140,7 @@ library.add(
   faCopy,
   faCrown,
   faDesktop,
+  faEllipsisH,
   faExchangeAlt,
   faFile,
   faFileArchive,

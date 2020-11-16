@@ -38,6 +38,7 @@ const availableIcons = [
   'copy',
   'crown',
   'desktop',
+  'ellipsis-h',
   'exchange-alt',
   'film',
   'file',

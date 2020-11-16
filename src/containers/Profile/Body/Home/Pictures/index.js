@@ -4,6 +4,7 @@ import SectionPanel from 'components/SectionPanel';
 import ButtonGroup from 'components/Buttons/ButtonGroup';
 import Carousel from 'components/Carousel';
 import Frame from './Frame';
+import Icon from 'components/Icon';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 
@@ -20,13 +21,18 @@ export default function Pictures({ pictures, selectedTheme }) {
           style={{ marginLeft: 'auto' }}
           buttons={[
             {
-              label: 'Add Picture',
+              label: (
+                <>
+                  <Icon icon="plus" />
+                  <span style={{ marginLeft: '0.7rem' }}>Add Picture</span>
+                </>
+              ),
               onClick: () => console.log('clicked'),
               skeuomorphic: true,
               color: 'darkerGray'
             },
             {
-              label: 'Reorder Pictures',
+              label: <Icon icon="ellipsis-h" />,
               onClick: () => console.log('clicked too'),
               skeuomorphic: true,
               color: 'darkerGray'
