@@ -10,9 +10,21 @@ DeleteInterface.propTypes = {
 export default function DeleteInterface({ pictures }) {
   return (
     <ErrorBoundary>
-      <div style={{ width: '100%', height: 'auto', display: 'flex' }}>
+      <div
+        style={{
+          width: '100%',
+          height: 'auto',
+          display: 'flex',
+          justifyContent: 'center'
+        }}
+      >
         {pictures.map((picture, index) => (
-          <Picture key={index} picture={picture} />
+          <Picture
+            key={index}
+            numPictures={pictures.length}
+            picture={picture}
+            style={{ marginLeft: index === 0 ? 0 : '1rem' }}
+          />
         ))}
       </div>
     </ErrorBoundary>

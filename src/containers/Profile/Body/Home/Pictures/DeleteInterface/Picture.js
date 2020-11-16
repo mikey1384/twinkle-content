@@ -5,10 +5,12 @@ import { cloudFrontURL } from 'constants/defaultValues';
 import { Color, borderRadius, innerBorderRadius } from 'constants/css';
 
 Picture.propTypes = {
-  picture: PropTypes.object.isRequired
+  picture: PropTypes.object.isRequired,
+  numPictures: PropTypes.number,
+  style: PropTypes.object
 };
 
-export default function Picture({ picture }) {
+export default function Picture({ numPictures, picture, style }) {
   const imageUrl = useMemo(() => {
     return picture?.src ? `${cloudFrontURL}${picture?.src}` : '';
   }, [picture]);
@@ -19,10 +21,10 @@ export default function Picture({ picture }) {
         position: relative;
         border: 1px solid ${Color.borderGray()};
         border-radius: ${borderRadius};
-        width: CALC(100% - 2rem);
-        height: 100%;
-        padding-bottom: CALC(100% - 2rem - 2px);
+        width: CALC(${100 / (numPictures + 1)}% - 2rem);
+        padding-bottom: CALC(${100 / (numPictures + 1)}% - 2rem - 2px);
       `}
+      style={style}
     >
       <img
         style={{
