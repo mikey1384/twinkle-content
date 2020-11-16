@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SectionPanel from 'components/SectionPanel';
-import ButtonGroup from 'components/Buttons/ButtonGroup';
+import Button from 'components/Button';
 import Carousel from 'components/Carousel';
 import Frame from './Frame';
 import Icon from 'components/Icon';
@@ -18,30 +18,26 @@ export default function Pictures({ numFrames, pictures, selectedTheme }) {
   return pictures ? (
     <SectionPanel
       button={
-        <ButtonGroup
-          style={{ marginLeft: 'auto' }}
-          buttons={[
-            {
-              label: (
-                <>
-                  <Icon icon="plus" />
-                  <span style={{ marginLeft: '0.7rem' }}>
-                    Add Picture ({numFrames})
-                  </span>
-                </>
-              ),
-              onClick: () => console.log('clicked'),
-              skeuomorphic: true,
-              color: 'darkerGray'
-            },
-            {
-              label: <Icon icon="ellipsis-h" />,
-              onClick: () => console.log('clicked too'),
-              skeuomorphic: true,
-              color: 'darkerGray'
-            }
-          ]}
-        />
+        <div style={{ display: 'flex' }}>
+          <Button
+            color="darkerGray"
+            skeuomorphic
+            onClick={() => console.log('clicked')}
+          >
+            <Icon icon="plus" />
+            <span style={{ marginLeft: '0.7rem' }}>
+              Add Picture ({pictures.length}/{numFrames})
+            </span>
+          </Button>
+          <Button
+            style={{ marginLeft: '1rem' }}
+            color="darkerGray"
+            skeuomorphic
+            onClick={() => console.log('clicked')}
+          >
+            <Icon icon="ellipsis-h" />
+          </Button>
+        </div>
       }
       customColorTheme={selectedTheme}
       loaded
