@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import SectionPanel from 'components/SectionPanel';
 import Comments from 'components/Comments';
 import Intro from './Intro';
-import { css } from 'emotion';
-import { mobileMaxWidth } from 'constants/css';
 import Achievements from './Achievements';
+import Pictures from './Pictures';
+import ErrorBoundary from 'components/ErrorBoundary';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
-import Pictures from './Pictures';
+import { css } from 'emotion';
+import { mobileMaxWidth } from 'constants/css';
 
 Home.propTypes = {
   profile: PropTypes.object,
@@ -79,7 +80,7 @@ export default function Home({ profile, selectedTheme }) {
   });
 
   return (
-    <div
+    <ErrorBoundary
       className={css`
         width: 70vw;
         @media (max-width: ${mobileMaxWidth}) {
@@ -132,6 +133,6 @@ export default function Home({ profile, selectedTheme }) {
           />
         </SectionPanel>
       )}
-    </div>
+    </ErrorBoundary>
   );
 }
