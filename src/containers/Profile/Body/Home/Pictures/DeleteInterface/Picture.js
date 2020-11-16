@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
+import Icon from 'components/Icon';
 import { css } from 'emotion';
 import { cloudFrontURL } from 'constants/defaultValues';
 import { Color, borderRadius, innerBorderRadius } from 'constants/css';
@@ -41,6 +42,23 @@ export default function Picture({ numPictures, picture, style }) {
         }}
         src={imageUrl}
       />
+      <div
+        style={{
+          cursor: 'pointer',
+          position: 'absolute',
+          width: 'CALC(2rem + 8px)',
+          height: 'CALC(2rem + 8px)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          top: 3,
+          right: 3,
+          background: Color.black(),
+          borderRadius: '50%'
+        }}
+      >
+        <Icon style={{ color: '#fff', fontSize: '2rem' }} icon="times" />
+      </div>
     </div>
   );
 }
