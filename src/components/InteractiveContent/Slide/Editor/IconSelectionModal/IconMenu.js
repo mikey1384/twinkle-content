@@ -68,6 +68,7 @@ const availableIcons = [
   'shopping-bag',
   'sign-out-alt',
   'sliders-h',
+  'sort',
   'star',
   ['far', 'star'],
   'surprise',

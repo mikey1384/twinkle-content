@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SectionPanel from 'components/SectionPanel';
 import Button from 'components/Button';
+import DropdownButton from 'components/Buttons/DropdownButton';
 import Carousel from 'components/Carousel';
 import Frame from './Frame';
 import Icon from 'components/Icon';
@@ -29,14 +30,33 @@ export default function Pictures({ numFrames, pictures, selectedTheme }) {
               Add Picture ({pictures.length}/{numFrames})
             </span>
           </Button>
-          <Button
-            style={{ marginLeft: '1rem' }}
-            color="darkerGray"
+          <DropdownButton
             skeuomorphic
-            onClick={() => console.log('clicked')}
-          >
-            <Icon icon="ellipsis-h" />
-          </Button>
+            icon="ellipsis-h"
+            color="darkerGray"
+            direction="left"
+            style={{ marginLeft: '1rem' }}
+            menuProps={[
+              {
+                label: (
+                  <>
+                    <Icon icon="sort" />
+                    <span style={{ marginLeft: '1rem' }}>Reorder</span>
+                  </>
+                ),
+                onClick: () => console.log('edit')
+              },
+              {
+                label: (
+                  <>
+                    <Icon icon="trash-alt" />
+                    <span style={{ marginLeft: '1rem' }}>Delete</span>
+                  </>
+                ),
+                onClick: () => console.log('edit')
+              }
+            ]}
+          />
         </div>
       }
       customColorTheme={selectedTheme}
