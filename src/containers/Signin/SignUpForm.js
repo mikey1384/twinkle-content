@@ -4,7 +4,6 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import Button from 'components/Button';
 import Input from 'components/Texts/Input';
 import { css } from 'emotion';
-import { Color } from 'constants/css';
 import Banner from 'components/Banner';
 import { isValidUsername, stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext } from 'contexts';
@@ -153,12 +152,7 @@ export default function SignUpForm({
             />
           </section>
           <section style={{ marginTop: '2rem' }}>
-            <label style={{ fontWeight: 'normal' }}>
-              {'Email '}
-              <span
-                style={{ color: Color.gray() }}
-              >{`(if you don't have an email, enter your parent's email)`}</span>
-            </label>
+            <label>{"Email (yours or your parent's)"}</label>
             <Input
               value={email}
               placeholder="Email is needed in case you forget your password"
