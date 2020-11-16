@@ -157,11 +157,11 @@ export default function SignUpForm({
               {'Email '}
               <span
                 style={{ color: Color.gray() }}
-              >{`(optional, you don't need to enter this)`}</span>
+              >{`(if you don't have an email, enter your parent's email)`}</span>
             </label>
             <Input
               value={email}
-              placeholder="Email is not required, but if you have one, enter it here"
+              placeholder="Email is needed in case you forget your password"
               onChange={(text) => {
                 setErrorMessage('');
                 setEmail(text);
