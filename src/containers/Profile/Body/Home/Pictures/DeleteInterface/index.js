@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Picture from './Picture';
@@ -8,6 +8,7 @@ DeleteInterface.propTypes = {
 };
 
 export default function DeleteInterface({ pictures }) {
+  const [remainingPictures, setRemainingPictures] = useState(pictures);
   return (
     <ErrorBoundary>
       <div
@@ -18,9 +19,14 @@ export default function DeleteInterface({ pictures }) {
           justifyContent: 'center'
         }}
       >
-        {pictures.map((picture, index) => (
+        {remainingPictures.map((picture, index) => (
           <Picture
             key={index}
+            onDelete={(pictureId) =>
+              setRemainingPictures((pictures) =>
+                pictures.filter((picture) => picture.id !== pictureId)
+              )
+            }
             numPictures={pictures.length}
             picture={picture}
             style={{ marginLeft: index === 0 ? 0 : '1rem' }}

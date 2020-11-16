@@ -8,10 +8,11 @@ import { Color, borderRadius, innerBorderRadius } from 'constants/css';
 Picture.propTypes = {
   picture: PropTypes.object.isRequired,
   numPictures: PropTypes.number,
+  onDelete: PropTypes.func.isRequired,
   style: PropTypes.object
 };
 
-export default function Picture({ numPictures, picture, style }) {
+export default function Picture({ numPictures, onDelete, picture, style }) {
   const imageUrl = useMemo(() => {
     return picture?.src ? `${cloudFrontURL}${picture?.src}` : '';
   }, [picture]);
@@ -43,6 +44,7 @@ export default function Picture({ numPictures, picture, style }) {
         src={imageUrl}
       />
       <div
+        onClick={() => onDelete(picture.id)}
         style={{
           cursor: 'pointer',
           position: 'absolute',
