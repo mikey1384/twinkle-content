@@ -1,14 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Picture from './Picture';
 
 DeleteInterface.propTypes = {
-  pictures: PropTypes.array.isRequired
+  pictures: PropTypes.array.isRequired,
+  remainingPictures: PropTypes.array.isRequired,
+  onSetRemainingPictures: PropTypes.func.isRequired
 };
 
-export default function DeleteInterface({ pictures }) {
-  const [remainingPictures, setRemainingPictures] = useState(pictures);
+export default function DeleteInterface({
+  remainingPictures,
+  pictures,
+  onSetRemainingPictures
+}) {
+  useEffect(() => {
+    onSetRemainingPictures(pictures);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <ErrorBoundary>
       <div
@@ -23,7 +33,7 @@ export default function DeleteInterface({ pictures }) {
           <Picture
             key={index}
             onDelete={(pictureId) =>
-              setRemainingPictures((pictures) =>
+              onSetRemainingPictures((pictures) =>
                 pictures.filter((picture) => picture.id !== pictureId)
               )
             }

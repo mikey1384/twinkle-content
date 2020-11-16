@@ -18,6 +18,7 @@ Pictures.propTypes = {
 
 export default function Pictures({ numFrames, pictures, selectedTheme }) {
   const [deleteMode, setDeleteMode] = useState(false);
+  const [remainingPictures, setRemainingPictures] = useState(pictures);
   return pictures ? (
     <SectionPanel
       button={
@@ -88,7 +89,11 @@ export default function Pictures({ numFrames, pictures, selectedTheme }) {
         }}
       >
         {deleteMode ? (
-          <DeleteInterface pictures={pictures} />
+          <DeleteInterface
+            remainingPictures={remainingPictures}
+            pictures={pictures}
+            onSetRemainingPictures={setRemainingPictures}
+          />
         ) : (
           <Carousel
             className={css`
