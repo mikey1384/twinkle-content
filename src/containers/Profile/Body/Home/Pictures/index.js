@@ -133,7 +133,7 @@ export default function Pictures({
               width: 75%;
             `}
             allowDrag={false}
-            slidesToShow={Math.min(pictures.length, 3)}
+            slidesToShow={3}
             slidesToScroll={1}
           >
             {pictures.map((picture, index) => (
