@@ -7,7 +7,6 @@ import Carousel from 'components/Carousel';
 import Frame from './Frame';
 import Icon from 'components/Icon';
 import DeleteInterface from './DeleteInterface';
-import { mobileMaxWidth } from 'constants/css';
 import { useAppContext } from 'contexts';
 import { css } from 'emotion';
 import { useMyState } from 'helpers/hooks';
@@ -124,13 +123,14 @@ export default function Pictures({
         ) : (
           <Carousel
             className={css`
-              width: 80%;
-              @media (max-width: ${mobileMaxWidth}) {
-                width: 100%;
-              }
+              width: ${pictures.length > 2
+                ? '75%'
+                : pictures.length > 1
+                ? '50%'
+                : '25%'};
             `}
             allowDrag={false}
-            slidesToShow={3}
+            slidesToShow={Math.min(pictures.length, 3)}
             slidesToScroll={1}
           >
             {pictures.map((picture, index) => (
