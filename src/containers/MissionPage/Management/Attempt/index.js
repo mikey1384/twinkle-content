@@ -7,7 +7,7 @@ import LongText from 'components/Texts/LongText';
 import { Color, borderRadius } from 'constants/css';
 import { panel } from '../../Styles';
 import { timeSince } from 'helpers/timeStampHelpers';
-import { stringIsEmpty } from 'helpers/stringHelpers';
+import { stringIsEmpty, processedStringWithURL } from 'helpers/stringHelpers';
 
 Attempt.propTypes = {
   activeTab: PropTypes.string.isRequired,
@@ -57,13 +57,22 @@ export default function Attempt({
               key={answer.questionId}
             >
               <p style={{ fontWeight: 'bold' }}>Q: {answer.question}</p>
-              <p>A: {answer.answer}</p>
+              <p
+                style={{
+                  whiteSpace: 'pre-wrap',
+                  overflowWrap: 'break-word',
+                  wordBreak: 'break-word'
+                }}
+                dangerouslySetInnerHTML={{
+                  __html: `A: ${processedStringWithURL(answer?.answer || '')}`
+                }}
+              />
             </div>
           ))}
         </div>
       )}
       {attempt.content && (
-        <div style={{ marginTop: '2rem' }}>
+        <div>
           <LongText>{attempt.content}</LongText>
         </div>
       )}
