@@ -1,5 +1,6 @@
 import request from 'axios';
 import URL from 'constants/URL';
+import { queryStringForArray } from 'helpers/stringHelpers';
 
 export default function userRequestHelpers({ auth, handleError, token }) {
   return {
@@ -108,6 +109,21 @@ export default function userRequestHelpers({ auth, handleError, token }) {
           `${URL}/user/accountType?accountTypeLabel=${accountTypeLabel}`,
           auth()
         );
+        return Promise.resolve(success);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
+    async deleteProfilePictures(remainingPictures) {
+      const queryString = queryStringForArray({
+        array: remainingPictures,
+        originVar: 'id',
+        destinationVar: 'remainingPictureIds'
+      });
+      try {
+        const {
+          data: { success }
+        } = await request.delete(`${URL}/user/picture?${queryString}`, auth());
         return Promise.resolve(success);
       } catch (error) {
         return handleError(error);

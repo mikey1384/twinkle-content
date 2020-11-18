@@ -6,9 +6,10 @@ import DropdownButton from 'components/Buttons/DropdownButton';
 import Carousel from 'components/Carousel';
 import Frame from './Frame';
 import Icon from 'components/Icon';
-import { mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
 import DeleteInterface from './DeleteInterface';
+import { mobileMaxWidth } from 'constants/css';
+import { useAppContext } from 'contexts';
+import { css } from 'emotion';
 
 Pictures.propTypes = {
   numFrames: PropTypes.number,
@@ -19,6 +20,10 @@ Pictures.propTypes = {
 export default function Pictures({ numFrames, pictures, selectedTheme }) {
   const [deleteMode, setDeleteMode] = useState(false);
   const [remainingPictures, setRemainingPictures] = useState(pictures);
+  const {
+    requestHelpers: { deleteProfilePictures }
+  } = useAppContext();
+
   return pictures ? (
     <SectionPanel
       button={
@@ -126,7 +131,7 @@ export default function Pictures({ numFrames, pictures, selectedTheme }) {
     setRemainingPictures(pictures);
   }
 
-  function handlePictureDeleteConfirm() {
-    console.log('confirming');
+  async function handlePictureDeleteConfirm() {
+    await deleteProfilePictures(remainingPictures);
   }
 }
