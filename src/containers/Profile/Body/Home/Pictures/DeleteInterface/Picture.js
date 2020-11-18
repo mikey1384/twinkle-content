@@ -16,6 +16,7 @@ export default function Picture({ numPictures, onDelete, picture, style }) {
   const imageUrl = useMemo(() => {
     return picture?.src ? `${cloudFrontURL}${picture?.src}` : '';
   }, [picture]);
+  const width = Math.min(100 / (numPictures + 1), 33);
 
   return (
     <div
@@ -23,8 +24,8 @@ export default function Picture({ numPictures, onDelete, picture, style }) {
         position: relative;
         border: 1px solid ${Color.borderGray()};
         border-radius: ${borderRadius};
-        width: CALC(${100 / (numPictures + 1)}% - 2rem);
-        padding-bottom: CALC(${100 / (numPictures + 1)}% - 2rem - 2px);
+        width: CALC(${width}% - 2rem);
+        padding-bottom: CALC(${width}% - 2rem - 2px);
       `}
       style={style}
     >
