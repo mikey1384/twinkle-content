@@ -27,14 +27,15 @@ export default function Pictures({ numFrames, pictures, selectedTheme }) {
             <Button
               color="vantaBlack"
               transparent
-              onClick={() => {
-                setDeleteMode(false);
-                setRemainingPictures(pictures);
-              }}
+              onClick={handlePictureDeleteCancel}
             >
               Cancel
             </Button>
-            <Button skeuomorphic style={{ marginLeft: '1rem' }}>
+            <Button
+              skeuomorphic
+              style={{ marginLeft: '1rem' }}
+              onClick={handlePictureDeleteConfirm}
+            >
               Save
             </Button>
           </div>
@@ -119,4 +120,13 @@ export default function Pictures({ numFrames, pictures, selectedTheme }) {
   ) : (
     <div>No Pictures</div>
   );
+
+  function handlePictureDeleteCancel() {
+    setDeleteMode(false);
+    setRemainingPictures(pictures);
+  }
+
+  function handlePictureDeleteConfirm() {
+    console.log('confirming');
+  }
 }
