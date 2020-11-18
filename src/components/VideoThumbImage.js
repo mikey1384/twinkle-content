@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import request from 'axios';
-import { Color } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { rewardValue } from 'constants/defaultValues';
 import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
+import { css } from 'emotion';
 import URL from 'constants/URL';
 
 const API_URL = `${URL}/video`;
@@ -109,14 +110,17 @@ export default function VideoThumbImage({
       />
       {!!rewardLevel && (
         <div
-          style={{
-            position: 'absolute',
-            padding: '0.1rem 0.5rem',
-            background: tagColor,
-            fontSize: '1.5rem',
-            fontWeight: 'bold',
-            color: '#fff'
-          }}
+          className={css`
+            position: absolute;
+            padding: 0.1rem 0.5rem;
+            background: ${tagColor};
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: 1rem;
+            }
+          `}
         >
           {addCommasToNumber(rewardLevel * rewardValue)} XP
         </div>
