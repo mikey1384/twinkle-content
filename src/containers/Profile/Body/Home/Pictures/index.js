@@ -27,7 +27,10 @@ export default function Pictures({ numFrames, pictures, selectedTheme }) {
             <Button
               color="vantaBlack"
               transparent
-              onClick={() => setDeleteMode(false)}
+              onClick={() => {
+                setDeleteMode(false);
+                setRemainingPictures(pictures);
+              }}
             >
               Cancel
             </Button>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Picture from './Picture';
@@ -14,11 +14,6 @@ export default function DeleteInterface({
   pictures,
   onSetRemainingPictures
 }) {
-  useEffect(() => {
-    onSetRemainingPictures(pictures);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <ErrorBoundary>
       <div
