@@ -91,6 +91,7 @@ export default function Home({ profile, selectedTheme }) {
       <Intro profile={profile} selectedTheme={selectedTheme} />
       {userId && (
         <Pictures
+          profileId={profile.id}
           numFrames={numFrames}
           pictures={pictures}
           selectedTheme={selectedTheme}
