@@ -6,24 +6,28 @@ import { cloudFrontURL } from 'constants/defaultValues';
 import { css } from 'emotion';
 
 Frame.propTypes = {
-  picture: PropTypes.object.isRequired
+  forCarousel: PropTypes.bool,
+  picture: PropTypes.object.isRequired,
+  style: PropTypes.object
 };
 
-export default function Frame({ picture }) {
+export default function Frame({ forCarousel, picture, style }) {
   const imageUrl = useMemo(() => {
     return picture?.src ? `${cloudFrontURL}${picture?.src}` : '';
   }, [picture]);
   const [imageModalShown, setImageModalShown] = useState(false);
+  const frameWidth = forCarousel ? 100 : 33;
 
   return (
     <div
+      style={style}
       className={css`
         position: relative;
         border: 1px solid ${Color.borderGray()};
         border-radius: ${borderRadius};
-        width: CALC(100% - 2rem);
-        height: 100%;
-        padding-bottom: CALC(100% - 2rem - 2px);
+        width: CALC(${frameWidth}% - 2rem);
+        height: ${frameWidth}%;
+        padding-bottom: CALC(${frameWidth}% - 2rem - 2px);
       `}
     >
       {imageUrl && (

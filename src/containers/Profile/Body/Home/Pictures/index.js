@@ -7,7 +7,7 @@ import Carousel from 'components/Carousel';
 import Frame from './Frame';
 import Icon from 'components/Icon';
 import DeleteInterface from './DeleteInterface';
-import { useAppContext } from 'contexts';
+import { useAppContext, useContentContext } from 'contexts';
 import { css } from 'emotion';
 import { useMyState } from 'helpers/hooks';
 
@@ -30,6 +30,9 @@ export default function Pictures({
   const {
     requestHelpers: { deleteProfilePictures }
   } = useAppContext();
+  const {
+    actions: { onUpdateProfileInfo }
+  } = useContentContext();
   const menuButtons = useMemo(() => {
     if (userId !== profileId) return null;
     return deleteMode ? (
@@ -95,7 +98,11 @@ export default function Pictures({
       setRemainingPictures(pictures);
     }
     async function handlePictureDeleteConfirm() {
-      await deleteProfilePictures(remainingPictures);
+      const success = await deleteProfilePictures(remainingPictures);
+      if (success) {
+        onUpdateProfileInfo({ userId: profileId, pictures: remainingPictures });
+      }
+      setDeleteMode(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deleteMode, numFrames, pictures, remainingPictures]);
@@ -120,23 +127,31 @@ export default function Pictures({
             pictures={pictures}
             onSetRemainingPictures={setRemainingPictures}
           />
-        ) : (
+        ) : pictures.length > 2 ? (
           <Carousel
             className={css`
-              width: ${pictures.length > 2
-                ? '75%'
-                : pictures.length > 1
-                ? '50%'
-                : '25%'};
+              width: 75%;
             `}
             allowDrag={false}
             slidesToShow={Math.min(pictures.length, 3)}
             slidesToScroll={1}
           >
             {pictures.map((picture, index) => (
-              <Frame key={index} picture={picture} />
+              <Frame forCarousel key={index} picture={picture} />
             ))}
           </Carousel>
+        ) : (
+          <div
+            style={{ width: '75%', display: 'flex', justifyContent: 'center' }}
+          >
+            {pictures.map((picture, index) => (
+              <Frame
+                key={index}
+                picture={picture}
+                style={{ marginLeft: index === 0 ? 0 : '1rem' }}
+              />
+            ))}
+          </div>
         )}
       </div>
     </SectionPanel>
