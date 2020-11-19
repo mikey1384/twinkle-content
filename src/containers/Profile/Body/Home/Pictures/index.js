@@ -168,7 +168,10 @@ export default function Pictures({
         <div>No Pictures</div>
       )}
       {addPictureModalShown && (
-        <AddPictureModal onHide={() => setAddPictureModalShown(false)} />
+        <AddPictureModal
+          onHide={() => setAddPictureModalShown(false)}
+          onConfirm={() => console.log('confirmed')}
+        />
       )}
     </ErrorBoundary>
   );
