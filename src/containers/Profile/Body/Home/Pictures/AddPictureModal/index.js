@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
@@ -9,11 +9,15 @@ AddPictureModal.propTypes = {
 };
 
 export default function AddPictureModal({ onHide }) {
+  const [section, setSection] = useState('start');
   return (
-    <Modal onHide={onHide}>
+    <Modal large={section === 'archive'} onHide={onHide}>
       <header>Add Picture</header>
       <main>
-        <StartScreen />
+        {section === 'start' && (
+          <StartScreen navigateTo={setSection} onHide={onHide} />
+        )}
+        {section === 'archive' && <div>This is archive</div>}
       </main>
       <footer>
         <Button color="blue" onClick={onHide}>

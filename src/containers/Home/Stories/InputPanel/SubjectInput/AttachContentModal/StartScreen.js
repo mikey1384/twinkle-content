@@ -56,7 +56,7 @@ export default function StartScreen({ navigateTo, onHide }) {
             color: Color.black()
           }}
         >
-          Upload from your {isMobile(navigator) ? 'device' : 'computer'}
+          from Your {isMobile(navigator) ? 'Device' : 'Computer'}
         </div>
         <div
           style={{
@@ -104,7 +104,7 @@ export default function StartScreen({ navigateTo, onHide }) {
             color: Color.black()
           }}
         >
-          Select from Twinkle Website
+          from Twinkle Website
         </div>
         <div
           style={{
