@@ -181,6 +181,16 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
+    async loadAllPictures() {
+      try {
+        const {
+          data: { pictures }
+        } = await request.get(`${URL}/user/picture/archive`, auth());
+        return Promise.resolve(pictures);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async loadKarmaPoints() {
       try {
         const {
