@@ -7,6 +7,7 @@ import Carousel from 'components/Carousel';
 import Frame from './Frame';
 import Icon from 'components/Icon';
 import DeleteInterface from './DeleteInterface';
+import AddPictureModal from './AddPictureModal';
 import { useAppContext, useContentContext } from 'contexts';
 import { css } from 'emotion';
 import { useMyState } from 'helpers/hooks';
@@ -25,6 +26,7 @@ export default function Pictures({
   selectedTheme
 }) {
   const { userId } = useMyState();
+  const [addPictureModalShown, setAddPictureModalShown] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
   const [remainingPictures, setRemainingPictures] = useState(pictures);
   const {
@@ -57,7 +59,7 @@ export default function Pictures({
         <Button
           color="darkerGray"
           skeuomorphic
-          onClick={() => console.log('clicked')}
+          onClick={() => setAddPictureModalShown(true)}
         >
           <Icon icon="plus" />
           <span style={{ marginLeft: '0.7rem' }}>
@@ -91,6 +93,9 @@ export default function Pictures({
             }
           ]}
         />
+        {addPictureModalShown && (
+          <AddPictureModal onHide={() => setAddPictureModalShown(false)} />
+        )}
       </div>
     );
     function handlePictureDeleteCancel() {
