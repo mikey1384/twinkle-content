@@ -11,6 +11,7 @@ import AddPictureModal from './AddPictureModal';
 import { useAppContext, useContentContext } from 'contexts';
 import { css } from 'emotion';
 import { useMyState } from 'helpers/hooks';
+import ErrorBoundary from 'components/ErrorBoundary';
 
 Pictures.propTypes = {
   numFrames: PropTypes.number,
@@ -93,9 +94,6 @@ export default function Pictures({
             }
           ]}
         />
-        {addPictureModalShown && (
-          <AddPictureModal onHide={() => setAddPictureModalShown(false)} />
-        )}
       </div>
     );
     function handlePictureDeleteCancel() {
@@ -112,55 +110,66 @@ export default function Pictures({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deleteMode, numFrames, pictures, remainingPictures]);
 
-  return pictures ? (
-    <SectionPanel
-      button={menuButtons}
-      customColorTheme={selectedTheme}
-      loaded
-      title={deleteMode ? 'Delete pictures' : 'Pictures'}
-    >
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          marginTop: '-1rem'
-        }}
-      >
-        {deleteMode ? (
-          <DeleteInterface
-            remainingPictures={remainingPictures}
-            pictures={pictures}
-            onSetRemainingPictures={setRemainingPictures}
-          />
-        ) : pictures.length > 2 ? (
-          <Carousel
-            className={css`
-              width: 75%;
-            `}
-            allowDrag={false}
-            slidesToShow={3}
-            slidesToScroll={1}
-          >
-            {pictures.map((picture, index) => (
-              <Frame forCarousel key={index} picture={picture} />
-            ))}
-          </Carousel>
-        ) : (
+  return (
+    <ErrorBoundary>
+      {pictures ? (
+        <SectionPanel
+          button={menuButtons}
+          customColorTheme={selectedTheme}
+          loaded
+          title={deleteMode ? 'Delete pictures' : 'Pictures'}
+        >
           <div
-            style={{ width: '75%', display: 'flex', justifyContent: 'center' }}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginTop: '-1rem'
+            }}
           >
-            {pictures.map((picture, index) => (
-              <Frame
-                key={index}
-                picture={picture}
-                style={{ marginLeft: index === 0 ? 0 : '1rem' }}
+            {deleteMode ? (
+              <DeleteInterface
+                remainingPictures={remainingPictures}
+                pictures={pictures}
+                onSetRemainingPictures={setRemainingPictures}
               />
-            ))}
+            ) : pictures.length > 2 ? (
+              <Carousel
+                className={css`
+                  width: 75%;
+                `}
+                allowDrag={false}
+                slidesToShow={3}
+                slidesToScroll={1}
+              >
+                {pictures.map((picture, index) => (
+                  <Frame forCarousel key={index} picture={picture} />
+                ))}
+              </Carousel>
+            ) : (
+              <div
+                style={{
+                  width: '75%',
+                  display: 'flex',
+                  justifyContent: 'center'
+                }}
+              >
+                {pictures.map((picture, index) => (
+                  <Frame
+                    key={index}
+                    picture={picture}
+                    style={{ marginLeft: index === 0 ? 0 : '1rem' }}
+                  />
+                ))}
+              </div>
+            )}
           </div>
-        )}
-      </div>
-    </SectionPanel>
-  ) : (
-    <div>No Pictures</div>
+        </SectionPanel>
+      ) : (
+        <div>No Pictures</div>
+      )}
+      {addPictureModalShown && (
+        <AddPictureModal onHide={() => setAddPictureModalShown(false)} />
+      )}
+    </ErrorBoundary>
   );
 }
