@@ -194,13 +194,24 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
-    async loadUserPictures(lastPictureId) {
+    async loadUserPictures({ lastPictureId, exclude }) {
+      const queryString = exclude
+        ? queryStringForArray({
+            array: exclude,
+            originVar: 'id',
+            destinationVar: 'currentPictureIds'
+          })
+        : '';
       try {
         const {
           data: { pictures, loadMoreShown }
         } = await request.get(
           `${URL}/user/picture/archive${
-            lastPictureId ? `?lastPictureId=${lastPictureId}` : ''
+            queryString || lastPictureId ? '?' : ''
+          }${queryString}${
+            lastPictureId
+              ? `${queryString ? '&' : ''}lastPictureId=${lastPictureId}`
+              : ''
           }`,
           auth()
         );
@@ -508,6 +519,16 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
+    async unlockUsernameChange() {
+      try {
+        const {
+          data: { success }
+        } = await request.put(`${URL}/user/unlock/username`, null, auth());
+        return Promise.resolve(success);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async uploadUserPic({ src, isProfilePic }) {
       try {
         const { data } = await request.post(
@@ -520,12 +541,16 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
-    async unlockUsernameChange() {
+    async updateUserPictures(pictureIds) {
       try {
         const {
-          data: { success }
-        } = await request.put(`${URL}/user/unlock/username`, null, auth());
-        return Promise.resolve(success);
+          data: { pictures }
+        } = await request.put(
+          `${URL}/user/picture/archive`,
+          { pictureIds },
+          auth()
+        );
+        return Promise.resolve(pictures);
       } catch (error) {
         return handleError(error);
       }

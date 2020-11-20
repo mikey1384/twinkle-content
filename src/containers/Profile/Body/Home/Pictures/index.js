@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import SectionPanel from 'components/SectionPanel';
 import Button from 'components/Button';
@@ -31,11 +31,18 @@ export default function Pictures({
   const [deleteMode, setDeleteMode] = useState(false);
   const [remainingPictures, setRemainingPictures] = useState(pictures);
   const {
-    requestHelpers: { deleteProfilePictures }
+    requestHelpers: { deleteProfilePictures, updateUserPictures }
   } = useAppContext();
   const {
     actions: { onUpdateProfileInfo }
   } = useContentContext();
+  const addPicturesButtonShown = useMemo(() => {
+    return pictures.length < numFrames;
+  }, [numFrames, pictures.length]);
+  useEffect(() => {
+    setRemainingPictures(pictures);
+  }, [pictures]);
+
   const menuButtons = useMemo(() => {
     if (userId !== profileId) return null;
     return deleteMode ? (
@@ -57,16 +64,18 @@ export default function Pictures({
       </div>
     ) : (
       <div style={{ display: 'flex' }}>
-        <Button
-          color="darkerGray"
-          skeuomorphic
-          onClick={() => setAddPictureModalShown(true)}
-        >
-          <Icon icon="plus" />
-          <span style={{ marginLeft: '0.7rem' }}>
-            Add Picture ({pictures.length}/{numFrames})
-          </span>
-        </Button>
+        {addPicturesButtonShown && (
+          <Button
+            color="darkerGray"
+            skeuomorphic
+            onClick={() => setAddPictureModalShown(true)}
+          >
+            <Icon icon="plus" />
+            <span style={{ marginLeft: '0.7rem' }}>
+              Add Picture ({pictures.length}/{numFrames})
+            </span>
+          </Button>
+        )}
         <DropdownButton
           skeuomorphic
           icon="ellipsis-h"
@@ -170,10 +179,20 @@ export default function Pictures({
       {addPictureModalShown && (
         <AddPictureModal
           onHide={() => setAddPictureModalShown(false)}
-          onConfirm={() => console.log('confirmed')}
+          onConfirm={handleAddPictures}
+          currentPictures={pictures}
           maxNumSelectable={numFrames - pictures.length}
         />
       )}
     </ErrorBoundary>
   );
+
+  async function handleAddPictures({ selectedPictureIds }) {
+    const pics = await updateUserPictures([
+      ...selectedPictureIds,
+      ...pictures.map((picture) => picture.id)
+    ]);
+    onUpdateProfileInfo({ userId: profileId, pictures: pics });
+    setAddPictureModalShown(false);
+  }
 }

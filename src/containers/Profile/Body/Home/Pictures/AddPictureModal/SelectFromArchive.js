@@ -6,11 +6,13 @@ import ArchivedPicture from './ArchivedPicture';
 import Button from 'components/Button';
 
 SelectFromArchive.propTypes = {
+  currentPictures: PropTypes.array.isRequired,
   selectedPictureIds: PropTypes.array.isRequired,
   onSetSelectedPictureIds: PropTypes.func.isRequired
 };
 
 export default function SelectFromArchive({
+  currentPictures,
   selectedPictureIds,
   onSetSelectedPictureIds
 }) {
@@ -28,7 +30,9 @@ export default function SelectFromArchive({
     init();
     async function init() {
       setLoading(true);
-      const { pictures: pics, loadMoreShown } = await loadUserPictures();
+      const { pictures: pics, loadMoreShown } = await loadUserPictures({
+        exclude: currentPictures
+      });
       if (mounted.current) {
         setPictures(pics);
         setLoadMoreButtonShown(loadMoreShown);
@@ -94,9 +98,10 @@ export default function SelectFromArchive({
 
   async function handleLoadMore() {
     setLoadingMore(true);
-    const { pictures: pics, loadMoreShown } = await loadUserPictures(
-      pictures[pictures.length - 1].id
-    );
+    const { pictures: pics, loadMoreShown } = await loadUserPictures({
+      lastPictureId: pictures[pictures.length - 1].id,
+      exclude: currentPictures
+    });
     setPictures((pictures) => pictures.concat(pics));
     setLoadMoreButtonShown(loadMoreShown);
     setLoadingMore(false);

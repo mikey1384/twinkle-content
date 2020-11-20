@@ -6,12 +6,14 @@ import StartScreen from './StartScreen';
 import SelectFromArchive from './SelectFromArchive';
 
 AddPictureModal.propTypes = {
+  currentPictures: PropTypes.array.isRequired,
   maxNumSelectable: PropTypes.number.isRequired,
   onConfirm: PropTypes.func.isRequired,
   onHide: PropTypes.func.isRequired
 };
 
 export default function AddPictureModal({
+  currentPictures,
   maxNumSelectable,
   onConfirm,
   onHide
@@ -30,6 +32,7 @@ export default function AddPictureModal({
         )}
         {section === 'archive' && (
           <SelectFromArchive
+            currentPictures={currentPictures}
             selectedPictureIds={selectedPictureIds}
             onSetSelectedPictureIds={setSelectedPictureIds}
           />
@@ -57,7 +60,7 @@ export default function AddPictureModal({
             }
             color="blue"
             style={{ marginLeft: '0.7rem' }}
-            onClick={() => onConfirm(selectedPictureIds)}
+            onClick={() => onConfirm({ selectedPictureIds })}
           >
             {selectedPictureIds.length > maxNumSelectable
               ? `Cannot select more than ${maxNumSelectable}`
