@@ -8,6 +8,7 @@ export default function SelectFromArchive() {
   const {
     requestHelpers: { loadUserPictures }
   } = useAppContext();
+  const [selectedPictureIds, setSelectedPictureIds] = useState([]);
   const [loadMoreButtonShown, setLoadMoreButtonShown] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -49,9 +50,20 @@ export default function SelectFromArchive() {
         pictures.map((picture) => (
           <ArchivedPicture
             key={picture.id}
-            onDeleteArchivedPicture={(pictureId) =>
+            selectedPictureIds={selectedPictureIds}
+            onDeleteArchivedPicture={(pictureId) => {
               setPictures((pictures) =>
                 pictures.filter((picture) => picture.id !== pictureId)
+              );
+              setSelectedPictureIds((selectedPictureIds) =>
+                selectedPictureIds.filter((id) => id !== pictureId)
+              );
+            }}
+            onSelect={(pictureId) =>
+              setSelectedPictureIds((selectedPictureIds) =>
+                selectedPictureIds.includes(pictureId)
+                  ? selectedPictureIds.filter((id) => id !== pictureId)
+                  : selectedPictureIds.concat(pictureId)
               )
             }
             picture={picture}

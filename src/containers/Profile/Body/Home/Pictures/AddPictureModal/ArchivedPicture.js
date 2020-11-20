@@ -6,18 +6,24 @@ import { css } from 'emotion';
 import { cloudFrontURL } from 'constants/defaultValues';
 import { Color, borderRadius, innerBorderRadius } from 'constants/css';
 import { useAppContext } from 'contexts';
+import { useMyState } from 'helpers/hooks';
 
 ArchivedPicture.propTypes = {
   picture: PropTypes.object.isRequired,
+  selectedPictureIds: PropTypes.array.isRequired,
   onDeleteArchivedPicture: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired,
   style: PropTypes.object
 };
 
 export default function ArchivedPicture({
+  onSelect,
   picture,
+  selectedPictureIds,
   style,
   onDeleteArchivedPicture
 }) {
+  const { profileTheme } = useMyState();
   const {
     requestHelpers: { deleteArchivedPicture }
   } = useAppContext();
@@ -31,17 +37,26 @@ export default function ArchivedPicture({
     <div
       className={css`
         position: relative;
-        border: 1px solid ${Color.borderGray()};
-        border-radius: ${borderRadius};
         width: CALC(${width}% - 2rem);
         padding-bottom: CALC(${width}% - 2rem - 2px);
       `}
-      style={style}
+      style={{
+        ...style,
+        borderRadius,
+        boxShadow: selectedPictureIds.includes(picture.id)
+          ? `0 0 5px ${Color[profileTheme](0.8)}`
+          : '',
+        border: selectedPictureIds.includes(picture.id)
+          ? `5px solid ${Color[profileTheme](0.8)}`
+          : `1px solid ${Color.borderGray()}`
+      }}
     >
       <img
-        onClick={handleImageSelect}
+        onClick={() => onSelect(picture.id)}
         style={{
-          borderRadius: innerBorderRadius,
+          borderRadius: selectedPictureIds.includes(picture.id)
+            ? 0
+            : innerBorderRadius,
           position: 'absolute',
           top: 0,
           bottom: 0,
@@ -82,10 +97,6 @@ export default function ArchivedPicture({
       )}
     </div>
   );
-
-  function handleImageSelect() {
-    console.log('image clicked');
-  }
 
   async function handleImageDelete() {
     await deleteArchivedPicture(picture.id);
