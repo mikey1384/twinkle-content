@@ -181,12 +181,17 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
-    async loadAllPictures() {
+    async loadUserPictures(lastPictureId) {
       try {
         const {
-          data: { pictures }
-        } = await request.get(`${URL}/user/picture/archive`, auth());
-        return Promise.resolve(pictures);
+          data: { pictures, loadMoreShown }
+        } = await request.get(
+          `${URL}/user/picture/archive${
+            lastPictureId ? `?lastPictureId=${lastPictureId}` : ''
+          }`,
+          auth()
+        );
+        return Promise.resolve({ pictures, loadMoreShown });
       } catch (error) {
         return handleError(error);
       }

@@ -6,8 +6,9 @@ import Button from 'components/Button';
 
 export default function SelectFromArchive() {
   const {
-    requestHelpers: { loadAllPictures }
+    requestHelpers: { loadUserPictures }
   } = useAppContext();
+  const [loadMoreButtonShown, setLoadMoreButtonShown] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [loading, setLoading] = useState(false);
   const [pictures, setPictures] = useState([]);
@@ -18,9 +19,10 @@ export default function SelectFromArchive() {
     init();
     async function init() {
       setLoading(true);
-      const pics = await loadAllPictures();
+      const { pictures: pics, loadMoreShown } = await loadUserPictures();
       if (mounted.current) {
         setPictures(pics);
+        setLoadMoreButtonShown(loadMoreShown);
         setLoading(false);
       }
     }
@@ -52,18 +54,26 @@ export default function SelectFromArchive() {
           />
         ))
       )}
-      <Button
-        style={{ marginTop: '2rem', width: '100%', fontSize: '2rem' }}
-        transparent
-        onClick={handleLoadMore}
-        disabled={loadingMore}
-      >
-        Load More
-      </Button>
+      {loadMoreButtonShown && (
+        <Button
+          style={{ marginTop: '2rem', width: '100%', fontSize: '2rem' }}
+          transparent
+          onClick={handleLoadMore}
+          disabled={loadingMore}
+        >
+          Load More
+        </Button>
+      )}
     </div>
   );
 
-  function handleLoadMore() {
+  async function handleLoadMore() {
     setLoadingMore(true);
+    const { pictures: pics, loadMoreShown } = await loadUserPictures(
+      pictures[pictures.length - 1].id
+    );
+    setPictures((pictures) => pictures.concat(pics));
+    setLoadMoreButtonShown(loadMoreShown);
+    setLoadingMore(false);
   }
 }
