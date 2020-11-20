@@ -15,7 +15,9 @@ export default function AddPictureModal({ onConfirm, onHide }) {
   const [selected, setSelected] = useState(null);
   return (
     <Modal large={section === 'archive'} onHide={onHide}>
-      <header>Add Picture</header>
+      <header>
+        Add Picture{section === 'archive' ? `s from Archive` : ''}
+      </header>
       <main>
         {section === 'start' && (
           <StartScreen navigateTo={setSection} onHide={onHide} />
