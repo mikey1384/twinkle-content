@@ -40,7 +40,7 @@ export default function SelectFromArchive() {
       }}
     >
       {loading ? (
-        <Loading />
+        <Loading style={{ height: '10rem' }} />
       ) : (
         pictures.map((picture) => (
           <Picture
