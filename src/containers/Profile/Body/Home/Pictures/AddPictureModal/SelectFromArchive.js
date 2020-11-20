@@ -2,11 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useAppContext } from 'contexts';
 import Loading from 'components/Loading';
 import Picture from './Picture';
+import Button from 'components/Button';
 
 export default function SelectFromArchive() {
   const {
     requestHelpers: { loadAllPictures }
   } = useAppContext();
+  const [loadingMore, setLoadingMore] = useState(false);
   const [loading, setLoading] = useState(false);
   const [pictures, setPictures] = useState([]);
   const mounted = useRef(true);
@@ -50,6 +52,18 @@ export default function SelectFromArchive() {
           />
         ))
       )}
+      <Button
+        style={{ marginTop: '2rem', width: '100%', fontSize: '2rem' }}
+        transparent
+        onClick={handleLoadMore}
+        disabled={loadingMore}
+      >
+        Load More
+      </Button>
     </div>
   );
+
+  function handleLoadMore() {
+    setLoadingMore(true);
+  }
 }
