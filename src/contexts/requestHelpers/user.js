@@ -129,6 +129,19 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
+    async deleteArchivedPicture(pictureId) {
+      try {
+        const {
+          data: { success }
+        } = await request.delete(
+          `${URL}/user/picture/archive?pictureId=${pictureId}`,
+          auth()
+        );
+        return Promise.resolve(success);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async editAccountType({ label, editedAccountType }) {
       try {
         const {

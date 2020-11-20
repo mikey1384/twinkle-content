@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useAppContext } from 'contexts';
 import Loading from 'components/Loading';
-import Picture from './Picture';
+import ArchivedPicture from './ArchivedPicture';
 import Button from 'components/Button';
 
 export default function SelectFromArchive() {
@@ -47,10 +47,10 @@ export default function SelectFromArchive() {
         <Loading style={{ height: '10rem' }} />
       ) : (
         pictures.map((picture) => (
-          <Picture
+          <ArchivedPicture
             key={picture.id}
             picture={picture}
-            style={{ margin: '0.5rem' }}
+            style={{ margin: '0.5rem', cursor: 'pointer' }}
           />
         ))
       )}
