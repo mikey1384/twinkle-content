@@ -6,13 +6,19 @@ import StartScreen from './StartScreen';
 import SelectFromArchive from './SelectFromArchive';
 
 AddPictureModal.propTypes = {
+  maxNumSelectable: PropTypes.number.isRequired,
   onConfirm: PropTypes.func.isRequired,
   onHide: PropTypes.func.isRequired
 };
 
-export default function AddPictureModal({ onConfirm, onHide }) {
+export default function AddPictureModal({
+  maxNumSelectable,
+  onConfirm,
+  onHide
+}) {
   const [section, setSection] = useState('start');
-  const [selected, setSelected] = useState(null);
+  const [selectedPictureIds, setSelectedPictureIds] = useState([]);
+
   return (
     <Modal large={section === 'archive'} onHide={onHide}>
       <header>
@@ -22,7 +28,12 @@ export default function AddPictureModal({ onConfirm, onHide }) {
         {section === 'start' && (
           <StartScreen navigateTo={setSection} onHide={onHide} />
         )}
-        {section === 'archive' && <SelectFromArchive />}
+        {section === 'archive' && (
+          <SelectFromArchive
+            selectedPictureIds={selectedPictureIds}
+            onSetSelectedPictureIds={setSelectedPictureIds}
+          />
+        )}
       </main>
       <footer>
         <Button
@@ -32,7 +43,7 @@ export default function AddPictureModal({ onConfirm, onHide }) {
               ? onHide
               : () => {
                   setSection('start');
-                  setSelected(null);
+                  setSelectedPictureIds([]);
                 }
           }
         >
@@ -40,12 +51,17 @@ export default function AddPictureModal({ onConfirm, onHide }) {
         </Button>
         {section !== 'start' && (
           <Button
-            disabled={!selected}
+            disabled={
+              selectedPictureIds.length === 0 ||
+              selectedPictureIds.length > maxNumSelectable
+            }
             color="blue"
             style={{ marginLeft: '0.7rem' }}
-            onClick={() => onConfirm(selected)}
+            onClick={() => onConfirm(selectedPictureIds)}
           >
-            Confirm
+            {selectedPictureIds.length > maxNumSelectable
+              ? `Cannot select more than ${maxNumSelectable}`
+              : 'Confirm'}
           </Button>
         )}
       </footer>

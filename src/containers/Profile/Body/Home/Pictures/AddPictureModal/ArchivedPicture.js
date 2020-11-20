@@ -31,6 +31,10 @@ export default function ArchivedPicture({
     return picture?.src ? `${cloudFrontURL}${picture?.src}` : '';
   }, [picture]);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
+  const isSelected = useMemo(() => selectedPictureIds.includes(picture.id), [
+    picture.id,
+    selectedPictureIds
+  ]);
   const width = 25;
 
   return (
@@ -43,10 +47,8 @@ export default function ArchivedPicture({
       style={{
         ...style,
         borderRadius,
-        boxShadow: selectedPictureIds.includes(picture.id)
-          ? `0 0 5px ${Color[profileTheme](0.8)}`
-          : '',
-        border: selectedPictureIds.includes(picture.id)
+        boxShadow: isSelected ? `0 0 5px ${Color[profileTheme](0.8)}` : '',
+        border: isSelected
           ? `5px solid ${Color[profileTheme](0.8)}`
           : `1px solid ${Color.borderGray()}`
       }}
@@ -54,9 +56,7 @@ export default function ArchivedPicture({
       <img
         onClick={() => onSelect(picture.id)}
         style={{
-          borderRadius: selectedPictureIds.includes(picture.id)
-            ? 0
-            : innerBorderRadius,
+          borderRadius: isSelected ? 0 : innerBorderRadius,
           position: 'absolute',
           top: 0,
           bottom: 0,
@@ -69,24 +69,26 @@ export default function ArchivedPicture({
         }}
         src={imageUrl}
       />
-      <div
-        onClick={() => setConfirmModalShown(true)}
-        style={{
-          cursor: 'pointer',
-          position: 'absolute',
-          width: 'CALC(2rem + 8px)',
-          height: 'CALC(2rem + 8px)',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          top: 3,
-          right: 3,
-          background: Color.black(),
-          borderRadius: '50%'
-        }}
-      >
-        <Icon style={{ color: '#fff', fontSize: '2rem' }} icon="times" />
-      </div>
+      {!isSelected && (
+        <div
+          onClick={() => setConfirmModalShown(true)}
+          style={{
+            cursor: 'pointer',
+            position: 'absolute',
+            width: 'CALC(2rem + 8px)',
+            height: 'CALC(2rem + 8px)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            top: 3,
+            right: 3,
+            background: Color.black(),
+            borderRadius: '50%'
+          }}
+        >
+          <Icon style={{ color: '#fff', fontSize: '2rem' }} icon="times" />
+        </div>
+      )}
       {confirmModalShown && (
         <ConfirmModal
           modalOverModal

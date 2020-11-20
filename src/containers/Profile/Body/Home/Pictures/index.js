@@ -171,6 +171,7 @@ export default function Pictures({
         <AddPictureModal
           onHide={() => setAddPictureModalShown(false)}
           onConfirm={() => console.log('confirmed')}
+          maxNumSelectable={numFrames - pictures.length}
         />
       )}
     </ErrorBoundary>
