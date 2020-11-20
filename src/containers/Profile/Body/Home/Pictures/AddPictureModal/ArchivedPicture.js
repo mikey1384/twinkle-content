@@ -1,6 +1,7 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
+import ConfirmModal from 'components/Modals/ConfirmModal';
 import { css } from 'emotion';
 import { cloudFrontURL } from 'constants/defaultValues';
 import { Color, borderRadius, innerBorderRadius } from 'constants/css';
@@ -8,16 +9,22 @@ import { useAppContext } from 'contexts';
 
 ArchivedPicture.propTypes = {
   picture: PropTypes.object.isRequired,
+  onDeleteArchivedPicture: PropTypes.func.isRequired,
   style: PropTypes.object
 };
 
-export default function ArchivedPicture({ picture, style }) {
+export default function ArchivedPicture({
+  picture,
+  style,
+  onDeleteArchivedPicture
+}) {
   const {
     requestHelpers: { deleteArchivedPicture }
   } = useAppContext();
   const imageUrl = useMemo(() => {
     return picture?.src ? `${cloudFrontURL}${picture?.src}` : '';
   }, [picture]);
+  const [confirmModalShown, setConfirmModalShown] = useState(false);
   const width = 25;
 
   return (
@@ -48,7 +55,7 @@ export default function ArchivedPicture({ picture, style }) {
         src={imageUrl}
       />
       <div
-        onClick={handleImageDelete}
+        onClick={() => setConfirmModalShown(true)}
         style={{
           cursor: 'pointer',
           position: 'absolute',
@@ -65,6 +72,14 @@ export default function ArchivedPicture({ picture, style }) {
       >
         <Icon style={{ color: '#fff', fontSize: '2rem' }} icon="times" />
       </div>
+      {confirmModalShown && (
+        <ConfirmModal
+          modalOverModal
+          onHide={() => setConfirmModalShown(false)}
+          title="Permanently Delete Picture"
+          onConfirm={handleImageDelete}
+        />
+      )}
     </div>
   );
 
@@ -74,5 +89,6 @@ export default function ArchivedPicture({ picture, style }) {
 
   async function handleImageDelete() {
     await deleteArchivedPicture(picture.id);
+    onDeleteArchivedPicture(picture.id);
   }
 }

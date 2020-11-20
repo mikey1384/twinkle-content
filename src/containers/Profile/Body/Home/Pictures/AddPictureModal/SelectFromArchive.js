@@ -49,6 +49,11 @@ export default function SelectFromArchive() {
         pictures.map((picture) => (
           <ArchivedPicture
             key={picture.id}
+            onDeleteArchivedPicture={(pictureId) =>
+              setPictures((pictures) =>
+                pictures.filter((picture) => picture.id !== pictureId)
+              )
+            }
             picture={picture}
             style={{ margin: '0.5rem', cursor: 'pointer' }}
           />
