@@ -36,8 +36,8 @@ export default function Pictures({
   const {
     actions: { onUpdateProfileInfo }
   } = useContentContext();
-  const addPicturesButtonShown = useMemo(() => {
-    return pictures.length < numFrames;
+  const addPictureButtonDisabled = useMemo(() => {
+    return pictures.length >= numFrames;
   }, [numFrames, pictures.length]);
   useEffect(() => {
     setRemainingPictures(pictures);
@@ -64,18 +64,17 @@ export default function Pictures({
       </div>
     ) : (
       <div style={{ display: 'flex' }}>
-        {addPicturesButtonShown && (
-          <Button
-            color="darkerGray"
-            skeuomorphic
-            onClick={() => setAddPictureModalShown(true)}
-          >
-            <Icon icon="plus" />
-            <span style={{ marginLeft: '0.7rem' }}>
-              Add Picture ({pictures.length}/{numFrames})
-            </span>
-          </Button>
-        )}
+        <Button
+          disabled={addPictureButtonDisabled}
+          color="darkerGray"
+          skeuomorphic
+          onClick={() => setAddPictureModalShown(true)}
+        >
+          <Icon icon="plus" />
+          <span style={{ marginLeft: '0.7rem' }}>
+            Add Picture ({pictures.length}/{numFrames})
+          </span>
+        </Button>
         <DropdownButton
           skeuomorphic
           icon="ellipsis-h"
