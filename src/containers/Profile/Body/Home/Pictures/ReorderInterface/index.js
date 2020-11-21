@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Picture from './Picture';
+import { isMobile, objectify } from 'helpers';
+import { DndProvider } from 'react-dnd';
+import { TouchBackend } from 'react-dnd-touch-backend';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
+const Backend = isMobile(navigator) ? TouchBackend : HTML5Backend;
 
 ReorderInterface.propTypes = {
   numPictures: PropTypes.number.isRequired,
@@ -16,26 +22,35 @@ export default function ReorderInterface({
   reorderedPictureIds,
   onSetReorderedPictureIds
 }) {
-  console.log(reorderedPictureIds, onSetReorderedPictureIds);
+  const pictureObj = useMemo(() => {
+    return objectify(pictures);
+  }, [pictures]);
+
   return (
     <ErrorBoundary>
-      <div
-        style={{
-          width: '100%',
-          height: 'auto',
-          display: 'flex',
-          justifyContent: 'center'
-        }}
-      >
-        {pictures.map((picture, index) => (
-          <Picture
-            key={picture.id}
-            numPictures={numPictures}
-            picture={picture}
-            style={{ marginLeft: index === 0 ? 0 : '1rem' }}
-          />
-        ))}
-      </div>
+      <DndProvider backend={Backend}>
+        <div
+          style={{
+            width: '100%',
+            height: 'auto',
+            display: 'flex',
+            justifyContent: 'center'
+          }}
+        >
+          {reorderedPictureIds.map((pictureId, index) => (
+            <Picture
+              key={pictureId}
+              numPictures={numPictures}
+              picture={pictureObj[pictureId]}
+              style={{ marginLeft: index === 0 ? 0 : '1rem' }}
+              onMove={({ sourceId, targetId }) => {
+                console.log(sourceId, targetId);
+                onSetReorderedPictureIds(reorderedPictureIds);
+              }}
+            />
+          ))}
+        </div>
+      </DndProvider>
     </ErrorBoundary>
   );
 }

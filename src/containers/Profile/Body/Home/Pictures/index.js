@@ -43,6 +43,7 @@ export default function Pictures({
     return pictures.length >= numFrames;
   }, [numFrames, pictures.length]);
   useEffect(() => {
+    setReorderedPictureIds(pictures.map((picture) => picture.id));
     setRemainingPictures(pictures);
   }, [pictures]);
 
