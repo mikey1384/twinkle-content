@@ -1,15 +1,13 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import AlertModal from 'components/Modals/AlertModal';
 import ErrorBoundary from 'components/ErrorBoundary';
+import ImageEditModal from 'components/Modals/ImageEditModal';
 import { isMobile } from 'helpers';
 import { Color } from 'constants/css';
-import { useMyState } from 'helpers/hooks';
-import { getFileInfoFromFileName } from 'helpers/stringHelpers';
-import { useInputContext } from 'contexts';
-import { mb, returnMaxUploadSize } from 'constants/defaultValues';
+import { MAX_PROFILE_PIC_SIZE } from 'constants/defaultValues';
 
 StartScreen.propTypes = {
   navigateTo: PropTypes.func.isRequired,
@@ -17,15 +15,10 @@ StartScreen.propTypes = {
 };
 
 export default function StartScreen({ navigateTo, onHide }) {
-  const {
-    actions: { onSetSubjectAttachment }
-  } = useInputContext();
-  const { fileUploadLvl } = useMyState();
   const [alertModalShown, setAlertModalShown] = useState(false);
+  const [imageEditModalShown, setImageEditModalShown] = useState(false);
+  const [imageUri, setImageUri] = useState('');
   const FileInputRef = useRef(null);
-  const maxSize = useMemo(() => returnMaxUploadSize(fileUploadLvl), [
-    fileUploadLvl
-  ]);
 
   return (
     <ErrorBoundary style={{ display: 'flex', width: '100%' }}>
@@ -106,68 +99,45 @@ export default function StartScreen({ navigateTo, onHide }) {
         ref={FileInputRef}
         style={{ display: 'none' }}
         type="file"
-        onChange={handleUpload}
+        onChange={handlePicture}
       />
       {alertModalShown && (
         <AlertModal
-          title="File is too large"
-          content={`The file size is larger than your limit of ${
-            maxSize / mb
-          } MB`}
+          title="Image is too large (limit: 10mb)"
+          content="Please select a smaller image"
           onHide={() => setAlertModalShown(false)}
+        />
+      )}
+      {imageEditModalShown && (
+        <ImageEditModal
+          isProfilePic
+          imageUri={imageUri}
+          onEditDone={handleImageEditDone}
+          onHide={() => {
+            setImageUri(null);
+            setImageEditModalShown(false);
+          }}
         />
       )}
     </ErrorBoundary>
   );
 
-  function handleUpload(event) {
-    const fileObj = event.target.files[0];
-    if (fileObj.size / mb > maxSize) {
+  function handleImageEditDone() {
+    onHide();
+  }
+
+  function handlePicture(event) {
+    const reader = new FileReader();
+    const file = event.target.files[0];
+    if (file.size / 1000 > MAX_PROFILE_PIC_SIZE) {
       return setAlertModalShown(true);
     }
-    const { fileType } = getFileInfoFromFileName(fileObj.name);
-    if (fileType === 'image') {
-      const reader = new FileReader();
-      reader.onload = (upload) => {
-        const payload = upload.target.result;
-        if (fileObj.name.split('.')[1] === 'gif') {
-          onSetSubjectAttachment({
-            file: fileObj,
-            contentType: 'file',
-            fileType,
-            imageUrl: payload
-          });
-          onHide();
-        } else {
-          window.loadImage(
-            payload,
-            function (img) {
-              const imageUrl = img.toDataURL('image/jpeg');
-              const dataUri = imageUrl.replace(/^data:image\/\w+;base64,/, '');
-              const buffer = Buffer.from(dataUri, 'base64');
-              const file = new File([buffer], fileObj.name);
+    reader.onload = (upload) => {
+      setImageEditModalShown(true);
+      setImageUri(upload.target.result);
+    };
 
-              onSetSubjectAttachment({
-                file,
-                contentType: 'file',
-                fileType,
-                imageUrl
-              });
-              onHide();
-            },
-            { orientation: true, canvas: true }
-          );
-        }
-      };
-      reader.readAsDataURL(fileObj);
-    } else {
-      onSetSubjectAttachment({
-        file: fileObj,
-        contentType: 'file',
-        fileType
-      });
-      onHide();
-    }
+    reader.readAsDataURL(file);
     event.target.value = null;
   }
 }
