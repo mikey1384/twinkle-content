@@ -88,7 +88,8 @@ function ProfilePanel({ expandable, profileId }) {
       onSetPlaceholderHeight,
       onSetVisible,
       onUpdateStatusMsg,
-      onUpdateBio
+      onUpdateBio,
+      onUploadProfilePic
     }
   } = useContentContext();
 
@@ -455,6 +456,7 @@ function ProfilePanel({ expandable, profileId }) {
                     <ImageEditModal
                       isProfilePic
                       imageUri={imageUri}
+                      onEditDone={handleImageEditDone}
                       onHide={() => {
                         setImageUri(undefined);
                         setImageEditModalShown(false);
@@ -506,6 +508,10 @@ function ProfilePanel({ expandable, profileId }) {
       </div>
     </div>
   );
+
+  function handleImageEditDone(filePath) {
+    onUploadProfilePic({ userId, imageUrl: `/profile/${filePath}` });
+  }
 
   function handlePicture(event) {
     const reader = new FileReader();

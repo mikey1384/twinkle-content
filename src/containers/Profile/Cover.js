@@ -40,7 +40,7 @@ export default function Cover({
     userType
   } = profile;
   const {
-    actions: { onSetOnline }
+    actions: { onSetOnline, onUploadProfilePic }
   } = useContentContext();
   const [alertModalShown, setAlertModalShown] = useState(false);
   const [colorSelectorShown, setColorSelectorShown] = useState(false);
@@ -177,7 +177,7 @@ export default function Cover({
                     style={{ fontSize: '1.2rem', marginRight: '1rem' }}
                     skeuomorphic
                     color="darkerGray"
-                    onClick={onColorSelectCancel}
+                    onClick={handleColorSelectCancel}
                   >
                     Cancel
                   </Button>
@@ -232,6 +232,7 @@ export default function Cover({
         <ImageEditModal
           isProfilePic
           imageUri={imageUri}
+          onEditDone={handleImageEditDone}
           onHide={() => {
             setImageUri(null);
             setImageEditModalShown(false);
@@ -248,9 +249,13 @@ export default function Cover({
     </ErrorBoundary>
   );
 
-  function onColorSelectCancel() {
+  function handleColorSelectCancel() {
     onSelectTheme(profileTheme || 'logoBlue');
     setColorSelectorShown(false);
+  }
+
+  function handleImageEditDone(filePath) {
+    onUploadProfilePic({ userId, imageUrl: `/profile/${filePath}` });
   }
 
   async function handleSetTheme() {

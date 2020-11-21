@@ -28,7 +28,7 @@ export default function MobileMenu({ location, history, onClose }) {
     actions: { onResetChat }
   } = useChatContext();
   const {
-    actions: { onSetOnline }
+    actions: { onUploadProfilePic, onSetOnline }
   } = useContentContext();
   const { username, userId } = useMyState();
   const [marginLeft, setMarginLeft] = useState('-100%');
@@ -128,6 +128,7 @@ export default function MobileMenu({ location, history, onClose }) {
         <ImageEditModal
           isProfilePic
           imageUri={imageUri}
+          onEditDone={handleImageEditDone}
           onHide={() =>
             setImageEditStatus({
               imageUri: null,
@@ -145,6 +146,10 @@ export default function MobileMenu({ location, history, onClose }) {
       )}
     </ErrorBoundary>
   );
+
+  function handleImageEditDone(filePath) {
+    onUploadProfilePic({ userId, imageUrl: `/profile/${filePath}` });
+  }
 
   function handleLogout() {
     onLogout();

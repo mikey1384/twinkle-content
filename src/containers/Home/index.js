@@ -11,6 +11,8 @@ import Store from './Store';
 import Stories from './Stories';
 import LocalContext from './Context';
 import { Route, Switch } from 'react-router-dom';
+import { useContentContext } from 'contexts';
+import { useMyState } from 'helpers/hooks';
 import { container, Left, Center, Right } from './Styles';
 
 Home.propTypes = {
@@ -20,6 +22,10 @@ Home.propTypes = {
 };
 
 function Home({ history, location, onFileUpload }) {
+  const { userId } = useMyState();
+  const {
+    actions: { onUploadProfilePic }
+  } = useContentContext();
   const [alertModalShown, setAlertModalShown] = useState(false);
   const [imageEditModalShown, setImageEditModalShown] = useState(false);
   const [imageUri, setImageUri] = useState(null);
@@ -76,6 +82,7 @@ function Home({ history, location, onFileUpload }) {
             <ImageEditModal
               isProfilePic
               imageUri={imageUri}
+              onEditDone={handleImageEditDone}
               onHide={() => {
                 setImageUri(null);
                 setImageEditModalShown(false);
@@ -93,6 +100,10 @@ function Home({ history, location, onFileUpload }) {
       </LocalContext.Provider>
     </ErrorBoundary>
   );
+
+  function handleImageEditDone(filePath) {
+    onUploadProfilePic({ userId, imageUrl: `/profile/${filePath}` });
+  }
 }
 
 export default memo(Home);

@@ -9,21 +9,24 @@ import Loading from 'components/Loading';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
 import { v1 as uuidv1 } from 'uuid';
 import { useMyState } from 'helpers/hooks';
-import { useAppContext, useContentContext } from 'contexts';
+import { useAppContext } from 'contexts';
 
 ImageEditModal.propTypes = {
   imageUri: PropTypes.string,
   isProfilePic: PropTypes.bool,
+  onEditDone: PropTypes.func.isRequired,
   onHide: PropTypes.func.isRequired
 };
 
-export default function ImageEditModal({ isProfilePic, onHide, imageUri }) {
+export default function ImageEditModal({
+  isProfilePic,
+  onEditDone,
+  onHide,
+  imageUri
+}) {
   const {
     requestHelpers: { uploadFile, uploadUserPic }
   } = useAppContext();
-  const {
-    actions: { onUploadProfilePic }
-  } = useContentContext();
   const { userId } = useMyState();
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(null);
@@ -163,7 +166,7 @@ export default function ImageEditModal({ isProfilePic, onHide, imageUri }) {
       src: `/profile/${filePath}`,
       isProfilePic
     });
-    onUploadProfilePic({ userId, imageUrl: `/profile/${filePath}` });
+    onEditDone(filePath);
     setUploadComplete(true);
     setProcessing(false);
     setTimeout(() => onHide(), 500);
