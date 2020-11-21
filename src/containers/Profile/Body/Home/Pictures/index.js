@@ -12,6 +12,7 @@ import { useAppContext, useContentContext } from 'contexts';
 import { css } from 'emotion';
 import { useMyState } from 'helpers/hooks';
 import ErrorBoundary from 'components/ErrorBoundary';
+import ReorderInterface from './ReorderInterface';
 
 Pictures.propTypes = {
   numFrames: PropTypes.number,
@@ -171,7 +172,7 @@ export default function Pictures({
                 onSetRemainingPictures={setRemainingPictures}
               />
             ) : reorderMode ? (
-              <div>ReorderMode on</div>
+              <ReorderInterface />
             ) : pictures.length > 2 ? (
               <Carousel
                 className={css`
