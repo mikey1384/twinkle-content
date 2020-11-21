@@ -73,7 +73,7 @@ export default function ImageEditModal({ onHide, imageUri }) {
                 keepSelection
                 ruleOfThirds
                 onImageLoaded={(image) => (ImageRef.current = image)}
-                onChange={(newCrop) => setCrop(newCrop)}
+                onChange={setCrop}
                 onComplete={handleCropComplete}
                 imageStyle={{
                   objectFit: 'contain',
