@@ -44,8 +44,12 @@ export default function ReorderInterface({
               picture={pictureObj[pictureId]}
               style={{ marginLeft: index === 0 ? 0 : '1rem' }}
               onMove={({ sourceId, targetId }) => {
-                console.log(sourceId, targetId);
-                onSetReorderedPictureIds(reorderedPictureIds);
+                const sourceIndex = reorderedPictureIds.indexOf(sourceId);
+                const targetIndex = reorderedPictureIds.indexOf(targetId);
+                const newReorderedPictureIds = [...reorderedPictureIds];
+                newReorderedPictureIds.splice(sourceIndex, 1);
+                newReorderedPictureIds.splice(targetIndex, 0, sourceId);
+                onSetReorderedPictureIds(newReorderedPictureIds);
               }}
             />
           ))}

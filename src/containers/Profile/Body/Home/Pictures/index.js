@@ -8,6 +8,7 @@ import Frame from './Frame';
 import Icon from 'components/Icon';
 import DeleteInterface from './DeleteInterface';
 import AddPictureModal from './AddPictureModal';
+import { objectify } from 'helpers';
 import { useAppContext, useContentContext } from 'contexts';
 import { css } from 'emotion';
 import { useMyState } from 'helpers/hooks';
@@ -34,7 +35,11 @@ export default function Pictures({
   const [reorderedPictureIds, setReorderedPictureIds] = useState([]);
   const [remainingPictures, setRemainingPictures] = useState(pictures);
   const {
-    requestHelpers: { deleteProfilePictures, updateUserPictures }
+    requestHelpers: {
+      deleteProfilePictures,
+      reorderProfilePictures,
+      updateUserPictures
+    }
   } = useAppContext();
   const {
     actions: { onUpdateProfileInfo }
@@ -120,6 +125,7 @@ export default function Pictures({
 
     function handlePictureReorderCancel() {
       setReorderMode(false);
+      setReorderedPictureIds(pictures.map((picture) => picture.id));
     }
 
     function handleConfirm() {
@@ -139,11 +145,28 @@ export default function Pictures({
     }
 
     async function handlePictureReorderConfirm() {
+      const success = await reorderProfilePictures(reorderedPictureIds);
+      if (success) {
+        const pictureObj = objectify(pictures);
+        onUpdateProfileInfo({
+          userId: profileId,
+          pictures: reorderedPictureIds.map(
+            (pictureId) => pictureObj[pictureId]
+          )
+        });
+      }
       setReorderMode(false);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deleteMode, reorderMode, numFrames, pictures, remainingPictures]);
+  }, [
+    deleteMode,
+    reorderMode,
+    numFrames,
+    pictures,
+    remainingPictures,
+    reorderedPictureIds
+  ]);
 
   return (
     <ErrorBoundary>

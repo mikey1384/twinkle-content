@@ -336,6 +336,20 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
+    async reorderProfilePictures(reorderedPictureIds) {
+      try {
+        const {
+          data: { success }
+        } = await request.put(
+          `${URL}/user/picture/reorder`,
+          { reorderedPictureIds },
+          auth()
+        );
+        return Promise.resolve(success);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async rewardUser({
       maxRewardAmountForOnePerson,
       explanation,
