@@ -4,14 +4,14 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import Picture from './Picture';
 
 DeleteInterface.propTypes = {
-  pictures: PropTypes.array.isRequired,
+  numPictures: PropTypes.number.isRequired,
   remainingPictures: PropTypes.array.isRequired,
   onSetRemainingPictures: PropTypes.func.isRequired
 };
 
 export default function DeleteInterface({
   remainingPictures,
-  pictures,
+  numPictures,
   onSetRemainingPictures
 }) {
   return (
@@ -32,7 +32,7 @@ export default function DeleteInterface({
                 pictures.filter((picture) => picture.id !== pictureId)
               )
             }
-            numPictures={pictures.length}
+            numPictures={numPictures}
             picture={picture}
             style={{ marginLeft: index === 0 ? 0 : '1rem' }}
           />

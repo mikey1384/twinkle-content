@@ -31,6 +31,7 @@ export default function Pictures({
   const [addPictureModalShown, setAddPictureModalShown] = useState(false);
   const [reorderMode, setReorderMode] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
+  const [reorderedPictureIds, setReorderedPictureIds] = useState([]);
   const [remainingPictures, setRemainingPictures] = useState(pictures);
   const {
     requestHelpers: { deleteProfilePictures, updateUserPictures }
@@ -168,11 +169,16 @@ export default function Pictures({
             {deleteMode ? (
               <DeleteInterface
                 remainingPictures={remainingPictures}
-                pictures={pictures}
+                numPictures={pictures.length}
                 onSetRemainingPictures={setRemainingPictures}
               />
             ) : reorderMode ? (
-              <ReorderInterface />
+              <ReorderInterface
+                reorderedPictureIds={reorderedPictureIds}
+                pictures={pictures}
+                numPictures={pictures.length}
+                onSetReorderedPictureIds={setReorderedPictureIds}
+              />
             ) : pictures.length > 2 ? (
               <Carousel
                 className={css`
