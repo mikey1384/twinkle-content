@@ -28,6 +28,7 @@ export default function Pictures({
 }) {
   const { userId } = useMyState();
   const [addPictureModalShown, setAddPictureModalShown] = useState(false);
+  const [reorderMode, setReorderMode] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
   const [remainingPictures, setRemainingPictures] = useState(pictures);
   const {
@@ -45,19 +46,15 @@ export default function Pictures({
 
   const menuButtons = useMemo(() => {
     if (userId !== profileId) return null;
-    return deleteMode ? (
+    return deleteMode || reorderMode ? (
       <div style={{ display: 'flex' }}>
-        <Button
-          color="vantaBlack"
-          transparent
-          onClick={handlePictureDeleteCancel}
-        >
+        <Button color="vantaBlack" transparent onClick={handleCancel}>
           Cancel
         </Button>
         <Button
           skeuomorphic
           style={{ marginLeft: '1rem' }}
-          onClick={handlePictureDeleteConfirm}
+          onClick={handleConfirm}
         >
           Save
         </Button>
@@ -89,7 +86,7 @@ export default function Pictures({
                   <span style={{ marginLeft: '1rem' }}>Reorder</span>
                 </>
               ),
-              onClick: () => console.log('edit')
+              onClick: () => setReorderMode(true)
             },
             {
               label: (
@@ -104,10 +101,32 @@ export default function Pictures({
         />
       </div>
     );
+
+    function handleCancel() {
+      if (deleteMode) {
+        handlePictureDeleteCancel();
+      } else {
+        handlePictureReorderCancel();
+      }
+    }
+
     function handlePictureDeleteCancel() {
       setDeleteMode(false);
       setRemainingPictures(pictures);
     }
+
+    function handlePictureReorderCancel() {
+      setReorderMode(false);
+    }
+
+    function handleConfirm() {
+      if (deleteMode) {
+        handlePictureDeleteConfirm();
+      } else {
+        handlePictureReorderConfirm();
+      }
+    }
+
     async function handlePictureDeleteConfirm() {
       const success = await deleteProfilePictures(remainingPictures);
       if (success) {
@@ -115,8 +134,13 @@ export default function Pictures({
       }
       setDeleteMode(false);
     }
+
+    async function handlePictureReorderConfirm() {
+      setReorderMode(false);
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deleteMode, numFrames, pictures, remainingPictures]);
+  }, [deleteMode, reorderMode, numFrames, pictures, remainingPictures]);
 
   return (
     <ErrorBoundary>
@@ -125,7 +149,13 @@ export default function Pictures({
           button={menuButtons}
           customColorTheme={selectedTheme}
           loaded
-          title={deleteMode ? 'Delete pictures' : 'Pictures'}
+          title={
+            deleteMode
+              ? 'Delete Pictures'
+              : reorderMode
+              ? 'Reorder Pictures'
+              : 'Pictures'
+          }
         >
           <div
             style={{
@@ -140,6 +170,8 @@ export default function Pictures({
                 pictures={pictures}
                 onSetRemainingPictures={setRemainingPictures}
               />
+            ) : reorderMode ? (
+              <div>ReorderMode on</div>
             ) : pictures.length > 2 ? (
               <Carousel
                 className={css`
