@@ -230,6 +230,7 @@ export default function Cover({
       />
       {imageEditModalShown && (
         <ImageEditModal
+          isProfilePic
           imageUri={imageUri}
           onHide={() => {
             setImageUri(null);

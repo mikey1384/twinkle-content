@@ -13,10 +13,11 @@ import { useAppContext, useContentContext } from 'contexts';
 
 ImageEditModal.propTypes = {
   imageUri: PropTypes.string,
+  isProfilePic: PropTypes.bool,
   onHide: PropTypes.func.isRequired
 };
 
-export default function ImageEditModal({ onHide, imageUri }) {
+export default function ImageEditModal({ isProfilePic, onHide, imageUri }) {
   const {
     requestHelpers: { uploadFile, uploadUserPic }
   } = useAppContext();
@@ -160,7 +161,7 @@ export default function ImageEditModal({ onHide, imageUri }) {
     });
     await uploadUserPic({
       src: `/profile/${filePath}`,
-      isProfilePic: true
+      isProfilePic
     });
     onUploadProfilePic({ userId, imageUrl: `/profile/${filePath}` });
     setUploadComplete(true);

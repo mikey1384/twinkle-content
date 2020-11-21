@@ -453,6 +453,7 @@ function ProfilePanel({ expandable, profileId }) {
                   )}
                   {imageEditModalShown && (
                     <ImageEditModal
+                      isProfilePic
                       imageUri={imageUri}
                       onHide={() => {
                         setImageUri(undefined);

@@ -74,6 +74,7 @@ function Home({ history, location, onFileUpload }) {
           <Notification className={Right} location="home" />
           {imageEditModalShown && (
             <ImageEditModal
+              isProfilePic
               imageUri={imageUri}
               onHide={() => {
                 setImageUri(null);

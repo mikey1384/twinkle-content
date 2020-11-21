@@ -28,7 +28,7 @@ export default function MobileMenu({ location, history, onClose }) {
     actions: { onResetChat }
   } = useChatContext();
   const {
-    actions: {onSetOnline}
+    actions: { onSetOnline }
   } = useContentContext();
   const { username, userId } = useMyState();
   const [marginLeft, setMarginLeft] = useState('-100%');
@@ -78,7 +78,7 @@ export default function MobileMenu({ location, history, onClose }) {
         <ProfileWidget
           history={history}
           onShowAlert={() => setAlertModalShown(true)}
-          onLoadImage={upload =>
+          onLoadImage={(upload) =>
             setImageEditStatus({
               ...imageEditStatus,
               imageEditModalShown: true,
@@ -126,6 +126,7 @@ export default function MobileMenu({ location, history, onClose }) {
       </div>
       {imageEditModalShown && (
         <ImageEditModal
+          isProfilePic
           imageUri={imageUri}
           onHide={() =>
             setImageEditStatus({
