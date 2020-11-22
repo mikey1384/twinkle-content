@@ -45,15 +45,15 @@ export default function Pictures({
     actions: { onUpdateProfileInfo }
   } = useContentContext();
   const addPictureButtonDisabled = useMemo(() => {
-    return pictures.length >= numFrames;
-  }, [numFrames, pictures.length]);
+    return pictures?.length >= numFrames;
+  }, [numFrames, pictures]);
   useEffect(() => {
-    setReorderedPictureIds(pictures.map((picture) => picture.id));
+    setReorderedPictureIds(pictures?.map((picture) => picture.id));
     setRemainingPictures(pictures);
   }, [pictures]);
 
   const menuButtons = useMemo(() => {
-    if (userId !== profileId) return null;
+    if (userId !== profileId || !pictures) return null;
     return deleteMode || reorderMode ? (
       <div style={{ display: 'flex' }}>
         <Button color="vantaBlack" transparent onClick={handleCancel}>
@@ -77,7 +77,7 @@ export default function Pictures({
         >
           <Icon icon="plus" />
           <span style={{ marginLeft: '0.7rem' }}>
-            Add Picture ({pictures.length}/{numFrames})
+            Add Picture ({pictures?.length}/{numFrames})
           </span>
         </Button>
         <DropdownButton
