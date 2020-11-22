@@ -161,7 +161,7 @@ export default function Home({ profile, selectedTheme }) {
             display: 'flex',
             minHeight: '10rem',
             width: '100%',
-            marginTop: userId !== profile.id ? '-1.5rem' : 0
+            marginTop: '1rem'
           }}
         >
           <div
