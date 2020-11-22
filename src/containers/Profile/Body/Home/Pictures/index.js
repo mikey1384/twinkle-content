@@ -237,7 +237,10 @@ export default function Pictures({
           </div>
         </SectionPanel>
       ) : (
-        <NoPictures profileId={profileId} />
+        <NoPictures
+          onAddButtonClick={() => setAddPictureModalShown(true)}
+          profileId={profileId}
+        />
       )}
       {addPictureModalShown && (
         <AddPictureModal

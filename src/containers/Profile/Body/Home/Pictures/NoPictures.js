@@ -6,10 +6,11 @@ import Button from 'components/Button';
 import { useMyState } from 'helpers/hooks';
 
 NoPictures.propTypes = {
+  onAddButtonClick: PropTypes.func.isRequired,
   profileId: PropTypes.number.isRequired
 };
 
-export default function NoPictures({ profileId }) {
+export default function NoPictures({ onAddButtonClick, profileId }) {
   const { userId } = useMyState();
 
   return (
@@ -26,7 +27,11 @@ export default function NoPictures({ profileId }) {
             marginBottom: '2rem'
           }}
         >
-          <Button transparent style={{ fontSize: '2rem' }}>
+          <Button
+            onClick={onAddButtonClick}
+            transparent
+            style={{ fontSize: '2rem' }}
+          >
             <Icon icon="plus" />
             <span style={{ marginLeft: '0.7rem' }}>Add Pictures</span>
           </Button>
