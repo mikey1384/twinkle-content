@@ -254,7 +254,7 @@ export default function Cover({
     setColorSelectorShown(false);
   }
 
-  function handleImageEditDone(filePath) {
+  function handleImageEditDone({ filePath }) {
     onUploadProfilePic({ userId, imageUrl: `/profile/${filePath}` });
     setImageEditModalShown(false);
   }

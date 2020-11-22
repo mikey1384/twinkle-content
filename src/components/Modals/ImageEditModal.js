@@ -164,13 +164,13 @@ export default function ImageEditModal({
       file,
       onUploadProgress: handleUploadProgress
     });
-    await uploadUserPic({
+    const pictures = await uploadUserPic({
       src: `/profile/${filePath}`,
       isProfilePic
     });
     setUploadComplete(true);
     setProcessing(false);
-    onEditDone(filePath);
+    onEditDone({ pictures, filePath });
   }
 
   function handleUploadProgress({ loaded, total }) {

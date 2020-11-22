@@ -9,14 +9,16 @@ AddPictureModal.propTypes = {
   currentPictures: PropTypes.array.isRequired,
   maxNumSelectable: PropTypes.number.isRequired,
   onConfirm: PropTypes.func.isRequired,
-  onHide: PropTypes.func.isRequired
+  onHide: PropTypes.func.isRequired,
+  profileId: PropTypes.number.isRequired
 };
 
 export default function AddPictureModal({
   currentPictures,
   maxNumSelectable,
   onConfirm,
-  onHide
+  onHide,
+  profileId
 }) {
   const [section, setSection] = useState('start');
   const [selectedPictureIds, setSelectedPictureIds] = useState([]);
@@ -28,7 +30,11 @@ export default function AddPictureModal({
       </header>
       <main>
         {section === 'start' && (
-          <StartScreen navigateTo={setSection} onHide={onHide} />
+          <StartScreen
+            profileId={profileId}
+            navigateTo={setSection}
+            onHide={onHide}
+          />
         )}
         {section === 'archive' && (
           <SelectFromArchive

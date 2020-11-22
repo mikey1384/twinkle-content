@@ -147,7 +147,7 @@ export default function MobileMenu({ location, history, onClose }) {
     </ErrorBoundary>
   );
 
-  function handleImageEditDone(filePath) {
+  function handleImageEditDone({ filePath }) {
     onUploadProfilePic({ userId, imageUrl: `/profile/${filePath}` });
     setImageEditStatus({
       imageUri: null,

@@ -246,6 +246,7 @@ export default function Pictures({
         <AddPictureModal
           onHide={() => setAddPictureModalShown(false)}
           onConfirm={handleAddPictures}
+          profileId={profileId}
           currentPictures={pictures}
           maxNumSelectable={numFrames - (pictures?.length ?? 0)}
         />

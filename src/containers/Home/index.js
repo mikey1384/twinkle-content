@@ -101,7 +101,7 @@ function Home({ history, location, onFileUpload }) {
     </ErrorBoundary>
   );
 
-  function handleImageEditDone(filePath) {
+  function handleImageEditDone({ filePath }) {
     onUploadProfilePic({ userId, imageUrl: `/profile/${filePath}` });
     setImageEditModalShown(false);
   }

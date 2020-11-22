@@ -545,12 +545,14 @@ export default function userRequestHelpers({ auth, handleError, token }) {
     },
     async uploadUserPic({ src, isProfilePic }) {
       try {
-        const { data } = await request.post(
+        const {
+          data: { pictures }
+        } = await request.post(
           `${URL}/user/picture`,
           { src, isProfilePic },
           auth()
         );
-        return Promise.resolve(data);
+        return Promise.resolve(pictures);
       } catch (error) {
         return handleError(error);
       }

@@ -509,7 +509,7 @@ function ProfilePanel({ expandable, profileId }) {
     </div>
   );
 
-  function handleImageEditDone(filePath) {
+  function handleImageEditDone({ filePath }) {
     onUploadProfilePic({ userId, imageUrl: `/profile/${filePath}` });
     setImageEditModalShown(false);
   }
