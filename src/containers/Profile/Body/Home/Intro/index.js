@@ -100,7 +100,7 @@ export default function Intro({ profile, selectedTheme }) {
             display: 'flex',
             minHeight: '10rem',
             width: '100%',
-            marginTop: userId !== profile.id ? '-1.5rem' : 0
+            marginTop: '1rem'
           }}
         >
           <div
@@ -210,17 +210,8 @@ export default function Intro({ profile, selectedTheme }) {
               profileTheme={profileTheme}
               className={css`
                 font-size: 1.7rem;
-                margin-top: ${(!greeting || greeting.length) < 50
-                  ? userId === profile.id
-                    ? '-5rem'
-                    : '-2rem'
-                  : 0};
                 @media (max-width: ${mobileMaxWidth}) {
                   font-size: 1.5rem;
-                  margin-top: ${(!greeting || greeting.length) < 20 &&
-                  userId === profile.id
-                    ? '-6rem'
-                    : '-3rem'};
                 }
               `}
               style={{
