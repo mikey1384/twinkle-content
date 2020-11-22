@@ -256,6 +256,7 @@ export default function Cover({
 
   function handleImageEditDone(filePath) {
     onUploadProfilePic({ userId, imageUrl: `/profile/${filePath}` });
+    setImageEditModalShown(false);
   }
 
   async function handleSetTheme() {

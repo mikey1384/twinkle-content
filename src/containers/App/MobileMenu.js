@@ -149,6 +149,10 @@ export default function MobileMenu({ location, history, onClose }) {
 
   function handleImageEditDone(filePath) {
     onUploadProfilePic({ userId, imageUrl: `/profile/${filePath}` });
+    setImageEditStatus({
+      imageUri: null,
+      imageEditModalShown: false
+    });
   }
 
   function handleLogout() {

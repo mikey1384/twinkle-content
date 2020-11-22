@@ -17,7 +17,7 @@ StartScreen.propTypes = {
 export default function StartScreen({ navigateTo, onHide }) {
   const [alertModalShown, setAlertModalShown] = useState(false);
   const [imageEditModalShown, setImageEditModalShown] = useState(false);
-  const [imageUri, setImageUri] = useState('');
+  const [imageUri, setImageUri] = useState(null);
   const FileInputRef = useRef(null);
 
   return (
@@ -110,7 +110,7 @@ export default function StartScreen({ navigateTo, onHide }) {
       )}
       {imageEditModalShown && (
         <ImageEditModal
-          isProfilePic
+          modalOverModal
           imageUri={imageUri}
           onEditDone={handleImageEditDone}
           onHide={() => {
@@ -123,6 +123,7 @@ export default function StartScreen({ navigateTo, onHide }) {
   );
 
   function handleImageEditDone() {
+    console.log('done');
     onHide();
   }
 

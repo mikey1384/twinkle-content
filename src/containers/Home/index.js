@@ -103,6 +103,7 @@ function Home({ history, location, onFileUpload }) {
 
   function handleImageEditDone(filePath) {
     onUploadProfilePic({ userId, imageUrl: `/profile/${filePath}` });
+    setImageEditModalShown(false);
   }
 }
 

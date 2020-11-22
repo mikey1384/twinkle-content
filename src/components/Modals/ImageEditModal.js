@@ -14,12 +14,14 @@ import { useAppContext } from 'contexts';
 ImageEditModal.propTypes = {
   imageUri: PropTypes.string,
   isProfilePic: PropTypes.bool,
+  modalOverModal: PropTypes.bool,
   onEditDone: PropTypes.func.isRequired,
   onHide: PropTypes.func.isRequired
 };
 
 export default function ImageEditModal({
   isProfilePic,
+  modalOverModal,
   onEditDone,
   onHide,
   imageUri
@@ -56,7 +58,7 @@ export default function ImageEditModal({
   }, [imageUri]);
 
   return (
-    <Modal onHide={onHide}>
+    <Modal modalOverModal={modalOverModal} onHide={onHide}>
       <ErrorBoundary>
         <header>Edit your picture</header>
         <main>
@@ -166,10 +168,9 @@ export default function ImageEditModal({
       src: `/profile/${filePath}`,
       isProfilePic
     });
-    onEditDone(filePath);
     setUploadComplete(true);
     setProcessing(false);
-    setTimeout(() => onHide(), 500);
+    onEditDone(filePath);
   }
 
   function handleUploadProgress({ loaded, total }) {
