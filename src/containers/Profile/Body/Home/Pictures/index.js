@@ -237,7 +237,7 @@ export default function Pictures({
           </div>
         </SectionPanel>
       ) : (
-        <NoPictures />
+        <NoPictures profileId={profileId} />
       )}
       {addPictureModalShown && (
         <AddPictureModal
