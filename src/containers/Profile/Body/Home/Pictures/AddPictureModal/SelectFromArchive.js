@@ -58,6 +58,8 @@ export default function SelectFromArchive({
     >
       {loading ? (
         <Loading style={{ height: '10rem' }} />
+      ) : pictures.length === 0 ? (
+        <div style={{ fontSize: '2rem' }}>Your picture archive is empty</div>
       ) : (
         pictures.map((picture) => (
           <ArchivedPicture

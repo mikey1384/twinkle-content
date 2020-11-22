@@ -247,7 +247,7 @@ export default function Pictures({
           onHide={() => setAddPictureModalShown(false)}
           onConfirm={handleAddPictures}
           currentPictures={pictures}
-          maxNumSelectable={numFrames - pictures.length}
+          maxNumSelectable={numFrames - (pictures?.length ?? 0)}
         />
       )}
     </ErrorBoundary>
