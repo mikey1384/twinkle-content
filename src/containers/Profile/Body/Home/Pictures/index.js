@@ -236,7 +236,7 @@ export default function Pictures({
           </div>
         </SectionPanel>
       ) : (
-        <div>No Pictures</div>
+        <div>No Pictures!!!</div>
       )}
       {addPictureModalShown && (
         <AddPictureModal
