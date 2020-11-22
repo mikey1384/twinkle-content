@@ -14,6 +14,7 @@ import { css } from 'emotion';
 import { useMyState } from 'helpers/hooks';
 import ErrorBoundary from 'components/ErrorBoundary';
 import ReorderInterface from './ReorderInterface';
+import NoPictures from './NoPictures';
 
 Pictures.propTypes = {
   numFrames: PropTypes.number,
@@ -236,7 +237,7 @@ export default function Pictures({
           </div>
         </SectionPanel>
       ) : (
-        <div>No Pictures!!!</div>
+        <NoPictures />
       )}
       {addPictureModalShown && (
         <AddPictureModal
