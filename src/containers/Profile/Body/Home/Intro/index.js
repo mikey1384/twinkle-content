@@ -100,7 +100,8 @@ export default function Intro({ profile, selectedTheme }) {
             display: 'flex',
             minHeight: '10rem',
             width: '100%',
-            marginTop: '1rem'
+            marginTop: '1rem',
+            paddingBottom: '4rem'
           }}
         >
           <div
@@ -193,7 +194,6 @@ export default function Intro({ profile, selectedTheme }) {
               {userId !== profile.id && stringIsEmpty(statusMsg) && (
                 <div
                   style={{
-                    marginTop: '-1rem',
                     width: '100%',
                     fontSize: '2rem',
                     display: 'flex',
