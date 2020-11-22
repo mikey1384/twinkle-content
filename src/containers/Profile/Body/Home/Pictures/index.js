@@ -171,7 +171,7 @@ export default function Pictures({
 
   return (
     <ErrorBoundary>
-      {pictures ? (
+      {pictures && pictures.length > 0 ? (
         <SectionPanel
           button={menuButtons}
           customColorTheme={selectedTheme}

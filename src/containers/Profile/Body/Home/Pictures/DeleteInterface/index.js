@@ -24,19 +24,23 @@ export default function DeleteInterface({
           justifyContent: 'center'
         }}
       >
-        {remainingPictures.map((picture, index) => (
-          <Picture
-            key={index}
-            onDelete={(pictureId) =>
-              onSetRemainingPictures((pictures) =>
-                pictures.filter((picture) => picture.id !== pictureId)
-              )
-            }
-            numPictures={numPictures}
-            picture={picture}
-            style={{ marginLeft: index === 0 ? 0 : '1rem' }}
-          />
-        ))}
+        {remainingPictures.length === 0 ? (
+          <div style={{ fontSize: '2rem' }}>No Pictures</div>
+        ) : (
+          remainingPictures.map((picture, index) => (
+            <Picture
+              key={index}
+              onDelete={(pictureId) =>
+                onSetRemainingPictures((pictures) =>
+                  pictures.filter((picture) => picture.id !== pictureId)
+                )
+              }
+              numPictures={numPictures}
+              picture={picture}
+              style={{ marginLeft: index === 0 ? 0 : '1rem' }}
+            />
+          ))
+        )}
       </div>
     </ErrorBoundary>
   );
