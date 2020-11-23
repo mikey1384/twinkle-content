@@ -104,6 +104,7 @@ export default function StartScreen({ navigateTo, onHide, profileId }) {
         ref={FileInputRef}
         style={{ display: 'none' }}
         type="file"
+        accept="image/*"
         onChange={handlePicture}
       />
       {alertModalShown && (
