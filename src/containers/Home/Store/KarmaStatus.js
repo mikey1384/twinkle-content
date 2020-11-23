@@ -1,25 +1,22 @@
 import React, { useEffect, useRef, useMemo, useState } from 'react';
-import PropTypes from 'prop-types';
 import { css } from 'emotion';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
-import { useAppContext } from 'contexts';
+import { useAppContext, useContentContext } from 'contexts';
 import Loading from 'components/Loading';
 
-KarmaStatus.propTypes = {
-  karmaPoints: PropTypes.number,
-  onSetKarmaPoints: PropTypes.func.isRequired
-};
-
-export default function KarmaStatus({ karmaPoints, onSetKarmaPoints }) {
+export default function KarmaStatus() {
   const recommendationsMultiplier = 10;
   const postsMultiplier = 3;
   const {
     requestHelpers: { loadKarmaPoints }
   } = useAppContext();
+  const {
+    actions: { onUpdateProfileInfo }
+  } = useContentContext();
   const mounted = useRef(true);
-  const { authLevel, userType, userId } = useMyState();
+  const { authLevel, userType, userId, karmaPoints } = useMyState();
   const [loadingKarma, setLoadingKarma] = useState(false);
   const [numTwinklesRewarded, setNumTwinklesRewarded] = useState(0);
   const [numApprovedRecommendations, setNumApprovedRecommendations] = useState(
@@ -50,7 +47,7 @@ export default function KarmaStatus({ karmaPoints, onSetKarmaPoints }) {
 
       if (authLevel < 2) {
         if (mounted.current) {
-          onSetKarmaPoints(kp);
+          onUpdateProfileInfo({ userId, karmaPoints: kp });
         }
         if (mounted.current) {
           setNumTwinklesRewarded(numTwinklesRewarded);
@@ -60,7 +57,10 @@ export default function KarmaStatus({ karmaPoints, onSetKarmaPoints }) {
         }
       } else {
         if (mounted.current) {
-          onSetKarmaPoints(postsMultiplier * numPostsRewarded);
+          onUpdateProfileInfo({
+            userId,
+            karmaPoints: postsMultiplier * numPostsRewarded
+          });
         }
         if (mounted.current) {
           setNumPostsRewarded(numPostsRewarded);

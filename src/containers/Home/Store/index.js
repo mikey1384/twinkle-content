@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import KarmaStatus from './KarmaStatus';
 import ItemPanel from './ItemPanel';
 import ChangeUsername from './ChangeUsername';
@@ -15,15 +15,11 @@ export default function Store() {
   const {
     actions: { onUpdateProfileInfo }
   } = useContentContext();
-  const { canChangeUsername, userId } = useMyState();
-  const [karmaPoints, setKarmaPoints] = useState(0);
+  const { canChangeUsername, karmaPoints, userId } = useMyState();
 
   return (
     <div style={{ paddingBottom: '15rem' }}>
-      <KarmaStatus
-        karmaPoints={karmaPoints}
-        onSetKarmaPoints={setKarmaPoints}
-      />
+      <KarmaStatus />
       <ItemPanel
         karmaPoints={karmaPoints}
         requiredKarmaPoints={karmaPointTable.username}
@@ -37,13 +33,6 @@ export default function Store() {
       </ItemPanel>
       <FileSizeItem />
       <ProfilePictureItem />
-      <ItemPanel
-        karmaPoints={karmaPoints}
-        requiredKarmaPoints={1000}
-        locked
-        itemName="Coming soon..."
-        style={{ marginTop: '5rem' }}
-      />
       <ItemPanel
         karmaPoints={karmaPoints}
         requiredKarmaPoints={5000}
