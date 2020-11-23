@@ -67,9 +67,9 @@ export default function EditTextArea({
     () =>
       exceedsCharLimit({
         contentType: 'comment',
-        text
+        text: editText
       }),
-    [text]
+    [editText]
   );
 
   useEffect(() => {
@@ -101,7 +101,7 @@ export default function EditTextArea({
         }}
         minRows={rows}
         value={editText}
-        onChange={onChange}
+        onChange={handleChange}
         onKeyUp={handleKeyUp}
       />
       {commentExceedsCharLimit && (
@@ -141,7 +141,7 @@ export default function EditTextArea({
     </div>
   );
 
-  function onChange(event) {
+  function handleChange(event) {
     handleSetEditText(event.target.value);
   }
 

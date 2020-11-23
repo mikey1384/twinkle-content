@@ -10,6 +10,7 @@ import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
 import { v1 as uuidv1 } from 'uuid';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
+import { finalizeEmoji } from 'helpers/stringHelpers';
 import DescriptionInput from './DescriptionInput';
 
 ImageEditModal.propTypes = {
@@ -31,6 +32,7 @@ export default function ImageEditModal({
   onHide,
   imageUri
 }) {
+  const [descriptionText, setDescriptionText] = useState('');
   const {
     requestHelpers: { uploadFile, uploadUserPic }
   } = useAppContext();
@@ -95,7 +97,12 @@ export default function ImageEditModal({
               />
             )}
           </div>
-          {hasDescription && <DescriptionInput />}
+          {hasDescription && (
+            <DescriptionInput
+              text={descriptionText}
+              onSetText={setDescriptionText}
+            />
+          )}
           {uploading && (
             <FileUploadStatusIndicator
               style={{ width: '20rem' }}
@@ -177,7 +184,11 @@ export default function ImageEditModal({
     });
     setUploadComplete(true);
     setProcessing(false);
-    onEditDone({ pictures, filePath });
+    onEditDone({
+      pictures,
+      filePath,
+      descriptionText: finalizeEmoji(descriptionText)
+    });
   }
 
   function handleUploadProgress({ loaded, total }) {
