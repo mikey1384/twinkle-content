@@ -27,10 +27,11 @@ import {
 
 ProfilePanel.propTypes = {
   expandable: PropTypes.bool,
-  profileId: PropTypes.number
+  profileId: PropTypes.number,
+  style: PropTypes.object
 };
 
-function ProfilePanel({ expandable, profileId }) {
+function ProfilePanel({ expandable, profileId, style }) {
   const mounted = useRef(true);
   useEffect(() => {
     return function cleanUp() {
@@ -218,12 +219,11 @@ function ProfilePanel({ expandable, profileId }) {
   );
 
   return (
-    <div ref={ComponentRef} key={profileId}>
+    <div style={style} ref={ComponentRef} key={profileId}>
       <div
         ref={ContainerRef}
         style={{
           width: '100%',
-          margin: '1rem 0 1rem 0',
           height: contentShown ? 'auto' : placeholderHeight || '20rem'
         }}
       >
@@ -233,7 +233,6 @@ function ProfilePanel({ expandable, profileId }) {
             className={css`
               background: #fff;
               width: 100%;
-              margin-bottom: 1rem;
               line-height: 2.3rem;
               font-size: 1.5rem;
               position: relative;
