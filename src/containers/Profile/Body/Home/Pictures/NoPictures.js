@@ -6,16 +6,17 @@ import Button from 'components/Button';
 import { useMyState } from 'helpers/hooks';
 
 NoPictures.propTypes = {
+  numFrames: PropTypes.number.isRequired,
   onAddButtonClick: PropTypes.func.isRequired,
   profileId: PropTypes.number.isRequired
 };
 
-export default function NoPictures({ onAddButtonClick, profileId }) {
+export default function NoPictures({ numFrames, onAddButtonClick, profileId }) {
   const { userId } = useMyState();
 
   return (
     <ErrorBoundary>
-      {profileId === userId ? (
+      {profileId === userId && numFrames > 0 ? (
         <div
           style={{
             width: '100%',

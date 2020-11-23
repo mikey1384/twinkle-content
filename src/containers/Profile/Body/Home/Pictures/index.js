@@ -240,6 +240,7 @@ export default function Pictures({
         <NoPictures
           onAddButtonClick={() => setAddPictureModalShown(true)}
           profileId={profileId}
+          numFrames={numFrames}
         />
       )}
       {addPictureModalShown && (
