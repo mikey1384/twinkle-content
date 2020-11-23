@@ -543,13 +543,13 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
-    async uploadUserPic({ src, isProfilePic }) {
+    async uploadUserPic({ caption, src, isProfilePic }) {
       try {
         const {
           data: { pictures }
         } = await request.post(
           `${URL}/user/picture`,
-          { src, isProfilePic },
+          { caption, src, isProfilePic },
           auth()
         );
         return Promise.resolve(pictures);

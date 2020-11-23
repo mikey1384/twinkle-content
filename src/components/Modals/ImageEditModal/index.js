@@ -32,7 +32,7 @@ export default function ImageEditModal({
   onHide,
   imageUri
 }) {
-  const [descriptionText, setDescriptionText] = useState('');
+  const [captionText, setCaptionText] = useState('');
   const {
     requestHelpers: { uploadFile, uploadUserPic }
   } = useAppContext();
@@ -98,10 +98,7 @@ export default function ImageEditModal({
             )}
           </div>
           {hasDescription && (
-            <DescriptionInput
-              text={descriptionText}
-              onSetText={setDescriptionText}
-            />
+            <DescriptionInput text={captionText} onSetText={setCaptionText} />
           )}
           {uploading && (
             <FileUploadStatusIndicator
@@ -172,7 +169,7 @@ export default function ImageEditModal({
     const fileName = `${path}.jpg`;
     const file = new File([buffer], fileName);
     const filePath = `${userId}/${fileName}`;
-    const description = finalizeEmoji(descriptionText);
+    const caption = finalizeEmoji(captionText);
     await uploadFile({
       context: 'profilePic',
       filePath,
@@ -182,14 +179,13 @@ export default function ImageEditModal({
     const pictures = await uploadUserPic({
       src: `/profile/${filePath}`,
       isProfilePic,
-      description
+      caption
     });
     setUploadComplete(true);
     setProcessing(false);
     onEditDone({
       pictures,
-      filePath,
-      description
+      filePath
     });
   }
 
