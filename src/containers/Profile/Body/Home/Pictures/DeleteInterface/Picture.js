@@ -21,6 +21,7 @@ export default function Picture({ numPictures, onDelete, picture, style }) {
   return (
     <div
       className={css`
+        background: black;
         position: relative;
         border: 1px solid ${Color.borderGray()};
         border-radius: ${borderRadius};
@@ -39,7 +40,7 @@ export default function Picture({ numPictures, onDelete, picture, style }) {
           right: 0,
           width: '100%',
           height: '100%',
-          objectFit: 'cover',
+          objectFit: 'contain',
           objectPosition: 'center'
         }}
         src={imageUrl}

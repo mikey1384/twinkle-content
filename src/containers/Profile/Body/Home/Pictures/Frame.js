@@ -22,6 +22,7 @@ export default function Frame({ forCarousel, picture, style }) {
     <div
       style={style}
       className={css`
+        background: black;
         position: relative;
         border: 1px solid ${Color.borderGray()};
         border-radius: ${borderRadius};
@@ -43,7 +44,7 @@ export default function Frame({ forCarousel, picture, style }) {
             right: 0,
             width: '100%',
             height: '100%',
-            objectFit: 'cover',
+            objectFit: 'contain',
             objectPosition: 'center'
           }}
           onClick={() => setImageModalShown(true)}

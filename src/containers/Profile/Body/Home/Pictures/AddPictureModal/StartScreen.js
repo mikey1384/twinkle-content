@@ -116,6 +116,7 @@ export default function StartScreen({ navigateTo, onHide, profileId }) {
       {imageEditModalShown && (
         <ImageEditModal
           modalOverModal
+          aspectFixed={false}
           imageUri={imageUri}
           onEditDone={handleImageEditDone}
           onHide={() => {

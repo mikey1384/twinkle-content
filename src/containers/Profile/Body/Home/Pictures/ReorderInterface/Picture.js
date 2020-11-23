@@ -41,7 +41,9 @@ export default function Picture({ numPictures, picture, style, onMove }) {
     <div
       ref={drag(drop(Draggable))}
       className={css`
+        cursor: pointer;
         opacity: ${isDragging ? 0.5 : 1};
+        background: black;
         position: relative;
         border: 1px solid ${Color.borderGray()};
         border-radius: ${borderRadius};
@@ -60,7 +62,7 @@ export default function Picture({ numPictures, picture, style, onMove }) {
           right: 0,
           width: '100%',
           height: '100%',
-          objectFit: 'cover',
+          objectFit: 'contain',
           objectPosition: 'center'
         }}
         src={imageUrl}

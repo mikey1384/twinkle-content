@@ -40,6 +40,7 @@ export default function ArchivedPicture({
   return (
     <div
       className={css`
+        background: black;
         position: relative;
         width: CALC(${width}% - 2rem);
         padding-bottom: CALC(${width}% - 2rem - 2px);
@@ -64,7 +65,7 @@ export default function ArchivedPicture({
           right: 0,
           width: '100%',
           height: '100%',
-          objectFit: 'cover',
+          objectFit: 'contain',
           objectPosition: 'center'
         }}
         src={imageUrl}

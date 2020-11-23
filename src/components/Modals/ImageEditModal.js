@@ -12,6 +12,7 @@ import { useMyState } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
 
 ImageEditModal.propTypes = {
+  aspectFixed: PropTypes.bool,
   imageUri: PropTypes.string,
   isProfilePic: PropTypes.bool,
   modalOverModal: PropTypes.bool,
@@ -20,6 +21,7 @@ ImageEditModal.propTypes = {
 };
 
 export default function ImageEditModal({
+  aspectFixed = true,
   isProfilePic,
   modalOverModal,
   onEditDone,
@@ -37,7 +39,8 @@ export default function ImageEditModal({
   const [crop, setCrop] = useState({
     unit: '%',
     width: 90,
-    aspect: 1,
+    height: aspectFixed ? 0 : 90,
+    aspect: aspectFixed ? 1 : null,
     x: 5
   });
   const [loading, setLoading] = useState(false);
