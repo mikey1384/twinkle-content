@@ -172,6 +172,7 @@ export default function ImageEditModal({
     const fileName = `${path}.jpg`;
     const file = new File([buffer], fileName);
     const filePath = `${userId}/${fileName}`;
+    const description = finalizeEmoji(descriptionText);
     await uploadFile({
       context: 'profilePic',
       filePath,
@@ -180,14 +181,15 @@ export default function ImageEditModal({
     });
     const pictures = await uploadUserPic({
       src: `/profile/${filePath}`,
-      isProfilePic
+      isProfilePic,
+      description
     });
     setUploadComplete(true);
     setProcessing(false);
     onEditDone({
       pictures,
       filePath,
-      descriptionText: finalizeEmoji(descriptionText)
+      description
     });
   }
 
