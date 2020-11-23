@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import SearchInput from 'components/Texts/SearchInput';
 import ProfilePanel from 'components/ProfilePanel';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
@@ -90,6 +90,11 @@ function People() {
     };
   }, []);
 
+  const loadMoreButtonShown = useMemo(
+    () => stringIsEmpty(userSearchText) && profilesLoaded && loadMoreButton,
+    [loadMoreButton, profilesLoaded, userSearchText]
+  );
+
   return (
     <div style={{ height: '100%' }}>
       <SearchInput
@@ -110,7 +115,8 @@ function People() {
           marginTop: '1rem',
           position: 'relative',
           minHeight: '30%',
-          width: '100%'
+          width: '100%',
+          paddingBottom: loadMoreButtonShown ? 0 : '1rem'
         }}
       >
         <PeopleFilterBar
@@ -126,13 +132,25 @@ function People() {
         )}
         {profilesLoaded &&
           stringIsEmpty(userSearchText) &&
-          profiles.map((profile) => (
-            <ProfilePanel expandable key={profile.id} profileId={profile.id} />
+          profiles.map((profile, index) => (
+            <ProfilePanel
+              style={{ marginTop: index === 0 ? 0 : '1rem' }}
+              expandable
+              key={profile.id}
+              profileId={profile.id}
+            />
           ))}
         {!stringIsEmpty(userSearchText) &&
           !searching &&
-          searchedProfiles.map((profile) => (
-            <ProfilePanel expandable key={profile.id} profileId={profile.id} />
+          searchedProfiles.map((profile, index) => (
+            <ProfilePanel
+              style={{
+                marginTop: index === 0 ? 0 : '1rem'
+              }}
+              expandable
+              key={profile.id}
+              profileId={profile.id}
+            />
           ))}
         {!stringIsEmpty(userSearchText) &&
           !searching &&
@@ -149,10 +167,10 @@ function People() {
               No Users Found
             </div>
           )}
-        {stringIsEmpty(userSearchText) && profilesLoaded && loadMoreButton && (
+        {loadMoreButtonShown && (
           <LoadMoreButton
-            style={{ marginBottom: '1rem' }}
             filled
+            style={{ marginTop: '1rem', marginBottom: '1rem' }}
             color="lightBlue"
             onClick={() => setLoading(true)}
             loading={loading}
