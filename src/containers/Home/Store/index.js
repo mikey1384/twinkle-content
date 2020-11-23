@@ -3,6 +3,7 @@ import KarmaStatus from './KarmaStatus';
 import ItemPanel from './ItemPanel';
 import ChangeUsername from './ChangeUsername';
 import FileSizeItem from './FileSizeItem';
+import ProfilePictureItem from './ProfilePictureItem';
 import { useAppContext, useContentContext } from 'contexts';
 import { priceTable, karmaPointTable } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
@@ -35,6 +36,7 @@ export default function Store() {
         <ChangeUsername style={{ marginTop: '1rem' }} />
       </ItemPanel>
       <FileSizeItem />
+      <ProfilePictureItem />
       <ItemPanel
         karmaPoints={karmaPoints}
         requiredKarmaPoints={1000}
