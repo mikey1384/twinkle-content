@@ -10,9 +10,11 @@ import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
 import { v1 as uuidv1 } from 'uuid';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
+import DescriptionInput from './DescriptionInput';
 
 ImageEditModal.propTypes = {
   aspectFixed: PropTypes.bool,
+  hasDescription: PropTypes.bool,
   imageUri: PropTypes.string,
   isProfilePic: PropTypes.bool,
   modalOverModal: PropTypes.bool,
@@ -22,6 +24,7 @@ ImageEditModal.propTypes = {
 
 export default function ImageEditModal({
   aspectFixed = true,
+  hasDescription,
   isProfilePic,
   modalOverModal,
   onEditDone,
@@ -92,6 +95,7 @@ export default function ImageEditModal({
               />
             )}
           </div>
+          {hasDescription && <DescriptionInput />}
           {uploading && (
             <FileUploadStatusIndicator
               style={{ width: '20rem' }}
