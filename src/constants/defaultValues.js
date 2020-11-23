@@ -45,6 +45,15 @@ export const karmaPointTable = {
     4: 25000,
     5: 50000,
     6: 100000
+  },
+  profilePicture: {
+    0: 1000,
+    1: 1500,
+    2: 2000,
+    3: 3000,
+    4: 4000,
+    5: 5000,
+    6: 6000
   }
 };
 export const charLimit = {

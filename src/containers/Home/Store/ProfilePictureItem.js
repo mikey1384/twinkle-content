@@ -1,18 +1,65 @@
 import React from 'react';
 import ItemPanel from './ItemPanel';
+import Icon from 'components/Icon';
 import { useMyState } from 'helpers/hooks';
+import { karmaPointTable } from 'constants/defaultValues';
+
+const item = {
+  maxLvl: 7,
+  name: [
+    'Add pictures to your profile page',
+    'Add pictures to your profile page (level 2)',
+    'Add pictures to your profile page (level 3)',
+    'Add pictures to your profile page (level 4)',
+    'Add pictures to your profile page (level 5)',
+    'Add pictures to your profile page (level 6)',
+    'Add pictures to your profile page (level 7)'
+  ]
+};
 
 export default function ProfilePictureItem() {
-  const { karmaPoints } = useMyState();
+  const { karmaPoints, numFrames = 0 } = useMyState();
   return (
-    <div>
-      <ItemPanel
-        karmaPoints={karmaPoints}
-        requiredKarmaPoints={1000}
-        locked
-        itemName="Coming soon..."
-        style={{ marginTop: '5rem' }}
-      />
-    </div>
+    <ItemPanel
+      isLeveled
+      currentLvl={numFrames}
+      maxLvl={item.maxLvl}
+      karmaPoints={karmaPoints}
+      requiredKarmaPoints={karmaPointTable.profilePicture[numFrames]}
+      locked={!numFrames}
+      onUnlock={handleUpgrade}
+      itemName={item.name[numFrames]}
+      itemDescription={
+        numFrames > 0
+          ? `Upgrade this item to post up to ${numFrames} pictures on you profile page`
+          : 'Unlock this item to post pictures on your profile page'
+      }
+      style={{ marginTop: '5rem' }}
+      upgradeIcon={<Icon size="3x" icon="upload" />}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', fontSize: '2rem' }}>
+        <Icon size="3x" icon="upload" />
+        <div
+          style={{
+            marginLeft: '2.5rem',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          <p style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>
+            Profile Pictures - Level 7
+          </p>
+          <p style={{ fontSize: '1.7rem' }}>
+            You can now upload up to {numFrames} pictures on your profile page
+          </p>
+        </div>
+      </div>
+    </ItemPanel>
   );
+
+  function handleUpgrade() {
+    console.log('upgrading');
+  }
 }
