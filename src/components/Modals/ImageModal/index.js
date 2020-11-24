@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Modal from 'components/Modal';
-import LongText from 'components/Texts/LongText';
+import Caption from './Caption';
 
 ImageModal.propTypes = {
   caption: PropTypes.string,
@@ -30,9 +30,7 @@ export default function ImageModal({
           src={src}
           rel={fileName}
         />
-        {caption && (
-          <LongText style={{ marginTop: '2rem' }}>{caption}</LongText>
-        )}
+        {caption && <Caption />}
       </main>
       <footer>
         {downloadable && (
