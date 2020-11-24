@@ -7,13 +7,13 @@ import { karmaPointTable } from 'constants/defaultValues';
 const item = {
   maxLvl: 7,
   name: [
-    'Add pictures to your profile page',
-    'Add pictures to your profile page (level 2)',
-    'Add pictures to your profile page (level 3)',
-    'Add pictures to your profile page (level 4)',
-    'Add pictures to your profile page (level 5)',
-    'Add pictures to your profile page (level 6)',
-    'Add pictures to your profile page (level 7)'
+    'Post pictures on your profile page',
+    'Post pictures on your profile page (level 2)',
+    'Post pictures on your profile page (level 3)',
+    'Post pictures on your profile page (level 4)',
+    'Post pictures on your profile page (level 5)',
+    'Post pictures on your profile page (level 6)',
+    'Post pictures on your profile page (level 7)'
   ]
 };
 
@@ -52,7 +52,7 @@ export default function ProfilePictureItem() {
             Profile Pictures - Level 7
           </p>
           <p style={{ fontSize: '1.7rem' }}>
-            You can now upload up to {numFrames} pictures on your profile page
+            You can now post up to {numFrames} pictures on your profile page
           </p>
         </div>
       </div>
