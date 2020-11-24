@@ -17,14 +17,14 @@ import ReorderInterface from './ReorderInterface';
 import NoPictures from './NoPictures';
 
 Pictures.propTypes = {
-  numFrames: PropTypes.number,
+  numPics: PropTypes.number,
   pictures: PropTypes.array,
   profileId: PropTypes.number,
   selectedTheme: PropTypes.string
 };
 
 export default function Pictures({
-  numFrames,
+  numPics,
   profileId,
   pictures,
   selectedTheme
@@ -46,8 +46,8 @@ export default function Pictures({
     actions: { onUpdateProfileInfo }
   } = useContentContext();
   const addPictureButtonDisabled = useMemo(() => {
-    return pictures?.length >= numFrames;
-  }, [numFrames, pictures]);
+    return pictures?.length >= numPics;
+  }, [numPics, pictures]);
   useEffect(() => {
     setReorderedPictureIds(pictures?.map((picture) => picture.id));
     setRemainingPictures(pictures);
@@ -78,7 +78,7 @@ export default function Pictures({
         >
           <Icon icon="plus" />
           <span style={{ marginLeft: '0.7rem' }}>
-            Add Picture ({pictures?.length}/{numFrames})
+            Add Picture ({pictures?.length}/{numPics})
           </span>
         </Button>
         <DropdownButton
@@ -163,7 +163,7 @@ export default function Pictures({
   }, [
     deleteMode,
     reorderMode,
-    numFrames,
+    numPics,
     pictures,
     remainingPictures,
     reorderedPictureIds
@@ -240,7 +240,7 @@ export default function Pictures({
         <NoPictures
           onAddButtonClick={() => setAddPictureModalShown(true)}
           profileId={profileId}
-          numFrames={numFrames}
+          numPics={numPics}
         />
       )}
       {addPictureModalShown && (
@@ -249,7 +249,7 @@ export default function Pictures({
           onConfirm={handleAddPictures}
           profileId={profileId}
           currentPictures={pictures}
-          maxNumSelectable={numFrames - (pictures?.length ?? 0)}
+          maxNumSelectable={numPics - (pictures?.length ?? 0)}
         />
       )}
     </ErrorBoundary>

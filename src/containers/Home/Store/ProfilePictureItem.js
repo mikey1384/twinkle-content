@@ -18,20 +18,20 @@ const item = {
 };
 
 export default function ProfilePictureItem() {
-  const { karmaPoints, numFrames = 0 } = useMyState();
+  const { karmaPoints, numPics = 0 } = useMyState();
   return (
     <ItemPanel
       isLeveled
-      currentLvl={numFrames}
+      currentLvl={numPics}
       maxLvl={item.maxLvl}
       karmaPoints={karmaPoints}
-      requiredKarmaPoints={karmaPointTable.profilePicture[numFrames]}
-      locked={!numFrames}
+      requiredKarmaPoints={karmaPointTable.profilePicture[numPics]}
+      locked={!numPics}
       onUnlock={handleUpgrade}
-      itemName={item.name[numFrames]}
+      itemName={item.name[numPics]}
       itemDescription={
-        numFrames > 0
-          ? `Upgrade this item to post up to ${numFrames} pictures on you profile page`
+        numPics > 0
+          ? `Upgrade this item to post up to ${numPics} pictures on you profile page`
           : 'Unlock this item to post pictures on your profile page'
       }
       style={{ marginTop: '5rem' }}
@@ -52,7 +52,7 @@ export default function ProfilePictureItem() {
             Profile Pictures - Level 7
           </p>
           <p style={{ fontSize: '1.7rem' }}>
-            You can now post up to {numFrames} pictures on your profile page
+            You can now post up to {numPics} pictures on your profile page
           </p>
         </div>
       </div>
