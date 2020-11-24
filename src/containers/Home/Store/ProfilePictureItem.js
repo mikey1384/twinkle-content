@@ -1,6 +1,7 @@
 import React from 'react';
 import ItemPanel from './ItemPanel';
 import Icon from 'components/Icon';
+import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { karmaPointTable } from 'constants/defaultValues';
 
@@ -18,7 +19,13 @@ const item = {
 };
 
 export default function ProfilePictureItem() {
-  const { karmaPoints, numPics = 0 } = useMyState();
+  const { karmaPoints, numPics = 0, userId } = useMyState();
+  const {
+    requestHelpers: { upgradeNumPics }
+  } = useAppContext();
+  const {
+    actions: { onUpdateProfileInfo }
+  } = useContentContext();
   return (
     <ItemPanel
       isLeveled
@@ -37,29 +44,42 @@ export default function ProfilePictureItem() {
       style={{ marginTop: '5rem' }}
       upgradeIcon={<Icon size="3x" icon="upload" />}
     >
-      <div style={{ display: 'flex', alignItems: 'center', fontSize: '2rem' }}>
-        <Icon size="3x" icon="upload" />
+      <div
+        style={{
+          padding: '2rem',
+          display: 'flex',
+          justifyContent: 'center'
+        }}
+      >
         <div
-          style={{
-            marginLeft: '2.5rem',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}
+          style={{ display: 'flex', alignItems: 'center', fontSize: '2rem' }}
         >
-          <p style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>
-            Profile Pictures - Level 7
-          </p>
-          <p style={{ fontSize: '1.7rem' }}>
-            You can now post up to {numPics} pictures on your profile page
-          </p>
+          <Icon size="3x" icon="upload" />
+          <div
+            style={{
+              marginLeft: '2.5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <p style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>
+              Profile Pictures - Level 7
+            </p>
+            <p style={{ fontSize: '1.7rem' }}>
+              You can now post up to {numPics} pictures on your profile page
+            </p>
+          </div>
         </div>
       </div>
     </ItemPanel>
   );
 
-  function handleUpgrade() {
-    console.log('upgrading');
+  async function handleUpgrade() {
+    const success = await upgradeNumPics();
+    if (success) {
+      onUpdateProfileInfo({ userId, numPics: numPics + 1 });
+    }
   }
 }

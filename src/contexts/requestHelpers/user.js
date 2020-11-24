@@ -581,6 +581,16 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
+    async upgradeNumPics() {
+      try {
+        const {
+          data: { success }
+        } = await request.put(`${URL}/user/upgrade/numPics`, null, auth());
+        return Promise.resolve(success);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async verifyEmail({ token, forPasswordReset }) {
       try {
         const {
