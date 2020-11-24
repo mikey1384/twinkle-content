@@ -38,7 +38,9 @@ export default function ProfilePictureItem() {
       itemName={item.name[numPics]}
       itemDescription={
         numPics > 0
-          ? `Upgrade this item to post up to ${numPics} pictures on you profile page`
+          ? `Upgrade this item to post up to ${
+              numPics + 1
+            } pictures on you profile page`
           : 'Unlock this item to post pictures on your profile page'
       }
       style={{ marginTop: '5rem' }}
