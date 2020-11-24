@@ -258,7 +258,7 @@ export default function Pictures({
   async function handleAddPictures({ selectedPictureIds }) {
     const pics = await updateUserPictures([
       ...selectedPictureIds,
-      ...pictures.map((picture) => picture.id)
+      ...(pictures || []).map((picture) => picture.id)
     ]);
     onUpdateProfileInfo({ userId: profileId, pictures: pics });
     setAddPictureModalShown(false);
