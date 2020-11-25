@@ -88,7 +88,7 @@ export default function QuestionsBuilder({
 
   return (
     <DndProvider backend={Backend}>
-      <Modal large onHide={onHide}>
+      <Modal closeWhenClickedOutside={false} large onHide={onHide}>
         <header>{title}</header>
         <main
           style={{

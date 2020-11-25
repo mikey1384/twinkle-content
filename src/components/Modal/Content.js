@@ -4,15 +4,24 @@ import Icon from 'components/Icon';
 import { useOutsideClick } from 'helpers/hooks';
 
 Content.propTypes = {
+  closeWhenClickedOutside: PropTypes.bool,
   onHide: PropTypes.func,
   className: PropTypes.string,
   children: PropTypes.node,
   style: PropTypes.object
 };
 
-export default function Content({ children, className, onHide, style }) {
+export default function Content({
+  closeWhenClickedOutside,
+  children,
+  className,
+  onHide,
+  style
+}) {
   const ContentRef = useRef(null);
-  useOutsideClick(ContentRef, () => onHide?.());
+  useOutsideClick(ContentRef, () =>
+    closeWhenClickedOutside ? onHide?.() : null
+  );
   return (
     <div style={style} className={className} ref={ContentRef}>
       <button className="close" onClick={onHide}>

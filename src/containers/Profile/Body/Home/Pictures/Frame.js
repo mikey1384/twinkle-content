@@ -8,10 +8,11 @@ import { css } from 'emotion';
 Frame.propTypes = {
   forCarousel: PropTypes.bool,
   picture: PropTypes.object.isRequired,
+  userIsUploader: PropTypes.bool,
   style: PropTypes.object
 };
 
-export default function Frame({ forCarousel, picture, style }) {
+export default function Frame({ forCarousel, picture, style, userIsUploader }) {
   const imageUrl = useMemo(() => {
     return picture?.src ? `${cloudFrontURL}${picture?.src}` : '';
   }, [picture]);
@@ -56,6 +57,7 @@ export default function Frame({ forCarousel, picture, style }) {
           caption={picture?.caption}
           downloadable={false}
           src={imageUrl}
+          userIsUploader={userIsUploader}
           onHide={() => setImageModalShown(false)}
         />
       )}

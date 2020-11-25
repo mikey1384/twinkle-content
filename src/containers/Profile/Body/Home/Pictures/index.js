@@ -214,7 +214,12 @@ export default function Pictures({
                 slidesToScroll={1}
               >
                 {pictures.map((picture, index) => (
-                  <Frame forCarousel key={index} picture={picture} />
+                  <Frame
+                    forCarousel
+                    key={index}
+                    picture={picture}
+                    userIsUploader={profileId === userId}
+                  />
                 ))}
               </Carousel>
             ) : (
@@ -230,6 +235,7 @@ export default function Pictures({
                     key={index}
                     picture={picture}
                     style={{ marginLeft: index === 0 ? 0 : '1rem' }}
+                    userIsUploader={profileId === userId}
                   />
                 ))}
               </div>

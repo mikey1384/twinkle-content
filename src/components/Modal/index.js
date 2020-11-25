@@ -9,6 +9,7 @@ import Content from './Content';
 Modal.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
+  closeWhenClickedOutside: PropTypes.bool,
   modalOverModal: PropTypes.bool,
   onHide: PropTypes.func,
   small: PropTypes.bool,
@@ -19,6 +20,7 @@ Modal.propTypes = {
 
 export default function Modal({
   className,
+  closeWhenClickedOutside = true,
   children,
   modalOverModal,
   onHide,
@@ -66,6 +68,7 @@ export default function Modal({
           style={style}
         >
           <Content
+            closeWhenClickedOutside={closeWhenClickedOutside}
             style={modalStyle}
             eventTypes={['mouseup']}
             className={css`
