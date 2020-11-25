@@ -242,7 +242,18 @@ export default function TakeScreenshot({
     if (success) {
       onUpdateMissionAttempt({
         missionId,
-        newState: { status: 'pending', tryingAgain: false }
+        newState: {
+          status: 'pending',
+          tryingAgain: false
+        }
+      });
+      onSetMissionState({
+        missionId,
+        newState: {
+          attachment: null,
+          fileUploadComplete: false,
+          fileUploadProgress: null
+        }
       });
     }
 
