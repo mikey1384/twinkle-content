@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import Textarea from 'components/Texts/Textarea';
 import { exceedsCharLimit, addEmoji } from 'helpers/stringHelpers';
 
-DescriptionInput.propTypes = {
+CaptionEditor.propTypes = {
   text: PropTypes.string,
   onSetText: PropTypes.func.isRequired
 };
 
-export default function DescriptionInput({ text, onSetText }) {
+export default function CaptionEditor({ text, onSetText }) {
   const commentExceedsCharLimit = useMemo(
     () =>
       exceedsCharLimit({
@@ -21,7 +21,7 @@ export default function DescriptionInput({ text, onSetText }) {
   return (
     <div style={{ width: '100%' }}>
       <Textarea
-        placeholder="Enter Description"
+        placeholder="Enter Caption"
         style={{
           width: '100%',
           position: 'relative',

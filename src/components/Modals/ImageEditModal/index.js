@@ -11,7 +11,7 @@ import { v1 as uuidv1 } from 'uuid';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
 import { finalizeEmoji } from 'helpers/stringHelpers';
-import DescriptionInput from './DescriptionInput';
+import CaptionEditor from './CaptionEditor';
 
 ImageEditModal.propTypes = {
   aspectFixed: PropTypes.bool,
@@ -98,7 +98,7 @@ export default function ImageEditModal({
             )}
           </div>
           {hasDescription && (
-            <DescriptionInput text={captionText} onSetText={setCaptionText} />
+            <CaptionEditor text={captionText} onSetText={setCaptionText} />
           )}
           {uploading && (
             <FileUploadStatusIndicator

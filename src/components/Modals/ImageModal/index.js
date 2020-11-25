@@ -40,7 +40,7 @@ export default function ImageModal({
           src={src}
           rel={fileName}
         />
-        <Caption caption={caption} />
+        <Caption isEditing={isEditing} caption={caption} />
       </main>
       <footer>
         {downloadable && (
@@ -48,7 +48,7 @@ export default function ImageModal({
             Download
           </Button>
         )}
-        {!stringIsEmpty(caption) && userIsUploader && (
+        {!stringIsEmpty(caption) && userIsUploader && !isEditing && (
           <Button transparent onClick={() => setIsEditing(true)}>
             <Icon icon="pencil-alt" />
             <span style={{ marginLeft: '0.7rem' }}>Edit Caption</span>
