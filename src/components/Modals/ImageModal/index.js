@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Modal from 'components/Modal';
@@ -25,8 +25,14 @@ export default function ImageModal({
   downloadable = true,
   userIsUploader
 }) {
+  const [isEditing, setIsEditing] = useState(false);
   return (
-    <Modal modalOverModal={modalOverModal} large onHide={onHide}>
+    <Modal
+      closeWhenClickedOutside={!isEditing}
+      modalOverModal={modalOverModal}
+      large
+      onHide={onHide}
+    >
       <header>{fileName}</header>
       <main>
         <img
@@ -43,7 +49,7 @@ export default function ImageModal({
           </Button>
         )}
         {!stringIsEmpty(caption) && userIsUploader && (
-          <Button transparent onClick={() => console.log('editing caption')}>
+          <Button transparent onClick={() => setIsEditing(true)}>
             <Icon icon="pencil-alt" />
             <span style={{ marginLeft: '0.7rem' }}>Edit Caption</span>
           </Button>
