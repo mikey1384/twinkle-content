@@ -25,6 +25,7 @@ export default function ImageModal({
   downloadable = true,
   userIsUploader
 }) {
+  const [editedCaption, setEditedCaption] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   return (
     <Modal
@@ -40,7 +41,12 @@ export default function ImageModal({
           src={src}
           rel={fileName}
         />
-        <Caption isEditing={isEditing} caption={caption} />
+        <Caption
+          editedCaption={editedCaption}
+          onSetEditedCaption={setEditedCaption}
+          isEditing={isEditing}
+          caption={caption}
+        />
       </main>
       <footer>
         {downloadable && (
@@ -54,9 +60,16 @@ export default function ImageModal({
             <span style={{ marginLeft: '0.7rem' }}>Edit Caption</span>
           </Button>
         )}
-        <Button style={{ marginLeft: '1rem' }} color="blue" onClick={onHide}>
-          Close
-        </Button>
+        {isEditing && (
+          <Button transparent onClick={() => setIsEditing(false)}>
+            Cancel
+          </Button>
+        )}
+        {stringIsEmpty(editedCaption) && (
+          <Button style={{ marginLeft: '1rem' }} color="blue" onClick={onHide}>
+            Close
+          </Button>
+        )}
       </footer>
     </Modal>
   );
