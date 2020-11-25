@@ -9,7 +9,9 @@ import { stringIsEmpty } from 'helpers/stringHelpers';
 ImageModal.propTypes = {
   caption: PropTypes.string,
   downloadable: PropTypes.bool,
+  hasCaption: PropTypes.bool,
   modalOverModal: PropTypes.bool,
+  onEditCaption: PropTypes.func,
   onHide: PropTypes.func.isRequired,
   fileName: PropTypes.string,
   src: PropTypes.string,
@@ -18,14 +20,16 @@ ImageModal.propTypes = {
 
 export default function ImageModal({
   caption,
+  hasCaption,
   modalOverModal,
+  onEditCaption,
   onHide,
   fileName,
   src,
   downloadable = true,
   userIsUploader
 }) {
-  const [editedCaption, setEditedCaption] = useState('');
+  const [editedCaption, setEditedCaption] = useState(caption || '');
   const [isEditing, setIsEditing] = useState(false);
   return (
     <Modal
@@ -41,12 +45,15 @@ export default function ImageModal({
           src={src}
           rel={fileName}
         />
-        <Caption
-          editedCaption={editedCaption}
-          onSetEditedCaption={setEditedCaption}
-          isEditing={isEditing}
-          caption={caption}
-        />
+        {hasCaption && (
+          <Caption
+            editedCaption={editedCaption}
+            onSetEditedCaption={setEditedCaption}
+            isEditing={isEditing}
+            caption={caption}
+            userIsUploader={userIsUploader}
+          />
+        )}
       </main>
       <footer>
         {downloadable && (
@@ -54,18 +61,36 @@ export default function ImageModal({
             Download
           </Button>
         )}
-        {!stringIsEmpty(caption) && userIsUploader && !isEditing && (
+        {hasCaption && !stringIsEmpty(caption) && userIsUploader && !isEditing && (
           <Button transparent onClick={() => setIsEditing(true)}>
             <Icon icon="pencil-alt" />
             <span style={{ marginLeft: '0.7rem' }}>Edit Caption</span>
           </Button>
         )}
-        {isEditing && (
-          <Button transparent onClick={() => setIsEditing(false)}>
+        {hasCaption && isEditing && (
+          <Button
+            transparent
+            onClick={() => {
+              setIsEditing(false);
+              setEditedCaption(caption);
+            }}
+          >
             Cancel
           </Button>
         )}
-        {stringIsEmpty(editedCaption) && (
+        {hasCaption &&
+          !stringIsEmpty(editedCaption) &&
+          editedCaption !== caption && (
+            <Button
+              style={{ marginLeft: '1rem' }}
+              color="green"
+              onClick={onEditCaption}
+            >
+              {stringIsEmpty(caption) ? 'Submit Caption' : 'Apply Changes'}
+            </Button>
+          )}
+        {((!hasCaption && stringIsEmpty(editedCaption)) ||
+          editedCaption === caption) && (
           <Button style={{ marginLeft: '1rem' }} color="blue" onClick={onHide}>
             Close
           </Button>

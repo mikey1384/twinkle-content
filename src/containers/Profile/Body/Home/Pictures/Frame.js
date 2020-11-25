@@ -54,6 +54,7 @@ export default function Frame({ forCarousel, picture, style, userIsUploader }) {
       )}
       {imageModalShown && (
         <ImageModal
+          hasCaption
           caption={picture?.caption}
           downloadable={false}
           src={imageUrl}

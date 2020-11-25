@@ -9,26 +9,28 @@ Caption.propTypes = {
   editedCaption: PropTypes.string,
   onSetEditedCaption: PropTypes.func,
   caption: PropTypes.string,
-  isEditing: PropTypes.bool
+  isEditing: PropTypes.bool,
+  userIsUploader: PropTypes.bool
 };
 
 export default function Caption({
   caption,
   isEditing,
   editedCaption,
-  onSetEditedCaption
+  onSetEditedCaption,
+  userIsUploader
 }) {
   return (
     <ErrorBoundary>
-      {stringIsEmpty(caption) || isEditing ? (
+      {userIsUploader && (stringIsEmpty(caption) || isEditing) ? (
         <CaptionEditor
           style={{ marginTop: '2rem' }}
           text={editedCaption}
           onSetText={onSetEditedCaption}
         />
-      ) : (
+      ) : !stringIsEmpty(caption) ? (
         <LongText style={{ marginTop: '2rem' }}>{caption}</LongText>
-      )}
+      ) : null}
     </ErrorBoundary>
   );
 }
