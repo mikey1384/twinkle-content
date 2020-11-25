@@ -219,6 +219,7 @@ export default function Pictures({
                     key={index}
                     picture={picture}
                     userIsUploader={profileId === userId}
+                    onUpdatePictureCaption={handleUpdatePictureCaption}
                   />
                 ))}
               </Carousel>
@@ -236,6 +237,7 @@ export default function Pictures({
                     picture={picture}
                     style={{ marginLeft: index === 0 ? 0 : '1rem' }}
                     userIsUploader={profileId === userId}
+                    onUpdatePictureCaption={handleUpdatePictureCaption}
                   />
                 ))}
               </div>
@@ -268,5 +270,19 @@ export default function Pictures({
     ]);
     onUpdateProfileInfo({ userId: profileId, pictures: pics });
     setAddPictureModalShown(false);
+  }
+
+  function handleUpdatePictureCaption({ caption, pictureId }) {
+    onUpdateProfileInfo({
+      userId: profileId,
+      pictures: pictures.map((picture) =>
+        picture.id === pictureId
+          ? {
+              ...picture,
+              caption
+            }
+          : picture
+      )
+    });
   }
 }

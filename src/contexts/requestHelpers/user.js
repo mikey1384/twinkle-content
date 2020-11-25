@@ -557,6 +557,20 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
+    async updateUserPictureCaption({ caption, pictureId }) {
+      try {
+        const {
+          data: { pictures }
+        } = await request.put(
+          `${URL}/user/picture/caption`,
+          { caption, pictureId },
+          auth()
+        );
+        return Promise.resolve(pictures);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async updateUserPictures(pictureIds) {
       try {
         const {

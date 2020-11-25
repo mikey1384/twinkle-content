@@ -4,7 +4,7 @@ import Button from 'components/Button';
 import Modal from 'components/Modal';
 import Caption from './Caption';
 import Icon from 'components/Icon';
-import { stringIsEmpty } from 'helpers/stringHelpers';
+import { stringIsEmpty, finalizeEmoji } from 'helpers/stringHelpers';
 
 ImageModal.propTypes = {
   caption: PropTypes.string,
@@ -78,17 +78,18 @@ export default function ImageModal({
             Cancel
           </Button>
         )}
-        {hasCaption &&
-          !stringIsEmpty(editedCaption) &&
-          editedCaption !== caption && (
-            <Button
-              style={{ marginLeft: '1rem' }}
-              color="green"
-              onClick={onEditCaption}
-            >
-              {stringIsEmpty(caption) ? 'Submit Caption' : 'Apply Changes'}
-            </Button>
-          )}
+        {hasCaption && editedCaption !== caption && (
+          <Button
+            style={{ marginLeft: '1rem' }}
+            color="green"
+            onClick={async () => {
+              await onEditCaption(finalizeEmoji(editedCaption));
+              setIsEditing(false);
+            }}
+          >
+            {stringIsEmpty(caption) ? 'Submit Caption' : 'Apply Changes'}
+          </Button>
+        )}
         {((!hasCaption && stringIsEmpty(editedCaption)) ||
           editedCaption === caption) && (
           <Button style={{ marginLeft: '1rem' }} color="blue" onClick={onHide}>

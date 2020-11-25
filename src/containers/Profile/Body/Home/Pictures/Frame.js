@@ -4,15 +4,26 @@ import ImageModal from 'components/Modals/ImageModal';
 import { Color, borderRadius, innerBorderRadius } from 'constants/css';
 import { cloudFrontURL } from 'constants/defaultValues';
 import { css } from 'emotion';
+import { useAppContext } from 'contexts';
 
 Frame.propTypes = {
   forCarousel: PropTypes.bool,
   picture: PropTypes.object.isRequired,
   userIsUploader: PropTypes.bool,
+  onUpdatePictureCaption: PropTypes.func,
   style: PropTypes.object
 };
 
-export default function Frame({ forCarousel, picture, style, userIsUploader }) {
+export default function Frame({
+  forCarousel,
+  onUpdatePictureCaption,
+  picture,
+  style,
+  userIsUploader
+}) {
+  const {
+    requestHelpers: { updateUserPictureCaption }
+  } = useAppContext();
   const imageUrl = useMemo(() => {
     return picture?.src ? `${cloudFrontURL}${picture?.src}` : '';
   }, [picture]);
@@ -59,9 +70,15 @@ export default function Frame({ forCarousel, picture, style, userIsUploader }) {
           downloadable={false}
           src={imageUrl}
           userIsUploader={userIsUploader}
+          onEditCaption={handleEditCaption}
           onHide={() => setImageModalShown(false)}
         />
       )}
     </div>
   );
+
+  async function handleEditCaption(text) {
+    await updateUserPictureCaption({ caption: text, pictureId: picture.id });
+    onUpdatePictureCaption({ caption: text, pictureId: picture.id });
+  }
 }
