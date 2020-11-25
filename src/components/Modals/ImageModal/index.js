@@ -30,7 +30,7 @@ export default function ImageModal({
           src={src}
           rel={fileName}
         />
-        {caption && <Caption />}
+        <Caption caption={caption} />
       </main>
       <footer>
         {downloadable && (
