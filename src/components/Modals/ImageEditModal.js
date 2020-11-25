@@ -7,11 +7,11 @@ import 'react-image-crop/dist/ReactCrop.css';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Loading from 'components/Loading';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
+import CaptionEditor from 'components/Texts/CaptionEditor';
 import { v1 as uuidv1 } from 'uuid';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
 import { finalizeEmoji } from 'helpers/stringHelpers';
-import CaptionEditor from './CaptionEditor';
 
 ImageEditModal.propTypes = {
   aspectFixed: PropTypes.bool,

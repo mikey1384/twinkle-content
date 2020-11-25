@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import LongText from 'components/Texts/LongText';
-import CaptionEditor from './CaptionEditor';
+import CaptionEditor from 'components/Texts/CaptionEditor';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
 Caption.propTypes = {
