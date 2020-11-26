@@ -189,10 +189,9 @@ export default function chatRequestHelpers({ auth, handleError }) {
       }
     },
     async leaveChannel(channelId) {
-      const timeStamp = Math.floor(Date.now() / 1000);
       try {
         await request.delete(
-          `${URL}/chat/channel?channelId=${channelId}&timeStamp=${timeStamp}`,
+          `${URL}/chat/channel?channelId=${channelId}`,
           auth()
         );
         return Promise.resolve();
