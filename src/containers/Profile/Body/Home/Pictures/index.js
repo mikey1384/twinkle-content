@@ -88,15 +88,19 @@ export default function Pictures({
           direction="left"
           style={{ marginLeft: '1rem' }}
           menuProps={[
-            {
-              label: (
-                <>
-                  <Icon icon="sort" />
-                  <span style={{ marginLeft: '1rem' }}>Reorder</span>
-                </>
-              ),
-              onClick: () => setReorderMode(true)
-            },
+            ...(pictures.length > 1
+              ? [
+                  {
+                    label: (
+                      <>
+                        <Icon icon="sort" />
+                        <span style={{ marginLeft: '1rem' }}>Reorder</span>
+                      </>
+                    ),
+                    onClick: () => setReorderMode(true)
+                  }
+                ]
+              : []),
             {
               label: (
                 <>
@@ -180,7 +184,7 @@ export default function Pictures({
             deleteMode
               ? 'Delete Pictures'
               : reorderMode
-              ? 'Reorder Pictures'
+              ? 'Reorder Pictures by Dragging Them'
               : 'Pictures'
           }
         >
