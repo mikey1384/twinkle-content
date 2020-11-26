@@ -130,7 +130,6 @@ function Comment({
           </div>
           {isEditing ? (
             <EditTextArea
-              autoFocus
               contentType="comment"
               contentId={id}
               text={content}

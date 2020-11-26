@@ -149,7 +149,6 @@ function Comment({
                   contentId={reward.id}
                   contentType="reward"
                   allowEmptyText
-                  autoFocus
                   rows={3}
                   text={reward.rewardComment}
                   onCancel={() =>
