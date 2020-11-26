@@ -52,9 +52,14 @@ export default function Mission({
     }
 
     async function handleCheckMissionStatus() {
-      const status = await checkMissionStatus(missionId);
+      const { filePath, feedback, status } = await checkMissionStatus(
+        missionId
+      );
       if (status && !(status === 'fail' && myAttempt?.tryingAgain)) {
-        onUpdateMissionAttempt({ missionId, newState: { status } });
+        onUpdateMissionAttempt({
+          missionId,
+          newState: { filePath, feedback, status }
+        });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
