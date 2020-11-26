@@ -78,19 +78,22 @@ export default function ImageModal({
             Cancel
           </Button>
         )}
-        {hasCaption && editedCaption !== caption && (
-          <Button
-            style={{ marginLeft: '1rem' }}
-            color="green"
-            onClick={async () => {
-              await onEditCaption(finalizeEmoji(editedCaption));
-              setIsEditing(false);
-            }}
-          >
-            {stringIsEmpty(caption) ? 'Submit Caption' : 'Apply Changes'}
-          </Button>
-        )}
+        {hasCaption &&
+          editedCaption !== caption &&
+          !(stringIsEmpty(caption) && stringIsEmpty(editedCaption)) && (
+            <Button
+              style={{ marginLeft: '1rem' }}
+              color="green"
+              onClick={async () => {
+                await onEditCaption(finalizeEmoji(editedCaption));
+                setIsEditing(false);
+              }}
+            >
+              {stringIsEmpty(caption) ? 'Submit Caption' : 'Apply Changes'}
+            </Button>
+          )}
         {((!hasCaption && stringIsEmpty(editedCaption)) ||
+          (stringIsEmpty(caption) && stringIsEmpty(editedCaption)) ||
           editedCaption === caption) && (
           <Button style={{ marginLeft: '1rem' }} color="blue" onClick={onHide}>
             Close
