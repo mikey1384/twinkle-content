@@ -92,7 +92,7 @@ export default function UsernameText({
   function onMouseEnter() {
     clearTimeout(timerRef.current);
     if (user.username && !isMobile(navigator)) {
-      timerRef.current = setTimeout(() => setMenuShown(true), 500);
+      timerRef.current = setTimeout(() => setMenuShown(true), 300);
     }
   }
 
