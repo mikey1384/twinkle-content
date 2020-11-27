@@ -68,7 +68,6 @@ export default function SubjectPanel({
     actions: {
       onChangeSpoilerStatus,
       onEditRewardComment,
-      onRecommendSubject,
       onSetXpRewardInterfaceShown
     }
   } = useContentContext();
@@ -103,7 +102,7 @@ export default function SubjectPanel({
     secretShown,
     fileName,
     filePath,
-    recommendations = [],
+    recommendations,
     rewards,
     xpRewardInterfaceShown
   } = useContentState({
@@ -146,11 +145,10 @@ export default function SubjectPanel({
 
   const isRecommendedByUser = useMemo(() => {
     return (
-      recommendations.filter(
-        (recommendation) => recommendation.userId === userId
-      ).length > 0
+      recommendations.filter((recommendation) => recommendation.userId === myId)
+        .length > 0
     );
-  }, [recommendations, userId]);
+  }, [recommendations, myId]);
 
   useEffect(() => {
     const titleIsEmpty = stringIsEmpty(editedTitle);
@@ -398,9 +396,6 @@ export default function SubjectPanel({
                   marginRight: '-1rem',
                   fontSize: '1.7rem'
                 }}
-                onRecommend={(recommendations) =>
-                  onRecommendSubject({ subjectId, recommendations })
-                }
                 onHide={() => setRecommendationInterfaceShown(false)}
                 recommendations={recommendations}
                 uploaderId={userId}

@@ -312,13 +312,6 @@ export default function ContentActions(dispatch) {
         contentId: Number(contentId)
       });
     },
-    onRecommendSubject({ recommendations, subjectId }) {
-      return dispatch({
-        type: 'RECOMMEND_SUBJECT',
-        recommendations,
-        subjectId
-      });
-    },
     onReloadContent({ contentId, contentType }) {
       return dispatch({
         type: 'RELOAD_CONTENT',

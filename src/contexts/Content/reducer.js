@@ -1581,6 +1581,13 @@ export default function ContentReducer(state, action) {
     case 'UPLOAD_SUBJECT':
       return {
         ...state,
+        ['subject' + action.subject.id]: {
+          contentId: action.subject.id,
+          contentType: 'subject',
+          comments: [],
+          recommendations: [],
+          rewards: []
+        },
         [contentKey]: {
           ...prevContentState,
           subjects: [action.subject].concat(prevContentState.subjects)

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { stringIsEmpty, addEmoji, finalizeEmoji } from 'helpers/stringHelpers';
 import PropTypes from 'prop-types';
 import Textarea from 'components/Texts/Textarea';
@@ -43,16 +43,33 @@ export default function SubjectInputForm({
   } = useInputContext();
   const subjectInputForm = state['subject' + contentType + contentId] || {};
   const {
-    title = '',
-    description = '',
-    rewardLevel = 0,
-    secretAnswer = ''
+    title: prevTitle = '',
+    description: prevDescription = '',
+    secretAnswer: prevSecretAnswer = '',
+    rewardLevel = 0
   } = subjectInputForm;
+  const [title, setTitle] = useState(prevTitle);
+  const titleRef = useRef(prevTitle);
+  const [description, setDescription] = useState(prevDescription);
+  const descriptionRef = useRef(prevDescription);
+  const [secretAnswer, setSecretAnswer] = useState(prevSecretAnswer);
+  const secretAnswerRef = useRef(prevSecretAnswer);
+
   const [submitting, setSubmitting] = useState(false);
+
   useEffect(() => {
     return function cleanUp() {
-      setSubmitting(false);
+      onSetSubjectInputForm({
+        contentId,
+        contentType,
+        form: {
+          title: titleRef.current,
+          description: descriptionRef.current,
+          secretAnswer: secretAnswerRef.current
+        }
+      });
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -66,20 +83,8 @@ export default function SubjectInputForm({
             borderColor: title.length > titleMaxChar && 'red',
             color: title.length > titleMaxChar && 'red'
           }}
-          onChange={text =>
-            onSetSubjectInputForm({
-              contentId,
-              contentType,
-              form: { title: text }
-            })
-          }
-          onKeyUp={event =>
-            onSetSubjectInputForm({
-              contentId,
-              contentType,
-              form: { title: addEmoji(event.target.value) }
-            })
-          }
+          onChange={handleSetTitle}
+          onKeyUp={(event) => handleSetTitle(addEmoji(event.target.value))}
         />
         {title.length > titleMaxChar && (
           <small style={{ color: 'red', fontSize: '1.6rem' }}>
@@ -97,19 +102,9 @@ export default function SubjectInputForm({
             minRows={rows}
             placeholder={descriptionPlaceholder}
             value={description}
-            onChange={event =>
-              onSetSubjectInputForm({
-                contentId,
-                contentType,
-                form: { description: event.target.value }
-              })
-            }
-            onKeyUp={event =>
-              onSetSubjectInputForm({
-                contentId,
-                contentType,
-                form: { description: addEmoji(event.target.value) }
-              })
+            onChange={(event) => handleSetDescription(event.target.value)}
+            onKeyUp={(event) =>
+              handleSetDescription(addEmoji(event.target.value))
             }
           />
           {description.length > descriptionMaxChar && (
@@ -131,19 +126,9 @@ export default function SubjectInputForm({
                 minRows={rows}
                 placeholder="Enter Secret Message... (Optional)"
                 value={secretAnswer}
-                onChange={event =>
-                  onSetSubjectInputForm({
-                    contentId,
-                    contentType,
-                    form: { secretAnswer: event.target.value }
-                  })
-                }
-                onKeyUp={event =>
-                  onSetSubjectInputForm({
-                    contentId,
-                    contentType,
-                    form: { secretAnswer: addEmoji(event.target.value) }
-                  })
+                onChange={(event) => handleSetSecretAnswer(event.target.value)}
+                onKeyUp={(event) =>
+                  handleSetSecretAnswer(addEmoji(event.target.value))
                 }
               />
               {secretAnswer.length > descriptionMaxChar && (
@@ -166,7 +151,7 @@ export default function SubjectInputForm({
                 fontSize: '3rem'
               }}
               rewardLevel={rewardLevel}
-              onSetRewardLevel={rewardLevel =>
+              onSetRewardLevel={(rewardLevel) =>
                 onSetSubjectInputForm({
                   contentId,
                   contentType,
@@ -217,6 +202,21 @@ export default function SubjectInputForm({
       form: undefined
     });
     onClose();
+  }
+
+  function handleSetTitle(text) {
+    setTitle(text);
+    titleRef.current = text;
+  }
+
+  function handleSetDescription(text) {
+    setDescription(text);
+    descriptionRef.current = text;
+  }
+
+  function handleSetSecretAnswer(text) {
+    setSecretAnswer(text);
+    secretAnswerRef.current = text;
   }
 
   async function handleSubmit(event) {
