@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   addEmoji,
   finalizeEmoji,
+  stringIsEmpty,
   trimWhiteSpaces
 } from 'helpers/stringHelpers';
 import { useOutsideClick } from 'helpers/hooks';
@@ -58,7 +59,12 @@ export default function EditSubjectForm({
 
   useEffect(() => {
     clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => handleChangeInput(title), 300);
+    setReadyForSubmit(false);
+    if (!stringIsEmpty(title)) {
+      timerRef.current = setTimeout(() => handleChangeInput(title), 300);
+    } else {
+      setReadyForSubmit(true);
+    }
     async function handleChangeInput(input) {
       await onChange(input);
       const content = input ? `${input[0].toUpperCase()}${input.slice(1)}` : '';
@@ -184,7 +190,6 @@ export default function EditSubjectForm({
 
   function onInputChange(text) {
     setTitle(text);
-    setReadyForSubmit(false);
     setHighlightedIndex(-1);
     setExactMatchExists(false);
   }
@@ -208,7 +213,7 @@ export default function EditSubjectForm({
       if (subjectId === currentSubjectId) return onClickOutSide();
       return onReloadChatSubject(subjectId);
     }
-
+    if (stringIsEmpty(title)) return;
     if (title && title.length > maxLength) return;
     if (
       title &&
