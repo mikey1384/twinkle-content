@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import DropdownList from 'components/DropdownList';
 import { Color } from 'constants/css';
@@ -23,6 +23,7 @@ export default function UsernameText({
   truncate = false
 }) {
   const history = useHistory();
+  const timerRef = useRef(null);
   const {
     requestHelpers: { loadChat, loadDMChannel }
   } = useAppContext();
@@ -40,7 +41,10 @@ export default function UsernameText({
         ...style
       }}
       className={className}
-      onMouseLeave={() => setMenuShown(false)}
+      onMouseLeave={() => {
+        clearTimeout(timerRef.current);
+        setMenuShown(false);
+      }}
     >
       <div
         style={{
@@ -86,7 +90,10 @@ export default function UsernameText({
   );
 
   function onMouseEnter() {
-    if (user.username && !isMobile(navigator)) setMenuShown(true);
+    clearTimeout(timerRef.current);
+    if (user.username && !isMobile(navigator)) {
+      timerRef.current = setTimeout(() => setMenuShown(true), 500);
+    }
   }
 
   async function onLinkClick() {
