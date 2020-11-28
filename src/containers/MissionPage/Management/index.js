@@ -5,6 +5,7 @@ import FilterBar from 'components/FilterBar';
 import Loading from 'components/Loading';
 import InvalidPage from 'components/InvalidPage';
 import ErrorBoundary from 'components/ErrorBoundary';
+import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
@@ -27,6 +28,7 @@ export default function Management({ mission, missionId, onSetMissionState }) {
   const { canEdit } = useMyState();
   const { managementTab: activeTab = 'pending' } = mission;
   const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   useEffect(() => {
     if (canEdit) {
@@ -36,7 +38,8 @@ export default function Management({ mission, missionId, onSetMissionState }) {
       setLoading(true);
       const {
         attemptObj,
-        [`${activeTab}AttemptIds`]: attemptIds
+        [`${activeTab}AttemptIds`]: attemptIds,
+        loadMoreButton
       } = await loadMissionAttempts({
         activeTab,
         missionId
@@ -45,7 +48,8 @@ export default function Management({ mission, missionId, onSetMissionState }) {
         missionId,
         newState: {
           [`${activeTab}AttemptIds`]: attemptIds,
-          attemptObj: { ...mission.attemptObj, ...attemptObj }
+          attemptObj: { ...mission.attemptObj, ...attemptObj },
+          loadMoreButton
         }
       });
       setLoading(false);
@@ -137,6 +141,40 @@ export default function Management({ mission, missionId, onSetMissionState }) {
           })}
         </>
       )}
+      {mission.loadMoreButton && (
+        <LoadMoreButton
+          style={{ marginTop: '2rem', fontSize: '1.7rem' }}
+          filled
+          color="green"
+          loading={loadingMore}
+          onClick={handleLoadMoreAttempts}
+        >
+          Load More button!
+        </LoadMoreButton>
+      )}
     </ErrorBoundary>
   );
+
+  async function handleLoadMoreAttempts() {
+    const currentAttemptIds = mission[`${activeTab}AttemptIds`];
+    setLoadingMore(true);
+    const {
+      attemptObj,
+      [`${activeTab}AttemptIds`]: attemptIds,
+      loadMoreButton
+    } = await loadMissionAttempts({
+      activeTab,
+      missionId,
+      lastAttemptId: currentAttemptIds[currentAttemptIds.length - 1]
+    });
+    onSetMissionState({
+      missionId,
+      newState: {
+        [`${activeTab}AttemptIds`]: currentAttemptIds.concat(attemptIds),
+        attemptObj: { ...mission.attemptObj, ...attemptObj },
+        loadMoreButton
+      }
+    });
+    setLoadingMore(false);
+  }
 }

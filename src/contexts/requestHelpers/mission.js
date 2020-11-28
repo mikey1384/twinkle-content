@@ -44,10 +44,12 @@ export default function missionRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async loadMissionAttempts({ activeTab, missionId }) {
+    async loadMissionAttempts({ activeTab, missionId, lastAttemptId }) {
       try {
         const { data } = await request.get(
-          `${URL}/mission/attempt?activeTab=${activeTab}&missionId=${missionId}`,
+          `${URL}/mission/attempt?activeTab=${activeTab}&missionId=${missionId}${
+            lastAttemptId ? `&lastAttemptId=${lastAttemptId}` : ''
+          }`,
           auth()
         );
         return Promise.resolve(data);
