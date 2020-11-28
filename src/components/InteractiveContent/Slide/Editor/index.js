@@ -37,7 +37,6 @@ Editor.propTypes = {
   forkButtonIds: PropTypes.array,
   forkButtonsObj: PropTypes.object,
   portalButton: PropTypes.object,
-  onThumbnailUpload: PropTypes.func,
   paths: PropTypes.object,
   interactiveId: PropTypes.number,
   slideId: PropTypes.number,
@@ -56,7 +55,6 @@ export default function Editor({
   isFork,
   isPortal,
   isLastSlide,
-  onThumbnailUpload,
   forkButtonIds,
   forkButtonsObj,
   portalButton,
@@ -273,6 +271,25 @@ export default function Editor({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (
+      editedAttachment &&
+      attachment &&
+      editedAttachment.fileUrl === attachment.fileUrl &&
+      !editedAttachment.thumbUrl &&
+      attachment.thumbUrl
+    ) {
+      handleSetInputState({
+        ...editForm,
+        editedAttachment: {
+          ...editedAttachment,
+          thumbUrl: attachment.thumbUrl
+        }
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [attachment, editedAttachment, interactiveId, slideId]);
+
   return (
     <div
       style={{
@@ -319,7 +336,6 @@ export default function Editor({
             fileUrl={editedAttachment?.fileUrl || ''}
             linkUrl={editedAttachment?.linkUrl || ''}
             thumbUrl={editedAttachment?.thumbUrl || ''}
-            slideId={slideId}
             newAttachment={editedAttachment?.newAttachment || null}
             onSetAttachmentState={(newState) => {
               handleSetInputState({
@@ -330,7 +346,6 @@ export default function Editor({
                 }
               });
             }}
-            onThumbnailUpload={onThumbnailUpload}
             uploadingFile={uploadingFile}
           />
           {uploadingFile && (

@@ -9,16 +9,12 @@ import { mb, returnMaxUploadSize } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 import { css } from 'emotion';
-import { useAppContext } from 'contexts';
-import { v1 as uuidv1 } from 'uuid';
 
 FileField.propTypes = {
   isChanging: PropTypes.bool,
   fileUrl: PropTypes.string,
   newAttachment: PropTypes.object,
   onSetAttachmentState: PropTypes.func.isRequired,
-  onThumbnailUpload: PropTypes.func,
-  slideId: PropTypes.number,
   thumbUrl: PropTypes.string,
   uploadingFile: PropTypes.bool
 };
@@ -28,14 +24,9 @@ export default function FileField({
   fileUrl,
   newAttachment,
   onSetAttachmentState,
-  onThumbnailUpload,
-  slideId,
   thumbUrl,
   uploadingFile
 }) {
-  const {
-    requestHelpers: { uploadThumbForInteractiveSlide }
-  } = useAppContext();
   const { fileUploadLvl } = useMyState();
   const maxSize = useMemo(() => returnMaxUploadSize(fileUploadLvl), [
     fileUploadLvl
@@ -66,11 +57,7 @@ export default function FileField({
           >
             <Icon icon="times" size="lg" />
           </Button>
-          <FileViewer
-            thumbUrl={thumbUrl}
-            src={fileUrl}
-            onThumbnailLoad={handleThumbnailLoad}
-          />
+          <FileViewer thumbUrl={thumbUrl} src={fileUrl} />
         </>
       ) : (
         <div
@@ -198,21 +185,5 @@ export default function FileField({
       });
     }
     event.target.value = null;
-  }
-
-  function handleThumbnailLoad(thumb) {
-    const dataUri = thumb.replace(/^data:image\/\w+;base64,/, '');
-    const buffer = Buffer.from(dataUri, 'base64');
-    const file = new File([buffer], 'thumb.png');
-    handleUploadThumb();
-
-    async function handleUploadThumb() {
-      const thumbUrl = await uploadThumbForInteractiveSlide({
-        slideId,
-        file,
-        path: uuidv1()
-      });
-      onThumbnailUpload(thumbUrl);
-    }
   }
 }

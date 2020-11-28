@@ -267,7 +267,6 @@ export default function Slide({
             portalButton={portalButton}
             slideId={slideId}
             slideObj={slideObj}
-            onThumbnailUpload={handleThumbnailUpload}
           />
         ) : isDeleted ? (
           <Deleted
