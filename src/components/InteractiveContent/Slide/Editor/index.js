@@ -103,6 +103,7 @@ export default function Editor({
     [interactiveId, slideId, state]
   );
 
+  const mounted = useRef(true);
   const filePathRef = useRef(null);
   const inputStateRef = useRef(prevInputState || defaultInputState);
   const [uploadingFile, setUploadingFile] = useState(false);
@@ -177,15 +178,17 @@ export default function Editor({
   ]);
 
   useEffect(() => {
+    mounted.current = true;
     return function saveInputStateBeforeUnmount() {
       onSetEditInteractiveForm({
         interactiveId,
         slideId,
         form: inputStateRef.current
       });
+      mounted.current = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [slideId]);
+  }, []);
 
   return (
     <div
@@ -402,11 +405,13 @@ export default function Editor({
         file: editedAttachment.newAttachment.file,
         onUploadProgress: handleUploadProgress
       });
-      onSetSlideState({
-        interactiveId,
-        slideId,
-        newState: { fileUploadComplete: true }
-      });
+      if (mounted.current) {
+        onSetSlideState({
+          interactiveId,
+          slideId,
+          newState: { fileUploadComplete: true }
+        });
+      }
       const post = {
         ...editForm,
         editedAttachment: {
@@ -420,18 +425,24 @@ export default function Editor({
         slideId,
         post
       });
-      onChangeNumUpdates({ interactiveId, numUpdates });
-      onSetSlideState({
-        interactiveId,
-        slideId,
-        newState: {
-          ...newState,
-          isEditing: false,
-          fileUploadComplete: false,
-          fileUploadProgress: null
-        }
-      });
-      handleSetInputState(post);
+      if (mounted.current) {
+        onChangeNumUpdates({ interactiveId, numUpdates });
+      }
+      if (mounted.current) {
+        onSetSlideState({
+          interactiveId,
+          slideId,
+          newState: {
+            ...newState,
+            isEditing: false,
+            fileUploadComplete: false,
+            fileUploadProgress: null
+          }
+        });
+      }
+      if (mounted.current) {
+        handleSetInputState(post);
+      }
     }
 
     function handleUploadProgress({ loaded, total }) {
@@ -463,17 +474,23 @@ export default function Editor({
       slideId,
       post
     });
-    onChangeNumUpdates({ interactiveId, numUpdates });
-    onSetSlideState({
-      interactiveId,
-      slideId,
-      newState: {
-        ...newState,
-        isEditing: false,
-        fileUploadComplete: false,
-        fileUploadProgress: null
-      }
-    });
-    handleSetInputState(post);
+    if (mounted.current) {
+      onChangeNumUpdates({ interactiveId, numUpdates });
+    }
+    if (mounted.current) {
+      onSetSlideState({
+        interactiveId,
+        slideId,
+        newState: {
+          ...newState,
+          isEditing: false,
+          fileUploadComplete: false,
+          fileUploadProgress: null
+        }
+      });
+    }
+    if (mounted.current) {
+      handleSetInputState(post);
+    }
   }
 }
