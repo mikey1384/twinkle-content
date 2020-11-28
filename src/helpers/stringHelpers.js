@@ -565,7 +565,7 @@ export function processedStringWithURL(string) {
     .replace(
       hugeWordRegex,
       (string) =>
-        `<span style="font-size: 2.5rem;">${string.substring(
+        `<span style="font-size: 1.9em;">${string.substring(
           2,
           string.length - 2
         )}</span>`
@@ -573,7 +573,7 @@ export function processedStringWithURL(string) {
     .replace(
       hugeSentenceRegex,
       (string) =>
-        `<span style="font-size: 2.5rem;">${string.substring(
+        `<span style="font-size: 1.9em;">${string.substring(
           2,
           string.length - 2
         )}</span>`
@@ -581,7 +581,7 @@ export function processedStringWithURL(string) {
     .replace(
       bigWordRegex,
       (string) =>
-        `<span style="font-size: 2rem;">${string.substring(
+        `<span style="font-size: 1.4em;">${string.substring(
           2,
           string.length - 2
         )}</span>`
@@ -589,7 +589,7 @@ export function processedStringWithURL(string) {
     .replace(
       bigSentenceRegex,
       (string) =>
-        `<span style="font-size: 2rem;">${string.substring(
+        `<span style="font-size: 1.4em;">${string.substring(
           2,
           string.length - 2
         )}</span>`
@@ -597,7 +597,7 @@ export function processedStringWithURL(string) {
     .replace(
       smallWordRegex,
       (string) =>
-        `<span style="font-size: 1.2rem;">${string.substring(
+        `<span style="font-size: 0.7em;">${string.substring(
           2,
           string.length - 2
         )}</span>`
@@ -605,7 +605,7 @@ export function processedStringWithURL(string) {
     .replace(
       smallSentenceRegex,
       (string) =>
-        `<span style="font-size: 1.2rem;">${string.substring(
+        `<span style="font-size: 0.7em;">${string.substring(
           2,
           string.length - 2
         )}</span>`
@@ -613,7 +613,7 @@ export function processedStringWithURL(string) {
     .replace(
       tinyWordRegex,
       (string) =>
-        `<span style="font-size: 0.7rem;">${string.substring(
+        `<span style="font-size: 0.5em;">${string.substring(
           2,
           string.length - 2
         )}</span>`
@@ -621,7 +621,7 @@ export function processedStringWithURL(string) {
     .replace(
       tinySentenceRegex,
       (string) =>
-        `<span style="font-size: 0.8rem;">${string.substring(
+        `<span style="font-size: 0.5em;">${string.substring(
           2,
           string.length - 2
         )}</span>`
