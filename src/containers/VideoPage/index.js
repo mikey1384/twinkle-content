@@ -227,6 +227,7 @@ export default function VideoPage({
         width: CALC(100% - 2rem);
         height: 100%;
         margin-top: 1rem;
+        margin-bottom: 1rem;
         @media (max-width: ${mobileMaxWidth}) {
           margin-top: 0;
           width: 100%;
@@ -416,8 +417,7 @@ export default function VideoPage({
               style={{
                 background: '#fff',
                 border: `1px solid ${Color.borderGray()}`,
-                padding: '1rem',
-                paddingBottom: '1rem'
+                padding: '1rem'
               }}
             >
               <p
