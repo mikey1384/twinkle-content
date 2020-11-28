@@ -8,7 +8,9 @@ import {
 import {
   exceedsCharLimit,
   finalizeEmoji,
-  stringIsEmpty
+  stringIsEmpty,
+  isValidUrl,
+  isValidYoutubeUrl
 } from 'helpers/stringHelpers';
 import { edit } from 'constants/placeholders';
 import Textarea from 'components/Texts/Textarea';
@@ -20,6 +22,7 @@ import Button from 'components/Button';
 import Icon from 'components/Icon';
 import ForkButtonsField from './ForkButtonsField';
 import GoBackField from './GoBackField';
+import { isEqual } from 'lodash';
 import { v1 as uuidv1 } from 'uuid';
 
 Editor.propTypes = {
@@ -149,6 +152,72 @@ export default function Editor({
   );
 
   const doneButtonDisabled = useMemo(() => {
+    if (editedAttachment?.isChanging && !editedAttachment?.newAttachment) {
+      return false;
+    }
+    const portalButtonNotChanged = editedIsPortal
+      ? isEqual(editedPortalButton, portalButton)
+      : true;
+    const forkButtonOrderNotChanged = editedIsFork
+      ? isEqual(editedForkButtonIds, forkButtonIds)
+      : true;
+    const forkButtonNotChanged = editedIsFork
+      ? isEqual(editedForkButtonsObj, forkButtonsObj)
+      : true;
+    const attachmentNotChanged = editedAttachment
+      ? isEqual(
+          {
+            ...editedAttachment,
+            isYouTubeVideo:
+              editedAttachment.type !== 'link'
+                ? null
+                : editedAttachment.isYouTubeVideo,
+            linkUrl:
+              editedAttachment.type !== 'link'
+                ? null
+                : editedAttachment.linkUrl,
+            type: null,
+            isChanging: null,
+            newAttachment: editedAttachment?.newAttachment
+          },
+          {
+            ...attachment,
+            isYouTubeVideo:
+              attachment?.type !== 'link' ? null : attachment?.isYouTubeVideo,
+            linkUrl: attachment?.type !== 'link' ? null : attachment?.linkUrl,
+            type: null,
+            isChanging: null,
+            newAttachment: attachment?.newAttachment
+          }
+        )
+      : true;
+
+    if (
+      portalButtonNotChanged &&
+      editedIsFork === isFork &&
+      editedIsPortal === isPortal &&
+      attachmentNotChanged &&
+      editedHeading === heading &&
+      editedDescription === description &&
+      forkButtonOrderNotChanged &&
+      forkButtonNotChanged
+    ) {
+      return true;
+    }
+    if (editedAttachment.type === 'link') {
+      if (stringIsEmpty(editedAttachment?.linkUrl)) {
+        return true;
+      }
+      if (!isValidUrl(editedAttachment?.linkUrl)) {
+        return true;
+      }
+      if (
+        editedAttachment.isYouTubeVideo &&
+        !isValidYoutubeUrl(editedAttachment?.linkUrl)
+      ) {
+        return true;
+      }
+    }
     if (descriptionExceedsCharLimit) {
       return true;
     }
@@ -171,9 +240,23 @@ export default function Editor({
     }
     return false;
   }, [
-    descriptionExceedsCharLimit,
+    editedPortalButton,
+    portalButton,
     editedIsFork,
+    isFork,
+    editedIsPortal,
+    isPortal,
+    editedAttachment,
+    attachment,
+    editedHeading,
+    heading,
+    editedDescription,
+    description,
+    editedForkButtonIds,
+    forkButtonIds,
     editedForkButtonsObj,
+    forkButtonsObj,
+    descriptionExceedsCharLimit,
     headingExceedsCharLimit
   ]);
 
@@ -461,8 +544,11 @@ export default function Editor({
 
   async function handleSubmit(event) {
     event.preventDefault();
+    const deletingAttachment =
+      editedAttachment.isChanging && !editedAttachment.newAttachment;
     const post = {
       ...editForm,
+      editedAttachment: deletingAttachment ? null : editedAttachment,
       editedPaths: paths,
       editedHeading: finalizeEmoji(editedHeading),
       editedDescription: finalizeEmoji(editedDescription)
