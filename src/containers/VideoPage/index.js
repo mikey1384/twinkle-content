@@ -227,7 +227,6 @@ export default function VideoPage({
         width: CALC(100% - 2rem);
         height: 100%;
         margin-top: 1rem;
-        margin-bottom: 1rem;
         @media (max-width: ${mobileMaxWidth}) {
           margin-top: 0;
           width: 100%;
@@ -418,7 +417,7 @@ export default function VideoPage({
                 background: '#fff',
                 border: `1px solid ${Color.borderGray()}`,
                 padding: '1rem',
-                marginBottom: '1rem'
+                paddingBottom: '1rem'
               }}
             >
               <p
@@ -456,6 +455,7 @@ export default function VideoPage({
                 userId={userId}
               />
             </div>
+            <div style={{ height: '10rem' }} />
             {resultModalShown && (
               <ResultModal
                 onHide={() => setResultModalShown(false)}
