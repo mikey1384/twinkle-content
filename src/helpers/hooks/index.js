@@ -185,7 +185,7 @@ export function useScrollPosition({
 }) {
   const BodyRef = useRef(document.scrollingElement || document.documentElement);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     document.getElementById('App').scrollTop = scrollPositions[pathname] || 0;
     BodyRef.current.scrollTop = scrollPositions[pathname] || 0;
     // prevents bug on mobile devices where tapping stops working after user swipes left to go to previous page
