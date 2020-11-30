@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ListItem from './ListItem';
 import RewardText from 'components/Texts/RewardText';
 import ErrorBoundary from 'components/ErrorBoundary';
+import FilterBar from 'components/FilterBar';
 import { gifTable } from 'constants/defaultValues';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
@@ -20,10 +21,25 @@ export default function MissionList({
   missions,
   missionObj
 }) {
+  const [selectedTab, setSelectedTab] = useState('ongoing');
   return (
     <ErrorBoundary>
       <div style={style} className={className}>
         <p style={{ fontWeight: 'bold', fontSize: '2.5rem' }}>All Missions</p>
+        <FilterBar style={{ marginTop: '1rem' }} bordered>
+          <nav
+            className={selectedTab === 'ongoing' ? 'active' : ''}
+            onClick={() => setSelectedTab('ongoing')}
+          >
+            In Progress
+          </nav>
+          <nav
+            className={selectedTab === 'complete' ? 'active' : ''}
+            onClick={() => setSelectedTab('complete')}
+          >
+            Complete
+          </nav>
+        </FilterBar>
         <div>
           <div style={{ marginTop: '1rem' }}>
             {missions.map((missionId, index) => {
