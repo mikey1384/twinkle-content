@@ -26,7 +26,8 @@ export const mb = 1000;
 export const gifTable = {
   1: `${cloudFrontURL}/missions/copy-and-paste/thumb.gif`,
   2: `${cloudFrontURL}/missions/take-a-screenshot/thumb.gif`,
-  3: `${cloudFrontURL}/missions/how-to-google/thumb.gif`
+  3: `${cloudFrontURL}/missions/how-to-google/thumb.gif`,
+  4: `${cloudFrontURL}/missions/grammar/thumb.gif`
 };
 export const priceTable = {
   chatSubject: 20,
