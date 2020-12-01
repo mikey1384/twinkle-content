@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import TakeScreenshot from './TakeScreenshot';
 import CopyAndPaste from './CopyAndPaste';
 import Googling from './Googling';
+import Grammar from './Grammar';
 
 Submit.propTypes = {
   fileUploadComplete: PropTypes.bool,
@@ -35,6 +36,9 @@ export default function Submit({
       )}
       {mission.missionType === 'copy-and-paste' && (
         <CopyAndPaste mission={mission} onSetMissionState={onSetMissionState} />
+      )}
+      {mission.missionType === 'grammar' && (
+        <Grammar mission={mission} onSetMissionState={onSetMissionState} />
       )}
     </div>
   );
