@@ -7,11 +7,11 @@ import { css } from 'emotion';
 
 NavButton.propTypes = {
   disabled: PropTypes.bool,
-  nextSlide: PropTypes.func,
+  onGoToNextSlide: PropTypes.func,
   left: PropTypes.bool
 };
 
-export default function NavButton({ disabled, nextSlide, left }) {
+export default function NavButton({ disabled, onGoToNextSlide, left }) {
   return disabled ? null : (
     <ErrorBoundary>
       <Button
@@ -32,6 +32,6 @@ export default function NavButton({ disabled, nextSlide, left }) {
 
   function handleClick(event) {
     event.preventDefault();
-    nextSlide();
+    onGoToNextSlide();
   }
 }

@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import ButtonGroup from 'components/Buttons/ButtonGroup';
 import NavButton from './NavButton';
 import Button from 'components/Button';
 import ProgressBar from 'components/ProgressBar';
@@ -24,14 +23,11 @@ Carousel.propTypes = {
   onShowAll: PropTypes.func,
   progressBar: PropTypes.bool,
   showAllButton: PropTypes.bool,
-  showQuestionsBuilder: PropTypes.func,
   slideIndex: PropTypes.number,
   slidesToScroll: PropTypes.number.isRequired,
   slidesToShow: PropTypes.number,
   slideWidthMultiplier: PropTypes.number,
-  style: PropTypes.object,
-  userCanEditThis: PropTypes.bool,
-  userIsUploader: PropTypes.bool
+  style: PropTypes.object
 };
 
 export default function Carousel({
@@ -50,10 +46,7 @@ export default function Carousel({
   slidesToShow = 1,
   slideWidthMultiplier = 1,
   showAllButton,
-  showQuestionsBuilder,
-  style,
-  userCanEditThis,
-  userIsUploader
+  style
 }) {
   const {
     state: {
@@ -106,17 +99,6 @@ export default function Carousel({
           ...style
         }}
       >
-        {(userIsUploader || userCanEditThis) && (
-          <a
-            style={{
-              position: 'absolute',
-              cursor: 'pointer'
-            }}
-            onClick={showQuestionsBuilder}
-          >
-            Add/Edit Questions
-          </a>
-        )}
         {progressBar && (
           <div
             style={{
@@ -127,23 +109,6 @@ export default function Carousel({
               alignItems: 'center'
             }}
           >
-            <ButtonGroup
-              buttons={[
-                {
-                  label: 'Prev',
-                  onClick: previousSlide,
-                  transparent: true,
-                  disabled: currentSlide === 0
-                },
-                {
-                  label: currentSlide + 1 === slideCount ? 'Finish' : 'Next',
-                  onClick:
-                    currentSlide + 1 === slideCount ? onFinish : nextSlide,
-                  color: currentSlide + 1 === slideCount ? 'blue' : 'black',
-                  transparent: currentSlide + 1 !== slideCount
-                }
-              ]}
-            />
             <ProgressBar
               progress={((currentSlide + 1) / slideCount) * 100}
               color={
@@ -304,7 +269,7 @@ export default function Carousel({
               left
               key={0}
               disabled={currentSlide === 0}
-              nextSlide={previousSlide}
+              nextSlide={handleGoToPreviousSlide}
             />
             <div key={1}>
               {showAllButton ? (
@@ -324,11 +289,40 @@ export default function Carousel({
               ) : (
                 <NavButton
                   disabled={slideCount - (currentSlide + 1) < slidesToShow}
-                  nextSlide={nextSlide}
+                  onGoToNextSlide={handleGoToNextSlide}
                 />
               )}
             </div>
           </>
+        )}
+        {progressBar && (
+          <div
+            style={{
+              display: 'flex',
+              marginTop: '0.5rem',
+              justifyContent: 'flex-end',
+              width: '100%'
+            }}
+          >
+            <Button
+              style={{ marginRight: '0.5rem', fontSize: '1.7rem' }}
+              onClick={handleGoToPreviousSlide}
+              transparent
+              disabled={currentSlide === 0}
+            >
+              Prev
+            </Button>
+            <Button
+              filled
+              style={{ fontSize: '1.7rem' }}
+              onClick={
+                currentSlide + 1 === slideCount ? onFinish : handleGoToNextSlide
+              }
+              color={currentSlide + 1 === slideCount ? 'brownOrange' : 'green'}
+            >
+              {currentSlide + 1 === slideCount ? 'Finish' : 'Next'}
+            </Button>
+          </div>
         )}
       </div>
     </ErrorBoundary>
@@ -404,13 +398,13 @@ export default function Carousel({
         if (currentSlide >= slideCount - slidesToShow) {
           setEasing(DEFAULT_EDGE_EASING);
         } else {
-          nextSlide();
+          handleGoToNextSlide();
         }
       } else if (touchObject.direction === -1) {
         if (currentSlide <= 0) {
           setEasing(DEFAULT_EDGE_EASING);
         } else {
-          previousSlide();
+          handleGoToPreviousSlide();
         }
       }
     } else {
@@ -421,7 +415,7 @@ export default function Carousel({
     scrollYRef.current = null;
   }
 
-  function nextSlide() {
+  function handleGoToNextSlide() {
     if (currentSlide < slideCount - slidesToShow) {
       goToSlide(
         Math.min(currentSlide + slidesToScroll, slideCount - slidesToShow)
@@ -429,7 +423,7 @@ export default function Carousel({
     }
   }
 
-  function previousSlide() {
+  function handleGoToPreviousSlide() {
     if (currentSlide > 0) {
       goToSlide(Math.max(0, currentSlide - slidesToScroll));
     }

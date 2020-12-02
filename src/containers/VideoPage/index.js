@@ -298,14 +298,23 @@ export default function VideoPage({
                     minimized={!watchTabActive}
                   />
                 )}
+                {(userIsUploader || userCanEditThis) && (
+                  <div style={{ marginTop: rewardLevel ? '1rem' : 0 }}>
+                    <a
+                      style={{
+                        cursor: 'pointer',
+                        fontSize: '1.5rem'
+                      }}
+                      onClick={() => setQuestionsBuilderShown(true)}
+                    >
+                      Add/Edit Questions
+                    </a>
+                  </div>
+                )}
                 {!watchTabActive && questions.length > 0 && (
                   <Carousel
                     allowDrag={false}
-                    style={{ marginTop: !!rewardLevel && '1rem' }}
                     progressBar
-                    showQuestionsBuilder={() => setQuestionsBuilderShown(true)}
-                    userIsUploader={userIsUploader}
-                    userCanEditThis={userCanEditThis}
                     slidesToShow={1}
                     slidesToScroll={1}
                     slideIndex={currentSlide}
