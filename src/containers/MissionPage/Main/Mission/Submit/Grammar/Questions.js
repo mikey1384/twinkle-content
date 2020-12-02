@@ -2,12 +2,31 @@ import React, { useState } from 'react';
 import QuestionSlide from './QuestionSlide';
 import Carousel from 'components/Carousel';
 
-const choices = [
-  { label: 'graduate by', checked: false },
-  { label: 'graduate from', checked: false },
-  { label: 'graduating', checked: false },
-  { label: 'graduating from', checked: false }
-];
+const questionObj = {
+  0: {
+    objective:
+      'Choose the word or phrase that correctly completes the sentence',
+    question: 'What year did you _____ university?',
+    choices: [
+      { label: 'graduate by', checked: false },
+      { label: 'graduate from', checked: false },
+      { label: 'graduating', checked: false },
+      { label: 'graduating from', checked: false }
+    ]
+  },
+  1: {
+    objective: 'Another objective',
+    question: 'What year did you _____ university?',
+    choices: [
+      { label: 'graduate by', checked: false },
+      { label: 'graduate from', checked: false },
+      { label: 'graduating', checked: false },
+      { label: 'graduating from', checked: false }
+    ]
+  }
+};
+
+const questionIds = [0, 1];
 
 export default function Questions() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -31,20 +50,17 @@ export default function Questions() {
               marginBottom: '-1rem'
             }}
           >
-            <h2>
-              Choose the word or phrase that correctly completes the sentence
-            </h2>
+            <h2>{questionObj[currentSlide].objective}</h2>
           </div>
         }
       >
-        <QuestionSlide
-          question="What year did you _____ university?"
-          choices={choices}
-        />
-        <QuestionSlide
-          question="What year did you _____ university?"
-          choices={choices}
-        />
+        {questionIds.map((questionId) => (
+          <QuestionSlide
+            key={questionId}
+            question={questionObj[questionId].question}
+            choices={questionObj[questionId].choices}
+          />
+        ))}
       </Carousel>
     </div>
   );
