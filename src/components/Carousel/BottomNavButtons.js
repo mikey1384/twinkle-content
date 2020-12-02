@@ -7,14 +7,16 @@ BottomNavButtons.propTypes = {
   onPrev: PropTypes.func,
   onNext: PropTypes.func.isRequired,
   onFinish: PropTypes.func.isRequired,
-  slideCount: PropTypes.number.isRequired
+  slideCount: PropTypes.number.isRequired,
+  onCheckNavCondition: PropTypes.func
 };
 export default function BottomNavButtons({
   currentSlide,
   onPrev,
   onNext,
   onFinish,
-  slideCount
+  slideCount,
+  onCheckNavCondition
 }) {
   return (
     <div
@@ -25,22 +27,34 @@ export default function BottomNavButtons({
         width: '100%'
       }}
     >
-      <Button
-        style={{ marginRight: '0.5rem', fontSize: '1.7rem' }}
-        onClick={onPrev}
-        transparent
-        disabled={currentSlide === 0}
-      >
-        Prev
-      </Button>
-      <Button
-        filled
-        style={{ fontSize: '1.7rem' }}
-        onClick={currentSlide + 1 === slideCount ? onFinish : onNext}
-        color={currentSlide + 1 === slideCount ? 'brownOrange' : 'green'}
-      >
-        {currentSlide + 1 === slideCount ? 'Finish' : 'Next'}
-      </Button>
+      {onCheckNavCondition ? (
+        <Button
+          filled
+          color="green"
+          onClick={() => onCheckNavCondition(onNext)}
+        >
+          Check
+        </Button>
+      ) : (
+        <>
+          <Button
+            style={{ marginRight: '0.5rem', fontSize: '1.7rem' }}
+            onClick={onPrev}
+            transparent
+            disabled={currentSlide === 0}
+          >
+            Prev
+          </Button>
+          <Button
+            filled
+            style={{ fontSize: '1.7rem' }}
+            onClick={currentSlide + 1 === slideCount ? onFinish : onNext}
+            color={currentSlide + 1 === slideCount ? 'brownOrange' : 'green'}
+          >
+            {currentSlide + 1 === slideCount ? 'Finish' : 'Next'}
+          </Button>
+        </>
+      )}
     </div>
   );
 }

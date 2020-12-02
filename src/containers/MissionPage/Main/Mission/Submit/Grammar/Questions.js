@@ -41,6 +41,7 @@ export default function Questions() {
         slideIndex={currentSlide}
         afterSlide={setCurrentSlide}
         onFinish={() => console.log('finished')}
+        onCheckNavCondition={handleCheckNavCondition}
         title={
           <div
             style={{
@@ -64,4 +65,9 @@ export default function Questions() {
       </Carousel>
     </div>
   );
+
+  function handleCheckNavCondition(onNext) {
+    console.log('works');
+    onNext();
+  }
 }
