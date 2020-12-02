@@ -4,9 +4,9 @@ import Button from 'components/Button';
 
 BottomNavButtons.propTypes = {
   currentSlide: PropTypes.number.isRequired,
-  onPrev: PropTypes.func.isRequired,
+  onPrev: PropTypes.func,
   onNext: PropTypes.func.isRequired,
-  onFinish: PropTypes.func,
+  onFinish: PropTypes.func.isRequired,
   slideCount: PropTypes.number.isRequired
 };
 export default function BottomNavButtons({
