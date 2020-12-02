@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CheckListGroup from 'components/CheckListGroup';
-import { Color, borderRadius } from 'constants/css';
+import { borderRadius } from 'constants/css';
 
 QuestionSlide.propTypes = {
   choices: PropTypes.array.isRequired
@@ -12,7 +12,6 @@ export default function QuestionSlide({ choices }) {
     <div
       style={{
         width: '100%',
-        border: `1px solid ${Color.borderGray()}`,
         padding: '2rem 2rem 3rem 2rem',
         borderRadius
       }}
