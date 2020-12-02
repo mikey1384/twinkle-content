@@ -10,6 +10,7 @@ import { Color } from 'constants/css';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 import { useExploreContext } from 'contexts';
 import { css } from 'emotion';
+import BottomNavButtons from './BottomNavButtons';
 
 Carousel.propTypes = {
   afterSlide: PropTypes.func,
@@ -296,33 +297,13 @@ export default function Carousel({
           </>
         )}
         {progressBar && (
-          <div
-            style={{
-              display: 'flex',
-              marginTop: '0.5rem',
-              justifyContent: 'flex-end',
-              width: '100%'
-            }}
-          >
-            <Button
-              style={{ marginRight: '0.5rem', fontSize: '1.7rem' }}
-              onClick={handleGoToPreviousSlide}
-              transparent
-              disabled={currentSlide === 0}
-            >
-              Prev
-            </Button>
-            <Button
-              filled
-              style={{ fontSize: '1.7rem' }}
-              onClick={
-                currentSlide + 1 === slideCount ? onFinish : handleGoToNextSlide
-              }
-              color={currentSlide + 1 === slideCount ? 'brownOrange' : 'green'}
-            >
-              {currentSlide + 1 === slideCount ? 'Finish' : 'Next'}
-            </Button>
-          </div>
+          <BottomNavButtons
+            currentSlide={currentSlide}
+            onFinish={onFinish}
+            onPrev={handleGoToPreviousSlide}
+            onNext={handleGoToNextSlide}
+            slideCount={slideCount}
+          />
         )}
       </div>
     </ErrorBoundary>
