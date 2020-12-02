@@ -28,7 +28,8 @@ Carousel.propTypes = {
   slidesToScroll: PropTypes.number.isRequired,
   slidesToShow: PropTypes.number,
   slideWidthMultiplier: PropTypes.number,
-  style: PropTypes.object
+  style: PropTypes.object,
+  title: PropTypes.any
 };
 
 export default function Carousel({
@@ -47,7 +48,8 @@ export default function Carousel({
   slidesToShow = 1,
   slideWidthMultiplier = 1,
   showAllButton,
-  style
+  style,
+  title
 }) {
   const {
     state: {
@@ -120,6 +122,7 @@ export default function Carousel({
               style={{ width: '100%' }}
               text={`${currentSlide + 1}/${slideCount}`}
             />
+            {title}
           </div>
         )}
         <div

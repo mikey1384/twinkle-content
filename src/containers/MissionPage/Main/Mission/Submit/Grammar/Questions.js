@@ -13,16 +13,39 @@ export default function Questions() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   return (
-    <Carousel
-      allowDrag={false}
-      progressBar
-      slidesToShow={1}
-      slidesToScroll={1}
-      slideIndex={currentSlide}
-      afterSlide={setCurrentSlide}
-      onFinish={() => console.log('finished')}
-    >
-      <QuestionSlide choices={choices} />
-    </Carousel>
+    <div>
+      <Carousel
+        allowDrag={false}
+        progressBar
+        slidesToShow={1}
+        slidesToScroll={1}
+        slideIndex={currentSlide}
+        afterSlide={setCurrentSlide}
+        onFinish={() => console.log('finished')}
+        title={
+          <div
+            style={{
+              width: '100%',
+              textAlign: 'center',
+              marginTop: '6rem',
+              marginBottom: '-1rem'
+            }}
+          >
+            <h2>
+              Choose the word or phrase that correctly completes the sentence
+            </h2>
+          </div>
+        }
+      >
+        <QuestionSlide
+          question="What year did you _____ university?"
+          choices={choices}
+        />
+        <QuestionSlide
+          question="What year did you _____ university?"
+          choices={choices}
+        />
+      </Carousel>
+    </div>
   );
 }

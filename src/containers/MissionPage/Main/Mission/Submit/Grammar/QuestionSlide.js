@@ -4,32 +4,31 @@ import CheckListGroup from 'components/CheckListGroup';
 import { borderRadius } from 'constants/css';
 
 QuestionSlide.propTypes = {
+  question: PropTypes.string.isRequired,
   choices: PropTypes.array.isRequired
 };
 
-export default function QuestionSlide({ choices }) {
+export default function QuestionSlide({ question, choices }) {
   return (
     <div
       style={{
         width: '100%',
-        padding: '2rem 2rem 3rem 2rem',
+        padding: '2rem 1rem 3rem 1rem',
         borderRadius
       }}
     >
-      <div style={{ width: '100%' }}>
-        <div style={{ width: '100%', textAlign: 'center' }}>
-          <h3>What year did you _____ university?</h3>
-        </div>
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
         <div
           style={{
-            width: '100%',
+            width: '80%',
             display: 'flex',
-            justifyContent: 'center',
+            flexDirection: 'column',
             marginTop: '3rem'
           }}
         >
+          <h3>{question}</h3>
           <CheckListGroup
-            style={{ marginTop: '1.5rem', width: '80%', fontSize: '1.6rem' }}
+            style={{ marginTop: '2rem', fontSize: '1.6rem' }}
             onSelect={(index) => console.log(index)}
             listItems={choices}
           />
