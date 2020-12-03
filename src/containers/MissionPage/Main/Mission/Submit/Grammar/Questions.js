@@ -30,16 +30,21 @@ const questionIds = [0, 1];
 
 export default function Questions() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [conditionPassStatus, setConditionPassStatus] = useState('');
 
   return (
     <div>
       <Carousel
         allowDrag={false}
+        conditionPassStatus={conditionPassStatus}
         progressBar
         slidesToShow={1}
         slidesToScroll={1}
         slideIndex={currentSlide}
-        afterSlide={setCurrentSlide}
+        afterSlide={(index) => {
+          setConditionPassStatus('');
+          setCurrentSlide(index);
+        }}
         onFinish={() => console.log('finished')}
         onCheckNavCondition={handleCheckNavCondition}
         title={
@@ -66,8 +71,7 @@ export default function Questions() {
     </div>
   );
 
-  function handleCheckNavCondition(onNext) {
-    console.log('works');
-    onNext();
+  function handleCheckNavCondition() {
+    setConditionPassStatus('fail');
   }
 }

@@ -19,6 +19,7 @@ Carousel.propTypes = {
   children: PropTypes.array.isRequired,
   cellSpacing: PropTypes.number,
   className: PropTypes.string,
+  conditionPassStatus: PropTypes.string,
   framePadding: PropTypes.string,
   onCheckNavCondition: PropTypes.func,
   onFinish: PropTypes.func,
@@ -40,6 +41,7 @@ export default function Carousel({
   className,
   cellSpacing = 0,
   children,
+  conditionPassStatus,
   framePadding = '0px',
   onCheckNavCondition,
   onFinish,
@@ -303,6 +305,7 @@ export default function Carousel({
         )}
         {progressBar && (
           <BottomNavButtons
+            conditionPassStatus={conditionPassStatus}
             currentSlide={currentSlide}
             onFinish={onFinish}
             onPrev={handleGoToPreviousSlide}

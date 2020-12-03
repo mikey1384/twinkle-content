@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
+import ConditionalButton from './ConditionalButton';
 
 BottomNavButtons.propTypes = {
+  conditionPassStatus: PropTypes.string,
   currentSlide: PropTypes.number.isRequired,
   onPrev: PropTypes.func,
   onNext: PropTypes.func.isRequired,
@@ -16,7 +18,8 @@ export default function BottomNavButtons({
   onNext,
   onFinish,
   slideCount,
-  onCheckNavCondition
+  onCheckNavCondition,
+  conditionPassStatus
 }) {
   return (
     <div
@@ -28,13 +31,11 @@ export default function BottomNavButtons({
       }}
     >
       {onCheckNavCondition ? (
-        <Button
-          filled
-          color="green"
-          onClick={() => onCheckNavCondition(onNext)}
-        >
-          Check
-        </Button>
+        <ConditionalButton
+          conditionPassStatus={conditionPassStatus}
+          onCheckNavCondition={onCheckNavCondition}
+          onNext={onNext}
+        />
       ) : (
         <>
           <Button
