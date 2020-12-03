@@ -5,7 +5,7 @@ import { scrollElementToCenter } from 'helpers';
 
 const questionIds = [0, 1, 2, 3, 4, 5];
 export default function Questions() {
-  const [questionObj] = useState({
+  const [questionObj, setQuestionObj] = useState({
     0: {
       id: 0,
       objective:
@@ -16,7 +16,9 @@ export default function Questions() {
         { label: 'graduate from', checked: false },
         { label: 'graduating', checked: false },
         { label: 'graduating from', checked: false }
-      ]
+      ],
+      answerIndex: 1,
+      selectedChoiceIndex: null
     },
     1: {
       id: 1,
@@ -29,7 +31,9 @@ export default function Questions() {
         { label: 'consult to', checked: false },
         { label: 'consult for', checked: false },
         { label: 'consult by', checked: false }
-      ]
+      ],
+      answerIndex: 0,
+      selectedChoiceIndex: null
     },
     2: {
       id: 2,
@@ -41,7 +45,9 @@ export default function Questions() {
         { label: `doesn't it`, checked: false },
         { label: `won't it`, checked: false },
         { label: `isn't it`, checked: false }
-      ]
+      ],
+      answerIndex: 3,
+      selectedChoiceIndex: null
     },
     3: {
       id: 3,
@@ -53,7 +59,9 @@ export default function Questions() {
         { label: 'catch the fire', checked: false },
         { label: 'catch on fire', checked: false },
         { label: 'catch with fire', checked: false }
-      ]
+      ],
+      answerIndex: 2,
+      selectedChoiceIndex: null
     },
     4: {
       id: 4,
@@ -65,7 +73,9 @@ export default function Questions() {
         { label: 'swimming', checked: false },
         { label: 'swim', checked: false },
         { label: 'to swimming', checked: false }
-      ]
+      ],
+      answerIndex: 1,
+      selectedChoiceIndex: null
     },
     5: {
       id: 5,
@@ -77,7 +87,9 @@ export default function Questions() {
         { label: 'to remembering my password', checked: false },
         { label: 'remember my password', checked: false },
         { label: 'remembering my password', checked: false }
-      ]
+      ],
+      answerIndex: 3,
+      selectedChoiceIndex: null
     }
   });
   const QuestionsRef = useRef(null);
@@ -120,6 +132,22 @@ export default function Questions() {
             key={questionId}
             question={questionObj[questionId].question}
             choices={questionObj[questionId].choices}
+            onSelectChoice={(selectedIndex) =>
+              setQuestionObj((questionObj) => ({
+                ...questionObj,
+                [questionId]: {
+                  ...questionObj[questionId],
+                  choices: questionObj[
+                    questionId
+                  ].choices.map((choice, index) =>
+                    index === selectedIndex
+                      ? { ...choice, checked: true }
+                      : { ...choice, checked: false }
+                  )
+                },
+                selectedChoiceIndex: selectedIndex
+              }))
+            }
           />
         ))}
       </Carousel>

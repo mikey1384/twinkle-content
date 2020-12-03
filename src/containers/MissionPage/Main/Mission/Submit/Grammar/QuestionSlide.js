@@ -5,10 +5,11 @@ import { borderRadius } from 'constants/css';
 
 QuestionSlide.propTypes = {
   question: PropTypes.string.isRequired,
-  choices: PropTypes.array.isRequired
+  choices: PropTypes.array.isRequired,
+  onSelectChoice: PropTypes.func.isRequired
 };
 
-export default function QuestionSlide({ question, choices }) {
+export default function QuestionSlide({ question, choices, onSelectChoice }) {
   return (
     <div
       style={{
@@ -29,7 +30,7 @@ export default function QuestionSlide({ question, choices }) {
           <h3>{question}</h3>
           <CheckListGroup
             style={{ marginTop: '2rem', fontSize: '1.6rem' }}
-            onSelect={(index) => console.log(index)}
+            onSelect={onSelectChoice}
             listItems={choices}
           />
         </div>
