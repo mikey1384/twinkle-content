@@ -8,13 +8,13 @@ StartScreen.propTypes = {
 
 export default function StartScreen({ onStartButtonClick }) {
   return (
-    <div style={{ textAlign: 'center', width: '100%', marginTop: '3rem' }}>
+    <div style={{ textAlign: 'center', width: '100%', marginTop: '4rem' }}>
       <h3>When you are ready, press the button below to begin the challenge</h3>
       <div
         style={{
           display: 'flex',
-          height: '10rem',
-          alignItems: 'center',
+          marginTop: '3rem',
+          paddingBottom: '2rem',
           justifyContent: 'center'
         }}
       >
@@ -24,7 +24,7 @@ export default function StartScreen({ onStartButtonClick }) {
           style={{ fontSize: '2rem' }}
           onClick={onStartButtonClick}
         >
-          Begin
+          Begin!
         </Button>
       </div>
     </div>

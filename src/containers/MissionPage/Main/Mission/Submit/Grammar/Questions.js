@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import QuestionSlide from './QuestionSlide';
 import Carousel from 'components/Carousel';
+import { scrollElementToCenter } from 'helpers';
 
 const questionObj = {
   0: {
@@ -29,11 +30,15 @@ const questionObj = {
 const questionIds = [0, 1];
 
 export default function Questions() {
+  const QuestionsRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [conditionPassStatus, setConditionPassStatus] = useState('');
+  useEffect(() => {
+    scrollElementToCenter(QuestionsRef.current);
+  }, []);
 
   return (
-    <div>
+    <div ref={QuestionsRef}>
       <Carousel
         allowDrag={false}
         conditionPassStatus={conditionPassStatus}
