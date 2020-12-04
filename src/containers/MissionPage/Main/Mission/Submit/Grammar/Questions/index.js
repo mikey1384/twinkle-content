@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import QuestionSlide from './QuestionSlide';
 import Carousel from 'components/Carousel';
+import StatusMessage from './StatusMessage';
 import { scrollElementToCenter } from 'helpers';
 
 const questionIds = [0, 1, 2, 3, 4, 5];
@@ -94,7 +95,7 @@ export default function Questions() {
   });
   const QuestionsRef = useRef(null);
   const selectedAnswerIndex = useRef(null);
-  const status = useRef('');
+  const statusRef = useRef(null);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [conditionPassStatus, setConditionPassStatus] = useState('');
   useEffect(() => {
@@ -111,7 +112,7 @@ export default function Questions() {
         slidesToScroll={1}
         slideIndex={currentSlideIndex}
         afterSlide={(index) => {
-          status.current = null;
+          statusRef.current = null;
           setConditionPassStatus('');
           setCurrentSlideIndex(index);
         }}
@@ -141,7 +142,7 @@ export default function Questions() {
           />
         ))}
       </Carousel>
-      {status.current === 'fail' && <div>fail message goes here</div>}
+      {conditionPassStatus && <StatusMessage status={conditionPassStatus} />}
     </div>
   );
 
@@ -162,13 +163,13 @@ export default function Questions() {
   }
 
   function handleCheckNavCondition() {
-    status.current =
+    if (statusRef.current === 'fail') {
+      return console.log('this is a failure');
+    }
+    statusRef.current =
       questionObj[currentSlideIndex].answerIndex === selectedAnswerIndex.current
         ? 'pass'
         : 'fail';
-    if (status.current === 'fail') {
-      console.log('this is a failure');
-    }
-    setConditionPassStatus(status.current);
+    setConditionPassStatus(statusRef.current);
   }
 }
