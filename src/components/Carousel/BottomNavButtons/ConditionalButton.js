@@ -19,16 +19,17 @@ export default function ConditionalButton({
     }
     return 'green';
   }, [conditionPassStatus]);
-  const onClick = useMemo(() => {
-    if (conditionPassStatus) {
-      return onNext;
-    }
-    return onCheckNavCondition;
-  }, [conditionPassStatus, onCheckNavCondition, onNext]);
 
   return (
-    <Button filled color={buttonColor} onClick={onClick}>
+    <Button filled color={buttonColor} onClick={handleClick}>
       {conditionPassStatus ? 'Continue' : 'Check'}
     </Button>
   );
+
+  function handleClick() {
+    if (conditionPassStatus === 'pass') {
+      return onNext();
+    }
+    return onCheckNavCondition();
+  }
 }

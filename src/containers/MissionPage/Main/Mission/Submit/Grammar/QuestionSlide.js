@@ -14,7 +14,7 @@ export default function QuestionSlide({ question, choices, onSelectChoice }) {
     <div
       style={{
         width: '100%',
-        padding: '2rem 1rem 3rem 1rem',
+        padding: '2rem 1rem 1rem 1rem',
         borderRadius
       }}
     >

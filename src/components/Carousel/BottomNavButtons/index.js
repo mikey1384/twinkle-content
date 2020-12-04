@@ -35,6 +35,7 @@ export default function BottomNavButtons({
           conditionPassStatus={conditionPassStatus}
           onCheckNavCondition={onCheckNavCondition}
           onNext={onNext}
+          onFinish={onFinish}
         />
       ) : (
         <>

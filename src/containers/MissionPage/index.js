@@ -79,7 +79,7 @@ export default function MissionPage({
   return userId ? (
     loaded && mission.loaded ? (
       mission.id ? (
-        <ErrorBoundary style={{ width: '100%' }}>
+        <ErrorBoundary style={{ width: '100%', paddingBottom: '10rem' }}>
           {canEdit && (
             <FilterBar
               className="mobile"

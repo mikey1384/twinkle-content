@@ -93,10 +93,11 @@ export default function Questions() {
     }
   });
   const QuestionsRef = useRef(null);
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const selectedAnswerIndex = useRef(null);
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [conditionPassStatus, setConditionPassStatus] = useState('');
   useEffect(() => {
-    scrollElementToCenter(QuestionsRef.current);
+    scrollElementToCenter(QuestionsRef.current, -200);
   }, []);
 
   return (
@@ -107,10 +108,10 @@ export default function Questions() {
         progressBar
         slidesToShow={1}
         slidesToScroll={1}
-        slideIndex={currentSlide}
+        slideIndex={currentSlideIndex}
         afterSlide={(index) => {
           setConditionPassStatus('');
-          setCurrentSlide(index);
+          setCurrentSlideIndex(index);
         }}
         onFinish={() => console.log('finished')}
         onCheckNavCondition={handleCheckNavCondition}
@@ -123,7 +124,7 @@ export default function Questions() {
               marginBottom: '-1rem'
             }}
           >
-            <h2>{questionObj[currentSlide].objective}</h2>
+            <h2>{questionObj[currentSlideIndex].objective}</h2>
           </div>
         }
       >
@@ -133,20 +134,7 @@ export default function Questions() {
             question={questionObj[questionId].question}
             choices={questionObj[questionId].choices}
             onSelectChoice={(selectedIndex) =>
-              setQuestionObj((questionObj) => ({
-                ...questionObj,
-                [questionId]: {
-                  ...questionObj[questionId],
-                  choices: questionObj[
-                    questionId
-                  ].choices.map((choice, index) =>
-                    index === selectedIndex
-                      ? { ...choice, checked: true }
-                      : { ...choice, checked: false }
-                  )
-                },
-                selectedChoiceIndex: selectedIndex
-              }))
+              handleSelectChoice({ selectedIndex, questionId })
             }
           />
         ))}
@@ -154,7 +142,30 @@ export default function Questions() {
     </div>
   );
 
+  function handleSelectChoice({ selectedIndex, questionId }) {
+    setQuestionObj((questionObj) => ({
+      ...questionObj,
+      [questionId]: {
+        ...questionObj[questionId],
+        choices: questionObj[questionId].choices.map((choice, index) =>
+          index === selectedIndex
+            ? { ...choice, checked: true }
+            : { ...choice, checked: false }
+        )
+      },
+      selectedChoiceIndex: selectedIndex
+    }));
+    selectedAnswerIndex.current = selectedIndex;
+  }
+
   function handleCheckNavCondition() {
-    setConditionPassStatus('fail');
+    const status =
+      questionObj[currentSlideIndex].answerIndex === selectedAnswerIndex.current
+        ? 'pass'
+        : 'fail';
+    if (status === 'fail') {
+      console.log('this is a failure');
+    }
+    setConditionPassStatus(status);
   }
 }
