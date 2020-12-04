@@ -94,6 +94,7 @@ export default function Questions() {
   });
   const QuestionsRef = useRef(null);
   const selectedAnswerIndex = useRef(null);
+  const status = useRef('');
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [conditionPassStatus, setConditionPassStatus] = useState('');
   useEffect(() => {
@@ -110,6 +111,7 @@ export default function Questions() {
         slidesToScroll={1}
         slideIndex={currentSlideIndex}
         afterSlide={(index) => {
+          status.current = null;
           setConditionPassStatus('');
           setCurrentSlideIndex(index);
         }}
@@ -139,6 +141,7 @@ export default function Questions() {
           />
         ))}
       </Carousel>
+      {status.current === 'fail' && <div>fail message goes here</div>}
     </div>
   );
 
@@ -159,13 +162,13 @@ export default function Questions() {
   }
 
   function handleCheckNavCondition() {
-    const status =
+    status.current =
       questionObj[currentSlideIndex].answerIndex === selectedAnswerIndex.current
         ? 'pass'
         : 'fail';
-    if (status === 'fail') {
+    if (status.current === 'fail') {
       console.log('this is a failure');
     }
-    setConditionPassStatus(status);
+    setConditionPassStatus(status.current);
   }
 }
