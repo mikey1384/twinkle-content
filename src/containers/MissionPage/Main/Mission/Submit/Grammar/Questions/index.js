@@ -18,6 +18,8 @@ export default function Questions() {
         { label: 'graduating', checked: false },
         { label: 'graduating from', checked: false }
       ],
+      passMessage: `Correct!`,
+      failMessage: `Wrong. Correct sentence is "What year did you *graduate* *from* university?"`,
       answerIndex: 1,
       selectedChoiceIndex: null
     },
@@ -33,6 +35,8 @@ export default function Questions() {
         { label: 'consult for', checked: false },
         { label: 'consult by', checked: false }
       ],
+      passMessage: `Correct!`,
+      failMessage: `Wrong. Correct sentence is "It seems to be getting worse. You had better *consult* a specialist."`,
       answerIndex: 0,
       selectedChoiceIndex: null
     },
@@ -47,6 +51,8 @@ export default function Questions() {
         { label: `won't it`, checked: false },
         { label: `isn't it`, checked: false }
       ],
+      passMessage: `Correct!`,
+      failMessage: `Wrong. Correct sentence is "Chicago is a large city, *isn't* *it*."`,
       answerIndex: 3,
       selectedChoiceIndex: null
     },
@@ -61,6 +67,8 @@ export default function Questions() {
         { label: 'catch on fire', checked: false },
         { label: 'catch with fire', checked: false }
       ],
+      passMessage: `Correct!`,
+      failMessage: `Wrong. Correct sentence is "Don't leave your books near the open fire. They might easily catch on fire."`,
       answerIndex: 2,
       selectedChoiceIndex: null
     },
@@ -75,6 +83,8 @@ export default function Questions() {
         { label: 'swim', checked: false },
         { label: 'to swimming', checked: false }
       ],
+      passMessage: `Correct!`,
+      failMessage: `Wrong. Correct sentence is "Do you enjoy *swimming*?"`,
       answerIndex: 1,
       selectedChoiceIndex: null
     },
@@ -89,6 +99,8 @@ export default function Questions() {
         { label: 'remember my password', checked: false },
         { label: 'remembering my password', checked: false }
       ],
+      passMessage: `Correct!`,
+      failMessage: `Wrong. Correct sentence is "I have trouble *remembering* *my* *password*."`,
       answerIndex: 3,
       selectedChoiceIndex: null
     }
@@ -142,7 +154,13 @@ export default function Questions() {
           />
         ))}
       </Carousel>
-      {conditionPassStatus && <StatusMessage status={conditionPassStatus} />}
+      {conditionPassStatus && (
+        <StatusMessage
+          status={conditionPassStatus}
+          passMessage={questionObj[currentSlideIndex].passMessage}
+          failMessage={questionObj[currentSlideIndex].failMessage}
+        />
+      )}
     </div>
   );
 
