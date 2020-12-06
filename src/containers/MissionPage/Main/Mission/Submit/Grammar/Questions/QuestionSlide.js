@@ -4,12 +4,20 @@ import ChoiceList from './ChoiceList';
 import { borderRadius } from 'constants/css';
 
 QuestionSlide.propTypes = {
+  answerIndex: PropTypes.number,
+  conditionPassStatus: PropTypes.string,
   question: PropTypes.string.isRequired,
   choices: PropTypes.array.isRequired,
   onSelectChoice: PropTypes.func.isRequired
 };
 
-export default function QuestionSlide({ question, choices, onSelectChoice }) {
+export default function QuestionSlide({
+  answerIndex,
+  conditionPassStatus,
+  question,
+  choices,
+  onSelectChoice
+}) {
   return (
     <div
       style={{
@@ -30,6 +38,8 @@ export default function QuestionSlide({ question, choices, onSelectChoice }) {
           <h3>{question}</h3>
           <ChoiceList
             style={{ marginTop: '2rem', fontSize: '1.6rem' }}
+            answerIndex={answerIndex}
+            conditionPassStatus={conditionPassStatus}
             onSelect={onSelectChoice}
             listItems={choices}
           />

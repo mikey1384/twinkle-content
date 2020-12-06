@@ -1,14 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Icon from 'components/Icon';
 import { css } from 'emotion';
 import { Color } from 'constants/css';
 
 ListItem.propTypes = {
+  answerIndex: PropTypes.number,
+  conditionPassStatus: PropTypes.string.isRequired,
   listItem: PropTypes.object.isRequired,
   index: PropTypes.number,
   onSelect: PropTypes.func.isRequired
 };
-export default function ListItem({ listItem, onSelect, index }) {
+export default function ListItem({
+  answerIndex,
+  conditionPassStatus,
+  listItem,
+  onSelect,
+  index
+}) {
   return (
     <nav
       className={css`
@@ -20,7 +29,7 @@ export default function ListItem({ listItem, onSelect, index }) {
           background: ${Color.highlightGray()};
         }
       `}
-      onClick={() => onSelect(index)}
+      onClick={handleSelect}
       key={index}
     >
       <section
@@ -36,13 +45,31 @@ export default function ListItem({ listItem, onSelect, index }) {
         <input
           type="checkbox"
           checked={listItem.checked}
-          onChange={() => onSelect(index)}
+          onChange={handleSelect}
         />
       </section>
-      <div
-        style={{ padding: '0 2rem' }}
-        dangerouslySetInnerHTML={{ __html: listItem.label }}
-      />
+      <div style={{ padding: '0 2rem', display: 'flex', alignItems: 'center' }}>
+        <div dangerouslySetInnerHTML={{ __html: listItem.label }} />
+        {conditionPassStatus === 'fail' && index === answerIndex && (
+          <Icon
+            style={{ color: Color.green(), marginLeft: '1rem' }}
+            icon="check"
+          />
+        )}
+        {conditionPassStatus === 'fail' && listItem.checked && (
+          <Icon
+            style={{ color: Color.rose(), marginLeft: '1rem' }}
+            icon="times"
+          />
+        )}
+      </div>
     </nav>
   );
+
+  function handleSelect() {
+    if (conditionPassStatus) {
+      return;
+    }
+    onSelect(index);
+  }
 }

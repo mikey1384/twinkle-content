@@ -5,11 +5,19 @@ import { css } from 'emotion';
 import { borderRadius, Color, innerBorderRadius } from 'constants/css';
 
 ChoiceList.propTypes = {
+  answerIndex: PropTypes.number,
+  conditionPassStatus: PropTypes.string,
   listItems: PropTypes.array.isRequired,
   onSelect: PropTypes.func.isRequired,
-  style: PropTypes.func.isRequired
+  style: PropTypes.object
 };
-export default function ChoiceList({ listItems, onSelect, style }) {
+export default function ChoiceList({
+  answerIndex,
+  conditionPassStatus,
+  listItems,
+  onSelect,
+  style
+}) {
   return (
     <div
       className={css`
@@ -42,6 +50,8 @@ export default function ChoiceList({ listItems, onSelect, style }) {
         return (
           <ListItem
             key={index}
+            answerIndex={answerIndex}
+            conditionPassStatus={conditionPassStatus}
             listItem={listItem}
             onSelect={onSelect}
             index={index}

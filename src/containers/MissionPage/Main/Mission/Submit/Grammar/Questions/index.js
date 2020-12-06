@@ -148,6 +148,8 @@ export default function Questions() {
             key={questionId}
             question={questionObj[questionId].question}
             choices={questionObj[questionId].choices}
+            answerIndex={questionObj[questionId].answerIndex}
+            conditionPassStatus={conditionPassStatus}
             onSelectChoice={(selectedIndex) =>
               handleSelectChoice({ selectedIndex, questionId })
             }
