@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CheckListGroup from 'components/CheckListGroup';
+import ChoiceList from './ChoiceList';
 import { borderRadius } from 'constants/css';
 
 QuestionSlide.propTypes = {
@@ -28,7 +28,7 @@ export default function QuestionSlide({ question, choices, onSelectChoice }) {
           }}
         >
           <h3>{question}</h3>
-          <CheckListGroup
+          <ChoiceList
             style={{ marginTop: '2rem', fontSize: '1.6rem' }}
             onSelect={onSelectChoice}
             listItems={choices}
