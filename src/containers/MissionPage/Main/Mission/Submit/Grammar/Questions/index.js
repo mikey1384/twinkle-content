@@ -12,15 +12,10 @@ const questions = [
     id: 0,
     type: 'fill in the blank',
     question: 'What year did you _____ university?',
-    choices: [
-      { label: 'graduate by', checked: false },
-      { label: 'graduate from', checked: false },
-      { label: 'graduating', checked: false },
-      { label: 'graduating from', checked: false }
-    ],
+    choices: ['graduate by', 'graduate from', 'graduating', 'graduating from'],
     passMessage: `Correct!`,
     failMessage: `Wrong. Correct sentence is "What year did you *graduate* *from* university?"`,
-    answerIndex: 1,
+    answer: 'graduate from',
     selectedChoiceIndex: null
   },
   {
@@ -28,30 +23,20 @@ const questions = [
     type: 'fill in the blank',
     question:
       'It seems to be getting worse. You had better _____ a specialist.',
-    choices: [
-      { label: 'consult', checked: false },
-      { label: 'consult to', checked: false },
-      { label: 'consult for', checked: false },
-      { label: 'consult by', checked: false }
-    ],
+    choices: ['consult', 'consult to', 'consult for', 'consult by'],
     passMessage: `Correct!`,
     failMessage: `Wrong. Correct sentence is "It seems to be getting worse. You had better *consult* a specialist."`,
-    answerIndex: 0,
+    answer: 'consult',
     selectedChoiceIndex: null
   },
   {
     id: 2,
     type: 'fill in the blank',
     question: 'Chicago is a large city, _____?',
-    choices: [
-      { label: `aren't it`, checked: false },
-      { label: `doesn't it`, checked: false },
-      { label: `won't it`, checked: false },
-      { label: `isn't it`, checked: false }
-    ],
+    choices: [`aren't it`, `doesn't it`, `won't it`, `isn't it`],
     passMessage: `Correct!`,
     failMessage: `Wrong. Correct sentence is "Chicago is a large city, *isn't* *it*."`,
-    answerIndex: 3,
+    answer: `isn't it`,
     selectedChoiceIndex: null
   },
   {
@@ -59,29 +44,24 @@ const questions = [
     type: 'fill in the blank',
     question: `Don't leave your books near the open fire. They might easily _____.`,
     choices: [
-      { label: 'catch to fire', checked: false },
-      { label: 'catch the fire', checked: false },
-      { label: 'catch on fire', checked: false },
-      { label: 'catch with fire', checked: false }
+      'catch to fire',
+      'catch the fire',
+      'catch on fire',
+      'catch with fire'
     ],
     passMessage: `Correct!`,
     failMessage: `Wrong. Correct sentence is "Don't leave your books near the open fire. They might easily catch on fire."`,
-    answerIndex: 2,
+    answer: 'catch on fire',
     selectedChoiceIndex: null
   },
   {
     id: 4,
     type: 'fill in the blank',
     question: 'Do you enjoy _____?',
-    choices: [
-      { label: 'to swim', checked: false },
-      { label: 'swimming', checked: false },
-      { label: 'swim', checked: false },
-      { label: 'to swimming', checked: false }
-    ],
+    choices: ['to swim', 'swimming', 'swim', 'to swimming'],
     passMessage: `Correct!`,
     failMessage: `Wrong. Correct sentence is "Do you enjoy *swimming*?"`,
-    answerIndex: 1,
+    answer: 'swimming',
     selectedChoiceIndex: null
   },
   {
@@ -89,14 +69,14 @@ const questions = [
     type: 'fill in the blank',
     question: 'I have trouble _____.',
     choices: [
-      { label: 'to remember my password', checked: false },
-      { label: 'to remembering my password', checked: false },
-      { label: 'remember my password', checked: false },
-      { label: 'remembering my password', checked: false }
+      'to remember my password',
+      'to remembering my password',
+      'remember my password',
+      'remembering my password'
     ],
     passMessage: `Correct!`,
     failMessage: `Wrong. Correct sentence is "I have trouble *remembering* *my* *password*."`,
-    answerIndex: 3,
+    answer: 'remembering my password',
     selectedChoiceIndex: null
   }
 ];
@@ -120,9 +100,14 @@ export default function Questions({ mission, onFail }) {
   } = useContentContext();
   const [questionObj, setQuestionObj] = useState(
     questions.reduce((prev, curr) => {
+      const choices = curr.choices.map((choice) => ({
+        label: choice,
+        checked: false
+      }));
+      const answerIndex = curr.choices.indexOf(curr.answer);
       return {
         ...prev,
-        [curr.id]: curr
+        [curr.id]: { ...curr, choices, answerIndex }
       };
     }, {})
   );
