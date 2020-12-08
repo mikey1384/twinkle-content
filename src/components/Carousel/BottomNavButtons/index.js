@@ -8,7 +8,7 @@ BottomNavButtons.propTypes = {
   currentSlide: PropTypes.number.isRequired,
   onPrev: PropTypes.func,
   onNext: PropTypes.func.isRequired,
-  onFinish: PropTypes.func.isRequired,
+  onFinish: PropTypes.func,
   slideCount: PropTypes.number.isRequired,
   onCheckNavCondition: PropTypes.func
 };
@@ -33,9 +33,7 @@ export default function BottomNavButtons({
       {onCheckNavCondition ? (
         <ConditionalButton
           conditionPassStatus={conditionPassStatus}
-          onCheckNavCondition={onCheckNavCondition}
-          onNext={onNext}
-          onFinish={onFinish}
+          onCheckNavCondition={() => onCheckNavCondition(onNext)}
         />
       ) : (
         <>

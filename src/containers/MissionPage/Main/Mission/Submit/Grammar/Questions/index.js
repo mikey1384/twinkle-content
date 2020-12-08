@@ -134,7 +134,6 @@ export default function Questions({ onFail }) {
           setConditionPassStatus('');
           setCurrentSlideIndex(index);
         }}
-        onFinish={() => console.log('finished')}
         onCheckNavCondition={handleCheckNavCondition}
         title={
           <div
@@ -188,9 +187,15 @@ export default function Questions({ onFail }) {
     selectedAnswerIndex.current = selectedIndex;
   }
 
-  function handleCheckNavCondition() {
+  function handleCheckNavCondition(onNext) {
     if (statusRef.current === 'fail') {
       return onFail();
+    }
+    if (statusRef.current === 'pass') {
+      if (currentSlideIndex < questionIds.length - 1) {
+        return onNext();
+      }
+      return console.log('finished');
     }
     statusRef.current =
       questionObj[currentSlideIndex].answerIndex === selectedAnswerIndex.current
