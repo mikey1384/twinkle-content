@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import QuestionSlide from './QuestionSlide';
 import Carousel from 'components/Carousel';
@@ -28,8 +28,7 @@ export default function Questions({ mission, onFail }) {
   const [questionObj, setQuestionObj] = useState({
     0: {
       id: 0,
-      objective:
-        'Choose the word or phrase that correctly completes the sentence',
+      type: 'fill in the blank',
       question: 'What year did you _____ university?',
       choices: [
         { label: 'graduate by', checked: false },
@@ -44,8 +43,7 @@ export default function Questions({ mission, onFail }) {
     },
     1: {
       id: 1,
-      objective:
-        'Choose the word or phrase that correctly completes the sentence',
+      type: 'fill in the blank',
       question:
         'It seems to be getting worse. You had better _____ a specialist.',
       choices: [
@@ -61,8 +59,7 @@ export default function Questions({ mission, onFail }) {
     },
     2: {
       id: 2,
-      objective:
-        'Choose the word or phrase that correctly completes the sentence',
+      type: 'fill in the blank',
       question: 'Chicago is a large city, _____?',
       choices: [
         { label: `aren't it`, checked: false },
@@ -77,8 +74,7 @@ export default function Questions({ mission, onFail }) {
     },
     3: {
       id: 3,
-      objective:
-        'Choose the word or phrase that correctly completes the sentence',
+      type: 'fill in the blank',
       question: `Don't leave your books near the open fire. They might easily _____.`,
       choices: [
         { label: 'catch to fire', checked: false },
@@ -93,8 +89,7 @@ export default function Questions({ mission, onFail }) {
     },
     4: {
       id: 4,
-      objective:
-        'Choose the word or phrase that correctly completes the sentence',
+      type: 'fill in the blank',
       question: 'Do you enjoy _____?',
       choices: [
         { label: 'to swim', checked: false },
@@ -109,8 +104,7 @@ export default function Questions({ mission, onFail }) {
     },
     5: {
       id: 5,
-      objective:
-        'Choose the word or phrase that correctly completes the sentence',
+      type: 'fill in the blank',
       question: 'I have trouble _____.',
       choices: [
         { label: 'to remember my password', checked: false },
@@ -132,6 +126,12 @@ export default function Questions({ mission, onFail }) {
   useEffect(() => {
     scrollElementToCenter(QuestionsRef.current, -200);
   }, []);
+  const objectiveMessage = useMemo(() => {
+    if (questionObj[currentSlideIndex].type === 'fill in the blank') {
+      return 'Choose the word or phrase that correctly completes the sentence';
+    }
+    return '';
+  }, [currentSlideIndex, questionObj]);
 
   return (
     <div ref={QuestionsRef}>
@@ -157,7 +157,7 @@ export default function Questions({ mission, onFail }) {
               marginBottom: '-1rem'
             }}
           >
-            <h2>{questionObj[currentSlideIndex].objective}</h2>
+            <h2>{objectiveMessage}</h2>
           </div>
         }
       >
