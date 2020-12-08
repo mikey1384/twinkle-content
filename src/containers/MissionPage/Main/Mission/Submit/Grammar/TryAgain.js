@@ -33,6 +33,9 @@ export default function TryAgain({ onTryAgain }) {
       >
         Mission Failed...
       </div>
+      <div
+        style={{ marginTop: '2rem', fontSize: '1.5rem' }}
+      >{`Don't give up! You can do this`}</div>
       <div style={{ marginTop: '5rem' }}>
         <Button
           style={{ fontSize: '2.3rem' }}
