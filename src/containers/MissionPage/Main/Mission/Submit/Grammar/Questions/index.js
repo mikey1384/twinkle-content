@@ -19,7 +19,7 @@ export default function Questions() {
         { label: 'graduating from', checked: false }
       ],
       passMessage: `Correct!`,
-      failMessage: `Wrong. The correct sentence is: "What year did you *graduate* *from* university?"`,
+      failMessage: `Wrong. Correct sentence is "What year did you *graduate* *from* university?"`,
       answerIndex: 1,
       selectedChoiceIndex: null
     },
@@ -36,7 +36,7 @@ export default function Questions() {
         { label: 'consult by', checked: false }
       ],
       passMessage: `Correct!`,
-      failMessage: `Wrong. The correct sentence is: "It seems to be getting worse. You had better *consult* a specialist."`,
+      failMessage: `Wrong. Correct sentence is "It seems to be getting worse. You had better *consult* a specialist."`,
       answerIndex: 0,
       selectedChoiceIndex: null
     },
@@ -52,7 +52,7 @@ export default function Questions() {
         { label: `isn't it`, checked: false }
       ],
       passMessage: `Correct!`,
-      failMessage: `Wrong. The correct sentence is: "Chicago is a large city, *isn't* *it*."`,
+      failMessage: `Wrong. Correct sentence is "Chicago is a large city, *isn't* *it*."`,
       answerIndex: 3,
       selectedChoiceIndex: null
     },
@@ -68,7 +68,7 @@ export default function Questions() {
         { label: 'catch with fire', checked: false }
       ],
       passMessage: `Correct!`,
-      failMessage: `Wrong. The correct sentence is: "Don't leave your books near the open fire. They might easily catch on fire."`,
+      failMessage: `Wrong. Correct sentence is "Don't leave your books near the open fire. They might easily catch on fire."`,
       answerIndex: 2,
       selectedChoiceIndex: null
     },
@@ -84,7 +84,7 @@ export default function Questions() {
         { label: 'to swimming', checked: false }
       ],
       passMessage: `Correct!`,
-      failMessage: `Wrong. The correct sentence is: "Do you enjoy *swimming*?"`,
+      failMessage: `Wrong. Correct sentence is "Do you enjoy *swimming*?"`,
       answerIndex: 1,
       selectedChoiceIndex: null
     },
@@ -100,7 +100,7 @@ export default function Questions() {
         { label: 'remembering my password', checked: false }
       ],
       passMessage: `Correct!`,
-      failMessage: `Wrong. The correct sentence is: "I have trouble *remembering* *my* *password*."`,
+      failMessage: `Wrong. Correct sentence is "I have trouble *remembering* *my* *password*."`,
       answerIndex: 3,
       selectedChoiceIndex: null
     }
