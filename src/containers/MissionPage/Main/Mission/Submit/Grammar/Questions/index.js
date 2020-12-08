@@ -15,8 +15,7 @@ const questions = [
     choices: ['graduate by', 'graduate from', 'graduating', 'graduating from'],
     passMessage: `Correct!`,
     failMessage: `Wrong. Correct sentence is "What year did you *graduate* *from* university?"`,
-    answer: 'graduate from',
-    selectedChoiceIndex: null
+    answerIndex: 1
   },
   {
     id: 1,
@@ -26,8 +25,7 @@ const questions = [
     choices: ['consult', 'consult to', 'consult for', 'consult by'],
     passMessage: `Correct!`,
     failMessage: `Wrong. Correct sentence is "It seems to be getting worse. You had better *consult* a specialist."`,
-    answer: 'consult',
-    selectedChoiceIndex: null
+    answerIndex: 0
   },
   {
     id: 2,
@@ -36,8 +34,7 @@ const questions = [
     choices: [`aren't it`, `doesn't it`, `won't it`, `isn't it`],
     passMessage: `Correct!`,
     failMessage: `Wrong. Correct sentence is "Chicago is a large city, *isn't* *it*."`,
-    answer: `isn't it`,
-    selectedChoiceIndex: null
+    answerIndex: 3
   },
   {
     id: 3,
@@ -51,8 +48,7 @@ const questions = [
     ],
     passMessage: `Correct!`,
     failMessage: `Wrong. Correct sentence is "Don't leave your books near the open fire. They might easily catch on fire."`,
-    answer: 'catch on fire',
-    selectedChoiceIndex: null
+    answerIndex: 2
   },
   {
     id: 4,
@@ -61,8 +57,7 @@ const questions = [
     choices: ['to swim', 'swimming', 'swim', 'to swimming'],
     passMessage: `Correct!`,
     failMessage: `Wrong. Correct sentence is "Do you enjoy *swimming*?"`,
-    answer: 'swimming',
-    selectedChoiceIndex: null
+    answerIndex: 1
   },
   {
     id: 5,
@@ -76,8 +71,7 @@ const questions = [
     ],
     passMessage: `Correct!`,
     failMessage: `Wrong. Correct sentence is "I have trouble *remembering* *my* *password*."`,
-    answer: 'remembering my password',
-    selectedChoiceIndex: null
+    answerIndex: 3
   }
 ];
 const questionIds = questions.map((question) => question.id);
@@ -104,10 +98,9 @@ export default function Questions({ mission, onFail }) {
         label: choice,
         checked: false
       }));
-      const answerIndex = curr.choices.indexOf(curr.answer);
       return {
         ...prev,
-        [curr.id]: { ...curr, choices, answerIndex }
+        [curr.id]: { ...curr, choices, selectedChoiceIndex: null }
       };
     }, {})
   );
