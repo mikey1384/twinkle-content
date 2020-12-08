@@ -7,7 +7,100 @@ import { scrollElementToCenter } from 'helpers';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useMissionContext, useContentContext } from 'contexts';
 
-const questionIds = [0, 1, 2, 3, 4, 5];
+const questions = [
+  {
+    id: 0,
+    type: 'fill in the blank',
+    question: 'What year did you _____ university?',
+    choices: [
+      { label: 'graduate by', checked: false },
+      { label: 'graduate from', checked: false },
+      { label: 'graduating', checked: false },
+      { label: 'graduating from', checked: false }
+    ],
+    passMessage: `Correct!`,
+    failMessage: `Wrong. Correct sentence is "What year did you *graduate* *from* university?"`,
+    answerIndex: 1,
+    selectedChoiceIndex: null
+  },
+  {
+    id: 1,
+    type: 'fill in the blank',
+    question:
+      'It seems to be getting worse. You had better _____ a specialist.',
+    choices: [
+      { label: 'consult', checked: false },
+      { label: 'consult to', checked: false },
+      { label: 'consult for', checked: false },
+      { label: 'consult by', checked: false }
+    ],
+    passMessage: `Correct!`,
+    failMessage: `Wrong. Correct sentence is "It seems to be getting worse. You had better *consult* a specialist."`,
+    answerIndex: 0,
+    selectedChoiceIndex: null
+  },
+  {
+    id: 2,
+    type: 'fill in the blank',
+    question: 'Chicago is a large city, _____?',
+    choices: [
+      { label: `aren't it`, checked: false },
+      { label: `doesn't it`, checked: false },
+      { label: `won't it`, checked: false },
+      { label: `isn't it`, checked: false }
+    ],
+    passMessage: `Correct!`,
+    failMessage: `Wrong. Correct sentence is "Chicago is a large city, *isn't* *it*."`,
+    answerIndex: 3,
+    selectedChoiceIndex: null
+  },
+  {
+    id: 3,
+    type: 'fill in the blank',
+    question: `Don't leave your books near the open fire. They might easily _____.`,
+    choices: [
+      { label: 'catch to fire', checked: false },
+      { label: 'catch the fire', checked: false },
+      { label: 'catch on fire', checked: false },
+      { label: 'catch with fire', checked: false }
+    ],
+    passMessage: `Correct!`,
+    failMessage: `Wrong. Correct sentence is "Don't leave your books near the open fire. They might easily catch on fire."`,
+    answerIndex: 2,
+    selectedChoiceIndex: null
+  },
+  {
+    id: 4,
+    type: 'fill in the blank',
+    question: 'Do you enjoy _____?',
+    choices: [
+      { label: 'to swim', checked: false },
+      { label: 'swimming', checked: false },
+      { label: 'swim', checked: false },
+      { label: 'to swimming', checked: false }
+    ],
+    passMessage: `Correct!`,
+    failMessage: `Wrong. Correct sentence is "Do you enjoy *swimming*?"`,
+    answerIndex: 1,
+    selectedChoiceIndex: null
+  },
+  {
+    id: 5,
+    type: 'fill in the blank',
+    question: 'I have trouble _____.',
+    choices: [
+      { label: 'to remember my password', checked: false },
+      { label: 'to remembering my password', checked: false },
+      { label: 'remember my password', checked: false },
+      { label: 'remembering my password', checked: false }
+    ],
+    passMessage: `Correct!`,
+    failMessage: `Wrong. Correct sentence is "I have trouble *remembering* *my* *password*."`,
+    answerIndex: 3,
+    selectedChoiceIndex: null
+  }
+];
+const questionIds = questions.map((question) => question.id);
 
 Questions.propTypes = {
   mission: PropTypes.object.isRequired,
@@ -25,99 +118,14 @@ export default function Questions({ mission, onFail }) {
   const {
     actions: { onChangeUserXP, onUpdateUserCoins }
   } = useContentContext();
-  const [questionObj, setQuestionObj] = useState({
-    0: {
-      id: 0,
-      type: 'fill in the blank',
-      question: 'What year did you _____ university?',
-      choices: [
-        { label: 'graduate by', checked: false },
-        { label: 'graduate from', checked: false },
-        { label: 'graduating', checked: false },
-        { label: 'graduating from', checked: false }
-      ],
-      passMessage: `Correct!`,
-      failMessage: `Wrong. Correct sentence is "What year did you *graduate* *from* university?"`,
-      answerIndex: 1,
-      selectedChoiceIndex: null
-    },
-    1: {
-      id: 1,
-      type: 'fill in the blank',
-      question:
-        'It seems to be getting worse. You had better _____ a specialist.',
-      choices: [
-        { label: 'consult', checked: false },
-        { label: 'consult to', checked: false },
-        { label: 'consult for', checked: false },
-        { label: 'consult by', checked: false }
-      ],
-      passMessage: `Correct!`,
-      failMessage: `Wrong. Correct sentence is "It seems to be getting worse. You had better *consult* a specialist."`,
-      answerIndex: 0,
-      selectedChoiceIndex: null
-    },
-    2: {
-      id: 2,
-      type: 'fill in the blank',
-      question: 'Chicago is a large city, _____?',
-      choices: [
-        { label: `aren't it`, checked: false },
-        { label: `doesn't it`, checked: false },
-        { label: `won't it`, checked: false },
-        { label: `isn't it`, checked: false }
-      ],
-      passMessage: `Correct!`,
-      failMessage: `Wrong. Correct sentence is "Chicago is a large city, *isn't* *it*."`,
-      answerIndex: 3,
-      selectedChoiceIndex: null
-    },
-    3: {
-      id: 3,
-      type: 'fill in the blank',
-      question: `Don't leave your books near the open fire. They might easily _____.`,
-      choices: [
-        { label: 'catch to fire', checked: false },
-        { label: 'catch the fire', checked: false },
-        { label: 'catch on fire', checked: false },
-        { label: 'catch with fire', checked: false }
-      ],
-      passMessage: `Correct!`,
-      failMessage: `Wrong. Correct sentence is "Don't leave your books near the open fire. They might easily catch on fire."`,
-      answerIndex: 2,
-      selectedChoiceIndex: null
-    },
-    4: {
-      id: 4,
-      type: 'fill in the blank',
-      question: 'Do you enjoy _____?',
-      choices: [
-        { label: 'to swim', checked: false },
-        { label: 'swimming', checked: false },
-        { label: 'swim', checked: false },
-        { label: 'to swimming', checked: false }
-      ],
-      passMessage: `Correct!`,
-      failMessage: `Wrong. Correct sentence is "Do you enjoy *swimming*?"`,
-      answerIndex: 1,
-      selectedChoiceIndex: null
-    },
-    5: {
-      id: 5,
-      type: 'fill in the blank',
-      question: 'I have trouble _____.',
-      choices: [
-        { label: 'to remember my password', checked: false },
-        { label: 'to remembering my password', checked: false },
-        { label: 'remember my password', checked: false },
-        { label: 'remembering my password', checked: false }
-      ],
-      passMessage: `Correct!`,
-      failMessage: `Wrong. Correct sentence is "I have trouble *remembering* *my* *password*."`,
-      answerIndex: 3,
-      selectedChoiceIndex: null
-    }
-  });
+  const [questionObj, setQuestionObj] = useState(
+    questions.reduce((prev, curr) => {
+      return {
+        ...prev,
+        [curr.id]: curr
+      };
+    }, {})
+  );
   const QuestionsRef = useRef(null);
   const selectedAnswerIndex = useRef(null);
   const statusRef = useRef(null);
