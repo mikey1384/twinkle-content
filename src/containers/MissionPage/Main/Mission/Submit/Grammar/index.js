@@ -4,8 +4,8 @@ import StartScreen from './StartScreen';
 import TryAgain from './TryAgain';
 
 export default function Grammar() {
-  const [started, setStarted] = useState(true);
-  const [failed, setFailed] = useState(true);
+  const [started, setStarted] = useState(false);
+  const [failed, setFailed] = useState(false);
   return (
     <div>
       {!started && <StartScreen onStartButtonClick={() => setStarted(true)} />}
