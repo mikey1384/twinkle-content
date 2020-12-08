@@ -1,11 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import QuestionSlide from './QuestionSlide';
 import Carousel from 'components/Carousel';
 import StatusMessage from './StatusMessage';
 import { scrollElementToCenter } from 'helpers';
 
 const questionIds = [0, 1, 2, 3, 4, 5];
-export default function Questions() {
+
+Questions.propTypes = {
+  onFail: PropTypes.func.isRequired
+};
+
+export default function Questions({ onFail }) {
   const [questionObj, setQuestionObj] = useState({
     0: {
       id: 0,
@@ -184,7 +190,7 @@ export default function Questions() {
 
   function handleCheckNavCondition() {
     if (statusRef.current === 'fail') {
-      return console.log('this is a failure');
+      return onFail();
     }
     statusRef.current =
       questionObj[currentSlideIndex].answerIndex === selectedAnswerIndex.current
