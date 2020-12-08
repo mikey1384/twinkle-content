@@ -37,9 +37,7 @@ export default function Submit({
       {mission.missionType === 'copy-and-paste' && (
         <CopyAndPaste mission={mission} onSetMissionState={onSetMissionState} />
       )}
-      {mission.missionType === 'grammar' && (
-        <Grammar mission={mission} onSetMissionState={onSetMissionState} />
-      )}
+      {mission.missionType === 'grammar' && <Grammar mission={mission} />}
     </div>
   );
 }

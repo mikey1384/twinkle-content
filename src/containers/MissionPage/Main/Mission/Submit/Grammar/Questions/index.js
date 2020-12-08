@@ -4,14 +4,27 @@ import QuestionSlide from './QuestionSlide';
 import Carousel from 'components/Carousel';
 import StatusMessage from './StatusMessage';
 import { scrollElementToCenter } from 'helpers';
+import { useMyState } from 'helpers/hooks';
+import { useAppContext, useMissionContext, useContentContext } from 'contexts';
 
 const questionIds = [0, 1, 2, 3, 4, 5];
 
 Questions.propTypes = {
+  mission: PropTypes.object.isRequired,
   onFail: PropTypes.func.isRequired
 };
 
-export default function Questions({ onFail }) {
+export default function Questions({ mission, onFail }) {
+  const { userId } = useMyState();
+  const {
+    requestHelpers: { uploadMissionAttempt }
+  } = useAppContext();
+  const {
+    actions: { onUpdateMissionAttempt }
+  } = useMissionContext();
+  const {
+    actions: { onChangeUserXP, onUpdateUserCoins }
+  } = useContentContext();
   const [questionObj, setQuestionObj] = useState({
     0: {
       id: 0,
@@ -195,12 +208,35 @@ export default function Questions({ onFail }) {
       if (currentSlideIndex < questionIds.length - 1) {
         return onNext();
       }
-      return console.log('finished');
+      return handleSuccess();
     }
     statusRef.current =
       questionObj[currentSlideIndex].answerIndex === selectedAnswerIndex.current
         ? 'pass'
         : 'fail';
     setConditionPassStatus(statusRef.current);
+  }
+
+  async function handleSuccess() {
+    const { success, newXpAndRank, newCoins } = await uploadMissionAttempt({
+      missionId: mission.id,
+      attempt: { status: 'pass' }
+    });
+    if (success) {
+      onUpdateMissionAttempt({
+        missionId: mission.id,
+        newState: { status: 'pass' }
+      });
+      if (newXpAndRank.xp) {
+        onChangeUserXP({
+          xp: newXpAndRank.xp,
+          rank: newXpAndRank.rank,
+          userId
+        });
+      }
+      if (newCoins.netCoins) {
+        onUpdateUserCoins({ coins: newCoins.netCoins, userId });
+      }
+    }
   }
 }

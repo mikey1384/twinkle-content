@@ -118,7 +118,7 @@ export default function CopyAndPaste({ mission, onSetMissionState, style }) {
     if (success) {
       onUpdateMissionAttempt({
         missionId: mission.id,
-        newState: { status: 'pass', tryingAgain: false }
+        newState: { status: 'pass' }
       });
       if (newXpAndRank.xp) {
         onChangeUserXP({
