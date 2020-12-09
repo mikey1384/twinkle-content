@@ -173,6 +173,8 @@ export default function NavMenu({ playlistId, videoId }) {
           padding-bottom: 5rem;
           section {
             margin: 0;
+            border-left: 0;
+            border-right: 0;
             margin-bottom: 1rem;
           }
         }
@@ -285,6 +287,7 @@ export default function NavMenu({ playlistId, videoId }) {
         </>
       )}
       {!videoTabActive && <Notification style={{ paddingTop: 0 }} />}
+      <div style={{ height: '1rem', marginTop: '-1rem' }} />
     </ErrorBoundary>
   );
 

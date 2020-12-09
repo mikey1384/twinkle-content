@@ -269,14 +269,19 @@ export default function VideoPage({
             `}
           >
             <div
-              style={{
-                width: '100%',
-                background: '#fff',
-                marginBottom: '1rem',
-                padding: '1rem',
-                border: `1px solid ${Color.borderGray()}`,
-                paddingTop: 0
-              }}
+              className={css`
+                width: 100%;
+                background: #fff;
+                margin-bottom: 1rem;
+                padding: 1rem;
+                border: 1px solid ${Color.borderGray()};
+                padding-top: 0;
+                @media (max-width: ${mobileMaxWidth}) {
+                  border-top: 0;
+                  border-left: 0;
+                  border-right: 0;
+                }
+              `}
             >
               <PageTab
                 questions={questions}
@@ -342,14 +347,18 @@ export default function VideoPage({
               </div>
             </div>
             <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                background: '#fff',
-                marginTop: '1rem',
-                border: `1px solid ${Color.borderGray()}`,
-                width: '100%'
-              }}
+              className={css`
+                display: flex;
+                flex-direction: column;
+                background: #fff;
+                margin-top: 1rem;
+                border: 1px solid ${Color.borderGray()};
+                width: 100%;
+                @media (max-width: ${mobileMaxWidth}) {
+                  border-left: 0;
+                  border-right: 0;
+                }
+              `}
             >
               <Details
                 addTags={onAddTags}
@@ -414,11 +423,15 @@ export default function VideoPage({
               }}
             />
             <div
-              style={{
-                background: '#fff',
-                border: `1px solid ${Color.borderGray()}`,
-                padding: '1rem'
-              }}
+              className={css`
+                background: #fff;
+                border: 1px solid ${Color.borderGray()};
+                padding: 1rem;
+                @media (max-width: ${mobileMaxWidth}) {
+                  border-left: 0;
+                  border-right: 0;
+                }
+              `}
             >
               <p
                 style={{
@@ -455,7 +468,14 @@ export default function VideoPage({
                 userId={userId}
               />
             </div>
-            <div style={{ height: '10rem' }} />
+            <div
+              className={css`
+                height: 10rem;
+                @media (max-width: ${mobileMaxWidth}) {
+                  height: 1rem;
+                }
+              `}
+            />
             {resultModalShown && (
               <ResultModal
                 onHide={() => setResultModalShown(false)}

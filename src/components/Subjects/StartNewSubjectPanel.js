@@ -6,7 +6,8 @@ import Icon from 'components/Icon';
 import { charLimit } from 'constants/defaultValues';
 import { useAppContext, useContentContext } from 'contexts';
 import { useContentState, useMyState } from 'helpers/hooks';
-import { Color } from 'constants/css';
+import { css } from 'emotion';
+import { Color, mobileMaxWidth } from 'constants/css';
 
 StartNewSubjectPanel.propTypes = {
   onUploadSubject: PropTypes.func.isRequired,
@@ -30,12 +31,16 @@ export default function StartNewSubjectPanel({
   const { subjectFormShown } = useContentState({ contentType, contentId });
   return (
     <div
-      style={{
-        background: '#fff',
-        border: `1px solid ${Color.borderGray()}`,
-        fontSize: '1.5rem',
-        marginTop: '1rem'
-      }}
+      className={css`
+        background: #fff;
+        border: 1px solid ${Color.borderGray()};
+        font-size: 1.5rem;
+        margin-top: 1rem;
+        @media (max-width: ${mobileMaxWidth}) {
+          border-left: 0;
+          border-right: 0;
+        }
+      `}
     >
       <div style={{ padding: '1rem' }}>
         {subjectFormShown ? (

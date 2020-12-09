@@ -173,12 +173,16 @@ export default function SubjectPanel({
 
   return !deleted ? (
     <div
-      style={{
-        background: '#fff',
-        border: `1px solid ${Color.borderGray()}`,
-        marginTop: '1rem',
-        fontSize: '1.5rem'
-      }}
+      className={css`
+        background: #fff;
+        border: 1px solid ${Color.borderGray()};
+        margin-top: 1rem;
+        font-size: 1.5rem;
+        @media (max-width: ${mobileMaxWidth}) {
+          border-left: 0;
+          border-right: 0;
+        }
+      `}
     >
       {rewardLevel > 0 && <RewardLevelBar rewardLevel={rewardLevel} />}
       <div style={{ padding: '1rem' }}>
