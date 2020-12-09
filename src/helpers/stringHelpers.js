@@ -435,6 +435,34 @@ export function processedStringWithURL(string) {
     .replace(/>/g, '&gt')
     .replace(urlRegex, `<a href=\"$1\" target=\"_blank\">$1</a>`)
     .replace(
+      underlineWordRegex,
+      (string) => `<u>${string.substring(2, string.length - 2)}</u>`
+    )
+    .replace(
+      linethroughWordRegex,
+      (string) => `<strike>${string.substring(2, string.length - 2)}</strike>`
+    )
+    .replace(
+      boldItalicWordRegex,
+      (string) => `<b><i>${string.substring(3, string.length - 3)}</i></b>`
+    )
+    .replace(
+      boldItalicSentenceRegex,
+      (string) => `<b><i>${string.substring(3, string.length - 3)}</i></b>`
+    )
+    .replace(
+      italicWordRegex,
+      (string) => `<i>${string.substring(2, string.length - 2)}</i>`
+    )
+    .replace(
+      italicSentenceRegex,
+      (string) => `<i>${string.substring(2, string.length - 2)}</i>`
+    )
+    .replace(
+      boldWordRegex,
+      (string) => `<b>${string.substring(1, string.length - 1)}</b>`
+    )
+    .replace(
       blueWordRegex,
       (string) =>
         `<span style="color: blue;">${string.substring(
@@ -625,34 +653,6 @@ export function processedStringWithURL(string) {
           2,
           string.length - 2
         )}</span>`
-    )
-    .replace(
-      underlineWordRegex,
-      (string) => `<u>${string.substring(2, string.length - 2)}</u>`
-    )
-    .replace(
-      linethroughWordRegex,
-      (string) => `<strike>${string.substring(2, string.length - 2)}</strike>`
-    )
-    .replace(
-      boldItalicWordRegex,
-      (string) => `<b><i>${string.substring(3, string.length - 3)}</i></b>`
-    )
-    .replace(
-      boldItalicSentenceRegex,
-      (string) => `<b><i>${string.substring(3, string.length - 3)}</i></b>`
-    )
-    .replace(
-      italicWordRegex,
-      (string) => `<i>${string.substring(2, string.length - 2)}</i>`
-    )
-    .replace(
-      italicSentenceRegex,
-      (string) => `<i>${string.substring(2, string.length - 2)}</i>`
-    )
-    .replace(
-      boldWordRegex,
-      (string) => `<b>${string.substring(1, string.length - 1)}</b>`
     )
     .replace(/\r?\n/g, '<br>');
   let newString = '';
