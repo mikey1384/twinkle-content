@@ -59,6 +59,8 @@ export default function UsernameText({
             width: '100%',
             cursor: 'pointer',
             fontWeight: 'bold',
+            overflowWrap: 'break-word',
+            wordBreak: 'break-word',
             color: user.username
               ? color || Color.darkerGray()
               : Color.lighterGray()

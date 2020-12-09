@@ -41,7 +41,7 @@ export default function Likers({
       totalLikes--;
       if (totalLikes > 0) {
         if (totalLikes === 1) {
-          let otherLikes = likes.filter(like => like?.id !== userId);
+          let otherLikes = likes.filter((like) => like?.id !== userId);
           return (
             <div>
               You and{' '}
