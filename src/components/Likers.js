@@ -16,6 +16,7 @@ Likers.propTypes = {
   onLinkClick: PropTypes.func.isRequired,
   style: PropTypes.object,
   target: PropTypes.string,
+  wordBreakEnabled: PropTypes.bool,
   userId: PropTypes.number
 };
 
@@ -26,7 +27,8 @@ export default function Likers({
   onLinkClick,
   style = {},
   className,
-  defaultText
+  defaultText,
+  wordBreakEnabled
 }) {
   const Likers = useMemo(() => {
     let userLiked = false;
@@ -46,6 +48,7 @@ export default function Likers({
             <div>
               You and{' '}
               <UsernameText
+                wordBreakEnabled={wordBreakEnabled}
                 color={Color.blue()}
                 user={{
                   id: otherLikes[0]?.id,
@@ -75,8 +78,12 @@ export default function Likers({
       if (totalLikes === 1) {
         return (
           <div>
-            <UsernameText color={Color.blue()} user={likes[0]} /> likes{' '}
-            {`this${target ? ' ' + target : ''}.`}
+            <UsernameText
+              wordBreakEnabled={wordBreakEnabled}
+              color={Color.blue()}
+              user={likes[0]}
+            />{' '}
+            likes {`this${target ? ' ' + target : ''}.`}
           </div>
         );
       } else {
@@ -95,7 +102,7 @@ export default function Likers({
     } else {
       return defaultText ? <div>{defaultText}</div> : null;
     }
-  }, [defaultText, likes, onLinkClick, target, userId]);
+  }, [defaultText, likes, onLinkClick, target, userId, wordBreakEnabled]);
 
   return (
     <ErrorBoundary>

@@ -12,7 +12,8 @@ UsernameText.propTypes = {
   color: PropTypes.string,
   style: PropTypes.object,
   truncate: PropTypes.bool,
-  user: PropTypes.object
+  user: PropTypes.object,
+  wordBreakEnabled: PropTypes.bool
 };
 
 export default function UsernameText({
@@ -20,7 +21,8 @@ export default function UsernameText({
   color,
   style = {},
   user = {},
-  truncate = false
+  truncate = false,
+  wordBreakEnabled
 }) {
   const history = useHistory();
   const timerRef = useRef(null);
@@ -59,8 +61,9 @@ export default function UsernameText({
             width: '100%',
             cursor: 'pointer',
             fontWeight: 'bold',
-            overflowWrap: 'break-word',
-            wordBreak: 'break-word',
+            ...(wordBreakEnabled
+              ? { overflowWrap: 'break-word', wordBreak: 'break-word' }
+              : {}),
             color: user.username
               ? color || Color.darkerGray()
               : Color.lighterGray()

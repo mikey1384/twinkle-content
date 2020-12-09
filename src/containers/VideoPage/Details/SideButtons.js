@@ -101,6 +101,7 @@ export default function SideButtons({
             onLinkClick={() => setUserListModalShown(true)}
             target="video"
             defaultText="Be the first to like this video"
+            wordBreakEnabled
           />
         </div>
       </div>
