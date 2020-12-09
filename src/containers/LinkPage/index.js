@@ -274,6 +274,9 @@ export default function LinkPage({
           border: 1px solid ${Color.borderGray()};
           padding-bottom: 1rem;
           @media (max-width: ${mobileMaxWidth}) {
+            border-top: 0;
+            border-left: 0;
+            border-right: 0;
             width: 100%;
           }
         `}
@@ -500,6 +503,8 @@ export default function LinkPage({
           width: 60%;
           background: #fff;
           @media (max-width: ${mobileMaxWidth}) {
+            border-left: 0;
+            border-right: 0;
             width: 100%;
           }
         `}
