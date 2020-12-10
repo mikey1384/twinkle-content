@@ -1,10 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import QuestionSlide from './QuestionSlide';
-import Carousel from 'components/Carousel';
 import StatusMessage from './StatusMessage';
 import Loading from 'components/Loading';
-import { scrollElementToCenter } from 'helpers';
+import QuestionCarousel from './QuestionCarousel';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useMissionContext, useContentContext } from 'contexts';
 
@@ -59,14 +57,10 @@ export default function Questions({ mission, onFail }) {
     setQuestionIds([...Array(mission.questions.length).keys()]);
   }, [mission.questions]);
 
-  const QuestionsRef = useRef(null);
   const selectedAnswerIndex = useRef(null);
   const statusRef = useRef(null);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [conditionPassStatus, setConditionPassStatus] = useState('');
-  useEffect(() => {
-    scrollElementToCenter(QuestionsRef.current, -200);
-  }, []);
   const objectiveMessage = useMemo(() => {
     if (questionObj[currentSlideIndex]?.type === 'fill in the blank') {
       return 'Choose the word or phrase that correctly completes the sentence';
@@ -75,47 +69,22 @@ export default function Questions({ mission, onFail }) {
   }, [currentSlideIndex, questionObj]);
 
   return (
-    <div ref={QuestionsRef}>
+    <div>
       {questionIds.length > 0 ? (
-        <Carousel
-          allowDrag={false}
+        <QuestionCarousel
           conditionPassStatus={conditionPassStatus}
-          progressBar
-          slidesToShow={1}
-          slidesToScroll={1}
-          slideIndex={currentSlideIndex}
-          afterSlide={(index) => {
+          currentSlideIndex={currentSlideIndex}
+          onAfterSlide={(index) => {
             statusRef.current = null;
             setConditionPassStatus('');
             setCurrentSlideIndex(index);
           }}
           onCheckNavCondition={handleCheckNavCondition}
-          title={
-            <div
-              style={{
-                width: '100%',
-                textAlign: 'center',
-                marginTop: '6rem',
-                marginBottom: '-1rem'
-              }}
-            >
-              <h2>{objectiveMessage}</h2>
-            </div>
-          }
-        >
-          {questionIds.map((questionId) => (
-            <QuestionSlide
-              key={questionId}
-              question={questionObj[questionId].question}
-              choices={questionObj[questionId].choices}
-              answerIndex={questionObj[questionId].answerIndex}
-              conditionPassStatus={conditionPassStatus}
-              onSelectChoice={(selectedIndex) =>
-                handleSelectChoice({ selectedIndex, questionId })
-              }
-            />
-          ))}
-        </Carousel>
+          objectiveMessage={objectiveMessage}
+          questionIds={questionIds}
+          questionObj={questionObj}
+          onSelectChoice={handleSelectChoice}
+        />
       ) : (
         <Loading />
       )}
