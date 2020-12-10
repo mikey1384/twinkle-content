@@ -435,12 +435,16 @@ export function processedStringWithURL(string) {
     .replace(/>/g, '&gt')
     .replace(urlRegex, `<a href=\"$1\" target=\"_blank\">$1</a>`)
     .replace(
-      boldWordRegex,
-      (string) => `<b>${string.substring(1, string.length - 1)}</b>`
+      boldItalicWordRegex,
+      (string) => `<b><i>${string.substring(3, string.length - 3)}</i></b>`
     )
     .replace(
       italicWordRegex,
       (string) => `<i>${string.substring(2, string.length - 2)}</i>`
+    )
+    .replace(
+      boldWordRegex,
+      (string) => `<b>${string.substring(1, string.length - 1)}</b>`
     )
     .replace(
       underlineWordRegex,
@@ -449,10 +453,6 @@ export function processedStringWithURL(string) {
     .replace(
       linethroughWordRegex,
       (string) => `<strike>${string.substring(2, string.length - 2)}</strike>`
-    )
-    .replace(
-      boldItalicWordRegex,
-      (string) => `<b><i>${string.substring(3, string.length - 3)}</i></b>`
     )
     .replace(
       blueWordRegex,
