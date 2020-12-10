@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import QuestionSlide from './QuestionSlide';
 import Carousel from 'components/Carousel';
 import StatusMessage from './StatusMessage';
+import Loading from 'components/Loading';
 import { scrollElementToCenter } from 'helpers';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useMissionContext, useContentContext } from 'contexts';
@@ -75,50 +76,54 @@ export default function Questions({ mission, onFail }) {
 
   return (
     <div ref={QuestionsRef}>
-      <Carousel
-        allowDrag={false}
-        conditionPassStatus={conditionPassStatus}
-        progressBar
-        slidesToShow={1}
-        slidesToScroll={1}
-        slideIndex={currentSlideIndex}
-        afterSlide={(index) => {
-          statusRef.current = null;
-          setConditionPassStatus('');
-          setCurrentSlideIndex(index);
-        }}
-        onCheckNavCondition={handleCheckNavCondition}
-        title={
-          <div
-            style={{
-              width: '100%',
-              textAlign: 'center',
-              marginTop: '6rem',
-              marginBottom: '-1rem'
-            }}
-          >
-            <h2>{objectiveMessage}</h2>
-          </div>
-        }
-      >
-        {questionIds.map((questionId) => (
-          <QuestionSlide
-            key={questionId}
-            question={questionObj[questionId].question}
-            choices={questionObj[questionId].choices}
-            answerIndex={questionObj[questionId].answerIndex}
-            conditionPassStatus={conditionPassStatus}
-            onSelectChoice={(selectedIndex) =>
-              handleSelectChoice({ selectedIndex, questionId })
-            }
-          />
-        ))}
-      </Carousel>
+      {questionIds.length > 0 ? (
+        <Carousel
+          allowDrag={false}
+          conditionPassStatus={conditionPassStatus}
+          progressBar
+          slidesToShow={1}
+          slidesToScroll={1}
+          slideIndex={currentSlideIndex}
+          afterSlide={(index) => {
+            statusRef.current = null;
+            setConditionPassStatus('');
+            setCurrentSlideIndex(index);
+          }}
+          onCheckNavCondition={handleCheckNavCondition}
+          title={
+            <div
+              style={{
+                width: '100%',
+                textAlign: 'center',
+                marginTop: '6rem',
+                marginBottom: '-1rem'
+              }}
+            >
+              <h2>{objectiveMessage}</h2>
+            </div>
+          }
+        >
+          {questionIds.map((questionId) => (
+            <QuestionSlide
+              key={questionId}
+              question={questionObj[questionId].question}
+              choices={questionObj[questionId].choices}
+              answerIndex={questionObj[questionId].answerIndex}
+              conditionPassStatus={conditionPassStatus}
+              onSelectChoice={(selectedIndex) =>
+                handleSelectChoice({ selectedIndex, questionId })
+              }
+            />
+          ))}
+        </Carousel>
+      ) : (
+        <Loading />
+      )}
       {conditionPassStatus && (
         <StatusMessage
           status={conditionPassStatus}
           passMessage="Correct!"
-          failMessage={questionObj[currentSlideIndex]?.failMessage}
+          failMessage={questionObj[currentSlideIndex].failMessage}
         />
       )}
     </div>
@@ -151,8 +156,7 @@ export default function Questions({ mission, onFail }) {
       return handleSuccess();
     }
     statusRef.current =
-      questionObj[currentSlideIndex]?.answerIndex ===
-      selectedAnswerIndex.current
+      questionObj[currentSlideIndex].answerIndex === selectedAnswerIndex.current
         ? 'pass'
         : 'fail';
     setConditionPassStatus(statusRef.current);
