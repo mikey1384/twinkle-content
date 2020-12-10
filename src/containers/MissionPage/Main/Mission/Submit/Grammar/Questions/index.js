@@ -7,63 +7,6 @@ import { scrollElementToCenter } from 'helpers';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useMissionContext, useContentContext } from 'contexts';
 
-const questions = [
-  {
-    id: 0,
-    type: 'fill in the blank',
-    question: 'What year did you _____ university?',
-    choices: ['graduate by', 'graduate from', 'graduating', 'graduating from'],
-    answerIndex: 1
-  },
-  {
-    id: 1,
-    type: 'fill in the blank',
-    question:
-      'It seems to be getting worse. You had better _____ a specialist.',
-    choices: ['consult', 'consult to', 'consult for', 'consult by'],
-    answerIndex: 0
-  },
-  {
-    id: 2,
-    type: 'fill in the blank',
-    question: 'Chicago is a large city, _____?',
-    choices: [`aren't it`, `doesn't it`, `won't it`, `isn't it`],
-    answerIndex: 3
-  },
-  {
-    id: 3,
-    type: 'fill in the blank',
-    question: `Don't leave your books near the open fire. They might easily _____.`,
-    choices: [
-      'catch to fire',
-      'catch the fire',
-      'catch on fire',
-      'catch with fire'
-    ],
-    answerIndex: 2
-  },
-  {
-    id: 4,
-    type: 'fill in the blank',
-    question: 'Do you enjoy _____?',
-    choices: ['to swim', 'swimming', 'swim', 'to swimming'],
-    answerIndex: 1
-  },
-  {
-    id: 5,
-    type: 'fill in the blank',
-    question: 'I have trouble _____.',
-    choices: [
-      'to remember my password',
-      'to remembering my password',
-      'remember my password',
-      'remembering my password'
-    ],
-    answerIndex: 3
-  }
-];
-const questionIds = questions.map((question) => question.id);
-
 Questions.propTypes = {
   mission: PropTypes.object.isRequired,
   onFail: PropTypes.func.isRequired
@@ -80,15 +23,18 @@ export default function Questions({ mission, onFail }) {
   const {
     actions: { onChangeUserXP, onUpdateUserCoins }
   } = useContentContext();
-  const [questionObj, setQuestionObj] = useState(
-    questions.reduce((prev, curr) => {
+  const [questionIds, setQuestionIds] = useState([]);
+  const [questionObj, setQuestionObj] = useState({});
+  useEffect(() => {
+    if (!mission.questions || mission.questions.length === 0) return;
+    const resultObj = mission.questions.reduce((prev, curr, index) => {
       const choices = curr.choices.map((choice) => ({
         label: choice,
         checked: false
       }));
       return {
         ...prev,
-        [curr.id]: {
+        [index]: {
           ...curr,
           choices,
           failMessage: renderFailMessage(),
@@ -107,8 +53,11 @@ export default function Questions({ mission, onFail }) {
           answerInBold
         )}"`;
       }
-    }, {})
-  );
+    }, {});
+    setQuestionObj(resultObj);
+    setQuestionIds([...Array(mission.questions.length).keys()]);
+  }, [mission.questions]);
+
   const QuestionsRef = useRef(null);
   const selectedAnswerIndex = useRef(null);
   const statusRef = useRef(null);
@@ -118,7 +67,7 @@ export default function Questions({ mission, onFail }) {
     scrollElementToCenter(QuestionsRef.current, -200);
   }, []);
   const objectiveMessage = useMemo(() => {
-    if (questionObj[currentSlideIndex].type === 'fill in the blank') {
+    if (questionObj[currentSlideIndex]?.type === 'fill in the blank') {
       return 'Choose the word or phrase that correctly completes the sentence';
     }
     return '';
@@ -169,7 +118,7 @@ export default function Questions({ mission, onFail }) {
         <StatusMessage
           status={conditionPassStatus}
           passMessage="Correct!"
-          failMessage={questionObj[currentSlideIndex].failMessage}
+          failMessage={questionObj[currentSlideIndex]?.failMessage}
         />
       )}
     </div>
@@ -202,7 +151,8 @@ export default function Questions({ mission, onFail }) {
       return handleSuccess();
     }
     statusRef.current =
-      questionObj[currentSlideIndex].answerIndex === selectedAnswerIndex.current
+      questionObj[currentSlideIndex]?.answerIndex ===
+      selectedAnswerIndex.current
         ? 'pass'
         : 'fail';
     setConditionPassStatus(statusRef.current);
