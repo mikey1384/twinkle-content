@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Color, borderRadius } from 'constants/css';
 import Button from 'components/Button';
 
 TryAgain.propTypes = {
+  onInitMission: PropTypes.func.isRequired,
   onTryAgain: PropTypes.func.isRequired
 };
 
-export default function TryAgain({ onTryAgain }) {
+export default function TryAgain({ onInitMission, onTryAgain }) {
+  useEffect(() => {
+    onInitMission();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div
       style={{
