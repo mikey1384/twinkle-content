@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Attempts from './Attempts';
 import InvalidPage from 'components/InvalidPage';
 import ErrorBoundary from 'components/ErrorBoundary';
+import Loading from 'components/Loading';
 import { useMyState } from 'helpers/hooks';
 
 Management.propTypes = {
@@ -22,13 +23,22 @@ export default function Management({ mission, missionId, onSetMissionState }) {
     );
   }
 
+  if (!mission?.missionType) {
+    return <Loading />;
+  }
+
   return (
     <ErrorBoundary style={{ width: '100%', marginBottom: '10rem' }}>
-      <Attempts
-        mission={mission}
-        missionId={missionId}
-        onSetMissionState={onSetMissionState}
-      />
+      {mission.missionType !== 'grammar' && (
+        <Attempts
+          mission={mission}
+          missionId={missionId}
+          onSetMissionState={onSetMissionState}
+        />
+      )}
+      {mission.missionType === 'grammar' && (
+        <div>This is grammar generator</div>
+      )}
     </ErrorBoundary>
   );
 }
