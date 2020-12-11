@@ -27,7 +27,7 @@ export default function QuestionCarousel({
 }) {
   const CarouselRef = useRef(null);
   useEffect(() => {
-    scrollElementToCenter(CarouselRef.current);
+    scrollElementToCenter(CarouselRef.current, -200);
   }, []);
   return (
     <div ref={CarouselRef}>
