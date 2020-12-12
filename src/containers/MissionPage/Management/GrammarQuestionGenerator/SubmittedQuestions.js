@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import FilterBar from 'components/FilterBar';
+import Loading from 'components/Loading';
+import { useAppContext } from 'contexts';
+import { useMyState } from 'helpers/hooks';
 
 SubmittedQuestions.propTypes = {
   style: PropTypes.object,
@@ -13,7 +16,36 @@ export default function SubmittedQuestions({
   mission,
   onSetMissionState
 }) {
+  const { canEdit } = useMyState();
   const { managementTab: activeTab = 'pending' } = mission;
+  const {
+    requestHelpers: { loadGrammarQuestions }
+  } = useAppContext();
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    if (canEdit) {
+      init();
+    }
+    async function init() {
+      setLoading(true);
+      const {
+        questionObj,
+        [`${activeTab}QuestionIds`]: questionIds,
+        loadMoreButton
+      } = await loadGrammarQuestions(activeTab);
+      onSetMissionState({
+        missionId: mission.id,
+        newState: {
+          [`${activeTab}QuestionIds`]: questionIds,
+          questionObj: { ...mission.questionObj, ...questionObj },
+          loadMoreButton
+        }
+      });
+      setLoading(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTab, canEdit]);
+
   return (
     <div style={style}>
       <FilterBar
@@ -46,6 +78,16 @@ export default function SubmittedQuestions({
           Approved
         </nav>
       </FilterBar>
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          {mission[`${activeTab}QuestionIds`]?.map((questionId) => {
+            const question = mission.questionObj[questionId];
+            return <div key={questionId}>{question.content}</div>;
+          })}
+        </>
+      )}
     </div>
   );
 }

@@ -33,6 +33,17 @@ export default function missionRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async loadGrammarQuestions(activeTab) {
+      try {
+        const { data } = await request.get(
+          `${URL}/mission/grammar/question?activeTab=${activeTab}`,
+          auth()
+        );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async loadMission(missionId) {
       try {
         const { data } = await request.get(
