@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import FilterBar from 'components/FilterBar';
 import Loading from 'components/Loading';
+import QuestionListItem from './QuestionListItem';
 import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
@@ -84,7 +85,7 @@ export default function SubmittedQuestions({
         <>
           {mission[`${activeTab}QuestionIds`]?.map((questionId) => {
             const question = mission.questionObj[questionId];
-            return <div key={questionId}>{question.content}</div>;
+            return <QuestionListItem key={questionId} question={question} />;
           })}
         </>
       )}
