@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import Input from 'components/Texts/Input';
+import Button from 'components/Button';
 import { css } from 'emotion';
 import { capitalize, stringIsEmpty } from 'helpers/stringHelpers';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
@@ -11,9 +12,11 @@ export default function GrammarQuestionGenerator() {
   const [wrongChoice1, setWrongChoice1] = useState('');
   const [wrongChoice2, setWrongChoice2] = useState('');
   const [wrongChoice3, setWrongChoice3] = useState('');
+
   const finalLeftSideText = useMemo(() => {
     return capitalize(leftSideText.trim());
   }, [leftSideText]);
+
   const finalRightSideText = useMemo(() => {
     if (stringIsEmpty(rightSideText)) {
       return '.';
@@ -29,6 +32,28 @@ export default function GrammarQuestionGenerator() {
     }
     return ` ${trimmedRightSideText}`;
   }, [rightSideText]);
+
+  const submitDisabled = useMemo(() => {
+    if (stringIsEmpty(leftSideText) & stringIsEmpty(rightSideText)) {
+      return true;
+    }
+    if (
+      stringIsEmpty(correctChoice) ||
+      stringIsEmpty(wrongChoice1) ||
+      stringIsEmpty(wrongChoice2) ||
+      stringIsEmpty(wrongChoice3)
+    ) {
+      return true;
+    }
+    return false;
+  }, [
+    correctChoice,
+    leftSideText,
+    rightSideText,
+    wrongChoice1,
+    wrongChoice2,
+    wrongChoice3
+  ]);
 
   return (
     <div
@@ -129,6 +154,24 @@ export default function GrammarQuestionGenerator() {
             value={wrongChoice3}
           />
         </div>
+      </div>
+      <div
+        style={{
+          marginTop: '2rem',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
+        <Button
+          disabled={submitDisabled}
+          style={{ fontSize: '2rem' }}
+          color="logoBlue"
+          filled
+          onClick={() => console.log('clicked')}
+        >
+          Submit
+        </Button>
       </div>
     </div>
   );
