@@ -4,6 +4,7 @@ import Button from 'components/Button';
 import { css } from 'emotion';
 import { capitalize, stringIsEmpty } from 'helpers/stringHelpers';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
+import SubmittedQuestions from './SubmittedQuestions';
 
 export default function GrammarQuestionGenerator() {
   const [leftSideText, setLeftSideText] = useState('');
@@ -56,123 +57,126 @@ export default function GrammarQuestionGenerator() {
   ]);
 
   return (
-    <div
-      className={css`
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        background: #fff;
-        padding: 1rem 1rem 1.5rem 1rem;
-        border: 1px solid ${Color.borderGray()};
-        border-radius: ${borderRadius};
-        @media (max-width: ${mobileMaxWidth}) {
-          border-radius: 0;
-          border-left: 0;
-          border-right: 0;
-        }
-      `}
-    >
-      <h2>Grammar Question Generator</h2>
-      {(!stringIsEmpty(leftSideText) || !stringIsEmpty(rightSideText)) && (
-        <div
-          style={{
-            width: '100%',
-            textAlign: 'center',
-            marginTop: '5rem',
-            fontSize: '2rem'
-          }}
-        >
-          {finalLeftSideText} _____
-          {finalRightSideText}
-        </div>
-      )}
+    <div style={{ width: '100%' }}>
       <div
         className={css`
-          margin-top: 2rem;
+          width: 100%;
           display: flex;
-          justify-content: center;
-          align-items: flex-end;
-          font-size: 1.5rem;
+          flex-direction: column;
+          background: #fff;
+          padding: 1rem 1rem 1.5rem 1rem;
+          border: 1px solid ${Color.borderGray()};
+          border-radius: ${borderRadius};
+          @media (max-width: ${mobileMaxWidth}) {
+            border-radius: 0;
+            border-left: 0;
+            border-right: 0;
+          }
         `}
       >
-        <Input
-          onChange={setLeftSideText}
-          placeholder="Enter text that goes to the left side of the blank"
-          value={leftSideText}
-        />
-        <span style={{ margin: '0 1rem' }}>_____</span>
-        <Input
-          onChange={setRightSideText}
-          placeholder="Enter text that goes to the right side of the blank"
-          value={rightSideText}
-        />
-      </div>
-      <div
-        style={{
-          marginTop: '3rem',
-          display: 'flex',
-          width: '100%',
-          justifyContent: 'center'
-        }}
-      >
+        <h2>Grammar Question Generator</h2>
+        {(!stringIsEmpty(leftSideText) || !stringIsEmpty(rightSideText)) && (
+          <div
+            style={{
+              width: '100%',
+              textAlign: 'center',
+              marginTop: '5rem',
+              fontSize: '2rem'
+            }}
+          >
+            {finalLeftSideText} _____
+            {finalRightSideText}
+          </div>
+        )}
         <div
           className={css`
-            width: 50%;
-            @media (max-width: ${mobileMaxWidth}) {
-              width: 100%;
-            }
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            font-size: 1.5rem;
           `}
-          style={{
-            display: 'flex',
-            flexDirection: 'column'
-          }}
         >
-          <h3>Enter the correct choice</h3>
           <Input
-            style={{ marginTop: '1rem' }}
-            onChange={setCorrectChoice}
-            placeholder="Enter the correct choice"
-            value={correctChoice}
+            onChange={setLeftSideText}
+            placeholder="Enter text that goes to the left side of the blank"
+            value={leftSideText}
           />
-          <h3 style={{ marginTop: '3rem' }}>Enter 3 wrong choices</h3>
+          <span style={{ margin: '0 1rem' }}>_____</span>
           <Input
-            style={{ marginTop: '1rem' }}
-            onChange={setWrongChoice1}
-            placeholder="Enter a wrong choice"
-            value={wrongChoice1}
-          />
-          <Input
-            style={{ marginTop: '1rem' }}
-            onChange={setWrongChoice2}
-            placeholder="Enter a wrong choice"
-            value={wrongChoice2}
-          />
-          <Input
-            style={{ marginTop: '1rem' }}
-            onChange={setWrongChoice3}
-            placeholder="Enter a wrong choice"
-            value={wrongChoice3}
+            onChange={setRightSideText}
+            placeholder="Enter text that goes to the right side of the blank"
+            value={rightSideText}
           />
         </div>
-      </div>
-      <div
-        style={{
-          marginTop: '3rem',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-      >
-        <Button
-          disabled={submitDisabled}
-          style={{ fontSize: '2rem' }}
-          color="logoBlue"
-          filled
-          onClick={() => console.log('clicked')}
+        <div
+          style={{
+            marginTop: '3rem',
+            display: 'flex',
+            width: '100%',
+            justifyContent: 'center'
+          }}
         >
-          Submit
-        </Button>
+          <div
+            className={css`
+              width: 50%;
+              @media (max-width: ${mobileMaxWidth}) {
+                width: 100%;
+              }
+            `}
+            style={{
+              display: 'flex',
+              flexDirection: 'column'
+            }}
+          >
+            <h3>Enter the correct choice</h3>
+            <Input
+              style={{ marginTop: '1rem' }}
+              onChange={setCorrectChoice}
+              placeholder="Enter the correct choice"
+              value={correctChoice}
+            />
+            <h3 style={{ marginTop: '3rem' }}>Enter 3 wrong choices</h3>
+            <Input
+              style={{ marginTop: '1rem' }}
+              onChange={setWrongChoice1}
+              placeholder="Enter a wrong choice"
+              value={wrongChoice1}
+            />
+            <Input
+              style={{ marginTop: '1rem' }}
+              onChange={setWrongChoice2}
+              placeholder="Enter a wrong choice"
+              value={wrongChoice2}
+            />
+            <Input
+              style={{ marginTop: '1rem' }}
+              onChange={setWrongChoice3}
+              placeholder="Enter a wrong choice"
+              value={wrongChoice3}
+            />
+          </div>
+        </div>
+        <div
+          style={{
+            marginTop: '3rem',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          <Button
+            disabled={submitDisabled}
+            style={{ fontSize: '2rem' }}
+            color="logoBlue"
+            filled
+            onClick={() => console.log('clicked')}
+          >
+            Submit
+          </Button>
+        </div>
       </div>
+      <SubmittedQuestions />
     </div>
   );
 }
