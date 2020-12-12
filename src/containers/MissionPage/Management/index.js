@@ -37,7 +37,12 @@ export default function Management({ mission, missionId, onSetMissionState }) {
           onSetMissionState={onSetMissionState}
         />
       )}
-      {mission.missionType === 'grammar' && <GrammarQuestionGenerator />}
+      {mission.missionType === 'grammar' && (
+        <GrammarQuestionGenerator
+          mission={mission}
+          onSetMissionState={onSetMissionState}
+        />
+      )}
     </ErrorBoundary>
   );
 }

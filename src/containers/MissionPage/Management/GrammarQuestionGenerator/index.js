@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import PropTypes from 'prop-types';
 import Input from 'components/Texts/Input';
 import Button from 'components/Button';
 import { css } from 'emotion';
@@ -6,7 +7,15 @@ import { capitalize, stringIsEmpty } from 'helpers/stringHelpers';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import SubmittedQuestions from './SubmittedQuestions';
 
-export default function GrammarQuestionGenerator() {
+GrammarQuestionGenerator.propTypes = {
+  mission: PropTypes.object.isRequired,
+  onSetMissionState: PropTypes.func.isRequired
+};
+
+export default function GrammarQuestionGenerator({
+  mission,
+  onSetMissionState
+}) {
   const [leftSideText, setLeftSideText] = useState('');
   const [rightSideText, setRightSideText] = useState('');
   const [correctChoice, setCorrectChoice] = useState('');
@@ -176,7 +185,10 @@ export default function GrammarQuestionGenerator() {
           </Button>
         </div>
       </div>
-      <SubmittedQuestions />
+      <SubmittedQuestions
+        mission={mission}
+        onSetMissionState={onSetMissionState}
+      />
     </div>
   );
 }
