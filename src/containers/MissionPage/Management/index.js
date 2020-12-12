@@ -4,6 +4,7 @@ import Attempts from './Attempts';
 import InvalidPage from 'components/InvalidPage';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Loading from 'components/Loading';
+import GrammarQuestionGenerator from './GrammarQuestionGenerator';
 import { useMyState } from 'helpers/hooks';
 
 Management.propTypes = {
@@ -36,9 +37,7 @@ export default function Management({ mission, missionId, onSetMissionState }) {
           onSetMissionState={onSetMissionState}
         />
       )}
-      {mission.missionType === 'grammar' && (
-        <div>This is grammar generator</div>
-      )}
+      {mission.missionType === 'grammar' && <GrammarQuestionGenerator />}
     </ErrorBoundary>
   );
 }
