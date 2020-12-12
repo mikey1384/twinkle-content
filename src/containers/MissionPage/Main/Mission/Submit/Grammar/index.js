@@ -53,7 +53,10 @@ export default function Grammar({ mission }) {
     if (userId) {
       const data = await loadMission(mission.id);
       if (mounted.current) {
-        onLoadMission({ mission: data, prevUserId: userId });
+        onLoadMission({
+          mission: { ...data, managementTab: mission.managementTab },
+          prevUserId: userId
+        });
       }
     } else {
       onLoadMission({ mission: { id: mission.id }, prevUserId: userId });
