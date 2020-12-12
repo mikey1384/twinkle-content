@@ -62,7 +62,7 @@ export default function GrammarQuestionGenerator() {
         display: flex;
         flex-direction: column;
         background: #fff;
-        padding: 1rem;
+        padding: 1rem 1rem 1.5rem 1rem;
         border: 1px solid ${Color.borderGray()};
         border-radius: ${borderRadius};
         @media (max-width: ${mobileMaxWidth}) {
