@@ -719,6 +719,7 @@ export default function Header({
           }
           @media (max-width: ${mobileMaxWidth}) {
             bottom: 0;
+            box-shadow: none;
             height: 5rem;
             border-top: 1px solid ${Color.borderGray()};
           }
