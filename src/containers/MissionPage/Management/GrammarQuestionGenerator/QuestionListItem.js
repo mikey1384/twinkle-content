@@ -8,8 +8,11 @@ QuestionListItem.propTypes = {
 export default function QuestionListItem({ question }) {
   return (
     <div>
-      <div>{question.content}</div>
+      <div>{question.question}</div>
       <div>{question.isApproved}</div>
+      {question.choices.map((choice, index) => (
+        <div key={index}>{choice}</div>
+      ))}
     </div>
   );
 }
