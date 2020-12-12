@@ -186,6 +186,7 @@ export default function GrammarQuestionGenerator({
         </div>
       </div>
       <SubmittedQuestions
+        style={{ marginTop: '2rem' }}
         mission={mission}
         onSetMissionState={onSetMissionState}
       />
