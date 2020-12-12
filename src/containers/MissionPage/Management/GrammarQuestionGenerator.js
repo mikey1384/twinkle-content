@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import Input from 'components/Texts/Input';
 import { css } from 'emotion';
-import { stringIsEmpty } from 'helpers/stringHelpers';
+import { capitalize, stringIsEmpty } from 'helpers/stringHelpers';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 
 export default function GrammarQuestionGenerator() {
@@ -12,14 +12,22 @@ export default function GrammarQuestionGenerator() {
   const [wrongChoice2, setWrongChoice2] = useState('');
   const [wrongChoice3, setWrongChoice3] = useState('');
   const finalLeftSideText = useMemo(() => {
-    return leftSideText;
+    return capitalize(leftSideText.trim());
   }, [leftSideText]);
   const finalRightSideText = useMemo(() => {
-    return stringIsEmpty(rightSideText)
-      ? '.'
-      : !rightSideText || ['.', '?'].includes(rightSideText)
-      ? rightSideText
-      : ` ${rightSideText}`;
+    if (stringIsEmpty(rightSideText)) {
+      return '.';
+    }
+    if (!rightSideText || ['.', '?'].includes(rightSideText)) {
+      return rightSideText;
+    }
+    const trimmedRightSideText = rightSideText.trim();
+    if (
+      /^[a-zA-Z]+$/i.test(trimmedRightSideText[trimmedRightSideText.length - 1])
+    ) {
+      return ` ${trimmedRightSideText}.`;
+    }
+    return ` ${trimmedRightSideText}`;
   }, [rightSideText]);
 
   return (
