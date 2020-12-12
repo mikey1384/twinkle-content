@@ -102,30 +102,30 @@ export default function GrammarQuestionGenerator() {
             flexDirection: 'column'
           }}
         >
-          <h3>Enter Correct Choice</h3>
+          <h3>Enter the correct choice</h3>
           <Input
             style={{ marginTop: '1rem' }}
             onChange={setCorrectChoice}
-            placeholder="Enter correct choice"
+            placeholder="Enter the correct choice"
             value={correctChoice}
           />
-          <h3 style={{ marginTop: '3rem' }}>Enter 3 Wrong Choices</h3>
+          <h3 style={{ marginTop: '3rem' }}>Enter 3 wrong choices</h3>
           <Input
             style={{ marginTop: '1rem' }}
             onChange={setWrongChoice1}
-            placeholder="Enter wrong choice"
+            placeholder="Enter a wrong choice"
             value={wrongChoice1}
           />
           <Input
             style={{ marginTop: '1rem' }}
             onChange={setWrongChoice2}
-            placeholder="Enter wrong choice"
+            placeholder="Enter a wrong choice"
             value={wrongChoice2}
           />
           <Input
             style={{ marginTop: '1rem' }}
             onChange={setWrongChoice3}
-            placeholder="Enter wrong choice"
+            placeholder="Enter a wrong choice"
             value={wrongChoice3}
           />
         </div>
