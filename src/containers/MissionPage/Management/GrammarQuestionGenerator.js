@@ -157,7 +157,7 @@ export default function GrammarQuestionGenerator() {
       </div>
       <div
         style={{
-          marginTop: '2rem',
+          marginTop: '3rem',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center'
