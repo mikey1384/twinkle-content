@@ -102,6 +102,34 @@ export default function missionRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async uploadGrammarQuestion({
+      leftSideText,
+      rightSideText,
+      correctChoice,
+      wrongChoice1,
+      wrongChoice2,
+      wrongChoice3
+    }) {
+      try {
+        const {
+          data: { success }
+        } = await request.post(
+          `${URL}/mission/grammar`,
+          {
+            leftSideText,
+            rightSideText,
+            correctChoice,
+            wrongChoice1,
+            wrongChoice2,
+            wrongChoice3
+          },
+          auth()
+        );
+        return Promise.resolve(success);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async uploadMissionAttempt({ missionId, attempt }) {
       try {
         const {

@@ -5,6 +5,7 @@ import Button from 'components/Button';
 import { css } from 'emotion';
 import { capitalize, stringIsEmpty } from 'helpers/stringHelpers';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
+import { useAppContext } from 'contexts';
 import SubmittedQuestions from './SubmittedQuestions';
 
 GrammarQuestionGenerator.propTypes = {
@@ -16,6 +17,9 @@ export default function GrammarQuestionGenerator({
   mission,
   onSetMissionState
 }) {
+  const {
+    requestHelpers: { uploadGrammarQuestion }
+  } = useAppContext();
   const [leftSideText, setLeftSideText] = useState('');
   const [rightSideText, setRightSideText] = useState('');
   const [correctChoice, setCorrectChoice] = useState('');
@@ -179,7 +183,7 @@ export default function GrammarQuestionGenerator({
             style={{ fontSize: '2rem' }}
             color="logoBlue"
             filled
-            onClick={() => console.log('clicked')}
+            onClick={handleSubmitQuestion}
           >
             Submit
           </Button>
@@ -192,4 +196,15 @@ export default function GrammarQuestionGenerator({
       />
     </div>
   );
+
+  async function handleSubmitQuestion() {
+    await uploadGrammarQuestion({
+      leftSideText: finalLeftSideText,
+      rightSideText: finalRightSideText,
+      correctChoice,
+      wrongChoice1,
+      wrongChoice2,
+      wrongChoice3
+    });
+  }
 }
