@@ -5,12 +5,14 @@ export default function missionRequestHelpers({ auth, handleError }) {
   return {
     async approveGrammarQuestion(questionId) {
       try {
-        const { data } = await request.put(
+        const {
+          data: { success }
+        } = await request.put(
           `${URL}/mission/grammar/question/approve`,
           { questionId },
           auth()
         );
-        return Promise.resolve(data);
+        return Promise.resolve(success);
       } catch (error) {
         return handleError(error);
       }

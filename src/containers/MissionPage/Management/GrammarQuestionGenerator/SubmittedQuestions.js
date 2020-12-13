@@ -68,11 +68,11 @@ export default function SubmittedQuestions({
           Pending
         </nav>
         <nav
-          className={activeTab === 'pass' ? 'active' : null}
+          className={activeTab === 'approved' ? 'active' : null}
           onClick={() => {
             onSetMissionState({
               missionId: mission.id,
-              newState: { managementTab: 'pass' }
+              newState: { managementTab: 'approved' }
             });
           }}
         >
@@ -89,6 +89,23 @@ export default function SubmittedQuestions({
               <QuestionListItem
                 key={questionId}
                 question={question}
+                onApproveQuestion={() =>
+                  onSetMissionState({
+                    missionId: mission.id,
+                    newState: {
+                      pendingQuestionIds: mission.pendingQuestionIds.filter(
+                        (id) => id !== questionId
+                      ),
+                      questionObj: {
+                        ...mission.questionObj,
+                        [questionId]: {
+                          ...mission.questionObj[questionId],
+                          isApproved: true
+                        }
+                      }
+                    }
+                  })
+                }
                 style={{ marginTop: index === 0 ? 0 : '1rem' }}
               />
             );

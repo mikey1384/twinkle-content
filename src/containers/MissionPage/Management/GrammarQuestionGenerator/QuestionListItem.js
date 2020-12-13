@@ -7,11 +7,16 @@ import Button from 'components/Button';
 import { useAppContext } from 'contexts';
 
 QuestionListItem.propTypes = {
+  onApproveQuestion: PropTypes.func.isRequired,
   question: PropTypes.object.isRequired,
   style: PropTypes.object
 };
 
-export default function QuestionListItem({ question, style }) {
+export default function QuestionListItem({
+  onApproveQuestion,
+  question,
+  style
+}) {
   const {
     requestHelpers: { approveGrammarQuestion }
   } = useAppContext();
@@ -105,6 +110,9 @@ export default function QuestionListItem({ question, style }) {
   );
 
   async function handleApprove() {
-    await approveGrammarQuestion(question.id);
+    const success = await approveGrammarQuestion(question.id);
+    if (success) {
+      onApproveQuestion();
+    }
   }
 }
