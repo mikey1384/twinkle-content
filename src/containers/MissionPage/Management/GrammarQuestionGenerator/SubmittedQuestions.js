@@ -81,6 +81,18 @@ export default function SubmittedQuestions({
       </FilterBar>
       {loading ? (
         <Loading />
+      ) : mission[`${activeTab}QuestionIds`]?.length === 0 ? (
+        <div
+          style={{
+            marginTop: '10rem',
+            fontSize: '2.5rem',
+            fontWeight: 'bold',
+            width: '100%',
+            textAlign: 'center'
+          }}
+        >
+          {`There are no ${activeTab} questions`}
+        </div>
       ) : (
         <>
           {mission[`${activeTab}QuestionIds`]?.map((questionId, index) => {
