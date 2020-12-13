@@ -3,6 +3,18 @@ import URL from 'constants/URL';
 
 export default function missionRequestHelpers({ auth, handleError }) {
   return {
+    async approveGrammarQuestion(questionId) {
+      try {
+        const { data } = await request.put(
+          `${URL}/mission/grammar/question/approve`,
+          { questionId },
+          auth()
+        );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async attachMissionTutorial({ missionId, missionTitle }) {
       try {
         const {

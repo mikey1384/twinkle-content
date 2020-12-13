@@ -4,6 +4,7 @@ import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
+import { useAppContext } from 'contexts';
 
 QuestionListItem.propTypes = {
   question: PropTypes.object.isRequired,
@@ -11,6 +12,9 @@ QuestionListItem.propTypes = {
 };
 
 export default function QuestionListItem({ question, style }) {
+  const {
+    requestHelpers: { approveGrammarQuestion }
+  } = useAppContext();
   const correctAnswer = useMemo(() => {
     return question.choices[question.answerIndex];
   }, [question.answerIndex, question.choices]);
@@ -100,7 +104,7 @@ export default function QuestionListItem({ question, style }) {
     </div>
   );
 
-  function handleApprove() {
-    console.log('approved');
+  async function handleApprove() {
+    await approveGrammarQuestion(question.id);
   }
 }
