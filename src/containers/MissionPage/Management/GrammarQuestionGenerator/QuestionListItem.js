@@ -2,6 +2,8 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
+import Icon from 'components/Icon';
+import Button from 'components/Button';
 
 QuestionListItem.propTypes = {
   question: PropTypes.object.isRequired,
@@ -65,6 +67,40 @@ export default function QuestionListItem({ question, style }) {
           </div>
         </div>
       </div>
+      <div
+        style={{
+          marginTop: '4rem',
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center'
+        }}
+      >
+        <Button
+          style={{
+            fontSize: '1.7rem'
+          }}
+          skeuomorphic
+          color="darkerGray"
+          onClick={() => console.log('editng')}
+        >
+          <Icon icon="pencil-alt" />
+          <span style={{ marginLeft: '0.7rem' }}>Edit</span>
+        </Button>
+        {!question.isApproved && (
+          <Button
+            style={{ fontSize: '1.7rem', marginLeft: '1rem' }}
+            skeuomorphic
+            color="darkBlue"
+            onClick={handleApprove}
+          >
+            Approve
+          </Button>
+        )}
+      </div>
     </div>
   );
+
+  function handleApprove() {
+    console.log('approved');
+  }
 }
