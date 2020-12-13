@@ -25,11 +25,12 @@ export default function QuestionListItem({ question, style }) {
         }
       `}
     >
-      <div>{question.question}</div>
-      <div>{question.isApproved}</div>
-      {question.choices.map((choice, index) => (
-        <div key={index}>{choice}</div>
-      ))}
+      <h3>{question.question}</h3>
+      <div style={{ marginTop: '2rem' }}>
+        {question.choices.map((choice, index) => (
+          <div key={index}>{choice}</div>
+        ))}
+      </div>
     </div>
   );
 }
