@@ -4,12 +4,14 @@ import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 
 QuestionListItem.propTypes = {
-  question: PropTypes.object.isRequired
+  question: PropTypes.object.isRequired,
+  style: PropTypes.object
 };
 
-export default function QuestionListItem({ question }) {
+export default function QuestionListItem({ question, style }) {
   return (
     <div
+      style={style}
       className={css`
         width: 100%;
         background: #fff;

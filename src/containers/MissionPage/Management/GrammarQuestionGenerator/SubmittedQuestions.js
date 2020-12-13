@@ -83,9 +83,15 @@ export default function SubmittedQuestions({
         <Loading />
       ) : (
         <>
-          {mission[`${activeTab}QuestionIds`]?.map((questionId) => {
+          {mission[`${activeTab}QuestionIds`]?.map((questionId, index) => {
             const question = mission.questionObj[questionId];
-            return <QuestionListItem key={questionId} question={question} />;
+            return (
+              <QuestionListItem
+                key={questionId}
+                question={question}
+                style={{ marginTop: index === 0 ? 0 : '1rem' }}
+              />
+            );
           })}
         </>
       )}
