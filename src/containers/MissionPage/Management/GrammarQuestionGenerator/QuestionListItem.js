@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
+import { css } from 'emotion';
 
 QuestionListItem.propTypes = {
   question: PropTypes.object.isRequired
@@ -7,7 +9,20 @@ QuestionListItem.propTypes = {
 
 export default function QuestionListItem({ question }) {
   return (
-    <div>
+    <div
+      className={css`
+        width: 100%;
+        background: #fff;
+        border-radius: ${borderRadius};
+        padding: 1rem;
+        border: 1px solid ${Color.borderGray()};
+        @media (max-width: ${mobileMaxWidth}) {
+          border-left: 0;
+          border-right: 0;
+          border-radius: 0;
+        }
+      `}
+    >
       <div>{question.question}</div>
       <div>{question.isApproved}</div>
       {question.choices.map((choice, index) => (
