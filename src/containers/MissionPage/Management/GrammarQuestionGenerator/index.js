@@ -200,7 +200,7 @@ export default function GrammarQuestionGenerator({
   );
 
   async function handleSubmitQuestion() {
-    await uploadGrammarQuestion({
+    const { alreadyExists, success } = await uploadGrammarQuestion({
       leftSideText: finalLeftSideText,
       rightSideText: finalRightSideText,
       correctChoice,
@@ -208,5 +208,9 @@ export default function GrammarQuestionGenerator({
       wrongChoice2,
       wrongChoice3
     });
+    if (alreadyExists) {
+      return console.log('already exists');
+    }
+    console.log(success);
   }
 }
