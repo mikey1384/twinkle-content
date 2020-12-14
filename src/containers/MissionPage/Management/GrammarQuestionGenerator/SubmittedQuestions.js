@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import FilterBar from 'components/FilterBar';
 import Loading from 'components/Loading';
 import QuestionListItem from './QuestionListItem';
+import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
@@ -17,13 +18,16 @@ export default function SubmittedQuestions({
   mission,
   onSetMissionState
 }) {
+  const mounted = useRef(true);
   const { canEdit } = useMyState();
-  const { managementTab: activeTab = 'pending' } = mission;
+  const { managementTab: activeTab = 'pending', loadMoreButton } = mission;
   const {
     requestHelpers: { loadGrammarQuestions }
   } = useAppContext();
   const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
   useEffect(() => {
+    mounted.current = true;
     if (canEdit) {
       init();
     }
@@ -33,19 +37,29 @@ export default function SubmittedQuestions({
         questionObj,
         [`${activeTab}QuestionIds`]: questionIds,
         loadMoreButton
-      } = await loadGrammarQuestions(activeTab);
-      onSetMissionState({
-        missionId: mission.id,
-        newState: {
-          [`${activeTab}QuestionIds`]: questionIds,
-          questionObj: { ...mission.questionObj, ...questionObj },
-          loadMoreButton
-        }
-      });
-      setLoading(false);
+      } = await loadGrammarQuestions({ activeTab });
+      if (mounted.current) {
+        onSetMissionState({
+          missionId: mission.id,
+          newState: {
+            [`${activeTab}QuestionIds`]: questionIds,
+            questionObj: { ...mission.questionObj, ...questionObj },
+            loadMoreButton
+          }
+        });
+      }
+      if (mounted.current) {
+        setLoading(false);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab, canEdit]);
+
+  useEffect(() => {
+    return function onUnmount() {
+      mounted.current = false;
+    };
+  }, []);
 
   return (
     <div style={style}>
@@ -124,6 +138,44 @@ export default function SubmittedQuestions({
           })}
         </>
       )}
+      {loadMoreButton && (
+        <LoadMoreButton
+          style={{ marginTop: '2rem', fontSize: '1.7rem' }}
+          filled
+          color="green"
+          loading={loadingMore}
+          onClick={handleLoadMoreQuestions}
+        />
+      )}
     </div>
   );
+
+  async function handleLoadMoreQuestions() {
+    setLoadingMore(true);
+    const lastQuestionId =
+      mission[`${activeTab}QuestionIds`]?.[
+        mission[`${activeTab}QuestionIds`]?.length - 1
+      ] || null;
+    if (!lastQuestionId) return;
+    const {
+      questionObj,
+      [`${activeTab}QuestionIds`]: loadedQuestionIds,
+      loadMoreButton
+    } = await loadGrammarQuestions({ activeTab, lastQuestionId });
+    if (mounted.current) {
+      onSetMissionState({
+        missionId: mission.id,
+        newState: {
+          [`${activeTab}QuestionIds`]: mission[
+            `${activeTab}QuestionIds`
+          ].concat(loadedQuestionIds),
+          questionObj: { ...mission.questionObj, ...questionObj },
+          loadMoreButton
+        }
+      });
+    }
+    if (mounted.current) {
+      setLoadingMore(false);
+    }
+  }
 }

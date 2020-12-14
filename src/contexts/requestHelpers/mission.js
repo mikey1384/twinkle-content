@@ -47,10 +47,12 @@ export default function missionRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async loadGrammarQuestions(activeTab) {
+    async loadGrammarQuestions({ activeTab, lastQuestionId }) {
       try {
         const { data } = await request.get(
-          `${URL}/mission/grammar/question?activeTab=${activeTab}`,
+          `${URL}/mission/grammar/question?activeTab=${activeTab}${
+            lastQuestionId ? `&lastQuestionId=${lastQuestionId}` : ''
+          }`,
           auth()
         );
         return Promise.resolve(data);
