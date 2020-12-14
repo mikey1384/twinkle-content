@@ -8,12 +8,14 @@ import { useAppContext } from 'contexts';
 
 QuestionListItem.propTypes = {
   onApproveQuestion: PropTypes.func.isRequired,
+  onSetIsEditing: PropTypes.func.isRequired,
   question: PropTypes.object.isRequired,
   style: PropTypes.object
 };
 
 export default function QuestionListItem({
   onApproveQuestion,
+  onSetIsEditing,
   question,
   style
 }) {
@@ -45,37 +47,45 @@ export default function QuestionListItem({
         }
       `}
     >
-      <div style={{ width: '100%', textAlign: 'center' }}>
-        <p style={{ fontSize: '2.2rem', fontWeight: 'bold' }}>
-          {question.question}
-        </p>
-      </div>
-      <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-        <div
-          className={css`
-            > article {
-              text-align: center;
-              font-weight: bold;
-              font-size: 1.9rem;
-            }
-            p {
-              font-size: 1.7rem;
-            }
-          `}
-          style={{ marginTop: '3rem' }}
-        >
-          <article>Correct Choice</article>
-          <div style={{ marginTop: '0.5rem', textAlign: 'center' }}>
-            <p>{correctAnswer}</p>
+      {question.isEditing ? (
+        <div>It is being edited</div>
+      ) : (
+        <>
+          <div style={{ width: '100%', textAlign: 'center' }}>
+            <p style={{ fontSize: '2.2rem', fontWeight: 'bold' }}>
+              {question.question}
+            </p>
           </div>
-          <article style={{ marginTop: '3rem' }}>Wrong Choices</article>
-          <div style={{ marginTop: '0.5rem', textAlign: 'center' }}>
-            {wrongChoices.map((choice, index) => (
-              <p key={index}>{choice}</p>
-            ))}
+          <div
+            style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+          >
+            <div
+              className={css`
+                > article {
+                  text-align: center;
+                  font-weight: bold;
+                  font-size: 1.9rem;
+                }
+                p {
+                  font-size: 1.7rem;
+                }
+              `}
+              style={{ marginTop: '3rem' }}
+            >
+              <article>Correct Choice</article>
+              <div style={{ marginTop: '0.5rem', textAlign: 'center' }}>
+                <p>{correctAnswer}</p>
+              </div>
+              <article style={{ marginTop: '3rem' }}>Wrong Choices</article>
+              <div style={{ marginTop: '0.5rem', textAlign: 'center' }}>
+                {wrongChoices.map((choice, index) => (
+                  <p key={index}>{choice}</p>
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
       <div
         style={{
           marginTop: '4rem',
@@ -90,7 +100,7 @@ export default function QuestionListItem({
           }}
           skeuomorphic
           color="darkerGray"
-          onClick={() => console.log('editng')}
+          onClick={() => onSetIsEditing(true)}
         >
           <Icon icon="pencil-alt" />
           <span style={{ marginLeft: '0.7rem' }}>Edit</span>

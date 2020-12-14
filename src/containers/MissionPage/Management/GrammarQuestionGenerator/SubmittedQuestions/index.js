@@ -115,6 +115,20 @@ export default function SubmittedQuestions({
               <QuestionListItem
                 key={questionId}
                 question={question}
+                onSetIsEditing={(isEditing) =>
+                  onSetMissionState({
+                    missionId: mission.id,
+                    newState: {
+                      questionObj: {
+                        ...mission.questionObj,
+                        [questionId]: {
+                          ...mission.questionObj[questionId],
+                          isEditing
+                        }
+                      }
+                    }
+                  })
+                }
                 onApproveQuestion={() =>
                   onSetMissionState({
                     missionId: mission.id,
