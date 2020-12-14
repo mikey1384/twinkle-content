@@ -114,7 +114,7 @@ export default function missionRequestHelpers({ auth, handleError }) {
         const {
           data: { success }
         } = await request.post(
-          `${URL}/mission/grammar`,
+          `${URL}/mission/grammar/question`,
           {
             leftSideText,
             rightSideText,

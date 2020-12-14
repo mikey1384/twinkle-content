@@ -35,16 +35,16 @@ export default function GrammarQuestionGenerator({
     if (stringIsEmpty(rightSideText)) {
       return '.';
     }
-    if (!rightSideText || ['.', '?'].includes(rightSideText)) {
+    if (!rightSideText || ['.', '?', '!'].includes(rightSideText)) {
       return rightSideText;
     }
     const trimmedRightSideText = rightSideText.trim();
     if (
       /^[a-zA-Z]+$/i.test(trimmedRightSideText[trimmedRightSideText.length - 1])
     ) {
-      return ` ${trimmedRightSideText}.`;
+      return `${trimmedRightSideText}.`;
     }
-    return ` ${trimmedRightSideText}`;
+    return trimmedRightSideText;
   }, [rightSideText]);
 
   const submitDisabled = useMemo(() => {
@@ -98,7 +98,9 @@ export default function GrammarQuestionGenerator({
             }}
           >
             {finalLeftSideText} _____
-            {finalRightSideText}
+            {['.', '?', '!'].includes(finalRightSideText)
+              ? finalRightSideText
+              : ` ${finalRightSideText}`}
           </div>
         )}
         <div
