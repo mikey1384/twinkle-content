@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Input from 'components/Texts/Input';
 import Button from 'components/Button';
@@ -20,6 +20,7 @@ export default function GrammarQuestionGenerator({
   const {
     requestHelpers: { uploadGrammarQuestion }
   } = useAppContext();
+  const [questionAlreadyExists, setQuestionAlreadyExists] = useState(false);
   const [leftSideText, setLeftSideText] = useState('');
   const [rightSideText, setRightSideText] = useState('');
   const [correctChoice, setCorrectChoice] = useState('');
@@ -68,6 +69,10 @@ export default function GrammarQuestionGenerator({
     wrongChoice2,
     wrongChoice3
   ]);
+
+  useEffect(() => {
+    setQuestionAlreadyExists(false);
+  }, [leftSideText, rightSideText]);
 
   return (
     <div style={{ width: '100%' }}>
@@ -190,6 +195,19 @@ export default function GrammarQuestionGenerator({
             Submit
           </Button>
         </div>
+        {questionAlreadyExists && (
+          <div
+            style={{
+              color: 'red',
+              width: '100%',
+              textAlign: 'center',
+              marginTop: '1rem',
+              fontSize: '1.2rem'
+            }}
+          >
+            That question already exists
+          </div>
+        )}
       </div>
       <SubmittedQuestions
         style={{ marginTop: '2rem' }}
@@ -209,7 +227,7 @@ export default function GrammarQuestionGenerator({
       wrongChoice3
     });
     if (alreadyExists) {
-      return console.log('already exists');
+      return setQuestionAlreadyExists(true);
     }
     onSetMissionState({
       missionId: mission.id,
