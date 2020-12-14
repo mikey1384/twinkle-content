@@ -24,7 +24,7 @@ export default function QuestionListItem({
   const {
     requestHelpers: { approveGrammarQuestion }
   } = useAppContext();
-  const correctAnswer = useMemo(() => {
+  const correctChoice = useMemo(() => {
     return question.choices[question.answerIndex];
   }, [question.answerIndex, question.choices]);
   const wrongChoices = useMemo(() => {
@@ -50,10 +50,17 @@ export default function QuestionListItem({
       `}
     >
       {question.isEditing ? (
-        <QuestionEditForm />
+        <QuestionEditForm
+          correctChoice={correctChoice}
+          leftSideText={question.question.split('_____')[0]}
+          rightSideText={question.question.split('_____')[1]}
+          wrongChoice1={wrongChoices[0]}
+          wrongChoice2={wrongChoices[1]}
+          wrongChoice3={wrongChoices[2]}
+        />
       ) : (
         <QuestionContent
-          correctAnswer={correctAnswer}
+          correctChoice={correctChoice}
           wrongChoices={wrongChoices}
           question={question}
         />

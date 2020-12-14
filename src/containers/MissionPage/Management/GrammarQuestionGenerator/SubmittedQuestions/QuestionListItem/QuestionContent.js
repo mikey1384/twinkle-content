@@ -4,14 +4,14 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from 'emotion';
 
 QuestionContent.propTypes = {
-  correctAnswer: PropTypes.string.isRequired,
+  correctChoice: PropTypes.string.isRequired,
   question: PropTypes.object.isRequired,
   wrongChoices: PropTypes.array.isRequired
 };
 
 export default function QuestionContent({
   question,
-  correctAnswer,
+  correctChoice,
   wrongChoices
 }) {
   return (
@@ -37,7 +37,7 @@ export default function QuestionContent({
         >
           <article>Correct Choice</article>
           <div style={{ marginTop: '0.5rem', textAlign: 'center' }}>
-            <p>{correctAnswer}</p>
+            <p>{correctChoice}</p>
           </div>
           <article style={{ marginTop: '3rem' }}>Wrong Choices</article>
           <div style={{ marginTop: '0.5rem', textAlign: 'center' }}>
