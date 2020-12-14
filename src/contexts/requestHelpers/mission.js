@@ -112,7 +112,7 @@ export default function missionRequestHelpers({ auth, handleError }) {
     }) {
       try {
         const {
-          data: { alreadyExists, success }
+          data: { alreadyExists, question }
         } = await request.post(
           `${URL}/mission/grammar/question`,
           {
@@ -125,7 +125,7 @@ export default function missionRequestHelpers({ auth, handleError }) {
           },
           auth()
         );
-        return Promise.resolve({ alreadyExists, success });
+        return Promise.resolve({ alreadyExists, question });
       } catch (error) {
         return handleError(error);
       }

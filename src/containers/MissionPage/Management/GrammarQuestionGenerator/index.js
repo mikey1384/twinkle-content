@@ -200,7 +200,7 @@ export default function GrammarQuestionGenerator({
   );
 
   async function handleSubmitQuestion() {
-    const { alreadyExists, success } = await uploadGrammarQuestion({
+    const { alreadyExists, question } = await uploadGrammarQuestion({
       leftSideText: finalLeftSideText,
       rightSideText: finalRightSideText,
       correctChoice,
@@ -211,6 +211,23 @@ export default function GrammarQuestionGenerator({
     if (alreadyExists) {
       return console.log('already exists');
     }
-    console.log(success);
+    onSetMissionState({
+      missionId: mission.id,
+      newState: {
+        pendingQuestionIds: [question.id].concat(
+          mission.pendingQuestionIds || []
+        ),
+        questionObj: {
+          ...mission.questionObj,
+          [question.id]: question
+        }
+      }
+    });
+    setLeftSideText('');
+    setRightSideText('');
+    setCorrectChoice('');
+    setWrongChoice1('');
+    setWrongChoice2('');
+    setWrongChoice3('');
   }
 }
