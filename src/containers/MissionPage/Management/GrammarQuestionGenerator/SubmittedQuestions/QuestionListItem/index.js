@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
 import QuestionContent from './QuestionContent';
+import QuestionEditForm from './QuestionEditForm';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 import { useAppContext } from 'contexts';
@@ -49,7 +50,7 @@ export default function QuestionListItem({
       `}
     >
       {question.isEditing ? (
-        <div>It is being edited</div>
+        <QuestionEditForm />
       ) : (
         <QuestionContent
           correctAnswer={correctAnswer}
@@ -57,36 +58,38 @@ export default function QuestionListItem({
           question={question}
         />
       )}
-      <div
-        style={{
-          marginTop: '4rem',
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'center'
-        }}
-      >
-        <Button
+      {!question.isEditing && (
+        <div
           style={{
-            fontSize: '1.7rem'
+            marginTop: '4rem',
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center'
           }}
-          skeuomorphic
-          color="darkerGray"
-          onClick={() => onSetIsEditing(true)}
         >
-          <Icon icon="pencil-alt" />
-          <span style={{ marginLeft: '0.7rem' }}>Edit</span>
-        </Button>
-        {!question.isApproved && (
           <Button
-            style={{ fontSize: '1.7rem', marginLeft: '1rem' }}
+            style={{
+              fontSize: '1.7rem'
+            }}
             skeuomorphic
-            color="darkBlue"
-            onClick={handleApprove}
+            color="darkerGray"
+            onClick={() => onSetIsEditing(true)}
           >
-            Approve
+            <Icon icon="pencil-alt" />
+            <span style={{ marginLeft: '0.7rem' }}>Edit</span>
           </Button>
-        )}
-      </div>
+          {!question.isApproved && (
+            <Button
+              style={{ fontSize: '1.7rem', marginLeft: '1rem' }}
+              skeuomorphic
+              color="darkBlue"
+              onClick={handleApprove}
+            >
+              Approve
+            </Button>
+          )}
+        </div>
+      )}
     </div>
   );
 
