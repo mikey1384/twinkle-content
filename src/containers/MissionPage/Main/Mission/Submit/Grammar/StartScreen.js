@@ -3,24 +3,35 @@ import PropTypes from 'prop-types';
 import Button from 'components/Button';
 
 StartScreen.propTypes = {
+  numQuestions: PropTypes.number,
   onInitMission: PropTypes.func.isRequired,
   onStartButtonClick: PropTypes.func.isRequired
 };
 
-export default function StartScreen({ onInitMission, onStartButtonClick }) {
+export default function StartScreen({
+  numQuestions,
+  onInitMission,
+  onStartButtonClick
+}) {
   useEffect(() => {
     onInitMission();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div style={{ textAlign: 'center', width: '100%', marginTop: '4rem' }}>
-      <h3>When you are ready, press the button below to begin the challenge</h3>
+    <div style={{ textAlign: 'center', width: '100%', marginTop: '3rem' }}>
+      <h3>
+        In this challenge, you will be given {numQuestions} grammar questions.
+        Your mission is to answer all of them correctly.
+      </h3>
+      <p
+        style={{ marginTop: '2rem', fontSize: '1.7rem' }}
+      >{`When you are ready, press "Start"`}</p>
       <div
         style={{
           display: 'flex',
-          marginTop: '3rem',
-          paddingBottom: '2rem',
+          marginTop: '4.5rem',
+          paddingBottom: '1.5rem',
           justifyContent: 'center'
         }}
       >
@@ -30,7 +41,7 @@ export default function StartScreen({ onInitMission, onStartButtonClick }) {
           style={{ fontSize: '2rem' }}
           onClick={onStartButtonClick}
         >
-          Begin!
+          Start
         </Button>
       </div>
     </div>

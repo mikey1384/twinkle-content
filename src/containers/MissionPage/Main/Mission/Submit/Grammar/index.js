@@ -32,8 +32,8 @@ export default function Grammar({ mission }) {
     <div>
       {!started && (
         <StartScreen
+          numQuestions={mission.numQuestions}
           onInitMission={handleInitMission}
-          missionId={mission.id}
           onStartButtonClick={() => setStarted(true)}
         />
       )}
