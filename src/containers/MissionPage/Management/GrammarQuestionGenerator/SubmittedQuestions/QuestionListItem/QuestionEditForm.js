@@ -4,6 +4,7 @@ import { capitalize, stringIsEmpty } from 'helpers/stringHelpers';
 import { css } from 'emotion';
 import { mobileMaxWidth } from 'constants/css';
 import Input from 'components/Texts/Input';
+import Button from 'components/Button';
 
 QuestionEditForm.propTypes = {
   correctChoice: PropTypes.string.isRequired,
@@ -137,6 +138,23 @@ export default function QuestionEditForm({
             value={editedWrongChoice3}
           />
         </div>
+      </div>
+      <div
+        style={{
+          marginTop: '2rem',
+          width: '100%',
+          justifyContent: 'center',
+          display: 'flex'
+        }}
+      >
+        <Button
+          style={{ fontSize: '2rem' }}
+          color="blue"
+          filled
+          onClick={() => console.log('clicked')}
+        >
+          Submit
+        </Button>
       </div>
     </div>
   );
