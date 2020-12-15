@@ -53,6 +53,29 @@ export default function QuestionEditForm({
     return trimmedRightSideText;
   }, [editedRightSideText]);
 
+  const submitDisabled = useMemo(() => {
+    if (
+      stringIsEmpty(editedLeftSideText) & stringIsEmpty(setEditedRightSideText)
+    ) {
+      return true;
+    }
+    if (
+      stringIsEmpty(editedCorrectChoice) ||
+      stringIsEmpty(editedWrongChoice1) ||
+      stringIsEmpty(editedWrongChoice2) ||
+      stringIsEmpty(editedWrongChoice3)
+    ) {
+      return true;
+    }
+    return false;
+  }, [
+    editedCorrectChoice,
+    editedLeftSideText,
+    editedWrongChoice1,
+    editedWrongChoice2,
+    editedWrongChoice3
+  ]);
+
   return (
     <div>
       {(!stringIsEmpty(editedLeftSideText) ||
@@ -141,7 +164,7 @@ export default function QuestionEditForm({
       </div>
       <div
         style={{
-          marginTop: '2rem',
+          marginTop: '3rem',
           width: '100%',
           justifyContent: 'center',
           display: 'flex'
@@ -149,8 +172,9 @@ export default function QuestionEditForm({
       >
         <Button
           style={{ fontSize: '2rem' }}
-          color="blue"
+          color="logoBlue"
           filled
+          disabled={submitDisabled}
           onClick={() => console.log('clicked')}
         >
           Submit
