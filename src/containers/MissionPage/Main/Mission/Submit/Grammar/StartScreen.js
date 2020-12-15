@@ -20,10 +20,7 @@ export default function StartScreen({
 
   return (
     <div style={{ textAlign: 'center', width: '100%', marginTop: '3rem' }}>
-      <h3>
-        In this challenge, you will be given {numQuestions} grammar questions.
-        Your mission is to answer all of them correctly.
-      </h3>
+      <h3>Correctly answer all {numQuestions} grammar questions</h3>
       <p
         style={{ marginTop: '2rem', fontSize: '1.7rem' }}
       >{`When you are ready, press "Start"`}</p>
