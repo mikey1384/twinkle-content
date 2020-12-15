@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { capitalize, stringIsEmpty } from 'helpers/stringHelpers';
 import { css } from 'emotion';
@@ -8,6 +8,7 @@ import Input from 'components/Texts/Input';
 import Button from 'components/Button';
 
 QuestionEditForm.propTypes = {
+  onEditQuestion: PropTypes.func.isRequired,
   correctChoice: PropTypes.string.isRequired,
   leftSideText: PropTypes.string.isRequired,
   rightSideText: PropTypes.string.isRequired,
@@ -18,6 +19,7 @@ QuestionEditForm.propTypes = {
 };
 
 export default function QuestionEditForm({
+  onEditQuestion,
   correctChoice,
   leftSideText,
   rightSideText,
@@ -26,6 +28,7 @@ export default function QuestionEditForm({
   wrongChoice3,
   questionId
 }) {
+  const mounted = useRef(true);
   const {
     requestHelpers: { editGrammarQuestion }
   } = useAppContext();
@@ -106,6 +109,13 @@ export default function QuestionEditForm({
     wrongChoice2,
     wrongChoice3
   ]);
+
+  useEffect(() => {
+    mounted.current = true;
+    return function onUnmount() {
+      mounted.current = false;
+    };
+  }, []);
 
   return (
     <div>
@@ -215,7 +225,7 @@ export default function QuestionEditForm({
   );
 
   async function handleSubmit() {
-    const success = await editGrammarQuestion({
+    const editedQuestion = await editGrammarQuestion({
       leftSideText: finalLeftSideText,
       rightSideText: finalRightSideText,
       correctChoice: editedCorrectChoice,
@@ -224,6 +234,8 @@ export default function QuestionEditForm({
       wrongChoice3: editedWrongChoice3,
       questionId
     });
-    console.log(success);
+    if (mounted.current) {
+      onEditQuestion(editedQuestion);
+    }
   }
 }

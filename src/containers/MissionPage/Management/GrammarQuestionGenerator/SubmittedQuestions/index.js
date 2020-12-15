@@ -129,6 +129,21 @@ export default function SubmittedQuestions({
                     }
                   })
                 }
+                onEditQuestion={(editedQuestion) => {
+                  onSetMissionState({
+                    missionId: mission.id,
+                    newState: {
+                      questionObj: {
+                        ...mission.questionObj,
+                        [questionId]: {
+                          ...mission.questionObj[questionId],
+                          ...editedQuestion,
+                          isEditing: false
+                        }
+                      }
+                    }
+                  });
+                }}
                 onApproveQuestion={() =>
                   onSetMissionState({
                     missionId: mission.id,

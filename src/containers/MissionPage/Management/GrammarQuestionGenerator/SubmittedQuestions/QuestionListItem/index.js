@@ -10,6 +10,7 @@ import { useAppContext } from 'contexts';
 
 QuestionListItem.propTypes = {
   onApproveQuestion: PropTypes.func.isRequired,
+  onEditQuestion: PropTypes.func.isRequired,
   onSetIsEditing: PropTypes.func.isRequired,
   question: PropTypes.object.isRequired,
   style: PropTypes.object
@@ -17,6 +18,7 @@ QuestionListItem.propTypes = {
 
 export default function QuestionListItem({
   onApproveQuestion,
+  onEditQuestion,
   onSetIsEditing,
   question,
   style
@@ -51,6 +53,7 @@ export default function QuestionListItem({
     >
       {question.isEditing ? (
         <QuestionEditForm
+          onEditQuestion={onEditQuestion}
           correctChoice={correctChoice}
           leftSideText={question.question.split('_____')[0]}
           rightSideText={question.question.split('_____')[1]}

@@ -58,7 +58,7 @@ export default function missionRequestHelpers({ auth, handleError }) {
     }) {
       try {
         const {
-          data: { success }
+          data: { question }
         } = await request.put(
           `${URL}/mission/grammar/question`,
           {
@@ -72,7 +72,7 @@ export default function missionRequestHelpers({ auth, handleError }) {
           },
           auth()
         );
-        return Promise.resolve(success);
+        return Promise.resolve(question);
       } catch (error) {
         return handleError(error);
       }
