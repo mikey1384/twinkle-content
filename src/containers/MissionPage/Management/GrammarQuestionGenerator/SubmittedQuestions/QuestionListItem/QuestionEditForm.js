@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { capitalize, stringIsEmpty } from 'helpers/stringHelpers';
 import { css } from 'emotion';
 import { mobileMaxWidth } from 'constants/css';
+import { useAppContext } from 'contexts';
 import Input from 'components/Texts/Input';
 import Button from 'components/Button';
 
@@ -12,7 +13,8 @@ QuestionEditForm.propTypes = {
   rightSideText: PropTypes.string.isRequired,
   wrongChoice1: PropTypes.string.isRequired,
   wrongChoice2: PropTypes.string.isRequired,
-  wrongChoice3: PropTypes.string.isRequired
+  wrongChoice3: PropTypes.string.isRequired,
+  questionId: PropTypes.number.isRequired
 };
 
 export default function QuestionEditForm({
@@ -21,8 +23,12 @@ export default function QuestionEditForm({
   rightSideText,
   wrongChoice1,
   wrongChoice2,
-  wrongChoice3
+  wrongChoice3,
+  questionId
 }) {
+  const {
+    requestHelpers: { editGrammarQuestion }
+  } = useAppContext();
   const [editedLeftSideText, setEditedLeftSideText] = useState(
     leftSideText.trim()
   );
@@ -200,11 +206,24 @@ export default function QuestionEditForm({
           color="logoBlue"
           filled
           disabled={submitDisabled}
-          onClick={() => console.log('clicked')}
+          onClick={handleSubmit}
         >
           Submit
         </Button>
       </div>
     </div>
   );
+
+  async function handleSubmit() {
+    const success = await editGrammarQuestion({
+      leftSideText: finalLeftSideText,
+      rightSideText: finalRightSideText,
+      correctChoice: editedCorrectChoice,
+      wrongChoice1: editedWrongChoice1,
+      wrongChoice2: editedWrongChoice2,
+      wrongChoice3: editedWrongChoice3,
+      questionId
+    });
+    console.log(success);
+  }
 }

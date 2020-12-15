@@ -57,6 +57,7 @@ export default function QuestionListItem({
           wrongChoice1={wrongChoices[0]}
           wrongChoice2={wrongChoices[1]}
           wrongChoice3={wrongChoices[2]}
+          questionId={question.id}
         />
       ) : (
         <QuestionContent

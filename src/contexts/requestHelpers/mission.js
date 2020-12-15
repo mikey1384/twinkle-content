@@ -47,6 +47,36 @@ export default function missionRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async editGrammarQuestion({
+      leftSideText,
+      rightSideText,
+      correctChoice,
+      wrongChoice1,
+      wrongChoice2,
+      wrongChoice3,
+      questionId
+    }) {
+      try {
+        const {
+          data: { success }
+        } = await request.put(
+          `${URL}/mission/grammar/question`,
+          {
+            leftSideText,
+            rightSideText,
+            correctChoice,
+            wrongChoice1,
+            wrongChoice2,
+            wrongChoice3,
+            questionId
+          },
+          auth()
+        );
+        return Promise.resolve(success);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async loadGrammarQuestions({ activeTab, lastQuestionId }) {
       try {
         const { data } = await request.get(
