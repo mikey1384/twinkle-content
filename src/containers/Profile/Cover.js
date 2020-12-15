@@ -87,6 +87,9 @@ export default function Cover({
             font-size: 5rem;
             padding-top: 15rem;
             font-weight: bold;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
             > p {
               font-size: 2rem;
               line-height: 1rem;
