@@ -162,6 +162,18 @@ export default function missionRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async uploadGrammarQuestionAttempt({ result, questionId }) {
+      try {
+        await request.post(
+          `${URL}/mission/grammar/question/attempt`,
+          { result, questionId },
+          auth()
+        );
+        return Promise.resolve();
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async uploadMissionAttempt({ missionId, attempt }) {
       try {
         const {

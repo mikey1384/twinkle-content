@@ -14,7 +14,7 @@ Questions.propTypes = {
 export default function Questions({ mission, onFail }) {
   const { userId } = useMyState();
   const {
-    requestHelpers: { uploadMissionAttempt }
+    requestHelpers: { uploadMissionAttempt, uploadGrammarQuestionAttempt }
   } = useAppContext();
   const {
     actions: { onUpdateMissionAttempt }
@@ -128,6 +128,10 @@ export default function Questions({ mission, onFail }) {
       questionObj[currentSlideIndex].answerIndex === selectedAnswerIndex.current
         ? 'pass'
         : 'fail';
+    uploadGrammarQuestionAttempt({
+      result: statusRef.current,
+      questionId: questionObj[currentSlideIndex].id
+    });
     setConditionPassStatus(statusRef.current);
   }
 
