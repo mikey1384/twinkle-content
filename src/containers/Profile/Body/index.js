@@ -32,7 +32,6 @@ export default function Body({
     <div
       className={css`
         width: 100%;
-        padding-bottom: 10rem;
         @media (max-width: ${mobileMaxWidth}) {
           width: 100%;
         }
