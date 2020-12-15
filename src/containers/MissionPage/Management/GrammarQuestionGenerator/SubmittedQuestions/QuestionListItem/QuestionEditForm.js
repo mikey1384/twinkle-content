@@ -34,23 +34,30 @@ export default function QuestionEditForm({
   const [editedWrongChoice2, setEditedWrongChoice2] = useState(wrongChoice2);
   const [editedWrongChoice3, setEditedWrongChoice3] = useState(wrongChoice3);
 
-  const finalLeftSideText = useMemo(() => {
-    return capitalize(editedLeftSideText.trim());
-  }, [editedLeftSideText]);
-  const finalRightSideText = useMemo(() => {
-    if (stringIsEmpty(editedRightSideText)) {
+  function finalizeLeftSideText(text) {
+    return capitalize(text.trim());
+  }
+  function finalizeRightSideText(text) {
+    if (stringIsEmpty(text)) {
       return '.';
     }
-    if (!editedRightSideText || ['.', '?', '!'].includes(editedRightSideText)) {
-      return editedRightSideText;
+    if (!text || ['.', '?', '!'].includes(text)) {
+      return text;
     }
-    const trimmedRightSideText = editedRightSideText.trim();
+    const trimmedRightSideText = text.trim();
     if (
       /^[a-zA-Z]+$/i.test(trimmedRightSideText[trimmedRightSideText.length - 1])
     ) {
       return `${trimmedRightSideText}.`;
     }
     return trimmedRightSideText;
+  }
+
+  const finalLeftSideText = useMemo(() => {
+    return finalizeLeftSideText(editedLeftSideText);
+  }, [editedLeftSideText]);
+  const finalRightSideText = useMemo(() => {
+    return finalizeRightSideText(editedRightSideText);
   }, [editedRightSideText]);
 
   const submitDisabled = useMemo(() => {
@@ -67,13 +74,31 @@ export default function QuestionEditForm({
     ) {
       return true;
     }
+    if (
+      finalLeftSideText === finalizeLeftSideText(leftSideText) &&
+      finalRightSideText === finalizeRightSideText(rightSideText) &&
+      editedCorrectChoice === correctChoice &&
+      editedWrongChoice1 === wrongChoice1 &&
+      editedWrongChoice2 === wrongChoice2 &&
+      editedWrongChoice3 === wrongChoice3
+    ) {
+      return true;
+    }
     return false;
   }, [
+    correctChoice,
     editedCorrectChoice,
     editedLeftSideText,
     editedWrongChoice1,
     editedWrongChoice2,
-    editedWrongChoice3
+    editedWrongChoice3,
+    finalLeftSideText,
+    finalRightSideText,
+    leftSideText,
+    rightSideText,
+    wrongChoice1,
+    wrongChoice2,
+    wrongChoice3
   ]);
 
   return (
