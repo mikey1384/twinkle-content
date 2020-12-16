@@ -18,7 +18,10 @@ export default function GrammarReview({ mission, onSetMissionState, style }) {
   const {
     requestHelpers: { loadGrammarAttempts }
   } = useAppContext();
-  const { grammarReviewTab: activeTab = 'gotWrong', loadMoreButton } = mission;
+  const {
+    grammarReviewTab: activeTab = 'gotWrong',
+    loadMoreButtonShown
+  } = mission;
   const [loading, setLoading] = useState(false);
   const [loadingMore] = useState(false);
   const mounted = useRef(true);
@@ -42,7 +45,7 @@ export default function GrammarReview({ mission, onSetMissionState, style }) {
               ...questionObj
             },
             [`${activeTab}Attempts`]: attempts,
-            loadMoreButton
+            loadMoreButtonShown: loadMoreButton
           }
         });
       }
@@ -118,7 +121,7 @@ export default function GrammarReview({ mission, onSetMissionState, style }) {
           })}
         </>
       )}
-      {loadMoreButton && (
+      {loadMoreButtonShown && (
         <LoadMoreButton
           style={{ marginTop: '2rem', fontSize: '1.7rem' }}
           filled
