@@ -29,14 +29,19 @@ export default function GrammarReview({ mission, onSetMissionState, style }) {
     async function init() {
       setLoading(true);
       const {
-        [`${activeTab}AttemptIds`]: attemptIds,
+        questionObj,
+        [`${activeTab}Attempts`]: attempts,
         loadMoreButton
       } = await loadGrammarAttempts({ activeTab });
       if (mounted.current) {
         onSetMissionState({
           missionId: mission.id,
           newState: {
-            [`${activeTab}AttemptIds`]: attemptIds,
+            questionObj: {
+              ...mission.questionObj,
+              ...questionObj
+            },
+            [`${activeTab}Attempts`]: attempts,
             loadMoreButton
           }
         });
@@ -90,7 +95,7 @@ export default function GrammarReview({ mission, onSetMissionState, style }) {
       </FilterBar>
       {loading ? (
         <Loading />
-      ) : mission[`${activeTab}AttemptIds`]?.length === 0 ? (
+      ) : mission[`${activeTab}Attempts`]?.length === 0 ? (
         <div
           style={{
             marginTop: '10rem',
@@ -104,8 +109,12 @@ export default function GrammarReview({ mission, onSetMissionState, style }) {
         </div>
       ) : (
         <>
-          {mission[`${activeTab}AttemptIds`]?.map((attemptId) => {
-            return <div key={attemptId}>list item</div>;
+          {mission[`${activeTab}Attempts`]?.map((attempt) => {
+            return (
+              <div key={attempt.id}>
+                {mission.questionObj[attempt.rootId].question}
+              </div>
+            );
           })}
         </>
       )}
