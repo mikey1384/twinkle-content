@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Mission from './Mission';
 import Tutorial from './Tutorial';
+import GrammarReview from './GrammarReview';
 import Loading from 'components/Loading';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from 'emotion';
@@ -23,6 +24,7 @@ export default function Main({ mission, onSetMissionState, style }) {
             mission={mission}
             onSetMissionState={onSetMissionState}
           />
+          {mission.missionType === 'grammar' && <GrammarReview />}
           <Tutorial
             mission={mission}
             className={css`
