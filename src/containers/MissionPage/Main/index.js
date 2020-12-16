@@ -25,7 +25,7 @@ export default function Main({ mission, onSetMissionState, style }) {
             onSetMissionState={onSetMissionState}
           />
           {mission.missionType === 'grammar' && (
-            <GrammarReview style={{ marginTop: '2rem' }} />
+            <GrammarReview mission={mission} style={{ marginTop: '1.5rem' }} />
           )}
           {mission.missionType !== 'grammar' && (
             <Tutorial
