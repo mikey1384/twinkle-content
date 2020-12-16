@@ -77,6 +77,19 @@ export default function missionRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async loadGrammarAttempts({ activeTab, lastTimeStamp }) {
+      try {
+        const { data } = await request.get(
+          `${URL}/mission/grammar/attempt?activeTab=${activeTab}${
+            lastTimeStamp ? `&lastTimeStamp=${lastTimeStamp}` : ''
+          }`,
+          auth()
+        );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async loadGrammarQuestions({ activeTab, lastQuestionId }) {
       try {
         const { data } = await request.get(
@@ -162,10 +175,10 @@ export default function missionRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async uploadGrammarQuestionAttempt({ result, questionId }) {
+    async uploadGrammarAttempt({ result, questionId }) {
       try {
         await request.post(
-          `${URL}/mission/grammar/question/attempt`,
+          `${URL}/mission/grammar/attempt`,
           { result, questionId },
           auth()
         );

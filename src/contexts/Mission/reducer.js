@@ -7,6 +7,7 @@ export default function MissionReducer(state, action) {
         missionObj: {
           ...state.missionObj,
           [action.mission.id]: {
+            ...state.missionObj[action.mission.id],
             ...action.mission,
             tutorialId: action.mission.tutorialId || 0,
             loaded: true
