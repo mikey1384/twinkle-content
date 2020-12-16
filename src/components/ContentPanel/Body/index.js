@@ -654,8 +654,7 @@ export default function Body({
             subject={contentObj.targetObj?.subject}
             commentsHidden={secretHidden}
             style={{
-              padding: '0 1rem',
-              paddingBottom: comments.length > 0 || commentsShown ? '0.5rem' : 0
+              padding: '0 1rem 0.5rem 1rem'
             }}
             userId={userId}
           />
