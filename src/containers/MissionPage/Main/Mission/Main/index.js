@@ -5,7 +5,7 @@ import CopyAndPaste from './CopyAndPaste';
 import Googling from './Googling';
 import Grammar from './Grammar';
 
-Submit.propTypes = {
+Main.propTypes = {
   fileUploadComplete: PropTypes.bool,
   fileUploadProgress: PropTypes.number,
   mission: PropTypes.object.isRequired,
@@ -13,7 +13,7 @@ Submit.propTypes = {
   style: PropTypes.object
 };
 
-export default function Submit({
+export default function Main({
   mission,
   fileUploadComplete,
   fileUploadProgress,

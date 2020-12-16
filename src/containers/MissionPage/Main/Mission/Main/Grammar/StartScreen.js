@@ -35,7 +35,7 @@ export default function StartScreen({
         <Button
           color="green"
           filled
-          style={{ fontSize: '2rem' }}
+          style={{ fontSize: '2.3rem' }}
           onClick={onStartButtonClick}
         >
           Start

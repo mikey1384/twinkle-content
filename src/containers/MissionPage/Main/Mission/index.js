@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import LongText from 'components/Texts/LongText';
-import Submit from './Submit';
+import Main from './Main';
 import ApprovedStatus from './ApprovedStatus';
 import PendingStatus from './PendingStatus';
 import RewardText from 'components/Texts/RewardText';
@@ -122,7 +122,7 @@ export default function Mission({
         (myAttempt?.status === 'fail' && !myAttempt?.tryingAgain) ? (
         <ApprovedStatus mission={mission} style={{ marginTop: '3rem' }} />
       ) : (
-        <Submit
+        <Main
           mission={mission}
           fileUploadComplete={fileUploadComplete}
           fileUploadProgress={fileUploadProgress}

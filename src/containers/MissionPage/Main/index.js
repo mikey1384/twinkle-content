@@ -24,19 +24,23 @@ export default function Main({ mission, onSetMissionState, style }) {
             mission={mission}
             onSetMissionState={onSetMissionState}
           />
-          {mission.missionType === 'grammar' && <GrammarReview />}
-          <Tutorial
-            mission={mission}
-            className={css`
-              margin-top: 5rem;
-              margin-bottom: 1rem;
-              width: 100%;
-              @media (max-width: ${mobileMaxWidth}) {
-                margin-top: 2rem;
-              }
-            `}
-            onSetMissionState={onSetMissionState}
-          />
+          {mission.missionType === 'grammar' && (
+            <GrammarReview style={{ marginTop: '2rem' }} />
+          )}
+          {mission.missionType !== 'grammar' && (
+            <Tutorial
+              mission={mission}
+              className={css`
+                margin-top: 5rem;
+                margin-bottom: 1rem;
+                width: 100%;
+                @media (max-width: ${mobileMaxWidth}) {
+                  margin-top: 2rem;
+                }
+              `}
+              onSetMissionState={onSetMissionState}
+            />
+          )}
         </div>
       ) : (
         <Loading text="Loading Mission..." />

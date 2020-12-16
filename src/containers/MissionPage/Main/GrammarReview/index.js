@@ -1,9 +1,26 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import ErrorBoundary from 'components/ErrorBoundary';
+import { css } from 'emotion';
+import { borderRadius, Color } from 'constants/css';
 
-export default function GrammarReview() {
+GrammarReview.propTypes = {
+  style: PropTypes.object
+};
+
+export default function GrammarReview({ style }) {
   return (
-    <div>
-      <div>this is grammar review</div>
-    </div>
+    <ErrorBoundary style={style}>
+      <div
+        className={css`
+          background: #fff;
+          border-radius: ${borderRadius};
+          border: 1px solid ${Color.borderGray()};
+          padding: 1rem;
+        `}
+      >
+        <div>this is grammar review</div>
+      </div>
+    </ErrorBoundary>
   );
 }
