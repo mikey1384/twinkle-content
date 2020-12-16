@@ -7,10 +7,11 @@ import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 
 GrammarReview.propTypes = {
   mission: PropTypes.object.isRequired,
+  onSetMissionState: PropTypes.func.isRequired,
   style: PropTypes.object
 };
 
-export default function GrammarReview({ mission, style }) {
+export default function GrammarReview({ mission, onSetMissionState, style }) {
   const { grammarReviewTab: activeTab = 'gotWrong' } = mission;
   return (
     <ErrorBoundary style={style}>
@@ -25,13 +26,23 @@ export default function GrammarReview({ mission, style }) {
       >
         <nav
           className={activeTab === 'gotWrong' ? 'active' : ''}
-          onClick={() => console.log('testing')}
+          onClick={() =>
+            onSetMissionState({
+              missionId: mission.id,
+              newState: { grammarReviewTab: 'gotWrong' }
+            })
+          }
         >
           Questions You Got Wrong
         </nav>
         <nav
           className={activeTab === 'gotRight' ? 'active' : ''}
-          onClick={() => console.log('not testing')}
+          onClick={() =>
+            onSetMissionState({
+              missionId: mission.id,
+              newState: { grammarReviewTab: 'gotRight' }
+            })
+          }
         >
           Questions You Got Right
         </nav>
