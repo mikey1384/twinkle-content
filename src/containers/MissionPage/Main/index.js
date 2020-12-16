@@ -24,13 +24,14 @@ export default function Main({ mission, onSetMissionState, style }) {
             mission={mission}
             onSetMissionState={onSetMissionState}
           />
-          {mission.missionType === 'grammar' && (
-            <GrammarReview
-              mission={mission}
-              onSetMissionState={onSetMissionState}
-              style={{ marginTop: '1.5rem' }}
-            />
-          )}
+          {mission.missionType === 'grammar' &&
+            (!mission.started || mission.failed) && (
+              <GrammarReview
+                mission={mission}
+                onSetMissionState={onSetMissionState}
+                style={{ marginTop: '1.5rem' }}
+              />
+            )}
           {mission.missionType !== 'grammar' && (
             <Tutorial
               mission={mission}

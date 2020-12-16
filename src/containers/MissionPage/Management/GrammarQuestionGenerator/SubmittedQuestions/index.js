@@ -20,7 +20,10 @@ export default function SubmittedQuestions({
 }) {
   const mounted = useRef(true);
   const { canEdit } = useMyState();
-  const { managementTab: activeTab = 'pending', loadMoreButton } = mission;
+  const {
+    managementTab: activeTab = 'pending',
+    loadMoreGrammarQuestionsButton: loadMoreButton
+  } = mission;
   const {
     requestHelpers: { loadGrammarQuestions }
   } = useAppContext();
@@ -44,7 +47,7 @@ export default function SubmittedQuestions({
           newState: {
             [`${activeTab}QuestionIds`]: questionIds,
             questionObj: { ...mission.questionObj, ...questionObj },
-            loadMoreButton
+            loadMoreGrammarQuestionsButton: loadMoreButton
           }
         });
       }
@@ -199,7 +202,7 @@ export default function SubmittedQuestions({
             `${activeTab}QuestionIds`
           ].concat(loadedQuestionIds),
           questionObj: { ...mission.questionObj, ...questionObj },
-          loadMoreButton
+          loadMoreGrammarQuestionsButton: loadMoreButton
         }
       });
     }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Questions from './Questions';
 import StartScreen from './StartScreen';
@@ -17,33 +17,63 @@ export default function Grammar({ mission }) {
     requestHelpers: { loadMission }
   } = useAppContext();
   const {
-    actions: { onLoadMission }
+    actions: { onLoadMission, onSetMissionState }
   } = useMissionContext();
-  const [started, setStarted] = useState(false);
-  const [failed, setFailed] = useState(false);
   useEffect(() => {
     mounted.current = true;
     return function nUnmount() {
       mounted.current = false;
+      onSetMissionState({
+        missionId: mission.id,
+        newState: {
+          started: false,
+          failed: false
+        }
+      });
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div>
-      {!started && (
+      {!mission.started && (
         <StartScreen
           numQuestions={mission.numQuestions}
           onInitMission={handleInitMission}
-          onStartButtonClick={() => setStarted(true)}
+          onStartButtonClick={() =>
+            onSetMissionState({
+              missionId: mission.id,
+              newState: {
+                started: true
+              }
+            })
+          }
         />
       )}
-      {started && !failed && (
-        <Questions mission={mission} onFail={() => setFailed(true)} />
+      {mission.started && !mission.failed && (
+        <Questions
+          mission={mission}
+          onFail={() =>
+            onSetMissionState({
+              missionId: mission.id,
+              newState: {
+                failed: true
+              }
+            })
+          }
+        />
       )}
-      {started && failed && (
+      {mission.started && mission.failed && (
         <TryAgain
           onInitMission={handleInitMission}
-          onTryAgain={() => setFailed(false)}
+          onTryAgain={() =>
+            onSetMissionState({
+              missionId: mission.id,
+              newState: {
+                failed: false
+              }
+            })
+          }
         />
       )}
     </div>
