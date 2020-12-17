@@ -90,6 +90,17 @@ export default function missionRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async loadMoreGrammarAttempts({ activeTab, lastTimeStamp }) {
+      try {
+        const { data } = await request.get(
+          `${URL}/mission/grammar/more/attempt?activeTab=${activeTab}&lastTimeStamp=${lastTimeStamp}`,
+          auth()
+        );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async loadGrammarQuestions({ activeTab, lastQuestionId }) {
       try {
         const { data } = await request.get(

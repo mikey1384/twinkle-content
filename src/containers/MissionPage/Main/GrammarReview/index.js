@@ -17,7 +17,7 @@ GrammarReview.propTypes = {
 
 export default function GrammarReview({ mission, onSetMissionState, style }) {
   const {
-    requestHelpers: { loadGrammarAttempts }
+    requestHelpers: { loadGrammarAttempts, loadMoreGrammarAttempts }
   } = useAppContext();
   const {
     grammarReviewTab: activeTab = 'gotWrong',
@@ -65,74 +65,105 @@ export default function GrammarReview({ mission, onSetMissionState, style }) {
 
   return (
     <ErrorBoundary style={style}>
-      <FilterBar
-        className={css`
-          @media (max-width: ${mobileMaxWidth}) {
-            font-size: 1.5rem;
-          }
-        `}
-        style={{ marginTop: '1rem' }}
-        bordered
-      >
-        <nav
-          className={activeTab === 'gotWrong' ? 'active' : ''}
-          onClick={() =>
-            onSetMissionState({
-              missionId: mission.id,
-              newState: { grammarReviewTab: 'gotWrong' }
-            })
-          }
-        >
-          Questions You Got Wrong
-        </nav>
-        <nav
-          className={activeTab === 'gotRight' ? 'active' : ''}
-          onClick={() =>
-            onSetMissionState({
-              missionId: mission.id,
-              newState: { grammarReviewTab: 'gotRight' }
-            })
-          }
-        >
-          Questions You Got Right
-        </nav>
-      </FilterBar>
       {loading ? (
         <Loading />
-      ) : mission[`${activeTab}Attempts`]?.length === 0 ? (
-        <div
-          style={{
-            marginTop: '10rem',
-            fontSize: '2.5rem',
-            fontWeight: 'bold',
-            width: '100%',
-            textAlign: 'center'
-          }}
-        >
-          {`There are no ${activeTab} questions`}
-        </div>
       ) : (
         <>
-          {mission[`${activeTab}Attempts`]?.map((attempt, index) => {
-            return (
-              <QuestionListItem
-                key={attempt.id}
-                question={mission.questionObj[attempt.rootId]}
-                style={{ marginTop: index === 0 ? 0 : '1rem' }}
-              />
-            );
-          })}
+          <FilterBar
+            className={css`
+              @media (max-width: ${mobileMaxWidth}) {
+                font-size: 1.5rem;
+              }
+            `}
+            style={{ marginTop: '1rem' }}
+            bordered
+          >
+            <nav
+              className={activeTab === 'gotWrong' ? 'active' : ''}
+              onClick={() =>
+                onSetMissionState({
+                  missionId: mission.id,
+                  newState: { grammarReviewTab: 'gotWrong' }
+                })
+              }
+            >
+              Questions You Got Wrong
+            </nav>
+            <nav
+              className={activeTab === 'gotRight' ? 'active' : ''}
+              onClick={() =>
+                onSetMissionState({
+                  missionId: mission.id,
+                  newState: { grammarReviewTab: 'gotRight' }
+                })
+              }
+            >
+              Questions You Got Right
+            </nav>
+          </FilterBar>
+          {mission[`${activeTab}Attempts`]?.length === 0 ? (
+            <div
+              style={{
+                marginTop: '10rem',
+                fontSize: '2.5rem',
+                fontWeight: 'bold',
+                width: '100%',
+                textAlign: 'center'
+              }}
+            >
+              {activeTab === 'gotWrong'
+                ? `You didn't get any question wrong`
+                : `You didn't get any question right`}
+            </div>
+          ) : (
+            <>
+              {mission[`${activeTab}Attempts`]?.map((attempt, index) => {
+                return (
+                  <QuestionListItem
+                    key={attempt.id}
+                    question={mission.questionObj[attempt.rootId]}
+                    style={{ marginTop: index === 0 ? 0 : '1rem' }}
+                  />
+                );
+              })}
+            </>
+          )}
+          {loadMoreButtonShown && (
+            <LoadMoreButton
+              style={{ marginTop: '2rem', fontSize: '1.7rem' }}
+              filled
+              color="green"
+              loading={loadingMore}
+              onClick={handleLoadMore}
+            />
+          )}
         </>
-      )}
-      {loadMoreButtonShown && (
-        <LoadMoreButton
-          style={{ marginTop: '2rem', fontSize: '1.7rem' }}
-          filled
-          color="green"
-          loading={loadingMore}
-          onClick={() => console.log('load more')}
-        />
       )}
     </ErrorBoundary>
   );
+
+  async function handleLoadMore() {
+    const currentAttempts = mission[`${activeTab}Attempts`];
+    const {
+      questionObj,
+      [`${activeTab}Attempts`]: attempts,
+      loadMoreButton
+    } = await loadMoreGrammarAttempts({
+      activeTab,
+      lastTimeStamp: currentAttempts[currentAttempts.length - 1].timeStamp
+    });
+    if (mounted.current) {
+      onSetMissionState({
+        missionId: mission.id,
+        newState: {
+          questionObj: {
+            ...mission.questionObj,
+            ...questionObj
+          },
+          [`${activeTab}Attempts`]: currentAttempts.concat(attempts),
+          loadMoreButtonShown: loadMoreButton
+        }
+      });
+    }
+  }
 }
