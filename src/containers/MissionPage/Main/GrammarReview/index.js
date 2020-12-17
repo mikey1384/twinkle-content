@@ -113,11 +113,12 @@ export default function GrammarReview({ mission, onSetMissionState, style }) {
         </div>
       ) : (
         <>
-          {mission[`${activeTab}Attempts`]?.map((attempt) => {
+          {mission[`${activeTab}Attempts`]?.map((attempt, index) => {
             return (
               <QuestionListItem
                 key={attempt.id}
                 question={mission.questionObj[attempt.rootId]}
+                style={{ marginTop: index === 0 ? 0 : '1rem' }}
               />
             );
           })}
