@@ -1,9 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function QuestionListItem() {
+QuestionListItem.propTypes = {
+  question: PropTypes.object.isRequired
+};
+
+export default function QuestionListItem({ question: { question, choices } }) {
   return (
     <div>
-      <div>one of the list items</div>
+      <div>{question}</div>
+      {choices.map((choice) => (
+        <div key={choice.id}>{choice}</div>
+      ))}
     </div>
   );
 }

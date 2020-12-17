@@ -4,6 +4,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import FilterBar from 'components/FilterBar';
 import Loading from 'components/Loading';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
+import QuestionListItem from './QuestionListItem';
 import { useAppContext } from 'contexts';
 import { css } from 'emotion';
 import { mobileMaxWidth } from 'constants/css';
@@ -114,9 +115,10 @@ export default function GrammarReview({ mission, onSetMissionState, style }) {
         <>
           {mission[`${activeTab}Attempts`]?.map((attempt) => {
             return (
-              <div key={attempt.id}>
-                {mission.questionObj[attempt.rootId].question}
-              </div>
+              <QuestionListItem
+                key={attempt.id}
+                question={mission.questionObj[attempt.rootId]}
+              />
             );
           })}
         </>
