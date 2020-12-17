@@ -24,7 +24,7 @@ export default function GrammarReview({ mission, onSetMissionState, style }) {
     loadMoreButtonShown
   } = mission;
   const [loading, setLoading] = useState(false);
-  const [loadingMore] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
   const mounted = useRef(true);
 
   useEffect(() => {
@@ -41,6 +41,7 @@ export default function GrammarReview({ mission, onSetMissionState, style }) {
       } = await loadGrammarAttempts();
       if (mounted.current) {
         onSetMissionState({
+          activeTab: gotWrongAttempts.length > 0 ? 'gotWrong' : 'gotRight',
           missionId: mission.id,
           newState: {
             questionObj: {
@@ -151,6 +152,7 @@ export default function GrammarReview({ mission, onSetMissionState, style }) {
   );
 
   async function handleLoadMore() {
+    setLoadingMore(true);
     const currentAttempts = mission[`${activeTab}Attempts`];
     const {
       questionObj,
@@ -172,6 +174,9 @@ export default function GrammarReview({ mission, onSetMissionState, style }) {
           loadMoreButtonShown: loadMoreButton
         }
       });
+    }
+    if (mounted.current) {
+      setLoadingMore(false);
     }
   }
 }
