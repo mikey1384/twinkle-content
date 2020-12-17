@@ -77,12 +77,10 @@ export default function missionRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async loadGrammarAttempts({ activeTab, lastTimeStamp }) {
+    async loadGrammarAttempts() {
       try {
         const { data } = await request.get(
-          `${URL}/mission/grammar/attempt?activeTab=${activeTab}${
-            lastTimeStamp ? `&lastTimeStamp=${lastTimeStamp}` : ''
-          }`,
+          `${URL}/mission/grammar/attempt`,
           auth()
         );
         return Promise.resolve(data);

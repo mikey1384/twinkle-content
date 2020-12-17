@@ -34,9 +34,11 @@ export default function GrammarReview({ mission, onSetMissionState, style }) {
       setLoading(true);
       const {
         questionObj,
-        [`${activeTab}Attempts`]: attempts,
-        loadMoreButton
-      } = await loadGrammarAttempts({ activeTab });
+        gotWrongAttempts,
+        gotRightAttempts,
+        gotWrongLoadMoreButton,
+        gotRightLoadMoreButton
+      } = await loadGrammarAttempts();
       if (mounted.current) {
         onSetMissionState({
           missionId: mission.id,
@@ -45,8 +47,12 @@ export default function GrammarReview({ mission, onSetMissionState, style }) {
               ...mission.questionObj,
               ...questionObj
             },
-            [`${activeTab}Attempts`]: attempts,
-            loadMoreButtonShown: loadMoreButton
+            gotWrongAttempts,
+            gotRightAttempts,
+            loadMoreButtonShown:
+              activeTab === 'gotWrong'
+                ? gotWrongLoadMoreButton
+                : gotRightLoadMoreButton
           }
         });
       }
@@ -55,7 +61,7 @@ export default function GrammarReview({ mission, onSetMissionState, style }) {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeTab, mission.id]);
+  }, [mission.id]);
 
   useEffect(() => {
     return function onUnmount() {
@@ -67,7 +73,9 @@ export default function GrammarReview({ mission, onSetMissionState, style }) {
     <ErrorBoundary style={style}>
       {loading ? (
         <Loading />
-      ) : (
+      ) : (mission.gotWrongAttempts?.length || 0) +
+          (mission.gotRightAttempts?.length || 0) ===
+        0 ? null : (
         <>
           <FilterBar
             className={css`
