@@ -29,7 +29,7 @@ export default function TryAgain({ onInitMission, onTryAgain }) {
         style={{
           borderRadius,
           marginTop: '2.5rem',
-          boxShadow: `0 0 2px ${Color.brown()}`,
+          boxShadow: `0 0 2px ${Color.black()}`,
           padding: '1rem 3rem',
           fontWeight: 'bold',
           fontSize: '2rem',

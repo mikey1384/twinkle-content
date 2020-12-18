@@ -74,10 +74,11 @@ export default function ApprovedStatus({ mission, style }) {
           mission.myAttempt.status === 'fail'
             ? {
                 borderRadius,
-                boxShadow:
+                boxShadow: `0 0 2px ${
                   mission.myAttempt.status === 'pass'
-                    ? `0 0 2px ${Color.brown()}`
-                    : null,
+                    ? Color.brown()
+                    : Color.black()
+                }`,
                 padding: '0.5rem 2rem'
               }
             : {}),
