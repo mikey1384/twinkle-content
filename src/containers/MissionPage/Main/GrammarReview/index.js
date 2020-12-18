@@ -41,9 +41,10 @@ export default function GrammarReview({ mission, onSetMissionState, style }) {
       } = await loadGrammarAttempts();
       if (mounted.current) {
         onSetMissionState({
-          activeTab: gotWrongAttempts.length > 0 ? 'gotWrong' : 'gotRight',
           missionId: mission.id,
           newState: {
+            grammarReviewTab:
+              gotWrongAttempts.length > 0 ? 'gotWrong' : 'gotRight',
             questionObj: {
               ...mission.questionObj,
               ...questionObj

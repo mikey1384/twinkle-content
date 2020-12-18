@@ -118,7 +118,7 @@ export default function Mission({
       )}
       {myAttempt?.status === 'pending' ? (
         <PendingStatus style={{ marginTop: '7rem' }} />
-      ) : myAttempt?.status === 'pass' ||
+      ) : (!mission.repeatable && myAttempt?.status === 'pass') ||
         (myAttempt?.status === 'fail' && !myAttempt?.tryingAgain) ? (
         <ApprovedStatus mission={mission} style={{ marginTop: '3rem' }} />
       ) : (
