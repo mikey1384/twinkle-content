@@ -66,31 +66,37 @@ export default function Mission() {
                 }
               `}
             >
-              {currentMissionId && (
-                <CurrentMission
-                  mission={missionObj[currentMissionId]}
-                  missionId={currentMissionId}
-                  className={css`
-                    width: 45%;
-                    @media (max-width: ${mobileMaxWidth}) {
-                      width: 100%;
-                    }
-                  `}
-                />
-              )}
               <MissionList
                 missions={missions}
                 missionObj={missionObj}
                 className={css`
-                  margin-left: 5rem;
-                  width: CALC(${currentMissionId ? '55%' : '80%'} - 5rem);
+                  width: CALC(${currentMissionId ? '65%' : '80%'} - 5rem);
                   @media (max-width: ${mobileMaxWidth}) {
-                    margin-left: 0;
-                    margin-top: 3rem;
                     width: 100%;
                   }
                 `}
               />
+              {currentMissionId && (
+                <div
+                  className={css`
+                    width: 35%;
+                    margin-left: 5rem;
+                    @media (max-width: ${mobileMaxWidth}) {
+                      margin-left: 0;
+                      margin-top: 3rem;
+                      width: 100%;
+                    }
+                  `}
+                >
+                  <div>Repeatable Mission</div>
+
+                  <CurrentMission
+                    mission={missionObj[currentMissionId]}
+                    missionId={currentMissionId}
+                    style={{ width: '100%' }}
+                  />
+                </div>
+              )}
             </div>
           </div>
         )}

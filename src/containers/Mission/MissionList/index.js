@@ -57,9 +57,8 @@ export default function MissionList({
           <FilterBar
             className={css`
               @media (max-width: ${mobileMaxWidth}) {
-                width: auto;
+                width: CALC(100% + 2rem) !important;
                 margin-left: -1rem;
-                margin-right: -1rem;
               }
             `}
             style={{ marginTop: '1rem' }}

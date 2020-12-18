@@ -10,11 +10,10 @@ import { useMissionContext } from 'contexts';
 
 CurrentMission.propTypes = {
   style: PropTypes.object,
-  className: PropTypes.string,
   missionId: PropTypes.number
 };
 
-export default function CurrentMission({ style, className, missionId }) {
+export default function CurrentMission({ style, missionId }) {
   const history = useHistory();
   const {
     state: { missionObj }
@@ -25,7 +24,7 @@ export default function CurrentMission({ style, className, missionId }) {
   ]);
 
   return (
-    <div style={style} className={className}>
+    <div style={style} className="desktop">
       <p
         className={css`
           font-size: 2.5rem;
