@@ -40,7 +40,7 @@ export default function Grammar({ isRepeating, mission }) {
       {!mission.started && (
         <StartScreen
           isRepeating={isRepeating}
-          numQuestions={mission.numQuestions}
+          mission={mission}
           onInitMission={handleInitMission}
           onStartButtonClick={() =>
             onSetMissionState({
