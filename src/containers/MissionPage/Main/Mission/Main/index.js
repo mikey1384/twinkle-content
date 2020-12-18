@@ -8,6 +8,7 @@ import Grammar from './Grammar';
 Main.propTypes = {
   fileUploadComplete: PropTypes.bool,
   fileUploadProgress: PropTypes.number,
+  isRepeating: PropTypes.bool,
   mission: PropTypes.object.isRequired,
   onSetMissionState: PropTypes.func,
   style: PropTypes.object
@@ -17,6 +18,7 @@ export default function Main({
   mission,
   fileUploadComplete,
   fileUploadProgress,
+  isRepeating,
   onSetMissionState,
   style
 }) {
@@ -37,7 +39,9 @@ export default function Main({
       {mission.missionType === 'copy-and-paste' && (
         <CopyAndPaste mission={mission} onSetMissionState={onSetMissionState} />
       )}
-      {mission.missionType === 'grammar' && <Grammar mission={mission} />}
+      {mission.missionType === 'grammar' && (
+        <Grammar mission={mission} isRepeating={isRepeating} />
+      )}
     </div>
   );
 }

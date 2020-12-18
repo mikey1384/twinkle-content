@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import LongText from 'components/Texts/LongText';
 import Main from './Main';
@@ -31,7 +31,9 @@ export default function Mission({
     id: missionId,
     myAttempt,
     xpReward,
-    coinReward
+    coinReward,
+    repeatXpReward,
+    repeatCoinReward
   },
   style,
   onSetMissionState
@@ -45,6 +47,11 @@ export default function Mission({
   const {
     state: { pageVisible }
   } = useViewContext();
+
+  const isRepeating = useMemo(
+    () => myAttempt?.status === 'pass' && !!mission.repeatable,
+    [mission.repeatable, myAttempt?.status]
+  );
 
   useEffect(() => {
     if (pageVisible) {
@@ -111,8 +118,8 @@ export default function Mission({
           </div>
           <RewardText
             style={{ marginTop: '2rem' }}
-            xpReward={xpReward}
-            coinReward={coinReward}
+            xpReward={isRepeating ? repeatXpReward : xpReward}
+            coinReward={isRepeating ? repeatCoinReward : coinReward}
           />
         </div>
       )}
@@ -124,6 +131,7 @@ export default function Mission({
       ) : (
         <Main
           mission={mission}
+          isRepeating={isRepeating}
           fileUploadComplete={fileUploadComplete}
           fileUploadProgress={fileUploadProgress}
           onSetMissionState={onSetMissionState}

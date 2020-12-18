@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import Button from 'components/Button';
 
 StartScreen.propTypes = {
+  isRepeating: PropTypes.bool,
   numQuestions: PropTypes.number,
   onInitMission: PropTypes.func.isRequired,
   onStartButtonClick: PropTypes.func.isRequired
 };
 
 export default function StartScreen({
+  isRepeating,
   numQuestions,
   onInitMission,
   onStartButtonClick
@@ -20,6 +22,7 @@ export default function StartScreen({
 
   return (
     <div style={{ textAlign: 'center', width: '100%', marginTop: '3rem' }}>
+      {isRepeating && <div>Congratulations. Now, try again</div>}
       <h3>Correctly answer all {numQuestions} grammar questions</h3>
       <p
         style={{ marginTop: '2rem', fontSize: '1.7rem' }}

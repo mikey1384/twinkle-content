@@ -7,10 +7,11 @@ import { useAppContext, useMissionContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
 Grammar.propTypes = {
+  isRepeating: PropTypes.bool,
   mission: PropTypes.object.isRequired
 };
 
-export default function Grammar({ mission }) {
+export default function Grammar({ isRepeating, mission }) {
   const mounted = useRef(true);
   const { userId } = useMyState();
   const {
@@ -38,6 +39,7 @@ export default function Grammar({ mission }) {
     <div>
       {!mission.started && (
         <StartScreen
+          isRepeating={isRepeating}
           numQuestions={mission.numQuestions}
           onInitMission={handleInitMission}
           onStartButtonClick={() =>
