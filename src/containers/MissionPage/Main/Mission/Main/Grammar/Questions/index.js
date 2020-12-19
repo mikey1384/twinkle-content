@@ -7,11 +7,12 @@ import { useMyState } from 'helpers/hooks';
 import { useAppContext, useMissionContext, useContentContext } from 'contexts';
 
 Questions.propTypes = {
+  isRepeating: PropTypes.bool,
   mission: PropTypes.object.isRequired,
   onFail: PropTypes.func.isRequired
 };
 
-export default function Questions({ mission, onFail }) {
+export default function Questions({ isRepeating, mission, onFail }) {
   const { userId } = useMyState();
   const {
     requestHelpers: { uploadMissionAttempt, uploadGrammarAttempt }
@@ -136,24 +137,28 @@ export default function Questions({ mission, onFail }) {
   }
 
   async function handleSuccess() {
-    const { success, newXpAndRank, newCoins } = await uploadMissionAttempt({
-      missionId: mission.id,
-      attempt: { status: 'pass' }
-    });
-    if (success) {
-      onUpdateMissionAttempt({
+    if (isRepeating) {
+      console.log('repeating');
+    } else {
+      const { success, newXpAndRank, newCoins } = await uploadMissionAttempt({
         missionId: mission.id,
-        newState: { status: 'pass' }
+        attempt: { status: 'pass' }
       });
-      if (newXpAndRank.xp) {
-        onChangeUserXP({
-          xp: newXpAndRank.xp,
-          rank: newXpAndRank.rank,
-          userId
+      if (success) {
+        onUpdateMissionAttempt({
+          missionId: mission.id,
+          newState: { status: 'pass' }
         });
-      }
-      if (newCoins.netCoins) {
-        onUpdateUserCoins({ coins: newCoins.netCoins, userId });
+        if (newXpAndRank.xp) {
+          onChangeUserXP({
+            xp: newXpAndRank.xp,
+            rank: newXpAndRank.rank,
+            userId
+          });
+        }
+        if (newCoins.netCoins) {
+          onUpdateUserCoins({ coins: newCoins.netCoins, userId });
+        }
       }
     }
   }
