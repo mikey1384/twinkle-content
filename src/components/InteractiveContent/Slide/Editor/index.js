@@ -70,7 +70,7 @@ export default function Editor({
     },
     editedIsFork: isFork,
     editedIsPortal: isPortal,
-    editedAttachment: attachment || null,
+    editedAttachment: attachment || {},
     editedHeading: heading || '',
     editedDescription: description || '',
     editedForkButtonIds: forkButtonIds.length > 0 ? forkButtonIds : [1, 2],
