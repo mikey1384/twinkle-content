@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Color, borderRadius } from 'constants/css';
 import Button from 'components/Button';
@@ -9,7 +9,10 @@ TryAgain.propTypes = {
 };
 
 export default function TryAgain({ onInitMission, onTryAgain }) {
-  useEffect(() => {
+  const BodyRef = useRef(document.scrollingElement || document.documentElement);
+  useLayoutEffect(() => {
+    document.getElementById('App').scrollTop = 0;
+    BodyRef.current.scrollTop = 0;
     onInitMission();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -42,7 +45,7 @@ export default function TryAgain({ onInitMission, onTryAgain }) {
       <div
         style={{ marginTop: '1.5rem', fontSize: '1.5rem' }}
       >{`Don't give up! You can do this`}</div>
-      <div style={{ marginTop: '5rem' }}>
+      <div style={{ marginTop: '4.5rem' }}>
         <Button
           style={{ fontSize: '2.3rem' }}
           color="green"

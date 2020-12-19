@@ -63,7 +63,7 @@ export default function StartScreen({
       style={{
         textAlign: 'center',
         width: '100%',
-        marginTop: '3rem'
+        marginTop: '2.5rem'
       }}
     >
       {isRepeating && (
