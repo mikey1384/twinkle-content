@@ -21,7 +21,7 @@ export default function GrammarReview({ mission, onSetMissionState, style }) {
   } = useAppContext();
   const {
     grammarReviewTab: activeTab = 'gotWrong',
-    loadMoreButtonShown
+    [`${activeTab}LoadMoreButtonShown`]: loadMoreButtonShown
   } = mission;
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -51,10 +51,8 @@ export default function GrammarReview({ mission, onSetMissionState, style }) {
             },
             gotWrongAttempts,
             gotRightAttempts,
-            loadMoreButtonShown:
-              activeTab === 'gotWrong'
-                ? gotWrongLoadMoreButton
-                : gotRightLoadMoreButton
+            gotWrongLoadMoreButtonShown: gotWrongLoadMoreButton,
+            gotRightLoadMoreButtonShown: gotRightLoadMoreButton
           }
         });
       }
@@ -172,7 +170,7 @@ export default function GrammarReview({ mission, onSetMissionState, style }) {
             ...questionObj
           },
           [`${activeTab}Attempts`]: currentAttempts.concat(attempts),
-          loadMoreButtonShown: loadMoreButton
+          [`${activeTab}LoadMoreButtonShown`]: loadMoreButton
         }
       });
     }

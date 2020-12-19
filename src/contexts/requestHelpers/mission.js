@@ -91,7 +91,7 @@ export default function missionRequestHelpers({ auth, handleError }) {
     async loadMoreGrammarAttempts({ activeTab, lastTimeStamp }) {
       try {
         const { data } = await request.get(
-          `${URL}/mission/grammar/more/attempt?activeTab=${activeTab}&lastTimeStamp=${lastTimeStamp}`,
+          `${URL}/mission/grammar/attempt/more?activeTab=${activeTab}&lastTimeStamp=${lastTimeStamp}`,
           auth()
         );
         return Promise.resolve(data);
