@@ -14,6 +14,7 @@ Questions.propTypes = {
 
 export default function Questions({ isRepeating, mission, onFail }) {
   const { userId } = useMyState();
+  const [repeatMissionComplete, setRepeatMissionComplete] = useState(false);
   const {
     requestHelpers: { uploadMissionAttempt, uploadGrammarAttempt }
   } = useAppContext();
@@ -73,7 +74,9 @@ export default function Questions({ isRepeating, mission, onFail }) {
     <div>
       {questionIds.length > 0 ? (
         <QuestionCarousel
-          conditionPassStatus={conditionPassStatus}
+          conditionPassStatus={
+            repeatMissionComplete ? 'complete' : conditionPassStatus
+          }
           currentSlideIndex={currentSlideIndex}
           onAfterSlide={(index) => {
             statusRef.current = null;
@@ -91,9 +94,17 @@ export default function Questions({ isRepeating, mission, onFail }) {
       )}
       {conditionPassStatus && (
         <StatusMessage
+          mission={mission}
+          missionComplete={repeatMissionComplete}
           status={conditionPassStatus}
           passMessage="Correct!"
           failMessage={questionObj[currentSlideIndex].failMessage}
+          onBackToStart={() =>
+            onSetMissionState({
+              missionId: mission.id,
+              newState: { started: false }
+            })
+          }
         />
       )}
     </div>
@@ -138,7 +149,7 @@ export default function Questions({ isRepeating, mission, onFail }) {
 
   async function handleSuccess() {
     if (isRepeating) {
-      console.log('repeating');
+      setRepeatMissionComplete(true);
     } else {
       const { success, newXpAndRank, newCoins } = await uploadMissionAttempt({
         missionId: mission.id,

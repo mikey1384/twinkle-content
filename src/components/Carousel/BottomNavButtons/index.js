@@ -21,7 +21,7 @@ export default function BottomNavButtons({
   onCheckNavCondition,
   conditionPassStatus
 }) {
-  return (
+  return conditionPassStatus && conditionPassStatus === 'complete' ? null : (
     <div
       style={{
         display: 'flex',
