@@ -20,6 +20,7 @@ export default function GrammarReview({ mission, onSetMissionState, style }) {
     requestHelpers: { loadGrammarAttempts, loadMoreGrammarAttempts }
   } = useAppContext();
   const {
+    grammarReviewLoaded,
     grammarReviewTab: activeTab = 'gotWrong',
     [`${activeTab}LoadMoreButtonShown`]: loadMoreButtonShown
   } = mission;
@@ -39,7 +40,7 @@ export default function GrammarReview({ mission, onSetMissionState, style }) {
         gotWrongLoadMoreButton,
         gotRightLoadMoreButton
       } = await loadGrammarAttempts();
-      if (mounted.current) {
+      if (mounted.current && !grammarReviewLoaded) {
         onSetMissionState({
           missionId: mission.id,
           newState: {
@@ -52,7 +53,8 @@ export default function GrammarReview({ mission, onSetMissionState, style }) {
             gotWrongAttempts,
             gotRightAttempts,
             gotWrongLoadMoreButtonShown: gotWrongLoadMoreButton,
-            gotRightLoadMoreButtonShown: gotRightLoadMoreButton
+            gotRightLoadMoreButtonShown: gotRightLoadMoreButton,
+            grammarReviewLoaded: true
           }
         });
       }

@@ -46,7 +46,8 @@ export default function Grammar({ isRepeating, mission }) {
             onSetMissionState({
               missionId: mission.id,
               newState: {
-                started: true
+                started: true,
+                grammarReviewLoaded: false
               }
             })
           }
@@ -73,7 +74,8 @@ export default function Grammar({ isRepeating, mission }) {
             onSetMissionState({
               missionId: mission.id,
               newState: {
-                failed: false
+                failed: false,
+                grammarReviewLoaded: false
               }
             })
           }

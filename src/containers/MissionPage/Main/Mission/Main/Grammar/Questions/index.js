@@ -18,7 +18,7 @@ export default function Questions({ isRepeating, mission, onFail }) {
     requestHelpers: { uploadMissionAttempt, uploadGrammarAttempt }
   } = useAppContext();
   const {
-    actions: { onUpdateMissionAttempt }
+    actions: { onUpdateMissionAttempt, onSetMissionState }
   } = useMissionContext();
   const {
     actions: { onChangeUserXP, onUpdateUserCoins }
@@ -149,6 +149,7 @@ export default function Questions({ isRepeating, mission, onFail }) {
           missionId: mission.id,
           newState: { status: 'pass' }
         });
+
         if (newXpAndRank.xp) {
           onChangeUserXP({
             xp: newXpAndRank.xp,
@@ -159,6 +160,10 @@ export default function Questions({ isRepeating, mission, onFail }) {
         if (newCoins.netCoins) {
           onUpdateUserCoins({ coins: newCoins.netCoins, userId });
         }
+        onSetMissionState({
+          missionId: mission.id,
+          newState: { started: false }
+        });
       }
     }
   }

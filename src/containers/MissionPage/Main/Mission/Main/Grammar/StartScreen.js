@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useLayoutEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
@@ -18,10 +18,14 @@ export default function StartScreen({
   onInitMission,
   onStartButtonClick
 }) {
-  useEffect(() => {
+  const BodyRef = useRef(document.scrollingElement || document.documentElement);
+  useLayoutEffect(() => {
+    document.getElementById('App').scrollTop = 0;
+    BodyRef.current.scrollTop = 0;
     onInitMission();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const rewardDetails = useMemo(() => {
     return (mission.xpReward || mission.coinReward) &&
       mission.myAttempt.status === 'pass' ? (
