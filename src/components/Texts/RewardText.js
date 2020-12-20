@@ -6,16 +6,20 @@ import { Color } from 'constants/css';
 import { css } from 'emotion';
 
 RewardText.propTypes = {
+  checked: PropTypes.bool,
   xpReward: PropTypes.number,
   coinReward: PropTypes.number,
+  isRepeating: PropTypes.bool,
   labelClassName: PropTypes.string,
   rewardClassName: PropTypes.string,
   style: PropTypes.object
 };
 
 export default function RewardText({
+  checked,
   xpReward,
   coinReward,
+  isRepeating,
   labelClassName,
   rewardClassName,
   style
@@ -31,7 +35,7 @@ export default function RewardText({
         }
         style={{ fontWeight: 'bold' }}
       >
-        Reward:
+        {isRepeating ? 'Repeat ' : ''}Reward:
       </p>
       <div
         className={
@@ -61,6 +65,12 @@ export default function RewardText({
           >
             <Icon icon={['far', 'badge-dollar']} /> {coinReward}
           </div>
+        )}
+        {checked && (
+          <Icon
+            icon="check"
+            style={{ marginLeft: '1rem', color: Color.green() }}
+          />
         )}
       </div>
     </div>

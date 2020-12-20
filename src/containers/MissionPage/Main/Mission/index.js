@@ -117,10 +117,19 @@ export default function Mission({
             </LongText>
           </div>
           <RewardText
+            checked={isRepeating}
             style={{ marginTop: '2rem' }}
-            xpReward={isRepeating ? repeatXpReward : xpReward}
-            coinReward={isRepeating ? repeatCoinReward : coinReward}
+            xpReward={xpReward}
+            coinReward={coinReward}
           />
+          {isRepeating && (
+            <RewardText
+              isRepeating
+              style={{ marginTop: '1rem' }}
+              xpReward={repeatXpReward}
+              coinReward={repeatCoinReward}
+            />
+          )}
         </div>
       )}
       {myAttempt?.status === 'pending' ? (
