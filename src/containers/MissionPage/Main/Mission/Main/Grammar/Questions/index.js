@@ -16,7 +16,12 @@ export default function Questions({ isRepeating, mission, onFail }) {
   const { userId } = useMyState();
   const [repeatMissionComplete, setRepeatMissionComplete] = useState(false);
   const {
-    requestHelpers: { uploadMissionAttempt, uploadGrammarAttempt }
+    requestHelpers: {
+      updateUserCoins,
+      updateUserXP,
+      uploadMissionAttempt,
+      uploadGrammarAttempt
+    }
   } = useAppContext();
   const {
     actions: { onUpdateMissionAttempt, onSetMissionState }
@@ -149,6 +154,22 @@ export default function Questions({ isRepeating, mission, onFail }) {
 
   async function handleSuccess() {
     if (isRepeating) {
+      const coins = await updateUserCoins({
+        action: 'repeat',
+        target: 'mission',
+        amount: mission.repeatCoinReward,
+        targetId: mission.id,
+        type: 'increase'
+      });
+      const { xp, rank } = await updateUserXP({
+        amount: mission.repeatXpReward,
+        action: 'repeat',
+        target: 'mission',
+        targetId: mission.id,
+        type: 'increase'
+      });
+      onUpdateUserCoins({ coins, userId });
+      onChangeUserXP({ xp, rank, userId });
       setRepeatMissionComplete(true);
     } else {
       const { success, newXpAndRank, newCoins } = await uploadMissionAttempt({
