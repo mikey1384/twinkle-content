@@ -69,6 +69,7 @@ export default function Grammar({ isRepeating, mission }) {
       )}
       {mission.started && mission.failed && (
         <TryAgain
+          isRepeating={isRepeating}
           onInitMission={handleInitMission}
           onTryAgain={() =>
             onSetMissionState({

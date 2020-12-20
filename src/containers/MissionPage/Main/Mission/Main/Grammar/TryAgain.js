@@ -4,11 +4,12 @@ import { Color, borderRadius } from 'constants/css';
 import Button from 'components/Button';
 
 TryAgain.propTypes = {
+  isRepeating: PropTypes.bool,
   onInitMission: PropTypes.func.isRequired,
   onTryAgain: PropTypes.func.isRequired
 };
 
-export default function TryAgain({ onInitMission, onTryAgain }) {
+export default function TryAgain({ isRepeating, onInitMission, onTryAgain }) {
   const BodyRef = useRef(document.scrollingElement || document.documentElement);
   useLayoutEffect(() => {
     document.getElementById('App').scrollTop = 0;
@@ -42,9 +43,11 @@ export default function TryAgain({ onInitMission, onTryAgain }) {
       >
         Mission Failed...
       </div>
-      <div
-        style={{ marginTop: '1.5rem', fontSize: '1.5rem' }}
-      >{`Don't give up! You can do this`}</div>
+      {!isRepeating && (
+        <div
+          style={{ marginTop: '1.5rem', fontSize: '1.5rem' }}
+        >{`Don't give up! You can do this`}</div>
+      )}
       <div style={{ marginTop: '4.5rem' }}>
         <Button
           style={{ fontSize: '2.3rem' }}
