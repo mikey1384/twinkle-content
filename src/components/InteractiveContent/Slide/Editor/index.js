@@ -70,7 +70,7 @@ export default function Editor({
     },
     editedIsFork: isFork,
     editedIsPortal: isPortal,
-    editedAttachment: attachment || {},
+    editedAttachment: attachment || null,
     editedHeading: heading || '',
     editedDescription: description || '',
     editedForkButtonIds: forkButtonIds.length > 0 ? forkButtonIds : [1, 2],
@@ -202,7 +202,7 @@ export default function Editor({
     ) {
       return true;
     }
-    if (editedAttachment.type === 'link') {
+    if (editedAttachment?.type === 'link') {
       if (stringIsEmpty(editedAttachment?.linkUrl)) {
         return true;
       }
@@ -560,7 +560,7 @@ export default function Editor({
   async function handleSubmit(event) {
     event.preventDefault();
     const deletingAttachment =
-      editedAttachment.isChanging && !editedAttachment.newAttachment;
+      !!editedAttachment?.isChanging && !editedAttachment?.newAttachment;
     const post = {
       ...editForm,
       editedAttachment: deletingAttachment ? null : editedAttachment,
