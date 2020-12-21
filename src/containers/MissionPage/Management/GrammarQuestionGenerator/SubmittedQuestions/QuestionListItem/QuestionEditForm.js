@@ -15,7 +15,8 @@ QuestionEditForm.propTypes = {
   wrongChoice1: PropTypes.string.isRequired,
   wrongChoice2: PropTypes.string.isRequired,
   wrongChoice3: PropTypes.string.isRequired,
-  questionId: PropTypes.number.isRequired
+  questionId: PropTypes.number.isRequired,
+  onCancel: PropTypes.func.isRequired
 };
 
 export default function QuestionEditForm({
@@ -26,7 +27,8 @@ export default function QuestionEditForm({
   wrongChoice1,
   wrongChoice2,
   wrongChoice3,
-  questionId
+  questionId,
+  onCancel
 }) {
   const mounted = useRef(true);
   const {
@@ -74,7 +76,7 @@ export default function QuestionEditForm({
   const submitDisabled = useMemo(() => {
     if (
       stringIsEmpty(editedLeftSideText) &&
-      stringIsEmpty(setEditedRightSideText)
+      stringIsEmpty(editedRightSideText)
     ) {
       return true;
     }
@@ -87,6 +89,22 @@ export default function QuestionEditForm({
       return true;
     }
     if (
+      !stringIsEmpty(finalLeftSideText) &&
+      stringIsEmpty(finalRightSideText)
+    ) {
+      if (finalLeftSideText !== finalizeLeftSideText(leftSideText)) {
+        return false;
+      }
+    }
+    if (
+      stringIsEmpty(finalLeftSideText) &&
+      !stringIsEmpty(finalRightSideText)
+    ) {
+      if (finalRightSideText !== finalizeRightSideText(rightSideText)) {
+        return false;
+      }
+    }
+    if (
       finalLeftSideText === finalizeLeftSideText(leftSideText) &&
       finalRightSideText === finalizeRightSideText(rightSideText) &&
       editedCorrectChoice === correctChoice &&
@@ -96,11 +114,13 @@ export default function QuestionEditForm({
     ) {
       return true;
     }
+
     return false;
   }, [
     correctChoice,
     editedCorrectChoice,
     editedLeftSideText,
+    editedRightSideText,
     editedWrongChoice1,
     editedWrongChoice2,
     editedWrongChoice3,
@@ -214,10 +234,13 @@ export default function QuestionEditForm({
           display: 'flex'
         }}
       >
+        <Button transparent onClick={onCancel}>
+          Cancel
+        </Button>
         <Button
-          style={{ fontSize: '2rem' }}
+          style={{ marginLeft: '1rem' }}
           color="logoBlue"
-          filled
+          skeuomorphic
           disabled={submitDisabled}
           onClick={handleSubmit}
         >

@@ -61,6 +61,7 @@ export default function QuestionListItem({
           wrongChoice2={wrongChoices[1]}
           wrongChoice3={wrongChoices[2]}
           questionId={question.id}
+          onCancel={() => onSetIsEditing(false)}
         />
       ) : (
         <QuestionContent
