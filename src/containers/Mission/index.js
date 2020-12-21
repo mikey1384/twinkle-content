@@ -12,7 +12,7 @@ import { useAppContext, useMissionContext } from 'contexts';
 
 export default function Mission() {
   const [loading, setLoading] = useState(false);
-  const { currentMissionId, userId } = useMyState();
+  const { currentMissionId, userId, canEdit } = useMyState();
   const {
     requestHelpers: { loadMissionList }
   } = useAppContext();
@@ -37,12 +37,20 @@ export default function Mission() {
       setLoading(true);
       const { missions, loadMoreButton } = await loadMissionList();
       if (mounted.current) {
+        let displayedMissions = missions;
+        if (!canEdit) {
+          displayedMissions = missions.filter((mission) => !mission.isHidden);
+        }
         setLoading(false);
-        onLoadMissionList({ missions, loadMoreButton, prevUserId: userId });
+        onLoadMissionList({
+          missions: displayedMissions,
+          loadMoreButton,
+          prevUserId: userId
+        });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [listLoaded, prevUserId, userId]);
+  }, [listLoaded, prevUserId, userId, canEdit]);
 
   return (
     <ErrorBoundary>
@@ -71,13 +79,15 @@ export default function Mission() {
                 missions={missions}
                 missionObj={missionObj}
                 className={css`
-                  width: CALC(${currentMissionId ? '65%' : '80%'} - 5rem);
+                  width: CALC(
+                    ${missionObj[currentMissionId] ? '65%' : '80%'} - 5rem
+                  );
                   @media (max-width: ${mobileMaxWidth}) {
                     width: 100%;
                   }
                 `}
               />
-              {currentMissionId && (
+              {missionObj[currentMissionId] && (
                 <div
                   className={css`
                     width: 35%;
