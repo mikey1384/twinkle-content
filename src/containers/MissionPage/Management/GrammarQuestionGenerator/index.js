@@ -36,7 +36,7 @@ export default function GrammarQuestionGenerator({
     if (stringIsEmpty(rightSideText)) {
       return '.';
     }
-    if (!rightSideText || ['.', '?', '!'].includes(rightSideText)) {
+    if (!rightSideText || ['.', '?', '!', ','].includes(rightSideText)) {
       return rightSideText;
     }
     const trimmedRightSideText = rightSideText.trim();
