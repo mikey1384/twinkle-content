@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import ListItem from './ListItem';
+import MissionItem from './MissionItem';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FilterBar from 'components/FilterBar';
 import { mobileMaxWidth } from 'constants/css';
@@ -98,7 +98,7 @@ export default function MissionList({
               displayedMissions.map((missionId, index) => {
                 const mission = missionObj[missionId];
                 return (
-                  <ListItem
+                  <MissionItem
                     style={{ marginTop: index > 0 ? '1rem' : 0 }}
                     key={missionId}
                     mission={mission}

@@ -8,11 +8,11 @@ import { useHistory } from 'react-router-dom';
 import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
-ListItem.propTypes = {
+MissionItem.propTypes = {
   style: PropTypes.object,
   mission: PropTypes.object.isRequired
 };
-export default function ListItem({ style, mission }) {
+export default function MissionItem({ style, mission }) {
   const history = useHistory();
   const { userId } = useMyState();
   const {
