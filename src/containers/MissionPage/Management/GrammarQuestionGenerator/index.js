@@ -41,7 +41,9 @@ export default function GrammarQuestionGenerator({
     }
     const trimmedRightSideText = rightSideText.trim();
     if (
-      /^[a-zA-Z]+$/i.test(trimmedRightSideText[trimmedRightSideText.length - 1])
+      /^[a-zA-Z0-9]+$/i.test(
+        trimmedRightSideText[trimmedRightSideText.length - 1]
+      )
     ) {
       return `${trimmedRightSideText}.`;
     }
