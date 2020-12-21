@@ -96,6 +96,12 @@ export default function Mission() {
                   />
                   {userId && (
                     <RepeatableMissions
+                      className={css`
+                        margin-top: 2rem;
+                        @media (max-width: ${mobileMaxWidth}) {
+                          margin-top: 0;
+                        }
+                      `}
                       missions={missions}
                       missionObj={missionObj}
                     />

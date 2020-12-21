@@ -35,6 +35,8 @@ export default function MissionList({
   useEffect(() => {
     if (ongoingMissions.length === 0) {
       setSelectedTab('complete');
+    } else {
+      setSelectedTab('ongoing');
     }
   }, [ongoingMissions.length]);
   let displayedMissions = useMemo(() => {

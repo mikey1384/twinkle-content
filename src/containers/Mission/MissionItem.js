@@ -10,9 +10,10 @@ import { useMyState } from 'helpers/hooks';
 
 MissionItem.propTypes = {
   style: PropTypes.object,
-  mission: PropTypes.object.isRequired
+  mission: PropTypes.object.isRequired,
+  showStatus: PropTypes.bool
 };
-export default function MissionItem({ style, mission }) {
+export default function MissionItem({ style, mission, showStatus = true }) {
   const history = useHistory();
   const { userId } = useMyState();
   const {
@@ -99,7 +100,8 @@ export default function MissionItem({ style, mission }) {
               xpReward={mission.xpReward}
             />
             {mission.myAttempt?.status &&
-              mission.myAttempt?.status !== 'pending' && (
+              mission.myAttempt?.status !== 'pending' &&
+              showStatus && (
                 <div
                   className={css`
                     font-size: 1.3rem;
