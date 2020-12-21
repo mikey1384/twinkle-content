@@ -105,7 +105,7 @@ export default function GrammarQuestionGenerator({
             }}
           >
             {finalLeftSideText} _____
-            {['.', '?', '!'].includes(finalRightSideText)
+            {['.', '?', '!', ','].includes(finalRightSideText)
               ? finalRightSideText
               : ` ${finalRightSideText}`}
           </div>
