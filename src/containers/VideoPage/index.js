@@ -303,7 +303,7 @@ export default function VideoPage({
                     minimized={!watchTabActive}
                   />
                 )}
-                {(userIsUploader || userCanEditThis) && (
+                {(userIsUploader || userCanEditThis) && !watchTabActive && (
                   <div style={{ marginTop: rewardLevel ? '1rem' : 0 }}>
                     <a
                       style={{
