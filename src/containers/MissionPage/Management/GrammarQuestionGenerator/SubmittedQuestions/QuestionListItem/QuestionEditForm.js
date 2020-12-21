@@ -73,7 +73,8 @@ export default function QuestionEditForm({
 
   const submitDisabled = useMemo(() => {
     if (
-      stringIsEmpty(editedLeftSideText) & stringIsEmpty(setEditedRightSideText)
+      stringIsEmpty(editedLeftSideText) &&
+      stringIsEmpty(setEditedRightSideText)
     ) {
       return true;
     }
