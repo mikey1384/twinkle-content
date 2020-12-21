@@ -89,12 +89,17 @@ export default function Mission() {
                     }
                   `}
                 >
-                  <RepeatableMissions />
                   <CurrentMission
                     mission={missionObj[currentMissionId]}
                     missionId={currentMissionId}
                     style={{ width: '100%' }}
                   />
+                  {userId && (
+                    <RepeatableMissions
+                      missions={missions}
+                      missionObj={missionObj}
+                    />
+                  )}
                 </div>
               )}
             </div>
