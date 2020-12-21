@@ -34,7 +34,7 @@ export default function RepeatableMissions({
           font-weight: bold;
         `}
       >
-        Repeatable Missions
+        Repeatable Mission{repeatableMissions.length > 1 ? 's' : ''}
       </p>
       <div>
         {repeatableMissions.map((mission) => (
