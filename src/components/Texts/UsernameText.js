@@ -1,11 +1,12 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import DropdownList from 'components/DropdownList';
 import { Color } from 'constants/css';
 import { useHistory } from 'react-router-dom';
-import { useMyState } from 'helpers/hooks';
-import { useAppContext, useChatContext } from 'contexts';
+import { useMyState, useContentState } from 'helpers/hooks';
+import { useAppContext, useChatContext, useContentContext } from 'contexts';
 import { isMobile } from 'helpers';
+import { addCommasToNumber } from 'helpers/stringHelpers';
 
 UsernameText.propTypes = {
   className: PropTypes.string,
@@ -27,14 +28,34 @@ export default function UsernameText({
   const history = useHistory();
   const timerRef = useRef(null);
   const {
-    requestHelpers: { loadChat, loadDMChannel }
+    requestHelpers: { loadChat, loadDMChannel, loadProfile }
   } = useAppContext();
+  const {
+    state,
+    actions: {
+      onInitContent
+    }
+  } = useContentContext();
   const { userId, username } = useMyState();
   const {
     state: { loaded },
     actions: { onInitChat, onOpenDirectMessageChannel }
   } = useChatContext();
   const [menuShown, setMenuShown] = useState(false);
+  const { twinkleXP } = useContentState({
+    contentType: 'user',
+    contentId: user.id
+  });
+  useEffect(() => {
+    if (loaded && state['user' + user.id] === undefined) {
+      init();
+    }
+    async function init() {
+      await initUserData(user.id);
+      console.log(state);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loaded, menuShown]);
   return (
     <div
       style={{
@@ -89,6 +110,13 @@ export default function UsernameText({
               <a style={{ color: Color.darkerGray() }}>Talk</a>
             </li>
           )}
+          <div
+            style={{
+              color: Color.darkerGray(), fontSize: '1rem', textAlign: 'center', fontWeight: 'bold'
+            }}
+          >
+            {(twinkleXP === null || twinkleXP === undefined) ? 0 : addCommasToNumber(twinkleXP)} XP
+          </div>
         </DropdownList>
       )}
     </div>
@@ -122,5 +150,10 @@ export default function UsernameText({
     if (user.username) {
       setMenuShown(!menuShown);
     }
+  }
+
+  async function initUserData(userId) {
+    const data = await loadProfile(userId);
+    onInitContent({ contentId: userId, contentType: 'user', ...data });
   }
 }
