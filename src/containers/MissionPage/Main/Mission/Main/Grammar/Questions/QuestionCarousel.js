@@ -2,7 +2,9 @@ import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Carousel from 'components/Carousel';
 import QuestionSlide from './QuestionSlide';
+import { css } from 'emotion';
 import { scrollElementToCenter } from 'helpers';
+import { mobileMaxWidth } from 'constants/css';
 
 QuestionCarousel.propTypes = {
   conditionPassStatus: PropTypes.string.isRequired,
@@ -27,7 +29,8 @@ export default function QuestionCarousel({
 }) {
   const CarouselRef = useRef(null);
   useEffect(() => {
-    scrollElementToCenter(CarouselRef.current, -200);
+    let scrollModifier = -200;
+    scrollElementToCenter(CarouselRef.current, scrollModifier);
   }, []);
   return (
     <div ref={CarouselRef}>
@@ -42,12 +45,19 @@ export default function QuestionCarousel({
         onCheckNavCondition={onCheckNavCondition}
         title={
           <div
-            style={{
-              width: '100%',
-              textAlign: 'center',
-              marginTop: '6rem',
-              marginBottom: '-1rem'
-            }}
+            className={css`
+              width: 100%;
+              text-align: center;
+              margin-top: 6rem;
+              margin-bottom: -1rem;
+              @media (max-width: ${mobileMaxWidth}) {
+                margin-top: 3rem;
+                margin-bottom: -2rem;
+                > h2 {
+                  font-size: 2rem;
+                }
+              }
+            `}
           >
             <h2>{objectiveMessage}</h2>
           </div>

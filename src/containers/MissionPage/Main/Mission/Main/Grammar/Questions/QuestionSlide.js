@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ChoiceList from './ChoiceList';
-import { borderRadius } from 'constants/css';
+import { borderRadius, mobileMaxWidth } from 'constants/css';
+import { css } from 'emotion';
 
 QuestionSlide.propTypes = {
   answerIndex: PropTypes.number,
@@ -28,12 +29,17 @@ export default function QuestionSlide({
     >
       <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
         <div
-          style={{
-            width: '80%',
-            display: 'flex',
-            flexDirection: 'column',
-            marginTop: '3rem'
-          }}
+          className={css`
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            margin-top: 3rem;
+            @media (max-width: ${mobileMaxWidth}) {
+              > h3 {
+                font-size: 1.8rem;
+              }
+            }
+          `}
         >
           <h3>{question}</h3>
           <ChoiceList
