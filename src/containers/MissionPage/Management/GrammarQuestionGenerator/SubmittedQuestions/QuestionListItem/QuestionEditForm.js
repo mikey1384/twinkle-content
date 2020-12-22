@@ -52,7 +52,7 @@ export default function QuestionEditForm({
     if (stringIsEmpty(text)) {
       return '.';
     }
-    if (!text || ['.', '?', '!'].includes(text)) {
+    if (!text || ['.', '?', '!'].includes(text) || text[0] === ',') {
       return text;
     }
     const trimmedRightSideText = text.trim();
@@ -152,7 +152,8 @@ export default function QuestionEditForm({
           }}
         >
           {finalLeftSideText} _____
-          {['.', '?', '!', ','].includes(finalRightSideText)
+          {['.', '?', '!'].includes(finalRightSideText) ||
+          finalRightSideText[0] === ','
             ? finalRightSideText
             : ` ${finalRightSideText}`}
         </div>

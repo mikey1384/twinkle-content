@@ -36,7 +36,11 @@ export default function GrammarQuestionGenerator({
     if (stringIsEmpty(rightSideText)) {
       return '.';
     }
-    if (!rightSideText || ['.', '?', '!', ','].includes(rightSideText)) {
+    if (
+      !rightSideText ||
+      ['.', '?', '!'].includes(rightSideText) ||
+      rightSideText[0] === ','
+    ) {
       return rightSideText;
     }
     const trimmedRightSideText = rightSideText.trim();
@@ -105,7 +109,8 @@ export default function GrammarQuestionGenerator({
             }}
           >
             {finalLeftSideText} _____
-            {['.', '?', '!', ','].includes(finalRightSideText)
+            {['.', '?', '!'].includes(finalRightSideText) ||
+            finalRightSideText[0] === ','
               ? finalRightSideText
               : ` ${finalRightSideText}`}
           </div>
