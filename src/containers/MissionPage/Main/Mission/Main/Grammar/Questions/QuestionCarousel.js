@@ -70,9 +70,9 @@ export default function QuestionCarousel({
             choices={questionObj[questionId].choices}
             answerIndex={questionObj[questionId].answerIndex}
             conditionPassStatus={conditionPassStatus}
-            onSelectChoice={(selectedIndex) =>
-              onSelectChoice({ selectedIndex, questionId })
-            }
+            onSelectChoice={(selectedIndex) => {
+              onSelectChoice({ selectedIndex, questionId });
+            }}
           />
         ))}
       </Carousel>

@@ -116,19 +116,21 @@ export default function Questions({ isRepeating, mission, onFail }) {
   );
 
   function handleSelectChoice({ selectedIndex, questionId }) {
-    setQuestionObj((questionObj) => ({
-      ...questionObj,
-      [questionId]: {
-        ...questionObj[questionId],
-        choices: questionObj[questionId].choices.map((choice, index) =>
-          index === selectedIndex
-            ? { ...choice, checked: true }
-            : { ...choice, checked: false }
-        )
-      },
-      selectedChoiceIndex: selectedIndex
-    }));
-    selectedAnswerIndex.current = selectedIndex;
+    if (!statusRef.current) {
+      setQuestionObj((questionObj) => ({
+        ...questionObj,
+        [questionId]: {
+          ...questionObj[questionId],
+          choices: questionObj[questionId].choices.map((choice, index) =>
+            index === selectedIndex
+              ? { ...choice, checked: true }
+              : { ...choice, checked: false }
+          )
+        },
+        selectedChoiceIndex: selectedIndex
+      }));
+      selectedAnswerIndex.current = selectedIndex;
+    }
   }
 
   function handleCheckNavCondition(onNext) {

@@ -367,7 +367,7 @@ export default function Carousel({
   }
 
   function goToSlide(index) {
-    if (index >= slideCount || index < 0) {
+    if (index >= slideCount || index < 0 || currentSlide === index) {
       return;
     }
     setEasing(DEFAULT_EASING);

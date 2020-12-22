@@ -67,7 +67,7 @@ export default function ListItem({
   );
 
   function handleSelect() {
-    if (conditionPassStatus) {
+    if (conditionPassStatus && conditionPassStatus !== '') {
       return;
     }
     onSelect(index);
