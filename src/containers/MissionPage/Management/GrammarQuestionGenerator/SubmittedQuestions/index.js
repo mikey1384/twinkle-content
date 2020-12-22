@@ -147,18 +147,20 @@ export default function SubmittedQuestions({
                     }
                   });
                 }}
-                onApproveQuestion={() =>
+                onApproveQuestion={(isApproved) =>
                   onSetMissionState({
                     missionId: mission.id,
                     newState: {
-                      pendingQuestionIds: mission.pendingQuestionIds.filter(
-                        (id) => id !== questionId
-                      ),
+                      [`${
+                        isApproved ? 'pending' : 'approved'
+                      }QuestionIds`]: mission[
+                        `${isApproved ? 'pending' : 'approved'}QuestionIds`
+                      ].filter((id) => id !== questionId),
                       questionObj: {
                         ...mission.questionObj,
                         [questionId]: {
                           ...mission.questionObj[questionId],
-                          isApproved: true
+                          isApproved
                         }
                       }
                     }

@@ -76,11 +76,14 @@ export default function QuestionListItem({
             marginTop: '4rem',
             width: '100%',
             display: 'flex',
-            justifyContent: 'center'
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center'
           }}
         >
           <Button
             style={{
+              width: '50%',
               fontSize: '1.7rem'
             }}
             skeuomorphic
@@ -90,25 +93,26 @@ export default function QuestionListItem({
             <Icon icon="pencil-alt" />
             <span style={{ marginLeft: '0.7rem' }}>Edit</span>
           </Button>
-          {!question.isApproved && (
-            <Button
-              style={{ fontSize: '1.7rem', marginLeft: '1rem' }}
-              skeuomorphic
-              color="darkBlue"
-              onClick={handleApprove}
-            >
-              Approve
-            </Button>
-          )}
+          <Button
+            style={{ width: '50%', fontSize: '1.7rem', marginTop: '1rem' }}
+            skeuomorphic
+            color={!question.isApproved ? 'darkBlue' : 'rose'}
+            onClick={handleApprove}
+          >
+            {!question.isApproved ? 'Approve' : 'Disapprove'}
+          </Button>
         </div>
       )}
     </div>
   );
 
   async function handleApprove() {
-    const success = await approveGrammarQuestion(question.id);
+    const success = await approveGrammarQuestion({
+      questionId: question.id,
+      isApproved: !question.isApproved
+    });
     if (success) {
-      onApproveQuestion();
+      onApproveQuestion(!question.isApproved);
     }
   }
 }

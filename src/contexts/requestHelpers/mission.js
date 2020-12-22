@@ -3,12 +3,12 @@ import URL from 'constants/URL';
 
 export default function missionRequestHelpers({ auth, handleError }) {
   return {
-    async approveGrammarQuestion(questionId) {
+    async approveGrammarQuestion({ questionId, isApproved }) {
       try {
         const {
           data: { success }
         } = await request.put(
-          `${URL}/mission/grammar/question/approve`,
+          `${URL}/mission/grammar/question/approve?isApproved=${isApproved}`,
           { questionId },
           auth()
         );
