@@ -90,8 +90,10 @@ export default function UsernameText({
               <a style={{ color: Color.darkerGray() }}>Talk</a>
             </li>
           )}
-          <div
+          <li
             style={{
+              padding: '5px',
+              background: Color.highlightGray(),
               color: Color.darkerGray(),
               fontSize: '1rem',
               textAlign: 'center',
@@ -99,7 +101,7 @@ export default function UsernameText({
             }}
           >
             {addCommasToNumber(user.twinkleXP)} XP
-          </div>
+          </li>
         </DropdownList>
       )}
     </div>
