@@ -18,6 +18,7 @@ export default function Googling({ mission, onSetMissionState, style }) {
   const {
     actions: { onUpdateMissionAttempt }
   } = useMissionContext();
+  const [submitDisabled, setSubmitDisabled] = useState(false);
   const [answers, setAnswers] = useState(mission.answers || {});
   const answersRef = useRef(mission.answers || {});
   const [hasErrorObj, setHasErrorObj] = useState(mission.hasErrorObj || {});
@@ -64,6 +65,7 @@ export default function Googling({ mission, onSetMissionState, style }) {
       >
         <Button
           style={{ fontSize: '1.7rem' }}
+          disabled={submitDisabled}
           color="blue"
           filled
           onClick={handleSubmit}
@@ -98,6 +100,7 @@ export default function Googling({ mission, onSetMissionState, style }) {
   }
 
   async function handleSubmit() {
+    setSubmitDisabled(true);
     for (let { id: questionId } of mission.questions) {
       if (!answers[questionId] || stringIsEmpty(answers[questionId])) {
         handleSetHasErrorObj({
@@ -105,6 +108,7 @@ export default function Googling({ mission, onSetMissionState, style }) {
           hasError: true
         });
         scrollElementToCenter(QuestionRefs.current[questionId]);
+        setSubmitDisabled(false);
         return QuestionRefs.current[questionId].focus();
       }
     }
@@ -121,5 +125,6 @@ export default function Googling({ mission, onSetMissionState, style }) {
         newState: { status: 'pending', tryingAgain: false }
       });
     }
+    setSubmitDisabled(false);
   }
 }

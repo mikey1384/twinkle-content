@@ -35,6 +35,7 @@ export default function TakeScreenshot({
   const {
     actions: { onUpdateMissionAttempt }
   } = useMissionContext();
+  const [submitDisabled, setSubmitDisabled] = useState(false);
   const { fileUploadLvl, username } = useMyState();
   const [alertModalShown, setAlertModalShown] = useState(false);
   const [uploadingFile, setUploadingFile] = useState(false);
@@ -146,6 +147,7 @@ export default function TakeScreenshot({
         )}
         {attachment?.preview && (
           <Button
+            disabled={submitDisabled}
             color="darkBlue"
             skeuomorphic
             style={{ fontSize: '2rem' }}
@@ -257,6 +259,7 @@ export default function TakeScreenshot({
         }
       });
     }
+    setSubmitDisabled(false);
 
     function handleUploadProgress({ loaded, total }) {
       onSetMissionState({
