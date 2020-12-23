@@ -145,10 +145,12 @@ export default function Carousel({
             boxSizing: 'border-box'
           }}
           onTouchStart={(e) => {
-            setTouchObject({
-              startX: e.touches[0].pageX,
-              startY: e.touches[0].pageY
-            });
+            if (allowDrag) {
+              setTouchObject({
+                startX: e.touches[0].pageX,
+                startY: e.touches[0].pageY
+              });
+            }
           }}
           onTouchMove={(e) => {
             if (!scrollYRef.current) {

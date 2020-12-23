@@ -26,7 +26,7 @@ export default function QuestionSlide({
         padding: 2rem 1rem 3rem 1rem;
         border-radius: ${borderRadius};
         @media (max-width: ${mobileMaxWidth}) {
-          padding-bottom: 0;
+          padding-bottom: 1rem;
         }
       `}
     >
