@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Carousel from 'components/Carousel';
 import QuestionSlide from './QuestionSlide';
 import { css } from 'emotion';
-import { scrollElementToCenter } from 'helpers';
+import { scrollElementToCenter, isMobile } from 'helpers';
 import { mobileMaxWidth } from 'constants/css';
 
 QuestionCarousel.propTypes = {
@@ -31,7 +31,7 @@ export default function QuestionCarousel({
 }) {
   const CarouselRef = useRef(null);
   useEffect(() => {
-    let scrollModifier = -200;
+    let scrollModifier = isMobile(navigator) ? -100 : -200;
     scrollElementToCenter(CarouselRef.current, scrollModifier);
   }, []);
   return (
