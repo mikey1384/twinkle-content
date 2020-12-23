@@ -52,7 +52,6 @@ export default function UsernameText({
     }
     async function init() {
       await initUserData(user.id);
-      console.log(state);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loaded, menuShown]);
