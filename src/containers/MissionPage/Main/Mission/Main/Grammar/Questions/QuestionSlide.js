@@ -21,11 +21,14 @@ export default function QuestionSlide({
 }) {
   return (
     <div
-      style={{
-        width: '100%',
-        padding: '2rem 1rem 3rem 1rem',
-        borderRadius
-      }}
+      className={css`
+        width: 100%;
+        padding: 2rem 1rem 3rem 1rem;
+        border-radius: ${borderRadius};
+        @media (max-width: ${mobileMaxWidth}) {
+          padding-bottom: 0;
+        }
+      `}
     >
       <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
         <div

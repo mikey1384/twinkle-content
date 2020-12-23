@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import LongText from 'components/Texts/LongText';
 import Button from 'components/Button';
-import { borderRadius, Color } from 'constants/css';
+import { css } from 'emotion';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 
 StatusMessage.propTypes = {
@@ -115,16 +116,47 @@ export default function StatusMessage({
           </div>
         </div>
       ) : (
-        <>
-          <Icon
-            size="2x"
-            style={{ color: status === 'pass' ? Color.green() : Color.rose() }}
-            icon={status === 'pass' ? 'check' : 'times'}
-          />
-          <LongText style={{ marginLeft: '2rem', fontSize: '1.7rem' }}>
-            {status === 'pass' ? passMessage : failMessage}
-          </LongText>
-        </>
+        <div>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <Icon
+              size="2x"
+              style={{
+                color: status === 'pass' ? Color.green() : Color.rose()
+              }}
+              icon={status === 'pass' ? 'check' : 'times'}
+            />
+            <LongText
+              className={css`
+                font-size: 1.7rem;
+                margin-left: 2rem;
+                @media (max-width: ${mobileMaxWidth}) {
+                  font-size: 1.5rem;
+                }
+              `}
+            >
+              {status === 'pass' ? passMessage : failMessage}
+            </LongText>
+          </div>
+          {status === 'fail' && (
+            <div
+              style={{
+                marginTop: '1.5rem',
+                display: 'flex',
+                justifyContent: 'center'
+              }}
+            >
+              <Button onClick={onBackToStart} skeuomorphic color="rose">
+                Back to Start Screen
+              </Button>
+            </div>
+          )}
+        </div>
       )}
     </div>
   );

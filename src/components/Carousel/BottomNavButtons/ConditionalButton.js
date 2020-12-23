@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 
@@ -13,18 +13,11 @@ export default function ConditionalButton({
   onCheckNavCondition,
   nextButtonDisabled
 }) {
-  const buttonColor = useMemo(() => {
-    if (conditionPassStatus === 'fail') {
-      return 'rose';
-    }
-    return 'green';
-  }, [conditionPassStatus]);
-
-  return (
+  return conditionPassStatus === 'fail' ? null : (
     <Button
       disabled={nextButtonDisabled}
       filled
-      color={buttonColor}
+      color="green"
       onClick={onCheckNavCondition}
     >
       {conditionPassStatus ? 'Continue' : 'Check'}
