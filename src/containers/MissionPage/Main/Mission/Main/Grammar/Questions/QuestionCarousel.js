@@ -14,7 +14,8 @@ QuestionCarousel.propTypes = {
   objectiveMessage: PropTypes.string.isRequired,
   questionIds: PropTypes.array.isRequired,
   questionObj: PropTypes.object.isRequired,
-  onSelectChoice: PropTypes.func.isRequired
+  onSelectChoice: PropTypes.func.isRequired,
+  submitDisabled: PropTypes.bool
 };
 
 export default function QuestionCarousel({
@@ -25,7 +26,8 @@ export default function QuestionCarousel({
   objectiveMessage,
   questionIds,
   questionObj,
-  onSelectChoice
+  onSelectChoice,
+  submitDisabled
 }) {
   const CarouselRef = useRef(null);
   useEffect(() => {
@@ -42,6 +44,7 @@ export default function QuestionCarousel({
         slidesToScroll={1}
         slideIndex={currentSlideIndex}
         afterSlide={onAfterSlide}
+        nextButtonDisabled={submitDisabled}
         onCheckNavCondition={onCheckNavCondition}
         title={
           <div

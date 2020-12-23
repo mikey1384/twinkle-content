@@ -4,12 +4,14 @@ import Button from 'components/Button';
 
 ConditionalButton.propTypes = {
   conditionPassStatus: PropTypes.string.isRequired,
-  onCheckNavCondition: PropTypes.func.isRequired
+  onCheckNavCondition: PropTypes.func.isRequired,
+  nextButtonDisabled: PropTypes.bool
 };
 
 export default function ConditionalButton({
   conditionPassStatus,
-  onCheckNavCondition
+  onCheckNavCondition,
+  nextButtonDisabled
 }) {
   const buttonColor = useMemo(() => {
     if (conditionPassStatus === 'fail') {
@@ -19,7 +21,12 @@ export default function ConditionalButton({
   }, [conditionPassStatus]);
 
   return (
-    <Button filled color={buttonColor} onClick={onCheckNavCondition}>
+    <Button
+      disabled={nextButtonDisabled}
+      filled
+      color={buttonColor}
+      onClick={onCheckNavCondition}
+    >
       {conditionPassStatus ? 'Continue' : 'Check'}
     </Button>
   );

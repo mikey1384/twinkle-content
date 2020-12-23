@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Input from 'components/Texts/Input';
 import Button from 'components/Button';
@@ -28,6 +28,8 @@ CopyAndPaste.propTypes = {
 };
 
 export default function CopyAndPaste({ mission, onSetMissionState, style }) {
+  const mounted = useRef(false);
+  const [submitDisabled, setSubmitDisabled] = useState(false);
   const { userId } = useMyState();
   const {
     requestHelpers: { uploadMissionAttempt }
@@ -43,6 +45,7 @@ export default function CopyAndPaste({ mission, onSetMissionState, style }) {
   const [status, setStatus] = useState('');
 
   useEffect(() => {
+    mounted.current = true;
     if (!stringIsEmpty(content)) {
       setStatus(
         content.localeCompare(missionText) === 0
@@ -55,6 +58,12 @@ export default function CopyAndPaste({ mission, onSetMissionState, style }) {
       setStatus('');
     }
   }, [content]);
+
+  useEffect(() => {
+    return function onDismount() {
+      mounted.current = false;
+    };
+  }, []);
 
   return (
     <div style={style}>
@@ -91,7 +100,12 @@ export default function CopyAndPaste({ mission, onSetMissionState, style }) {
           }}
         >
           {status === 'pass' && (
-            <Button onClick={handleSuccess} color="green" filled>
+            <Button
+              disabled={submitDisabled}
+              onClick={handleSuccess}
+              color="green"
+              filled
+            >
               Success!
             </Button>
           )}
@@ -111,25 +125,31 @@ export default function CopyAndPaste({ mission, onSetMissionState, style }) {
   );
 
   async function handleSuccess() {
+    setSubmitDisabled(true);
     const { success, newXpAndRank, newCoins } = await uploadMissionAttempt({
       missionId: mission.id,
       attempt: { content, status: 'pass' }
     });
     if (success) {
-      onUpdateMissionAttempt({
-        missionId: mission.id,
-        newState: { status: 'pass' }
-      });
-      if (newXpAndRank.xp) {
+      if (mounted.current) {
+        onUpdateMissionAttempt({
+          missionId: mission.id,
+          newState: { status: 'pass' }
+        });
+      }
+      if (newXpAndRank.xp && mounted.current) {
         onChangeUserXP({
           xp: newXpAndRank.xp,
           rank: newXpAndRank.rank,
           userId
         });
       }
-      if (newCoins.netCoins) {
+      if (newCoins.netCoins && mounted.current) {
         onUpdateUserCoins({ coins: newCoins.netCoins, userId });
       }
+    }
+    if (mounted.current) {
+      setSubmitDisabled(false);
     }
   }
 }
