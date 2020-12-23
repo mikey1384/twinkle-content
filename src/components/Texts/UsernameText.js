@@ -1,10 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import DropdownList from 'components/DropdownList';
 import { Color } from 'constants/css';
 import { useHistory } from 'react-router-dom';
-import { useMyState } from 'helpers/hooks';
-import { useAppContext, useChatContext } from 'contexts';
+import { useContentState, useMyState } from 'helpers/hooks';
+import { useAppContext, useContentContext, useChatContext } from 'contexts';
 import { isMobile } from 'helpers';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 
@@ -28,14 +28,28 @@ export default function UsernameText({
   const history = useHistory();
   const timerRef = useRef(null);
   const {
-    requestHelpers: { loadChat, loadDMChannel }
+    requestHelpers: { loadChat, loadDMChannel, loadProfile }
   } = useAppContext();
+  const {
+    actions: { onInitContent }
+  } = useContentContext();
+  const { twinkleXP } = useContentState({
+    contentType: 'user',
+    contentId: user.id
+  });
   const { userId, username } = useMyState();
   const {
     state: { loaded },
     actions: { onInitChat, onOpenDirectMessageChannel }
   } = useChatContext();
   const [menuShown, setMenuShown] = useState(false);
+  const userXP = useMemo(() => {
+    if (!twinkleXP && !user.twinkleXP) {
+      return null;
+    }
+    return addCommasToNumber(twinkleXP || user.twinkleXP);
+  }, [twinkleXP, user.twinkleXP]);
+
   return (
     <div
       style={{
@@ -90,27 +104,35 @@ export default function UsernameText({
               <a style={{ color: Color.darkerGray() }}>Talk</a>
             </li>
           )}
-          <li
-            style={{
-              padding: '5px',
-              background: Color.highlightGray(),
-              color: Color.darkerGray(),
-              fontSize: '1rem',
-              textAlign: 'center',
-              fontWeight: 'bold'
-            }}
-          >
-            {addCommasToNumber(user.twinkleXP)} XP
-          </li>
+          {userXP && (
+            <li
+              style={{
+                padding: '5px',
+                background: Color.highlightGray(),
+                color: Color.darkerGray(),
+                fontSize: '1rem',
+                textAlign: 'center',
+                fontWeight: 'bold'
+              }}
+            >
+              {userXP} XP
+            </li>
+          )}
         </DropdownList>
       )}
     </div>
   );
 
-  function onMouseEnter() {
+  async function onMouseEnter() {
     clearTimeout(timerRef.current);
     if (user.username && !isMobile(navigator)) {
-      timerRef.current = setTimeout(() => setMenuShown(true), 300);
+      if (!twinkleXP && !user.twinkleXP) {
+        const data = await loadProfile(user.id);
+        onInitContent({ contentId: user.id, contentType: 'user', ...data });
+        timerRef.current = setTimeout(() => setMenuShown(true), 200);
+      } else {
+        timerRef.current = setTimeout(() => setMenuShown(true), 300);
+      }
     }
   }
 
