@@ -110,6 +110,7 @@ export function addAdvancedEmoji(string) {
     .replace(/(\:fear\:)/gi, '😱')
     .replace(/(\:fire\:)/gi, '🔥')
     .replace(/(\:fox\:)/gi, '🦊')
+    .replace(/(\:food\:)/gi, '🍔')
     .replace(/(\:friend\:)/gi, '👭')
     .replace(/(\:ghost\:)/gi, '👻')
     .replace(/(\:gift\:)/gi, '🎁')
