@@ -27,6 +27,7 @@ export default function UsernameText({
 }) {
   const history = useHistory();
   const timerRef = useRef(null);
+  const mouseEntered = useRef(false);
   const {
     requestHelpers: { loadChat, loadDMChannel, loadProfile }
   } = useAppContext();
@@ -59,6 +60,7 @@ export default function UsernameText({
       }}
       className={className}
       onMouseLeave={() => {
+        mouseEntered.current = false;
         clearTimeout(timerRef.current);
         setMenuShown(false);
       }}
@@ -124,12 +126,17 @@ export default function UsernameText({
   );
 
   async function onMouseEnter() {
+    mouseEntered.current = true;
     clearTimeout(timerRef.current);
     if (user.username && !isMobile(navigator)) {
       if (!twinkleXP && !user.twinkleXP) {
-        const data = await loadProfile(user.id);
-        onInitContent({ contentId: user.id, contentType: 'user', ...data });
-        timerRef.current = setTimeout(() => setMenuShown(true), 200);
+        timerRef.current = setTimeout(async () => {
+          const data = await loadProfile(user.id);
+          if (mouseEntered.current) {
+            onInitContent({ contentId: user.id, contentType: 'user', ...data });
+            setMenuShown(true);
+          }
+        }, 200);
       } else {
         timerRef.current = setTimeout(() => setMenuShown(true), 300);
       }
