@@ -213,6 +213,8 @@ export default function Questions({ isRepeating, mission, onFail }) {
         });
       }
     }
-    setSubmitDisabled(false);
+    if (mounted.current) {
+      setSubmitDisabled(false);
+    }
   }
 }
