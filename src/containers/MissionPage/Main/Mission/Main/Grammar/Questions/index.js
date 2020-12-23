@@ -166,54 +166,56 @@ export default function Questions({ isRepeating, mission, onFail }) {
 
   async function handleSuccess() {
     setSubmitDisabled(true);
-    if (isRepeating) {
-      const coins = await updateUserCoins({
-        action: 'repeat',
-        target: 'mission',
-        amount: mission.repeatCoinReward,
-        targetId: mission.id,
-        type: 'increase'
-      });
-      const { xp, rank } = await updateUserXP({
-        amount: mission.repeatXpReward,
-        action: 'repeat',
-        target: 'mission',
-        targetId: mission.id,
-        type: 'increase'
-      });
-      if (mounted.current) {
-        onUpdateUserCoins({ coins, userId });
-        onChangeUserXP({ xp, rank, userId });
-        setRepeatMissionComplete(true);
-      }
-    } else {
-      const { success, newXpAndRank, newCoins } = await uploadMissionAttempt({
-        missionId: mission.id,
-        attempt: { status: 'pass' }
-      });
-      if (success && mounted.current) {
-        onUpdateMissionAttempt({
-          missionId: mission.id,
-          newState: { status: 'pass' }
+    try {
+      if (isRepeating) {
+        const coins = await updateUserCoins({
+          action: 'repeat',
+          target: 'mission',
+          amount: mission.repeatCoinReward,
+          targetId: mission.id,
+          type: 'increase'
         });
+        const { xp, rank } = await updateUserXP({
+          amount: mission.repeatXpReward,
+          action: 'repeat',
+          target: 'mission',
+          targetId: mission.id,
+          type: 'increase'
+        });
+        if (mounted.current) {
+          onUpdateUserCoins({ coins, userId });
+          onChangeUserXP({ xp, rank, userId });
+          setRepeatMissionComplete(true);
+        }
+      } else {
+        const { success, newXpAndRank, newCoins } = await uploadMissionAttempt({
+          missionId: mission.id,
+          attempt: { status: 'pass' }
+        });
+        if (success && mounted.current) {
+          onUpdateMissionAttempt({
+            missionId: mission.id,
+            newState: { status: 'pass' }
+          });
 
-        if (newXpAndRank.xp) {
-          onChangeUserXP({
-            xp: newXpAndRank.xp,
-            rank: newXpAndRank.rank,
-            userId
+          if (newXpAndRank.xp) {
+            onChangeUserXP({
+              xp: newXpAndRank.xp,
+              rank: newXpAndRank.rank,
+              userId
+            });
+          }
+          if (newCoins.netCoins) {
+            onUpdateUserCoins({ coins: newCoins.netCoins, userId });
+          }
+          onSetMissionState({
+            missionId: mission.id,
+            newState: { started: false }
           });
         }
-        if (newCoins.netCoins) {
-          onUpdateUserCoins({ coins: newCoins.netCoins, userId });
-        }
-        onSetMissionState({
-          missionId: mission.id,
-          newState: { started: false }
-        });
       }
-    }
-    if (mounted.current) {
+      setSubmitDisabled(false);
+    } catch (error) {
       setSubmitDisabled(false);
     }
   }
