@@ -160,8 +160,13 @@ export default function UsernameText({
     }
   }
 
-  function onUsernameClick() {
+  async function onUsernameClick() {
     if (user.username) {
+      if (!twinkleXP && !user.twinkleXP && !menuShown) {
+        const data = await loadProfile(user.id);
+        onInitContent({ contentId: user.id, contentType: 'user', ...data });
+        setMenuShown(true);
+      }
       setMenuShown(!menuShown);
     }
   }
