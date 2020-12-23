@@ -6,6 +6,7 @@ import ConditionalButton from './ConditionalButton';
 BottomNavButtons.propTypes = {
   conditionPassStatus: PropTypes.string,
   currentSlide: PropTypes.number.isRequired,
+  nextButtonDisabled: PropTypes.bool,
   onPrev: PropTypes.func,
   onNext: PropTypes.func.isRequired,
   onFinish: PropTypes.func,
@@ -14,6 +15,7 @@ BottomNavButtons.propTypes = {
 };
 export default function BottomNavButtons({
   currentSlide,
+  nextButtonDisabled,
   onPrev,
   onNext,
   onFinish,
@@ -32,6 +34,7 @@ export default function BottomNavButtons({
     >
       {onCheckNavCondition ? (
         <ConditionalButton
+          nextButtonDisabled={nextButtonDisabled}
           conditionPassStatus={conditionPassStatus}
           onCheckNavCondition={() => onCheckNavCondition(onNext)}
         />
@@ -47,6 +50,7 @@ export default function BottomNavButtons({
           </Button>
           <Button
             filled
+            disabled={nextButtonDisabled}
             style={{ fontSize: '1.7rem' }}
             onClick={currentSlide + 1 === slideCount ? onFinish : onNext}
             color={currentSlide + 1 === slideCount ? 'brownOrange' : 'green'}

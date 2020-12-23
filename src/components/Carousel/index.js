@@ -21,6 +21,7 @@ Carousel.propTypes = {
   className: PropTypes.string,
   conditionPassStatus: PropTypes.string,
   framePadding: PropTypes.string,
+  nextButtonDisabled: PropTypes.bool,
   onCheckNavCondition: PropTypes.func,
   onFinish: PropTypes.func,
   onShowAll: PropTypes.func,
@@ -43,6 +44,7 @@ export default function Carousel({
   children,
   conditionPassStatus,
   framePadding = '0px',
+  nextButtonDisabled,
   onCheckNavCondition,
   onFinish,
   onShowAll,
@@ -312,6 +314,7 @@ export default function Carousel({
             onCheckNavCondition={onCheckNavCondition}
             onNext={handleGoToNextSlide}
             slideCount={slideCount}
+            nextButtonDisabled={nextButtonDisabled}
           />
         )}
       </div>

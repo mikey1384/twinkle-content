@@ -13,6 +13,8 @@ Questions.propTypes = {
 };
 
 export default function Questions({ isRepeating, mission, onFail }) {
+  const mounted = useRef(true);
+  const [submitDisabled, setSubmitDisabled] = useState(false);
   const { userId } = useMyState();
   const [repeatMissionComplete, setRepeatMissionComplete] = useState(false);
   const {
@@ -32,6 +34,7 @@ export default function Questions({ isRepeating, mission, onFail }) {
   const [questionIds, setQuestionIds] = useState([]);
   const [questionObj, setQuestionObj] = useState({});
   useEffect(() => {
+    mounted.current = true;
     if (!mission.questions || mission.questions.length === 0) return;
     const resultObj = mission.questions.reduce((prev, curr, index) => {
       const choices = curr.choices.map((choice) => ({
@@ -75,6 +78,12 @@ export default function Questions({ isRepeating, mission, onFail }) {
     return '';
   }, [currentSlideIndex, questionObj]);
 
+  useEffect(() => {
+    return function onDismount() {
+      mounted.current = false;
+    };
+  }, []);
+
   return (
     <div>
       {questionIds.length > 0 ? (
@@ -93,6 +102,7 @@ export default function Questions({ isRepeating, mission, onFail }) {
           questionIds={questionIds}
           questionObj={questionObj}
           onSelectChoice={handleSelectChoice}
+          submitDisabled={submitDisabled}
         />
       ) : (
         <Loading />
@@ -155,6 +165,7 @@ export default function Questions({ isRepeating, mission, onFail }) {
   }
 
   async function handleSuccess() {
+    setSubmitDisabled(true);
     if (isRepeating) {
       const coins = await updateUserCoins({
         action: 'repeat',
@@ -170,15 +181,17 @@ export default function Questions({ isRepeating, mission, onFail }) {
         targetId: mission.id,
         type: 'increase'
       });
-      onUpdateUserCoins({ coins, userId });
-      onChangeUserXP({ xp, rank, userId });
-      setRepeatMissionComplete(true);
+      if (mounted.current) {
+        onUpdateUserCoins({ coins, userId });
+        onChangeUserXP({ xp, rank, userId });
+        setRepeatMissionComplete(true);
+      }
     } else {
       const { success, newXpAndRank, newCoins } = await uploadMissionAttempt({
         missionId: mission.id,
         attempt: { status: 'pass' }
       });
-      if (success) {
+      if (success && mounted.current) {
         onUpdateMissionAttempt({
           missionId: mission.id,
           newState: { status: 'pass' }
@@ -200,5 +213,6 @@ export default function Questions({ isRepeating, mission, onFail }) {
         });
       }
     }
+    setSubmitDisabled(false);
   }
 }
