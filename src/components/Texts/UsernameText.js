@@ -166,8 +166,9 @@ export default function UsernameText({
         const data = await loadProfile(user.id);
         onInitContent({ contentId: user.id, contentType: 'user', ...data });
         setMenuShown(true);
+      } else {
+        setMenuShown(!menuShown);
       }
-      setMenuShown(!menuShown);
     }
   }
 }
