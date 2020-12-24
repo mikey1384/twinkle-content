@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ChoiceList from './ChoiceList';
-import { borderRadius, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
 
 QuestionSlide.propTypes = {
   answerIndex: PropTypes.number,
   conditionPassStatus: PropTypes.string,
+  gotWrong: PropTypes.bool,
   question: PropTypes.string.isRequired,
   choices: PropTypes.array.isRequired,
   onSelectChoice: PropTypes.func.isRequired
@@ -15,6 +16,7 @@ QuestionSlide.propTypes = {
 export default function QuestionSlide({
   answerIndex,
   conditionPassStatus,
+  gotWrong,
   question,
   choices,
   onSelectChoice
@@ -44,6 +46,29 @@ export default function QuestionSlide({
             }
           `}
         >
+          {gotWrong && conditionPassStatus !== 'complete' && (
+            <div
+              style={{
+                marginTop: '-1rem',
+                marginBottom: '1rem',
+                fontWeight: conditionPassStatus === 'pass' ? 'bold' : 'normal',
+                color:
+                  conditionPassStatus === 'pass'
+                    ? Color.green()
+                    : Color.orange()
+              }}
+            >
+              {conditionPassStatus === 'pass'
+                ? [
+                    'You did it!',
+                    'Great job!',
+                    'Excellent!',
+                    'Bravo!',
+                    'You are getting better at this!'
+                  ].sort(() => Math.random() - 0.5)[0]
+                : 'You got this wrong last time'}
+            </div>
+          )}
           <h3>{question}</h3>
           <ChoiceList
             style={{ marginTop: '2rem', fontSize: '1.6rem' }}

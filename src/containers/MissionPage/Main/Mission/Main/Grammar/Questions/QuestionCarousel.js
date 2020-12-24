@@ -69,6 +69,7 @@ export default function QuestionCarousel({
         {questionIds.map((questionId) => (
           <QuestionSlide
             key={questionId}
+            gotWrong={questionObj[questionId].gotWrong}
             question={questionObj[questionId].question}
             choices={questionObj[questionId].choices}
             answerIndex={questionObj[questionId].answerIndex}
