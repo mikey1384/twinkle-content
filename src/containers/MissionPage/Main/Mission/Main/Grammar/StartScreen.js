@@ -79,7 +79,7 @@ export default function StartScreen({
             alignItems: 'center',
             flexDirection: 'column',
             justifyContent: 'center',
-            marginBottom: '5rem'
+            marginBottom: '3.5rem'
           }}
         >
           <div
@@ -100,7 +100,7 @@ export default function StartScreen({
           <div
             style={{
               fontSize: '1.5rem',
-              marginTop: '1.5rem',
+              marginTop: '1rem',
               fontWeight: 'bold',
               color: Color.green()
             }}
@@ -111,12 +111,12 @@ export default function StartScreen({
       )}
       <h3>Correctly answer all {mission.numQuestions} grammar questions</h3>
       <p
-        style={{ marginTop: '2rem', fontSize: '1.7rem' }}
+        style={{ marginTop: '1.5rem', fontSize: '1.7rem' }}
       >{`When you are ready, press "Start"`}</p>
       <div
         style={{
           display: 'flex',
-          marginTop: '4.5rem',
+          marginTop: '4rem',
           paddingBottom: '1.5rem',
           justifyContent: 'center'
         }}
