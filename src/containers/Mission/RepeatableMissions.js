@@ -40,6 +40,7 @@ export default function RepeatableMissions({
         {repeatableMissions.map((mission) => (
           <MissionItem
             key={mission.id}
+            isRepeatable
             style={{ marginTop: '1rem' }}
             mission={mission}
             showStatus={false}

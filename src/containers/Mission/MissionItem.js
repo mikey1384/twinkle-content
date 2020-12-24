@@ -9,11 +9,17 @@ import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
 MissionItem.propTypes = {
+  isRepeatable: PropTypes.bool,
   style: PropTypes.object,
   mission: PropTypes.object.isRequired,
   showStatus: PropTypes.bool
 };
-export default function MissionItem({ style, mission, showStatus = true }) {
+export default function MissionItem({
+  isRepeatable,
+  style,
+  mission,
+  showStatus = true
+}) {
   const history = useHistory();
   const { userId } = useMyState();
   const {
@@ -96,8 +102,13 @@ export default function MissionItem({ style, mission, showStatus = true }) {
                 }
               `}
               rewardStyle={{ fontSize: '1.2rem' }}
-              coinReward={mission.coinReward}
-              xpReward={mission.xpReward}
+              isRepeating={isRepeatable}
+              coinReward={
+                isRepeatable ? mission.repeatCoinReward : mission.coinReward
+              }
+              xpReward={
+                isRepeatable ? mission.repeatXpReward : mission.xpReward
+              }
             />
             {mission.myAttempt?.status &&
               mission.myAttempt?.status !== 'pending' &&
