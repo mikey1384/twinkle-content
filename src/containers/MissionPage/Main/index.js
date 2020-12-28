@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Mission from './Mission';
 import Tutorial from './Tutorial';
-import GrammarReview from './GrammarReview';
+import RepeatMissionAddons from './RepeatMissionAddons';
 import Loading from 'components/Loading';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from 'emotion';
@@ -15,6 +15,11 @@ Main.propTypes = {
 };
 
 export default function Main({ mission, onSetMissionState, style }) {
+  const isRepeatMission = useMemo(() => {
+    const repeatMissionTypes = ['grammar'];
+    return repeatMissionTypes.includes(mission.missionType);
+  }, [mission.missionType]);
+
   return (
     <ErrorBoundary style={{ width: '100%', ...style }}>
       {mission ? (
@@ -24,15 +29,12 @@ export default function Main({ mission, onSetMissionState, style }) {
             mission={mission}
             onSetMissionState={onSetMissionState}
           />
-          {mission.missionType === 'grammar' &&
-            (!mission.started || mission.failed) && (
-              <GrammarReview
-                mission={mission}
-                onSetMissionState={onSetMissionState}
-                style={{ marginTop: '1.5rem' }}
-              />
-            )}
-          {mission.missionType !== 'grammar' && (
+          {isRepeatMission ? (
+            <RepeatMissionAddons
+              mission={mission}
+              onSetMissionState={onSetMissionState}
+            />
+          ) : (
             <Tutorial
               mission={mission}
               className={css`
