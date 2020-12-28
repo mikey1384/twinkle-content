@@ -9,7 +9,7 @@ RepeatMissionAddon.propTypes = {
 
 export default function RepeatMissionAddon({ mission, onSetMissionState }) {
   return (
-    <div>
+    <div style={{ width: '100%' }}>
       {(!mission.started || mission.failed) && (
         <GrammarReview
           mission={mission}
