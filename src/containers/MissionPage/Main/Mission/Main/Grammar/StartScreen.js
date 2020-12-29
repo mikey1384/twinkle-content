@@ -116,8 +116,7 @@ export default function StartScreen({
       <div
         style={{
           display: 'flex',
-          marginTop: '4rem',
-          paddingBottom: '1.5rem',
+          marginTop: '3.5rem',
           justifyContent: 'center'
         }}
       >

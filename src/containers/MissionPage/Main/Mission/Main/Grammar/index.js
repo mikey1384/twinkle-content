@@ -18,7 +18,7 @@ export default function Grammar({ isRepeating, mission }) {
     requestHelpers: { loadMission }
   } = useAppContext();
   const {
-    actions: { onLoadMission, onSetMissionState }
+    actions: { onSetMissionState }
   } = useMissionContext();
   useEffect(() => {
     mounted.current = true;
@@ -89,13 +89,14 @@ export default function Grammar({ isRepeating, mission }) {
     if (userId) {
       const data = await loadMission(mission.id);
       if (mounted.current) {
-        onLoadMission({
-          mission: { ...data, managementTab: mission.managementTab },
-          prevUserId: userId
+        onSetMissionState({
+          missionId: mission.id,
+          newState: {
+            ...data,
+            managementTab: mission.managementTab
+          }
         });
       }
-    } else {
-      onLoadMission({ mission: { id: mission.id }, prevUserId: userId });
     }
   }
 }

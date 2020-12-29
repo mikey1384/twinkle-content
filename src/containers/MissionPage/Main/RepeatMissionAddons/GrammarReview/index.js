@@ -6,7 +6,7 @@ import Loading from 'components/Loading';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import QuestionListItem from './QuestionListItem';
 import { useMyState } from 'helpers/hooks';
-import { useAppContext, useMissionContext } from 'contexts';
+import { useAppContext } from 'contexts';
 import { css } from 'emotion';
 import { mobileMaxWidth } from 'constants/css';
 
@@ -21,9 +21,7 @@ export default function GrammarReview({ mission, onSetMissionState, style }) {
     requestHelpers: { loadGrammarAttempts, loadMoreGrammarAttempts }
   } = useAppContext();
   const {
-    state: { prevUserId }
-  } = useMissionContext();
-  const {
+    grammarReviewPrevUserId,
     grammarReviewLoaded,
     grammarReviewTab: activeTab = 'gotWrong',
     [`${activeTab}LoadMoreButtonShown`]: loadMoreButtonShown
@@ -45,10 +43,14 @@ export default function GrammarReview({ mission, onSetMissionState, style }) {
         gotWrongLoadMoreButton,
         gotRightLoadMoreButton
       } = await loadGrammarAttempts();
-      if (mounted.current && (!grammarReviewLoaded || userId !== prevUserId)) {
+      if (
+        mounted.current &&
+        (!grammarReviewLoaded || userId !== grammarReviewPrevUserId)
+      ) {
         onSetMissionState({
           missionId: mission.id,
           newState: {
+            grammarReviewPrevUserId: userId,
             grammarReviewTab:
               gotWrongAttempts.length > 0 ? 'gotWrong' : 'gotRight',
             questionObj: {
@@ -68,7 +70,7 @@ export default function GrammarReview({ mission, onSetMissionState, style }) {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mission.id, userId, prevUserId]);
+  }, [mission.id, userId, grammarReviewPrevUserId]);
 
   useEffect(() => {
     return function onUnmount() {
