@@ -5,88 +5,44 @@ import FilterBar from 'components/FilterBar';
 import Loading from 'components/Loading';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import QuestionListItem from './QuestionListItem';
-import { useMyState } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
 import { css } from 'emotion';
 import { mobileMaxWidth } from 'constants/css';
 
 GrammarReview.propTypes = {
+  activeTab: PropTypes.string,
+  loadingReview: PropTypes.bool,
   mission: PropTypes.object.isRequired,
   onSetMissionState: PropTypes.func.isRequired,
   style: PropTypes.object
 };
 
-export default function GrammarReview({ mission, onSetMissionState, style }) {
+export default function GrammarReview({
+  activeTab,
+  loadingReview,
+  mission,
+  onSetMissionState,
+  style
+}) {
   const {
-    requestHelpers: { loadGrammarAttempts, loadMoreGrammarAttempts }
+    requestHelpers: { loadMoreGrammarAttempts }
   } = useAppContext();
-  const {
-    grammarReviewPrevUserId,
-    grammarReviewLoaded,
-    grammarReviewTab: activeTab = 'gotWrong',
-    [`${activeTab}LoadMoreButtonShown`]: loadMoreButtonShown
-  } = mission;
-  const { userId } = useMyState();
-  const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const mounted = useRef(true);
+  const { [`${activeTab}LoadMoreButtonShown`]: loadMoreButtonShown } = mission;
 
   useEffect(() => {
     mounted.current = true;
-    init();
-    async function init() {
-      setLoading(true);
-      const {
-        questionObj,
-        gotWrongAttempts,
-        gotRightAttempts,
-        gotWrongLoadMoreButton,
-        gotRightLoadMoreButton
-      } = await loadGrammarAttempts();
-      if (
-        mounted.current &&
-        (!grammarReviewLoaded || userId !== grammarReviewPrevUserId)
-      ) {
-        onSetMissionState({
-          missionId: mission.id,
-          newState: {
-            grammarReviewPrevUserId: userId,
-            grammarReviewTab:
-              gotWrongAttempts.length > 0 ? 'gotWrong' : 'gotRight',
-            questionObj: {
-              ...mission.questionObj,
-              ...questionObj
-            },
-            gotWrongAttempts,
-            gotRightAttempts,
-            gotWrongLoadMoreButtonShown: gotWrongLoadMoreButton,
-            gotRightLoadMoreButtonShown: gotRightLoadMoreButton,
-            grammarReviewLoaded: true
-          }
-        });
-      }
-      if (mounted.current) {
-        setLoading(false);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mission.id, userId, grammarReviewPrevUserId]);
-
-  useEffect(() => {
     return function onUnmount() {
       mounted.current = false;
     };
   }, []);
 
-  useEffect(() => {}, [userId]);
-
   return (
     <ErrorBoundary style={style}>
-      {loading ? (
+      {loadingReview ? (
         <Loading />
-      ) : (mission.gotWrongAttempts?.length || 0) +
-          (mission.gotRightAttempts?.length || 0) ===
-        0 ? null : (
+      ) : (
         <>
           <FilterBar
             className={css`
