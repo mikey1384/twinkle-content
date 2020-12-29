@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import GrammarReview from './GrammarReview';
 import FilterBar from 'components/FilterBar';
@@ -9,10 +9,15 @@ RepeatMissionAddon.propTypes = {
 };
 
 export default function RepeatMissionAddon({ mission, onSetMissionState }) {
+  const activeTab = useMemo(() => {
+    return mission.selectedAddonTab || 'grammarReview';
+  }, [mission.selectedAddonTab]);
+
   return (
     <div style={{ width: '100%' }}>
       <FilterBar style={{ marginTop: '1.5rem' }} bordered>
         <nav
+          className={activeTab === 'grammarReview' ? 'active' : ''}
           onClick={() =>
             onSetMissionState({
               missionId: mission.id,
@@ -23,6 +28,7 @@ export default function RepeatMissionAddon({ mission, onSetMissionState }) {
           Review
         </nav>
         <nav
+          className={activeTab === 'rankings' ? 'active' : ''}
           onClick={() =>
             onSetMissionState({
               missionId: mission.id,
@@ -33,13 +39,14 @@ export default function RepeatMissionAddon({ mission, onSetMissionState }) {
           Rankings
         </nav>
       </FilterBar>
-      {(!mission.started || mission.failed) && (
-        <GrammarReview
-          mission={mission}
-          onSetMissionState={onSetMissionState}
-          style={{ marginTop: '1rem' }}
-        />
-      )}
+      {(!mission.started || mission.failed) &&
+        activeTab === 'grammarReview' && (
+          <GrammarReview
+            mission={mission}
+            onSetMissionState={onSetMissionState}
+            style={{ marginTop: '1rem' }}
+          />
+        )}
     </div>
   );
 }
