@@ -136,10 +136,10 @@ export default function SignUpForm({
             />
           </section>
           <section>
-            <label>Who is Cheesestick?</label>
+            <label>{`Who is the Big Bad Wolf's brother?`}</label>
             <Input
               value={keyphrase}
-              placeholder="Who is Cheesestick?"
+              placeholder="Who is the Big Bad Wolf's brother?"
               onChange={(text) => {
                 setErrorMessage('');
                 setKeyphrase(text);
