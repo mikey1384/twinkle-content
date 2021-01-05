@@ -281,7 +281,7 @@ export default function Carousel({
               left
               key={0}
               disabled={currentSlide === 0}
-              nextSlide={handleGoToPreviousSlide}
+              onGoToNextSlide={handleGoToPreviousSlide}
             />
             <div key={1}>
               {showAllButton ? (
