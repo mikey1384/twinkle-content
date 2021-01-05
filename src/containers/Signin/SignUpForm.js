@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Button from 'components/Button';
 import Input from 'components/Texts/Input';
-import { css } from 'emotion';
 import Banner from 'components/Banner';
+import { css } from 'emotion';
 import { isValidUsername, stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext } from 'contexts';
 
