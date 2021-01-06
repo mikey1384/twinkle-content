@@ -123,6 +123,17 @@ export default function missionRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async loadMissionRankings(missionId) {
+      try {
+        const { data } = await request.get(
+          `${URL}/mission/ranking?missionId=${missionId}`,
+          auth()
+        );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async loadMissionAttempts({ activeTab, missionId, lastAttemptId }) {
       try {
         const { data } = await request.get(
