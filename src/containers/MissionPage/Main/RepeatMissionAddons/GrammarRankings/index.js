@@ -30,6 +30,7 @@ export default function GrammarRankings({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const rankers = useMemo(() => (allSelected ? all : top30s), [
     all,
     allSelected,
