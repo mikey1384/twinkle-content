@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import FilterBar from 'components/FilterBar';
+import Ranker from './Ranker';
 import { useAppContext } from 'contexts';
 import { Color } from 'constants/css';
 
@@ -68,7 +69,7 @@ export default function GrammarRankings({
       )}
       <div style={{ marginTop: '1rem' }}>
         {rankers.map((ranker) => (
-          <div key={ranker.id}>{ranker.username}</div>
+          <Ranker key={ranker.id} user={ranker} />
         ))}
       </div>
     </div>
