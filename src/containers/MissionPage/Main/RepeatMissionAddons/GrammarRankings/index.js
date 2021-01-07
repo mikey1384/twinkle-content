@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import FilterBar from 'components/FilterBar';
 import Ranker from './Ranker';
 import { useAppContext } from 'contexts';
-import { Color } from 'constants/css';
 
 GrammarRankings.propTypes = {
   mission: PropTypes.object.isRequired
@@ -39,18 +38,6 @@ export default function GrammarRankings({
 
   return (
     <div>
-      <div
-        style={{
-          fontSize: '1.7rem',
-          padding: '1rem',
-          textAlign: 'center',
-          fontWeight: 'bold',
-          background: Color.brownOrange(),
-          color: '#fff'
-        }}
-      >
-        Grammar Ranking
-      </div>
       {numRepeated > 0 && (
         <FilterBar style={{ fontSize: '1.5rem', height: '4rem' }}>
           <nav
