@@ -123,7 +123,7 @@ export default function RepeatMissionAddon({ mission, onSetMissionState }) {
             />
           )}
           {(activeTab === 'rankings' || !missionAttemptExist) && (
-            <GrammarRankings missionId={mission.id} />
+            <GrammarRankings mission={mission} />
           )}
         </ErrorBoundary>
       )}
