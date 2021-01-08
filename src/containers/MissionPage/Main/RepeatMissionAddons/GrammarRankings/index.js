@@ -5,6 +5,7 @@ import Ranker from './Ranker';
 import { useAppContext } from 'contexts';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from 'emotion';
+import { useMyState } from 'helpers/hooks';
 
 GrammarRankings.propTypes = {
   mission: PropTypes.object.isRequired
@@ -16,6 +17,7 @@ export default function GrammarRankings({
     myAttempt: { numRepeated }
   }
 }) {
+  const { profileTheme } = useMyState();
   const [allSelected, setAllSelected] = useState(numRepeated > 0);
   const [top30s, setTop30s] = useState([]);
   const [all, setAll] = useState([]);
@@ -85,6 +87,21 @@ export default function GrammarRankings({
             }
           `}
         >
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr 1fr 1fr',
+              background: Color[profileTheme](),
+              color: '#fff',
+              fontWeight: 'bold',
+              padding: '0.5rem 0'
+            }}
+          >
+            <div style={{ justifySelf: 'center' }}>Rank</div>
+            <div />
+            <div />
+            <div style={{ justifySelf: 'center' }}>Times Completed</div>
+          </div>
           {rankers.map((ranker) => (
             <Ranker key={ranker.id} user={ranker} />
           ))}
