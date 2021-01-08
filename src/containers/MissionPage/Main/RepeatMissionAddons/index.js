@@ -58,7 +58,9 @@ export default function RepeatMissionAddon({ mission, onSetMissionState }) {
             gotRightAttempts,
             gotWrongLoadMoreButtonShown: gotWrongLoadMoreButton,
             gotRightLoadMoreButtonShown: gotRightLoadMoreButton,
-            grammarReviewLoaded: true
+            grammarReviewLoaded: true,
+            selectedAddonTab:
+              gotWrongAttempts.length > 0 ? 'grammarReview' : 'rankings'
           }
         });
       }
