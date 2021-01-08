@@ -69,7 +69,7 @@ export default function RepeatMissionAddon({ mission, onSetMissionState }) {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mission, userId, grammarReviewPrevUserId, grammarReviewLoaded]);
+  }, [userId, grammarReviewPrevUserId, grammarReviewLoaded, mission.id]);
 
   const missionAttemptExist = useMemo(() => {
     return (
