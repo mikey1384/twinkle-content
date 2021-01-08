@@ -17,7 +17,7 @@ export default function GrammarRankings({
     myAttempt: { status }
   }
 }) {
-  const { profileTheme } = useMyState();
+  const { profileTheme, userId } = useMyState();
   const [allSelected, setAllSelected] = useState(status === 'pass');
   const [top30s, setTop30s] = useState([]);
   const [all, setAll] = useState([]);
@@ -103,7 +103,7 @@ export default function GrammarRankings({
             <div style={{ justifySelf: 'center' }}>Times Completed</div>
           </div>
           {rankers.map((ranker) => (
-            <Ranker key={ranker.id} user={ranker} />
+            <Ranker key={ranker.id} user={ranker} myId={userId} />
           ))}
         </div>
       </div>
