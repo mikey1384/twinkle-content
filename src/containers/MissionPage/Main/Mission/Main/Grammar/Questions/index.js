@@ -210,7 +210,7 @@ export default function Questions({ isRepeating, mission, onFail }) {
           }
           onSetMissionState({
             missionId: mission.id,
-            newState: { started: false }
+            newState: { started: false, grammarReviewLoaded: false }
           });
         }
       }

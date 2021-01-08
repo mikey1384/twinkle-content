@@ -14,11 +14,11 @@ GrammarRankings.propTypes = {
 export default function GrammarRankings({
   mission,
   mission: {
-    myAttempt: { numRepeated }
+    myAttempt: { status }
   }
 }) {
   const { profileTheme } = useMyState();
-  const [allSelected, setAllSelected] = useState(numRepeated > 0);
+  const [allSelected, setAllSelected] = useState(status === 'pass');
   const [top30s, setTop30s] = useState([]);
   const [all, setAll] = useState([]);
   const {
@@ -43,7 +43,7 @@ export default function GrammarRankings({
 
   return (
     <div>
-      {numRepeated > 0 && (
+      {status === 'pass' && (
         <FilterBar bordered>
           <nav
             onClick={() => setAllSelected(true)}

@@ -69,13 +69,13 @@ export default function RepeatMissionAddon({ mission, onSetMissionState }) {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mission.id, userId, grammarReviewPrevUserId]);
+  }, [mission, userId, grammarReviewPrevUserId, grammarReviewLoaded]);
 
   const missionAttemptExist = useMemo(() => {
     return (
       (mission.gotWrongAttempts?.length || 0) +
         (mission.gotRightAttempts?.length || 0) >
-      0
+        0 || mission.myAttempt.status === 'pass'
     );
   }, [mission]);
 
