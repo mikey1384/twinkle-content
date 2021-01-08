@@ -108,9 +108,12 @@ export default function GrammarQuestionGenerator({
               fontSize: '2rem'
             }}
           >
-            {finalLeftSideText} _____
+            {finalLeftSideText[finalLeftSideText.length - 1] === `"`
+              ? finalLeftSideText
+              : `${finalLeftSideText} `}
+            _____
             {['.', '?', '!'].includes(finalRightSideText) ||
-            finalRightSideText[0] === ','
+            ['.', `"`, ','].includes(finalRightSideText[0])
               ? finalRightSideText
               : ` ${finalRightSideText}`}
           </div>
