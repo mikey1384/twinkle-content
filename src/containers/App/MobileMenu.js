@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import HomeMenuItems from 'components/HomeMenuItems';
 import ProfileWidget from 'components/ProfileWidget';
@@ -19,6 +19,7 @@ MobileMenu.propTypes = {
 };
 
 export default function MobileMenu({ location, history, onClose }) {
+  const mounted = useRef(true);
   const {
     user: {
       actions: { onLogout }
@@ -42,6 +43,13 @@ export default function MobileMenu({ location, history, onClose }) {
 
   useEffect(() => {
     setMarginLeft(0);
+  }, []);
+
+  useEffect(() => {
+    mounted.current = true;
+    return function onDismount() {
+      mounted.current = false;
+    };
   }, []);
 
   const [alertModalShown, setAlertModalShown] = useState(false);
@@ -156,8 +164,14 @@ export default function MobileMenu({ location, history, onClose }) {
   }
 
   function handleLogout() {
-    onLogout();
-    onSetOnline({ contentId: userId, contentType: 'user', online: false });
-    onResetChat();
+    if (mounted.current) {
+      onLogout();
+    }
+    if (mounted.current) {
+      onSetOnline({ contentId: userId, contentType: 'user', online: false });
+    }
+    if (mounted.current) {
+      onResetChat();
+    }
   }
 }
