@@ -14,7 +14,7 @@ export default function notificationRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async fetchNotifications(firstId) {
+    async fetchNotifications() {
       try {
         if (auth().headers.authorization === null) {
           const { data } = await request.get(`${URL}/notification/chatSubject`);
@@ -26,10 +26,7 @@ export default function notificationRequestHelpers({ auth, handleError }) {
             currentChatSubject: data
           });
         } else {
-          const { data } = await request.get(
-            `${URL}/notification${firstId ? `?firstId=${firstId}` : ''}`,
-            auth()
-          );
+          const { data } = await request.get(`${URL}/notification`, auth());
           return Promise.resolve(data);
         }
       } catch (error) {
