@@ -42,7 +42,7 @@ export default function GrammarRankings({
   return (
     <div>
       {numRepeated > 0 && (
-        <FilterBar bordered style={{ height: '5rem' }}>
+        <FilterBar bordered>
           <nav
             onClick={() => setAllSelected(true)}
             className={allSelected ? 'active' : ''}
