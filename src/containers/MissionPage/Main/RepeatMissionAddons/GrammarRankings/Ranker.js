@@ -4,7 +4,6 @@ import UsernameText from 'components/Texts/UsernameText';
 import ProfilePic from 'components/ProfilePic';
 import { Color } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
-import { isMobile } from 'helpers';
 import Icon from 'components/Icon';
 
 Ranker.propTypes = {
@@ -79,31 +78,19 @@ export default function Ranker({ myId, style, user }) {
           />
         </div>
       </div>
-      <div>
-        {isMobile(navigator) && (
-          <Icon
-            style={{
-              color: textColor,
-              marginRight: '0.7rem',
-              fontSize: '1.1rem'
-            }}
-            icon="times"
-          />
-        )}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            color: textColor,
-            fontSize: '1.5rem',
-            fontWeight: 'bold'
-          }}
-        >
-          <Icon icon="times" />
-          <span style={{ marginLeft: '0.7rem' }}>
-            {addCommasToNumber(user.value || 0)}
-          </span>
-        </div>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          color: textColor,
+          fontSize: '1.5rem',
+          fontWeight: 'bold'
+        }}
+      >
+        <Icon icon="times" />
+        <span style={{ marginLeft: '0.7rem' }}>
+          {addCommasToNumber(user.value || 0)}
+        </span>
       </div>
     </nav>
   );

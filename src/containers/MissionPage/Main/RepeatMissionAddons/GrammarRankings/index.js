@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import FilterBar from 'components/FilterBar';
 import Ranker from './Ranker';
 import { useAppContext } from 'contexts';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
+import { css } from 'emotion';
 
 GrammarRankings.propTypes = {
   mission: PropTypes.object.isRequired
@@ -40,7 +42,7 @@ export default function GrammarRankings({
   return (
     <div>
       {numRepeated > 0 && (
-        <FilterBar style={{ fontSize: '1.5rem', height: '4rem' }}>
+        <FilterBar bordered style={{ height: '5rem' }}>
           <nav
             onClick={() => setAllSelected(true)}
             className={allSelected ? 'active' : ''}
@@ -55,10 +57,38 @@ export default function GrammarRankings({
           </nav>
         </FilterBar>
       )}
-      <div style={{ marginTop: '1rem' }}>
-        {rankers.map((ranker) => (
-          <Ranker key={ranker.id} user={ranker} />
-        ))}
+      <div
+        className={css`
+          border: 1px solid ${Color.borderGray()};
+          border-radius: ${borderRadius};
+          @media (max-width: ${mobileMaxWidth}) {
+            border-left: 0;
+            border-right: 0;
+            border-radius: 0;
+          }
+        `}
+        style={{
+          width: '100%',
+          marginTop: '1rem',
+          display: 'flex',
+          justifyContent: 'center',
+          background: Color.wellGray()
+        }}
+      >
+        <div
+          className={css`
+            min-width: 40rem;
+            width: 40%;
+            @media (max-width: ${mobileMaxWidth}) {
+              min-width: 0;
+              width: 100%;
+            }
+          `}
+        >
+          {rankers.map((ranker) => (
+            <Ranker key={ranker.id} user={ranker} />
+          ))}
+        </div>
       </div>
     </div>
   );
