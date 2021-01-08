@@ -40,7 +40,7 @@ function Notification({ className, location, style }) {
     }
   } = useNotiContext();
   const loadingNotificationRef = useRef(false);
-  const [loadingNotifications, setLoadingNotifications] = useState(true);
+  const [loadingNotifications, setLoadingNotifications] = useState(false);
   const [activeTab, setActiveTab] = useState('rankings');
   const userChangedTab = useRef(false);
   const mounted = useRef(true);
