@@ -39,7 +39,8 @@ function Notification({ className, location, style }) {
       onResetRewards
     }
   } = useNotiContext();
-  const [loadingNotifications, setLoadingNotifications] = useState(false);
+  const loadingNotificationRef = useRef(false);
+  const [loadingNotifications, setLoadingNotifications] = useState(true);
   const [activeTab, setActiveTab] = useState('rankings');
   const userChangedTab = useRef(false);
   const mounted = useRef(true);
@@ -226,11 +227,15 @@ function Notification({ className, location, style }) {
     fetchRankings();
   }
   async function fetchNews() {
-    setLoadingNotifications(true);
-    const data = await fetchNotifications();
-    if (mounted.current) {
-      onFetchNotifications(data);
-      setLoadingNotifications(false);
+    if (!loadingNotificationRef.current) {
+      setLoadingNotifications(true);
+      loadingNotificationRef.current = true;
+      const data = await fetchNotifications();
+      if (mounted.current) {
+        onFetchNotifications(data);
+        setLoadingNotifications(false);
+        loadingNotificationRef.current = false;
+      }
     }
   }
   async function fetchRankings() {
