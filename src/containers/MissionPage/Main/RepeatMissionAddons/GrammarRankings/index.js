@@ -49,7 +49,7 @@ export default function GrammarRankings({
             onClick={() => setAllSelected(true)}
             className={allSelected ? 'active' : ''}
           >
-            Rankings
+            My Ranking
           </nav>
           <nav
             onClick={() => setAllSelected(false)}
