@@ -4,7 +4,7 @@ import UsernameText from 'components/Texts/UsernameText';
 import ProfilePic from 'components/ProfilePic';
 import { Color } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 RankingsListItem.propTypes = {
   myId: PropTypes.number,

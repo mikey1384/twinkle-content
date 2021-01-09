@@ -7,7 +7,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import VideoThumbImage from 'components/VideoThumbImage';
 import Icon from 'components/Icon';
 import { Color } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { textIsOverflown } from 'helpers';
 import { useContentState, useMyState } from 'helpers/hooks';
 

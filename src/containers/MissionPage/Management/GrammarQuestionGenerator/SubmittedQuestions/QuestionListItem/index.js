@@ -5,7 +5,7 @@ import Button from 'components/Button';
 import QuestionContent from './QuestionContent';
 import QuestionEditForm from './QuestionEditForm';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useAppContext } from 'contexts';
 
 QuestionListItem.propTypes = {

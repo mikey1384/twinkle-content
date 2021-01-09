@@ -6,7 +6,7 @@ import ReactPlayer from 'react-player';
 import Icon from 'components/Icon';
 import URL from 'constants/URL';
 import TwinkleVideo from './TwinkleVideo';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import {
   getFileInfoFromFileName,
   isValidYoutubeUrl,

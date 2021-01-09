@@ -6,7 +6,7 @@ import Icon from 'components/Icon';
 import { charLimit } from 'constants/defaultValues';
 import { useAppContext, useContentContext } from 'contexts';
 import { useContentState, useMyState } from 'helpers/hooks';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 
 StartNewSubjectPanel.propTypes = {

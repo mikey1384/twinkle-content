@@ -16,7 +16,7 @@ import HiddenComment from 'components/HiddenComment';
 import MissionContent from './MissionContent';
 import { stringIsEmpty, getFileInfoFromFileName } from 'helpers/stringHelpers';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useContentState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
 import { useHistory } from 'react-router-dom';

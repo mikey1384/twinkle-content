@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import StackTrace from 'stacktrace-js';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Color } from 'constants/css';
 import { clientVersion } from 'constants/defaultValues';
 import URL from 'constants/URL';

@@ -18,7 +18,7 @@ import RewardStatus from 'components/RewardStatus';
 import XPRewardInterface from 'components/XPRewardInterface';
 import RecommendationStatus from 'components/RecommendationStatus';
 import RecommendationInterface from 'components/RecommendationInterface';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { descriptionLengthForExtraRewardLevel } from 'constants/defaultValues';
 import { stringIsEmpty, addEmoji, finalizeEmoji } from 'helpers/stringHelpers';

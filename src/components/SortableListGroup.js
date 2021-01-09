@@ -6,7 +6,7 @@ import { TouchBackend } from 'react-dnd-touch-backend';
 import SortableListItem from './SortableListItem';
 import { borderRadius, Color } from 'constants/css';
 import { isMobile } from 'helpers';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 SortableListGroup.propTypes = {
   listItemObj: PropTypes.object.isRequired,

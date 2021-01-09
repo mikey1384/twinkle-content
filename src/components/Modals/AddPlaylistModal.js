@@ -18,7 +18,7 @@ import {
   finalizeEmoji
 } from 'helpers/stringHelpers';
 import { isMobile, objectify } from 'helpers';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useAppContext } from 'contexts';
 
 AddPlaylistModal.propTypes = {

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import LongText from 'components/Texts/LongText';
 import { Color } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 StatusMsg.propTypes = {
   statusColor: PropTypes.string,

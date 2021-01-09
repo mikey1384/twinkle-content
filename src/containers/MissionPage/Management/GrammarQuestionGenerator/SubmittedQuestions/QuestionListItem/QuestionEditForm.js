@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { capitalize, stringIsEmpty } from 'helpers/stringHelpers';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import { useAppContext } from 'contexts';
 import Input from 'components/Texts/Input';

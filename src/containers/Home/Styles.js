@@ -1,4 +1,4 @@
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 
 export const container = css`

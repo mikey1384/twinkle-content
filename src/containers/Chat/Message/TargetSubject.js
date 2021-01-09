@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 TargetSubject.propTypes = {
   subject: PropTypes.object.isRequired

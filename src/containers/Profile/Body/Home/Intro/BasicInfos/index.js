@@ -4,7 +4,7 @@ import Button from 'components/Button';
 import Icon from 'components/Icon';
 import InfoEditForm from './InfoEditForm';
 import PasswordInputModal from './PasswordInputModal';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { stringIsEmpty, trimUrl } from 'helpers/stringHelpers';
 import { timeSince } from 'helpers/timeStampHelpers';

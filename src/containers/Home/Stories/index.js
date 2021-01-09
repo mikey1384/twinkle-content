@@ -6,7 +6,7 @@ import Banner from 'components/Banner';
 import ErrorBoundary from 'components/ErrorBoundary';
 import HomeFilter from './HomeFilter';
 import ContentPanel from 'components/ContentPanel';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import { useInfiniteScroll, useMyState } from 'helpers/hooks';
 import { useAppContext, useHomeContext, useNotiContext } from 'contexts';

@@ -4,7 +4,7 @@ import Button from 'components/Button';
 import Textarea from 'components/Texts/Textarea';
 import ColorSelector from 'components/ColorSelector';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Color } from 'constants/css';
 import { exceedsCharLimit } from 'helpers/stringHelpers';
 

@@ -5,7 +5,7 @@ import FilterBar from 'components/FilterBar';
 import Home from './Home';
 import Posts from './Posts';
 import { Switch, Route } from 'react-router-dom';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 Body.propTypes = {
   history: PropTypes.object.isRequired,

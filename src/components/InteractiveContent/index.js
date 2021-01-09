@@ -8,7 +8,7 @@ import Button from 'components/Button';
 import { useAppContext, useInteractiveContext, useViewContext } from 'contexts';
 import { scrollElementToCenter, scrollElementTo } from 'helpers';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 InteractiveContent.propTypes = {
   autoFocus: PropTypes.bool,

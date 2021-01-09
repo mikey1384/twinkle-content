@@ -1,6 +1,6 @@
 import React from 'react';
 import { Color } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 
 export default function Spinner() {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Cover from './Cover';
 import Body from './Body';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useAppContext, useContentContext, useProfileContext } from 'contexts';
 import { useContentState, useMyState, useProfileState } from 'helpers/hooks';
 import InvalidPage from 'components/InvalidPage';

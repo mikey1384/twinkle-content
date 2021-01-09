@@ -6,7 +6,7 @@ import Loading from 'components/Loading';
 import ErrorBoundary from 'components/ErrorBoundary';
 import RepeatableMissions from './RepeatableMissions';
 import { mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useMissionContext } from 'contexts';
 

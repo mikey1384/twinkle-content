@@ -6,7 +6,7 @@ import LongText from 'components/Texts/LongText';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
 Content.propTypes = {

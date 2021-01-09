@@ -14,7 +14,7 @@ import Loading from 'components/Loading';
 import { useHistory } from 'react-router-dom';
 import { MAX_PROFILE_PIC_SIZE } from 'constants/defaultValues';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { useContentState, useLazyLoad, useMyState } from 'helpers/hooks';
 import { useInView } from 'react-intersection-observer';

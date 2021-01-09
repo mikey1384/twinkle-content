@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Color } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 TwinkleLogo.propTypes = {
   style: PropTypes.object

@@ -1,6 +1,6 @@
 import React, { memo, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { addCommasToNumber, stringIsEmpty } from 'helpers/stringHelpers';
 import { returnMaxRewards } from 'constants/defaultValues';

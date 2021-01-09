@@ -4,7 +4,7 @@ import Checkbox from 'components/Checkbox';
 import Link from 'components/Link';
 import Icon from 'components/Icon';
 import { Color } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useMyState } from 'helpers/hooks';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import ProfilePic from 'components/ProfilePic';
 

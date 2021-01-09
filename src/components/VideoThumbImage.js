@@ -6,7 +6,7 @@ import { addCommasToNumber } from 'helpers/stringHelpers';
 import { rewardValue } from 'constants/defaultValues';
 import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import URL from 'constants/URL';
 
 const API_URL = `${URL}/video`;

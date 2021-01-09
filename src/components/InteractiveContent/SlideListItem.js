@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Attachment from './Attachment';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { borderRadius, Color } from 'constants/css';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useInteractiveContext } from 'contexts';

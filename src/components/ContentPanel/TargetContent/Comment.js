@@ -9,7 +9,7 @@ import LongText from 'components/Texts/LongText';
 import ErrorBoundary from 'components/ErrorBoundary';
 import ContentFileViewer from 'components/ContentFileViewer';
 import LoginToViewContent from 'components/LoginToViewContent';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useHistory } from 'react-router-dom';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { Color } from 'constants/css';

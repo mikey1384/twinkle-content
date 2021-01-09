@@ -5,7 +5,7 @@ import Vocabulary from './Vocabulary';
 import Loading from 'components/Loading';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { phoneMaxWidth, Color } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useChatContext } from 'contexts';
 
 Body.propTypes = {

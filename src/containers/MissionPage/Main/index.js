@@ -5,7 +5,7 @@ import Tutorial from './Tutorial';
 import RepeatMissionAddons from './RepeatMissionAddons';
 import Loading from 'components/Loading';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 
 Main.propTypes = {

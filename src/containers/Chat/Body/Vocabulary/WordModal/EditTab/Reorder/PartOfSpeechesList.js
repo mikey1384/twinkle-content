@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SortableListItem from 'components/SortableListItem';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { borderRadius, Color } from 'constants/css';
 
 PartOfSpeechesList.propTypes = {

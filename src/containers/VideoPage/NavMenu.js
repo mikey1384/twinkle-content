@@ -14,7 +14,7 @@ import Icon from 'components/Icon';
 import request from 'axios';
 import URL from 'constants/URL';
 import { socket } from 'constants/io';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useNotiContext } from 'contexts';
 

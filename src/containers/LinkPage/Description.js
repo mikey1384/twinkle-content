@@ -14,7 +14,7 @@ import {
   addEmoji,
   finalizeEmoji
 } from 'helpers/stringHelpers';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useContentContext, useInputContext } from 'contexts';
 

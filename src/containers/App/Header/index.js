@@ -5,7 +5,7 @@ import MainNavs from './MainNavs';
 import TwinkleLogo from './TwinkleLogo';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Peer from 'simple-peer';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Color, mobileMaxWidth, desktopMinWidth } from 'constants/css';
 import { socket } from 'constants/io';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -264,8 +264,7 @@ export default function Header({
         socket.emit(
           'check_online_members',
           selectedChannelId,
-          (err, { membersOnline }) => {
-            if (err) console.error(err);
+          ({ membersOnline }) => {
             const members = Object.entries(membersOnline).map(
               ([, member]) => member
             );
@@ -611,8 +610,7 @@ export default function Header({
     socket.emit(
       'check_online_members',
       selectedChannelId,
-      (err, { callData, membersOnline }) => {
-        if (err) console.error(err);
+      ({ callData, membersOnline }) => {
         if (callData && Object.keys(membersOnCall.current).length === 0) {
           const membersHash = {};
           for (let member of Object.entries(membersOnline)

@@ -4,7 +4,7 @@ import HeaderNav from './HeaderNav';
 import Icon from 'components/Icon';
 import { matchPath } from 'react-router';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { getSectionFromPathname } from 'helpers';
 import { addCommasToNumber, truncateText } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';

@@ -5,7 +5,7 @@ import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import Loading from 'components/Loading';
 import PeopleFilterBar from './PeopleFilterBar';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import { useAppContext, useInputContext } from 'contexts';
 import { useInfiniteScroll, useMyState, useSearch } from 'helpers/hooks';

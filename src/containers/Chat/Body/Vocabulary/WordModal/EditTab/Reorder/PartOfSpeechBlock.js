@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SortableListItem from 'components/SortableListItem';
 import { borderRadius, Color } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 PartOfSpeechBlock.propTypes = {
   deletedDefIds: PropTypes.array.isRequired,
@@ -53,7 +53,7 @@ export default function PartOfSpeechBlock({
         `}
       >
         {defIds
-          .filter(id => !deletedDefIds.includes(id))
+          .filter((id) => !deletedDefIds.includes(id))
           .map((id, index) => {
             return (
               <SortableListItem

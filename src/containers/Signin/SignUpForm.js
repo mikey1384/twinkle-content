@@ -4,7 +4,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import Button from 'components/Button';
 import Input from 'components/Texts/Input';
 import Banner from 'components/Banner';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { isValidUsername, stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext } from 'contexts';
 

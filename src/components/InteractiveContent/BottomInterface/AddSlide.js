@@ -5,7 +5,7 @@ import Icon from 'components/Icon';
 import SelectArchivedSlideModal from '../SelectArchivedSlideModal';
 import { useAppContext, useInteractiveContext } from 'contexts';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 AddSlide.propTypes = {
   archivedSlides: PropTypes.array.isRequired,

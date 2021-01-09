@@ -6,7 +6,7 @@ import Embedly from 'components/Embedly';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { isMobile, textIsOverflown } from 'helpers';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 
 Selectable.propTypes = {

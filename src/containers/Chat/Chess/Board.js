@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Square from './Square';
 import getPiece from './helpers/piece';
 import Loading from 'components/Loading';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 
 Board.propTypes = {

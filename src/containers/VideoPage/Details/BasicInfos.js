@@ -6,7 +6,7 @@ import UsernameText from 'components/Texts/UsernameText';
 import { edit } from 'constants/placeholders';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 BasicInfos.propTypes = {
   className: PropTypes.string,

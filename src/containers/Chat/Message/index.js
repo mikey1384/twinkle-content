@@ -32,7 +32,7 @@ import {
 } from 'helpers/stringHelpers';
 import { useMyState, useContentState, useLazyLoad } from 'helpers/hooks';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import {
   useAppContext,
   useContentContext,

@@ -2,7 +2,7 @@ import React, { memo, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ProfilePic from 'components/ProfilePic';
 import UsernameText from 'components/Texts/UsernameText';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import LongText from 'components/Texts/LongText';
 import EditTextArea from 'components/Texts/EditTextArea';

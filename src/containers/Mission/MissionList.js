@@ -5,7 +5,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import FilterBar from 'components/FilterBar';
 import { mobileMaxWidth } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 MissionList.propTypes = {
   style: PropTypes.object,

@@ -6,7 +6,7 @@ import Icon from 'components/Icon';
 import { rewardValue } from 'constants/defaultValues';
 import { useContentState } from 'helpers/hooks';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 
 XPBar.propTypes = {

@@ -7,7 +7,7 @@ import InvalidPage from 'components/InvalidPage';
 import Management from './Management';
 import FilterBar from 'components/FilterBar';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import { useMyState } from 'helpers/hooks';

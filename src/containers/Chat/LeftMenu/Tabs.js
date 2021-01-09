@@ -1,6 +1,6 @@
 import React from 'react';
 import Icon from 'components/Icon';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Color, phoneMaxWidth } from 'constants/css';
 import { useChatContext } from 'contexts';
 

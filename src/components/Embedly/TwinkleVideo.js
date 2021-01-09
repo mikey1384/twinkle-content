@@ -5,7 +5,7 @@ import XPVideoPlayer from 'components/XPVideoPlayer';
 import Link from 'components/Link';
 import VideoThumbImage from 'components/VideoThumbImage';
 import { useHistory } from 'react-router-dom';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import { useAppContext, useContentContext } from 'contexts';
 import { useContentState } from 'helpers/hooks';

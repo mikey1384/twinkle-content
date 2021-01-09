@@ -6,7 +6,7 @@ import Comment from './Comment';
 import Button from 'components/Button';
 import Loading from 'components/Loading';
 import { scrollElementToCenter } from 'helpers';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { useAppContext, useContentContext, useInputContext } from 'contexts';
 

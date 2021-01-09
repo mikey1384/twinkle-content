@@ -20,7 +20,7 @@ import {
   finalizeEmoji,
   getFileInfoFromFileName
 } from 'helpers/stringHelpers';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 import { useInputContext } from 'contexts';
 

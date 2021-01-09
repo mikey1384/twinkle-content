@@ -8,7 +8,7 @@ import FileContent from 'components/FileContent';
 import { mb, returnMaxUploadSize } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 FileField.propTypes = {
   isChanging: PropTypes.bool,

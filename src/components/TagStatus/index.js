@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import PlaylistModal from 'components/Modals/PlaylistModal';
 import TagModal from './TagModal';
 import { hashify } from 'helpers/stringHelpers';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Color } from 'constants/css';
 import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { Color } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 RewardText.propTypes = {
   checked: PropTypes.bool,

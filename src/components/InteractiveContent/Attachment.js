@@ -7,7 +7,7 @@ import { mobileMaxWidth } from 'constants/css';
 import { fetchedVideoCodeFromURL } from 'helpers/stringHelpers';
 import { useAppContext, useInteractiveContext } from 'contexts';
 import { v1 as uuidv1 } from 'uuid';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 Attachment.propTypes = {
   small: PropTypes.bool,

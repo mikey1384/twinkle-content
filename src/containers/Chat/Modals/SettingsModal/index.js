@@ -14,7 +14,7 @@ import { useMyState } from 'helpers/hooks';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useChatContext, useContentContext } from 'contexts';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 SettingsModal.propTypes = {
   channelId: PropTypes.number,

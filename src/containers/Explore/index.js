@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import { socket } from 'constants/io';
 import { stringIsEmpty } from 'helpers/stringHelpers';

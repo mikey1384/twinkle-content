@@ -27,7 +27,7 @@ import {
   returnMaxUploadSize
 } from 'constants/defaultValues';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Color } from 'constants/css';
 import { socket } from 'constants/io';
 import { useMyState } from 'helpers/hooks';

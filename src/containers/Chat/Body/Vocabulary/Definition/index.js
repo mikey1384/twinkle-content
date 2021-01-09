@@ -4,7 +4,7 @@ import Button from 'components/Button';
 import Icon from 'components/Icon';
 import WordModal from '../WordModal';
 import PosBlock from './PosBlock';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 Definition.propTypes = {
   style: PropTypes.object,
@@ -57,8 +57,8 @@ export default function Definition({ style, wordObj }) {
         </div>
       )}
       {partOfSpeechOrder
-        .filter(pos => wordObj[pos]?.length > 0)
-        .map(pos => {
+        .filter((pos) => wordObj[pos]?.length > 0)
+        .map((pos) => {
           return <PosBlock key={pos} wordObj={wordObj} pos={pos} />;
         })}
       {wordModalShown && (

@@ -4,7 +4,7 @@ import UserListModal from 'components/Modals/UserListModal';
 import Likers from 'components/Likers';
 import LikeButton from 'components/Buttons/LikeButton';
 import StarButton from 'components/Buttons/StarButton';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 
 SideButtons.propTypes = {

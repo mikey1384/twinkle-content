@@ -6,7 +6,7 @@ import UsernameText from 'components/Texts/UsernameText';
 import { useHistory } from 'react-router-dom';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { Color } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 Heading.propTypes = {
   action: PropTypes.string.isRequired,

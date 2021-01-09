@@ -6,7 +6,7 @@ import Loading from 'components/Loading';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import QuestionListItem from './QuestionListItem';
 import { useAppContext } from 'contexts';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 
 GrammarReview.propTypes = {

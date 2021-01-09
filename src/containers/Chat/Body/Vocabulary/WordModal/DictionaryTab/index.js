@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PosBlock from './PosBlock';
 import Button from 'components/Button';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 
 DictionaryTab.propTypes = {

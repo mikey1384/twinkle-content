@@ -6,7 +6,7 @@ import FullTextReveal from 'components/Texts/FullTextReveal';
 import VideoThumbImage from 'components/VideoThumbImage';
 import { textIsOverflown } from 'helpers';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 SortableThumb.propTypes = {
   id: PropTypes.number.isRequired,
@@ -20,7 +20,7 @@ export default function SortableThumb({ id, onMove, video }) {
   const ThumbLabelRef = useRef(null);
   const [{ isDragging }, drag] = useDrag({
     item: { type: ItemTypes.THUMB, id },
-    collect: monitor => ({
+    collect: (monitor) => ({
       isDragging: !!monitor.isDragging()
     })
   });

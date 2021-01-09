@@ -5,7 +5,7 @@ import Input from 'components/Texts/Input';
 import Button from 'components/Button';
 import { useInputContext } from 'contexts';
 import { edit } from 'constants/placeholders';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import {
   addEmoji,
   exceedsCharLimit,

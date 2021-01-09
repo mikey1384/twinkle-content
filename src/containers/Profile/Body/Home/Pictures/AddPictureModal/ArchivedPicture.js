@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import ConfirmModal from 'components/Modals/ConfirmModal';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { cloudFrontURL } from 'constants/defaultValues';
 import { Color, borderRadius, innerBorderRadius } from 'constants/css';
 import { useAppContext } from 'contexts';

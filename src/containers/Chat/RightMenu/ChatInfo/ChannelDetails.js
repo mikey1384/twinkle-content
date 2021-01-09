@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import FullTextReveal from 'components/Texts/FullTextReveal';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import { useChatContext } from 'contexts';
 import { isMobile, textIsOverflown } from 'helpers';
@@ -20,7 +20,7 @@ export default function ChannelDetails({ channelId, channelName, style }) {
   const ChannelNameRef = useRef(null);
   return (
     <div
-      onClick={() => setChannelNameHovered(hovered => !hovered)}
+      onClick={() => setChannelNameHovered((hovered) => !hovered)}
       style={style}
       className={css`
         width: 100%;

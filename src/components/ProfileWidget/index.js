@@ -7,7 +7,7 @@ import WelcomeMessage from './WelcomeMessage';
 import { container } from './Styles';
 import { borderRadius } from 'constants/css';
 import { MAX_PROFILE_PIC_SIZE } from 'constants/defaultValues';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
 

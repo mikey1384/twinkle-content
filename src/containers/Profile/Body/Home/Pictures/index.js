@@ -10,7 +10,7 @@ import DeleteInterface from './DeleteInterface';
 import AddPictureModal from './AddPictureModal';
 import { objectify } from 'helpers';
 import { useAppContext, useContentContext } from 'contexts';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 import ErrorBoundary from 'components/ErrorBoundary';
 import ReorderInterface from './ReorderInterface';

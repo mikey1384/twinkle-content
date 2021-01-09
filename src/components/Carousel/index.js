@@ -9,7 +9,7 @@ import { Animate } from 'react-move';
 import { Color } from 'constants/css';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 import { useExploreContext } from 'contexts';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import BottomNavButtons from './BottomNavButtons';
 
 Carousel.propTypes = {

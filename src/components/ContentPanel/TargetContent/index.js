@@ -21,7 +21,7 @@ import HiddenComment from 'components/HiddenComment';
 import Icon from 'components/Icon';
 import LoginToViewContent from 'components/LoginToViewContent';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { timeSince } from 'helpers/timeStampHelpers';
 import {
   determineUserCanRewardThis,

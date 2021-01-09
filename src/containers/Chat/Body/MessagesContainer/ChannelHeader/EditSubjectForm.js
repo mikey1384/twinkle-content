@@ -16,7 +16,7 @@ import Input from 'components/Texts/Input';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Loading from 'components/Loading';
 import { edit } from 'constants/placeholders';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 EditSubjectForm.propTypes = {
   autoFocus: PropTypes.bool,

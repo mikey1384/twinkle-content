@@ -8,7 +8,7 @@ import Icon from 'components/Icon';
 import Loading from 'components/Loading';
 import { addEmoji, stringIsEmpty } from 'helpers/stringHelpers';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useMyState, useOutsideClick } from 'helpers/hooks';
 
 SectionPanel.propTypes = {

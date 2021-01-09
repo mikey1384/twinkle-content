@@ -2,7 +2,7 @@ import React, { memo, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Square from './Square';
 import getPiece from './helpers/piece';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 
 FallenPieces.propTypes = {
@@ -23,7 +23,7 @@ function FallenPieces({ whiteFallenPieces, blackFallenPieces, myColor }) {
         }
       }
     }
-    return Object.keys(whiteFallenHash).map(key => whiteFallenHash[key]);
+    return Object.keys(whiteFallenHash).map((key) => whiteFallenHash[key]);
   }, [whiteFallenPieces]);
 
   const blackFallenPiecesCompressed = useMemo(() => {
@@ -37,7 +37,7 @@ function FallenPieces({ whiteFallenPieces, blackFallenPieces, myColor }) {
         }
       }
     }
-    return Object.keys(blackFallenHash).map(key => blackFallenHash[key]);
+    return Object.keys(blackFallenHash).map((key) => blackFallenHash[key]);
   }, [blackFallenPieces]);
 
   return (

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Color } from 'constants/css';
 
 Banner.propTypes = {

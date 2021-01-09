@@ -8,7 +8,7 @@ import Table from '../Table';
 import Icon from 'components/Icon';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useManagementContext } from 'contexts';
 

@@ -10,7 +10,7 @@ import { Color, mobileMaxWidth } from 'constants/css';
 import { unix } from 'moment';
 import { socket } from 'constants/io';
 import { useChatContext } from 'contexts';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import Icon from 'components/Icon';
 
 Activity.propTypes = {

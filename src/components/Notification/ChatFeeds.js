@@ -7,7 +7,7 @@ import RoundList from 'components/RoundList';
 import Icon from 'components/Icon';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { Color } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useHistory } from 'react-router-dom';
 import { useAppContext, useChatContext } from 'contexts';
 

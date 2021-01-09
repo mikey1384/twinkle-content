@@ -2,7 +2,7 @@ import React, { useMemo, memo } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import { Color } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useChatContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { returnWordLevel, rewardHash } from 'constants/defaultValues';

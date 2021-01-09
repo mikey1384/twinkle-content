@@ -8,7 +8,7 @@ import Loading from 'components/Loading';
 import ContentFileViewer from 'components/ContentFileViewer';
 import { useHistory } from 'react-router-dom';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useContentContext } from 'contexts';
 

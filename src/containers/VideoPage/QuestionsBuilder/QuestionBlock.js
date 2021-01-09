@@ -7,7 +7,7 @@ import Button from 'components/Button';
 import { borderRadius, innerBorderRadius, Color } from 'constants/css';
 import Banner from 'components/Banner';
 import Icon from 'components/Icon';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 const Styles = {
   content: css`
@@ -155,7 +155,7 @@ export default function QuestionBlock({
               autoFocus
               placeholder="Enter Question..."
               value={editedQuestionTitle}
-              onChange={event => {
+              onChange={(event) => {
                 hideErrorMsg(questionId);
                 setEditedQuestionTitle(event.target.value);
               }}

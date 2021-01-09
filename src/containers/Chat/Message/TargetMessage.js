@@ -17,7 +17,7 @@ import {
   getFileInfoFromFileName,
   isValidSpoiler
 } from 'helpers/stringHelpers';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { cloudFrontURL } from 'constants/defaultValues';
 import { useAppContext, useContentContext } from 'contexts';
 

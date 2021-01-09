@@ -5,7 +5,7 @@ import LongText from 'components/Texts/LongText';
 import { borderRadius, Color, desktopMinWidth } from 'constants/css';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 SecretAnswer.propTypes = {
   answer: PropTypes.string.isRequired,

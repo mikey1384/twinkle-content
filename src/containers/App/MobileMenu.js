@@ -8,7 +8,7 @@ import ImageEditModal from 'components/Modals/ImageEditModal';
 import Icon from 'components/Icon';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { Color } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useChatContext, useContentContext } from 'contexts';
 

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Spinner from 'components/Spinner';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 Loading.propTypes = {
   className: PropTypes.string,

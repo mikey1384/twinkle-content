@@ -28,7 +28,7 @@ import SubjectLink from './SubjectLink';
 import Icon from 'components/Icon';
 import LoginToViewContent from 'components/LoginToViewContent';
 import ContentFileViewer from 'components/ContentFileViewer';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useHistory } from 'react-router-dom';
 import { commentContainer } from './Styles';
 import { timeSince } from 'helpers/timeStampHelpers';

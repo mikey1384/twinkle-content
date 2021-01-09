@@ -6,7 +6,7 @@ import ContentPanel from 'components/ContentPanel';
 import Loading from 'components/Loading';
 import SideMenu from './SideMenu';
 import InvalidPage from 'components/InvalidPage';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import { useInfiniteScroll, useProfileState } from 'helpers/hooks';
 import { useAppContext, useProfileContext } from 'contexts';

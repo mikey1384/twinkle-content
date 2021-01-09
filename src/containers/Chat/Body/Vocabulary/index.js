@@ -14,7 +14,7 @@ import {
 } from 'contexts';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 export default function Vocabulary() {
   const {

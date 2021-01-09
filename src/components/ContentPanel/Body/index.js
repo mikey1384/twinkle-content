@@ -16,7 +16,7 @@ import RewardStatus from 'components/RewardStatus';
 import RecommendationStatus from 'components/RecommendationStatus';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Icon from 'components/Icon';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { descriptionLengthForExtraRewardLevel } from 'constants/defaultValues';
 import { addCommasToNumber } from 'helpers/stringHelpers';

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DropdownButton from 'components/Buttons/DropdownButton';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 PeopleFilterBar.propTypes = {
   dropdownLabel: PropTypes.string,

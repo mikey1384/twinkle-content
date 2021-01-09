@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { Color } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 Dropdown.propTypes = {
   dropdownFooter: PropTypes.node,
@@ -84,7 +84,7 @@ export default function Dropdown({
                 style={{
                   lineHeight: 'normal'
                 }}
-                onClick={e => e.preventDefault()}
+                onClick={(e) => e.preventDefault()}
               >
                 {renderItemLabel(item)}
               </a>

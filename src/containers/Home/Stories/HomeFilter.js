@@ -5,7 +5,7 @@ import FilterBar from 'components/FilterBar';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { PropTypes } from 'prop-types';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { isMobile } from 'helpers';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext } from 'contexts';

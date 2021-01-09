@@ -11,7 +11,7 @@ import {
   mobileMaxWidth,
   phoneMaxWidth
 } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useChatContext } from 'contexts';
 

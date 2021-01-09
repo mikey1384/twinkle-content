@@ -8,7 +8,7 @@ import ConfirmModal from 'components/Modals/ConfirmModal';
 import Embedly from 'components/Embedly';
 import { useHistory } from 'react-router-dom';
 import { Color } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useExploreContext } from 'contexts';

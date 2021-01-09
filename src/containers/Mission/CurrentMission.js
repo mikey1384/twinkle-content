@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import MissionItem from './MissionItem';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useMissionContext } from 'contexts';
 
 CurrentMission.propTypes = {

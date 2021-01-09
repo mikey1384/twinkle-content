@@ -6,7 +6,7 @@ import request from 'axios';
 import URL from 'constants/URL';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useViewContext } from 'contexts';
 

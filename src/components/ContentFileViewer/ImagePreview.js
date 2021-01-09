@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ImageModal from 'components/Modals/ImageModal';
 import { mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 ImagePreview.propTypes = {
   isThumb: PropTypes.bool,

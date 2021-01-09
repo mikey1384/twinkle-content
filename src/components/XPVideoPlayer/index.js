@@ -5,7 +5,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import XPBar from './XPBar';
 import { rewardValue } from 'constants/defaultValues';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useViewContext } from 'contexts';
 

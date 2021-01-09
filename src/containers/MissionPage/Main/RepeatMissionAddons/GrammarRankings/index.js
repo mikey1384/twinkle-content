@@ -4,7 +4,7 @@ import FilterBar from 'components/FilterBar';
 import Ranker from './Ranker';
 import { useAppContext } from 'contexts';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 
 GrammarRankings.propTypes = {

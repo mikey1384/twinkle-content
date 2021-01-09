@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Textarea from 'components/Texts/Textarea';
 import SelectRewardAmount from './SelectRewardAmount';
 import Icon from 'components/Icon';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Color } from 'constants/css';
 import {
   addCommasToNumber,

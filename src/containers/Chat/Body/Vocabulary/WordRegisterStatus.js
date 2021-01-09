@@ -3,7 +3,7 @@ import { useChatContext } from 'contexts';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { rewardHash, returnWordLevel } from 'constants/defaultValues';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { isMobile } from 'helpers';
 import Button from 'components/Button';
 import Icon from 'components/Icon';

@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Carousel from 'components/Carousel';
 import QuestionSlide from './QuestionSlide';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { scrollElementToCenter, isMobile } from 'helpers';
 import { mobileMaxWidth } from 'constants/css';
 

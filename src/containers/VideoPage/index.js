@@ -20,7 +20,7 @@ import NavMenu from './NavMenu';
 import PageTab from './PageTab';
 import URL from 'constants/URL';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { fetchedVideoCodeFromURL } from 'helpers/stringHelpers';
 import { useContentState, useMyState } from 'helpers/hooks';
 import {

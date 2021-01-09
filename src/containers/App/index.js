@@ -24,7 +24,7 @@ import Incoming from 'components/Stream/Incoming';
 import Outgoing from 'components/Stream/Outgoing';
 import { Switch, Route } from 'react-router-dom';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { socket } from 'constants/io';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 import { finalizeEmoji } from 'helpers/stringHelpers';

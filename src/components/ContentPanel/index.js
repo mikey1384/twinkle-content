@@ -9,7 +9,7 @@ import Body from './Body';
 import TargetContent from './TargetContent';
 import Embedly from 'components/Embedly';
 import Profile from './Profile';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { container } from './Styles';
 import { useContentState, useLazyLoad } from 'helpers/hooks';

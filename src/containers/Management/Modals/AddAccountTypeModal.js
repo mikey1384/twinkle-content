@@ -6,7 +6,7 @@ import Input from 'components/Texts/Input';
 import Check from '../Check';
 import Table from '../Table';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useAppContext, useManagementContext } from 'contexts';
 
 AddAccountTypeModal.propTypes = {

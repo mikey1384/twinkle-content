@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ListItem from './ListItem';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { borderRadius, Color, innerBorderRadius } from 'constants/css';
 
 ChoiceList.propTypes = {

@@ -4,7 +4,7 @@ import { useAppContext, useInteractiveContext } from 'contexts';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import Content from './Content';
 import Deleted from './Deleted';
 import Editor from './Editor';

@@ -6,7 +6,7 @@ import { stringIsEmpty } from 'helpers/stringHelpers';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { useAppContext, useContentContext, useMissionContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 const missionText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce luctus
 commodo purus eget tempus. In suscipit euismod ex, sit amet maximus sem

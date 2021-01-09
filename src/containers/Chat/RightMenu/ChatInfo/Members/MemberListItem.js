@@ -6,7 +6,7 @@ import Icon from 'components/Icon';
 import Button from 'components/Button';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import { useChatContext } from 'contexts';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
 import { socket } from 'constants/io';

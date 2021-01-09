@@ -4,7 +4,7 @@ import Modal from 'components/Modal';
 import Button from 'components/Button';
 import { Color } from 'constants/css';
 import Input from 'components/Texts/Input';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { addEmoji, finalizeEmoji } from 'helpers/stringHelpers';
 
 const MAX_CHAR = 150;
@@ -56,7 +56,7 @@ export default function BioEditModal({ onHide, onSubmit, ...props }) {
           <Input
             autoFocus
             value={firstLine}
-            onChange={text => setFirstLine(addEmoji(text))}
+            onChange={(text) => setFirstLine(addEmoji(text))}
             placeholder="Write something"
           />
           <small
@@ -75,7 +75,7 @@ export default function BioEditModal({ onHide, onSubmit, ...props }) {
           </label>
           <Input
             value={secondLine}
-            onChange={text => setSecondLine(addEmoji(text))}
+            onChange={(text) => setSecondLine(addEmoji(text))}
             placeholder="Write something"
           />
           <small
@@ -92,7 +92,7 @@ export default function BioEditModal({ onHide, onSubmit, ...props }) {
           </label>
           <Input
             value={thirdLine}
-            onChange={text => setThirdLine(addEmoji(text))}
+            onChange={(text) => setThirdLine(addEmoji(text))}
             placeholder="Write something"
           />
           <small

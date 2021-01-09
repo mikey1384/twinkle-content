@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import { Route, useHistory } from 'react-router-dom';
 import { Color, desktopMinWidth, mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import {
   useAppContext,
   useContentContext,

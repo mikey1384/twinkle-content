@@ -15,7 +15,7 @@ import Bio from 'components/Texts/Bio';
 import ErrorBoundary from 'components/ErrorBoundary';
 import request from 'axios';
 import URL from 'constants/URL';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { useAppContext, useContentContext, useInputContext } from 'contexts';

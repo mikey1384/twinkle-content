@@ -5,7 +5,7 @@ import FullTextReveal from 'components/Texts/FullTextReveal';
 import { useMyState } from 'helpers/hooks';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { priceTable } from 'constants/defaultValues';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 ColorSelector.propTypes = {
   unlocked: PropTypes.array.isRequired,

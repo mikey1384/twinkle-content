@@ -8,7 +8,7 @@ import EditPlaylistModal from './Modals/EditPlaylistModal';
 import PlaylistModal from 'components/Modals/PlaylistModal';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import Link from 'components/Link';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { charLimit } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';

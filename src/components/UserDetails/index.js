@@ -10,7 +10,7 @@ import request from 'axios';
 import ErrorBoundary from 'components/ErrorBoundary';
 import StatusMsg from './StatusMsg';
 import Bio from 'components/Texts/Bio';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Color } from 'constants/css';
 import { addEmoji, finalizeEmoji, renderText } from 'helpers/stringHelpers';
 import URL from 'constants/URL';
@@ -130,7 +130,7 @@ export default function UserDetails({
           statusColor={statusColor}
           editedStatusMsg={editedStatusMsg}
           setColor={onSetEditedStatusColor}
-          onTextChange={event => {
+          onTextChange={(event) => {
             onSetEditedStatusMsg(addEmoji(renderText(event.target.value)));
             if (!event.target.value) {
               onSetEditedStatusColor('');

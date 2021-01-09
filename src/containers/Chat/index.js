@@ -10,7 +10,7 @@ import PleaseLogIn from './PleaseLogIn';
 import LocalContext from './Context';
 import { phoneMaxWidth } from 'constants/css';
 import { socket } from 'constants/io';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useViewContext, useChatContext } from 'contexts';
 
@@ -138,8 +138,7 @@ function Chat({ onFileUpload }) {
     socket.emit(
       'check_online_members',
       selectedChannelId,
-      (err, { membersOnline }) => {
-        if (err) console.error(err);
+      ({ membersOnline }) => {
         if (mounted.current) {
           setCurrentChannelOnlineMembers(membersOnline);
         }

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import { borderRadius, Color } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 PartOfSpeechBlock.propTypes = {
   deletedDefIds: PropTypes.array.isRequired,

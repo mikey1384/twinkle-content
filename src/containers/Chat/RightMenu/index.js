@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ChatInfo from './ChatInfo';
 import VocabInfo from './VocabInfo';
 import { useMyState } from 'helpers/hooks';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Color, phoneMaxWidth } from 'constants/css';
 import { useAppContext, useChatContext, useNotiContext } from 'contexts';
 

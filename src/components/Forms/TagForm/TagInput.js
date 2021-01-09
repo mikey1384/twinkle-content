@@ -4,7 +4,7 @@ import SearchDropdown from 'components/SearchDropdown';
 import Input from 'components/Texts/Input';
 import Icon from 'components/Icon';
 import { Color } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useOutsideClick } from 'helpers/hooks';
 import Loading from 'components/Loading';

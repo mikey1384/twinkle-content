@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
 import SearchDropdown from '../SearchDropdown';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Color } from 'constants/css';
 import Input from './Input';
 import Icon from 'components/Icon';
@@ -100,7 +100,7 @@ export default function SearchInput({
         onFocus={onFocus && onFocus}
         placeholder={placeholder}
         value={value}
-        onChange={text => onChange(text)}
+        onChange={(text) => onChange(text)}
         onKeyDown={onKeyDown}
       />
       {renderDropdownList()}
@@ -114,7 +114,7 @@ export default function SearchInput({
         onUpdate={() => setIndexToHighlight(0)}
         onUnmount={() => setIndexToHighlight(0)}
         indexToHighlight={indexToHighlight}
-        onItemClick={item => onSelect(item)}
+        onItemClick={(item) => onSelect(item)}
         renderItemLabel={renderItemLabel}
         renderItemUrl={renderItemUrl}
       />

@@ -6,7 +6,7 @@ import TagForm from 'components/Forms/TagForm';
 import Input from 'components/Texts/Input';
 import { useAppContext, useChatContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { socket } from 'constants/io';
 import { mobileMaxWidth } from 'constants/css';
 import { stringIsEmpty } from 'helpers/stringHelpers';

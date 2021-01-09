@@ -1,5 +1,5 @@
 import { Color, mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 export const MessageStyle = {
   container: css`

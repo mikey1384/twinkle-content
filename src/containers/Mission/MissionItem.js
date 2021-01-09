@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import RewardText from 'components/Texts/RewardText';
 import { gifTable } from 'constants/defaultValues';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { useHistory } from 'react-router-dom';
 import { useAppContext } from 'contexts';

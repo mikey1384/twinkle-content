@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ProfilePic from 'components/ProfilePic';
 import RankBar from 'components/RankBar';
 import UserDetails from 'components/UserDetails';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
 

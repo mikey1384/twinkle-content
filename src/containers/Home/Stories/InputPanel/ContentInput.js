@@ -10,7 +10,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import Loading from 'components/Loading';
 import { PanelStyle } from './Styles';
 import { Color } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { scrollElementToCenter } from 'helpers';
 import {
   exceedsCharLimit,

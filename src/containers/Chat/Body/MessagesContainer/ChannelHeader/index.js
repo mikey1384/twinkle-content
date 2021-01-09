@@ -17,7 +17,7 @@ import {
   GENERAL_CHAT_ID
 } from 'constants/defaultValues';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useInterval, useMyState } from 'helpers/hooks';
 import { useAppContext, useChatContext } from 'contexts';
 

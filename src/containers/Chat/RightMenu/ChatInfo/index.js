@@ -4,7 +4,7 @@ import Members from './Members';
 import ChannelDetails from './ChannelDetails';
 import Icon from 'components/Icon';
 import Video from './Video';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Color, desktopMinWidth, mobileMaxWidth } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
 import { useChatContext } from 'contexts';

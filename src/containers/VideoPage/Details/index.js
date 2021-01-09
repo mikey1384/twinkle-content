@@ -32,7 +32,7 @@ import {
   useExploreContext,
   useInputContext
 } from 'contexts';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 Details.propTypes = {
   addTags: PropTypes.func.isRequired,

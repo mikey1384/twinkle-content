@@ -3,7 +3,7 @@ import React from 'react';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 LoadMoreButton.propTypes = {
   label: PropTypes.string,

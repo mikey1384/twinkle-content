@@ -1,7 +1,7 @@
 import React, { useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import ItemTypes from 'constants/itemTypes';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { cloudFrontURL } from 'constants/defaultValues';
 import { Color, borderRadius, innerBorderRadius } from 'constants/css';
 import { useDrag, useDrop } from 'react-dnd';

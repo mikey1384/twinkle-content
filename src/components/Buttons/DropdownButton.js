@@ -5,7 +5,7 @@ import DropdownList from 'components/DropdownList';
 import Icon from 'components/Icon';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { useOutsideClick } from 'helpers/hooks';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 DropdownButton.propTypes = {
   buttonStyle: PropTypes.object,

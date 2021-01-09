@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Color } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useAppContext, useInteractiveContext } from 'contexts';
 import Icon from 'components/Icon';
 import SelectArchivedSlideModal from '../SelectArchivedSlideModal';

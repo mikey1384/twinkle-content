@@ -9,7 +9,7 @@ import { useMyState } from 'helpers/hooks';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 import { useAppContext, useMissionContext } from 'contexts';
 import { v1 as uuidv1 } from 'uuid';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 
 TakeScreenshot.propTypes = {

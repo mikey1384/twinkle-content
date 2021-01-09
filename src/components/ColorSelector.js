@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import Icon from 'components/Icon';
 import FullTextReveal from 'components/Texts/FullTextReveal';

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ImageModal from 'components/Modals/ImageModal';
 import { Color, borderRadius, innerBorderRadius } from 'constants/css';
 import { cloudFrontURL } from 'constants/defaultValues';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useAppContext } from 'contexts';
 
 Frame.propTypes = {

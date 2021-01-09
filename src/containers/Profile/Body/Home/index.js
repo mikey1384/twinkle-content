@@ -8,7 +8,7 @@ import Pictures from './Pictures';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 
 Home.propTypes = {
