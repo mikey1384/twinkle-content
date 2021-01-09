@@ -231,6 +231,11 @@ function MessageInput({
     try {
       await onMessageSubmit(finalizeEmoji(text));
       handleSetText('');
+      onEnterComment({
+        contentType: 'chat',
+        contentId: currentChannelId,
+        text: ''
+      });
     } catch (error) {
       console.error(error);
     }
