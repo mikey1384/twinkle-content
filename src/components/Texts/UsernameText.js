@@ -34,7 +34,7 @@ export default function UsernameText({
   const {
     actions: { onInitContent }
   } = useContentContext();
-  const { twinkleXP } = useContentState({
+  const { rank, twinkleXP } = useContentState({
     contentType: 'user',
     contentId: user.id
   });
@@ -50,6 +50,9 @@ export default function UsernameText({
     }
     return addCommasToNumber(twinkleXP || user.twinkleXP);
   }, [twinkleXP, user.twinkleXP]);
+  const userRank = useMemo(() => {
+    return rank || user.rank;
+  }, [rank, user.rank]);
 
   return (
     <div
@@ -110,14 +113,35 @@ export default function UsernameText({
             <li
               style={{
                 padding: '5px',
-                background: Color.highlightGray(),
-                color: Color.darkerGray(),
+                background:
+                  !!userRank && userRank < 4
+                    ? Color.darkerGray()
+                    : Color.highlightGray(),
+                color: !!userRank && userRank < 4 ? '#fff' : Color.darkerGray(),
                 fontSize: '1rem',
                 textAlign: 'center',
                 fontWeight: 'bold'
               }}
             >
               {userXP} XP
+              {!!userRank && userRank < 4 ? (
+                <span
+                  style={{
+                    fontWeight: 'bold',
+                    color:
+                      userRank === 1
+                        ? Color.gold()
+                        : userRank === 2
+                        ? '#fff'
+                        : Color.orange()
+                  }}
+                >
+                  {' '}
+                  (#{userRank})
+                </span>
+              ) : (
+                ''
+              )}
             </li>
           )}
         </DropdownList>
