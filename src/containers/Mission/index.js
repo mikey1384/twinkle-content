@@ -55,7 +55,7 @@ export default function Mission() {
   return (
     <ErrorBoundary>
       <div>
-        {userId && <Cover />}
+        {userId && <Cover missionIds={missions} missionObj={missionObj} />}
         {missions.length === 0 && loading && <Loading />}
         {missions.length > 0 && (
           <div

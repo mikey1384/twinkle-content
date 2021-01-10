@@ -1,11 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { useMyState } from 'helpers/hooks';
+import { useHistory } from 'react-router-dom';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
+import { useAppContext } from 'contexts';
 import ProfilePic from 'components/ProfilePic';
 
-export default function Cover() {
+Cover.propTypes = {
+  missionIds: PropTypes.array.isRequired,
+  missionObj: PropTypes.object.isRequired
+};
+
+export default function Cover({ missionIds, missionObj }) {
+  const history = useHistory();
   const { profileTheme, profilePicUrl, userId, username } = useMyState();
+  const {
+    requestHelpers: { loadMissionRankings }
+  } = useAppContext();
+  const [numComplete, setNumComplete] = useState(0);
+  const [myGrammarRank, setMyGrammarRank] = useState(0);
+  useEffect(() => {
+    let numCompleteCount = 0;
+    for (let missionId of missionIds) {
+      if (missionObj[missionId].myAttempt.status === 'pass') {
+        numCompleteCount++;
+      }
+      if (missionObj[missionId].missionType === 'grammar') {
+        handleLoadRanking(missionId, (myRank) => setMyGrammarRank(myRank));
+      }
+    }
+    setNumComplete(numCompleteCount);
+
+    async function handleLoadRanking(missionId, callback) {
+      const { myRank } = await loadMissionRankings(missionId);
+      callback(myRank);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [missionObj, missionIds]);
 
   return (
     <div
@@ -51,6 +83,53 @@ export default function Cover() {
         >
           {username}
         </div>
+      </div>
+      <div
+        className={css`
+          height: 100%;
+          display: flex;
+          align-items: center;
+          color: #fff;
+          justify-content: center;
+          flex-direction: column;
+          font-weight: bold;
+          font-size: 2rem;
+          line-height: 2;
+          @media (max-width: ${mobileMaxWidth}) {
+            font-size: 1.3rem;
+          }
+        `}
+      >
+        {numComplete > 0 && (
+          <div>
+            <span className="mobile">
+              Completed: {numComplete}/{missionIds.length}
+            </span>
+            <span className="desktop">
+              Completed {numComplete} out of {missionIds.length} mission
+              {missionIds.length > 1 ? 's' : ''}
+            </span>
+          </div>
+        )}
+        {!!myGrammarRank && myGrammarRank < 11 && (
+          <div
+            className={css`
+              cursor: pointer;
+              &:hover {
+                text-decoration: underline;
+              }
+              @media (max-width: ${mobileMaxWidth}) {
+                &:hover {
+                  text-decoration: none;
+                }
+              }
+            `}
+            onClick={() => history.push('/missions/4')}
+            style={{ color: myGrammarRank === 1 ? Color.gold() : '#fff' }}
+          >
+            Grammar Rank #{myGrammarRank}
+          </div>
+        )}
       </div>
     </div>
   );
