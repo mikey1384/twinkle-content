@@ -117,7 +117,7 @@ export default function Questions({ isRepeating, mission, onFail }) {
           onBackToStart={() =>
             onSetMissionState({
               missionId: mission.id,
-              newState: { started: false }
+              newState: { started: false, grammarReviewLoaded: false }
             })
           }
         />
