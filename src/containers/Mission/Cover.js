@@ -111,7 +111,7 @@ export default function Cover({ missionIds, missionObj }) {
             </span>
           </div>
         )}
-        {!!myGrammarRank && myGrammarRank < 11 && (
+        {!!myGrammarRank && myGrammarRank < 31 && (
           <div
             className={css`
               cursor: pointer;
