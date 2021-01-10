@@ -438,7 +438,7 @@ export default function SubjectPanel({
               inputAreaInnerRef={CommentsRef}
               isLoading={loadingComments}
               numInputRows={3}
-              commentsLoadLimit={10}
+              commentsLoadLimit={5}
               commentsHidden={secretHidden}
               commentsShown
               inputTypeLabel={'comment'}
