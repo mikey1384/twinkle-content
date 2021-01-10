@@ -110,7 +110,7 @@ export default function Home({ profile, selectedTheme }) {
         >
           <Comments
             comments={comments}
-            commentsLoadLimit={20}
+            commentsLoadLimit={5}
             commentsShown={true}
             contentId={id}
             inputAreaInnerRef={CommentInputAreaRef}
