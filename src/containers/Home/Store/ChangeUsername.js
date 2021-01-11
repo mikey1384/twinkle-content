@@ -24,6 +24,7 @@ export default function ChangeUsername({ style }) {
   } = useContentContext();
   const { twinkleCoins, userId } = useMyState();
   const [loading, setLoading] = useState(false);
+  const [changing, setChanging] = useState(false);
   const [newUsername, setNewUsername] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [usernameAvailable, setUsernameAvailable] = useState(false);
@@ -107,7 +108,7 @@ export default function ChangeUsername({ style }) {
           style={{ position: 'absolute', top: '0.5rem', right: 0 }}
           filled
           color="green"
-          disabled={disabled}
+          disabled={disabled || changing}
           onClick={handleChangeUsername}
         >
           Change
@@ -121,6 +122,7 @@ export default function ChangeUsername({ style }) {
   );
 
   async function handleChangeUsername() {
+    setChanging(true);
     const { coins, alreadyExists } = await changeUsername(newUsername);
     if (alreadyExists) {
       setUsernameAvailable(false);
@@ -130,5 +132,6 @@ export default function ChangeUsername({ style }) {
       onUpdateUserCoins({ coins, userId });
       setNewUsername('');
     }
+    setChanging(false);
   }
 }
