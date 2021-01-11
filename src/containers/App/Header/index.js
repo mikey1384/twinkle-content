@@ -665,7 +665,7 @@ export default function Header({
 
   useEffect(() => {
     const newNotiNum = numNewPosts + numNewNotis + numUnreads;
-    document.title = `${newNotiNum > 0 ? '(' + newNotiNum + ') ' : ''}Twinkle`;
+    document.title = `Twinkle${newNotiNum > 0 ? ' *' : ''}`;
   }, [numNewNotis, numNewPosts, numUnreads, pathname]);
 
   useEffect(() => {
