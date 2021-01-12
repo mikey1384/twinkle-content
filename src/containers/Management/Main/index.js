@@ -1,33 +1,29 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import SectionPanel from 'components/SectionPanel';
 import Button from 'components/Button';
 import EditAccountTypeModal from '../Modals/EditAccountTypeModal';
-import EditModeratorModal from '../Modals/EditModeratorModal';
-import AddModeratorModal from '../Modals/AddModeratorModal';
 import AddAccountTypeModal from '../Modals/AddAccountTypeModal';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Table from '../Table';
 import Check from '../Check';
+import Moderators from './Moderators';
+import SectionPanel from 'components/SectionPanel';
 import { useMyState } from 'helpers/hooks';
-import { timeSince } from 'helpers/timeStampHelpers';
 import { useAppContext, useManagementContext } from 'contexts';
 
 export default function Main() {
-  const { userId, managementLevel } = useMyState();
+  const { managementLevel } = useMyState();
   const canManage = useMemo(() => managementLevel > 1, [managementLevel]);
   const {
     requestHelpers: { loadAccountTypes, loadModerators }
   } = useAppContext();
   const {
-    state: { accountTypes, accountTypesLoaded, moderators, moderatorsLoaded },
+    state: { accountTypes, accountTypesLoaded },
     actions: { onLoadAccountTypes, onLoadModerators }
   } = useManagementContext();
   const [accountTypeModalTarget, setAccountTypeModalTarget] = useState(null);
-  const [moderatorModalTarget, setModeratorModalTarget] = useState(null);
   const [addAccountTypeModalShown, setAddAccountTypeModalShown] = useState(
     false
   );
-  const [addModeratorModalShown, setAddModeratorModalShown] = useState(false);
   useEffect(() => {
     initModerators();
     initAccountTypes();
@@ -44,77 +40,7 @@ export default function Main() {
 
   return (
     <ErrorBoundary>
-      <SectionPanel
-        title="Moderators"
-        emptyMessage="No Moderators"
-        loaded={moderatorsLoaded}
-        style={{ paddingLeft: 0, paddingRight: 0 }}
-        button={
-          canManage ? (
-            <Button
-              color="darkerGray"
-              skeuomorphic
-              onClick={() => setAddModeratorModalShown(true)}
-            >
-              + Add Moderators
-            </Button>
-          ) : null
-        }
-      >
-        <Table
-          columns={`
-            minmax(10rem, 1fr)
-            minmax(15rem, 2fr)
-            minmax(10rem, 1fr)
-            minmax(15rem, 1fr)
-            ${canManage ? 'minmax(17rem, 2fr)' : ''}
-          `}
-        >
-          <thead>
-            <tr>
-              <th>User</th>
-              <th>Email</th>
-              <th>Online</th>
-              <th>Account Type</th>
-              {canManage && <th></th>}
-            </tr>
-          </thead>
-          <tbody>
-            {moderators.map((moderator) => (
-              <tr
-                key={moderator.id}
-                style={{ cursor: canManage && 'pointer' }}
-                onClick={() =>
-                  canManage ? setModeratorModalTarget(moderator) : {}
-                }
-              >
-                <td style={{ fontWeight: 'bold', fontSize: '1.6rem' }}>
-                  {moderator.username}
-                </td>
-                <td>{moderator.email || 'Not Specified'}</td>
-                <td>
-                  {userId === moderator.id || moderator.online
-                    ? 'now'
-                    : timeSince(moderator.lastActive)}
-                </td>
-                <td
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center'
-                  }}
-                >
-                  {moderator.userType}
-                </td>
-                {canManage && (
-                  <td style={{ display: 'flex', justifyContent: 'center' }}>
-                    <a>Change Account Type</a>
-                  </td>
-                )}
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </SectionPanel>
+      <Moderators canManage={canManage} />
       <SectionPanel
         title="Account Types"
         emptyMessage="No Account Types"
@@ -198,13 +124,6 @@ export default function Main() {
           </tbody>
         </Table>
       </SectionPanel>
-      {moderatorModalTarget && (
-        <EditModeratorModal
-          accountTypes={accountTypes}
-          target={moderatorModalTarget}
-          onHide={() => setModeratorModalTarget(null)}
-        />
-      )}
       {accountTypeModalTarget && (
         <EditAccountTypeModal
           target={
@@ -213,12 +132,6 @@ export default function Main() {
             )[0]
           }
           onHide={() => setAccountTypeModalTarget(null)}
-        />
-      )}
-      {addModeratorModalShown && (
-        <AddModeratorModal
-          accountTypes={accountTypes}
-          onHide={() => setAddModeratorModalShown(false)}
         />
       )}
       {addAccountTypeModalShown && (
