@@ -1,16 +1,16 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import SectionPanel from 'components/SectionPanel';
 import Button from 'components/Button';
-import EditAccountTypeModal from './Modals/EditAccountTypeModal';
-import EditModeratorModal from './Modals/EditModeratorModal';
-import AddModeratorModal from './Modals/AddModeratorModal';
+import EditAccountTypeModal from '../Modals/EditAccountTypeModal';
+import EditModeratorModal from '../Modals/EditModeratorModal';
+import AddModeratorModal from '../Modals/AddModeratorModal';
+import AddAccountTypeModal from '../Modals/AddAccountTypeModal';
 import ErrorBoundary from 'components/ErrorBoundary';
-import Table from './Table';
-import Check from './Check';
+import Table from '../Table';
+import Check from '../Check';
 import { useMyState } from 'helpers/hooks';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { useAppContext, useManagementContext } from 'contexts';
-import AddAccountTypeModal from './Modals/AddAccountTypeModal';
 
 export default function Main() {
   const { userId, managementLevel } = useMyState();
