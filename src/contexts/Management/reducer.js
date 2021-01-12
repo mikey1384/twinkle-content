@@ -72,7 +72,6 @@ export default function ManagementReducer(state, action) {
       return {
         ...state,
         moderators: action.moderators,
-        numModeratorsShown: 10,
         moderatorsLoaded: true
       };
     case 'LOAD_MORE_MODERATORS':
