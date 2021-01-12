@@ -15,7 +15,7 @@ Moderators.propTypes = {
 };
 
 export default function Moderators({ canManage }) {
-  const { userId } = useMyState();
+  const { userId, profileTheme } = useMyState();
   const {
     state: { accountTypes, moderators, moderatorsLoaded }
   } = useManagementContext();
@@ -42,6 +42,7 @@ export default function Moderators({ canManage }) {
         }
       >
         <Table
+          color={profileTheme}
           columns={`
             minmax(10rem, 1fr)
             minmax(15rem, 2fr)

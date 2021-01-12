@@ -11,7 +11,7 @@ import { useMyState } from 'helpers/hooks';
 import { useAppContext, useManagementContext } from 'contexts';
 
 export default function Main() {
-  const { managementLevel } = useMyState();
+  const { managementLevel, profileTheme } = useMyState();
   const canManage = useMemo(() => managementLevel > 1, [managementLevel]);
   const {
     requestHelpers: { loadAccountTypes, loadModerators }
@@ -59,6 +59,7 @@ export default function Main() {
         }
       >
         <Table
+          color={profileTheme}
           headerFontSize="1.5rem"
           columns={`
             minmax(10rem, 1.5fr)

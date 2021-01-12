@@ -4,13 +4,20 @@ import { css } from '@emotion/css';
 import { Color } from 'constants/css';
 
 Table.propTypes = {
+  color: PropTypes.string,
   headerFontSize: PropTypes.string,
   columns: PropTypes.string.isRequired,
   children: PropTypes.node,
   style: PropTypes.object
 };
 
-export default function Table({ headerFontSize, columns, children, style }) {
+export default function Table({
+  color = 'logoBlue',
+  headerFontSize,
+  columns,
+  children,
+  style
+}) {
   return (
     <table
       style={style}
@@ -34,13 +41,13 @@ export default function Table({ headerFontSize, columns, children, style }) {
           font-size: ${headerFontSize || '1.7rem'};
           font-weight: normal;
           text-align: left;
-          padding: 1.5rem 2rem 1.5rem 2rem;
+          padding: 1.3rem 2rem 1.3rem 2rem;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
           position: sticky;
           top: 0;
-          background: ${Color.logoBlue()};
+          background: ${Color[color](0.9)};
           color: white;
           position: relative;
         }
