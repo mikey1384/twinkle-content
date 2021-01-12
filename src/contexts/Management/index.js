@@ -10,7 +10,7 @@ export const initialManagementState = {
   loaded: false,
   moderators: [],
   moderatorsLoaded: false,
-  numModeratorsShown: 10
+  numModeratorsShown: 5
 };
 
 ManagementContextProvider.propTypes = {
