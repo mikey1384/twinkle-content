@@ -19,8 +19,8 @@ export default function Main() {
     initModerators();
     initAccountTypes();
     async function initModerators() {
-      const data = await loadModerators();
-      onLoadModerators(data);
+      const moderators = await loadModerators();
+      onLoadModerators(moderators);
     }
     async function initAccountTypes() {
       const data = await loadAccountTypes();

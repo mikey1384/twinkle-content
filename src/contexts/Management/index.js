@@ -9,7 +9,8 @@ export const initialManagementState = {
   accountTypesLoaded: false,
   loaded: false,
   moderators: [],
-  moderatorsLoaded: false
+  moderatorsLoaded: false,
+  numModeratorsShown: 10
 };
 
 ManagementContextProvider.propTypes = {

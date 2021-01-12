@@ -242,8 +242,10 @@ export default function userRequestHelpers({ auth, handleError, token }) {
     },
     async loadModerators() {
       try {
-        const { data } = await request.get(`${URL}/user/moderator`);
-        return Promise.resolve(data);
+        const {
+          data: { moderators }
+        } = await request.get(`${URL}/user/moderator`);
+        return Promise.resolve(moderators);
       } catch (error) {
         return handleError(error);
       }

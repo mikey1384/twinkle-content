@@ -14,7 +14,7 @@ export default function ManagementReducer(state, action) {
       return {
         ...state,
         moderators: action.selectedAccountType
-          ? state.moderators.map(moderator =>
+          ? state.moderators.map((moderator) =>
               moderator.id === action.userId
                 ? {
                     ...moderator,
@@ -22,22 +22,24 @@ export default function ManagementReducer(state, action) {
                   }
                 : moderator
             )
-          : state.moderators.filter(moderator => moderator.id !== action.userId)
+          : state.moderators.filter(
+              (moderator) => moderator.id !== action.userId
+            )
       };
     case 'DELETE_ACCOUNT_TYPE':
       return {
         ...state,
         accountTypes: state.accountTypes.filter(
-          accountType => accountType.label !== action.accountTypeLabel
+          (accountType) => accountType.label !== action.accountTypeLabel
         ),
         moderators: state.moderators.filter(
-          moderator => moderator.userType !== action.accountTypeLabel
+          (moderator) => moderator.userType !== action.accountTypeLabel
         )
       };
     case 'EDIT_ACCOUNT_TYPE':
       return {
         ...state,
-        accountTypes: state.accountTypes.map(accountType =>
+        accountTypes: state.accountTypes.map((accountType) =>
           accountType.label === action.label
             ? {
                 ...accountType,
@@ -45,7 +47,7 @@ export default function ManagementReducer(state, action) {
               }
             : accountType
         ),
-        moderators: state.moderators.map(moderator => {
+        moderators: state.moderators.map((moderator) => {
           return {
             ...moderator,
             userType:
@@ -70,7 +72,13 @@ export default function ManagementReducer(state, action) {
       return {
         ...state,
         moderators: action.moderators,
+        numModeratorsShown: 10,
         moderatorsLoaded: true
+      };
+    case 'LOAD_MORE_MODERATORS':
+      return {
+        ...state,
+        numModeratorsShown: state.numModeratorsShown + 10
       };
     default:
       return state;

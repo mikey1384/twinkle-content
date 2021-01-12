@@ -48,6 +48,11 @@ export default function ManagementActions(dispatch) {
         type: 'LOAD_MODERATORS',
         moderators
       });
+    },
+    onLoadMoreModerators() {
+      return dispatch({
+        type: 'LOAD_MORE_MODERATORS'
+      });
     }
   };
 }
