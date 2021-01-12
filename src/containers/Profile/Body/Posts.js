@@ -266,7 +266,7 @@ export default function Posts({
       case 'watched':
         return `${username} has not watched any XP video so far`;
       case 'likes':
-        return `${username} doesn't like any content so far`;
+        return `${username} has not liked any content so far`;
     }
   }
 }
