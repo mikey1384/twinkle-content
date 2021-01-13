@@ -1,4 +1,4 @@
-export const clientVersion = '1.4.68';
+export const clientVersion = '1.4.69';
 export const defaultChatSubject = 'Welcome!';
 export const defaultContentState = {
   isEditing: false,
@@ -37,7 +37,7 @@ export const priceTable = {
   reward: 2
 };
 export const karmaPointTable = {
-  username: 100,
+  username: 50,
   file: {
     0: 500,
     1: 1000,
