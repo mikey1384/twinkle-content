@@ -734,9 +734,13 @@ export default function Body({
     });
     if (mounted.current) {
       onLoadComments({ ...data, contentId, contentType });
+    }
+    if (mounted.current) {
       onSetCommentsShown({ contentId, contentType });
     }
-    setLoadingComments(false);
+    if (mounted.current) {
+      setLoadingComments(false);
+    }
   }
 
   async function handleLikeClick({ isUnlike }) {

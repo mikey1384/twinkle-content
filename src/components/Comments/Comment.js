@@ -143,7 +143,6 @@ function Comment({
     originalThumbUrl,
     thumbUrlFromContext
   ]);
-
   const subjectState = useContentState({
     contentType: 'subject',
     contentId: subject.id
@@ -171,6 +170,10 @@ function Comment({
   const ReplyRefs = {};
   const RewardInterfaceRef = useRef(null);
 
+  const subjectId = useMemo(() => subjectState.id || subject.id, [
+    subject.id,
+    subjectState.id
+  ]);
   const isRecommendedByUser = useMemo(() => {
     return (
       recommendations.filter(
@@ -334,33 +337,29 @@ function Comment({
 
   useEffect(() => {
     if (mounted.current) {
-      if (
-        userId &&
-        subjectState.id &&
-        subjectState.prevSecretViewerId !== userId
-      ) {
+      if (userId && subjectId && subjectState.prevSecretViewerId !== userId) {
         handleCheckSecretShown();
       }
       if (!userId) {
         onChangeSpoilerStatus({
           shown: false,
-          subjectId: subjectState.id
+          subjectId
         });
       }
     }
 
     async function handleCheckSecretShown() {
-      const { responded } = await checkIfUserResponded(subjectState.id);
+      const { responded } = await checkIfUserResponded(subjectId);
       if (mounted.current) {
         onChangeSpoilerStatus({
           shown: responded,
-          subjectId: subjectState.id,
+          subjectId,
           prevSecretViewerId: userId
         });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [subjectState.id, subjectState.prevSecretViewerId, userId]);
+  }, [subjectId, subjectState.prevSecretViewerId, userId]);
 
   return !deleted && !comment.deleted ? (
     <>
@@ -664,12 +663,16 @@ function Comment({
       contentId: comment.id,
       contentType: 'comment'
     });
-    onEditDone({ editedComment, commentId: comment.id });
-    onSetIsEditing({
-      contentId: comment.id,
-      contentType: 'comment',
-      isEditing: false
-    });
+    if (mounted.current) {
+      onEditDone({ editedComment, commentId: comment.id });
+    }
+    if (mounted.current) {
+      onSetIsEditing({
+        contentId: comment.id,
+        contentType: 'comment',
+        isEditing: false
+      });
+    }
   }
 
   function handleLikeClick({ likes, isUnlike }) {
@@ -691,14 +694,18 @@ function Comment({
     if (numReplies > 0 && parent.contentType === 'comment') {
       setLoadingReplies(true);
       const { loadMoreButton, replies } = await loadReplies({ commentId });
-      onLoadReplies({
-        commentId,
-        loadMoreButton,
-        replies,
-        contentType: 'comment',
-        contentId: parent.contentId
-      });
-      setLoadingReplies(false);
+      if (mounted.current) {
+        onLoadReplies({
+          commentId,
+          loadMoreButton,
+          replies,
+          contentType: 'comment',
+          contentId: parent.contentId
+        });
+      }
+      if (mounted.current) {
+        setLoadingReplies(false);
+      }
     }
     ReplyInputAreaRef.current.focus();
   }
