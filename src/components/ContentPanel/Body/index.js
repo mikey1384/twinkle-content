@@ -726,6 +726,7 @@ export default function Body({
   }
 
   async function handleExpandComments() {
+    setLoadingComments(true);
     const data = await loadComments({
       contentType,
       contentId,
@@ -735,6 +736,7 @@ export default function Body({
       onLoadComments({ ...data, contentId, contentType });
       onSetCommentsShown({ contentId, contentType });
     }
+    setLoadingComments(false);
   }
 
   async function handleLikeClick({ isUnlike }) {
