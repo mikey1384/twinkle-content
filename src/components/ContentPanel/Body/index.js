@@ -726,7 +726,9 @@ export default function Body({
   }
 
   async function handleExpandComments() {
-    setLoadingComments(true);
+    if (numPreviewComments > 0) {
+      setLoadingComments(true);
+    }
     const data = await loadComments({
       contentType,
       contentId,
