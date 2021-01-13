@@ -170,10 +170,14 @@ function Comment({
   const ReplyRefs = {};
   const RewardInterfaceRef = useRef(null);
 
-  const subjectId = useMemo(() => subjectState.id || subject.id, [
-    subject.id,
-    subjectState.id
+  const subjectId = useMemo(() => subjectState?.id || subject?.id, [
+    subject?.id,
+    subjectState?.id
   ]);
+  const subjectHasSecretMessage = useMemo(
+    () => !!subjectState?.secretAnswer || !!subject?.secretAnswer,
+    [subject?.secretAnswer, subjectState?.secretAnswer]
+  );
   const isRecommendedByUser = useMemo(() => {
     return (
       recommendations.filter(
@@ -319,11 +323,15 @@ function Comment({
   );
 
   const isHidden = useMemo(() => {
-    const hasSecretAnswer = subject?.secretAnswer;
     const secretShown =
       subjectState.secretShown || subject?.uploader?.id === userId;
-    return hasSecretAnswer && !secretShown;
-  }, [subject, subjectState.secretShown, userId]);
+    return subjectHasSecretMessage && !secretShown;
+  }, [
+    subject?.uploader?.id,
+    subjectHasSecretMessage,
+    subjectState.secretShown,
+    userId
+  ]);
 
   const xpButtonDisabled = useMemo(() => {
     if (isPreview) return true;
@@ -337,7 +345,12 @@ function Comment({
 
   useEffect(() => {
     if (mounted.current) {
-      if (userId && subjectId && subjectState.prevSecretViewerId !== userId) {
+      if (
+        userId &&
+        subjectHasSecretMessage &&
+        subjectId &&
+        subjectState.prevSecretViewerId !== userId
+      ) {
         handleCheckSecretShown();
       }
       if (!userId) {
