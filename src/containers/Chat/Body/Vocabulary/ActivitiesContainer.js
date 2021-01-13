@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Activity from './Activity';
-import Button from 'components/Button';
+import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import { useAppContext, useChatContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { checkScrollIsAtTheBottom } from 'helpers';
@@ -81,14 +81,12 @@ function ActivitiesContainer({ style }) {
             width: '100%'
           }}
         >
-          <Button
+          <LoadMoreButton
             filled
             color="lightBlue"
-            disabled={loadingMore}
+            loading={loadingMore}
             onClick={handleLoadMore}
-          >
-            Load More
-          </Button>
+          />
         </div>
       ) : (
         <div

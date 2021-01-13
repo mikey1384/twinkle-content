@@ -257,9 +257,7 @@ export default function EditPlaylistModal({
                           transparent
                           loading={loadingMore}
                           onClick={handleLoadMoreVideos}
-                        >
-                          Load More
-                        </LoadMoreButton>
+                        />
                       </div>
                     )}
                   </div>

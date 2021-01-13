@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import Button from 'components/Button';
+import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import Body from './Body';
 import SearchInput from 'components/Texts/SearchInput';
 import Input from 'components/Texts/Input';
@@ -239,14 +239,12 @@ export default function SectionPanel({
         )}
         {loadMoreButtonShown && (
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <Button
+            <LoadMoreButton
               transparent
-              disabled={loading}
+              loading={loading}
               onClick={onLoadMore}
               style={{ fontSize: '2rem' }}
-            >
-              Load More
-            </Button>
+            />
           </div>
         )}
       </main>

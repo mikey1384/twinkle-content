@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Context from './Context';
 import CommentInputArea from './CommentInputArea';
 import Comment from './Comment';
-import Button from 'components/Button';
+import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import Loading from 'components/Loading';
 import { scrollElementToCenter } from 'helpers';
 import { css } from '@emotion/css';
@@ -254,10 +254,10 @@ function Comments({
 
   function renderLoadMoreButton() {
     return (autoExpand || commentsShown) && !isLoading ? (
-      <Button
+      <LoadMoreButton
         filled
-        color="lightBlue"
-        disabled={isLoadingMore}
+        color="green"
+        loading={isLoadingMore}
         onClick={handleLoadMoreComments}
         style={{
           width: '100%',
@@ -265,9 +265,7 @@ function Comments({
           justifyContent: 'center',
           marginTop: inputAtBottom ? 0 : '1rem'
         }}
-      >
-        Load More
-      </Button>
+      />
     ) : null;
   }
 

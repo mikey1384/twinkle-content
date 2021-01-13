@@ -56,7 +56,7 @@ export default function SelectUploadsForm({
           No Results
         </div>
       ) : (
-        uploads.map(uploadId => {
+        uploads.map((uploadId) => {
           return (
             <Selectable
               key={uploadId}
@@ -82,9 +82,7 @@ export default function SelectUploadsForm({
             transparent
             loading={loadingMore}
             onClick={loadMoreUploads}
-          >
-            Load More
-          </LoadMoreButton>
+          />
         </div>
       )}
     </div>

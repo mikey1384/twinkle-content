@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
+import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import MessageInput from './MessageInput';
 import DropdownButton from 'components/Buttons/DropdownButton';
@@ -478,14 +479,12 @@ export default function MessagesContainer({
                   width: '100%'
                 }}
               >
-                <Button
+                <LoadMoreButton
                   filled
                   color="lightBlue"
-                  disabled={loadMoreButtonLock}
+                  loading={loadMoreButtonLock}
                   onClick={handleLoadMore}
-                >
-                  Load More
-                </Button>
+                />
               </div>
             ) : (
               <div

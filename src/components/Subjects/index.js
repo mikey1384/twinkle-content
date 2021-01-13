@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import SubjectPanel from './SubjectPanel';
 import StartNewSubjectPanel from './StartNewSubjectPanel';
-import Button from 'components/Button';
+import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import LocalContext from './Context';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { useAppContext } from 'contexts';
@@ -63,6 +63,7 @@ export default function Subjects({
   const {
     requestHelpers: { loadSubjects }
   } = useAppContext();
+  const [loadingMore, setLoadingMore] = useState(false);
   return (
     <LocalContext.Provider
       value={{
@@ -101,14 +102,13 @@ export default function Subjects({
                 />
               ))}
             {loadMoreButton && (
-              <Button
+              <LoadMoreButton
                 style={{ width: '100%', borderRadius: 0 }}
                 filled
                 color="lightBlue"
+                loading={loadingMore}
                 onClick={handleLoadMoreSubjects}
-              >
-                Load More Subjects
-              </Button>
+              />
             )}
           </div>
         </ErrorBoundary>
@@ -117,11 +117,13 @@ export default function Subjects({
   );
 
   async function handleLoadMoreSubjects() {
+    setLoadingMore(true);
     const data = await loadSubjects({
       contentType,
       contentId,
       lastSubjectId: subjects[subjects.length - 1].id
     });
     onLoadMoreSubjects({ ...data, contentId, contentType });
+    setLoadingMore(false);
   }
 }

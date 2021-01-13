@@ -86,9 +86,7 @@ function Replies({
           color="lightBlue"
           loading={loadingMoreReplies}
           onClick={handleLoadMoreReplies}
-        >
-          Load More
-        </LoadMoreButton>
+        />
       )}
       {replies.map((reply, index) => {
         return (

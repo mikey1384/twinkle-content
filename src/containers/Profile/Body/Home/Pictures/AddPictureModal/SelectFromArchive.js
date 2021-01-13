@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useAppContext } from 'contexts';
 import Loading from 'components/Loading';
 import ArchivedPicture from './ArchivedPicture';
-import Button from 'components/Button';
+import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 
 SelectFromArchive.propTypes = {
   currentPictures: PropTypes.array.isRequired,
@@ -86,14 +86,12 @@ export default function SelectFromArchive({
         ))
       )}
       {loadMoreButtonShown && (
-        <Button
+        <LoadMoreButton
           style={{ marginTop: '2rem', width: '100%', fontSize: '2rem' }}
           transparent
           onClick={handleLoadMore}
-          disabled={loadingMore}
-        >
-          Load More
-        </Button>
+          loading={loadingMore}
+        />
       )}
     </div>
   );

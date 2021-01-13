@@ -135,9 +135,7 @@ export default function Attempts({ mission, missionId, onSetMissionState }) {
           color="green"
           loading={loadingMore}
           onClick={handleLoadMoreAttempts}
-        >
-          Load More button!
-        </LoadMoreButton>
+        />
       )}
     </div>
   );

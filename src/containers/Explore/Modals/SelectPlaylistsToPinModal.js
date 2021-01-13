@@ -3,6 +3,7 @@ import { useSearch } from 'helpers/hooks';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
+import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import CheckListGroup from 'components/CheckListGroup';
 import FilterBar from 'components/FilterBar';
 import Banner from 'components/Banner';
@@ -122,14 +123,12 @@ export default function SelectPlaylistsToPinModal({
                 />
               )}
               {displayedLoadMoreButton && !searching && (
-                <Button
+                <LoadMoreButton
                   style={{ marginTop: '2rem', width: '100%' }}
                   transparent
                   onClick={() => handleLoadMore(lastPlaylistId)}
-                  disabled={loadingMore}
-                >
-                  Load More
-                </Button>
+                  loading={loadingMore}
+                />
               )}
               {playlistsToPin.length === 0 && (
                 <p
@@ -152,7 +151,7 @@ export default function SelectPlaylistsToPinModal({
               <CheckListGroup
                 inputType="checkbox"
                 onSelect={handleDeselect}
-                listItems={selectedPlaylists.map(playlistId => ({
+                listItems={selectedPlaylists.map((playlistId) => ({
                   label: playlistObjectsRef.current[playlistId],
                   checked: true
                 }))}
@@ -214,7 +213,7 @@ export default function SelectPlaylistsToPinModal({
         {}
       )
     };
-    setSearchedPlaylists(searchedPlaylists =>
+    setSearchedPlaylists((searchedPlaylists) =>
       searchedPlaylists.concat(results)
     );
     setLoadingMore(false);
@@ -241,7 +240,7 @@ export default function SelectPlaylistsToPinModal({
     setSelectedPlaylists(
       !selectedPlaylists.includes(playlistId)
         ? [playlistId].concat(selectedPlaylists)
-        : selectedPlaylists.filter(id => id !== playlistId)
+        : selectedPlaylists.filter((id) => id !== playlistId)
     );
   }
 
@@ -263,7 +262,7 @@ export default function SelectPlaylistsToPinModal({
 
   function renderListItems() {
     const playlists = searchText ? searchedPlaylists : playlistsToPin;
-    return playlists.map(playlist => ({
+    return playlists.map((playlist) => ({
       label: playlist.title,
       checked: selectedPlaylists.includes(playlist.id)
     }));
