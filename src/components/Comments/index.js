@@ -256,7 +256,7 @@ function Comments({
     return (autoExpand || commentsShown) && !isLoading ? (
       <LoadMoreButton
         filled
-        color="green"
+        color="lightBlue"
         loading={isLoadingMore}
         onClick={handleLoadMoreComments}
         style={{
