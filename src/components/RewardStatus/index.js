@@ -30,18 +30,16 @@ function RewardStatus({
   const { userId } = useMyState();
   const [numLoaded, setNumLoaded] = useState(2);
   rewards = useMemo(() => {
-    const finalReward = rewards.length > 0 ? rewards[rewards.length - 1] : {};
     const rewardsWithComment = rewards.filter(
-      (reward) =>
-        !stringIsEmpty(reward.rewardComment) && reward.id !== finalReward.id
+      (reward) => !stringIsEmpty(reward.rewardComment)
     );
-    const rewardsWithoutComment = rewards.filter(
-      (reward) =>
-        stringIsEmpty(reward.rewardComment) && reward.id !== finalReward.id
+    if (rewardsWithComment.length > 2) {
+      setNumLoaded(3);
+    }
+    const rewardsWithoutComment = rewards.filter((reward) =>
+      stringIsEmpty(reward.rewardComment)
     );
-    return rewardsWithoutComment
-      .concat(rewardsWithComment)
-      .concat(finalReward.id ? [finalReward] : []);
+    return rewardsWithoutComment.concat(rewardsWithComment);
   }, [rewards]);
   const maxRewards = useMemo(() => returnMaxRewards({ rewardLevel }), [
     rewardLevel
