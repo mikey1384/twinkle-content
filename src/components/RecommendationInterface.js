@@ -86,51 +86,59 @@ export default function RecommendationInterface({
         borderLeft: 'none',
         borderRight: 'none',
         marginBottom: '1rem',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
         padding: '1rem',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
         ...style
       }}
     >
       {recommending && <Loading style={{ position: 'absolute' }} />}
-      <div style={{ fontWeight: 'bold', opacity: recommending ? 0 : 1 }}>
-        <span style={{ marginRight: '0.7rem' }}>
-          {isRecommendedByUser ? (
-            <>
-              <span style={{ color: Color.rose(), fontWeight: 'bold' }}>
-                Cancel
-              </span>{' '}
-              your recommendation?
-            </>
-          ) : (
-            `Recommend this ${
-              contentType === 'pass' ? 'accomplishment' : contentType
-            }?`
-          )}
-          {priceText}
-        </span>
-      </div>
-      {!recommending && (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Button
-            disabled={disabled}
-            onClick={handleRecommend}
-            color="darkBlue"
-            skeuomorphic
-          >
-            Yes
-          </Button>
-          <Button
-            onClick={onHide}
-            style={{ marginLeft: '0.7rem' }}
-            color="rose"
-            skeuomorphic
-          >
-            No
-          </Button>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+        }}
+      >
+        <div style={{ fontWeight: 'bold', opacity: recommending ? 0 : 1 }}>
+          <span style={{ marginRight: '0.7rem' }}>
+            {isRecommendedByUser ? (
+              <>
+                <span style={{ color: Color.rose(), fontWeight: 'bold' }}>
+                  Cancel
+                </span>{' '}
+                your recommendation?
+              </>
+            ) : (
+              `Recommend this ${
+                contentType === 'pass' ? 'accomplishment' : contentType
+              }?`
+            )}
+            {priceText}
+          </span>
         </div>
-      )}
+        {!recommending && (
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Button
+              disabled={disabled}
+              onClick={handleRecommend}
+              color="darkBlue"
+              skeuomorphic
+            >
+              Yes
+            </Button>
+            <Button
+              onClick={onHide}
+              style={{ marginLeft: '0.7rem' }}
+              color="rose"
+              skeuomorphic
+            >
+              No
+            </Button>
+          </div>
+        )}
+      </div>
     </ErrorBoundary>
   );
 
