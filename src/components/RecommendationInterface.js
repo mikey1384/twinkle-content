@@ -86,24 +86,22 @@ export default function RecommendationInterface({
       }}
     >
       {recommending && <Loading style={{ position: 'absolute' }} />}
-      <div>
-        <div style={{ fontWeight: 'bold', opacity: recommending ? 0 : 1 }}>
-          <span style={{ marginRight: '0.7rem' }}>
-            {isRecommendedByUser ? (
-              <>
-                <span style={{ color: Color.rose(), fontWeight: 'bold' }}>
-                  Cancel
-                </span>{' '}
-                your recommendation?
-              </>
-            ) : (
-              `Recommend this ${
-                contentType === 'pass' ? 'accomplishment' : contentType
-              }?`
-            )}
-            {priceText}
-          </span>
-        </div>
+      <div style={{ fontWeight: 'bold', opacity: recommending ? 0 : 1 }}>
+        <span style={{ marginRight: '0.7rem' }}>
+          {isRecommendedByUser ? (
+            <>
+              <span style={{ color: Color.rose(), fontWeight: 'bold' }}>
+                Cancel
+              </span>{' '}
+              your recommendation?
+            </>
+          ) : (
+            `Recommend this ${
+              contentType === 'pass' ? 'accomplishment' : contentType
+            }?`
+          )}
+          {priceText}
+        </span>
       </div>
       {!recommending && (
         <div style={{ display: 'flex', alignItems: 'center' }}>
