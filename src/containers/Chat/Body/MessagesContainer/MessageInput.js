@@ -55,6 +55,8 @@ function MessageInput({
   const prevChannelId = useRef(currentChannelId);
   const textForThisChannel = state['chat' + currentChannelId]?.text || '';
   const textRef = useRef(textForThisChannel);
+  const inputCoolingDown = useRef(false);
+  const timerRef = useRef(null);
   const [text, setText] = useState(textForThisChannel);
 
   useEffect(() => {
@@ -223,6 +225,14 @@ function MessageInput({
   }
 
   async function handleSendMsg() {
+    if (inputCoolingDown.current) {
+      return;
+    }
+    clearTimeout(timerRef.current);
+    inputCoolingDown.current = true;
+    timerRef.current = setTimeout(() => {
+      inputCoolingDown.current = false;
+    }, 1000);
     if (banned && recepientId !== 5) {
       return;
     }
