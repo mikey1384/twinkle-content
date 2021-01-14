@@ -228,7 +228,6 @@ function MessageInput({
     if (inputCoolingDown.current) {
       return;
     }
-    clearTimeout(timerRef.current);
     inputCoolingDown.current = true;
     timerRef.current = setTimeout(() => {
       inputCoolingDown.current = false;
