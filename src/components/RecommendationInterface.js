@@ -82,6 +82,7 @@ export default function RecommendationInterface({
   return hidden ? null : (
     <ErrorBoundary
       style={{
+        position: 'relative',
         border: `1px ${Color.borderGray()} solid`,
         borderLeft: 'none',
         borderRight: 'none',
@@ -93,7 +94,9 @@ export default function RecommendationInterface({
         ...style
       }}
     >
-      {recommending && <Loading style={{ position: 'absolute' }} />}
+      {recommending && (
+        <Loading style={{ position: 'absolute', width: '100%', left: 0 }} />
+      )}
       <div
         style={{
           display: 'flex',
