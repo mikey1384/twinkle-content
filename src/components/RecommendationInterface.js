@@ -13,7 +13,6 @@ RecommendationInterface.propTypes = {
   contentId: PropTypes.number.isRequired,
   contentType: PropTypes.string.isRequired,
   onHide: PropTypes.func.isRequired,
-  onRecommend: PropTypes.func,
   recommendations: PropTypes.array,
   style: PropTypes.object,
   uploaderId: PropTypes.number
@@ -23,13 +22,13 @@ export default function RecommendationInterface({
   contentId,
   contentType,
   onHide,
-  onRecommend,
   recommendations,
   style,
   uploaderId
 }) {
   const { userId, twinkleCoins } = useMyState();
   const [recommending, setRecommending] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const mounted = useRef(true);
 
   useEffect(() => {
@@ -80,7 +79,7 @@ export default function RecommendationInterface({
     ) : null;
   }, [isRecommendedByUser]);
 
-  return (
+  return hidden ? null : (
     <ErrorBoundary
       style={{
         border: `1px ${Color.borderGray()} solid`,
@@ -152,13 +151,10 @@ export default function RecommendationInterface({
         onUpdateUserCoins({ coins, userId });
       }
       if (mounted.current) {
-        setRecommending(false);
+        setHidden(true);
       }
       if (recommendations && mounted.current) {
         onRecommendContent({ contentId, contentType, recommendations });
-      }
-      if (mounted.current) {
-        onRecommend?.(recommendations);
       }
       if (mounted.current) {
         onHide();
