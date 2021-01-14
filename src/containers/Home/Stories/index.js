@@ -6,6 +6,7 @@ import Banner from 'components/Banner';
 import ErrorBoundary from 'components/ErrorBoundary';
 import HomeFilter from './HomeFilter';
 import ContentPanel from 'components/ContentPanel';
+import Icon from 'components/Icon';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import { useInfiniteScroll, useMyState } from 'helpers/hooks';
@@ -192,7 +193,9 @@ export default function Stories() {
                 <Banner
                   color="gold"
                   onClick={() => window.location.reload()}
-                  style={{ marginBottom: '1rem' }}
+                  style={{
+                    marginBottom: '1rem'
+                  }}
                 >
                   Tap to See New Posts!
                 </Banner>
@@ -201,10 +204,16 @@ export default function Stories() {
                 <Banner
                   color="gold"
                   onClick={handleFetchNewFeeds}
-                  style={{ marginBottom: '1rem' }}
+                  style={{
+                    marginBottom: '1rem',
+                    opacity: loadingNewFeeds ? 0.5 : 1
+                  }}
                 >
                   Tap to See {numNewPosts} new Post
                   {numNewPosts > 1 ? 's' : ''}
+                  {loadingNewFeeds && (
+                    <Icon style={{ marginLeft: '1rem' }} icon="spinner" pulse />
+                  )}
                 </Banner>
               )}
               {ContentPanels}
