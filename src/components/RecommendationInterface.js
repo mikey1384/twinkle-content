@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Button from 'components/Button';
@@ -30,6 +30,15 @@ export default function RecommendationInterface({
 }) {
   const { userId, twinkleCoins } = useMyState();
   const [recommending, setRecommending] = useState(false);
+  const mounted = useRef(true);
+
+  useEffect(() => {
+    mounted.current = true;
+
+    return function onDismount() {
+      mounted.current = false;
+    };
+  }, []);
 
   const {
     requestHelpers: { recommendContent }
@@ -139,12 +148,21 @@ export default function RecommendationInterface({
         uploaderId,
         currentRecommendations
       });
-      onUpdateUserCoins({ coins, userId });
-      if (recommendations) {
+      if (mounted.current) {
+        onUpdateUserCoins({ coins, userId });
+      }
+      if (mounted.current) {
+        setRecommending(false);
+      }
+      if (recommendations && mounted.current) {
         onRecommendContent({ contentId, contentType, recommendations });
       }
-      onRecommend?.(recommendations);
-      onHide();
+      if (mounted.current) {
+        onRecommend?.(recommendations);
+      }
+      if (mounted.current) {
+        onHide();
+      }
     } catch (error) {
       console.error(error);
       onHide();
