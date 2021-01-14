@@ -88,7 +88,7 @@ export default function RecommendationInterface({
       {recommending && <Loading style={{ position: 'absolute' }} />}
       <div>
         <div>
-          <span style={{ fontWeight: 'bold' }}>
+          <span style={{ fontWeight: 'bold', opacity: recommending ? 0 : 1 }}>
             <span style={{ marginRight: '0.7rem' }}>
               {isRecommendedByUser ? (
                 <>
