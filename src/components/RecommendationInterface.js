@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
+import Loading from 'components/Loading';
 import { Color } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
 import { priceTable } from 'constants/defaultValues';
@@ -70,7 +71,7 @@ export default function RecommendationInterface({
     ) : null;
   }, [isRecommendedByUser]);
 
-  return recommending ? null : (
+  return (
     <ErrorBoundary
       style={{
         border: `1px ${Color.borderGray()} solid`,
@@ -84,6 +85,7 @@ export default function RecommendationInterface({
         ...style
       }}
     >
+      {recommending && <Loading style={{ position: 'absolute' }} />}
       <div>
         <div>
           <span style={{ fontWeight: 'bold' }}>
@@ -105,24 +107,26 @@ export default function RecommendationInterface({
           </span>
         </div>
       </div>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <Button
-          disabled={disabled}
-          onClick={handleRecommend}
-          color="darkBlue"
-          skeuomorphic
-        >
-          Yes
-        </Button>
-        <Button
-          onClick={onHide}
-          style={{ marginLeft: '0.7rem' }}
-          color="rose"
-          skeuomorphic
-        >
-          No
-        </Button>
-      </div>
+      {!recommending && (
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <Button
+            disabled={disabled}
+            onClick={handleRecommend}
+            color="darkBlue"
+            skeuomorphic
+          >
+            Yes
+          </Button>
+          <Button
+            onClick={onHide}
+            style={{ marginLeft: '0.7rem' }}
+            color="rose"
+            skeuomorphic
+          >
+            No
+          </Button>
+        </div>
+      )}
     </ErrorBoundary>
   );
 
