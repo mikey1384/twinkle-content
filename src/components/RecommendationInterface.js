@@ -148,10 +148,10 @@ export default function RecommendationInterface({
         currentRecommendations
       });
       if (mounted.current) {
-        onUpdateUserCoins({ coins, userId });
+        setHidden(true);
       }
       if (mounted.current) {
-        setHidden(true);
+        onUpdateUserCoins({ coins, userId });
       }
       if (recommendations && mounted.current) {
         onRecommendContent({ contentId, contentType, recommendations });
