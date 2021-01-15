@@ -231,7 +231,7 @@ function MessageInput({
     inputCoolingDown.current = true;
     timerRef.current = setTimeout(() => {
       inputCoolingDown.current = false;
-    }, 1000);
+    }, 500);
     if (banned && recepientId !== 5) {
       return;
     }
