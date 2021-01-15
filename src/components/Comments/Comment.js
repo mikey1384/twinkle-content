@@ -529,11 +529,19 @@ function Comment({
                               {numReplies > 1 &&
                               parent.contentType === 'comment'
                                 ? 'Replies'
-                                : 'Reply'}{' '}
-                              {numReplies > 0 &&
-                              parent.contentType === 'comment'
-                                ? ` (${numReplies})`
-                                : ''}
+                                : 'Reply'}
+                              {loadingReplies ? (
+                                <Icon
+                                  style={{ marginLeft: '0.7rem' }}
+                                  icon="spinner"
+                                  pulse
+                                />
+                              ) : numReplies > 0 &&
+                                parent.contentType === 'comment' ? (
+                                ` (${numReplies})`
+                              ) : (
+                                ''
+                              )}
                             </span>
                           </Button>
                           {userCanRewardThis && (
