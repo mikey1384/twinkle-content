@@ -333,9 +333,17 @@ function Reply({
                           <Icon icon="comment-alt" />
                           <span style={{ marginLeft: '0.7rem' }}>
                             {reply.numReplies > 1 ? 'Replies' : 'Reply'}
-                            {reply.numReplies > 0
-                              ? ` (${reply.numReplies})`
-                              : ''}
+                            {loadingReplies ? (
+                              <Icon
+                                style={{ marginLeft: '0.7rem' }}
+                                icon="spinner"
+                                pulse
+                              />
+                            ) : reply.numReplies > 0 ? (
+                              ` (${reply.numReplies})`
+                            ) : (
+                              ''
+                            )}
                           </span>
                         </Button>
                         {userCanRewardThis && (
