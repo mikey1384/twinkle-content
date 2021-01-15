@@ -407,7 +407,10 @@ function XPVideoPlayer({
     }
 
     async function increaseXPMeter() {
-      if (PlayerRef.current?.getInternalPlayer()?.isMuted()) {
+      if (
+        PlayerRef.current?.getInternalPlayer()?.isMuted() ||
+        PlayerRef.current?.getInternalPlayer()?.getVolume() === 0
+      ) {
         return;
       }
       const requiredViewDuration =
