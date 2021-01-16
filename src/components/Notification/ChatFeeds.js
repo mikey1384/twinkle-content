@@ -36,6 +36,7 @@ function ChatFeeds({
   userId,
   username
 }) {
+  const [loadingChat, setLoadingChat] = useState(false);
   const history = useHistory();
   const {
     requestHelpers: { loadChat, loadChatChannel }
@@ -118,9 +119,17 @@ function ChatFeeds({
           {content}
         </p>
         <span style={{ color: Color.darkerGray() }}>{Details}</span>
-        <Button skeuomorphic color="darkerGray" onClick={initChatFromThis}>
+        <Button
+          disabled={loadingChat}
+          skeuomorphic
+          color="darkerGray"
+          onClick={initChatFromThis}
+        >
           <Icon icon="comments" />
           <span style={{ marginLeft: '1rem' }}>Join Conversation</span>
+          {loadingChat && (
+            <Icon style={{ marginLeft: '0.7rem' }} icon="spinner" pulse />
+          )}
         </Button>
       </nav>
     </RoundList>
@@ -128,6 +137,7 @@ function ChatFeeds({
 
   async function initChatFromThis() {
     if (myId) {
+      setLoadingChat(true);
       if (!loaded) {
         const data = await loadChat({ channelId: 2 });
         onInitChat(data);
