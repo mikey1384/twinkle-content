@@ -108,11 +108,13 @@ export default function InputForm({
   useEffect(() => {
     return function saveTextBeforeUnmount() {
       mounted.current = false;
-      onEnterComment({
-        contentType,
-        contentId,
-        text: textRef.current
-      });
+      if (textRef.current !== prevText) {
+        onEnterComment({
+          contentType,
+          contentId,
+          text: textRef.current
+        });
+      }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
