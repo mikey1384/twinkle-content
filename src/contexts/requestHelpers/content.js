@@ -110,17 +110,6 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async deleteVideo({ videoId, lastVideoId }) {
-      try {
-        const { data } = await request.delete(
-          `${URL}/video?videoId=${videoId}&lastVideoId=${lastVideoId}`,
-          auth()
-        );
-        return Promise.resolve(data);
-      } catch (error) {
-        return handleError(error);
-      }
-    },
     async editContent({
       contentId,
       editedComment,
