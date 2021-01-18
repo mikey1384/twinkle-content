@@ -4,7 +4,6 @@ import InvalidPage from 'components/InvalidPage';
 import Routes from './Routes';
 import Loading from 'components/Loading';
 import SideMenu from 'components/SideMenu';
-import Icon from 'components/Icon';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import { NavLink } from 'react-router-dom';
@@ -30,18 +29,12 @@ export default function Management({ location }) {
     <Loading />
   ) : managementLevel > 0 ? (
     <div>
-      <SideMenu>
-        <NavLink to="/subjects" activeClassName="active">
-          <Icon icon="bolt" />
-          <span style={{ marginLeft: '1.1rem' }}>Subjects</span>
+      <SideMenu style={{ top: 'CALC(50vh - 8rem)' }}>
+        <NavLink to="/management" exact activeClassName="active">
+          <span style={{ marginLeft: '1.1rem' }}>Account Mgmt</span>
         </NavLink>
-        <NavLink to="/videos" activeClassName="active">
-          <Icon icon="film" />
-          <span style={{ marginLeft: '1.1rem' }}>Videos</span>
-        </NavLink>
-        <NavLink to="/links" activeClassName="active">
-          <Icon icon="book" />
-          <span style={{ marginLeft: '1.1rem' }}>Links</span>
+        <NavLink to="/management/mod-activities" activeClassName="active">
+          <span style={{ marginLeft: '1.1rem' }}>Mod Activities</span>
         </NavLink>
       </SideMenu>
       <Routes

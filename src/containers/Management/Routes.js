@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Main from './Main';
 import Notification from 'components/Notification';
+import ModActivities from './ModActivities';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import { Route, Switch } from 'react-router-dom';
@@ -26,7 +27,8 @@ export default function Routes({ location, className }) {
         `}
       >
         <Switch>
-          <Route path="/" component={Main} />
+          <Route path="/management" exact component={Main} />
+          <Route path="/management/mod-activities" component={ModActivities} />
         </Switch>
       </div>
       <Notification
