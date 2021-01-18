@@ -11,7 +11,7 @@ import { useExploreContext } from 'contexts';
 import { useScrollToBottom } from 'helpers/hooks';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Notification from 'components/Notification';
-import SideMenu from './SideMenu';
+import SideMenu from 'components/SideMenu';
 import Search from './Search';
 import Categories from './Categories';
 import Icon from 'components/Icon';

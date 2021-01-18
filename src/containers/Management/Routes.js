@@ -7,16 +7,17 @@ import { mobileMaxWidth } from 'constants/css';
 import { Route, Switch } from 'react-router-dom';
 
 Routes.propTypes = {
+  className: PropTypes.string,
   location: PropTypes.object
 };
 
-export default function Routes({ location }) {
+export default function Routes({ location, className }) {
   return (
-    <div style={{ display: 'flex', width: '100%' }}>
+    <div className={className}>
       <div
         className={css`
           margin-top: 1rem;
-          width: CALC(100vw - 34rem);
+          width: CALC(100vw - 54rem);
           margin-left: 1rem;
           @media (max-width: ${mobileMaxWidth}) {
             margin-left: 0;
