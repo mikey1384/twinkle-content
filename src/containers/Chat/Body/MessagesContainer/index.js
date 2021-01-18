@@ -146,6 +146,7 @@ export default function MessagesContainer({
   const MessagesContainerRef = useRef({});
   const FileInputRef = useRef(null);
   const ChatInputRef = useRef(null);
+  const favoritingRef = useRef(false);
   const timerRef = useRef(null);
   const menuLabel = isMobile(navigator) ? '' : 'Menu';
 
@@ -980,8 +981,12 @@ export default function MessagesContainer({
   }
 
   async function handleFavoriteClick() {
-    const favorited = await putFavoriteChannel(selectedChannelId);
-    onSetFavoriteChannel({ channelId: selectedChannelId, favorited });
+    if (!favoritingRef.current) {
+      favoritingRef.current = true;
+      const favorited = await putFavoriteChannel(selectedChannelId);
+      onSetFavoriteChannel({ channelId: selectedChannelId, favorited });
+    }
+    favoritingRef.current = false;
   }
 
   async function handleMessageSubmit({
