@@ -20,7 +20,11 @@ export default function ModActivities() {
   return (
     <div>
       {deletedPosts.map((post) => (
-        <DeletedContent key={post.id} />
+        <DeletedContent
+          key={post.id}
+          contentId={post.contentId}
+          contentType={post.type}
+        />
       ))}
     </div>
   );
