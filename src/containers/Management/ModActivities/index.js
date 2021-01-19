@@ -11,7 +11,6 @@ export default function ModActivities() {
     init();
     async function init() {
       const data = await loadDeletedPosts();
-      console.log(data);
       setDeletedPosts(data);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
