@@ -1,9 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useAppContext } from 'contexts';
+import DeletedContent from './DeletedContent';
 
 export default function ModActivities() {
+  const [deletedPosts, setDeletedPosts] = useState([]);
+  const {
+    requestHelpers: { loadDeletedPosts }
+  } = useAppContext();
+  useEffect(() => {
+    init();
+    async function init() {
+      const data = await loadDeletedPosts();
+      console.log(data);
+      setDeletedPosts(data);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div>
-      <div>this is mod activities</div>
+      {deletedPosts.map((post) => (
+        <DeletedContent key={post.id} />
+      ))}
     </div>
   );
 }
