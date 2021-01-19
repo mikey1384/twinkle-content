@@ -277,7 +277,8 @@ export default function ContentPanel({
                     </div>
                   )}
                   {contentType === 'comment' &&
-                    contentState.rootType === 'video' && (
+                    contentState.rootType === 'video' &&
+                    !rootObj.notFound && (
                       <ContentListItem
                         style={{
                           position: 'relative'
