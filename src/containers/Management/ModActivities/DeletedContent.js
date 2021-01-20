@@ -298,8 +298,14 @@ export default function DeletedContent({ contentId, contentType, style }) {
             />
           </div>
           <div style={{ display: 'flex' }}>
-            <Button skeuomorphic>Delete Permanently</Button>
-            <Button style={{ marginLeft: '1rem' }} skeuomorphic>
+            <Button color="red" skeuomorphic>
+              Delete Permanently
+            </Button>
+            <Button
+              color="darkerGray"
+              style={{ marginLeft: '1rem' }}
+              skeuomorphic
+            >
               Undo
             </Button>
           </div>
