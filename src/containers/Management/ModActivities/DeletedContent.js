@@ -65,6 +65,7 @@ export default function DeletedContent({ contentId, contentType, style }) {
         }
       `}
     >
+      {contentType}
       <div style={{ padding: '1rem', height: 'auto' }}>
         <div
           style={{
