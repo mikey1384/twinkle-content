@@ -5,6 +5,7 @@ import VideoThumbImage from 'components/VideoThumbImage';
 import Embedly from 'components/Embedly';
 import UsernameText from 'components/Texts/UsernameText';
 import ReactPlayer from 'react-player';
+import Button from 'components/Button';
 import { css } from '@emotion/css';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { useAppContext } from 'contexts';
@@ -22,6 +23,7 @@ export default function DeletedContent({ contentId, contentType, style }) {
   const [contentObj, setContentObj] = useState({});
   const {
     content,
+    deleter,
     description,
     fileName,
     filePath,
@@ -259,11 +261,50 @@ export default function DeletedContent({ contentId, contentType, style }) {
           )}
         </div>
         {secretAnswer && (
-          <div style={{ padding: '1rem', background: Color.ivory() }}>
+          <div
+            style={{
+              padding: '1rem',
+              background: Color.ivory(),
+              borderTop: `1px solid ${Color.borderGray()}`,
+              borderBottom: `1px solid ${Color.borderGray()}`
+            }}
+          >
             secretAnswer
           </div>
         )}
       </div>
+      {deleter && (
+        <div
+          style={{
+            marginTop: '1rem',
+            padding: '1rem',
+            background: Color.darkerGray(),
+            marginLeft: '-1px',
+            marginRight: '-1px',
+            fontSize: '1.5rem',
+            marginBottom: '1rem',
+            color: '#fff',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}
+        >
+          <div>
+            Deleted by{' '}
+            <UsernameText
+              color="#fff"
+              style={{ fontSize: '1.5rem' }}
+              user={deleter}
+            />
+          </div>
+          <div style={{ display: 'flex' }}>
+            <Button skeuomorphic>Delete Permanently</Button>
+            <Button style={{ marginLeft: '1rem' }} skeuomorphic>
+              Undo
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
