@@ -1,28 +1,269 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
+import ContentFileViewer from 'components/ContentFileViewer';
+import VideoThumbImage from 'components/VideoThumbImage';
+import Embedly from 'components/Embedly';
+import UsernameText from 'components/Texts/UsernameText';
+import ReactPlayer from 'react-player';
+import { css } from '@emotion/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { useAppContext } from 'contexts';
 
 DeletedContent.propTypes = {
   contentId: PropTypes.number,
-  contentType: PropTypes.string
+  contentType: PropTypes.string,
+  style: PropTypes.object
 };
 
-export default function DeletedContent({ contentId, contentType }) {
+export default function DeletedContent({ contentId, contentType, style }) {
   const {
     requestHelpers: { loadDeletedContent }
   } = useAppContext();
+  const [contentObj, setContentObj] = useState({});
+  const {
+    content,
+    description,
+    fileName,
+    filePath,
+    fileSize,
+    rootObj,
+    secretAnswer,
+    title,
+    thumbUrl,
+    uploader = {}
+  } = useMemo(() => contentObj, [contentObj]);
   useEffect(() => {
     init();
     async function init() {
       const data = await loadDeletedContent({ contentId, contentType });
-      console.log(data);
+      setContentObj(data);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div>
-      <div>deleted</div>
+    <div
+      style={{
+        cursor: 'pointer',
+        borderRadius,
+        height: 'auto',
+        ...style
+      }}
+      className={css`
+        border: 1px solid ${Color.borderGray()};
+        background: '#fff';
+        .label {
+          color: ${Color.black()};
+        }
+        margin-top: 0;
+        @media (max-width: ${mobileMaxWidth}) {
+          margin-top: -0.5rem;
+          border-left: 0;
+          border-right: 0;
+        }
+      `}
+    >
+      <div style={{ padding: '1rem', height: 'auto' }}>
+        <div
+          style={{
+            display: 'flex',
+            width: '100%',
+            fontSize: '1.3rem',
+            height: 'auto'
+          }}
+        >
+          {contentType === 'video' && (
+            <div>
+              <div>
+                <UsernameText style={{ fontSize: '1.5rem' }} user={uploader} />
+              </div>
+              <p
+                style={{
+                  marginTop: '1rem',
+                  fontSize: '1.7rem',
+                  fontWeight: 'bold',
+                  lineHeight: 1.5,
+                  overflowWrap: 'break-word',
+                  wordBreak: 'break-word'
+                }}
+                className="label"
+              >
+                {title}
+              </p>
+              <div
+                style={{
+                  marginTop: '1rem',
+                  color: Color.darkerGray(),
+                  overflow: 'hidden',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 4,
+                  WebkitBoxOrient: 'vertical'
+                }}
+              >
+                {description}
+              </div>
+              <div
+                style={{
+                  width: '100%',
+                  position: 'relative',
+                  height: 'auto'
+                }}
+              >
+                <ReactPlayer
+                  style={{ position: 'relative' }}
+                  url={`https://www.youtube.com/watch?v=${content}`}
+                  controls
+                />
+              </div>
+            </div>
+          )}
+          {contentType === 'comment' && (
+            <div
+              style={{
+                display: 'flex',
+                width: '100%',
+                flexDirection: 'column'
+              }}
+            >
+              <div>
+                <UsernameText style={{ fontSize: '1.5rem' }} user={uploader} />
+              </div>
+              <div
+                style={{
+                  marginTop: '1rem',
+                  fontSize: '1.5rem',
+                  width: '100%',
+                  textAlign: 'left',
+                  color: Color.darkerGray(),
+                  whiteSpace: 'pre-wrap',
+                  overflowWrap: 'break-word',
+                  wordBreak: 'break-word',
+                  overflow: 'hidden',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 4,
+                  WebkitBoxOrient: 'vertical'
+                }}
+              >
+                {content}
+              </div>
+            </div>
+          )}
+          <div
+            style={{
+              marginTop: '1rem',
+              width: '100%',
+              height: 'auto',
+              padding: '1rem 0'
+            }}
+          >
+            {contentType === 'subject' && (
+              <div
+                style={{
+                  display: 'flex',
+                  width: '100%'
+                }}
+              >
+                <div
+                  className="label"
+                  style={{
+                    width: '100%',
+                    overflowWrap: 'break-word',
+                    wordBreak: 'break-word'
+                  }}
+                >
+                  <p style={{ lineClamp: 2, fontSize: '2.5rem' }}>{title}</p>
+                  {uploader.username && (
+                    <p style={{ color: Color.gray() }}>
+                      Posted by {uploader.username}
+                    </p>
+                  )}
+                  {description && (
+                    <div
+                      style={{
+                        marginTop: '1rem',
+                        width: '100%',
+                        textAlign: 'left',
+                        color: Color.darkerGray(),
+                        whiteSpace: 'pre-wrap',
+                        overflowWrap: 'break-word',
+                        wordBreak: 'break-word',
+                        overflow: 'hidden',
+                        display: '-webkit-box',
+                        WebkitLineClamp: 4,
+                        WebkitBoxOrient: 'vertical'
+                      }}
+                    >
+                      {description}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+            {contentType === 'url' && (
+              <div>
+                <span
+                  style={{
+                    fontWeight: 'bold',
+                    fontSize: '2rem'
+                  }}
+                  className="label"
+                >
+                  {title}
+                </span>
+                <Embedly
+                  small
+                  noLink
+                  style={{ marginTop: '0.5rem' }}
+                  contentId={contentId}
+                />
+              </div>
+            )}
+          </div>
+          {contentType === 'subject' && rootObj?.id && (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                width: '25%',
+                marginBottom: secretAnswer ? '1rem' : ''
+              }}
+            >
+              {rootObj?.contentType === 'video' && (
+                <VideoThumbImage
+                  rewardLevel={rootObj.rewardLevel}
+                  videoId={rootObj.id}
+                  src={`https://img.youtube.com/vi/${rootObj.content}/mqdefault.jpg`}
+                />
+              )}
+              {rootObj?.contentType === 'url' && (
+                <Embedly imageOnly noLink contentId={rootObj?.id} />
+              )}
+            </div>
+          )}
+          {filePath && (
+            <ContentFileViewer
+              contentId={contentId}
+              contentType={contentType}
+              fileName={fileName}
+              filePath={filePath}
+              fileSize={fileSize}
+              thumbUrl={thumbUrl}
+              videoHeight="100%"
+              isThumb
+              style={{
+                display: 'flex',
+                width: '15rem',
+                height: '11rem'
+              }}
+            />
+          )}
+        </div>
+        {secretAnswer && (
+          <div style={{ padding: '1rem', background: Color.ivory() }}>
+            secretAnswer
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -18,13 +18,15 @@ export default function ModActivities() {
 
   return (
     <div>
-      {deletedPosts.map((post) => (
+      {deletedPosts.map((post, index) => (
         <DeletedContent
           key={post.id}
           contentId={post.contentId}
           contentType={post.type}
+          style={{ marginTop: index === 0 ? 0 : '1rem' }}
         />
       ))}
+      <div style={{ height: '10rem' }} />
     </div>
   );
 }
