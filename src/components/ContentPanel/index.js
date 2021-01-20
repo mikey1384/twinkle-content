@@ -277,8 +277,7 @@ export default function ContentPanel({
                     </div>
                   )}
                   {contentType === 'comment' &&
-                    contentState.rootType === 'video' &&
-                    !rootObj.notFound && (
+                    contentState.rootType === 'video' && (
                       <ContentListItem
                         style={{
                           position: 'relative'
@@ -289,7 +288,8 @@ export default function ContentPanel({
                       />
                     )}
                   {(contentType === 'comment' || contentType === 'subject') &&
-                    rootType === 'url' && (
+                    rootType === 'url' &&
+                    !rootObj.notFound && (
                       <div
                         className={css`
                           padding: 1rem;

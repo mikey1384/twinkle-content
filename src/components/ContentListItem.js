@@ -24,7 +24,7 @@ ContentListItem.propTypes = {
 function ContentListItem({
   onClick = () => {},
   contentObj,
-  contentObj: { id: contentId, contentType },
+  contentObj: { id: contentId, contentType, notFound },
   expandable,
   selectable,
   selected,
@@ -63,7 +63,7 @@ function ContentListItem({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loaded]);
 
-  return (
+  return notFound ? null : (
     <div
       onClick={onClick}
       style={{
