@@ -22,6 +22,8 @@ export default function DeletedContent({ contentId, contentType, style }) {
   } = useAppContext();
   const [contentObj, setContentObj] = useState({});
   const {
+    actualTitle,
+    actualDescription,
     content,
     deleter,
     description,
@@ -230,6 +232,8 @@ export default function DeletedContent({ contentId, contentType, style }) {
                     style={{ marginTop: '0.5rem' }}
                     contentId={contentId}
                     defaultThumbUrl={thumbUrl}
+                    defaultActualTitle={actualTitle}
+                    defaultActualDescription={actualDescription}
                   />
                 </div>
               </div>

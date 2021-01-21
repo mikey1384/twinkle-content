@@ -23,6 +23,9 @@ const API_URL = `${URL}/content`;
 Embedly.propTypes = {
   contentId: PropTypes.number,
   contentType: PropTypes.string,
+  defaultThumbUrl: PropTypes.string,
+  defaultActualTitle: PropTypes.string,
+  defaultActualDescription: PropTypes.string,
   imageWidth: PropTypes.string,
   imageOnly: PropTypes.bool,
   loadingHeight: PropTypes.string,
@@ -33,14 +36,15 @@ Embedly.propTypes = {
   style: PropTypes.object,
   userCanEditThis: PropTypes.bool,
   videoWidth: PropTypes.string,
-  videoHeight: PropTypes.string,
-  defaultThumbUrl: PropTypes.string
+  videoHeight: PropTypes.string
 };
 
 function Embedly({
   contentId,
   contentType = 'url',
   defaultThumbUrl,
+  defaultActualTitle,
+  defaultActualDescription,
   imageWidth,
   imageOnly,
   loadingHeight = '100%',
@@ -288,7 +292,7 @@ function Embedly({
                   WebkitBoxOrient: 'vertical'
                 }}
               >
-                {actualTitle || title}
+                {actualTitle || defaultActualTitle || title}
               </h3>
               <p
                 style={{
@@ -298,7 +302,7 @@ function Embedly({
                   WebkitBoxOrient: 'vertical'
                 }}
               >
-                {actualDescription || description}
+                {actualDescription || defaultActualDescription || description}
               </p>
               <p style={{ fontWeight: 'bold' }}>{siteUrl}</p>
             </>
@@ -316,6 +320,8 @@ function Embedly({
     contentCss,
     contentId,
     contentType,
+    defaultActualDescription,
+    defaultActualTitle,
     description,
     history,
     imageOnly,
