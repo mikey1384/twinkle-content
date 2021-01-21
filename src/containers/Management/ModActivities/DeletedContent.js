@@ -231,6 +231,7 @@ export default function DeletedContent({ contentId, contentType, style }) {
                     noLink
                     style={{ marginTop: '0.5rem' }}
                     contentId={contentId}
+                    directUrl={content}
                     defaultThumbUrl={thumbUrl}
                     defaultActualTitle={actualTitle}
                     defaultActualDescription={actualDescription}

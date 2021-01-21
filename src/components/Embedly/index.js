@@ -23,6 +23,7 @@ const API_URL = `${URL}/content`;
 Embedly.propTypes = {
   contentId: PropTypes.number,
   contentType: PropTypes.string,
+  directUrl: PropTypes.string,
   defaultThumbUrl: PropTypes.string,
   defaultActualTitle: PropTypes.string,
   defaultActualDescription: PropTypes.string,
@@ -42,6 +43,7 @@ Embedly.propTypes = {
 function Embedly({
   contentId,
   contentType = 'url',
+  directUrl,
   defaultThumbUrl,
   defaultActualTitle,
   defaultActualDescription,
@@ -263,15 +265,19 @@ function Embedly({
         )}
         {!imageOnly &&
           React.createElement(
-            contentType === 'chat' ? 'a' : 'section',
+            contentType === 'chat' || directUrl ? 'a' : 'section',
             {
               style: {
                 textDecoration: 'none',
                 color: Color.darkerGray()
               },
-              target: contentType === 'chat' ? '_blank' : null,
-              rel: contentType === 'chat' ? 'noopener noreferrer' : null,
-              href: contentType === 'chat' ? url : null,
+              target: contentType === 'chat' || directUrl ? '_blank' : null,
+              rel:
+                contentType === 'chat' || directUrl
+                  ? 'noopener noreferrer'
+                  : null,
+              href:
+                contentType === 'chat' || directUrl ? directUrl || url : null,
               className: css`
                 width: 100%;
                 line-height: 1.5;
@@ -281,7 +287,10 @@ function Embedly({
                 ${small ? 'margin-left: 1rem;' : ''}
                 ${small ? '' : 'margin-top: 1rem;'}
               `,
-              onClick: small ? () => history.push(`/links/${contentId}`) : null
+              onClick:
+                small && !directUrl
+                  ? () => history.push(`/links/${contentId}`)
+                  : null
             },
             <>
               <h3
@@ -323,6 +332,7 @@ function Embedly({
     defaultActualDescription,
     defaultActualTitle,
     description,
+    directUrl,
     history,
     imageOnly,
     imageUrl,
