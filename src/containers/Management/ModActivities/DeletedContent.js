@@ -48,7 +48,6 @@ export default function DeletedContent({ contentId, contentType, style }) {
   return (
     <div
       style={{
-        cursor: 'pointer',
         borderRadius,
         height: 'auto',
         ...style
