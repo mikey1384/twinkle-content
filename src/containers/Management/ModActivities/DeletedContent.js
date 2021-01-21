@@ -199,31 +199,39 @@ export default function DeletedContent({ contentId, contentType, style }) {
             </div>
           )}
           {contentType === 'url' && (
-            <div>
+            <div
+              style={{
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'column'
+              }}
+            >
               <div>
                 <UsernameText style={{ fontSize: '1.5rem' }} user={uploader} />
               </div>
-              <span
-                style={{
-                  marginTop: '1rem',
-                  fontSize: '1.7rem',
-                  fontWeight: 'bold',
-                  lineHeight: 1.5,
-                  overflowWrap: 'break-word',
-                  wordBreak: 'break-word'
-                }}
-                className="label"
-              >
-                {title}
-              </span>
               <div>
-                <Embedly
-                  small
-                  noLink
-                  style={{ marginTop: '0.5rem' }}
-                  contentId={contentId}
-                  defaultThumbUrl={thumbUrl}
-                />
+                <span
+                  style={{
+                    marginTop: '1rem',
+                    fontSize: '1.7rem',
+                    fontWeight: 'bold',
+                    lineHeight: 1.5,
+                    overflowWrap: 'break-word',
+                    wordBreak: 'break-word'
+                  }}
+                  className="label"
+                >
+                  {title}
+                </span>
+                <div>
+                  <Embedly
+                    small
+                    noLink
+                    style={{ marginTop: '0.5rem' }}
+                    contentId={contentId}
+                    defaultThumbUrl={thumbUrl}
+                  />
+                </div>
               </div>
             </div>
           )}
