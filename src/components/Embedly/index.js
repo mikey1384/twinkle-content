@@ -282,8 +282,12 @@ function Embedly({
                 width: 100%;
                 line-height: 1.5;
                 padding: 1rem;
-                cursor: ${contentType === 'chat' || small ? 'pointer' : ''};
-                ${contentType === 'chat' ? 'margin-bottom: 1rem;' : ''}
+                cursor: ${contentType === 'chat' || directUrl || small
+                  ? 'pointer'
+                  : ''};
+                ${contentType === 'chat' || directUrl
+                  ? 'margin-bottom: 1rem;'
+                  : ''}
                 ${small ? 'margin-left: 1rem;' : ''}
                 ${small ? '' : 'margin-top: 1rem;'}
               `,
