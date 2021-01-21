@@ -33,12 +33,14 @@ Embedly.propTypes = {
   style: PropTypes.object,
   userCanEditThis: PropTypes.bool,
   videoWidth: PropTypes.string,
-  videoHeight: PropTypes.string
+  videoHeight: PropTypes.string,
+  defaultThumbUrl: PropTypes.string
 };
 
 function Embedly({
   contentId,
   contentType = 'url',
+  defaultThumbUrl,
   imageWidth,
   imageOnly,
   loadingHeight = '100%',
@@ -185,10 +187,10 @@ function Embedly({
       if (thumbUrl?.includes('http://')) {
         makeThumbnailSecure({ contentId, contentType, thumbUrl });
       }
-      setImageUrl(thumbUrl || fallbackImage);
+      setImageUrl(thumbUrl || defaultThumbUrl || fallbackImage);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [thumbUrl, url]);
+  }, [defaultThumbUrl, thumbUrl, url]);
 
   useEffect(() => {
     return function setCurrentTimeBeforeUnmount() {

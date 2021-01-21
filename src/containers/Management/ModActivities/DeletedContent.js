@@ -65,7 +65,6 @@ export default function DeletedContent({ contentId, contentType, style }) {
         }
       `}
     >
-      {contentType}
       <div style={{ padding: '1rem', height: 'auto' }}>
         <div
           style={{
@@ -151,15 +150,11 @@ export default function DeletedContent({ contentId, contentType, style }) {
               </div>
             </div>
           )}
-          <div
-            style={{
-              marginTop: '1rem',
-              width: '100%',
-              height: 'auto',
-              padding: '1rem 0'
-            }}
-          >
-            {contentType === 'subject' && (
+          {contentType === 'subject' && (
+            <div>
+              <div>
+                <UsernameText style={{ fontSize: '1.5rem' }} user={uploader} />
+              </div>
               <div
                 style={{
                   display: 'flex',
@@ -201,79 +196,89 @@ export default function DeletedContent({ contentId, contentType, style }) {
                   )}
                 </div>
               </div>
-            )}
-            {contentType === 'url' && (
+            </div>
+          )}
+          {contentType === 'url' && (
+            <div>
               <div>
-                <span
-                  style={{
-                    fontWeight: 'bold',
-                    fontSize: '2rem'
-                  }}
-                  className="label"
-                >
-                  {title}
-                </span>
+                <UsernameText style={{ fontSize: '1.5rem' }} user={uploader} />
+              </div>
+              <span
+                style={{
+                  marginTop: '1rem',
+                  fontSize: '1.7rem',
+                  fontWeight: 'bold',
+                  lineHeight: 1.5,
+                  overflowWrap: 'break-word',
+                  wordBreak: 'break-word'
+                }}
+                className="label"
+              >
+                {title}
+              </span>
+              <div>
                 <Embedly
                   small
                   noLink
                   style={{ marginTop: '0.5rem' }}
                   contentId={contentId}
+                  defaultThumbUrl={thumbUrl}
                 />
               </div>
-            )}
-          </div>
-          {contentType === 'subject' && rootObj?.id && (
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                width: '25%',
-                marginBottom: secretAnswer ? '1rem' : ''
-              }}
-            >
-              {rootObj?.contentType === 'video' && (
-                <VideoThumbImage
-                  rewardLevel={rootObj.rewardLevel}
-                  videoId={rootObj.id}
-                  src={`https://img.youtube.com/vi/${rootObj.content}/mqdefault.jpg`}
-                />
-              )}
-              {rootObj?.contentType === 'url' && (
-                <Embedly imageOnly noLink contentId={rootObj?.id} />
-              )}
             </div>
           )}
-          {filePath && (
-            <ContentFileViewer
-              contentId={contentId}
-              contentType={contentType}
-              fileName={fileName}
-              filePath={filePath}
-              fileSize={fileSize}
-              thumbUrl={thumbUrl}
-              videoHeight="100%"
-              isThumb
-              style={{
-                display: 'flex',
-                width: '15rem',
-                height: '11rem'
-              }}
-            />
-          )}
         </div>
-        {secretAnswer && (
+        {contentType === 'subject' && rootObj?.id && (
           <div
             style={{
-              padding: '1rem',
-              background: Color.ivory(),
-              borderTop: `1px solid ${Color.borderGray()}`,
-              borderBottom: `1px solid ${Color.borderGray()}`
+              display: 'flex',
+              alignItems: 'center',
+              width: '25%',
+              marginBottom: secretAnswer ? '1rem' : ''
             }}
           >
-            secretAnswer
+            {rootObj?.contentType === 'video' && (
+              <VideoThumbImage
+                rewardLevel={rootObj.rewardLevel}
+                videoId={rootObj.id}
+                src={`https://img.youtube.com/vi/${rootObj.content}/mqdefault.jpg`}
+              />
+            )}
+            {rootObj?.contentType === 'url' && (
+              <Embedly imageOnly noLink contentId={rootObj?.id} />
+            )}
           </div>
         )}
+        {filePath && (
+          <ContentFileViewer
+            contentId={contentId}
+            contentType={contentType}
+            fileName={fileName}
+            filePath={filePath}
+            fileSize={fileSize}
+            thumbUrl={thumbUrl}
+            videoHeight="100%"
+            isThumb
+            style={{
+              display: 'flex',
+              width: '15rem',
+              height: '11rem'
+            }}
+          />
+        )}
       </div>
+      {secretAnswer && (
+        <div
+          style={{
+            padding: '1rem',
+            background: Color.ivory(),
+            borderTop: `1px solid ${Color.borderGray()}`,
+            borderBottom: `1px solid ${Color.borderGray()}`
+          }}
+        >
+          {secretAnswer}
+        </div>
+      )}
       {deleter && (
         <div
           style={{
