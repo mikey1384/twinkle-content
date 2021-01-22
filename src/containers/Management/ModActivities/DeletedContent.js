@@ -7,6 +7,7 @@ import UsernameText from 'components/Texts/UsernameText';
 import ReactPlayer from 'react-player';
 import Button from 'components/Button';
 import Loading from 'components/Loading';
+import ConfirmModal from 'components/Modals/ConfirmModal';
 import { css } from '@emotion/css';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { useAppContext } from 'contexts';
@@ -22,6 +23,7 @@ export default function DeletedContent({ contentId, contentType, style }) {
     requestHelpers: { loadDeletedContent }
   } = useAppContext();
   const [loading, setLoading] = useState(false);
+  const [confirmModalShown, setConfirmModalShown] = useState(false);
   const [contentObj, setContentObj] = useState({});
   const {
     actualTitle,
@@ -339,7 +341,7 @@ export default function DeletedContent({ contentId, contentType, style }) {
               </div>
               <div style={{ display: 'flex' }}>
                 <Button
-                  onClick={handleDeletePermanently}
+                  onClick={() => setConfirmModalShown(true)}
                   color="red"
                   skeuomorphic
                 >
@@ -358,14 +360,21 @@ export default function DeletedContent({ contentId, contentType, style }) {
           )}
         </>
       )}
+      {confirmModalShown && (
+        <ConfirmModal
+          onHide={() => setConfirmModalShown(false)}
+          title="Delete Content Permanently"
+          onConfirm={handleDeletePermanently}
+        />
+      )}
     </div>
   );
 
   async function handleDeletePermanently() {
-    console.log('deleting permanently');
+    console.log('deleting permanently', contentId, contentType);
   }
 
   async function handleUndoDelete() {
-    console.log('undoing deletion');
+    console.log('undoing deletion', contentId, contentType);
   }
 }
