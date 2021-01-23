@@ -15,10 +15,18 @@ import { useAppContext } from 'contexts';
 DeletedContent.propTypes = {
   contentId: PropTypes.number,
   contentType: PropTypes.string,
+  postId: PropTypes.number,
+  onDeletePermanently: PropTypes.func,
   style: PropTypes.object
 };
 
-export default function DeletedContent({ contentId, contentType, style }) {
+export default function DeletedContent({
+  contentId,
+  contentType,
+  onDeletePermanently,
+  postId,
+  style
+}) {
   const {
     requestHelpers: { deletePermanently, loadDeletedContent }
   } = useAppContext();
@@ -378,7 +386,9 @@ export default function DeletedContent({ contentId, contentType, style }) {
       fileName,
       filePath
     });
-    console.log(success);
+    if (success) {
+      onDeletePermanently(postId);
+    }
   }
 
   async function handleUndoDelete() {

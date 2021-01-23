@@ -23,6 +23,12 @@ export default function ModActivities() {
         {deletedPosts.map((post, index) => (
           <DeletedContent
             key={post.id}
+            onDeletePermanently={() =>
+              setDeletedPosts((deletedPosts) =>
+                deletedPosts.filter((deletedPost) => deletedPost.id !== post.id)
+              )
+            }
+            postId={post.id}
             contentId={post.contentId}
             contentType={post.type}
             style={{ marginTop: index === 0 ? 0 : '1rem' }}
