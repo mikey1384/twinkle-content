@@ -295,11 +295,11 @@ export default function DeletedContent({ contentId, contentType, style }) {
                 fileSize={fileSize}
                 thumbUrl={thumbUrl}
                 videoHeight="100%"
-                isThumb
                 style={{
+                  marginTop: '5rem',
                   display: 'flex',
-                  width: '15rem',
-                  height: '11rem'
+                  width: '30rem',
+                  height: '15rem'
                 }}
               />
             )}
