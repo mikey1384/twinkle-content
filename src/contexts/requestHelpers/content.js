@@ -73,13 +73,22 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async deleteContent({ id, contentType }) {
+    async deleteContent({ id, contentType, undo }) {
       try {
-        await request.delete(
-          `${URL}/content?contentId=${id}&contentType=${contentType}`,
+        const {
+          data: { success, isRecovered }
+        } = await request.delete(
+          `${URL}/content?contentId=${id}&contentType=${contentType}${
+            undo ? '&undo=1' : ''
+          }`,
           auth()
         );
-        return Promise.resolve({ contentId: id, contentType });
+        return Promise.resolve({
+          contentId: id,
+          contentType,
+          success,
+          isRecovered
+        });
       } catch (error) {
         return handleError(error);
       }

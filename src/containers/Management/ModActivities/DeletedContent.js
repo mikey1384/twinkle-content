@@ -28,7 +28,7 @@ export default function DeletedContent({
   style
 }) {
   const {
-    requestHelpers: { deletePermanently, loadDeletedContent }
+    requestHelpers: { deleteContent, deletePermanently, loadDeletedContent }
   } = useAppContext();
   const [loading, setLoading] = useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
@@ -42,6 +42,7 @@ export default function DeletedContent({
     fileName,
     filePath,
     fileSize,
+    isRecovered,
     rootObj,
     secretAnswer,
     title,
@@ -329,7 +330,7 @@ export default function DeletedContent({
               style={{
                 marginTop: '1rem',
                 padding: '1rem',
-                background: Color.darkerGray(),
+                background: isRecovered ? Color.green() : Color.darkerGray(),
                 marginLeft: '-1px',
                 marginRight: '-1px',
                 fontSize: '1.5rem',
@@ -340,29 +341,35 @@ export default function DeletedContent({
                 alignItems: 'center'
               }}
             >
-              <div>
-                Deleted by{' '}
-                <UsernameText
-                  color="#fff"
-                  style={{ fontSize: '1.5rem' }}
-                  user={deleter}
-                />
-              </div>
+              {isRecovered ? (
+                <div>Content Recovered</div>
+              ) : (
+                <div>
+                  Deleted by{' '}
+                  <UsernameText
+                    color="#fff"
+                    style={{ fontSize: '1.5rem' }}
+                    user={deleter}
+                  />
+                </div>
+              )}
               <div style={{ display: 'flex' }}>
+                {!isRecovered && (
+                  <Button
+                    onClick={() => setConfirmModalShown(true)}
+                    color="red"
+                    skeuomorphic
+                  >
+                    Delete Permanently
+                  </Button>
+                )}
                 <Button
-                  onClick={() => setConfirmModalShown(true)}
-                  color="red"
-                  skeuomorphic
-                >
-                  Delete Permanently
-                </Button>
-                <Button
-                  onClick={handleUndoDelete}
+                  onClick={() => handleUndoDelete({ redo: isRecovered })}
                   color="darkerGray"
                   style={{ marginLeft: '1rem' }}
                   skeuomorphic
                 >
-                  Undo
+                  {isRecovered ? 'Delete' : 'Undo'}
                 </Button>
               </div>
             </div>
@@ -391,7 +398,18 @@ export default function DeletedContent({
     }
   }
 
-  async function handleUndoDelete() {
-    console.log('undoing deletion', contentId, contentType);
+  async function handleUndoDelete({ redo }) {
+    const { success, isRecovered } = await deleteContent({
+      id: contentId,
+      contentType,
+      undo: !redo
+    });
+    if (success) {
+      setContentObj((prevContentObj) => ({
+        ...prevContentObj,
+        isRecovered
+      }));
+      console.log(isRecovered);
+    }
   }
 }
