@@ -342,7 +342,19 @@ export default function DeletedContent({
               }}
             >
               {isRecovered ? (
-                <div>Content Recovered</div>
+                <div>
+                  Content Recovered:{' '}
+                  <a
+                    style={{ color: '#fff', fontWeight: 'bold' }}
+                    rel="noreferrer"
+                    target="_blank"
+                    href={`https://www.twin-kle.com/${
+                      contentType === 'url' ? 'link' : contentType
+                    }s/${contentId}`}
+                  >
+                    Click here to view the content
+                  </a>
+                </div>
               ) : (
                 <div>
                   Deleted by{' '}
@@ -409,7 +421,6 @@ export default function DeletedContent({
         ...prevContentObj,
         isRecovered
       }));
-      console.log(isRecovered);
     }
   }
 }
