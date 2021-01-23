@@ -3,6 +3,7 @@ import { useAppContext } from 'contexts';
 import DeletedContent from './DeletedContent';
 
 export default function ModActivities() {
+  const [loaded, setLoaded] = useState(false);
   const [deletedPosts, setDeletedPosts] = useState([]);
   const {
     requestHelpers: { loadDeletedPosts }
@@ -12,14 +13,30 @@ export default function ModActivities() {
     async function init() {
       const data = await loadDeletedPosts();
       setDeletedPosts(data);
+      setLoaded(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div>
-      <h2 style={{ marginTop: '1rem' }}>Deleted Posts</h2>
+    <div style={{ padding: '1rem' }}>
+      <h2>Deleted Posts</h2>
       <div style={{ marginTop: '2rem' }}>
+        {loaded && deletedPosts.length === 0 && (
+          <div
+            style={{
+              width: '100%',
+              height: '25rem',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              fontWeight: 'bold',
+              fontSize: '2rem'
+            }}
+          >
+            There are no newly deleted posts
+          </div>
+        )}
         {deletedPosts.map((post, index) => (
           <DeletedContent
             key={post.id}
