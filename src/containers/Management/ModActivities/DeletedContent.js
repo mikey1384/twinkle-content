@@ -20,7 +20,7 @@ DeletedContent.propTypes = {
 
 export default function DeletedContent({ contentId, contentType, style }) {
   const {
-    requestHelpers: { loadDeletedContent }
+    requestHelpers: { deletePermanently, loadDeletedContent }
   } = useAppContext();
   const [loading, setLoading] = useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
@@ -189,14 +189,15 @@ export default function DeletedContent({ contentId, contentType, style }) {
                         wordBreak: 'break-word'
                       }}
                     >
-                      <p style={{ lineClamp: 2, fontSize: '2.5rem' }}>
+                      <p
+                        style={{
+                          lineClamp: 2,
+                          fontSize: '2.3rem',
+                          fontWeight: 'bold'
+                        }}
+                      >
                         {title}
                       </p>
-                      {uploader.username && (
-                        <p style={{ color: Color.gray() }}>
-                          Posted by {uploader.username}
-                        </p>
-                      )}
                       {description && (
                         <div
                           style={{
@@ -371,7 +372,13 @@ export default function DeletedContent({ contentId, contentType, style }) {
   );
 
   async function handleDeletePermanently() {
-    console.log('deleting permanently', contentId, contentType);
+    const success = await deletePermanently({
+      contentId,
+      contentType,
+      fileName,
+      filePath
+    });
+    console.log(success);
   }
 
   async function handleUndoDelete() {

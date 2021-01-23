@@ -98,7 +98,6 @@ export default function Body({
     byUser,
     description,
     filePath,
-    fileName,
     isEditing,
     secretAnswer,
     secretShown,
@@ -717,7 +716,7 @@ export default function Body({
   }
 
   async function deleteThisContent() {
-    await deleteContent({ contentType, id, filePath, fileName });
+    await deleteContent({ contentType, id });
     if (contentType === 'comment') {
       onDeleteComment(id);
     } else {
