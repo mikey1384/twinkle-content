@@ -172,7 +172,6 @@ export default function ChatReducer(state, action) {
                 username: action.data.message.username
               }
             },
-            lastUpdate: action.data.message.timeStamp,
             isClass: action.data.isClass,
             isClosed: action.data.isClosed,
             numUnreads: 0,
@@ -661,7 +660,6 @@ export default function ChatReducer(state, action) {
           ...state.channelsObj,
           [action.data.channelId]: {
             ...state.channelsObj[action.data.channelId],
-            lastUpdate: timeStamp,
             lastMessage: {
               content: leaveMessage,
               sender: {
@@ -710,7 +708,6 @@ export default function ChatReducer(state, action) {
             members: [action.user, action.recepient],
             channelName: action.recepient.username,
             lastMessage: action.lastMessage,
-            lastUpdate: action.lastUpdate,
             numUnreads: 0
           }
         },
@@ -740,7 +737,6 @@ export default function ChatReducer(state, action) {
               content: null,
               sender: null
             },
-            lastUpdate: null,
             members: [action.user, action.recepient],
             numUnreads: 0,
             twoPeople: true
@@ -801,7 +797,6 @@ export default function ChatReducer(state, action) {
                 username: action.message.username
               }
             },
-            lastUpdate: action.message.timeStamp,
             members: [
               ...state.channelsObj[action.message.channelId].members,
               ...action.newMembers.filter(
@@ -844,7 +839,6 @@ export default function ChatReducer(state, action) {
                 username: action.message.username
               }
             },
-            lastUpdate: action.message.timeStamp,
             numUnreads: 1
           }
         },
@@ -1183,7 +1177,6 @@ export default function ChatReducer(state, action) {
                 username: action.message.username
               }
             },
-            lastUpdate: Math.floor(Date.now() / 1000),
             numUnreads: 0
           }
         },

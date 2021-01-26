@@ -263,7 +263,6 @@ function Chat({ onFileUpload }) {
         channel: {
           id: channelId,
           channelName,
-          lastUpdate: message.timeStamp,
           isHidden: false,
           lastMessage: {
             content: message.content,
