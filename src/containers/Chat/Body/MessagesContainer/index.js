@@ -354,6 +354,7 @@ export default function MessagesContainer({
   }, [messagesLoaded, reconnecting]);
 
   useEffect(() => {
+    favoritingRef.current = false;
     setLoadMoreButtonLock(false);
   }, [selectedChannelId]);
 
@@ -983,10 +984,15 @@ export default function MessagesContainer({
   async function handleFavoriteClick() {
     if (!favoritingRef.current) {
       favoritingRef.current = true;
-      const favorited = await putFavoriteChannel(selectedChannelId);
-      onSetFavoriteChannel({ channelId: selectedChannelId, favorited });
+      try {
+        const favorited = await putFavoriteChannel(selectedChannelId);
+        onSetFavoriteChannel({ channelId: selectedChannelId, favorited });
+        favoritingRef.current = false;
+      } catch (error) {
+        console.error(error);
+        favoritingRef.current = false;
+      }
     }
-    favoritingRef.current = false;
   }
 
   async function handleMessageSubmit({
