@@ -84,7 +84,7 @@ export default function ApproveInterface({
         <Button
           filled={status === 'pass'}
           onClick={() => handleSetStatus('pass')}
-          color="logoBlue"
+          color="green"
           style={{ marginLeft: '1rem' }}
         >
           <Icon icon="thumbs-up" />
@@ -114,7 +114,7 @@ export default function ApproveInterface({
           >
             <Button
               style={{ marginTop: '1.5rem', fontSize: '2rem' }}
-              color={status === 'pass' ? 'logoBlue' : 'rose'}
+              color={status === 'pass' ? 'green' : 'rose'}
               filled
               onClick={handleConfirm}
             >
