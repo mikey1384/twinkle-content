@@ -1,6 +1,6 @@
 import getPiece from './piece';
 
-export function initialiseChessBoard({ initialState, loading, myId }) {
+export function initializeChessBoard({ initialState, loading, myId }) {
   if (loading) return [];
   let myColor = 'white';
   const blackPieces = [
@@ -120,7 +120,7 @@ export function highlightPossiblePathsFromSrc({
   enPassantTarget,
   myColor
 }) {
-  const actualSquares = squares.map(square => (square.isPiece ? square : {}));
+  const actualSquares = squares.map((square) => (square.isPiece ? square : {}));
   return actualSquares.map((square, index) =>
     index === src ||
     isPossibleAndLegal({
@@ -146,21 +146,25 @@ export function highlightPossiblePathsFromSrc({
 }
 
 export function isGameOver({ squares, enPassantTarget, myColor }) {
+  const opponentColor = getOpponentPlayerColor(myColor);
+  const squaresFromOpponentsPointOfView = squares.map(
+    (square, index) => squares[squares.length - 1 - index]
+  );
   const { kingIndex, playerPieces } = getPlayerPieces({
-    color: getOpponentPlayerColor(myColor),
-    squares
+    color: opponentColor,
+    squares: squaresFromOpponentsPointOfView
   });
-  const whitePieces = squares
+  const whitePieces = squaresFromOpponentsPointOfView
     .map((square, index) => ({ ...square, index }))
-    .filter(square => square.color === 'white' && !!square.isPiece);
+    .filter((square) => square.color === 'white' && !!square.isPiece);
   const remainingWhitePiece = whitePieces.filter(
-    piece => piece.type !== 'king'
+    (piece) => piece.type !== 'king'
   )[0];
-  const blackPieces = squares
+  const blackPieces = squaresFromOpponentsPointOfView
     .map((square, index) => ({ ...square, index }))
-    .filter(square => square.color === 'black' && !!square.isPiece);
+    .filter((square) => square.color === 'black' && !!square.isPiece);
   const remainingBlackPiece = blackPieces.filter(
-    piece => piece.type !== 'king'
+    (piece) => piece.type !== 'king'
   )[0];
   if (whitePieces.length === 1 && blackPieces.length === 1) return 'Draw';
   if (whitePieces.length === 2 && blackPieces.length === 1) {
@@ -220,25 +224,25 @@ export function isGameOver({ squares, enPassantTarget, myColor }) {
     kingIndex + 9
   ];
   let checkers = [];
-  const kingPiece = squares[kingIndex];
+  const kingPiece = squaresFromOpponentsPointOfView[kingIndex];
   if (kingPiece.state === 'check') {
     isChecked = true;
     checkers = checkerPos({
-      squares,
+      squares: squaresFromOpponentsPointOfView,
       kingIndex,
-      myColor
+      myColor: opponentColor
     });
   }
   const possibleNextDest = nextDest.filter(
-    dest =>
+    (dest) =>
       dest >= 0 &&
       dest <= 63 &&
       isPossibleAndLegal({
         src: kingIndex,
         dest,
-        squares,
+        squares: squaresFromOpponentsPointOfView,
         enPassantTarget,
-        myColor
+        myColor: opponentColor
       })
   );
   if (possibleNextDest.length === 0 && kingPiece.state !== 'check') {
@@ -249,13 +253,13 @@ export function isGameOver({ squares, enPassantTarget, myColor }) {
     const newSquares = returnBoardAfterMove({
       src: kingIndex,
       dest,
-      myColor,
-      squares
+      myColor: opponentColor,
+      squares: squaresFromOpponentsPointOfView
     });
     const potentialKingSlayers = kingWillBeCapturedBy({
       kingIndex: dest,
       squares: newSquares,
-      myColor
+      myColor: opponentColor
     });
     if (potentialKingSlayers.length === 0) {
       kingCanMove = true;
@@ -270,24 +274,50 @@ export function isGameOver({ squares, enPassantTarget, myColor }) {
           isPossibleAndLegal({
             src: piece.index,
             dest: checkers[0],
-            squares,
+            squares: squaresFromOpponentsPointOfView,
             enPassantTarget,
-            myColor
+            myColor: opponentColor
           })
         ) {
           const newSquares = returnBoardAfterMove({
             src: piece.index,
             dest: checkers[0],
-            myColor,
-            squares
+            myColor: opponentColor,
+            squares: squaresFromOpponentsPointOfView
           });
           const potentialKingSlayers = kingWillBeCapturedBy({
             kingIndex,
             squares: newSquares,
-            myColor
+            myColor: opponentColor
           });
           if (potentialKingSlayers.length === 0) {
             return false;
+          }
+        } else if (piece.piece.type === 'pawn' && enPassantTarget) {
+          const pieceRow = Math.floor(piece.index / 8);
+          const pieceColumn = piece.index % 8;
+          const targetRow = Math.floor(enPassantTarget / 8);
+          const targetColumn = enPassantTarget % 8;
+          if (
+            pieceRow === targetRow &&
+            (pieceColumn === targetColumn - 1 ||
+              pieceColumn === targetColumn + 1)
+          ) {
+            const newSquares = returnBoardAfterMove({
+              src: piece.index,
+              dest: (targetRow - 1) * 8 + targetColumn,
+              enPassantTarget,
+              myColor: opponentColor,
+              squares: squaresFromOpponentsPointOfView
+            });
+            const potentialKingSlayers = kingWillBeCapturedBy({
+              kingIndex,
+              squares: newSquares,
+              myColor: opponentColor
+            });
+            if (potentialKingSlayers.length === 0) {
+              return false;
+            }
           }
         }
       }
@@ -295,8 +325,8 @@ export function isGameOver({ squares, enPassantTarget, myColor }) {
     const allBlockPoints = [];
     for (let checker of checkers) {
       const trajectory = getPiece({
-        piece: squares[checker],
-        myColor
+        piece: squaresFromOpponentsPointOfView[checker],
+        myColor: opponentColor
       }).getSrcToDestPath(checker, kingIndex);
       if (trajectory.length === 0) return 'Checkmate';
       const blockPoints = [];
@@ -307,21 +337,21 @@ export function isGameOver({ squares, enPassantTarget, myColor }) {
             isPossibleAndLegal({
               src: piece.index,
               dest: square,
-              squares,
+              squares: squaresFromOpponentsPointOfView,
               enPassantTarget,
-              myColor
+              myColor: opponentColor
             })
           ) {
             const newSquares = returnBoardAfterMove({
               src: piece.index,
               dest: square,
-              myColor,
-              squares
+              myColor: opponentColor,
+              squares: squaresFromOpponentsPointOfView
             });
             const potentialKingSlayers = kingWillBeCapturedBy({
               kingIndex,
               squares: newSquares,
-              myColor
+              myColor: opponentColor
             });
             if (potentialKingSlayers.length === 0) {
               if (checkers.length === 1) return false;
@@ -346,28 +376,28 @@ export function isGameOver({ squares, enPassantTarget, myColor }) {
     }
     return 'Checkmate';
   } else {
-    for (let i = 0; i < squares.length; i++) {
+    for (let i = 0; i < squaresFromOpponentsPointOfView.length; i++) {
       for (let piece of playerPieces) {
         if (
           isPossibleAndLegal({
             src: piece.index,
             dest: i,
-            squares,
+            squares: squaresFromOpponentsPointOfView,
             enPassantTarget,
-            myColor
+            myColor: opponentColor
           })
         ) {
           const newSquares = returnBoardAfterMove({
             src: piece.index,
             dest: i,
-            myColor,
-            squares
+            myColor: opponentColor,
+            squares: squaresFromOpponentsPointOfView
           });
           if (
             kingWillBeCapturedBy({
               kingIndex: piece.piece.type === 'king' ? i : kingIndex,
               squares: newSquares,
-              myColor
+              myColor: opponentColor
             }).length === 0
           ) {
             return false;

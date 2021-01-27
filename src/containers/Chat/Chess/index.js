@@ -5,7 +5,7 @@ import FallenPieces from './FallenPieces.js';
 import 'core-js/features/string/pad-start';
 import { css } from '@emotion/css';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
-import { initialiseChessBoard, getPositionId } from './helpers/model.js';
+import { initializeChessBoard, getPositionId } from './helpers/model.js';
 import {
   checkerPos,
   getPieceIndex,
@@ -83,7 +83,7 @@ export default function Chess({
     black: []
   });
   const loadingRef = useRef(channelLoading);
-  const enPassantTarget = useRef({});
+  const enPassantTarget = useRef(null);
   const capturedPiece = useRef(null);
   const parsedState = useMemo(
     () => (initialState ? JSON.parse(initialState) : undefined),
@@ -130,15 +130,15 @@ export default function Chess({
           [myId]: 'white',
           [opponentId]: 'black'
         };
-    setSquares(initialiseChessBoard({ initialState, loading: !loaded, myId }));
+    setSquares(initializeChessBoard({ initialState, loading: !loaded, myId }));
     capturedPiece.current = null;
     if (parsedState) {
-      enPassantTarget.current = parsedState.enPassantTarget || {};
+      enPassantTarget.current = parsedState.enPassantTarget || null;
       setBlackFallenPieces(parsedState.fallenPieces.black);
       setWhiteFallenPieces(parsedState.fallenPieces.white);
       fallenPieces.current = parsedState.fallenPieces;
     } else {
-      enPassantTarget.current = {};
+      enPassantTarget.current = null;
       setBlackFallenPieces([]);
       setWhiteFallenPieces([]);
       fallenPieces.current = {
@@ -856,9 +856,12 @@ export default function Chess({
       black: newBlackFallenPieces
     };
     setStatus('');
+    const target =
+      newSquares[dest]?.type === 'pawn' && dest === src - 16 ? 63 - dest : null;
+    enPassantTarget.current = target;
     const gameOver = isGameOver({
       squares: newSquares,
-      enPassantTarget,
+      enPassantTarget: enPassantTarget.current,
       myColor
     });
     if (gameOver) {
@@ -873,9 +876,6 @@ export default function Chess({
       }
       setGameOverMsg(gameOver);
     }
-    const target =
-      newSquares[dest]?.type === 'pawn' && dest === src - 16 ? 63 - dest : null;
-    enPassantTarget.current = target;
     return {
       moved: true,
       isCheck,
