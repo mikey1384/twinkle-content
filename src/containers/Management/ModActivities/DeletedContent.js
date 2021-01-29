@@ -10,6 +10,7 @@ import Loading from 'components/Loading';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import { css } from '@emotion/css';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
+import { useMyState } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
 
 DeletedContent.propTypes = {
@@ -27,6 +28,7 @@ export default function DeletedContent({
   postId,
   style
 }) {
+  const { managementLevel } = useMyState();
   const {
     requestHelpers: { deleteContent, deletePermanently, loadDeletedContent }
   } = useAppContext();
@@ -325,7 +327,7 @@ export default function DeletedContent({
               {secretAnswer}
             </div>
           )}
-          {deleter && (
+          {deleter && managementLevel > 1 && (
             <div
               style={{
                 marginTop: '1rem',

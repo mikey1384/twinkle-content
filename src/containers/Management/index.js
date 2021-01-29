@@ -54,7 +54,7 @@ export default function Management({ location }) {
     </div>
   ) : (
     <InvalidPage
-      title="For moderators only"
+      title="For authorized moderators only"
       text="You are not authorized to view this page"
     />
   );
