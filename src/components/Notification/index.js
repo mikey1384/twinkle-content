@@ -147,7 +147,7 @@ function Notification({ className, location, style }) {
               {...subject}
             />
           )}
-          {userId && (
+          {userId && (numNewNotis > 0 || notifications.length > 0) && (
             <FilterBar
               bordered
               style={{
