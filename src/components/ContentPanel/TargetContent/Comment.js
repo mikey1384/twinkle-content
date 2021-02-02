@@ -140,7 +140,7 @@ function Comment({
                   isEditing: false
                 })
               }
-              onEditDone={editComment}
+              onEditDone={handleEditComment}
               rows={2}
             />
           ) : (
@@ -200,7 +200,7 @@ function Comment({
     onDelete(comment.id);
   }
 
-  async function editComment(editedComment) {
+  async function handleEditComment(editedComment) {
     await editContent({
       editedComment,
       contentId: comment.id,
