@@ -39,6 +39,7 @@ export default function EditTextArea({
   style,
   text
 }) {
+  const submitting = useRef(false);
   const {
     state,
     actions: { onSetEditForm }
@@ -74,7 +75,7 @@ export default function EditTextArea({
 
   useEffect(() => {
     return function saveTextBeforeUnmount() {
-      if (editTextRef.current !== text) {
+      if (editTextRef.current !== text && !submitting.current) {
         onSetEditForm({
           contentId,
           contentType,
@@ -168,6 +169,7 @@ export default function EditTextArea({
       form: undefined
     });
     handleSetEditText('');
+    submitting.current = true;
     onEditDone(finalizeEmoji(editText));
   }
 }
