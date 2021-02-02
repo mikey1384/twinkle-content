@@ -167,6 +167,7 @@ export default function EditTextArea({
       contentType,
       form: undefined
     });
+    handleSetEditText('');
     onEditDone(finalizeEmoji(editText));
   }
 }
