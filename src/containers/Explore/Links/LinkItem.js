@@ -96,7 +96,6 @@ export default function LinkItem({
         display: flex;
         width: 100%;
         section {
-          width: 100%;
           display: flex;
           justify-content: space-between;
         }
@@ -109,11 +108,14 @@ export default function LinkItem({
         style={{ cursor: !onEdit && 'pointer' }}
         className={css`
           position: relative;
-          width: 10rem;
+          width: 15%;
           &:after {
             content: '';
             display: block;
             padding-bottom: 35%;
+          }
+          @media (max-width: ${mobileMaxWidth}) {
+            width: 20%;
           }
         `}
       >
@@ -128,9 +130,14 @@ export default function LinkItem({
       <section
         style={{
           marginLeft: '2rem',
-          display: 'flex',
-          width: `CALC(100% - ${editButtonShown ? '16' : '12'}rem)`
+          display: 'flex'
         }}
+        className={css`
+          width: ${editButtonShown ? 'CALC(85% - 6rem)' : '85%'};
+          @media (max-width: ${mobileMaxWidth}) {
+            width: ${editButtonShown ? 'CALC(80% - 6rem)' : '80%'};
+          }
+        `}
       >
         <div
           className={css`
