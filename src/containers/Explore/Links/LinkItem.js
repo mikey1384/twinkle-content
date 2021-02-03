@@ -7,7 +7,7 @@ import EditTitleForm from 'components/Texts/EditTitleForm';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import Embedly from 'components/Embedly';
 import { useHistory } from 'react-router-dom';
-import { Color } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { useContentState, useMyState } from 'helpers/hooks';
@@ -109,7 +109,7 @@ export default function LinkItem({
         style={{ cursor: !onEdit && 'pointer' }}
         className={css`
           position: relative;
-          width: 20%;
+          width: 10rem;
           &:after {
             content: '';
             display: block;
@@ -125,7 +125,13 @@ export default function LinkItem({
           contentId={id}
         />
       </div>
-      <section style={{ marginLeft: '2rem' }}>
+      <section
+        style={{
+          marginLeft: '2rem',
+          display: 'flex',
+          width: `CALC(100% - ${editButtonShown ? '16' : '12'}rem)`
+        }}
+      >
         <div
           className={css`
             display: flex;
@@ -146,19 +152,28 @@ export default function LinkItem({
               `}
             >
               {!onEdit && (
-                <span
+                <p
                   onMouseUp={() => {
                     if (!onEdit) history.push(`/links/${id}`);
                   }}
                   style={{
+                    width: '100%',
+                    whiteSpace: 'nowrap',
+                    textOverflow: 'ellipsis',
+                    overflow: 'hidden',
                     cursor: 'pointer',
                     color: Color.blue(),
-                    fontSize: '2rem',
                     fontWeight: 'bold'
                   }}
+                  className={css`
+                    font-size: 2rem;
+                    @media (max-width: ${mobileMaxWidth}) {
+                      font-size: 1.5rem;
+                    }
+                  `}
                 >
                   {title}
-                </span>
+                </p>
               )}
               {onEdit && (
                 <EditTitleForm
