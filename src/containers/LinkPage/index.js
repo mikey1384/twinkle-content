@@ -307,10 +307,16 @@ export default function LinkPage({
               fontWeight: 'bold',
               fontSize: '1.7rem',
               marginTop: '2rem',
-              marginLeft: '-1px',
-              marginRight: '-1px',
               marginBottom: '1rem'
             }}
+            className={css`
+              margin-left: -1px;
+              margin-right: -1px;
+              @media (max-width: ${mobileMaxWidth}) {
+                margin-left: 0;
+                margin-right: 0;
+              }
+            `}
           >
             This was made by {uploader.username}
           </div>
@@ -445,6 +451,10 @@ export default function LinkPage({
             font-size: 1.4rem;
             margin-right: -1px;
             margin-left: -1px;
+            @media (max-width: ${mobileMaxWidth}) {
+              margin-left: 0;
+              margin-right: 0;
+            }
           `}
           rewards={rewards}
         />
