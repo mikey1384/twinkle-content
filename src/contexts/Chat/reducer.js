@@ -488,7 +488,6 @@ export default function ChatReducer(state, action) {
     case 'LEAVE_CHANNEL':
       return {
         ...state,
-        messages: [],
         allFavoriteChannelIds: {
           ...state.allFavoriteChannelIds,
           [action.channelId]: false

@@ -45,6 +45,7 @@ export default function Header({
       checkIfHomeOutdated,
       checkVersion,
       getNumberOfUnreadMessages,
+      loadChatChannel,
       loadChat,
       loadRankings,
       loadCoins,
@@ -82,7 +83,9 @@ export default function Header({
       onHideAttachment,
       onCallReceptionConfirm,
       onDeleteMessage,
+      onEnterChannelWithId,
       onEditMessage,
+      onLeaveChannel,
       onGetNumberOfUnreadMessages,
       onHangUp,
       onInitChat,
@@ -175,6 +178,7 @@ export default function Header({
     socket.on('channel_settings_changed', onChangeChannelSettings);
     socket.on('connect', handleConnect);
     socket.on('disconnect', handleDisconnect);
+    socket.on('left_chat_from_another_tab', handleLeftChatFromAnotherTab);
     socket.on('message_attachment_hid', onHideAttachment);
     socket.on('mission_rewards_received', handleMissionRewards);
     socket.on('new_call_member', handleNewCallMember);
@@ -213,6 +217,10 @@ export default function Header({
       );
       socket.removeListener('connect', handleConnect);
       socket.removeListener('disconnect', handleDisconnect);
+      socket.removeListener(
+        'left_chat_from_another_tab',
+        handleLeftChatFromAnotherTab
+      );
       socket.removeListener('message_attachment_hid', onHideAttachment);
       socket.removeListener('mission_rewards_received', handleMissionRewards);
       socket.removeListener('new_call_member', handleNewCallMember);
@@ -366,6 +374,16 @@ export default function Header({
     function handleDisconnect(reason) {
       console.log('disconnected from socket. reason: ', reason);
       onChangeSocketStatus(false);
+    }
+
+    async function handleLeftChatFromAnotherTab(channelId) {
+      if (selectedChannelId === channelId) {
+        onLeaveChannel(channelId);
+        const data = await loadChatChannel({ channelId: GENERAL_CHAT_ID });
+        onEnterChannelWithId({ data });
+      } else {
+        onLeaveChannel(channelId);
+      }
     }
 
     function handleMissionRewards({
