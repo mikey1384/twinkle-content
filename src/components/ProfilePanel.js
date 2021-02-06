@@ -105,10 +105,14 @@ function ProfilePanel({ expandable, profileId, style }) {
   const [placeholderHeight, setPlaceholderHeight] = useState(
     previousPlaceholderHeight
   );
+  const placeholderHeightRef = useRef(previousPlaceholderHeight);
   useLazyLoad({
     PanelRef,
     inView,
-    onSetPlaceholderHeight: setPlaceholderHeight,
+    onSetPlaceholderHeight: (height) => {
+      setPlaceholderHeight(height);
+      placeholderHeightRef.current = height;
+    },
     onSetVisible: (visible) => {
       setVisible(visible);
       visibleRef.current = visible;
@@ -117,12 +121,11 @@ function ProfilePanel({ expandable, profileId, style }) {
   });
 
   useEffect(() => {
-    const container = ContainerRef.current;
     return function cleanUp() {
       onSetPlaceholderHeight({
         contentType: 'user',
         contentId: profileId,
-        height: container?.clientHeight
+        height: placeholderHeightRef.current
       });
       onSetVisible({
         contentType: 'user',
