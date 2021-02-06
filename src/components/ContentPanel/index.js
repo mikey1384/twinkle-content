@@ -41,7 +41,6 @@ export default function ContentPanel({
   const [ComponentRef, inView] = useInView({
     threshold: 0
   });
-  const ContainerRef = useRef(null);
   const PanelRef = useRef(null);
   const history = useHistory();
   const {
@@ -195,7 +194,6 @@ export default function ContentPanel({
         {!contentState.deleted ? (
           <div style={style} className={className} ref={ComponentRef}>
             <div
-              ref={ContainerRef}
               style={{
                 width: '100%',
                 marginBottom: '1rem',
