@@ -42,7 +42,6 @@ export default function ContentPanel({
     threshold: 0
   });
   const ContainerRef = useRef(null);
-  const PanelRef = useRef(null);
   const history = useHistory();
   const {
     requestHelpers: { loadContent }
@@ -95,7 +94,7 @@ export default function ContentPanel({
   const [visible, setVisible] = useState(previousVisible);
   const visibleRef = useRef(null);
   useLazyLoad({
-    PanelRef,
+    PanelRef: ContainerRef,
     inView,
     onSetPlaceholderHeight: setPlaceholderHeight,
     onSetVisible: (visible) => {
@@ -115,12 +114,12 @@ export default function ContentPanel({
   });
 
   useEffect(() => {
-    const container = ContainerRef.current;
     return function cleanUp() {
+      console.log(placeholderHeight);
       onSetPlaceholderHeight({
         contentType,
         contentId,
-        height: container?.clientHeight
+        height: placeholderHeight
       });
       onSetVisible({
         contentId,
@@ -201,7 +200,6 @@ export default function ContentPanel({
             >
               {contentShown && (
                 <div
-                  ref={PanelRef}
                   style={{
                     height: !loaded && '15rem',
                     position: 'relative',
