@@ -42,6 +42,7 @@ export default function ContentPanel({
     threshold: 0
   });
   const ContainerRef = useRef(null);
+  const PanelRef = useRef(null);
   const history = useHistory();
   const {
     requestHelpers: { loadContent }
@@ -88,14 +89,18 @@ export default function ContentPanel({
     visible: previousVisible,
     rootId
   } = contentState;
-  const placeholderHeightRef = useRef(previousPlaceholderHeight);
+  const placeHolderHeightRef = useRef(previousPlaceholderHeight);
+  const [placeholderHeight, setPlaceholderHeight] = useState(
+    previousPlaceholderHeight
+  );
   const [visible, setVisible] = useState(previousVisible);
   const visibleRef = useRef(null);
   useLazyLoad({
-    PanelRef: ContainerRef,
+    PanelRef,
     inView,
     onSetPlaceholderHeight: (height) => {
-      placeholderHeightRef.current = height;
+      setPlaceholderHeight(height);
+      placeHolderHeightRef.current = height;
     },
     onSetVisible: (visible) => {
       setVisible(visible);
@@ -106,8 +111,7 @@ export default function ContentPanel({
   const mounted = useRef(true);
   const loading = useRef(false);
   const inputAtBottom = contentType === 'comment';
-  const heightNotSet =
-    !previousPlaceholderHeight && !placeholderHeightRef.current;
+  const heightNotSet = !previousPlaceholderHeight && !placeholderHeight;
 
   const { started: rootStarted } = useContentState({
     contentType: rootType,
@@ -119,7 +123,7 @@ export default function ContentPanel({
       onSetPlaceholderHeight({
         contentType,
         contentId,
-        height: placeholderHeightRef.current
+        height: placeHolderHeightRef.current
       });
       onSetVisible({
         contentId,
@@ -195,13 +199,12 @@ export default function ContentPanel({
               style={{
                 width: '100%',
                 marginBottom: '1rem',
-                height: contentShown
-                  ? 'auto'
-                  : previousPlaceholderHeight || '15rem'
+                height: contentShown ? 'auto' : placeholderHeight || '15rem'
               }}
             >
               {contentShown && (
                 <div
+                  ref={PanelRef}
                   style={{
                     height: !loaded && '15rem',
                     position: 'relative',
