@@ -89,7 +89,7 @@ export default function ContentPanel({
     visible: previousVisible,
     rootId
   } = contentState;
-  const placeHolderHeightRef = useRef(previousPlaceholderHeight);
+  const placeholderHeightRef = useRef(previousPlaceholderHeight);
   const [placeholderHeight, setPlaceholderHeight] = useState(
     previousPlaceholderHeight
   );
@@ -100,7 +100,7 @@ export default function ContentPanel({
     inView,
     onSetPlaceholderHeight: (height) => {
       setPlaceholderHeight(height);
-      placeHolderHeightRef.current = height;
+      placeholderHeightRef.current = height;
     },
     onSetVisible: (visible) => {
       setVisible(visible);
@@ -123,7 +123,7 @@ export default function ContentPanel({
       onSetPlaceholderHeight({
         contentType,
         contentId,
-        height: placeHolderHeightRef.current
+        height: placeholderHeightRef.current
       });
       onSetVisible({
         contentId,
