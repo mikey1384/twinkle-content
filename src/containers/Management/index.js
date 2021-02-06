@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import InvalidPage from 'components/InvalidPage';
+import FilterBar from 'components/FilterBar';
 import Routes from './Routes';
 import Loading from 'components/Loading';
 import SideMenu from 'components/SideMenu';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { useMyState } from 'helpers/hooks';
 import { useManagementContext } from 'contexts';
 
@@ -15,11 +16,12 @@ Management.propTypes = {
 };
 
 export default function Management({ location }) {
+  const history = useHistory();
   const {
     state: { loaded },
     actions: { onLoadManagement }
   } = useManagementContext();
-  const { loaded: userLoaded, managementLevel } = useMyState();
+  const { loaded: userLoaded, managementLevel, profileTheme } = useMyState();
   useEffect(() => {
     onLoadManagement();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -37,6 +39,30 @@ export default function Management({ location }) {
           <span style={{ marginLeft: '1.1rem' }}>Mod Activities</span>
         </NavLink>
       </SideMenu>
+      <FilterBar
+        color={profileTheme}
+        style={{ height: '5rem', marginBottom: 0 }}
+        className={`mobile ${css`
+          @media (max-width: ${mobileMaxWidth}) {
+            font-size: 1.3rem;
+          }
+        `}`}
+      >
+        <nav
+          className={location.pathname === `/management` ? 'active' : ''}
+          onClick={() => history.push('/management')}
+        >
+          Account Mgmt
+        </nav>
+        <nav
+          className={
+            location.pathname === `/management/mod-activities` ? 'active' : ''
+          }
+          onClick={() => history.push('/management/mod-activities')}
+        >
+          Mod Activities
+        </nav>
+      </FilterBar>
       <Routes
         className={css`
           width: CALC(100vw - 51rem - 2rem);

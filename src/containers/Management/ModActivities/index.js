@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAppContext } from 'contexts';
 import DeletedContent from './DeletedContent';
+import Loading from 'components/Loading';
 
 export default function ModActivities() {
   const [loaded, setLoaded] = useState(false);
@@ -20,8 +21,9 @@ export default function ModActivities() {
 
   return (
     <div style={{ padding: '1rem' }}>
-      <h2>Deleted Posts</h2>
+      <h2 style={{ marginTop: '1rem' }}>Deleted Posts</h2>
       <div style={{ marginTop: '2rem' }}>
+        {!loaded && <Loading />}
         {loaded && deletedPosts.length === 0 && (
           <div
             style={{
