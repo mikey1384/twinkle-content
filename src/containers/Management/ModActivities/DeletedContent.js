@@ -65,11 +65,11 @@ export default function DeletedContent({
   return (
     <div
       style={{
-        borderRadius,
         height: 'auto',
         ...style
       }}
       className={css`
+        border-radius: ${borderRadius};
         border: 1px solid ${Color.borderGray()};
         background: '#fff';
         .label {
@@ -77,6 +77,7 @@ export default function DeletedContent({
         }
         margin-top: 0;
         @media (max-width: ${mobileMaxWidth}) {
+          border-radius: 0;
           margin-top: -0.5rem;
           border-left: 0;
           border-right: 0;
@@ -333,8 +334,6 @@ export default function DeletedContent({
                 marginTop: '1rem',
                 padding: '1rem',
                 background: isRecovered ? Color.green() : Color.darkerGray(),
-                marginLeft: '-1px',
-                marginRight: '-1px',
                 fontSize: '1.5rem',
                 marginBottom: '1rem',
                 color: '#fff',
@@ -342,6 +341,14 @@ export default function DeletedContent({
                 justifyContent: 'space-between',
                 alignItems: 'center'
               }}
+              className={css`
+                margin-left: -1px;
+                margin-right: -1px;
+                @media (max-width: ${mobileMaxWidth}) {
+                  margin-left: 0;
+                  margin-right: 0;
+                }
+              `}
             >
               {isRecovered ? (
                 <div>

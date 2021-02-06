@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useAppContext } from 'contexts';
 import DeletedContent from './DeletedContent';
 import Loading from 'components/Loading';
+import { mobileMaxWidth } from 'constants/css';
+import { css } from '@emotion/css';
 
 export default function ModActivities() {
   const [loaded, setLoaded] = useState(false);
@@ -20,8 +22,26 @@ export default function ModActivities() {
   }, []);
 
   return (
-    <div style={{ padding: '1rem' }}>
-      <h2 style={{ marginTop: '1rem' }}>Deleted Posts</h2>
+    <div
+      className={css`
+        padding: 1rem;
+        @media (max-width: ${mobileMaxWidth}) {
+          padding: 0;
+        }
+      `}
+    >
+      <h2
+        className={css`
+          margin-top: 1rem;
+          @media (max-width: ${mobileMaxWidth}) {
+            padding: 0 1rem;
+            font-size: 2.3rem;
+            margin-top: 2rem;
+          }
+        `}
+      >
+        Deleted Posts
+      </h2>
       <div style={{ marginTop: '2rem' }}>
         {!loaded && <Loading />}
         {loaded && deletedPosts.length === 0 && (
