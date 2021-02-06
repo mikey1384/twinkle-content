@@ -115,7 +115,6 @@ export default function ContentPanel({
 
   useEffect(() => {
     return function cleanUp() {
-      console.log(placeholderHeight);
       onSetPlaceholderHeight({
         contentType,
         contentId,
