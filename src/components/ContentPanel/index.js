@@ -88,14 +88,14 @@ export default function ContentPanel({
     visible: previousVisible,
     rootId
   } = contentState;
-  const placeHolderHeightRef = useRef(previousPlaceholderHeight);
+  const placeholderHeightRef = useRef(previousPlaceholderHeight);
   const [visible, setVisible] = useState(previousVisible);
   const visibleRef = useRef(null);
   useLazyLoad({
     PanelRef: ContainerRef,
     inView,
     onSetPlaceholderHeight: (height) => {
-      placeHolderHeightRef.current = height;
+      placeholderHeightRef.current = height;
     },
     onSetVisible: (visible) => {
       setVisible(visible);
@@ -107,7 +107,7 @@ export default function ContentPanel({
   const loading = useRef(false);
   const inputAtBottom = contentType === 'comment';
   const heightNotSet =
-    !previousPlaceholderHeight && !placeHolderHeightRef.current;
+    !previousPlaceholderHeight && !placeholderHeightRef.current;
 
   const { started: rootStarted } = useContentState({
     contentType: rootType,
@@ -119,7 +119,7 @@ export default function ContentPanel({
       onSetPlaceholderHeight({
         contentType,
         contentId,
-        height: placeHolderHeightRef.current
+        height: placeholderHeightRef.current
       });
       onSetVisible({
         contentId,
@@ -197,7 +197,7 @@ export default function ContentPanel({
                 marginBottom: '1rem',
                 height: contentShown
                   ? 'auto'
-                  : placeHolderHeightRef.current || '15rem'
+                  : previousPlaceholderHeight || '15rem'
               }}
             >
               {contentShown && (
