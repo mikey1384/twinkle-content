@@ -60,6 +60,7 @@ function MessageInput({
   const textRef = useRef(textForThisChannel);
   const inputCoolingDown = useRef(false);
   const timerRef = useRef(null);
+  const [coolingDown, setCoolingDown] = useState(false);
   const [text, setText] = useState(textForThisChannel);
 
   useEffect(() => {
@@ -176,7 +177,7 @@ function MessageInput({
           >
             <Button
               filled
-              disabled={loading || !socketConnected}
+              disabled={loading || !socketConnected || coolingDown}
               color={profileTheme}
               onClick={handleSendMsg}
             >
@@ -239,10 +240,19 @@ function MessageInput({
 
   async function handleSendMsg() {
     if (!socketConnected || inputCoolingDown.current) {
+      if (inputCoolingDown.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = setTimeout(() => {
+          setCoolingDown(false);
+          inputCoolingDown.current = false;
+        }, 700);
+      }
       return;
     }
+    setCoolingDown(true);
     inputCoolingDown.current = true;
     timerRef.current = setTimeout(() => {
+      setCoolingDown(false);
       inputCoolingDown.current = false;
     }, 700);
     if (banned && recepientId !== 5) {
