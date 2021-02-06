@@ -13,6 +13,7 @@ StarButton.propTypes = {
   contentId: PropTypes.number,
   rewardLevel: PropTypes.number,
   direction: PropTypes.string,
+  filePath: PropTypes.string,
   filled: PropTypes.bool,
   onSetRewardLevel: PropTypes.func,
   onToggleByUser: PropTypes.func,
@@ -26,6 +27,7 @@ export default function StarButton({
   byUser,
   contentId,
   contentType,
+  filePath,
   rewardLevel,
   direction = 'left',
   filled,
@@ -96,7 +98,7 @@ export default function StarButton({
       uploader &&
       (contentType === 'video' ||
         contentType === 'url' ||
-        contentType === 'subject')
+        (contentType === 'subject' && filePath))
     ) {
       return setMenuShown(!menuShown);
     }

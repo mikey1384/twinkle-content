@@ -45,6 +45,7 @@ export default function Body({
   contentObj: {
     commentsLoaded,
     contentId,
+    filePath,
     rewardLevel,
     id,
     numComments,
@@ -525,6 +526,7 @@ export default function Body({
                         style={{ marginLeft: '1rem' }}
                         byUser={!!contentObj.byUser}
                         contentId={contentObj.id}
+                        filePath={filePath}
                         rewardLevel={rewardLevel}
                         onSetRewardLevel={onSetRewardLevel}
                         onToggleByUser={onToggleByUser}
