@@ -97,7 +97,6 @@ export default function Body({
   const {
     byUser,
     description,
-    filePath,
     isEditing,
     secretAnswer,
     secretShown,
@@ -188,8 +187,7 @@ export default function Body({
           : 0
         : rootObj.rewardLevel;
     return (contentType === 'subject' &&
-      (description?.length > descriptionLengthForExtraRewardLevel ||
-        filePath)) ||
+      description?.length > descriptionLengthForExtraRewardLevel) ||
       contentObj.byUser
       ? 5
       : targetObj.subject?.rewardLevel || rootRewardLevel;
@@ -197,7 +195,6 @@ export default function Body({
     contentObj.byUser,
     contentType,
     description,
-    filePath,
     rootObj.rewardLevel,
     rootType,
     targetObj.subject
