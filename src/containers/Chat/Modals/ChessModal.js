@@ -4,6 +4,7 @@ import Modal from 'components/Modal';
 import Button from 'components/Button';
 import Chess from '../Chess';
 import ConfirmModal from 'components/Modals/ConfirmModal';
+import Icon from 'components/Icon';
 import { Color } from 'constants/css';
 import { socket } from 'constants/io';
 import { useAppContext, useChatContext } from 'contexts';
@@ -17,7 +18,8 @@ ChessModal.propTypes = {
   countdownNumber: PropTypes.number,
   onSpoilerClick: PropTypes.func.isRequired,
   opponentId: PropTypes.number,
-  opponentName: PropTypes.string
+  opponentName: PropTypes.string,
+  socketConnected: PropTypes.bool
 };
 
 export default function ChessModal({
@@ -29,7 +31,8 @@ export default function ChessModal({
   countdownNumber,
   onSpoilerClick,
   opponentId,
-  opponentName
+  opponentName,
+  socketConnected
 }) {
   const {
     requestHelpers: { fetchCurrentChessState, setChessMoveViewTimeStamp }
@@ -169,9 +172,12 @@ export default function ChessModal({
           <Button
             color="blue"
             onClick={submitChessMove}
-            disabled={!newChessState}
+            disabled={!newChessState || !socketConnected}
           >
             Done
+            {!socketConnected && (
+              <Icon style={{ marginLeft: '0.7rem' }} icon="spinner" pulse />
+            )}
           </Button>
         )}
       </footer>

@@ -607,42 +607,33 @@ export default function MessagesContainer({
           borderTop: `1px solid ${Color.borderGray()}`
         }}
       >
-        {socketConnected ? (
-          <MessageInput
-            innerRef={ChatInputRef}
-            loading={loading}
-            myId={userId}
-            isTwoPeopleChannel={currentChannel.twoPeople}
-            currentChannelId={selectedChannelId}
-            currentChannel={currentChannel}
-            onImagePaste={handleImagePaste}
-            onChessButtonClick={handleChessModalShown}
-            onMessageSubmit={(content) =>
-              handleMessageSubmit({ content, target: replyTarget })
+        <MessageInput
+          innerRef={ChatInputRef}
+          loading={loading}
+          socketConnected={socketConnected}
+          myId={userId}
+          isTwoPeopleChannel={currentChannel.twoPeople}
+          currentChannelId={selectedChannelId}
+          currentChannel={currentChannel}
+          onImagePaste={handleImagePaste}
+          onChessButtonClick={handleChessModalShown}
+          onMessageSubmit={(content) =>
+            handleMessageSubmit({ content, target: replyTarget })
+          }
+          onHeightChange={(height) => {
+            if (height !== textAreaHeight) {
+              setTextAreaHeight(height > 46 ? height : 0);
             }
-            onHeightChange={(height) => {
-              if (height !== textAreaHeight) {
-                setTextAreaHeight(height > 46 ? height : 0);
-              }
-            }}
-            onUploadButtonClick={() => FileInputRef.current.click()}
-            onSelectVideoButtonClick={() => setSelectVideoModalShown(true)}
-            recepientId={
-              recepientId ||
-              currentChannel?.members
-                ?.map((member) => member.id)
-                ?.filter((memberId) => memberId !== userId)[0]
-            }
-          />
-        ) : (
-          <div>
-            <Loading
-              style={{ height: '4.6rem' }}
-              innerStyle={{ fontSize: '2rem' }}
-              text="Socket disconnected. Reconnecting..."
-            />
-          </div>
-        )}
+          }}
+          onUploadButtonClick={() => FileInputRef.current.click()}
+          onSelectVideoButtonClick={() => setSelectVideoModalShown(true)}
+          recepientId={
+            recepientId ||
+            currentChannel?.members
+              ?.map((member) => member.id)
+              ?.filter((memberId) => memberId !== userId)[0]
+          }
+        />
       </div>
       {alertModalShown && (
         <AlertModal
@@ -665,6 +656,7 @@ export default function MessagesContainer({
           onSpoilerClick={handleChessSpoilerClick}
           opponentId={chessOpponent?.id}
           opponentName={chessOpponent?.username}
+          socketConnected={socketConnected}
         />
       )}
       {uploadModalShown && (

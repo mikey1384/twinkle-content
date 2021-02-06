@@ -15,6 +15,7 @@ import { useChatContext, useInputContext } from 'contexts';
 import TargetMessagePreview from './TargetMessagePreview';
 import TargetSubjectPreview from './TargetSubjectPreview';
 import AddButtons from './AddButtons';
+import Loading from 'components/Loading';
 
 MessageInput.propTypes = {
   currentChannelId: PropTypes.number,
@@ -27,7 +28,8 @@ MessageInput.propTypes = {
   onMessageSubmit: PropTypes.func.isRequired,
   onSelectVideoButtonClick: PropTypes.func.isRequired,
   onUploadButtonClick: PropTypes.func.isRequired,
-  recepientId: PropTypes.number
+  recepientId: PropTypes.number,
+  socketConnected: PropTypes.bool
 };
 
 function MessageInput({
@@ -41,7 +43,8 @@ function MessageInput({
   onMessageSubmit,
   onSelectVideoButtonClick,
   onUploadButtonClick,
-  recepientId
+  recepientId,
+  socketConnected
 }) {
   const { banned, profileTheme } = useMyState();
   const {
@@ -168,13 +171,12 @@ function MessageInput({
         {!stringIsEmpty(text) && (
           <div
             style={{
-              height: '100%',
               margin: `0.2rem 1rem 0.2rem 0`
             }}
           >
             <Button
               filled
-              disabled={loading}
+              disabled={loading || !socketConnected}
               color={profileTheme}
               onClick={handleSendMsg}
             >
@@ -183,10 +185,21 @@ function MessageInput({
           </div>
         )}
         <AddButtons
-          disabled={loading || !!banned}
+          disabled={loading || !!banned || !socketConnected}
           onUploadButtonClick={onUploadButtonClick}
           onSelectVideoButtonClick={onSelectVideoButtonClick}
         />
+        {!socketConnected && (
+          <Loading
+            style={{
+              height: 0,
+              width: 0,
+              position: 'absolute',
+              right: '7rem',
+              bottom: '3.2rem'
+            }}
+          />
+        )}
       </div>
     </div>
   );
@@ -225,7 +238,7 @@ function MessageInput({
   }
 
   async function handleSendMsg() {
-    if (inputCoolingDown.current) {
+    if (!socketConnected || inputCoolingDown.current) {
       return;
     }
     inputCoolingDown.current = true;
