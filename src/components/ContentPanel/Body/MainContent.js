@@ -97,7 +97,7 @@ export default function MainContent({
               style={{
                 display: 'flex',
                 justifyContent: 'center',
-                marginTop: byUser ? '2rem' : '1rem',
+                marginTop: byUser ? '1.7rem' : '1rem',
                 ...(fileType === 'audio'
                   ? {
                       padding: '1rem'
@@ -162,7 +162,8 @@ export default function MainContent({
         )}
         <div
           style={{
-            marginTop: '1rem',
+            marginTop:
+              contentType === 'subject' && filePath ? '0.5rem' : '1rem',
             marginBottom: isEditing
               ? 0
               : contentType !== 'video' && !secretHidden && '1rem',
