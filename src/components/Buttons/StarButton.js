@@ -65,7 +65,7 @@ export default function StarButton({
               width: '25rem'
             }}
           >
-            {contentType === 'video' && (
+            {(contentType === 'video' || contentType === 'subject') && (
               <li onClick={showRewardLevelModal}>Set Reward Level</li>
             )}
             <li onClick={toggleByUser}>
@@ -92,7 +92,12 @@ export default function StarButton({
   );
 
   function onClick() {
-    if (contentType === 'video' || contentType === 'url') {
+    if (
+      uploader &&
+      (contentType === 'video' ||
+        contentType === 'url' ||
+        contentType === 'subject')
+    ) {
       return setMenuShown(!menuShown);
     }
     return setRewardLevelModalShown(true);

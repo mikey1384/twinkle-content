@@ -97,7 +97,7 @@ export default function MainContent({
               style={{
                 display: 'flex',
                 justifyContent: 'center',
-                marginTop: '1rem',
+                marginTop: byUser ? '2rem' : '1rem',
                 ...(fileType === 'audio'
                   ? {
                       padding: '1rem'

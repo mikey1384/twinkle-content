@@ -321,7 +321,7 @@ export default function Body({
           width: '100%'
         }}
       >
-        {contentType === 'url' && !!byUser && (
+        {(contentType === 'url' || contentType === 'subject') && !!byUser && (
           <div
             style={{
               padding: '0.7rem',
