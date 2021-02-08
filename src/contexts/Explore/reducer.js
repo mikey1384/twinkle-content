@@ -103,7 +103,7 @@ export default function ExploreReducer(state, action) {
           addPlaylistModalShown: false
         }
       };
-    case 'CLOSE_REORDER_PINNED_PL_MODAL':
+    case 'CLOSE_REORDER_FEATURED_PL_MODAL':
       return {
         ...state,
         videos: {
@@ -111,13 +111,13 @@ export default function ExploreReducer(state, action) {
           reorderFeaturedPlaylistsShown: false
         }
       };
-    case 'CLOSE_SELECT_PL_TO_PIN_MODAL':
+    case 'CLOSE_SELECT_FEATURED_PL_MODAL':
       return {
         ...state,
         videos: {
           ...state.videos,
-          loadMorePlaylistsToPinButton: false,
-          selectPlaylistsToFeatureModalShown: false
+          loadMoreFeaturedPlaylistsButton: false,
+          selectFeaturedPlaylistsModalShown: false
         }
       };
     case 'DELETE_LINK':
@@ -488,10 +488,10 @@ export default function ExploreReducer(state, action) {
         }
       };
     case 'LOAD_MORE_PLAYLISTS_TO_PIN': {
-      let loadMorePlaylistsToPinButton = false;
+      let loadMoreFeaturedPlaylistsButton = false;
       if (action.data.result.length > 10) {
         action.data.result.pop();
-        loadMorePlaylistsToPinButton = true;
+        loadMoreFeaturedPlaylistsButton = true;
       }
       return {
         ...state,
@@ -500,7 +500,7 @@ export default function ExploreReducer(state, action) {
           playlistsToPin: state.videos.playlistsToPin.concat(
             action.data.result
           ),
-          loadMorePlaylistsToPinButton
+          loadMoreFeaturedPlaylistsButton
         }
       };
     }
@@ -530,7 +530,7 @@ export default function ExploreReducer(state, action) {
           addPlaylistModalShown: true
         }
       };
-    case 'OPEN_REORDER_PINNED_PL_MODAL':
+    case 'OPEN_REORDER_FEATURED_PL_MODAL':
       return {
         ...state,
         videos: {
@@ -538,11 +538,11 @@ export default function ExploreReducer(state, action) {
           reorderFeaturedPlaylistsShown: true
         }
       };
-    case 'OPEN_SELECT_PL_TO_PIN_MODAL': {
-      let loadMorePlaylistsToPinButton = false;
+    case 'OPEN_SELECT_FEATURED_PL_MODAL': {
+      let loadMoreFeaturedPlaylistsButton = false;
       if (action.data.result.length > 10) {
         action.data.result.pop();
-        loadMorePlaylistsToPinButton = true;
+        loadMoreFeaturedPlaylistsButton = true;
       }
       return {
         ...state,
@@ -552,8 +552,8 @@ export default function ExploreReducer(state, action) {
             title: item.title,
             id: item.id
           })),
-          loadMorePlaylistsToPinButton,
-          selectPlaylistsToFeatureModalShown: true
+          loadMoreFeaturedPlaylistsButton,
+          selectFeaturedPlaylistsModalShown: true
         }
       };
     }

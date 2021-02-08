@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import PlaylistsPanel from './PlaylistsPanel';
 import ErrorBoundary from 'components/ErrorBoundary';
 import ButtonGroup from 'components/Buttons/ButtonGroup';
-import SelectPlaylistsToPinModal from '../Modals/SelectPlaylistsToPinModal';
+import SelectFeaturedPlaylists from '../Modals/SelectFeaturedPlaylists';
 import ReorderFeaturedPlaylists from '../Modals/ReorderFeaturedPlaylists';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useExploreContext } from 'contexts';
@@ -18,15 +18,15 @@ export default function FeaturedPlaylistsPanel() {
         featuredPlaylists,
         featuredPlaylistsLoaded,
         reorderFeaturedPlaylistsShown,
-        selectPlaylistsToFeatureModalShown
+        selectFeaturedPlaylistsModalShown
       }
     },
     actions: {
       onCloseReorderFeaturedPlaylists,
-      onCloseSelectPlaylistsToPinModal,
+      onCloseSelectFeaturedPlaylists,
       onLoadFeaturedPlaylists,
       onOpenReorderFeaturedPlaylists,
-      onOpenSelectPlaylistsToPinModal
+      onOpenSelectFeaturedPlaylists
     }
   } = useExploreContext();
   const prevLoaded = useRef(false);
@@ -45,7 +45,7 @@ export default function FeaturedPlaylistsPanel() {
   const menuButtons = useMemo(() => {
     const buttons = [
       {
-        label: 'Select Playlists',
+        label: 'Select',
         onClick: handleOpenSelectPlaylistsToPinModal,
         skeuomorphic: true,
         color: 'darkerGray'
@@ -53,7 +53,7 @@ export default function FeaturedPlaylistsPanel() {
     ];
     if (featuredPlaylists.length > 0) {
       buttons.push({
-        label: 'Reorder Playlists',
+        label: 'Reorder',
         onClick: onOpenReorderFeaturedPlaylists,
         skeuomorphic: true,
         color: 'darkerGray'
@@ -75,17 +75,17 @@ export default function FeaturedPlaylistsPanel() {
         playlists={featuredPlaylists}
         loaded={featuredPlaylistsLoaded || prevLoaded.current}
       />
-      {selectPlaylistsToFeatureModalShown && (
-        <SelectPlaylistsToPinModal
-          selectedPlaylists={featuredPlaylists.map(playlist => {
+      {selectFeaturedPlaylistsModalShown && (
+        <SelectFeaturedPlaylists
+          selectedPlaylists={featuredPlaylists.map((playlist) => {
             return playlist.id;
           })}
-          onHide={onCloseSelectPlaylistsToPinModal}
+          onHide={onCloseSelectFeaturedPlaylists}
         />
       )}
       {reorderFeaturedPlaylistsShown && (
         <ReorderFeaturedPlaylists
-          playlistIds={featuredPlaylists.map(playlist => playlist.id)}
+          playlistIds={featuredPlaylists.map((playlist) => playlist.id)}
           onHide={onCloseReorderFeaturedPlaylists}
         />
       )}
@@ -94,6 +94,6 @@ export default function FeaturedPlaylistsPanel() {
 
   async function handleOpenSelectPlaylistsToPinModal() {
     const data = await loadPlaylistList();
-    onOpenSelectPlaylistsToPinModal(data);
+    onOpenSelectFeaturedPlaylists(data);
   }
 }

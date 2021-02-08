@@ -52,12 +52,12 @@ export default function ExploreActions(dispatch) {
     },
     onCloseReorderFeaturedPlaylists() {
       return dispatch({
-        type: 'CLOSE_REORDER_PINNED_PL_MODAL'
+        type: 'CLOSE_REORDER_FEATURED_PL_MODAL'
       });
     },
-    onCloseSelectPlaylistsToPinModal() {
+    onCloseSelectFeaturedPlaylists() {
       return dispatch({
-        type: 'CLOSE_SELECT_PL_TO_PIN_MODAL'
+        type: 'CLOSE_SELECT_FEATURED_PL_MODAL'
       });
     },
     onDeletePlaylist(playlistId) {
@@ -205,12 +205,12 @@ export default function ExploreActions(dispatch) {
     },
     onOpenReorderFeaturedPlaylists() {
       return dispatch({
-        type: 'OPEN_REORDER_PINNED_PL_MODAL'
+        type: 'OPEN_REORDER_FEATURED_PL_MODAL'
       });
     },
-    onOpenSelectPlaylistsToPinModal(data) {
+    onOpenSelectFeaturedPlaylists(data) {
       return dispatch({
-        type: 'OPEN_SELECT_PL_TO_PIN_MODAL',
+        type: 'OPEN_SELECT_FEATURED_PL_MODAL',
         data
       });
     },

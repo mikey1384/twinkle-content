@@ -18,7 +18,7 @@ export default function Subjects() {
     },
     actions: { onLoadFeaturedSubjects }
   } = useExploreContext();
-  const [modalShown, setModalShown] = useState(false);
+  const [selectModalShown, setSelectModalShown] = useState(false);
   const prevLoaded = useRef(false);
   useEffect(() => {
     init();
@@ -39,14 +39,23 @@ export default function Subjects() {
           title="Featured Subjects"
           button={
             userId && canPinPlaylists ? (
-              <Button
-                skeuomorphic
-                color="darkerGray"
-                style={{ marginLeft: 'auto' }}
-                onClick={() => setModalShown(true)}
-              >
-                Select Subjects
-              </Button>
+              <div style={{ display: 'flex' }}>
+                <Button
+                  skeuomorphic
+                  color="darkerGray"
+                  style={{ marginLeft: 'auto' }}
+                  onClick={() => setSelectModalShown(true)}
+                >
+                  Select
+                </Button>
+                <Button
+                  skeuomorphic
+                  color="darkerGray"
+                  style={{ marginLeft: '1rem' }}
+                >
+                  Reorder
+                </Button>
+              </div>
             ) : null
           }
           isEmpty={featured.length === 0}
@@ -61,13 +70,13 @@ export default function Subjects() {
             />
           ))}
         </SectionPanel>
-        {modalShown && (
+        {selectModalShown && (
           <SelectFeaturedSubjects
             subjects={featured}
-            onHide={() => setModalShown(false)}
+            onHide={() => setSelectModalShown(false)}
             onSubmit={(selectedSubjects) => {
               onLoadFeaturedSubjects(selectedSubjects);
-              setModalShown(false);
+              setSelectModalShown(false);
             }}
           />
         )}

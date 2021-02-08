@@ -13,12 +13,12 @@ import { stringIsEmpty } from 'helpers/stringHelpers';
 import { isEqual } from 'lodash';
 import { useAppContext, useExploreContext } from 'contexts';
 
-SelectPlaylistsToPinModal.propTypes = {
+SelectFeaturedPlaylists.propTypes = {
   onHide: PropTypes.func.isRequired,
   selectedPlaylists: PropTypes.array.isRequired
 };
 
-export default function SelectPlaylistsToPinModal({
+export default function SelectFeaturedPlaylists({
   onHide,
   selectedPlaylists: initialSelectedPlaylists
 }) {
@@ -29,7 +29,7 @@ export default function SelectPlaylistsToPinModal({
     state: {
       videos: {
         featuredPlaylists,
-        loadMorePlaylistsToPinButton: loadMoreButton,
+        loadMoreFeaturedPlaylistsButton: loadMoreButton,
         playlistsToPin
       }
     },
