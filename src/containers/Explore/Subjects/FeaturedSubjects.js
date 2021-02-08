@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import ErrorBoundary from 'components/ErrorBoundary';
 import ContentListItem from 'components/ContentListItem';
 import SectionPanel from 'components/SectionPanel';
@@ -10,6 +10,7 @@ import { useAppContext, useExploreContext } from 'contexts';
 
 export default function FeaturedSubjects() {
   const { userId, canPinPlaylists } = useMyState();
+  const [loadedMore, setLoadedMore] = useState(false);
   const [reorderModalShown, setReorderModalShown] = useState(false);
   const [selectModalShown, setSelectModalShown] = useState(false);
   const {
@@ -33,11 +34,19 @@ export default function FeaturedSubjects() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loaded]);
+  const shownSubjects = useMemo(() => {
+    if (loadedMore) {
+      return featured;
+    }
+    return featured[0] ? [featured[0]] : [];
+  }, [featured, loadedMore]);
 
   return (
     <ErrorBoundary>
       <SectionPanel
         title="Featured Subjects"
+        loadMoreButtonShown={!loadedMore}
+        onLoadMore={() => setLoadedMore(true)}
         button={
           userId && canPinPlaylists ? (
             <div style={{ display: 'flex' }}>
@@ -64,7 +73,7 @@ export default function FeaturedSubjects() {
         emptyMessage="No featured subjects for now..."
         loaded={loaded || prevLoaded.current}
       >
-        {featured.map((subject) => (
+        {shownSubjects.map((subject) => (
           <ContentListItem
             key={subject.id}
             style={{ marginBottom: '1rem' }}

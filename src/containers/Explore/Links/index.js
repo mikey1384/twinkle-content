@@ -121,7 +121,7 @@ export default function Links() {
         emptyMessage="No User Made Content"
         isEmpty={byUserLinks.length === 0}
         loaded={byUserLoaded}
-        loadMore={handleLoadMoreByUserLinks}
+        onLoadMore={handleLoadMoreByUserLinks}
         loadMoreButtonShown={loadMoreByUserLinksButtonShown}
       >
         <LinkGroup links={byUserLinks} />
@@ -131,7 +131,7 @@ export default function Links() {
         emptyMessage="No Recommended Links"
         isEmpty={recommendeds.length === 0}
         loaded={recommendedsLoaded}
-        loadMore={handleLoadMoreRecommendeds}
+        onLoadMore={handleLoadMoreRecommendeds}
         loadMoreButtonShown={loadMoreRecommendedsButtonShown}
       >
         <LinkGroup links={recommendeds} />
@@ -150,7 +150,7 @@ export default function Links() {
         emptyMessage="No Uploaded Links"
         isEmpty={links.length === 0}
         loaded={loaded || prevLoaded.current}
-        loadMore={handleLoadMoreLinks}
+        onLoadMore={handleLoadMoreLinks}
         loadMoreButtonShown={loadMoreLinksButtonShown}
       >
         <LinkGroup links={links} />

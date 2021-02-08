@@ -49,7 +49,7 @@ export default function PlaylistsPanel({
       isEmpty={playlists.length === 0}
       loaded={loaded}
       loadMoreButtonShown={!isSearching && loadMoreButton}
-      loadMore={handleLoadMorePlaylists}
+      onLoadMore={handleLoadMorePlaylists}
       isSearching={isSearching}
       onSearch={onSearch}
       searchQuery={searchQuery}

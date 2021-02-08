@@ -21,7 +21,7 @@ SectionPanel.propTypes = {
   isEmpty: PropTypes.bool,
   isSearching: PropTypes.bool,
   loaded: PropTypes.bool,
-  loadMore: PropTypes.func,
+  onLoadMore: PropTypes.func,
   children: PropTypes.node,
   loadMoreButtonShown: PropTypes.bool,
   onEditTitle: PropTypes.func,
@@ -44,9 +44,9 @@ export default function SectionPanel({
   isEmpty,
   isSearching,
   loaded,
-  loadMore,
   loadMoreButtonShown,
   onEditTitle,
+  onLoadMore,
   onSearch,
   placeholder = 'Enter Title',
   searchPlaceholder,
@@ -242,7 +242,7 @@ export default function SectionPanel({
             <LoadMoreButton
               transparent
               loading={loading}
-              onClick={onLoadMore}
+              onClick={handleLoadMore}
               style={{ fontSize: '2rem' }}
             />
           </div>
@@ -256,10 +256,10 @@ export default function SectionPanel({
     setOnEdit(false);
   }
 
-  async function onLoadMore() {
+  async function handleLoadMore() {
     if (!loading) {
       setLoading(true);
-      await loadMore();
+      await onLoadMore();
       setLoading(false);
     }
   }
