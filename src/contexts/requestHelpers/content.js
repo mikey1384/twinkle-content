@@ -714,7 +714,7 @@ export default function contentRequestHelpers({ auth, handleError }) {
     },
     async uploadFeaturedSubjects({ selected }) {
       try {
-        const subjects = await request.post(
+        const { data: subjects } = await request.post(
           `${URL}/content/featured/subjects`,
           { selectedSubjects: selected },
           auth()

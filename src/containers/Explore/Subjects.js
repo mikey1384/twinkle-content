@@ -3,6 +3,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import ContentListItem from 'components/ContentListItem';
 import SectionPanel from 'components/SectionPanel';
 import SelectFeaturedSubjects from './Modals/SelectFeaturedSubjects';
+import ReorderFeaturedSubjects from './Modals/ReorderFeaturedSubjects';
 import Button from 'components/Button';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useExploreContext } from 'contexts';
@@ -18,6 +19,7 @@ export default function Subjects() {
     },
     actions: { onLoadFeaturedSubjects }
   } = useExploreContext();
+  const [reorderModalShown, setReorderModalShown] = useState(false);
   const [selectModalShown, setSelectModalShown] = useState(false);
   const prevLoaded = useRef(false);
   useEffect(() => {
@@ -52,6 +54,7 @@ export default function Subjects() {
                   skeuomorphic
                   color="darkerGray"
                   style={{ marginLeft: '1rem' }}
+                  onClick={() => setReorderModalShown(true)}
                 >
                   Reorder
                 </Button>
@@ -78,6 +81,12 @@ export default function Subjects() {
               onLoadFeaturedSubjects(selectedSubjects);
               setSelectModalShown(false);
             }}
+          />
+        )}
+        {reorderModalShown && (
+          <ReorderFeaturedSubjects
+            subjectIds={featured.map((subject) => subject.id)}
+            onHide={() => setReorderModalShown(false)}
           />
         )}
       </ErrorBoundary>
