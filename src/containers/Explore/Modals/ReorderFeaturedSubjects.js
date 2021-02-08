@@ -71,10 +71,10 @@ export default function ReorderFeaturedSubjects({
 
   async function handleSubmit() {
     setDisabled(true);
-    const newSelectedSubjects = await uploadFeaturedSubjects({
+    const reorderedSubjects = await uploadFeaturedSubjects({
       selected: subjectIds
     });
-    onLoadFeaturedSubjects(newSelectedSubjects);
+    onLoadFeaturedSubjects(reorderedSubjects);
     onHide();
   }
 }
