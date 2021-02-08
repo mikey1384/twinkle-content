@@ -7,7 +7,7 @@ export default function RecommendedSubjects() {
   return (
     <ErrorBoundary>
       <SectionPanel
-        title="Featured Subjects"
+        title="Recommended Subjects"
         loadMoreButtonShown={loadMoreButtonShown}
         onLoadMore={() => setLoadMoreButtonShown(false)}
         isEmpty={true}
