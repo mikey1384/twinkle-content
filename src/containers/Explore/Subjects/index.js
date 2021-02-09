@@ -12,13 +12,18 @@ export default function Subjects() {
     state: {
       subjects: { loaded, featured, featuredLoaded, featuredLoadedMore }
     },
-    actions: { onLoadFeaturedSubjects, onSetFeaturedSubjectsLoadedMore }
+    actions: {
+      onLoadFeaturedSubjects,
+      onSetFeaturedSubjectsLoadedMore,
+      onSetSubjectsLoaded
+    }
   } = useExploreContext();
   useEffect(() => {
     init();
     async function init() {
       if (!loaded) {
         handleLoadFeaturedSubjects();
+        onSetSubjectsLoaded(true);
       }
     }
 

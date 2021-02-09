@@ -622,6 +622,14 @@ export default function ExploreReducer(state, action) {
           loadMoreSearchedPlaylistsButton: action.loadMoreButton
         }
       };
+    case 'SET_SUBJECTS_LOADED':
+      return {
+        ...state,
+        subjects: {
+          ...state.subjects,
+          loaded: action.loaded
+        }
+      };
     case 'TURN_OFF_CLICK_SAFE':
       return {
         ...state,

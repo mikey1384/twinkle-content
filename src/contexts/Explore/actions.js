@@ -239,6 +239,12 @@ export default function ExploreActions(dispatch) {
         loadedMore
       });
     },
+    onSetSubjectsLoaded(loaded) {
+      return dispatch({
+        type: 'SET_SUBJECTS_LOADED',
+        loaded
+      });
+    },
     onUpdateNumLinkComments({ id, updateType }) {
       return dispatch({
         type: 'UPDATE_NUM_LINK_COMMENTS',
