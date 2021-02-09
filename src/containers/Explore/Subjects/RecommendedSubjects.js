@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ErrorBoundary from 'components/ErrorBoundary';
 import SectionPanel from 'components/SectionPanel';
 
 export default function RecommendedSubjects() {
-  const [loadMoreButtonShown, setLoadMoreButtonShown] = useState(false);
   return (
     <ErrorBoundary>
       <SectionPanel
-        title="Recommended Subjects"
-        loadMoreButtonShown={loadMoreButtonShown}
-        onLoadMore={() => setLoadMoreButtonShown(false)}
+        title="Recommended"
+        loadMoreButtonShown={false}
+        onLoadMore={() => console.log('loading more')}
         isEmpty={true}
         emptyMessage="No recommended subjects for now..."
         loaded={true}

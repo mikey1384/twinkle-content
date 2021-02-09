@@ -221,17 +221,16 @@ export default function SectionPanel({
             isSearching={isSearching}
             searchQuery={searchQuery}
             statusMsgStyle={css`
+              padding: 0 1rem;
               font-size: 3rem;
               font-weight: bold;
-              top: 0;
-              bottom: 0;
-              left: 0;
-              right: 0;
-              position: absolute;
               display: flex;
               justify-content: center;
               align-items: center;
               color: ${Color.darkerGray()};
+              @media (max-width: ${mobileMaxWidth}) {
+                font-size: 2.2rem;
+              }
             `}
           />
         ) : (

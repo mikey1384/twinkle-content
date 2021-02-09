@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import ErrorBoundary from 'components/ErrorBoundary';
 import ContentListItem from 'components/ContentListItem';
 import SectionPanel from 'components/SectionPanel';
@@ -22,14 +22,12 @@ export default function FeaturedSubjects() {
     },
     actions: { onLoadFeaturedSubjects }
   } = useExploreContext();
-  const prevLoaded = useRef(false);
   useEffect(() => {
     init();
     async function init() {
       if (!loaded) {
         const subjects = await loadFeaturedSubjects();
         onLoadFeaturedSubjects(subjects);
-        prevLoaded.current = true;
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,7 +42,7 @@ export default function FeaturedSubjects() {
   return (
     <ErrorBoundary>
       <SectionPanel
-        title="Featured Subjects"
+        title="Featured"
         loadMoreButtonShown={!loadedMore}
         onLoadMore={() => setLoadedMore(true)}
         button={
@@ -71,7 +69,7 @@ export default function FeaturedSubjects() {
         }
         isEmpty={featured.length === 0}
         emptyMessage="No featured subjects for now..."
-        loaded={loaded || prevLoaded.current}
+        loaded={loaded}
       >
         {shownSubjects.map((subject) => (
           <ContentListItem
