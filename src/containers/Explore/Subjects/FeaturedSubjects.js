@@ -10,12 +10,19 @@ import { useMyState } from 'helpers/hooks';
 
 FeaturedSubjects.propTypes = {
   loaded: PropTypes.bool,
+  loadedMore: PropTypes.bool,
   subjects: PropTypes.array,
+  onLoadMore: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired
 };
-export default function FeaturedSubjects({ loaded, subjects, onSubmit }) {
+export default function FeaturedSubjects({
+  loaded,
+  loadedMore,
+  subjects,
+  onLoadMore,
+  onSubmit
+}) {
   const { userId, canPinPlaylists } = useMyState();
-  const [loadedMore, setLoadedMore] = useState(false);
   const [reorderModalShown, setReorderModalShown] = useState(false);
   const [selectModalShown, setSelectModalShown] = useState(false);
   const shownSubjects = useMemo(() => {
@@ -30,7 +37,7 @@ export default function FeaturedSubjects({ loaded, subjects, onSubmit }) {
       <SectionPanel
         title="Featured"
         loadMoreButtonShown={!loadedMore}
-        onLoadMore={() => setLoadedMore(true)}
+        onLoadMore={onLoadMore}
         button={
           userId && canPinPlaylists ? (
             <div style={{ display: 'flex' }}>

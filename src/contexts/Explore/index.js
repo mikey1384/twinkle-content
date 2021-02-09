@@ -18,6 +18,7 @@ export const initialExploreState = {
   },
   subjects: {
     featured: [],
+    featuredLoadedMore: false,
     loaded: false
   },
   search: {

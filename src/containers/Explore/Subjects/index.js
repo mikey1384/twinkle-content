@@ -10,9 +10,9 @@ export default function Subjects() {
   } = useAppContext();
   const {
     state: {
-      subjects: { loaded, featured }
+      subjects: { loaded, featured, featuredLoadedMore }
     },
-    actions: { onLoadFeaturedSubjects }
+    actions: { onLoadFeaturedSubjects, onSetFeaturedSubjectsLoadedMore }
   } = useExploreContext();
   useEffect(() => {
     init();
@@ -34,8 +34,10 @@ export default function Subjects() {
     <div>
       <FeaturedSubjects
         loaded={loaded || loadedRef.current}
+        loadedMore={featuredLoadedMore}
         subjects={featured}
         onSubmit={onLoadFeaturedSubjects}
+        onLoadMore={() => onSetFeaturedSubjectsLoadedMore(true)}
       />
       <RecommendedSubjects />
     </div>
