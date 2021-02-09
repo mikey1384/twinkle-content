@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import ContentListItem from 'components/ContentListItem';
 import SectionPanel from 'components/SectionPanel';
@@ -6,38 +7,23 @@ import SelectFeaturedSubjects from '../Modals/SelectFeaturedSubjects';
 import ReorderFeaturedSubjects from '../Modals/ReorderFeaturedSubjects';
 import Button from 'components/Button';
 import { useMyState } from 'helpers/hooks';
-import { useAppContext, useExploreContext } from 'contexts';
 
-export default function FeaturedSubjects() {
+FeaturedSubjects.propTypes = {
+  loaded: PropTypes.bool,
+  subjects: PropTypes.array,
+  onSubmit: PropTypes.func.isRequired
+};
+export default function FeaturedSubjects({ loaded, subjects, onSubmit }) {
   const { userId, canPinPlaylists } = useMyState();
   const [loadedMore, setLoadedMore] = useState(false);
   const [reorderModalShown, setReorderModalShown] = useState(false);
   const [selectModalShown, setSelectModalShown] = useState(false);
-  const {
-    requestHelpers: { loadFeaturedSubjects }
-  } = useAppContext();
-  const {
-    state: {
-      subjects: { loaded, featured }
-    },
-    actions: { onLoadFeaturedSubjects }
-  } = useExploreContext();
-  useEffect(() => {
-    init();
-    async function init() {
-      if (!loaded) {
-        const subjects = await loadFeaturedSubjects();
-        onLoadFeaturedSubjects(subjects);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loaded]);
   const shownSubjects = useMemo(() => {
     if (loadedMore) {
-      return featured;
+      return subjects;
     }
-    return featured[0] ? [featured[0]] : [];
-  }, [featured, loadedMore]);
+    return subjects[0] ? [subjects[0]] : [];
+  }, [subjects, loadedMore]);
 
   return (
     <ErrorBoundary>
@@ -67,7 +53,7 @@ export default function FeaturedSubjects() {
             </div>
           ) : null
         }
-        isEmpty={featured.length === 0}
+        isEmpty={subjects.length === 0}
         emptyMessage="No featured subjects for now..."
         loaded={loaded}
       >
@@ -81,17 +67,17 @@ export default function FeaturedSubjects() {
       </SectionPanel>
       {selectModalShown && (
         <SelectFeaturedSubjects
-          subjects={featured}
+          subjects={subjects}
           onHide={() => setSelectModalShown(false)}
           onSubmit={(selectedSubjects) => {
-            onLoadFeaturedSubjects(selectedSubjects);
+            onSubmit(selectedSubjects);
             setSelectModalShown(false);
           }}
         />
       )}
       {reorderModalShown && (
         <ReorderFeaturedSubjects
-          subjectIds={featured.map((subject) => subject.id)}
+          subjectIds={subjects.map((subject) => subject.id)}
           onHide={() => setReorderModalShown(false)}
         />
       )}

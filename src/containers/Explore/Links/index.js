@@ -38,7 +38,7 @@ export default function Links() {
   const lastByUserId = useRef(null);
   const lastRecommendedId = useRef(null);
   const lastRecommendedTime = useRef(null);
-  const prevLoaded = useRef(false);
+  const loadedRef = useRef(false);
 
   useEffect(() => {
     return function cleanUp() {
@@ -108,7 +108,7 @@ export default function Links() {
       });
 
       onLoadLinks({ links, loadMoreButton });
-      prevLoaded.current = true;
+      loadedRef.current = true;
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -149,7 +149,7 @@ export default function Links() {
         }
         emptyMessage="No Uploaded Links"
         isEmpty={links.length === 0}
-        loaded={loaded || prevLoaded.current}
+        loaded={loaded || loadedRef.current}
         onLoadMore={handleLoadMoreLinks}
         loadMoreButtonShown={loadMoreLinksButtonShown}
       >
