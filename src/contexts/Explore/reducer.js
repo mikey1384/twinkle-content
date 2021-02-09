@@ -445,7 +445,7 @@ export default function ExploreReducer(state, action) {
         subjects: {
           ...state.subjects,
           featured: action.subjects,
-          loaded: true
+          featuredLoaded: true
         }
       };
     case 'LOAD_FEATURED_PLAYLISTS':

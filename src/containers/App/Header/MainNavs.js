@@ -142,17 +142,15 @@ function MainNavs({
     if (profilePageMatch) {
       onSetProfileNav(pathname);
     }
-    if (!loaded.current && defaultSearchFilter) {
+    if (['links', 'videos', 'subjects'].includes(section)) {
+      onSetExploreCategory(section);
+      loaded.current = true;
+    } else if (!loaded.current && defaultSearchFilter) {
       onSetExploreCategory(
         ['videos', 'subjects', 'links'].includes(defaultSearchFilter)
           ? defaultSearchFilter
           : 'subjects'
       );
-      loaded.current = true;
-    } else {
-      if (['links', 'videos', 'subjects'].includes(section)) {
-        onSetExploreCategory(section);
-      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultSearchFilter, pathname]);
