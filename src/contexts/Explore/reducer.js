@@ -557,14 +557,6 @@ export default function ExploreReducer(state, action) {
         }
       };
     }
-    case 'RELOAD_SUBJECTS':
-      return {
-        ...state,
-        subjects: {
-          ...state.subjects,
-          loaded: false
-        }
-      };
     case 'SET_FEATURED_SUBJECTS_LOADED_MORE':
       return {
         ...state,

@@ -228,11 +228,6 @@ export default function ExploreActions(dispatch) {
         rewardLevel
       });
     },
-    onReloadSubjects() {
-      return dispatch({
-        type: 'RELOAD_SUBJECTS'
-      });
-    },
     onSetFeaturedSubjectsLoadedMore(loadedMore) {
       return dispatch({
         type: 'SET_FEATURED_SUBJECTS_LOADED_MORE',

@@ -49,7 +49,7 @@ function HeaderNav({
     actions: { onReloadContent }
   } = useContentContext();
   const {
-    actions: { onClearLinksLoaded, onClearVideosLoaded, onReloadSubjects }
+    actions: { onClearLinksLoaded, onClearVideosLoaded, onSetSubjectsLoaded }
   } = useExploreContext();
   const BodyRef = useRef(document.scrollingElement || document.documentElement);
   const highlighted = useMemo(
@@ -206,7 +206,7 @@ function HeaderNav({
       )
     ) {
       onClearLinksLoaded();
-      onReloadSubjects();
+      onSetSubjectsLoaded(false);
       onClearVideosLoaded();
     }
     document.getElementById('App').scrollTop = 0;

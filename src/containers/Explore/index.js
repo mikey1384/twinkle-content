@@ -29,7 +29,7 @@ export default function Explore({ history, location }) {
     state: {
       search: { searchText }
     },
-    actions: { onClearLinksLoaded, onClearVideosLoaded, onReloadSubjects }
+    actions: { onClearLinksLoaded, onClearVideosLoaded, onSetSubjectsLoaded }
   } = useExploreContext();
   const mounted = useRef(true);
   const disconnected = useRef(false);
@@ -65,7 +65,7 @@ export default function Explore({ history, location }) {
     function onConnect() {
       if (disconnected.current && mounted.current) {
         onClearLinksLoaded();
-        onReloadSubjects();
+        onSetSubjectsLoaded(false);
         onClearVideosLoaded();
       }
       disconnected.current = false;
