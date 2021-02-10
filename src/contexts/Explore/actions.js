@@ -135,6 +135,13 @@ export default function ExploreActions(dispatch) {
         loadMoreButton
       });
     },
+    onLoadRecommendedSubjects({ subjects, loadMoreButton }) {
+      return dispatch({
+        type: 'LOAD_RECOMMENDED_SUBJECTS',
+        subjects,
+        loadMoreButton
+      });
+    },
     onLoadFeaturedPlaylists(playlists) {
       return dispatch({
         type: 'LOAD_FEATURED_PLAYLISTS',

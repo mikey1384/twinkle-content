@@ -155,7 +155,7 @@ export default function ExploreReducer(state, action) {
         ...state,
         subjects: {
           ...state.subjects,
-          featured: state.subjects.featured.filter(
+          featureds: state.subjects.featured.filter(
             (subject) => subject.id !== action.subjectId
           )
         }
@@ -444,8 +444,18 @@ export default function ExploreReducer(state, action) {
         ...state,
         subjects: {
           ...state.subjects,
-          featured: action.subjects,
+          featureds: action.subjects,
           featuredLoaded: true
+        }
+      };
+    case 'LOAD_RECOMMENDED_SUBJECTS':
+      return {
+        ...state,
+        subjects: {
+          ...state.subjects,
+          recommendeds: action.subjects,
+          recommendedLoadMoreButton: action.loadMoreButton,
+          recommendedLoaded: true
         }
       };
     case 'LOAD_FEATURED_PLAYLISTS':

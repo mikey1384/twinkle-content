@@ -36,7 +36,7 @@ export default function FeaturedSubjects({
     <ErrorBoundary>
       <SectionPanel
         title="Featured"
-        loadMoreButtonShown={!loadedMore}
+        loadMoreButtonShown={!loadedMore && subjects.length > 1}
         onLoadMore={onLoadMore}
         button={
           userId && canPinPlaylists ? (

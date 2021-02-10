@@ -21,7 +21,7 @@ export default function ReorderFeaturedSubjects({
   } = useAppContext();
   const {
     state: {
-      subjects: { featured: featuredSubjects }
+      subjects: { featureds: featuredSubjects }
     },
     actions: { onLoadFeaturedSubjects }
   } = useExploreContext();
