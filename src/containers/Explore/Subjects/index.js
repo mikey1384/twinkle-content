@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import FeaturedSubjects from './FeaturedSubjects';
-import RecommendedSubjects from './RecommendedSubjects';
+import Featured from './Featured';
+import Recommended from './Recommended';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { useAppContext, useExploreContext } from 'contexts';
 
@@ -63,14 +63,14 @@ export default function Subjects() {
   return (
     <div>
       <ErrorBoundary>
-        <FeaturedSubjects
+        <Featured
           loaded={featuredLoaded}
           expanded={featuredExpanded}
           subjects={featureds}
           onSubmit={onLoadFeaturedSubjects}
           onExpand={() => onSetFeaturedSubjectsExpanded(true)}
         />
-        <RecommendedSubjects
+        <Recommended
           style={{ marginTop: '2.5rem' }}
           expanded={recommendedExpanded}
           subjects={recommendeds}

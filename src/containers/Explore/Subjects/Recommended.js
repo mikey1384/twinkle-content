@@ -5,7 +5,7 @@ import SectionPanel from 'components/SectionPanel';
 import ContentListItem from 'components/ContentListItem';
 import { useAppContext, useExploreContext } from 'contexts';
 
-RecommendedSubjects.propTypes = {
+Recommended.propTypes = {
   expanded: PropTypes.bool,
   loaded: PropTypes.bool,
   loadMorebutton: PropTypes.bool,
@@ -14,7 +14,7 @@ RecommendedSubjects.propTypes = {
   style: PropTypes.object
 };
 
-export default function RecommendedSubjects({
+export default function Recommended({
   expanded,
   subjects,
   loaded,

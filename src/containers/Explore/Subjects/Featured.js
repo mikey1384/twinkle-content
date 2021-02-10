@@ -8,14 +8,14 @@ import ReorderFeaturedSubjects from '../Modals/ReorderFeaturedSubjects';
 import Button from 'components/Button';
 import { useMyState } from 'helpers/hooks';
 
-FeaturedSubjects.propTypes = {
+Featured.propTypes = {
   loaded: PropTypes.bool,
   expanded: PropTypes.bool,
   subjects: PropTypes.array,
   onExpand: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired
 };
-export default function FeaturedSubjects({
+export default function Featured({
   loaded,
   expanded,
   subjects,
