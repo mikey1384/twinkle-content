@@ -52,7 +52,8 @@ export default function LongText({
       fullTextRef.current = true;
       setFullText(true);
     }
-  }, [fullTextState, section]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     return function saveFullTextStateBeforeUnmount() {

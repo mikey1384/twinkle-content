@@ -205,7 +205,7 @@ export default function MainContent({
                     <LongText
                       contentId={contentId}
                       contentType={contentType}
-                      section="hidden message"
+                      section="content"
                     >
                       {content}
                     </LongText>
@@ -242,30 +242,32 @@ export default function MainContent({
                   </p>
                 </div>
               )}
-              <div
-                style={{
-                  marginTop: contentType === 'url' ? '-1rem' : 0,
-                  whiteSpace: 'pre-wrap',
-                  overflowWrap: 'break-word',
-                  wordBreak: 'break-word',
-                  marginBottom:
-                    contentType === 'url' || contentType === 'subject'
-                      ? '1rem'
-                      : '0.5rem'
-                }}
-              >
-                <LongText
-                  contentId={contentId}
-                  contentType={contentType}
-                  section="description"
+              {contentType !== 'comment' && (
+                <div
+                  style={{
+                    marginTop: contentType === 'url' ? '-1rem' : 0,
+                    whiteSpace: 'pre-wrap',
+                    overflowWrap: 'break-word',
+                    wordBreak: 'break-word',
+                    marginBottom:
+                      contentType === 'url' || contentType === 'subject'
+                        ? '1rem'
+                        : '0.5rem'
+                  }}
                 >
-                  {!stringIsEmpty(description)
-                    ? description
-                    : contentType === 'video' || contentType === 'url'
-                    ? title
-                    : ''}
-                </LongText>
-              </div>
+                  <LongText
+                    contentId={contentId}
+                    contentType={contentType}
+                    section="description"
+                  >
+                    {!stringIsEmpty(description)
+                      ? description
+                      : contentType === 'video' || contentType === 'url'
+                      ? title
+                      : ''}
+                  </LongText>
+                </div>
+              )}
               {secretAnswer && (
                 <SecretAnswer
                   answer={secretAnswer}

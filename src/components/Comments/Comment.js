@@ -498,7 +498,12 @@ function Comment({
                     </div>
                   ) : (
                     !stringIsEmpty(comment.content) && (
-                      <LongText className="comment__content">
+                      <LongText
+                        contentType="comment"
+                        contentId={comment.id}
+                        section="content"
+                        className="comment__content"
+                      >
                         {comment.content}
                       </LongText>
                     )
