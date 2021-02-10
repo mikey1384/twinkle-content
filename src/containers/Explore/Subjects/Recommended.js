@@ -8,7 +8,7 @@ import { useAppContext, useExploreContext } from 'contexts';
 Recommended.propTypes = {
   expanded: PropTypes.bool,
   loaded: PropTypes.bool,
-  loadMorebutton: PropTypes.bool,
+  loadMoreButton: PropTypes.bool,
   onExpand: PropTypes.func.isRequired,
   subjects: PropTypes.array.isRequired,
   style: PropTypes.object
@@ -18,7 +18,7 @@ export default function Recommended({
   expanded,
   subjects,
   loaded,
-  loadMorebutton,
+  loadMoreButton,
   onExpand,
   style
 }) {
@@ -40,10 +40,10 @@ export default function Recommended({
       <SectionPanel
         style={style}
         title="Recommended"
-        loadMoreButtonShown={!expanded || loadMorebutton}
+        loadMoreButtonShown={!expanded || loadMoreButton}
         onLoadMore={handleLoadMore}
         isEmpty={subjects.length === 0}
-        emptyMessage="No recommended subjects for now..."
+        emptyMessage="No Recommended Subjects"
         loaded={loaded}
       >
         {shownSubjects.map((subject) => (

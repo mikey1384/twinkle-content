@@ -61,7 +61,7 @@ export default function Featured({
           ) : null
         }
         isEmpty={subjects.length === 0}
-        emptyMessage="No featured subjects for now..."
+        emptyMessage="No Subjects Featured"
         loaded={loaded}
       >
         {shownSubjects.map((subject) => (

@@ -63,18 +63,20 @@ export default function Subjects() {
   return (
     <div>
       <ErrorBoundary>
-        <Featured
-          loaded={featuredLoaded}
-          expanded={featuredExpanded}
-          subjects={featureds}
-          onSubmit={onLoadFeaturedSubjects}
-          onExpand={() => onSetFeaturedSubjectsExpanded(true)}
-        />
+        {featuredLoaded && featureds.length > 0 && (
+          <Featured
+            loaded={featuredLoaded}
+            expanded={featuredExpanded}
+            subjects={featureds}
+            onSubmit={onLoadFeaturedSubjects}
+            onExpand={() => onSetFeaturedSubjectsExpanded(true)}
+          />
+        )}
         <Recommended
           style={{ marginTop: '2.5rem' }}
           expanded={recommendedExpanded}
           subjects={recommendeds}
-          loadMorebutton={recommendedLoadMoreButton}
+          loadMoreButton={recommendedLoadMoreButton}
           loaded={recommendedLoaded}
           onExpand={() => onSetRecommendedSubjectsExpanded(true)}
         />
