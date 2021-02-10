@@ -567,12 +567,12 @@ export default function ExploreReducer(state, action) {
         }
       };
     }
-    case 'SET_FEATURED_SUBJECTS_LOADED_MORE':
+    case 'SET_FEATURED_SUBJECTS_EXPANDED':
       return {
         ...state,
         subjects: {
           ...state.subjects,
-          featuredLoadedMore: action.loadedMore
+          featuredExpanded: action.expanded
         }
       };
     case 'SET_REWARD_LEVEL':

@@ -235,10 +235,10 @@ export default function ExploreActions(dispatch) {
         rewardLevel
       });
     },
-    onSetFeaturedSubjectsLoadedMore(loadedMore) {
+    onSetFeaturedSubjectsExpanded(expanded) {
       return dispatch({
-        type: 'SET_FEATURED_SUBJECTS_LOADED_MORE',
-        loadedMore
+        type: 'SET_FEATURED_SUBJECTS_EXPANDED',
+        expanded
       });
     },
     onSetSubjectsLoaded(loaded) {
