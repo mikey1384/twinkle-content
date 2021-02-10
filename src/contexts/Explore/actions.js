@@ -254,6 +254,12 @@ export default function ExploreActions(dispatch) {
         expanded
       });
     },
+    onSetByUserSubjectsExpanded(expanded) {
+      return dispatch({
+        type: 'SET_BY_USERS_EXPANDED',
+        expanded
+      });
+    },
     onSetSubjectsLoaded(loaded) {
       return dispatch({
         type: 'SET_SUBJECTS_LOADED',

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import Featured from './Featured';
 import Recommended from './Recommended';
+import MadeByUsers from './MadeByUsers';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { useAppContext, useExploreContext } from 'contexts';
 
@@ -12,6 +13,10 @@ export default function Subjects() {
     state: {
       subjects: {
         loaded,
+        byUsers,
+        byUsersExpanded,
+        byUsersLoadMoreButton,
+        byUsersLoaded,
         featureds,
         featuredLoaded,
         featuredExpanded,
@@ -23,6 +28,7 @@ export default function Subjects() {
     },
     actions: {
       onLoadFeaturedSubjects,
+      onSetByUserSubjectsExpanded,
       onSetFeaturedSubjectsExpanded,
       onSetRecommendedSubjectsExpanded,
       onLoadRecommendedSubjects,
@@ -72,6 +78,14 @@ export default function Subjects() {
             onExpand={() => onSetFeaturedSubjectsExpanded(true)}
           />
         )}
+        <MadeByUsers
+          style={{ marginTop: '2.5rem' }}
+          expanded={byUsersExpanded}
+          subjects={byUsers}
+          loadMoreButton={byUsersLoadMoreButton}
+          loaded={byUsersLoaded}
+          onExpand={() => onSetByUserSubjectsExpanded(true)}
+        />
         <Recommended
           style={{ marginTop: '2.5rem' }}
           expanded={recommendedExpanded}

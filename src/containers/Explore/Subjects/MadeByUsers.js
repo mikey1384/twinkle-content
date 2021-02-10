@@ -8,6 +8,7 @@ MadeByUsers.propTypes = {
   expanded: PropTypes.bool,
   loaded: PropTypes.bool,
   loadMoreButton: PropTypes.bool,
+  onExpand: PropTypes.func.isRequired,
   subjects: PropTypes.array,
   style: PropTypes.object
 };
@@ -16,6 +17,7 @@ export default function MadeByUsers({
   expanded,
   loaded,
   loadMoreButton,
+  onExpand,
   subjects,
   style
 }) {
@@ -49,6 +51,9 @@ export default function MadeByUsers({
   );
 
   function handleLoadMore() {
+    if (!expanded) {
+      return onExpand();
+    }
     console.log('loading more');
   }
 }

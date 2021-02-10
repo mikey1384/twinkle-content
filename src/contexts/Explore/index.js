@@ -17,6 +17,10 @@ export const initialExploreState = {
     loadMoreRecommendedsButtonShown: false
   },
   subjects: {
+    byUsers: [],
+    byUsersExpanded: false,
+    byUsersLoadMoreButton: false,
+    byUsersLoaded: false,
     featureds: [],
     featuredExpanded: false,
     recommendeds: [],
