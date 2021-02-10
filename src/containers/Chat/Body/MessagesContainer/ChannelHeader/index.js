@@ -135,7 +135,7 @@ export default function ChannelHeader({
   const menuProps = useMemo(() => {
     let result = [];
     if (
-      (currentChannel.id === GENERAL_CHAT_ID && authLevel > 0) ||
+      (selectedChannelId === GENERAL_CHAT_ID && authLevel > 0) ||
       currentChannel.canChangeSubject === 'all' ||
       (currentChannel.canChangeSubject === 'owner' &&
         currentChannel.creatorId === userId)
@@ -150,7 +150,7 @@ export default function ChannelHeader({
         onClick: () => setOnEdit(true)
       });
     }
-    if (currentChannel.id !== GENERAL_CHAT_ID) {
+    if (selectedChannelId !== GENERAL_CHAT_ID) {
       if (!currentChannel.isClosed || currentChannel.creatorId === userId) {
         result.push({
           label: (
@@ -201,10 +201,10 @@ export default function ChannelHeader({
 
   const menuButtonShown = useMemo(() => {
     return (
-      (currentChannel.id !== GENERAL_CHAT_ID || authLevel > 0) &&
+      (selectedChannelId !== GENERAL_CHAT_ID || authLevel > 0) &&
       menuProps.length > 0
     );
-  }, [authLevel, currentChannel.id, menuProps.length]);
+  }, [authLevel, selectedChannelId, menuProps.length]);
 
   return (
     <ErrorBoundary

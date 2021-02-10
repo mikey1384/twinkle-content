@@ -268,9 +268,9 @@ export default function MessagesContainer({
 
   const channelHeaderShown = useMemo(() => {
     return (
-      currentChannel.id === GENERAL_CHAT_ID || !!currentChannel.canChangeSubject
+      selectedChannelId === GENERAL_CHAT_ID || !!currentChannel.canChangeSubject
     );
-  }, [currentChannel.canChangeSubject, currentChannel.id]);
+  }, [currentChannel.canChangeSubject, selectedChannelId]);
 
   useEffect(() => {
     setTimeout(() => {
