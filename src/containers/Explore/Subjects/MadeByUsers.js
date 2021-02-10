@@ -39,7 +39,7 @@ export default function MadeByUsers({
     <ErrorBoundary>
       <SectionPanel
         style={style}
-        title="Made By Users"
+        title="Made By Twinkle Users"
         loadMoreButtonShown={
           (!expanded && subjects.length > 1) || loadMoreButton
         }
