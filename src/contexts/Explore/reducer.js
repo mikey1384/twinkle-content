@@ -458,6 +458,15 @@ export default function ExploreReducer(state, action) {
           recommendedLoaded: true
         }
       };
+    case 'LOAD_MORE_RECOMMENDED_SUBJECTS':
+      return {
+        ...state,
+        subjects: {
+          ...state.subjects,
+          recommendeds: state.subjects.recommendeds.concat(action.subjects),
+          recommendedLoadMoreButton: action.loadMoreButton
+        }
+      };
     case 'LOAD_FEATURED_PLAYLISTS':
       return {
         ...state,

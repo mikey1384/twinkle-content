@@ -70,7 +70,6 @@ export default function Subjects() {
         subjects={recommendeds}
         loadMorebutton={recommendedLoadMoreButton}
         loaded={recommendedLoaded}
-        onLoadMore={() => console.log('loading more')}
       />
     </div>
   );

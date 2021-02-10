@@ -167,7 +167,7 @@ export default function Links() {
       limit: 10,
       lastId: lastByUserId.current
     });
-    return onLoadMoreByUserLinks({ links: results, loadMoreButton });
+    onLoadMoreByUserLinks({ links: results, loadMoreButton });
   }
 
   async function handleLoadMoreRecommendeds() {
@@ -177,7 +177,7 @@ export default function Links() {
       lastRecommendationId: lastRecommendedId.current,
       lastInteraction: lastRecommendedTime.current
     });
-    return onLoadMoreRecommendedLinks({ links: results, loadMoreButton });
+    onLoadMoreRecommendedLinks({ links: results, loadMoreButton });
   }
 
   async function handleLoadMoreLinks() {
@@ -186,6 +186,6 @@ export default function Links() {
       limit: 10,
       contentId: lastId.current
     });
-    return onLoadMoreLinks({ links, loadMoreButton });
+    onLoadMoreLinks({ links, loadMoreButton });
   }
 }
