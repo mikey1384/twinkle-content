@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import SectionPanel from 'components/SectionPanel';
 import ContentListItem from 'components/ContentListItem';
+import { useAppContext, useExploreContext } from 'contexts';
 
 MadeByUsers.propTypes = {
   expanded: PropTypes.bool,
@@ -21,6 +22,12 @@ export default function MadeByUsers({
   subjects,
   style
 }) {
+  const {
+    requestHelpers: { loadByUserUploads }
+  } = useAppContext();
+  const {
+    actions: { onLoadMoreByUserSubjects }
+  } = useExploreContext();
   const shownSubjects = useMemo(() => {
     if (expanded) {
       return subjects;
@@ -32,8 +39,10 @@ export default function MadeByUsers({
     <ErrorBoundary>
       <SectionPanel
         style={style}
-        title="Recommended"
-        loadMoreButtonShown={!expanded || loadMoreButton}
+        title="Made By Users"
+        loadMoreButtonShown={
+          (!expanded && subjects.length > 1) || loadMoreButton
+        }
         onLoadMore={handleLoadMore}
         isEmpty={subjects.length === 0}
         emptyMessage="No User Made Content"
@@ -50,10 +59,21 @@ export default function MadeByUsers({
     </ErrorBoundary>
   );
 
-  function handleLoadMore() {
+  async function handleLoadMore() {
     if (!expanded) {
       return onExpand();
     }
-    console.log('loading more');
+    const {
+      results,
+      loadMoreButton: loadMoreButtonShown
+    } = await loadByUserUploads({
+      contentType: 'subject',
+      limit: 10,
+      lastId: subjects[subjects.length - 1].id
+    });
+    onLoadMoreByUserSubjects({
+      subjects: results,
+      loadMoreButton: loadMoreButtonShown
+    });
   }
 }

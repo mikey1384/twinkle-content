@@ -40,7 +40,9 @@ export default function Recommended({
       <SectionPanel
         style={style}
         title="Recommended"
-        loadMoreButtonShown={!expanded || loadMoreButton}
+        loadMoreButtonShown={
+          (!expanded && subjects.length > 1) || loadMoreButton
+        }
         onLoadMore={handleLoadMore}
         isEmpty={subjects.length === 0}
         emptyMessage="No Recommended Subjects"
