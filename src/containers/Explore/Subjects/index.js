@@ -4,8 +4,10 @@ import Recommended from './Recommended';
 import MadeByUsers from './MadeByUsers';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { useAppContext, useExploreContext } from 'contexts';
+import { useMyState } from 'helpers/hooks';
 
 export default function Subjects() {
+  const { canPinPlaylists } = useMyState();
   const {
     requestHelpers: {
       loadByUserUploads,
@@ -86,7 +88,7 @@ export default function Subjects() {
   return (
     <div>
       <ErrorBoundary>
-        {featuredLoaded && featureds.length > 0 && (
+        {((featuredLoaded && featureds.length > 0) || canPinPlaylists) && (
           <Featured
             loaded={featuredLoaded}
             expanded={featuredExpanded}
