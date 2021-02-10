@@ -31,7 +31,7 @@ export default function Moderators({ canManage }) {
         title="Moderators"
         emptyMessage="No Moderators"
         loaded={moderatorsLoaded}
-        style={{ paddingLeft: 0, paddingRight: 0 }}
+        innerStyle={{ paddingLeft: 0, paddingRight: 0 }}
         button={
           canManage ? (
             <Button

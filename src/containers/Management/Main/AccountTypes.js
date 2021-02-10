@@ -30,7 +30,7 @@ export default function AccountTypes({ canManage }) {
         title="Account Types"
         emptyMessage="No Account Types"
         loaded={accountTypesLoaded}
-        style={{ paddingLeft: 0, paddingRight: 0 }}
+        innerStyle={{ paddingLeft: 0, paddingRight: 0 }}
         button={
           canManage ? (
             <Button

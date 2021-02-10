@@ -128,6 +128,7 @@ export default function Links() {
       </SectionPanel>
       <SectionPanel
         title="Recommended"
+        style={{ marginTop: '2.5rem' }}
         emptyMessage="No Recommended Links"
         isEmpty={recommendeds.length === 0}
         loaded={recommendedsLoaded}
@@ -138,6 +139,7 @@ export default function Links() {
       </SectionPanel>
       <SectionPanel
         title="All Links"
+        style={{ marginTop: '2.5rem' }}
         button={
           <Button
             skeuomorphic

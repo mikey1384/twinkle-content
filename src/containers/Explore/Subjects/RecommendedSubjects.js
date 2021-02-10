@@ -10,7 +10,8 @@ RecommendedSubjects.propTypes = {
   loaded: PropTypes.bool,
   loadMorebutton: PropTypes.bool,
   onExpand: PropTypes.func.isRequired,
-  subjects: PropTypes.array.isRequired
+  subjects: PropTypes.array.isRequired,
+  style: PropTypes.object
 };
 
 export default function RecommendedSubjects({
@@ -18,7 +19,8 @@ export default function RecommendedSubjects({
   subjects,
   loaded,
   loadMorebutton,
-  onExpand
+  onExpand,
+  style
 }) {
   const {
     requestHelpers: { loadRecommendedUploads }
@@ -36,6 +38,7 @@ export default function RecommendedSubjects({
   return (
     <ErrorBoundary>
       <SectionPanel
+        style={style}
         title="Recommended"
         loadMoreButtonShown={!expanded || loadMorebutton}
         onLoadMore={handleLoadMore}

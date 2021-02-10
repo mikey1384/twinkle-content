@@ -29,8 +29,9 @@ SectionPanel.propTypes = {
   placeholder: PropTypes.string,
   searchPlaceholder: PropTypes.string,
   searchQuery: PropTypes.string,
+  style: PropTypes.object,
   customColorTheme: PropTypes.string,
-  style: PropTypes.object
+  innerStyle: PropTypes.object
 };
 
 export default function SectionPanel({
@@ -51,7 +52,8 @@ export default function SectionPanel({
   placeholder = 'Enter Title',
   searchPlaceholder,
   searchQuery = '',
-  style = {},
+  style,
+  innerStyle = {},
   title
 }) {
   const { profileTheme } = useMyState();
@@ -67,6 +69,7 @@ export default function SectionPanel({
 
   return (
     <div
+      style={style}
       className={css`
         border: 1px solid ${Color.borderGray()};
         width: 100%;
@@ -211,7 +214,7 @@ export default function SectionPanel({
           {button}
         </div>
       </header>
-      <main style={{ width: '100%', ...style }}>
+      <main style={{ width: '100%', ...innerStyle }}>
         {loaded ? (
           <Body
             content={children}

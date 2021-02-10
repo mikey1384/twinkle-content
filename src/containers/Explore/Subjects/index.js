@@ -69,6 +69,7 @@ export default function Subjects() {
         onExpand={() => onSetFeaturedSubjectsExpanded(true)}
       />
       <RecommendedSubjects
+        style={{ marginTop: '2.5rem' }}
         expanded={recommendedExpanded}
         subjects={recommendeds}
         loadMorebutton={recommendedLoadMoreButton}

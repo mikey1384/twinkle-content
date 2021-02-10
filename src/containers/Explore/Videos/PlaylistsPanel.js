@@ -15,6 +15,7 @@ PlaylistsPanel.propTypes = {
   onSearch: PropTypes.func,
   playlists: PropTypes.array.isRequired,
   searchQuery: PropTypes.string,
+  style: PropTypes.object,
   title: PropTypes.string.isRequired,
   userId: PropTypes.number
 };
@@ -29,6 +30,7 @@ export default function PlaylistsPanel({
   onSearch,
   playlists,
   searchQuery,
+  style,
   title = 'All Playlists',
   userId
 }) {
@@ -42,6 +44,7 @@ export default function PlaylistsPanel({
   return (
     <SectionPanel
       innerRef={innerRef}
+      style={style}
       title={title}
       button={buttonGroupShown ? buttonGroup() : null}
       searchPlaceholder="Search playlists"

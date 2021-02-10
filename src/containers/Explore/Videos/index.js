@@ -77,6 +77,7 @@ export default function Videos({ history }) {
       <FeaturedPlaylistsPanel history={history} />
       <PlaylistsPanel
         key={'allplaylists'}
+        style={{ marginTop: '2.5rem' }}
         innerRef={AllPlaylistsPanelRef}
         buttonGroup={() => (
           <ButtonGroup
