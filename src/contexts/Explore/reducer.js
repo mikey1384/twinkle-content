@@ -448,6 +448,16 @@ export default function ExploreReducer(state, action) {
           featuredLoaded: true
         }
       };
+    case 'LOAD_BY_USER_SUBJECTS':
+      return {
+        ...state,
+        subjects: {
+          ...state.subjects,
+          byUsers: action.subjects,
+          byUsersLoadMoreButton: action.loadMoreButton,
+          byUsersLoaded: true
+        }
+      };
     case 'LOAD_RECOMMENDED_SUBJECTS':
       return {
         ...state,

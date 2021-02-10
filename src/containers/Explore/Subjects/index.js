@@ -7,7 +7,11 @@ import { useAppContext, useExploreContext } from 'contexts';
 
 export default function Subjects() {
   const {
-    requestHelpers: { loadFeaturedSubjects, loadRecommendedUploads }
+    requestHelpers: {
+      loadByUserUploads,
+      loadFeaturedSubjects,
+      loadRecommendedUploads
+    }
   } = useAppContext();
   const {
     state: {
@@ -31,6 +35,7 @@ export default function Subjects() {
       onSetByUserSubjectsExpanded,
       onSetFeaturedSubjectsExpanded,
       onSetRecommendedSubjectsExpanded,
+      onLoadByUserSubjects,
       onLoadRecommendedSubjects,
       onSetSubjectsLoaded
     }
@@ -40,6 +45,7 @@ export default function Subjects() {
     async function init() {
       if (!loaded) {
         handleLoadFeaturedSubjects();
+        handleLoadByUserSubjects();
         handleLoadRecommendedSubjects();
         onSetSubjectsLoaded(true);
       }
@@ -48,6 +54,17 @@ export default function Subjects() {
     async function handleLoadFeaturedSubjects() {
       const subjects = await loadFeaturedSubjects();
       onLoadFeaturedSubjects(subjects);
+    }
+
+    async function handleLoadByUserSubjects() {
+      const { results, loadMoreButton } = await loadByUserUploads({
+        contentType: 'subject',
+        limit: 5
+      });
+      onLoadByUserSubjects({
+        subjects: results,
+        loadMoreButton
+      });
     }
 
     async function handleLoadRecommendedSubjects() {

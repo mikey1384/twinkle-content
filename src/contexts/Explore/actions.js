@@ -142,6 +142,13 @@ export default function ExploreActions(dispatch) {
         loadMoreButton
       });
     },
+    onLoadByUserSubjects({ subjects, loadMoreButton }) {
+      return dispatch({
+        type: 'LOAD_BY_USER_SUBJECTS',
+        subjects,
+        loadMoreButton
+      });
+    },
     onLoadMoreRecommendedSubjects({ subjects, loadMoreButton }) {
       return dispatch({
         type: 'LOAD_MORE_RECOMMENDED_SUBJECTS',
