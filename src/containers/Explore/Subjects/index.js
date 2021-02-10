@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import FeaturedSubjects from './FeaturedSubjects';
 import RecommendedSubjects from './RecommendedSubjects';
+import ErrorBoundary from 'components/ErrorBoundary';
 import { useAppContext, useExploreContext } from 'contexts';
 
 export default function Subjects() {
@@ -61,21 +62,23 @@ export default function Subjects() {
 
   return (
     <div>
-      <FeaturedSubjects
-        loaded={featuredLoaded}
-        expanded={featuredExpanded}
-        subjects={featureds}
-        onSubmit={onLoadFeaturedSubjects}
-        onExpand={() => onSetFeaturedSubjectsExpanded(true)}
-      />
-      <RecommendedSubjects
-        style={{ marginTop: '2.5rem' }}
-        expanded={recommendedExpanded}
-        subjects={recommendeds}
-        loadMorebutton={recommendedLoadMoreButton}
-        loaded={recommendedLoaded}
-        onExpand={() => onSetRecommendedSubjectsExpanded(true)}
-      />
+      <ErrorBoundary>
+        <FeaturedSubjects
+          loaded={featuredLoaded}
+          expanded={featuredExpanded}
+          subjects={featureds}
+          onSubmit={onLoadFeaturedSubjects}
+          onExpand={() => onSetFeaturedSubjectsExpanded(true)}
+        />
+        <RecommendedSubjects
+          style={{ marginTop: '2.5rem' }}
+          expanded={recommendedExpanded}
+          subjects={recommendeds}
+          loadMorebutton={recommendedLoadMoreButton}
+          loaded={recommendedLoaded}
+          onExpand={() => onSetRecommendedSubjectsExpanded(true)}
+        />
+      </ErrorBoundary>
     </div>
   );
 }
