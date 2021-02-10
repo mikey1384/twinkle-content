@@ -584,6 +584,14 @@ export default function ExploreReducer(state, action) {
           featuredExpanded: action.expanded
         }
       };
+    case 'SET_RECOMMENDED_SUBJECTS_EXPANDED':
+      return {
+        ...state,
+        subjects: {
+          ...state.subjects,
+          recommendedExpanded: action.expanded
+        }
+      };
     case 'SET_REWARD_LEVEL':
       return {
         ...state,

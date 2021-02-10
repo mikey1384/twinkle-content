@@ -15,6 +15,7 @@ export default function Subjects() {
         featuredLoaded,
         featuredExpanded,
         recommendeds,
+        recommendedExpanded,
         recommendedLoadMoreButton,
         recommendedLoaded
       }
@@ -22,6 +23,7 @@ export default function Subjects() {
     actions: {
       onLoadFeaturedSubjects,
       onSetFeaturedSubjectsExpanded,
+      onSetRecommendedSubjectsExpanded,
       onLoadRecommendedSubjects,
       onSetSubjectsLoaded
     }
@@ -67,9 +69,11 @@ export default function Subjects() {
         onExpand={() => onSetFeaturedSubjectsExpanded(true)}
       />
       <RecommendedSubjects
+        expanded={recommendedExpanded}
         subjects={recommendeds}
         loadMorebutton={recommendedLoadMoreButton}
         loaded={recommendedLoaded}
+        onExpand={() => onSetRecommendedSubjectsExpanded(true)}
       />
     </div>
   );

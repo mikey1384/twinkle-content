@@ -248,6 +248,12 @@ export default function ExploreActions(dispatch) {
         expanded
       });
     },
+    onSetRecommendedSubjectsExpanded(expanded) {
+      return dispatch({
+        type: 'SET_RECOMMENDED_SUBJECTS_EXPANDED',
+        expanded
+      });
+    },
     onSetSubjectsLoaded(loaded) {
       return dispatch({
         type: 'SET_SUBJECTS_LOADED',

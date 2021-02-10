@@ -20,6 +20,7 @@ export const initialExploreState = {
     featureds: [],
     featuredExpanded: false,
     recommendeds: [],
+    recommendedExpanded: false,
     recommendedLoadMoreButton: false,
     loaded: false
   },
