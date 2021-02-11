@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { useOutsideClick } from 'helpers/hooks';
+import React, { useMemo, useRef, useState } from 'react';
+import { useMyState, useOutsideClick } from 'helpers/hooks';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
@@ -37,15 +37,36 @@ export default function StarButton({
   skeuomorphic,
   style
 }) {
+  const { canReward, canEditRewardLevel, userId } = useMyState();
   const {
     requestHelpers: { setByUser }
   } = useAppContext();
   const [rewardLevelModalShown, setRewardLevelModalShown] = useState(false);
   const [menuShown, setMenuShown] = useState(false);
+  const showsDropdownWhenClicked = useMemo(() => {
+    return (
+      uploader &&
+      (contentType === 'video' ||
+        contentType === 'url' ||
+        (contentType === 'subject' && filePath))
+    );
+  }, [contentType, filePath, uploader]);
   const StarButtonRef = useRef(null);
   useOutsideClick(StarButtonRef, () => setMenuShown(false));
+  const buttonShown = useMemo(() => {
+    return (
+      canEditRewardLevel ||
+      (showsDropdownWhenClicked && (uploader?.id === userId || canReward))
+    );
+  }, [
+    canEditRewardLevel,
+    canReward,
+    showsDropdownWhenClicked,
+    uploader?.id,
+    userId
+  ]);
 
-  return (
+  return buttonShown ? (
     <ErrorBoundary>
       <div ref={StarButtonRef}>
         <Button
@@ -67,9 +88,10 @@ export default function StarButton({
               width: '25rem'
             }}
           >
-            {(contentType === 'video' || contentType === 'subject') && (
-              <li onClick={showRewardLevelModal}>Set Reward Level</li>
-            )}
+            {(contentType === 'video' || contentType === 'subject') &&
+              canEditRewardLevel && (
+                <li onClick={handleShowRewardLevelModal}>Set Reward Level</li>
+              )}
             <li onClick={toggleByUser}>
               {byUser
                 ? `This wasn't made by ${uploader.username}`
@@ -91,21 +113,16 @@ export default function StarButton({
         />
       )}
     </ErrorBoundary>
-  );
+  ) : null;
 
   function onClick() {
-    if (
-      uploader &&
-      (contentType === 'video' ||
-        contentType === 'url' ||
-        (contentType === 'subject' && filePath))
-    ) {
+    if (showsDropdownWhenClicked) {
       return setMenuShown(!menuShown);
     }
     return setRewardLevelModalShown(true);
   }
 
-  function showRewardLevelModal() {
+  function handleShowRewardLevelModal() {
     setRewardLevelModalShown(true);
     setMenuShown(false);
   }
