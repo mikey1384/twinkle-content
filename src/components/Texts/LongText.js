@@ -80,9 +80,7 @@ export default function LongText({
         {fullText ? (
           <span
             dangerouslySetInnerHTML={{
-              __html: limitBrs(
-                cleanString ? text : processedStringWithURL(text || '')
-              )
+              __html: innerHTML
             }}
           />
         ) : (
