@@ -9,7 +9,6 @@ import { mobileMaxWidth } from 'constants/css';
 
 SideButtons.propTypes = {
   byUser: PropTypes.bool.isRequired,
-  canReward: PropTypes.bool,
   className: PropTypes.string,
   rewardLevel: PropTypes.number,
   likes: PropTypes.array.isRequired,
@@ -24,7 +23,6 @@ SideButtons.propTypes = {
 
 export default function SideButtons({
   byUser,
-  canReward,
   changeByUserStatus,
   className,
   rewardLevel,
@@ -47,28 +45,26 @@ export default function SideButtons({
           width: '100%'
         }}
       >
-        {canReward && (
-          <div
-            style={{
-              position: 'relative',
-              width: '4rem',
-              height: '4rem',
-              marginRight: '1rem'
-            }}
-          >
-            <StarButton
-              skeuomorphic
-              byUser={byUser}
-              contentId={Number(videoId)}
-              style={{ position: 'absolute', top: 0, left: 0 }}
-              contentType="video"
-              rewardLevel={rewardLevel}
-              onSetRewardLevel={onSetRewardLevel}
-              onToggleByUser={handleToggleByUser}
-              uploader={uploader}
-            />
-          </div>
-        )}
+        <div
+          style={{
+            position: 'relative',
+            width: '4rem',
+            height: '4rem',
+            marginRight: '1rem'
+          }}
+        >
+          <StarButton
+            skeuomorphic
+            byUser={byUser}
+            contentId={Number(videoId)}
+            style={{ position: 'absolute', top: 0, left: 0 }}
+            contentType="video"
+            rewardLevel={rewardLevel}
+            onSetRewardLevel={onSetRewardLevel}
+            onToggleByUser={handleToggleByUser}
+            uploader={uploader}
+          />
+        </div>
         <div
           style={{
             display: 'flex',

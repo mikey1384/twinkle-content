@@ -84,7 +84,6 @@ export default function Body({
     authLevel,
     canDelete,
     canEdit,
-    canEditRewardLevel,
     canReward,
     profileTheme,
     twinkleCoins,
@@ -518,22 +517,21 @@ export default function Body({
                   >
                     <Icon icon="star" />
                   </Button>
-                  {canEditRewardLevel &&
-                    (contentType === 'subject' ||
-                      contentType === 'video' ||
-                      contentType === 'url') && (
-                      <StarButton
-                        style={{ marginLeft: '1rem' }}
-                        byUser={!!contentObj.byUser}
-                        contentId={contentObj.id}
-                        filePath={filePath}
-                        rewardLevel={rewardLevel}
-                        onSetRewardLevel={onSetRewardLevel}
-                        onToggleByUser={onToggleByUser}
-                        contentType={contentType}
-                        uploader={uploader}
-                      />
-                    )}
+                  {(contentType === 'subject' ||
+                    contentType === 'video' ||
+                    contentType === 'url') && (
+                    <StarButton
+                      style={{ marginLeft: '1rem' }}
+                      byUser={!!contentObj.byUser}
+                      contentId={contentObj.id}
+                      filePath={filePath}
+                      rewardLevel={rewardLevel}
+                      onSetRewardLevel={onSetRewardLevel}
+                      onToggleByUser={onToggleByUser}
+                      contentType={contentType}
+                      uploader={uploader}
+                    />
+                  )}
                 </div>
               )}
             </div>

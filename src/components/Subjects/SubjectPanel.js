@@ -75,7 +75,6 @@ export default function SubjectPanel({
     authLevel,
     canDelete,
     canEdit,
-    canEditRewardLevel,
     canReward,
     twinkleCoins,
     userId: myId
@@ -206,7 +205,7 @@ export default function SubjectPanel({
             </Link>
           )}
           <div style={{ display: 'flex' }}>
-            {canEditRewardLevel && !onEdit && (
+            {!onEdit && (
               <StarButton
                 contentId={subjectId}
                 contentType="subject"

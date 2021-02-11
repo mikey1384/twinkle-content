@@ -365,22 +365,20 @@ export default function LinkPage({
                   </span>
                 </Button>
               )}
-              {canReward && (
-                <div style={{ position: 'relative' }}>
-                  <StarButton
-                    style={{
-                      fontSize: '2rem',
-                      marginLeft: '1rem'
-                    }}
-                    direction="left"
-                    byUser={!!byUser}
-                    contentId={linkId}
-                    onToggleByUser={handleSetByUserStatus}
-                    contentType="url"
-                    uploader={uploader}
-                  />
-                </div>
-              )}
+              <div style={{ position: 'relative' }}>
+                <StarButton
+                  style={{
+                    fontSize: '2rem',
+                    marginLeft: '1rem'
+                  }}
+                  direction="left"
+                  byUser={!!byUser}
+                  contentId={linkId}
+                  onToggleByUser={handleSetByUserStatus}
+                  contentType="url"
+                  uploader={uploader}
+                />
+              </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Likers
