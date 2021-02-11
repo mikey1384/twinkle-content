@@ -6,7 +6,7 @@ import Button from 'components/Button';
 AlertModal.propTypes = {
   onHide: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired
+  content: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired
 };
 export default function AlertModal({ onHide, title, content }) {
   return (

@@ -7,6 +7,7 @@ import DropdownList from 'components/DropdownList';
 import RewardLevelModal from 'components/Modals/RewardLevelModal';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { useAppContext } from 'contexts';
+import AlertModal from 'components/Modals/AlertModal';
 
 StarButton.propTypes = {
   byUser: PropTypes.bool,
@@ -41,6 +42,8 @@ export default function StarButton({
   const {
     requestHelpers: { setByUser }
   } = useAppContext();
+  const [cannotChangeModalShown, setCannotChangeModalShown] = useState(false);
+  const [moderatorName, setModeratorName] = useState('');
   const [rewardLevelModalShown, setRewardLevelModalShown] = useState(false);
   const [menuShown, setMenuShown] = useState(false);
   const showsDropdownWhenClicked = useMemo(() => {
@@ -115,6 +118,17 @@ export default function StarButton({
           onHide={() => setRewardLevelModalShown(false)}
         />
       )}
+      {cannotChangeModalShown && (
+        <AlertModal
+          title="This setting cannot be changed"
+          content={
+            <span>
+              <b>{moderatorName}</b> has disabled you from changing this setting
+            </span>
+          }
+          onHide={() => setCannotChangeModalShown(false)}
+        />
+      )}
     </ErrorBoundary>
   ) : null;
 
@@ -131,7 +145,14 @@ export default function StarButton({
   }
 
   async function toggleByUser() {
-    const byUser = await setByUser({ contentType, contentId });
+    const { byUser, cannotChange, moderatorName: modName } = await setByUser({
+      contentType,
+      contentId
+    });
+    if (cannotChange) {
+      setModeratorName(modName);
+      return setCannotChangeModalShown(true);
+    }
     onToggleByUser(byUser);
     setMenuShown(false);
   }

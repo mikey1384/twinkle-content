@@ -570,13 +570,13 @@ export default function contentRequestHelpers({ auth, handleError }) {
     async setByUser({ contentType, contentId }) {
       try {
         const {
-          data: { byUser }
+          data: { byUser, cannotChange, moderatorName }
         } = await request.put(
           `${URL}/content/byUser`,
           { contentType, contentId },
           auth()
         );
-        return Promise.resolve(byUser);
+        return Promise.resolve({ byUser, cannotChange, moderatorName });
       } catch (error) {
         return handleError(error);
       }
