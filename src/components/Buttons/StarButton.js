@@ -65,6 +65,9 @@ export default function StarButton({
     uploader?.id,
     userId
   ]);
+  const makerLabel = useMemo(() => {
+    return uploader?.id === userId ? 'me' : uploader?.username;
+  }, [uploader?.id, uploader?.username, userId]);
 
   return buttonShown ? (
     <ErrorBoundary>
@@ -94,8 +97,8 @@ export default function StarButton({
               )}
             <li onClick={toggleByUser}>
               {byUser
-                ? `This wasn't made by ${uploader.username}`
-                : `This was made by ${uploader.username}`}
+                ? `This wasn't made by ${makerLabel}`
+                : `This was made by ${makerLabel}`}
             </li>
           </DropdownList>
         )}
