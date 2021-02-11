@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { limitBrs, processedStringWithURL } from 'helpers/stringHelpers';
 import { Color } from 'constants/css';
@@ -57,7 +57,7 @@ export default function LongText({
 
   useEffect(() => {
     return function saveFullTextStateBeforeUnmount() {
-      if (contentType && section) {
+      if (contentType && section && fullTextRef.current) {
         onSetFullTextState({
           contentId,
           contentType,
@@ -68,6 +68,11 @@ export default function LongText({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const innerHTML = useMemo(
+    () => limitBrs(cleanString ? text : processedStringWithURL(text)),
+    [cleanString, text]
+  );
 
   return (
     <div style={style} className={className}>
@@ -91,9 +96,7 @@ export default function LongText({
                 WebkitBoxOrient: 'vertical'
               }}
               dangerouslySetInnerHTML={{
-                __html: limitBrs(
-                  cleanString ? text : processedStringWithURL(text)
-                )
+                __html: innerHTML
               }}
             />
             <>
