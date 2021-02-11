@@ -53,6 +53,9 @@ export default function StarButton({
   }, [contentType, filePath, uploader]);
   const StarButtonRef = useRef(null);
   useOutsideClick(StarButtonRef, () => setMenuShown(false));
+  const makerLabel = useMemo(() => {
+    return uploader?.id === userId ? 'me' : uploader?.username;
+  }, [uploader?.id, uploader?.username, userId]);
   const buttonShown = useMemo(() => {
     return (
       canEditRewardLevel ||
@@ -65,9 +68,6 @@ export default function StarButton({
     uploader?.id,
     userId
   ]);
-  const makerLabel = useMemo(() => {
-    return uploader?.id === userId ? 'me' : uploader?.username;
-  }, [uploader?.id, uploader?.username, userId]);
 
   return buttonShown ? (
     <ErrorBoundary>
