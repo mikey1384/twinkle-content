@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router';
 import { NavLink } from 'react-router-dom';
@@ -8,7 +8,6 @@ import { socket } from 'constants/io';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { getSectionFromPathname } from 'helpers';
 import { useExploreContext } from 'contexts';
-import { useScrollToBottom } from 'helpers/hooks';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Notification from 'components/Notification';
 import SideMenu from 'components/SideMenu';
@@ -35,8 +34,6 @@ export default function Explore({ history, location }) {
   const disconnected = useRef(false);
   const ContainerRef = useRef({});
   const SearchBoxRef = useRef(null);
-  const [categoriesShown, setCategoriesShown] = useState(false);
-  const { atBottom, scrollTop } = useScrollToBottom(ContainerRef, 30);
   const category = getSectionFromPathname(location.pathname)?.section;
 
   useEffect(() => {
@@ -44,20 +41,6 @@ export default function Explore({ history, location }) {
       mounted.current = false;
     };
   }, []);
-
-  useEffect(() => {
-    if (scrollTop === 0) {
-      setCategoriesShown(false);
-    } else if (atBottom) {
-      setCategoriesShown(true);
-    }
-  }, [atBottom, scrollTop]);
-
-  useEffect(() => {
-    return function componentWillRefresh() {
-      setCategoriesShown(false);
-    };
-  }, [category]);
 
   useEffect(() => {
     socket.on('connect', onConnect);
@@ -141,12 +124,10 @@ export default function Explore({ history, location }) {
             <Route path="/links" component={Links} />
             <Route path="/subjects" component={Subjects} />
           </Switch>
-          {categoriesShown && (
-            <Categories
-              style={{ marginTop: '3rem', marginBottom: '4rem' }}
-              filter={category}
-            />
-          )}
+          <Categories
+            style={{ marginTop: '3rem', marginBottom: '4rem' }}
+            filter={category}
+          />
           <div
             className={css`
               display: none;
