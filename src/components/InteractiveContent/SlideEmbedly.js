@@ -62,12 +62,14 @@ function SlideEmbedly({
           });
           const numUpdates = await updateEmbedData({
             slideId,
-            thumbUrl,
-            actualTitle,
-            actualDescription,
-            siteUrl
+            thumbUrl: image.url,
+            actualTitle: title,
+            actualDescription: description,
+            siteUrl: site
           });
-          onChangeNumUpdates({ interactiveId, numUpdates });
+          if (mounted.current) {
+            onChangeNumUpdates({ interactiveId, numUpdates });
+          }
         }
       } catch (error) {
         setLoading(false);

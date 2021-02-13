@@ -92,7 +92,8 @@ export default function interactiveRequestHelpers({ auth, handleError }) {
     async loadInteractive(contentId) {
       try {
         const { data } = await request.get(
-          `${URL}/interactive?contentId=${contentId}`
+          `${URL}/interactive?contentId=${contentId}`,
+          auth()
         );
         return Promise.resolve(data);
       } catch (error) {
