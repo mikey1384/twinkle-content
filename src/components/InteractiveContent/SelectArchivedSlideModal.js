@@ -8,16 +8,14 @@ SelectArchivedSlideModal.propTypes = {
   interactiveId: PropTypes.number.isRequired,
   onHide: PropTypes.func.isRequired,
   archivedSlides: PropTypes.array.isRequired,
-  onDone: PropTypes.func.isRequired,
-  onEmbedDataLoad: PropTypes.func.isRequired
+  onDone: PropTypes.func.isRequired
 };
 
 export default function SelectArchivedSlideModal({
   interactiveId,
   onDone,
   onHide,
-  archivedSlides,
-  onEmbedDataLoad
+  archivedSlides
 }) {
   const mounted = useRef(true);
   const [selectedSlideId, setSelectedSlideId] = useState(null);
@@ -38,7 +36,6 @@ export default function SelectArchivedSlideModal({
             selectedSlideId={selectedSlideId}
             interactiveId={interactiveId}
             slide={slide}
-            onEmbedDataLoad={onEmbedDataLoad}
             onClick={(slideId) => setSelectedSlideId(slideId)}
             style={{ marginTop: index === 0 ? 0 : '1rem' }}
           />

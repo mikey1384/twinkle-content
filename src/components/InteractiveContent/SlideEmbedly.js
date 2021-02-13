@@ -3,19 +3,19 @@ import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { useAppContext } from 'contexts';
+import { useAppContext, useInteractiveContext } from 'contexts';
 
 SlideEmbedly.propTypes = {
   actualDescription: PropTypes.string,
   actualTitle: PropTypes.string,
-  url: PropTypes.string,
-  siteUrl: PropTypes.string,
-  thumbUrl: PropTypes.string,
-  style: PropTypes.object,
+  interactiveId: PropTypes.number.isRequired,
   onSetEmbedProps: PropTypes.func.isRequired,
-  onEmbedDataLoad: PropTypes.func.isRequired,
   prevUrl: PropTypes.string,
-  slideId: PropTypes.number
+  siteUrl: PropTypes.string,
+  slideId: PropTypes.number,
+  style: PropTypes.object,
+  thumbUrl: PropTypes.string,
+  url: PropTypes.string
 };
 
 function SlideEmbedly({
@@ -25,14 +25,17 @@ function SlideEmbedly({
   thumbUrl,
   actualTitle,
   actualDescription,
+  interactiveId,
   prevUrl,
   siteUrl,
-  onEmbedDataLoad,
   slideId
 }) {
   const {
-    requestHelpers: { fetchUrlEmbedData }
+    requestHelpers: { fetchUrlEmbedData, updateEmbedData }
   } = useAppContext();
+  const {
+    actions: { onChangeNumUpdates }
+  } = useInteractiveContext();
   const [loading, setLoading] = useState(false);
   const mounted = useRef(true);
   const fallbackImage = '/img/link.png';
@@ -57,13 +60,14 @@ function SlideEmbedly({
             siteUrl: site,
             prevUrl: url
           });
-          onEmbedDataLoad({
-            thumbUrl: image.url,
-            actualTitle: title,
-            actualDescription: description,
-            siteUrl: site,
-            slideId
+          const numUpdates = await updateEmbedData({
+            slideId,
+            thumbUrl,
+            actualTitle,
+            actualDescription,
+            siteUrl
           });
+          onChangeNumUpdates({ interactiveId, numUpdates });
         }
       } catch (error) {
         setLoading(false);

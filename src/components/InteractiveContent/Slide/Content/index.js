@@ -20,7 +20,6 @@ Content.propTypes = {
   forkButtonIds: PropTypes.array,
   forkButtonsObj: PropTypes.object,
   onForkButtonClick: PropTypes.func,
-  onEmbedDataLoad: PropTypes.func,
   onPortalButtonClick: PropTypes.func,
   onSetEmbedProps: PropTypes.func,
   onThumbnailUpload: PropTypes.func,
@@ -41,7 +40,6 @@ export default function Content({
   forkButtonIds,
   forkButtonsObj,
   onForkButtonClick,
-  onEmbedDataLoad,
   onPortalButtonClick,
   onSetEmbedProps,
   onThumbnailUpload,
@@ -118,7 +116,6 @@ export default function Content({
             prevUrl={attachment.prevUrl}
             siteUrl={attachment.siteUrl}
             slideId={slideId}
-            onEmbedDataLoad={onEmbedDataLoad}
             onSetEmbedProps={onSetEmbedProps}
             onThumbnailUpload={onThumbnailUpload}
           />

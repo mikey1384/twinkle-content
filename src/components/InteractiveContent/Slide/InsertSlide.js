@@ -12,7 +12,6 @@ InsertSlide.propTypes = {
   interactiveId: PropTypes.number,
   slideId: PropTypes.number,
   className: PropTypes.string,
-  onEmbedDataLoad: PropTypes.func,
   slideObj: PropTypes.object,
   style: PropTypes.object
 };
@@ -21,7 +20,6 @@ export default function InsertSlide({
   archivedSlides,
   interactiveId,
   forkedFrom,
-  onEmbedDataLoad,
   slideId,
   slideObj,
   className,
@@ -102,7 +100,6 @@ export default function InsertSlide({
           interactiveId={interactiveId}
           archivedSlides={archivedSlides}
           onDone={handleInsertArchivedSlide}
-          onEmbedDataLoad={onEmbedDataLoad}
           onHide={() => setSelectArchivedSlideModalShown(false)}
         />
       )}

@@ -10,7 +10,6 @@ import { useMyState } from 'helpers/hooks';
 SlideListItem.propTypes = {
   interactiveId: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,
-  onEmbedDataLoad: PropTypes.func.isRequired,
   selectedSlideId: PropTypes.number,
   slide: PropTypes.object.isRequired,
   style: PropTypes.object
@@ -19,7 +18,6 @@ SlideListItem.propTypes = {
 export default function SlideListItem({
   interactiveId,
   onClick,
-  onEmbedDataLoad,
   selectedSlideId,
   slide,
   style
@@ -89,7 +87,6 @@ export default function SlideListItem({
             prevUrl={slide.attachment.prevUrl}
             siteUrl={slide.attachment.siteUrl}
             slideId={slide.id}
-            onEmbedDataLoad={onEmbedDataLoad}
             onSetEmbedProps={handleSetEmbedProps}
             onThumbnailUpload={handleThumbnailUpload}
           />
