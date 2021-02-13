@@ -20,7 +20,8 @@ export default function InteractiveContent({ autoFocus, interactiveId }) {
     requestHelpers: {
       checkInteractiveNumUpdates,
       loadInteractive,
-      moveInteractiveSlide
+      moveInteractiveSlide,
+      updateEmbedData
     }
   } = useAppContext();
   const {
@@ -211,6 +212,7 @@ export default function InteractiveContent({ autoFocus, interactiveId }) {
               isPortal={!!slideObj[slideId].isPortal}
               forkedFrom={slideObj[slideId].forkedFrom}
               interactiveId={interactiveId}
+              onEmbedDataLoad={handleEmbedDataLoad}
               onExpandPath={slideObj[slideId].isFork ? handleExpandPath : null}
               onMoveSlide={handleMoveInteractiveSlide}
               portalButton={slideObj[slideId].portalButton}
@@ -275,6 +277,23 @@ export default function InteractiveContent({ autoFocus, interactiveId }) {
   ) : (
     <Loading />
   );
+
+  async function handleEmbedDataLoad({
+    thumbUrl,
+    actualTitle,
+    actualDescription,
+    slideId,
+    siteUrl
+  }) {
+    const numUpdates = await updateEmbedData({
+      slideId,
+      thumbUrl,
+      actualTitle,
+      actualDescription,
+      siteUrl
+    });
+    onChangeNumUpdates({ interactiveId, numUpdates });
+  }
 
   function handleExpandPath({ newSlides, slideId, buttonId }) {
     if (buttonId !== slideObj[slideId].selectedForkButtonId) {

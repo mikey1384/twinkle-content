@@ -14,6 +14,7 @@ GoBackField.propTypes = {
   button: PropTypes.object,
   forkedFrom: PropTypes.number,
   interactiveId: PropTypes.number,
+  onEmbedDataLoad: PropTypes.func.isRequired,
   onSetButtonState: PropTypes.func.isRequired,
   slideObj: PropTypes.object
 };
@@ -23,6 +24,7 @@ export default function GoBackField({
   button,
   forkedFrom,
   interactiveId,
+  onEmbedDataLoad,
   onSetButtonState,
   slideObj
 }) {
@@ -91,6 +93,7 @@ export default function GoBackField({
           style={{ marginTop: '1rem' }}
           slide={slideObj[button.destination || forkedFrom]}
           interactiveId={interactiveId}
+          onEmbedDataLoad={onEmbedDataLoad}
           onClick={() => setSelectForkModalShown(true)}
         />
       </div>
@@ -100,6 +103,7 @@ export default function GoBackField({
           onDone={handleSelectDestination}
           originForkId={forkedFrom}
           interactiveId={interactiveId}
+          onEmbedDataLoad={onEmbedDataLoad}
           slideObj={slideObj}
         />
       )}

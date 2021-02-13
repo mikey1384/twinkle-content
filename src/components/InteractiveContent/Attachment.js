@@ -120,6 +120,7 @@ export default function Attachment({
           actualTitle={actualTitle}
           actualDescription={actualDescription}
           prevUrl={prevUrl}
+          slideId={slideId}
           siteUrl={siteUrl}
         />
       );

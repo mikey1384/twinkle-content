@@ -8,6 +8,7 @@ SelectForkModal.propTypes = {
   interactiveId: PropTypes.number.isRequired,
   onHide: PropTypes.func.isRequired,
   onDone: PropTypes.func.isRequired,
+  onEmbedDataLoad: PropTypes.func.isRequired,
   originForkId: PropTypes.number,
   slideObj: PropTypes.object
 };
@@ -16,6 +17,7 @@ export default function SelectForkModal({
   interactiveId,
   onDone,
   onHide,
+  onEmbedDataLoad,
   originForkId,
   slideObj
 }) {
@@ -53,7 +55,8 @@ export default function SelectForkModal({
             slide={slideObj[id]}
             interactiveId={interactiveId}
             selectedSlideId={selectedSlideId}
-            onClick={(slideId) => setSelectedSlideId(slideId)}
+            onClick={setSelectedSlideId}
+            onEmbedDataLoad={onEmbedDataLoad}
           />
         ))}
       </main>

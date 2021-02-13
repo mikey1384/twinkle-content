@@ -39,6 +39,7 @@ Slide.propTypes = {
   onMoveSlide: PropTypes.func,
   forkButtonIds: PropTypes.array,
   forkButtonsObj: PropTypes.object,
+  onEmbedDataLoad: PropTypes.func.isRequired,
   portalButton: PropTypes.object,
   slideId: PropTypes.number,
   slideObj: PropTypes.object,
@@ -66,6 +67,7 @@ export default function Slide({
   isFork,
   isPortal,
   forkedFrom,
+  onEmbedDataLoad,
   onExpandPath,
   onMoveSlide,
   forkButtonIds,
@@ -83,8 +85,7 @@ export default function Slide({
       deleteInteractiveSlide,
       publishInteractiveSlide,
       undeleteInteractiveSlide,
-      unPublishInteractiveSlide,
-      updateEmbedData
+      unPublishInteractiveSlide
     }
   } = useAppContext();
   const {
@@ -195,6 +196,7 @@ export default function Slide({
           archivedSlides={archivedSlides}
           forkedFrom={forkedFrom}
           interactiveId={interactiveId}
+          onEmbedDataLoad={onEmbedDataLoad}
           slideId={slideId}
           slideObj={slideObj}
           className={css`
@@ -263,6 +265,7 @@ export default function Slide({
             isLastSlide={isLastSlide}
             forkButtonIds={forkButtonIds}
             forkButtonsObj={forkButtonsObj}
+            onEmbedDataLoad={onEmbedDataLoad}
             paths={paths}
             portalButton={portalButton}
             slideId={slideId}
@@ -288,7 +291,7 @@ export default function Slide({
             forkButtonIds={forkButtonIds}
             forkButtonsObj={forkButtonsObj}
             onForkButtonClick={handleForkButtonClick}
-            onEmbedDataLoad={handleEmbedDataLoad}
+            onEmbedDataLoad={onEmbedDataLoad}
             onPortalButtonClick={(forkId) =>
               onGoBack({ interactiveId, forkId })
             }
@@ -359,22 +362,6 @@ export default function Slide({
       slideId,
       newState: { isPublished: false }
     });
-  }
-
-  async function handleEmbedDataLoad({
-    thumbUrl,
-    actualTitle,
-    actualDescription,
-    siteUrl
-  }) {
-    const numUpdates = await updateEmbedData({
-      slideId,
-      thumbUrl,
-      actualTitle,
-      actualDescription,
-      siteUrl
-    });
-    onChangeNumUpdates({ interactiveId, numUpdates });
   }
 
   async function handleSetEmbedProps(params) {

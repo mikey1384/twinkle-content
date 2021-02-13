@@ -36,6 +36,7 @@ Editor.propTypes = {
   isPortal: PropTypes.bool,
   forkButtonIds: PropTypes.array,
   forkButtonsObj: PropTypes.object,
+  onEmbedDataLoad: PropTypes.func.isRequired,
   portalButton: PropTypes.object,
   paths: PropTypes.object,
   interactiveId: PropTypes.number,
@@ -57,6 +58,7 @@ export default function Editor({
   isLastSlide,
   forkButtonIds,
   forkButtonsObj,
+  onEmbedDataLoad,
   portalButton,
   paths,
   slideId,
@@ -441,6 +443,7 @@ export default function Editor({
                   button={editedPortalButton}
                   forkedFrom={forkedFrom}
                   interactiveId={interactiveId}
+                  onEmbedDataLoad={onEmbedDataLoad}
                   onSetButtonState={(newState) =>
                     handleSetInputState({
                       ...editForm,

@@ -14,7 +14,8 @@ SlideEmbedly.propTypes = {
   style: PropTypes.object,
   onSetEmbedProps: PropTypes.func.isRequired,
   onEmbedDataLoad: PropTypes.func.isRequired,
-  prevUrl: PropTypes.string
+  prevUrl: PropTypes.string,
+  slideId: PropTypes.number
 };
 
 function SlideEmbedly({
@@ -26,7 +27,8 @@ function SlideEmbedly({
   actualDescription,
   prevUrl,
   siteUrl,
-  onEmbedDataLoad
+  onEmbedDataLoad,
+  slideId
 }) {
   const {
     requestHelpers: { fetchUrlEmbedData }
@@ -59,7 +61,8 @@ function SlideEmbedly({
             thumbUrl: image.url,
             actualTitle: title,
             actualDescription: description,
-            siteUrl: site
+            siteUrl: site,
+            slideId
           });
         }
       } catch (error) {

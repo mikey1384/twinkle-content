@@ -4,12 +4,13 @@ import Attachment from './Attachment';
 import { css } from '@emotion/css';
 import { borderRadius, Color } from 'constants/css';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { useAppContext, useInteractiveContext } from 'contexts';
+import { useInteractiveContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
 SlideListItem.propTypes = {
   interactiveId: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,
+  onEmbedDataLoad: PropTypes.func.isRequired,
   selectedSlideId: PropTypes.number,
   slide: PropTypes.object.isRequired,
   style: PropTypes.object
@@ -18,16 +19,14 @@ SlideListItem.propTypes = {
 export default function SlideListItem({
   interactiveId,
   onClick,
+  onEmbedDataLoad,
   selectedSlideId,
   slide,
   style
 }) {
   const { profileTheme } = useMyState();
   const {
-    requestHelpers: { updateEmbedData }
-  } = useAppContext();
-  const {
-    actions: { onChangeNumUpdates, onSetSlideState }
+    actions: { onSetSlideState }
   } = useInteractiveContext();
   const selected = selectedSlideId === slide.id;
 
@@ -90,7 +89,7 @@ export default function SlideListItem({
             prevUrl={slide.attachment.prevUrl}
             siteUrl={slide.attachment.siteUrl}
             slideId={slide.id}
-            onEmbedDataLoad={handleEmbedDataLoad}
+            onEmbedDataLoad={onEmbedDataLoad}
             onSetEmbedProps={handleSetEmbedProps}
             onThumbnailUpload={handleThumbnailUpload}
           />
@@ -98,22 +97,6 @@ export default function SlideListItem({
       )}
     </div>
   );
-
-  async function handleEmbedDataLoad({
-    thumbUrl,
-    actualTitle,
-    actualDescription,
-    siteUrl
-  }) {
-    const numUpdates = await updateEmbedData({
-      slideId: slide.id,
-      thumbUrl,
-      actualTitle,
-      actualDescription,
-      siteUrl
-    });
-    onChangeNumUpdates({ interactiveId, numUpdates });
-  }
 
   async function handleSetEmbedProps(params) {
     onSetSlideState({
