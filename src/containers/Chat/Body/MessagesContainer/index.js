@@ -360,7 +360,7 @@ export default function MessagesContainer({
 
   return (
     <ErrorBoundary>
-      {!channelHeaderShown && !banned && (
+      {!channelHeaderShown && !banned.chat && (
         <div
           style={{
             display: 'flex',
@@ -727,6 +727,9 @@ export default function MessagesContainer({
   );
 
   function handleChessModalShown() {
+    if (banned.chess) {
+      return;
+    }
     const channelId = currentChannel?.id;
     if (chessCountdownObj[channelId] !== 0) {
       onSetReplyTarget(null);

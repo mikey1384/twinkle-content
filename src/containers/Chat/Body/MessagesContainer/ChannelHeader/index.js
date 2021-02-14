@@ -291,7 +291,7 @@ export default function ChannelHeader({
                 >
                   <Icon flip="both" icon="reply" />
                 </Button>
-                {menuButtonShown && !banned && (
+                {menuButtonShown && !banned.chat && (
                   <DropdownButton
                     skeuomorphic
                     color="darkerGray"

@@ -64,7 +64,7 @@ export default function Chess({
   spoilerOff,
   style
 }) {
-  const { userId } = useMyState();
+  const { userId, banned } = useMyState();
   const {
     state: { channelLoading, creatingNewDMChannel, selectedChannelId }
   } = useChatContext();
@@ -887,6 +887,7 @@ export default function Chess({
 
   function handleSpoilerClick() {
     if (
+      banned.chess ||
       loadingRef.current ||
       selectedChannelId !== channelId ||
       senderId === userId ||

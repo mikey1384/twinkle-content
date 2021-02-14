@@ -139,7 +139,7 @@ function MessageInput({
             }}
           >
             <Button
-              disabled={loading}
+              disabled={loading || banned.chess}
               skeuomorphic
               onClick={onChessButtonClick}
               color={profileTheme}
@@ -186,7 +186,7 @@ function MessageInput({
           </div>
         )}
         <AddButtons
-          disabled={loading || !!banned || !socketConnected}
+          disabled={loading || !!banned.chat || !socketConnected}
           onUploadButtonClick={onUploadButtonClick}
           onSelectVideoButtonClick={onSelectVideoButtonClick}
         />
@@ -255,7 +255,7 @@ function MessageInput({
       setCoolingDown(false);
       inputCoolingDown.current = false;
     }, 700);
-    if (banned && recepientId !== 5) {
+    if (banned.chat && recepientId !== 5) {
       return;
     }
     innerRef.current.focus();
