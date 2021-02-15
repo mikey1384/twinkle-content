@@ -2,6 +2,7 @@ import React, { useEffect, useMemo } from 'react';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Moderators from './Moderators';
 import AccountTypes from './AccountTypes';
+import BannedUsers from './BannedUsers';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useManagementContext } from 'contexts';
 
@@ -33,6 +34,7 @@ export default function Main() {
     <ErrorBoundary>
       <Moderators canManage={canManage} />
       <AccountTypes canManage={canManage} />
+      <BannedUsers canManage={canManage} />
     </ErrorBoundary>
   );
 }
