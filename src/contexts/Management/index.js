@@ -10,6 +10,8 @@ export const initialManagementState = {
   loaded: false,
   moderators: [],
   moderatorsLoaded: false,
+  bannedUsers: [],
+  bannedUsersLoaded: false,
   numModeratorsShown: 5
 };
 
