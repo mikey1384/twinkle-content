@@ -21,7 +21,10 @@ export default function BannedUsers({ canManage }) {
         loaded={bannedUsersLoaded}
         innerStyle={{ paddingLeft: 0, paddingRight: 0 }}
       >
-        {bannedUsers} {canManage}
+        {bannedUsers.map((user) => (
+          <div key={user.id}>{user.id}</div>
+        ))}
+        {canManage && <div>can manage</div>}
       </SectionPanel>
     </ErrorBoundary>
   );
