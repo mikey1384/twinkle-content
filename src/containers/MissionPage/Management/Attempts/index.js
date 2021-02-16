@@ -22,13 +22,13 @@ Attempts.propTypes = {
 export default function Attempts({ mission, missionId, onSetMissionState }) {
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
-  const { canEdit } = useMyState();
+  const { isCreator } = useMyState();
   const { managementTab: activeTab = 'pending' } = mission;
   const {
     requestHelpers: { loadMissionAttempts }
   } = useAppContext();
   useEffect(() => {
-    if (canEdit) {
+    if (isCreator) {
       init();
     }
     async function init() {
@@ -52,7 +52,7 @@ export default function Attempts({ mission, missionId, onSetMissionState }) {
       setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeTab, canEdit]);
+  }, [activeTab, isCreator]);
   return (
     <div style={{ width: '100%' }}>
       <FilterBar

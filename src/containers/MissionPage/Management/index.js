@@ -14,8 +14,8 @@ Management.propTypes = {
 };
 
 export default function Management({ mission, missionId, onSetMissionState }) {
-  const { canEdit } = useMyState();
-  if (!canEdit) {
+  const { isCreator } = useMyState();
+  if (!isCreator) {
     return (
       <InvalidPage
         title="For moderators only"

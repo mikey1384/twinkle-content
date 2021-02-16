@@ -19,7 +19,7 @@ export default function SubmittedQuestions({
   onSetMissionState
 }) {
   const mounted = useRef(true);
-  const { canEdit } = useMyState();
+  const { isCreator } = useMyState();
   const {
     managementTab: activeTab = 'pending',
     loadMoreGrammarQuestionsButton: loadMoreButton
@@ -31,7 +31,7 @@ export default function SubmittedQuestions({
   const [loadingMore, setLoadingMore] = useState(false);
   useEffect(() => {
     mounted.current = true;
-    if (canEdit) {
+    if (isCreator) {
       init();
     }
     async function init() {
@@ -56,7 +56,7 @@ export default function SubmittedQuestions({
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeTab, canEdit]);
+  }, [activeTab, isCreator]);
 
   useEffect(() => {
     return function onUnmount() {

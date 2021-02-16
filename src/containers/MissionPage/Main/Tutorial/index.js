@@ -19,7 +19,7 @@ export default function Tutorial({
   style,
   mission
 }) {
-  const { canEdit } = useMyState();
+  const { isCreator } = useMyState();
   return (
     <ErrorBoundary
       className={className}
@@ -30,14 +30,14 @@ export default function Tutorial({
         ...style
       }}
     >
-      {canEdit && !mission.tutorialId && (
+      {isCreator && !mission.tutorialId && (
         <AddTutorial missionId={mission.id} missionTitle={mission.title} />
       )}
       {!!mission.tutorialId &&
         mission.tutorialIsPublished &&
         !mission.tutorialStarted &&
         !mission.myAttempt?.status &&
-        !canEdit && (
+        !isCreator && (
           <ViewTutorial
             onStartClick={() =>
               onSetMissionState({
@@ -48,9 +48,11 @@ export default function Tutorial({
           />
         )}
       {!!mission.tutorialId &&
-        (mission.tutorialStarted || canEdit || !!mission.myAttempt?.status) && (
+        (mission.tutorialStarted ||
+          isCreator ||
+          !!mission.myAttempt?.status) && (
           <InteractiveContent
-            autoFocus={!canEdit && !mission.myAttempt?.status}
+            autoFocus={!isCreator && !mission.myAttempt?.status}
             interactiveId={mission.tutorialId}
           />
         )}

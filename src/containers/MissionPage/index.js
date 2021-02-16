@@ -26,7 +26,7 @@ export default function MissionPage({
   const mounted = useRef(true);
   const history = useHistory();
   const location = useLocation();
-  const { loaded, userId, canEdit } = useMyState();
+  const { loaded, userId, isCreator } = useMyState();
   const {
     requestHelpers: { loadMission, updateCurrentMission }
   } = useAppContext();
@@ -80,7 +80,7 @@ export default function MissionPage({
     loaded && mission.loaded ? (
       mission.id ? (
         <ErrorBoundary style={{ width: '100%', paddingBottom: '10rem' }}>
-          {canEdit && (
+          {isCreator && (
             <FilterBar
               className="mobile"
               bordered
@@ -113,7 +113,7 @@ export default function MissionPage({
             className={css`
               padding-top: 1rem;
               @media (max-width: ${mobileMaxWidth}) {
-                padding-top: ${canEdit ? '0.5rem' : 0};
+                padding-top: ${isCreator ? '0.5rem' : 0};
               }
             `}
             style={{
@@ -125,8 +125,8 @@ export default function MissionPage({
             <div
               className={css`
                 display: flex;
-                width: ${canEdit ? 'CALC(100% - 55rem)' : '60%'};
-                ${canEdit
+                width: ${isCreator ? 'CALC(100% - 55rem)' : '60%'};
+                ${isCreator
                   ? 'margin-left: 25rem;'
                   : `
                     justify-content: center;
@@ -143,7 +143,6 @@ export default function MissionPage({
                   path={path}
                   render={() => (
                     <Main
-                      canEdit={canEdit}
                       onSetMissionState={onSetMissionState}
                       mission={mission}
                     />
@@ -162,7 +161,7 @@ export default function MissionPage({
                 />
               </Switch>
             </div>
-            {canEdit && (
+            {isCreator && (
               <RightMenu
                 className="desktop"
                 missionId={missionId}
