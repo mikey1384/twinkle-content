@@ -72,11 +72,11 @@ export default function Mission({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageVisible]);
 
-  const { canEdit } = useMyState();
+  const { isCreator } = useMyState();
   return (
     <ErrorBoundary
       className={`${panel} ${
-        canEdit
+        isCreator
           ? ''
           : css`
               @media (max-width: ${mobileMaxWidth}) {

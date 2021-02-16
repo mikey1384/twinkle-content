@@ -12,7 +12,7 @@ import { useAppContext, useMissionContext } from 'contexts';
 
 export default function Mission() {
   const [loading, setLoading] = useState(false);
-  const { currentMissionId, userId, canEdit } = useMyState();
+  const { currentMissionId, userId, isCreator } = useMyState();
   const {
     requestHelpers: { loadMissionList }
   } = useAppContext();
@@ -38,7 +38,7 @@ export default function Mission() {
       const { missions, loadMoreButton } = await loadMissionList();
       if (mounted.current) {
         let displayedMissions = missions;
-        if (!canEdit) {
+        if (!isCreator) {
           displayedMissions = missions.filter((mission) => !mission.isHidden);
         }
         setLoading(false);
@@ -50,7 +50,7 @@ export default function Mission() {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [listLoaded, prevUserId, userId, canEdit]);
+  }, [listLoaded, prevUserId, userId, isCreator]);
 
   return (
     <ErrorBoundary>
