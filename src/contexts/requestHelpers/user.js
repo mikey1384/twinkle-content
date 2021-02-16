@@ -186,14 +186,6 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
-    async loadAccountTypes() {
-      try {
-        const { data } = await request.get(`${URL}/user/accountType`);
-        return Promise.resolve(data);
-      } catch (error) {
-        return handleError(error);
-      }
-    },
     async loadUserPictures({ lastPictureId, exclude }) {
       const queryString = exclude
         ? queryStringForArray({
@@ -236,16 +228,6 @@ export default function userRequestHelpers({ auth, handleError, token }) {
           numApprovedRecommendations,
           numPostsRewarded
         });
-      } catch (error) {
-        return handleError(error);
-      }
-    },
-    async loadModerators() {
-      try {
-        const {
-          data: { moderators }
-        } = await request.get(`${URL}/user/moderator`);
-        return Promise.resolve(moderators);
       } catch (error) {
         return handleError(error);
       }

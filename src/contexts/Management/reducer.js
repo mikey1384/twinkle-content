@@ -63,6 +63,12 @@ export default function ManagementReducer(state, action) {
         accountTypes: action.accountTypes,
         accountTypesLoaded: true
       };
+    case 'LOAD_BANNED_USERS':
+      return {
+        ...state,
+        bannedUsers: action.bannedUsers,
+        bannedUsersLoaded: true
+      };
     case 'LOAD_MANAGEMENT':
       return {
         ...state,

@@ -18,6 +18,22 @@ export default function managementRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async loadAccountTypes() {
+      try {
+        const { data } = await request.get(`${URL}/user/accountType`);
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
+    async loadBannedUsers() {
+      try {
+        const { data } = await request.get(`${URL}/user/bannedUsers`);
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async loadDeletedContent({ contentId, contentType }) {
       try {
         const { data } = await request.get(
@@ -32,6 +48,16 @@ export default function managementRequestHelpers({ auth, handleError }) {
       try {
         const { data } = await request.get(`${URL}/management/deleted`, auth());
         return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
+    async loadModerators() {
+      try {
+        const {
+          data: { moderators }
+        } = await request.get(`${URL}/user/moderator`);
+        return Promise.resolve(moderators);
       } catch (error) {
         return handleError(error);
       }

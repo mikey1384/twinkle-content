@@ -38,6 +38,12 @@ export default function ManagementActions(dispatch) {
         accountTypes
       });
     },
+    onLoadBannedUsers(bannedUsers) {
+      return dispatch({
+        type: 'LOAD_BANNED_USERS',
+        bannedUsers
+      });
+    },
     onLoadManagement() {
       return dispatch({
         type: 'LOAD_MANAGEMENT'

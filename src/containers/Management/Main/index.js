@@ -10,15 +10,16 @@ export default function Main() {
   const { managementLevel } = useMyState();
   const canManage = useMemo(() => managementLevel > 1, [managementLevel]);
   const {
-    requestHelpers: { loadAccountTypes, loadModerators }
+    requestHelpers: { loadAccountTypes, loadBannedUsers, loadModerators }
   } = useAppContext();
   const {
-    actions: { onLoadAccountTypes, onLoadModerators }
+    actions: { onLoadAccountTypes, onLoadBannedUsers, onLoadModerators }
   } = useManagementContext();
 
   useEffect(() => {
     initModerators();
     initAccountTypes();
+    initBannedUsers();
     async function initModerators() {
       const moderators = await loadModerators();
       onLoadModerators(moderators);
@@ -26,6 +27,10 @@ export default function Main() {
     async function initAccountTypes() {
       const data = await loadAccountTypes();
       onLoadAccountTypes(data);
+    }
+    async function initBannedUsers() {
+      const data = await loadBannedUsers();
+      onLoadBannedUsers(data);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
