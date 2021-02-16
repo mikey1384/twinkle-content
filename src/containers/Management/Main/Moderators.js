@@ -47,8 +47,7 @@ export default function Moderators({ canManage }) {
         <Table
           color={profileTheme}
           columns={`
-            minmax(10rem, 1fr)
-            minmax(15rem, 2fr)
+            minmax(15rem, 1.5fr)
             minmax(10rem, 1fr)
             minmax(15rem, 1fr)
             ${canManage ? 'minmax(17rem, 2fr)' : ''}
@@ -57,7 +56,6 @@ export default function Moderators({ canManage }) {
           <thead>
             <tr>
               <th>User</th>
-              <th>Email</th>
               <th>Online</th>
               <th>Account Type</th>
               {canManage && <th></th>}
@@ -77,7 +75,6 @@ export default function Moderators({ canManage }) {
                   <td style={{ fontWeight: 'bold', fontSize: '1.6rem' }}>
                     {moderator.username}
                   </td>
-                  <td>{moderator.email || 'Not Specified'}</td>
                   <td>
                     {userId === moderator.id || moderator.online
                       ? 'now'
