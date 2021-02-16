@@ -47,15 +47,15 @@ export default function AccountTypes({ canManage }) {
           color={profileTheme}
           headerFontSize="1.5rem"
           columns={`
-        minmax(10rem, 1.5fr)
-        minmax(15rem, 1.5fr)
-        minmax(10rem, 1fr)
-        minmax(10rem, 1.2fr)
-        minmax(10rem, 1.1fr)
-        minmax(17rem, 2fr)
-        minmax(15rem, 1.6fr)
-        minmax(17rem, 2fr)
-      `}
+          minmax(10rem, 1.5fr)
+          minmax(15rem, 1.5fr)
+          minmax(10rem, 1fr)
+          minmax(10rem, 1.2fr)
+          minmax(10rem, 1.1fr)
+          minmax(17rem, 2fr)
+          minmax(15rem, 1.6fr)
+          minmax(17rem, 2fr)
+        `}
         >
           <thead>
             <tr>
