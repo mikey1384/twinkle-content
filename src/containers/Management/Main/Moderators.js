@@ -39,7 +39,7 @@ export default function Moderators({ canManage }) {
               skeuomorphic
               onClick={() => setAddModeratorModalShown(true)}
             >
-              + Add Moderators
+              Edit Moderators
             </Button>
           ) : null
         }

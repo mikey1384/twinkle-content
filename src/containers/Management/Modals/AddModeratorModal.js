@@ -7,7 +7,7 @@ import SearchInput from 'components/Texts/SearchInput';
 import DropdownButton from 'components/Buttons/DropdownButton';
 import Table from '../Table';
 import Icon from 'components/Icon';
-import { useSearch } from 'helpers/hooks';
+import { useSearch, useMyState } from 'helpers/hooks';
 import { useAppContext, useManagementContext } from 'contexts';
 import { Color } from 'constants/css';
 import { capitalize } from 'helpers/stringHelpers';
@@ -24,6 +24,7 @@ export default function AddModeratorModal({ accountTypes, onHide }) {
   const {
     actions: { onAddModerators }
   } = useManagementContext();
+  const { userId } = useMyState();
   const [searchText, setSearchText] = useState('');
   const [searchedUsers, setSearchedUsers] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -33,10 +34,10 @@ export default function AddModeratorModal({ accountTypes, onHide }) {
     onSetSearchText: setSearchText
   });
   const TableContent = useMemo(() => {
-    return selectedUsers.map(user => {
+    return selectedUsers.map((user) => {
       const dropdownMenu = accountTypes
-        .filter(accountType => accountType.label !== user.userType)
-        .map(accountType => ({
+        .filter((accountType) => accountType.label !== user.userType)
+        .map((accountType) => ({
           label: capitalize(accountType.label),
           onClick: () =>
             handleAccountTypeClick({
@@ -92,14 +93,14 @@ export default function AddModeratorModal({ accountTypes, onHide }) {
 
   return (
     <Modal onHide={onHide}>
-      <header>Add Moderators</header>
+      <header>Add / Edit Moderators</header>
       <main>
         <SearchInput
           autoFocus
           onChange={handleSearch}
           onSelect={handleSelectUser}
           placeholder="Search users..."
-          renderItemLabel={item => (
+          renderItemLabel={(item) => (
             <span>
               {item.username} <small>{`(${item.realName})`}</small>
             </span>
@@ -146,8 +147,8 @@ export default function AddModeratorModal({ accountTypes, onHide }) {
   );
 
   function handleAccountTypeClick({ type, userId }) {
-    setSelectedUsers(users =>
-      users.map(user =>
+    setSelectedUsers((users) =>
+      users.map((user) =>
         user.id === userId
           ? {
               ...user,
@@ -159,13 +160,13 @@ export default function AddModeratorModal({ accountTypes, onHide }) {
   }
 
   function handleSelectUser(user) {
-    setSelectedUsers(users => users.concat(user));
+    setSelectedUsers((users) => users.concat(user));
     setSearchedUsers([]);
     setSearchText('');
   }
 
   async function handleSubmit() {
-    const newModerators = selectedUsers.filter(user => !!user.userType);
+    const newModerators = selectedUsers.filter((user) => !!user.userType);
     await addModerators(newModerators);
     onAddModerators(newModerators);
     onHide();
@@ -173,11 +174,7 @@ export default function AddModeratorModal({ accountTypes, onHide }) {
 
   async function handleUserSearch(text) {
     const users = await searchUsers(text);
-    const result = users.filter(
-      user =>
-        !user.userType &&
-        !selectedUsers.map(selectedUser => selectedUser.id).includes(user.id)
-    );
+    const result = users.filter((user) => user.id !== userId);
     setSearchedUsers(result);
   }
 }
