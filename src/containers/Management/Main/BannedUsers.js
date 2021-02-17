@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import SectionPanel from 'components/SectionPanel';
 import Table from '../Table';
-import Icon from 'components/Icon';
-import { Color } from 'constants/css';
+import RedTimes from '../RedTimes';
 import { useManagementContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import EditBanStatusModal from '../Modals/EditBanStatusModal';
@@ -66,24 +65,16 @@ export default function BannedUsers({ canManage }) {
                   {bannedUser.username}
                 </td>
                 <td style={{ textAlign: 'center' }}>
-                  {bannedUser.banned.all && (
-                    <Icon icon="times" style={{ color: Color.rose() }} />
-                  )}
+                  {bannedUser.banned.all && <RedTimes />}
                 </td>
                 <td style={{ textAlign: 'center' }}>
-                  {bannedUser.banned.chat && (
-                    <Icon icon="times" style={{ color: Color.rose() }} />
-                  )}
+                  {bannedUser.banned.chat && <RedTimes />}
                 </td>
                 <td style={{ textAlign: 'center' }}>
-                  {bannedUser.banned.chess && (
-                    <Icon icon="times" style={{ color: Color.rose() }} />
-                  )}
+                  {bannedUser.banned.chess && <RedTimes />}
                 </td>
                 <td style={{ textAlign: 'center' }}>
-                  {bannedUser.banned.comment && (
-                    <Icon icon="times" style={{ color: Color.rose() }} />
-                  )}
+                  {bannedUser.banned.comment && <RedTimes />}
                 </td>
               </tr>
             ))}

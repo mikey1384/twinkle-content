@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Modal from 'components/Modal';
 import Table from '../Table';
-import Icon from 'components/Icon';
+import RedTimes from '../RedTimes';
 import Button from 'components/Button';
-import { Color } from 'constants/css';
 import { css } from '@emotion/css';
 
 EditBanStatusModal.propTypes = {
@@ -35,31 +34,31 @@ export default function EditBanStatusModal({ onHide }) {
               <tr onClick={() => console.log('clicked')}>
                 <td style={{ fontWeight: 'bold' }}>Can Edit</td>
                 <td style={{ textAlign: 'center' }}>
-                  <Icon icon="times" style={{ color: Color.rose() }} />
+                  <RedTimes />
                 </td>
               </tr>
               <tr onClick={() => console.log('clicked')}>
                 <td style={{ fontWeight: 'bold' }}>Can Delete</td>
                 <td style={{ textAlign: 'center' }}>
-                  <Icon icon="times" style={{ color: Color.rose() }} />
+                  <RedTimes />
                 </td>
               </tr>
               <tr onClick={() => console.log('clicked')}>
                 <td style={{ fontWeight: 'bold' }}>Can Reward</td>
                 <td style={{ textAlign: 'center' }}>
-                  <Icon icon="times" style={{ color: Color.rose() }} />
+                  <RedTimes />
                 </td>
               </tr>
               <tr onClick={() => console.log('clicked')}>
                 <td style={{ fontWeight: 'bold' }}>Can Feature Contents</td>
                 <td style={{ textAlign: 'center' }}>
-                  <Icon icon="times" style={{ color: Color.rose() }} />
+                  <RedTimes />
                 </td>
               </tr>
               <tr onClick={() => console.log('clicked')}>
                 <td style={{ fontWeight: 'bold' }}>Can Edit Playlists</td>
                 <td style={{ textAlign: 'center' }}>
-                  <Icon icon="times" style={{ color: Color.rose() }} />
+                  <RedTimes />
                 </td>
               </tr>
             </tbody>
