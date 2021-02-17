@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Modal from 'components/Modal';
@@ -7,6 +7,8 @@ import RedTimes from '../RedTimes';
 import Button from 'components/Button';
 import { css } from '@emotion/css';
 import { Color } from 'constants/css';
+import { isEqual } from 'lodash';
+import { useAppContext } from 'contexts';
 
 EditBanStatusModal.propTypes = {
   onHide: PropTypes.func.isRequired,
@@ -14,7 +16,26 @@ EditBanStatusModal.propTypes = {
 };
 
 export default function EditBanStatusModal({ onHide, target }) {
+  const {
+    requestHelpers: { updateBanStatus }
+  } = useAppContext();
   const [banStatus, setBanStatus] = useState(target.banned);
+  const submitDisabled = useMemo(() => {
+    const bannedFeatures = {};
+    for (let key in banStatus) {
+      if (banStatus[key]) {
+        bannedFeatures[key] = true;
+      }
+    }
+    const prevBannedFeatures = {};
+    for (let key in target.banned) {
+      if (target.banned[key]) {
+        prevBannedFeatures[key] = true;
+      }
+    }
+    return isEqual(bannedFeatures, prevBannedFeatures);
+  }, [banStatus, target.banned]);
+
   return (
     <ErrorBoundary>
       <Modal onHide={onHide}>
@@ -72,11 +93,7 @@ export default function EditBanStatusModal({ onHide, target }) {
           >
             Cancel
           </Button>
-          <Button
-            color="blue"
-            disabled={true}
-            onClick={() => console.log('clicked')}
-          >
+          <Button color="blue" disabled={submitDisabled} onClick={handleSubmit}>
             Done
           </Button>
         </footer>
@@ -89,5 +106,10 @@ export default function EditBanStatusModal({ onHide, target }) {
       ...prevStatus,
       [feature]: !prevStatus[feature]
     }));
+  }
+
+  async function handleSubmit() {
+    await updateBanStatus({ userId: target.id, banStatus });
+    onHide();
   }
 }

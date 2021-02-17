@@ -28,7 +28,7 @@ export default function managementRequestHelpers({ auth, handleError }) {
     },
     async loadBannedUsers() {
       try {
-        const { data } = await request.get(`${URL}/user/bannedUsers`);
+        const { data } = await request.get(`${URL}/user/banned`);
         return Promise.resolve(data);
       } catch (error) {
         return handleError(error);
@@ -58,6 +58,14 @@ export default function managementRequestHelpers({ auth, handleError }) {
           data: { moderators }
         } = await request.get(`${URL}/user/moderator`);
         return Promise.resolve(moderators);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
+    async updateBanStatus({ userId, banStatus }) {
+      try {
+        await request.put(`${URL}/user/banned`, { userId, banStatus }, auth());
+        return Promise.resolve();
       } catch (error) {
         return handleError(error);
       }
