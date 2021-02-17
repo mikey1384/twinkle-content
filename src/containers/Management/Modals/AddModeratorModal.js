@@ -24,7 +24,7 @@ export default function AddModeratorModal({ accountTypes, onHide }) {
   const {
     actions: { onAddModerators }
   } = useManagementContext();
-  const { userId } = useMyState();
+  const { authLevel } = useMyState();
   const [searchText, setSearchText] = useState('');
   const [searchedUsers, setSearchedUsers] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -108,9 +108,6 @@ export default function AddModeratorModal({ accountTypes, onHide }) {
           searchResults={searchedUsers}
           value={searchText}
         />
-        {searching && (
-          <Loading style={{ position: 'absolute', marginTop: '1rem' }} />
-        )}
         {selectedUsers.length > 0 && (
           <Table columns="2fr 1fr" style={{ marginTop: '1.5rem' }}>
             <thead>
@@ -133,6 +130,9 @@ export default function AddModeratorModal({ accountTypes, onHide }) {
           >
             No users selected
           </div>
+        )}
+        {searching && (
+          <Loading style={{ position: 'absolute', marginTop: '1rem' }} />
         )}
       </main>
       <footer>
@@ -174,7 +174,7 @@ export default function AddModeratorModal({ accountTypes, onHide }) {
 
   async function handleUserSearch(text) {
     const users = await searchUsers(text);
-    const result = users.filter((user) => user.id !== userId);
+    const result = users.filter((user) => user.authLevel < authLevel);
     setSearchedUsers(result);
   }
 }
