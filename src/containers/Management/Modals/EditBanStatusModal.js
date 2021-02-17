@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Modal from 'components/Modal';
@@ -6,21 +6,27 @@ import Table from '../Table';
 import RedTimes from '../RedTimes';
 import Button from 'components/Button';
 import { css } from '@emotion/css';
+import { Color } from 'constants/css';
 
 EditBanStatusModal.propTypes = {
-  onHide: PropTypes.func.isRequired
+  onHide: PropTypes.func.isRequired,
+  target: PropTypes.object.isRequired
 };
 
-export default function EditBanStatusModal({ onHide }) {
+export default function EditBanStatusModal({ onHide, target }) {
+  const [banStatus, setBanStatus] = useState(target.banned);
   return (
     <ErrorBoundary>
       <Modal onHide={onHide}>
-        <header style={{ display: 'block' }}>Edit Restriction Status:</header>
+        <header style={{ display: 'block' }}>
+          Edit Restriction Status of{' '}
+          <span style={{ color: Color.logoBlue() }}>{target.username}</span>
+        </header>
         <main>
           <Table columns="2fr 1fr">
             <thead>
               <tr>
-                <th>Perks</th>
+                <th>Features</th>
                 <th></th>
               </tr>
             </thead>
@@ -31,34 +37,28 @@ export default function EditBanStatusModal({ onHide }) {
                 }
               `} unselectable`}
             >
-              <tr onClick={() => console.log('clicked')}>
-                <td style={{ fontWeight: 'bold' }}>Can Edit</td>
+              <tr onClick={() => handleBanStatusClick('all')}>
+                <td style={{ fontWeight: 'bold' }}>Log In</td>
                 <td style={{ textAlign: 'center' }}>
-                  <RedTimes />
+                  {banStatus.all && <RedTimes />}
                 </td>
               </tr>
-              <tr onClick={() => console.log('clicked')}>
-                <td style={{ fontWeight: 'bold' }}>Can Delete</td>
+              <tr onClick={() => handleBanStatusClick('chat')}>
+                <td style={{ fontWeight: 'bold' }}>Chat</td>
                 <td style={{ textAlign: 'center' }}>
-                  <RedTimes />
+                  {banStatus.chat && <RedTimes />}
                 </td>
               </tr>
-              <tr onClick={() => console.log('clicked')}>
-                <td style={{ fontWeight: 'bold' }}>Can Reward</td>
+              <tr onClick={() => handleBanStatusClick('chess')}>
+                <td style={{ fontWeight: 'bold' }}>Chess</td>
                 <td style={{ textAlign: 'center' }}>
-                  <RedTimes />
+                  {banStatus.chess && <RedTimes />}
                 </td>
               </tr>
-              <tr onClick={() => console.log('clicked')}>
-                <td style={{ fontWeight: 'bold' }}>Can Feature Contents</td>
+              <tr onClick={() => handleBanStatusClick('comment')}>
+                <td style={{ fontWeight: 'bold' }}>Comment</td>
                 <td style={{ textAlign: 'center' }}>
-                  <RedTimes />
-                </td>
-              </tr>
-              <tr onClick={() => console.log('clicked')}>
-                <td style={{ fontWeight: 'bold' }}>Can Edit Playlists</td>
-                <td style={{ textAlign: 'center' }}>
-                  <RedTimes />
+                  {banStatus.comment && <RedTimes />}
                 </td>
               </tr>
             </tbody>
@@ -83,4 +83,11 @@ export default function EditBanStatusModal({ onHide }) {
       </Modal>
     </ErrorBoundary>
   );
+
+  function handleBanStatusClick(feature) {
+    setBanStatus((prevStatus) => ({
+      ...prevStatus,
+      [feature]: !prevStatus[feature]
+    }));
+  }
 }

@@ -17,7 +17,7 @@ export default function BannedUsers({ canManage }) {
     state: { bannedUsers, bannedUsersLoaded }
   } = useManagementContext();
   const { profileTheme } = useMyState();
-  const [banStatusModalShown, setEditBanStatusModalShown] = useState(false);
+  const [banStatusModalTarget, setEditBanStatusModalTarget] = useState(null);
 
   return (
     <ErrorBoundary>
@@ -41,19 +41,21 @@ export default function BannedUsers({ canManage }) {
           <thead>
             <tr>
               <th>Users</th>
-              <th style={{ textAlign: 'center' }}>All</th>
+              <th style={{ textAlign: 'center' }}>Log In</th>
               <th style={{ textAlign: 'center' }}>Chat</th>
               <th style={{ textAlign: 'center' }}>Chess</th>
               <th style={{ textAlign: 'center' }}>Comment</th>
             </tr>
           </thead>
           <tbody>
-            {bannedUsers.map((bannedUser) => (
+            {bannedUsers.map(({ id, username, banned }) => (
               <tr
                 onClick={() =>
-                  canManage ? setEditBanStatusModalShown(true) : {}
+                  canManage
+                    ? setEditBanStatusModalTarget({ id, username, banned })
+                    : {}
                 }
-                key={bannedUser.id}
+                key={id}
                 style={{ cursor: canManage && 'pointer' }}
               >
                 <td
@@ -62,27 +64,30 @@ export default function BannedUsers({ canManage }) {
                     fontSize: '1.6rem'
                   }}
                 >
-                  {bannedUser.username}
+                  {username}
                 </td>
                 <td style={{ textAlign: 'center' }}>
-                  {bannedUser.banned.all && <RedTimes />}
+                  {banned.all && <RedTimes />}
                 </td>
                 <td style={{ textAlign: 'center' }}>
-                  {bannedUser.banned.chat && <RedTimes />}
+                  {banned.chat && <RedTimes />}
                 </td>
                 <td style={{ textAlign: 'center' }}>
-                  {bannedUser.banned.chess && <RedTimes />}
+                  {banned.chess && <RedTimes />}
                 </td>
                 <td style={{ textAlign: 'center' }}>
-                  {bannedUser.banned.comment && <RedTimes />}
+                  {banned.comment && <RedTimes />}
                 </td>
               </tr>
             ))}
           </tbody>
         </Table>
       </SectionPanel>
-      {banStatusModalShown && (
-        <EditBanStatusModal onHide={() => setEditBanStatusModalShown(false)} />
+      {banStatusModalTarget && (
+        <EditBanStatusModal
+          target={banStatusModalTarget}
+          onHide={() => setEditBanStatusModalTarget(null)}
+        />
       )}
     </ErrorBoundary>
   );
