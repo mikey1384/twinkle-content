@@ -36,7 +36,7 @@ export default function Main() {
   }, []);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary style={{ paddingBottom: '10rem' }}>
       <Moderators canManage={canManage} />
       <AccountTypes canManage={canManage} />
       <BannedUsers canManage={canManage} />

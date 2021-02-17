@@ -4,7 +4,7 @@ import Icon from 'components/Icon';
 import { Color } from 'constants/css';
 
 Check.propTypes = {
-  checked: PropTypes.bool.isRequired
+  checked: PropTypes.bool
 };
 
 export default function Check({ checked }) {
