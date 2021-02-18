@@ -28,6 +28,7 @@ export default function AccountTypes({ canManage }) {
     <ErrorBoundary>
       <SectionPanel
         title="Account Types"
+        isEmpty={accountTypes.length === 0}
         emptyMessage="No Account Types"
         loaded={accountTypesLoaded}
         innerStyle={{ paddingLeft: 0, paddingRight: 0 }}

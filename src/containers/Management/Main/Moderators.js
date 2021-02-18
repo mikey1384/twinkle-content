@@ -29,6 +29,7 @@ export default function Moderators({ canManage }) {
     <ErrorBoundary>
       <SectionPanel
         title="Moderators"
+        isEmpty={moderators.length === 0}
         emptyMessage="No Moderators"
         loaded={moderatorsLoaded}
         innerStyle={{ paddingLeft: 0, paddingRight: 0 }}

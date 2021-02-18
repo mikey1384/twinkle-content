@@ -23,6 +23,7 @@ export default function BannedUsers({ canManage }) {
     <ErrorBoundary>
       <SectionPanel
         title="Restricted Users"
+        isEmpty={bannedUsers.length === 0}
         emptyMessage="No Restricted Users"
         loaded={bannedUsersLoaded}
         innerStyle={{ paddingLeft: 0, paddingRight: 0 }}
