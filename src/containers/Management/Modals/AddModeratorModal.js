@@ -22,7 +22,7 @@ export default function AddModeratorModal({ accountTypes, onHide }) {
     requestHelpers: { addModerators, searchUsers }
   } = useAppContext();
   const {
-    actions: { onAddModerators }
+    actions: { onEditModerators }
   } = useManagementContext();
   const { authLevel } = useMyState();
   const [searchText, setSearchText] = useState('');
@@ -168,7 +168,7 @@ export default function AddModeratorModal({ accountTypes, onHide }) {
   async function handleSubmit() {
     const newModerators = selectedUsers.filter((user) => !!user.userType);
     await addModerators(newModerators);
-    onAddModerators(newModerators);
+    onEditModerators(newModerators);
     onHide();
   }
 

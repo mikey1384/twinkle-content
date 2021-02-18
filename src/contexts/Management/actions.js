@@ -12,9 +12,9 @@ export default function ManagementActions(dispatch) {
         accountTypeLabel
       });
     },
-    onAddModerators(newModerators) {
+    onEditModerators(newModerators) {
       return dispatch({
-        type: 'ADD_MODERATORS',
+        type: 'EDIT_MODERATORS',
         newModerators
       });
     },

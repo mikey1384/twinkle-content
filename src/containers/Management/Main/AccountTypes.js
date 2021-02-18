@@ -7,6 +7,7 @@ import Table from '../Table';
 import Check from '../Check';
 import AddAccountTypeModal from '../Modals/AddAccountTypeModal';
 import EditAccountTypeModal from '../Modals/EditAccountTypeModal';
+import Icon from 'components/Icon';
 import { useMyState } from 'helpers/hooks';
 import { useManagementContext } from 'contexts';
 
@@ -39,7 +40,8 @@ export default function AccountTypes({ canManage }) {
               skeuomorphic
               onClick={() => setAddAccountTypeModalShown(true)}
             >
-              + Add Account Type
+              <Icon icon="plus" />
+              <span style={{ marginLeft: '0.7rem' }}>Add Account Type</span>
             </Button>
           ) : null
         }

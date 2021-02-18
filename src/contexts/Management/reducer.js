@@ -5,10 +5,17 @@ export default function ManagementReducer(state, action) {
         ...state,
         accountTypes: state.accountTypes.concat(action.accountType)
       };
-    case 'ADD_MODERATORS':
+    case 'EDIT_MODERATORS':
       return {
         ...state,
-        moderators: state.moderators.concat(action.newModerators)
+        moderators: action.newModerators.concat(
+          state.moderators.filter(
+            (moderator) =>
+              !action.newModerators
+                .map((newModerator) => newModerator.id)
+                .includes(moderator.id)
+          )
+        )
       };
     case 'CHANGE_MODERATOR_ACCOUNT_TYPE':
       return {

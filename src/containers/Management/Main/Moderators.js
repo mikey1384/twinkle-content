@@ -10,6 +10,7 @@ import { timeSince } from 'helpers/timeStampHelpers';
 import { useManagementContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
+import Icon from 'components/Icon';
 
 Moderators.propTypes = {
   canManage: PropTypes.bool.isRequired
@@ -40,7 +41,8 @@ export default function Moderators({ canManage }) {
               skeuomorphic
               onClick={() => setAddModeratorModalShown(true)}
             >
-              Edit Moderators
+              <Icon icon="plus" />
+              <span style={{ marginLeft: '0.7rem' }}>Add Moderators</span>
             </Button>
           ) : null
         }
