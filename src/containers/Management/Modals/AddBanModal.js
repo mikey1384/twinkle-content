@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import Table from '../Table';
 import RedTimes from '../RedTimes';
+import SearchInput from 'components/Texts/SearchInput';
+import Loading from 'components/Loading';
+import { useSearch, useMyState } from 'helpers/hooks';
+import { useAppContext } from 'contexts';
+import { isEqual } from 'lodash';
 import { css } from '@emotion/css';
 
 AddBanModal.propTypes = {
@@ -12,59 +17,121 @@ AddBanModal.propTypes = {
 };
 
 export default function AddBanModal({ onHide }) {
-  const [banStatus, setBanStatus] = useState({
-    all: false,
-    chat: false,
-    chess: false,
-    comment: false
+  const { authLevel } = useMyState();
+  const [searchText, setSearchText] = useState('');
+  const [searchedUsers, setSearchedUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const {
+    requestHelpers: { searchUsers }
+  } = useAppContext();
+  const { handleSearch, searching } = useSearch({
+    onSearch: handleUserSearch,
+    onClear: () => setSearchedUsers([]),
+    onSetSearchText: setSearchText
   });
-  const [submitDisabled, setSubmitDisabled] = useState(false);
+  const [banStatus, setBanStatus] = useState(null);
+  useEffect(() => {
+    setBanStatus(
+      selectedUser?.banned || {
+        all: false,
+        chat: false,
+        chess: false,
+        comment: false
+      }
+    );
+  }, [selectedUser]);
+  const submitDisabled = useMemo(() => {
+    if (!selectedUser) return true;
+    const bannedFeatures = {};
+    for (let key in banStatus) {
+      if (banStatus[key]) {
+        bannedFeatures[key] = true;
+      }
+    }
+    const prevBannedFeatures = {};
+    for (let key in selectedUser.banned) {
+      if (selectedUser.banned[key]) {
+        prevBannedFeatures[key] = true;
+      }
+    }
+    return isEqual(bannedFeatures, prevBannedFeatures);
+  }, [banStatus, selectedUser]);
 
   return (
     <ErrorBoundary>
       <Modal onHide={onHide}>
         <header style={{ display: 'block' }}>Restrict Account</header>
         <main>
-          <Table columns="2fr 1fr">
-            <thead>
-              <tr>
-                <th>Features</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody
-              className={`${css`
-                tr {
-                  cursor: pointer;
-                }
-              `} unselectable`}
-            >
-              <tr onClick={() => handleBanStatusClick('all')}>
-                <td style={{ fontWeight: 'bold' }}>Log In</td>
-                <td style={{ textAlign: 'center' }}>
-                  {banStatus.all && <RedTimes />}
-                </td>
-              </tr>
-              <tr onClick={() => handleBanStatusClick('chat')}>
-                <td style={{ fontWeight: 'bold' }}>Chat</td>
-                <td style={{ textAlign: 'center' }}>
-                  {banStatus.chat && <RedTimes />}
-                </td>
-              </tr>
-              <tr onClick={() => handleBanStatusClick('chess')}>
-                <td style={{ fontWeight: 'bold' }}>Chess</td>
-                <td style={{ textAlign: 'center' }}>
-                  {banStatus.chess && <RedTimes />}
-                </td>
-              </tr>
-              <tr onClick={() => handleBanStatusClick('comment')}>
-                <td style={{ fontWeight: 'bold' }}>Comment</td>
-                <td style={{ textAlign: 'center' }}>
-                  {banStatus.comment && <RedTimes />}
-                </td>
-              </tr>
-            </tbody>
-          </Table>
+          <div style={{ position: 'relative', width: '100%' }}>
+            <SearchInput
+              autoFocus
+              onChange={handleSearch}
+              onSelect={handleSelectUser}
+              placeholder="Search users..."
+              renderItemLabel={(item) => (
+                <span>
+                  {item.username} <small>{`(${item.realName})`}</small>
+                </span>
+              )}
+              searchResults={searchedUsers}
+              value={searchText}
+            />
+            {selectedUser && (
+              <div>
+                <p
+                  style={{
+                    fontSize: '2rem',
+                    fontWeight: 'bold',
+                    marginTop: '2rem',
+                    textAlign: 'center'
+                  }}
+                >
+                  {selectedUser.username}
+                </p>
+                <Table style={{ marginTop: '1.5rem' }} columns="2fr 1fr">
+                  <thead>
+                    <tr>
+                      <th>Features</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    className={`${css`
+                      tr {
+                        cursor: pointer;
+                      }
+                    `} unselectable`}
+                  >
+                    <tr onClick={() => handleBanStatusClick('all')}>
+                      <td style={{ fontWeight: 'bold' }}>Log In</td>
+                      <td style={{ textAlign: 'center' }}>
+                        {banStatus.all && <RedTimes />}
+                      </td>
+                    </tr>
+                    <tr onClick={() => handleBanStatusClick('chat')}>
+                      <td style={{ fontWeight: 'bold' }}>Chat</td>
+                      <td style={{ textAlign: 'center' }}>
+                        {banStatus.chat && <RedTimes />}
+                      </td>
+                    </tr>
+                    <tr onClick={() => handleBanStatusClick('chess')}>
+                      <td style={{ fontWeight: 'bold' }}>Chess</td>
+                      <td style={{ textAlign: 'center' }}>
+                        {banStatus.chess && <RedTimes />}
+                      </td>
+                    </tr>
+                    <tr onClick={() => handleBanStatusClick('comment')}>
+                      <td style={{ fontWeight: 'bold' }}>Comment</td>
+                      <td style={{ textAlign: 'center' }}>
+                        {banStatus.comment && <RedTimes />}
+                      </td>
+                    </tr>
+                  </tbody>
+                </Table>
+              </div>
+            )}
+            {searching && <Loading style={{ position: 'absolute', top: 0 }} />}
+          </div>
         </main>
         <footer>
           <Button
@@ -90,6 +157,18 @@ export default function AddBanModal({ onHide }) {
   }
 
   function handleSubmit() {
-    setSubmitDisabled(false);
+    console.log('submit');
+  }
+
+  function handleSelectUser(user) {
+    setSelectedUser(user);
+    setSearchedUsers([]);
+    setSearchText('');
+  }
+
+  async function handleUserSearch(text) {
+    const users = await searchUsers(text);
+    const result = users.filter((user) => user.authLevel < authLevel);
+    setSearchedUsers(result);
   }
 }
