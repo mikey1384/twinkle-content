@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import SectionPanel from 'components/SectionPanel';
@@ -22,9 +22,14 @@ export default function Moderators({ canManage }) {
     state: { accountTypes, moderators, moderatorsLoaded, numModeratorsShown },
     actions: { onLoadMoreModerators }
   } = useManagementContext();
-  const [loadingMore, setLoadingMore] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const [addModeratorModalShown, setAddModeratorModalShown] = useState(false);
   const [moderatorModalTarget, setModeratorModalTarget] = useState(null);
+  const filteredModerators = useMemo(() => {
+    return moderators.filter((moderator) =>
+      searchQuery ? moderator.username.includes(searchQuery) : moderator
+    );
+  }, [moderators, searchQuery]);
 
   return (
     <ErrorBoundary>
@@ -32,6 +37,9 @@ export default function Moderators({ canManage }) {
         title="Moderators"
         isEmpty={moderators.length === 0}
         emptyMessage="No Moderators"
+        searchPlaceholder="Search Moderators"
+        onSearch={setSearchQuery}
+        searchQuery={searchQuery}
         loaded={moderatorsLoaded}
         innerStyle={{ paddingLeft: 0, paddingRight: 0 }}
         button={
@@ -65,7 +73,7 @@ export default function Moderators({ canManage }) {
             </tr>
           </thead>
           <tbody>
-            {moderators
+            {filteredModerators
               .filter((moderator, index) => index < numModeratorsShown)
               .map((moderator) => (
                 <tr
@@ -113,8 +121,7 @@ export default function Moderators({ canManage }) {
             <LoadMoreButton
               transparent
               style={{ fontSize: '2rem' }}
-              onClick={handleLoadMoreModerators}
-              loading={loadingMore}
+              onClick={onLoadMoreModerators}
             />
           </div>
         )}
@@ -134,10 +141,4 @@ export default function Moderators({ canManage }) {
       )}
     </ErrorBoundary>
   );
-
-  async function handleLoadMoreModerators() {
-    setLoadingMore(true);
-    onLoadMoreModerators();
-    setLoadingMore(false);
-  }
 }
