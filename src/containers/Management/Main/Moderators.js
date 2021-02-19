@@ -27,7 +27,9 @@ export default function Moderators({ canManage }) {
   const [moderatorModalTarget, setModeratorModalTarget] = useState(null);
   const filteredModerators = useMemo(() => {
     return moderators.filter((moderator) =>
-      searchQuery ? moderator.username.includes(searchQuery) : moderator
+      searchQuery
+        ? moderator.username.toLowerCase().includes(searchQuery.toLowerCase())
+        : moderator
     );
   }, [moderators, searchQuery]);
 
@@ -108,7 +110,7 @@ export default function Moderators({ canManage }) {
               ))}
           </tbody>
         </Table>
-        {moderators.length > numModeratorsShown && (
+        {moderators.length > numModeratorsShown && !searchQuery && (
           <div
             style={{
               marginTop: '2rem',
