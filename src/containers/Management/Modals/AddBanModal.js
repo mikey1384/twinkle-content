@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Modal from 'components/Modal';
@@ -18,11 +18,12 @@ AddBanModal.propTypes = {
 
 export default function AddBanModal({ onHide }) {
   const { authLevel } = useMyState();
+  const mounted = useRef(true);
   const [searchText, setSearchText] = useState('');
   const [searchedUsers, setSearchedUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const {
-    requestHelpers: { searchUsers }
+    requestHelpers: { searchUsers, updateBanStatus }
   } = useAppContext();
   const { handleSearch, searching } = useSearch({
     onSearch: handleUserSearch,
@@ -56,6 +57,13 @@ export default function AddBanModal({ onHide }) {
     }
     return isEqual(bannedFeatures, prevBannedFeatures);
   }, [banStatus, selectedUser]);
+
+  useEffect(() => {
+    mounted.current = true;
+    return function onUnmount() {
+      mounted.current = false;
+    };
+  }, []);
 
   return (
     <ErrorBoundary>
@@ -156,8 +164,11 @@ export default function AddBanModal({ onHide }) {
     }));
   }
 
-  function handleSubmit() {
-    console.log('submit');
+  async function handleSubmit() {
+    await updateBanStatus({ userId: selectedUser.id, banStatus });
+    if (mounted.current) {
+      onHide();
+    }
   }
 
   function handleSelectUser(user) {
