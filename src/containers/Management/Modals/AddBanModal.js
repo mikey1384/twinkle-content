@@ -8,7 +8,7 @@ import RedTimes from '../RedTimes';
 import SearchInput from 'components/Texts/SearchInput';
 import Loading from 'components/Loading';
 import { useSearch, useMyState } from 'helpers/hooks';
-import { useAppContext } from 'contexts';
+import { useAppContext, useManagementContext } from 'contexts';
 import { isEqual } from 'lodash';
 import { css } from '@emotion/css';
 
@@ -25,6 +25,9 @@ export default function AddBanModal({ onHide }) {
   const {
     requestHelpers: { searchUsers, updateBanStatus }
   } = useAppContext();
+  const {
+    actions: { onUpdateBanStatus }
+  } = useManagementContext();
   const { handleSearch, searching } = useSearch({
     onSearch: handleUserSearch,
     onClear: () => setSearchedUsers([]),
@@ -166,6 +169,7 @@ export default function AddBanModal({ onHide }) {
 
   async function handleSubmit() {
     await updateBanStatus({ userId: selectedUser.id, banStatus });
+    onUpdateBanStatus({ ...selectedUser, banned: banStatus });
     if (mounted.current) {
       onHide();
     }

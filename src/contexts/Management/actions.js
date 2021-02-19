@@ -59,6 +59,12 @@ export default function ManagementActions(dispatch) {
       return dispatch({
         type: 'LOAD_MORE_MODERATORS'
       });
+    },
+    onUpdateBanStatus(user) {
+      return dispatch({
+        type: 'UPDATE_BAN_STATUS',
+        user
+      });
     }
   };
 }

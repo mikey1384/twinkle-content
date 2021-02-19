@@ -92,6 +92,13 @@ export default function ManagementReducer(state, action) {
         ...state,
         numModeratorsShown: state.numModeratorsShown + 10
       };
+    case 'UPDATE_BAN_STATUS':
+      return {
+        ...state,
+        bannedUsers: [action.user].concat(
+          state.bannedUsers.filter((user) => user.id !== action.user.id)
+        )
+      };
     default:
       return state;
   }

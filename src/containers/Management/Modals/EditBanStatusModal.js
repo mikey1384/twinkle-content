@@ -8,7 +8,7 @@ import Button from 'components/Button';
 import { css } from '@emotion/css';
 import { Color } from 'constants/css';
 import { isEqual } from 'lodash';
-import { useAppContext } from 'contexts';
+import { useAppContext, useManagementContext } from 'contexts';
 
 EditBanStatusModal.propTypes = {
   onHide: PropTypes.func.isRequired,
@@ -19,6 +19,9 @@ export default function EditBanStatusModal({ onHide, target }) {
   const {
     requestHelpers: { updateBanStatus }
   } = useAppContext();
+  const {
+    actions: { onUpdateBanStatus }
+  } = useManagementContext();
   const mounted = useRef(true);
   const [banStatus, setBanStatus] = useState(target.banned);
   const submitDisabled = useMemo(() => {
@@ -117,6 +120,7 @@ export default function EditBanStatusModal({ onHide, target }) {
 
   async function handleSubmit() {
     await updateBanStatus({ userId: target.id, banStatus });
+    onUpdateBanStatus({ ...target, banned: banStatus });
     if (mounted.current) {
       onHide();
     }
