@@ -165,6 +165,7 @@ export default function Header({
   }, [userId]);
 
   useEffect(() => {
+    socket.on('ban_status_updated', handleBanStatusUpdate);
     socket.on('signal_received', handleCallSignal);
     socket.on('away_status_changed', handleAwayStatusChange);
     socket.on('busy_status_changed', handleBusyStatusChange);
@@ -198,6 +199,7 @@ export default function Header({
     socket.on('new_vocab_activity_received', handleReceiveVocabActivity);
 
     return function cleanUp() {
+      socket.removeListener('ban_status_updated', handleBanStatusUpdate);
       socket.removeListener('signal_received', handleCallSignal);
       socket.removeListener('away_status_changed', handleAwayStatusChange);
       socket.removeListener('busy_status_changed', handleBusyStatusChange);
@@ -251,6 +253,10 @@ export default function Header({
         handleReceiveVocabActivity
       );
     };
+
+    function handleBanStatusUpdate(banStatus) {
+      onUpdateProfileInfo({ userId, banned: banStatus });
+    }
 
     async function handleConnect() {
       console.log('connected to socket');
