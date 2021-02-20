@@ -887,7 +887,7 @@ export default function Chess({
 
   function handleSpoilerClick() {
     if (
-      banned.chess ||
+      banned?.chess ||
       loadingRef.current ||
       selectedChannelId !== channelId ||
       senderId === userId ||

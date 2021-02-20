@@ -84,16 +84,16 @@ export default function BannedUsers({ canManage }) {
                   {username}
                 </td>
                 <td style={{ textAlign: 'center' }}>
-                  {banned.all && <RedTimes />}
+                  {banned?.all && <RedTimes />}
                 </td>
                 <td style={{ textAlign: 'center' }}>
-                  {banned.chat && <RedTimes />}
+                  {banned?.chat && <RedTimes />}
                 </td>
                 <td style={{ textAlign: 'center' }}>
-                  {banned.chess && <RedTimes />}
+                  {banned?.chess && <RedTimes />}
                 </td>
                 <td style={{ textAlign: 'center' }}>
-                  {banned.comment && <RedTimes />}
+                  {banned?.comment && <RedTimes />}
                 </td>
               </tr>
             ))}
