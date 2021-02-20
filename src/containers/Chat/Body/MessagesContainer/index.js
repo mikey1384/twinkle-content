@@ -360,7 +360,7 @@ export default function MessagesContainer({
 
   return (
     <ErrorBoundary>
-      {!channelHeaderShown && !banned.chat && (
+      {!channelHeaderShown && !banned?.chat && (
         <div
           style={{
             display: 'flex',
@@ -727,7 +727,7 @@ export default function MessagesContainer({
   );
 
   function handleChessModalShown() {
-    if (banned.chess) {
+    if (banned?.chess) {
       return;
     }
     const channelId = currentChannel?.id;
