@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
@@ -12,17 +12,27 @@ import {
 } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
 import { useChatContext } from 'contexts';
+import LocalContext from '../../Context';
 
 UploadModal.propTypes = {
   channelId: PropTypes.number,
   fileObj: PropTypes.object,
-  onHide: PropTypes.func.isRequired
+  onHide: PropTypes.func.isRequired,
+  recepientId: PropTypes.number,
+  subjectId: PropTypes.number
 };
 
-export default function UploadModal({ channelId, fileObj, onHide }) {
+export default function UploadModal({
+  channelId,
+  fileObj,
+  onHide,
+  recepientId,
+  subjectId
+}) {
   const { profilePicUrl, userId, username } = useMyState();
+  const { onFileUpload } = useContext(LocalContext);
   const {
-    state: { replyTarget },
+    state: { isRespondingToSubject, replyTarget },
     actions: { onSubmitMessage }
   } = useChatContext();
   const [caption, setCaption] = useState('');
@@ -107,17 +117,29 @@ export default function UploadModal({ channelId, fileObj, onHide }) {
 
   function handleSubmit() {
     if (selectedFile) {
+      const filePath = uuidv1();
+      onFileUpload({
+        channelId,
+        content: finalizeEmoji(caption),
+        filePath,
+        fileToUpload: selectedFile,
+        userId,
+        recepientId,
+        targetMessageId: replyTarget?.id,
+        subjectId: isRespondingToSubject ? subjectId : null
+      });
       onSubmitMessage({
         message: {
           content: finalizeEmoji(caption),
           channelId,
           fileToUpload: selectedFile,
-          filePath: uuidv1(),
+          filePath,
           fileName: selectedFile.name,
           profilePicUrl,
           userId,
           username
         },
+        isRespondingToSubject,
         replyTarget
       });
       onHide();

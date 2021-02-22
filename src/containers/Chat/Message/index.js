@@ -1,11 +1,4 @@
-import React, {
-  memo,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from 'react';
+import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
 import ProfilePic from 'components/ProfilePic';
@@ -19,7 +12,6 @@ import DropdownButton from 'components/Buttons/DropdownButton';
 import TargetMessage from './TargetMessage';
 import TargetSubject from './TargetSubject';
 import RewardMessage from './RewardMessage';
-import LocalContext from '../Context';
 import Invitation from './Invitation';
 import MessageRewardModal from '../Modals/MessageRewardModal';
 import { useInView } from 'react-intersection-observer';
@@ -116,8 +108,7 @@ function Message({
   onReplyClick,
   onRewardMessageSubmit,
   onSetScrollToBottom,
-  onShowSubjectMsgsModal,
-  recepientId
+  onShowSubjectMsgsModal
 }) {
   const [ComponentRef, inView] = useInView({
     threshold: 0
@@ -132,7 +123,6 @@ function Message({
     onSetVisible: setVisible,
     delay: 1000
   });
-  const { onFileUpload } = useContext(LocalContext);
   const {
     authLevel,
     canDelete,
@@ -176,7 +166,7 @@ function Message({
   });
 
   const {
-    state: { filesBeingUploaded, reconnecting, replyTarget },
+    state: { filesBeingUploaded, reconnecting },
     actions: {
       onEditMessage,
       onSaveMessage,
@@ -476,7 +466,6 @@ function Message({
                 <FileUploadStatusIndicator
                   key={channelId}
                   fileName={fileToUpload.name}
-                  onFileUpload={handleFileUpload}
                   uploadComplete={!!uploadStatus.uploadComplete}
                   uploadProgress={uploadStatus.uploadProgress}
                 />
@@ -610,19 +599,6 @@ function Message({
       contentId: messageId,
       contentType: 'chat',
       isEditing: false
-    });
-  }
-
-  function handleFileUpload() {
-    onFileUpload({
-      channelId,
-      content,
-      filePath,
-      fileToUpload,
-      userId,
-      recepientId,
-      targetMessageId: replyTarget?.id,
-      subjectId
     });
   }
 

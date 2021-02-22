@@ -159,6 +159,11 @@ export default function MessagesContainer({
     [channelOnCall.id, selectedChannelId]
   );
 
+  const subjectId = useMemo(() => subjectObj[selectedChannelId]?.id, [
+    selectedChannelId,
+    subjectObj
+  ]);
+
   useEffect(() => {
     return function onUnmount() {
       mounted.current = false;
@@ -661,6 +666,8 @@ export default function MessagesContainer({
       )}
       {uploadModalShown && (
         <UploadModal
+          recepientId={recepientId}
+          subjectId={subjectId}
           channelId={selectedChannelId}
           fileObj={fileObj}
           onHide={() => setUploadModalShown(false)}
@@ -1022,9 +1029,7 @@ export default function MessagesContainer({
       profilePicUrl,
       content,
       channelId: selectedChannelId,
-      subjectId: isRespondingToSubject
-        ? subjectObj[selectedChannelId]?.id
-        : null
+      subjectId: isRespondingToSubject ? subjectId : null
     };
     onSubmitMessage({
       message,
