@@ -105,7 +105,6 @@ export default function Editor({
   );
 
   const mounted = useRef(true);
-  const filePathRef = useRef(null);
   const inputStateRef = useRef(prevInputState || defaultInputState);
   const [uploadingFile, setUploadingFile] = useState(false);
   const [inputState, setInputState] = useState(
@@ -357,7 +356,6 @@ export default function Editor({
                 paddingBottom: '1rem'
               }}
               fileName={editedAttachment.newAttachment.file?.name}
-              onFileUpload={handleFileUpload}
               uploadComplete={fileUploadComplete}
               uploadProgress={fileUploadProgress}
             />
@@ -491,15 +489,28 @@ export default function Editor({
     </div>
   );
 
-  function handleFileUpload() {
-    filePathRef.current = uuidv1();
-    handleSubmitWithAttachment();
-    filePathRef.current = null;
+  function handleSetInputState(newState) {
+    setInputState(newState);
+    inputStateRef.current = newState;
+  }
 
-    async function handleSubmitWithAttachment() {
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const deletingAttachment =
+      !!editedAttachment?.isChanging && !editedAttachment?.newAttachment;
+    const post = {
+      ...editForm,
+      editedAttachment: deletingAttachment ? null : editedAttachment,
+      editedPaths: paths,
+      editedHeading: finalizeEmoji(editedHeading),
+      editedDescription: finalizeEmoji(editedDescription)
+    };
+
+    if (editedAttachment?.newAttachment) {
+      setUploadingFile(true);
       const uploadedFilePath = await uploadFile({
         context: 'interactive',
-        filePath: filePathRef.current,
+        filePath: uuidv1(),
         file: editedAttachment.newAttachment.file,
         onUploadProgress: handleUploadProgress
       });
@@ -541,6 +552,29 @@ export default function Editor({
       if (mounted.current) {
         handleSetInputState(post);
       }
+    } else {
+      const { slide: newState, numUpdates } = await editInteractiveSlide({
+        slideId,
+        post
+      });
+      if (mounted.current) {
+        onChangeNumUpdates({ interactiveId, numUpdates });
+      }
+      if (mounted.current) {
+        onSetSlideState({
+          interactiveId,
+          slideId,
+          newState: {
+            ...newState,
+            isEditing: false,
+            fileUploadComplete: false,
+            fileUploadProgress: null
+          }
+        });
+      }
+      if (mounted.current) {
+        handleSetInputState(post);
+      }
     }
 
     function handleUploadProgress({ loaded, total }) {
@@ -549,49 +583,6 @@ export default function Editor({
         slideId,
         newState: { fileUploadProgress: loaded / total }
       });
-    }
-  }
-
-  function handleSetInputState(newState) {
-    setInputState(newState);
-    inputStateRef.current = newState;
-  }
-
-  async function handleSubmit(event) {
-    event.preventDefault();
-    const deletingAttachment =
-      !!editedAttachment?.isChanging && !editedAttachment?.newAttachment;
-    const post = {
-      ...editForm,
-      editedAttachment: deletingAttachment ? null : editedAttachment,
-      editedPaths: paths,
-      editedHeading: finalizeEmoji(editedHeading),
-      editedDescription: finalizeEmoji(editedDescription)
-    };
-    if (editedAttachment?.newAttachment) {
-      return setUploadingFile(true);
-    }
-    const { slide: newState, numUpdates } = await editInteractiveSlide({
-      slideId,
-      post
-    });
-    if (mounted.current) {
-      onChangeNumUpdates({ interactiveId, numUpdates });
-    }
-    if (mounted.current) {
-      onSetSlideState({
-        interactiveId,
-        slideId,
-        newState: {
-          ...newState,
-          isEditing: false,
-          fileUploadComplete: false,
-          fileUploadProgress: null
-        }
-      });
-    }
-    if (mounted.current) {
-      handleSetInputState(post);
     }
   }
 }

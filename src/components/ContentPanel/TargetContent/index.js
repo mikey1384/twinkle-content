@@ -123,7 +123,6 @@ export default function TargetContent({
   const [userListModalShown, setUserListModalShown] = useState(false);
   const InputFormRef = useRef(null);
   const RewardInterfaceRef = useRef(null);
-  const filePathRef = useRef(null);
   const userCanRewardThis = useMemo(() => {
     let canRewardThis;
     if (comment && !comment.notFound) {
@@ -492,7 +491,6 @@ export default function TargetContent({
                     marginRight: '1rem'
                   }}
                   fileName={attachment?.file?.name}
-                  onFileUpload={handleFileUpload}
                   uploadComplete={fileUploadComplete}
                   uploadProgress={fileUploadProgress}
                 />
@@ -559,50 +557,63 @@ export default function TargetContent({
     }
   }
 
-  async function handleFileUpload() {
-    filePathRef.current = uuidv1();
+  async function handleSubmit(text) {
     try {
-      await uploadFile({
-        filePath: filePathRef.current,
-        file: attachment.file,
-        onUploadProgress: handleUploadProgress
-      });
-      const data = await uploadComment({
-        content: commentContent,
-        parent: {
-          contentType: rootType,
-          contentId: rootObj.id
-        },
-        targetCommentId: comment.id,
-        attachment,
-        filePath: filePathRef.current,
-        fileName: attachment.file.name,
-        fileSize: attachment.file.size
-      });
-      if (mounted.current) {
-        onSetCommentFileUploadComplete({
-          contentType: 'comment',
-          contentId: comment.id
+      if (attachment) {
+        setCommentContent(text);
+        setUploadingFile(true);
+        const filePath = uuidv1();
+        await uploadFile({
+          filePath,
+          file: attachment.file,
+          onUploadProgress: handleUploadProgress
         });
-        setUploadingFile(false);
+        const data = await uploadComment({
+          content: commentContent,
+          parent: {
+            contentType: rootType,
+            contentId: rootObj.id
+          },
+          targetCommentId: comment.id,
+          attachment,
+          filePath,
+          fileName: attachment.file.name,
+          fileSize: attachment.file.size
+        });
+        if (mounted.current) {
+          onSetCommentFileUploadComplete({
+            contentType: 'comment',
+            contentId: comment.id
+          });
+          setUploadingFile(false);
+          onUploadTargetComment({ ...data, contentId, contentType });
+          onClearCommentFileUploadProgress({
+            contentType: 'comment',
+            contentId: comment.id
+          });
+          setUploadingFile(false);
+          onEnterComment({
+            contentType: 'comment',
+            contentId: comment.id,
+            text: ''
+          });
+          setCommentContent('');
+          onSetCommentAttachment({
+            attachment: undefined,
+            contentType: 'comment',
+            contentId: comment.id
+          });
+        }
+      } else {
+        const data = await uploadComment({
+          content: text,
+          parent: {
+            contentType: rootType,
+            contentId: rootObj.id
+          },
+          targetCommentId: comment.id
+        });
         onUploadTargetComment({ ...data, contentId, contentType });
-        onClearCommentFileUploadProgress({
-          contentType: 'comment',
-          contentId: comment.id
-        });
-        setUploadingFile(false);
-        onEnterComment({
-          contentType: 'comment',
-          contentId: comment.id,
-          text: ''
-        });
-        setCommentContent('');
-        onSetCommentAttachment({
-          attachment: undefined,
-          contentType: 'comment',
-          contentId: comment.id
-        });
-        filePathRef.current = null;
       }
     } catch (error) {
       console.error(error);
@@ -614,23 +625,6 @@ export default function TargetContent({
         contentId: comment.id,
         progress: loaded / total
       });
-    }
-  }
-
-  async function handleSubmit(text) {
-    if (attachment) {
-      setCommentContent(text);
-      setUploadingFile(true);
-    } else {
-      const data = await uploadComment({
-        content: text,
-        parent: {
-          contentType: rootType,
-          contentId: rootObj.id
-        },
-        targetCommentId: comment.id
-      });
-      onUploadTargetComment({ ...data, contentId, contentType });
     }
   }
 }
