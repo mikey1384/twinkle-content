@@ -41,6 +41,8 @@ function SubjectInput() {
     state: {
       fileUploadComplete,
       fileUploadProgress,
+      secretAttachmentUploadComplete,
+      secretAttachmentUploadProgress,
       submittingSubject,
       uploadingFile
     },
@@ -263,8 +265,8 @@ function SubjectInput() {
         <FileUploadStatusIndicator
           style={{ fontSize: '1.7rem', fontWeight: 'bold', marginTop: 0 }}
           fileName={secretAttachment?.file?.name}
-          uploadComplete={fileUploadComplete}
-          uploadProgress={fileUploadProgress}
+          uploadComplete={secretAttachmentUploadComplete}
+          uploadProgress={secretAttachmentUploadProgress}
         />
       )}
       {uploadingFile && attachment?.contentType === 'file' && (

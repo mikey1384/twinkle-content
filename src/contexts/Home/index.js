@@ -11,6 +11,8 @@ export const initialHomeState = {
   feedsOutdated: false,
   fileUploadProgress: null,
   fileUploadComplete: false,
+  secretAttachmentUploadProgress: null,
+  secretAttachmentUploadComplete: false,
   loadMoreButton: false,
   subFilter: 'all',
   submittingSubject: false,
