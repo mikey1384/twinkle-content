@@ -33,6 +33,7 @@ import { useAppContext, useHomeContext, useInputContext } from 'contexts';
 
 function SubjectInput() {
   const filePathRef = useRef(null);
+  const secretAttachmentPathRef = useRef(null);
   const { onFileUpload } = useContext(LocalContext);
   const {
     requestHelpers: { uploadContent }
@@ -53,6 +54,7 @@ function SubjectInput() {
       onSetHasSecretAnswer,
       onResetSubjectInput,
       onSetSecretAnswer,
+      onSetSecretAttachment,
       onSetSubjectAttachment,
       onSetSubjectDescription,
       onSetSubjectDescriptionFieldShown,
@@ -61,9 +63,8 @@ function SubjectInput() {
     }
   } = useInputContext();
   const {
-    attachment,
     details,
-    details: { rewardLevel }
+    details: { attachment, rewardLevel, secretAttachment }
   } = subject;
   const [attachContentModalShown, setAttachContentModalShown] = useState(false);
   const titleRef = useRef(details.title);
@@ -105,13 +106,19 @@ function SubjectInput() {
     if (title.length > charLimit.subject.title) return true;
     if (description.length > charLimit.subject.description) return true;
     if (
-      (hasSecretAnswer && stringIsEmpty(secretAnswer)) ||
+      (hasSecretAnswer && stringIsEmpty(secretAnswer) && !secretAttachment) ||
       secretAnswer.length > charLimit.subject.description
     ) {
       return true;
     }
     return false;
-  }, [description.length, hasSecretAnswer, secretAnswer, title.length]);
+  }, [
+    description.length,
+    hasSecretAnswer,
+    secretAnswer,
+    secretAttachment,
+    title.length
+  ]);
 
   useEffect(() => {
     return function setTextsBeforeUnmount() {
@@ -205,7 +212,9 @@ function SubjectInput() {
               {hasSecretAnswer && (
                 <SecretMessageInput
                   secretAnswer={secretAnswer}
+                  secretAttachment={secretAttachment}
                   onSetSecretAnswer={handleSetSecretAnswer}
+                  onSetSecretAttachment={onSetSecretAttachment}
                 />
               )}
               {canEditRewardLevel && (
@@ -252,7 +261,16 @@ function SubjectInput() {
           )}
         </>
       )}
-      {uploadingFile && (
+      {uploadingFile && hasSecretAnswer && secretAttachment && (
+        <FileUploadStatusIndicator
+          style={{ fontSize: '1.7rem', fontWeight: 'bold', marginTop: 0 }}
+          fileName={secretAttachment?.file?.name}
+          onFileUpload={handleSecretAttachmentUpload}
+          uploadComplete={fileUploadComplete}
+          uploadProgress={fileUploadProgress}
+        />
+      )}
+      {uploadingFile && attachment?.contentType === 'file' && (
         <FileUploadStatusIndicator
           style={{ fontSize: '1.7rem', fontWeight: 'bold', marginTop: 0 }}
           fileName={attachment?.file?.name}
@@ -282,6 +300,15 @@ function SubjectInput() {
     filePathRef.current = null;
   }
 
+  function handleSecretAttachmentUpload() {
+    secretAttachmentPathRef.current = uuidv1();
+    onFileUpload({
+      filePath: secretAttachmentPathRef.current,
+      file: secretAttachment.file
+    });
+    secretAttachmentPathRef.current = null;
+  }
+
   function handleInputChange(text) {
     handleSetTitle(text);
     handleSetDescriptionFieldShown(!!text.length);
@@ -295,12 +322,15 @@ function SubjectInput() {
     if (
       stringIsEmpty(title) ||
       title.length > charLimit.subject.title ||
-      (hasSecretAnswer && stringIsEmpty(secretAnswer))
+      (hasSecretAnswer && stringIsEmpty(secretAnswer) && !secretAttachment)
     ) {
       return;
     }
     onSetSubmittingSubject(true);
-    if (attachment?.contentType === 'file') {
+    if (
+      attachment?.contentType === 'file' ||
+      (hasSecretAnswer && secretAttachment)
+    ) {
       onSetSubjectDescriptionFieldShown(descriptionFieldShownRef.current);
       onSetSubjectTitle(titleRef.current);
       onSetSubjectDescription(descriptionRef.current);
@@ -310,7 +340,9 @@ function SubjectInput() {
       handleSetDescription('');
       handleSetSecretAnswer('');
       handleSetDescriptionFieldShown(false);
-      handleSetHasSecretAnswer(false);
+      if (!(hasSecretAnswer && secretAttachment)) {
+        handleSetHasSecretAnswer(false);
+      }
       return onSetUploadingFile(true);
     }
     handleUploadSubject();

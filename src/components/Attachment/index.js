@@ -13,7 +13,7 @@ Attachment.propTypes = {
 
 export default function Attachment({
   attachment,
-  attachment: { contentType, fileType },
+  attachment: { contentType = 'file', fileType },
   onClose,
   style
 }) {

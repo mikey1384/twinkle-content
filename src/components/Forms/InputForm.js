@@ -205,7 +205,7 @@ export default function InputForm({
           attachment={attachment}
           onClose={() =>
             onSetCommentAttachment({
-              attachment: undefined,
+              attachment: null,
               contentType,
               contentId
             })
@@ -326,7 +326,6 @@ export default function InputForm({
               const dataUri = imageUrl.replace(/^data:image\/\w+;base64,/, '');
               const buffer = Buffer.from(dataUri, 'base64');
               const file = new File([buffer], fileObj.name);
-
               onSetCommentAttachment({
                 attachment: {
                   file,

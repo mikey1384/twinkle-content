@@ -189,6 +189,12 @@ export default function InputActions(dispatch) {
         secretAnswer
       });
     },
+    onSetSecretAttachment(secretAttachment) {
+      return dispatch({
+        type: 'SET_SECRET_ATTACHMENT',
+        secretAttachment
+      });
+    },
     onSetSubjectAttachment(attachment) {
       return dispatch({
         type: 'SET_SUBJECT_ATTACHMENT',

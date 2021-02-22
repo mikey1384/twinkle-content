@@ -240,12 +240,26 @@ export default function InputReducer(state, action) {
           }
         }
       };
+    case 'SET_SECRET_ATTACHMENT':
+      return {
+        ...state,
+        subject: {
+          ...state.subject,
+          details: {
+            ...state.subject.details,
+            secretAttachment: action.secretAttachment
+          }
+        }
+      };
     case 'SET_SUBJECT_ATTACHMENT':
       return {
         ...state,
         subject: {
           ...state.subject,
-          attachment: action.attachment
+          details: {
+            ...state.subject.details,
+            attachment: action.attachment
+          }
         }
       };
     case 'SET_SUBJECT_DESCRIPTION':

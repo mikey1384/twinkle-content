@@ -4,27 +4,45 @@ import { Color } from 'constants/css';
 import {
   addEmoji,
   exceedsCharLimit,
-  addCommasToNumber
+  addCommasToNumber,
+  getFileInfoFromFileName
 } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
-import { FILE_UPLOAD_XP_REQUIREMENT } from 'constants/defaultValues';
+import {
+  FILE_UPLOAD_XP_REQUIREMENT,
+  mb,
+  returnMaxUploadSize
+} from 'constants/defaultValues';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
 import Textarea from 'components/Texts/Textarea';
+import AlertModal from 'components/Modals/AlertModal';
+import Attachment from 'components/Attachment';
 import FullTextReveal from 'components/Texts/FullTextReveal';
 
 SecretMessageInput.propTypes = {
   secretAnswer: PropTypes.string,
-  onSetSecretAnswer: PropTypes.func.isRequired
+  secretAttachment: PropTypes.object,
+  onSetSecretAnswer: PropTypes.func.isRequired,
+  onSetSecretAttachment: PropTypes.func.isRequired
 };
 
 export default function SecretMessageInput({
-  secretAnswer,
-  onSetSecretAnswer
+  onSetSecretAnswer,
+  secretAttachment,
+  onSetSecretAttachment,
+  secretAnswer
 }) {
   const [onHover, setOnHover] = useState(false);
+  const [alertModalShown, setAlertModalShown] = useState(false);
   const FileInputRef = useRef(null);
-  const { authLevel, profileTheme, twinkleXP, userId } = useMyState();
+  const {
+    authLevel,
+    fileUploadLvl,
+    profileTheme,
+    twinkleXP,
+    userId
+  } = useMyState();
   const secretAnswerExceedsCharLimit = useMemo(
     () =>
       exceedsCharLimit({
@@ -34,6 +52,9 @@ export default function SecretMessageInput({
       }),
     [secretAnswer]
   );
+  const maxSize = useMemo(() => returnMaxUploadSize(fileUploadLvl), [
+    fileUploadLvl
+  ]);
   const disabled = useMemo(
     () =>
       !userId || (authLevel === 0 && twinkleXP < FILE_UPLOAD_XP_REQUIREMENT),
@@ -78,16 +99,24 @@ export default function SecretMessageInput({
           )}
         </div>
         <div style={{ marginLeft: '1rem' }}>
-          <Button
-            skeuomorphic
-            disabled={disabled}
-            color={profileTheme}
-            onClick={() => FileInputRef.current.click()}
-            onMouseEnter={() => setOnHover(true)}
-            onMouseLeave={() => setOnHover(false)}
-          >
-            <Icon size="lg" icon="upload" />
-          </Button>
+          {secretAttachment ? (
+            <Attachment
+              style={{ marginLeft: '1rem', fontSize: '1rem' }}
+              attachment={secretAttachment}
+              onClose={() => onSetSecretAttachment(null)}
+            />
+          ) : (
+            <Button
+              skeuomorphic
+              disabled={disabled}
+              color={profileTheme}
+              onClick={() => FileInputRef.current.click()}
+              onMouseEnter={() => setOnHover(true)}
+              onMouseLeave={() => setOnHover(false)}
+            >
+              <Icon size="lg" icon="upload" />
+            </Button>
+          )}
           {userId && disabled && (
             <FullTextReveal
               style={{
@@ -111,12 +140,19 @@ export default function SecretMessageInput({
         type="file"
         onChange={handleUpload}
       />
+      {alertModalShown && (
+        <AlertModal
+          title="File is too large"
+          content={`The file size is larger than your limit of ${
+            maxSize / mb
+          } MB`}
+          onHide={() => setAlertModalShown(false)}
+        />
+      )}
     </div>
   );
 
   function handleUpload(event) {
-    console.log(event);
-    /*
     const fileObj = event.target.files[0];
     if (fileObj.size / mb > maxSize) {
       return setAlertModalShown(true);
@@ -127,15 +163,10 @@ export default function SecretMessageInput({
       reader.onload = (upload) => {
         const payload = upload.target.result;
         if (fileObj.name.split('.')[1] === 'gif') {
-          onSetCommentAttachment({
-            attachment: {
-              file: fileObj,
-              contentType: 'file',
-              fileType,
-              imageUrl: payload
-            },
-            contentType,
-            contentId
+          onSetSecretAttachment({
+            file: fileObj,
+            fileType,
+            imageUrl: payload
           });
         } else {
           window.loadImage(
@@ -145,16 +176,10 @@ export default function SecretMessageInput({
               const dataUri = imageUrl.replace(/^data:image\/\w+;base64,/, '');
               const buffer = Buffer.from(dataUri, 'base64');
               const file = new File([buffer], fileObj.name);
-
-              onSetCommentAttachment({
-                attachment: {
-                  file,
-                  contentType: 'file',
-                  fileType,
-                  imageUrl
-                },
-                contentType,
-                contentId
+              onSetSecretAttachment({
+                file,
+                fileType,
+                imageUrl
               });
             },
             { orientation: true, canvas: true }
@@ -163,17 +188,11 @@ export default function SecretMessageInput({
       };
       reader.readAsDataURL(fileObj);
     } else {
-      onSetCommentAttachment({
-        attachment: {
-          file: fileObj,
-          contentType: 'file',
-          fileType
-        },
-        contentType,
-        contentId
+      onSetSecretAttachment({
+        file: fileObj,
+        fileType
       });
     }
     event.target.value = null;
-    */
   }
 }

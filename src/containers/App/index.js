@@ -109,7 +109,13 @@ function App({ location, history }) {
   } = useInputContext();
   const {
     attachment,
-    details: { title, description, secretAnswer, rewardLevel },
+    details: {
+      title,
+      description,
+      secretAnswer,
+      secretAttachment,
+      rewardLevel
+    },
     hasSecretAnswer
   } = subject;
   const [mobileMenuShown, setMobileMenuShown] = useState(false);
@@ -414,6 +420,9 @@ function App({ location, history }) {
   }
 
   async function handleFileUploadOnHome({ filePath, file }) {
+    if (hasSecretAnswer && secretAttachment) {
+      return console.log(secretAttachment, 'no progress');
+    }
     try {
       await uploadFile({
         filePath,
