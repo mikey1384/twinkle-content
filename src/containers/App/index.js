@@ -104,20 +104,8 @@ function App({ location, history }) {
     actions: { onChangePageVisibility, onRecordScrollPosition }
   } = useViewContext();
   const {
-    state: { subject },
     actions: { onResetSubjectInput }
   } = useInputContext();
-  const {
-    attachment,
-    details: {
-      title,
-      description,
-      secretAnswer,
-      secretAttachment,
-      rewardLevel
-    },
-    hasSecretAnswer
-  } = subject;
   const [mobileMenuShown, setMobileMenuShown] = useState(false);
   const currentChannel = useMemo(() => channelsObj[selectedChannelId] || {}, [
     channelsObj,
@@ -419,7 +407,17 @@ function App({ location, history }) {
     }
   }
 
-  async function handleFileUploadOnHome({ filePath, file }) {
+  async function handleFileUploadOnHome({
+    attachment,
+    description,
+    filePath,
+    file,
+    hasSecretAnswer,
+    rewardLevel,
+    secretAnswer,
+    secretAttachment,
+    title
+  }) {
     if (hasSecretAnswer && secretAttachment) {
       return console.log(secretAttachment, 'no progress');
     }

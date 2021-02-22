@@ -32,7 +32,6 @@ import { useMyState } from 'helpers/hooks';
 import { useAppContext, useHomeContext, useInputContext } from 'contexts';
 
 function SubjectInput() {
-  const filePathRef = useRef(null);
   const secretAttachmentPathRef = useRef(null);
   const { onFileUpload } = useContext(LocalContext);
   const {
@@ -274,7 +273,6 @@ function SubjectInput() {
         <FileUploadStatusIndicator
           style={{ fontSize: '1.7rem', fontWeight: 'bold', marginTop: 0 }}
           fileName={attachment?.file?.name}
-          onFileUpload={handleFileUpload}
           uploadComplete={fileUploadComplete}
           uploadProgress={fileUploadProgress}
         />
@@ -291,13 +289,27 @@ function SubjectInput() {
     </ErrorBoundary>
   );
 
-  function handleFileUpload() {
-    filePathRef.current = uuidv1();
+  function handleFileUpload({
+    attachment,
+    description,
+    hasSecretAnswer,
+    rewardLevel,
+    secretAnswer,
+    secretAttachment,
+    title
+  }) {
+    onSetUploadingFile(true);
     onFileUpload({
-      filePath: filePathRef.current,
+      attachment,
+      description,
+      hasSecretAnswer,
+      rewardLevel,
+      secretAnswer,
+      secretAttachment,
+      title,
+      filePath: uuidv1(),
       file: attachment.file
     });
-    filePathRef.current = null;
   }
 
   function handleSecretAttachmentUpload() {
@@ -331,19 +343,20 @@ function SubjectInput() {
       attachment?.contentType === 'file' ||
       (hasSecretAnswer && secretAttachment)
     ) {
-      onSetSubjectDescriptionFieldShown(descriptionFieldShownRef.current);
-      onSetSubjectTitle(titleRef.current);
-      onSetSubjectDescription(descriptionRef.current);
-      onSetHasSecretAnswer(hasSecretAnswerRef.current);
-      onSetSecretAnswer(secretAnswerRef.current);
       handleSetTitle('');
       handleSetDescription('');
       handleSetSecretAnswer('');
       handleSetDescriptionFieldShown(false);
-      if (!(hasSecretAnswer && secretAttachment)) {
-        handleSetHasSecretAnswer(false);
-      }
-      return onSetUploadingFile(true);
+      handleSetHasSecretAnswer(false);
+      return handleFileUpload({
+        attachment,
+        description,
+        hasSecretAnswer,
+        rewardLevel,
+        secretAnswer,
+        secretAttachment,
+        title
+      });
     }
     handleUploadSubject();
   }
