@@ -63,6 +63,11 @@ export default function HomeReducer(state, action) {
         ...state,
         fileUploadComplete: true
       };
+    case 'SET_SECRET_ATTACHMENT_UPLOAD_COMPLETE':
+      return {
+        ...state,
+        secretAttachmentUploadComplete: true
+      };
     case 'SET_SUBMITTING_SUBJECT':
       return {
         ...state,
@@ -77,6 +82,11 @@ export default function HomeReducer(state, action) {
       return {
         ...state,
         fileUploadProgress: action.progress
+      };
+    case 'UPDATE_SECRET_ATTACHMENT_UPLOAD_PROGRESS':
+      return {
+        ...state,
+        secretAttachmentUploadProgress: action.progress
       };
     default:
       return state;

@@ -261,7 +261,7 @@ function SubjectInput() {
           )}
         </>
       )}
-      {uploadingFile && hasSecretAnswer && secretAttachment && (
+      {uploadingFile && secretAttachment?.file && (
         <FileUploadStatusIndicator
           style={{ fontSize: '1.7rem', fontWeight: 'bold', marginTop: 0 }}
           fileName={secretAttachment?.file?.name}
@@ -308,7 +308,7 @@ function SubjectInput() {
       secretAttachment,
       title,
       filePath: uuidv1(),
-      file: attachment.file
+      file: attachment?.file
     });
   }
 

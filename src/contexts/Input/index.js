@@ -6,7 +6,6 @@ import InputReducer from './reducer';
 export const InputContext = createContext();
 export const initialInputState = {
   subject: {
-    attachment: undefined,
     descriptionFieldShown: false,
     details: {
       title: '',

@@ -30,6 +30,7 @@ import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 import { finalizeEmoji } from 'helpers/stringHelpers';
 import { useMyState, useScrollPosition } from 'helpers/hooks';
 import { isMobile } from 'helpers';
+import { v1 as uuidv1 } from 'uuid';
 import {
   useAppContext,
   useContentContext,
@@ -90,8 +91,10 @@ function App({ location, history }) {
     actions: {
       onLoadNewFeeds,
       onSetFileUploadComplete,
+      onSetSecretAttachmentUploadComplete,
       onSetSubmittingSubject,
       onUpdateFileUploadProgress,
+      onUpdateSecretAttachmentUploadProgress,
       onClearFileUploadProgress,
       onSetUploadingFile
     }
@@ -418,25 +421,37 @@ function App({ location, history }) {
     secretAttachment,
     title
   }) {
-    if (hasSecretAnswer && secretAttachment) {
-      return console.log(secretAttachment, 'no progress');
-    }
     try {
-      await uploadFile({
-        filePath,
-        file,
-        onUploadProgress: handleUploadProgress
-      });
+      const promises = [];
+      if (attachment) {
+        promises.push(
+          uploadFile({
+            filePath,
+            file,
+            onUploadProgress: handleUploadProgress
+          })
+        );
+      }
+      if (hasSecretAnswer && secretAttachment) {
+        promises.push(
+          uploadFile({
+            filePath: uuidv1(),
+            file: secretAttachment?.file,
+            onUploadProgress: handleSecretAttachmentUploadProgress
+          })
+        );
+      }
+      await Promise.all(promises);
       onSetFileUploadComplete();
+      onSetSecretAttachmentUploadComplete();
       const data = await uploadContent({
-        attachment,
         title,
         description: finalizeEmoji(description),
         secretAnswer: hasSecretAnswer ? secretAnswer : '',
         rewardLevel,
-        filePath,
-        fileName: file.name,
-        fileSize: file.size
+        ...(attachment
+          ? { attachment, filePath, fileName: file.name, fileSize: file.size }
+          : {})
       });
       if (data) {
         onLoadNewFeeds([data]);
@@ -447,6 +462,9 @@ function App({ location, history }) {
       onSetUploadingFile(false);
     } catch (error) {
       console.error(error);
+    }
+    function handleSecretAttachmentUploadProgress({ loaded, total }) {
+      onUpdateSecretAttachmentUploadProgress(loaded / total);
     }
     function handleUploadProgress({ loaded, total }) {
       onUpdateFileUploadProgress(loaded / total);

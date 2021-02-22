@@ -55,6 +55,11 @@ export default function HomeActions(dispatch) {
         type: 'SET_FILE_UPLOAD_COMPLETE'
       });
     },
+    onSetSecretAttachmentUploadComplete() {
+      return dispatch({
+        type: 'SET_SECRET_ATTACHMENT_UPLOAD_COMPLETE'
+      });
+    },
     onSetSubmittingSubject(submitting) {
       return dispatch({
         type: 'SET_SUBMITTING_SUBJECT',
@@ -70,6 +75,12 @@ export default function HomeActions(dispatch) {
     onUpdateFileUploadProgress(progress) {
       return dispatch({
         type: 'UPDATE_FILE_UPLOAD_PROGRESS',
+        progress
+      });
+    },
+    onUpdateSecretAttachmentUploadProgress(progress) {
+      return dispatch({
+        type: 'UPDATE_SECRET_ATTACHMENT_UPLOAD_PROGRESS',
         progress
       });
     }
