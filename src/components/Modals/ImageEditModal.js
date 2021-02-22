@@ -103,7 +103,6 @@ export default function ImageEditModal({
           {uploading && (
             <FileUploadStatusIndicator
               style={{ width: '20rem' }}
-              onFileUpload={handleFileUpload}
               uploadComplete={uploadComplete}
               uploadProgress={uploadProgress}
             />
@@ -117,11 +116,7 @@ export default function ImageEditModal({
           >
             Cancel
           </Button>
-          <Button
-            color="blue"
-            onClick={() => setUploading(true)}
-            disabled={processing}
-          >
+          <Button color="blue" onClick={handleFileUpload} disabled={processing}>
             Submit
           </Button>
         </footer>
@@ -162,6 +157,7 @@ export default function ImageEditModal({
   }
 
   async function handleFileUpload() {
+    setUploading(true);
     setProcessing(true);
     const path = uuidv1();
     const dataUri = croppedImageUrl.replace(/^data:image\/\w+;base64,/, '');
