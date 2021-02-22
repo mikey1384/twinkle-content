@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import InputForm from 'components/Forms/InputForm';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
@@ -55,9 +55,7 @@ export default function CommentInputArea({
     contentType
   });
 
-  const filePathRef = useRef(null);
   const [uploadingFile, setUploadingFile] = useState(false);
-  const [commentContent, setCommentContent] = useState('');
   const attachment = state[contentType + contentId]?.attachment;
 
   return (
@@ -84,7 +82,6 @@ export default function CommentInputArea({
             paddingBottom: '1rem'
           }}
           fileName={attachment?.file?.name}
-          onFileUpload={handleFileUpload}
           uploadComplete={fileUploadComplete}
           uploadProgress={fileUploadProgress}
         />
@@ -92,37 +89,26 @@ export default function CommentInputArea({
     </div>
   );
 
-  function handleFileUpload() {
-    filePathRef.current = uuidv1();
-    handleSubmitWithAttachment();
-    setCommentContent('');
-    onSetCommentAttachment({
-      attachment: undefined,
-      contentType,
-      contentId
-    });
-    filePathRef.current = null;
-
-    async function handleSubmitWithAttachment() {
+  async function handleSubmit(text) {
+    if (attachment) {
+      setUploadingFile(true);
       await onSubmitWithAttachment({
         attachment,
-        commentContent,
+        commentContent: text,
         contentId,
         contentType,
-        filePath: filePathRef.current,
+        filePath: uuidv1(),
         file: attachment.file,
         rootCommentId,
         subjectId,
         targetCommentId
       });
+      onSetCommentAttachment({
+        attachment: undefined,
+        contentType,
+        contentId
+      });
       setUploadingFile(false);
-    }
-  }
-
-  async function handleSubmit(text) {
-    if (attachment) {
-      setCommentContent(text);
-      setUploadingFile(true);
     } else {
       await onSubmit({
         content: text,
