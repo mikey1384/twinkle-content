@@ -40,7 +40,6 @@ export default function TakeScreenshot({
   const [alertModalShown, setAlertModalShown] = useState(false);
   const [uploadingFile, setUploadingFile] = useState(false);
   const FileInputRef = useRef(null);
-  const filePathRef = useRef(null);
   const maxSize = useMemo(() => returnMaxUploadSize(fileUploadLvl), [
     fileUploadLvl
   ]);
@@ -63,7 +62,6 @@ export default function TakeScreenshot({
             paddingBottom: '1rem'
           }}
           fileName={attachment?.file?.name}
-          onFileUpload={handleFileUpload}
           uploadComplete={fileUploadComplete}
           uploadProgress={fileUploadProgress}
         />
@@ -151,7 +149,7 @@ export default function TakeScreenshot({
             color="darkBlue"
             skeuomorphic
             style={{ fontSize: '2rem' }}
-            onClick={() => setUploadingFile(true)}
+            onClick={handleFileUpload}
           >
             <Icon icon="upload" />
             <span style={{ marginLeft: '1rem' }}>Submit</span>
@@ -219,10 +217,10 @@ export default function TakeScreenshot({
   }
 
   async function handleFileUpload() {
-    filePathRef.current = uuidv1();
+    setUploadingFile(true);
     const uploadedFilePath = await uploadFile({
       context: 'mission',
-      filePath: filePathRef.current,
+      filePath: uuidv1(),
       file: attachment.file,
       onUploadProgress: handleUploadProgress
     });
@@ -232,7 +230,6 @@ export default function TakeScreenshot({
         fileUploadComplete: true
       }
     });
-    filePathRef.current = null;
     const { success } = await uploadMissionAttempt({
       missionId,
       attempt: {

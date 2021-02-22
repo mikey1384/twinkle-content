@@ -32,7 +32,6 @@ import { useMyState } from 'helpers/hooks';
 import { useAppContext, useHomeContext, useInputContext } from 'contexts';
 
 function SubjectInput() {
-  const secretAttachmentPathRef = useRef(null);
   const { onFileUpload } = useContext(LocalContext);
   const {
     requestHelpers: { uploadContent }
@@ -264,7 +263,6 @@ function SubjectInput() {
         <FileUploadStatusIndicator
           style={{ fontSize: '1.7rem', fontWeight: 'bold', marginTop: 0 }}
           fileName={secretAttachment?.file?.name}
-          onFileUpload={handleSecretAttachmentUpload}
           uploadComplete={fileUploadComplete}
           uploadProgress={fileUploadProgress}
         />
@@ -310,15 +308,6 @@ function SubjectInput() {
       filePath: uuidv1(),
       file: attachment.file
     });
-  }
-
-  function handleSecretAttachmentUpload() {
-    secretAttachmentPathRef.current = uuidv1();
-    onFileUpload({
-      filePath: secretAttachmentPathRef.current,
-      file: secretAttachment.file
-    });
-    secretAttachmentPathRef.current = null;
   }
 
   function handleInputChange(text) {
