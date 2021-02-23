@@ -1348,7 +1348,11 @@ export default function ContentReducer(state, action) {
         ...state,
         [contentKey]: {
           ...prevContentState,
-          currentTime: action.currentTime
+          ...(action.secretAttachmentCurrentTime
+            ? {
+                secretAttachmentCurrentTime: action.secretAttachmentCurrentTime
+              }
+            : { currentTime: action.currentTime })
         }
       };
     case 'SET_VIDEO_QUESTIONS':

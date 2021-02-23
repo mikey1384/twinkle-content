@@ -34,7 +34,11 @@ export default function MediaPlayer({
   const {
     actions: { onSetThumbUrl, onSetVideoCurrentTime }
   } = useContentContext();
-  const { currentTime = 0 } = useContentState({ contentType, contentId });
+  const {
+    [isSecretAttachment
+      ? 'secretAttachmentCurrentTime'
+      : 'currentTime']: currentTime = 0
+  } = useContentState({ contentType, contentId });
   const timeAtRef = useRef(0);
   const PlayerRef = useRef(null);
   const mobile = isMobile(navigator);
@@ -52,7 +56,9 @@ export default function MediaPlayer({
         onSetVideoCurrentTime({
           contentType,
           contentId,
-          currentTime: timeAtRef.current
+          [isSecretAttachment
+            ? 'secretAttachmentCurrentTime'
+            : 'currentTime']: timeAtRef.current
         });
       }
     };
