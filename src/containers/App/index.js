@@ -423,6 +423,7 @@ function App({ location, history }) {
   }) {
     try {
       const promises = [];
+      const secretAttachmentFilePath = uuidv1();
       if (attachment) {
         promises.push(
           uploadFile({
@@ -435,20 +436,32 @@ function App({ location, history }) {
       if (hasSecretAnswer && secretAttachment) {
         promises.push(
           uploadFile({
-            filePath: uuidv1(),
+            filePath: secretAttachmentFilePath,
             file: secretAttachment?.file,
             onUploadProgress: handleSecretAttachmentUploadProgress
           })
         );
       }
       await Promise.all(promises);
-      onSetFileUploadComplete();
-      onSetSecretAttachmentUploadComplete();
+      if (attachment) {
+        onSetFileUploadComplete();
+      }
+      if (hasSecretAnswer && secretAttachment) {
+        onSetSecretAttachmentUploadComplete();
+      }
       const data = await uploadContent({
         title,
         description: finalizeEmoji(description),
         secretAnswer: hasSecretAnswer ? secretAnswer : '',
         rewardLevel,
+        ...(hasSecretAnswer && secretAttachment
+          ? {
+              secretAttachment,
+              secretAttachmentFilePath,
+              secretAttachmentFileName: secretAttachment.file.name,
+              secretAttachmentFileSize: secretAttachment.file.size
+            }
+          : {}),
         ...(attachment
           ? { attachment, filePath, fileName: file.name, fileSize: file.size }
           : {})

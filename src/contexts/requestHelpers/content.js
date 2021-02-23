@@ -673,6 +673,10 @@ export default function contentRequestHelpers({ auth, handleError }) {
       fileSize,
       rewardLevel,
       secretAnswer,
+      secretAttachment,
+      secretAttachmentFilePath,
+      secretAttachmentFileName,
+      secretAttachmentFileSize,
       ytDetails
     }) {
       try {
@@ -689,6 +693,10 @@ export default function contentRequestHelpers({ auth, handleError }) {
             fileSize,
             rewardLevel,
             secretAnswer,
+            secretAttachment,
+            secretAttachmentFilePath,
+            secretAttachmentFileName,
+            secretAttachmentFileSize,
             ytDetails
           },
           auth()
