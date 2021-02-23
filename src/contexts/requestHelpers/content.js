@@ -824,7 +824,13 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async uploadThumb({ contentId, contentType, file, path }) {
+    async uploadThumb({
+      contentId,
+      contentType,
+      file,
+      isSecretAttachment,
+      path
+    }) {
       const { data: url } = await request.post(`${URL}/content/thumb`, {
         fileSize: file.size,
         path
@@ -835,7 +841,8 @@ export default function contentRequestHelpers({ auth, handleError }) {
       } = await request.put(`${URL}/content/thumb`, {
         path,
         contentId,
-        contentType
+        contentType,
+        isSecretAttachment
       });
       return Promise.resolve(thumbUrl);
     }

@@ -2,20 +2,29 @@ import React, { memo, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import LongText from 'components/Texts/LongText';
+import ContentFileViewer from 'components/ContentFileViewer';
 import { borderRadius, Color, desktopMinWidth } from 'constants/css';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
 import { css } from '@emotion/css';
 
 SecretAnswer.propTypes = {
-  answer: PropTypes.string.isRequired,
+  answer: PropTypes.string,
+  attachment: PropTypes.object,
   onClick: PropTypes.func,
   style: PropTypes.object,
   subjectId: PropTypes.number,
   uploaderId: PropTypes.number
 };
 
-function SecretAnswer({ answer, onClick, style, subjectId, uploaderId }) {
+function SecretAnswer({
+  answer,
+  attachment,
+  onClick,
+  style,
+  subjectId,
+  uploaderId
+}) {
   const mounted = useRef(true);
   useEffect(() => {
     return function cleanUp() {
@@ -74,7 +83,28 @@ function SecretAnswer({ answer, onClick, style, subjectId, uploaderId }) {
           ...style
         }}
       >
-        {spoilerShown && <LongText>{answer}</LongText>}
+        {spoilerShown && (
+          <div style={{ width: '100%' }}>
+            {attachment && (
+              <ContentFileViewer
+                isSecretAttachment
+                contentId={subjectId}
+                contentType="subject"
+                fileName={attachment.fileName}
+                filePath={attachment.filePath}
+                fileSize={attachment.fileSize}
+                thumbUrl={attachment.thumbUrl}
+                videoHeight="100%"
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  marginTop: '1rem'
+                }}
+              />
+            )}
+            <LongText>{answer}</LongText>
+          </div>
+        )}
         {!spoilerShown && (
           <span
             className={css`

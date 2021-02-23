@@ -9,6 +9,7 @@ import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 ContentFileViewer.propTypes = {
   contentId: PropTypes.number,
   contentType: PropTypes.string.isRequired,
+  isSecretAttachment: PropTypes.bool,
   isThumb: PropTypes.bool,
   filePath: PropTypes.string.isRequired,
   fileName: PropTypes.string.isRequired,
@@ -22,6 +23,7 @@ ContentFileViewer.propTypes = {
 export default function ContentFileViewer({
   contentId,
   contentType,
+  isSecretAttachment,
   isThumb,
   filePath,
   fileName,
@@ -89,6 +91,7 @@ export default function ContentFileViewer({
             contentType={contentType}
             fileType={fileType}
             isThumb={isThumb}
+            isSecretAttachment={isSecretAttachment}
             src={src}
             thumbUrl={thumbUrl}
             videoHeight={videoHeight}

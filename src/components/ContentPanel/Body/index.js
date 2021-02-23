@@ -343,7 +343,6 @@ export default function Body({
           </div>
         )}
         <MainContent
-          autoExpand={autoExpand}
           contentId={contentId}
           contentType={contentType}
           secretHidden={secretHidden}

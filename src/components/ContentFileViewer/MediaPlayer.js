@@ -12,6 +12,7 @@ MediaPlayer.propTypes = {
   contentType: PropTypes.string,
   fileType: PropTypes.string,
   isThumb: PropTypes.bool,
+  isSecretAttachment: PropTypes.bool,
   src: PropTypes.string,
   thumbUrl: PropTypes.string,
   videoHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
@@ -21,6 +22,7 @@ export default function MediaPlayer({
   contentId,
   contentType,
   fileType,
+  isSecretAttachment,
   isThumb,
   src,
   thumbUrl,
@@ -132,12 +134,14 @@ export default function MediaPlayer({
         contentType,
         contentId,
         file,
+        isSecretAttachment,
         path: uuidv1()
       });
       onSetThumbUrl({
         contentId,
         contentType,
-        thumbUrl
+        thumbUrl,
+        isSecretAttachment
       });
     }
   }

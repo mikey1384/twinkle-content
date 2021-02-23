@@ -22,7 +22,6 @@ import { useAppContext, useContentContext } from 'contexts';
 import { useHistory } from 'react-router-dom';
 
 MainContent.propTypes = {
-  autoExpand: PropTypes.bool,
   contentId: PropTypes.number.isRequired,
   contentType: PropTypes.string.isRequired,
   onClickSecretAnswer: PropTypes.func.isRequired,
@@ -31,7 +30,6 @@ MainContent.propTypes = {
 };
 
 export default function MainContent({
-  autoExpand,
   contentId,
   contentType,
   onClickSecretAnswer,
@@ -59,6 +57,7 @@ export default function MainContent({
     rootId,
     rootType,
     secretAnswer,
+    secretAttachment,
     targetObj,
     tags,
     title
@@ -85,10 +84,8 @@ export default function MainContent({
           !(contentType === 'comment' && secretHidden) &&
           (userId ? (
             <ContentFileViewer
-              autoPlay
               contentId={contentId}
               contentType={contentType}
-              isMuted={!autoExpand}
               fileName={fileName}
               filePath={filePath}
               fileSize={fileSize}
@@ -268,9 +265,10 @@ export default function MainContent({
                   </LongText>
                 </div>
               )}
-              {secretAnswer && (
+              {(secretAnswer || secretAttachment) && (
                 <SecretAnswer
                   answer={secretAnswer}
+                  attachment={secretAttachment}
                   onClick={onClickSecretAnswer}
                   subjectId={contentId}
                   uploaderId={uploader.id}

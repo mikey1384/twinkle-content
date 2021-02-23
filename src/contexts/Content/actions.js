@@ -476,12 +476,13 @@ export default function ContentActions(dispatch) {
         contentType
       });
     },
-    onSetThumbUrl({ contentId, contentType, thumbUrl }) {
+    onSetThumbUrl({ contentId, contentType, thumbUrl, isSecretAttachment }) {
       return dispatch({
         type: 'SET_THUMB_URL',
         contentId,
         contentType,
-        thumbUrl
+        thumbUrl,
+        isSecretAttachment
       });
     },
     onSetVideoCoinProgress({ videoId, progress }) {

@@ -18,7 +18,9 @@ export default function HomeReducer(state, action) {
       return {
         ...state,
         fileUploadProgress: null,
-        fileUploadComplete: false
+        fileUploadComplete: false,
+        secretAttachmentUploadProgress: null,
+        secretAttachmentUploadComplete: false
       };
     case 'DELETE_FEED':
       return {

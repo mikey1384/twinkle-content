@@ -1325,7 +1325,14 @@ export default function ContentReducer(state, action) {
         ...state,
         [contentKey]: {
           ...prevContentState,
-          thumbUrl: action.thumbUrl
+          ...(action.isSecretAttachment
+            ? {
+                secretAttachment: {
+                  ...prevContentState.secretAttachment,
+                  thumbUrl: action.thumbUrl
+                }
+              }
+            : { thumbUrl: action.thumbUrl })
         }
       };
     case 'SET_USER_ONLINE':

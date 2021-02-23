@@ -261,20 +261,24 @@ function SubjectInput() {
           )}
         </>
       )}
-      {uploadingFile && secretAttachment?.file && (
-        <FileUploadStatusIndicator
-          style={{ fontSize: '1.7rem', fontWeight: 'bold', marginTop: 0 }}
-          fileName={secretAttachment?.file?.name}
-          uploadComplete={secretAttachmentUploadComplete}
-          uploadProgress={secretAttachmentUploadProgress}
-        />
-      )}
       {uploadingFile && attachment?.contentType === 'file' && (
         <FileUploadStatusIndicator
           style={{ fontSize: '1.7rem', fontWeight: 'bold', marginTop: 0 }}
           fileName={attachment?.file?.name}
           uploadComplete={fileUploadComplete}
           uploadProgress={fileUploadProgress}
+        />
+      )}
+      {uploadingFile && secretAttachment?.file && (
+        <FileUploadStatusIndicator
+          style={{
+            fontSize: '1.7rem',
+            fontWeight: 'bold',
+            marginTop: '1.5rem'
+          }}
+          fileName={secretAttachment?.file?.name}
+          uploadComplete={secretAttachmentUploadComplete}
+          uploadProgress={secretAttachmentUploadProgress}
         />
       )}
       {attachContentModalShown && (
