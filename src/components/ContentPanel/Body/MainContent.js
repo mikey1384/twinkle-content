@@ -12,7 +12,7 @@ import AlreadyPosted from 'components/AlreadyPosted';
 import TagStatus from 'components/TagStatus';
 import SecretAnswer from 'components/SecretAnswer';
 import Link from 'components/Link';
-import HiddenComment from 'components/HiddenComment';
+import SecretComment from 'components/SecretComment';
 import MissionContent from './MissionContent';
 import { stringIsEmpty, getFileInfoFromFileName } from 'helpers/stringHelpers';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
@@ -177,7 +177,7 @@ export default function MainContent({
             <>
               {contentType === 'comment' &&
                 (secretHidden ? (
-                  <HiddenComment
+                  <SecretComment
                     onClick={() =>
                       history.push(
                         `/subjects/${targetObj?.subject?.id || rootId}`

@@ -22,7 +22,7 @@ import LongText from 'components/Texts/LongText';
 import RewardStatus from 'components/RewardStatus';
 import RecommendationInterface from 'components/RecommendationInterface';
 import RecommendationStatus from 'components/RecommendationStatus';
-import HiddenComment from 'components/HiddenComment';
+import SecretComment from 'components/SecretComment';
 import XPRewardInterface from 'components/XPRewardInterface';
 import SubjectLink from './SubjectLink';
 import Icon from 'components/Icon';
@@ -482,7 +482,7 @@ function Comment({
                     <SubjectLink subject={subject} />
                   )}
                   {isHidden ? (
-                    <HiddenComment
+                    <SecretComment
                       onClick={() => history.push(`/subjects/${subject?.id}`)}
                     />
                   ) : isNotification ? (

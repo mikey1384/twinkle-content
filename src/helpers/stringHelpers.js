@@ -176,6 +176,8 @@ export function addAdvancedEmoji(string) {
     .replace(/(\:theta\:)/gi, '⍬')
     .replace(/(\:thumb\:)/gi, '👍')
     .replace(/(\:thumbs\:)/gi, '👍')
+    .replace(/(\:tup\:)/gi, '👍')
+    .replace(/(\:tdown\:)/gi, '👎')
     .replace(/(\:tiger\:)/gi, '🐯')
     .replace(/(\:turtle\:)/gi, '🐢')
     .replace(/(\:twinkle\:)/gi, '✨')

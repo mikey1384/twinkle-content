@@ -17,7 +17,7 @@ import XPRewardInterface from 'components/XPRewardInterface';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
 import ContentFileViewer from 'components/ContentFileViewer';
-import HiddenComment from 'components/HiddenComment';
+import SecretComment from 'components/SecretComment';
 import Icon from 'components/Icon';
 import LoginToViewContent from 'components/LoginToViewContent';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
@@ -331,7 +331,7 @@ export default function TargetContent({
                         <LoginToViewContent />
                       ))}
                     {contentHidden ? (
-                      <HiddenComment
+                      <SecretComment
                         style={{ marginBottom: '1rem' }}
                         onClick={() => history.push(`/subjects/${subject.id}`)}
                       />

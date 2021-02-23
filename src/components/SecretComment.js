@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { borderRadius, Color, desktopMinWidth } from 'constants/css';
 import { css } from '@emotion/css';
 
-HiddenComment.propTypes = {
+SecretComment.propTypes = {
   onClick: PropTypes.func,
   style: PropTypes.object
 };
 
-export default function HiddenComment({ onClick, style }) {
+export default function SecretComment({ onClick, style }) {
   return (
     <div
       style={{
