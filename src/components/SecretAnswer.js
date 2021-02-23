@@ -97,8 +97,7 @@ function SecretAnswer({
                 videoHeight="100%"
                 style={{
                   display: 'flex',
-                  justifyContent: 'center',
-                  marginTop: '1rem'
+                  justifyContent: 'center'
                 }}
               />
             )}

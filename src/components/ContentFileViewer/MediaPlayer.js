@@ -106,7 +106,11 @@ export default function MediaPlayer({
             left: 0,
             bottom: 0,
             paddingBottom:
-              fileType === 'audio' || fileType === 'video' ? '1rem' : 0
+              fileType === 'audio' && isSecretAttachment
+                ? '2rem'
+                : fileType === 'audio' || fileType === 'video'
+                ? '1rem'
+                : 0
           }}
           width="100%"
           height={fileType === 'video' ? videoHeight || '100%' : '5rem'}
