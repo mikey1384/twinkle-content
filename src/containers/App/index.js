@@ -456,14 +456,13 @@ function App({ location, history }) {
         rewardLevel,
         ...(hasSecretAnswer && secretAttachment
           ? {
-              secretAttachment,
               secretAttachmentFilePath,
               secretAttachmentFileName: secretAttachment.file.name,
               secretAttachmentFileSize: secretAttachment.file.size
             }
           : {}),
         ...(attachment
-          ? { attachment, filePath, fileName: file.name, fileSize: file.size }
+          ? { filePath, fileName: file.name, fileSize: file.size }
           : {})
       });
       if (data) {

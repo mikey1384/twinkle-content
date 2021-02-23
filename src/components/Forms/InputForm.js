@@ -240,11 +240,9 @@ export default function InputForm({
                 marginLeft: '1rem',
                 marginTop: '0.5rem'
               }}
-              text={
-                'Requires ' +
-                addCommasToNumber(FILE_UPLOAD_XP_REQUIREMENT) +
-                ' XP'
-              }
+              text={`Requires ${addCommasToNumber(
+                FILE_UPLOAD_XP_REQUIREMENT
+              )} XP`}
               show={onHover}
             />
           )}

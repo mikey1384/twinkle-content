@@ -106,31 +106,35 @@ export default function SecretMessageInput({
               onClose={() => onSetSecretAttachment(null)}
             />
           ) : (
-            <Button
-              skeuomorphic
-              disabled={disabled}
-              color={profileTheme}
-              onClick={() => FileInputRef.current.click()}
-              onMouseEnter={() => setOnHover(true)}
-              onMouseLeave={() => setOnHover(false)}
-            >
-              <Icon size="lg" icon="upload" />
-            </Button>
-          )}
-          {userId && disabled && (
-            <FullTextReveal
-              style={{
-                fontSize: '1.3rem',
-                marginLeft: '1rem',
-                marginTop: '0.5rem'
-              }}
-              text={
-                'Requires ' +
-                addCommasToNumber(FILE_UPLOAD_XP_REQUIREMENT) +
-                ' XP'
-              }
-              show={onHover}
-            />
+            <div>
+              <Button
+                skeuomorphic
+                color={profileTheme}
+                onClick={() => (disabled ? null : FileInputRef.current.click())}
+                onMouseEnter={() => setOnHover(true)}
+                onMouseLeave={() => setOnHover(false)}
+                style={{
+                  opacity: disabled ? 0.2 : 1,
+                  cursor: disabled ? 'default' : 'pointer',
+                  boxShadow: disabled ? 'none' : '',
+                  borderColor: disabled ? Color[profileTheme](0.2) : ''
+                }}
+              >
+                <Icon size="lg" icon="upload" />
+              </Button>
+              {userId && disabled && (
+                <FullTextReveal
+                  style={{
+                    fontSize: '1.3rem',
+                    marginTop: '0.5rem'
+                  }}
+                  text={`Requires ${addCommasToNumber(
+                    FILE_UPLOAD_XP_REQUIREMENT
+                  )} XP`}
+                  show={onHover}
+                />
+              )}
+            </div>
           )}
         </div>
       </div>

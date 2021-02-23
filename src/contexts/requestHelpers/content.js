@@ -663,7 +663,6 @@ export default function contentRequestHelpers({ auth, handleError }) {
       }
     },
     async uploadContent({
-      attachment,
       url,
       isVideo,
       title,
@@ -673,7 +672,6 @@ export default function contentRequestHelpers({ auth, handleError }) {
       fileSize,
       rewardLevel,
       secretAnswer,
-      secretAttachment,
       secretAttachmentFilePath,
       secretAttachmentFileName,
       secretAttachmentFileSize,
@@ -683,7 +681,6 @@ export default function contentRequestHelpers({ auth, handleError }) {
         const { data } = await request.post(
           `${URL}/content`,
           {
-            attachment,
             url,
             isVideo,
             title,
@@ -693,7 +690,6 @@ export default function contentRequestHelpers({ auth, handleError }) {
             fileSize,
             rewardLevel,
             secretAnswer,
-            secretAttachment,
             secretAttachmentFilePath,
             secretAttachmentFileName,
             secretAttachmentFileSize,
