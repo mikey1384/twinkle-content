@@ -42,6 +42,7 @@ function ContentListItem({
     rewardLevel,
     rootObj,
     secretAnswer,
+    secretAttachment,
     title,
     thumbUrl,
     uploader = {}
@@ -282,12 +283,13 @@ function ContentListItem({
               />
             )}
           </div>
-          {contentType === 'subject' && secretAnswer && (
+          {contentType === 'subject' && (secretAnswer || secretAttachment) && (
             <SecretAnswer
               style={{ marginTop: filePath && userId ? '0.5rem' : 0 }}
               answer={secretAnswer}
               subjectId={contentId}
               uploaderId={uploader.id}
+              attachment={secretAttachment}
             />
           )}
         </div>
