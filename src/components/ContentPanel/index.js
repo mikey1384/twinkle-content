@@ -111,7 +111,6 @@ export default function ContentPanel({
   const loading = useRef(false);
   const inputAtBottom = contentType === 'comment';
   const heightNotSet = !previousPlaceholderHeight && !placeholderHeight;
-
   const { started: rootStarted } = useContentState({
     contentType: rootType,
     contentId: rootId
