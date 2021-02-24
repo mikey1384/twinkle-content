@@ -23,8 +23,8 @@ export default function ImagePreview({
       style={{
         display: 'flex',
         height: '100%',
-        width: '100%',
-        justifyContent: isThumb ? 'flex-end' : 'center',
+        width: isThumb && '100%',
+        justifyContent: isThumb && 'flex-end',
         alignItems: 'center'
       }}
     >
