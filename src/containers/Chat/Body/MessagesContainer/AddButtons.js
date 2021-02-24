@@ -20,7 +20,8 @@ export default function AddButtons({
     <div
       style={{
         display: 'flex',
-        margin: '0.2rem 0 0.2rem 0'
+        margin: '0.2rem 0 0.2rem 0',
+        alignItems: 'flex-start'
       }}
     >
       <Button
