@@ -274,7 +274,7 @@ function SubjectInput() {
           style={{
             fontSize: '1.7rem',
             fontWeight: 'bold',
-            marginTop: '1.5rem'
+            marginTop: attachment?.contentType === 'file' ? '1.5rem' : 0
           }}
           fileName={secretAttachment?.file?.name}
           uploadComplete={secretAttachmentUploadComplete}
@@ -384,7 +384,8 @@ function SubjectInput() {
   async function handleUploadSubject() {
     try {
       const data = await uploadContent({
-        attachment,
+        rootId: attachment?.id,
+        rootType: attachment?.contentType,
         title,
         description: finalizeEmoji(description),
         secretAnswer: hasSecretAnswer ? secretAnswer : '',

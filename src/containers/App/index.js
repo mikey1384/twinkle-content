@@ -424,7 +424,7 @@ function App({ location, history }) {
     try {
       const promises = [];
       const secretAttachmentFilePath = uuidv1();
-      if (attachment) {
+      if (attachment?.contentType === 'file') {
         promises.push(
           uploadFile({
             filePath,
@@ -461,8 +461,11 @@ function App({ location, history }) {
               secretAttachmentFileSize: secretAttachment.file.size
             }
           : {}),
-        ...(attachment
+        ...(attachment?.contentType === 'file'
           ? { filePath, fileName: file.name, fileSize: file.size }
+          : {}),
+        ...(attachment && attachment.contentType !== 'file'
+          ? { rootId: attachment.id, rootType: attachment.contentType }
           : {})
       });
       if (data) {
