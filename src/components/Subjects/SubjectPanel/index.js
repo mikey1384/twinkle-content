@@ -13,7 +13,7 @@ import RewardLevelBar from 'components/RewardLevelBar';
 import Link from 'components/Link';
 import SecretAnswer from 'components/SecretAnswer';
 import StarButton from 'components/Buttons/StarButton';
-import LocalContext from './Context';
+import LocalContext from '../Context';
 import RewardStatus from 'components/RewardStatus';
 import XPRewardInterface from 'components/XPRewardInterface';
 import RecommendationStatus from 'components/RecommendationStatus';
