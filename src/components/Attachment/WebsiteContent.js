@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { truncateText } from 'helpers/stringHelpers';
@@ -12,11 +12,19 @@ WebsiteContent.propTypes = {
 
 export default function WebsiteContent({ attachment }) {
   const history = useHistory();
+  const [imageUrl, setImageUrl] = useState('');
   const { content, thumbUrl } = useContentState({
     contentType: attachment.contentType,
     contentId: attachment.id
   });
   const fallbackImage = '/img/link.png';
+  useEffect(() => {
+    setImageUrl(
+      attachment.contentType === 'video'
+        ? `https://img.youtube.com/vi/${content}/mqdefault.jpg`
+        : thumbUrl || fallbackImage
+    );
+  }, [attachment.contentType, content, thumbUrl]);
   return (
     <ErrorBoundary>
       <div
@@ -50,11 +58,8 @@ export default function WebsiteContent({ attachment }) {
           )}
           <img
             alt="Thumbnail"
-            src={
-              attachment.contentType === 'video'
-                ? `https://img.youtube.com/vi/${content}/mqdefault.jpg`
-                : thumbUrl || fallbackImage
-            }
+            src={imageUrl}
+            onError={handleImageLoadError}
             style={{
               display: 'block',
               width: '100%',
@@ -73,4 +78,8 @@ export default function WebsiteContent({ attachment }) {
       </div>
     </ErrorBoundary>
   );
+
+  function handleImageLoadError() {
+    setImageUrl(!thumbUrl || imageUrl === thumbUrl ? fallbackImage : thumbUrl);
+  }
 }

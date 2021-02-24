@@ -230,6 +230,33 @@ function Embedly({
               }
             `}
           />
+        ) : noLink ? (
+          <div style={{ width: small ? '25%' : '100%', height: '100%' }}>
+            <section
+              className={css`
+                position: relative;
+                width: 100%;
+                height: 100%;
+                &:after {
+                  content: '';
+                  display: block;
+                  padding-bottom: ${small ? '100%' : '60%'};
+                }
+              `}
+            >
+              <img
+                className={css`
+                  position: absolute;
+                  width: 100%;
+                  height: 100%;
+                  object-fit: ${contentType === 'chat' ? 'contain' : 'cover'};
+                `}
+                src={imageUrl}
+                onError={handleImageLoadError}
+                alt={title}
+              />
+            </section>
+          </div>
         ) : (
           <a
             style={{ width: small ? '25%' : '100%', height: '100%' }}
@@ -343,6 +370,7 @@ function Embedly({
     loading,
     loadingHeight,
     mobileLoadingHeight,
+    noLink,
     siteUrl,
     small,
     thumbUrl,
