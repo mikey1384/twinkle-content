@@ -100,7 +100,7 @@ export default function MainContent({
                       padding: '1rem'
                     }
                   : {}),
-                marginBottom: rewardLevel ? '1rem' : 0
+                marginBottom: rewardLevel ? '1.5rem' : 0
               }}
             />
           ) : (

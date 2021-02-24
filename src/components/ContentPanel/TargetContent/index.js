@@ -319,7 +319,7 @@ export default function TargetContent({
                             display: 'flex',
                             justifyContent: 'center',
                             marginTop: '1rem',
-                            marginBottom: comment.content ? '2rem' : 0,
+                            marginBottom: comment.content ? '2.5rem' : 0,
                             ...(fileType === 'audio'
                               ? {
                                   padding: '1rem'

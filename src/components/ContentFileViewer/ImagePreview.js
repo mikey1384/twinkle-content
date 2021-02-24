@@ -21,10 +21,11 @@ export default function ImagePreview({
   return (
     <div
       style={{
+        display: 'flex',
         height: '100%',
-        width: isThumb && '100%',
-        display: isThumb && 'flex',
-        justifyContent: isThumb && 'flex-end'
+        width: '100%',
+        justifyContent: isThumb ? 'flex-end' : 'center',
+        alignItems: 'center'
       }}
     >
       <img
