@@ -6,6 +6,7 @@ import Button from 'components/Button';
 import Input from 'components/Texts/Input';
 import ErrorBoundary from 'components/ErrorBoundary';
 import RewardLevelForm from 'components/Forms/RewardLevelForm';
+import SecretMessageInput from 'components/Forms/SecretMessageInput';
 import { useInputContext } from 'contexts';
 
 SubjectInputForm.propTypes = {
@@ -46,6 +47,7 @@ export default function SubjectInputForm({
     title: prevTitle = '',
     description: prevDescription = '',
     secretAnswer: prevSecretAnswer = '',
+    secretAttachment: prevSecretAttachment = null,
     rewardLevel = 0
   } = subjectInputForm;
   const [title, setTitle] = useState(prevTitle);
@@ -54,6 +56,10 @@ export default function SubjectInputForm({
   const descriptionRef = useRef(prevDescription);
   const [secretAnswer, setSecretAnswer] = useState(prevSecretAnswer);
   const secretAnswerRef = useRef(prevSecretAnswer);
+  const [secretAttachment, setSecretAttachment] = useState(
+    prevSecretAttachment
+  );
+  const secretAttachmentRef = useRef(prevSecretAttachment);
 
   const [submitting, setSubmitting] = useState(false);
 
@@ -65,7 +71,8 @@ export default function SubjectInputForm({
         form: {
           title: titleRef.current,
           description: descriptionRef.current,
-          secretAnswer: secretAnswerRef.current
+          secretAnswer: secretAnswerRef.current,
+          secretAttachment: secretAttachmentRef.current
         }
       });
     };
@@ -113,30 +120,12 @@ export default function SubjectInputForm({
             </small>
           )}
           {isSubject && (
-            <div style={{ marginTop: '0.5rem' }}>
-              <span style={{ fontSize: '1.7rem', fontWeight: 'bold' }}>
-                Secret Message
-              </span>
-              <Textarea
-                style={{
-                  marginTop: '0.7rem',
-                  color: secretAnswer.length > descriptionMaxChar && 'red',
-                  borderColor: secretAnswer.length > descriptionMaxChar && 'red'
-                }}
-                minRows={rows}
-                placeholder="Enter Secret Message... (Optional)"
-                value={secretAnswer}
-                onChange={(event) => handleSetSecretAnswer(event.target.value)}
-                onKeyUp={(event) =>
-                  handleSetSecretAnswer(addEmoji(event.target.value))
-                }
-              />
-              {secretAnswer.length > descriptionMaxChar && (
-                <small style={{ color: 'red', fontSize: '1.3rem' }}>
-                  {secretAnswer} character limit exceeded
-                </small>
-              )}
-            </div>
+            <SecretMessageInput
+              secretAnswer={secretAnswer}
+              secretAttachment={secretAttachment}
+              onSetSecretAnswer={handleSetSecretAnswer}
+              onSetSecretAttachment={handleSetSecretAttachment}
+            />
           )}
           {canEditRewardLevel && (
             <RewardLevelForm
@@ -217,6 +206,11 @@ export default function SubjectInputForm({
   function handleSetSecretAnswer(text) {
     setSecretAnswer(text);
     secretAnswerRef.current = text;
+  }
+
+  function handleSetSecretAttachment(attachment) {
+    setSecretAttachment(attachment);
+    secretAttachmentRef.current = attachment;
   }
 
   async function handleSubmit(event) {

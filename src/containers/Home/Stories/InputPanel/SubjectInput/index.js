@@ -24,7 +24,7 @@ import SwitchButton from 'components/Buttons/SwitchButton';
 import RewardLevelForm from 'components/Forms/RewardLevelForm';
 import Icon from 'components/Icon';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
-import SecretMessageInput from './SecretMessageInput';
+import SecretMessageInput from 'components/Forms/SecretMessageInput';
 import { Color } from 'constants/css';
 import { PanelStyle } from '../Styles';
 import { charLimit } from 'constants/defaultValues';
