@@ -808,7 +808,10 @@ export default function contentRequestHelpers({ auth, handleError }) {
       title,
       description,
       rewardLevel,
-      secretAnswer
+      secretAnswer,
+      secretAttachmentFilePath,
+      secretAttachmentFileName,
+      secretAttachmentFileSize
     }) {
       try {
         const { data } = await request.post(
@@ -819,7 +822,10 @@ export default function contentRequestHelpers({ auth, handleError }) {
             contentId,
             rewardLevel,
             secretAnswer,
-            contentType
+            contentType,
+            secretAttachmentFilePath,
+            secretAttachmentFileName,
+            secretAttachmentFileSize
           },
           auth()
         );

@@ -89,7 +89,10 @@ export default function StartNewSubjectPanel({
     title,
     description,
     rewardLevel,
-    secretAnswer
+    secretAnswer,
+    secretAttachmentFilePath,
+    secretAttachmentFileName,
+    secretAttachmentFileSize
   }) {
     const data = await uploadSubject({
       title,
@@ -97,7 +100,10 @@ export default function StartNewSubjectPanel({
       contentId,
       rewardLevel,
       secretAnswer,
-      contentType
+      contentType,
+      secretAttachmentFilePath,
+      secretAttachmentFileName,
+      secretAttachmentFileSize
     });
     onSetSubjectFormShown({ contentId, contentType, shown: false });
     onUploadSubject({ ...data, contentType, contentId });
