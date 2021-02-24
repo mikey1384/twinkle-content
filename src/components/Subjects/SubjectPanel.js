@@ -34,6 +34,7 @@ SubjectPanel.propTypes = {
   numComments: PropTypes.string,
   rootRewardLevel: PropTypes.number,
   secretAnswer: PropTypes.string,
+  secretAttachment: PropTypes.object,
   timeStamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
     .isRequired,
   title: PropTypes.string.isRequired,
@@ -59,6 +60,7 @@ export default function SubjectPanel({
   loadMoreCommentsButton,
   rootRewardLevel,
   secretAnswer,
+  secretAttachment,
   subjectId
 }) {
   const {
@@ -229,10 +231,11 @@ export default function SubjectPanel({
         {!onEdit && !!description && (
           <LongText style={{ padding: '1rem 0' }}>{description}</LongText>
         )}
-        {secretAnswer && !onEdit && (
+        {(secretAnswer || secretAttachment) && !onEdit && (
           <SecretAnswer
             style={{ marginTop: '1rem' }}
             answer={secretAnswer}
+            attachment={secretAttachment}
             subjectId={subjectId}
             onClick={handleExpand}
             uploaderId={userId}
@@ -440,7 +443,7 @@ export default function SubjectPanel({
               commentsLoadLimit={5}
               commentsHidden={secretHidden}
               commentsShown
-              inputTypeLabel={'comment'}
+              inputTypeLabel="comment"
               comments={comments}
               loadMoreButton={loadMoreCommentsButton}
               userId={myId}
