@@ -98,8 +98,8 @@ function Embedly({
     if (rawThumbUrl?.split('/')[1] === 'thumbs') {
       return `${cloudFrontURL}${rawThumbUrl}`;
     }
-    return rawThumbUrl;
-  }, [rawThumbUrl]);
+    return rawThumbUrl || defaultThumbUrl;
+  }, [defaultThumbUrl, rawThumbUrl]);
 
   const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(false);
@@ -193,10 +193,10 @@ function Embedly({
       if (thumbUrl?.includes('http://')) {
         makeThumbnailSecure({ contentId, contentType, thumbUrl });
       }
-      setImageUrl(thumbUrl || defaultThumbUrl || fallbackImage);
+      setImageUrl(thumbUrl || fallbackImage);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [defaultThumbUrl, thumbUrl, url]);
+  }, [thumbUrl, url]);
 
   useEffect(() => {
     return function setCurrentTimeBeforeUnmount() {

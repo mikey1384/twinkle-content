@@ -136,6 +136,7 @@ export default function TargetMessage({ message, onSetScrollToBottom }) {
         >
           <Embedly
             imageOnly
+            defaultThumbUrl={message.thumbUrl}
             contentId={message.id}
             contentType="chat"
             imageWidth="100%"
