@@ -100,7 +100,6 @@ export default function MediaPlayer({
           light={light}
           ref={PlayerRef}
           playsinline
-          muted={isThumb}
           onProgress={handleVideoProgress}
           onReady={handleReady}
           style={{
@@ -121,7 +120,7 @@ export default function MediaPlayer({
           width="100%"
           height={fileType === 'video' ? videoHeight || '100%' : '5rem'}
           url={src}
-          controls={!isThumb}
+          controls
         />
       )}
     </div>

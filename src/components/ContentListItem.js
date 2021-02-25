@@ -290,6 +290,7 @@ function ContentListItem({
               subjectId={contentId}
               uploaderId={uploader.id}
               attachment={secretAttachment}
+              mediaDisabled
             />
           )}
         </div>

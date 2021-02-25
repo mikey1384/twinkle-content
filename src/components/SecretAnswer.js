@@ -11,6 +11,7 @@ import { css } from '@emotion/css';
 SecretAnswer.propTypes = {
   answer: PropTypes.string,
   attachment: PropTypes.object,
+  mediaDisabled: PropTypes.bool,
   onClick: PropTypes.func,
   style: PropTypes.object,
   subjectId: PropTypes.number,
@@ -20,6 +21,7 @@ SecretAnswer.propTypes = {
 function SecretAnswer({
   answer,
   attachment,
+  mediaDisabled,
   onClick,
   style,
   subjectId,
@@ -86,20 +88,32 @@ function SecretAnswer({
         {spoilerShown && (
           <div style={{ width: '100%' }}>
             {attachment && (
-              <ContentFileViewer
-                isSecretAttachment
-                contentId={subjectId}
-                contentType="subject"
-                fileName={attachment.fileName}
-                filePath={attachment.filePath}
-                fileSize={attachment.fileSize}
-                thumbUrl={attachment.thumbUrl}
-                videoHeight="100%"
+              <div
                 style={{
+                  width: '100%',
                   display: 'flex',
                   justifyContent: 'center'
                 }}
-              />
+              >
+                <ContentFileViewer
+                  isSecretAttachment
+                  contentId={subjectId}
+                  contentType="subject"
+                  fileName={attachment.fileName}
+                  filePath={attachment.filePath}
+                  fileSize={attachment.fileSize}
+                  isThumb={mediaDisabled}
+                  thumbUrl={attachment.thumbUrl}
+                  videoHeight="100%"
+                  style={{
+                    ...(mediaDisabled
+                      ? { width: '15rem', height: '11rem' }
+                      : {}),
+                    display: 'flex',
+                    justifyContent: 'center'
+                  }}
+                />
+              </div>
             )}
             <LongText>{answer}</LongText>
           </div>

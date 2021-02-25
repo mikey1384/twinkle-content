@@ -39,7 +39,7 @@ export default function FileInfo({
         style={{
           display: 'flex',
           width: '100%',
-          justifyContent: isThumb ? 'flex-end' : 'center',
+          justifyContent: 'center',
           alignItems: 'center',
           height: '100%'
         }}
@@ -56,7 +56,7 @@ export default function FileInfo({
                   }
                 `
           }
-          onClick={() => window.open(src)}
+          onClick={() => (isThumb ? {} : window.open(src))}
         >
           <Icon
             className={css`
