@@ -1563,7 +1563,7 @@ export default function ContentReducer(state, action) {
           ? {
               ['comment' + commentId]: {
                 ...state['comment' + commentId],
-                comments: state['comment' + commentId].comments.concat(
+                comments: (state['comment' + commentId].comments || []).concat(
                   action.data
                 )
               }
