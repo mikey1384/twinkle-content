@@ -204,6 +204,7 @@ function Comments({
               (isPreview ? previewComments : comments).map((comment, index) => (
                 <Comment
                   isPreview={isPreview}
+                  isPinned={index === 0}
                   index={index}
                   innerRef={(ref) => (CommentRefs[comment.id] = ref)}
                   parent={parent}

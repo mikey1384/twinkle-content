@@ -44,6 +44,7 @@ import { useAppContext, useContentContext } from 'contexts';
 import LocalContext from './Context';
 
 Comment.propTypes = {
+  isPinned: PropTypes.bool,
   comment: PropTypes.shape({
     commentId: PropTypes.number,
     content: PropTypes.string.isRequired,
@@ -81,6 +82,7 @@ Comment.propTypes = {
 function Comment({
   comment,
   innerRef,
+  isPinned,
   isPreview,
   parent,
   rootContent = {},
@@ -381,6 +383,14 @@ function Comment({
         className={commentContainer}
         ref={innerRef}
       >
+        {isPinned && (
+          <div>
+            <Icon icon={['fas', 'thumbtack']} />
+            <span style={{ marginLeft: '0.7rem' }}>
+              Pinned by {uploader.username}
+            </span>
+          </div>
+        )}
         <div className="content-wrapper">
           <aside>
             <ProfilePic
