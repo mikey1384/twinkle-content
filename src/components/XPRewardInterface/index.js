@@ -323,7 +323,7 @@ export default function XPRewardInterface({
         });
       }
     } catch (error) {
-      console.error({ error });
+      console.error(error);
     }
   }
 
