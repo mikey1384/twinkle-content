@@ -1546,15 +1546,33 @@ export default function ContentReducer(state, action) {
           }
         };
       }
-
+      let commentId = action.data.replyId || action.data.commentId;
+      const newComments = [...prevContentState.comments];
+      if (
+        prevContentState.contentType === 'comment' &&
+        prevContentState.contentId === commentId
+      ) {
+        newComments.push(action.data);
+      }
       return {
         ...state,
         ...subjectState,
+        ...((prevContentState.contentType !== 'comment' ||
+          prevContentState.contentId !== commentId) &&
+        state['comment' + commentId]
+          ? {
+              ['comment' + commentId]: {
+                ...state['comment' + commentId],
+                comments: state['comment' + commentId].comments.concat(
+                  action.data
+                )
+              }
+            }
+          : {}),
         [contentKey]: {
           ...prevContentState,
-          comments: prevContentState.comments.map((comment) => {
+          comments: newComments.map((comment) => {
             let match = false;
-            let commentId = action.data.replyId || action.data.commentId;
             if (comment.id === commentId) {
               match = true;
             } else {
