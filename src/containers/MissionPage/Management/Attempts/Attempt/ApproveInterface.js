@@ -4,7 +4,11 @@ import Textarea from 'components/Texts/Textarea';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import { useAppContext, useInputContext } from 'contexts';
-import { addEmoji, exceedsCharLimit } from 'helpers/stringHelpers';
+import {
+  addEmoji,
+  exceedsCharLimit,
+  finalizeEmoji
+} from 'helpers/stringHelpers';
 
 ApproveInterface.propTypes = {
   activeTab: PropTypes.string.isRequired,
@@ -132,7 +136,7 @@ export default function ApproveInterface({
   async function handleConfirm() {
     const success = await uploadMissionFeedback({
       attemptId: attempt.id,
-      feedback,
+      feedback: finalizeEmoji(feedback),
       status
     });
     if (success) {

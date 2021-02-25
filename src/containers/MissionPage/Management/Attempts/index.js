@@ -15,7 +15,8 @@ const displayedStatus = {
 
 Attempts.propTypes = {
   mission: PropTypes.object.isRequired,
-  missionId: PropTypes.number.isRequired,
+  missionId: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    .isRequired,
   onSetMissionState: PropTypes.func.isRequired
 };
 

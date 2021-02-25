@@ -37,12 +37,12 @@ export default function missionRequestHelpers({ auth, handleError }) {
     async checkMissionStatus(missionId) {
       try {
         const {
-          data: { filePath, feedback, status }
+          data: { filePath, feedback, status, reviewer }
         } = await request.get(
           `${URL}/mission/status?missionId=${missionId}`,
           auth()
         );
-        return Promise.resolve({ filePath, feedback, status });
+        return Promise.resolve({ filePath, feedback, status, reviewer });
       } catch (error) {
         return handleError(error);
       }
