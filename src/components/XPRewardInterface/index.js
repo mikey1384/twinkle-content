@@ -324,7 +324,6 @@ export default function XPRewardInterface({
       }
     } catch (error) {
       console.error({ error });
-      setRewarding(false);
     }
   }
 
