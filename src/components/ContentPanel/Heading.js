@@ -47,7 +47,7 @@ function Heading({
       rootType === 'url'
         ? 'link'
         : rootType === 'subject'
-        ? 'a subject'
+        ? 'subject'
         : rootType;
     switch (contentType) {
       case 'video':
