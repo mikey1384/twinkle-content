@@ -44,12 +44,12 @@ import { useAppContext, useContentContext } from 'contexts';
 import LocalContext from './Context';
 
 Comment.propTypes = {
-  isPinned: PropTypes.bool,
   comment: PropTypes.shape({
     commentId: PropTypes.number,
     content: PropTypes.string.isRequired,
     deleted: PropTypes.bool,
     id: PropTypes.number.isRequired,
+    isPinned: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
     likes: PropTypes.array,
     numReplies: PropTypes.number,
     profilePicUrl: PropTypes.string,
@@ -82,13 +82,13 @@ Comment.propTypes = {
 function Comment({
   comment,
   innerRef,
-  isPinned,
   isPreview,
   parent,
   rootContent = {},
   subject,
   comment: {
     id: commentId,
+    isPinned,
     replies = [],
     likes = [],
     recommendations = [],
@@ -281,7 +281,7 @@ function Comment({
     return (
       ((userIsUploader && !(isForSecretSubject || isNotification)) ||
         userCanEditThis ||
-        userIsSubjectUploader) &&
+        (userIsSubjectUploader && !isNotification)) &&
       !isPreview
     );
   }, [
@@ -444,7 +444,7 @@ function Comment({
           >
             <Icon icon={['fas', 'thumbtack']} />
             <span style={{ marginLeft: '0.7rem' }}>
-              Pinned by {uploader.username}
+              Pinned by {parent.uploader?.username}
             </span>
           </div>
         )}

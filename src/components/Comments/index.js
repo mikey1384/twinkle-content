@@ -202,7 +202,6 @@ function Comments({
             {inputAtBottom && loadMoreButton && renderLoadMoreButton()}
             {comments[0] && (
               <Comment
-                isPinned
                 isPreview={isPreview}
                 innerRef={(ref) => (CommentRefs[comments[0].id] = ref)}
                 parent={parent}
