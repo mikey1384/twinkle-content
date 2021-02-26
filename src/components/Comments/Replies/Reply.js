@@ -35,6 +35,7 @@ Reply.propTypes = {
   innerRef: PropTypes.func,
   deleteReply: PropTypes.func.isRequired,
   onLoadRepliesOfReply: PropTypes.func,
+  onPinReply: PropTypes.func,
   onSubmitWithAttachment: PropTypes.func.isRequired,
   parent: PropTypes.object.isRequired,
   reply: PropTypes.shape({
@@ -70,6 +71,7 @@ function Reply({
   innerRef = () => {},
   deleteReply,
   onLoadRepliesOfReply,
+  onPinReply,
   onSubmitWithAttachment,
   parent,
   reply,
@@ -220,7 +222,7 @@ function Reply({
             <span style={{ marginLeft: '1rem' }}>Pin</span>
           </>
         ),
-        onClick: () => console.log('clicked')
+        onClick: () => onPinReply(reply.id)
       });
     }
     if (userIsUploader || canEdit) {
@@ -252,7 +254,7 @@ function Reply({
     }
     return items;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [canDelete, canEdit, reply.id, userIsUploader]);
+  }, [canDelete, canEdit, reply.id, userIsSubjectUploader, userIsUploader]);
 
   return !deleted && !reply.deleted ? (
     <ErrorBoundary>

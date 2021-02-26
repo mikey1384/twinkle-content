@@ -12,6 +12,7 @@ Replies.propTypes = {
     loadMoreButton: PropTypes.bool
   }).isRequired,
   subject: PropTypes.object,
+  onPinReply: PropTypes.func,
   parent: PropTypes.object.isRequired,
   replies: PropTypes.arrayOf(
     PropTypes.shape({
@@ -29,6 +30,7 @@ function Replies({
   userId,
   comment,
   subject,
+  onPinReply,
   parent,
   rootContent,
   ReplyRefs
@@ -99,6 +101,7 @@ function Replies({
             userId={userId}
             deleteReply={handleDeleteReply}
             onLoadRepliesOfReply={onLoadRepliesOfReply}
+            onPinReply={onPinReply}
             onSubmitWithAttachment={handleSubmitWithAttachment}
             parent={parent}
             rootContent={rootContent}

@@ -310,7 +310,7 @@ function Comment({
             <span style={{ marginLeft: '1rem' }}>Pin</span>
           </>
         ),
-        onClick: () => console.log('clicked')
+        onClick: () => handlePinComment(comment.id)
       });
     }
     if ((userIsUploader || canEdit) && !isNotification) {
@@ -342,7 +342,14 @@ function Comment({
     }
     return items;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [canDelete, canEdit, comment.id, userIsUploader]);
+  }, [
+    canDelete,
+    canEdit,
+    comment.id,
+    isNotification,
+    userIsSubjectUploader,
+    userIsUploader
+  ]);
 
   const userCanRewardThis = useMemo(
     () =>
@@ -709,6 +716,7 @@ function Comment({
                   parent={parent}
                   rootContent={rootContent}
                   onLoadMoreReplies={onLoadMoreReplies}
+                  onPinReply={handlePinComment}
                   onReplySubmit={onReplySubmit}
                   ReplyRefs={ReplyRefs}
                 />
@@ -765,6 +773,13 @@ function Comment({
       }
     }
     onLikeClick({ commentId: comment.id, likes });
+  }
+
+  async function handlePinComment(commentId) {
+    if (parent.contentType !== 'subject') {
+      return;
+    }
+    console.log(commentId, parent.id, parent.contentType);
   }
 
   async function handleReplyButtonClick() {
