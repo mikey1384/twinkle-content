@@ -288,7 +288,12 @@ function Comment({
     const items = [];
     if ((userIsUploader || canEdit) && !isNotification) {
       items.push({
-        label: 'Edit',
+        label: (
+          <>
+            <Icon icon="pencil-alt" />
+            <span style={{ marginLeft: '1rem' }}>Edit</span>
+          </>
+        ),
         onClick: () =>
           onSetIsEditing({
             contentId: comment.id,
@@ -299,7 +304,12 @@ function Comment({
     }
     if (userIsUploader || canDelete) {
       items.push({
-        label: 'Remove',
+        label: (
+          <>
+            <Icon icon="trash-alt" />
+            <span style={{ marginLeft: '1rem' }}>Remove</span>
+          </>
+        ),
         onClick: () => setConfirmModalShown(true)
       });
     }

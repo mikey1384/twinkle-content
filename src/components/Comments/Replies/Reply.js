@@ -201,7 +201,12 @@ function Reply({
     const items = [];
     if (userIsUploader || canEdit) {
       items.push({
-        label: 'Edit',
+        label: (
+          <>
+            <Icon icon="pencil-alt" />
+            <span style={{ marginLeft: '1rem' }}>Edit</span>
+          </>
+        ),
         onClick: () =>
           onSetIsEditing({
             contentId: reply.id,
@@ -212,7 +217,12 @@ function Reply({
     }
     if (userIsUploader || canDelete) {
       items.push({
-        label: 'Remove',
+        label: (
+          <>
+            <Icon icon="trash-alt" />
+            <span style={{ marginLeft: '1rem' }}>Remove</span>
+          </>
+        ),
         onClick: () => setConfirmModalShown(true)
       });
     }
