@@ -244,11 +244,15 @@ function Comment({
     uploader.id,
     userId
   ]);
+  const userIsSubjectUploader = useMemo(
+    () => parent.contentType === 'subject' && parent.uploader.id === userId,
+    [parent.contentType, parent.uploader.id, userId]
+  );
   const userIsHigherAuth = useMemo(() => authLevel > uploader.authLevel, [
     authLevel,
     uploader.authLevel
   ]);
-  const editButtonShown = useMemo(() => {
+  const dropdownButtonShown = useMemo(() => {
     const isForSecretSubject =
       (rootContent?.secretAnswer &&
         !(
@@ -268,7 +272,8 @@ function Comment({
     const userCanEditThis = (canEdit || canDelete) && userIsHigherAuth;
     return (
       ((userIsUploader && !(isForSecretSubject || isNotification)) ||
-        userCanEditThis) &&
+        userCanEditThis ||
+        userIsSubjectUploader) &&
       !isPreview
     );
   }, [
@@ -277,15 +282,34 @@ function Comment({
     canEdit,
     isNotification,
     isPreview,
-    parent,
-    rootContent,
-    subject,
+    parent?.secretAnswer,
+    parent?.uploader?.authLevel,
+    parent?.uploader?.id,
+    rootContent?.secretAnswer,
+    rootContent?.uploader?.authLevel,
+    rootContent?.uploader?.id,
+    subject?.secretAnswer,
+    subject?.uploader?.authLevel,
+    subject?.uploader?.id,
     userId,
     userIsHigherAuth,
+    userIsSubjectUploader,
     userIsUploader
   ]);
-  const editMenuItems = useMemo(() => {
+
+  const dropdownMenuItems = useMemo(() => {
     const items = [];
+    if (userIsSubjectUploader) {
+      items.push({
+        label: (
+          <>
+            <Icon icon={['fas', 'thumbtack']} />
+            <span style={{ marginLeft: '1rem' }}>Pin</span>
+          </>
+        ),
+        onClick: () => console.log('clicked')
+      });
+    }
     if ((userIsUploader || canEdit) && !isNotification) {
       items.push({
         label: (
@@ -417,7 +441,7 @@ function Comment({
               profilePicUrl={uploader.profilePicUrl}
             />
           </aside>
-          {editButtonShown && !isEditing && (
+          {dropdownButtonShown && !isEditing && (
             <div className="dropdown-wrapper">
               <DropdownButton
                 skeuomorphic
@@ -425,7 +449,7 @@ function Comment({
                 color="darkerGray"
                 direction="left"
                 opacity={0.8}
-                menuProps={editMenuItems}
+                menuProps={dropdownMenuItems}
               />
             </div>
           )}

@@ -123,6 +123,10 @@ function Reply({
   const ReplyInputAreaRef = useRef(null);
   const RewardInterfaceRef = useRef(null);
   const userIsUploader = userId === uploader.id;
+  const userIsSubjectUploader = useMemo(
+    () => parent.contentType === 'subject' && parent.uploader.id === userId,
+    [parent.contentType, parent.uploader.id, userId]
+  );
   const userIsHigherAuth = authLevel > uploader.authLevel;
 
   const isRecommendedByUser = useMemo(() => {
@@ -137,10 +141,16 @@ function Reply({
     return rewards.filter((reward) => reward.rewarderId === userId).length > 0;
   }, [rewards, userId]);
 
-  const editButtonShown = useMemo(() => {
+  const dropdownButtonShown = useMemo(() => {
     const userCanEditThis = (canEdit || canDelete) && userIsHigherAuth;
-    return userIsUploader || userCanEditThis;
-  }, [canDelete, canEdit, userIsHigherAuth, userIsUploader]);
+    return userIsUploader || userIsSubjectUploader || userCanEditThis;
+  }, [
+    canDelete,
+    canEdit,
+    userIsHigherAuth,
+    userIsSubjectUploader,
+    userIsUploader
+  ]);
 
   const userCanRewardThis = useMemo(
     () =>
@@ -197,8 +207,19 @@ function Reply({
     [userId, rewardLevel, xpRewardInterfaceShown, rewards]
   );
 
-  const editMenuItems = useMemo(() => {
+  const dropdownMenuItems = useMemo(() => {
     const items = [];
+    if (userIsSubjectUploader) {
+      items.push({
+        label: (
+          <>
+            <Icon icon={['fas', 'thumbtack']} />
+            <span style={{ marginLeft: '1rem' }}>Pin</span>
+          </>
+        ),
+        onClick: () => console.log('clicked')
+      });
+    }
     if (userIsUploader || canEdit) {
       items.push({
         label: (
@@ -241,7 +262,7 @@ function Reply({
               profilePicUrl={uploader.profilePicUrl}
             />
           </aside>
-          {editButtonShown && !isEditing && (
+          {dropdownButtonShown && !isEditing && (
             <div className="dropdown-wrapper">
               <DropdownButton
                 skeuomorphic
@@ -249,7 +270,7 @@ function Reply({
                 color="darkerGray"
                 direction="left"
                 opacity={0.8}
-                menuProps={editMenuItems}
+                menuProps={dropdownMenuItems}
               />
             </div>
           )}
