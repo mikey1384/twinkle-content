@@ -784,7 +784,7 @@ function Comment({
     if (parent.contentType !== 'subject') {
       return;
     }
-    await updateCommentPinStatus({ commentId, isPinned: true });
+    await updateCommentPinStatus({ commentId, subjectId });
   }
 
   async function handleReplyButtonClick() {
