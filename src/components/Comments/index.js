@@ -5,6 +5,7 @@ import CommentInputArea from './CommentInputArea';
 import Comment from './Comment';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import Loading from 'components/Loading';
+import PinnedComment from './PinnedComment';
 import { scrollElementToCenter } from 'helpers';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
@@ -199,18 +200,8 @@ function Comments({
             }}
           >
             {isLoading && <Loading />}
+            {!isLoading && <PinnedComment />}
             {inputAtBottom && loadMoreButton && renderLoadMoreButton()}
-            {comments[0] && (
-              <Comment
-                isPreview={isPreview}
-                innerRef={(ref) => (CommentRefs[comments[0].id] = ref)}
-                parent={parent}
-                rootContent={rootContent}
-                subject={subject}
-                comment={comments[0]}
-                userId={userId}
-              />
-            )}
             {!isLoading &&
               (isPreview ? previewComments : comments).map((comment) => (
                 <Comment
