@@ -235,6 +235,7 @@ function Reply({
             <div className="dropdown-wrapper">
               <DropdownButton
                 skeuomorphic
+                icon="chevron-down"
                 color="darkerGray"
                 direction="left"
                 opacity={0.8}
