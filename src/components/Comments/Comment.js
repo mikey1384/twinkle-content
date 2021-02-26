@@ -245,8 +245,8 @@ function Comment({
     userId
   ]);
   const userIsSubjectUploader = useMemo(
-    () => parent.contentType === 'subject' && parent.uploader.id === userId,
-    [parent.contentType, parent.uploader.id, userId]
+    () => parent.contentType === 'subject' && parent.uploader?.id === userId,
+    [parent.contentType, parent.uploader?.id, userId]
   );
   const userIsHigherAuth = useMemo(() => authLevel > uploader.authLevel, [
     authLevel,
