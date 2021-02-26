@@ -40,7 +40,8 @@ Comments.propTypes = {
   parent: PropTypes.shape({
     commentId: PropTypes.number,
     contentId: PropTypes.number.isRequired,
-    contentType: PropTypes.string.isRequired
+    contentType: PropTypes.string.isRequired,
+    pinnedCommentId: PropTypes.number
   }).isRequired,
   rootContent: PropTypes.object,
   showSecretButtonAvailable: PropTypes.bool,
@@ -200,7 +201,9 @@ function Comments({
             }}
           >
             {isLoading && <Loading />}
-            {!isLoading && <PinnedComment />}
+            {!isLoading && parent.pinnedCommentId && (
+              <PinnedComment commentId={parent.pinnedCommentId} />
+            )}
             {inputAtBottom && loadMoreButton && renderLoadMoreButton()}
             {!isLoading &&
               (isPreview ? previewComments : comments).map((comment) => (
