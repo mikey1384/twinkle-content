@@ -113,7 +113,12 @@ function Comment({
   const { fileType } = getFileInfoFromFileName(fileName);
   const history = useHistory();
   const {
-    requestHelpers: { checkIfUserResponded, editContent, loadReplies }
+    requestHelpers: {
+      checkIfUserResponded,
+      editContent,
+      loadReplies,
+      updateCommentPinStatus
+    }
   } = useAppContext();
   const {
     authLevel,
@@ -779,7 +784,7 @@ function Comment({
     if (parent.contentType !== 'subject') {
       return;
     }
-    console.log(commentId, parent.id, parent.contentType);
+    await updateCommentPinStatus({ commentId, isPinned: true });
   }
 
   async function handleReplyButtonClick() {

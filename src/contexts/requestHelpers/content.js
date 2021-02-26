@@ -581,6 +581,18 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async updateCommentPinStatus({ commentId, isPinned }) {
+      try {
+        const { data } = await request.put(
+          `${URL}/content/comment/pin`,
+          { commentId, isPinned },
+          auth()
+        );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async updateRewardLevel({ rewardLevel, contentId, contentType }) {
       try {
         await request.put(
