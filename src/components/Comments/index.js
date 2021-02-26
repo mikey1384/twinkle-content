@@ -200,12 +200,22 @@ function Comments({
           >
             {isLoading && <Loading />}
             {inputAtBottom && loadMoreButton && renderLoadMoreButton()}
+            {comments[0] && (
+              <Comment
+                isPinned
+                isPreview={isPreview}
+                innerRef={(ref) => (CommentRefs[comments[0].id] = ref)}
+                parent={parent}
+                rootContent={rootContent}
+                subject={subject}
+                comment={comments[0]}
+                userId={userId}
+              />
+            )}
             {!isLoading &&
-              (isPreview ? previewComments : comments).map((comment, index) => (
+              (isPreview ? previewComments : comments).map((comment) => (
                 <Comment
                   isPreview={isPreview}
-                  isPinned={index === 0}
-                  index={index}
                   innerRef={(ref) => (CommentRefs[comment.id] = ref)}
                   parent={parent}
                   rootContent={rootContent}

@@ -384,7 +384,14 @@ function Comment({
         ref={innerRef}
       >
         {isPinned && (
-          <div>
+          <div
+            style={{
+              marginBottom: '0.3rem',
+              fontSize: '1.3rem',
+              fontWeight: 'bold',
+              color: Color.darkerGray()
+            }}
+          >
             <Icon icon={['fas', 'thumbtack']} />
             <span style={{ marginLeft: '0.7rem' }}>
               Pinned by {uploader.username}
