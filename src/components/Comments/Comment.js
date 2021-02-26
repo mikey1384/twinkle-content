@@ -386,7 +386,8 @@ function Comment({
         {isPinned && (
           <div
             style={{
-              marginBottom: '0.3rem',
+              marginBottom: '0.5rem',
+              lineHeight: 1,
               fontSize: '1.3rem',
               fontWeight: 'bold',
               color: Color.darkerGray()
