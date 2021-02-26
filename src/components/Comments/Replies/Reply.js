@@ -124,7 +124,10 @@ function Reply({
   const RewardInterfaceRef = useRef(null);
   const userIsUploader = userId === uploader.id;
   const userIsSubjectUploader = useMemo(
-    () => parent.contentType === 'subject' && parent.uploader?.id === userId,
+    () =>
+      userId &&
+      parent.contentType === 'subject' &&
+      parent.uploader?.id === userId,
     [parent.contentType, parent.uploader?.id, userId]
   );
   const userIsHigherAuth = authLevel > uploader.authLevel;
