@@ -201,7 +201,7 @@ function Comments({
             }}
           >
             {isLoading && <Loading />}
-            {!isLoading && parent.pinnedCommentId && (
+            {!isLoading && parent.pinnedCommentId && !isPreview && (
               <PinnedComment
                 parent={parent}
                 rootContent={rootContent}

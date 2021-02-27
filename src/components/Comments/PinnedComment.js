@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useContentState } from 'helpers/hooks';
 import PropTypes from 'prop-types';
 import Comment from './Comment';
+import { Color } from 'constants/css';
 import { useAppContext, useContentContext } from 'contexts';
 
 PinnedComment.propTypes = {
@@ -48,6 +49,11 @@ export default function PinnedComment({
 
   return loaded ? (
     <Comment
+      style={{
+        borderBottom: `1px solid ${Color.borderGray()}`,
+        paddingBottom: '0.5rem',
+        marginBottom: '1rem'
+      }}
       parent={parent}
       rootContent={rootContent}
       subject={subject}

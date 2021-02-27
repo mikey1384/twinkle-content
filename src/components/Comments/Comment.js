@@ -76,6 +76,7 @@ Comment.propTypes = {
   rootContent: PropTypes.shape({
     contentType: PropTypes.string
   }),
+  style: PropTypes.object,
   subject: PropTypes.object
 };
 
@@ -86,6 +87,7 @@ function Comment({
   isPreview,
   parent,
   rootContent = {},
+  style,
   subject,
   comment: {
     id: commentId,
@@ -428,7 +430,7 @@ function Comment({
   return !deleted && !comment.deleted ? (
     <>
       <div
-        style={isPreview ? { cursor: 'pointer' } : {}}
+        style={isPreview ? { cursor: 'pointer' } : style}
         className={commentContainer}
         ref={innerRef}
       >
