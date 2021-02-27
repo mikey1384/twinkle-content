@@ -202,7 +202,13 @@ function Comments({
           >
             {isLoading && <Loading />}
             {!isLoading && parent.pinnedCommentId && (
-              <PinnedComment commentId={parent.pinnedCommentId} />
+              <PinnedComment
+                parent={parent}
+                rootContent={rootContent}
+                subject={subject}
+                commentId={parent.pinnedCommentId}
+                userId={userId}
+              />
             )}
             {inputAtBottom && loadMoreButton && renderLoadMoreButton()}
             {!isLoading &&
