@@ -10,8 +10,6 @@ import React, {
 import DropdownButton from 'components/Buttons/DropdownButton';
 import Likers from 'components/Likers';
 import UserListModal from 'components/Modals/UserListModal';
-import Replies from '../Replies';
-import ReplyInputArea from '../Replies/ReplyInputArea';
 import EditTextArea from 'components/Texts/EditTextArea';
 import UsernameText from 'components/Texts/UsernameText';
 import ProfilePic from 'components/ProfilePic';
@@ -114,7 +112,6 @@ function Comment({
     requestHelpers: {
       checkIfUserResponded,
       editContent,
-      loadReplies,
       updateCommentPinStatus
     }
   } = useAppContext();
@@ -129,13 +126,11 @@ function Comment({
   const {
     actions: {
       onChangeSpoilerStatus,
-      onLoadReplies,
       onSetIsEditing,
       onSetXpRewardInterfaceShown
     }
   } = useContentContext();
   const {
-    deleted,
     isEditing,
     thumbUrl: thumbUrlFromContext,
     xpRewardInterfaceShown
@@ -152,15 +147,9 @@ function Comment({
     contentType: 'subject',
     contentId: subject.id
   });
-  const {
-    onDelete,
-    onEditDone,
-    onLikeClick,
-    onLoadMoreReplies,
-    onReplySubmit,
-    onRewardCommentEdit,
-    onSubmitWithAttachment
-  } = useContext(LocalContext);
+  const { onDelete, onEditDone, onLikeClick, onRewardCommentEdit } = useContext(
+    LocalContext
+  );
 
   const [
     recommendationInterfaceShown,
@@ -168,10 +157,8 @@ function Comment({
   ] = useState(false);
   const [userListModalShown, setUserListModalShown] = useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
-  const [loadingReplies, setLoadingReplies] = useState(false);
   const [replying, setReplying] = useState(false);
   const prevReplies = useRef(replies);
-  const ReplyInputAreaRef = useRef(null);
   const ReplyRefs = {};
   const RewardInterfaceRef = useRef(null);
 
@@ -423,7 +410,7 @@ function Comment({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subjectId, subjectState.prevSecretViewerId, userId]);
 
-  return !deleted && !comment.deleted ? (
+  return (
     <>
       <div
         style={isPreview ? { cursor: 'pointer' } : {}}
@@ -569,10 +556,11 @@ function Comment({
                             likes={likes}
                           />
                           <Button
-                            disabled={loadingReplies}
                             transparent
                             style={{ marginLeft: '1rem' }}
-                            onClick={handleReplyButtonClick}
+                            onClick={() =>
+                              history.push(`/comments/${comment.id}`)
+                            }
                           >
                             <Icon icon="comment-alt" />
                             <span style={{ marginLeft: '1rem' }}>
@@ -580,18 +568,10 @@ function Comment({
                               parent.contentType === 'comment'
                                 ? 'Replies'
                                 : 'Reply'}
-                              {loadingReplies ? (
-                                <Icon
-                                  style={{ marginLeft: '0.7rem' }}
-                                  icon="spinner"
-                                  pulse
-                                />
-                              ) : numReplies > 0 &&
-                                parent.contentType === 'comment' ? (
-                                ` (${numReplies})`
-                              ) : (
-                                ''
-                              )}
+                              {numReplies > 0 &&
+                              parent.contentType === 'comment'
+                                ? ` (${numReplies})`
+                                : ''}
                             </span>
                           </Button>
                           {userCanRewardThis && (
@@ -681,34 +661,6 @@ function Comment({
                 uploaderName={uploader.username}
               />
             )}
-            {!isPreview && !isNotification && !isHidden && (
-              <>
-                <ReplyInputArea
-                  innerRef={ReplyInputAreaRef}
-                  numReplies={numReplies}
-                  onSubmit={submitReply}
-                  onSubmitWithAttachment={handleSubmitWithAttachment}
-                  parent={parent}
-                  rootCommentId={comment.commentId}
-                  style={{
-                    marginTop: '0.5rem'
-                  }}
-                  targetCommentId={comment.id}
-                />
-                <Replies
-                  subject={subject || {}}
-                  userId={userId}
-                  replies={replies}
-                  comment={comment}
-                  parent={parent}
-                  rootContent={rootContent}
-                  onLoadMoreReplies={onLoadMoreReplies}
-                  onPinReply={handlePinComment}
-                  onReplySubmit={onReplySubmit}
-                  ReplyRefs={ReplyRefs}
-                />
-              </>
-            )}
           </section>
         </div>
         {userListModalShown && (
@@ -727,7 +679,7 @@ function Comment({
         />
       )}
     </>
-  ) : null;
+  );
 
   async function handleEditDone(editedComment) {
     await editContent({
@@ -767,36 +719,6 @@ function Comment({
       return;
     }
     await updateCommentPinStatus({ commentId, subjectId });
-  }
-
-  async function handleReplyButtonClick() {
-    if (numReplies > 0 && parent.contentType === 'comment') {
-      setLoadingReplies(true);
-      const { loadMoreButton, replies } = await loadReplies({ commentId });
-      if (mounted.current) {
-        onLoadReplies({
-          commentId,
-          loadMoreButton,
-          replies,
-          contentType: 'comment',
-          contentId: parent.contentId
-        });
-      }
-      if (mounted.current) {
-        setLoadingReplies(false);
-      }
-    }
-    ReplyInputAreaRef.current.focus();
-  }
-
-  async function handleSubmitWithAttachment(params) {
-    setReplying(true);
-    await onSubmitWithAttachment(params);
-  }
-
-  function submitReply(reply) {
-    setReplying(true);
-    onReplySubmit(reply);
   }
 }
 

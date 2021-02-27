@@ -51,7 +51,7 @@ export default function PinnedComment({
 
   return (
     <ErrorBoundary>
-      {loaded ? (
+      {loaded && !comment.deleted ? (
         <div
           style={{
             marginTop: '0.5rem',
