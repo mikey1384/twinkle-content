@@ -79,7 +79,6 @@ export default function PinnedComment({
             subject={subject}
             comment={comment}
             userId={userId}
-            isPinned
           />
         </div>
       ) : null}
