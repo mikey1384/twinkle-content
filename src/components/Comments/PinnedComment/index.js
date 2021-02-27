@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useContentState } from 'helpers/hooks';
 import PropTypes from 'prop-types';
 import Comment from './Comment';
@@ -32,12 +32,10 @@ export default function PinnedComment({
     contentType: 'comment',
     contentId: commentId
   });
-  const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     if (!comment.loaded) {
       return init();
     }
-    setLoaded(true);
 
     async function init() {
       const data = await loadContent({
@@ -51,7 +49,7 @@ export default function PinnedComment({
 
   return (
     <ErrorBoundary>
-      {loaded && !comment.deleted ? (
+      {comment.loaded && !comment.deleted ? (
         <div
           style={{
             marginTop: '0.5rem',

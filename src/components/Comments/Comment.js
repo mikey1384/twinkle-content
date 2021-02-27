@@ -131,7 +131,8 @@ function Comment({
       onChangeSpoilerStatus,
       onLoadReplies,
       onSetIsEditing,
-      onSetXpRewardInterfaceShown
+      onSetXpRewardInterfaceShown,
+      onUpdateCommentPinStatus
     }
   } = useContentContext();
   const {
@@ -767,6 +768,7 @@ function Comment({
       return;
     }
     await updateCommentPinStatus({ commentId, subjectId });
+    onUpdateCommentPinStatus({ subjectId, commentId });
   }
 
   async function handleReplyButtonClick() {

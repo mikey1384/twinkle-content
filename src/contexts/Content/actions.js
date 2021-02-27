@@ -602,6 +602,14 @@ export default function ContentActions(dispatch) {
         contentId
       });
     },
+    onUpdateCommentPinStatus({ subjectId, commentId }) {
+      return dispatch({
+        type: 'UPDATE_COMMENT_PIN_STATUS',
+        contentType: 'subject',
+        contentId: subjectId,
+        commentId
+      });
+    },
     onUpdateGreeting({ greeting, userId }) {
       return dispatch({
         type: 'UPDATE_USER_GREETING',

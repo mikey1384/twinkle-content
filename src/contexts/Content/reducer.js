@@ -1451,6 +1451,14 @@ export default function ContentReducer(state, action) {
           fileUploadProgress: action.progress
         }
       };
+    case 'UPDATE_COMMENT_PIN_STATUS':
+      return {
+        ...state,
+        [contentKey]: {
+          ...prevContentState,
+          pinnedCommentId: action.commentId
+        }
+      };
     case 'UPDATE_CURRENT_MISSION':
       return {
         ...state,

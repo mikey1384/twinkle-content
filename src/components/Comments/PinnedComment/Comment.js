@@ -127,7 +127,8 @@ function Comment({
     actions: {
       onChangeSpoilerStatus,
       onSetIsEditing,
-      onSetXpRewardInterfaceShown
+      onSetXpRewardInterfaceShown,
+      onUpdateCommentPinStatus
     }
   } = useContentContext();
   const {
@@ -719,6 +720,7 @@ function Comment({
       return;
     }
     await updateCommentPinStatus({ commentId, subjectId });
+    onUpdateCommentPinStatus({ subjectId, commentId });
   }
 }
 
