@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useContentState } from 'helpers/hooks';
 import PropTypes from 'prop-types';
 import Comment from './Comment';
+import ErrorBoundary from 'components/ErrorBoundary';
+import Icon from 'components/Icon';
 import { Color } from 'constants/css';
 import { useAppContext, useContentContext } from 'contexts';
 
@@ -47,19 +49,40 @@ export default function PinnedComment({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [comment, commentId]);
 
-  return loaded ? (
-    <Comment
-      style={{
-        borderBottom: `1px solid ${Color.borderGray()}`,
-        paddingBottom: '0.5rem',
-        marginBottom: '1rem'
-      }}
-      parent={parent}
-      rootContent={rootContent}
-      subject={subject}
-      comment={comment}
-      userId={userId}
-      isPinned
-    />
-  ) : null;
+  return (
+    <ErrorBoundary>
+      {loaded ? (
+        <div
+          style={{
+            marginTop: '0.5rem',
+            borderBottom: `1px solid ${Color.borderGray()}`,
+            paddingBottom: '0.5rem',
+            marginBottom: '1rem'
+          }}
+        >
+          <div
+            style={{
+              lineHeight: 1,
+              fontSize: '1.3rem',
+              fontWeight: 'bold',
+              color: Color.darkerGray()
+            }}
+          >
+            <Icon icon={['fas', 'thumbtack']} />
+            <span style={{ marginLeft: '0.7rem' }}>
+              Pinned by {parent.uploader?.username}
+            </span>
+          </div>
+          <Comment
+            parent={parent}
+            rootContent={rootContent}
+            subject={subject}
+            comment={comment}
+            userId={userId}
+            isPinned
+          />
+        </div>
+      ) : null}
+    </ErrorBoundary>
+  );
 }
