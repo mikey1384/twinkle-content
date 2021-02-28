@@ -72,6 +72,7 @@ Comment.propTypes = {
   innerRef: PropTypes.func,
   isPreview: PropTypes.bool,
   parent: PropTypes.object,
+  pinnedCommentId: PropTypes.number,
   rootContent: PropTypes.shape({
     contentType: PropTypes.string
   }),
@@ -83,6 +84,7 @@ function Comment({
   innerRef,
   isPreview,
   parent,
+  pinnedCommentId,
   rootContent = {},
   subject,
   comment: {
@@ -311,10 +313,13 @@ function Comment({
         label: (
           <>
             <Icon icon={['fas', 'thumbtack']} />
-            <span style={{ marginLeft: '1rem' }}>Pin</span>
+            <span style={{ marginLeft: '1rem' }}>
+              {pinnedCommentId === comment.id ? 'Unpin' : 'Pin'}
+            </span>
           </>
         ),
-        onClick: () => handlePinComment(comment.id)
+        onClick: () =>
+          handlePinComment(pinnedCommentId === comment.id ? null : comment.id)
       });
     }
     if ((userIsUploader || canEdit) && !isNotification) {
@@ -351,6 +356,7 @@ function Comment({
     canEdit,
     comment.id,
     isNotification,
+    pinnedCommentId,
     userIsSubjectUploader,
     userIsUploader
   ]);
@@ -431,6 +437,22 @@ function Comment({
         className={commentContainer}
         ref={innerRef}
       >
+        {pinnedCommentId === comment.id && (
+          <div
+            style={{
+              lineHeight: 1,
+              fontSize: '1.3rem',
+              fontWeight: 'bold',
+              color: Color.darkerGray(),
+              marginBottom: '0.2rem'
+            }}
+          >
+            <Icon icon={['fas', 'thumbtack']} />
+            <span style={{ marginLeft: '0.7rem' }}>
+              Pinned by {parent.uploader?.username}
+            </span>
+          </div>
+        )}
         <div className="content-wrapper">
           <aside>
             <ProfilePic
@@ -697,6 +719,7 @@ function Comment({
                   targetCommentId={comment.id}
                 />
                 <Replies
+                  pinnedCommentId={pinnedCommentId}
                   subject={subject || {}}
                   userId={userId}
                   replies={replies}

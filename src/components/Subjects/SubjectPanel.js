@@ -103,6 +103,7 @@ export default function SubjectPanel({
     secretShown,
     fileName,
     filePath,
+    pinnedCommentId,
     recommendations,
     rewards,
     xpRewardInterfaceShown
@@ -461,6 +462,7 @@ export default function SubjectPanel({
               parent={{
                 contentId: rootId,
                 contentType: rootType,
+                pinnedCommentId,
                 rewardLevel: rootRewardLevel,
                 secretAnswer,
                 uploader: {

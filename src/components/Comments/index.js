@@ -220,6 +220,7 @@ function Comments({
                   rootContent={rootContent}
                   subject={subject}
                   comment={comment}
+                  pinnedCommentId={parent.pinnedCommentId}
                   key={comment.id}
                   userId={userId}
                 />

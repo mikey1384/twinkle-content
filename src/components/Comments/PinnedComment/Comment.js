@@ -298,10 +298,10 @@ function Comment({
         label: (
           <>
             <Icon icon={['fas', 'thumbtack']} />
-            <span style={{ marginLeft: '1rem' }}>Pin</span>
+            <span style={{ marginLeft: '1rem' }}>Unpin</span>
           </>
         ),
-        onClick: () => handlePinComment(comment.id)
+        onClick: () => handleUnPinComment()
       });
     }
     if ((userIsUploader || canEdit) && !isNotification) {
@@ -715,12 +715,9 @@ function Comment({
     onLikeClick({ commentId: comment.id, likes });
   }
 
-  async function handlePinComment(commentId) {
-    if (parent.contentType !== 'subject') {
-      return;
-    }
-    await updateCommentPinStatus({ commentId, subjectId });
-    onUpdateCommentPinStatus({ subjectId, commentId });
+  async function handleUnPinComment() {
+    await updateCommentPinStatus({ commentId: null, subjectId });
+    onUpdateCommentPinStatus({ subjectId, commentId: null });
   }
 }
 

@@ -20,6 +20,7 @@ Replies.propTypes = {
       userId: PropTypes.number.isRequired
     })
   ).isRequired,
+  pinnedCommentId: PropTypes.number,
   ReplyRefs: PropTypes.object,
   rootContent: PropTypes.object,
   userId: PropTypes.number
@@ -32,6 +33,7 @@ function Replies({
   subject,
   onPinReply,
   parent,
+  pinnedCommentId,
   rootContent,
   ReplyRefs
 }) {
@@ -104,6 +106,7 @@ function Replies({
             onPinReply={onPinReply}
             onSubmitWithAttachment={handleSubmitWithAttachment}
             parent={parent}
+            pinnedCommentId={pinnedCommentId}
             rootContent={rootContent}
             subject={subject}
             onSubmitReply={handleSubmitReply}

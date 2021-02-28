@@ -22,6 +22,7 @@ import XPRewardInterface from 'components/XPRewardInterface';
 import ContentFileViewer from 'components/ContentFileViewer';
 import { commentContainer } from '../Styles';
 import { Link } from 'react-router-dom';
+import { Color } from 'constants/css';
 import { determineUserCanRewardThis, determineXpButtonDisabled } from 'helpers';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { timeSince } from 'helpers/timeStampHelpers';
@@ -38,6 +39,7 @@ Reply.propTypes = {
   onPinReply: PropTypes.func,
   onSubmitWithAttachment: PropTypes.func.isRequired,
   parent: PropTypes.object.isRequired,
+  pinnedCommentId: PropTypes.number,
   reply: PropTypes.shape({
     commentId: PropTypes.number.isRequired,
     content: PropTypes.string.isRequired,
@@ -74,6 +76,7 @@ function Reply({
   onPinReply,
   onSubmitWithAttachment,
   parent,
+  pinnedCommentId,
   reply,
   reply: {
     likes = [],
@@ -219,10 +222,13 @@ function Reply({
         label: (
           <>
             <Icon icon={['fas', 'thumbtack']} />
-            <span style={{ marginLeft: '1rem' }}>Pin</span>
+            <span style={{ marginLeft: '1rem' }}>
+              {pinnedCommentId === reply.id ? 'Unpin' : 'Pin'}
+            </span>
           </>
         ),
-        onClick: () => onPinReply(reply.id)
+        onClick: () =>
+          onPinReply(pinnedCommentId === reply.id ? null : reply.id)
       });
     }
     if (userIsUploader || canEdit) {
@@ -254,11 +260,34 @@ function Reply({
     }
     return items;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [canDelete, canEdit, reply.id, userIsSubjectUploader, userIsUploader]);
+  }, [
+    canDelete,
+    canEdit,
+    pinnedCommentId,
+    reply.id,
+    userIsSubjectUploader,
+    userIsUploader
+  ]);
 
   return !deleted && !reply.deleted ? (
     <ErrorBoundary>
       <div className={commentContainer} ref={innerRef}>
+        {pinnedCommentId === reply.id && (
+          <div
+            style={{
+              lineHeight: 1,
+              fontSize: '1.3rem',
+              fontWeight: 'bold',
+              color: Color.darkerGray(),
+              marginBottom: '0.2rem'
+            }}
+          >
+            <Icon icon={['fas', 'thumbtack']} />
+            <span style={{ marginLeft: '0.7rem' }}>
+              Pinned by {parent.uploader?.username}
+            </span>
+          </div>
+        )}
         <div className="content-wrapper">
           <aside>
             <ProfilePic
