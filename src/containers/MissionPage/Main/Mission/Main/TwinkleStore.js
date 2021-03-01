@@ -1,9 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function TwinkleStore() {
+TwinkleStore.propTypes = {
+  mission: PropTypes.object.isRequired
+};
+
+export default function TwinkleStore({ mission }) {
   return (
     <div>
-      <div>this is twinkle store mission</div>
+      <div>this is {mission.title}</div>
     </div>
   );
 }
