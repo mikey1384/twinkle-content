@@ -4,6 +4,7 @@ import TakeScreenshot from './TakeScreenshot';
 import CopyAndPaste from './CopyAndPaste';
 import Googling from './Googling';
 import Grammar from './Grammar';
+import TwinkleStore from './TwinkleStore';
 
 Main.propTypes = {
   fileUploadComplete: PropTypes.bool,
@@ -33,6 +34,7 @@ export default function Main({
           onSetMissionState={onSetMissionState}
         />
       )}
+      {mission.missionType === 'twinkle-store' && <TwinkleStore />}
       {mission.missionType === 'google' && (
         <Googling mission={mission} onSetMissionState={onSetMissionState} />
       )}
