@@ -1,8 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import MissionItem from './MissionItem';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FilterBar from 'components/FilterBar';
+import Loading from 'components/Loading';
+import { useMissionContext } from 'contexts';
 import { mobileMaxWidth } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
@@ -20,8 +22,11 @@ export default function MissionList({
   missions,
   missionObj
 }) {
+  const {
+    state: { selectedMissionListTab },
+    actions: { onSetSelectedMissionListTab }
+  } = useMissionContext();
   const { userId } = useMyState();
-  const [selectedTab, setSelectedTab] = useState('ongoing');
   const ongoingMissions = useMemo(() => {
     return missions.filter(
       (missionId) => missionObj[missionId].myAttempt?.status !== 'pass'
@@ -33,21 +38,34 @@ export default function MissionList({
     );
   }, [missionObj, missions]);
   useEffect(() => {
-    if (ongoingMissions.length === 0) {
-      setSelectedTab('complete');
-    } else {
-      setSelectedTab('ongoing');
+    if (selectedMissionListTab) {
+      return;
     }
-  }, [ongoingMissions.length]);
+    if (ongoingMissions.length === 0) {
+      onSetSelectedMissionListTab('complete');
+    } else {
+      onSetSelectedMissionListTab('ongoing');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ongoingMissions.length, selectedMissionListTab]);
   let displayedMissions = useMemo(() => {
     if (userId) {
-      if (selectedTab === 'ongoing') {
+      if (selectedMissionListTab === 'ongoing') {
         return ongoingMissions;
       }
-      return completedMissions;
+      if (selectedMissionListTab === 'complete') {
+        return completedMissions;
+      }
+      return [];
     }
     return missions;
-  }, [completedMissions, missions, ongoingMissions, selectedTab, userId]);
+  }, [
+    completedMissions,
+    missions,
+    ongoingMissions,
+    selectedMissionListTab,
+    userId
+  ]);
 
   return (
     <ErrorBoundary>
@@ -65,14 +83,14 @@ export default function MissionList({
             bordered
           >
             <nav
-              className={selectedTab === 'ongoing' ? 'active' : ''}
-              onClick={() => setSelectedTab('ongoing')}
+              className={selectedMissionListTab === 'ongoing' ? 'active' : ''}
+              onClick={() => onSetSelectedMissionListTab('ongoing')}
             >
               In Progress
             </nav>
             <nav
-              className={selectedTab === 'complete' ? 'active' : ''}
-              onClick={() => setSelectedTab('complete')}
+              className={selectedMissionListTab === 'complete' ? 'active' : ''}
+              onClick={() => onSetSelectedMissionListTab('complete')}
             >
               Complete
             </nav>
@@ -92,9 +110,13 @@ export default function MissionList({
                   fontSize: '2rem'
                 }}
               >
-                {selectedTab === 'ongoing'
-                  ? 'You have completed every available mission'
-                  : `You haven't completed any mission, yet`}
+                {selectedMissionListTab === 'ongoing' ? (
+                  'You have completed every available mission'
+                ) : selectedMissionListTab === 'completed' ? (
+                  `You haven't completed any mission, yet`
+                ) : (
+                  <Loading />
+                )}
               </div>
             ) : (
               displayedMissions.map((missionId, index) => {

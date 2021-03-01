@@ -9,7 +9,8 @@ export const initialMissionState = {
   loadMoreButton: false,
   missionObj: {},
   missionIdHash: {},
-  prevUserId: null
+  prevUserId: null,
+  selectedMissionListTab: ''
 };
 
 MissionContextProvider.propTypes = {

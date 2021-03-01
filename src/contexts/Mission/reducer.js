@@ -68,6 +68,11 @@ export default function MissionReducer(state, action) {
         }
       };
     }
+    case 'SET_SELECTED_MISSION_LIST_TAB':
+      return {
+        ...state,
+        selectedMissionListTab: action.selectedTab
+      };
     case 'UPDATE_MISSION_ATTEMPT': {
       return {
         ...state,
