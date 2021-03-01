@@ -83,7 +83,7 @@ export default function MissionPage({
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId, prevUserId, missionId]);
+  }, [userId, prevUserId, missionId, mission.loaded]);
 
   useEffect(() => {
     return function onUnmount() {
@@ -91,8 +91,21 @@ export default function MissionPage({
     };
   }, []);
 
+  if (!loaded) {
+    return <Loading />;
+  }
+
+  if (
+    userId &&
+    missionType &&
+    missionTypeIdHash &&
+    !missionTypeIdHash[missionType]
+  ) {
+    return <InvalidPage />;
+  }
+
   return userId ? (
-    loaded && mission.loaded ? (
+    mission.loaded ? (
       mission.id ? (
         <ErrorBoundary style={{ width: '100%', paddingBottom: '10rem' }}>
           {isCreator && (
