@@ -88,6 +88,7 @@ export function addAdvancedEmoji(string) {
     .replace(/(\:cash\:)/gi, '💰')
     .replace(/(\:cat\:)/gi, '🐱')
     .replace(/(\:chess\:)/gi, '♟️')
+    .replace(/(\:cherry\:)/gi, '🍒')
     .replace(/(\:chicken\:)/gi, '🍗')
     .replace(/(\:china\:)/gi, '🇨🇳')
     .replace(/(\:christmas\:)/gi, '🎄')
