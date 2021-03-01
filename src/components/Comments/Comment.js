@@ -308,7 +308,7 @@ function Comment({
 
   const dropdownMenuItems = useMemo(() => {
     const items = [];
-    if (userIsSubjectUploader) {
+    if (userIsSubjectUploader && !isNotification) {
       items.push({
         label: (
           <>

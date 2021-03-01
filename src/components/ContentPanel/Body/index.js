@@ -99,6 +99,7 @@ export default function Body({
     description,
     isEditing,
     secretAnswer,
+    secretAttachment,
     secretShown,
     xpRewardInterfaceShown
   } = useContentState({
@@ -162,19 +163,22 @@ export default function Body({
     const rootObjSecretHidden = !(
       rootSecretShown || rootObj?.uploader?.id === userId
     );
-    return contentType === 'subject' && secretAnswer
+    return contentType === 'subject' && (secretAnswer || secretAttachment)
       ? contentSecretHidden
       : targetObj.subject?.secretAnswer
       ? targetSubjectSecretHidden
       : !!rootObj?.secretAnswer && rootObjSecretHidden;
   }, [
     contentType,
-    rootObj,
+    rootObj?.secretAnswer,
+    rootObj?.uploader?.id,
     rootSecretShown,
     secretAnswer,
+    secretAttachment,
     secretShown,
     subjectSecretShown,
-    targetObj.subject,
+    targetObj.subject?.secretAnswer,
+    targetObj.subject?.uploader?.id,
     uploader.id,
     userId
   ]);
@@ -675,7 +679,11 @@ export default function Body({
   );
 
   async function handleCommentSubmit(params) {
-    if (contentType === 'subject' && contentObj.secretAnswer && !secretShown) {
+    if (
+      contentType === 'subject' &&
+      (contentObj.secretAnswer || contentObj.secretAttachment) &&
+      !secretShown
+    ) {
       await handleExpandComments();
       if (mounted.current) {
         onChangeSpoilerStatus({
@@ -702,13 +710,13 @@ export default function Body({
       await handleExpandComments();
     }
     if (!isMobile(navigator)) {
-      CommentInputAreaRef.current.focus();
+      CommentInputAreaRef.current?.focus();
     }
     scrollElementToCenter(CommentInputAreaRef.current);
   }
 
   function onSecretAnswerClick() {
-    CommentInputAreaRef.current.focus();
+    CommentInputAreaRef.current?.focus();
   }
 
   async function deleteThisContent() {
