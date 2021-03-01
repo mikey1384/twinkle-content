@@ -7,11 +7,11 @@ import { useLocation, useHistory } from 'react-router-dom';
 
 RightMenu.propTypes = {
   className: PropTypes.string,
-  missionId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  missionType: PropTypes.string,
   style: PropTypes.object
 };
 
-export default function RightMenu({ className, missionId, style }) {
+export default function RightMenu({ className, missionType, style }) {
   const history = useHistory();
   const location = useLocation();
   return (
@@ -49,9 +49,9 @@ export default function RightMenu({ className, missionId, style }) {
       >
         <nav
           className={
-            location.pathname === `/missions/${missionId}` ? 'active' : ''
+            location.pathname === `/missions/${missionType}` ? 'active' : ''
           }
-          onClick={() => history.push(`/missions/${missionId}`)}
+          onClick={() => history.push(`/missions/${missionType}`)}
           style={{
             cursor: 'pointer',
             display: 'flex',
@@ -63,9 +63,9 @@ export default function RightMenu({ className, missionId, style }) {
           <span style={{ marginLeft: '1.5rem' }}>Mission</span>
         </nav>
         <nav
-          onClick={() => history.push(`/missions/${missionId}/manage`)}
+          onClick={() => history.push(`/missions/${missionType}/manage`)}
           className={
-            location.pathname === `/missions/${missionId}/manage`
+            location.pathname === `/missions/${missionType}/manage`
               ? 'active'
               : ''
           }

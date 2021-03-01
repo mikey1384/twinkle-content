@@ -191,7 +191,7 @@ export default function MissionPage({
           {isCreator && (
             <RightMenu
               className="desktop"
-              missionId={missionId}
+              missionType={missionType}
               style={{
                 width: '25rem',
                 marginLeft: '5rem',
