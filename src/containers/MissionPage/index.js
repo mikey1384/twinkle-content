@@ -106,105 +106,101 @@ export default function MissionPage({
 
   return userId ? (
     mission.loaded ? (
-      mission.id ? (
-        <ErrorBoundary style={{ width: '100%', paddingBottom: '10rem' }}>
-          {isCreator && (
-            <FilterBar
-              className="mobile"
-              bordered
-              style={{
-                fontSize: '1.6rem',
-                height: '5rem'
-              }}
-            >
-              <nav
-                className={
-                  location.pathname === `/missions/${missionId}` ? 'active' : ''
-                }
-                onClick={() => history.push(`/missions/${missionId}`)}
-              >
-                Mission
-              </nav>
-              <nav
-                className={
-                  location.pathname === `/missions/${missionId}/manage`
-                    ? 'active'
-                    : ''
-                }
-                onClick={() => history.push(`/missions/${missionId}/manage`)}
-              >
-                Manage
-              </nav>
-            </FilterBar>
-          )}
-          <div
-            className={css`
-              padding-top: 1rem;
-              @media (max-width: ${mobileMaxWidth}) {
-                padding-top: ${isCreator ? '0.5rem' : 0};
-              }
-            `}
+      <ErrorBoundary style={{ width: '100%', paddingBottom: '10rem' }}>
+        {isCreator && (
+          <FilterBar
+            className="mobile"
+            bordered
             style={{
-              display: 'flex',
-              justifyContent: 'center',
-              width: '100%'
+              fontSize: '1.6rem',
+              height: '5rem'
             }}
           >
-            <div
-              className={css`
-                display: flex;
-                width: ${isCreator ? 'CALC(100% - 55rem)' : '60%'};
-                ${isCreator
-                  ? 'margin-left: 25rem;'
-                  : `
+            <nav
+              className={
+                location.pathname === `/missions/${missionId}` ? 'active' : ''
+              }
+              onClick={() => history.push(`/missions/${missionId}`)}
+            >
+              Mission
+            </nav>
+            <nav
+              className={
+                location.pathname === `/missions/${missionId}/manage`
+                  ? 'active'
+                  : ''
+              }
+              onClick={() => history.push(`/missions/${missionId}/manage`)}
+            >
+              Manage
+            </nav>
+          </FilterBar>
+        )}
+        <div
+          className={css`
+            padding-top: 1rem;
+            @media (max-width: ${mobileMaxWidth}) {
+              padding-top: ${isCreator ? '0.5rem' : 0};
+            }
+          `}
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            width: '100%'
+          }}
+        >
+          <div
+            className={css`
+              display: flex;
+              width: ${isCreator ? 'CALC(100% - 55rem)' : '60%'};
+              ${isCreator
+                ? 'margin-left: 25rem;'
+                : `
                     justify-content: center;
                     flex-direction: column;`}
-                @media (max-width: ${mobileMaxWidth}) {
-                  margin-left: 0;
-                  width: 100%;
-                }
-              `}
-            >
-              <Switch>
-                <Route
-                  exact
-                  path={path}
-                  render={() => (
-                    <Main
-                      onSetMissionState={onSetMissionState}
-                      mission={mission}
-                    />
-                  )}
-                />
-                <Route
-                  exact
-                  path={`${path}/manage`}
-                  render={() => (
-                    <Management
-                      missionId={missionId}
-                      mission={mission}
-                      onSetMissionState={onSetMissionState}
-                    />
-                  )}
-                />
-              </Switch>
-            </div>
-            {isCreator && (
-              <RightMenu
-                className="desktop"
-                missionId={missionId}
-                style={{
-                  width: '25rem',
-                  marginLeft: '5rem',
-                  marginTop: '3rem'
-                }}
+              @media (max-width: ${mobileMaxWidth}) {
+                margin-left: 0;
+                width: 100%;
+              }
+            `}
+          >
+            <Switch>
+              <Route
+                exact
+                path={path}
+                render={() => (
+                  <Main
+                    onSetMissionState={onSetMissionState}
+                    mission={mission}
+                  />
+                )}
               />
-            )}
+              <Route
+                exact
+                path={`${path}/manage`}
+                render={() => (
+                  <Management
+                    missionId={missionId}
+                    mission={mission}
+                    onSetMissionState={onSetMissionState}
+                  />
+                )}
+              />
+            </Switch>
           </div>
-        </ErrorBoundary>
-      ) : (
-        <InvalidPage />
-      )
+          {isCreator && (
+            <RightMenu
+              className="desktop"
+              missionId={missionId}
+              style={{
+                width: '25rem',
+                marginLeft: '5rem',
+                marginTop: '3rem'
+              }}
+            />
+          )}
+        </div>
+      </ErrorBoundary>
     ) : (
       <Loading />
     )
