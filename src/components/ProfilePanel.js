@@ -584,7 +584,7 @@ function ProfilePanel({ expandable, profileId, style }) {
   async function onMessagesButtonClick() {
     await onExpandComments();
     if (mounted.current) {
-      if (profileId !== userId) CommentInputAreaRef.current.focus();
+      if (profileId !== userId) CommentInputAreaRef.current?.focus();
     }
   }
 

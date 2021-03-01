@@ -133,8 +133,10 @@ export default function SubjectPanel({
     return userIsUploader || userCanEditThis;
   }, [authLevel, canDelete, canEdit, uploaderAuthLevel, userIsUploader]);
   const secretHidden = useMemo(
-    () => !!secretAnswer && !(secretShown || userIsUploader),
-    [secretAnswer, secretShown, userIsUploader]
+    () =>
+      (!!secretAnswer || !!secretAttachment) &&
+      !(secretShown || userIsUploader),
+    [secretAnswer, secretAttachment, secretShown, userIsUploader]
   );
   const rewardButtonShown = useMemo(() => {
     return (
