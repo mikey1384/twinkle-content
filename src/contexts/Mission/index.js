@@ -8,6 +8,7 @@ export const initialMissionState = {
   missions: [],
   loadMoreButton: false,
   missionObj: {},
+  missionIdHash: {},
   prevUserId: null
 };
 

@@ -20,7 +20,7 @@ MissionPage.propTypes = {
 export default function MissionPage({
   match: {
     path,
-    params: { missionId }
+    params: { missionType }
   }
 }) {
   const mounted = useRef(true);
@@ -28,15 +28,31 @@ export default function MissionPage({
   const location = useLocation();
   const { loaded, userId, isCreator } = useMyState();
   const {
-    requestHelpers: { loadMission, updateCurrentMission }
+    requestHelpers: { loadMission, loadMissionTypeIdHash, updateCurrentMission }
   } = useAppContext();
   const {
     actions: { onUpdateCurrentMission }
   } = useContentContext();
   const {
-    actions: { onLoadMission, onSetMissionState },
-    state: { missionObj, prevUserId }
+    actions: { onLoadMission, onLoadMissionTypeIdHash, onSetMissionState },
+    state: { missionObj, prevUserId, missionTypeIdHash }
   } = useMissionContext();
+
+  const missionId = useMemo(() => {
+    return missionTypeIdHash?.[missionType];
+  }, [missionTypeIdHash, missionType]);
+
+  useEffect(() => {
+    if (missionId && userId) {
+      handleUpdateCurrentMission();
+    }
+
+    async function handleUpdateCurrentMission() {
+      await updateCurrentMission(missionId);
+      onUpdateCurrentMission({ missionId, userId });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [missionId, userId]);
 
   const mission = useMemo(() => missionObj[missionId] || {}, [
     missionId,
@@ -44,16 +60,15 @@ export default function MissionPage({
   ]);
 
   useEffect(() => {
-    if (userId) {
-      updateCurrentMission(missionId);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId]);
-
-  useEffect(() => {
-    onUpdateCurrentMission({ missionId: Number(missionId), userId });
-    if (!mission.loaded || (userId && prevUserId !== userId)) {
+    if (!missionId) {
+      getMissionId();
+    } else if (!mission.loaded || (userId && prevUserId !== userId)) {
       init();
+    }
+
+    async function getMissionId() {
+      const data = await loadMissionTypeIdHash();
+      onLoadMissionTypeIdHash(data);
     }
 
     async function init() {
@@ -68,7 +83,7 @@ export default function MissionPage({
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId, prevUserId]);
+  }, [userId, prevUserId, missionId]);
 
   useEffect(() => {
     return function onUnmount() {

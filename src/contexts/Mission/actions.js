@@ -15,6 +15,12 @@ export default function MissionActions(dispatch) {
         prevUserId
       });
     },
+    onLoadMissionTypeIdHash(hash) {
+      return dispatch({
+        type: 'LOAD_MISSION_TYPE_ID_HASH',
+        hash
+      });
+    },
     onSetMissionState({ missionId, newState }) {
       return dispatch({
         type: 'SET_MISSION_STATE',

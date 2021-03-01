@@ -15,6 +15,12 @@ export default function MissionReducer(state, action) {
         }
       };
     }
+    case 'LOAD_MISSION_TYPE_ID_HASH': {
+      return {
+        ...state,
+        missionTypeIdHash: action.hash
+      };
+    }
     case 'LOAD_MISSION_LIST': {
       const newMissionObj = state.missionObj || {};
       for (let mission of action.missions) {

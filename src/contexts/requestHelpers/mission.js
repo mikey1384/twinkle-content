@@ -155,6 +155,14 @@ export default function missionRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async loadMissionTypeIdHash() {
+      try {
+        const { data } = await request.get(`${URL}/mission/typeIdHash`, auth());
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async updateCurrentMission(missionId) {
       try {
         await request.put(
