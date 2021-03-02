@@ -1,17 +1,70 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import UsernameChangeItem from './username_change_item.png';
 import UnlockFaded from './unlock_faded.png';
 import Icon from 'components/Icon';
+import Loading from 'components/Loading';
+import { karmaMultiplier } from 'constants/defaultValues';
+import { useAppContext, useContentContext } from 'contexts';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import { useMyState } from 'helpers/hooks';
 
 TwinkleStore.propTypes = {
   mission: PropTypes.object.isRequired
 };
 
 export default function TwinkleStore({ mission }) {
-  return (
+  const { authLevel, userId, karmaPoints } = useMyState();
+  const {
+    requestHelpers: { loadKarmaPoints }
+  } = useAppContext();
+  const {
+    actions: { onUpdateProfileInfo }
+  } = useContentContext();
+  const [loadingKarma, setLoadingKarma] = useState(false);
+  const mounted = useRef(true);
+
+  useEffect(() => {
+    if (userId) {
+      handleLoadKarmaPoints();
+    }
+
+    async function handleLoadKarmaPoints() {
+      if (mounted.current) {
+        setLoadingKarma(true);
+      }
+      const { karmaPoints: kp, numPostsRewarded } = await loadKarmaPoints();
+
+      if (authLevel < 2) {
+        if (mounted.current) {
+          onUpdateProfileInfo({ userId, karmaPoints: kp });
+        }
+      } else {
+        if (mounted.current) {
+          onUpdateProfileInfo({
+            userId,
+            karmaPoints: karmaMultiplier.post * numPostsRewarded
+          });
+        }
+      }
+      if (mounted.current) {
+        setLoadingKarma(false);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
+
+  useEffect(() => {
+    mounted.current = true;
+    return function onUnmount() {
+      mounted.current = false;
+    };
+  }, []);
+
+  return loadingKarma ? (
+    <Loading />
+  ) : (
     <div
       style={{
         width: '100%',
@@ -21,6 +74,7 @@ export default function TwinkleStore({ mission }) {
         alignItems: 'center'
       }}
     >
+      {karmaPoints}
       <p style={{ fontWeight: 'bold', fontSize: '2.3rem' }}>Instructions</p>
       <div
         style={{

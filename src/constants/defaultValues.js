@@ -58,6 +58,10 @@ export const karmaPointTable = {
     6: 6000
   }
 };
+export const karmaMultiplier = {
+  post: 3,
+  recommendation: 10
+};
 export const charLimit = {
   chat: {
     subject: 200,

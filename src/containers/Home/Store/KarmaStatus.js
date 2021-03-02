@@ -4,11 +4,10 @@ import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
+import { karmaMultiplier } from 'constants/defaultValues';
 import Loading from 'components/Loading';
 
 export default function KarmaStatus() {
-  const recommendationsMultiplier = 10;
-  const postsMultiplier = 3;
   const {
     requestHelpers: { loadKarmaPoints }
   } = useAppContext();
@@ -59,7 +58,7 @@ export default function KarmaStatus() {
         if (mounted.current) {
           onUpdateProfileInfo({
             userId,
-            karmaPoints: postsMultiplier * numPostsRewarded
+            karmaPoints: karmaMultiplier.post * numPostsRewarded
           });
         }
         if (mounted.current) {
@@ -79,7 +78,7 @@ export default function KarmaStatus() {
         <span>
           Your Karma Points = Total number of Twinkles you{' '}
           <b style={{ color: Color.pink() }}>rewarded</b> + (
-          {recommendationsMultiplier} × total number of your{' '}
+          {karmaMultiplier.recommendation} × total number of your{' '}
           <b style={{ color: Color.brownOrange() }}>recommendations</b> that
           were approved by teachers)
         </span>
@@ -88,7 +87,7 @@ export default function KarmaStatus() {
     return (
       <span>
         Your Karma Points = Total number of <b>posts</b> you rewarded ×{' '}
-        {postsMultiplier}
+        {karmaMultiplier.post}
       </span>
     );
   }, [authLevel]);
@@ -109,7 +108,7 @@ export default function KarmaStatus() {
             {addCommasToNumber(numApprovedRecommendations)}
           </p>
           <p style={{ marginTop: '1rem', fontSize: '1.7rem' }}>
-            {numTwinklesRewarded} + ({recommendationsMultiplier} ×{' '}
+            {numTwinklesRewarded} + ({karmaMultiplier.recommendation} ×{' '}
             {numApprovedRecommendations}) ={' '}
             <b style={{ color: Color.darkerGray() }}>
               {addCommasToNumber(karmaPoints)} Karma Points
@@ -125,7 +124,7 @@ export default function KarmaStatus() {
           {addCommasToNumber(numPostsRewarded)}
         </p>
         <p style={{ marginTop: '1rem', fontSize: '1.7rem' }}>
-          {numPostsRewarded} × {postsMultiplier} ={' '}
+          {numPostsRewarded} × {karmaMultiplier.post} ={' '}
           <b>{addCommasToNumber(karmaPoints)} Karma Points</b>
         </p>
       </div>
