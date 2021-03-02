@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ItemPanel from './ItemPanel';
 import Icon from 'components/Icon';
 import { useAppContext, useContentContext } from 'contexts';
@@ -18,7 +19,11 @@ const item = {
   ]
 };
 
-export default function ProfilePictureItem() {
+ProfilePictureItem.propTypes = {
+  style: PropTypes.object
+};
+
+export default function ProfilePictureItem({ style }) {
   const { karmaPoints, numPics = 0, userId } = useMyState();
   const {
     requestHelpers: { upgradeNumPics }
@@ -43,7 +48,7 @@ export default function ProfilePictureItem() {
             } pictures on you profile page`
           : 'Unlock this item to post pictures on your profile page'
       }
-      style={{ marginTop: '5rem' }}
+      style={style}
       upgradeIcon={<Icon size="3x" icon="upload" />}
     >
       <div

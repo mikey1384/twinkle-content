@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ItemPanel from './ItemPanel';
 import Icon from 'components/Icon';
 import { useAppContext, useContentContext } from 'contexts';
@@ -29,7 +30,11 @@ const item = {
   })
 };
 
-export default function FileSizeItem() {
+FileSizeItem.propTypes = {
+  style: PropTypes.object
+};
+
+export default function FileSizeItem({ style }) {
   const { fileUploadLvl = 0, karmaPoints, userId } = useMyState();
   const {
     actions: { onUpdateProfileInfo }
@@ -48,7 +53,7 @@ export default function FileSizeItem() {
       onUnlock={handleUpgrade}
       itemName={item.name[fileUploadLvl]}
       itemDescription={item.description[fileUploadLvl]}
-      style={{ marginTop: '5rem' }}
+      style={style}
       upgradeIcon={<Icon size="3x" icon="upload" />}
     >
       <div

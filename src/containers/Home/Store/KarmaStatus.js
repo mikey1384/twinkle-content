@@ -77,8 +77,8 @@ export default function KarmaStatus() {
     if (authLevel < 2) {
       return (
         <span>
-          Your Karma Points = Total number of{' '}
-          <b style={{ color: Color.pink() }}>Twinkles</b> you rewarded + (
+          Your Karma Points = Total number of Twinkles you{' '}
+          <b style={{ color: Color.pink() }}>rewarded</b> + (
           {recommendationsMultiplier} × total number of your{' '}
           <b style={{ color: Color.brownOrange() }}>recommendations</b> that
           were approved by teachers)
@@ -98,8 +98,9 @@ export default function KarmaStatus() {
       return (
         <div style={{ fontSize: '1.5rem', marginTop: '3rem' }}>
           <p>
-            Total number of <b style={{ color: Color.pink() }}>Twinkles</b> you
-            rewarded: {addCommasToNumber(numTwinklesRewarded)}
+            Total number of Twinkles you{' '}
+            <b style={{ color: Color.pink() }}>rewarded</b>:{' '}
+            {addCommasToNumber(numTwinklesRewarded)}
           </p>
           <p>
             Total number of{' '}
@@ -110,7 +111,9 @@ export default function KarmaStatus() {
           <p style={{ marginTop: '1rem', fontSize: '1.7rem' }}>
             {numTwinklesRewarded} + ({recommendationsMultiplier} ×{' '}
             {numApprovedRecommendations}) ={' '}
-            <b>{addCommasToNumber(karmaPoints)} Karma Points</b>
+            <b style={{ color: Color.darkerGray() }}>
+              {addCommasToNumber(karmaPoints)} Karma Points
+            </b>
           </p>
         </div>
       );
@@ -146,7 +149,6 @@ export default function KarmaStatus() {
         border-radius: ${borderRadius};
         @media (max-width: ${mobileMaxWidth}) {
           border-radius: 0;
-          border-top: 0;
           border-left: 0;
           border-right: 0;
         }
@@ -159,7 +161,8 @@ export default function KarmaStatus() {
           <p
             className={css`
               font-weight: bold;
-              font-size: 2.3rem;
+              font-size: 2.2rem;
+              color: ${Color.darkerGray()};
             `}
           >
             You have {addCommasToNumber(karmaPoints)} Karma Points
