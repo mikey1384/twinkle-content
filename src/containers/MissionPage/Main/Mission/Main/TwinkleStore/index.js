@@ -92,7 +92,7 @@ export default function TwinkleStore({ mission }) {
           <span>{`, you will see a section labeled "change your username"`}</span>
         </p>
         <MockUsernameSection
-          style={{ marginTop: '3rem' }}
+          style={{ marginTop: '2rem' }}
           karmaPoints={karmaPoints}
         />
       </div>
