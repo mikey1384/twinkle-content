@@ -106,8 +106,8 @@ export default function TwinkleStore({ mission }) {
         }}
       >
         <p>
-          <span>Below the</span> <Icon icon="lock" />{' '}
-          <span>{`icon, there's a button that says "unlock"`}</span>
+          <span>{`See the button that says "unlock" below the`}</span>{' '}
+          <Icon icon="lock" /> <span>icon?</span>
         </p>
         <img
           className={css`
