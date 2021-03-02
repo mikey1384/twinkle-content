@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import UsernameChangeItem from './username_change_item.png';
 import UnlockFaded from './unlock_faded.png';
 import Icon from 'components/Icon';
 import Loading from 'components/Loading';
+import MockUsernameSection from './MockUsernameSection';
 import { karmaMultiplier } from 'constants/defaultValues';
 import { useAppContext, useContentContext } from 'contexts';
 import { mobileMaxWidth } from 'constants/css';
@@ -74,7 +74,6 @@ export default function TwinkleStore({ mission }) {
         alignItems: 'center'
       }}
     >
-      {karmaPoints}
       <p style={{ fontWeight: 'bold', fontSize: '2.3rem' }}>Instructions</p>
       <div
         style={{
@@ -92,16 +91,9 @@ export default function TwinkleStore({ mission }) {
           </a>
           <span>{`, you will see a section labeled "change your username"`}</span>
         </p>
-        <img
-          className={css`
-            width: 100%;
-            max-width: 50rem;
-            margin-top: 1.5rem;
-            @media (max-width: ${mobileMaxWidth}) {
-              max-width: 100%;
-            }
-          `}
-          src={UsernameChangeItem}
+        <MockUsernameSection
+          style={{ marginTop: '3rem' }}
+          karmaPoints={karmaPoints}
         />
       </div>
       <div
