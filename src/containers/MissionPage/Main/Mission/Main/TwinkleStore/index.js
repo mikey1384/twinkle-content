@@ -68,7 +68,7 @@ export default function TwinkleStore({ mission }) {
             width: 100%;
             max-width: 30rem;
             @media (max-width: ${mobileMaxWidth}) {
-              max-width: 100%;
+              max-width: 50%;
             }
           `}
           src={UnlockFaded}
