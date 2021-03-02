@@ -112,7 +112,7 @@ export default function MissionList({
               >
                 {selectedMissionListTab === 'ongoing' ? (
                   'You have completed every available mission'
-                ) : selectedMissionListTab === 'completed' ? (
+                ) : selectedMissionListTab === 'complete' ? (
                   `You haven't completed any mission, yet`
                 ) : (
                   <Loading />
