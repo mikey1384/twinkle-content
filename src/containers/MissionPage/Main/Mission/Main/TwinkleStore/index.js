@@ -224,7 +224,7 @@ export default function TwinkleStore({ mission }) {
                 fontSize: '2rem'
               }}
             >
-              Good luck
+              Good luck!
             </p>
           </div>
         )}

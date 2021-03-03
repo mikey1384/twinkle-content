@@ -20,7 +20,7 @@ export default function ViewTutorial({ onStartClick }) {
       >
         <Button
           style={{ marginLeft: '1rem', fontSize: '2rem' }}
-          color="rose"
+          color="green"
           skeuomorphic
           onClick={onStartClick}
         >
