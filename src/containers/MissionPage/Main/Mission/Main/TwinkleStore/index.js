@@ -156,7 +156,7 @@ export default function TwinkleStore({ mission }) {
               alignItems: 'center'
             }}
           >
-            <p>{`Right now the button is faded out and doesn't work`}</p>
+            <p>{`Right now that button is faded out and doesn't work`}</p>
             <p style={{ marginTop: '20rem' }}>
               <span>{`This is because you don't have enough karma points`}</span>
             </p>
@@ -188,8 +188,43 @@ export default function TwinkleStore({ mission }) {
               <b>{requiredKarmaPoints - karmaPoints} more karma points</b>
             </p>
             <p style={{ marginTop: '1rem' }}>
-              Once you do, the button will light up
+              Once you do, the button will light up like this
             </p>
+            <div
+              className={css`
+                display: flex;
+                justify-content: center;
+                width: 100%;
+                margin-top: 1rem;
+              `}
+            >
+              <Button
+                skeuomorphic
+                color="green"
+                style={{ fontSize: '3rem', padding: '2rem', cursor: 'default' }}
+                className={css`
+                  &:hover {
+                    box-shadow: 0 0 1px ${Color.green(0.5)} !important;
+                    border-color: ${Color.green(0.5)}!important;
+                  }
+                `}
+                onClick={() => null}
+              >
+                <Icon icon="unlock" />
+                <span style={{ marginLeft: '0.7rem' }}>Unlock</span>
+              </Button>
+            </div>
+            <p style={{ marginTop: '20rem' }}>
+              <span>
+                Your <b>mission</b> is to earn the remaining
+              </span>{' '}
+              {requiredKarmaPoints - karmaPoints}{' '}
+              <span>{`karma points and press the "unlock" button once it lights up.`}</span>
+            </p>
+            <p style={{ marginTop: '1rem' }}>
+              Once you are done, come back here to claim your reward
+            </p>
+            <p style={{ marginTop: '5rem' }}>Good luck!</p>
           </div>
         )}
       </div>
