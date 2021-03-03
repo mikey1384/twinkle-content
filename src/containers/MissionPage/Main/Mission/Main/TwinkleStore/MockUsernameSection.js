@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
@@ -12,14 +12,17 @@ import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 ItemPanel.propTypes = {
   requiredKarmaPoints: PropTypes.number,
   karmaPoints: PropTypes.number,
-  style: PropTypes.object
+  style: PropTypes.object,
+  unlockProgress: PropTypes.number
 };
 
-export default function ItemPanel({ requiredKarmaPoints, style, karmaPoints }) {
+export default function ItemPanel({
+  requiredKarmaPoints,
+  style,
+  karmaPoints,
+  unlockProgress
+}) {
   const { canChangeUsername, profileTheme } = useMyState();
-  const unlockProgress = useMemo(() => {
-    return Math.floor(Math.min((karmaPoints * 100) / requiredKarmaPoints, 100));
-  }, [karmaPoints, requiredKarmaPoints]);
 
   return (
     <div
