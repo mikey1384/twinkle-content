@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import ProgressBar from 'components/ProgressBar';
 import Icon from 'components/Icon';
+import MockUsernameSection from './MockUsernameSection';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
@@ -23,13 +24,54 @@ export default function NotEnoughKarmaInstructions({
   return (
     <div
       style={{
-        marginTop: '1rem',
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center'
       }}
     >
+      <p style={{ fontWeight: 'bold', fontSize: '2.3rem' }}>Instructions</p>
+      <div
+        style={{
+          width: '100%',
+          marginTop: '3rem',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
+        }}
+      >
+        <p>
+          <span>If you go to </span>
+          <a style={{ fontWeight: 'bold' }} href="/store" target="_blank">
+            Twinkle Store
+          </a>
+          <span>{`, you will see a section labeled "change your username"`}</span>
+        </p>
+        <MockUsernameSection
+          className={css`
+            margin-top: 2rem;
+            width: 60%;
+            @media (max-width: ${mobileMaxWidth}) {
+              width: 90%;
+            }
+          `}
+          karmaPoints={karmaPoints}
+          requiredKarmaPoints={requiredKarmaPoints}
+          unlockProgress={unlockProgress}
+        />
+      </div>
+      <p style={{ marginTop: '2rem' }}>
+        See the{' '}
+        <span
+          style={{
+            fontWeight: 'bold',
+            color: Color.green(0.5)
+          }}
+        >
+          <Icon icon="unlock" /> unlock
+        </span>{' '}
+        button below the <Icon icon="lock" /> <span>icon?</span>
+      </p>
       <p>{`Right now that button is faded out and doesn't work`}</p>
       <p style={{ marginTop: '20rem' }}>
         <span>{`This is because you don't have enough karma points`}</span>
@@ -97,11 +139,11 @@ export default function NotEnoughKarmaInstructions({
         .
       </p>
       <p style={{ marginTop: '1rem' }}>
-        When you are done, come back here to claim your reward!
+        When you are done, come back here to claim your reward.
       </p>
       <p
         style={{
-          marginTop: '20rem',
+          marginTop: '5rem',
           fontWeight: 'bold',
           fontSize: '2rem'
         }}

@@ -1,20 +1,13 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
-import Icon from 'components/Icon';
 import Loading from 'components/Loading';
-import MockUsernameSection from './MockUsernameSection';
 import NotEnoughKarmaInstructions from './NotEnoughKarmaInstructions';
 import { karmaMultiplier, karmaPointTable } from 'constants/defaultValues';
 import { useAppContext, useContentContext } from 'contexts';
-import { Color, mobileMaxWidth } from 'constants/css';
+import { mobileMaxWidth } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
 
-TwinkleStore.propTypes = {
-  mission: PropTypes.object.isRequired
-};
-
-export default function TwinkleStore({ mission }) {
+export default function TwinkleStore() {
   const { authLevel, userId, karmaPoints, profileTheme } = useMyState();
   const {
     requestHelpers: { loadKarmaPoints }
@@ -82,58 +75,36 @@ export default function TwinkleStore({ mission }) {
         alignItems: 'center'
       }}
     >
-      <p style={{ fontWeight: 'bold', fontSize: '2.3rem' }}>Instructions</p>
       <div
         style={{
-          marginTop: '2.5rem',
+          marginTop: '2rem',
           display: 'flex',
           width: '100%',
           flexDirection: 'column',
           alignItems: 'center'
         }}
       >
-        <p>
-          <span>If you go to </span>
-          <a style={{ fontWeight: 'bold' }} href="/store" target="_blank">
-            {mission.title}
-          </a>
-          <span>{`, you will see a section labeled "change your username"`}</span>
-        </p>
-        <MockUsernameSection
-          className={css`
-            margin-top: 2rem;
-            width: 60%;
-            @media (max-width: ${mobileMaxWidth}) {
-              width: 90%;
-            }
-          `}
-          karmaPoints={karmaPoints}
-          requiredKarmaPoints={requiredKarmaPoints}
-          unlockProgress={unlockProgress}
-        />
-      </div>
-      <div
-        style={{
-          marginTop: '3rem',
-          display: 'flex',
-          width: '100%',
-          flexDirection: 'column',
-          alignItems: 'center'
-        }}
-      >
-        <p>
-          See the{' '}
-          <span
-            style={{
-              fontWeight: 'bold',
-              color: Color.green(hasEnoughKarmaPoints ? 1 : 0.5)
-            }}
+        {hasEnoughKarmaPoints ? (
+          <div
+            className={css`
+              width: 60%;
+              padding: 0 1rem;
+              text-align: center;
+              @media (max-width: ${mobileMaxWidth}) {
+                width: 90%;
+              }
+            `}
           >
-            <Icon icon="unlock" /> unlock
-          </span>{' '}
-          button below the <Icon icon="lock" /> <span>icon?</span>
-        </p>
-        {!hasEnoughKarmaPoints && (
+            <p>
+              You have successfully earned the {requiredKarmaPoints} karma
+              points required to enable the unlock button!
+            </p>
+            <p style={{ marginTop: '5rem' }}>
+              Now go to Twinkle Store, press the button, and
+            </p>
+            <p>come back here when you are done</p>
+          </div>
+        ) : (
           <NotEnoughKarmaInstructions
             profileTheme={profileTheme}
             unlockProgress={unlockProgress}
