@@ -218,13 +218,19 @@ export default function TwinkleStore({ mission }) {
               <span>
                 Your <b>mission</b> is to earn the remaining
               </span>{' '}
-              {requiredKarmaPoints - karmaPoints}{' '}
-              <span>{`karma points and press the "unlock" button once it lights up.`}</span>
+              {requiredKarmaPoints - karmaPoints} karma points
             </p>
             <p style={{ marginTop: '1rem' }}>
-              Once you are done, come back here to claim your reward
+              <span>{` and press the "unlock" button`}</span> from{' '}
+              <a href="/store" target="_blank">
+                {mission.title}
+              </a>{' '}
+              once it lights up.
             </p>
-            <p style={{ marginTop: '5rem' }}>Good luck!</p>
+            <p style={{ marginTop: '1rem' }}>
+              When you are done, come back here to claim your reward!
+            </p>
+            <p style={{ marginTop: '20rem', fontWeight: 'bold' }}>Good luck!</p>
           </div>
         )}
       </div>
