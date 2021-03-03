@@ -96,7 +96,7 @@ export default function TwinkleStore({ mission }) {
       >
         <p>
           <span>If you go to </span>
-          <a href="/store" target="_blank">
+          <a style={{ fontWeight: 'bold' }} href="/store" target="_blank">
             {mission.title}
           </a>
           <span>{`, you will see a section labeled "change your username"`}</span>
@@ -149,7 +149,7 @@ export default function TwinkleStore({ mission }) {
         {!hasEnoughKarmaPoints && (
           <div
             style={{
-              marginTop: '1rem',
+              marginTop: '2rem',
               width: '100%',
               display: 'flex',
               flexDirection: 'column',
@@ -218,14 +218,18 @@ export default function TwinkleStore({ mission }) {
               <span>
                 Your <b>mission</b> is to earn the remaining
               </span>{' '}
-              {requiredKarmaPoints - karmaPoints} karma points
+              {requiredKarmaPoints - karmaPoints} karma points{' '}
             </p>
             <p style={{ marginTop: '1rem' }}>
-              <span>{` and press the "unlock" button`}</span> from{' '}
-              <a href="/store" target="_blank">
+              <span>and press the</span>{' '}
+              <span style={{ color: Color.green(), fontWeight: 'bold' }}>
+                <Icon icon="unlock" /> unlock
+              </span>{' '}
+              button once it lights up in{' '}
+              <a style={{ fontWeight: 'bold' }} href="/store" target="_blank">
                 {mission.title}
-              </a>{' '}
-              once it lights up.
+              </a>
+              .
             </p>
             <p style={{ marginTop: '1rem' }}>
               When you are done, come back here to claim your reward!
