@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import UnlockFaded from './unlock_faded.png';
 import Icon from 'components/Icon';
 import Loading from 'components/Loading';
 import MockUsernameSection from './MockUsernameSection';
-import { karmaMultiplier } from 'constants/defaultValues';
+import Button from 'components/Button';
+import { karmaMultiplier, karmaPointTable } from 'constants/defaultValues';
 import { useAppContext, useContentContext } from 'contexts';
-import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 
@@ -24,6 +23,7 @@ export default function TwinkleStore({ mission }) {
   } = useContentContext();
   const [loadingKarma, setLoadingKarma] = useState(false);
   const mounted = useRef(true);
+  const requiredKarmaPoints = karmaPointTable.username;
 
   useEffect(() => {
     if (userId) {
@@ -94,6 +94,7 @@ export default function TwinkleStore({ mission }) {
         <MockUsernameSection
           style={{ marginTop: '2rem' }}
           karmaPoints={karmaPoints}
+          requiredKarmaPoints={requiredKarmaPoints}
         />
       </div>
       <div
@@ -109,16 +110,25 @@ export default function TwinkleStore({ mission }) {
           <span>{`See the button that says "unlock" below the`}</span>{' '}
           <Icon icon="lock" /> <span>icon?</span>
         </p>
-        <img
+        <div
           className={css`
+            display: flex;
+            justify-content: center;
             width: 100%;
-            max-width: 30rem;
-            @media (max-width: ${mobileMaxWidth}) {
-              max-width: 50%;
-            }
+            margin-top: 2rem;
           `}
-          src={UnlockFaded}
-        />
+        >
+          <Button
+            disabled={karmaPoints < requiredKarmaPoints}
+            skeuomorphic
+            color="green"
+            style={{ fontSize: '3rem', padding: '2rem' }}
+            onClick={() => null}
+          >
+            <Icon icon="unlock" />
+            <span style={{ marginLeft: '0.7rem' }}>Unlock</span>
+          </Button>
+        </div>
       </div>
     </div>
   );

@@ -5,22 +5,21 @@ import Button from 'components/Button';
 import ProgressBar from 'components/ProgressBar';
 import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
-import { karmaPointTable, priceTable } from 'constants/defaultValues';
+import { priceTable } from 'constants/defaultValues';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 
 ItemPanel.propTypes = {
+  requiredKarmaPoints: PropTypes.number,
   karmaPoints: PropTypes.number,
   style: PropTypes.object
 };
 
-export default function ItemPanel({ style, karmaPoints }) {
+export default function ItemPanel({ requiredKarmaPoints, style, karmaPoints }) {
   const { canChangeUsername, profileTheme } = useMyState();
   const unlockProgress = useMemo(() => {
-    return Math.floor(
-      Math.min((karmaPoints * 100) / karmaPointTable.username, 100)
-    );
-  }, [karmaPoints]);
+    return Math.floor(Math.min((karmaPoints * 100) / requiredKarmaPoints, 100));
+  }, [karmaPoints, requiredKarmaPoints]);
 
   return (
     <div
@@ -44,7 +43,7 @@ export default function ItemPanel({ style, karmaPoints }) {
       {!canChangeUsername && (
         <>
           <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
-            Requires {addCommasToNumber(karmaPointTable.username)} KP
+            Requires {addCommasToNumber(requiredKarmaPoints)} KP
           </p>
           <p style={{ fontSize: '1.3rem', marginTop: '0.5rem' }}>
             {`Unlock this item to change your username anytime you want for ${priceTable.username} Twinkle Coins`}
@@ -87,8 +86,7 @@ export default function ItemPanel({ style, karmaPoints }) {
         progress={unlockProgress}
       />
       <p style={{ fontSize: '1.2rem', marginTop: '0.5rem' }}>
-        You need{' '}
-        <b>{addCommasToNumber(karmaPointTable.username)} karma points</b> to
+        You need <b>{addCommasToNumber(requiredKarmaPoints)} karma points</b> to
         unlock this item. You have{' '}
         <b>{addCommasToNumber(karmaPoints)} karma points</b>
       </p>
