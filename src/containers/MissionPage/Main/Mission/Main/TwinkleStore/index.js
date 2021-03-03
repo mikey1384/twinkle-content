@@ -116,7 +116,7 @@ export default function TwinkleStore({ mission }) {
       </div>
       <div
         style={{
-          marginTop: '20rem',
+          marginTop: '3rem',
           display: 'flex',
           width: '100%',
           flexDirection: 'column',
@@ -124,32 +124,21 @@ export default function TwinkleStore({ mission }) {
         }}
       >
         <p>
-          <span>{`See the button that says "unlock" below the`}</span>{' '}
-          <Icon icon="lock" /> <span>icon?</span>
-        </p>
-        <div
-          className={css`
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            margin-top: 1rem;
-          `}
-        >
-          <Button
-            disabled={!hasEnoughKarmaPoints}
-            skeuomorphic
-            color="green"
-            style={{ fontSize: '3rem', padding: '2rem' }}
-            onClick={() => null}
+          See the{' '}
+          <span
+            style={{
+              fontWeight: 'bold',
+              color: Color.green(hasEnoughKarmaPoints ? 1 : 0.5)
+            }}
           >
-            <Icon icon="unlock" />
-            <span style={{ marginLeft: '0.7rem' }}>Unlock</span>
-          </Button>
-        </div>
+            <Icon icon="unlock" /> unlock
+          </span>{' '}
+          button below the <Icon icon="lock" /> <span>icon?</span>
+        </p>
         {!hasEnoughKarmaPoints && (
           <div
             style={{
-              marginTop: '2rem',
+              marginTop: '1rem',
               width: '100%',
               display: 'flex',
               flexDirection: 'column',
@@ -188,7 +177,7 @@ export default function TwinkleStore({ mission }) {
               <b>{requiredKarmaPoints - karmaPoints} more karma points</b>
             </p>
             <p style={{ marginTop: '1rem' }}>
-              Once you do, the button will light up like this
+              Once you do, the button will light up like this:
             </p>
             <div
               className={css`
@@ -202,12 +191,6 @@ export default function TwinkleStore({ mission }) {
                 skeuomorphic
                 color="green"
                 style={{ fontSize: '3rem', padding: '2rem', cursor: 'default' }}
-                className={css`
-                  &:hover {
-                    box-shadow: 0 0 1px ${Color.green(0.5)} !important;
-                    border-color: ${Color.green(0.5)}!important;
-                  }
-                `}
                 onClick={() => null}
               >
                 <Icon icon="unlock" />
@@ -234,7 +217,15 @@ export default function TwinkleStore({ mission }) {
             <p style={{ marginTop: '1rem' }}>
               When you are done, come back here to claim your reward!
             </p>
-            <p style={{ marginTop: '20rem', fontWeight: 'bold' }}>Good luck!</p>
+            <p
+              style={{
+                marginTop: '20rem',
+                fontWeight: 'bold',
+                fontSize: '2rem'
+              }}
+            >
+              Good luck
+            </p>
           </div>
         )}
       </div>
