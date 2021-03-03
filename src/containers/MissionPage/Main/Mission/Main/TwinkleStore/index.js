@@ -102,7 +102,7 @@ export default function TwinkleStore({ mission }) {
           <span>{`, you will see a section labeled "change your username"`}</span>
         </p>
         <MockUsernameSection
-          style={{ marginTop: '2rem' }}
+          style={{ marginTop: '2rem', width: '60%' }}
           karmaPoints={karmaPoints}
           requiredKarmaPoints={requiredKarmaPoints}
           unlockProgress={unlockProgress}
@@ -141,20 +141,31 @@ export default function TwinkleStore({ mission }) {
           </Button>
         </div>
         {!hasEnoughKarmaPoints && (
-          <div style={{ marginTop: '1rem' }}>
+          <div
+            style={{
+              marginTop: '1rem',
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center'
+            }}
+          >
             <div>{`Right now the button is faded out and doesn't work`}</div>
-            <ProgressBar
-              color={
-                unlockProgress === 100 ? Color.green() : Color[profileTheme]()
-              }
-              progress={unlockProgress}
-            />
-            <p style={{ fontSize: '1.2rem', marginTop: '0.5rem' }}>
-              You need{' '}
-              <b>{addCommasToNumber(requiredKarmaPoints)} karma points</b> to
-              unlock this item. You have{' '}
-              <b>{addCommasToNumber(karmaPoints)} karma points</b>
-            </p>
+            <div style={{ width: '60%', padding: '0 1rem' }}>
+              <ProgressBar
+                style={{ width: '100%' }}
+                color={
+                  unlockProgress === 100 ? Color.green() : Color[profileTheme]()
+                }
+                progress={unlockProgress}
+              />
+              <p style={{ fontSize: '1.2rem', marginTop: '0.5rem' }}>
+                You need{' '}
+                <b>{addCommasToNumber(requiredKarmaPoints)} karma points</b> to
+                unlock this item. You have{' '}
+                <b>{addCommasToNumber(karmaPoints)} karma points</b>
+              </p>
+            </div>
           </div>
         )}
       </div>
