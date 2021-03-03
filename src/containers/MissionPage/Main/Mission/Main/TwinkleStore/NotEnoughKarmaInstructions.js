@@ -101,7 +101,7 @@ export default function NotEnoughKarmaInstructions({
         <b>{requiredKarmaPoints - karmaPoints} more karma points</b>
       </p>
       <p style={{ marginTop: '1rem' }}>
-        Once you do, the button will light up like this:
+        Once you do, the button will become enabled and look like this:
       </p>
       <div
         className={css`
@@ -132,7 +132,7 @@ export default function NotEnoughKarmaInstructions({
         <span style={{ color: Color.green(), fontWeight: 'bold' }}>
           <Icon icon="unlock" /> unlock
         </span>{' '}
-        button once it lights up in{' '}
+        button once it gets enabled in{' '}
         <a style={{ fontWeight: 'bold' }} href="/store" target="_blank">
           Twinkle Store
         </a>
