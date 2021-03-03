@@ -12,11 +12,13 @@ import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 ItemPanel.propTypes = {
   requiredKarmaPoints: PropTypes.number,
   karmaPoints: PropTypes.number,
+  className: PropTypes.string,
   style: PropTypes.object,
   unlockProgress: PropTypes.number
 };
 
 export default function ItemPanel({
+  className,
   requiredKarmaPoints,
   style,
   karmaPoints,
@@ -26,12 +28,12 @@ export default function ItemPanel({
 
   return (
     <div
-      className={css`
+      className={`${css`
         border-radius: ${borderRadius};
         @media (max-width: ${mobileMaxWidth}) {
           border-radius: 0;
         }
-      `}
+      `} ${className}`}
       style={{
         border: `1px solid ${Color.borderGray()}`,
         background: '#fff',

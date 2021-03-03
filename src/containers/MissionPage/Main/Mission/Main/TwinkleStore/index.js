@@ -7,7 +7,7 @@ import Button from 'components/Button';
 import ProgressBar from 'components/ProgressBar';
 import { karmaMultiplier, karmaPointTable } from 'constants/defaultValues';
 import { useAppContext, useContentContext } from 'contexts';
-import { Color } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
@@ -102,7 +102,13 @@ export default function TwinkleStore({ mission }) {
           <span>{`, you will see a section labeled "change your username"`}</span>
         </p>
         <MockUsernameSection
-          style={{ marginTop: '2rem', width: '60%' }}
+          className={css`
+            margin-top: 2rem;
+            width: 60%;
+            @media (max-width: ${mobileMaxWidth}) {
+              width: 90%;
+            }
+          `}
           karmaPoints={karmaPoints}
           requiredKarmaPoints={requiredKarmaPoints}
           unlockProgress={unlockProgress}
@@ -151,7 +157,15 @@ export default function TwinkleStore({ mission }) {
             }}
           >
             <div>{`Right now the button is faded out and doesn't work`}</div>
-            <div style={{ width: '60%', padding: '0 1rem' }}>
+            <div
+              className={css`
+                width: 60%;
+                padding: 0 1rem;
+                @media (max-width: ${mobileMaxWidth}) {
+                  width: 90%;
+                }
+              `}
+            >
               <ProgressBar
                 style={{ width: '100%' }}
                 color={
