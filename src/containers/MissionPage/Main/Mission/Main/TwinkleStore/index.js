@@ -116,7 +116,7 @@ export default function TwinkleStore({ mission }) {
       </div>
       <div
         style={{
-          marginTop: '5rem',
+          marginTop: '20rem',
           display: 'flex',
           width: '100%',
           flexDirection: 'column',
@@ -156,7 +156,10 @@ export default function TwinkleStore({ mission }) {
               alignItems: 'center'
             }}
           >
-            <div>{`Right now the button is faded out and doesn't work`}</div>
+            <p>{`Right now the button is faded out and doesn't work`}</p>
+            <p style={{ marginTop: '20rem' }}>
+              <span>{`This is because you don't have enough karma points`}</span>
+            </p>
             <div
               className={css`
                 width: 60%;
@@ -167,7 +170,7 @@ export default function TwinkleStore({ mission }) {
               `}
             >
               <ProgressBar
-                style={{ width: '100%' }}
+                style={{ width: '100%', marginTop: '1.5rem' }}
                 color={
                   unlockProgress === 100 ? Color.green() : Color[profileTheme]()
                 }
@@ -180,6 +183,13 @@ export default function TwinkleStore({ mission }) {
                 <b>{addCommasToNumber(karmaPoints)} karma points</b>
               </p>
             </div>
+            <p style={{ marginTop: '20rem' }}>
+              To make the button work, you need to earn{' '}
+              <b>{requiredKarmaPoints - karmaPoints} more karma points</b>
+            </p>
+            <p style={{ marginTop: '1rem' }}>
+              Once you do, the button will light up
+            </p>
           </div>
         )}
       </div>
