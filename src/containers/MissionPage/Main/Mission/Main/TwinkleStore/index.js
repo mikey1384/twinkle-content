@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Loading from 'components/Loading';
 import NotEnoughKarmaInstructions from './NotEnoughKarmaInstructions';
+import Icon from 'components/Icon';
 import { karmaMultiplier, karmaPointTable } from 'constants/defaultValues';
 import { useAppContext, useContentContext } from 'contexts';
-import { mobileMaxWidth } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
 
@@ -96,11 +97,20 @@ export default function TwinkleStore() {
             `}
           >
             <p>
-              You have successfully earned the {requiredKarmaPoints} karma
-              points required to enable the unlock button!
+              You have successfully earned the{' '}
+              <b>{requiredKarmaPoints} karma points</b> required to enable the
+              unlock button!
             </p>
             <p style={{ marginTop: '5rem' }}>
-              Now go to Twinkle Store, press the button, and
+              Now go to{' '}
+              <a style={{ fontWeight: 'bold' }} href="/store" target="_blank">
+                Twinkle Store
+              </a>
+              , press the{' '}
+              <span style={{ color: Color.green(), fontWeight: 'bold' }}>
+                <Icon icon="unlock" /> unlock{' '}
+              </span>
+              button, and
             </p>
             <p>come back here when you are done</p>
           </div>
