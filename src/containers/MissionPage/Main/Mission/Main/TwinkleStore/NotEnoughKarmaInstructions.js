@@ -112,7 +112,7 @@ export default function NotEnoughKarmaInstructions({
           </p>
         </div>
         <p style={{ marginTop: '2rem' }}>
-          To make the button work you need to earn{' '}
+          To make the button work you need{' '}
           <b>{requiredKarmaPoints - karmaPoints} more karma points</b>
         </p>
         <p style={{ marginTop: '20rem' }}>
