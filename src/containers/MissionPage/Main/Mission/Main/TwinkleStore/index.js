@@ -3,12 +3,10 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import Loading from 'components/Loading';
 import MockUsernameSection from './MockUsernameSection';
-import Button from 'components/Button';
-import ProgressBar from 'components/ProgressBar';
+import NotEnoughKarmaInstructions from './NotEnoughKarmaInstructions';
 import { karmaMultiplier, karmaPointTable } from 'constants/defaultValues';
 import { useAppContext, useContentContext } from 'contexts';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { addCommasToNumber } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
 
@@ -136,97 +134,12 @@ export default function TwinkleStore({ mission }) {
           button below the <Icon icon="lock" /> <span>icon?</span>
         </p>
         {!hasEnoughKarmaPoints && (
-          <div
-            style={{
-              marginTop: '1rem',
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center'
-            }}
-          >
-            <p>{`Right now that button is faded out and doesn't work`}</p>
-            <p style={{ marginTop: '20rem' }}>
-              <span>{`This is because you don't have enough karma points`}</span>
-            </p>
-            <div
-              className={css`
-                width: 60%;
-                padding: 0 1rem;
-                @media (max-width: ${mobileMaxWidth}) {
-                  width: 90%;
-                }
-              `}
-            >
-              <ProgressBar
-                style={{ width: '100%', marginTop: '1.5rem' }}
-                color={
-                  unlockProgress === 100 ? Color.green() : Color[profileTheme]()
-                }
-                progress={unlockProgress}
-              />
-              <p style={{ fontSize: '1.2rem', marginTop: '0.5rem' }}>
-                You need{' '}
-                <b>{addCommasToNumber(requiredKarmaPoints)} karma points</b> to
-                unlock this item. You have{' '}
-                <b>{addCommasToNumber(karmaPoints)} karma points</b>
-              </p>
-            </div>
-            <p style={{ marginTop: '20rem' }}>
-              To make the button work, you need to earn{' '}
-              <b>{requiredKarmaPoints - karmaPoints} more karma points</b>
-            </p>
-            <p style={{ marginTop: '1rem' }}>
-              Once you do, the button will light up like this:
-            </p>
-            <div
-              className={css`
-                display: flex;
-                justify-content: center;
-                width: 100%;
-                margin-top: 1rem;
-              `}
-            >
-              <Button
-                skeuomorphic
-                color="green"
-                style={{ fontSize: '3rem', padding: '2rem', cursor: 'default' }}
-                onClick={() => null}
-              >
-                <Icon icon="unlock" />
-                <span style={{ marginLeft: '0.7rem' }}>Unlock</span>
-              </Button>
-            </div>
-            <p style={{ marginTop: '20rem' }}>
-              <span>
-                Your <b>mission</b> is to earn the remaining
-              </span>{' '}
-              {requiredKarmaPoints - karmaPoints} karma points{' '}
-            </p>
-            <p style={{ marginTop: '1rem' }}>
-              <span>and press the</span>{' '}
-              <span style={{ color: Color.green(), fontWeight: 'bold' }}>
-                <Icon icon="unlock" /> unlock
-              </span>{' '}
-              button once it lights up in{' '}
-              <a style={{ fontWeight: 'bold' }} href="/store" target="_blank">
-                {mission.title}
-              </a>
-              .
-            </p>
-            <p style={{ marginTop: '1rem' }}>
-              When you are done, come back here to claim your reward!
-            </p>
-            <p
-              style={{
-                marginTop: '20rem',
-                fontWeight: 'bold',
-                fontSize: '2rem'
-              }}
-            >
-              Good luck!
-            </p>
-          </div>
+          <NotEnoughKarmaInstructions
+            profileTheme={profileTheme}
+            unlockProgress={unlockProgress}
+            requiredKarmaPoints={requiredKarmaPoints}
+            karmaPoints={karmaPoints}
+          />
         )}
       </div>
     </div>
