@@ -1,12 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Loading from 'components/Loading';
 import NotEnoughKarmaInstructions from './NotEnoughKarmaInstructions';
-import Icon from 'components/Icon';
 import { karmaMultiplier, karmaPointTable } from 'constants/defaultValues';
 import { useAppContext, useContentContext } from 'contexts';
-import { Color, mobileMaxWidth } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
-import { css } from '@emotion/css';
 import EnoughKarmaInstructions from './EnoughKarmaInstructions';
 
 export default function TwinkleStore() {
