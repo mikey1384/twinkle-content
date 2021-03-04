@@ -5,7 +5,7 @@ import NotEnoughKarmaInstructions from './NotEnoughKarmaInstructions';
 import EnoughKarmaInstructions from './EnoughKarmaInstructions';
 import FinalStep from './FinalStep';
 import { karmaMultiplier, karmaPointTable } from 'constants/defaultValues';
-import { useAppContext, useContentContext } from 'contexts';
+import { useAppContext, useContentContext, useViewContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
 TwinkleStore.propTypes = {
@@ -21,10 +21,13 @@ export default function TwinkleStore({ mission }) {
     profileTheme
   } = useMyState();
   const {
-    requestHelpers: { loadKarmaPoints }
+    requestHelpers: { loadKarmaPoints, loadMyData }
   } = useAppContext();
   const {
-    actions: { onUpdateProfileInfo }
+    state: { pageVisible }
+  } = useViewContext();
+  const {
+    actions: { onInitContent, onUpdateProfileInfo }
   } = useContentContext();
   const [loadingKarma, setLoadingKarma] = useState(false);
   const mounted = useRef(true);
@@ -35,12 +38,16 @@ export default function TwinkleStore({ mission }) {
 
   useEffect(() => {
     if (userId) {
-      handleLoadKarmaPoints();
+      init();
     }
 
-    async function handleLoadKarmaPoints() {
+    async function init() {
       if (mounted.current) {
         setLoadingKarma(true);
+      }
+      const data = await loadMyData();
+      if (mounted.current) {
+        onInitContent({ contentType: 'user', contentId: data.userId, ...data });
       }
       const { karmaPoints: kp, numPostsRewarded } = await loadKarmaPoints();
 
@@ -61,7 +68,7 @@ export default function TwinkleStore({ mission }) {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId]);
+  }, [userId, pageVisible]);
 
   const hasEnoughKarmaPoints = useMemo(() => {
     return karmaPoints >= requiredKarmaPoints;

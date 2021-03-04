@@ -53,7 +53,8 @@ function App({ location, history }) {
     },
     requestHelpers: {
       auth,
-      initSession,
+      loadMyData,
+      recordUserTraffic,
       uploadFile,
       uploadContent,
       uploadFileOnChat
@@ -149,7 +150,8 @@ function App({ location, history }) {
     }
     authRef.current = auth();
     async function init() {
-      const data = await initSession(location.pathname);
+      await recordUserTraffic(location.pathname);
+      const data = await loadMyData(location.pathname);
       if (mounted.current) {
         onInitContent({ contentType: 'user', contentId: data.userId, ...data });
         if (data?.userId) onInitUser(data);

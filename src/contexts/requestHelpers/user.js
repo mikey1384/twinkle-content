@@ -171,16 +171,24 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
-    async initSession(pathname) {
+    async recordUserTraffic(pathname) {
       if (token() === null) {
         request.post(`${URL}/user/recordAnonTraffic`, { pathname });
         return {};
       }
       try {
         const { data } = await request.get(
-          `${URL}/user/session?pathname=${pathname}`,
+          `${URL}/user/traffic?pathname=${pathname}`,
           auth()
         );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
+    async loadMyData() {
+      try {
+        const { data } = await request.get(`${URL}/user/session`, auth());
         return Promise.resolve(data);
       } catch (error) {
         return handleError(error);
