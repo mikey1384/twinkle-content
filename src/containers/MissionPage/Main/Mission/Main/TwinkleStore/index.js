@@ -1,13 +1,20 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Loading from 'components/Loading';
 import NotEnoughKarmaInstructions from './NotEnoughKarmaInstructions';
+import EnoughKarmaInstructions from './EnoughKarmaInstructions';
+import Button from 'components/Button';
 import { karmaMultiplier, karmaPointTable } from 'constants/defaultValues';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
-import EnoughKarmaInstructions from './EnoughKarmaInstructions';
 
 export default function TwinkleStore() {
-  const { authLevel, userId, karmaPoints, profileTheme } = useMyState();
+  const {
+    authLevel,
+    canChangeUsername,
+    userId,
+    karmaPoints,
+    profileTheme
+  } = useMyState();
   const {
     requestHelpers: { loadKarmaPoints }
   } = useAppContext();
@@ -64,6 +71,16 @@ export default function TwinkleStore() {
 
   return loadingKarma ? (
     <Loading />
+  ) : canChangeUsername ? (
+    <div>
+      Great! You have unlocked change username item from Twinkle Store!
+      <div>
+        Press this button to claim your reward
+        <Button skeuomorphic color="green">
+          Press it
+        </Button>
+      </div>
+    </div>
   ) : (
     <div
       style={{
