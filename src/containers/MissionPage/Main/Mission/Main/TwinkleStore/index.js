@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
 import NotEnoughKarmaInstructions from './NotEnoughKarmaInstructions';
 import EnoughKarmaInstructions from './EnoughKarmaInstructions';
@@ -7,7 +8,11 @@ import { karmaMultiplier, karmaPointTable } from 'constants/defaultValues';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
-export default function TwinkleStore() {
+TwinkleStore.propTypes = {
+  mission: PropTypes.object
+};
+
+export default function TwinkleStore({ mission }) {
   const {
     authLevel,
     canChangeUsername,
@@ -72,7 +77,7 @@ export default function TwinkleStore() {
   return loadingKarma ? (
     <Loading />
   ) : canChangeUsername ? (
-    <FinalStep />
+    <FinalStep mission={mission} userId={userId} />
   ) : (
     <div
       style={{

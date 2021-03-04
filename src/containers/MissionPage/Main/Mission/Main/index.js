@@ -35,7 +35,7 @@ export default function Main({
         />
       )}
       {mission.missionType === 'twinkle-store' && (
-        <TwinkleStore mission={mission} onSetMissionState={onSetMissionState} />
+        <TwinkleStore mission={mission} />
       )}
       {mission.missionType === 'google' && (
         <Googling mission={mission} onSetMissionState={onSetMissionState} />

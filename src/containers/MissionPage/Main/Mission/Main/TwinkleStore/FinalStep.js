@@ -1,15 +1,37 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
+import { useAppContext, useMissionContext, useContentContext } from 'contexts';
 import { Color } from 'constants/css';
 import { css } from '@emotion/css';
 
 FinalStep.propTypes = {
+  mission: PropTypes.object.isRequired,
+  userId: PropTypes.number.isRequired,
   style: PropTypes.object
 };
 
-export default function FinalStep({ style }) {
+export default function FinalStep({ mission, style, userId }) {
+  const {
+    requestHelpers: { uploadMissionAttempt }
+  } = useAppContext();
+  const {
+    actions: { onUpdateMissionAttempt }
+  } = useMissionContext();
+  const {
+    actions: { onChangeUserXP, onUpdateUserCoins }
+  } = useContentContext();
+  const [submitDisabled, setSubmitDisabled] = useState(false);
+  const mounted = useRef(true);
+
+  useEffect(() => {
+    mounted.current = true;
+    return function onUnmount() {
+      mounted.current = false;
+    };
+  }, []);
+
   return (
     <div
       style={{
@@ -36,14 +58,44 @@ export default function FinalStep({ style }) {
       </p>
       <Button
         filled
+        disabled={submitDisabled}
         style={{ marginTop: '5rem', fontSize: '1.7rem' }}
         skeuomorphic
         color="brownOrange"
-        onClick={() => console.log('mission completee')}
+        onClick={handleCompleteMission}
       >
         <Icon icon="bolt" />
         <span style={{ marginLeft: '1rem' }}>Collect Reward</span>
       </Button>
     </div>
   );
+
+  async function handleCompleteMission() {
+    setSubmitDisabled(true);
+    const { success, newXpAndRank, newCoins } = await uploadMissionAttempt({
+      missionId: mission.id,
+      attempt: { status: 'pass' }
+    });
+    if (success) {
+      if (mounted.current) {
+        onUpdateMissionAttempt({
+          missionId: mission.id,
+          newState: { status: 'pass' }
+        });
+      }
+      if (newXpAndRank.xp && mounted.current) {
+        onChangeUserXP({
+          xp: newXpAndRank.xp,
+          rank: newXpAndRank.rank,
+          userId
+        });
+      }
+      if (newCoins.netCoins && mounted.current) {
+        onUpdateUserCoins({ coins: newCoins.netCoins, userId });
+      }
+    }
+    if (mounted.current) {
+      setSubmitDisabled(false);
+    }
+  }
 }
