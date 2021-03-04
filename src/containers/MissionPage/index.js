@@ -118,19 +118,19 @@ export default function MissionPage({
           >
             <nav
               className={
-                location.pathname === `/missions/${missionId}` ? 'active' : ''
+                location.pathname === `/missions/${missionType}` ? 'active' : ''
               }
-              onClick={() => history.push(`/missions/${missionId}`)}
+              onClick={() => history.push(`/missions/${missionType}`)}
             >
               Mission
             </nav>
             <nav
               className={
-                location.pathname === `/missions/${missionId}/manage`
+                location.pathname === `/missions/${missionType}/manage`
                   ? 'active'
                   : ''
               }
-              onClick={() => history.push(`/missions/${missionId}/manage`)}
+              onClick={() => history.push(`/missions/${missionType}/manage`)}
             >
               Manage
             </nav>
