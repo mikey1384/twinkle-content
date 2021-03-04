@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import KarmaStatus from './KarmaStatus';
 import ItemPanel from './ItemPanel';
 import ChangeUsername from './ChangeUsername';
@@ -6,18 +6,43 @@ import FileSizeItem from './FileSizeItem';
 import ProfilePictureItem from './ProfilePictureItem';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useAppContext, useContentContext } from 'contexts';
+import { useAppContext, useContentContext, useViewContext } from 'contexts';
 import { priceTable, karmaPointTable } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 
 export default function Store() {
   const {
-    requestHelpers: { unlockUsernameChange }
+    requestHelpers: { loadMyData, unlockUsernameChange }
   } = useAppContext();
   const {
-    actions: { onUpdateProfileInfo }
+    actions: { onInitContent, onUpdateProfileInfo }
   } = useContentContext();
+  const {
+    state: { pageVisible }
+  } = useViewContext();
   const { canChangeUsername, karmaPoints, userId } = useMyState();
+  const mounted = useRef(true);
+
+  useEffect(() => {
+    if (userId) {
+      init();
+    }
+
+    async function init() {
+      const data = await loadMyData();
+      if (mounted.current) {
+        onInitContent({ contentType: 'user', contentId: data.userId, ...data });
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageVisible, userId]);
+
+  useEffect(() => {
+    mounted.current = true;
+    return function onUnmount() {
+      mounted.current = false;
+    };
+  }, []);
 
   return (
     <div style={{ paddingBottom: '15rem' }}>
