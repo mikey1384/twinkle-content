@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
+import Icon from 'components/Icon';
+import { Color } from 'constants/css';
 import { css } from '@emotion/css';
 
 FinalStep.propTypes = {
@@ -24,14 +26,20 @@ export default function FinalStep({ style }) {
         }
       `}
     >
-      <p>Great! You have unlocked change username item from Twinkle Store!</p>
-      <p>Press this button to claim your reward</p>
+      <p>{`Great! You have successfully unlocked the "change username" item from Twinkle Store`}</p>
+      <p>
+        Press the <b style={{ color: Color.brownOrange() }}>button</b> below to
+        collect your reward
+      </p>
       <Button
-        style={{ marginTop: '2rem', fontSize: '1.7rem' }}
+        filled
+        style={{ marginTop: '5rem', fontSize: '1.7rem' }}
         skeuomorphic
-        color="green"
+        color="brownOrange"
+        onClick={() => console.log('mission completee')}
       >
-        Press it
+        <Icon icon="bolt" />
+        <span style={{ marginLeft: '1rem' }}>Collect Reward</span>
       </Button>
     </div>
   );
