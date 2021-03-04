@@ -26,7 +26,10 @@ export default function FinalStep({ style }) {
         }
       `}
     >
-      <p>{`Great! You have successfully unlocked the "change username" item from Twinkle Store`}</p>
+      <p>
+        Great! You have successfully unlocked the <b>change username item</b>{' '}
+        from Twinkle Store.
+      </p>
       <p>
         Press the <b style={{ color: Color.brownOrange() }}>button</b> below to
         collect your reward
