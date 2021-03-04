@@ -1,14 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Button from 'components/Button';
 
-export default function FinalStep() {
+FinalStep.propTypes = {
+  style: PropTypes.object
+};
+
+export default function FinalStep({ style }) {
   return (
     <div
       style={{
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center'
+        alignItems: 'center',
+        ...style
       }}
     >
       <p>Great! You have unlocked change username item from Twinkle Store!</p>
