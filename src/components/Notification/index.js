@@ -32,19 +32,13 @@ function Notification({ className, location, style }) {
       totalRewardedTwinkleCoins,
       currentChatSubject: { content = defaultChatSubject, loaded, ...subject }
     },
-    actions: {
-      onFetchNotifications,
-      onGetRanks,
-      onClearNotifications,
-      onResetRewards
-    }
+    actions: { onFetchNotifications, onGetRanks, onResetRewards }
   } = useNotiContext();
   const loadingNotificationRef = useRef(false);
   const [loadingNotifications, setLoadingNotifications] = useState(false);
   const [activeTab, setActiveTab] = useState('rankings');
   const userChangedTab = useRef(false);
   const mounted = useRef(true);
-  const prevUserId = useRef(userId);
   const prevTwinkleXP = useRef(twinkleXP);
 
   useEffect(() => {
@@ -88,14 +82,6 @@ function Notification({ className, location, style }) {
     location,
     numNewNotis
   ]);
-
-  useEffect(() => {
-    if (userId !== prevUserId.current && !!prevUserId.current) {
-      onClearNotifications();
-    }
-    prevUserId.current = userId;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId]);
 
   useEffect(() => {
     if (
