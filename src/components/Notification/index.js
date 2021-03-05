@@ -33,9 +33,9 @@ function Notification({ className, location, style }) {
       currentChatSubject: { content = defaultChatSubject, loaded, ...subject }
     },
     actions: {
+      onClearNotifications,
       onFetchNotifications,
       onGetRanks,
-      onClearNotifications,
       onResetRewards
     }
   } = useNotiContext();
@@ -92,6 +92,7 @@ function Notification({ className, location, style }) {
   useEffect(() => {
     if (userId !== prevUserId.current && !!prevUserId.current) {
       onClearNotifications();
+      handleFetchNotifications(true);
     }
     prevUserId.current = userId;
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -220,12 +221,13 @@ function Notification({ className, location, style }) {
     </ErrorBoundary>
   );
 
-  function handleFetchNotifications() {
-    if (notifications.length === 0) {
+  function handleFetchNotifications(reloading) {
+    if (reloading || notifications.length === 0) {
       fetchNews();
     }
     fetchRankings();
   }
+
   async function fetchNews() {
     if (!loadingNotificationRef.current) {
       setLoadingNotifications(true);
