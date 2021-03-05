@@ -139,7 +139,7 @@ export default function NavMenu({ playlistId, videoId }) {
   }, [totalRewardedTwinkles, totalRewardedTwinkleCoins]);
 
   useEffect(() => {
-    if (prevUserId.current !== userId) {
+    if (prevUserId.current !== userId && !!prevUserId.current) {
       onClearNotifications();
     }
     prevUserId.current = userId;

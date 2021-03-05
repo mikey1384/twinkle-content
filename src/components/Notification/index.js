@@ -90,7 +90,7 @@ function Notification({ className, location, style }) {
   ]);
 
   useEffect(() => {
-    if (userId !== prevUserId.current) {
+    if (userId !== prevUserId.current && !!prevUserId.current) {
       onClearNotifications();
     }
     prevUserId.current = userId;
