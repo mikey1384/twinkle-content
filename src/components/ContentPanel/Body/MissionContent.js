@@ -60,7 +60,11 @@ export default function MissionContent({ uploader, rootObj: mission }) {
       }}
     >
       <ContentLink
-        content={{ id: mission.id, title: mission.title }}
+        content={{
+          id: mission.id,
+          missionType: mission.missionType,
+          title: mission.title
+        }}
         contentType="mission"
         style={{ fontWeight: 'bold', fontSize: '2.2rem', color: Color.black() }}
       />

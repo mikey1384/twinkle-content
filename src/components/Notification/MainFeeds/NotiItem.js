@@ -33,7 +33,6 @@ export default function NotiItem({
     let notificationMessage;
     const isReply = targetComment?.userId === userId;
     const isSubjectResponse = targetSubject?.userId === userId;
-
     switch (actionObj.contentType) {
       case 'like':
         notificationMessage = (
@@ -278,6 +277,7 @@ export default function NotiItem({
               contentType="mission"
               content={{
                 id: targetObj.id,
+                missionType: targetObj.missionType,
                 title: `(${truncateText({
                   text: targetObj.content,
                   limit: 100
@@ -296,6 +296,7 @@ export default function NotiItem({
               contentType="mission"
               content={{
                 id: targetObj.id,
+                missionType: targetObj.missionType,
                 title: `(${truncateText({
                   text: targetObj.content,
                   limit: 100
