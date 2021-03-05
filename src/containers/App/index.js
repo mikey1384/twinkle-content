@@ -151,10 +151,16 @@ function App({ location, history }) {
     authRef.current = auth();
     async function init() {
       await recordUserTraffic(location.pathname);
-      const data = await loadMyData(location.pathname);
-      if (mounted.current) {
-        onInitContent({ contentType: 'user', contentId: data.userId, ...data });
-        if (data?.userId) onInitUser(data);
+      if (authRef.current?.headers?.authorization) {
+        const data = await loadMyData(location.pathname);
+        if (mounted.current) {
+          onInitContent({
+            contentType: 'user',
+            contentId: data.userId,
+            ...data
+          });
+          if (data?.userId) onInitUser(data);
+        }
       }
       onSetSessionLoaded();
     }
