@@ -38,7 +38,7 @@ export default function NavMenu({ playlistId, videoId }) {
   const { hideWatched, profileTheme, userId } = useMyState();
   const {
     state: { numNewNotis, totalRewardedTwinkles, totalRewardedTwinkleCoins },
-    actions: { onFetchNotifications }
+    actions: { onClearNotifications, onFetchNotifications }
   } = useNotiContext();
 
   const [nextVideos, setNextVideos] = useState([]);
@@ -56,6 +56,7 @@ export default function NavMenu({ playlistId, videoId }) {
   const [videoTabActive, setVideoTabActive] = useState(true);
   const [loading, setLoading] = useState(false);
   const mounted = useRef(true);
+  const prevUserId = useRef(userId);
 
   useEffect(() => {
     return function cleanUp() {
@@ -87,8 +88,7 @@ export default function NavMenu({ playlistId, videoId }) {
 
     async function handleNewReward({ receiverId }) {
       if (receiverId === userId) {
-        const data = await fetchNotifications();
-        onFetchNotifications(data);
+        handleFetchNotifications();
       }
     }
 
@@ -136,6 +136,15 @@ export default function NavMenu({ playlistId, videoId }) {
   useEffect(() => {
     setRewardsExist(totalRewardedTwinkles + totalRewardedTwinkleCoins > 0);
   }, [totalRewardedTwinkles, totalRewardedTwinkleCoins]);
+
+  useEffect(() => {
+    if (prevUserId.current !== userId && !!prevUserId.current) {
+      onClearNotifications();
+      handleFetchNotifications();
+    }
+    prevUserId.current = userId;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
 
   return (
     <ErrorBoundary
@@ -281,6 +290,13 @@ export default function NavMenu({ playlistId, videoId }) {
       <div style={{ height: '1rem', marginTop: '-1rem' }} />
     </ErrorBoundary>
   );
+
+  async function handleFetchNotifications() {
+    const data = await fetchNotifications();
+    if (mounted.current) {
+      onFetchNotifications(data);
+    }
+  }
 
   async function handleToggleHideWatched() {
     setFiltering(true);
