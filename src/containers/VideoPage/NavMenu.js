@@ -190,7 +190,7 @@ export default function NavMenu({ playlistId, videoId }) {
           }`}
           onClick={() => setVideoTabActive(false)}
         >
-          {rewardsExist ? 'Rewards' : 'News'}
+          {rewardsExist ? 'Rewards' : userId ? 'News' : 'Leaderboard'}
         </nav>
       </FilterBar>
       {userId && videoTabActive && playlistId && (

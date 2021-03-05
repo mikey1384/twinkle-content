@@ -32,7 +32,12 @@ function Notification({ className, location, style }) {
       totalRewardedTwinkleCoins,
       currentChatSubject: { content = defaultChatSubject, loaded, ...subject }
     },
-    actions: { onFetchNotifications, onGetRanks, onResetRewards }
+    actions: {
+      onClearNotifications,
+      onFetchNotifications,
+      onGetRanks,
+      onResetRewards
+    }
   } = useNotiContext();
   const loadingNotificationRef = useRef(false);
   const [loadingNotifications, setLoadingNotifications] = useState(false);
@@ -40,6 +45,7 @@ function Notification({ className, location, style }) {
   const userChangedTab = useRef(false);
   const mounted = useRef(true);
   const prevTwinkleXP = useRef(twinkleXP);
+  const prevUserId = useRef(userId);
 
   useEffect(() => {
     return function cleanUp() {
@@ -82,6 +88,15 @@ function Notification({ className, location, style }) {
     location,
     numNewNotis
   ]);
+
+  useEffect(() => {
+    if (userId !== prevUserId.current && !!prevUserId.current) {
+      onClearNotifications();
+      handleFetchNotifications(true);
+    }
+    prevUserId.current = userId;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
 
   useEffect(() => {
     if (
@@ -206,12 +221,13 @@ function Notification({ className, location, style }) {
     </ErrorBoundary>
   );
 
-  function handleFetchNotifications() {
-    if (notifications.length === 0) {
+  function handleFetchNotifications(reloading) {
+    if (reloading || notifications.length === 0) {
       fetchNews();
     }
     fetchRankings();
   }
+
   async function fetchNews() {
     if (!loadingNotificationRef.current) {
       setLoadingNotifications(true);
