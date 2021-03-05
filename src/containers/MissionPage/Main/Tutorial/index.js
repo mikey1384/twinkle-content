@@ -33,20 +33,22 @@ export default function Tutorial({
       {isCreator && !mission.tutorialId && (
         <AddTutorial missionId={mission.id} missionTitle={mission.title} />
       )}
-      {!!mission.tutorialId &&
-        mission.tutorialIsPublished &&
-        !mission.tutorialStarted &&
-        !mission.myAttempt?.status &&
-        !isCreator && (
-          <ViewTutorial
-            onStartClick={() =>
-              onSetMissionState({
-                missionId: mission.id,
-                newState: { tutorialStarted: true }
-              })
-            }
-          />
-        )}
+      {(isCreator ||
+        (!!mission.tutorialId &&
+          mission.tutorialIsPublished &&
+          !mission.tutorialStarted &&
+          !mission.myAttempt?.status)) && (
+        <ViewTutorial
+          isCreator={isCreator}
+          style={isCreator ? { marginBottom: '5rem' } : {}}
+          onStartClick={() =>
+            onSetMissionState({
+              missionId: mission.id,
+              newState: { tutorialStarted: true }
+            })
+          }
+        />
+      )}
       {!!mission.tutorialId &&
         (mission.tutorialStarted ||
           isCreator ||

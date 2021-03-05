@@ -2,15 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
-import { panel } from '../../Styles';
 
-ViewTutorial.propTypes = {
+UserView.propTypes = {
   onStartClick: PropTypes.func.isRequired
 };
 
-export default function ViewTutorial({ onStartClick }) {
+export default function UserView({ onStartClick }) {
   return (
-    <div className={panel} style={{ padding: '2rem', width: '100%' }}>
+    <div>
       <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>Need help?</h2>
       <div
         style={{
