@@ -1,9 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function Editor() {
+Editor.propTypes = {
+  tutorialPrompt: PropTypes.string,
+  tutorialButtonLabel: PropTypes.string
+};
+
+export default function Editor({ tutorialPrompt, tutorialButtonLabel }) {
   return (
     <div>
-      <div>this is the editor</div>
+      <div>{tutorialPrompt}</div>
+      <div>{tutorialButtonLabel}</div>
     </div>
   );
 }

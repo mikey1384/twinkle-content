@@ -41,7 +41,10 @@ export default function CreatorView({ tutorialPrompt, tutorialButtonLabel }) {
         </span>
       </div>
       {isEditing ? (
-        <Editor />
+        <Editor
+          tutorialPrompt={tutorialPrompt}
+          tutorialButtonLabel={tutorialButtonLabel}
+        />
       ) : (
         <div
           style={{
