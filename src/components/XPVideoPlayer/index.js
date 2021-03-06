@@ -78,8 +78,10 @@ function XPVideoPlayer({
   const [startingPosition, setStartingPosition] = useState(0);
   const timeAt = useRef(0);
   const requiredDurationForCoin = 60;
-  const thresholdXP = 3000 * 1000;
-  const requiredDurationForXP = twinkleXP > thresholdXP ? 180 : 120;
+  const thresholdXP1 = 3000 * 1000;
+  const thresholdXP2 = 6000 * 1000;
+  const requiredDurationForXP =
+    twinkleXP > thresholdXP2 ? 300 : twinkleXP > thresholdXP1 ? 180 : 120;
   const PlayerRef = useRef(null);
   const timerRef = useRef(null);
   const timeWatchedRef = useRef(0);
