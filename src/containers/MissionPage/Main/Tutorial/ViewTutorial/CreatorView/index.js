@@ -24,21 +24,23 @@ export default function CreatorView({ tutorialPrompt, tutorialButtonLabel }) {
           marginBottom: '2rem'
         }}
       >
-        <span
-          className={css`
-            cursor: pointer;
-            font-weight: bold;
-            &:hover {
-              text-decoration: underline;
-            }
-          `}
-          onClick={() => setIsEditing(true)}
-        >
-          <Icon icon="pencil-alt" />
-          <span style={{ marginLeft: '0.7rem' }}>
-            This is the preview for your tutorial prompt. Tap here to edit
+        {!isEditing && (
+          <span
+            className={css`
+              cursor: pointer;
+              font-weight: bold;
+              &:hover {
+                text-decoration: underline;
+              }
+            `}
+            onClick={() => setIsEditing(true)}
+          >
+            <Icon icon="pencil-alt" />
+            <span style={{ marginLeft: '0.7rem' }}>
+              This is the preview for your tutorial prompt. Tap here to edit
+            </span>
           </span>
-        </span>
+        )}
       </div>
       {isEditing ? (
         <Editor
