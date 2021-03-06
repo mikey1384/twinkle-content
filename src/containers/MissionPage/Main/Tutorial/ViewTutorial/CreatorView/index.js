@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import { borderRadius, Color } from 'constants/css';
@@ -10,6 +10,8 @@ CreatorView.propTypes = {
 };
 
 export default function CreatorView({ tutorialPrompt, tutorialButtonLabel }) {
+  const [isEditing, setIsEditing] = useState(false);
+
   return (
     <div style={{ width: '100%' }}>
       <div
@@ -29,6 +31,7 @@ export default function CreatorView({ tutorialPrompt, tutorialButtonLabel }) {
               text-decoration: underline;
             }
           `}
+          onClick={() => setIsEditing(true)}
         >
           <Icon icon="pencil-alt" />
           <span style={{ marginLeft: '0.7rem' }}>
@@ -36,26 +39,32 @@ export default function CreatorView({ tutorialPrompt, tutorialButtonLabel }) {
           </span>
         </span>
       </div>
-      <div
-        style={{
-          display: 'flex',
-          width: '100%',
-          alignItems: 'center',
-          flexDirection: 'column'
-        }}
-      >
-        <h2 style={{ marginBottom: '2rem' }}>{tutorialPrompt}</h2>
+      {isEditing ? (
+        <div>editor</div>
+      ) : (
         <div
           style={{
-            fontSize: '2rem',
-            padding: '1rem',
-            borderRadius,
-            border: `1px solid ${Color.borderGray()}`
+            display: 'flex',
+            width: '100%',
+            alignItems: 'center',
+            flexDirection: 'column'
           }}
         >
-          {tutorialButtonLabel}
+          <h2 style={{ marginBottom: '2rem' }}>
+            {tutorialPrompt || 'Need help?'}
+          </h2>
+          <div
+            style={{
+              fontSize: '2rem',
+              padding: '1rem',
+              borderRadius,
+              border: `1px solid ${Color.borderGray()}`
+            }}
+          >
+            {tutorialButtonLabel || 'Start Tutorial'}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
