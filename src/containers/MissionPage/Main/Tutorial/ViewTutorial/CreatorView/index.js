@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
+import Editor from './Editor';
 import { borderRadius, Color } from 'constants/css';
 import { css } from '@emotion/css';
 
@@ -40,7 +41,7 @@ export default function CreatorView({ tutorialPrompt, tutorialButtonLabel }) {
         </span>
       </div>
       {isEditing ? (
-        <div>editor</div>
+        <Editor />
       ) : (
         <div
           style={{
