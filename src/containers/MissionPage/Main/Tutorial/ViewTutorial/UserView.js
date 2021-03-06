@@ -4,13 +4,21 @@ import Button from 'components/Button';
 import Icon from 'components/Icon';
 
 UserView.propTypes = {
-  onStartClick: PropTypes.func.isRequired
+  onStartClick: PropTypes.func.isRequired,
+  tutorialPrompt: PropTypes.string,
+  tutorialButtonLabel: PropTypes.string
 };
 
-export default function UserView({ onStartClick }) {
+export default function UserView({
+  onStartClick,
+  tutorialPrompt,
+  tutorialButtonLabel
+}) {
   return (
     <div>
-      <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>Need help?</h2>
+      <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>
+        {tutorialPrompt || 'Need help?'}
+      </h2>
       <div
         style={{
           display: 'flex',
@@ -24,7 +32,9 @@ export default function UserView({ onStartClick }) {
           onClick={onStartClick}
         >
           <Icon icon="chalkboard-teacher" />
-          <span style={{ marginLeft: '1rem' }}>Start Tutorial</span>
+          <span style={{ marginLeft: '1rem' }}>
+            {tutorialButtonLabel || 'Start Tutorial'}
+          </span>
         </Button>
       </div>
     </div>

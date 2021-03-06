@@ -6,16 +6,28 @@ import UserView from './UserView';
 ViewTutorial.propTypes = {
   isCreator: PropTypes.bool,
   onStartClick: PropTypes.func.isRequired,
-  style: PropTypes.object
+  style: PropTypes.object,
+  tutorialPrompt: PropTypes.string,
+  tutorialButtonLabel: PropTypes.string
 };
 
-export default function ViewTutorial({ isCreator, onStartClick, style }) {
+export default function ViewTutorial({
+  isCreator,
+  onStartClick,
+  style,
+  tutorialPrompt,
+  tutorialButtonLabel
+}) {
   return (
     <div className={panel} style={{ padding: '2rem', width: '100%', ...style }}>
       {isCreator ? (
         <div>Author view</div>
       ) : (
-        <UserView onStartClick={onStartClick} />
+        <UserView
+          tutorialPrompt={tutorialPrompt}
+          tutorialButtonLabel={tutorialButtonLabel}
+          onStartClick={onStartClick}
+        />
       )}
     </div>
   );

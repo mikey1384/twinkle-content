@@ -41,6 +41,8 @@ export default function Tutorial({
         <ViewTutorial
           isCreator={isCreator}
           style={isCreator ? { marginBottom: '5rem' } : {}}
+          tutorialPrompt={mission.tutorialPrompt}
+          tutorialButtonLabel={mission.tutorialButtonLabel}
           onStartClick={() =>
             onSetMissionState({
               missionId: mission.id,
