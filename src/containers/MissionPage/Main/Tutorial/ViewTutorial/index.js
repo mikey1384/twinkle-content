@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { panel } from '../../../Styles';
 import UserView from './UserView';
+import CreatorView from './CreatorView';
+import { panel } from '../../../Styles';
 
 ViewTutorial.propTypes = {
   isCreator: PropTypes.bool,
@@ -21,7 +22,10 @@ export default function ViewTutorial({
   return (
     <div className={panel} style={{ padding: '2rem', width: '100%', ...style }}>
       {isCreator ? (
-        <div>Author view</div>
+        <CreatorView
+          tutorialPrompt={tutorialPrompt}
+          tutorialButtonLabel={tutorialButtonLabel}
+        />
       ) : (
         <UserView
           tutorialPrompt={tutorialPrompt}
