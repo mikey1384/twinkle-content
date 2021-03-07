@@ -175,6 +175,18 @@ export default function missionRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async updateTutorialPrompt({ missionId, tutorialPrompt, buttonLabel }) {
+      try {
+        await request.put(
+          `${URL}/mission/tutorial/prompt`,
+          { missionId, tutorialPrompt, buttonLabel },
+          auth()
+        );
+        return Promise.resolve();
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async uploadGrammarQuestion({
       leftSideText,
       rightSideText,

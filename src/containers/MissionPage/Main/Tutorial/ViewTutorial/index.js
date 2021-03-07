@@ -6,6 +6,7 @@ import { panel } from '../../../Styles';
 
 ViewTutorial.propTypes = {
   isCreator: PropTypes.bool,
+  missionId: PropTypes.number,
   onStartClick: PropTypes.func.isRequired,
   style: PropTypes.object,
   tutorialPrompt: PropTypes.string,
@@ -14,6 +15,7 @@ ViewTutorial.propTypes = {
 
 export default function ViewTutorial({
   isCreator,
+  missionId,
   onStartClick,
   style,
   tutorialPrompt,
@@ -23,6 +25,7 @@ export default function ViewTutorial({
     <div className={panel} style={{ padding: '2rem', width: '100%', ...style }}>
       {isCreator ? (
         <CreatorView
+          missionId={missionId}
           tutorialPrompt={tutorialPrompt}
           tutorialButtonLabel={tutorialButtonLabel}
         />

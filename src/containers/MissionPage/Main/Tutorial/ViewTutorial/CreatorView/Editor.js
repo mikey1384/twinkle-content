@@ -2,21 +2,27 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Input from 'components/Texts/Input';
 import Button from 'components/Button';
+import { useAppContext } from 'contexts';
 import { css } from '@emotion/css';
 import { addEmoji } from 'helpers/stringHelpers';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 
 Editor.propTypes = {
+  missionId: PropTypes.number.isRequired,
   onClose: PropTypes.func.isRequired,
   tutorialPrompt: PropTypes.string,
   tutorialButtonLabel: PropTypes.string
 };
 
 export default function Editor({
+  missionId,
   onClose,
   tutorialPrompt,
   tutorialButtonLabel
 }) {
+  const {
+    requestHelpers: { updateTutorialPrompt }
+  } = useAppContext();
   const [editedTutorialPrompt, setEditedTutorialPrompt] = useState(
     tutorialPrompt || 'Need help?'
   );
@@ -65,10 +71,18 @@ export default function Editor({
         />
       </div>
       <div style={{ display: 'flex', marginTop: '2rem' }}>
-        <Button color="blue" onClick={handleDone}>
+        <Button
+          style={{ fontSize: '1.7rem' }}
+          color="blue"
+          onClick={handleDone}
+        >
           Done
         </Button>
-        <Button style={{ marginLeft: '1rem' }} transparent onClick={onClose}>
+        <Button
+          style={{ fontSize: '1.7rem', marginLeft: '1rem' }}
+          transparent
+          onClick={onClose}
+        >
           Cancel
         </Button>
       </div>
@@ -76,6 +90,11 @@ export default function Editor({
   );
 
   async function handleDone() {
+    await updateTutorialPrompt({
+      missionId,
+      tutorialPrompt: editedTutorialPrompt,
+      buttonLabel: editedTutorialButtonLabel
+    });
     console.log('done');
     onClose();
   }

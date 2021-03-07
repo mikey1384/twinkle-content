@@ -6,11 +6,16 @@ import { borderRadius, Color } from 'constants/css';
 import { css } from '@emotion/css';
 
 CreatorView.propTypes = {
+  missionId: PropTypes.number.isRequired,
   tutorialPrompt: PropTypes.string,
   tutorialButtonLabel: PropTypes.string
 };
 
-export default function CreatorView({ tutorialPrompt, tutorialButtonLabel }) {
+export default function CreatorView({
+  missionId,
+  tutorialPrompt,
+  tutorialButtonLabel
+}) {
   const [isEditing, setIsEditing] = useState(false);
 
   return (
@@ -44,6 +49,7 @@ export default function CreatorView({ tutorialPrompt, tutorialButtonLabel }) {
       </div>
       {isEditing ? (
         <Editor
+          missionId={missionId}
           tutorialPrompt={tutorialPrompt}
           tutorialButtonLabel={tutorialButtonLabel}
           onClose={() => setIsEditing(false)}

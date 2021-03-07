@@ -40,6 +40,7 @@ export default function Tutorial({
           !mission.myAttempt?.status)) && (
         <ViewTutorial
           isCreator={isCreator}
+          missionId={mission.id}
           style={isCreator ? { marginBottom: '5rem' } : {}}
           tutorialPrompt={mission.tutorialPrompt}
           tutorialButtonLabel={mission.tutorialButtonLabel}
