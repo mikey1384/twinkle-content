@@ -46,6 +46,7 @@ export default function CreatorView({ tutorialPrompt, tutorialButtonLabel }) {
         <Editor
           tutorialPrompt={tutorialPrompt}
           tutorialButtonLabel={tutorialButtonLabel}
+          onClose={() => setIsEditing(false)}
         />
       ) : (
         <div
