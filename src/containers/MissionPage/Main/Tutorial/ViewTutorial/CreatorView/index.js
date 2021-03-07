@@ -7,12 +7,14 @@ import { css } from '@emotion/css';
 
 CreatorView.propTypes = {
   missionId: PropTypes.number.isRequired,
+  onSetMissionState: PropTypes.func.isRequired,
   tutorialPrompt: PropTypes.string,
   tutorialButtonLabel: PropTypes.string
 };
 
 export default function CreatorView({
   missionId,
+  onSetMissionState,
   tutorialPrompt,
   tutorialButtonLabel
 }) {
@@ -50,6 +52,7 @@ export default function CreatorView({
       {isEditing ? (
         <Editor
           missionId={missionId}
+          onSetMissionState={onSetMissionState}
           tutorialPrompt={tutorialPrompt}
           tutorialButtonLabel={tutorialButtonLabel}
           onClose={() => setIsEditing(false)}

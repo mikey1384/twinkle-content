@@ -177,12 +177,14 @@ export default function missionRequestHelpers({ auth, handleError }) {
     },
     async updateTutorialPrompt({ missionId, tutorialPrompt, buttonLabel }) {
       try {
-        await request.put(
+        const {
+          data: { success }
+        } = await request.put(
           `${URL}/mission/tutorial/prompt`,
           { missionId, tutorialPrompt, buttonLabel },
           auth()
         );
-        return Promise.resolve();
+        return Promise.resolve(success);
       } catch (error) {
         return handleError(error);
       }

@@ -8,6 +8,7 @@ ViewTutorial.propTypes = {
   isCreator: PropTypes.bool,
   missionId: PropTypes.number,
   onStartClick: PropTypes.func.isRequired,
+  onSetMissionState: PropTypes.func.isRequired,
   style: PropTypes.object,
   tutorialPrompt: PropTypes.string,
   tutorialButtonLabel: PropTypes.string
@@ -17,6 +18,7 @@ export default function ViewTutorial({
   isCreator,
   missionId,
   onStartClick,
+  onSetMissionState,
   style,
   tutorialPrompt,
   tutorialButtonLabel
@@ -26,6 +28,7 @@ export default function ViewTutorial({
       {isCreator ? (
         <CreatorView
           missionId={missionId}
+          onSetMissionState={onSetMissionState}
           tutorialPrompt={tutorialPrompt}
           tutorialButtonLabel={tutorialButtonLabel}
         />

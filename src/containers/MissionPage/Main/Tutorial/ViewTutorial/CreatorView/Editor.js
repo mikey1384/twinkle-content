@@ -10,6 +10,7 @@ import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 Editor.propTypes = {
   missionId: PropTypes.number.isRequired,
   onClose: PropTypes.func.isRequired,
+  onSetMissionState: PropTypes.func.isRequired,
   tutorialPrompt: PropTypes.string,
   tutorialButtonLabel: PropTypes.string
 };
@@ -17,6 +18,7 @@ Editor.propTypes = {
 export default function Editor({
   missionId,
   onClose,
+  onSetMissionState,
   tutorialPrompt,
   tutorialButtonLabel
 }) {
@@ -90,12 +92,20 @@ export default function Editor({
   );
 
   async function handleDone() {
-    await updateTutorialPrompt({
+    const success = await updateTutorialPrompt({
       missionId,
       tutorialPrompt: editedTutorialPrompt,
       buttonLabel: editedTutorialButtonLabel
     });
-    console.log('done');
-    onClose();
+    if (success) {
+      onSetMissionState({
+        missionId,
+        newState: {
+          tutorialPrompt: editedTutorialPrompt,
+          tutorialButtonLabel: editedTutorialButtonLabel
+        }
+      });
+      onClose();
+    }
   }
 }

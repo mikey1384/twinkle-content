@@ -42,6 +42,7 @@ export default function Tutorial({
           isCreator={isCreator}
           missionId={mission.id}
           style={isCreator ? { marginBottom: '5rem' } : {}}
+          onSetMissionState={onSetMissionState}
           tutorialPrompt={mission.tutorialPrompt}
           tutorialButtonLabel={mission.tutorialButtonLabel}
           onStartClick={() =>
