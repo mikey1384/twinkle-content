@@ -118,6 +118,13 @@ export default function Content({
           {descriptionShown && (
             <div
               className={css`
+                margin-top: ${headingShown &&
+                (forkButtonIds?.length ||
+                (isPortal && portalButton && !!forkedFrom) ||
+                attachment?.fileUrl ||
+                attachment?.linkUrl
+                  ? '2rem'
+                  : 0)};
                 display: flex;
                 justify-content: center;
                 font-size: 2rem;
