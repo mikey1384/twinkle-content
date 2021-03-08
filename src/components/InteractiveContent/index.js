@@ -118,7 +118,7 @@ export default function InteractiveContent({ autoFocus, interactiveId }) {
                 ]
               ].id
             ],
-          amount: 50
+          amount: 100
         });
       }, 10);
     }

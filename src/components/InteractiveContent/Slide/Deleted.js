@@ -18,7 +18,8 @@ export default function Deleted({ onRemoveInteractiveSlide, onUndeleteSlide }) {
         display: 'flex',
         width: '100%',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginBottom: '-1rem'
       }}
     >
       <div

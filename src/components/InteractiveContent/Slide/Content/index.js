@@ -94,6 +94,7 @@ export default function Content({
         <div>
           <p
             className={css`
+              margin-top: ${headingShown && !bodyShown ? '0' : '1rem'};
               text-align: center;
               font-size: 3rem;
               font-weight: bold;
@@ -112,7 +113,8 @@ export default function Content({
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            flexGrow: 1
+            flexGrow: 1,
+            ...(headingShown ? {} : { marginTop: '0.5rem' })
           }}
         >
           {descriptionShown && (
@@ -128,6 +130,7 @@ export default function Content({
                 display: flex;
                 justify-content: center;
                 font-size: 2rem;
+                line-height: 2;
                 @media (max-width: ${mobileMaxWidth}) {
                   font-size: 1.5rem;
                 }
