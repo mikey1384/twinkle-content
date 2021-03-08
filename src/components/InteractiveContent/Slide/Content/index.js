@@ -23,7 +23,6 @@ Content.propTypes = {
   onPortalButtonClick: PropTypes.func,
   onSetEmbedProps: PropTypes.func,
   onThumbnailUpload: PropTypes.func,
-  paddingShown: PropTypes.bool,
   portalButton: PropTypes.object,
   slideId: PropTypes.number,
   selectedForkButtonId: PropTypes.number
@@ -43,7 +42,6 @@ export default function Content({
   onPortalButtonClick,
   onSetEmbedProps,
   onThumbnailUpload,
-  paddingShown,
   portalButton,
   slideId,
   selectedForkButtonId
@@ -52,9 +50,34 @@ export default function Content({
   const descriptionShown = useMemo(() => !stringIsEmpty(description), [
     description
   ]);
+  const bodyShown = useMemo(() => {
+    return (
+      descriptionShown ||
+      attachment?.fileUrl ||
+      attachment?.linkUrl ||
+      forkButtonIds?.length > 0 ||
+      (isPortal && portalButton && !!forkedFrom)
+    );
+  }, [
+    attachment?.fileUrl,
+    attachment?.linkUrl,
+    descriptionShown,
+    forkButtonIds?.length,
+    forkedFrom,
+    isPortal,
+    portalButton
+  ]);
 
   return (
-    <div style={{ width: '100%', height: '100%' }}>
+    <div
+      style={{
+        width: '100%',
+        height: '100%',
+        minHeight: '30rem',
+        display: 'flex',
+        flexDirection: 'column'
+      }}
+    >
       {!isPublished && (
         <div
           style={{
@@ -67,88 +90,102 @@ export default function Content({
         >{`(Draft)`}</div>
       )}
       {headingShown && (
-        <p
-          className={css`
-            text-align: center;
-            font-size: 3rem;
-            font-weight: bold;
-            margin-top: 1.5rem;
-            @media (max-width: ${mobileMaxWidth}) {
-              font-size: 1.7rem;
-            }
-          `}
-        >
-          {heading}
-        </p>
-      )}
-      {descriptionShown && (
-        <div
-          className={css`
-            font-size: 2rem;
-            margin-top: 1.5rem;
-            @media (max-width: ${mobileMaxWidth}) {
-              font-size: 1.5rem;
-            }
-          `}
-        >
-          <LongText maxLines={100}>{description}</LongText>
-        </div>
-      )}
-      {attachment && (
-        <div
-          style={{
-            marginTop: '2rem',
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            justifyContent: 'center'
-          }}
-        >
-          <Attachment
-            type={attachment.type}
-            interactiveId={interactiveId}
-            isYouTubeVideo={attachment.isYouTubeVideo}
-            fileUrl={attachment.fileUrl}
-            linkUrl={attachment.linkUrl}
-            thumbUrl={attachment.thumbUrl}
-            actualTitle={attachment.actualTitle}
-            actualDescription={attachment.actualDescription}
-            prevUrl={attachment.prevUrl}
-            siteUrl={attachment.siteUrl}
-            slideId={slideId}
-            onSetEmbedProps={onSetEmbedProps}
-            onThumbnailUpload={onThumbnailUpload}
-          />
-        </div>
-      )}
-      {forkButtonIds?.length > 0 && (
-        <ForkButtons
-          descriptionShown={descriptionShown}
-          forkButtonIds={forkButtonIds}
-          forkButtonsObj={forkButtonsObj}
-          onForkButtonClick={onForkButtonClick}
-          selectedForkButtonId={selectedForkButtonId}
-        />
-      )}
-      {isPortal && portalButton && !!forkedFrom && (
-        <div
-          style={{
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            marginTop: '3rem',
-            marginBottom: paddingShown ? '-2rem' : 0
-          }}
-        >
-          <Button
-            onClick={() =>
-              onPortalButtonClick(portalButton.destination || forkedFrom)
-            }
-            skeuomorphic
+        <div>
+          <p
+            className={css`
+              text-align: center;
+              font-size: 3rem;
+              font-weight: bold;
+              @media (max-width: ${mobileMaxWidth}) {
+                font-size: 1.7rem;
+              }
+            `}
           >
-            <Icon icon={portalButton.icon} />
-            <span style={{ marginLeft: '0.7rem' }}>{portalButton.label}</span>
-          </Button>
+            {heading}
+          </p>
+        </div>
+      )}
+      {bodyShown && (
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            flexGrow: 1
+          }}
+        >
+          {descriptionShown && (
+            <div
+              className={css`
+                display: flex;
+                justify-content: center;
+                font-size: 2rem;
+                @media (max-width: ${mobileMaxWidth}) {
+                  font-size: 1.5rem;
+                }
+              `}
+            >
+              <LongText maxLines={100}>{description}</LongText>
+            </div>
+          )}
+          {(attachment?.fileUrl || attachment?.linkUrl) && (
+            <div
+              style={{
+                marginTop: '2rem',
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                justifyContent: 'center'
+              }}
+            >
+              <Attachment
+                type={attachment.type}
+                interactiveId={interactiveId}
+                isYouTubeVideo={attachment.isYouTubeVideo}
+                fileUrl={attachment.fileUrl}
+                linkUrl={attachment.linkUrl}
+                thumbUrl={attachment.thumbUrl}
+                actualTitle={attachment.actualTitle}
+                actualDescription={attachment.actualDescription}
+                prevUrl={attachment.prevUrl}
+                siteUrl={attachment.siteUrl}
+                slideId={slideId}
+                onSetEmbedProps={onSetEmbedProps}
+                onThumbnailUpload={onThumbnailUpload}
+              />
+            </div>
+          )}
+          {forkButtonIds?.length > 0 && (
+            <ForkButtons
+              descriptionShown={descriptionShown}
+              forkButtonIds={forkButtonIds}
+              forkButtonsObj={forkButtonsObj}
+              onForkButtonClick={onForkButtonClick}
+              selectedForkButtonId={selectedForkButtonId}
+            />
+          )}
+          {isPortal && portalButton && !!forkedFrom && (
+            <div
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                marginTop: '3rem'
+              }}
+            >
+              <Button
+                onClick={() =>
+                  onPortalButtonClick(portalButton.destination || forkedFrom)
+                }
+                skeuomorphic
+              >
+                <Icon icon={portalButton.icon} />
+                <span style={{ marginLeft: '0.7rem' }}>
+                  {portalButton.label}
+                </span>
+              </Button>
+            </div>
+          )}
         </div>
       )}
     </div>

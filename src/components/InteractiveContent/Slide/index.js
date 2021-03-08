@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useAppContext, useInteractiveContext } from 'contexts';
-import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
@@ -97,9 +96,6 @@ export default function Slide({
   } = useInteractiveContext();
   const { canEdit } = useMyState();
 
-  const paddingShown = useMemo(() => {
-    return !stringIsEmpty(heading) && !isEditing;
-  }, [heading, isEditing]);
   const dropdownMenuProps = useMemo(() => {
     return [
       {
@@ -205,7 +201,7 @@ export default function Slide({
         />
       )}
       <div
-        ref={(ref) => innerRef(ref)}
+        ref={innerRef}
         className={css`
           width: 100%;
           height: auto;
@@ -217,6 +213,7 @@ export default function Slide({
           padding-left: 2rem;
           padding-right: 2rem;
           padding-top: ${isEditing ? '2rem' : '1rem'};
+          padding-bottom: 2rem;
           margin-top: ${index === 0 ? 0 : canEdit ? '2rem' : '5rem'};
           background: #fff;
           border: 1px solid ${Color.borderGray()};
@@ -292,16 +289,10 @@ export default function Slide({
             }
             onSetEmbedProps={handleSetEmbedProps}
             onThumbnailUpload={handleThumbnailUpload}
-            paddingShown={paddingShown}
             slideId={slideId}
             selectedForkButtonId={selectedForkButtonId}
           />
         )}
-        <div
-          style={{
-            paddingBottom: isDeleted ? '1rem' : paddingShown ? '4rem' : '2rem'
-          }}
-        />
         {!isPublished && !isEditing && !isDeleted && (
           <div>
             <Button

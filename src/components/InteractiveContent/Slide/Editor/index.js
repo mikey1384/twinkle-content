@@ -122,10 +122,19 @@ export default function Editor({
     editedForkButtonsObj
   } = editForm;
 
-  const forkSwitchShown = useMemo(() => isLastSlide && !isFork, [
-    isFork,
-    isLastSlide
-  ]);
+  const pathsExist = useMemo(() => {
+    if (!paths) return false;
+    for (let [, path] of Object.entries(paths)) {
+      if (path.length > 0) return true;
+    }
+    return false;
+  }, [paths]);
+
+  const forkSwitchShown = useMemo(
+    () => isLastSlide && !(isFork && pathsExist),
+    [isFork, isLastSlide, pathsExist]
+  );
+
   const portalSwitchShown = !!forkedFrom;
 
   const descriptionExceedsCharLimit = useMemo(
