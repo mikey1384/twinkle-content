@@ -75,7 +75,8 @@ export default function Content({
         height: '100%',
         minHeight: '30rem',
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        ...(headingShown && !bodyShown ? { justifyContent: 'center' } : {})
       }}
     >
       {!isPublished && (
