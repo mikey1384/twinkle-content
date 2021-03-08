@@ -8,6 +8,7 @@ import Button from 'components/Button';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { stringIsEmpty } from 'helpers/stringHelpers';
+import { useMyState } from 'helpers/hooks';
 
 Content.propTypes = {
   forkedFrom: PropTypes.number,
@@ -46,6 +47,7 @@ export default function Content({
   slideId,
   selectedForkButtonId
 }) {
+  const { profileTheme } = useMyState();
   const headingShown = useMemo(() => !stringIsEmpty(heading), [heading]);
   const descriptionShown = useMemo(() => !stringIsEmpty(description), [
     description
@@ -188,7 +190,9 @@ export default function Content({
                 onClick={() =>
                   onPortalButtonClick(portalButton.destination || forkedFrom)
                 }
+                color={profileTheme}
                 skeuomorphic
+                style={{ fontSize: '1.7rem' }}
               >
                 <Icon icon={portalButton.icon} />
                 <span style={{ marginLeft: '0.7rem' }}>
