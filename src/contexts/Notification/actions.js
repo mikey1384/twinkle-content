@@ -73,6 +73,12 @@ export default function NotiActions(dispatch) {
         type: 'RESET_REWARDS'
       });
     },
+    onSetPrevUserId(userId) {
+      return dispatch({
+        type: 'SET_PREV_USER_ID_FOR_NOTIFICATION',
+        userId
+      });
+    },
     onShowUpdateNotice(shown) {
       return dispatch({
         type: 'SHOW_UPDATE_NOTICE',

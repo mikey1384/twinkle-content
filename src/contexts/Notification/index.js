@@ -17,6 +17,7 @@ export const initialNotiState = {
   numNewPosts: 0,
   rankingsLoaded: false,
   allRanks: [],
+  prevUserId: null,
   top30s: [],
   socketConnected: false,
   totalRewardedTwinkles: 0,

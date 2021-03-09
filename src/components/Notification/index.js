@@ -27,6 +27,7 @@ function Notification({ className, location, style }) {
       loadMore,
       notifications,
       numNewNotis,
+      prevUserId,
       rewards,
       totalRewardedTwinkles,
       totalRewardedTwinkleCoins,
@@ -36,7 +37,8 @@ function Notification({ className, location, style }) {
       onClearNotifications,
       onFetchNotifications,
       onGetRanks,
-      onResetRewards
+      onResetRewards,
+      onSetPrevUserId
     }
   } = useNotiContext();
   const loadingNotificationRef = useRef(false);
@@ -45,7 +47,6 @@ function Notification({ className, location, style }) {
   const userChangedTab = useRef(false);
   const mounted = useRef(true);
   const prevTwinkleXP = useRef(twinkleXP);
-  const prevUserId = useRef(userId);
 
   useEffect(() => {
     return function cleanUp() {
@@ -54,12 +55,6 @@ function Notification({ className, location, style }) {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  useEffect(() => {
-    onResetRewards();
-    userChangedTab.current = false;
-    handleFetchNotifications();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId]);
 
   useEffect(() => {
     if (!userChangedTab.current) {
@@ -90,11 +85,19 @@ function Notification({ className, location, style }) {
   ]);
 
   useEffect(() => {
-    if (userId !== prevUserId.current && !!prevUserId.current) {
+    userChangedTab.current = false;
+    handleFetchNotifications();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
+
+  useEffect(() => {
+    onResetRewards();
+    if (userId !== prevUserId) {
+      setActiveTab('notification');
       onClearNotifications();
       handleFetchNotifications(true);
     }
-    prevUserId.current = userId;
+    onSetPrevUserId(userId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
