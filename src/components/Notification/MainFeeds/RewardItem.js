@@ -18,6 +18,7 @@ export default function RewardItem({
     contentType,
     rootId,
     rootType,
+    rootMissionType,
     rewardAmount,
     rewardType,
     rewarderId,
@@ -85,9 +86,10 @@ export default function RewardItem({
           style={{ color: Color.green() }}
           content={{
             id: rootId,
-            title: `this ${rootType === 'pass' ? 'accomplishment' : rootType}`
+            title: `this ${rootType === 'pass' ? 'mission' : rootType}`,
+            missionType: rootMissionType
           }}
-          contentType={rootType}
+          contentType={rootType === 'pass' ? 'mission' : rootType}
         />{' '}
         <p style={{ fontWeight: 'bold', color: Color.brownOrange() }}>
           You earn {rewardAmount} Twinkle Coin
