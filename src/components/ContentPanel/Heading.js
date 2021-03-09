@@ -101,7 +101,11 @@ function Heading({
           <>
             <UsernameText user={uploader} color={Color.blue()} /> completed a{' '}
             <ContentLink
-              content={{ id: rootObj.id, title: `mission: ${rootObj.title}` }}
+              content={{
+                id: rootObj.id,
+                title: `mission: ${rootObj.title}`,
+                missionType: rootObj.missionType
+              }}
               contentType="mission"
               style={{ color: Color.orange() }}
             />{' '}

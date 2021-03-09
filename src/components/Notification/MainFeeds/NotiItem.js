@@ -25,6 +25,7 @@ export default function NotiItem({
     rewardType,
     rewardRootId,
     rewardRootType,
+    rewardRootMissionType,
     isNotification
   }
 }) {
@@ -140,9 +141,14 @@ export default function NotiItem({
                 style={{ color: Color.green() }}
                 content={{
                   id: rewardRootId,
-                  title: `this ${rewardRootType}`
+                  title: `this ${
+                    rewardRootType === 'pass' ? 'mission' : rewardRootType
+                  }`,
+                  missionType: rewardRootMissionType
                 }}
-                contentType={rewardRootType}
+                contentType={
+                  rewardRootType === 'pass' ? 'mission' : rewardRootType
+                }
               />{' '}
               <p style={{ fontWeight: 'bold', color: Color.brownOrange() }}>
                 You earn {actionObj.amount} Twinkle Coin

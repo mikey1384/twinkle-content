@@ -85,7 +85,7 @@ export default function RewardItem({
           style={{ color: Color.green() }}
           content={{
             id: rootId,
-            title: `this ${rootType}`
+            title: `this ${rootType === 'pass' ? 'accomplishment' : rootType}`
           }}
           contentType={rootType}
         />{' '}
