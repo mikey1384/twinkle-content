@@ -11,7 +11,7 @@ import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 ItemPanel.propTypes = {
   children: PropTypes.node,
   currentLvl: PropTypes.number,
-  itemName: PropTypes.string.isRequired,
+  itemName: PropTypes.string,
   itemDescription: PropTypes.string,
   isLeveled: PropTypes.bool,
   maxLvl: PropTypes.number,
