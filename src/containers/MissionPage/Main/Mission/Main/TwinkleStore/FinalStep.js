@@ -77,12 +77,6 @@ export default function FinalStep({ mission, style, userId }) {
       attempt: { status: 'pass' }
     });
     if (success) {
-      if (mounted.current) {
-        onUpdateMissionAttempt({
-          missionId: mission.id,
-          newState: { status: 'pass' }
-        });
-      }
       if (newXpAndRank.xp && mounted.current) {
         onChangeUserXP({
           xp: newXpAndRank.xp,
@@ -92,6 +86,12 @@ export default function FinalStep({ mission, style, userId }) {
       }
       if (newCoins.netCoins && mounted.current) {
         onUpdateUserCoins({ coins: newCoins.netCoins, userId });
+      }
+      if (mounted.current) {
+        onUpdateMissionAttempt({
+          missionId: mission.id,
+          newState: { status: 'pass' }
+        });
       }
     }
     if (mounted.current) {

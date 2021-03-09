@@ -28,7 +28,7 @@ CopyAndPaste.propTypes = {
 };
 
 export default function CopyAndPaste({ mission, onSetMissionState, style }) {
-  const mounted = useRef(false);
+  const mounted = useRef(true);
   const [submitDisabled, setSubmitDisabled] = useState(false);
   const { userId } = useMyState();
   const {
@@ -131,12 +131,6 @@ export default function CopyAndPaste({ mission, onSetMissionState, style }) {
       attempt: { content, status: 'pass' }
     });
     if (success) {
-      if (mounted.current) {
-        onUpdateMissionAttempt({
-          missionId: mission.id,
-          newState: { status: 'pass' }
-        });
-      }
       if (newXpAndRank.xp && mounted.current) {
         onChangeUserXP({
           xp: newXpAndRank.xp,
@@ -146,6 +140,12 @@ export default function CopyAndPaste({ mission, onSetMissionState, style }) {
       }
       if (newCoins.netCoins && mounted.current) {
         onUpdateUserCoins({ coins: newCoins.netCoins, userId });
+      }
+      if (mounted.current) {
+        onUpdateMissionAttempt({
+          missionId: mission.id,
+          newState: { status: 'pass' }
+        });
       }
     }
     if (mounted.current) {

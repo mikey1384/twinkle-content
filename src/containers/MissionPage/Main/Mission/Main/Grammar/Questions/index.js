@@ -193,11 +193,6 @@ export default function Questions({ isRepeating, mission, onFail }) {
           attempt: { status: 'pass' }
         });
         if (success && mounted.current) {
-          onUpdateMissionAttempt({
-            missionId: mission.id,
-            newState: { status: 'pass' }
-          });
-
           if (newXpAndRank.xp) {
             onChangeUserXP({
               xp: newXpAndRank.xp,
@@ -208,6 +203,10 @@ export default function Questions({ isRepeating, mission, onFail }) {
           if (newCoins.netCoins) {
             onUpdateUserCoins({ coins: newCoins.netCoins, userId });
           }
+          onUpdateMissionAttempt({
+            missionId: mission.id,
+            newState: { status: 'pass' }
+          });
           onSetMissionState({
             missionId: mission.id,
             newState: { started: false, grammarReviewLoaded: false }

@@ -93,13 +93,15 @@ function Notification({ className, location, style }) {
   useEffect(() => {
     onResetRewards();
     if (userId !== prevUserId) {
-      setActiveTab('notification');
+      if (activeTab === 'reward') {
+        setActiveTab('notification');
+      }
       onClearNotifications();
       handleFetchNotifications(true);
     }
     onSetPrevUserId(userId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId]);
+  }, [prevUserId, userId]);
 
   useEffect(() => {
     if (
