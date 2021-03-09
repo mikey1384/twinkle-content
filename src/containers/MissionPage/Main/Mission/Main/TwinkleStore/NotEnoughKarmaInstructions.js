@@ -124,8 +124,8 @@ export default function NotEnoughKarmaInstructions({
           <a style={{ fontWeight: 'bold' }} href="/store" target="_blank">
             Twinkle Store
           </a>{' '}
-          after activating it by reaching {requiredKarmaPoints} karma points.
-          Come back here when you are done to collect your rewards.
+          after earning at least {requiredKarmaPoints} karma points. Come back
+          here when you are done to collect your rewards.
         </p>
         <p
           style={{
