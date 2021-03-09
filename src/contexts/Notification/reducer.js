@@ -34,6 +34,7 @@ export default function NotiReducer(state, action) {
     case 'CLEAR_NOTIFICATIONS':
       return {
         ...initialNotiState,
+        socketConnected: state.socketConnected,
         updateDetail: state.updateDetail,
         updateNoticeShown: state.updateNoticeShown
       };
