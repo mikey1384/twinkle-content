@@ -451,6 +451,7 @@ export default function Header({
       if (
         uploaderId === userId &&
         newlyRecommended &&
+        target.contentType !== 'pass' &&
         recommenderId !== userId
       ) {
         onIncreaseNumNewNotis();
