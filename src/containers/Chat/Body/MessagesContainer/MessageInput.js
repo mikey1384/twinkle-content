@@ -254,7 +254,7 @@ function MessageInput({
     timerRef.current = setTimeout(() => {
       setCoolingDown(false);
       inputCoolingDown.current = false;
-    }, 700);
+    }, 500);
     if (banned?.chat && recepientId !== 5) {
       return;
     }
