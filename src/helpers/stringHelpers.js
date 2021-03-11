@@ -418,6 +418,8 @@ export function processedStringWithURL(string) {
   const purpleSentenceRegex = /((pu\|[^\s]){1}([^\n])+([^\s]\|pu){1})/gi;
   const grayWordRegex = /(gr\|[^\s]+\|gr)/gi;
   const graySentenceRegex = /((gr\|[^\s]){1}([^\n])+([^\s]\|gr){1})/gi;
+  const yellowWordRegex = /(y\|[^\s]+\|y)/gi;
+  const yellowSentenceRegex = /((y\|[^\s]){1}([^\n])+([^\s]\|y){1})/gi;
   const hugeWordRegex = /(h\[[^\s]+\]h)/gi;
   const hugeSentenceRegex = /((h\[[^\s]){1}([^\n])+([^\s]\]h){1})/gi;
   const bigWordRegex = /(b\[[^\s]+\]b)/gi;
@@ -523,6 +525,14 @@ export function processedStringWithURL(string) {
         )}</span>`
     )
     .replace(
+      yellowWordRegex,
+      (string) =>
+        `<span style="color: rgb(255,210,0);">${string.substring(
+          2,
+          string.length - 2
+        )}</span>`
+    )
+    .replace(
       hugeWordRegex,
       (string) =>
         `<span style="font-size: 1.9em;">${string.substring(
@@ -614,6 +624,14 @@ export function processedStringWithURL(string) {
       redSentenceRegex,
       (string) =>
         `<span style="color: red;">${string.substring(
+          2,
+          string.length - 2
+        )}</span>`
+    )
+    .replace(
+      yellowSentenceRegex,
+      (string) =>
+        `<span style="color: rgb(255,210,0);">${string.substring(
           2,
           string.length - 2
         )}</span>`
