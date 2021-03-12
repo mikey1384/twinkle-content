@@ -402,10 +402,10 @@ export function processedStringWithURL(string) {
   const trimmedString = (string) =>
     string.length > maxChar ? `${string.substring(0, maxChar)}...` : string;
   const urlRegex = /(((http[s]?:\/\/|ftp:\/\/)?(www\.){1}([0-9\p{L}/])+([0-9\p{L}/\-.,;:?!&@%_\+~#=\/()])+([0-9\p{L}/])+)|((?!.*www)(http[s]?:\/\/|ftp:\/\/){1}([0-9\p{L}/])+([0-9\p{L}/\-.,;:?!&@%_\+~#=\/()])+([0-9\p{L}/])+))/giu;
-  const redWordRegex = /(r\|[^\s]+\|r)/gi;
-  const redSentenceRegex = /((r\|[^\s]){1}([^\n])+([^\s]\|r){1})/gi;
   const blueWordRegex = /(b\|[^\s]+\|b)/gi;
   const blueSentenceRegex = /((b\|[^\s]){1}([^\n])+([^\s]\|b){1})/gi;
+  const grayWordRegex = /(gr\|[^\s]+\|gr)/gi;
+  const graySentenceRegex = /((gr\|[^\s]){1}([^\n])+([^\s]\|gr){1})/gi;
   const greenWordRegex = /(g\|[^\s]+\|g)/gi;
   const greenSentenceRegex = /((g\|[^\s]){1}([^\n])+([^\s]\|g){1})/gi;
   const limeWordRegex = /(l\|[^\s]+\|l)/gi;
@@ -416,8 +416,8 @@ export function processedStringWithURL(string) {
   const pinkSentenceRegex = /((p\|[^\s]){1}([^\n])+([^\s]\|p){1})/gi;
   const purpleWordRegex = /(pu\|[^\s]+\|pu)/gi;
   const purpleSentenceRegex = /((pu\|[^\s]){1}([^\n])+([^\s]\|pu){1})/gi;
-  const grayWordRegex = /(gr\|[^\s]+\|gr)/gi;
-  const graySentenceRegex = /((gr\|[^\s]){1}([^\n])+([^\s]\|gr){1})/gi;
+  const redWordRegex = /(r\|[^\s]+\|r)/gi;
+  const redSentenceRegex = /((r\|[^\s]){1}([^\n])+([^\s]\|r){1})/gi;
   const yellowWordRegex = /(y\|[^\s]+\|y)/gi;
   const yellowSentenceRegex = /((y\|[^\s]){1}([^\n])+([^\s]\|y){1})/gi;
   const hugeWordRegex = /(h\[[^\s]+\]h)/gi;
