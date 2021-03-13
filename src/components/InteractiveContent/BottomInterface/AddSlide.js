@@ -27,7 +27,8 @@ export default function AddSlide({ archivedSlides, interactiveId, lastFork }) {
   } = useInteractiveContext();
   const forkOptionNotSelected = useMemo(() => {
     return lastFork && !lastFork.selectedForkButtonId;
-  }, [lastFork]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lastFork, lastFork.selectedForkButtonId]);
 
   const [
     selectArchivedSlideModalShown,
