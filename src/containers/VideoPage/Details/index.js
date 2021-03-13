@@ -159,9 +159,9 @@ export default function Details({
     videoId
   ]);
   const {
-    editedDescription: prevEditedDescription = '',
     editedTitle: prevEditedTitle = '',
-    editedUrl = ''
+    editedDescription: prevEditedDescription = '',
+    editedUrl: prevEditedUrl = ''
   } = editForm;
 
   const [editedTitle, setEditedTitle] = useState(prevEditedTitle || title);
@@ -171,6 +171,13 @@ export default function Details({
     prevEditedDescription || description
   );
   const editedDescriptionRef = useRef(prevEditedDescription || description);
+
+  const [editedUrl, setEditedUrl] = useState(
+    prevEditedUrl || `https://www.youtube.com/watch?v=${content}`
+  );
+  const editedUrlRef = useRef(
+    prevEditedUrl || `https://www.youtube.com/watch?v=${content}`
+  );
 
   const userIsUploader = uploader.id === userId;
 
@@ -240,7 +247,8 @@ export default function Details({
         contentType: 'video',
         form: {
           editedDescription: editedDescriptionRef.current,
-          editedTitle: editedTitleRef.current
+          editedTitle: editedTitleRef.current,
+          editedUrl: editedUrlRef.current
         }
       });
     };
@@ -303,15 +311,7 @@ export default function Details({
                   handleTitleChange(addEmoji(event.target.value));
                 }
               }}
-              onUrlChange={(text) =>
-                onSetEditForm({
-                  contentId: videoId,
-                  contentType: 'video',
-                  form: {
-                    editedUrl: text
-                  }
-                })
-              }
+              onUrlChange={handleUrlChange}
               onEdit={isEditing}
               onMouseLeave={() => setTitleHovered(false)}
               onMouseOver={onMouseOver}
@@ -504,6 +504,7 @@ export default function Details({
   function handleEditCancel() {
     handleTitleChange(title);
     handleDescriptionChange(description);
+    handleUrlChange(`https://www.youtube.com/watch?v=${content}`);
     onSetEditForm({
       contentId: videoId,
       contentType: 'video',
@@ -569,6 +570,11 @@ export default function Details({
   function handleDescriptionChange(text) {
     setEditedDescription(text);
     editedDescriptionRef.current = text;
+  }
+
+  function handleUrlChange(text) {
+    setEditedUrl(text);
+    editedUrlRef.current = text;
   }
 
   function onMouseOver() {
