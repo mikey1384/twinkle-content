@@ -7,7 +7,6 @@ import { edit } from 'constants/placeholders';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { addEmoji } from 'helpers/stringHelpers';
 
 BasicInfos.propTypes = {
   className: PropTypes.string,
@@ -16,7 +15,9 @@ BasicInfos.propTypes = {
   innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
   onMouseLeave: PropTypes.func.isRequired,
   onMouseOver: PropTypes.func.isRequired,
-  onSetEditForm: PropTypes.func.isRequired,
+  onTitleChange: PropTypes.func.isRequired,
+  onTitleKeyUp: PropTypes.func.isRequired,
+  onUrlChange: PropTypes.func.isRequired,
   onEdit: PropTypes.bool.isRequired,
   titleHovered: PropTypes.bool.isRequired,
   onTitleClick: PropTypes.func.isRequired,
@@ -24,7 +25,6 @@ BasicInfos.propTypes = {
   title: PropTypes.string.isRequired,
   titleExceedsCharLimit: PropTypes.func.isRequired,
   timeStamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  videoId: PropTypes.number.isRequired,
   uploader: PropTypes.object.isRequired,
   urlExceedsCharLimit: PropTypes.func.isRequired
 };
@@ -34,7 +34,9 @@ export default function BasicInfos({
   editedUrl,
   editedTitle,
   innerRef,
-  onSetEditForm,
+  onTitleChange,
+  onTitleKeyUp,
+  onUrlChange,
   onEdit,
   onMouseLeave,
   onMouseOver,
@@ -45,8 +47,7 @@ export default function BasicInfos({
   timeStamp,
   titleExceedsCharLimit,
   uploader,
-  urlExceedsCharLimit,
-  videoId
+  urlExceedsCharLimit
 }) {
   return (
     <div className={className} style={style}>
@@ -55,40 +56,14 @@ export default function BasicInfos({
           <Input
             placeholder={edit.video}
             value={editedUrl}
-            onChange={(text) =>
-              onSetEditForm({
-                contentId: videoId,
-                contentType: 'video',
-                form: {
-                  editedUrl: text
-                }
-              })
-            }
+            onChange={onUrlChange}
             style={urlExceedsCharLimit(editedUrl)?.style}
           />
           <Input
             placeholder={edit.title}
             value={editedTitle}
-            onChange={(text) =>
-              onSetEditForm({
-                contentId: videoId,
-                contentType: 'video',
-                form: {
-                  editedTitle: text
-                }
-              })
-            }
-            onKeyUp={(event) => {
-              if (event.key === ' ') {
-                onSetEditForm({
-                  contentId: videoId,
-                  contentType: 'video',
-                  form: {
-                    editedTitle: addEmoji(event.target.value)
-                  }
-                });
-              }
-            }}
+            onChange={onTitleChange}
+            onKeyUp={onTitleKeyUp}
             style={{
               marginTop: '1rem',
               ...(titleExceedsCharLimit(editedTitle)?.style || {})

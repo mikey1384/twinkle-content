@@ -269,8 +269,36 @@ export default function Details({
               }}
               editedUrl={editedUrl}
               editedTitle={editedTitle}
-              onSetEditForm={onSetEditForm}
+              onTitleChange={(title) =>
+                onSetEditForm({
+                  contentId: videoId,
+                  contentType: 'video',
+                  form: {
+                    editedTitle: title
+                  }
+                })
+              }
               innerRef={TitleRef}
+              onTitleKeyUp={(event) => {
+                if (event.key === ' ') {
+                  onSetEditForm({
+                    contentId: videoId,
+                    contentType: 'video',
+                    form: {
+                      editedTitle: addEmoji(event.target.value)
+                    }
+                  });
+                }
+              }}
+              onUrlChange={(text) =>
+                onSetEditForm({
+                  contentId: videoId,
+                  contentType: 'video',
+                  form: {
+                    editedUrl: text
+                  }
+                })
+              }
               onEdit={isEditing}
               onMouseLeave={() => setTitleHovered(false)}
               onMouseOver={onMouseOver}
@@ -285,7 +313,6 @@ export default function Details({
               timeStamp={timeStamp}
               uploader={uploader}
               urlExceedsCharLimit={urlExceedsCharLimit}
-              videoId={videoId}
             />
             <SideButtons
               className={css`
