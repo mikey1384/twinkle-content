@@ -48,7 +48,6 @@ export default function Content({
   selectedForkButtonId
 }) {
   const { profileTheme } = useMyState();
-  const headingShown = useMemo(() => !stringIsEmpty(heading), [heading]);
   const descriptionShown = useMemo(() => !stringIsEmpty(description), [
     description
   ]);
@@ -69,6 +68,16 @@ export default function Content({
     isPortal,
     portalButton
   ]);
+  const displayedHeading = useMemo(() => {
+    if (!stringIsEmpty(heading)) {
+      return heading;
+    }
+    if (!bodyShown && !descriptionShown) {
+      return 'New Slide';
+    }
+    return '';
+  }, [bodyShown, descriptionShown, heading]);
+  const headingShown = useMemo(() => !!displayedHeading, [displayedHeading]);
 
   return (
     <div
@@ -105,7 +114,7 @@ export default function Content({
               }
             `}
           >
-            {heading}
+            {displayedHeading}
           </p>
         </div>
       )}
