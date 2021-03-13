@@ -159,13 +159,18 @@ export default function Details({
     videoId
   ]);
   const {
-    editedDescription = '',
+    editedDescription: prevEditedDescription = '',
     editedTitle: prevEditedTitle = '',
     editedUrl = ''
   } = editForm;
 
   const [editedTitle, setEditedTitle] = useState(prevEditedTitle || title);
   const editedTitleRef = useRef(prevEditedTitle || title);
+
+  const [editedDescription, setEditedDescription] = useState(
+    prevEditedDescription || description
+  );
+  const editedDescriptionRef = useRef(prevEditedDescription || description);
 
   const userIsUploader = uploader.id === userId;
 
@@ -234,6 +239,7 @@ export default function Details({
         contentId: videoId,
         contentType: 'video',
         form: {
+          editedDescription: editedDescriptionRef.current,
           editedTitle: editedTitleRef.current
         }
       });
@@ -294,13 +300,7 @@ export default function Details({
               innerRef={TitleRef}
               onTitleKeyUp={(event) => {
                 if (event.key === ' ') {
-                  onSetEditForm({
-                    contentId: videoId,
-                    contentType: 'video',
-                    form: {
-                      editedTitle: addEmoji(event.target.value)
-                    }
-                  });
+                  handleTitleChange(addEmoji(event.target.value));
                 }
               }}
               onUrlChange={(text) =>
@@ -365,27 +365,13 @@ export default function Details({
             style={{ display: 'flex', flexDirection: 'column', width: '100%' }}
           >
             <Description
-              onChange={(event) =>
-                onSetEditForm({
-                  contentId: videoId,
-                  contentType: 'video',
-                  form: {
-                    editedDescription: event.target.value
-                  }
-                })
-              }
+              onChange={(event) => handleDescriptionChange(event.target.value)}
               onEdit={isEditing}
               onEditCancel={handleEditCancel}
               onEditFinish={handleEditFinish}
               onKeyUp={(event) => {
                 if (event.key === ' ') {
-                  onSetEditForm({
-                    contentId: videoId,
-                    contentType: 'video',
-                    form: {
-                      editedDescription: addEmoji(event.target.value)
-                    }
-                  });
+                  handleDescriptionChange(addEmoji(event.target.value));
                 }
               }}
               description={description}
@@ -517,6 +503,7 @@ export default function Details({
 
   function handleEditCancel() {
     handleTitleChange(title);
+    handleDescriptionChange(description);
     onSetEditForm({
       contentId: videoId,
       contentType: 'video',
@@ -577,6 +564,11 @@ export default function Details({
   function handleTitleChange(text) {
     setEditedTitle(text);
     editedTitleRef.current = text;
+  }
+
+  function handleDescriptionChange(text) {
+    setEditedDescription(text);
+    editedDescriptionRef.current = text;
   }
 
   function onMouseOver() {
