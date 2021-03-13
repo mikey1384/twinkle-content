@@ -240,9 +240,11 @@ function Notification({ className, location, style }) {
       const data = await fetchNotifications();
       if (mounted.current) {
         onFetchNotifications(data);
-        setLoadingNotifications(false);
-        loadingNotificationRef.current = false;
       }
+      if (mounted.current) {
+        setLoadingNotifications(false);
+      }
+      loadingNotificationRef.current = false;
     }
   }
   async function fetchRankings() {

@@ -206,8 +206,14 @@ function MainFeeds({
     });
     if (mounted.current) {
       onUpdateUserCoins({ coins, userId });
+    }
+    if (mounted.current) {
       onChangeUserXP({ xp, rank, userId });
+    }
+    if (mounted.current) {
       onClearRewards();
+    }
+    if (mounted.current) {
       setCollectingReward(false);
     }
   }
@@ -217,7 +223,11 @@ function MainFeeds({
     const data = await fetchNotifications();
     if (mounted.current) {
       onFetchNotifications(data);
+    }
+    if (mounted.current) {
       selectNotiTab();
+    }
+    if (mounted.current) {
       setLoadingNewFeeds(false);
     }
   }

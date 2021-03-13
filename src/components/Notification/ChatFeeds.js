@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useState } from 'react';
+import React, { memo, useEffect, useRef, useMemo, useState } from 'react';
 import { useInterval } from 'helpers/hooks';
 import PropTypes from 'prop-types';
 import UsernameText from 'components/Texts/UsernameText';
@@ -36,6 +36,7 @@ function ChatFeeds({
   userId,
   username
 }) {
+  const mounted = useRef(true);
   const [loadingChat, setLoadingChat] = useState(false);
   const history = useHistory();
   const {
@@ -83,6 +84,13 @@ function ChatFeeds({
     userId,
     username
   ]);
+
+  useEffect(() => {
+    mounted.current = true;
+    return function onUnmount() {
+      mounted.current = false;
+    };
+  }, []);
 
   return (
     <RoundList
@@ -140,10 +148,14 @@ function ChatFeeds({
       setLoadingChat(true);
       if (!loaded) {
         const data = await loadChat({ channelId: 2 });
-        onInitChat(data);
+        if (mounted.current) {
+          onInitChat(data);
+        }
       } else {
         const data = await loadChatChannel({ channelId: 2 });
-        onEnterChannelWithId({ data });
+        if (mounted.current) {
+          onEnterChannelWithId({ data });
+        }
       }
     }
     history.push('/chat');
