@@ -165,21 +165,27 @@ export default function Details({
     editedUrl: prevEditedUrl = ''
   } = editForm;
 
-  const [editedTitle, setEditedTitle] = useState('');
-  const editedTitleRef = useRef('');
+  const [editedTitle, setEditedTitle] = useState(prevEditedTitle || title);
+  const editedTitleRef = useRef(prevEditedTitle || title);
   useEffect(() => {
     handleTitleChange(prevEditedTitle || title);
   }, [prevEditedTitle, title]);
 
-  const [editedDescription, setEditedDescription] = useState('');
-  const editedDescriptionRef = useRef('');
+  const [editedDescription, setEditedDescription] = useState(
+    prevEditedDescription || description
+  );
+  const editedDescriptionRef = useRef(prevEditedDescription || description);
   useEffect(
     () => handleDescriptionChange(prevEditedDescription || description),
     [description, prevEditedDescription]
   );
 
-  const [editedUrl, setEditedUrl] = useState('');
-  const editedUrlRef = useRef('');
+  const [editedUrl, setEditedUrl] = useState(
+    prevEditedUrl || `https://www.youtube.com/watch?v=${content}`
+  );
+  const editedUrlRef = useRef(
+    prevEditedUrl || `https://www.youtube.com/watch?v=${content}`
+  );
   useEffect(
     () =>
       handleUrlChange(
