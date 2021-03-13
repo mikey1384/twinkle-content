@@ -158,7 +158,15 @@ export default function Details({
     inputState,
     videoId
   ]);
-  const { editedDescription = '', editedTitle = '', editedUrl = '' } = editForm;
+  const {
+    editedDescription = '',
+    editedTitle: prevEditedTitle = '',
+    editedUrl = ''
+  } = editForm;
+
+  const [editedTitle, setEditedTitle] = useState(prevEditedTitle || title);
+  const editedTitleRef = useRef(prevEditedTitle || title);
+
   const userIsUploader = uploader.id === userId;
 
   const editButtonShown = useMemo(() => {
@@ -220,6 +228,19 @@ export default function Details({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canDelete, canEdit, userIsUploader, videoId]);
 
+  useEffect(() => {
+    return function onUnmount() {
+      onSetEditForm({
+        contentId: videoId,
+        contentType: 'video',
+        form: {
+          editedTitle: editedTitleRef.current
+        }
+      });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div style={{ width: '100%' }}>
       <AlreadyPosted
@@ -269,15 +290,7 @@ export default function Details({
               }}
               editedUrl={editedUrl}
               editedTitle={editedTitle}
-              onTitleChange={(title) =>
-                onSetEditForm({
-                  contentId: videoId,
-                  contentType: 'video',
-                  form: {
-                    editedTitle: title
-                  }
-                })
-              }
+              onTitleChange={handleTitleChange}
               innerRef={TitleRef}
               onTitleKeyUp={(event) => {
                 if (event.key === ' ') {
@@ -503,6 +516,7 @@ export default function Details({
   }
 
   function handleEditCancel() {
+    handleTitleChange(title);
     onSetEditForm({
       contentId: videoId,
       contentType: 'video',
@@ -558,6 +572,11 @@ export default function Details({
       contentType: 'video',
       shown: true
     });
+  }
+
+  function handleTitleChange(text) {
+    setEditedTitle(text);
+    editedTitleRef.current = text;
   }
 
   function onMouseOver() {
