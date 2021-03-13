@@ -28,12 +28,12 @@ function Vocabulary({ selected, onClick }) {
       addCommasToNumber(
         rewardHash[
           returnWordLevel({
-            frequency: lastActivity.frequency,
-            word: lastActivity.content
+            frequency: lastActivity?.frequency,
+            word: lastActivity?.content
           })
         ].rewardAmount
       ),
-    [lastActivity.content, lastActivity.frequency]
+    [lastActivity?.content, lastActivity?.frequency]
   );
 
   return (
