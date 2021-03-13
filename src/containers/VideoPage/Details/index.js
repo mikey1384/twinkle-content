@@ -511,9 +511,6 @@ export default function Details({
   }
 
   function handleEditCancel() {
-    handleTitleChange(title);
-    handleDescriptionChange(description);
-    handleUrlChange(`https://www.youtube.com/watch?v=${content}`);
     onSetEditForm({
       contentId: videoId,
       contentType: 'video',

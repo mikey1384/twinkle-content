@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import UsernameText from 'components/Texts/UsernameText';
 import DropdownButton from 'components/Buttons/DropdownButton';
@@ -56,8 +56,14 @@ export default function Description({
     contentType: 'url',
     contentId: linkId
   });
+
+  const editState = useMemo(() => inputState['edit' + 'url' + linkId], [
+    inputState,
+    linkId
+  ]);
+
   useEffect(() => {
-    if (!inputState['edit' + 'url' + linkId]) {
+    if (!editState) {
       onSetEditForm({
         contentId: linkId,
         contentType: 'url',
@@ -68,12 +74,32 @@ export default function Description({
         }
       });
     }
-  }, [isEditing, title, description, url, inputState, linkId, onSetEditForm]);
-  const editForm = useMemo(() => inputState['edit' + 'url' + linkId] || {}, [
-    inputState,
-    linkId
-  ]);
-  const { editedDescription = '', editedTitle = '', editedUrl = '' } = editForm;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEditing, title, description, url, inputState, linkId, editState]);
+
+  const editForm = useMemo(() => editState || {}, [editState]);
+  const {
+    editedTitle: prevEditedTitle = '',
+    editedDescription: prevEditedDescription = '',
+    editedUrl: prevEditedUrl = ''
+  } = editForm;
+
+  const [editedTitle, setEditedTitle] = useState('');
+  const editedTitleRef = useRef('');
+  useEffect(() => {
+    handleTitleChange(prevEditedTitle || title);
+  }, [prevEditedTitle, title]);
+
+  const [editedDescription, setEditedDescription] = useState('');
+  const editedDescriptionRef = useRef('');
+  useEffect(
+    () => handleDescriptionChange(prevEditedDescription || description),
+    [description, prevEditedDescription]
+  );
+
+  const [editedUrl, setEditedUrl] = useState('');
+  const editedUrlRef = useRef('');
+  useEffect(() => handleUrlChange(prevEditedUrl || url), [url, prevEditedUrl]);
 
   const descriptionExceedsCharLimit = useMemo(
     () =>
@@ -157,6 +183,21 @@ export default function Description({
     urlExceedsCharLimit
   ]);
 
+  useEffect(() => {
+    return function onUnmount() {
+      onSetEditForm({
+        contentId: linkId,
+        contentType: 'url',
+        form: {
+          editedDescription: editedDescriptionRef.current,
+          editedTitle: editedTitleRef.current,
+          editedUrl: editedUrlRef.current
+        }
+      });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div style={{ position: 'relative', padding: '2rem 1rem 0 1rem' }}>
       {editButtonShown && !isEditing && (
@@ -195,24 +236,10 @@ export default function Description({
                 style={titleExceedsCharLimit?.style}
                 placeholder="Enter Title..."
                 value={editedTitle}
-                onChange={(text) => {
-                  onSetEditForm({
-                    contentId: linkId,
-                    contentType: 'url',
-                    form: {
-                      editedTitle: text
-                    }
-                  });
-                }}
+                onChange={handleTitleChange}
                 onKeyUp={(event) => {
                   if (event.key === ' ') {
-                    onSetEditForm({
-                      contentId: linkId,
-                      contentType: 'url',
-                      form: {
-                        editedTitle: addEmoji(event.target.value)
-                      }
-                    });
+                    handleTitleChange(addEmoji(event.target.value));
                   }
                 }}
               />
@@ -249,38 +276,16 @@ export default function Description({
               `}
               style={urlExceedsCharLimit?.style}
               value={editedUrl}
-              onChange={(text) => {
-                onSetEditForm({
-                  contentId: linkId,
-                  contentType: 'url',
-                  form: {
-                    editedUrl: text
-                  }
-                });
-              }}
+              onChange={handleUrlChange}
             />
             <Textarea
               minRows={4}
               placeholder="Enter Description"
               value={editedDescription}
-              onChange={(event) => {
-                onSetEditForm({
-                  contentId: linkId,
-                  contentType: 'url',
-                  form: {
-                    editedDescription: event.target.value
-                  }
-                });
-              }}
+              onChange={(event) => handleDescriptionChange(event.target.value)}
               onKeyUp={(event) => {
                 if (event.key === ' ') {
-                  onSetEditForm({
-                    contentId: linkId,
-                    contentType: 'url',
-                    form: {
-                      editedDescription: addEmoji(event.target.value)
-                    }
-                  });
+                  handleDescriptionChange(addEmoji(event.target.value));
                 }
               }}
               style={{
@@ -317,6 +322,21 @@ export default function Description({
     </div>
   );
 
+  function handleTitleChange(text) {
+    setEditedTitle(text);
+    editedTitleRef.current = text;
+  }
+
+  function handleDescriptionChange(text) {
+    setEditedDescription(text);
+    editedDescriptionRef.current = text;
+  }
+
+  function handleUrlChange(text) {
+    setEditedUrl(text);
+    editedUrlRef.current = text;
+  }
+
   function onEditCancel() {
     onSetEditForm({
       contentId: linkId,
@@ -337,6 +357,11 @@ export default function Description({
       editedDescription: finalizeEmoji(editedDescription),
       contentId: linkId,
       contentType: 'url'
+    });
+    onSetEditForm({
+      contentId: linkId,
+      contentType: 'url',
+      form: undefined
     });
     onSetIsEditing({
       contentId: linkId,
