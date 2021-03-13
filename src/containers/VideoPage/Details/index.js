@@ -108,9 +108,13 @@ export default function Details({
   const [titleHovered, setTitleHovered] = useState(false);
   const TitleRef = useRef(null);
   const RewardInterfaceRef = useRef(null);
+  const editState = useMemo(() => inputState['edit' + 'video' + videoId], [
+    inputState,
+    videoId
+  ]);
 
   useEffect(() => {
-    if (!inputState['edit' + 'video' + videoId]) {
+    if (!editState) {
       onSetEditForm({
         contentId: videoId,
         contentType: 'video',
@@ -127,7 +131,7 @@ export default function Details({
       shown: false
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isEditing, title, description, content]);
+  }, [editState, isEditing, title, description, content]);
 
   useEffect(() => {
     onSetXpRewardInterfaceShown({
@@ -154,29 +158,34 @@ export default function Details({
     return rewards.filter((reward) => reward.rewarderId === userId).length > 0;
   }, [rewards, userId]);
 
-  const editForm = useMemo(() => inputState['edit' + 'video' + videoId] || {}, [
-    inputState,
-    videoId
-  ]);
+  const editForm = useMemo(() => editState || {}, [editState]);
   const {
     editedTitle: prevEditedTitle = '',
     editedDescription: prevEditedDescription = '',
     editedUrl: prevEditedUrl = ''
   } = editForm;
 
-  const [editedTitle, setEditedTitle] = useState(prevEditedTitle || title);
-  const editedTitleRef = useRef(prevEditedTitle || title);
+  const [editedTitle, setEditedTitle] = useState('');
+  const editedTitleRef = useRef('');
+  useEffect(() => {
+    handleTitleChange(prevEditedTitle || title);
+  }, [prevEditedTitle, title]);
 
-  const [editedDescription, setEditedDescription] = useState(
-    prevEditedDescription || description
+  const [editedDescription, setEditedDescription] = useState('');
+  const editedDescriptionRef = useRef('');
+  useEffect(
+    () => handleDescriptionChange(prevEditedDescription || description),
+    [description, prevEditedDescription]
   );
-  const editedDescriptionRef = useRef(prevEditedDescription || description);
 
-  const [editedUrl, setEditedUrl] = useState(
-    prevEditedUrl || `https://www.youtube.com/watch?v=${content}`
-  );
-  const editedUrlRef = useRef(
-    prevEditedUrl || `https://www.youtube.com/watch?v=${content}`
+  const [editedUrl, setEditedUrl] = useState('');
+  const editedUrlRef = useRef('');
+  useEffect(
+    () =>
+      handleUrlChange(
+        prevEditedUrl || `https://www.youtube.com/watch?v=${content}`
+      ),
+    [content, prevEditedUrl]
   );
 
   const userIsUploader = uploader.id === userId;
