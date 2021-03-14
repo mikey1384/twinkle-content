@@ -6,6 +6,7 @@ import {
   useInteractiveContext
 } from 'contexts';
 import {
+  addEmoji,
   exceedsCharLimit,
   finalizeEmoji,
   stringIsEmpty,
@@ -331,6 +332,13 @@ export default function Editor({
               handleSetInputState({
                 ...editForm,
                 editedDescription: value
+              });
+            }}
+            onKeyUp={(event) => {
+              const { value } = event.target;
+              handleSetInputState({
+                ...editForm,
+                editedDescription: addEmoji(value)
               });
             }}
             placeholder={edit.description}
