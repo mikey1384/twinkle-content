@@ -11,17 +11,26 @@ import { timeSince } from 'helpers/timeStampHelpers';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 
 ApprovedStatus.propTypes = {
-  mission: PropTypes.object.isRequired,
+  xpReward: PropTypes.number,
+  coinReward: PropTypes.number,
+  missionId: PropTypes.number.isRequired,
+  myAttempt: PropTypes.object.isRequired,
   style: PropTypes.object
 };
 
-export default function ApprovedStatus({ mission, style }) {
+export default function ApprovedStatus({
+  xpReward,
+  coinReward,
+  missionId,
+  myAttempt,
+  style
+}) {
   const {
     actions: { onUpdateMissionAttempt }
   } = useMissionContext();
+
   const rewardDetails = useMemo(() => {
-    return (mission.xpReward || mission.coinReward) &&
-      mission.myAttempt.status === 'pass' ? (
+    return (xpReward || coinReward) && myAttempt.status === 'pass' ? (
       <div
         style={{
           marginTop: '0.5rem',
@@ -29,31 +38,31 @@ export default function ApprovedStatus({ mission, style }) {
         }}
       >
         You were rewarded{' '}
-        {mission.xpReward ? (
+        {xpReward ? (
           <span style={{ color: Color.logoGreen(), fontWeight: 'bold' }}>
-            {addCommasToNumber(mission.xpReward)}{' '}
+            {addCommasToNumber(xpReward)}{' '}
           </span>
         ) : null}
-        {mission.xpReward && mission.coinReward ? (
+        {xpReward && coinReward ? (
           <>
             <span style={{ color: Color.gold(), fontWeight: 'bold' }}>XP</span>{' '}
             and{' '}
           </>
         ) : null}
-        {mission.coinReward ? (
+        {coinReward ? (
           <>
             <Icon
               style={{ color: Color.brownOrange(), fontWeight: 'bold' }}
               icon={['far', 'badge-dollar']}
             />{' '}
             <span style={{ color: Color.brownOrange(), fontWeight: 'bold' }}>
-              {mission.coinReward}
+              {coinReward}
             </span>
           </>
         ) : null}
       </div>
     ) : null;
-  }, [mission.coinReward, mission.myAttempt.status, mission.xpReward]);
+  }, [coinReward, myAttempt?.status, xpReward]);
 
   return (
     <div
@@ -70,14 +79,11 @@ export default function ApprovedStatus({ mission, style }) {
     >
       <div
         style={{
-          ...(mission.myAttempt.status === 'pass' ||
-          mission.myAttempt.status === 'fail'
+          ...(myAttempt.status === 'pass' || myAttempt.status === 'fail'
             ? {
                 borderRadius,
                 boxShadow: `0 0 2px ${
-                  mission.myAttempt.status === 'pass'
-                    ? Color.brown()
-                    : Color.black()
+                  myAttempt.status === 'pass' ? Color.brown() : Color.black()
                 }`,
                 padding: '0.5rem 2rem'
               }
@@ -85,27 +91,27 @@ export default function ApprovedStatus({ mission, style }) {
           fontWeight: 'bold',
           fontSize: '2rem',
           background:
-            mission.myAttempt.status === 'pass'
+            myAttempt.status === 'pass'
               ? Color.brownOrange()
-              : mission.myAttempt.status === 'fail'
+              : myAttempt.status === 'fail'
               ? Color.black()
               : null,
           color: '#fff'
         }}
       >
-        {mission.myAttempt.status === 'pass'
+        {myAttempt.status === 'pass'
           ? 'Mission Accomplished'
           : 'Mission Failed...'}
       </div>
       {rewardDetails}
-      {mission.myAttempt.filePath && (
+      {myAttempt.filePath && (
         <FileViewer
           style={{ marginTop: '2rem' }}
-          thumbUrl={mission.myAttempt.thumbUrl}
-          src={mission.myAttempt.filePath}
+          thumbUrl={myAttempt.thumbUrl}
+          src={myAttempt.filePath}
         />
       )}
-      {mission.myAttempt.reviewer && (
+      {myAttempt.reviewer && (
         <div
           style={{
             width: '100%',
@@ -122,28 +128,23 @@ export default function ApprovedStatus({ mission, style }) {
               lineHeight: 1.5
             }}
           >
-            <UsernameText
-              color={Color.blue()}
-              user={mission.myAttempt.reviewer}
-            />
-            <span>{timeSince(mission.myAttempt.reviewTimeStamp)}</span>
+            <UsernameText color={Color.blue()} user={myAttempt.reviewer} />
+            <span>{timeSince(myAttempt.reviewTimeStamp)}</span>
           </div>
           <LongText>
-            {mission.myAttempt.feedback ||
-              (mission.myAttempt.status === 'pass'
-                ? 'Great job!'
-                : 'Please try again')}
+            {myAttempt.feedback ||
+              (myAttempt.status === 'pass' ? 'Great job!' : 'Please try again')}
           </LongText>
         </div>
       )}
-      {mission.myAttempt.status === 'fail' && (
+      {myAttempt.status === 'fail' && (
         <div style={{ marginTop: '3rem' }}>
           <Button
             style={{ fontSize: '2.5rem' }}
             color="green"
             onClick={() =>
               onUpdateMissionAttempt({
-                missionId: mission.id,
+                missionId,
                 newState: { tryingAgain: true }
               })
             }

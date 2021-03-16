@@ -59,13 +59,17 @@ export default function Mission({
     }
 
     async function handleCheckMissionStatus() {
-      const { filePath, feedback, status } = await checkMissionStatus(
-        missionId
-      );
+      const {
+        filePath,
+        feedback,
+        status,
+        reviewTimeStamp,
+        reviewer
+      } = await checkMissionStatus(missionId);
       if (status && !(status === 'fail' && myAttempt?.tryingAgain)) {
         onUpdateMissionAttempt({
           missionId,
-          newState: { filePath, feedback, status }
+          newState: { filePath, feedback, reviewer, reviewTimeStamp, status }
         });
       }
     }
@@ -136,7 +140,13 @@ export default function Mission({
         <PendingStatus style={{ marginTop: '7rem' }} />
       ) : (!mission.repeatable && myAttempt?.status === 'pass') ||
         (myAttempt?.status === 'fail' && !myAttempt?.tryingAgain) ? (
-        <ApprovedStatus mission={mission} style={{ marginTop: '3rem' }} />
+        <ApprovedStatus
+          missionId={mission.id}
+          xpReward={mission.xpReward}
+          coinReward={mission.coinReward}
+          myAttempt={myAttempt}
+          style={{ marginTop: '3rem' }}
+        />
       ) : (
         <Main
           mission={mission}

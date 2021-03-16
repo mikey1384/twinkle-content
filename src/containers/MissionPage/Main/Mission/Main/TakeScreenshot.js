@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useState } from 'react';
+import React, { useEffect, useRef, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import AlertModal from 'components/Modals/AlertModal';
@@ -43,6 +43,14 @@ export default function TakeScreenshot({
   const maxSize = useMemo(() => returnMaxUploadSize(fileUploadLvl), [
     fileUploadLvl
   ]);
+  const mounted = useRef(true);
+
+  useEffect(() => {
+    mounted.current = true;
+    return function onUnmount() {
+      mounted.current = false;
+    };
+  });
 
   return (
     <div
@@ -224,12 +232,14 @@ export default function TakeScreenshot({
       file: attachment.file,
       onUploadProgress: handleUploadProgress
     });
-    onSetMissionState({
-      missionId,
-      newState: {
-        fileUploadComplete: true
-      }
-    });
+    if (mounted.current) {
+      onSetMissionState({
+        missionId,
+        newState: {
+          fileUploadComplete: true
+        }
+      });
+    }
     const { success } = await uploadMissionAttempt({
       missionId,
       attempt: {
@@ -240,21 +250,25 @@ export default function TakeScreenshot({
     });
 
     if (success) {
-      onUpdateMissionAttempt({
-        missionId,
-        newState: {
-          status: 'pending',
-          tryingAgain: false
-        }
-      });
-      onSetMissionState({
-        missionId,
-        newState: {
-          attachment: null,
-          fileUploadComplete: false,
-          fileUploadProgress: null
-        }
-      });
+      if (mounted.current) {
+        onSetMissionState({
+          missionId,
+          newState: {
+            attachment: null,
+            fileUploadComplete: false,
+            fileUploadProgress: null
+          }
+        });
+      }
+      if (mounted.current) {
+        onUpdateMissionAttempt({
+          missionId,
+          newState: {
+            status: 'pending',
+            tryingAgain: false
+          }
+        });
+      }
     }
     setSubmitDisabled(false);
 
