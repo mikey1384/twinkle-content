@@ -58,6 +58,7 @@ export default function NavMenu({ playlistId, videoId }) {
   const mounted = useRef(true);
 
   useEffect(() => {
+    mounted.current = true;
     return function cleanUp() {
       mounted.current = false;
     };
@@ -117,9 +118,7 @@ export default function NavMenu({ playlistId, videoId }) {
           if (data.playlistVideos) {
             setPlaylistVideos(data.playlistVideos);
           }
-          if (data.playlistVideosLoadMoreShown) {
-            setPlaylistVideosLoadMoreShown(data.playlistVideosLoadMoreShown);
-          }
+          setPlaylistVideosLoadMoreShown(!!data.playlistVideosLoadMoreShown);
           if (data.otherVideos) {
             setOtherVideos(data.otherVideos);
           }
@@ -130,7 +129,7 @@ export default function NavMenu({ playlistId, videoId }) {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [videoId, hideWatched]);
+  }, [videoId, hideWatched, userId]);
 
   useEffect(() => {
     setRewardsExist(totalRewardedTwinkles + totalRewardedTwinkleCoins > 0);
