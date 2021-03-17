@@ -308,20 +308,6 @@ function Comment({
 
   const dropdownMenuItems = useMemo(() => {
     const items = [];
-    if (userIsSubjectUploader && !isNotification) {
-      items.push({
-        label: (
-          <>
-            <Icon icon={['fas', 'thumbtack']} />
-            <span style={{ marginLeft: '1rem' }}>
-              {pinnedCommentId === comment.id ? 'Unpin' : 'Pin'}
-            </span>
-          </>
-        ),
-        onClick: () =>
-          handlePinComment(pinnedCommentId === comment.id ? null : comment.id)
-      });
-    }
     if ((userIsUploader || canEdit) && !isNotification) {
       items.push({
         label: (
@@ -336,6 +322,20 @@ function Comment({
             contentType: 'comment',
             isEditing: true
           })
+      });
+    }
+    if (userIsSubjectUploader && !isNotification) {
+      items.push({
+        label: (
+          <>
+            <Icon icon={['fas', 'thumbtack']} />
+            <span style={{ marginLeft: '1rem' }}>
+              {pinnedCommentId === comment.id ? 'Unpin' : 'Pin'}
+            </span>
+          </>
+        ),
+        onClick: () =>
+          handlePinComment(pinnedCommentId === comment.id ? null : comment.id)
       });
     }
     if (userIsUploader || canDelete) {

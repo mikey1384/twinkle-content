@@ -217,20 +217,6 @@ function Reply({
 
   const dropdownMenuItems = useMemo(() => {
     const items = [];
-    if (userIsSubjectUploader) {
-      items.push({
-        label: (
-          <>
-            <Icon icon={['fas', 'thumbtack']} />
-            <span style={{ marginLeft: '1rem' }}>
-              {pinnedCommentId === reply.id ? 'Unpin' : 'Pin'}
-            </span>
-          </>
-        ),
-        onClick: () =>
-          onPinReply(pinnedCommentId === reply.id ? null : reply.id)
-      });
-    }
     if (userIsUploader || canEdit) {
       items.push({
         label: (
@@ -245,6 +231,20 @@ function Reply({
             contentType: 'comment',
             isEditing: true
           })
+      });
+    }
+    if (userIsSubjectUploader) {
+      items.push({
+        label: (
+          <>
+            <Icon icon={['fas', 'thumbtack']} />
+            <span style={{ marginLeft: '1rem' }}>
+              {pinnedCommentId === reply.id ? 'Unpin' : 'Pin'}
+            </span>
+          </>
+        ),
+        onClick: () =>
+          onPinReply(pinnedCommentId === reply.id ? null : reply.id)
       });
     }
     if (userIsUploader || canDelete) {
