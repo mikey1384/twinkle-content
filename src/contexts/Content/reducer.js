@@ -1501,6 +1501,28 @@ export default function ContentReducer(state, action) {
         }
       };
     case 'UPLOAD_COMMENT': {
+      const newState = { ...state };
+      const contentKeys = Object.keys(newState);
+      if (action.data.commentId || action.data.replyId) {
+        for (let contentKey of contentKeys) {
+          const prevContentState = newState[contentKey];
+          newState[contentKey] = {
+            ...prevContentState,
+            comments: prevContentState.comments.map((comment) => {
+              if (
+                comment.id === action.data.commentId ||
+                comment.id === action.data.replyId
+              ) {
+                return {
+                  ...comment,
+                  replies: (comment.replies || []).concat(action.data)
+                };
+              }
+              return comment;
+            })
+          };
+        }
+      }
       const subjectState =
         action.data.subjectId &&
         !action.data.commentId &&
@@ -1515,7 +1537,7 @@ export default function ContentReducer(state, action) {
             }
           : {};
       return {
-        ...state,
+        ...newState,
         ...subjectState,
         [contentKey]: {
           ...prevContentState,
@@ -1536,6 +1558,28 @@ export default function ContentReducer(state, action) {
     }
 
     case 'UPLOAD_REPLY': {
+      const newState = { ...state };
+      const contentKeys = Object.keys(newState);
+      if (action.data.commentId || action.data.replyId) {
+        for (let contentKey of contentKeys) {
+          const prevContentState = newState[contentKey];
+          newState[contentKey] = {
+            ...prevContentState,
+            comments: prevContentState.comments.map((comment) => {
+              if (
+                comment.id === action.data.commentId ||
+                comment.id === action.data.replyId
+              ) {
+                return {
+                  ...comment,
+                  replies: (comment.replies || []).concat(action.data)
+                };
+              }
+              return comment;
+            })
+          };
+        }
+      }
       let subjectState = {};
       if (action.data.subjectId && state['subject' + action.data.subjectId]) {
         subjectState = {
@@ -1563,7 +1607,7 @@ export default function ContentReducer(state, action) {
         newComments.push(action.data);
       }
       return {
-        ...state,
+        ...newState,
         ...subjectState,
         ...((prevContentState.contentType !== 'comment' ||
           prevContentState.contentId !== commentId) &&
