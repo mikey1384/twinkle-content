@@ -33,7 +33,7 @@ function AccountMenu({ className, history }) {
     const result = [
       {
         label: 'Profile',
-        onClick: () => history.push(`/${username}`)
+        onClick: () => history.push(`/users/${username}`)
       }
     ];
     if (managementLevel > 0) {
