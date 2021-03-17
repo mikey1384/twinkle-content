@@ -24,6 +24,7 @@ export default function ExtractedThumb({
   const [loadingThumb, setLoadingThumb] = useState(false);
   const [thumbnail, setThumbnail] = useState(null);
   const [suspended, setSuspended] = useState(false);
+  const [thumbnailBroken, setThumbnailBroken] = useState(false);
   const videoRef = useRef({});
   const canvasRef = useRef(null);
 
@@ -67,11 +68,12 @@ export default function ExtractedThumb({
   }, [dataLoaded, metadataLoaded, seeked, suspended, thumbUrl, thumbnail]);
 
   return thumbnail ? (
-    isHidden ? null : (
+    isHidden || thumbnailBroken ? null : (
       <img
         style={{ objectFit: 'cover', ...style }}
         src={thumbnail}
         alt="video thumbnail"
+        onError={() => setThumbnailBroken(true)}
       />
     )
   ) : (

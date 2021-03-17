@@ -18,7 +18,8 @@ export default function ImagePreview({
   fileName
 }) {
   const [imageModalShown, setImageModalShown] = useState(false);
-  return (
+  const [imageWorks, setImageWorks] = useState(true);
+  return imageWorks ? (
     <div
       style={{
         display: 'flex',
@@ -44,6 +45,7 @@ export default function ImagePreview({
         src={src}
         rel={fileName}
         onClick={() => setImageModalShown(true)}
+        onError={() => setImageWorks(false)}
       />
       {imageModalShown && (
         <ImageModal
@@ -54,5 +56,5 @@ export default function ImagePreview({
         />
       )}
     </div>
-  );
+  ) : null;
 }
