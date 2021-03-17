@@ -83,6 +83,7 @@ export default function Stories() {
   });
 
   useEffect(() => {
+    mounted.current = true;
     return function cleanUp() {
       mounted.current = false;
     };

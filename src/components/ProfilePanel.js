@@ -34,6 +34,7 @@ ProfilePanel.propTypes = {
 function ProfilePanel({ expandable, profileId, style }) {
   const mounted = useRef(true);
   useEffect(() => {
+    mounted.current = true;
     return function cleanUp() {
       mounted.current = false;
     };

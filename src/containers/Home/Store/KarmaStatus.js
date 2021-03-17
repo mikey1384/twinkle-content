@@ -23,6 +23,7 @@ export default function KarmaStatus() {
   );
   const [numPostsRewarded, setNumPostsRewarded] = useState(0);
   useEffect(() => {
+    mounted.current = true;
     return function cleanUp() {
       mounted.current = false;
     };

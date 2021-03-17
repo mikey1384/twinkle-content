@@ -129,6 +129,7 @@ export default function LinkPage({
   const RewardInterfaceRef = useRef(null);
 
   useEffect(() => {
+    mounted.current = true;
     return function cleanUp() {
       mounted.current = false;
     };

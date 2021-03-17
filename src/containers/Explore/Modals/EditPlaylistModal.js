@@ -34,6 +34,7 @@ export default function EditPlaylistModal({
 }) {
   const mounted = useRef(true);
   useEffect(() => {
+    mounted.current = true;
     return function cleanUp() {
       mounted.current = false;
     };

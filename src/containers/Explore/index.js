@@ -37,6 +37,7 @@ export default function Explore({ history, location }) {
   const category = getSectionFromPathname(location.pathname)?.section;
 
   useEffect(() => {
+    mounted.current = true;
     return function cleanUp() {
       mounted.current = false;
     };

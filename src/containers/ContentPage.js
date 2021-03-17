@@ -34,6 +34,7 @@ export default function ContentPage({
   const prevDeleted = useRef(false);
 
   useEffect(() => {
+    mounted.current = true;
     return function cleanUp() {
       mounted.current = false;
     };

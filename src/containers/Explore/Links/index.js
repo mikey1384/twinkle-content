@@ -41,6 +41,7 @@ export default function Links() {
   const loadedRef = useRef(false);
 
   useEffect(() => {
+    mounted.current = true;
     return function cleanUp() {
       mounted.current = false;
     };

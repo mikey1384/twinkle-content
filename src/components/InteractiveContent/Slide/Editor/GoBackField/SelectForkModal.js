@@ -37,6 +37,7 @@ export default function SelectForkModal({
   }, [originForkId, slideObj]);
 
   useEffect(() => {
+    mounted.current = true;
     return function onDismount() {
       mounted.current = false;
     };

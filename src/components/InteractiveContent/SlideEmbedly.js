@@ -81,6 +81,7 @@ function SlideEmbedly({
   }, [url, thumbUrl, prevUrl]);
 
   useEffect(() => {
+    mounted.current = true;
     return function cleanUp() {
       mounted.current = false;
     };

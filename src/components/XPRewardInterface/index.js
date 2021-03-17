@@ -163,6 +163,7 @@ export default function XPRewardInterface({
   }, [requiresPayment, selectedAmount]);
 
   useEffect(() => {
+    mounted.current = true;
     return function cleanUp() {
       onSetRewardForm({
         contentType,

@@ -49,6 +49,7 @@ function Notification({ className, location, style }) {
   const prevTwinkleXP = useRef(twinkleXP);
 
   useEffect(() => {
+    mounted.current = true;
     return function cleanUp() {
       onResetRewards();
       mounted.current = false;

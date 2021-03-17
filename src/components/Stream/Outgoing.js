@@ -8,6 +8,7 @@ export default function Outgoing() {
     actions: { onSetMyStream }
   } = useChatContext();
   useEffect(() => {
+    mounted.current = true;
     const currentVideo = videoRef.current;
     init();
     async function init() {

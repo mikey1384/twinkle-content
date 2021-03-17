@@ -10,6 +10,7 @@ export default function useScrollToBottom(containerRef, threshold = 0) {
   );
 
   useEffect(() => {
+    mounted.current = true;
     return function cleanUp() {
       mounted.current = false;
     };

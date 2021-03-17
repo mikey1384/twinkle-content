@@ -58,6 +58,7 @@ export default function VideoPage({
   const prevDeleted = useRef(false);
 
   useEffect(() => {
+    mounted.current = true;
     return function cleanUp() {
       mounted.current = false;
     };

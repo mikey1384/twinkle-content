@@ -71,6 +71,7 @@ export default function Body({
 }) {
   const mounted = useRef(true);
   useEffect(() => {
+    mounted.current = true;
     return function cleanUp() {
       mounted.current = false;
     };

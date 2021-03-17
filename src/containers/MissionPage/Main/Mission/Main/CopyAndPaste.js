@@ -60,6 +60,7 @@ export default function CopyAndPaste({ mission, onSetMissionState, style }) {
   }, [content]);
 
   useEffect(() => {
+    mounted.current = true;
     return function onDismount() {
       mounted.current = false;
     };

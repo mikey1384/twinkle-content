@@ -147,6 +147,7 @@ function Chat({ onFileUpload }) {
   }, [selectedChannelId]);
 
   useEffect(() => {
+    mounted.current = true;
     return function cleanUp() {
       mounted.current = false;
     };

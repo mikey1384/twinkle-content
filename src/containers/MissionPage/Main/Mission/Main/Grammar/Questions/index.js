@@ -79,6 +79,7 @@ export default function Questions({ isRepeating, mission, onFail }) {
   }, [currentSlideIndex, questionObj]);
 
   useEffect(() => {
+    mounted.current = true;
     return function onDismount() {
       mounted.current = false;
     };

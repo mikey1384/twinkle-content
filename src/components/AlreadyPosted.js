@@ -27,6 +27,7 @@ export default function AlreadyPosted({
 }) {
   const mounted = useRef(true);
   useEffect(() => {
+    mounted.current = true;
     return function cleanUp() {
       mounted.current = false;
     };

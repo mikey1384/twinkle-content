@@ -21,6 +21,7 @@ export default function SelectArchivedSlideModal({
   const [selectedSlideId, setSelectedSlideId] = useState(null);
 
   useEffect(() => {
+    mounted.current = true;
     return function onDismount() {
       mounted.current = false;
     };

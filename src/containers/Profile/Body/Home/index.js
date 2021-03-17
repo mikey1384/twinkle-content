@@ -41,6 +41,7 @@ export default function Home({ profile, selectedTheme }) {
   const CommentInputAreaRef = useRef(null);
 
   useEffect(() => {
+    mounted.current = true;
     return function cleanUp() {
       mounted.current = false;
     };
