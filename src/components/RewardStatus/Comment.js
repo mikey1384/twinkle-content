@@ -2,12 +2,13 @@ import React, { memo, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ProfilePic from 'components/ProfilePic';
 import UsernameText from 'components/Texts/UsernameText';
-import { css } from '@emotion/css';
-import { Color, mobileMaxWidth } from 'constants/css';
 import LongText from 'components/Texts/LongText';
 import EditTextArea from 'components/Texts/EditTextArea';
 import DropdownButton from 'components/Buttons/DropdownButton';
 import ErrorBoundary from 'components/ErrorBoundary';
+import Icon from 'components/Icon';
+import { css } from '@emotion/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useContentState, useMyState } from 'helpers/hooks';
@@ -46,7 +47,12 @@ function Comment({
     const items = [];
     if (userIsUploader || canEdit) {
       items.push({
-        label: 'Edit',
+        label: (
+          <>
+            <Icon icon="pencil-alt" />
+            <span style={{ marginLeft: '1rem' }}>Edit</span>
+          </>
+        ),
         onClick: () =>
           onSetIsEditing({
             contentId: reward.id,
@@ -166,6 +172,7 @@ function Comment({
           {editButtonShown && !isEditing && (
             <DropdownButton
               skeuomorphic
+              icon="chevron-down"
               color="darkerGray"
               direction="left"
               menuProps={editMenuItems}
