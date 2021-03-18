@@ -115,6 +115,20 @@ export default function ChessModal({
     [gameFinished, newChessState, parsedState?.move?.number, userMadeLastMove]
   );
 
+  const drawButtonShown = useMemo(() => {
+    return (
+      !!parsedState?.move?.number > 0 &&
+      !newChessState &&
+      !gameFinished &&
+      userMadeLastMove
+    );
+  }, [
+    gameFinished,
+    newChessState,
+    parsedState?.move?.number,
+    userMadeLastMove
+  ]);
+
   return (
     <Modal large onHide={onHide}>
       <header>Chess</header>
@@ -152,19 +166,28 @@ export default function ChessModal({
       <footer style={{ border: 0 }}>
         {resignButtonShown && (
           <Button
-            style={{ marginRight: '0.7rem' }}
+            style={{ marginRight: '1rem' }}
             color="red"
             onClick={() => setResignModalShown(true)}
           >
             Resign
           </Button>
         )}
-        <Button transparent onClick={onHide} style={{ marginRight: '0.7rem' }}>
+        {drawButtonShown && (
+          <Button
+            style={{ marginRight: '1rem' }}
+            color="orange"
+            onClick={() => console.log('clicked')}
+          >
+            Offer Draw
+          </Button>
+        )}
+        <Button transparent onClick={onHide}>
           Close
         </Button>
         {!!newChessState && (
           <Button
-            style={{ marginRight: '0.7rem' }}
+            style={{ marginLeft: '1rem' }}
             color="pink"
             onClick={() => setNewChessState(undefined)}
           >
@@ -172,12 +195,17 @@ export default function ChessModal({
           </Button>
         )}
         {gameFinished ? (
-          <Button color="orange" onClick={() => setInitialState(undefined)}>
+          <Button
+            style={{ marginLeft: '1rem' }}
+            color="orange"
+            onClick={() => setInitialState(undefined)}
+          >
             Start a new game
           </Button>
-        ) : (
+        ) : !userMadeLastMove ? (
           <Button
             color="blue"
+            style={{ marginLeft: '1rem' }}
             onClick={submitChessMove}
             disabled={!newChessState || !socketConnected}
           >
@@ -186,7 +214,7 @@ export default function ChessModal({
               <Icon style={{ marginLeft: '0.7rem' }} icon="spinner" pulse />
             )}
           </Button>
-        )}
+        ) : null}
       </footer>
       {resignModalShown && (
         <ConfirmModal
