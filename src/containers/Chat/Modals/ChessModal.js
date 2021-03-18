@@ -177,7 +177,7 @@ export default function ChessModal({
           <Button
             style={{ marginRight: '1rem' }}
             color="orange"
-            onClick={() => console.log('clicked')}
+            onClick={handleOfferDraw}
           >
             Offer Draw
           </Button>
@@ -226,6 +226,10 @@ export default function ChessModal({
       )}
     </Modal>
   );
+
+  async function handleOfferDraw() {
+    console.log('offering draw');
+  }
 
   async function handleSpoilerClick() {
     try {
