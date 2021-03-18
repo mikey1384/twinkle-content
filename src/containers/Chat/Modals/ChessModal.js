@@ -97,12 +97,22 @@ export default function ChessModal({
     () => (initialState ? JSON.parse(initialState) : {}),
     [initialState]
   );
+
   const gameFinished = useMemo(
     () =>
       parsedState?.isCheckmate ||
       parsedState?.isStalemate ||
       parsedState?.isDraw,
-    [parsedState]
+    [parsedState?.isCheckmate, parsedState?.isStalemate, parsedState?.isDraw]
+  );
+
+  const resignButtonShown = useMemo(
+    () =>
+      !!parsedState?.move?.number > 0 &&
+      !newChessState &&
+      !gameFinished &&
+      !userMadeLastMove,
+    [gameFinished, newChessState, parsedState?.move?.number, userMadeLastMove]
   );
 
   return (
@@ -140,18 +150,15 @@ export default function ChessModal({
         </div>
       </main>
       <footer style={{ border: 0 }}>
-        {!!parsedState?.move?.number > 0 &&
-          !newChessState &&
-          !gameFinished &&
-          !userMadeLastMove && (
-            <Button
-              style={{ marginRight: '0.7rem' }}
-              color="red"
-              onClick={() => setResignModalShown(true)}
-            >
-              Resign
-            </Button>
-          )}
+        {resignButtonShown && (
+          <Button
+            style={{ marginRight: '0.7rem' }}
+            color="red"
+            onClick={() => setResignModalShown(true)}
+          >
+            Resign
+          </Button>
+        )}
         <Button transparent onClick={onHide} style={{ marginRight: '0.7rem' }}>
           Close
         </Button>
