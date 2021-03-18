@@ -102,8 +102,7 @@ export default function NavMenu({ playlistId, videoId }) {
         setLoading(true);
         const data = await loadRightMenuVideos({
           videoId,
-          playlistId,
-          hideWatched
+          playlistId
         });
         if (mounted.current) {
           if (data.playlistTitle) {
