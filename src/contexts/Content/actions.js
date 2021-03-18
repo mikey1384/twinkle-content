@@ -333,6 +333,14 @@ export default function ContentActions(dispatch) {
         contentType: 'user'
       });
     },
+    onRevokeReward({ contentType, contentId, rewardId }) {
+      return dispatch({
+        type: 'REVOKE_REWARD',
+        contentId,
+        contentType,
+        rewardId
+      });
+    },
     onSetActualDescription({ contentId, contentType, description }) {
       return dispatch({
         type: 'SET_ACTUAL_URL_DESCRIPTION',

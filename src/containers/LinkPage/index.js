@@ -443,6 +443,7 @@ export default function LinkPage({
         />
         <RewardStatus
           contentType="url"
+          contentId={linkId}
           rewardLevel={byUser ? 5 : 0}
           onCommentEdit={onEditRewardComment}
           className={css`

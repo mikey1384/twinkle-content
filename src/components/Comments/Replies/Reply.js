@@ -487,6 +487,8 @@ function Reply({
             )}
             <RewardStatus
               noMarginForEditButton
+              contentType="comment"
+              contentId={reply.id}
               rewardLevel={rewardLevel}
               onCommentEdit={onRewardCommentEdit}
               style={{

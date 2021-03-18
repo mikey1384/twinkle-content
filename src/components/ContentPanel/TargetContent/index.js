@@ -453,6 +453,8 @@ export default function TargetContent({
                 />
               )}
               <RewardStatus
+                contentType="comment"
+                contentId={comment.id}
                 className={css`
                   margin-left: -1px;
                   margin-right: -1px;

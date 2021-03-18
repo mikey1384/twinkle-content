@@ -1121,6 +1121,16 @@ export default function ContentReducer(state, action) {
           loaded: false
         }
       };
+    case 'REVOKE_REWARD':
+      return {
+        ...state,
+        [contentKey]: {
+          ...prevContentState,
+          rewards: prevContentState.rewards.filter(
+            (reward) => reward.id !== action.rewardId
+          )
+        }
+      };
     case 'SET_ACTUAL_URL_DESCRIPTION':
       return {
         ...state,

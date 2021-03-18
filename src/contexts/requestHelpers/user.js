@@ -171,6 +171,19 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
+    async revokeReward(rewardId) {
+      try {
+        const {
+          data: { success }
+        } = await request.delete(
+          `${URL}/user/reward?rewardId=${rewardId}`,
+          auth()
+        );
+        return Promise.resolve(success);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async recordUserTraffic(pathname) {
       if (token() === null) {
         request.post(`${URL}/user/recordAnonTraffic`, { pathname });

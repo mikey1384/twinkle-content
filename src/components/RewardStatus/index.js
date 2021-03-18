@@ -12,6 +12,8 @@ import { useMyState } from 'helpers/hooks';
 
 RewardStatus.propTypes = {
   className: PropTypes.string,
+  contentType: PropTypes.string,
+  contentId: PropTypes.number,
   rewardLevel: PropTypes.number,
   noMarginForEditButton: PropTypes.bool,
   onCommentEdit: PropTypes.func,
@@ -20,6 +22,8 @@ RewardStatus.propTypes = {
 };
 
 function RewardStatus({
+  contentType,
+  contentId,
   className,
   rewardLevel,
   noMarginForEditButton,
@@ -106,6 +110,8 @@ function RewardStatus({
         .filter((reward, index) => index > rewards.length - numLoaded - 1)
         .map((reward) => (
           <Comment
+            contentType={contentType}
+            contentId={contentId}
             maxRewardables={Math.ceil(maxRewards / 2)}
             noMarginForEditButton={noMarginForEditButton}
             key={reward.id}

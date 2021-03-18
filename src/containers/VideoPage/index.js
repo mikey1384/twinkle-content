@@ -394,6 +394,7 @@ export default function VideoPage({
               />
               <RewardStatus
                 contentType="video"
+                contentId={videoId}
                 rewardLevel={byUser ? 5 : 0}
                 onCommentEdit={onEditRewardComment}
                 style={{

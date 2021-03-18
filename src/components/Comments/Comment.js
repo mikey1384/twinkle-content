@@ -694,6 +694,8 @@ function Comment({
             )}
             {!isPreview && (
               <RewardStatus
+                contentType="comment"
+                contentId={comment.id}
                 rewardLevel={rewardLevel}
                 noMarginForEditButton
                 onCommentEdit={onRewardCommentEdit}

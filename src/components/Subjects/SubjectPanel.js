@@ -427,6 +427,7 @@ export default function SubjectPanel({
             )}
             <RewardStatus
               contentType="subject"
+              contentId={subjectId}
               rewardLevel={finalRewardLevel}
               onCommentEdit={onEditRewardComment}
               rewards={rewards}

@@ -15,6 +15,8 @@ import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
 
 Comment.propTypes = {
+  contentType: PropTypes.string,
+  contentId: PropTypes.number,
   maxRewardables: PropTypes.number.isRequired,
   noMarginForEditButton: PropTypes.bool,
   onEditDone: PropTypes.func,
@@ -22,16 +24,18 @@ Comment.propTypes = {
 };
 
 function Comment({
+  contentType,
+  contentId,
   maxRewardables,
   noMarginForEditButton,
   onEditDone = () => {},
   reward
 }) {
   const {
-    requestHelpers: { editRewardComment }
+    requestHelpers: { editRewardComment, revokeReward }
   } = useAppContext();
   const {
-    actions: { onSetIsEditing }
+    actions: { onRevokeReward, onSetIsEditing }
   } = useContentContext();
   const { authLevel, canEdit, userId } = useMyState();
   const { isEditing } = useContentState({
@@ -61,7 +65,26 @@ function Comment({
           })
       });
     }
+    if (canEdit) {
+      items.push({
+        label: (
+          <>
+            <Icon icon="ban" />
+            <span style={{ marginLeft: '1rem' }}>Revoke</span>
+          </>
+        ),
+        onClick: handleRevokeReward
+      });
+    }
     return items;
+
+    async function handleRevokeReward() {
+      const success = await revokeReward(reward.id);
+      if (success) {
+        onRevokeReward({ contentType, contentId, rewardId: reward.id });
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canEdit, onSetIsEditing, reward.id, userIsUploader]);
 
   return (

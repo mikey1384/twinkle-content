@@ -600,6 +600,7 @@ export default function Body({
         )}
         <RewardStatus
           contentType={contentType}
+          contentId={contentId}
           rewardLevel={finalRewardLevel}
           onCommentEdit={onEditRewardComment}
           rewards={rewards}
