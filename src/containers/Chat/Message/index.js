@@ -127,7 +127,6 @@ function Message({
   });
   const {
     authLevel,
-    banned,
     canDelete,
     canEdit,
     canReward,
@@ -174,7 +173,6 @@ function Message({
     actions: {
       onEditMessage,
       onSaveMessage,
-      onSetChessModalShown,
       onSetReplyTarget,
       onUpdateChessMoveViewTimeStamp,
       onUpdateRecentChessMessage
@@ -454,7 +452,7 @@ function Message({
                 <DrawOffer
                   userId={userId}
                   username={username}
-                  onClick={handleChessModalShown}
+                  onClick={onChessBoardClick}
                 />
               ) : isChessMsg ? (
                 <Chess
@@ -615,16 +613,6 @@ function Message({
 
   function handleRewardMessageSubmit({ reasonId, amount }) {
     onRewardMessageSubmit({ amount, reasonId, message });
-  }
-
-  function handleChessModalShown() {
-    if (banned?.chess) {
-      return;
-    }
-    if (chessCountdownNumber !== 0) {
-      onSetReplyTarget(null);
-      onSetChessModalShown(true);
-    }
   }
 
   function handleSetScrollToBottom() {
