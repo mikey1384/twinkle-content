@@ -13,6 +13,7 @@ import TargetMessage from './TargetMessage';
 import TargetSubject from './TargetSubject';
 import RewardMessage from './RewardMessage';
 import Invitation from './Invitation';
+import DrawOffer from './DrawOffer';
 import MessageRewardModal from '../Modals/MessageRewardModal';
 import { useInView } from 'react-intersection-observer';
 import { socket } from 'constants/io';
@@ -83,6 +84,7 @@ function Message({
     gameWinnerId,
     inviteFrom,
     isChessMsg,
+    isDrawOffer,
     isNewMessage,
     isReloadedSubject,
     isSubject,
@@ -445,6 +447,8 @@ function Message({
                   messageId={messageId}
                   onAcceptGroupInvitation={onAcceptGroupInvitation}
                 />
+              ) : isDrawOffer ? (
+                <DrawOffer />
               ) : isChessMsg ? (
                 <Chess
                   channelId={channelId}

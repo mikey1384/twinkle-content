@@ -7,6 +7,7 @@ import ConfirmModal from 'components/Modals/ConfirmModal';
 import Icon from 'components/Icon';
 import { Color } from 'constants/css';
 import { socket } from 'constants/io';
+import { useMyState } from 'helpers/hooks';
 import { useAppContext, useChatContext } from 'contexts';
 
 ChessModal.propTypes = {
@@ -34,12 +35,13 @@ export default function ChessModal({
   opponentName,
   socketConnected
 }) {
+  const { userId, username, profilePicUrl } = useMyState();
   const {
     requestHelpers: { fetchCurrentChessState, setChessMoveViewTimeStamp }
   } = useAppContext();
   const {
     state: { recentChessMessage },
-    actions: { onUpdateChessMoveViewTimeStamp }
+    actions: { onSubmitMessage, onUpdateChessMoveViewTimeStamp }
   } = useChatContext();
   const [initialState, setInitialState] = useState();
   const [viewTimeStamp, setViewTimeStamp] = useState();
@@ -228,7 +230,17 @@ export default function ChessModal({
   );
 
   async function handleOfferDraw() {
-    console.log('offering draw');
+    onSubmitMessage({
+      message: {
+        channelId,
+        isDrawOffer: true,
+        content: 'offered a draw',
+        userId,
+        username,
+        profilePicUrl
+      }
+    });
+    onHide();
   }
 
   async function handleSpoilerClick() {
