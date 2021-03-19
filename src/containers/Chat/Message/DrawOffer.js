@@ -1,9 +1,46 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import PropTypes from 'prop-types';
+import { useMyState } from 'helpers/hooks';
+import { css } from '@emotion/css';
+import { Color } from 'constants/css';
 
-export default function DrawOffer() {
+DrawOffer.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  userId: PropTypes.number,
+  username: PropTypes.string
+};
+
+export default function DrawOffer({ onClick, username, userId }) {
+  const { userId: myId } = useMyState();
+  const displayedUserLabel = useMemo(() => {
+    if (userId === myId) {
+      return 'You';
+    }
+    return username;
+  }, [myId, userId, username]);
+
   return (
-    <div>
-      <div>this is a draw offer my man</div>
+    <div
+      className={css`
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        padding: 2rem 1rem 1rem 1rem;
+        position: relative;
+      `}
+    >
+      <span
+        style={{
+          cursor: 'pointer',
+          fontSize: '2rem',
+          display: 'flex',
+          fontWeight: 'bold',
+          color: Color.orange()
+        }}
+        onClick={onClick}
+      >
+        {displayedUserLabel} offered a draw
+      </span>
     </div>
   );
 }
