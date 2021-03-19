@@ -117,14 +117,23 @@ export default function ChessModal({
     [gameFinished, newChessState, parsedState?.move?.number, userMadeLastMove]
   );
 
+  const drawOffererId = useMemo(() => {
+    if (currentChannel?.gameState?.chess?.drawOfferedBy) {
+      return currentChannel.gameState.chess.drawOfferedBy;
+    }
+    return null;
+  }, [currentChannel.gameState.chess.drawOfferedBy]);
+
   const drawButtonShown = useMemo(() => {
     return (
+      !drawOffererId &&
       !!parsedState?.move?.number > 0 &&
       !newChessState &&
       !gameFinished &&
       userMadeLastMove
     );
   }, [
+    drawOffererId,
     gameFinished,
     newChessState,
     parsedState?.move?.number,
