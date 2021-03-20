@@ -1188,6 +1188,26 @@ export default function ChatReducer(state, action) {
           ...state.channelsObj,
           [action.message.channelId]: {
             ...state.channelsObj[action.message.channelId],
+            gameState: {
+              ...state.channelsObj[action.message.channelId].gameState,
+              ...(action.message.isChessMsg
+                ? {
+                    chess: {
+                      ...state.channelsObj[action.message.channelId].gameState
+                        ?.chess,
+                      drawOfferedBy: null
+                    }
+                  }
+                : action.message.isDrawOffer
+                ? {
+                    chess: {
+                      ...state.channelsObj[action.message.channelId].gameState
+                        ?.chess,
+                      drawOfferedBy: action.message.userId
+                    }
+                  }
+                : {})
+            },
             lastMessage: {
               fileName: action.message.fileName || '',
               gameWinnerId: action.message.gameWinnerId,
