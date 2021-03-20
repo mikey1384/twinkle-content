@@ -84,6 +84,7 @@ function Message({
     gameWinnerId,
     inviteFrom,
     isChessMsg,
+    isDraw,
     isDrawOffer,
     isNewMessage,
     isReloadedSubject,
@@ -393,13 +394,14 @@ function Message({
   const dropdownButtonShown =
     !!messageId && !isNotification && !isChessMsg && !isEditing;
 
-  if (!chessState && gameWinnerId) {
+  if (!chessState && (gameWinnerId || isDraw)) {
     return (
       <GameOverMessage
         winnerId={gameWinnerId}
         opponentName={channelName}
         myId={myId}
         isResign={!!isResign}
+        isDraw={!!isDraw}
       />
     );
   }

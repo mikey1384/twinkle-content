@@ -7,11 +7,12 @@ import { Color, mobileMaxWidth } from 'constants/css';
 GameOverMessage.propTypes = {
   opponentName: PropTypes.string,
   myId: PropTypes.number.isRequired,
-  winnerId: PropTypes.number.isRequired,
-  isResign: PropTypes.bool.isRequired
+  winnerId: PropTypes.number,
+  isDraw: PropTypes.bool,
+  isResign: PropTypes.bool
 };
 
-function GameOverMessage({ myId, opponentName, winnerId, isResign }) {
+function GameOverMessage({ myId, opponentName, winnerId, isDraw, isResign }) {
   return (
     <ErrorBoundary>
       <div
@@ -22,21 +23,27 @@ function GameOverMessage({ myId, opponentName, winnerId, isResign }) {
       >
         <div
           className={css`
-            background: ${myId === winnerId
+            background: ${isDraw
+              ? Color.logoBlue()
+              : myId === winnerId
               ? Color.brownOrange()
               : Color.black()};
             font-size: 2.5rem;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1rem;
+            padding: ${isDraw ? '2rem' : '1rem'};
             color: #fff;
             @media (max-width: ${mobileMaxWidth}) {
               font-size: 1.7rem;
             }
           `}
         >
-          {isResign ? (
+          {isDraw ? (
+            <div style={{ textAlign: 'center' }}>
+              The chess match ended in a draw
+            </div>
+          ) : isResign ? (
             myId === winnerId ? (
               <div style={{ textAlign: 'center' }}>
                 <p>{opponentName} resigned!</p>

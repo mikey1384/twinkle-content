@@ -49,7 +49,7 @@ export default function ChessModal({
   const [uploaderId, setUploaderId] = useState();
   const [loaded, setLoaded] = useState(false);
   const [newChessState, setNewChessState] = useState();
-  const [resignModalShown, setResignModalShown] = useState(false);
+  const [confirmModalShown, setConfirmModalShown] = useState(false);
   const [spoilerOff, setSpoilerOff] = useState(false);
   const [userMadeLastMove, setUserMadeLastMove] = useState(false);
   const prevChannelId = useRef(channelId);
@@ -122,7 +122,7 @@ export default function ChessModal({
       return currentChannel.gameState.chess.drawOfferedBy;
     }
     return null;
-  }, [currentChannel.gameState.chess.drawOfferedBy]);
+  }, [currentChannel?.gameState?.chess?.drawOfferedBy]);
 
   const drawButtonShown = useMemo(() => {
     return (
@@ -139,6 +139,10 @@ export default function ChessModal({
     parsedState?.move?.number,
     userMadeLastMove
   ]);
+
+  const drawOfferPending = useMemo(() => {
+    return drawOffererId && drawOffererId !== myId;
+  }, [drawOffererId, myId]);
 
   return (
     <Modal large onHide={onHide}>
@@ -178,10 +182,10 @@ export default function ChessModal({
         {gameEndButtonShown && (
           <Button
             style={{ marginRight: '1rem' }}
-            color={drawOffererId && drawOffererId !== myId ? 'orange' : 'red'}
-            onClick={() => setResignModalShown(true)}
+            color={drawOfferPending ? 'orange' : 'red'}
+            onClick={() => setConfirmModalShown(true)}
           >
-            {drawOffererId && drawOffererId !== myId ? 'Accept Draw' : 'Resign'}
+            {drawOfferPending ? 'Accept Draw' : 'Resign'}
           </Button>
         )}
         {drawButtonShown && (
@@ -227,12 +231,12 @@ export default function ChessModal({
           </Button>
         ) : null}
       </footer>
-      {resignModalShown && (
+      {confirmModalShown && (
         <ConfirmModal
           modalOverModal
-          title="Resign Chess Match"
-          onConfirm={handleResign}
-          onHide={() => setResignModalShown(false)}
+          title={drawOfferPending ? 'Accept Draw' : 'Resign Chess Match'}
+          onConfirm={handleGameOver}
+          onHide={() => setConfirmModalShown(false)}
         />
       )}
     </Modal>
@@ -268,12 +272,14 @@ export default function ChessModal({
     onHide();
   }
 
-  function handleResign() {
-    socket.emit('resign_chess_game', {
+  function handleGameOver() {
+    socket.emit('end_chess_game', {
       channel: currentChannel,
       channelId,
       targetUserId: myId,
-      winnerId: opponentId
+      ...(drawOfferPending
+        ? { isDraw: true }
+        : { winnerId: opponentId, isResign: true })
     });
     onHide();
   }

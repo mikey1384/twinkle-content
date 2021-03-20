@@ -159,7 +159,13 @@ function Channel({
     </div>
   );
 
-  function renderPreviewMessage({ content, fileName, gameWinnerId, sender }) {
+  function renderPreviewMessage({
+    content,
+    fileName,
+    gameWinnerId,
+    sender,
+    isDraw
+  }) {
     const messageSender = sender?.id
       ? sender.id === userId
         ? 'You'
@@ -171,6 +177,9 @@ function Channel({
           {`${messageSender}:`} {`"${fileName}"`}
         </span>
       );
+    }
+    if (isDraw) {
+      return <span>chess match ended in a draw</span>;
     }
     if (typeof gameWinnerId === 'number') {
       if (gameWinnerId === 0) {
