@@ -25,7 +25,7 @@ export default function DrawOffer({ onClick, username, userId }) {
         display: flex;
         justify-content: center;
         width: 100%;
-        padding: 2rem 1rem 1rem 1rem;
+        padding: 2.5rem 1rem 1.5rem 1rem;
         position: relative;
       `}
     >
@@ -35,7 +35,7 @@ export default function DrawOffer({ onClick, username, userId }) {
           fontSize: '2rem',
           display: 'flex',
           fontWeight: 'bold',
-          color: Color.orange()
+          color: Color.logoBlue()
         }}
         onClick={onClick}
       >

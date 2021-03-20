@@ -807,6 +807,26 @@ export default function ChatReducer(state, action) {
               )
             ],
             numUnreads: 0,
+            gameState: {
+              ...state.channelsObj[action.message.channelId].gameState,
+              ...(action.message.isChessMsg
+                ? {
+                    chess: {
+                      ...state.channelsObj[action.message.channelId].gameState
+                        ?.chess,
+                      drawOfferedBy: null
+                    }
+                  }
+                : action.message.isDrawOffer
+                ? {
+                    chess: {
+                      ...state.channelsObj[action.message.channelId].gameState
+                        ?.chess,
+                      drawOfferedBy: action.message.userId
+                    }
+                  }
+                : {})
+            },
             isHidden: false
           }
         }
