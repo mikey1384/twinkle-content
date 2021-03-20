@@ -356,7 +356,7 @@ function Message({
       }
     });
   }
-  if (userIsUploader || canDelete) {
+  if ((userIsUploader || canDelete) && !isDrawOffer) {
     messageMenuItems.push({
       label: (
         <>
