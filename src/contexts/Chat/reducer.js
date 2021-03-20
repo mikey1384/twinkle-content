@@ -788,6 +788,7 @@ export default function ChatReducer(state, action) {
           [action.message.channelId]: {
             ...state.channelsObj[action.message.channelId],
             lastMessage: {
+              isDraw: action.message.isDraw,
               fileName: action.message.fileName || '',
               gameWinnerId: action.message.gameWinnerId,
               content: action.message.content,
