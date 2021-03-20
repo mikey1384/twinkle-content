@@ -607,7 +607,7 @@ export function processedStringWithURL(string) {
     .replace(
       pinkSentenceRegex,
       (string) =>
-        `<span style="color: pink;">${string.substring(
+        `<span style="color: rgb(255,105,180);">${string.substring(
           2,
           string.length - 2
         )}</span>`

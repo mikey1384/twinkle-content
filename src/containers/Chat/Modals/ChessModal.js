@@ -108,7 +108,7 @@ export default function ChessModal({
     [parsedState?.isCheckmate, parsedState?.isStalemate, parsedState?.isDraw]
   );
 
-  const resignButtonShown = useMemo(
+  const gameEndButtonShown = useMemo(
     () =>
       !!parsedState?.move?.number > 0 &&
       !newChessState &&
@@ -175,13 +175,13 @@ export default function ChessModal({
         </div>
       </main>
       <footer style={{ border: 0 }}>
-        {resignButtonShown && (
+        {gameEndButtonShown && (
           <Button
             style={{ marginRight: '1rem' }}
-            color="red"
+            color={drawOffererId && drawOffererId !== myId ? 'orange' : 'red'}
             onClick={() => setResignModalShown(true)}
           >
-            Resign
+            {drawOffererId && drawOffererId !== myId ? 'Accept Draw' : 'Resign'}
           </Button>
         )}
         {drawButtonShown && (
