@@ -4,6 +4,7 @@ import Button from 'components/Button';
 import Textarea from 'components/Texts/Textarea';
 import Icon from '../Icon';
 import Attachment from 'components/Attachment';
+import ConfirmModal from 'components/Modals/ConfirmModal';
 import FullTextReveal from 'components/Texts/FullTextReveal';
 import AlertModal from 'components/Modals/AlertModal';
 import { Color } from 'constants/css';
@@ -61,6 +62,7 @@ export default function InputForm({
   const maxSize = useMemo(() => returnMaxUploadSize(fileUploadLvl), [
     fileUploadLvl
   ]);
+  const [confirmModalShown, setConfirmModalShown] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [
     secretViewMessageSubmitting,
@@ -170,7 +172,11 @@ export default function InputForm({
                 color="rose"
                 filled
                 disabled={secretViewMessageSubmitting}
-                onClick={handleViewAnswer}
+                onClick={
+                  authLevel > 1
+                    ? handleViewAnswer
+                    : () => setConfirmModalShown(true)
+                }
               >
                 View without responding
               </Button>
@@ -261,6 +267,15 @@ export default function InputForm({
             maxSize / mb
           } MB`}
           onHide={() => setAlertModalShown(false)}
+        />
+      )}
+      {confirmModalShown && (
+        <ConfirmModal
+          onHide={() => setConfirmModalShown(false)}
+          descriptionFontSize="1.7rem"
+          title="View secret message without responding"
+          description="Are you sure? The comments you post on this subject might not be rewarded"
+          onConfirm={handleViewAnswer}
         />
       )}
     </div>
@@ -363,5 +378,6 @@ export default function InputForm({
       setSecretViewMessageSubmitting(false);
       console.error(error);
     }
+    setConfirmModalShown(false);
   }
 }
