@@ -159,6 +159,9 @@ export default function Editor({
   );
 
   const doneButtonDisabled = useMemo(() => {
+    if (uploadingFile) {
+      return true;
+    }
     if (editedAttachment?.isChanging && !editedAttachment?.newAttachment) {
       return false;
     }
@@ -247,22 +250,23 @@ export default function Editor({
     }
     return false;
   }, [
+    uploadingFile,
+    editedAttachment,
+    editedIsPortal,
     editedPortalButton,
     portalButton,
     editedIsFork,
-    isFork,
-    editedIsPortal,
-    isPortal,
-    editedAttachment,
-    attachment,
-    editedHeading,
-    heading,
-    editedDescription,
-    description,
     editedForkButtonIds,
     forkButtonIds,
     editedForkButtonsObj,
     forkButtonsObj,
+    attachment,
+    isFork,
+    isPortal,
+    editedHeading,
+    heading,
+    editedDescription,
+    description,
     descriptionExceedsCharLimit,
     headingExceedsCharLimit
   ]);
