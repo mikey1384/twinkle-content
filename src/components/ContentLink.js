@@ -38,10 +38,7 @@ export default function ContentLink({
     <Link
       style={{
         fontWeight: 'bold',
-        color:
-          contentType === 'video' && byUser
-            ? Color[profileTheme](0.9)
-            : Color.blue(),
+        color: byUser ? Color[profileTheme](0.9) : Color.blue(),
         ...style
       }}
       to={`/${destination}/${
