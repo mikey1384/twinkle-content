@@ -113,7 +113,6 @@ export default function FilterBar({
             : ''};
         }
         > nav:hover {
-          transition: border-bottom 0.5s, background 0.5s;
           background: ${inverted ? Color[themeColor](selectedOpacity) : ''};
           color: ${inverted ? '#fff' : Color[themeColor](selectedOpacity)};
           border-bottom: ${inverted
@@ -125,7 +124,6 @@ export default function FilterBar({
           }
           > a {
             color: ${inverted ? '#fff' : Color[themeColor](selectedOpacity)};
-            transition: color 0.5s, font-weight 0.5s;
             font-weight: bold;
           }
         }
