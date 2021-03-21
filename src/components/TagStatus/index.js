@@ -62,7 +62,7 @@ function TagStatus({
     () =>
       tags.map((tag) => (
         <a
-          style={{ marginRight: '0.5rem' }}
+          style={{ marginRight: '0.5rem', fontSize: '1.5rem' }}
           key={tag.id}
           onClick={() => {
             setShownPlaylistId(tag.id);

@@ -109,7 +109,15 @@ export default function BasicInfos({
         </div>
       )}
       {!onEdit && (
-        <div>
+        <div
+          className={css`
+            margin-top: 0.5rem;
+            font-size: 1.5rem;
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: 1.2rem;
+            }
+          `}
+        >
           Added by <UsernameText user={uploader} />{' '}
           <span>{`${timeStamp ? timeSince(timeStamp) : ''}`}</span>
         </div>
