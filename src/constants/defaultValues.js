@@ -132,8 +132,8 @@ export const rewardHash = {
 export const rewardReasons = {
   1: {
     color: 'pink',
-    icon: 'heart',
-    message: 'for being considerate'
+    icon: 'certificate',
+    message: 'for being thoughtful'
   },
   2: {
     color: 'logoBlue',
@@ -143,7 +143,7 @@ export const rewardReasons = {
   3: {
     color: 'orange',
     icon: 'surprise',
-    message: 'for posting something interesting'
+    message: 'for posting something awesome'
   },
   4: {
     color: 'gold',
