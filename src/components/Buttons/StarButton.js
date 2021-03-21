@@ -123,7 +123,8 @@ export default function StarButton({
           title="This setting cannot be changed"
           content={
             <span>
-              <b>{moderatorName}</b> has disabled you from changing this setting
+              <b>{moderatorName}</b> has disabled users from changing this
+              setting for this post
             </span>
           }
           onHide={() => setCannotChangeModalShown(false)}
