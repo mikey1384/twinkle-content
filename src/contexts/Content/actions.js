@@ -610,11 +610,11 @@ export default function ContentActions(dispatch) {
         contentId
       });
     },
-    onUpdateCommentPinStatus({ subjectId, commentId }) {
+    onUpdateCommentPinStatus({ contentType, contentId, commentId }) {
       return dispatch({
         type: 'UPDATE_COMMENT_PIN_STATUS',
-        contentType: 'subject',
-        contentId: subjectId,
+        contentType,
+        contentId,
         commentId
       });
     },

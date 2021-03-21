@@ -236,10 +236,12 @@ function Comment({
     uploader.id,
     userId
   ]);
-  const userIsSubjectUploader = useMemo(
+  const userIsParentUploader = useMemo(
     () =>
       userId &&
-      parent.contentType === 'subject' &&
+      (parent.contentType === 'subject' ||
+        parent.contentType === 'video' ||
+        parent.contentType === 'url') &&
       parent.uploader?.id === userId,
     [parent.contentType, parent.uploader?.id, userId]
   );
@@ -268,7 +270,7 @@ function Comment({
     return (
       ((userIsUploader && !(isForSecretSubject || isNotification)) ||
         userCanEditThis ||
-        (userIsSubjectUploader && !isNotification)) &&
+        (userIsParentUploader && !isNotification)) &&
       !isPreview
     );
   }, [
@@ -288,23 +290,12 @@ function Comment({
     subject?.uploader?.id,
     userId,
     userIsHigherAuth,
-    userIsSubjectUploader,
+    userIsParentUploader,
     userIsUploader
   ]);
 
   const dropdownMenuItems = useMemo(() => {
     const items = [];
-    if (userIsSubjectUploader) {
-      items.push({
-        label: (
-          <>
-            <Icon icon={['fas', 'thumbtack']} />
-            <span style={{ marginLeft: '1rem' }}>Unpin</span>
-          </>
-        ),
-        onClick: () => handleUnPinComment()
-      });
-    }
     if ((userIsUploader || canEdit) && !isNotification) {
       items.push({
         label: (
@@ -319,6 +310,17 @@ function Comment({
             contentType: 'comment',
             isEditing: true
           })
+      });
+    }
+    if (userIsParentUploader) {
+      items.push({
+        label: (
+          <>
+            <Icon icon={['fas', 'thumbtack']} />
+            <span style={{ marginLeft: '1rem' }}>Unpin</span>
+          </>
+        ),
+        onClick: () => handleUnPinComment()
       });
     }
     if (userIsUploader || canDelete) {
@@ -339,7 +341,7 @@ function Comment({
     canEdit,
     comment.id,
     isNotification,
-    userIsSubjectUploader,
+    userIsParentUploader,
     userIsUploader
   ]);
 
@@ -719,8 +721,16 @@ function Comment({
   }
 
   async function handleUnPinComment() {
-    await updateCommentPinStatus({ commentId: null, subjectId });
-    onUpdateCommentPinStatus({ subjectId, commentId: null });
+    await updateCommentPinStatus({
+      contentId: parent.contentId,
+      contentType: parent.contentType,
+      commentId: null
+    });
+    onUpdateCommentPinStatus({
+      contentId: parent.contentId,
+      contentType: parent.contentType,
+      commentId: null
+    });
   }
 }
 

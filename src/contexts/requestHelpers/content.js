@@ -581,11 +581,11 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async updateCommentPinStatus({ commentId, subjectId }) {
+    async updateCommentPinStatus({ commentId, contentType, contentId }) {
       try {
         const { data } = await request.put(
-          `${URL}/content/subject/pin`,
-          { commentId, subjectId },
+          `${URL}/content/pin`,
+          { commentId, contentType, contentId },
           auth()
         );
         return Promise.resolve(data);

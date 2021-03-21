@@ -470,6 +470,7 @@ export default function SubjectPanel({
                 secretAnswer,
                 uploader: {
                   id: userId,
+                  username,
                   authLevel: uploaderAuthLevel
                 }
               }}

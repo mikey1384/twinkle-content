@@ -251,11 +251,13 @@ function Comment({
     uploader.id,
     userId
   ]);
-  const userIsSubjectUploader = useMemo(
+  const userIsParentUploader = useMemo(
     () =>
       userId &&
-      parent.contentType === 'subject' &&
-      parent.uploader?.id === userId,
+      parent.uploader?.id === userId &&
+      (parent.contentType === 'video' ||
+        parent.contentType === 'url' ||
+        parent.contentType === 'subject'),
     [parent.contentType, parent.uploader?.id, userId]
   );
   const userIsHigherAuth = useMemo(() => authLevel > uploader.authLevel, [
@@ -283,7 +285,7 @@ function Comment({
     return (
       ((userIsUploader && !(isForSecretSubject || isNotification)) ||
         userCanEditThis ||
-        (userIsSubjectUploader && !isNotification)) &&
+        (userIsParentUploader && !isNotification)) &&
       !isPreview
     );
   }, [
@@ -303,7 +305,7 @@ function Comment({
     subject?.uploader?.id,
     userId,
     userIsHigherAuth,
-    userIsSubjectUploader,
+    userIsParentUploader,
     userIsUploader
   ]);
 
@@ -325,7 +327,7 @@ function Comment({
           })
       });
     }
-    if (userIsSubjectUploader && !isNotification) {
+    if (userIsParentUploader && !isNotification) {
       items.push({
         label: (
           <>
@@ -358,7 +360,7 @@ function Comment({
     comment.id,
     isNotification,
     pinnedCommentId,
-    userIsSubjectUploader,
+    userIsParentUploader,
     userIsUploader
   ]);
 
@@ -790,11 +792,16 @@ function Comment({
   }
 
   async function handlePinComment(commentId) {
-    if (parent.contentType !== 'subject') {
-      return;
-    }
-    await updateCommentPinStatus({ commentId, subjectId });
-    onUpdateCommentPinStatus({ subjectId, commentId });
+    await updateCommentPinStatus({
+      commentId,
+      contentId: parent.contentId,
+      contentType: parent.contentType
+    });
+    onUpdateCommentPinStatus({
+      contentId: parent.contentId,
+      contentType: parent.contentType,
+      commentId
+    });
   }
 
   async function handleReplyButtonClick() {

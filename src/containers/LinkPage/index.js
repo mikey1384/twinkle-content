@@ -103,6 +103,7 @@ export default function LinkPage({
     description,
     likes,
     loaded,
+    pinnedCommentId,
     recommendations,
     subjects,
     subjectsLoaded,
@@ -113,6 +114,7 @@ export default function LinkPage({
     uploader,
     xpRewardInterfaceShown
   } = useContentState({ contentType: 'url', contentId: linkId });
+
   const {
     actions: { onSetContentNav }
   } = useViewContext();
@@ -506,7 +508,12 @@ export default function LinkPage({
         onLoadRepliesOfReply={onLoadRepliesOfReply}
         onReplySubmit={handleUploadReply}
         onRewardCommentEdit={onEditRewardComment}
-        parent={{ contentType: 'url', contentId: linkId }}
+        parent={{
+          contentType: 'url',
+          contentId: linkId,
+          uploader,
+          pinnedCommentId
+        }}
         className={css`
           border: 1px solid ${Color.borderGray()};
           padding: 1rem;

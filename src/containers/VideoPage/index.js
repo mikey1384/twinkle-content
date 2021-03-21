@@ -127,6 +127,7 @@ export default function VideoPage({
     rewardLevel,
     likes,
     loaded,
+    pinnedCommentId,
     questions,
     recommendations,
     rewards,
@@ -472,6 +473,7 @@ export default function VideoPage({
                 parent={{
                   contentType: 'video',
                   contentId: videoId,
+                  pinnedCommentId,
                   rewardLevel,
                   uploader
                 }}
