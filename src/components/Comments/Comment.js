@@ -255,9 +255,7 @@ function Comment({
     () =>
       userId &&
       parent.uploader?.id === userId &&
-      (parent.contentType === 'video' ||
-        parent.contentType === 'url' ||
-        parent.contentType === 'subject'),
+      parent.contentType !== 'comment',
     [parent.contentType, parent.uploader?.id, userId]
   );
   const userIsHigherAuth = useMemo(() => authLevel > uploader.authLevel, [

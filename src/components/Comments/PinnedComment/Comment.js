@@ -239,9 +239,7 @@ function Comment({
   const userIsParentUploader = useMemo(
     () =>
       userId &&
-      (parent.contentType === 'subject' ||
-        parent.contentType === 'video' ||
-        parent.contentType === 'url') &&
+      parent.contentType !== 'comment' &&
       parent.uploader?.id === userId,
     [parent.contentType, parent.uploader?.id, userId]
   );

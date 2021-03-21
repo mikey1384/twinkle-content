@@ -128,10 +128,10 @@ function Reply({
   const ReplyInputAreaRef = useRef(null);
   const RewardInterfaceRef = useRef(null);
   const userIsUploader = userId === uploader.id;
-  const userIsSubjectUploader = useMemo(
+  const userIsParentUploader = useMemo(
     () =>
       userId &&
-      parent.contentType === 'subject' &&
+      parent.contentType !== 'comment' &&
       parent.uploader?.id === userId,
     [parent.contentType, parent.uploader?.id, userId]
   );
@@ -151,12 +151,12 @@ function Reply({
 
   const dropdownButtonShown = useMemo(() => {
     const userCanEditThis = (canEdit || canDelete) && userIsHigherAuth;
-    return userIsUploader || userIsSubjectUploader || userCanEditThis;
+    return userIsUploader || userIsParentUploader || userCanEditThis;
   }, [
     canDelete,
     canEdit,
     userIsHigherAuth,
-    userIsSubjectUploader,
+    userIsParentUploader,
     userIsUploader
   ]);
 
@@ -233,7 +233,7 @@ function Reply({
           })
       });
     }
-    if (userIsSubjectUploader) {
+    if (userIsParentUploader) {
       items.push({
         label: (
           <>
@@ -265,7 +265,7 @@ function Reply({
     canEdit,
     pinnedCommentId,
     reply.id,
-    userIsSubjectUploader,
+    userIsParentUploader,
     userIsUploader
   ]);
 
