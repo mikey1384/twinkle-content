@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import ProfilePic from 'components/ProfilePic';
 import UsernameText from 'components/Texts/UsernameText';
@@ -7,6 +7,7 @@ import EditTextArea from 'components/Texts/EditTextArea';
 import DropdownButton from 'components/Buttons/DropdownButton';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Icon from 'components/Icon';
+import ConfirmModal from 'components/Modals/ConfirmModal';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { timeSince } from 'helpers/timeStampHelpers';
@@ -42,7 +43,11 @@ function Comment({
     contentType: 'reward',
     contentId: reward.id
   });
-  const userIsUploader = reward.rewarderId === userId;
+  const [confirmModalShown, setConfirmModalShown] = useState(false);
+  const userIsUploader = useMemo(() => reward.rewarderId === userId, [
+    reward.rewarderId,
+    userId
+  ]);
   const editButtonShown = useMemo(() => {
     const userCanEditThis = canEdit && authLevel > reward.rewarderAuthLevel;
     return userIsUploader || userCanEditThis;
@@ -73,17 +78,10 @@ function Comment({
             <span style={{ marginLeft: '1rem' }}>Revoke</span>
           </>
         ),
-        onClick: handleRevokeReward
+        onClick: () => setConfirmModalShown(true)
       });
     }
     return items;
-
-    async function handleRevokeReward() {
-      const success = await revokeReward(reward.id);
-      if (success) {
-        onRevokeReward({ contentType, contentId, rewardId: reward.id });
-      }
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canEdit, onSetIsEditing, reward.id, userIsUploader]);
 
@@ -203,8 +201,22 @@ function Comment({
           )}
         </div>
       </div>
+      {confirmModalShown && (
+        <ConfirmModal
+          onHide={() => setConfirmModalShown(false)}
+          title="Revoke Reward"
+          onConfirm={handleRevokeReward}
+        />
+      )}
     </ErrorBoundary>
   );
+
+  async function handleRevokeReward() {
+    const success = await revokeReward(reward.id);
+    if (success) {
+      onRevokeReward({ contentType, contentId, rewardId: reward.id });
+    }
+  }
 
   async function handleSubmitEdit(editedComment) {
     await editRewardComment({ editedComment, contentId: reward.id });
