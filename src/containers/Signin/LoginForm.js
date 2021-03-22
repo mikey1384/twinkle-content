@@ -87,7 +87,7 @@ export default function LoginForm({
         <Button
           className={css`
             font-size: 1.5rem;
-            margin-right: 1rem;
+            margin-right: 1.5rem;
             @media (max-width: ${mobileMaxWidth}) {
               max-width: 30%;
               margin-right: 0;
@@ -102,8 +102,9 @@ export default function LoginForm({
         <Button
           className={css`
             font-size: 1.5rem;
-            margin-right: 1rem;
+            margin-right: 1.5rem;
             @media (max-width: ${mobileMaxWidth}) {
+              margin-right: 1rem;
               max-width: 30%;
             }
           `}
@@ -115,12 +116,7 @@ export default function LoginForm({
         </Button>
         <Button
           color="blue"
-          className={css`
-            font-size: 2.5rem;
-            @media (max-width: ${mobileMaxWidth}) {
-              font-size: 2rem;
-            }
-          `}
+          style={{ fontSize: '2rem' }}
           disabled={stringIsEmpty(username) || stringIsEmpty(password)}
           onClick={onSubmit}
         >
