@@ -105,7 +105,6 @@ export default function LoginForm({
             margin-right: 1rem;
             @media (max-width: ${mobileMaxWidth}) {
               max-width: 30%;
-              margin-right: 0;
             }
           `}
           color="orange"
