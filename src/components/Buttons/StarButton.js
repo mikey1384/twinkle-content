@@ -1,13 +1,14 @@
 import React, { useMemo, useRef, useState } from 'react';
-import { useMyState, useOutsideClick } from 'helpers/hooks';
+import { useContentState, useMyState, useOutsideClick } from 'helpers/hooks';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import DropdownList from 'components/DropdownList';
 import RewardLevelModal from 'components/Modals/RewardLevelModal';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { useAppContext } from 'contexts';
 import AlertModal from 'components/Modals/AlertModal';
+import { useAppContext } from 'contexts';
+import { descriptionLengthForExtraRewardLevel } from 'constants/defaultValues';
 
 StarButton.propTypes = {
   byUser: PropTypes.bool,
@@ -42,18 +43,26 @@ export default function StarButton({
   const {
     requestHelpers: { setByUser }
   } = useAppContext();
+  const { description } = useContentState({ contentId, contentType });
   const [cannotChangeModalShown, setCannotChangeModalShown] = useState(false);
   const [moderatorName, setModeratorName] = useState('');
   const [rewardLevelModalShown, setRewardLevelModalShown] = useState(false);
   const [menuShown, setMenuShown] = useState(false);
+  const writtenByButtonShown = useMemo(
+    () =>
+      contentType === 'subject' &&
+      !filePath &&
+      description?.length > descriptionLengthForExtraRewardLevel,
+    [contentType, description?.length, filePath]
+  );
   const showsDropdownWhenClicked = useMemo(() => {
     return (
       uploader &&
       (contentType === 'video' ||
         contentType === 'url' ||
-        (contentType === 'subject' && filePath))
+        (contentType === 'subject' && (filePath || writtenByButtonShown)))
     );
-  }, [contentType, filePath, uploader]);
+  }, [contentType, filePath, uploader, writtenByButtonShown]);
   const StarButtonRef = useRef(null);
   useOutsideClick(StarButtonRef, () => setMenuShown(false));
   const makerLabel = useMemo(() => {
@@ -100,8 +109,12 @@ export default function StarButton({
               )}
             <li onClick={toggleByUser}>
               {byUser
-                ? `This wasn't made by ${makerLabel}`
-                : `This was made by ${makerLabel}`}
+                ? `This wasn't ${
+                    writtenByButtonShown ? 'written' : 'made'
+                  } by ${makerLabel}`
+                : `This was ${
+                    writtenByButtonShown ? 'written' : 'made'
+                  } by ${makerLabel}`}
             </li>
           </DropdownList>
         )}

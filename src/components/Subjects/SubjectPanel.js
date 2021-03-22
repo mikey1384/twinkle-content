@@ -20,7 +20,6 @@ import RecommendationStatus from 'components/RecommendationStatus';
 import RecommendationInterface from 'components/RecommendationInterface';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { descriptionLengthForExtraRewardLevel } from 'constants/defaultValues';
 import { stringIsEmpty, addEmoji, finalizeEmoji } from 'helpers/stringHelpers';
 import { determineXpButtonDisabled } from 'helpers';
 import { timeSince } from 'helpers/timeStampHelpers';
@@ -98,6 +97,7 @@ export default function SubjectPanel({
   } = useContext(LocalContext);
 
   const {
+    byUser,
     comments,
     deleted,
     secretShown,
@@ -144,8 +144,8 @@ export default function SubjectPanel({
     );
   }, [authLevel, canReward, onEdit, uploaderAuthLevel, userIsUploader]);
   const finalRewardLevel = useMemo(() => {
-    return description?.length > descriptionLengthForExtraRewardLevel ? 5 : 0;
-  }, [description]);
+    return byUser ? 5 : 0;
+  }, [byUser]);
 
   const isRecommendedByUser = useMemo(() => {
     return (

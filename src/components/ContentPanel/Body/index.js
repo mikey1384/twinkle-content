@@ -18,7 +18,6 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import Icon from 'components/Icon';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { descriptionLengthForExtraRewardLevel } from 'constants/defaultValues';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import {
   determineUserCanRewardThis,
@@ -86,7 +85,6 @@ export default function Body({
     canDelete,
     canEdit,
     canReward,
-    profileTheme,
     twinkleCoins,
     userId
   } = useMyState();
@@ -96,8 +94,6 @@ export default function Body({
   } = useContentContext();
 
   const {
-    byUser,
-    description,
     isEditing,
     secretAnswer,
     secretAttachment,
@@ -191,19 +187,10 @@ export default function Body({
           ? 1
           : 0
         : rootObj.rewardLevel;
-    return (contentType === 'subject' &&
-      description?.length > descriptionLengthForExtraRewardLevel) ||
-      contentObj.byUser
+    return contentObj.byUser
       ? 5
       : targetObj.subject?.rewardLevel || rootRewardLevel;
-  }, [
-    contentObj.byUser,
-    contentType,
-    description,
-    rootObj.rewardLevel,
-    rootType,
-    targetObj.subject
-  ]);
+  }, [contentObj.byUser, rootObj.rewardLevel, rootType, targetObj.subject]);
 
   const xpButtonDisabled = useMemo(
     () =>
@@ -323,30 +310,6 @@ export default function Body({
           width: '100%'
         }}
       >
-        {(contentType === 'url' || contentType === 'subject') && !!byUser && (
-          <div
-            style={{
-              padding: '0.7rem',
-              background: Color[profileTheme](0.9),
-              color: '#fff',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              fontWeight: 'bold',
-              fontSize: '1.7rem'
-            }}
-            className={css`
-              margin-left: -1px;
-              margin-right: -1px;
-              @media (max-width: ${mobileMaxWidth}) {
-                margin-left: 0;
-                margin-right: 0;
-              }
-            `}
-          >
-            This was made by {uploader.username}
-          </div>
-        )}
         <MainContent
           contentId={contentId}
           contentType={contentType}

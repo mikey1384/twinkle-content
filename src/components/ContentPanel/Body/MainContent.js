@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Embedly from 'components/Embedly';
 import LongText from 'components/Texts/LongText';
@@ -17,7 +17,7 @@ import MissionContent from './MissionContent';
 import { stringIsEmpty, getFileInfoFromFileName } from 'helpers/stringHelpers';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useContentState } from 'helpers/hooks';
+import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
 import { useHistory } from 'react-router-dom';
 
@@ -40,6 +40,7 @@ export default function MainContent({
   const {
     requestHelpers: { editContent }
   } = useAppContext();
+  const { profileTheme } = useMyState();
   const {
     byUser,
     content,
@@ -72,6 +73,10 @@ export default function MainContent({
     }
   } = useContentContext();
   const { fileType } = fileName ? getFileInfoFromFileName(fileName) : '';
+  const subjectIsAttachedToVideo = useMemo(
+    () => contentType === 'subject' && rootType === 'video' && rootObj,
+    [contentType, rootObj, rootType]
+  );
 
   return (
     <ErrorBoundary>
@@ -79,41 +84,13 @@ export default function MainContent({
         {contentType === 'pass' && (
           <MissionContent uploader={uploader} rootObj={rootObj} />
         )}
-        {(contentType === 'subject' || contentType === 'comment') &&
-          filePath &&
-          !(contentType === 'comment' && secretHidden) &&
-          (userId ? (
-            <ContentFileViewer
-              contentId={contentId}
-              contentType={contentType}
-              fileName={fileName}
-              filePath={filePath}
-              fileSize={fileSize}
-              thumbUrl={thumbUrl}
-              videoHeight="100%"
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                marginTop: byUser ? '1.7rem' : '1rem',
-                ...(fileType === 'audio'
-                  ? {
-                      padding: '1rem'
-                    }
-                  : {}),
-                marginBottom: rewardLevel ? '1.5rem' : 0
-              }}
-            />
-          ) : (
-            <LoginToViewContent />
-          ))}
-        {(contentType === 'video' ||
-          (contentType === 'subject' && rootType === 'video' && rootObj)) && (
+        {(contentType === 'video' || subjectIsAttachedToVideo) && (
           <XPVideoPlayer
             stretch
             rewardLevel={
               contentType === 'subject' ? rootObj.rewardLevel : rewardLevel
             }
-            byUser={!!(rootObj.byUser || byUser)}
+            byUser={!!(rootObj.byUser || (contentType === 'video' && byUser))}
             onEdit={isEditing}
             title={rootObj.title || title}
             uploader={rootObj.uploader || uploader}
@@ -157,6 +134,60 @@ export default function MainContent({
             contentId={contentId}
           />
         )}
+        {(contentType === 'url' || contentType === 'subject') && !!byUser && (
+          <div
+            style={{
+              ...(subjectIsAttachedToVideo ? { marginTop: '0.5rem' } : {}),
+              padding: '0.7rem',
+              background: Color[profileTheme](0.9),
+              color: '#fff',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              fontWeight: 'bold',
+              fontSize: '1.7rem'
+            }}
+            className={css`
+              margin-left: -1px;
+              margin-right: -1px;
+              @media (max-width: ${mobileMaxWidth}) {
+                margin-left: 0;
+                margin-right: 0;
+              }
+            `}
+          >
+            This was{' '}
+            {contentType === 'subject' && !filePath ? 'written' : 'made'} by{' '}
+            {uploader.username}
+          </div>
+        )}
+        {(contentType === 'subject' || contentType === 'comment') &&
+          filePath &&
+          !(contentType === 'comment' && secretHidden) &&
+          (userId ? (
+            <ContentFileViewer
+              contentId={contentId}
+              contentType={contentType}
+              fileName={fileName}
+              filePath={filePath}
+              fileSize={fileSize}
+              thumbUrl={thumbUrl}
+              videoHeight="100%"
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                marginTop: byUser ? '1.7rem' : '1rem',
+                ...(fileType === 'audio'
+                  ? {
+                      padding: '1rem'
+                    }
+                  : {}),
+                marginBottom: rewardLevel ? '1.5rem' : 0
+              }}
+            />
+          ) : (
+            <LoginToViewContent />
+          ))}
         <div
           style={{
             marginTop:
