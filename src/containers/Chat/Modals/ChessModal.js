@@ -214,7 +214,7 @@ export default function ChessModal({
             style={{ marginLeft: '1rem' }}
             color="orange"
             onClick={() => {
-              userMadeLastMove(false);
+              setUserMadeLastMove(false);
               setInitialState(undefined);
             }}
           >
