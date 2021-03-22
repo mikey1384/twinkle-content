@@ -194,3 +194,5 @@ export function returnWordLevel({ frequency, word }) {
   if (frequency <= epicWordFrequency) return 5;
   return 3;
 }
+
+export const strongColors = ['rose', 'red', 'purple'];

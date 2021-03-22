@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import ErrorBoundary from 'components/ErrorBoundary';
 import XPBar from './XPBar';
-import { rewardValue } from 'constants/defaultValues';
+import { rewardValue, strongColors } from 'constants/defaultValues';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useContentState, useMyState } from 'helpers/hooks';
@@ -193,7 +193,9 @@ function XPVideoPlayer({
       {byUser && !isChat && (
         <div
           className={css`
-            background: ${Color[themeColor](0.9)};
+            background: ${Color[themeColor](
+              strongColors.includes(themeColor) ? 0.7 : 0.9
+            )};
             display: flex;
             align-items: center;
             font-weight: bold;
