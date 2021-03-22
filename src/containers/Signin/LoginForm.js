@@ -86,7 +86,6 @@ export default function LoginForm({
       <footer>
         <Button
           className={css`
-            font-size: 1.5rem;
             margin-right: 1.5rem;
             @media (max-width: ${mobileMaxWidth}) {
               max-width: 30%;
@@ -101,7 +100,6 @@ export default function LoginForm({
         </Button>
         <Button
           className={css`
-            font-size: 1.5rem;
             margin-right: 1.5rem;
             @media (max-width: ${mobileMaxWidth}) {
               margin-right: 1rem;
