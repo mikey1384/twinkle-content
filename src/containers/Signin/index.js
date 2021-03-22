@@ -19,7 +19,7 @@ export default function Signin({ onHide }) {
       <Modal
         onHide={onHide}
         modalStyle={{
-          marginTop: currentPage === 'main' && 'CALC(50vh - 25rem)'
+          marginTop: currentPage !== 'signUp' ? 'CALC(50vh - 25rem)' : 0
         }}
       >
         {currentPage === 'main' && (

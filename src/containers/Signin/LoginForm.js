@@ -4,8 +4,10 @@ import Button from 'components/Button';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Input from 'components/Texts/Input';
 import Banner from 'components/Banner';
+import { mobileMaxWidth } from 'constants/css';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext } from 'contexts';
+import { css } from '@emotion/css';
 
 LoginForm.propTypes = {
   username: PropTypes.string,
@@ -42,12 +44,12 @@ export default function LoginForm({
             <Input
               name="username"
               value={username}
-              onChange={text => {
+              onChange={(text) => {
                 setErrorMessage('');
                 onSetUsername(text);
               }}
               placeholder="Enter your username"
-              onKeyPress={event => {
+              onKeyPress={(event) => {
                 if (
                   !stringIsEmpty(username) &&
                   !stringIsEmpty(password) &&
@@ -62,13 +64,13 @@ export default function LoginForm({
             <Input
               name="password"
               value={password}
-              onChange={text => {
+              onChange={(text) => {
                 setErrorMessage('');
                 setPassword(text);
               }}
               placeholder="Enter your password"
               type="password"
-              onKeyPress={event => {
+              onKeyPress={(event) => {
                 if (
                   !stringIsEmpty(username) &&
                   !stringIsEmpty(password) &&
@@ -83,10 +85,14 @@ export default function LoginForm({
       </main>
       <footer>
         <Button
-          style={{
-            fontSize: '1.5rem',
-            marginRight: '1rem'
-          }}
+          className={css`
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            @media (max-width: ${mobileMaxWidth}) {
+              max-width: 30%;
+              margin-right: 0;
+            }
+          `}
           color="blue"
           transparent
           onClick={onShowForgotPasswordForm}
@@ -94,10 +100,14 @@ export default function LoginForm({
           I forgot my password
         </Button>
         <Button
-          style={{
-            fontSize: '1.5rem',
-            marginRight: '1rem'
-          }}
+          className={css`
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            @media (max-width: ${mobileMaxWidth}) {
+              max-width: 30%;
+              margin-right: 0;
+            }
+          `}
           color="orange"
           transparent
           onClick={onShowSignupForm}
@@ -106,7 +116,12 @@ export default function LoginForm({
         </Button>
         <Button
           color="blue"
-          style={{ fontSize: '2.5rem' }}
+          className={css`
+            font-size: 2.5rem;
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: 2rem;
+            }
+          `}
           disabled={stringIsEmpty(username) || stringIsEmpty(password)}
           onClick={onSubmit}
         >
