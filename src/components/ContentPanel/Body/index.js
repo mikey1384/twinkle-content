@@ -494,7 +494,7 @@ export default function Body({
                       filePath={filePath}
                       rewardLevel={rewardLevel}
                       onSetRewardLevel={onSetRewardLevel}
-                      onToggleByUser={onToggleByUser}
+                      onToggleByUser={handleToggleByUser}
                       contentType={contentType}
                       uploader={uploader}
                     />
@@ -739,7 +739,7 @@ export default function Body({
     textField.remove();
   }
 
-  function onToggleByUser(byUser) {
+  function handleToggleByUser(byUser) {
     onByUserStatusChange({ byUser, contentId, contentType });
   }
 }

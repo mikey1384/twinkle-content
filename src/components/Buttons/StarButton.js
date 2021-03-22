@@ -15,6 +15,7 @@ StarButton.propTypes = {
   contentId: PropTypes.number,
   rewardLevel: PropTypes.number,
   direction: PropTypes.string,
+  defaultDescription: PropTypes.string,
   filePath: PropTypes.string,
   filled: PropTypes.bool,
   onSetRewardLevel: PropTypes.func,
@@ -29,6 +30,7 @@ export default function StarButton({
   byUser,
   contentId,
   contentType,
+  defaultDescription,
   filePath,
   rewardLevel,
   direction = 'left',
@@ -48,12 +50,14 @@ export default function StarButton({
   const [moderatorName, setModeratorName] = useState('');
   const [rewardLevelModalShown, setRewardLevelModalShown] = useState(false);
   const [menuShown, setMenuShown] = useState(false);
+
   const writtenByButtonShown = useMemo(
     () =>
       contentType === 'subject' &&
       !filePath &&
-      description?.length > descriptionLengthForExtraRewardLevel,
-    [contentType, description?.length, filePath]
+      (description || defaultDescription)?.length >
+        descriptionLengthForExtraRewardLevel,
+    [contentType, defaultDescription, description, filePath]
   );
   const showsDropdownWhenClicked = useMemo(() => {
     return (

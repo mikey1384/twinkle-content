@@ -69,7 +69,8 @@ export default function SubjectPanel({
     actions: {
       onChangeSpoilerStatus,
       onEditRewardComment,
-      onSetXpRewardInterfaceShown
+      onSetXpRewardInterfaceShown,
+      onSetByUserStatus
     }
   } = useContentContext();
   const {
@@ -209,13 +210,17 @@ export default function SubjectPanel({
               {title}
             </Link>
           )}
-          <div style={{ display: 'flex' }}>
+          <div style={{ display: 'flex', position: 'relative' }}>
             {!onEdit && (
               <StarButton
                 contentId={subjectId}
                 contentType="subject"
+                defaultDescription={description}
                 rewardLevel={rewardLevel}
                 onSetRewardLevel={onSetRewardLevel}
+                onToggleByUser={handleToggleByUser}
+                byUser={!!byUser}
+                uploader={{ id: userId, username }}
               />
             )}
             <div>
@@ -589,6 +594,10 @@ export default function SubjectPanel({
     onSubjectEditDone({ editedSubject, subjectId });
     setOnEdit(false);
     setEditDoneButtonDisabled(true);
+  }
+
+  function handleToggleByUser(byUser) {
+    onSetByUserStatus({ byUser, contentId: subjectId, contentType: 'subject' });
   }
 
   function handleLoadMoreComments(data) {
