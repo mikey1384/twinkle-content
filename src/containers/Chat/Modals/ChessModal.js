@@ -213,7 +213,10 @@ export default function ChessModal({
           <Button
             style={{ marginLeft: '1rem' }}
             color="orange"
-            onClick={() => setInitialState(undefined)}
+            onClick={() => {
+              userMadeLastMove(false);
+              setInitialState(undefined);
+            }}
           >
             Start a new game
           </Button>
