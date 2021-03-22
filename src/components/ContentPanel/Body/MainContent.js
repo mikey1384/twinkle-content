@@ -100,22 +100,6 @@ export default function MainContent({
             style={{ paddingBottom: '0.5rem' }}
           />
         )}
-        {contentType === 'subject' && !rootObj.id && !!rewardLevel && (
-          <RewardLevelBar
-            className={css`
-              margin-left: -1px;
-              margin-right: -1px;
-              @media (max-width: ${mobileMaxWidth}) {
-                margin-left: 0px;
-                margin-right: 0px;
-              }
-            `}
-            style={{
-              marginBottom: rootType === 'url' ? '-0.5rem' : 0
-            }}
-            rewardLevel={rewardLevel}
-          />
-        )}
         {contentType === 'video' && (
           <AlreadyPosted
             style={{ marginTop: '-0.5rem' }}
@@ -191,6 +175,22 @@ export default function MainContent({
           ) : (
             <LoginToViewContent />
           ))}
+        {contentType === 'subject' && !rootObj.id && !byUser && !!rewardLevel && (
+          <RewardLevelBar
+            className={css`
+              margin-left: -1px;
+              margin-right: -1px;
+              @media (max-width: ${mobileMaxWidth}) {
+                margin-left: 0px;
+                margin-right: 0px;
+              }
+            `}
+            style={{
+              marginBottom: rootType === 'url' ? '-0.5rem' : 0
+            }}
+            rewardLevel={rewardLevel}
+          />
+        )}
         <div
           style={{
             marginTop:
@@ -339,26 +339,28 @@ export default function MainContent({
             mobileLoadingHeight="25rem"
           />
         )}
-        {contentType === 'subject' && !!rewardLevel && !!rootObj.id && (
-          <RewardLevelBar
-            className={css`
-              margin-left: -1px;
-              margin-right: -1px;
-              @media (max-width: ${mobileMaxWidth}) {
-                margin-left: 0px;
-                margin-right: 0px;
-              }
-            `}
-            style={{
-              marginBottom: isEditing
-                ? '1rem'
-                : rootType === 'url' && !secretHidden
-                ? '-0.5rem'
-                : 0
-            }}
-            rewardLevel={rewardLevel}
-          />
-        )}
+        {contentType === 'subject' &&
+          !!rewardLevel &&
+          (!!rootObj.id || !!byUser) && (
+            <RewardLevelBar
+              className={css`
+                margin-left: -1px;
+                margin-right: -1px;
+                @media (max-width: ${mobileMaxWidth}) {
+                  margin-left: 0px;
+                  margin-right: 0px;
+                }
+              `}
+              style={{
+                marginBottom: isEditing
+                  ? '1rem'
+                  : rootType === 'url' && !secretHidden
+                  ? '-0.5rem'
+                  : 0
+              }}
+              rewardLevel={rewardLevel}
+            />
+          )}
       </div>
     </ErrorBoundary>
   );
