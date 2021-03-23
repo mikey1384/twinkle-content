@@ -374,7 +374,7 @@ function Reply({
                   <LongText
                     contentType="comment"
                     contentId={reply.id}
-                    section="content"
+                    section="reply"
                     className="comment__content"
                   >
                     {reply.content}

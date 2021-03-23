@@ -635,7 +635,7 @@ function Comment({
                           <LongText
                             contentId={commentId}
                             contentType="comment"
-                            section="content"
+                            section="comment"
                             className="comment__content"
                           >
                             {comment.content}
