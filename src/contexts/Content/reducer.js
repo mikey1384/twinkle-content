@@ -652,7 +652,7 @@ export default function ContentReducer(state, action) {
               : prevContentState.likes,
           comments:
             action.contentType === 'comment'
-              ? prevContentState.comments.map((comment) => ({
+              ? prevContentState.comments?.map((comment) => ({
                   ...comment,
                   likes:
                     comment.id === action.contentId
@@ -1229,6 +1229,14 @@ export default function ContentReducer(state, action) {
           isEditing: action.isEditing
         }
       };
+    case 'SET_COMMENT_PLACEHOLDER_HEIGHT':
+      return {
+        ...state,
+        ['comment' + action.commentId]: {
+          ...(state['comment' + action.commentId] || defaultContentState),
+          commentPlaceholderHeight: action.height
+        }
+      };
     case 'SET_PLACEHOLDER_HEIGHT':
       return {
         ...state,
@@ -1419,6 +1427,14 @@ export default function ContentReducer(state, action) {
         [contentKey]: {
           ...prevContentState,
           xpProgress: action.progress
+        }
+      };
+    case 'SET_COMMENT_VISIBLE':
+      return {
+        ...state,
+        ['comment' + action.commentId]: {
+          ...(state['comment' + action.commentId] || defaultContentState),
+          commentVisible: action.visible
         }
       };
     case 'SET_VISIBLE':

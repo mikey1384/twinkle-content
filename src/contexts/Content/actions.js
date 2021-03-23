@@ -436,6 +436,13 @@ export default function ContentActions(dispatch) {
         online
       });
     },
+    onSetCommentPlaceholderHeight({ commentId, height }) {
+      return dispatch({
+        type: 'SET_COMMENT_PLACEHOLDER_HEIGHT',
+        commentId,
+        height
+      });
+    },
     onSetPlaceholderHeight({ contentId, contentType, height }) {
       return dispatch({
         type: 'SET_PLACEHOLDER_HEIGHT',
@@ -561,6 +568,13 @@ export default function ContentActions(dispatch) {
         contentType: 'video',
         contentId: videoId,
         progress
+      });
+    },
+    onSetCommentVisible({ visible, commentId }) {
+      return dispatch({
+        type: 'SET_COMMENT_VISIBLE',
+        commentId,
+        visible
       });
     },
     onSetVisible({ visible, contentId, contentType }) {
