@@ -371,7 +371,12 @@ function Reply({
                 />
               ) : (
                 <div>
-                  <LongText className="comment__content">
+                  <LongText
+                    contentType="comment"
+                    contentId={reply.id}
+                    section="content"
+                    className="comment__content"
+                  >
                     {reply.content}
                   </LongText>
                   <div
