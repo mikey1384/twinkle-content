@@ -173,12 +173,12 @@ function Comment({
     setRecommendationInterfaceShown
   ] = useState(false);
 
-  const placeholderHeightRef = useRef(previousPlaceholderHeight);
   const [placeholderHeight, setPlaceholderHeight] = useState(
     previousPlaceholderHeight
   );
+  const placeholderHeightRef = useRef(previousPlaceholderHeight);
   const [visible, setVisible] = useState(previousVisible);
-  const visibleRef = useRef(null);
+  const visibleRef = useRef(previousVisible);
 
   useLazyLoad({
     PanelRef,
