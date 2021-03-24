@@ -92,7 +92,7 @@ export default function XPRewardInterface({
   const [comment, setComment] = useState(prevComment);
   const selectedAmountRef = useRef(prevSelectedAmount);
   const [selectedAmount, setSelectedAmount] = useState(prevSelectedAmount);
-  const requiresPayment = uploaderAuthLevel >= authLevel;
+  const requiresPayment = !authLevel || uploaderAuthLevel >= authLevel;
 
   useEffect(() => {
     setSelectedAmount((selectedAmount) =>
