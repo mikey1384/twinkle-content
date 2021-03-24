@@ -24,6 +24,7 @@ import { useMyState } from 'helpers/hooks';
 import { useAppContext, useHomeContext, useInputContext } from 'contexts';
 
 function ContentInput() {
+  const BodyRef = useRef(document.scrollingElement || document.documentElement);
   const {
     requestHelpers: { checkContentUrl, uploadContent }
   } = useAppContext();
@@ -309,6 +310,7 @@ function ContentInput() {
         handleSetUrl('');
         onLoadNewFeeds([data]);
         document.getElementById('App').scrollTop = 0;
+        BodyRef.current.scrollTop = 0;
       }
       setSubmitting(false);
     } catch (error) {

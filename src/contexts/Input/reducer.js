@@ -196,6 +196,14 @@ export default function InputReducer(state, action) {
           emailError: action.emailError
         }
       };
+    case 'SET_IS_MADE_BY_USER':
+      return {
+        ...state,
+        subject: {
+          ...state.subject,
+          isMadeByUser: action.isMadeByUser
+        }
+      };
     case 'SET_HAS_SECRET_ANSWER':
       return {
         ...state,

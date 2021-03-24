@@ -675,6 +675,7 @@ export default function contentRequestHelpers({ auth, handleError }) {
       }
     },
     async uploadContent({
+      byUser,
       url,
       isVideo,
       title,
@@ -695,6 +696,7 @@ export default function contentRequestHelpers({ auth, handleError }) {
         const { data } = await request.post(
           `${URL}/content`,
           {
+            byUser,
             url,
             isVideo,
             title,

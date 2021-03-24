@@ -27,11 +27,15 @@ import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
 import SecretMessageInput from 'components/Forms/SecretMessageInput';
 import { Color } from 'constants/css';
 import { PanelStyle } from '../Styles';
-import { charLimit } from 'constants/defaultValues';
+import {
+  charLimit,
+  DESCRIPTION_LENGTH_FOR_EXTRA_REWARD_LEVEL
+} from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useHomeContext, useInputContext } from 'contexts';
 
 function SubjectInput() {
+  const BodyRef = useRef(document.scrollingElement || document.documentElement);
   const { onFileUpload } = useContext(LocalContext);
   const {
     requestHelpers: { uploadContent }
@@ -53,6 +57,7 @@ function SubjectInput() {
     actions: {
       onSetHasSecretAnswer,
       onResetSubjectInput,
+      onSetIsMadeByUser,
       onSetSecretAnswer,
       onSetSecretAttachment,
       onSetSubjectAttachment,
@@ -81,6 +86,8 @@ function SubjectInput() {
   const [hasSecretAnswer, setHasSecretAnswer] = useState(
     subject.hasSecretAnswer
   );
+  const isMadeByUserRef = useRef(subject.isMadeByUser);
+  const [isMadeByUser, setIsMadeByUser] = useState(subject.isMadeByUser);
 
   const titleExceedsCharLimit = useMemo(
     () =>
@@ -126,6 +133,7 @@ function SubjectInput() {
       onSetSubjectTitle(titleRef.current);
       onSetSubjectDescription(descriptionRef.current);
       onSetHasSecretAnswer(hasSecretAnswerRef.current);
+      onSetIsMadeByUser(isMadeByUserRef.current);
       onSetSecretAnswer(secretAnswerRef.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -209,6 +217,24 @@ function SubjectInput() {
                   {descriptionExceedsCharLimit.message}
                 </small>
               )}
+              {description.length > DESCRIPTION_LENGTH_FOR_EXTRA_REWARD_LEVEL &&
+                attachment?.contentType !== 'file' && (
+                  <div
+                    style={{
+                      padding: '1rem',
+                      display: 'flex',
+                      justifyContent: 'center'
+                    }}
+                  >
+                    <SwitchButton
+                      checked={isMadeByUser}
+                      label="I wrote this myself"
+                      labelStyle={{ fontSize: '1.5rem' }}
+                      onChange={() => handleSetIsMadeByUser(!isMadeByUser)}
+                      style={{ marginRight: '1rem' }}
+                    />
+                  </div>
+                )}
               {hasSecretAnswer && (
                 <SecretMessageInput
                   secretAnswer={secretAnswer}
@@ -295,6 +321,7 @@ function SubjectInput() {
 
   function handleFileUpload({
     attachment,
+    byUser,
     description,
     hasSecretAnswer,
     rewardLevel,
@@ -305,6 +332,7 @@ function SubjectInput() {
     onSetUploadingFile(true);
     onFileUpload({
       attachment,
+      byUser,
       description,
       hasSecretAnswer,
       rewardLevel,
@@ -343,8 +371,9 @@ function SubjectInput() {
       handleSetSecretAnswer('');
       handleSetDescriptionFieldShown(false);
       handleSetHasSecretAnswer(false);
-      return handleFileUpload({
+      handleFileUpload({
         attachment,
+        byUser: isMadeByUser,
         description,
         hasSecretAnswer,
         rewardLevel,
@@ -352,8 +381,12 @@ function SubjectInput() {
         secretAttachment,
         title
       });
+      handleSetIsMadeByUser(false);
+    } else {
+      handleUploadSubject();
     }
-    handleUploadSubject();
+    document.getElementById('App').scrollTop = 0;
+    BodyRef.current.scrollTop = 0;
   }
 
   function handleSetTitle(text) {
@@ -369,6 +402,11 @@ function SubjectInput() {
   function handleSetDescriptionFieldShown(shown) {
     setDescriptionFieldShown(shown);
     descriptionFieldShownRef.current = shown;
+  }
+
+  function handleSetIsMadeByUser(is) {
+    setIsMadeByUser(is);
+    isMadeByUserRef.current = is;
   }
 
   function handleSetHasSecretAnswer(has) {
@@ -387,6 +425,7 @@ function SubjectInput() {
         rootId: attachment?.id,
         rootType: attachment?.contentType,
         title,
+        byUser: isMadeByUser,
         description: finalizeEmoji(description),
         secretAnswer: hasSecretAnswer ? secretAnswer : '',
         rewardLevel
@@ -398,6 +437,7 @@ function SubjectInput() {
         handleSetSecretAnswer('');
         handleSetDescriptionFieldShown(false);
         handleSetHasSecretAnswer(false);
+        handleSetIsMadeByUser(false);
         onResetSubjectInput();
       }
       onSetSubmittingSubject(false);

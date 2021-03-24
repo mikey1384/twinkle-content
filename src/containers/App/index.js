@@ -421,6 +421,7 @@ function App({ location, history }) {
 
   async function handleFileUploadOnHome({
     attachment,
+    byUser,
     description,
     filePath,
     file,
@@ -460,6 +461,7 @@ function App({ location, history }) {
       }
       const data = await uploadContent({
         title,
+        byUser,
         description: finalizeEmoji(description),
         secretAnswer: hasSecretAnswer ? secretAnswer : '',
         rewardLevel,

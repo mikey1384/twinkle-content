@@ -20,7 +20,6 @@ export const cloudFrontURL = `https://${process.env.REACT_APP_CLOUDFRONT_KEY}.cl
 export const S3URL = `https://${process.env.REACT_APP_AWS_S3_BUCKET_NAME}.s3.amazonaws.com`;
 export const TURN_USERNAME = process.env.REACT_APP_TURN_USERNAME;
 export const TURN_PASSWORD = process.env.REACT_APP_TURN_PASSWORD;
-export const descriptionLengthForExtraRewardLevel = 1000;
 export const rewardValue = 200;
 export const mb = 1000;
 export const gifTable = {
@@ -158,6 +157,7 @@ export const rewardReasons = {
 };
 
 export const DEFAULT_PROFILE_THEME = 'logoBlue';
+export const DESCRIPTION_LENGTH_FOR_EXTRA_REWARD_LEVEL = 1000;
 export const GENERAL_CHAT_ID = 2;
 export const FILE_UPLOAD_XP_REQUIREMENT = 100000;
 export const LAST_ONLINE_FILTER_LABEL = 'Last Online';

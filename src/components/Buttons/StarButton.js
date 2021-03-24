@@ -8,7 +8,7 @@ import RewardLevelModal from 'components/Modals/RewardLevelModal';
 import ErrorBoundary from 'components/ErrorBoundary';
 import AlertModal from 'components/Modals/AlertModal';
 import { useAppContext } from 'contexts';
-import { descriptionLengthForExtraRewardLevel } from 'constants/defaultValues';
+import { DESCRIPTION_LENGTH_FOR_EXTRA_REWARD_LEVEL } from 'constants/defaultValues';
 
 StarButton.propTypes = {
   byUser: PropTypes.bool,
@@ -56,7 +56,7 @@ export default function StarButton({
       contentType === 'subject' &&
       !filePath &&
       (description || defaultDescription)?.length >
-        descriptionLengthForExtraRewardLevel,
+        DESCRIPTION_LENGTH_FOR_EXTRA_REWARD_LEVEL,
     [contentType, defaultDescription, description, filePath]
   );
   const showsDropdownWhenClicked = useMemo(() => {

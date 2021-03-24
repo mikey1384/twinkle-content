@@ -147,6 +147,12 @@ export default function InputActions(dispatch) {
         form
       });
     },
+    onSetIsMadeByUser(isMadeByUser) {
+      return dispatch({
+        type: 'SET_IS_MADE_BY_USER',
+        isMadeByUser
+      });
+    },
     onSetHasSecretAnswer(hasSecretAnswer) {
       return dispatch({
         type: 'SET_HAS_SECRET_ANSWER',
