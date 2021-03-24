@@ -431,6 +431,7 @@ export default function LinkPage({
                   !isRecommendedByUser && twinkleCoins > 0
                 )
               }
+              uploaderAuthLevel={uploader.authLevel}
               uploaderId={uploader.id}
             />
           </div>

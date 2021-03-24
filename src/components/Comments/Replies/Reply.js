@@ -487,6 +487,7 @@ function Reply({
                     !isRecommendedByUser && twinkleCoins > 0
                   )
                 }
+                uploaderAuthLevel={uploader.authLevel}
                 uploaderId={uploader.id}
               />
             )}

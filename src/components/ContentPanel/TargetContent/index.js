@@ -443,6 +443,7 @@ export default function TargetContent({
                   contentType={'comment'}
                   contentId={comment.id}
                   rewardLevel={finalRewardLevel}
+                  uploaderAuthLevel={comment.uploader.authLevel}
                   uploaderId={comment.uploader.id}
                   onReward={() =>
                     setRecommendationInterfaceShown(

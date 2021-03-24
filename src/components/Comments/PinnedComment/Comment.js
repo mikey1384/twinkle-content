@@ -652,6 +652,7 @@ function Comment({
                     !isRecommendedByUser && twinkleCoins > 0
                   )
                 }
+                uploaderAuthLevel={uploader.authLevel}
                 uploaderId={uploader.id}
               />
             )}

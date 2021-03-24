@@ -25,7 +25,8 @@ XPRewardInterface.propTypes = {
   uploaderId: PropTypes.number.isRequired,
   noPadding: PropTypes.bool,
   onReward: PropTypes.func,
-  rewards: PropTypes.array.isRequired
+  rewards: PropTypes.array.isRequired,
+  uploaderAuthLevel: PropTypes.number
 };
 
 export default function XPRewardInterface({
@@ -36,7 +37,8 @@ export default function XPRewardInterface({
   noPadding,
   onReward,
   rewards,
-  uploaderId
+  uploaderId,
+  uploaderAuthLevel
 }) {
   const {
     requestHelpers: { rewardUser }
@@ -90,7 +92,7 @@ export default function XPRewardInterface({
   const [comment, setComment] = useState(prevComment);
   const selectedAmountRef = useRef(prevSelectedAmount);
   const [selectedAmount, setSelectedAmount] = useState(prevSelectedAmount);
-  const requiresPayment = authLevel < 2;
+  const requiresPayment = uploaderAuthLevel >= authLevel;
 
   useEffect(() => {
     setSelectedAmount((selectedAmount) =>

@@ -21,10 +21,7 @@ export function determineUserCanRewardThis({
       }
     }
   }
-  return (
-    (studentsCanReward || (canReward && authLevel > uploader?.authLevel)) &&
-    userId !== uploader?.id
-  );
+  return (studentsCanReward || canReward) && userId !== uploader?.id;
 }
 
 export function determineXpButtonDisabled({

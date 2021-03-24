@@ -557,6 +557,7 @@ export default function Body({
               )
             }
             rewardLevel={finalRewardLevel}
+            uploaderAuthLevel={uploader.authLevel}
             uploaderId={uploader.id}
             rewards={rewards}
           />
