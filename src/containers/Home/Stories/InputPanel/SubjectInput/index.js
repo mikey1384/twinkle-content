@@ -193,6 +193,23 @@ function SubjectInput() {
               {titleExceedsCharLimit?.message}
             </span>
           </div>
+          {attachment?.contentType === 'file' && (
+            <div
+              style={{
+                padding: '1rem',
+                display: 'flex',
+                justifyContent: 'center'
+              }}
+            >
+              <SwitchButton
+                checked={isMadeByUser}
+                label="I made this myself"
+                labelStyle={{ fontSize: '1.5rem' }}
+                onChange={() => handleSetIsMadeByUser(!isMadeByUser)}
+                style={{ marginRight: '1rem' }}
+              />
+            </div>
+          )}
           {descriptionFieldShown && (
             <div style={{ position: 'relative' }}>
               <Textarea
