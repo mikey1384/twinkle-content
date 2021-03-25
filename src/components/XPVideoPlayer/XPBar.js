@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import ProgressBar from 'components/ProgressBar';
 import Icon from 'components/Icon';
-import { rewardValue } from 'constants/defaultValues';
+import { REWARD_VALUE } from 'constants/defaultValues';
 import { useContentState } from 'helpers/hooks';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
@@ -36,7 +36,7 @@ export default function XPBar({
 }) {
   const xpEarned = alreadyEarned || justEarned;
   const watching = startingPosition > 0;
-  const rewardAmount = useMemo(() => rewardLevel * rewardValue, [rewardLevel]);
+  const rewardAmount = useMemo(() => rewardLevel * REWARD_VALUE, [rewardLevel]);
   const canEarnCoins = rewardLevel >= 3;
   const {
     coinProgress = 0,

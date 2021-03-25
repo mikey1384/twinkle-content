@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import ErrorBoundary from 'components/ErrorBoundary';
 import XPBar from './XPBar';
-import { rewardValue, strongColors } from 'constants/defaultValues';
+import { REWARD_VALUE, strongColors } from 'constants/defaultValues';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useContentState, useMyState } from 'helpers/hooks';
@@ -93,7 +93,7 @@ function XPVideoPlayer({
   const rewardingXP = useRef(false);
   const themeColor = profileTheme || 'logoBlue';
   const rewardLevelRef = useRef(0);
-  const rewardAmountRef = useRef(rewardLevel * rewardValue);
+  const rewardAmountRef = useRef(rewardLevel * REWARD_VALUE);
   const xpEarnedRef = useRef(xpEarned);
   const canEarnCoins = rewardLevelRef.current >= 3;
   const coinRewardAmount = 2;
@@ -133,7 +133,7 @@ function XPVideoPlayer({
 
   useEffect(() => {
     rewardLevelRef.current = rewardLevel;
-    rewardAmountRef.current = rewardLevel * rewardValue;
+    rewardAmountRef.current = rewardLevel * REWARD_VALUE;
 
     if (!!rewardLevel && userId) {
       handleCheckXPEarned();

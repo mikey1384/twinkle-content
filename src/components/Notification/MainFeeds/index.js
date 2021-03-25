@@ -9,7 +9,7 @@ import RewardItem from './RewardItem';
 import MyRank from 'components/MyRank';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Loading from 'components/Loading';
-import { rewardValue } from 'constants/defaultValues';
+import { REWARD_VALUE } from 'constants/defaultValues';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useNotiContext } from 'contexts';
@@ -123,8 +123,8 @@ function MainFeeds({
               {totalTwinkles > 0 && (
                 <p style={{ fontSize: '1.5rem' }}>
                   * {totalTwinkles} Twinkle{totalTwinkles > 0 ? 's' : ''} (
-                  {totalTwinkles} * {rewardValue} ={' '}
-                  {addCommasToNumber(totalTwinkles * rewardValue)} XP)
+                  {totalTwinkles} * {REWARD_VALUE} ={' '}
+                  {addCommasToNumber(totalTwinkles * REWARD_VALUE)} XP)
                 </p>
               )}
               {totalCoins > 0 && (
@@ -140,12 +140,12 @@ function MainFeeds({
               <p>
                 Your XP: {addCommasToNumber(originalTwinkleXP)} XP {'=>'}{' '}
                 {addCommasToNumber(
-                  originalTwinkleXP + totalTwinkles * rewardValue
+                  originalTwinkleXP + totalTwinkles * REWARD_VALUE
                 )}{' '}
                 XP
               </p>
               <p style={{ fontSize: '1.5rem' }}>
-                (+ {addCommasToNumber(totalTwinkles * rewardValue)} XP)
+                (+ {addCommasToNumber(totalTwinkles * REWARD_VALUE)} XP)
               </p>
             </div>
           )}

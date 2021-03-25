@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import request from 'axios';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
-import { rewardValue } from 'constants/defaultValues';
+import { REWARD_VALUE } from 'constants/defaultValues';
 import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
@@ -123,7 +123,7 @@ export default function VideoThumbImage({
             }
           `}
         >
-          {addCommasToNumber(rewardLevel * rewardValue)} XP
+          {addCommasToNumber(rewardLevel * REWARD_VALUE)} XP
         </div>
       )}
     </div>
