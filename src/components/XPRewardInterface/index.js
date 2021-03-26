@@ -303,23 +303,31 @@ export default function XPRewardInterface({
           contentId,
           form: undefined
         });
-        if (reward) {
-          onAttachReward({
-            reward,
-            contentId,
-            contentType
-          });
-        }
-        if (typeof netCoins === 'number') {
-          onUpdateUserCoins({ coins: netCoins, userId });
-        }
-        if (selectedAmount === myRewardables) {
-          onReward?.();
-        }
+      }
+      if (reward && mounted.current) {
+        onAttachReward({
+          reward,
+          contentId,
+          contentType
+        });
+      }
+      if (typeof netCoins === 'number' && mounted.current) {
+        onUpdateUserCoins({ coins: netCoins, userId });
+      }
+      if (selectedAmount === myRewardables && mounted.current) {
+        onReward?.();
+      }
+      if (mounted.current) {
         handleSetComment('');
+      }
+      if (mounted.current) {
         handleSetSelectedAmount(0);
+      }
+      if (mounted.current) {
         setRewarding(false);
-        rewardingRef.current = false;
+      }
+      rewardingRef.current = false;
+      if (mounted.current) {
         onSetXpRewardInterfaceShown({
           contentId,
           contentType,

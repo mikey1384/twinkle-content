@@ -1121,16 +1121,117 @@ export default function ContentReducer(state, action) {
           loaded: false
         }
       };
-    case 'REVOKE_REWARD':
-      return {
-        ...state,
-        [contentKey]: {
+    case 'REVOKE_REWARD': {
+      const newState = { ...state };
+      const contentKeys = Object.keys(newState);
+      for (let contentKey of contentKeys) {
+        const prevContentState = newState[contentKey];
+        const contentMatches =
+          prevContentState.contentId === action.contentId &&
+          prevContentState.contentType === action.contentType;
+        newState[contentKey] = {
           ...prevContentState,
-          rewards: prevContentState.rewards.filter(
-            (reward) => reward.id !== action.rewardId
-          )
-        }
-      };
+          rewards: contentMatches
+            ? (prevContentState.rewards || []).filter(
+                (reward) => reward.id !== action.rewardId
+              )
+            : prevContentState.rewards,
+          comments:
+            action.contentType === 'comment'
+              ? prevContentState.comments?.map((comment) => {
+                  const commentMatches = comment.id === action.contentId;
+                  return {
+                    ...comment,
+                    rewards: commentMatches
+                      ? (comment.rewards || []).filter(
+                          (reward) => reward.id !== action.rewardId
+                        )
+                      : comment.rewards,
+                    replies: (comment.replies || []).map((reply) => {
+                      const replyMatches = reply.id === action.contentId;
+                      return {
+                        ...reply,
+                        rewards: replyMatches
+                          ? (reply.rewards || []).filter(
+                              (reward) => reward.id !== action.rewardId
+                            )
+                          : reply.rewards
+                      };
+                    })
+                  };
+                })
+              : prevContentState.comments,
+          subjects: prevContentState.subjects?.map((subject) => {
+            const subjectMatches =
+              subject.id === action.contentId &&
+              action.contentType === 'subject';
+            return {
+              ...subject,
+              rewards: subjectMatches
+                ? (subject.rewards || []).filter(
+                    (reward) => reward.id !== action.rewardId
+                  )
+                : subject.rewards,
+              comments:
+                action.contentType === 'comment'
+                  ? subject.comments.map((comment) => {
+                      const commentMatches = comment.id === action.contentId;
+                      return {
+                        ...comment,
+                        rewards: commentMatches
+                          ? (comment.rewards || []).filter(
+                              (reward) => reward.id !== action.rewardId
+                            )
+                          : comment.rewards,
+                        replies: (comment.replies || []).map((reply) => {
+                          const replyMatches = reply.id === action.contentId;
+                          return {
+                            ...reply,
+                            rewards: replyMatches
+                              ? (reply.rewards || []).filter(
+                                  (reward) => reward.id !== action.rewardId
+                                )
+                              : reply.rewards
+                          };
+                        })
+                      };
+                    })
+                  : subject.comments
+            };
+          }),
+          targetObj: prevContentState.targetObj
+            ? {
+                ...prevContentState.targetObj,
+                comment: prevContentState.targetObj.comment
+                  ? {
+                      ...prevContentState.targetObj.comment,
+                      rewards:
+                        prevContentState.targetObj.comment.id ===
+                          action.contentId && action.contentType === 'comment'
+                          ? (
+                              prevContentState.targetObj.comment.rewards || []
+                            ).filter((reward) => reward.id !== action.rewardId)
+                          : prevContentState.targetObj.comment.rewards
+                    }
+                  : undefined,
+                subject: prevContentState.targetObj.subject
+                  ? {
+                      ...prevContentState.targetObj.subject,
+                      rewards:
+                        prevContentState.targetObj.subject.id ===
+                          action.contentId && action.contentType === 'subject'
+                          ? (
+                              prevContentState.targetObj.subject.rewards || []
+                            ).filter((reward) => reward.id !== action.rewardId)
+                          : prevContentState.targetObj.subject.rewards
+                    }
+                  : undefined
+              }
+            : undefined
+        };
+      }
+      return newState;
+    }
     case 'SET_ACTUAL_URL_DESCRIPTION':
       return {
         ...state,
