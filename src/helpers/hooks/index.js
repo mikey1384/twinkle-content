@@ -101,7 +101,7 @@ export function useMyState() {
         signinModalShown,
         xpThisMonth
       }
-    : { loaded, profileTheme: 'logoBlue', signinModalShown };
+    : { loaded, rewardBoostLvl: 0, profileTheme: 'logoBlue', signinModalShown };
 }
 
 export function useOutsideClick(ref, callback) {

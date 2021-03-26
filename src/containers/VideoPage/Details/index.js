@@ -442,7 +442,7 @@ export default function Details({
                 </Button>
               )}
               <Button
-                color="brownOrange"
+                color="orange"
                 style={{ marginLeft: '1rem' }}
                 skeuomorphic
                 filled={isRecommendedByUser}

@@ -404,7 +404,7 @@ export default function TargetContent({
                       className="right"
                     >
                       <Button
-                        color="brownOrange"
+                        color="orange"
                         filled={isRecommendedByUser}
                         disabled={recommendationInterfaceShown}
                         onClick={() => setRecommendationInterfaceShown(true)}

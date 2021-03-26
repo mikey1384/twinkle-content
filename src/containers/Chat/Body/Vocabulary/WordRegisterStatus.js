@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { useChatContext } from 'contexts';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
-import { rewardHash, returnWordLevel } from 'constants/defaultValues';
+import { vocabRewardHash, returnWordLevel } from 'constants/defaultValues';
 import { css } from '@emotion/css';
 import { isMobile } from 'helpers';
 import Button from 'components/Button';
@@ -49,7 +49,7 @@ export default function WordRegisterStatus() {
           <span> </span>
           <span
             style={{
-              color: Color[rewardHash[wordLevel].color](),
+              color: Color[vocabRewardHash[wordLevel].color](),
               fontWeight: 'bold'
             }}
           >
@@ -74,7 +74,7 @@ export default function WordRegisterStatus() {
         <div>
           {!isMobile(navigator) && (
             <>
-              <b style={{ color: Color[rewardHash[wordLevel].color]() }}>
+              <b style={{ color: Color[vocabRewardHash[wordLevel].color]() }}>
                 {content}
               </b>{' '}
               {`is `}
@@ -82,8 +82,8 @@ export default function WordRegisterStatus() {
             </>
           )}
           <>
-            <b style={{ color: Color[rewardHash[wordLevel].color]() }}>
-              {rewardHash[wordLevel].label}
+            <b style={{ color: Color[vocabRewardHash[wordLevel].color]() }}>
+              {vocabRewardHash[wordLevel].label}
             </b>{' '}
             word.
           </>{' '}
@@ -92,8 +92,8 @@ export default function WordRegisterStatus() {
           ) : (
             <span>You earned </span>
           )}
-          <b style={{ color: Color[rewardHash[wordLevel].color]() }}>
-            {addCommasToNumber(rewardHash[wordLevel].rewardAmount)} XP
+          <b style={{ color: Color[vocabRewardHash[wordLevel].color]() }}>
+            {addCommasToNumber(vocabRewardHash[wordLevel].rewardAmount)} XP
           </b>
           {wordLevel > 3 && (
             <>
@@ -113,7 +113,7 @@ export default function WordRegisterStatus() {
                 <span
                   style={{ color: Color.brownOrange(), marginLeft: '0.3rem' }}
                 >
-                  {addCommasToNumber(rewardHash[wordLevel].coinAmount)}
+                  {addCommasToNumber(vocabRewardHash[wordLevel].coinAmount)}
                 </span>
               </b>
             </>

@@ -1,9 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import request from 'axios';
+import Icon from 'components/Icon';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { addCommasToNumber } from 'helpers/stringHelpers';
-import { REWARD_VALUE } from 'constants/defaultValues';
 import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
@@ -39,7 +38,7 @@ export default function VideoThumbImage({
   const {
     requestHelpers: { auth }
   } = useAppContext();
-  const { userId } = useMyState();
+  const { userId, loaded } = useMyState();
   const [xpEarned, setXpEarned] = useState(false);
   useEffect(() => {
     checkXpStatus();
@@ -68,7 +67,7 @@ export default function VideoThumbImage({
   const tagColor = useMemo(
     () =>
       rewardLevel === 5
-        ? Color.gold()
+        ? Color.brownOrange()
         : rewardLevel === 4
         ? Color.cranberry()
         : rewardLevel === 3
@@ -109,11 +108,15 @@ export default function VideoThumbImage({
           borderBottom: !!xpEarned && `0.8rem solid ${Color.green()}`
         }}
       />
-      {!!rewardLevel && (
+      {!!rewardLevel && loaded && (
         <div
           className={css`
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 4rem;
             position: absolute;
-            padding: 0.1rem 0.5rem;
+            padding: 0.5rem 0.5rem;
             background: ${tagColor};
             font-size: 1.5rem;
             font-weight: bold;
@@ -123,7 +126,11 @@ export default function VideoThumbImage({
             }
           `}
         >
-          {addCommasToNumber(rewardLevel * REWARD_VALUE)} XP
+          <div style={{ fontSize: '1rem', lineHeight: 1 }}>
+            {[...Array(rewardLevel)].map((elem, index) => (
+              <Icon key={index} style={{ verticalAlign: 0 }} icon="star" />
+            ))}
+          </div>
         </div>
       )}
     </div>

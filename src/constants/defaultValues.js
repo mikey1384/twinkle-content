@@ -105,7 +105,54 @@ export const charLimit = {
   }
 };
 
-export const rewardHash = {
+export const videoRewardHash = {
+  0: {
+    xp: 20,
+    coin: 2
+  },
+  1: {
+    xp: 25,
+    coin: 2
+  },
+  2: {
+    xp: 30,
+    coin: 2
+  },
+  3: {
+    xp: 35,
+    coin: 3
+  },
+  4: {
+    xp: 40,
+    coin: 3
+  },
+  5: {
+    xp: 45,
+    coin: 3
+  },
+  6: {
+    xp: 50,
+    coin: 4
+  },
+  7: {
+    xp: 55,
+    coin: 4
+  },
+  8: {
+    xp: 60,
+    coin: 4
+  },
+  9: {
+    xp: 65,
+    coin: 4
+  },
+  10: {
+    xp: 70,
+    coin: 5
+  }
+};
+
+export const vocabRewardHash = {
   1: {
     label: 'basic',
     rewardAmount: 10,

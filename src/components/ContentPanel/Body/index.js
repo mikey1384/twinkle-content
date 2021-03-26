@@ -477,7 +477,7 @@ export default function Body({
                   style={{ position: 'relative', marginRight: 0 }}
                 >
                   <Button
-                    color="brownOrange"
+                    color="orange"
                     filled={isRecommendedByUser}
                     disabled={recommendationInterfaceShown}
                     onClick={() => setRecommendationInterfaceShown(true)}

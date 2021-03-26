@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import ProgressBar from 'components/ProgressBar';
 import Icon from 'components/Icon';
-import { REWARD_VALUE } from 'constants/defaultValues';
-import { useContentState } from 'helpers/hooks';
+import { videoRewardHash } from 'constants/defaultValues';
+import { useContentState, useMyState } from 'helpers/hooks';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
@@ -36,7 +36,14 @@ export default function XPBar({
 }) {
   const xpEarned = alreadyEarned || justEarned;
   const watching = startingPosition > 0;
-  const rewardAmount = useMemo(() => rewardLevel * REWARD_VALUE, [rewardLevel]);
+  const { rewardBoostLvl } = useMyState();
+  const xpRewardAmount = useMemo(
+    () => rewardLevel * videoRewardHash[rewardBoostLvl].xp,
+    [rewardBoostLvl, rewardLevel]
+  );
+  const coinRewardAmount = useMemo(() => videoRewardHash[rewardBoostLvl].coin, [
+    rewardBoostLvl
+  ]);
   const canEarnCoins = rewardLevel >= 3;
   const {
     coinProgress = 0,
@@ -50,7 +57,7 @@ export default function XPBar({
   const xpLevelColor = useMemo(
     () =>
       rewardLevel === 5
-        ? Color.gold()
+        ? Color.brownOrange()
         : rewardLevel === 4
         ? Color.cranberry()
         : rewardLevel === 3
@@ -135,9 +142,9 @@ export default function XPBar({
             }}
           >
             {!xpEarned && (
-              <div>
+              <div style={{ lineHeight: 1 }}>
                 {[...Array(rewardLevel)].map((elem, index) => (
-                  <Icon key={index} icon="star" />
+                  <Icon key={index} style={{ verticalAlign: 0 }} icon="star" />
                 ))}
               </div>
             )}
@@ -151,9 +158,11 @@ export default function XPBar({
                 ? canEarnCoins
                   ? 'Watch and earn Twinkle Coins!'
                   : `You have earned ${
-                      justEarned ? rewardAmount : ''
+                      justEarned ? xpRewardAmount : ''
                     } XP from this video`
-                : `Watch and earn ${addCommasToNumber(rewardAmount)} XP!`}
+                : `Watch and earn ${addCommasToNumber(
+                    xpRewardAmount
+                  )} XP and ${coinRewardAmount} Twinkle Coins every minute!`}
             </div>
           </div>
         );
@@ -162,18 +171,19 @@ export default function XPBar({
   }, [
     userId,
     xpLoaded,
+    watching,
     started,
+    rewardLevel,
     xpEarned,
     canEarnCoins,
+    isChat,
     coinProgress,
     xpProgress,
     xpLevelColor,
-    watching,
     onPlayVideo,
-    isChat,
-    rewardLevel,
     justEarned,
-    rewardAmount
+    xpRewardAmount,
+    coinRewardAmount
   ]);
 
   return userId && xpLoaded ? (
@@ -221,7 +231,7 @@ export default function XPBar({
                 background: ${xpEarned ? Color.green() : xpLevelColor};
               `}
             >
-              {rewardAmount} XP
+              {xpRewardAmount} XP
               {xpEarned && (
                 <Icon icon="check" style={{ marginLeft: '0.5rem' }} />
               )}

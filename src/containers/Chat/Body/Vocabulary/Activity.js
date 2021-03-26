@@ -4,7 +4,7 @@ import ProfilePic from 'components/ProfilePic';
 import UsernameText from 'components/Texts/UsernameText';
 import WordModal from './WordModal';
 import { addCommasToNumber } from 'helpers/stringHelpers';
-import { rewardHash, returnWordLevel } from 'constants/defaultValues';
+import { vocabRewardHash, returnWordLevel } from 'constants/defaultValues';
 import { MessageStyle } from '../../Styles';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { unix } from 'moment';
@@ -103,10 +103,10 @@ export default function Activity({
           <b
             style={{
               fontSize: '1.7rem',
-              color: Color[rewardHash[wordLevel].color]()
+              color: Color[vocabRewardHash[wordLevel].color]()
             }}
           >
-            {rewardHash[wordLevel].label}
+            {vocabRewardHash[wordLevel].label}
           </b>{' '}
           word,{' '}
           <span
@@ -137,7 +137,7 @@ export default function Activity({
             }}
           >
             <span style={{ color: Color.logoGreen() }}>
-              {addCommasToNumber(rewardHash[wordLevel].rewardAmount)}
+              {addCommasToNumber(vocabRewardHash[wordLevel].rewardAmount)}
             </span>{' '}
             <span style={{ color: Color.gold() }}>XP</span>
           </b>
@@ -160,7 +160,7 @@ export default function Activity({
                 <span
                   style={{ color: Color.brownOrange(), marginLeft: '0.3rem' }}
                 >
-                  {addCommasToNumber(rewardHash[wordLevel].coinAmount)}
+                  {addCommasToNumber(vocabRewardHash[wordLevel].coinAmount)}
                 </span>
               </b>
             </>
