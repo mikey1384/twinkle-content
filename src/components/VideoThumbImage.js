@@ -38,7 +38,7 @@ export default function VideoThumbImage({
   const {
     requestHelpers: { auth }
   } = useAppContext();
-  const { userId, loaded } = useMyState();
+  const { userId } = useMyState();
   const [xpEarned, setXpEarned] = useState(false);
   useEffect(() => {
     checkXpStatus();
@@ -108,7 +108,7 @@ export default function VideoThumbImage({
           borderBottom: !!xpEarned && `0.8rem solid ${Color.green()}`
         }}
       />
-      {!!rewardLevel && loaded && (
+      {!!rewardLevel && (
         <div
           className={css`
             display: flex;
