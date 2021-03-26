@@ -41,26 +41,22 @@ function XPVideoPlayer({
       checkCurrentlyWatchingAnotherVideo,
       updateCurrentlyWatching,
       updateUserCoins,
-      updateUserXP,
-      updateTotalViewDuration,
-      updateVideoXPEarned
+      updateTotalViewDuration
     }
   } = useAppContext();
-  const { profileTheme, userId, twinkleCoins, twinkleXP } = useMyState();
+  const { profileTheme, userId, twinkleCoins } = useMyState();
   const {
     state: { pageVisible }
   } = useViewContext();
   const {
     actions: {
       onUpdateUserCoins,
-      onChangeUserXP,
       onIncreaseNumCoinsEarned,
       onSetVideoCoinProgress,
       onSetVideoStarted,
       onSetVideoXpEarned,
       onSetVideoXpJustEarned,
       onSetVideoXpLoaded,
-      onSetVideoXpProgress,
       onSetXpVideoWatchTime,
       onSetVideoCurrentTime
     }
@@ -78,10 +74,6 @@ function XPVideoPlayer({
   const [startingPosition, setStartingPosition] = useState(0);
   const timeAt = useRef(0);
   const requiredDurationForCoin = 60;
-  const thresholdXP1 = 3000 * 1000;
-  const thresholdXP2 = 6000 * 1000;
-  const requiredDurationForXP =
-    twinkleXP > thresholdXP2 ? 300 : twinkleXP > thresholdXP1 ? 180 : 120;
   const PlayerRef = useRef(null);
   const timerRef = useRef(null);
   const timeWatchedRef = useRef(0);
@@ -90,12 +82,10 @@ function XPVideoPlayer({
   const watchCodeRef = useRef(Math.floor(Math.random() * 10000));
   const mounted = useRef(true);
   const rewardingCoin = useRef(false);
-  const rewardingXP = useRef(false);
   const themeColor = profileTheme || 'logoBlue';
   const rewardLevelRef = useRef(0);
   const rewardAmountRef = useRef(rewardLevel * REWARD_VALUE);
   const xpEarnedRef = useRef(xpEarned);
-  const canEarnCoins = rewardLevelRef.current >= 3;
   const coinRewardAmount = 2;
 
   useEffect(() => {
@@ -334,15 +324,58 @@ function XPVideoPlayer({
     checkAlreadyWatchingAnotherVideo();
     updateTotalViewDuration({ videoId });
     if (
-      !!rewardLevelRef.current &&
-      !xpEarnedRef.current &&
-      !justEarned &&
+      PlayerRef.current?.getInternalPlayer()?.isMuted() ||
+      PlayerRef.current?.getInternalPlayer()?.getVolume() === 0
+    ) {
+      return;
+    }
+    if (
+      rewardAmountRef.current &&
+      timeWatchedRef.current >= requiredDurationForCoin &&
+      !rewardingCoin.current &&
       userId
     ) {
-      increaseXPMeter();
-    } else if (canEarnCoins) {
-      increaseCoinMeter();
+      timeWatchedRef.current = 0;
+      onSetXpVideoWatchTime({
+        videoId,
+        watchTime: 0
+      });
+      onSetVideoCoinProgress({
+        videoId,
+        progress: 0
+      });
+      if (twinkleCoins + coinRewardAmount <= 1000) {
+        rewardingCoin.current = true;
+        try {
+          const coins = await updateUserCoins({
+            action: 'watch',
+            target: 'video',
+            amount: coinRewardAmount,
+            targetId: videoId,
+            type: 'increase'
+          });
+          onUpdateUserCoins({ coins, userId });
+          onIncreaseNumCoinsEarned({ videoId });
+          rewardingCoin.current = false;
+        } catch (error) {
+          console.error(error.response || error);
+          rewardingCoin.current = false;
+        }
+      }
+      return;
     }
+    timeWatchedRef.current = timeWatchedRef.current + intervalLength / 1000;
+    onSetXpVideoWatchTime({
+      videoId,
+      watchTime: timeWatchedRef.current
+    });
+    onSetVideoCoinProgress({
+      videoId,
+      progress: Math.floor(
+        (Math.min(timeWatchedRef.current, requiredDurationForCoin) * 100) /
+          requiredDurationForCoin
+      )
+    });
 
     async function checkAlreadyWatchingAnotherVideo() {
       if (rewardLevelRef.current) {
@@ -356,123 +389,6 @@ function XPVideoPlayer({
           PlayerRef.current?.getInternalPlayer()?.pauseVideo?.();
         }
       }
-    }
-
-    async function increaseCoinMeter() {
-      if (
-        PlayerRef.current?.getInternalPlayer()?.isMuted() ||
-        PlayerRef.current?.getInternalPlayer()?.getVolume() === 0
-      ) {
-        return;
-      }
-      if (
-        rewardAmountRef.current &&
-        timeWatchedRef.current >= requiredDurationForCoin &&
-        !rewardingCoin.current &&
-        userId
-      ) {
-        timeWatchedRef.current = 0;
-        onSetXpVideoWatchTime({
-          videoId,
-          watchTime: 0
-        });
-        onSetVideoCoinProgress({
-          videoId,
-          progress: 0
-        });
-        if (twinkleCoins + coinRewardAmount <= 1000) {
-          rewardingCoin.current = true;
-          try {
-            const coins = await updateUserCoins({
-              action: 'watch',
-              target: 'video',
-              amount: coinRewardAmount,
-              targetId: videoId,
-              type: 'increase'
-            });
-            onUpdateUserCoins({ coins, userId });
-            onIncreaseNumCoinsEarned({ videoId });
-            rewardingCoin.current = false;
-          } catch (error) {
-            console.error(error.response || error);
-            rewardingCoin.current = false;
-          }
-        }
-        return;
-      }
-      timeWatchedRef.current = timeWatchedRef.current + intervalLength / 1000;
-      onSetXpVideoWatchTime({
-        videoId,
-        watchTime: timeWatchedRef.current
-      });
-      onSetVideoCoinProgress({
-        videoId,
-        progress: Math.floor(
-          (Math.min(timeWatchedRef.current, requiredDurationForCoin) * 100) /
-            requiredDurationForCoin
-        )
-      });
-    }
-
-    async function increaseXPMeter() {
-      if (
-        PlayerRef.current?.getInternalPlayer()?.isMuted() ||
-        PlayerRef.current?.getInternalPlayer()?.getVolume() === 0
-      ) {
-        return;
-      }
-      const requiredViewDuration =
-        totalDurationRef.current < requiredDurationForXP + 10
-          ? Math.floor(totalDurationRef.current * 0.8)
-          : requiredDurationForXP;
-      if (
-        rewardAmountRef.current &&
-        timeWatchedRef.current >= requiredViewDuration &&
-        !rewardingXP.current &&
-        userId
-      ) {
-        onSetVideoXpEarned({ videoId, earned: true });
-        onSetVideoXpJustEarned({ videoId, justEarned: true });
-        timeWatchedRef.current = 0;
-        onSetXpVideoWatchTime({
-          videoId,
-          watchTime: 0
-        });
-        rewardingXP.current = true;
-        try {
-          await updateVideoXPEarned(videoId);
-          const { alreadyDone, xp, rank } = await updateUserXP({
-            action: 'watch',
-            target: 'video',
-            amount: rewardAmountRef.current,
-            targetId: videoId,
-            type: 'increase'
-          });
-          if (alreadyDone) return;
-          onChangeUserXP({ xp, rank, userId });
-          xpEarnedRef.current = true;
-          rewardingXP.current = false;
-        } catch (error) {
-          console.error(error.response || error);
-          rewardingXP.current = false;
-        }
-        return;
-      }
-      timeWatchedRef.current = timeWatchedRef.current + intervalLength / 1000;
-      onSetXpVideoWatchTime({
-        videoId,
-        watchTime: timeWatchedRef.current
-      });
-      onSetVideoXpProgress({
-        videoId,
-        progress:
-          requiredViewDuration > 0
-            ? Math.floor(
-                (Math.min(timeWatchedRef.current, requiredViewDuration) * 100) /
-                  requiredViewDuration
-              )
-            : 0
-      });
     }
   }
 }
