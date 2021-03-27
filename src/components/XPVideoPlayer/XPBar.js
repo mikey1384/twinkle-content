@@ -11,9 +11,7 @@ import { css } from '@emotion/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 
 XPBar.propTypes = {
-  alreadyEarned: PropTypes.bool,
   isChat: PropTypes.bool,
-  justEarned: PropTypes.bool,
   onPlayVideo: PropTypes.func,
   rewardLevel: PropTypes.number,
   started: PropTypes.bool,
@@ -24,9 +22,7 @@ XPBar.propTypes = {
 };
 
 export default function XPBar({
-  alreadyEarned,
   isChat,
-  justEarned,
   onPlayVideo,
   rewardLevel,
   started,
@@ -36,7 +32,6 @@ export default function XPBar({
   xpLoaded
 }) {
   const [hovered, setHovered] = useState(false);
-  const xpEarned = alreadyEarned || justEarned;
   const watching = startingPosition > 0;
   const { rewardBoostLvl, twinkleCoins } = useMyState();
   const xpRewardAmount = useMemo(
@@ -55,6 +50,14 @@ export default function XPBar({
     contentType: 'video',
     contentId: videoId
   });
+
+  const numXpEarnedWithComma = useMemo(() => addCommasToNumber(numXpEarned), [
+    numXpEarned
+  ]);
+  const numCoinsEarnedWithComma = useMemo(
+    () => addCommasToNumber(numCoinsEarned),
+    [numCoinsEarned]
+  );
 
   const xpLevelColor = useMemo(
     () =>
@@ -209,10 +212,10 @@ export default function XPBar({
                 color: #fff;
                 flex-grow: 1;
                 font-weight: bold;
-                background: ${xpEarned ? Color.green() : xpLevelColor};
+                background: ${xpLevelColor};
               `}
             >
-              {numXpEarned > 0 ? `+ ${numXpEarned}` : 'XP'}
+              {numXpEarned > 0 ? `+ ${numXpEarnedWithComma}` : 'XP'}
             </div>
             {canEarnCoins && (
               <div>
@@ -241,7 +244,7 @@ export default function XPBar({
                   `}
                 >
                   {numCoinsEarned > 0 ? (
-                    `+ ${numCoinsEarned}`
+                    `+ ${numCoinsEarnedWithComma}`
                   ) : (
                     <Icon size="lg" icon={['far', 'badge-dollar']} />
                   )}
@@ -256,7 +259,7 @@ export default function XPBar({
                       width: '30rem',
                       position: 'absolute'
                     }}
-                    text={`You can no longer earn Twinkle Coins by watching videos once you have over 1,000 coins`}
+                    text={`You can no longer earn Twinkle Coins by watching videos because you have more than 1,000 coins`}
                   />
                 )}
               </div>
