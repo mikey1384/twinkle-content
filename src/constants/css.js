@@ -10,7 +10,7 @@ export const Color = {
   bronze: (opacity = 1) => `rgba(255,190,130,${opacity})`,
   cyan: (opacity = 1) => `rgba(0,255,255,${opacity})`,
   darkCyan: (opacity = 1) => `rgba(0,139,139,${opacity})`,
-  gold: (opacity = 1) => `rgba(255,210,0,${opacity})`,
+  gold: (opacity = 1) => `rgba(255,208,0,${opacity})`,
   logoGreen: (opacity = 1) => `rgba(97,226,101,${opacity})`,
   green: (opacity = 1) => `rgba(40,182,44,${opacity})`,
   limeGreen: (opacity = 1) => `rgba(50, 205, 50,${opacity})`,

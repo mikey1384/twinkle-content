@@ -67,7 +67,7 @@ export default function VideoThumbImage({
   const tagColor = useMemo(
     () =>
       rewardLevel === 5
-        ? Color.brownOrange()
+        ? Color.gold()
         : rewardLevel === 4
         ? Color.cranberry()
         : rewardLevel === 3
