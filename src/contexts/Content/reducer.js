@@ -1506,6 +1506,14 @@ export default function ContentReducer(state, action) {
           videoProgress: action.progress
         }
       };
+    case 'SET_VIDEO_TIME_WATCHED':
+      return {
+        ...state,
+        [contentKey]: {
+          ...prevContentState,
+          timeWatched: action.timeWatched
+        }
+      };
     case 'SET_COMMENT_VISIBLE':
       return {
         ...state,

@@ -547,6 +547,14 @@ export default function ContentActions(dispatch) {
         started
       });
     },
+    onSetTimeWatched({ videoId, timeWatched }) {
+      return dispatch({
+        type: 'SET_VIDEO_TIME_WATCHED',
+        contentType: 'video',
+        contentId: videoId,
+        timeWatched
+      });
+    },
     onSetCommentVisible({ visible, commentId }) {
       return dispatch({
         type: 'SET_COMMENT_VISIBLE',

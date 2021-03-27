@@ -70,10 +70,16 @@ function XPVideoPlayer({
       onIncreaseNumXpEarned,
       onSetVideoProgress,
       onSetVideoStarted,
-      onSetVideoCurrentTime
+      onSetVideoCurrentTime,
+      onSetTimeWatched
     }
   } = useContentContext();
-  const { currentTime = 0, started, isEditing } = useContentState({
+  const {
+    currentTime = 0,
+    started,
+    timeWatched: prevTimeWatched = 0,
+    isEditing
+  } = useContentState({
     contentType: 'video',
     contentId: videoId
   });
@@ -83,9 +89,9 @@ function XPVideoPlayer({
   const requiredDurationForCoin = 60;
   const PlayerRef = useRef(null);
   const timerRef = useRef(null);
-  const timeWatchedRef = useRef(0);
+  const timeWatchedRef = useRef(prevTimeWatched);
   const totalDurationRef = useRef(0);
-  const userIdRef = useRef(null);
+  const userIdRef = useRef(userId);
   const watchCodeRef = useRef(Math.floor(Math.random() * 10000));
   const mounted = useRef(true);
   const rewardingCoin = useRef(false);
@@ -130,6 +136,8 @@ function XPVideoPlayer({
   }, [isEditing]);
 
   useEffect(() => {
+    userIdRef.current = userId;
+    rewardLevelRef.current = rewardLevel;
     PlayerRef.current?.getInternalPlayer()?.pauseVideo?.();
   }, [userId, rewardLevel]);
 
@@ -288,6 +296,7 @@ function XPVideoPlayer({
       return;
     }
     if (timeWatchedRef.current >= requiredDurationForCoin && userId) {
+      onSetTimeWatched({ videoId, timeWatched: 0 });
       timeWatchedRef.current = 0;
       onSetVideoProgress({
         videoId,
@@ -339,6 +348,10 @@ function XPVideoPlayer({
       });
       return;
     }
+    onSetTimeWatched({
+      videoId,
+      timeWatched: timeWatchedRef.current + intervalLength / 1000
+    });
     timeWatchedRef.current = timeWatchedRef.current + intervalLength / 1000;
     onSetVideoProgress({
       videoId,
