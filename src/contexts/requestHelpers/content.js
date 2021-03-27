@@ -60,19 +60,6 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async checkXPEarned(videoId) {
-      try {
-        const {
-          data: { xpEarned }
-        } = await request.get(
-          `${URL}/video/xpEarned?videoId=${videoId}`,
-          auth()
-        );
-        return Promise.resolve(xpEarned);
-      } catch (error) {
-        return handleError(error);
-      }
-    },
     async deleteContent({ id, contentType, undo }) {
       try {
         const {
@@ -627,14 +614,6 @@ export default function contentRequestHelpers({ auth, handleError }) {
           },
           auth()
         );
-        return Promise.resolve();
-      } catch (error) {
-        return handleError(error);
-      }
-    },
-    async updateVideoXPEarned(videoId) {
-      try {
-        await request.put(`${URL}/video/xpEarned`, { videoId }, auth());
         return Promise.resolve();
       } catch (error) {
         return handleError(error);

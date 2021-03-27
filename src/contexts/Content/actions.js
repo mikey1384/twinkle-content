@@ -547,30 +547,6 @@ export default function ContentActions(dispatch) {
         started
       });
     },
-    onSetVideoXpEarned({ videoId, earned }) {
-      return dispatch({
-        type: 'SET_VIDEO_XP_EARNED',
-        contentType: 'video',
-        contentId: videoId,
-        earned
-      });
-    },
-    onSetVideoXpJustEarned({ videoId, justEarned }) {
-      return dispatch({
-        type: 'SET_VIDEO_XP_JUST_EARNED',
-        contentType: 'video',
-        contentId: videoId,
-        justEarned
-      });
-    },
-    onSetVideoXpLoaded({ videoId, loaded }) {
-      return dispatch({
-        type: 'SET_VIDEO_XP_LOADED',
-        contentType: 'video',
-        contentId: videoId,
-        loaded
-      });
-    },
     onSetCommentVisible({ visible, commentId }) {
       return dispatch({
         type: 'SET_COMMENT_VISIBLE',

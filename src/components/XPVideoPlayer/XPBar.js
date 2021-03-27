@@ -17,8 +17,7 @@ XPBar.propTypes = {
   started: PropTypes.bool,
   startingPosition: PropTypes.number,
   userId: PropTypes.number,
-  videoId: PropTypes.number.isRequired,
-  xpLoaded: PropTypes.bool
+  videoId: PropTypes.number.isRequired
 };
 
 export default function XPBar({
@@ -28,8 +27,7 @@ export default function XPBar({
   started,
   startingPosition,
   userId,
-  videoId,
-  xpLoaded
+  videoId
 }) {
   const [hovered, setHovered] = useState(false);
   const watching = startingPosition > 0;
@@ -74,7 +72,7 @@ export default function XPBar({
   );
 
   const Bar = useMemo(() => {
-    if (!userId || !xpLoaded || (!(watching && !started) && !rewardLevel)) {
+    if (!userId || (!(watching && !started) && !rewardLevel)) {
       return null;
     }
     if (started) {
@@ -158,7 +156,6 @@ export default function XPBar({
     }
   }, [
     userId,
-    xpLoaded,
     watching,
     started,
     rewardLevel,
@@ -170,7 +167,7 @@ export default function XPBar({
     coinRewardAmount
   ]);
 
-  return userId && xpLoaded ? (
+  return userId ? (
     <ErrorBoundary>
       <div
         style={{

@@ -1,22 +1,15 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
-import request from 'axios';
 import Icon from 'components/Icon';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { useAppContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
-import URL from 'constants/URL';
-
-const API_URL = `${URL}/video`;
 
 VideoThumbImage.propTypes = {
   height: PropTypes.string,
   rewardLevel: PropTypes.number,
   onClick: PropTypes.func,
   src: PropTypes.string.isRequired,
-  style: PropTypes.object,
-  videoId: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  style: PropTypes.object
 };
 
 export default function VideoThumbImage({
@@ -24,8 +17,7 @@ export default function VideoThumbImage({
   height = '55%',
   onClick,
   src,
-  style,
-  videoId
+  style
 }) {
   const mounted = useRef(true);
   useEffect(() => {
@@ -34,35 +26,6 @@ export default function VideoThumbImage({
       mounted.current = false;
     };
   }, []);
-
-  const {
-    requestHelpers: { auth }
-  } = useAppContext();
-  const { userId } = useMyState();
-  const [xpEarned, setXpEarned] = useState(false);
-  useEffect(() => {
-    checkXpStatus();
-    async function checkXpStatus() {
-      const authorization = auth();
-      const authExists = !!authorization.headers.authorization;
-      if (authExists) {
-        try {
-          const {
-            data: { xpEarned }
-          } = await request.get(
-            `${API_URL}/xpEarned?videoId=${videoId}`,
-            auth()
-          );
-          if (mounted.current) setXpEarned(xpEarned);
-        } catch (error) {
-          console.error(error.response || error);
-        }
-      } else {
-        setXpEarned(false);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [videoId, rewardLevel, userId]);
 
   const tagColor = useMemo(
     () =>
@@ -104,8 +67,7 @@ export default function VideoThumbImage({
           left: 0,
           bottom: 0,
           right: 0,
-          margin: 'auto',
-          borderBottom: !!xpEarned && `0.8rem solid ${Color.green()}`
+          margin: 'auto'
         }}
       />
       {!!rewardLevel && (

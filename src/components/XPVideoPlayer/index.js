@@ -37,7 +37,6 @@ function XPVideoPlayer({
   const {
     requestHelpers: {
       addVideoView,
-      checkXPEarned,
       checkCurrentlyWatchingAnotherVideo,
       updateCurrentlyWatching,
       updateUserCoins,
@@ -71,20 +70,13 @@ function XPVideoPlayer({
       onIncreaseNumXpEarned,
       onSetVideoProgress,
       onSetVideoStarted,
-      onSetVideoXpEarned,
-      onSetVideoXpJustEarned,
-      onSetVideoXpLoaded,
       onSetVideoCurrentTime
     }
   } = useContentContext();
-  const {
-    currentTime = 0,
-    started,
-    xpLoaded,
-    xpEarned,
-    justEarned,
-    isEditing
-  } = useContentState({ contentType: 'video', contentId: videoId });
+  const { currentTime = 0, started, isEditing } = useContentState({
+    contentType: 'video',
+    contentId: videoId
+  });
   const [playing, setPlaying] = useState(false);
   const [startingPosition, setStartingPosition] = useState(0);
   const timeAt = useRef(0);
@@ -100,7 +92,6 @@ function XPVideoPlayer({
   const rewardingXP = useRef(false);
   const themeColor = profileTheme || 'logoBlue';
   const rewardLevelRef = useRef(0);
-  const xpEarnedRef = useRef(xpEarned);
 
   useEffect(() => {
     mounted.current = true;
@@ -132,39 +123,11 @@ function XPVideoPlayer({
   }, [timeAt.current]);
 
   useEffect(() => {
-    rewardLevelRef.current = rewardLevel;
-
-    if (!!rewardLevel && userId) {
-      handleCheckXPEarned();
-    }
-
-    async function handleCheckXPEarned() {
-      const xpEarned = await checkXPEarned(videoId);
-      if (mounted.current) {
-        onSetVideoXpEarned({ videoId, earned: !!xpEarned });
-        onSetVideoXpLoaded({ videoId, loaded: true });
-      }
-    }
-    userIdRef.current = userId;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rewardLevel, userId, videoId]);
-
-  useEffect(() => {
     if (isEditing) {
       handleVideoStop();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEditing]);
-
-  useEffect(() => {
-    xpEarnedRef.current = xpEarned;
-    if (!userId) {
-      onSetVideoXpEarned({ videoId, earned: false });
-      onSetVideoXpJustEarned({ videoId, justEarned: false });
-      onSetVideoXpLoaded({ videoId, loaded: false });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId, xpEarned]);
 
   useEffect(() => {
     PlayerRef.current?.getInternalPlayer()?.pauseVideo?.();
@@ -261,9 +224,7 @@ function XPVideoPlayer({
       </div>
       {(!!rewardLevel || (startingPosition > 0 && !started)) && (
         <XPBar
-          alreadyEarned={xpEarned}
           isChat={isChat}
-          justEarned={justEarned}
           onPlayVideo={() =>
             PlayerRef.current?.getInternalPlayer()?.playVideo()
           }
@@ -272,8 +233,6 @@ function XPVideoPlayer({
           startingPosition={startingPosition}
           userId={userId}
           videoId={videoId}
-          xpEarned={xpEarned}
-          xpLoaded={xpLoaded}
         />
       )}
     </ErrorBoundary>

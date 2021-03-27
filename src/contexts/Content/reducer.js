@@ -1506,30 +1506,6 @@ export default function ContentReducer(state, action) {
           videoProgress: action.progress
         }
       };
-    case 'SET_VIDEO_XP_EARNED':
-      return {
-        ...state,
-        [contentKey]: {
-          ...prevContentState,
-          xpEarned: action.earned
-        }
-      };
-    case 'SET_VIDEO_XP_JUST_EARNED':
-      return {
-        ...state,
-        [contentKey]: {
-          ...prevContentState,
-          justEarned: action.justEarned
-        }
-      };
-    case 'SET_VIDEO_XP_LOADED':
-      return {
-        ...state,
-        [contentKey]: {
-          ...prevContentState,
-          xpLoaded: action.loaded
-        }
-      };
     case 'SET_COMMENT_VISIBLE':
       return {
         ...state,
