@@ -7,7 +7,7 @@ import { videoRewardHash, strongColors } from 'constants/defaultValues';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useContentState, useMyState } from 'helpers/hooks';
-import { useAppContext, useContentContext, useViewContext } from 'contexts';
+import { useAppContext, useContentContext } from 'contexts';
 
 const intervalLength = 2000;
 
@@ -63,10 +63,6 @@ function XPVideoPlayer({
   useEffect(() => {
     xpRewardAmountRef.current = xpRewardAmount;
   }, [xpRewardAmount]);
-
-  const {
-    state: { pageVisible }
-  } = useViewContext();
   const {
     actions: {
       onChangeUserXP,
@@ -173,15 +169,6 @@ function XPVideoPlayer({
   useEffect(() => {
     PlayerRef.current?.getInternalPlayer()?.pauseVideo?.();
   }, [userId, rewardLevel]);
-
-  useEffect(() => {
-    const alreadyEarned = xpEarned || justEarned;
-    if (started && !!rewardLevel && userId && !alreadyEarned) {
-      handleVideoStop();
-      PlayerRef.current?.getInternalPlayer()?.pauseVideo?.();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageVisible]);
 
   const videoUrl = useMemo(
     () =>
