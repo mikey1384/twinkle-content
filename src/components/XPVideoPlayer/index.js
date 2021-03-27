@@ -49,12 +49,21 @@ function XPVideoPlayer({
   const coinRewardAmount = useMemo(() => videoRewardHash[rewardBoostLvl].coin, [
     rewardBoostLvl
   ]);
+
   const coinRewardAmountRef = useRef(coinRewardAmount);
+  useEffect(() => {
+    coinRewardAmountRef.current = coinRewardAmount;
+  }, [coinRewardAmount]);
+
   const xpRewardAmount = useMemo(
     () => videoRewardHash[rewardBoostLvl].xp * rewardLevel,
     [rewardBoostLvl, rewardLevel]
   );
   const xpRewardAmountRef = useRef(xpRewardAmount);
+  useEffect(() => {
+    xpRewardAmountRef.current = xpRewardAmount;
+  }, [xpRewardAmount]);
+
   const {
     state: { pageVisible }
   } = useViewContext();
@@ -63,6 +72,7 @@ function XPVideoPlayer({
       onChangeUserXP,
       onUpdateUserCoins,
       onIncreaseNumCoinsEarned,
+      onIncreaseNumXpEarned,
       onSetVideoProgress,
       onSetVideoStarted,
       onSetVideoXpEarned,
@@ -95,14 +105,6 @@ function XPVideoPlayer({
   const themeColor = profileTheme || 'logoBlue';
   const rewardLevelRef = useRef(0);
   const xpEarnedRef = useRef(xpEarned);
-
-  useEffect(() => {
-    coinRewardAmountRef.current = coinRewardAmount;
-  }, [coinRewardAmount]);
-
-  useEffect(() => {
-    xpRewardAmountRef.current = xpRewardAmount;
-  }, [rewardLevel, xpRewardAmount]);
 
   useEffect(() => {
     mounted.current = true;
@@ -360,7 +362,10 @@ function XPVideoPlayer({
             type: 'increase'
           });
           onUpdateUserCoins({ coins, userId });
-          onIncreaseNumCoinsEarned({ videoId });
+          onIncreaseNumCoinsEarned({
+            videoId,
+            amount: coinRewardAmountRef.current
+          });
           rewardingCoin.current = false;
         } catch (error) {
           console.error(error.response || error);
@@ -379,6 +384,10 @@ function XPVideoPlayer({
           });
           if (alreadyDone) return;
           onChangeUserXP({ xp, rank, userId });
+          onIncreaseNumXpEarned({
+            videoId,
+            amount: xpRewardAmountRef.current
+          });
           rewardingXP.current = false;
         } catch (error) {
           console.error(error.response || error);

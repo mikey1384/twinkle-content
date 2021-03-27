@@ -109,9 +109,18 @@ export default function ContentActions(dispatch) {
         subjectId
       });
     },
-    onIncreaseNumCoinsEarned({ videoId }) {
+    onIncreaseNumCoinsEarned({ videoId, amount }) {
       return dispatch({
         type: 'INCREASE_NUM_COINS_EARNED',
+        amount,
+        contentType: 'video',
+        contentId: videoId
+      });
+    },
+    onIncreaseNumXpEarned({ videoId, amount }) {
+      return dispatch({
+        type: 'INCREASE_NUM_XP_EARNED',
+        amount,
         contentType: 'video',
         contentId: videoId
       });

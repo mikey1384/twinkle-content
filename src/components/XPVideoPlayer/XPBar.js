@@ -45,7 +45,11 @@ export default function XPBar({
     rewardBoostLvl
   ]);
   const canEarnCoins = rewardLevel >= 3;
-  const { videoProgress = 0, numCoinsEarned = 0 } = useContentState({
+  const {
+    videoProgress = 0,
+    numCoinsEarned = 0,
+    numXpEarned = 0
+  } = useContentState({
     contentType: 'video',
     contentId: videoId
   });
@@ -206,7 +210,7 @@ export default function XPBar({
                 background: ${xpEarned ? Color.green() : xpLevelColor};
               `}
             >
-              XP
+              {numXpEarned > 0 ? `+ ${numXpEarned}` : 'XP'}
             </div>
             {canEarnCoins && (
               <div

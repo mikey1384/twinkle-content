@@ -587,7 +587,15 @@ export default function ContentReducer(state, action) {
         ...state,
         [contentKey]: {
           ...prevContentState,
-          numCoinsEarned: (prevContentState.numCoinsEarned || 0) + 2
+          numCoinsEarned: (prevContentState.numCoinsEarned || 0) + action.amount
+        }
+      };
+    case 'INCREASE_NUM_XP_EARNED':
+      return {
+        ...state,
+        [contentKey]: {
+          ...prevContentState,
+          numXpEarned: (prevContentState.numXpEarned || 0) + action.amount
         }
       };
     case 'LIKE_COMMENT': {
