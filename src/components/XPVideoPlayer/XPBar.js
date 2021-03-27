@@ -1,8 +1,9 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import ProgressBar from 'components/ProgressBar';
 import Icon from 'components/Icon';
+import FullTextReveal from 'components/Texts/FullTextReveal';
 import { videoRewardHash } from 'constants/defaultValues';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { Color, mobileMaxWidth } from 'constants/css';
@@ -34,9 +35,10 @@ export default function XPBar({
   videoId,
   xpLoaded
 }) {
+  const [hovered, setHovered] = useState(false);
   const xpEarned = alreadyEarned || justEarned;
   const watching = startingPosition > 0;
-  const { rewardBoostLvl } = useMyState();
+  const { rewardBoostLvl, twinkleCoins } = useMyState();
   const xpRewardAmount = useMemo(
     () => rewardLevel * videoRewardHash[rewardBoostLvl].xp,
     [rewardBoostLvl, rewardLevel]
@@ -177,7 +179,7 @@ export default function XPBar({
         }}
       >
         {Bar}
-        {started && !(xpEarned && !canEarnCoins) && !!rewardLevel && (
+        {started && !!rewardLevel && (
           <div
             className={css`
               height: 2.7rem;
@@ -213,27 +215,49 @@ export default function XPBar({
               {numXpEarned > 0 ? `+ ${numXpEarned}` : 'XP'}
             </div>
             {canEarnCoins && (
-              <div
-                className={css`
-                  height: 100%;
-                  min-width: 5rem;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  font-weight: bold;
-                  color: #fff;
-                  font-size: 1.5rem;
-                  background: ${Color.brownOrange()};
-                  @media (max-width: ${mobileMaxWidth}) {
-                    min-width: ${isChat ? '3rem' : '5rem'};
-                    font-size: ${isChat ? '0.8rem' : '1.5rem'};
+              <div>
+                <div
+                  onMouseEnter={
+                    twinkleCoins > 1000 ? () => setHovered(true) : () => {}
                   }
-                `}
-              >
-                {numCoinsEarned > 0 ? (
-                  `+ ${numCoinsEarned}`
-                ) : (
-                  <Icon size="lg" icon={['far', 'badge-dollar']} />
+                  onMouseLeave={() => setHovered(false)}
+                  className={css`
+                    height: 100%;
+                    position: relative;
+                    min-width: 5rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: bold;
+                    color: #fff;
+                    font-size: 1.5rem;
+                    background: ${Color.brownOrange(
+                      twinkleCoins > 1000 ? 0.3 : 1
+                    )};
+                    @media (max-width: ${mobileMaxWidth}) {
+                      min-width: ${isChat ? '3rem' : '5rem'};
+                      font-size: ${isChat ? '0.8rem' : '1.5rem'};
+                    }
+                  `}
+                >
+                  {numCoinsEarned > 0 ? (
+                    `+ ${numCoinsEarned}`
+                  ) : (
+                    <Icon size="lg" icon={['far', 'badge-dollar']} />
+                  )}
+                </div>
+                {hovered && (
+                  <FullTextReveal
+                    show
+                    direction="left"
+                    style={{
+                      marginTop: '0.5rem',
+                      color: '#000',
+                      width: '30rem',
+                      position: 'absolute'
+                    }}
+                    text={`You can no longer earn Twinkle Coins by watching videos once you have over 1,000 coins`}
+                  />
                 )}
               </div>
             )}

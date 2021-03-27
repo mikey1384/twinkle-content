@@ -334,11 +334,7 @@ function XPVideoPlayer({
         videoId,
         progress: 0
       });
-      if (
-        twinkleCoins + coinRewardAmount <= 1000 &&
-        rewardLevel > 2 &&
-        !rewardingCoin.current
-      ) {
+      if (twinkleCoins <= 1000 && rewardLevel > 2 && !rewardingCoin.current) {
         rewardingCoin.current = true;
         try {
           const coins = await updateUserCoins({
@@ -372,7 +368,7 @@ function XPVideoPlayer({
           rewardingXP.current = false;
         }
       }
-      if (twinkleCoins + coinRewardAmount <= 1000 && rewardLevel > 2) {
+      if (twinkleCoins <= 1000 && rewardLevel > 2) {
         onIncreaseNumCoinsEarned({
           videoId,
           amount: coinRewardAmountRef.current
