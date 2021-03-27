@@ -332,7 +332,7 @@ function XPVideoPlayer({
         videoId,
         progress: 0
       });
-      if (twinkleCoins + coinRewardAmount <= 1000) {
+      if (twinkleCoins + coinRewardAmount <= 1000 && rewardLevel > 2) {
         rewardingCoin.current = true;
         try {
           const coins = await updateUserCoins({
