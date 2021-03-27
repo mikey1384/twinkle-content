@@ -143,9 +143,9 @@ export default function XPBar({
               ))}
             </div>
             <div style={{ marginLeft: '0.7rem' }}>
-              {`Watch and earn ${addCommasToNumber(
-                xpRewardAmount
-              )} XP and ${coinRewardAmount} Twinkle Coins every minute!`}
+              {`Watch and earn ${addCommasToNumber(xpRewardAmount)} XP ${
+                rewardLevel > 2 ? `and ${coinRewardAmount} Twinkle Coins ` : ''
+              } every minute!`}
             </div>
           </div>
         );
