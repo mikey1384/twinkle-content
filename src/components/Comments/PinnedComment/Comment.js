@@ -610,7 +610,7 @@ function Comment({
                       </div>
                       <div>
                         <Button
-                          color="orange"
+                          color="brownOrange"
                           filled={isRecommendedByUser}
                           disabled={recommendationInterfaceShown}
                           onClick={() => setRecommendationInterfaceShown(true)}

@@ -381,7 +381,7 @@ export default function SubjectPanel({
                   </Button>
                 )}
                 <Button
-                  color="orange"
+                  color="brownOrange"
                   style={{ fontSize: '2rem', marginLeft: '1rem' }}
                   skeuomorphic
                   filled={isRecommendedByUser}

@@ -395,7 +395,7 @@ export default function LinkPage({
           </div>
           <Button
             style={{ right: '1rem', bottom: '0.5rem', position: 'absolute' }}
-            color="orange"
+            color="brownOrange"
             skeuomorphic
             filled={isRecommendedByUser}
             disabled={recommendationInterfaceShown}
