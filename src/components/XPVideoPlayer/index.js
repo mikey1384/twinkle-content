@@ -55,7 +55,7 @@ function XPVideoPlayer({
     actions: {
       onUpdateUserCoins,
       onIncreaseNumCoinsEarned,
-      onSetVideoCoinProgress,
+      onSetVideoProgress,
       onSetVideoStarted,
       onSetVideoXpEarned,
       onSetVideoXpJustEarned,
@@ -328,7 +328,7 @@ function XPVideoPlayer({
       userId
     ) {
       timeWatchedRef.current = 0;
-      onSetVideoCoinProgress({
+      onSetVideoProgress({
         videoId,
         progress: 0
       });
@@ -353,7 +353,7 @@ function XPVideoPlayer({
       return;
     }
     timeWatchedRef.current = timeWatchedRef.current + intervalLength / 1000;
-    onSetVideoCoinProgress({
+    onSetVideoProgress({
       videoId,
       progress: Math.floor(
         (Math.min(timeWatchedRef.current, requiredDurationForCoin) * 100) /

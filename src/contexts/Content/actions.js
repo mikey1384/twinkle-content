@@ -500,9 +500,9 @@ export default function ContentActions(dispatch) {
         isSecretAttachment
       });
     },
-    onSetVideoCoinProgress({ videoId, progress }) {
+    onSetVideoProgress({ videoId, progress }) {
       return dispatch({
-        type: 'SET_VIDEO_COIN_PROGRESS',
+        type: 'SET_VIDEO_PROGRESS',
         contentType: 'video',
         contentId: videoId,
         progress
@@ -560,14 +560,6 @@ export default function ContentActions(dispatch) {
         contentType: 'video',
         contentId: videoId,
         loaded
-      });
-    },
-    onSetVideoXpProgress({ videoId, progress }) {
-      return dispatch({
-        type: 'SET_VIDEO_XP_PROGRESS',
-        contentType: 'video',
-        contentId: videoId,
-        progress
       });
     },
     onSetCommentVisible({ visible, commentId }) {

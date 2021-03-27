@@ -45,7 +45,7 @@ export default function XPBar({
     rewardBoostLvl
   ]);
   const canEarnCoins = rewardLevel >= 3;
-  const { coinProgress = 0, numCoinsEarned = 0 } = useContentState({
+  const { videoProgress = 0, numCoinsEarned = 0 } = useContentState({
     contentType: 'video',
     contentId: videoId
   });
@@ -82,7 +82,7 @@ export default function XPBar({
               font-size: ${isChat ? '0.8rem' : '1.2rem'}!important;
             }
           `}
-          progress={coinProgress}
+          progress={videoProgress}
           color={xpLevelColor}
           noBorderRadius
         />
@@ -154,7 +154,7 @@ export default function XPBar({
     started,
     rewardLevel,
     isChat,
-    coinProgress,
+    videoProgress,
     xpLevelColor,
     onPlayVideo,
     xpRewardAmount,
@@ -206,10 +206,7 @@ export default function XPBar({
                 background: ${xpEarned ? Color.green() : xpLevelColor};
               `}
             >
-              {xpRewardAmount} XP
-              {xpEarned && (
-                <Icon icon="check" style={{ marginLeft: '0.5rem' }} />
-              )}
+              XP
             </div>
             {canEarnCoins && (
               <div

@@ -1490,12 +1490,12 @@ export default function ContentReducer(state, action) {
           started: action.started
         }
       };
-    case 'SET_VIDEO_COIN_PROGRESS':
+    case 'SET_VIDEO_PROGRESS':
       return {
         ...state,
         [contentKey]: {
           ...prevContentState,
-          coinProgress: action.progress
+          videoProgress: action.progress
         }
       };
     case 'SET_VIDEO_XP_EARNED':
@@ -1520,14 +1520,6 @@ export default function ContentReducer(state, action) {
         [contentKey]: {
           ...prevContentState,
           xpLoaded: action.loaded
-        }
-      };
-    case 'SET_VIDEO_XP_PROGRESS':
-      return {
-        ...state,
-        [contentKey]: {
-          ...prevContentState,
-          xpProgress: action.progress
         }
       };
     case 'SET_COMMENT_VISIBLE':
