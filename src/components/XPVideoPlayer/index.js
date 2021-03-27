@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import ErrorBoundary from 'components/ErrorBoundary';
 import XPBar from './XPBar';
-import { REWARD_VALUE, strongColors } from 'constants/defaultValues';
+import { videoRewardHash, strongColors } from 'constants/defaultValues';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useContentState, useMyState } from 'helpers/hooks';
@@ -44,7 +44,10 @@ function XPVideoPlayer({
       updateTotalViewDuration
     }
   } = useAppContext();
-  const { profileTheme, userId, twinkleCoins } = useMyState();
+  const { profileTheme, rewardBoostLvl, userId, twinkleCoins } = useMyState();
+  const coinRewardAmount = useMemo(() => videoRewardHash[rewardBoostLvl].coin, [
+    rewardBoostLvl
+  ]);
   const {
     state: { pageVisible }
   } = useViewContext();
@@ -57,7 +60,6 @@ function XPVideoPlayer({
       onSetVideoXpEarned,
       onSetVideoXpJustEarned,
       onSetVideoXpLoaded,
-      onSetXpVideoWatchTime,
       onSetVideoCurrentTime
     }
   } = useContentContext();
@@ -67,7 +69,6 @@ function XPVideoPlayer({
     xpLoaded,
     xpEarned,
     justEarned,
-    watchTime = 0,
     isEditing
   } = useContentState({ contentType: 'video', contentId: videoId });
   const [playing, setPlaying] = useState(false);
@@ -84,9 +85,7 @@ function XPVideoPlayer({
   const rewardingCoin = useRef(false);
   const themeColor = profileTheme || 'logoBlue';
   const rewardLevelRef = useRef(0);
-  const rewardAmountRef = useRef(rewardLevel * REWARD_VALUE);
   const xpEarnedRef = useRef(xpEarned);
-  const coinRewardAmount = 2;
 
   useEffect(() => {
     mounted.current = true;
@@ -105,10 +104,6 @@ function XPVideoPlayer({
   }, []);
 
   useEffect(() => {
-    timeWatchedRef.current = watchTime;
-  }, [watchTime]);
-
-  useEffect(() => {
     return function setCurrentTimeBeforeUnmount() {
       if (timeAt.current > 0) {
         onSetVideoCurrentTime({
@@ -123,7 +118,6 @@ function XPVideoPlayer({
 
   useEffect(() => {
     rewardLevelRef.current = rewardLevel;
-    rewardAmountRef.current = rewardLevel * REWARD_VALUE;
 
     if (!!rewardLevel && userId) {
       handleCheckXPEarned();
@@ -252,8 +246,7 @@ function XPVideoPlayer({
           onPlay={() => {
             onPlay?.();
             onVideoPlay({
-              userId: userIdRef.current,
-              watchTime
+              userId: userIdRef.current
             });
           }}
           onPause={handleVideoStop}
@@ -330,16 +323,11 @@ function XPVideoPlayer({
       return;
     }
     if (
-      rewardAmountRef.current &&
       timeWatchedRef.current >= requiredDurationForCoin &&
       !rewardingCoin.current &&
       userId
     ) {
       timeWatchedRef.current = 0;
-      onSetXpVideoWatchTime({
-        videoId,
-        watchTime: 0
-      });
       onSetVideoCoinProgress({
         videoId,
         progress: 0
@@ -365,10 +353,6 @@ function XPVideoPlayer({
       return;
     }
     timeWatchedRef.current = timeWatchedRef.current + intervalLength / 1000;
-    onSetXpVideoWatchTime({
-      videoId,
-      watchTime: timeWatchedRef.current
-    });
     onSetVideoCoinProgress({
       videoId,
       progress: Math.floor(

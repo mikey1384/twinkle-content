@@ -1554,14 +1554,6 @@ export default function ContentReducer(state, action) {
           xpRewardInterfaceShown: action.shown
         }
       };
-    case 'SET_XP_VIDEO_WATCH_TIME':
-      return {
-        ...state,
-        [contentKey]: {
-          ...prevContentState,
-          watchTime: action.watchTime
-        }
-      };
     case 'SHOW_TC_REPLY_INPUT':
       return {
         ...state,

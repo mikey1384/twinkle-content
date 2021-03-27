@@ -593,14 +593,6 @@ export default function ContentActions(dispatch) {
         shown
       });
     },
-    onSetXpVideoWatchTime({ videoId, watchTime }) {
-      return dispatch({
-        type: 'SET_XP_VIDEO_WATCH_TIME',
-        contentType: 'video',
-        contentId: videoId,
-        watchTime
-      });
-    },
     onShowTCReplyInput({ contentId, contentType }) {
       return dispatch({
         type: 'SHOW_TC_REPLY_INPUT',
