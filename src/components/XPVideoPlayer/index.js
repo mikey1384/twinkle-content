@@ -362,10 +362,6 @@ function XPVideoPlayer({
             type: 'increase'
           });
           onUpdateUserCoins({ coins, userId });
-          onIncreaseNumCoinsEarned({
-            videoId,
-            amount: coinRewardAmountRef.current
-          });
           rewardingCoin.current = false;
         } catch (error) {
           console.error(error.response || error);
@@ -375,25 +371,30 @@ function XPVideoPlayer({
       if (!rewardingXP.current) {
         rewardingXP.current = true;
         try {
-          const { alreadyDone, xp, rank } = await updateUserXP({
+          const { xp, rank } = await updateUserXP({
             action: 'watch',
             target: 'video',
             amount: xpRewardAmountRef.current,
             targetId: videoId,
             type: 'increase'
           });
-          if (alreadyDone) return;
           onChangeUserXP({ xp, rank, userId });
-          onIncreaseNumXpEarned({
-            videoId,
-            amount: xpRewardAmountRef.current
-          });
           rewardingXP.current = false;
         } catch (error) {
           console.error(error.response || error);
           rewardingXP.current = false;
         }
       }
+      if (twinkleCoins + coinRewardAmount <= 1000 && rewardLevel > 2) {
+        onIncreaseNumCoinsEarned({
+          videoId,
+          amount: coinRewardAmountRef.current
+        });
+      }
+      onIncreaseNumXpEarned({
+        videoId,
+        amount: xpRewardAmountRef.current
+      });
       return;
     }
     timeWatchedRef.current = timeWatchedRef.current + intervalLength / 1000;
