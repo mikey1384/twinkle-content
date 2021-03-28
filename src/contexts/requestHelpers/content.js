@@ -189,6 +189,18 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async finishWatchingVideo(videoId) {
+      try {
+        const { data } = await request.put(
+          `${URL}/video/finish`,
+          { videoId },
+          auth()
+        );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async likeContent({ id, contentType }) {
       try {
         const {

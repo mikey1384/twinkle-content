@@ -38,6 +38,7 @@ function XPVideoPlayer({
     requestHelpers: {
       addVideoView,
       checkCurrentlyWatchingAnotherVideo,
+      finishWatchingVideo,
       loadVideoCurrentTime,
       updateCurrentlyWatching,
       updateUserCoins,
@@ -226,7 +227,9 @@ function XPVideoPlayer({
           onPause={handleVideoStop}
           onEnded={() => {
             handleVideoStop();
-            updateTotalViewDuration({ videoId, currentTime: 0 });
+            if (userIdRef.current) {
+              finishWatchingVideo(videoId);
+            }
           }}
         />
       </div>
