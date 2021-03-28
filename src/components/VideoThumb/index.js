@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import UsernameText from './Texts/UsernameText';
+import UsernameText from 'components/Texts/UsernameText';
 import Link from 'components/Link';
 import FullTextReveal from 'components/Texts/FullTextReveal';
 import ErrorBoundary from 'components/ErrorBoundary';
