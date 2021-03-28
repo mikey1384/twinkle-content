@@ -71,12 +71,10 @@ function XPVideoPlayer({
       onIncreaseNumXpEarned,
       onSetVideoProgress,
       onSetVideoStarted,
-      onSetVideoCurrentTime,
       onSetTimeWatched
     }
   } = useContentContext();
   const {
-    currentTime = 0,
     started,
     timeWatched: prevTimeWatched = 0,
     isEditing
@@ -86,7 +84,6 @@ function XPVideoPlayer({
   });
   const [playing, setPlaying] = useState(false);
   const [startingPosition, setStartingPosition] = useState(0);
-  const timeAt = useRef(0);
   const requiredDurationForCoin = 60;
   const PlayerRef = useRef(null);
   const timerRef = useRef(null);
@@ -115,25 +112,13 @@ function XPVideoPlayer({
     };
 
     async function init() {
-      const data = await loadVideoCurrentTime({ videoId });
-      console.log(data);
-      setStartingPosition(currentTime);
+      const currentTime = await loadVideoCurrentTime({ videoId });
+      if (currentTime) {
+        setStartingPosition(currentTime);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    return function setCurrentTimeBeforeUnmount() {
-      if (timeAt.current > 0) {
-        onSetVideoCurrentTime({
-          contentType: 'video',
-          contentId: videoId,
-          currentTime: timeAt.current
-        });
-      }
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timeAt.current]);
 
   useEffect(() => {
     if (isEditing) {
@@ -234,7 +219,10 @@ function XPVideoPlayer({
             });
           }}
           onPause={handleVideoStop}
-          onEnded={handleVideoStop}
+          onEnded={() => {
+            handleVideoStop();
+            updateTotalViewDuration({ videoId, currentTime: 0 });
+          }}
         />
       </div>
       {(!!rewardLevel || (startingPosition > 0 && !started)) && (
@@ -290,12 +278,12 @@ function XPVideoPlayer({
   }
 
   async function handleIncreaseMeter({ userId }) {
-    timeAt.current = PlayerRef.current.getCurrentTime();
+    const timeAt = PlayerRef.current.getCurrentTime();
     if (!totalDurationRef.current) {
       onVideoReady();
     }
     checkAlreadyWatchingAnotherVideo();
-    updateTotalViewDuration({ videoId, currentTime: timeAt.current });
+    updateTotalViewDuration({ videoId, currentTime: timeAt });
     if (
       PlayerRef.current?.getInternalPlayer()?.isMuted() ||
       PlayerRef.current?.getInternalPlayer()?.getVolume() === 0

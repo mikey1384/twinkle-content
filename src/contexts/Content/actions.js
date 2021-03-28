@@ -517,20 +517,6 @@ export default function ContentActions(dispatch) {
         progress
       });
     },
-    onSetVideoCurrentTime({
-      contentType,
-      contentId,
-      currentTime,
-      secretAttachmentCurrentTime
-    }) {
-      return dispatch({
-        type: 'SET_VIDEO_CURRENT_TIME',
-        contentType,
-        contentId,
-        currentTime,
-        secretAttachmentCurrentTime
-      });
-    },
     onSetVideoQuestions({ questions, contentType, contentId }) {
       return dispatch({
         type: 'SET_VIDEO_QUESTIONS',

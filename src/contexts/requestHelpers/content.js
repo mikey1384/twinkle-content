@@ -503,11 +503,13 @@ export default function contentRequestHelpers({ auth, handleError }) {
     },
     async loadVideoCurrentTime({ videoId }) {
       try {
-        const { data } = await request.get(
+        const {
+          data: { currentTime }
+        } = await request.get(
           `${URL}/video/currentTime?videoId=${videoId}`,
           auth()
         );
-        return Promise.resolve(data);
+        return Promise.resolve(currentTime);
       } catch (error) {
         return handleError(error);
       }
