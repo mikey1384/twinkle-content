@@ -275,6 +275,7 @@ export default function InputForm({
           descriptionFontSize="1.7rem"
           title="View secret message without responding"
           description="Are you sure? The comments you post on this subject might not be rewarded"
+          disabled={secretViewMessageSubmitting}
           onConfirm={handleViewAnswer}
         />
       )}
