@@ -38,6 +38,7 @@ function XPVideoPlayer({
     requestHelpers: {
       addVideoView,
       checkCurrentlyWatchingAnotherVideo,
+      loadVideoCurrentTime,
       updateCurrentlyWatching,
       updateUserCoins,
       updateUserXP,
@@ -101,7 +102,7 @@ function XPVideoPlayer({
 
   useEffect(() => {
     mounted.current = true;
-    setStartingPosition(currentTime);
+    init();
     return function cleanUp() {
       handleVideoStop();
       onSetVideoStarted({
@@ -112,6 +113,12 @@ function XPVideoPlayer({
       clearInterval(timerRef.current);
       mounted.current = false;
     };
+
+    async function init() {
+      const data = await loadVideoCurrentTime({ videoId });
+      console.log(data);
+      setStartingPosition(currentTime);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -501,6 +501,17 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async loadVideoCurrentTime({ videoId }) {
+      try {
+        const { data } = await request.get(
+          `${URL}/video/currentTime?videoId=${videoId}`,
+          auth()
+        );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async recommendContent({
       contentId,
       contentType,
