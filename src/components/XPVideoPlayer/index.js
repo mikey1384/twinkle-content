@@ -98,8 +98,20 @@ function XPVideoPlayer({
   const rewardLevelRef = useRef(0);
 
   useEffect(() => {
-    mounted.current = true;
     init();
+    async function init() {
+      if (userId) {
+        const currentTime = await loadVideoCurrentTime({ videoId });
+        if (currentTime) {
+          setStartingPosition(currentTime);
+        }
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
+
+  useEffect(() => {
+    mounted.current = true;
     return function cleanUp() {
       handleVideoStop();
       onSetVideoStarted({
@@ -110,15 +122,8 @@ function XPVideoPlayer({
       clearInterval(timerRef.current);
       mounted.current = false;
     };
-
-    async function init() {
-      const currentTime = await loadVideoCurrentTime({ videoId });
-      if (currentTime) {
-        setStartingPosition(currentTime);
-      }
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [videoId]);
 
   useEffect(() => {
     if (isEditing) {

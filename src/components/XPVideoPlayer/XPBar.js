@@ -116,7 +116,11 @@ export default function XPBar({
             `}
             onClick={onPlayVideo}
           >
-            Continue Watching...
+            {`Continue watching to earn ${addCommasToNumber(
+              xpRewardAmount
+            )} XP ${
+              rewardLevel > 2 ? `and ${coinRewardAmount} Twinkle Coins ` : ''
+            } every minute!`}
           </div>
         );
       } else {
@@ -140,11 +144,6 @@ export default function XPBar({
               justifyContent: 'center'
             }}
           >
-            <div style={{ lineHeight: 1 }}>
-              {[...Array(rewardLevel)].map((elem, index) => (
-                <Icon key={index} style={{ verticalAlign: 0 }} icon="star" />
-              ))}
-            </div>
             <div style={{ marginLeft: '0.7rem' }}>
               {`Watch and earn ${addCommasToNumber(xpRewardAmount)} XP ${
                 rewardLevel > 2 ? `and ${coinRewardAmount} Twinkle Coins ` : ''
@@ -179,11 +178,15 @@ export default function XPBar({
         }}
       >
         {Bar}
-        {started && !!rewardLevel && (
+        {!!rewardLevel && (
           <div
             className={css`
               height: 2.7rem;
-              width: ${canEarnCoins ? '13rem' : '7rem'};
+              width: ${canEarnCoins
+                ? numXpEarned > 0
+                  ? '13rem'
+                  : `1${rewardLevel - 1}rem`
+                : '7rem'};
               margin-left: 1rem;
               display: flex;
               font-size: 1.3rem;
@@ -212,7 +215,15 @@ export default function XPBar({
                 background: ${xpLevelColor};
               `}
             >
-              {numXpEarned > 0 ? `+ ${numXpEarnedWithComma}` : 'XP'}
+              {numXpEarned > 0
+                ? `+ ${numXpEarnedWithComma}`
+                : [...Array(rewardLevel)].map((elem, index) => (
+                    <Icon
+                      key={index}
+                      style={{ verticalAlign: 0 }}
+                      icon="star"
+                    />
+                  ))}
             </div>
             {canEarnCoins && (
               <div>
