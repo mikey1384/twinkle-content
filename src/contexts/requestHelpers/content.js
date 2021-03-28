@@ -630,13 +630,14 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async updateTotalViewDuration({ videoId, currentTime }) {
+    async updateTotalViewDuration({ videoId, currentTime, totalTime }) {
       try {
         await request.put(
           `${URL}/video/duration`,
           {
             videoId,
-            currentTime
+            currentTime,
+            totalTime
           },
           auth()
         );
