@@ -288,7 +288,7 @@ function XPVideoPlayer({
       onVideoReady();
     }
     checkAlreadyWatchingAnotherVideo();
-    updateTotalViewDuration({ videoId });
+    updateTotalViewDuration({ videoId, currentTime: timeAt.current });
     if (
       PlayerRef.current?.getInternalPlayer()?.isMuted() ||
       PlayerRef.current?.getInternalPlayer()?.getVolume() === 0
