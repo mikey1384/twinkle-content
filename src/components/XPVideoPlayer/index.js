@@ -102,7 +102,7 @@ function XPVideoPlayer({
     init();
     async function init() {
       if (userId) {
-        const currentTime = await loadVideoCurrentTime({ videoId });
+        const currentTime = await loadVideoCurrentTime(videoId);
         if (currentTime) {
           setStartingPosition(currentTime);
         }

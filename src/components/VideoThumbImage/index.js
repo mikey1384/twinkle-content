@@ -1,7 +1,9 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useAppContext } from 'contexts';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import WatchProgressBar from './WatchProgressBar';
+import { useMyState } from 'helpers/hooks';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 
@@ -10,7 +12,8 @@ VideoThumbImage.propTypes = {
   rewardLevel: PropTypes.number,
   onClick: PropTypes.func,
   src: PropTypes.string.isRequired,
-  style: PropTypes.object
+  style: PropTypes.object,
+  videoId: PropTypes.number
 };
 
 export default function VideoThumbImage({
@@ -18,15 +21,34 @@ export default function VideoThumbImage({
   height = '55%',
   onClick,
   src,
-  style
+  style,
+  videoId
 }) {
+  const {
+    requestHelpers: { loadVideoWatchPercentage }
+  } = useAppContext();
+  const { userId } = useMyState();
+  const [progressBarPercentage, setProgressBarPercentage] = useState(0);
   const mounted = useRef(true);
+
   useEffect(() => {
     mounted.current = true;
     return function cleanUp() {
       mounted.current = false;
     };
   }, []);
+
+  useEffect(() => {
+    init();
+
+    async function init() {
+      if (userId) {
+        const percentage = await loadVideoWatchPercentage(videoId);
+        setProgressBarPercentage(percentage);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId, videoId]);
 
   const tagColor = useMemo(
     () =>
@@ -98,7 +120,9 @@ export default function VideoThumbImage({
           </div>
         )}
       </div>
-      <WatchProgressBar />
+      {progressBarPercentage > 0 && (
+        <WatchProgressBar percentage={progressBarPercentage} />
+      )}
     </div>
   );
 }

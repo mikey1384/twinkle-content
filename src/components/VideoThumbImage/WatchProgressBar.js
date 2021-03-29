@@ -1,15 +1,27 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 
-export default function WatchProgressBar() {
+WatchProgressBar.propTypes = {
+  percentage: PropTypes.number
+};
+
+export default function WatchProgressBar({ percentage = 0 }) {
   return (
-    <div style={{ position: 'absolute', width: '100%', bottom: 0 }}>
+    <div
+      style={{
+        position: 'absolute',
+        width: '100%',
+        bottom: 0,
+        background: Color.darkerBorderGray()
+      }}
+    >
       <div
         className={css`
           background: ${Color.red()};
           height: 5px;
-          width: 100%;
+          width: ${percentage}%;
           @media (max-width: ${mobileMaxWidth}) {
             height: 3px;
           }

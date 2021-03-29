@@ -60,6 +60,7 @@ export default function TwinkleVideo({ imageOnly, onPlay, style, videoId }) {
           style={{ paddingBottom: 0, width: '100%', height: '100%' }}
           rewardLevel={rewardLevel}
           src={`https://img.youtube.com/vi/${content}/mqdefault.jpg`}
+          videoId={videoId}
           onClick={() => history.push(`/videos/${videoId}`)}
         />
       ) : (

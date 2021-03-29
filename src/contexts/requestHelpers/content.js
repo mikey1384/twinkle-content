@@ -513,7 +513,7 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async loadVideoCurrentTime({ videoId }) {
+    async loadVideoCurrentTime(videoId) {
       try {
         const {
           data: { currentTime }
@@ -522,6 +522,19 @@ export default function contentRequestHelpers({ auth, handleError }) {
           auth()
         );
         return Promise.resolve(currentTime);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
+    async loadVideoWatchPercentage(videoId) {
+      try {
+        const {
+          data: { percentage }
+        } = await request.get(
+          `${URL}/video/percentage?videoId=${videoId}`,
+          auth()
+        );
+        return Promise.resolve(percentage);
       } catch (error) {
         return handleError(error);
       }
