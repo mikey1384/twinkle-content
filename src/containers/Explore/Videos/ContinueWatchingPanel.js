@@ -17,7 +17,7 @@ export default function ContinueWatchingPanel() {
         loadMoreContinueWatchingButton
       }
     },
-    actions: { onLoadContinueWatching }
+    actions: { onLoadContinueWatching, onLoadMoreContinueWatching }
   } = useExploreContext();
   useEffect(() => {
     init();
@@ -38,7 +38,7 @@ export default function ContinueWatchingPanel() {
         <SectionPanel
           loaded
           title="Continue Watching"
-          onLoadMore={() => console.log('plz load more')}
+          onLoadMore={handleLoadMoreContinueWatching}
           loadMoreButtonShown={loadMoreContinueWatchingButton}
         >
           <div
@@ -68,4 +68,11 @@ export default function ContinueWatchingPanel() {
       ) : null}
     </ErrorBoundary>
   );
+
+  async function handleLoadMoreContinueWatching() {
+    const { videos, loadMoreButton } = await loadContinueWatching(
+      continueWatchingVideos[continueWatchingVideos.length - 1]?.viewTimeStamp
+    );
+    onLoadMoreContinueWatching({ videos, loadMoreButton });
+  }
 }

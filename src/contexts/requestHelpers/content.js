@@ -245,11 +245,16 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async loadContinueWatching() {
+    async loadContinueWatching(lastTimeStamp) {
       try {
         const {
           data: { videos, loadMoreButton }
-        } = await request.get(`${URL}/video/continue`, auth());
+        } = await request.get(
+          `${URL}/video/continue${
+            lastTimeStamp ? `?lastTimeStamp=${lastTimeStamp}` : ''
+          }`,
+          auth()
+        );
         return Promise.resolve({ videos, loadMoreButton });
       } catch (error) {
         return handleError(error);

@@ -100,6 +100,13 @@ export default function ExploreActions(dispatch) {
         loadMoreButton
       });
     },
+    onLoadMoreContinueWatching({ videos, loadMoreButton }) {
+      return dispatch({
+        type: 'LOAD_MORE_CONTINUE_WATCHING',
+        videos,
+        loadMoreButton
+      });
+    },
     onLoadLinks({ links, loadMoreButton }) {
       return dispatch({
         type: 'LOAD_LINKS',
