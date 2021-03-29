@@ -11,7 +11,8 @@ export default function ContinueWatchingPanel() {
     init();
 
     async function init() {
-      await loadContinueWatching();
+      const videos = await loadContinueWatching();
+      console.log(videos);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
