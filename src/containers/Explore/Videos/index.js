@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ButtonGroup from 'components/Buttons/ButtonGroup';
 import FeaturedPlaylistsPanel from './FeaturedPlaylistsPanel';
 import PlaylistsPanel from './PlaylistsPanel';
+import ContineWatchingPanel from './ContinueWatchingPanel';
 import AddPlaylistModal from 'components/Modals/AddPlaylistModal';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { scrollElementToCenter } from 'helpers';
@@ -74,6 +75,7 @@ export default function Videos({ history }) {
 
   return (
     <div>
+      <ContineWatchingPanel />
       <FeaturedPlaylistsPanel history={history} />
       <PlaylistsPanel
         key={'allplaylists'}
