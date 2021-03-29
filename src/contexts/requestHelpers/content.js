@@ -245,6 +245,16 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async loadContinueWatching() {
+      try {
+        const {
+          data: { videos }
+        } = await request.get(`${URL}/video/continue`, auth());
+        return Promise.resolve(videos);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async loadFeaturedPlaylists() {
       try {
         const { data } = await request.get(

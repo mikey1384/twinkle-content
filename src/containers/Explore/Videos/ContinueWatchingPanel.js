@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useAppContext } from 'contexts';
 import ErrorBoundary from 'components/ErrorBoundary';
 import SectionPanel from 'components/SectionPanel';
 
 export default function ContinueWatchingPanel() {
+  const {
+    requestHelpers: { loadContinueWatching }
+  } = useAppContext();
+  useEffect(() => {
+    init();
+
+    async function init() {
+      await loadContinueWatching();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <ErrorBoundary>
       <SectionPanel

@@ -29,7 +29,7 @@ export default function FeaturedPlaylistsPanel() {
       onOpenSelectFeaturedPlaylists
     }
   } = useExploreContext();
-  const prevLoaded = useRef(false);
+  const loadedRef = useRef(false);
   useEffect(() => {
     if (!featuredPlaylistsLoaded) {
       init();
@@ -37,7 +37,7 @@ export default function FeaturedPlaylistsPanel() {
     async function init() {
       const playlists = await loadFeaturedPlaylists();
       onLoadFeaturedPlaylists(playlists);
-      prevLoaded.current = true;
+      loadedRef.current = true;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [featuredPlaylistsLoaded]);
@@ -73,7 +73,7 @@ export default function FeaturedPlaylistsPanel() {
         title="Featured Playlists"
         userId={userId}
         playlists={featuredPlaylists}
-        loaded={featuredPlaylistsLoaded || prevLoaded.current}
+        loaded={featuredPlaylistsLoaded || loadedRef.current}
       />
       {selectFeaturedPlaylistsModalShown && (
         <SelectFeaturedPlaylists
