@@ -493,7 +493,8 @@ export default function ExploreReducer(state, action) {
         videos: {
           ...state.videos,
           continueWatchingVideos: action.videos,
-          continueWatchingLoaded: true
+          continueWatchingLoaded: true,
+          loadMoreContinueWatchingButton: action.loadMoreButton
         }
       };
     case 'LOAD_FEATURED_PLAYLISTS':

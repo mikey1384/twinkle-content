@@ -93,10 +93,11 @@ export default function ExploreActions(dispatch) {
         params
       });
     },
-    onLoadContinueWatching(videos) {
+    onLoadContinueWatching({ videos, loadMoreButton }) {
       return dispatch({
         type: 'LOAD_CONTINUE_WATCHING',
-        videos
+        videos,
+        loadMoreButton
       });
     },
     onLoadLinks({ links, loadMoreButton }) {

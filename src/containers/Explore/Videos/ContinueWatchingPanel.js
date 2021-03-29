@@ -11,7 +11,11 @@ export default function ContinueWatchingPanel() {
   } = useAppContext();
   const {
     state: {
-      videos: { continueWatchingVideos, continueWatchingLoaded }
+      videos: {
+        continueWatchingVideos,
+        continueWatchingLoaded,
+        loadMoreContinueWatchingButton
+      }
     },
     actions: { onLoadContinueWatching }
   } = useExploreContext();
@@ -20,8 +24,8 @@ export default function ContinueWatchingPanel() {
 
     async function init() {
       if (!continueWatchingLoaded) {
-        const videos = await loadContinueWatching();
-        onLoadContinueWatching(videos);
+        const { videos, loadMoreButton } = await loadContinueWatching();
+        onLoadContinueWatching({ videos, loadMoreButton });
         loadedRef.current = true;
       }
     }
@@ -36,7 +40,7 @@ export default function ContinueWatchingPanel() {
           isEmpty={false}
           loaded={true}
           onLoadMore={() => console.log('plz load more')}
-          loadMoreButtonShown={true}
+          loadMoreButtonShown={loadMoreContinueWatchingButton}
         >
           <div
             style={{

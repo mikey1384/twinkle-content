@@ -40,6 +40,7 @@ export const initialExploreState = {
     allVideoThumbs: [],
     continueWatchingVideos: [],
     continueWatchingLoaded: false,
+    loadMoreContinueWatchingButton: false,
     featuredPlaylists: [],
     featuredPlaylistsLoaded: false,
     searchedPlaylists: [],
