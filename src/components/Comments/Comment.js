@@ -191,7 +191,7 @@ function Comment({
       setVisible(visible);
       visibleRef.current = visible;
     },
-    delay: 1000
+    delay: 1500
   });
 
   const heightNotSet = useMemo(
