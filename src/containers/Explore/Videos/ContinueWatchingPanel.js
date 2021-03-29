@@ -37,14 +37,29 @@ export default function ContinueWatchingPanel() {
         onLoadMore={() => console.log('plz load more')}
         loadMoreButtonShown={true}
       >
-        {continueWatchingVideos.map((video, index) => (
-          <VideoThumb
-            to={`videos/${video.id}`}
-            key={index}
-            video={video}
-            user={video.uploader}
-          />
-        ))}
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'flex-start',
+            width: '100%',
+            marginBottom: '1rem'
+          }}
+        >
+          {continueWatchingVideos.map((video, index) => (
+            <VideoThumb
+              to={`videos/${video.id}`}
+              style={{
+                width: `CALC(25% - 0.75rem)`,
+                marginLeft: index % 4 > 0 ? '1rem' : 0,
+                marginTop: index > 3 ? '1.5rem' : 0
+              }}
+              key={index}
+              video={video}
+              user={video.uploader}
+            />
+          ))}
+        </div>
       </SectionPanel>
     </ErrorBoundary>
   );
