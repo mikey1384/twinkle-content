@@ -1,9 +1,10 @@
 import React from 'react';
+import ErrorBoundary from 'components/ErrorBoundary';
 
 export default function ContineWatchingPanel() {
   return (
-    <div>
+    <ErrorBoundary>
       <div>This is contine watching panel</div>
-    </div>
+    </ErrorBoundary>
   );
 }
