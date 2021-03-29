@@ -91,6 +91,7 @@ export default function ExploreReducer(state, action) {
         ...state,
         videos: {
           ...state.videos,
+          continueWatchingLoaded: false,
           allPlaylistsLoaded: false,
           featuredPlaylistsLoaded: false
         }
