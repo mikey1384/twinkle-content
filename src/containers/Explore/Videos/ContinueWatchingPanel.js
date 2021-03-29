@@ -36,9 +36,8 @@ export default function ContinueWatchingPanel() {
     <ErrorBoundary>
       {continueWatchingVideos.length > 0 ? (
         <SectionPanel
+          loaded
           title="Continue Watching"
-          isEmpty={false}
-          loaded={true}
           onLoadMore={() => console.log('plz load more')}
           loadMoreButtonShown={loadMoreContinueWatchingButton}
         >
