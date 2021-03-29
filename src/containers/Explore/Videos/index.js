@@ -78,7 +78,7 @@ export default function Videos({ history }) {
       <FeaturedPlaylistsPanel history={history} />
       {userId && <ContineWatchingPanel />}
       <PlaylistsPanel
-        key={'allplaylists'}
+        key="allplaylists"
         style={{ marginTop: '2.5rem' }}
         innerRef={AllPlaylistsPanelRef}
         buttonGroup={() => (
