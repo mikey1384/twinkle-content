@@ -247,9 +247,10 @@ export default function contentRequestHelpers({ auth, handleError }) {
     },
     async loadContinueWatching() {
       try {
-        const {
-          data: { videos }
-        } = await request.get(`${URL}/video/continue`, auth());
+        const { data: videos } = await request.get(
+          `${URL}/video/continue`,
+          auth()
+        );
         return Promise.resolve(videos);
       } catch (error) {
         return handleError(error);

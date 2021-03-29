@@ -486,6 +486,15 @@ export default function ExploreReducer(state, action) {
           recommendedLoadMoreButton: action.loadMoreButton
         }
       };
+    case 'LOAD_CONTINUE_WATCHING':
+      return {
+        ...state,
+        videos: {
+          ...state.videos,
+          continueWatchingVideos: action.videos,
+          continueWatchingLoaded: true
+        }
+      };
     case 'LOAD_FEATURED_PLAYLISTS':
       return {
         ...state,

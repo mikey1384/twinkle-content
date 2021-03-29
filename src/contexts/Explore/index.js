@@ -38,6 +38,8 @@ export const initialExploreState = {
     allPlaylists: [],
     allPlaylistsLoaded: false,
     allVideoThumbs: [],
+    continueWatchingVideos: [],
+    continueWatchingLoaded: false,
     featuredPlaylists: [],
     featuredPlaylistsLoaded: false,
     searchedPlaylists: [],
