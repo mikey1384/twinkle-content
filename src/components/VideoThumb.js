@@ -6,7 +6,6 @@ import FullTextReveal from 'components/Texts/FullTextReveal';
 import ErrorBoundary from 'components/ErrorBoundary';
 import VideoThumbImage from 'components/VideoThumbImage';
 import Icon from 'components/Icon';
-import WatchProgressBar from './WatchProgressBar';
 import { Color } from 'constants/css';
 import { css } from '@emotion/css';
 import { textIsOverflown } from 'helpers';
@@ -62,7 +61,7 @@ export default function VideoThumb({
           }
         `}`}
       >
-        <div style={{ width: '100%', position: 'relative' }}>
+        <div style={{ width: '100%' }}>
           <Link to={`/${to}`} onClickAsync={onLinkClick}>
             <VideoThumbImage
               height="65%"
@@ -71,7 +70,6 @@ export default function VideoThumb({
               src={`https://img.youtube.com/vi/${video.content}/mqdefault.jpg`}
             />
           </Link>
-          <WatchProgressBar />
         </div>
         <div
           style={{
