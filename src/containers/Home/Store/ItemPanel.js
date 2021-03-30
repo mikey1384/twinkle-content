@@ -5,14 +5,14 @@ import Button from 'components/Button';
 import ProgressBar from 'components/ProgressBar';
 import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
-import { addCommasToNumber, stringIsEmpty } from 'helpers/stringHelpers';
+import { addCommasToNumber } from 'helpers/stringHelpers';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 
 ItemPanel.propTypes = {
   children: PropTypes.node,
   currentLvl: PropTypes.number,
   itemName: PropTypes.string,
-  itemDescription: PropTypes.string,
+  itemDescription: PropTypes.node,
   isLeveled: PropTypes.bool,
   maxLvl: PropTypes.number,
   karmaPoints: PropTypes.number,
@@ -76,10 +76,10 @@ export default function ItemPanel({
           <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
             Requires {addCommasToNumber(requiredKarmaPoints)} KP
           </p>
-          {!stringIsEmpty(itemDescription) && (
-            <p style={{ fontSize: '1.3rem', marginTop: '0.5rem' }}>
+          {itemDescription && (
+            <div style={{ fontSize: '1.5rem', marginTop: '0.5rem' }}>
               {itemDescription}
-            </p>
+            </div>
           )}
         </>
       )}

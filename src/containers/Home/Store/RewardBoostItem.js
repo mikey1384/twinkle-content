@@ -4,24 +4,29 @@ import ItemPanel from './ItemPanel';
 import Icon from 'components/Icon';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
-import { karmaPointTable, maxSizes } from 'constants/defaultValues';
+import { karmaPointTable, videoRewardHash } from 'constants/defaultValues';
 
 const item = {
   maxLvl: 10,
   name: [
-    'Expand maximum upload file size',
-    'Expand maximum upload file size (level 2)',
-    'Expand maximum upload file size (level 3)',
-    'Expand maximum upload file size (level 4)',
-    'Expand maximum upload file size (level 5)',
-    'Expand maximum upload file size (level 6)',
-    'Expand maximum upload file size (level 7)'
+    'Boost rewards from watching XP Videos',
+    'Boost rewards from watching XP Videos (level 2)',
+    'Boost rewards from watching XP Videos (level 3)',
+    'Boost rewards from watching XP Videos (level 4)',
+    'Boost rewards from watching XP Videos (level 5)',
+    'Boost rewards from watching XP Videos (level 6)',
+    'Boost rewards from watching XP Videos (level 7)',
+    'Boost rewards from watching XP Videos (level 8)',
+    'Boost rewards from watching XP Videos Videoseos (level 9)',
+    'Boost rewards from watching XP Videos (level 10)'
   ],
-  description: maxSizes.map((currentSize, index) => {
-    if (index === 0) {
-      return `Unlock this item to expand your maximum upload file size to`;
+  description: Object.keys(videoRewardHash).map((key) => {
+    if (key === 0) {
+      return (
+        <div key={key}>Unlock this item to earn the following rewards</div>
+      );
     }
-    return `Upgrade this item to expand your maximum upload file size to`;
+    return <div key={key}>Upgrade this item to earn the following rewards</div>;
   })
 };
 

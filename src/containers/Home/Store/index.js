@@ -9,6 +9,7 @@ import { css } from '@emotion/css';
 import { useAppContext, useContentContext, useViewContext } from 'contexts';
 import { priceTable, karmaPointTable } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
+import RewardBoostItem from './RewardBoostItem';
 
 export default function Store() {
   const {
@@ -96,6 +97,7 @@ export default function Store() {
       >
         <ChangeUsername style={{ marginTop: '1rem' }} />
       </ItemPanel>
+      <RewardBoostItem style={{ marginTop: '3rem' }} />
       <FileSizeItem style={{ marginTop: '3rem' }} />
       <ProfilePictureItem style={{ marginTop: '3rem' }} />
       <ItemPanel
