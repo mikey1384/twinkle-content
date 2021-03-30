@@ -51,8 +51,9 @@ export default function ContinueWatchingPanel() {
       setLoaded(true);
       loadingRef.current = false;
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [continueWatchingLoaded, userId, prevUserId]);
+  }, [continueWatchingLoaded, userId, prevUserId, profileLoaded]);
 
   return (
     <ErrorBoundary>
