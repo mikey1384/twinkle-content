@@ -75,7 +75,7 @@ export default function Videos({ history }) {
 
   return (
     <div>
-      {userId && <ContinueWatchingPanel />}
+      <ContinueWatchingPanel />
       <FeaturedPlaylistsPanel history={history} />
       <PlaylistsPanel
         key="allplaylists"
