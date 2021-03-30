@@ -49,7 +49,7 @@ export default function ProfilePictureItem({ style }) {
           : 'Unlock this item to post pictures on your profile page'
       }
       style={style}
-      upgradeIcon={<Icon size="3x" icon="upload" />}
+      upgradeIcon={<Icon size="3x" icon="image" />}
     >
       <div
         style={{

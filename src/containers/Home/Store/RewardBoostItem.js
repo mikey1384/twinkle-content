@@ -30,9 +30,7 @@ const item = {
       <div style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem' }} key={key}>
         <p>
           {keyNumber === 0 ? 'Unlock' : 'Upgrade'} this item to earn the
-          following rewards{' '}
-          <b style={{ color: Color.orange() }}>every minute</b> while watching
-          XP Videos
+          following rewards <b>per minute</b> while watching XP Videos
         </p>
         <div
           style={{
@@ -160,7 +158,7 @@ export default function RewardBoostItem({ style }) {
     actions: { onUpdateProfileInfo }
   } = useContentContext();
   const {
-    requestHelpers: { upgradeFileUploadSize }
+    requestHelpers: { upgradeRewardBoost }
   } = useAppContext();
   return (
     <ItemPanel
@@ -186,7 +184,7 @@ export default function RewardBoostItem({ style }) {
         <div
           style={{ display: 'flex', alignItems: 'center', fontSize: '2rem' }}
         >
-          <Icon size="3x" icon="upload" />
+          <Icon size="3x" icon="bolt" />
           <div
             style={{
               marginLeft: '2.5rem',
@@ -206,7 +204,7 @@ export default function RewardBoostItem({ style }) {
   );
 
   async function handleUpgrade() {
-    const success = await upgradeFileUploadSize();
+    const success = await upgradeRewardBoost();
     if (success) {
       onUpdateProfileInfo({ userId, rewardBoostLvl: rewardBoostLvl + 1 });
     }

@@ -610,6 +610,16 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
+    async upgradeRewardBoost() {
+      try {
+        const {
+          data: { success }
+        } = await request.put(`${URL}/user/upgrade/rewardBoost`, null, auth());
+        return Promise.resolve(success);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async verifyEmail({ token, forPasswordReset }) {
       try {
         const {
