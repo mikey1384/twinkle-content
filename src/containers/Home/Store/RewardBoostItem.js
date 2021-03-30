@@ -30,7 +30,9 @@ const item = {
       <div style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem' }} key={key}>
         <p>
           {keyNumber === 0 ? 'Unlock' : 'Upgrade'} this item to earn the
-          following rewards <b>every minute</b> while watching XP Videos
+          following rewards{' '}
+          <b style={{ color: Color.orange() }}>every minute</b> while watching
+          XP Videos
         </p>
         <div
           style={{
