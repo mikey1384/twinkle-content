@@ -62,6 +62,18 @@ export const karmaPointTable = {
     4: 4000,
     5: 5000,
     6: 6000
+  },
+  rewardBoost: {
+    0: 100,
+    1: 250,
+    2: 500,
+    3: 1000,
+    4: 2500,
+    5: 5000,
+    6: 10000,
+    7: 25000,
+    8: 50000,
+    9: 100000
   }
 };
 export const karmaMultiplier = {

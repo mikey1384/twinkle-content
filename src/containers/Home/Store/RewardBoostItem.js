@@ -7,7 +7,7 @@ import { useMyState } from 'helpers/hooks';
 import { karmaPointTable, maxSizes } from 'constants/defaultValues';
 
 const item = {
-  maxLvl: 7,
+  maxLvl: 10,
   name: [
     'Expand maximum upload file size',
     'Expand maximum upload file size (level 2)',
@@ -30,7 +30,7 @@ RewardBoostItem.propTypes = {
 };
 
 export default function RewardBoostItem({ style }) {
-  const { fileUploadLvl = 0, karmaPoints, userId } = useMyState();
+  const { rewardBoostLvl, karmaPoints, userId } = useMyState();
   const {
     actions: { onUpdateProfileInfo }
   } = useContentContext();
@@ -40,14 +40,14 @@ export default function RewardBoostItem({ style }) {
   return (
     <ItemPanel
       isLeveled
-      currentLvl={fileUploadLvl}
+      currentLvl={rewardBoostLvl}
       maxLvl={item.maxLvl}
       karmaPoints={karmaPoints}
-      requiredKarmaPoints={karmaPointTable.file[fileUploadLvl]}
-      locked={!fileUploadLvl}
+      requiredKarmaPoints={karmaPointTable.rewardBoost[rewardBoostLvl]}
+      locked={!rewardBoostLvl}
       onUnlock={handleUpgrade}
-      itemName={item.name[fileUploadLvl]}
-      itemDescription={item.description[fileUploadLvl]}
+      itemName={item.name[rewardBoostLvl]}
+      itemDescription={item.description[rewardBoostLvl]}
       style={style}
       upgradeIcon={<Icon size="3x" icon="upload" />}
     >
@@ -84,7 +84,7 @@ export default function RewardBoostItem({ style }) {
   async function handleUpgrade() {
     const success = await upgradeFileUploadSize();
     if (success) {
-      onUpdateProfileInfo({ userId, fileUploadLvl: fileUploadLvl + 1 });
+      onUpdateProfileInfo({ userId, rewardBoostLvl: rewardBoostLvl + 1 });
     }
   }
 }
