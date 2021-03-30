@@ -77,7 +77,7 @@ export default function ItemPanel({
             Requires {addCommasToNumber(requiredKarmaPoints)} KP
           </p>
           {itemDescription && (
-            <div style={{ fontSize: '1.5rem', marginTop: '0.5rem' }}>
+            <div style={{ fontSize: '1.5rem', marginTop: '1rem' }}>
               {itemDescription}
             </div>
           )}
@@ -89,7 +89,7 @@ export default function ItemPanel({
             {onUnlock ? (
               <div
                 style={{
-                  marginTop: '2rem',
+                  marginTop: '2.5rem',
                   display: 'flex',
                   flexDirection: 'column',
                   width: '100%',
