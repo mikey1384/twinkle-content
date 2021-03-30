@@ -27,7 +27,7 @@ const item = {
     const colorKey = ['logoBlue', 'pink', 'orange', 'cranberry', 'gold'];
     const keyNumber = Number(key);
     return (
-      <div key={key}>
+      <div style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem' }} key={key}>
         <p>
           {keyNumber === 0 ? 'Unlock' : 'Upgrade'} this item to earn the
           following rewards <b>every minute</b> while watching XP Videos
@@ -195,9 +195,8 @@ export default function RewardBoostItem({ style }) {
             }}
           >
             <p style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>
-              Maximum upload file size - Level 7
+              XP Video Reward Boost - Level 10
             </p>
-            <p style={{ fontSize: '1.7rem' }}>You can now upload files up to</p>
           </div>
         </div>
       </div>
