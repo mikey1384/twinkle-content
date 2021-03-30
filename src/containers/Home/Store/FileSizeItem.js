@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ItemPanel from './ItemPanel';
 import Icon from 'components/Icon';
+import MaxLevelItemInfo from './MaxLevelItemInfo';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { translateMBToGB } from 'helpers/stringHelpers';
@@ -56,36 +57,13 @@ export default function FileSizeItem({ style }) {
       style={style}
       upgradeIcon={<Icon size="3x" icon="upload" />}
     >
-      <div
-        style={{
-          padding: '2rem',
-          display: 'flex',
-          justifyContent: 'center'
-        }}
-      >
-        <div
-          style={{ display: 'flex', alignItems: 'center', fontSize: '2rem' }}
-        >
-          <Icon size="3x" icon="upload" />
-          <div
-            style={{
-              marginLeft: '2.5rem',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-          >
-            <p style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>
-              Maximum upload file size - Level 7
-            </p>
-            <p style={{ fontSize: '1.7rem' }}>
-              You can now upload files up to{' '}
-              {translateMBToGB(maxSizes[maxSizes.length - 1])} in size
-            </p>
-          </div>
-        </div>
-      </div>
+      <MaxLevelItemInfo
+        icon="upload"
+        title="Maximum upload file size - Level 7"
+        description={`You can now upload files up to ${translateMBToGB(
+          maxSizes[maxSizes.length - 1]
+        )} in size`}
+      />
     </ItemPanel>
   );
 

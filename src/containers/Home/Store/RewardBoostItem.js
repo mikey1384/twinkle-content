@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ItemPanel from './ItemPanel';
 import Icon from 'components/Icon';
+import MaxLevelItemInfo from './MaxLevelItemInfo';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { useAppContext, useContentContext } from 'contexts';
@@ -174,32 +175,11 @@ export default function RewardBoostItem({ style }) {
       style={style}
       upgradeIcon={<Icon size="3x" icon="bolt" />}
     >
-      <div
-        style={{
-          padding: '2rem',
-          display: 'flex',
-          justifyContent: 'center'
-        }}
-      >
-        <div
-          style={{ display: 'flex', alignItems: 'center', fontSize: '2rem' }}
-        >
-          <Icon size="3x" icon="bolt" />
-          <div
-            style={{
-              marginLeft: '2.5rem',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-          >
-            <p style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>
-              XP Video Reward Boost - Level 10
-            </p>
-          </div>
-        </div>
-      </div>
+      <MaxLevelItemInfo
+        icon="bolt"
+        title="XP Video Reward Boost - Level 10"
+        description={`You can now earn (reward level × ${videoRewardHash[rewardBoostLvl].xp}) XP and ${videoRewardHash[rewardBoostLvl].coin} Twinkle Coins per minute while watching XP Videos`}
+      />
     </ItemPanel>
   );
 
