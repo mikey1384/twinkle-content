@@ -100,16 +100,16 @@ export default function Store() {
       <ProfilePictureItem style={{ marginTop: '3rem' }} />
       <ItemPanel
         karmaPoints={karmaPoints}
-        requiredKarmaPoints={5000}
+        requiredKarmaPoints={10000}
         locked
-        itemName="Coming soon..."
+        itemName="More to come..."
         style={{ marginTop: '3rem' }}
       />
       <ItemPanel
         karmaPoints={karmaPoints}
-        requiredKarmaPoints={10000}
+        requiredKarmaPoints={30000}
         locked
-        itemName="Coming soon..."
+        itemName="More to come..."
         style={{ marginTop: '3rem' }}
       />
     </div>
