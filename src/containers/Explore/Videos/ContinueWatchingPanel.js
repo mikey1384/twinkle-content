@@ -7,7 +7,7 @@ import Icon from 'components/Icon';
 import { useMyState } from 'helpers/hooks';
 
 export default function ContinueWatchingPanel() {
-  const { userId } = useMyState();
+  const { userId, loaded: profileLoaded } = useMyState();
   const {
     requestHelpers: { loadContinueWatching }
   } = useAppContext();
@@ -29,6 +29,7 @@ export default function ContinueWatchingPanel() {
   useEffect(() => {
     if (
       !loadingRef.current &&
+      profileLoaded &&
       (!(continueWatchingLoaded || loadedRef.current) || userId !== prevUserId)
     ) {
       init();
