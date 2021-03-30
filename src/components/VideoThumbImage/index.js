@@ -44,7 +44,9 @@ export default function VideoThumbImage({
     async function init() {
       if (userId) {
         const percentage = await loadVideoWatchPercentage(videoId);
-        setProgressBarPercentage(percentage);
+        if (mounted.current) {
+          setProgressBarPercentage(percentage);
+        }
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
