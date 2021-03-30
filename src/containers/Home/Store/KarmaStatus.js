@@ -44,11 +44,10 @@ export default function KarmaStatus() {
         numApprovedRecommendations,
         numPostsRewarded
       } = await loadKarmaPoints();
-
+      if (mounted.current) {
+        onUpdateProfileInfo({ userId, karmaPoints: kp });
+      }
       if (authLevel < 2) {
-        if (mounted.current) {
-          onUpdateProfileInfo({ userId, karmaPoints: kp });
-        }
         if (mounted.current) {
           setNumTwinklesRewarded(numTwinklesRewarded);
         }
@@ -56,12 +55,6 @@ export default function KarmaStatus() {
           setNumApprovedRecommendations(numApprovedRecommendations);
         }
       } else {
-        if (mounted.current) {
-          onUpdateProfileInfo({
-            userId,
-            karmaPoints: karmaMultiplier.post * numPostsRewarded
-          });
-        }
         if (mounted.current) {
           setNumPostsRewarded(numPostsRewarded);
         }
