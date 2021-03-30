@@ -20,10 +20,11 @@ import { useAppContext, useNotiContext } from 'contexts';
 
 NavMenu.propTypes = {
   playlistId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  videoId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired
+  videoId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  isContinuing: PropTypes.bool
 };
 
-export default function NavMenu({ playlistId, videoId }) {
+export default function NavMenu({ playlistId, videoId, isContinuing }) {
   const {
     user: {
       actions: { onToggleHideWatched }
@@ -41,6 +42,7 @@ export default function NavMenu({ playlistId, videoId }) {
     actions: { onFetchNotifications }
   } = useNotiContext();
 
+  const [continueWatchingVideos, setContinueWatchingVideos] = useState([]);
   const [nextVideos, setNextVideos] = useState([]);
   const [relatedVideos, setRelatedVideos] = useState([]);
   const [otherVideos, setOtherVideos] = useState([]);
@@ -102,11 +104,15 @@ export default function NavMenu({ playlistId, videoId }) {
         setLoading(true);
         const data = await loadRightMenuVideos({
           videoId,
-          playlistId
+          playlistId,
+          isContinuing
         });
         if (mounted.current) {
           if (data.playlistTitle) {
             setPlaylistTitle(data.playlistTitle);
+          }
+          if (data.continueWatching) {
+            setContinueWatchingVideos(data.continueWatching);
           }
           if (data.nextVideos) {
             setNextVideos(data.nextVideos);
@@ -222,6 +228,14 @@ export default function NavMenu({ playlistId, videoId }) {
               {renderVideos({
                 videos: nextVideos,
                 arePlaylistVideos: playlistId && playlistVideos.length > 0
+              })}
+            </section>
+          )}
+          {continueWatchingVideos.length > 0 && (
+            <section key={videoId + 'continue watching'}>
+              <p>Continue Watching</p>
+              {renderVideos({
+                videos: continueWatchingVideos
               })}
             </section>
           )}

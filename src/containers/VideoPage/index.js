@@ -219,7 +219,9 @@ export default function VideoPage({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [videoId]);
-  const { playlist: playlistId } = queryString.parse(search);
+  const { playlist: playlistId, continue: isContinuing } = queryString.parse(
+    search
+  );
   const userIsUploader = uploader?.id === userId;
   const userCanEditThis = canEdit && authLevel >= uploader?.authLevel;
 
@@ -514,7 +516,13 @@ export default function VideoPage({
             )}
           </div>
         )}
-        {loaded && <NavMenu videoId={videoId} playlistId={playlistId} />}
+        {loaded && (
+          <NavMenu
+            videoId={videoId}
+            playlistId={playlistId}
+            isContinuing={!!isContinuing}
+          />
+        )}
       </div>
     </ErrorBoundary>
   );

@@ -429,14 +429,14 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async loadRightMenuVideos({ playlistId, videoId }) {
+    async loadRightMenuVideos({ playlistId, videoId, isContinuing }) {
       try {
         const { data } = await request.get(
           `${URL}/${
             playlistId ? 'playlist' : 'video'
           }/rightMenu?videoId=${videoId}${
             playlistId ? `&playlistId=${playlistId}` : ''
-          }`,
+          }${isContinuing ? '&isContinuing=true' : ''}`,
           auth()
         );
         return Promise.resolve(data);

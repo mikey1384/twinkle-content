@@ -88,7 +88,9 @@ export default function ContinueWatchingPanel() {
         >
           {continueWatchingVideos.map((video, index) => (
             <VideoThumb
-              to={`videos/${video.id}`}
+              to={`videos/${video.id}${
+                showingRecommendedVideos ? '' : '?continue=true'
+              }`}
               style={{
                 width: `CALC(25% - 0.75rem)`,
                 marginLeft: index % 4 > 0 ? '1rem' : 0,
