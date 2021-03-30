@@ -24,16 +24,18 @@ export default function ContinueWatchingPanel() {
     actions: { onLoadContinueWatching, onLoadMoreContinueWatching }
   } = useExploreContext();
   const [loaded, setLoaded] = useState(continueWatchingLoaded);
+  const loadingRef = useRef(false);
   const loadedRef = useRef(false);
   useEffect(() => {
     if (
-      !(continueWatchingLoaded || loadedRef.current) ||
-      userId !== prevUserId
+      !loadingRef.current &&
+      (!(continueWatchingLoaded || loadedRef.current) || userId !== prevUserId)
     ) {
       init();
     }
 
     async function init() {
+      loadingRef.current = true;
       const {
         videos,
         loadMoreButton,
@@ -46,6 +48,7 @@ export default function ContinueWatchingPanel() {
       });
       loadedRef.current = true;
       setLoaded(true);
+      loadingRef.current = false;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [continueWatchingLoaded, userId, prevUserId]);
