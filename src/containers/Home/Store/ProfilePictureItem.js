@@ -61,7 +61,7 @@ export default function ProfilePictureItem({ style }) {
         <div
           style={{ display: 'flex', alignItems: 'center', fontSize: '2rem' }}
         >
-          <Icon size="3x" icon="upload" />
+          <Icon size="3x" icon="image" />
           <div
             style={{
               marginLeft: '2.5rem',

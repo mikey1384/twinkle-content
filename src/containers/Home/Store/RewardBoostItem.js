@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ItemPanel from './ItemPanel';
 import Icon from 'components/Icon';
+import { css } from '@emotion/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { karmaPointTable, videoRewardHash } from 'constants/defaultValues';
@@ -17,16 +19,132 @@ const item = {
     'Boost rewards from watching XP Videos (level 6)',
     'Boost rewards from watching XP Videos (level 7)',
     'Boost rewards from watching XP Videos (level 8)',
-    'Boost rewards from watching XP Videos Videoseos (level 9)',
+    'Boost rewards from watching XP Videos (level 9)',
     'Boost rewards from watching XP Videos (level 10)'
   ],
-  description: Object.keys(videoRewardHash).map((key) => {
-    if (key === 0) {
-      return (
-        <div key={key}>Unlock this item to earn the following rewards</div>
-      );
-    }
-    return <div key={key}>Upgrade this item to earn the following rewards</div>;
+  description: [...Array(10).keys()].map((key) => {
+    const rewardLevels = [1, 2, 3, 4, 5];
+    const colorKey = ['logoBlue', 'pink', 'orange', 'cranberry', 'gold'];
+    const keyNumber = Number(key);
+    return (
+      <div key={key}>
+        <p>
+          {keyNumber === 0 ? 'Unlock' : 'Upgrade'} this item to earn the
+          following rewards <b>every minute</b> while watching XP Videos
+        </p>
+        <div
+          style={{
+            width: '100%',
+            marginTop: '3rem',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            position: 'relative'
+          }}
+        >
+          {rewardLevels.map((rewardLevel, index) => (
+            <div
+              key={index}
+              style={{
+                display: 'flex',
+                width: '80%',
+                justifyContent: 'space-between',
+                marginTop: index === 0 ? 0 : '1rem'
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  width: `8rem`,
+                  justifyContent: 'center'
+                }}
+              >
+                <div
+                  className={css`
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    min-width: 4rem;
+                    padding: 0.5rem 0.5rem;
+                    background: ${Color[colorKey[index]]()};
+                    font-size: 1.5rem;
+                    font-weight: bold;
+                    color: #fff;
+                    @media (max-width: ${mobileMaxWidth}) {
+                      font-size: 1rem;
+                    }
+                  `}
+                >
+                  <div style={{ fontSize: '1rem', lineHeight: 1 }}>
+                    {[...Array(rewardLevel)].map((elem, index) => (
+                      <Icon
+                        key={index}
+                        style={{ verticalAlign: 0 }}
+                        icon="star"
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  marginLeft: '3rem',
+                  flexGrow: 1
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    width: '95%',
+                    justifyContent: 'space-around'
+                  }}
+                >
+                  <div>
+                    {videoRewardHash[keyNumber].xp * rewardLevel} XP
+                    {rewardLevel > 2 ? (
+                      <span>
+                        {`, `}
+                        <span style={{ marginLeft: '0.5rem' }}>
+                          <Icon icon={['far', 'badge-dollar']} />{' '}
+                          {videoRewardHash[keyNumber].coin}
+                        </span>
+                      </span>
+                    ) : (
+                      ''
+                    )}
+                  </div>
+                  <div style={{ color: Color.green() }}>
+                    <Icon icon="arrow-right" />
+                  </div>
+                  <div
+                    style={{
+                      fontWeight: 'bold',
+                      color: Color.brownOrange()
+                    }}
+                  >
+                    {videoRewardHash[keyNumber + 1].xp * rewardLevel} XP
+                    {rewardLevel > 2 ? (
+                      <span>
+                        {`, `}
+                        <span style={{ marginLeft: '0.5rem' }}>
+                          <Icon icon={['far', 'badge-dollar']} />{' '}
+                          {videoRewardHash[keyNumber + 1].coin}
+                        </span>
+                      </span>
+                    ) : (
+                      ''
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
   })
 };
 
@@ -54,7 +172,7 @@ export default function RewardBoostItem({ style }) {
       itemName={item.name[rewardBoostLvl]}
       itemDescription={item.description[rewardBoostLvl]}
       style={style}
-      upgradeIcon={<Icon size="3x" icon="upload" />}
+      upgradeIcon={<Icon size="3x" icon="bolt" />}
     >
       <div
         style={{
