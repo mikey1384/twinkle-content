@@ -32,7 +32,10 @@ export default function FeaturedPlaylistsPanel() {
   } = useExploreContext();
   const loadedRef = useRef(false);
   useEffect(() => {
-    if (!featuredPlaylistsLoaded || userId !== prevUserId) {
+    if (
+      !(featuredPlaylistsLoaded || loadedRef.current) ||
+      userId !== prevUserId
+    ) {
       init();
     }
     async function init() {

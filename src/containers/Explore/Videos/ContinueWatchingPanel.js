@@ -26,7 +26,10 @@ export default function ContinueWatchingPanel() {
   const [loaded, setLoaded] = useState(continueWatchingLoaded);
   const loadedRef = useRef(false);
   useEffect(() => {
-    if (!continueWatchingLoaded || userId !== prevUserId) {
+    if (
+      !(continueWatchingLoaded || loadedRef.current) ||
+      userId !== prevUserId
+    ) {
       init();
     }
 

@@ -51,10 +51,10 @@ export default function Videos({ history }) {
       onSetSearchText({ category: 'playlist', searchText })
   });
   const AllPlaylistsPanelRef = useRef(null);
-  const prevLoaded = useRef(false);
+  const loadedRef = useRef(false);
 
   useEffect(() => {
-    if (!allPlaylistsLoaded || userId !== prevUserId) {
+    if (!(allPlaylistsLoaded || loadedRef.current) || userId !== prevUserId) {
       init();
     }
     async function init() {
@@ -63,7 +63,7 @@ export default function Videos({ history }) {
         playlists: results,
         loadMoreButton
       });
-      prevLoaded.current = true;
+      loadedRef.current = true;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allPlaylistsLoaded, userId, prevUserId]);
@@ -107,7 +107,7 @@ export default function Videos({ history }) {
         }
         userId={userId}
         playlists={playlists}
-        loaded={allPlaylistsLoaded || prevLoaded.current}
+        loaded={allPlaylistsLoaded || loadedRef.current}
         isSearching={searching}
         onSearch={handleSearch}
         searchQuery={playlistSearchText}
