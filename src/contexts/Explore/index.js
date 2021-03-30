@@ -49,9 +49,11 @@ export const initialExploreState = {
     loadMoreFeaturedPlaylistsButton: false,
     loadMoreSearchedPlaylistsButton: false,
     playlistsToPin: [],
+    showingRecommendedVideos: false,
     reorderFeaturedPlaylistsShown: false,
     clickSafe: true
-  }
+  },
+  prevUserId: null
 };
 
 ExploreContextProvider.propTypes = {

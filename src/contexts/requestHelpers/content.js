@@ -248,14 +248,14 @@ export default function contentRequestHelpers({ auth, handleError }) {
     async loadContinueWatching(lastTimeStamp) {
       try {
         const {
-          data: { videos, loadMoreButton }
+          data: { videos, loadMoreButton, noVideosToContinue }
         } = await request.get(
           `${URL}/video/continue${
             lastTimeStamp ? `?lastTimeStamp=${lastTimeStamp}` : ''
           }`,
           auth()
         );
-        return Promise.resolve({ videos, loadMoreButton });
+        return Promise.resolve({ videos, loadMoreButton, noVideosToContinue });
       } catch (error) {
         return handleError(error);
       }

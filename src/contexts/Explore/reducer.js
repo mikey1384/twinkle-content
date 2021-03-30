@@ -494,7 +494,8 @@ export default function ExploreReducer(state, action) {
           ...state.videos,
           continueWatchingVideos: action.videos,
           continueWatchingLoaded: true,
-          loadMoreContinueWatchingButton: action.loadMoreButton
+          loadMoreContinueWatchingButton: action.loadMoreButton,
+          showingRecommendedVideos: action.showingRecommendedVideos
         }
       };
     case 'LOAD_MORE_CONTINUE_WATCHING':
@@ -640,6 +641,11 @@ export default function ExploreReducer(state, action) {
           ...state.subjects,
           byUsersExpanded: action.expanded
         }
+      };
+    case 'SET_PREV_USER_ID_FOR_EXPLORE':
+      return {
+        ...state,
+        prevUserId: action.userId
       };
     case 'SET_REWARD_LEVEL':
       return {

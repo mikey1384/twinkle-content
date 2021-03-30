@@ -1,12 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useAppContext, useExploreContext } from 'contexts';
 import ErrorBoundary from 'components/ErrorBoundary';
 import SectionPanel from 'components/SectionPanel';
 import VideoThumb from 'components/VideoThumb';
 import Icon from 'components/Icon';
+import { useMyState } from 'helpers/hooks';
 
 export default function ContinueWatchingPanel() {
-  const loadedRef = useRef(false);
+  const { userId } = useMyState();
   const {
     requestHelpers: { loadContinueWatching }
   } = useAppContext();
@@ -15,33 +16,51 @@ export default function ContinueWatchingPanel() {
       videos: {
         continueWatchingVideos,
         continueWatchingLoaded,
-        loadMoreContinueWatchingButton
-      }
+        loadMoreContinueWatchingButton,
+        showingRecommendedVideos
+      },
+      prevUserId
     },
     actions: { onLoadContinueWatching, onLoadMoreContinueWatching }
   } = useExploreContext();
   const [loaded, setLoaded] = useState(continueWatchingLoaded);
+  const loadedRef = useRef(false);
   useEffect(() => {
-    init();
+    if (!continueWatchingLoaded || userId !== prevUserId) {
+      init();
+    }
 
     async function init() {
-      if (!continueWatchingLoaded) {
-        const { videos, loadMoreButton } = await loadContinueWatching();
-        onLoadContinueWatching({ videos, loadMoreButton });
-        setLoaded(true);
-        loadedRef.current = true;
-      }
+      const {
+        videos,
+        loadMoreButton,
+        noVideosToContinue
+      } = await loadContinueWatching();
+      onLoadContinueWatching({
+        videos,
+        loadMoreButton,
+        showingRecommendedVideos: !!noVideosToContinue
+      });
+      loadedRef.current = true;
+      setLoaded(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [continueWatchingLoaded]);
+  }, [continueWatchingLoaded, userId, prevUserId]);
 
   return (
     <ErrorBoundary>
       <SectionPanel
-        loaded={loaded}
+        loaded={loaded || loadedRef.current}
+        innerStyle={{ fontSize: '1.5rem' }}
+        emptyMessage="We don't have any videos to recommend to you at the moment"
+        isEmpty={continueWatchingVideos.length === 0}
         title={
-          loaded ? (
-            'Continue Watching'
+          loaded || loadedRef.current ? (
+            showingRecommendedVideos ? (
+              'Recommended'
+            ) : (
+              'Continue Watching'
+            )
           ) : (
             <div
               style={{

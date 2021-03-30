@@ -19,7 +19,8 @@ export default function FeaturedPlaylistsPanel() {
         featuredPlaylistsLoaded,
         reorderFeaturedPlaylistsShown,
         selectFeaturedPlaylistsModalShown
-      }
+      },
+      prevUserId
     },
     actions: {
       onCloseReorderFeaturedPlaylists,
@@ -31,7 +32,7 @@ export default function FeaturedPlaylistsPanel() {
   } = useExploreContext();
   const loadedRef = useRef(false);
   useEffect(() => {
-    if (!featuredPlaylistsLoaded) {
+    if (!featuredPlaylistsLoaded || userId !== prevUserId) {
       init();
     }
     async function init() {
@@ -40,7 +41,7 @@ export default function FeaturedPlaylistsPanel() {
       loadedRef.current = true;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [featuredPlaylistsLoaded]);
+  }, [featuredPlaylistsLoaded, userId, prevUserId]);
 
   const menuButtons = useMemo(() => {
     const buttons = [

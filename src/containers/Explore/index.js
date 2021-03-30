@@ -8,6 +8,7 @@ import { socket } from 'constants/io';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { getSectionFromPathname } from 'helpers';
 import { useExploreContext } from 'contexts';
+import { useMyState } from 'helpers/hooks';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Notification from 'components/Notification';
 import SideMenu from 'components/SideMenu';
@@ -28,8 +29,9 @@ export default function Explore({ history, location }) {
     state: {
       search: { searchText }
     },
-    actions: { onClearLinksLoaded, onClearVideosLoaded, onSetSubjectsLoaded }
+    actions: { onSetPrevUserId }
   } = useExploreContext();
+  const { userId } = useMyState();
   const mounted = useRef(true);
   const disconnected = useRef(false);
   const ContainerRef = useRef({});
@@ -44,14 +46,14 @@ export default function Explore({ history, location }) {
   }, []);
 
   useEffect(() => {
+    onSetPrevUserId(userId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
+
+  useEffect(() => {
     socket.on('connect', onConnect);
     socket.on('disconnect', onDisconnect);
     function onConnect() {
-      if (disconnected.current && mounted.current) {
-        onClearLinksLoaded();
-        onSetSubjectsLoaded(false);
-        onClearVideosLoaded();
-      }
       disconnected.current = false;
     }
     function onDisconnect() {

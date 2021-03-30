@@ -7,7 +7,7 @@ import { useAppContext, useExploreContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
 export default function Subjects() {
-  const { canPinPlaylists } = useMyState();
+  const { canPinPlaylists, userId } = useMyState();
   const {
     requestHelpers: {
       loadByUserUploads,
@@ -30,7 +30,8 @@ export default function Subjects() {
         recommendedExpanded,
         recommendedLoadMoreButton,
         recommendedLoaded
-      }
+      },
+      prevUserId
     },
     actions: {
       onLoadFeaturedSubjects,
@@ -45,7 +46,7 @@ export default function Subjects() {
   useEffect(() => {
     init();
     async function init() {
-      if (!loaded) {
+      if (!loaded || userId !== prevUserId) {
         handleLoadFeaturedSubjects();
         handleLoadByUserSubjects();
         handleLoadRecommendedSubjects();
@@ -83,7 +84,7 @@ export default function Subjects() {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loaded]);
+  }, [loaded, userId, prevUserId]);
 
   return (
     <div>

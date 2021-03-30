@@ -28,7 +28,8 @@ export default function Videos({ history }) {
         allPlaylistsLoaded,
         allPlaylists,
         searchedPlaylists
-      }
+      },
+      prevUserId
     },
     actions: {
       onCloseAddPlaylistModal,
@@ -53,7 +54,7 @@ export default function Videos({ history }) {
   const prevLoaded = useRef(false);
 
   useEffect(() => {
-    if (!allPlaylistsLoaded) {
+    if (!allPlaylistsLoaded || userId !== prevUserId) {
       init();
     }
     async function init() {
@@ -65,7 +66,7 @@ export default function Videos({ history }) {
       prevLoaded.current = true;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allPlaylistsLoaded]);
+  }, [allPlaylistsLoaded, userId, prevUserId]);
 
   const playlists = useMemo(
     () =>

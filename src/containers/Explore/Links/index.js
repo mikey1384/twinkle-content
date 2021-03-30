@@ -3,9 +3,11 @@ import AddLinkModal from './AddLinkModal';
 import Button from 'components/Button';
 import SectionPanel from 'components/SectionPanel';
 import LinkGroup from './LinkGroup';
+import { useMyState } from 'helpers/hooks';
 import { useAppContext, useExploreContext } from 'contexts';
 
 export default function Links() {
+  const { userId } = useMyState();
   const {
     requestHelpers: { loadByUserUploads, loadRecommendedUploads, loadUploads }
   } = useAppContext();
@@ -21,7 +23,8 @@ export default function Links() {
         loaded,
         links,
         loadMoreLinksButtonShown
-      }
+      },
+      prevUserId
     },
     actions: {
       onLoadByUserLinks,
@@ -70,7 +73,7 @@ export default function Links() {
   useEffect(() => {
     init();
     async function init() {
-      if (!loaded) {
+      if (!loaded || prevUserId !== userId) {
         handleLoadLinksMadeByUsers();
         handleLoadRecommendedLinks();
         handleLoadLinks();
@@ -113,7 +116,7 @@ export default function Links() {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loaded]);
+  }, [loaded, prevUserId, userId]);
 
   return (
     <div>

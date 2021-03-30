@@ -13,7 +13,7 @@ import { useMyState, useOutsideClick } from 'helpers/hooks';
 
 SectionPanel.propTypes = {
   canEdit: PropTypes.bool,
-  title: PropTypes.string,
+  title: PropTypes.node,
   button: PropTypes.node,
   emptyMessage: PropTypes.string,
   innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
@@ -225,14 +225,14 @@ export default function SectionPanel({
             searchQuery={searchQuery}
             statusMsgStyle={css`
               padding: 0 1rem;
-              font-size: 3rem;
+              font-size: 2.5rem;
               font-weight: bold;
               display: flex;
               justify-content: center;
               align-items: center;
               color: ${Color.darkerGray()};
               @media (max-width: ${mobileMaxWidth}) {
-                font-size: 2.2rem;
+                font-size: 2rem;
               }
             `}
           />

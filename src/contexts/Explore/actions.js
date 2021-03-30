@@ -93,11 +93,16 @@ export default function ExploreActions(dispatch) {
         params
       });
     },
-    onLoadContinueWatching({ videos, loadMoreButton }) {
+    onLoadContinueWatching({
+      videos,
+      loadMoreButton,
+      showingRecommendedVideos
+    }) {
       return dispatch({
         type: 'LOAD_CONTINUE_WATCHING',
         videos,
-        loadMoreButton
+        loadMoreButton,
+        showingRecommendedVideos
       });
     },
     onLoadMoreContinueWatching({ videos, loadMoreButton }) {
@@ -274,6 +279,12 @@ export default function ExploreActions(dispatch) {
       return dispatch({
         type: 'SET_FEATURED_SUBJECTS_EXPANDED',
         expanded
+      });
+    },
+    onSetPrevUserId(userId) {
+      return dispatch({
+        type: 'SET_PREV_USER_ID_FOR_EXPLORE',
+        userId
       });
     },
     onSetRecommendedSubjectsExpanded(expanded) {
