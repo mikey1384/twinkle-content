@@ -267,7 +267,7 @@ function XPVideoPlayer({
       });
       setPlaying(true);
       const time = PlayerRef.current.getCurrentTime();
-      if (Math.floor(time) === 0) {
+      if (Math.floor(time) === 0 && userId) {
         addVideoView({ videoId, userId });
       }
       clearInterval(timerRef.current);
