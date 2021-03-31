@@ -202,7 +202,7 @@ export default function XPBar({
               @media (max-width: ${mobileMaxWidth}) {
                 min-width: 0;
                 flex-grow: 1;
-                max-width: 7rem;
+                max-width: 8.5rem;
                 height: ${isChat ? '2rem' : '2.7rem'};
               }
             `}
