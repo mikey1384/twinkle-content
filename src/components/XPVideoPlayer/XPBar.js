@@ -116,11 +116,9 @@ export default function XPBar({
             `}
             onClick={onPlayVideo}
           >
-            {`Continue watching to earn ${addCommasToNumber(
-              xpRewardAmount
-            )} XP ${
-              rewardLevel > 2 ? `and ${coinRewardAmount} Twinkle Coins ` : ''
-            } every minute!`}
+            {`Continue watching (${addCommasToNumber(xpRewardAmount)} XP ${
+              rewardLevel > 2 ? `& ${coinRewardAmount} Twinkle Coins ` : ''
+            } per minute)`}
           </div>
         );
       } else {
@@ -147,7 +145,7 @@ export default function XPBar({
             <div style={{ marginLeft: '0.7rem' }}>
               {`Watch and earn ${addCommasToNumber(xpRewardAmount)} XP ${
                 rewardLevel > 2 ? `and ${coinRewardAmount} Twinkle Coins ` : ''
-              } every minute!`}
+              } per minute!`}
             </div>
           </div>
         );
