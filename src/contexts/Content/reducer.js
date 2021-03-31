@@ -1470,6 +1470,18 @@ export default function ContentReducer(state, action) {
           online: action.online
         }
       };
+    case 'SET_VIDEO_CURRENT_TIME':
+      return {
+        ...state,
+        [contentKey]: {
+          ...prevContentState,
+          ...(action.secretAttachmentCurrentTime
+            ? {
+                secretAttachmentCurrentTime: action.secretAttachmentCurrentTime
+              }
+            : { currentTime: action.currentTime })
+        }
+      };
     case 'SET_VIDEO_QUESTIONS':
       return {
         ...state,

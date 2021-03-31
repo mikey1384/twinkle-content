@@ -182,7 +182,7 @@ export default function XPBar({
               height: 2.7rem;
               width: ${canEarnCoins
                 ? numXpEarned > 0
-                  ? '13rem'
+                  ? 'auto'
                   : `1${rewardLevel - 1}rem`
                 : '7rem'};
               margin-left: 1rem;

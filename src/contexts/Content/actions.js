@@ -548,6 +548,20 @@ export default function ContentActions(dispatch) {
         visible
       });
     },
+    onSetVideoCurrentTime({
+      contentType,
+      contentId,
+      currentTime,
+      secretAttachmentCurrentTime
+    }) {
+      return dispatch({
+        type: 'SET_VIDEO_CURRENT_TIME',
+        contentType,
+        contentId,
+        currentTime,
+        secretAttachmentCurrentTime
+      });
+    },
     onSetVisible({ visible, contentId, contentType }) {
       return dispatch({
         type: 'SET_VISIBLE',
