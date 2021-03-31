@@ -111,7 +111,7 @@ export default function XPBar({
               cursor: pointer;
               @media (max-width: ${mobileMaxWidth}) {
                 height: ${isChat ? '2rem' : '2.7rem'};
-                font-size: ${isChat ? '1rem' : '1.3rem'};
+                font-size: 1rem;
               }
             `}
             onClick={onPlayVideo}
@@ -130,8 +130,8 @@ export default function XPBar({
               height: 2.7rem;
               font-size: 1.3rem;
               @media (max-width: ${mobileMaxWidth}) {
+                font-size: 1rem;
                 height: ${isChat ? '2rem' : '2.7rem'};
-                font-size: ${isChat ? '1rem' : '1.3rem'};
               }
             `}
             style={{
@@ -213,6 +213,9 @@ export default function XPBar({
                 flex-grow: 1;
                 font-weight: bold;
                 background: ${xpLevelColor};
+                @media (max-width: ${mobileMaxWidth}) {
+                  font-size: 1.1rem;
+                }
               `}
             >
               {numXpEarned > 0
