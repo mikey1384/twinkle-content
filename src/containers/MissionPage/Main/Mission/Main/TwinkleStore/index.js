@@ -4,7 +4,7 @@ import Loading from 'components/Loading';
 import NotEnoughKarmaInstructions from './NotEnoughKarmaInstructions';
 import EnoughKarmaInstructions from './EnoughKarmaInstructions';
 import FinalStep from './FinalStep';
-import { karmaMultiplier, karmaPointTable } from 'constants/defaultValues';
+import { karmaPointTable } from 'constants/defaultValues';
 import { useAppContext, useContentContext, useViewContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
@@ -13,13 +13,7 @@ TwinkleStore.propTypes = {
 };
 
 export default function TwinkleStore({ mission }) {
-  const {
-    authLevel,
-    canChangeUsername,
-    userId,
-    karmaPoints,
-    profileTheme
-  } = useMyState();
+  const { canChangeUsername, userId, karmaPoints, profileTheme } = useMyState();
   const {
     requestHelpers: { loadKarmaPoints, loadMyData }
   } = useAppContext();
@@ -49,19 +43,9 @@ export default function TwinkleStore({ mission }) {
       if (mounted.current) {
         onInitContent({ contentType: 'user', contentId: data.userId, ...data });
       }
-      const { karmaPoints: kp, numPostsRewarded } = await loadKarmaPoints();
-
-      if (authLevel < 2) {
-        if (mounted.current) {
-          onUpdateProfileInfo({ userId, karmaPoints: kp });
-        }
-      } else {
-        if (mounted.current) {
-          onUpdateProfileInfo({
-            userId,
-            karmaPoints: karmaMultiplier.post * numPostsRewarded
-          });
-        }
+      const { karmaPoints: kp } = await loadKarmaPoints();
+      if (mounted.current) {
+        onUpdateProfileInfo({ userId, karmaPoints: kp });
       }
       if (mounted.current) {
         setLoadingKarma(false);
