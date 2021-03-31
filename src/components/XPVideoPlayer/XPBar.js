@@ -180,11 +180,7 @@ export default function XPBar({
           <div
             className={css`
               height: 2.7rem;
-              min-width: ${canEarnCoins
-                ? numXpEarned > 0
-                  ? 'auto'
-                  : `1${rewardLevel - 1}rem`
-                : '7rem'};
+              min-width: ${canEarnCoins ? `1${rewardLevel - 1}rem` : '7rem'};
               margin-left: 1rem;
               display: flex;
               font-size: 1.3rem;
