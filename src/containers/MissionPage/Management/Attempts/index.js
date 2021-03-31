@@ -129,7 +129,7 @@ export default function Attempts({ mission, missionId, onSetMissionState }) {
           })}
         </>
       )}
-      {mission.loadMoreButton && (
+      {mission.loadMoreButton && !loading && (
         <LoadMoreButton
           style={{ marginTop: '2rem', fontSize: '1.7rem' }}
           filled
