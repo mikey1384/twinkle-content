@@ -6,6 +6,7 @@ import Icon from 'components/Icon';
 import FullTextReveal from 'components/Texts/FullTextReveal';
 import { videoRewardHash } from 'constants/defaultValues';
 import { useContentState, useMyState } from 'helpers/hooks';
+import { isMobile } from 'helpers';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
@@ -19,6 +20,8 @@ XPBar.propTypes = {
   userId: PropTypes.number,
   videoId: PropTypes.number.isRequired
 };
+
+const isViewingOnMobile = isMobile(navigator);
 
 export default function XPBar({
   isChat,
@@ -116,9 +119,7 @@ export default function XPBar({
             `}
             onClick={onPlayVideo}
           >
-            {`Continue watching (${addCommasToNumber(xpRewardAmount)} XP ${
-              rewardLevel > 2 ? `& ${coinRewardAmount} Twinkle Coins ` : ''
-            } per minute)`}
+            Continue watching
           </div>
         );
       } else {
@@ -143,9 +144,23 @@ export default function XPBar({
             }}
           >
             <div style={{ marginLeft: '0.7rem' }}>
-              {`Watch and earn ${addCommasToNumber(xpRewardAmount)} XP ${
-                rewardLevel > 2 ? `and ${coinRewardAmount} Twinkle Coins ` : ''
-              } every minute!`}
+              <span>{addCommasToNumber(xpRewardAmount)} XP</span>
+              {rewardLevel > 2 ? (
+                <>
+                  {' '}
+                  <span>&</span>
+                  <Icon
+                    style={{ marginLeft: '0.5rem' }}
+                    icon={['far', 'badge-dollar']}
+                  />
+                  <span style={{ marginLeft: '0.2rem' }}>
+                    {coinRewardAmount}
+                  </span>
+                </>
+              ) : (
+                ''
+              )}{' '}
+              <span>per minute</span>
             </div>
           </div>
         );
@@ -185,15 +200,10 @@ export default function XPBar({
               display: flex;
               font-size: 1.3rem;
               @media (max-width: ${mobileMaxWidth}) {
-                width: ${isChat
-                  ? canEarnCoins
-                    ? '8rem'
-                    : '4rem'
-                  : canEarnCoins
-                  ? '13rem'
-                  : '7rem'};
+                min-width: 0;
+                flex-grow: 1;
+                max-width: 7rem;
                 height: ${isChat ? '2rem' : '2.7rem'};
-                font-size: ${isChat ? '0.8rem' : '1.3rem'};
               }
             `}
           >
@@ -208,12 +218,14 @@ export default function XPBar({
                 font-weight: bold;
                 background: ${xpLevelColor};
                 @media (max-width: ${mobileMaxWidth}) {
-                  font-size: 1.1rem;
+                  font-size: ${isChat ? '0.7rem' : '1.3rem'};
                 }
               `}
             >
               {numXpEarned > 0
                 ? `+ ${numXpEarnedWithComma}`
+                : isViewingOnMobile
+                ? 'XP'
                 : [...Array(rewardLevel)].map((elem, index) => (
                     <Icon
                       key={index}
@@ -244,7 +256,7 @@ export default function XPBar({
                     )};
                     @media (max-width: ${mobileMaxWidth}) {
                       min-width: ${isChat ? '3rem' : '5rem'};
-                      font-size: ${isChat ? '0.8rem' : '1.5rem'};
+                      font-size: ${isChat ? '0.7rem' : '1.3rem'};
                     }
                   `}
                 >
