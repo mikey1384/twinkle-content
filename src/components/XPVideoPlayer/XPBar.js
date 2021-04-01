@@ -13,7 +13,6 @@ import { addCommasToNumber } from 'helpers/stringHelpers';
 
 XPBar.propTypes = {
   isChat: PropTypes.bool,
-  onPlayVideo: PropTypes.func,
   rewardLevel: PropTypes.number,
   started: PropTypes.bool,
   startingPosition: PropTypes.number,
@@ -25,7 +24,6 @@ const isViewingOnMobile = isMobile(navigator);
 
 export default function XPBar({
   isChat,
-  onPlayVideo,
   rewardLevel,
   started,
   startingPosition,
@@ -98,73 +96,45 @@ export default function XPBar({
         />
       );
     } else {
-      if (watching && !started) {
-        return (
-          <div
-            className={css`
-              height: 2.7rem;
-              background: ${Color.darkBlue()};
-              color: #fff;
-              flex-grow: 1;
-              font-size: 1.3rem;
-              font-weight: bold;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              cursor: pointer;
-              @media (max-width: ${mobileMaxWidth}) {
-                height: ${isChat ? '2rem' : '2.7rem'};
-                font-size: 1rem;
-              }
-            `}
-            onClick={onPlayVideo}
-          >
-            Continue watching
+      return (
+        <div
+          className={css`
+            height: 2.7rem;
+            font-size: 1.3rem;
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: 1rem;
+              height: ${isChat ? '2rem' : '2.7rem'};
+            }
+          `}
+          style={{
+            background: watching && !started ? Color.darkBlue() : xpLevelColor,
+            color: '#fff',
+            fontWeight: 'bold',
+            display: 'flex',
+            flexGrow: 1,
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          <div style={{ marginLeft: '0.7rem' }}>
+            <span>{addCommasToNumber(xpRewardAmount)} XP</span>
+            {rewardLevel > 2 ? (
+              <>
+                {' '}
+                <span>&</span>
+                <Icon
+                  style={{ marginLeft: '0.5rem' }}
+                  icon={['far', 'badge-dollar']}
+                />
+                <span style={{ marginLeft: '0.2rem' }}>{coinRewardAmount}</span>
+              </>
+            ) : (
+              ''
+            )}{' '}
+            <span>per minute</span>
           </div>
-        );
-      } else {
-        return (
-          <div
-            className={css`
-              height: 2.7rem;
-              font-size: 1.3rem;
-              @media (max-width: ${mobileMaxWidth}) {
-                font-size: 1rem;
-                height: ${isChat ? '2rem' : '2.7rem'};
-              }
-            `}
-            style={{
-              background: xpLevelColor,
-              color: '#fff',
-              fontWeight: 'bold',
-              display: 'flex',
-              flexGrow: 1,
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-          >
-            <div style={{ marginLeft: '0.7rem' }}>
-              <span>{addCommasToNumber(xpRewardAmount)} XP</span>
-              {rewardLevel > 2 ? (
-                <>
-                  {' '}
-                  <span>&</span>
-                  <Icon
-                    style={{ marginLeft: '0.5rem' }}
-                    icon={['far', 'badge-dollar']}
-                  />
-                  <span style={{ marginLeft: '0.2rem' }}>
-                    {coinRewardAmount}
-                  </span>
-                </>
-              ) : (
-                ''
-              )}{' '}
-              <span>per minute</span>
-            </div>
-          </div>
-        );
-      }
+        </div>
+      );
     }
   }, [
     userId,
@@ -174,7 +144,6 @@ export default function XPBar({
     isChat,
     videoProgress,
     xpLevelColor,
-    onPlayVideo,
     xpRewardAmount,
     coinRewardAmount
   ]);
@@ -220,14 +189,14 @@ export default function XPBar({
                 @media (max-width: ${mobileMaxWidth}) {
                   flex-grow: 0;
                   width: 5rem;
-                  font-size: ${numXpEarned > 0 ? '0.7rem' : '1.2rem'};
+                  font-size: ${numXpEarned > 0 ? '0.7rem' : '1rem'};
                 }
               `}
             >
               {numXpEarned > 0
                 ? `+ ${numXpEarnedWithComma}`
                 : isViewingOnMobile
-                ? 'XP'
+                ? `${rewardLevel}-STAR`
                 : [...Array(rewardLevel)].map((elem, index) => (
                     <Icon
                       key={index}

@@ -236,9 +236,6 @@ function XPVideoPlayer({
       {(!!rewardLevel || (startingPosition > 0 && !started)) && (
         <XPBar
           isChat={isChat}
-          onPlayVideo={() =>
-            PlayerRef.current?.getInternalPlayer()?.playVideo()
-          }
           rewardLevel={rewardLevel}
           started={started}
           startingPosition={startingPosition}
