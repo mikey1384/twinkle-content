@@ -198,7 +198,6 @@ export default function XPBar({
               min-width: ${canEarnCoins ? `1${rewardLevel - 1}rem` : '7rem'};
               margin-left: 1rem;
               display: flex;
-              font-size: 1.3rem;
               @media (max-width: ${mobileMaxWidth}) {
                 min-width: 0;
                 flex-grow: 1;
@@ -217,6 +216,7 @@ export default function XPBar({
                 flex-grow: 1;
                 font-weight: bold;
                 background: ${xpLevelColor};
+                font-size: 1.3rem;
                 @media (max-width: ${mobileMaxWidth}) {
                   flex-grow: 0;
                   width: 5rem;
@@ -252,7 +252,7 @@ export default function XPBar({
                     justify-content: center;
                     font-weight: bold;
                     color: #fff;
-                    font-size: 1.5rem;
+                    font-size: ${numCoinsEarned > 0 ? '1.3rem' : '1.5rem'};
                     background: ${Color.brownOrange(
                       twinkleCoins > 1000 ? 0.3 : 1
                     )};
