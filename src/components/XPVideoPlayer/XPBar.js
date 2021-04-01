@@ -218,7 +218,9 @@ export default function XPBar({
                 font-weight: bold;
                 background: ${xpLevelColor};
                 @media (max-width: ${mobileMaxWidth}) {
-                  font-size: ${isChat ? '0.7rem' : '1.3rem'};
+                  flex-grow: 0;
+                  width: 5rem;
+                  font-size: ${numXpEarned > 0 ? '0.7rem' : '1.2rem'};
                 }
               `}
             >
@@ -255,8 +257,9 @@ export default function XPBar({
                       twinkleCoins > 1000 ? 0.3 : 1
                     )};
                     @media (max-width: ${mobileMaxWidth}) {
-                      min-width: ${isChat ? '3rem' : '5rem'};
-                      font-size: ${isChat ? '0.7rem' : '1.3rem'};
+                      flex-grow: 1;
+                      min-width: 3.5rem;
+                      font-size: ${numCoinsEarned > 0 ? '0.7rem' : '1.2rem'};
                     }
                   `}
                 >
