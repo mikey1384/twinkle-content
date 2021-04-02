@@ -232,7 +232,7 @@ export default function XPBar({
                     }
                   `}
                 >
-                  {numCoinsEarned > 0 ? (
+                  {numCoinsEarned > 0 && twinkleCoins <= 1000 ? (
                     `+ ${numCoinsEarnedWithComma}`
                   ) : (
                     <Icon size="lg" icon={['far', 'badge-dollar']} />
