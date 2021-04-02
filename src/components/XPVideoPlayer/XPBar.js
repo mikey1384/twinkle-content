@@ -72,8 +72,13 @@ export default function XPBar({
     [rewardLevel]
   );
 
+  const continuingStatusShown = useMemo(() => watching && !started, [
+    started,
+    watching
+  ]);
+
   const Bar = useMemo(() => {
-    if (!userId || (!(watching && !started) && !rewardLevel)) {
+    if (!userId || !rewardLevel) {
       return null;
     }
     if (started) {
@@ -107,7 +112,7 @@ export default function XPBar({
             }
           `}
           style={{
-            background: watching && !started ? Color.darkBlue() : xpLevelColor,
+            background: continuingStatusShown ? Color.darkBlue() : xpLevelColor,
             color: '#fff',
             fontWeight: 'bold',
             display: 'flex',
@@ -117,6 +122,7 @@ export default function XPBar({
           }}
         >
           <div style={{ marginLeft: '0.7rem' }}>
+            {continuingStatusShown && <span>Continue watching (</span>}
             <span>{addCommasToNumber(xpRewardAmount)} XP</span>
             {rewardLevel > 2 ? (
               <>
@@ -130,15 +136,15 @@ export default function XPBar({
               </>
             ) : (
               ''
-            )}{' '}
-            <span>per minute</span>
+            )}
+            {continuingStatusShown ? <span>)</span> : <span> per minute</span>}
           </div>
         </div>
       );
     }
   }, [
+    continuingStatusShown,
     userId,
-    watching,
     started,
     rewardLevel,
     isChat,
