@@ -208,7 +208,7 @@ export default function Pictures({
                 numPictures={pictures.length}
                 onSetReorderedPictureIds={setReorderedPictureIds}
               />
-            ) : pictures.length > 2 ? (
+            ) : pictures?.length > 2 ? (
               <Carousel
                 className={css`
                   width: 75%;
@@ -217,7 +217,7 @@ export default function Pictures({
                 slidesToShow={3}
                 slidesToScroll={1}
               >
-                {pictures.map((picture, index) => (
+                {pictures?.map((picture, index) => (
                   <Frame
                     forCarousel
                     key={index}
@@ -235,7 +235,7 @@ export default function Pictures({
                   justifyContent: 'center'
                 }}
               >
-                {pictures.map((picture, index) => (
+                {pictures?.map((picture, index) => (
                   <Frame
                     key={index}
                     picture={picture}
