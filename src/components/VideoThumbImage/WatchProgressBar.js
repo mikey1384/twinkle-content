@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
@@ -7,7 +7,7 @@ WatchProgressBar.propTypes = {
   percentage: PropTypes.number
 };
 
-export default function WatchProgressBar({ percentage = 0 }) {
+function WatchProgressBar({ percentage = 0 }) {
   return (
     <div
       style={{
@@ -30,3 +30,5 @@ export default function WatchProgressBar({ percentage = 0 }) {
     </div>
   );
 }
+
+export default memo(WatchProgressBar);

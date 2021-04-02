@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { memo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import UsernameText from 'components/Texts/UsernameText';
 import Link from 'components/Link';
@@ -27,14 +27,7 @@ VideoThumb.propTypes = {
   }).isRequired
 };
 
-export default function VideoThumb({
-  className,
-  clickSafe,
-  style,
-  to,
-  user,
-  video
-}) {
+function VideoThumb({ className, clickSafe, style, to, user, video }) {
   const { profileTheme } = useMyState();
   const { deleted } = useContentState({
     contentType: 'video',
@@ -134,3 +127,5 @@ export default function VideoThumb({
     }
   }
 }
+
+export default memo(VideoThumb);

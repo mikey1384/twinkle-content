@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import { useAppContext } from 'contexts';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
@@ -16,7 +16,7 @@ VideoThumbImage.propTypes = {
   videoId: PropTypes.number
 };
 
-export default function VideoThumbImage({
+function VideoThumbImage({
   rewardLevel,
   height = '55%',
   onClick,
@@ -128,3 +128,5 @@ export default function VideoThumbImage({
     </div>
   );
 }
+
+export default memo(VideoThumbImage);
