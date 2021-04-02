@@ -148,6 +148,14 @@ export default function XPBar({
     coinRewardAmount
   ]);
 
+  const Stars = useMemo(
+    () =>
+      [...Array(rewardLevel)].map((elem, index) => (
+        <Icon key={index} style={{ verticalAlign: 0 }} icon="star" />
+      )),
+    [rewardLevel]
+  );
+
   return userId ? (
     <ErrorBoundary>
       <div
@@ -197,13 +205,7 @@ export default function XPBar({
                 ? `+ ${numXpEarnedWithComma}`
                 : isViewingOnMobile
                 ? `${rewardLevel}-STAR`
-                : [...Array(rewardLevel)].map((elem, index) => (
-                    <Icon
-                      key={index}
-                      style={{ verticalAlign: 0 }}
-                      icon="star"
-                    />
-                  ))}
+                : Stars}
             </div>
             {canEarnCoins && (
               <div>

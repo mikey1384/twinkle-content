@@ -31,6 +31,14 @@ function VideoThumbImage({
   const [progressBarPercentage, setProgressBarPercentage] = useState(0);
   const mounted = useRef(true);
 
+  const Stars = useMemo(
+    () =>
+      [...Array(rewardLevel)].map((elem, index) => (
+        <Icon key={index} style={{ verticalAlign: 0 }} icon="star" />
+      )),
+    [rewardLevel]
+  );
+
   useEffect(() => {
     mounted.current = true;
     return function cleanUp() {
@@ -114,11 +122,7 @@ function VideoThumbImage({
               }
             `}
           >
-            <div style={{ fontSize: '1rem', lineHeight: 1 }}>
-              {[...Array(rewardLevel)].map((elem, index) => (
-                <Icon key={index} style={{ verticalAlign: 0 }} icon="star" />
-              ))}
-            </div>
+            <div style={{ fontSize: '1rem', lineHeight: 1 }}>{Stars}</div>
           </div>
         )}
       </div>
