@@ -228,7 +228,9 @@ export default function XPBar({
                     @media (max-width: ${mobileMaxWidth}) {
                       flex-grow: 1;
                       min-width: 3.5rem;
-                      font-size: ${numCoinsEarned > 0 ? '0.7rem' : '1.2rem'};
+                      font-size: ${numCoinsEarned > 0 && twinkleCoins <= 1000
+                        ? '0.7rem'
+                        : '1.2rem'};
                     }
                   `}
                 >
