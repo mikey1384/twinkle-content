@@ -118,6 +118,11 @@ function XPVideoPlayer({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
+  const handleVideoStop = useCallback(() => {
+    setPlaying(false);
+    clearInterval(timerRef.current);
+  }, []);
+
   useEffect(() => {
     mounted.current = true;
     return function cleanUp() {
@@ -153,6 +158,12 @@ function XPVideoPlayer({
       }`,
     [startingPosition, videoCode]
   );
+
+  const onVideoReady = useCallback(() => {
+    totalDurationRef.current = PlayerRef.current
+      ?.getInternalPlayer()
+      ?.getDuration();
+  }, []);
 
   const handleIncreaseMeter = useCallback(
     async ({ userId }) => {
@@ -256,6 +267,35 @@ function XPVideoPlayer({
     [rewardLevel, twinkleCoins, videoId]
   );
 
+  const onVideoPlay = useCallback(
+    async ({ userId }) => {
+      onSetVideoStarted({
+        contentType: 'video',
+        contentId: videoId,
+        started: true
+      });
+      if (!playing) {
+        await updateCurrentlyWatching({
+          watchCode: watchCodeRef.current
+        });
+        setPlaying(true);
+        const time = PlayerRef.current.getCurrentTime();
+        if (Math.floor(time) === 0 && userId) {
+          addVideoView({ videoId, userId });
+        }
+        clearInterval(timerRef.current);
+        if (userId) {
+          timerRef.current = setInterval(
+            () => handleIncreaseMeter({ userId }),
+            intervalLength
+          );
+        }
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [handleIncreaseMeter, playing, videoId]
+  );
+
   return (
     <ErrorBoundary style={style}>
       {byUser && !isChat && (
@@ -354,42 +394,6 @@ function XPVideoPlayer({
       )}
     </ErrorBoundary>
   );
-
-  function onVideoReady() {
-    totalDurationRef.current = PlayerRef.current
-      ?.getInternalPlayer()
-      ?.getDuration();
-  }
-
-  async function onVideoPlay({ userId }) {
-    onSetVideoStarted({
-      contentType: 'video',
-      contentId: videoId,
-      started: true
-    });
-    if (!playing) {
-      await updateCurrentlyWatching({
-        watchCode: watchCodeRef.current
-      });
-      setPlaying(true);
-      const time = PlayerRef.current.getCurrentTime();
-      if (Math.floor(time) === 0 && userId) {
-        addVideoView({ videoId, userId });
-      }
-      clearInterval(timerRef.current);
-      if (userId) {
-        timerRef.current = setInterval(
-          () => handleIncreaseMeter({ userId }),
-          intervalLength
-        );
-      }
-    }
-  }
-
-  function handleVideoStop() {
-    setPlaying(false);
-    clearInterval(timerRef.current);
-  }
 }
 
 export default memo(XPVideoPlayer);
