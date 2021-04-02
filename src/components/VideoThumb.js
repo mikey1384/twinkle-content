@@ -1,4 +1,4 @@
-import React, { memo, useRef, useState } from 'react';
+import React, { memo, useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import UsernameText from 'components/Texts/UsernameText';
 import Link from 'components/Link';
@@ -35,6 +35,14 @@ function VideoThumb({ className, clickSafe, style, to, user, video }) {
   });
   const [onTitleHover, setOnTitleHover] = useState(false);
   const ThumbLabelRef = useRef(null);
+  const onLinkClick = useCallback(() => Promise.resolve(clickSafe), [
+    clickSafe
+  ]);
+  const onMouseOver = useCallback(() => {
+    if (textIsOverflown(ThumbLabelRef.current)) {
+      setOnTitleHover(true);
+    }
+  }, []);
 
   return !deleted ? (
     <ErrorBoundary style={style}>
@@ -116,16 +124,6 @@ function VideoThumb({ className, clickSafe, style, to, user, video }) {
       </div>
     </ErrorBoundary>
   ) : null;
-
-  function onLinkClick() {
-    return Promise.resolve(clickSafe);
-  }
-
-  function onMouseOver() {
-    if (textIsOverflown(ThumbLabelRef.current)) {
-      setOnTitleHover(true);
-    }
-  }
 }
 
 export default memo(VideoThumb);
