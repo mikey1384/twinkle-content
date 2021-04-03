@@ -200,7 +200,7 @@ export default function ContentPanel({
               style={{
                 width: '100%',
                 marginBottom: '1rem',
-                minHeight: contentShown ? 'auto' : placeholderHeight || '15rem'
+                height: contentShown ? 'auto' : placeholderHeight || '15rem'
               }}
             >
               {contentShown && (
