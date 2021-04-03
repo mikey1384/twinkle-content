@@ -229,7 +229,7 @@ function ProfilePanel({ expandable, profileId, style }) {
         ref={ContainerRef}
         style={{
           width: '100%',
-          minHeight: contentShown ? 'auto' : placeholderHeight || '20rem'
+          minHeight: contentShown ? 'auto' : placeholderHeight || '15rem'
         }}
       >
         {contentShown && (
