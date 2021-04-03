@@ -197,7 +197,7 @@ export default function InteractiveContent({ autoFocus, interactiveId }) {
               displayedSlideIds={displayedSlideIds}
               index={index}
               innerRef={(ref) => (SlideRefs.current[slideId] = ref)}
-              insertButtonShown={index !== 0 && canEdit}
+              insertButtonShown={canEdit}
               cannotMoveUp={
                 index === 0 || !!slideObj[displayedSlideIds[index - 1]]?.isFork
               }

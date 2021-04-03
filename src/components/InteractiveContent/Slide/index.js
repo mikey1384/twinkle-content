@@ -193,7 +193,7 @@ export default function Slide({
           slideId={slideId}
           slideObj={slideObj}
           className={css`
-            margin-top: 2rem;
+            margin-top: ${index === 0 ? 0 : '2rem'};
             @media (max-width: ${mobileMaxWidth}) {
               margin-top: 1rem;
             }
@@ -214,7 +214,7 @@ export default function Slide({
           padding-right: 2rem;
           padding-top: ${isEditing ? '2rem' : '1rem'};
           padding-bottom: 2rem;
-          margin-top: ${index === 0 ? 0 : canEdit ? '2rem' : '5rem'};
+          margin-top: ${canEdit ? '2rem' : index === 0 ? 0 : '5rem'};
           background: #fff;
           border: 1px solid ${Color.borderGray()};
           border-radius: ${borderRadius};

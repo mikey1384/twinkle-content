@@ -35,9 +35,7 @@ export default function Tutorial({
       )}
       {!!mission.tutorialId &&
         (isCreator ||
-          (mission.tutorialIsPublished &&
-            !mission.tutorialStarted &&
-            !mission.myAttempt?.status)) && (
+          (mission.tutorialIsPublished && !mission.tutorialStarted)) && (
           <ViewTutorial
             isCreator={isCreator}
             missionId={mission.id}
@@ -53,15 +51,12 @@ export default function Tutorial({
             }
           />
         )}
-      {!!mission.tutorialId &&
-        (mission.tutorialStarted ||
-          isCreator ||
-          !!mission.myAttempt?.status) && (
-          <InteractiveContent
-            autoFocus={!isCreator && !mission.myAttempt?.status}
-            interactiveId={mission.tutorialId}
-          />
-        )}
+      {!!mission.tutorialId && (mission.tutorialStarted || isCreator) && (
+        <InteractiveContent
+          autoFocus={!isCreator && !mission.myAttempt?.status}
+          interactiveId={mission.tutorialId}
+        />
+      )}
     </ErrorBoundary>
   );
 }
