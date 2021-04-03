@@ -496,7 +496,7 @@ export default function MessagesContainer({
             ) : (
               <div
                 style={{
-                  height: placeholderHeight
+                  minHeight: placeholderHeight
                 }}
               />
             )}

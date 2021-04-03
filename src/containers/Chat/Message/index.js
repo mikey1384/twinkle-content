@@ -571,7 +571,7 @@ function Message({
         <div
           style={{
             width: '100%',
-            height: placeholderHeight
+            minHeight: placeholderHeight
           }}
         />
       )}

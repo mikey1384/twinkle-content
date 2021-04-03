@@ -486,7 +486,7 @@ function Comment({
     <div ref={ComponentRef}>
       <div
         style={{
-          height: contentShown ? 'auto' : placeholderHeight,
+          minHeight: contentShown ? 'auto' : placeholderHeight,
           ...(isPreview ? { cursor: 'pointer' } : {})
         }}
         className={commentContainer}
