@@ -348,7 +348,7 @@ export function isValidUrl(url = '') {
 }
 
 export function isValidUsername(username) {
-  const pattern = new RegExp(/^[a-zA-Z0-9_]+$/);
+  const pattern = new RegExp(/^(?!.*___.*)[a-zA-Z0-9_]+$/);
   return (
     !!username &&
     username.length < 20 &&
