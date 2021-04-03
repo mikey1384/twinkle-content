@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import PropTypes from 'prop-types';
 import Board from './Board';
 import FallenPieces from './FallenPieces.js';
@@ -174,6 +180,381 @@ export default function Chess({
     parsedState,
     userMadeLastMove
   ]);
+
+  const handleMove = useCallback(
+    ({ newSquares, dest, isCheck, isDraw, isCheckmate, isStalemate }) => {
+      const moveDetail =
+        typeof dest === 'number'
+          ? {
+              piece: {
+                ...squares[selectedIndex],
+                state: 'blurred',
+                isPiece: false
+              },
+              from: getPositionId({ index: selectedIndex, myColor }),
+              to: getPositionId({ index: dest, myColor }),
+              srcIndex: myColor === 'black' ? 63 - selectedIndex : selectedIndex
+            }
+          : {};
+      const json = JSON.stringify({
+        move: {
+          number: move.number ? move.number + 1 : 1,
+          by: myId,
+          ...moveDetail
+        },
+        capturedPiece: capturedPiece.current?.type,
+        playerColors: playerColors.current || {
+          [myId]: 'white',
+          [opponentId]: 'black'
+        },
+        board: (myColor === 'black'
+          ? newSquares.map(
+              (square, index) => newSquares[newSquares.length - 1 - index]
+            )
+          : newSquares
+        ).map((square) =>
+          square.state === 'highlighted'
+            ? { ...square, state: '' }
+            : square.state === 'check' && isCheckmate
+            ? { ...square, state: 'checkmate' }
+            : square
+        ),
+        fallenPieces: fallenPieces.current,
+        enPassantTarget: enPassantTarget.current,
+        isCheck,
+        isCheckmate,
+        isDraw,
+        isStalemate
+      });
+      onChessMove({ state: json, isCheckmate, isStalemate });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [move.number, myColor, myId, opponentId, selectedIndex, squares]
+  );
+
+  const processResult = useCallback(
+    ({ myKingIndex, newSquares, dest, src }) => {
+      let isCheck = false;
+      const newWhiteFallenPieces = [...whiteFallenPieces];
+      const newBlackFallenPieces = [...blackFallenPieces];
+      const potentialCapturers = kingWillBeCapturedBy({
+        kingIndex: myKingIndex,
+        myColor,
+        squares: newSquares
+      });
+      if (potentialCapturers.length > 0) {
+        setSquares((squares) =>
+          squares.map((square, index) => {
+            if (potentialCapturers.includes(index)) {
+              return {
+                ...square,
+                state: 'danger'
+              };
+            }
+            return {
+              ...square,
+              state: square.state === 'danger' ? '' : square.state
+            };
+          })
+        );
+        setStatus('Your King will be captured if you make that move.');
+        return {};
+      }
+      if (typeof dest === 'number') {
+        if (squares[src].type === 'pawn') {
+          if (enPassantTarget.current) {
+            const srcColumn = src % 8;
+            const destRow = Math.floor(dest / 8);
+            const destColumn = dest % 8;
+            const enPassantTargetRow = Math.floor(enPassantTarget.current / 8);
+            const enPassantTargetColumn = enPassantTarget.current % 8;
+            const attacking =
+              Math.abs(srcColumn - destColumn) === 1 &&
+              destColumn === enPassantTargetColumn &&
+              destRow === enPassantTargetRow - 1;
+            const enPassanting = !squares[dest].isPiece && attacking;
+            if (enPassanting) {
+              myColor === 'white'
+                ? newBlackFallenPieces.push(squares[enPassantTarget.current])
+                : newWhiteFallenPieces.push(squares[enPassantTarget.current]);
+              capturedPiece.current = squares[enPassantTarget.current];
+            }
+          }
+        }
+        if (squares[dest].isPiece) {
+          squares[dest].color === 'white'
+            ? newWhiteFallenPieces.push(squares[dest])
+            : newBlackFallenPieces.push(squares[dest]);
+          capturedPiece.current = squares[dest];
+        }
+      }
+      setSelectedIndex(-1);
+      const theirKingIndex = getPieceIndex({
+        color: getOpponentPlayerColor(myColor),
+        squares: newSquares,
+        type: 'king'
+      });
+      if (
+        checkerPos({
+          squares: newSquares,
+          kingIndex: theirKingIndex,
+          myColor
+        }).length !== 0
+      ) {
+        newSquares[theirKingIndex] = {
+          ...newSquares[theirKingIndex],
+          state: 'check'
+        };
+        isCheck = true;
+      }
+      if (typeof dest === 'number') {
+        newSquares[dest].moved = true;
+      }
+      setSquares(newSquares);
+      setWhiteFallenPieces(newWhiteFallenPieces);
+      setBlackFallenPieces(newBlackFallenPieces);
+      fallenPieces.current = {
+        white: newWhiteFallenPieces,
+        black: newBlackFallenPieces
+      };
+      setStatus('');
+      const target =
+        newSquares[dest]?.type === 'pawn' && dest === src - 16
+          ? 63 - dest
+          : null;
+      enPassantTarget.current = target;
+      const gameOver = isGameOver({
+        squares: newSquares,
+        enPassantTarget: enPassantTarget.current,
+        myColor
+      });
+      if (gameOver) {
+        if (gameOver === 'Checkmate') {
+          setSquares((squares) =>
+            squares.map((square, index) =>
+              index === theirKingIndex
+                ? { ...square, state: 'checkmate' }
+                : square
+            )
+          );
+        }
+        setGameOverMsg(gameOver);
+      }
+      return {
+        moved: true,
+        isCheck,
+        isCheckmate: gameOver === 'Checkmate',
+        isStalemate: gameOver === 'Stalemate',
+        isDraw: gameOver === 'Draw'
+      };
+    },
+    [blackFallenPieces, myColor, squares, whiteFallenPieces]
+  );
+
+  const handleClick = useCallback(
+    (i) => {
+      if (!interactable || newChessState || userMadeLastMove) return;
+      if (selectedIndex === -1) {
+        if (!squares[i] || squares[i].color !== myColor) {
+          return;
+        }
+        setSquares((squares) =>
+          highlightPossiblePathsFromSrc({
+            color: myColor,
+            squares,
+            src: i,
+            enPassantTarget: enPassantTarget.current,
+            myColor
+          })
+        );
+        setStatus('');
+        setSelectedIndex(i);
+      } else {
+        if (squares[i] && squares[i].color === myColor) {
+          setSelectedIndex(i);
+          setStatus('');
+          setSquares((squares) =>
+            highlightPossiblePathsFromSrc({
+              color: myColor,
+              squares,
+              src: i,
+              enPassantTarget: enPassantTarget.current,
+              myColor
+            })
+          );
+        } else {
+          if (
+            isPossibleAndLegal({
+              src: selectedIndex,
+              dest: i,
+              squares,
+              enPassantTarget: enPassantTarget.current,
+              myColor
+            })
+          ) {
+            const newSquares = returnBoardAfterMove({
+              squares,
+              src: selectedIndex,
+              dest: i,
+              myColor,
+              enPassantTarget: enPassantTarget.current
+            });
+            const myKingIndex = getPieceIndex({
+              color: myColor,
+              squares: newSquares,
+              type: 'king'
+            });
+            const {
+              moved,
+              isCheck,
+              isCheckmate,
+              isDraw,
+              isStalemate
+            } = processResult({
+              myKingIndex,
+              newSquares,
+              dest: i,
+              src: selectedIndex
+            });
+            if (moved) {
+              handleMove({
+                newSquares,
+                dest: i,
+                isCheck,
+                isCheckmate,
+                isStalemate,
+                isDraw
+              });
+            }
+          }
+        }
+      }
+    },
+    [
+      handleMove,
+      interactable,
+      myColor,
+      newChessState,
+      processResult,
+      selectedIndex,
+      squares,
+      userMadeLastMove
+    ]
+  );
+
+  const handleSpoilerClick = useCallback(() => {
+    if (
+      banned?.chess ||
+      loadingRef.current ||
+      selectedChannelId !== channelId ||
+      senderId === userId ||
+      creatingNewDMChannel
+    ) {
+      return;
+    }
+    onSpoilerClick(senderId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    banned?.chess,
+    channelId,
+    creatingNewDMChannel,
+    selectedChannelId,
+    senderId,
+    userId
+  ]);
+
+  const handleCastling = useCallback(
+    (direction) => {
+      const actualSquares = squares.map((square) =>
+        square.isPiece ? square : {}
+      );
+      const { playerPieces } = getPlayerPieces({
+        color: getOpponentPlayerColor(myColor),
+        squares: actualSquares
+      });
+      let kingPos = getPieceIndex({
+        color: myColor,
+        squares: actualSquares,
+        type: 'king'
+      });
+      let rookPos = -1;
+      let kingMidDest = -1;
+      let kingEndDest = -1;
+
+      if (direction === 'right') {
+        rookPos = 63;
+        if (myColor === 'white') {
+          kingMidDest = 61;
+          kingEndDest = 62;
+        } else {
+          kingMidDest = 60;
+          kingEndDest = 61;
+        }
+      } else {
+        rookPos = 56;
+        if (myColor === 'white') {
+          kingMidDest = 59;
+          kingEndDest = 58;
+        } else {
+          kingMidDest = 58;
+          kingEndDest = 57;
+        }
+      }
+
+      for (let piece of playerPieces) {
+        if (
+          isPossibleAndLegal({
+            src: piece.index,
+            dest: kingMidDest,
+            squares: actualSquares,
+            myColor
+          })
+        ) {
+          setSquares(
+            actualSquares.map((square, index) => {
+              if (index === piece.index) {
+                return {
+                  ...square,
+                  state: 'danger'
+                };
+              }
+              return {
+                ...square,
+                state: square.state === 'danger' ? '' : square.state
+              };
+            })
+          );
+          setStatus(
+            `Castling not allowed because the king cannot pass through a square that is attacked by an enemy piece`
+          );
+          return;
+        }
+      }
+      const rookDest = kingMidDest;
+      const newSquares = returnBoardAfterMove({
+        squares: returnBoardAfterMove({
+          squares: actualSquares,
+          src: kingPos,
+          dest: kingEndDest,
+          myColor,
+          isCastling: true
+        }),
+        src: rookPos,
+        dest: rookDest,
+        myColor,
+        kingEndDest,
+        isCastling: true
+      });
+      const { moved, isCheck, isCheckmate, isStalemate } = processResult({
+        myKingIndex: kingEndDest,
+        newSquares
+      });
+      if (moved) {
+        handleMove({ newSquares, isCheck, isCheckmate, isStalemate });
+      }
+    },
+    [handleMove, myColor, processResult, squares]
+  );
 
   return (
     <div
@@ -547,354 +928,4 @@ export default function Chess({
         )}
     </div>
   );
-
-  function handleCastling(direction) {
-    const actualSquares = squares.map((square) =>
-      square.isPiece ? square : {}
-    );
-    const { playerPieces } = getPlayerPieces({
-      color: getOpponentPlayerColor(myColor),
-      squares: actualSquares
-    });
-    let kingPos = getPieceIndex({
-      color: myColor,
-      squares: actualSquares,
-      type: 'king'
-    });
-    let rookPos = -1;
-    let kingMidDest = -1;
-    let kingEndDest = -1;
-
-    if (direction === 'right') {
-      rookPos = 63;
-      if (myColor === 'white') {
-        kingMidDest = 61;
-        kingEndDest = 62;
-      } else {
-        kingMidDest = 60;
-        kingEndDest = 61;
-      }
-    } else {
-      rookPos = 56;
-      if (myColor === 'white') {
-        kingMidDest = 59;
-        kingEndDest = 58;
-      } else {
-        kingMidDest = 58;
-        kingEndDest = 57;
-      }
-    }
-
-    for (let piece of playerPieces) {
-      if (
-        isPossibleAndLegal({
-          src: piece.index,
-          dest: kingMidDest,
-          squares: actualSquares,
-          myColor
-        })
-      ) {
-        setSquares(
-          actualSquares.map((square, index) => {
-            if (index === piece.index) {
-              return {
-                ...square,
-                state: 'danger'
-              };
-            }
-            return {
-              ...square,
-              state: square.state === 'danger' ? '' : square.state
-            };
-          })
-        );
-        setStatus(
-          `Castling not allowed because the king cannot pass through a square that is attacked by an enemy piece`
-        );
-        return;
-      }
-    }
-    const rookDest = kingMidDest;
-    const newSquares = returnBoardAfterMove({
-      squares: returnBoardAfterMove({
-        squares: actualSquares,
-        src: kingPos,
-        dest: kingEndDest,
-        myColor,
-        isCastling: true
-      }),
-      src: rookPos,
-      dest: rookDest,
-      myColor,
-      kingEndDest,
-      isCastling: true
-    });
-    const { moved, isCheck, isCheckmate, isStalemate } = processResult({
-      myKingIndex: kingEndDest,
-      newSquares
-    });
-    if (moved) {
-      handleMove({ newSquares, isCheck, isCheckmate, isStalemate });
-    }
-  }
-
-  function handleClick(i) {
-    if (!interactable || newChessState || userMadeLastMove) return;
-    if (selectedIndex === -1) {
-      if (!squares[i] || squares[i].color !== myColor) {
-        return;
-      }
-      setSquares((squares) =>
-        highlightPossiblePathsFromSrc({
-          color: myColor,
-          squares,
-          src: i,
-          enPassantTarget: enPassantTarget.current,
-          myColor
-        })
-      );
-      setStatus('');
-      setSelectedIndex(i);
-    } else {
-      if (squares[i] && squares[i].color === myColor) {
-        setSelectedIndex(i);
-        setStatus('');
-        setSquares((squares) =>
-          highlightPossiblePathsFromSrc({
-            color: myColor,
-            squares,
-            src: i,
-            enPassantTarget: enPassantTarget.current,
-            myColor
-          })
-        );
-      } else {
-        if (
-          isPossibleAndLegal({
-            src: selectedIndex,
-            dest: i,
-            squares,
-            enPassantTarget: enPassantTarget.current,
-            myColor
-          })
-        ) {
-          const newSquares = returnBoardAfterMove({
-            squares,
-            src: selectedIndex,
-            dest: i,
-            myColor,
-            enPassantTarget: enPassantTarget.current
-          });
-          const myKingIndex = getPieceIndex({
-            color: myColor,
-            squares: newSquares,
-            type: 'king'
-          });
-          const {
-            moved,
-            isCheck,
-            isCheckmate,
-            isDraw,
-            isStalemate
-          } = processResult({
-            myKingIndex,
-            newSquares,
-            dest: i,
-            src: selectedIndex
-          });
-          if (moved) {
-            handleMove({
-              newSquares,
-              dest: i,
-              isCheck,
-              isCheckmate,
-              isStalemate,
-              isDraw
-            });
-          }
-        }
-      }
-    }
-  }
-
-  function handleMove({
-    newSquares,
-    dest,
-    isCheck,
-    isDraw,
-    isCheckmate,
-    isStalemate
-  }) {
-    const moveDetail =
-      typeof dest === 'number'
-        ? {
-            piece: {
-              ...squares[selectedIndex],
-              state: 'blurred',
-              isPiece: false
-            },
-            from: getPositionId({ index: selectedIndex, myColor }),
-            to: getPositionId({ index: dest, myColor }),
-            srcIndex: myColor === 'black' ? 63 - selectedIndex : selectedIndex
-          }
-        : {};
-    const json = JSON.stringify({
-      move: {
-        number: move.number ? move.number + 1 : 1,
-        by: myId,
-        ...moveDetail
-      },
-      capturedPiece: capturedPiece.current?.type,
-      playerColors: playerColors.current || {
-        [myId]: 'white',
-        [opponentId]: 'black'
-      },
-      board: (myColor === 'black'
-        ? newSquares.map(
-            (square, index) => newSquares[newSquares.length - 1 - index]
-          )
-        : newSquares
-      ).map((square) =>
-        square.state === 'highlighted'
-          ? { ...square, state: '' }
-          : square.state === 'check' && isCheckmate
-          ? { ...square, state: 'checkmate' }
-          : square
-      ),
-      fallenPieces: fallenPieces.current,
-      enPassantTarget: enPassantTarget.current,
-      isCheck,
-      isCheckmate,
-      isDraw,
-      isStalemate
-    });
-    onChessMove({ state: json, isCheckmate, isStalemate });
-  }
-
-  function processResult({ myKingIndex, newSquares, dest, src }) {
-    let isCheck = false;
-    const newWhiteFallenPieces = [...whiteFallenPieces];
-    const newBlackFallenPieces = [...blackFallenPieces];
-    const potentialCapturers = kingWillBeCapturedBy({
-      kingIndex: myKingIndex,
-      myColor,
-      squares: newSquares
-    });
-    if (potentialCapturers.length > 0) {
-      setSquares((squares) =>
-        squares.map((square, index) => {
-          if (potentialCapturers.includes(index)) {
-            return {
-              ...square,
-              state: 'danger'
-            };
-          }
-          return {
-            ...square,
-            state: square.state === 'danger' ? '' : square.state
-          };
-        })
-      );
-      setStatus('Your King will be captured if you make that move.');
-      return {};
-    }
-    if (typeof dest === 'number') {
-      if (squares[src].type === 'pawn') {
-        if (enPassantTarget.current) {
-          const srcColumn = src % 8;
-          const destRow = Math.floor(dest / 8);
-          const destColumn = dest % 8;
-          const enPassantTargetRow = Math.floor(enPassantTarget.current / 8);
-          const enPassantTargetColumn = enPassantTarget.current % 8;
-          const attacking =
-            Math.abs(srcColumn - destColumn) === 1 &&
-            destColumn === enPassantTargetColumn &&
-            destRow === enPassantTargetRow - 1;
-          const enPassanting = !squares[dest].isPiece && attacking;
-          if (enPassanting) {
-            myColor === 'white'
-              ? newBlackFallenPieces.push(squares[enPassantTarget.current])
-              : newWhiteFallenPieces.push(squares[enPassantTarget.current]);
-            capturedPiece.current = squares[enPassantTarget.current];
-          }
-        }
-      }
-      if (squares[dest].isPiece) {
-        squares[dest].color === 'white'
-          ? newWhiteFallenPieces.push(squares[dest])
-          : newBlackFallenPieces.push(squares[dest]);
-        capturedPiece.current = squares[dest];
-      }
-    }
-    setSelectedIndex(-1);
-    const theirKingIndex = getPieceIndex({
-      color: getOpponentPlayerColor(myColor),
-      squares: newSquares,
-      type: 'king'
-    });
-    if (
-      checkerPos({
-        squares: newSquares,
-        kingIndex: theirKingIndex,
-        myColor
-      }).length !== 0
-    ) {
-      newSquares[theirKingIndex] = {
-        ...newSquares[theirKingIndex],
-        state: 'check'
-      };
-      isCheck = true;
-    }
-    if (typeof dest === 'number') {
-      newSquares[dest].moved = true;
-    }
-    setSquares(newSquares);
-    setWhiteFallenPieces(newWhiteFallenPieces);
-    setBlackFallenPieces(newBlackFallenPieces);
-    fallenPieces.current = {
-      white: newWhiteFallenPieces,
-      black: newBlackFallenPieces
-    };
-    setStatus('');
-    const target =
-      newSquares[dest]?.type === 'pawn' && dest === src - 16 ? 63 - dest : null;
-    enPassantTarget.current = target;
-    const gameOver = isGameOver({
-      squares: newSquares,
-      enPassantTarget: enPassantTarget.current,
-      myColor
-    });
-    if (gameOver) {
-      if (gameOver === 'Checkmate') {
-        setSquares((squares) =>
-          squares.map((square, index) =>
-            index === theirKingIndex
-              ? { ...square, state: 'checkmate' }
-              : square
-          )
-        );
-      }
-      setGameOverMsg(gameOver);
-    }
-    return {
-      moved: true,
-      isCheck,
-      isCheckmate: gameOver === 'Checkmate',
-      isStalemate: gameOver === 'Stalemate',
-      isDraw: gameOver === 'Draw'
-    };
-  }
-
-  function handleSpoilerClick() {
-    if (
-      banned?.chess ||
-      loadingRef.current ||
-      selectedChannelId !== channelId ||
-      senderId === userId ||
-      creatingNewDMChannel
-    ) {
-      return;
-    }
-    onSpoilerClick(senderId);
-  }
 }
