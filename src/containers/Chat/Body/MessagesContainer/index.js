@@ -554,21 +554,18 @@ export default function MessagesContainer({
             bottom: '1rem',
             display: 'flex',
             justifyContent: 'center',
-            width: '100%'
+            width: '100%',
+            zIndex: 1000
           }}
         >
           {newUnseenMessage && (
             <Button
               filled
               color="orange"
+              style={{ opacity: 0.9 }}
               onClick={() => {
                 setNewUnseenMessage(false);
-                setTimeout(() => {
-                  if (mounted.current && MessagesContainerRef.current) {
-                    MessagesContainerRef.current.scrollTop =
-                      ContentRef.current?.offsetHeight || 0;
-                  }
-                }, 100);
+                handleSetScrollToBottom();
               }}
             >
               New Message

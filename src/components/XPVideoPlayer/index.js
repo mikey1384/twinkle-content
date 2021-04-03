@@ -41,6 +41,13 @@ function XPVideoPlayer({
   videoCode,
   videoId
 }) {
+  const mounted = useRef(true);
+  useEffect(() => {
+    mounted.current = true;
+    return function onUnmount() {
+      mounted.current = false;
+    };
+  }, []);
   const {
     requestHelpers: {
       addVideoView,
@@ -99,7 +106,6 @@ function XPVideoPlayer({
   const totalDurationRef = useRef(0);
   const userIdRef = useRef(userId);
   const watchCodeRef = useRef(Math.floor(Math.random() * 10000));
-  const mounted = useRef(true);
   const rewardingCoin = useRef(false);
   const rewardingXP = useRef(false);
   const themeColor = profileTheme || 'logoBlue';
@@ -110,7 +116,7 @@ function XPVideoPlayer({
     async function init() {
       if (userId) {
         const currentTime = await loadVideoCurrentTime(videoId);
-        if (currentTime) {
+        if (currentTime && mounted.current) {
           setStartingPosition(currentTime);
         }
       }
@@ -124,7 +130,6 @@ function XPVideoPlayer({
   }, []);
 
   useEffect(() => {
-    mounted.current = true;
     return function cleanUp() {
       handleVideoStop();
       onSetVideoStarted({
@@ -133,7 +138,6 @@ function XPVideoPlayer({
         started: false
       });
       clearInterval(timerRef.current);
-      mounted.current = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [videoId]);
@@ -200,7 +204,9 @@ function XPVideoPlayer({
               targetId: videoId,
               type: 'increase'
             });
-            onUpdateUserCoins({ coins, userId });
+            if (mounted.current) {
+              onUpdateUserCoins({ coins, userId });
+            }
             rewardingCoin.current = false;
           } catch (error) {
             console.error(error.response || error);
@@ -217,7 +223,9 @@ function XPVideoPlayer({
               targetId: videoId,
               type: 'increase'
             });
-            onChangeUserXP({ xp, rank, userId });
+            if (mounted.current) {
+              onChangeUserXP({ xp, rank, userId });
+            }
             rewardingXP.current = false;
           } catch (error) {
             console.error(error.response || error);
@@ -257,7 +265,7 @@ function XPVideoPlayer({
               watchCode: watchCodeRef.current
             }
           );
-          if (currentlyWatchingAnotherVideo) {
+          if (currentlyWatchingAnotherVideo && mounted.current) {
             PlayerRef.current?.getInternalPlayer()?.pauseVideo?.();
           }
         }
@@ -278,7 +286,9 @@ function XPVideoPlayer({
         await updateCurrentlyWatching({
           watchCode: watchCodeRef.current
         });
-        setPlaying(true);
+        if (mounted.current) {
+          setPlaying(true);
+        }
         const time = PlayerRef.current.getCurrentTime();
         if (Math.floor(time) === 0 && userId) {
           addVideoView({ videoId, userId });
