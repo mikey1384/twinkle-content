@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import EditTextArea from 'components/Texts/EditTextArea';
@@ -61,6 +61,32 @@ function TextMessage({
     requestHelpers: { hideChatAttachment }
   } = useAppContext();
 
+  const Prefix = useMemo(() => {
+    let prefix = '';
+    if (isSubject) {
+      prefix = (
+        <span style={{ fontWeight: 'bold', color: Color[theme || 'green']() }}>
+          Subject:{' '}
+        </span>
+      );
+    }
+    if (isReloadedSubject) {
+      prefix = (
+        <span style={{ fontWeight: 'bold', color: Color[theme || 'green']() }}>
+          {'Returning Subject: '}
+        </span>
+      );
+    }
+    return prefix;
+  }, [isReloadedSubject, isSubject, theme]);
+
+  const handleHideAttachment = useCallback(async () => {
+    await hideChatAttachment(messageId);
+    onHideAttachment(messageId);
+    socket.emit('hide_message_attachment', { channelId, messageId });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [channelId, messageId]);
+
   return (
     <ErrorBoundary>
       <div>
@@ -79,7 +105,7 @@ function TextMessage({
         ) : (
           <div>
             <div className={MessageStyle.messageWrapper}>
-              {renderPrefix()}
+              {Prefix}
               {isValidSpoiler(content) ? (
                 <Spoiler
                   content={content}
@@ -124,31 +150,6 @@ function TextMessage({
       </div>
     </ErrorBoundary>
   );
-
-  async function handleHideAttachment() {
-    await hideChatAttachment(messageId);
-    onHideAttachment(messageId);
-    socket.emit('hide_message_attachment', { channelId, messageId });
-  }
-
-  function renderPrefix() {
-    let prefix = '';
-    if (isSubject) {
-      prefix = (
-        <span style={{ fontWeight: 'bold', color: Color[theme || 'green']() }}>
-          Subject:{' '}
-        </span>
-      );
-    }
-    if (isReloadedSubject) {
-      prefix = (
-        <span style={{ fontWeight: 'bold', color: Color[theme || 'green']() }}>
-          {'Returning Subject: '}
-        </span>
-      );
-    }
-    return prefix;
-  }
 }
 
 export default memo(TextMessage);

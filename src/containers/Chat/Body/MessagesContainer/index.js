@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
@@ -361,6 +367,53 @@ export default function MessagesContainer({
   useEffect(() => {
     favoritingRef.current = false;
     setLoadMoreButtonLock(false);
+  }, [selectedChannelId]);
+
+  const handleChessModalShown = useCallback(() => {
+    if (banned?.chess) {
+      return;
+    }
+    const channelId = currentChannel?.id;
+    if (chessCountdownObj[channelId] !== 0) {
+      onSetReplyTarget(null);
+      onSetChessModalShown(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [banned?.chess, chessCountdownObj, currentChannel?.id]);
+
+  const handleImagePaste = useCallback(
+    (file) => {
+      if (file.size / mb > maxSize) {
+        return setAlertModalShown(true);
+      }
+      setFileObj(file);
+      setUploadModalShown(true);
+    },
+    [maxSize]
+  );
+
+  const handleUpload = useCallback(
+    (event) => {
+      const file = event.target.files[0];
+      if (file.size / mb > maxSize) {
+        return setAlertModalShown(true);
+      }
+      setFileObj(file);
+      setUploadModalShown(true);
+      event.target.value = null;
+    },
+    [maxSize]
+  );
+
+  const handleHideChat = useCallback(async () => {
+    await hideChat(selectedChannelId);
+    onHideChat(selectedChannelId);
+    const data = await loadChatChannel({
+      channelId: GENERAL_CHAT_ID
+    });
+    onEnterChannelWithId({ data });
+    setHideModalShown(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedChannelId]);
 
   return (
@@ -730,17 +783,6 @@ export default function MessagesContainer({
     </ErrorBoundary>
   );
 
-  function handleChessModalShown() {
-    if (banned?.chess) {
-      return;
-    }
-    const channelId = currentChannel?.id;
-    if (chessCountdownObj[channelId] !== 0) {
-      onSetReplyTarget(null);
-      onSetChessModalShown(true);
-    }
-  }
-
   function handleChessSpoilerClick(senderId) {
     socket.emit('viewed_chess_move', selectedChannelId);
     socket.emit('start_chess_timer', {
@@ -1106,33 +1148,5 @@ export default function MessagesContainer({
       filePath,
       messageId
     });
-  }
-
-  async function handleHideChat() {
-    await hideChat(selectedChannelId);
-    onHideChat(selectedChannelId);
-    const data = await loadChatChannel({
-      channelId: GENERAL_CHAT_ID
-    });
-    onEnterChannelWithId({ data });
-    setHideModalShown(false);
-  }
-
-  function handleImagePaste(file) {
-    if (file.size / mb > maxSize) {
-      return setAlertModalShown(true);
-    }
-    setFileObj(file);
-    setUploadModalShown(true);
-  }
-
-  function handleUpload(event) {
-    const file = event.target.files[0];
-    if (file.size / mb > maxSize) {
-      return setAlertModalShown(true);
-    }
-    setFileObj(file);
-    setUploadModalShown(true);
-    event.target.value = null;
   }
 }
