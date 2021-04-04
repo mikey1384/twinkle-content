@@ -10,7 +10,7 @@ import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 import { useAppContext, useMissionContext } from 'contexts';
 import { v1 as uuidv1 } from 'uuid';
 import { css } from '@emotion/css';
-import { mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 
 TakeScreenshot.propTypes = {
   attachment: PropTypes.object,
@@ -35,6 +35,7 @@ export default function TakeScreenshot({
   const {
     actions: { onUpdateMissionAttempt }
   } = useMissionContext();
+  const [screenshotTaken, setScreenshotTaken] = useState(false);
   const [submitDisabled, setSubmitDisabled] = useState(false);
   const { fileUploadLvl, username } = useMyState();
   const [alertModalShown, setAlertModalShown] = useState(false);
@@ -79,9 +80,11 @@ export default function TakeScreenshot({
             Follow the instructions below
           </div>
           <div>
-            <b>1.</b> Take a screenshot of{' '}
-            <b>the screen you are looking at right now</b> and tap the button
-            below to select the screenshot from your computer
+            <b>1.</b> Take the screenshot of{' '}
+            <b>
+              this screen you are looking at right now{' '}
+              <Icon icon="arrow-down" />
+            </b>
             <div
               className={css`
                 font-size: 1.3rem;
@@ -99,6 +102,17 @@ export default function TakeScreenshot({
               }}
             >
               <div
+                className={css`
+                  border: 1px solid ${Color.borderGray()};
+                  border-radius: ${borderRadius};
+                  text-align: center;
+                  padding: 1rem;
+                  background: ${Color.ivory()};
+                  font-size: 1.7rem;
+                  @media (max-width: ${mobileMaxWidth}) {
+                    font-size: 1.3rem;
+                  }
+                `}
                 style={{
                   display: 'flex',
                   width: '60%',
@@ -106,15 +120,7 @@ export default function TakeScreenshot({
                   alignItems: 'center'
                 }}
               >
-                <p
-                  className={css`
-                    font-size: 1.5rem;
-                    @media (max-width: ${mobileMaxWidth}) {
-                      font-size: 1.3rem;
-                    }
-                  `}
-                  style={{ fontWeight: 'bold' }}
-                >
+                <p style={{ fontWeight: 'bold' }}>
                   Your screenshot must include this section
                 </p>
                 <p style={{ marginTop: '1.5rem' }}>
@@ -126,60 +132,132 @@ export default function TakeScreenshot({
           {attachment?.preview && (
             <div style={{ marginTop: '1rem' }}>
               <img style={{ width: '100%' }} src={attachment?.preview} />
-              <div style={{ marginTop: '1rem' }}>
-                <b>2.</b>{' '}
+              <div style={{ marginTop: '1.5rem' }}>
+                <b>3.</b>{' '}
                 {`Make sure you've selected the correct file and then tap "Submit"`}
               </div>
             </div>
           )}
         </>
       )}
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          marginTop: '3rem'
-        }}
-      >
-        {!attachment?.preview && (
-          <Button
-            skeuomorphic
-            style={{ fontSize: '2rem' }}
-            onClick={() => FileInputRef.current.click()}
-          >
-            <Icon icon="image" />
-            <span style={{ marginLeft: '1rem' }}>Select Screenshot</span>
-          </Button>
-        )}
-        {attachment?.preview && (
-          <Button
-            disabled={submitDisabled}
-            color="darkBlue"
-            skeuomorphic
-            style={{ fontSize: '2rem' }}
-            onClick={handleFileUpload}
-          >
-            <Icon icon="upload" />
-            <span style={{ marginLeft: '1rem' }}>Submit</span>
-          </Button>
-        )}
-        <input
-          ref={FileInputRef}
-          style={{ display: 'none' }}
-          type="file"
-          accept="image/*"
-          onChange={handleFileSelection}
-        />
-        {alertModalShown && (
-          <AlertModal
-            title="File is too large"
-            content={`The file size is larger than your limit of ${
-              maxSize / mb
-            } MB`}
-            onHide={() => setAlertModalShown(false)}
+      {screenshotTaken ? (
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: '2rem'
+          }}
+        >
+          {!attachment?.preview && (
+            <p>
+              <b>2.</b> Press this{' '}
+              <b style={{ color: Color.logoBlue() }}>button</b> and select the
+              screenshot image file you have just taken
+            </p>
+          )}
+          {!attachment?.preview && (
+            <Button
+              skeuomorphic
+              color="logoBlue"
+              style={{ fontSize: '2rem', marginTop: '1.5rem' }}
+              onClick={() => FileInputRef.current.click()}
+            >
+              <Icon icon="image" />
+              <span style={{ marginLeft: '1rem' }}>Select Screenshot</span>
+            </Button>
+          )}
+          {attachment?.preview && (
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center'
+              }}
+            >
+              <Button
+                disabled={submitDisabled}
+                color="darkBlue"
+                skeuomorphic
+                style={{ fontSize: '2rem' }}
+                onClick={handleFileUpload}
+              >
+                <Icon icon="upload" />
+                <span style={{ marginLeft: '1rem' }}>Submit</span>
+              </Button>
+              <Button
+                color="darkerGray"
+                skeuomorphic
+                style={{ fontSize: '2rem', marginTop: '1rem' }}
+                onClick={() =>
+                  onSetMissionState({
+                    missionId,
+                    newState: {
+                      attachment: null
+                    }
+                  })
+                }
+              >
+                <span style={{ marginLeft: '1rem' }}>
+                  I selected a wrong file
+                </span>
+              </Button>
+            </div>
+          )}
+          <input
+            ref={FileInputRef}
+            style={{ display: 'none' }}
+            type="file"
+            accept="image/*"
+            onChange={handleFileSelection}
           />
-        )}
-      </div>
+        </div>
+      ) : (
+        <div
+          style={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}
+        >
+          <div
+            style={{
+              marginTop: '1rem',
+              width: '50%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center'
+            }}
+          >
+            <Button
+              filled
+              color="logoBlue"
+              onClick={() => setScreenshotTaken(true)}
+            >
+              I took the screenshot
+            </Button>
+          </div>
+          <div style={{ marginTop: '5rem' }}>
+            <span>
+              {`If you don't know what the word "screenshot" means, `}
+              press the <b style={{ color: Color.green() }}>button</b> below
+            </span>
+            <Icon style={{ marginLeft: '1rem' }} icon="arrow-down" />
+          </div>
+        </div>
+      )}
+      {alertModalShown && (
+        <AlertModal
+          title="File is too large"
+          content={`The file size is larger than your limit of ${
+            maxSize / mb
+          } MB`}
+          onHide={() => setAlertModalShown(false)}
+        />
+      )}
     </div>
   );
 
