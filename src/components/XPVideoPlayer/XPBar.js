@@ -165,13 +165,13 @@ export default function XPBar({
   return userId ? (
     <ErrorBoundary>
       <div
-        style={{
-          display: 'flex',
-          marginTop: '1rem',
-          alignItems: 'center',
-          width: '100%',
-          justifyContent: 'space-between'
-        }}
+        className={css`
+          display: flex;
+          margin-top: 1rem;
+          align-items: center;
+          width: 100%;
+          justify-content: space-between;
+        `}
       >
         {Bar}
         {!!rewardLevel && (
@@ -183,7 +183,6 @@ export default function XPBar({
               display: flex;
               @media (max-width: ${mobileMaxWidth}) {
                 min-width: 0;
-                flex-grow: 1;
                 max-width: 8.5rem;
                 height: ${isChat ? '2rem' : '2.7rem'};
               }
