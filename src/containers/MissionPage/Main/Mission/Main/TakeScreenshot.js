@@ -233,7 +233,7 @@ export default function TakeScreenshot({
             }}
           >
             <Button
-              filled
+              skeuomorphic
               color="logoBlue"
               onClick={() => setScreenshotTaken(true)}
             >
