@@ -215,6 +215,9 @@ export default function XPBar({
             {canEarnCoins && (
               <div>
                 <div
+                  onClick={() =>
+                    isViewingOnMobile ? setHovered((hovered) => !hovered) : {}
+                  }
                   onMouseEnter={
                     twinkleCoins > 1000 ? () => setHovered(true) : () => {}
                   }
@@ -255,6 +258,7 @@ export default function XPBar({
                       marginTop: '0.5rem',
                       color: '#000',
                       width: '30rem',
+                      fontSize: '1.2rem',
                       position: 'absolute'
                     }}
                     text={`You can no longer earn Twinkle Coins by watching videos because you have more than 1,000 coins`}
