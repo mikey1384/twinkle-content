@@ -1,4 +1,11 @@
-import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import PropTypes from 'prop-types';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
 import ProfilePic from 'components/ProfilePic';
@@ -267,7 +274,7 @@ function Message({
 
   useEffect(() => {
     if (isLastMsg && (!isNewMessage || userIsUploader)) {
-      onSetScrollToBottom();
+      handleScrollToBottomBasedComponentHeight();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEditing, reconnecting]);
@@ -321,78 +328,181 @@ function Message({
     [inView, isLastMsg, placeholderHeight, started, visible]
   );
 
-  const messageMenuItems = [
-    {
-      label: (
-        <>
-          <Icon icon="reply" />
-          <span style={{ marginLeft: '1rem' }}>Reply</span>
-        </>
-      ),
-      onClick: () => {
-        onSetReplyTarget(
-          rewardAmount
-            ? targetMessage
-            : { ...message, thumbUrl: thumbUrl || recentThumbUrl }
-        );
-        onReplyClick();
-      }
-    }
-  ];
-  if (userCanEditThis && !rewardAmount) {
-    messageMenuItems.push({
-      label: (
-        <>
-          <Icon icon="pencil-alt"></Icon>
-          <span style={{ marginLeft: '1rem' }}>Edit</span>
-        </>
-      ),
-      onClick: () => {
-        onSetIsEditing({
-          contentId: messageId,
-          contentType: 'chat',
-          isEditing: true
-        });
-      }
-    });
-  }
-  if ((userIsUploader || canDelete) && !isDrawOffer) {
-    messageMenuItems.push({
-      label: (
-        <>
-          <Icon icon="trash-alt"></Icon>
-          <span style={{ marginLeft: '1rem' }}>Remove</span>
-        </>
-      ),
-      onClick: () => {
-        onDelete({ messageId });
-      }
-    });
-  }
-  if (
-    ((userCanRewardThis && channelId === 2) ||
-      (isCreator && !userIsUploader)) &&
-    !rewardAmount
-  ) {
-    messageMenuItems.push({
-      label: (
-        <>
-          <Icon icon="star"></Icon>
-          <span style={{ marginLeft: '1rem' }}>Reward</span>
-        </>
-      ),
-      style: { color: '#fff', background: Color.pink() },
-      className: css`
-        opacity: 0.9;
-        &:hover {
-          opacity: 1 !important;
+  const messageMenuItems = useMemo(() => {
+    const result = [
+      {
+        label: (
+          <>
+            <Icon icon="reply" />
+            <span style={{ marginLeft: '1rem' }}>Reply</span>
+          </>
+        ),
+        onClick: () => {
+          onSetReplyTarget(
+            rewardAmount
+              ? targetMessage
+              : { ...message, thumbUrl: thumbUrl || recentThumbUrl }
+          );
+          onReplyClick();
         }
-      `,
-      onClick: () => setMessageRewardModalShown(true)
+      }
+    ];
+    if (userCanEditThis && !rewardAmount) {
+      result.push({
+        label: (
+          <>
+            <Icon icon="pencil-alt"></Icon>
+            <span style={{ marginLeft: '1rem' }}>Edit</span>
+          </>
+        ),
+        onClick: () => {
+          onSetIsEditing({
+            contentId: messageId,
+            contentType: 'chat',
+            isEditing: true
+          });
+        }
+      });
+    }
+    if ((userIsUploader || canDelete) && !isDrawOffer) {
+      result.push({
+        label: (
+          <>
+            <Icon icon="trash-alt"></Icon>
+            <span style={{ marginLeft: '1rem' }}>Remove</span>
+          </>
+        ),
+        onClick: () => {
+          onDelete({ messageId });
+        }
+      });
+    }
+    if (
+      ((userCanRewardThis && channelId === 2) ||
+        (isCreator && !userIsUploader)) &&
+      !rewardAmount
+    ) {
+      result.push({
+        label: (
+          <>
+            <Icon icon="star"></Icon>
+            <span style={{ marginLeft: '1rem' }}>Reward</span>
+          </>
+        ),
+        style: { color: '#fff', background: Color.pink() },
+        className: css`
+          opacity: 0.9;
+          &:hover {
+            opacity: 1 !important;
+          }
+        `,
+        onClick: () => setMessageRewardModalShown(true)
+      });
+    }
+    return result;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    canDelete,
+    channelId,
+    isCreator,
+    isDrawOffer,
+    message,
+    messageId,
+    recentThumbUrl,
+    rewardAmount,
+    targetMessage,
+    thumbUrl,
+    userCanEditThis,
+    userCanRewardThis,
+    userIsUploader
+  ]);
+
+  const displayedTimeStamp = useMemo(() => unix(timeStamp).format('LLL'), [
+    timeStamp
+  ]);
+
+  const fileViewerMarginBottom = useMemo(
+    () => getFileInfoFromFileName(fileName)?.fileType === 'audio' && '2rem',
+    [fileName]
+  );
+
+  const dropdownButtonShown = useMemo(
+    () => !!messageId && !isNotification && !isChessMsg && !isEditing,
+    [isChessMsg, isEditing, isNotification, messageId]
+  );
+
+  const handleChessSpoilerClick = useCallback(async () => {
+    onSetReplyTarget(null);
+    try {
+      await setChessMoveViewTimeStamp({ channelId, message });
+      onUpdateChessMoveViewTimeStamp();
+      onChessSpoilerClick(userId);
+    } catch (error) {
+      console.error(error);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [channelId, message, userId]);
+
+  const handleRewardMessageSubmit = useCallback(
+    ({ reasonId, amount }) => {
+      onRewardMessageSubmit({ amount, reasonId, message });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [message]
+  );
+
+  const handleSetScrollToBottom = useCallback(() => {
+    if (isLastMsg) {
+      onSetScrollToBottom();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLastMsg]);
+
+  const handleEditCancel = useCallback(() => {
+    onSetIsEditing({
+      contentId: messageId,
+      contentType: 'chat',
+      isEditing: false
     });
-  }
-  const dropdownButtonShown =
-    !!messageId && !isNotification && !isChessMsg && !isEditing;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [messageId]);
+
+  const handleEditDone = useCallback(
+    async (editedMessage) => {
+      const messageIsSubject = !!isSubject || !!isReloadedSubject;
+      const subjectChanged = await editChatMessage({
+        editedMessage,
+        messageId,
+        isSubject: messageIsSubject,
+        subjectId
+      });
+      onEditMessage({
+        editedMessage,
+        messageId,
+        isSubject: messageIsSubject,
+        subjectChanged
+      });
+      socket.emit('edit_chat_message', {
+        channelId,
+        editedMessage,
+        messageId,
+        isSubject: messageIsSubject
+      });
+      onSetIsEditing({
+        contentId: messageId,
+        contentType: 'chat',
+        isEditing: false
+      });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [channelId, isReloadedSubject, isSubject, messageId, subjectId]
+  );
+
+  const handleScrollToBottomBasedComponentHeight = useCallback(() => {
+    if (placeholderHeight < 200) {
+      handleSetScrollToBottom();
+    }
+  }, [handleSetScrollToBottom, placeholderHeight]);
 
   if (!chessState && (gameWinnerId || isDraw)) {
     return (
@@ -439,7 +549,7 @@ function Message({
                 }}
               />{' '}
               <span className={MessageStyle.timeStamp}>
-                {unix(timeStamp).format('LLL')}
+                {displayedTimeStamp}
               </span>
             </div>
             <div style={{ width: '100%' }}>
@@ -500,9 +610,7 @@ function Message({
                       thumbUrl={thumbUrl || recentThumbUrl}
                       style={{
                         marginTop: '1rem',
-                        marginBottom:
-                          getFileInfoFromFileName(fileName)?.fileType ===
-                            'audio' && '2rem'
+                        marginBottom: fileViewerMarginBottom
                       }}
                     />
                   )}
@@ -547,11 +655,7 @@ function Message({
                 style={{ position: 'absolute', top: 0, right: '5px' }}
                 direction="left"
                 opacity={0.8}
-                onButtonClick={() => {
-                  if (isLastMsg) {
-                    onSetScrollToBottom();
-                  }
-                }}
+                onButtonClick={handleScrollToBottomBasedComponentHeight}
                 menuProps={messageMenuItems}
               />
             )}
@@ -577,62 +681,6 @@ function Message({
       )}
     </div>
   );
-
-  function handleEditCancel() {
-    onSetIsEditing({
-      contentId: messageId,
-      contentType: 'chat',
-      isEditing: false
-    });
-  }
-
-  async function handleEditDone(editedMessage) {
-    const messageIsSubject = !!isSubject || !!isReloadedSubject;
-    const subjectChanged = await editChatMessage({
-      editedMessage,
-      messageId,
-      isSubject: messageIsSubject,
-      subjectId
-    });
-    onEditMessage({
-      editedMessage,
-      messageId,
-      isSubject: messageIsSubject,
-      subjectChanged
-    });
-    socket.emit('edit_chat_message', {
-      channelId,
-      editedMessage,
-      messageId,
-      isSubject: messageIsSubject
-    });
-    onSetIsEditing({
-      contentId: messageId,
-      contentType: 'chat',
-      isEditing: false
-    });
-  }
-
-  function handleRewardMessageSubmit({ reasonId, amount }) {
-    onRewardMessageSubmit({ amount, reasonId, message });
-  }
-
-  function handleSetScrollToBottom() {
-    if (isLastMsg) {
-      onSetScrollToBottom();
-    }
-  }
-
-  async function handleChessSpoilerClick() {
-    onSetReplyTarget(null);
-    try {
-      await setChessMoveViewTimeStamp({ channelId, message });
-      onUpdateChessMoveViewTimeStamp();
-      onChessSpoilerClick(userId);
-    } catch (error) {
-      console.error(error);
-    }
-  }
 }
 
 export default memo(Message);
