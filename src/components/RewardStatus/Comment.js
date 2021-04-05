@@ -48,10 +48,16 @@ function Comment({
     reward.rewarderId,
     userId
   ]);
+  const userCanRevokeReward = useMemo(
+    () =>
+      authLevel > 1 &&
+      ((canEdit && authLevel > reward.rewarderAuthLevel) ||
+        reward.rewarderId === userId),
+    [authLevel, canEdit, reward.rewarderAuthLevel, reward.rewarderId, userId]
+  );
   const editButtonShown = useMemo(() => {
-    const userCanEditThis = canEdit && authLevel > reward.rewarderAuthLevel;
-    return userIsUploader || userCanEditThis;
-  }, [authLevel, canEdit, reward.rewarderAuthLevel, userIsUploader]);
+    return userIsUploader || canEdit || userCanRevokeReward;
+  }, [canEdit, userCanRevokeReward, userIsUploader]);
   const editMenuItems = useMemo(() => {
     const items = [];
     if (userIsUploader || canEdit) {
@@ -70,7 +76,7 @@ function Comment({
           })
       });
     }
-    if (canEdit) {
+    if (userCanRevokeReward) {
       items.push({
         label: (
           <>
