@@ -195,7 +195,7 @@ export default function Slide({
           className={css`
             margin-top: ${index === 0 ? 0 : '2rem'};
             @media (max-width: ${mobileMaxWidth}) {
-              margin-top: 1rem;
+              margin-top: ${index === 0 && canEdit ? 0 : '1rem'};
             }
           `}
         />
@@ -219,7 +219,7 @@ export default function Slide({
           border: 1px solid ${Color.borderGray()};
           border-radius: ${borderRadius};
           @media (max-width: ${mobileMaxWidth}) {
-            margin-top: ${index === 0 ? 0 : canEdit ? '1rem' : '2rem'};
+            margin-top: ${canEdit ? '1rem' : index === 0 ? 0 : '2rem'};
             border-left: 0;
             border-right: 0;
             border-radius: 0;
