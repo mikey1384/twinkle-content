@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
@@ -32,6 +32,12 @@ export default function ChannelDetail({
       setShownMembers(members);
     }
   }, [members]);
+  const handleChannelEnter = useCallback(() => {
+    if (alreadyJoined) {
+      onChannelEnter(inviteFrom);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [alreadyJoined, inviteFrom]);
 
   return (
     <div
@@ -59,7 +65,7 @@ export default function ChannelDetail({
             font-size: 1.5rem;
           }
         `}
-        onClick={() => (alreadyJoined ? onChannelEnter(inviteFrom) : {})}
+        onClick={handleChannelEnter}
       >
         Invitation to {channelName}
       </p>
