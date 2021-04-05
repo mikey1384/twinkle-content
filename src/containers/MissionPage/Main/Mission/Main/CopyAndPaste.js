@@ -28,6 +28,7 @@ CopyAndPaste.propTypes = {
 };
 
 export default function CopyAndPaste({ mission, onSetMissionState, style }) {
+  const BodyRef = useRef(document.scrollingElement || document.documentElement);
   const mounted = useRef(true);
   const [submitDisabled, setSubmitDisabled] = useState(false);
   const { userId } = useMyState();
@@ -148,6 +149,8 @@ export default function CopyAndPaste({ mission, onSetMissionState, style }) {
           newState: { status: 'pass' }
         });
       }
+      document.getElementById('App').scrollTop = 0;
+      BodyRef.current.scrollTop = 0;
     }
     if (mounted.current) {
       setSubmitDisabled(false);

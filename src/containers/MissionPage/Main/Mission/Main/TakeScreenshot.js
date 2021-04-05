@@ -44,6 +44,7 @@ export default function TakeScreenshot({
   const maxSize = useMemo(() => returnMaxUploadSize(fileUploadLvl), [
     fileUploadLvl
   ]);
+  const BodyRef = useRef(document.scrollingElement || document.documentElement);
   const mounted = useRef(true);
 
   useEffect(() => {
@@ -347,6 +348,8 @@ export default function TakeScreenshot({
           }
         });
       }
+      document.getElementById('App').scrollTop = 0;
+      BodyRef.current.scrollTop = 0;
     }
     setSubmitDisabled(false);
 
