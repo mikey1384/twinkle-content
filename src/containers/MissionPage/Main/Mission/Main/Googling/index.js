@@ -24,8 +24,11 @@ export default function Googling({ mission, onSetMissionState, style }) {
   const [hasErrorObj, setHasErrorObj] = useState(mission.hasErrorObj || {});
   const hasErrorObjRef = useRef(mission.hasErrorObj || {});
   const QuestionRefs = useRef({});
+  const BodyRef = useRef(document.scrollingElement || document.documentElement);
+  const mounted = useRef(true);
 
   useEffect(() => {
+    mounted.current = true;
     return function onUnmount() {
       onSetMissionState({
         missionId: mission.id,
@@ -34,6 +37,7 @@ export default function Googling({ mission, onSetMissionState, style }) {
           hasErrorObj: hasErrorObjRef.current
         }
       });
+      mounted.current = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -120,10 +124,27 @@ export default function Googling({ mission, onSetMissionState, style }) {
       }
     });
     if (success) {
-      onUpdateMissionAttempt({
-        missionId: mission.id,
-        newState: { status: 'pending', tryingAgain: false }
-      });
+      if (mounted.current) {
+        setAnswers({});
+        answersRef.current = {};
+      }
+      if (mounted.current) {
+        onSetMissionState({
+          missionId: mission.id,
+          newState: {
+            answers: {},
+            hasErrorObj: {}
+          }
+        });
+      }
+      if (mounted.current) {
+        onUpdateMissionAttempt({
+          missionId: mission.id,
+          newState: { status: 'pending', tryingAgain: false }
+        });
+      }
+      document.getElementById('App').scrollTop = 0;
+      BodyRef.current.scrollTop = 0;
     }
     setSubmitDisabled(false);
   }
