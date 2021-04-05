@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ChannelDetail from './ChannelDetail';
 import Button from 'components/Button';
@@ -87,6 +87,11 @@ export default function Invitation({
     }
   }, [invitationDetail, sender.id, userId]);
 
+  const handleAcceptGroupInvitation = useCallback(() => {
+    onAcceptGroupInvitation(inviteFrom);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inviteFrom]);
+
   return (
     <div
       className={css`
@@ -109,7 +114,7 @@ export default function Invitation({
         <Button
           filled
           color={profileTheme}
-          onClick={() => onAcceptGroupInvitation(inviteFrom)}
+          onClick={handleAcceptGroupInvitation}
           disabled={alreadyJoined}
         >
           {alreadyJoined
