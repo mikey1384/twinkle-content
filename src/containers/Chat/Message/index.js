@@ -56,6 +56,7 @@ Message.propTypes = {
   isNotification: PropTypes.bool,
   loading: PropTypes.bool,
   onAcceptGroupInvitation: PropTypes.func.isRequired,
+  onChannelEnter: PropTypes.func,
   onChessBoardClick: PropTypes.func,
   onChessSpoilerClick: PropTypes.func,
   onReceiveNewMessage: PropTypes.func,
@@ -111,6 +112,7 @@ function Message({
     isResign
   },
   onAcceptGroupInvitation,
+  onChannelEnter,
   onChessBoardClick,
   onDelete,
   onChessSpoilerClick,
@@ -558,6 +560,7 @@ function Message({
                   sender={{ id: userId, username }}
                   inviteFrom={inviteFrom}
                   messageId={messageId}
+                  onChannelEnter={onChannelEnter}
                   onAcceptGroupInvitation={onAcceptGroupInvitation}
                 />
               ) : isDrawOffer ? (

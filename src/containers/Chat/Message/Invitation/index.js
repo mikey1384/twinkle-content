@@ -11,6 +11,7 @@ Invitation.propTypes = {
   inviteFrom: PropTypes.number.isRequired,
   messageId: PropTypes.number.isRequired,
   onAcceptGroupInvitation: PropTypes.func.isRequired,
+  onChannelEnter: PropTypes.func,
   sender: PropTypes.object.isRequired
 };
 
@@ -18,6 +19,7 @@ export default function Invitation({
   inviteFrom,
   messageId,
   onAcceptGroupInvitation,
+  onChannelEnter,
   sender
 }) {
   const { userId, profileTheme } = useMyState();
@@ -96,7 +98,10 @@ export default function Invitation({
     >
       {invitationDetail && (
         <ChannelDetail
+          inviteFrom={inviteFrom}
+          alreadyJoined={alreadyJoined}
           channelName={invitationDetail.channelName}
+          onChannelEnter={onChannelEnter}
           members={invitationDetail.members}
         />
       )}

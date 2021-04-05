@@ -11,10 +11,11 @@ import { useChatContext } from 'contexts';
 Body.propTypes = {
   channelName: PropTypes.string,
   chessOpponent: PropTypes.object,
-  currentChannel: PropTypes.object
+  currentChannel: PropTypes.object,
+  onChannelEnter: PropTypes.func
 };
 
-function Body({ channelName, chessOpponent, currentChannel }) {
+function Body({ channelName, chessOpponent, currentChannel, onChannelEnter }) {
   const {
     state: { chatType, loadingVocabulary, selectedChannelId },
     actions: { onSetReplyTarget, onSetIsRespondingToSubject }
@@ -52,6 +53,7 @@ function Body({ channelName, chessOpponent, currentChannel }) {
                 channelName={channelName}
                 chessOpponent={chessOpponent}
                 currentChannel={currentChannel}
+                onChannelEnter={onChannelEnter}
               />
             )}
           </>

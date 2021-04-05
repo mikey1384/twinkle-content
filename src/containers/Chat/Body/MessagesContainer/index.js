@@ -44,7 +44,8 @@ import { checkScrollIsAtTheBottom, isMobile } from 'helpers';
 MessagesContainer.propTypes = {
   channelName: PropTypes.string,
   chessOpponent: PropTypes.object,
-  currentChannel: PropTypes.object.isRequired
+  currentChannel: PropTypes.object.isRequired,
+  onChannelEnter: PropTypes.func
 };
 
 const CALL_SCREEN_HEIGHT = '30%';
@@ -52,7 +53,8 @@ const CALL_SCREEN_HEIGHT = '30%';
 export default function MessagesContainer({
   channelName,
   chessOpponent,
-  currentChannel
+  currentChannel,
+  onChannelEnter
 }) {
   const {
     requestHelpers: {
@@ -574,6 +576,7 @@ export default function MessagesContainer({
                   loading={loading}
                   message={message}
                   onAcceptGroupInvitation={handleAcceptGroupInvitation}
+                  onChannelEnter={onChannelEnter}
                   onChessBoardClick={handleChessModalShown}
                   onChessSpoilerClick={handleChessSpoilerClick}
                   onDelete={handleShowDeleteModal}

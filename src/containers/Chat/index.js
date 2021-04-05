@@ -202,6 +202,7 @@ function Chat({ onFileUpload }) {
               channelName={currentChannelName}
               chessOpponent={partner}
               currentChannel={currentChannel}
+              onChannelEnter={handleChannelEnter}
             />
             <RightMenu
               channelOnCall={channelOnCall}

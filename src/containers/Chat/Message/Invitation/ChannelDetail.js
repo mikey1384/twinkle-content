@@ -6,11 +6,20 @@ import { useMyState } from 'helpers/hooks';
 import UserListModal from 'components/Modals/UserListModal';
 
 ChannelDetail.propTypes = {
+  inviteFrom: PropTypes.number.isRequired,
+  alreadyJoined: PropTypes.bool.isRequired,
   channelName: PropTypes.string.isRequired,
-  members: PropTypes.array.isRequired
+  members: PropTypes.array.isRequired,
+  onChannelEnter: PropTypes.func.isRequired
 };
 
-export default function ChannelDetail({ channelName, members }) {
+export default function ChannelDetail({
+  alreadyJoined,
+  channelName,
+  inviteFrom,
+  members,
+  onChannelEnter
+}) {
   const { profileTheme } = useMyState();
   const [shownMembers, setShownMembers] = useState([]);
   const [userListModalShown, setUserListModalShown] = useState(false);
@@ -45,10 +54,12 @@ export default function ChannelDetail({ channelName, members }) {
           font-weight: bold;
           font-size: 2.2rem;
           color: ${Color[profileTheme]()};
+          cursor: ${alreadyJoined ? 'pointer' : 'default'};
           @media (max-width: ${mobileMaxWidth}) {
             font-size: 1.5rem;
           }
         `}
+        onClick={() => (alreadyJoined ? onChannelEnter(inviteFrom) : {})}
       >
         Invitation to {channelName}
       </p>
