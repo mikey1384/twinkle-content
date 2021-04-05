@@ -6,6 +6,7 @@ export const defaultContentState = {
   rewards: [],
   comments: [],
   likes: [],
+  pictures: [],
   questions: [],
   recommendations: [],
   subjects: [],

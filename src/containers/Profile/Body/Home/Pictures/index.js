@@ -46,10 +46,10 @@ export default function Pictures({
     actions: { onUpdateProfileInfo }
   } = useContentContext();
   const addPictureButtonDisabled = useMemo(() => {
-    return pictures?.length >= numPics;
+    return pictures.length >= numPics;
   }, [numPics, pictures]);
   useEffect(() => {
-    setReorderedPictureIds(pictures?.map((picture) => picture.id));
+    setReorderedPictureIds(pictures.map((picture) => picture.id));
     setRemainingPictures(pictures);
   }, [pictures]);
 
@@ -78,7 +78,7 @@ export default function Pictures({
         >
           <Icon icon="plus" />
           <span style={{ marginLeft: '0.7rem' }}>
-            Add Picture ({pictures?.length}/{numPics})
+            Add Picture ({pictures.length}/{numPics})
           </span>
         </Button>
         <DropdownButton
@@ -208,7 +208,7 @@ export default function Pictures({
                 numPictures={pictures.length}
                 onSetReorderedPictureIds={setReorderedPictureIds}
               />
-            ) : pictures?.length > 2 ? (
+            ) : pictures.length > 2 ? (
               <Carousel
                 className={css`
                   width: 75%;
@@ -217,7 +217,7 @@ export default function Pictures({
                 slidesToShow={3}
                 slidesToScroll={1}
               >
-                {pictures?.map((picture, index) => (
+                {pictures.map((picture, index) => (
                   <Frame
                     forCarousel
                     key={index}
@@ -235,7 +235,7 @@ export default function Pictures({
                   justifyContent: 'center'
                 }}
               >
-                {pictures?.map((picture, index) => (
+                {pictures.map((picture, index) => (
                   <Frame
                     key={index}
                     picture={picture}
@@ -261,7 +261,7 @@ export default function Pictures({
           onConfirm={handleAddPictures}
           profileId={profileId}
           currentPictures={pictures}
-          maxNumSelectable={numPics - (pictures?.length ?? 0)}
+          maxNumSelectable={numPics - pictures.length}
         />
       )}
     </ErrorBoundary>
@@ -270,7 +270,7 @@ export default function Pictures({
   async function handleAddPictures({ selectedPictureIds }) {
     const pics = await updateUserPictures([
       ...selectedPictureIds,
-      ...(pictures || []).map((picture) => picture.id)
+      ...pictures.map((picture) => picture.id)
     ]);
     onUpdateProfileInfo({ userId: profileId, pictures: pics });
     setAddPictureModalShown(false);
