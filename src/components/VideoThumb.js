@@ -108,9 +108,16 @@ function VideoThumb({ className, clickSafe, style, to, user, video }) {
             </p>
             <FullTextReveal show={onTitleHover} text={video.title} />
           </div>
-          <div style={{ width: '100%', fontSize: '1.2rem' }}>
+          <div
+            style={{
+              width: '100%',
+              fontSize: '1.2rem',
+              overflowX: 'hidden',
+              textOverflow: 'ellipsis'
+            }}
+          >
             <div className="username">
-              Added by <UsernameText user={user} />
+              Added by <UsernameText truncate user={user} />
             </div>
             {video.likes?.length > 0 && (
               <div style={{ marginTop: '0.5rem' }}>
