@@ -28,8 +28,9 @@ export default function ChoiceListItem({
 }) {
   const Draggable = useRef(null);
   const [{ opacity }, drag] = useDrag({
-    item: { type: ItemTypes.LIST_ITEM, id, questionIndex },
-    collect: monitor => ({
+    type: ItemTypes.LIST_ITEM,
+    item: { id, questionIndex },
+    collect: (monitor) => ({
       opacity: monitor.isDragging() ? 0 : 1
     })
   });

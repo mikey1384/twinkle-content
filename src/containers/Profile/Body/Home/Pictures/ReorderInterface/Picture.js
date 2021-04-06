@@ -20,7 +20,8 @@ export default function Picture({ numPictures, picture, style, onMove }) {
   const width = Math.min(100 / (numPictures + 1), 33);
   const Draggable = useRef(null);
   const [{ isDragging }, drag] = useDrag({
-    item: { type: ItemTypes.PICTURE, id: picture.id },
+    type: ItemTypes.PICTURE,
+    item: { id: picture.id },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging()
     })

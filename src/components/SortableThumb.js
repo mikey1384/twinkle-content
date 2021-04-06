@@ -19,7 +19,8 @@ export default function SortableThumb({ id, onMove, video }) {
   const Draggable = useRef(null);
   const ThumbLabelRef = useRef(null);
   const [{ isDragging }, drag] = useDrag({
-    item: { type: ItemTypes.THUMB, id },
+    type: ItemTypes.THUMB,
+    item: { id },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging()
     })

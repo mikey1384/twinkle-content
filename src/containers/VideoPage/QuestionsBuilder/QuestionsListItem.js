@@ -18,8 +18,9 @@ export default function QuestionsListItem({
 }) {
   const Draggable = useRef(null);
   const [{ opacity }, drag] = useDrag({
-    item: { type: ItemTypes.LIST_ITEM, questionId: questionId },
-    collect: monitor => ({
+    type: ItemTypes.LIST_ITEM,
+    item: { questionId: questionId },
+    collect: (monitor) => ({
       opacity: monitor.isDragging() ? 0 : 1
     })
   });

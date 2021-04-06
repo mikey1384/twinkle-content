@@ -24,13 +24,13 @@ export default function SortableListItem({
 }) {
   const Draggable = useRef(null);
   const [{ opacity }, drag] = useDrag({
+    type: ItemTypes.LIST_ITEM,
     item: {
-      type: ItemTypes.LIST_ITEM,
       id: listItemId,
       index,
       itemType: listItemType
     },
-    collect: monitor => ({
+    collect: (monitor) => ({
       opacity: monitor.isDragging() ? 0 : 1
     })
   });
