@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router-dom';
 import { useChatContext } from 'contexts';
 
 Audio.propTypes = {
@@ -8,11 +7,9 @@ Audio.propTypes = {
 };
 
 export default function Audio({ stream }) {
-  const { pathname } = useLocation();
   const audioRef = useRef(stream);
   const {
-    state: { callMuted },
-    state: { channelOnCall, selectedChannelId }
+    state: { callMuted }
   } = useChatContext();
   useEffect(() => {
     const currentAudio = audioRef.current;
@@ -30,12 +27,8 @@ export default function Audio({ stream }) {
   }, []);
 
   useEffect(() => {
-    if (pathname === '/chat' && channelOnCall.id === selectedChannelId) {
-      audioRef.current.muted = true;
-    } else {
-      audioRef.current.muted = callMuted;
-    }
-  }, [callMuted, channelOnCall.id, pathname, selectedChannelId]);
+    audioRef.current.muted = callMuted;
+  }, [callMuted]);
 
   return (
     <audio

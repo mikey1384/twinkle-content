@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
-import Video from './Video';
 import { useChatContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { socket } from 'constants/io';
@@ -14,17 +13,10 @@ CallScreen.propTypes = {
 
 export default function CallScreen({ creatorId, style }) {
   const {
-    state: { channelOnCall, myStream, peerStreams },
+    state: { channelOnCall, peerStreams },
     actions: { onSetImLive, onShowIncoming }
   } = useChatContext();
   const { userId } = useMyState();
-
-  const streamShown = useMemo(
-    () =>
-      (channelOnCall.isClass && channelOnCall.imLive) ||
-      channelOnCall.incomingShown,
-    [channelOnCall.imLive, channelOnCall.incomingShown, channelOnCall.isClass]
-  );
 
   const calling = useMemo(() => {
     return !channelOnCall.callReceived && channelOnCall.imCalling;
@@ -53,29 +45,6 @@ export default function CallScreen({ creatorId, style }) {
               Answer
             </span>
           </Button>
-        </div>
-      )}
-      {streamShown && (
-        <div
-          style={{
-            position: 'relative',
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            justifyContent: 'center'
-          }}
-        >
-          {channelOnCall.isClass && channelOnCall.imLive && myStream && (
-            <Video key={userId} isMyStream stream={myStream} />
-          )}
-          {channelOnCall.incomingShown &&
-            Object.entries(peerStreams)
-              .filter(
-                ([peerId]) => !channelOnCall?.members[peerId]?.streamHidden
-              )
-              .map(([peerId, stream]) => (
-                <Video key={peerId} stream={stream} />
-              ))}
         </div>
       )}
       {calling && (

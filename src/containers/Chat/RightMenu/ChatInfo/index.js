@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Members from './Members';
 import ChannelDetails from './ChannelDetails';
 import Icon from 'components/Icon';
-import Video from './Video';
 import { css } from '@emotion/css';
 import { Color, desktopMinWidth, mobileMaxWidth } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
@@ -164,9 +163,6 @@ function ChatInfo({
                 {!callOngoing ? 'Call' : 'Hang Up'}
               </span>
             </div>
-          )}
-          {myStream && channelOnCall.imLive && !channelOnCall.isClass && (
-            <Video myVideoRef={myVideoRef} />
           )}
           <ChannelDetails
             style={{ marginTop: '1rem' }}

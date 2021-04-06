@@ -526,10 +526,7 @@ export default function Header({
 
     function handlePeerStreamShowRequest() {
       if (myStream) {
-        if (
-          myStream.getVideoTracks()[0].enabled &&
-          myStream.getAudioTracks()[0].enabled
-        ) {
+        if (myStream.getAudioTracks()[0].enabled) {
           for (let peerId in membersOnCall.current) {
             try {
               if (peersRef.current[peerId]) {
@@ -541,7 +538,6 @@ export default function Header({
           }
           onSetImLive(true);
         } else {
-          myStream.getVideoTracks()[0].enabled = true;
           myStream.getAudioTracks()[0].enabled = true;
           socket.emit('notify_stream_enabled', {
             channelId: channelOnCall.id,
@@ -554,7 +550,6 @@ export default function Header({
 
     async function handlePeerStreamCloseRequest(memberId) {
       if (memberId === userId) {
-        myStream.getVideoTracks()[0].enabled = false;
         myStream.getAudioTracks()[0].enabled = false;
         onSetImLive(false);
       } else {
