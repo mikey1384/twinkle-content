@@ -2,9 +2,12 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
+import ProfilePic from 'components/ProfilePic';
 import { useChatContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
+import { mobileMaxWidth } from 'constants/css';
 import { socket } from 'constants/io';
+import { css } from '@emotion/css';
 
 CallScreen.propTypes = {
   creatorId: PropTypes.number,
@@ -13,7 +16,7 @@ CallScreen.propTypes = {
 
 export default function CallScreen({ creatorId, style }) {
   const {
-    state: { channelOnCall, peerStreams },
+    state: { channelOnCall, ...state },
     actions: { onSetImLive, onShowIncoming }
   } = useChatContext();
   const { userId } = useMyState();
@@ -27,13 +30,48 @@ export default function CallScreen({ creatorId, style }) {
     [channelOnCall.imCalling, channelOnCall.incomingShown]
   );
 
+  const peers = useMemo(() => {
+    return Object.keys(channelOnCall.members)?.map((memberId) => {
+      return Number(memberId);
+    });
+  }, [channelOnCall.members]);
+
   return (
     <div style={{ width: '100%', position: 'relative', zIndex: 5, ...style }}>
+      {peers.length > 0 && (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'flex-end',
+            paddingTop: '8rem',
+            paddingBottom: '7rem'
+          }}
+        >
+          {peers.map((peerId, index) => {
+            return (
+              <ProfilePic
+                key={peerId}
+                className={css`
+                  height: 10rem;
+                  width: 10rem;
+                  margin-left: ${index === 0 ? 0 : '1.5rem'};
+                  @media (max-width: ${mobileMaxWidth}) {
+                    height: 5rem;
+                    width: 5rem;
+                  }
+                `}
+                userId={peerId}
+                profilePicUrl={state['user' + peerId]?.profilePicUrl}
+              />
+            );
+          })}
+        </div>
+      )}
       {answerButtonShown && (
         <div
           style={{
             width: '100%',
-            height: '100%',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center'
@@ -51,7 +89,6 @@ export default function CallScreen({ creatorId, style }) {
         <div
           style={{
             width: '100%',
-            height: !channelOnCall.isClass && '100%',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center'
@@ -60,21 +97,6 @@ export default function CallScreen({ creatorId, style }) {
           Calling...
         </div>
       )}
-      {channelOnCall.isClass &&
-        !calling &&
-        !answerButtonShown &&
-        Object.keys(peerStreams).length === 0 &&
-        creatorId === userId && (
-          <div
-            style={{
-              width: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              fontWeight: 'bold'
-            }}
-          >{`Show or hide your students using the right menu buttons next to their usernames`}</div>
-        )}
     </div>
   );
 

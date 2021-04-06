@@ -12,7 +12,6 @@ import { useMyState } from 'helpers/hooks';
 import { socket } from 'constants/io';
 
 MemberListItem.propTypes = {
-  channelId: PropTypes.number,
   onlineMembers: PropTypes.object,
   creatorId: PropTypes.number,
   imLive: PropTypes.bool,
@@ -24,7 +23,6 @@ MemberListItem.propTypes = {
 };
 
 function MemberListItem({
-  channelId,
   onlineMembers,
   creatorId,
   imLive,
@@ -123,7 +121,6 @@ function MemberListItem({
             style={{ fontSize: '1rem', marginLeft: '1rem' }}
             filled
             color={peerIsStreaming ? 'rose' : 'darkBlue'}
-            onClick={handleShowPeer}
           >
             {peerIsStreaming ? 'Hide' : 'Show'}
           </Button>
@@ -142,23 +139,6 @@ function MemberListItem({
   function handleConfirmShowPeer() {
     socket.emit('show_peer_stream', member.id);
     setConfirmModalShown(false);
-  }
-
-  function handleShowPeer() {
-    if (peerIsStreaming) {
-      socket.emit('close_peer_stream', {
-        memberId: member.id,
-        channelId
-      });
-    } else {
-      const numLivePeers = Object.keys(peerStreams)?.filter(
-        (peerId) => !channelOnCall.members[peerId]?.streamHidden
-      ).length;
-      if (numLivePeers >= 2) {
-        return setConfirmModalShown(true);
-      }
-      socket.emit('show_peer_stream', member.id);
-    }
   }
 }
 
