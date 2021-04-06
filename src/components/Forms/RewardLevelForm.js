@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import { Color } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
 
 RewardLevelForm.propTypes = {
+  alreadyPosted: PropTypes.bool,
   extendedRewardLevels: PropTypes.bool,
   icon: PropTypes.string,
+  isMadeByUser: PropTypes.bool,
+  isSubject: PropTypes.bool,
   rewardLevel: PropTypes.number.isRequired,
   onSetRewardLevel: PropTypes.func.isRequired,
   style: PropTypes.object,
@@ -14,14 +17,32 @@ RewardLevelForm.propTypes = {
 };
 
 export default function RewardLevelForm({
+  alreadyPosted,
   extendedRewardLevels,
   icon = 'star',
+  isMadeByUser,
+  isSubject,
   themed,
   rewardLevel,
   onSetRewardLevel,
   style
 }) {
-  const { profileTheme } = useMyState();
+  const { authLevel, profileTheme } = useMyState();
+  useEffect(() => {
+    if (alreadyPosted) {
+      return onSetRewardLevel(0);
+    }
+    if (!rewardLevel) {
+      if (isSubject && isMadeByUser) {
+        onSetRewardLevel(1);
+      }
+      if (!isSubject && authLevel > 2) {
+        onSetRewardLevel(4);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authLevel, isSubject, isMadeByUser, alreadyPosted]);
+
   return (
     <div
       style={{

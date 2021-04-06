@@ -249,6 +249,7 @@ function ContentInput() {
               </div>
               <RewardLevelForm
                 themed
+                alreadyPosted={!!alreadyPosted.id}
                 style={{
                   marginTop: '1rem',
                   textAlign: 'center',

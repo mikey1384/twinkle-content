@@ -202,7 +202,7 @@ function SubjectInput() {
               }}
             >
               <SwitchButton
-                checked={isMadeByUser}
+                checked={!!isMadeByUser}
                 label="I made this myself"
                 labelStyle={{ fontSize: '1.5rem' }}
                 onChange={() => handleSetIsMadeByUser(!isMadeByUser)}
@@ -244,7 +244,7 @@ function SubjectInput() {
                     }}
                   >
                     <SwitchButton
-                      checked={isMadeByUser}
+                      checked={!!isMadeByUser}
                       label="I wrote this myself"
                       labelStyle={{ fontSize: '1.5rem' }}
                       onChange={() => handleSetIsMadeByUser(!isMadeByUser)}
@@ -269,6 +269,8 @@ function SubjectInput() {
                   </div>
                   <RewardLevelForm
                     themed
+                    isSubject
+                    isMadeByUser={isMadeByUser}
                     style={{
                       marginTop: '1rem',
                       textAlign: 'center',
