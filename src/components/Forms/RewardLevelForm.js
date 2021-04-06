@@ -9,7 +9,8 @@ RewardLevelForm.propTypes = {
   extendedRewardLevels: PropTypes.bool,
   icon: PropTypes.string,
   isMadeByUser: PropTypes.bool,
-  isSubject: PropTypes.bool,
+  isFromContentInput: PropTypes.bool,
+  isFromSubjectInput: PropTypes.bool,
   rewardLevel: PropTypes.number.isRequired,
   onSetRewardLevel: PropTypes.func.isRequired,
   style: PropTypes.object,
@@ -21,7 +22,8 @@ export default function RewardLevelForm({
   extendedRewardLevels,
   icon = 'star',
   isMadeByUser,
-  isSubject,
+  isFromContentInput,
+  isFromSubjectInput,
   themed,
   rewardLevel,
   onSetRewardLevel,
@@ -33,15 +35,21 @@ export default function RewardLevelForm({
       return onSetRewardLevel(0);
     }
     if (!rewardLevel) {
-      if (isSubject && isMadeByUser) {
+      if (isFromSubjectInput && isMadeByUser) {
         onSetRewardLevel(1);
       }
-      if (!isSubject && authLevel > 2) {
+      if (isFromContentInput && authLevel > 2) {
         onSetRewardLevel(4);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authLevel, isSubject, isMadeByUser, alreadyPosted]);
+  }, [
+    authLevel,
+    isFromContentInput,
+    isFromSubjectInput,
+    isMadeByUser,
+    alreadyPosted
+  ]);
 
   return (
     <div

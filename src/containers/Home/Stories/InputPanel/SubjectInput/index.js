@@ -269,7 +269,7 @@ function SubjectInput() {
                   </div>
                   <RewardLevelForm
                     themed
-                    isSubject
+                    isFromSubjectInput
                     isMadeByUser={isMadeByUser}
                     style={{
                       marginTop: '1rem',
