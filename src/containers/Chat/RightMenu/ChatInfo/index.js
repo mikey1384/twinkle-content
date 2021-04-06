@@ -26,7 +26,7 @@ function ChatInfo({
   currentChannelOnlineMembers,
   channelName
 }) {
-  const { userId: myId, username, profilePicUrl, authLevel } = useMyState();
+  const { userId: myId, username, profilePicUrl } = useMyState();
   const {
     state: { myStream },
     actions: { onSetCall, onHangUp }
@@ -56,16 +56,16 @@ function ChatInfo({
     };
   }, [myStream]);
 
-  const videoChatButtonShown = useMemo(() => {
+  const voiceChatButtonShown = useMemo(() => {
     if (currentChannel.twoPeople) {
       if (currentChannel.members?.length !== 2) return false;
-      return !!currentChannel.id && (callOngoing || authLevel > 0);
+      return !!currentChannel.id;
     }
     return (
       currentChannel.isClass &&
       (callOngoing || currentChannel.creatorId === myId)
     );
-  }, [authLevel, callOngoing, currentChannel, myId]);
+  }, [callOngoing, currentChannel, myId]);
 
   const displayedChannelMembers = useMemo(() => {
     const totalChannelMembers = currentChannel?.members || [];
@@ -130,7 +130,7 @@ function ChatInfo({
           }}
           className="unselectable"
         >
-          {videoChatButtonShown && (
+          {voiceChatButtonShown && (
             <div
               className={css`
                 padding: 1rem;
