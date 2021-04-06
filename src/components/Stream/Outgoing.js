@@ -2,22 +2,20 @@ import React, { useEffect, useRef } from 'react';
 import { useChatContext } from 'contexts';
 
 export default function Outgoing() {
-  const videoRef = useRef(null);
+  const audioRef = useRef(null);
   const mounted = useRef(true);
   const {
     actions: { onSetMyStream }
   } = useChatContext();
   useEffect(() => {
     mounted.current = true;
-    const currentVideo = videoRef.current;
+    const currentAudio = audioRef.current;
     init();
     async function init() {
-      const options = { video: true, audio: true };
+      const options = { audio: true };
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         const stream = await navigator.mediaDevices.getUserMedia(options);
         if (mounted.current) {
-          currentVideo.srcObject = stream;
-          currentVideo.volume = 0;
           onSetMyStream(stream);
         }
       }
@@ -26,7 +24,7 @@ export default function Outgoing() {
     return function cleanUp() {
       mounted.current = false;
       onSetMyStream(null);
-      currentVideo.srcObject?.getTracks()?.forEach((track) => {
+      currentAudio.srcObject?.getTracks()?.forEach((track) => {
         track.stop();
       });
     };
@@ -34,10 +32,10 @@ export default function Outgoing() {
   }, []);
 
   return (
-    <video
+    <audio
       autoPlay
       style={{ display: 'none', height: 0, width: 0 }}
-      ref={videoRef}
+      ref={audioRef}
     />
   );
 }
