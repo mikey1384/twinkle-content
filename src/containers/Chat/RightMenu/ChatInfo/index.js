@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useEffect, useRef } from 'react';
+import React, { memo, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Members from './Members';
 import ChannelDetails from './ChannelDetails';
@@ -28,11 +28,8 @@ function ChatInfo({
 }) {
   const { userId: myId, username, profilePicUrl } = useMyState();
   const {
-    state: { myStream },
     actions: { onSetCall, onHangUp }
   } = useChatContext();
-  const myVideoRef = useRef(null);
-  const myStreamRef = useRef(false);
 
   const callOngoing = useMemo(
     () => selectedChannelId === channelOnCall.id && channelOnCall.members[myId],
@@ -42,19 +39,6 @@ function ChatInfo({
   const calling = useMemo(() => {
     return !channelOnCall.callReceived && channelOnCall.imCalling;
   }, [channelOnCall.callReceived, channelOnCall.imCalling]);
-
-  useEffect(() => {
-    const videoRef = myVideoRef.current;
-    if (videoRef && myStream && !myStreamRef.current && !videoRef?.srcObject) {
-      const clonedStream = myStream.clone();
-      videoRef.srcObject = clonedStream;
-      videoRef.volume = 0;
-      myStreamRef.current = true;
-    }
-    return function cleanUp() {
-      myStreamRef.current = false;
-    };
-  }, [myStream]);
 
   const voiceChatButtonShown = useMemo(() => {
     if (currentChannel.twoPeople) {

@@ -2,14 +2,14 @@ import React, { useEffect, useRef } from 'react';
 import { useChatContext } from 'contexts';
 
 export default function Outgoing() {
-  const audioRef = useRef(null);
+  const myStreamRef = useRef(null);
   const mounted = useRef(true);
   const {
+    state: { myStream },
     actions: { onSetMyStream }
   } = useChatContext();
   useEffect(() => {
     mounted.current = true;
-    const currentAudio = audioRef.current;
     init();
     async function init() {
       const options = { audio: true };
@@ -24,18 +24,14 @@ export default function Outgoing() {
     return function cleanUp() {
       mounted.current = false;
       onSetMyStream(null);
-      currentAudio.srcObject?.getTracks()?.forEach((track) => {
-        track.stop();
-      });
+      myStreamRef.current?.getTracks()?.[0]?.stop();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return (
-    <audio
-      autoPlay
-      style={{ display: 'none', height: 0, width: 0 }}
-      ref={audioRef}
-    />
-  );
+  useEffect(() => {
+    myStreamRef.current = myStream;
+  }, [myStream]);
+
+  return <div></div>;
 }
