@@ -62,7 +62,7 @@ function MemberListItem({
     return isClass && imLive && creatorId === myId && member.id !== myId;
   }, [creatorId, imLive, isClass, member.id, myId]);
 
-  return (
+  return username ? (
     <div
       style={{
         display: 'flex',
@@ -137,7 +137,7 @@ function MemberListItem({
         />
       )}
     </div>
-  );
+  ) : null;
 
   function handleConfirmShowPeer() {
     socket.emit('show_peer_stream', member.id);
