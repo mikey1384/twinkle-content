@@ -116,8 +116,8 @@ function VideoThumb({ className, clickSafe, style, to, user, video }) {
               textOverflow: 'ellipsis'
             }}
           >
-            <div className="username">
-              Added by <UsernameText truncate user={user} />
+            <div style={{ display: 'inline' }}>
+              Added by <UsernameText wordBreakEnabled user={user} />
             </div>
             {video.likes?.length > 0 && (
               <div style={{ marginTop: '0.5rem' }}>
