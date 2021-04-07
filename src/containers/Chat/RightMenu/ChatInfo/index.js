@@ -203,10 +203,10 @@ function ChatInfo({
       });
     } else {
       if (calling) {
-        socket.emit('hang_up_call', channelOnCall.id);
-        return onSetCall({});
+        onSetCall({});
+      } else {
+        onHangUp({ memberId: myId, iHungUp: true });
       }
-      onHangUp({ memberId: myId, iHungUp: true });
       socket.emit('hang_up_call', channelOnCall.id, () => {
         if (selectedChannelId !== channelOnCall.id) {
           onSetCall({
