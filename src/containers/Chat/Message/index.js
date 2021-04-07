@@ -204,6 +204,7 @@ function Message({
     profilePicUrl,
     targetMessage,
     targetSubject,
+    isCallNotification,
     ...post
   } = message;
   const [messageRewardModalShown, setMessageRewardModalShown] = useState(false);
@@ -224,7 +225,7 @@ function Message({
       !message.id &&
       !message.fileToUpload &&
       !message.isSubject &&
-      !message.isNotification
+      (!message.isNotification || isCallNotification)
     ) {
       handleSaveMessage();
     }

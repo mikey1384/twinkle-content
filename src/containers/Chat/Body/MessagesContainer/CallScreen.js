@@ -37,15 +37,22 @@ export default function CallScreen({ creatorId, style }) {
   }, [channelOnCall.members]);
 
   return (
-    <div style={{ width: '100%', position: 'relative', zIndex: 5, ...style }}>
+    <div
+      style={{
+        width: '100%',
+        height: '100%',
+        position: 'relative',
+        zIndex: 5,
+        ...style
+      }}
+    >
       {peers.length > 0 && (
         <div
           style={{
             display: 'flex',
+            height: 'CALC(70% - 1rem)',
             justifyContent: 'center',
-            alignItems: 'flex-end',
-            paddingTop: '8rem',
-            paddingBottom: '7rem'
+            alignItems: 'flex-end'
           }}
         >
           {peers.map((peerId, index) => {
@@ -57,8 +64,8 @@ export default function CallScreen({ creatorId, style }) {
                   width: 10rem;
                   margin-left: ${index === 0 ? 0 : '1.5rem'};
                   @media (max-width: ${mobileMaxWidth}) {
-                    height: 5rem;
-                    width: 5rem;
+                    height: 7rem;
+                    width: 7rem;
                   }
                 `}
                 userId={peerId}
@@ -72,6 +79,7 @@ export default function CallScreen({ creatorId, style }) {
         <div
           style={{
             width: '100%',
+            height: 'CALC(30% + 1rem)',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center'
@@ -88,6 +96,7 @@ export default function CallScreen({ creatorId, style }) {
       {calling && (
         <div
           style={{
+            height: 'CALC(30% + 1rem)',
             width: '100%',
             display: 'flex',
             justifyContent: 'center',

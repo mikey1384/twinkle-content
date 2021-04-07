@@ -28,7 +28,7 @@ function ChatInfo({
 }) {
   const { userId: myId, username, profilePicUrl } = useMyState();
   const {
-    actions: { onSetCall, onHangUp }
+    actions: { onSetCall, onHangUp, onSubmitMessage }
   } = useChatContext();
 
   const callOngoing = useMemo(
@@ -185,6 +185,17 @@ function ChatInfo({
 
   function handleCall() {
     if (!channelOnCall.id) {
+      onSubmitMessage({
+        message: {
+          content: 'made a call',
+          channelId: selectedChannelId,
+          profilePicUrl,
+          userId: myId,
+          username,
+          isNotification: true,
+          isCallNotification: true
+        }
+      });
       onSetCall({
         imCalling: true,
         channelId: selectedChannelId,
