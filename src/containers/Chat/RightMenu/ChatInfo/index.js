@@ -209,6 +209,17 @@ function ChatInfo({
       }
       socket.emit('hang_up_call', channelOnCall.id, () => {
         if (selectedChannelId !== channelOnCall.id) {
+          onSubmitMessage({
+            message: {
+              content: 'made a call',
+              channelId: selectedChannelId,
+              profilePicUrl,
+              userId: myId,
+              username,
+              isNotification: true,
+              isCallNotification: true
+            }
+          });
           onSetCall({
             imCalling: true,
             channelId: selectedChannelId,
