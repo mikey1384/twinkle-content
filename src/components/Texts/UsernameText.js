@@ -12,7 +12,6 @@ UsernameText.propTypes = {
   className: PropTypes.string,
   color: PropTypes.string,
   style: PropTypes.object,
-  truncate: PropTypes.bool,
   user: PropTypes.object,
   wordBreakEnabled: PropTypes.bool
 };
@@ -22,7 +21,6 @@ export default function UsernameText({
   color,
   style = {},
   user = {},
-  truncate = false,
   wordBreakEnabled
 }) {
   const history = useHistory();
@@ -70,10 +68,8 @@ export default function UsernameText({
     >
       <div
         style={{
-          display: truncate ? 'block' : 'inline',
-          overflowX: 'hidden',
-          textOverflow: 'ellipsis',
-          width: '100%'
+          width: '100%',
+          display: 'inline'
         }}
       >
         <span
@@ -81,6 +77,8 @@ export default function UsernameText({
             width: '100%',
             cursor: 'pointer',
             fontWeight: 'bold',
+            overflowX: 'hidden',
+            textOverflow: 'ellipsis',
             ...(wordBreakEnabled
               ? { overflowWrap: 'break-word', wordBreak: 'break-word' }
               : {}),

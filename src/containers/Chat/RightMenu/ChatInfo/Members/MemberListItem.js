@@ -94,7 +94,6 @@ function MemberListItem({
           statusShown
         />
         <UsernameText
-          truncate
           className={css`
             width: auto;
             max-width: ${creatorId === member.id
