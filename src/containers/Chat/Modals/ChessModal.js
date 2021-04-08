@@ -35,7 +35,7 @@ export default function ChessModal({
   opponentName,
   socketConnected
 }) {
-  const { userId, username, profilePicUrl } = useMyState();
+  const { banned, userId, username, profilePicUrl } = useMyState();
   const {
     requestHelpers: { fetchCurrentChessState, setChessMoveViewTimeStamp }
   } = useAppContext();
@@ -225,7 +225,7 @@ export default function ChessModal({
             color="blue"
             style={{ marginLeft: '1rem' }}
             onClick={submitChessMove}
-            disabled={!newChessState || !socketConnected}
+            disabled={!newChessState || !socketConnected || banned?.chess}
           >
             Done
             {!socketConnected && (
