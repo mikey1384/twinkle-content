@@ -56,8 +56,7 @@ export default function UsernameText({
     <div
       style={{
         display: 'inline',
-        overflowX: 'hidden',
-        textOverflow: 'ellipsis',
+        ...(menuShown ? {} : { overflowX: 'hidden', textOverflow: 'ellipsis' }),
         position: 'relative',
         ...style
       }}
