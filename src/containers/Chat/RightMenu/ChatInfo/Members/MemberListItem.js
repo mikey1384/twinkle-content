@@ -94,15 +94,13 @@ function MemberListItem({
           statusShown
         />
         <UsernameText
-          className={css`
-            width: auto;
-            max-width: ${creatorId === member.id
-              ? usernameWidth
-              : `CALC(${usernameWidth} + 2rem)`};
-          `}
           style={{
             color: Color.darkerGray(),
-            marginLeft: '2rem'
+            marginLeft: '2rem',
+            maxWidth:
+              creatorId === member.id
+                ? usernameWidth
+                : `CALC(${usernameWidth} + 2rem)`
           }}
           user={{ id: member.id, username }}
         />

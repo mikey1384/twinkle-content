@@ -56,6 +56,8 @@ export default function UsernameText({
     <div
       style={{
         display: 'inline',
+        overflowX: 'hidden',
+        textOverflow: 'ellipsis',
         position: 'relative',
         ...style
       }}
@@ -74,11 +76,8 @@ export default function UsernameText({
       >
         <span
           style={{
-            width: '100%',
             cursor: 'pointer',
             fontWeight: 'bold',
-            overflowX: 'hidden',
-            textOverflow: 'ellipsis',
             ...(wordBreakEnabled
               ? { overflowWrap: 'break-word', wordBreak: 'break-word' }
               : {}),
