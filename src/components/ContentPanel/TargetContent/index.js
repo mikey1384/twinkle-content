@@ -115,7 +115,6 @@ export default function TargetContent({
     ? getFileInfoFromFileName(comment?.fileName)
     : '';
   const [uploadingFile, setUploadingFile] = useState(false);
-  const [commentContent, setCommentContent] = useState('');
   const [
     recommendationInterfaceShown,
     setRecommendationInterfaceShown
@@ -563,7 +562,6 @@ export default function TargetContent({
   async function handleSubmit(text) {
     try {
       if (attachment) {
-        setCommentContent(text);
         setUploadingFile(true);
         const filePath = uuidv1();
         await uploadFile({
@@ -572,7 +570,7 @@ export default function TargetContent({
           onUploadProgress: handleUploadProgress
         });
         const data = await uploadComment({
-          content: commentContent,
+          content: text,
           parent: {
             contentType: rootType,
             contentId: rootObj.id
@@ -600,7 +598,6 @@ export default function TargetContent({
             contentId: comment.id,
             text: ''
           });
-          setCommentContent('');
           onSetCommentAttachment({
             attachment: undefined,
             contentType: 'comment',
