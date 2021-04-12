@@ -450,7 +450,7 @@ function Embedly({
               onPlay={handlePlay}
               style={{
                 width: videoWidth || '50vw',
-                height: videoHeight || '60%'
+                height: videoHeight || 'CALC(30vw + 3rem)'
               }}
               videoId={Number(twinkleVideoId)}
             />
