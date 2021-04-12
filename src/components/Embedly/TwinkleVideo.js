@@ -40,7 +40,6 @@ export default function TwinkleVideo({ imageOnly, onPlay, style, videoId }) {
     if (!loaded) {
       init();
     }
-
     async function init() {
       const data = await loadContent({
         contentId: videoId,
@@ -57,7 +56,11 @@ export default function TwinkleVideo({ imageOnly, onPlay, style, videoId }) {
         <Loading style={{ height: '100%' }} />
       ) : imageOnly ? (
         <VideoThumbImage
-          style={{ paddingBottom: 0, width: '100%', height: '100%' }}
+          style={{
+            paddingBottom: 0,
+            width: '100%',
+            height: '100%'
+          }}
           rewardLevel={rewardLevel}
           src={`https://img.youtube.com/vi/${content}/mqdefault.jpg`}
           videoId={videoId}

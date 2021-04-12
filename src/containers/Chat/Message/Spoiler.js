@@ -34,6 +34,7 @@ export default function Spoiler({ content, onSpoilerClick }) {
             cursor: 'pointer',
             background: `rgb(${grayness},${grayness},${grayness})`,
             height: '2.5rem',
+            maxWidth: '100%',
             width:
               displayedContent.length > 50
                 ? '80%'
