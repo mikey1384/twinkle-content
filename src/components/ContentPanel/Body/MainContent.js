@@ -73,11 +73,25 @@ export default function MainContent({
       onSetIsEditing
     }
   } = useContentContext();
-  const { fileType } = fileName ? getFileInfoFromFileName(fileName) : '';
+  const { fileType } = useMemo(
+    () => (fileName ? getFileInfoFromFileName(fileName) : ''),
+    [fileName]
+  );
   const subjectIsAttachedToVideo = useMemo(
     () => contentType === 'subject' && rootType === 'video' && rootObj,
     [contentType, rootObj, rootType]
   );
+  const Description = useMemo(() => {
+    return !stringIsEmpty(description)
+      ? description
+      : contentType === 'video' || contentType === 'url'
+      ? title
+      : '';
+  }, [contentType, description, title]);
+  const displayedContent = useMemo(() => content || rootContent, [
+    content,
+    rootContent
+  ]);
 
   return (
     <ErrorBoundary>
@@ -204,7 +218,27 @@ export default function MainContent({
             wordBrea: 'break-word'
           }}
         >
-          {!isEditing && (
+          {isEditing ? (
+            <ContentEditor
+              comment={content}
+              content={displayedContent}
+              contentId={contentId}
+              description={description}
+              filePath={filePath}
+              onDismiss={() =>
+                onSetIsEditing({ contentId, contentType, isEditing: false })
+              }
+              onEditContent={handleEditContent}
+              secretAnswer={secretAnswer}
+              style={{
+                marginTop:
+                  (contentType === 'video' || contentType === 'subject') &&
+                  '1rem'
+              }}
+              title={title}
+              contentType={contentType}
+            />
+          ) : (
             <>
               {contentType === 'comment' &&
                 (secretHidden ? (
@@ -291,11 +325,7 @@ export default function MainContent({
                     contentType={contentType}
                     section="description"
                   >
-                    {!stringIsEmpty(description)
-                      ? description
-                      : contentType === 'video' || contentType === 'url'
-                      ? title
-                      : ''}
+                    {Description}
                   </LongText>
                 </div>
               )}
@@ -309,27 +339,6 @@ export default function MainContent({
                 />
               )}
             </>
-          )}
-          {isEditing && (
-            <ContentEditor
-              comment={content}
-              content={content || rootContent}
-              contentId={contentId}
-              description={description}
-              filePath={filePath}
-              onDismiss={() =>
-                onSetIsEditing({ contentId, contentType, isEditing: false })
-              }
-              onEditContent={handleEditContent}
-              secretAnswer={secretAnswer}
-              style={{
-                marginTop:
-                  (contentType === 'video' || contentType === 'subject') &&
-                  '1rem'
-              }}
-              title={title}
-              contentType={contentType}
-            />
           )}
         </div>
         {!isEditing && contentType === 'url' && (

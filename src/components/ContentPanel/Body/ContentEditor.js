@@ -42,17 +42,22 @@ export default function ContentEditor({
   style,
   title
 }) {
-  const defaultInputState = {
-    editedContent: content || '',
-    editedComment: comment || '',
-    editedDescription: description || '',
-    editedSecretAnswer: secretAnswer || '',
-    editedTitle: title || '',
-    editedUrl:
-      contentType === 'video'
-        ? `https://www.youtube.com/watch?v=${content}`
-        : content || ''
-  };
+  const defaultInputState = useMemo(
+    () => ({
+      editedContent: content || '',
+      editedComment: comment || '',
+      editedDescription: description || '',
+      editedSecretAnswer: secretAnswer || '',
+      editedTitle: title || '',
+      editedUrl:
+        contentType === 'video'
+          ? `https://www.youtube.com/watch?v=${content}`
+          : contentType === 'url'
+          ? content
+          : ''
+    }),
+    [comment, content, contentType, description, secretAnswer, title]
+  );
   const {
     state,
     actions: { onSetEditForm }
@@ -70,7 +75,7 @@ export default function ContentEditor({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prevInputState]);
 
-  const editForm = inputState || {};
+  const editForm = useMemo(() => inputState || {}, [inputState]);
   const {
     editedContent = '',
     editedComment = '',
