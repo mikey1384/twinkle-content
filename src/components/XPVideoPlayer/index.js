@@ -61,9 +61,10 @@ function XPVideoPlayer({
     }
   } = useAppContext();
   const { profileTheme, rewardBoostLvl, userId, twinkleCoins } = useMyState();
-  const coinRewardAmount = useMemo(() => videoRewardHash[rewardBoostLvl].coin, [
-    rewardBoostLvl
-  ]);
+  const coinRewardAmount = useMemo(
+    () => videoRewardHash?.[rewardBoostLvl]?.coin || 2,
+    [rewardBoostLvl]
+  );
 
   const coinRewardAmountRef = useRef(coinRewardAmount);
   useEffect(() => {
