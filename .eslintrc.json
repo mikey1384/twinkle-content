@@ -20,7 +20,6 @@
   "extends": ["plugin:react/recommended"],
 
   "globals": {
-    "AudioContext": true,
     "beforeEach": true,
     "document": false,
     "fetch": true,
