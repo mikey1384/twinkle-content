@@ -371,7 +371,6 @@ export default function ChatReducer(state, action) {
             ? false
             : state.channelOnCall?.outgoingShown,
           imCalling: action.iHungUp ? false : state.channelOnCall?.imCalling,
-          imLive: action.iHungUp ? false : state.channelOnCall?.imLive,
           incomingShown: action.iHungUp
             ? false
             : state.channelOnCall?.incomingShown,
@@ -1004,7 +1003,6 @@ export default function ChatReducer(state, action) {
         ...state,
         channelOnCall: action.channelId
           ? {
-              imLive: action.imCalling,
               imCalling: action.imCalling,
               id: action.channelId,
               isClass: action.isClass,
@@ -1043,14 +1041,6 @@ export default function ChatReducer(state, action) {
           : filteredFavChannelIds
       };
     }
-    case 'SET_IM_LIVE':
-      return {
-        ...state,
-        channelOnCall: {
-          ...state.channelOnCall,
-          imLive: action.imLive
-        }
-      };
     case 'SET_IS_RESPONDING_TO_SUBJECT':
       return {
         ...state,

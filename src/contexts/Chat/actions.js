@@ -437,12 +437,6 @@ export default function ChatActions(dispatch) {
         favorited
       });
     },
-    onSetImLive(imLive) {
-      return dispatch({
-        type: 'SET_IM_LIVE',
-        imLive
-      });
-    },
     onSetIsRespondingToSubject(isResponding) {
       return dispatch({
         type: 'SET_IS_RESPONDING_TO_SUBJECT',

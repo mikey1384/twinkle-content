@@ -75,7 +75,6 @@ export default function Header({
       onChangeBusyStatus,
       onChangeChatSubject,
       onEnableChatSubject,
-      onSetImLive,
       onSetReconnecting,
       onChangeChannelOwner,
       onChangeChannelSettings,
@@ -611,9 +610,6 @@ export default function Header({
           channelId: channelOnCall.id,
           initiator: true
         });
-        if (!channelOnCall.isClass) {
-          onSetImLive(true);
-        }
       }
     }
     prevIncomingShown.current = channelOnCall.incomingShown;

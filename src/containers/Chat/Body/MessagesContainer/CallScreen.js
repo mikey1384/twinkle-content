@@ -4,22 +4,19 @@ import Icon from 'components/Icon';
 import Button from 'components/Button';
 import ProfilePic from 'components/ProfilePic';
 import { useChatContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
 import { mobileMaxWidth } from 'constants/css';
 import { socket } from 'constants/io';
 import { css } from '@emotion/css';
 
 CallScreen.propTypes = {
-  creatorId: PropTypes.number,
   style: PropTypes.object
 };
 
-export default function CallScreen({ creatorId, style }) {
+export default function CallScreen({ style }) {
   const {
     state: { channelOnCall, ...state },
-    actions: { onSetImLive, onShowIncoming }
+    actions: { onShowIncoming }
   } = useChatContext();
-  const { userId } = useMyState();
 
   const calling = useMemo(() => {
     return !channelOnCall.callReceived && channelOnCall.imCalling;
@@ -111,9 +108,6 @@ export default function CallScreen({ creatorId, style }) {
 
   function handleShowIncoming() {
     socket.emit('confirm_call_reception', channelOnCall.id);
-    if (creatorId === userId && channelOnCall.isClass) {
-      onSetImLive(true);
-    }
     onShowIncoming();
   }
 }
