@@ -7,23 +7,14 @@ import { Color } from 'constants/css';
 Members.propTypes = {
   channelId: PropTypes.number.isRequired,
   creatorId: PropTypes.number,
-  imLive: PropTypes.bool,
   isClass: PropTypes.bool,
   members: PropTypes.array.isRequired,
   onlineMembers: PropTypes.object.isRequired
 };
 
-function Members({
-  channelId,
-  creatorId,
-  imLive,
-  isClass,
-  members,
-  onlineMembers
-}) {
+function Members({ channelId, creatorId, isClass, members, onlineMembers }) {
   const {
     state: {
-      peerStreams,
       channelOnCall: { id: channelOnCallId, members: membersOnCallObj }
     }
   } = useChatContext();
@@ -67,14 +58,10 @@ function Members({
           {membersOnCall.map((member) => (
             <MemberListItem
               key={`oncall-member-${member.id}`}
-              channelId={channelId}
               creatorId={creatorId}
               onlineMembers={onlineMembers}
               member={member}
-              imLive={imLive}
               isClass={isClass}
-              membersOnCallObj={membersOnCallObj}
-              peerStreams={peerStreams}
             />
           ))}
         </div>
