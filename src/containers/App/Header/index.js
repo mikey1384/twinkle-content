@@ -630,11 +630,7 @@ export default function Header({
     if (myStream && !prevMyStreamRef.current) {
       if (channelOnCall.imCalling) {
         socket.emit('start_new_call', channelOnCall.id);
-      } else if (
-        !channelOnCall.isClass ||
-        (channelOnCall.isClass &&
-          channelsObj[channelOnCall.id].creatorId === userId)
-      ) {
+      } else {
         for (let peerId in membersOnCall.current) {
           try {
             if (peersRef.current[peerId]) {
