@@ -488,12 +488,7 @@ export default function Header({
           handleNewPeer({
             peerId,
             channelId,
-            stream: channelOnCall.isClass
-              ? channelsObj[channelOnCall.id].creatorId === userId ||
-                channelOnCall.imLive
-                ? myStream
-                : null
-              : myStream
+            stream: myStream
           });
         } catch (error) {
           console.error(error);
