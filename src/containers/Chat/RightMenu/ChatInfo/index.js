@@ -2,13 +2,13 @@ import React, { memo, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Members from './Members';
 import ChannelDetails from './ChannelDetails';
-import Icon from 'components/Icon';
 import { css } from '@emotion/css';
-import { Color, desktopMinWidth, mobileMaxWidth } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
 import { useChatContext } from 'contexts';
 import { socket } from 'constants/io';
 import { GENERAL_CHAT_ID } from 'constants/defaultValues';
+import CallButton from './CallButton';
 
 ChatInfo.propTypes = {
   channelName: PropTypes.string,
@@ -115,38 +115,7 @@ function ChatInfo({
           className="unselectable"
         >
           {voiceChatButtonShown && (
-            <div
-              className={css`
-                padding: 1rem;
-                background: ${callOngoing
-                  ? Color.rose(0.8)
-                  : Color.darkBlue(0.8)};
-                color: #fff;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                transition: background 0.2s;
-                @media (max-width: ${mobileMaxWidth}) {
-                  background: ${callOngoing
-                    ? Color.rose(1)
-                    : Color.darkBlue(1)};
-                }
-                @media (min-width: ${desktopMinWidth}) {
-                  &:hover {
-                    background: ${callOngoing
-                      ? Color.rose(1)
-                      : Color.darkBlue(1)};
-                  }
-                }
-              `}
-              onClick={handleCall}
-            >
-              {!callOngoing && <Icon icon="phone-volume" />}
-              <span style={{ marginLeft: '1rem' }}>
-                {!callOngoing ? 'Call' : 'Hang Up'}
-              </span>
-            </div>
+            <CallButton callOngoing={callOngoing} onCall={handleCall} />
           )}
           <ChannelDetails
             style={{ marginTop: '1rem' }}
