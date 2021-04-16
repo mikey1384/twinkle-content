@@ -32,7 +32,8 @@ function ChatInfo({
   } = useChatContext();
 
   const callOngoing = useMemo(
-    () => selectedChannelId === channelOnCall.id && channelOnCall.members[myId],
+    () =>
+      selectedChannelId === channelOnCall.id && !!channelOnCall.members[myId],
     [channelOnCall.id, channelOnCall.members, myId, selectedChannelId]
   );
 

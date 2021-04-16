@@ -1,13 +1,11 @@
-import React, { memo, useMemo, useEffect, useState } from 'react';
+import React, { memo, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ProfilePic from 'components/ProfilePic';
 import UsernameText from 'components/Texts/UsernameText';
 import Icon from 'components/Icon';
-import ConfirmModal from 'components/Modals/ConfirmModal';
 import { useChatContext } from 'contexts';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { socket } from 'constants/io';
 
 MemberListItem.propTypes = {
   onlineMembers: PropTypes.object,
@@ -18,7 +16,6 @@ MemberListItem.propTypes = {
 };
 
 function MemberListItem({ onlineMembers, creatorId, isClass, member, style }) {
-  const [confirmModalShown, setConfirmModalShown] = useState(false);
   const {
     state: {
       ['user' + member.id]: { isAway, isBusy, username, profilePicUrl } = {}
@@ -89,20 +86,8 @@ function MemberListItem({ onlineMembers, creatorId, isClass, member, style }) {
           </div>
         ) : null}
       </div>
-      {confirmModalShown && (
-        <ConfirmModal
-          onHide={() => setConfirmModalShown(false)}
-          title="Showing over 2 students at a time may slow down the performance or cause errors"
-          onConfirm={handleConfirmShowPeer}
-        />
-      )}
     </div>
   ) : null;
-
-  function handleConfirmShowPeer() {
-    socket.emit('show_peer_stream', member.id);
-    setConfirmModalShown(false);
-  }
 }
 
 export default memo(MemberListItem);

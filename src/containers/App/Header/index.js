@@ -100,7 +100,6 @@ export default function Header({
       onSetUserData,
       onShowIncoming,
       onShowOutgoing,
-      onTogglePeerStream,
       onUpdateCollectorsRankings
     }
   } = useChatContext();
@@ -191,9 +190,6 @@ export default function Header({
     socket.on('new_recommendation_posted', handleNewRecommendation);
     socket.on('peer_accepted', handlePeerAccepted);
     socket.on('peer_hung_up', handlePeerHungUp);
-    socket.on('peer_stream_show_requested', handlePeerStreamShowRequest);
-    socket.on('peer_stream_close_requested', handlePeerStreamCloseRequest);
-    socket.on('peer_stream_enabled', handlePeerStreamEnable);
     socket.on('subject_changed', handleSubjectChange);
     socket.on('username_changed', handleUsernameChange);
     socket.on('new_vocab_activity_received', handleReceiveVocabActivity);
@@ -237,15 +233,6 @@ export default function Header({
       );
       socket.removeListener('peer_accepted', handlePeerAccepted);
       socket.removeListener('peer_hung_up', handlePeerHungUp);
-      socket.removeListener(
-        'peer_stream_show_requested',
-        handlePeerStreamShowRequest
-      );
-      socket.removeListener(
-        'peer_stream_close_requested',
-        handlePeerStreamCloseRequest
-      );
-      socket.removeListener('peer_stream_enabled', handlePeerStreamEnable);
       socket.removeListener('subject_changed', handleSubjectChange);
       socket.removeListener('username_changed', handleUsernameChange);
       socket.removeListener(
@@ -521,51 +508,6 @@ export default function Header({
       ) {
         delete membersOnCall.current[peerId];
         onHangUp({ peerId, memberId, iHungUp: memberId === userId });
-      }
-    }
-
-    function handlePeerStreamShowRequest() {
-      if (myStream) {
-        if (myStream.getAudioTracks()[0].enabled) {
-          for (let peerId in membersOnCall.current) {
-            try {
-              if (peersRef.current[peerId]) {
-                peersRef.current[peerId].addStream(myStream);
-              }
-            } catch (error) {
-              console.error(error);
-            }
-          }
-          onSetImLive(true);
-        } else {
-          myStream.getAudioTracks()[0].enabled = true;
-          socket.emit('notify_stream_enabled', {
-            channelId: channelOnCall.id,
-            memberId: userId
-          });
-          onSetImLive(true);
-        }
-      }
-    }
-
-    async function handlePeerStreamCloseRequest(memberId) {
-      if (memberId === userId) {
-        myStream.getAudioTracks()[0].enabled = false;
-        onSetImLive(false);
-      } else {
-        onTogglePeerStream({
-          peerId: channelOnCall.members[memberId],
-          hidden: true
-        });
-      }
-    }
-
-    async function handlePeerStreamEnable(memberId) {
-      if (memberId !== userId) {
-        onTogglePeerStream({
-          peerId: channelOnCall.members[memberId],
-          hidden: false
-        });
       }
     }
 

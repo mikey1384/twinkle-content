@@ -974,21 +974,6 @@ export default function ChatReducer(state, action) {
           }
         }
       };
-    case 'TOGGLE_PEER_STREAM': {
-      return {
-        ...state,
-        channelOnCall: {
-          ...state.channelOnCall,
-          members: {
-            ...state.channelOnCall.members,
-            [action.peerId]: {
-              ...state.channelOnCall.members[action.peerId],
-              streamHidden: action.hidden
-            }
-          }
-        }
-      };
-    }
     case 'RESET_CHAT':
       return initialChatState;
     case 'SEARCH':
@@ -1043,7 +1028,7 @@ export default function ChatReducer(state, action) {
         ...state,
         currentChannelName: action.channelName
       };
-    case 'SET_FAVORITE_CHANNEL':
+    case 'SET_FAVORITE_CHANNEL': {
       const filteredFavChannelIds = state.favoriteChannelIds.filter(
         (channelId) => channelId !== action.channelId
       );
@@ -1057,6 +1042,7 @@ export default function ChatReducer(state, action) {
           ? [action.channelId].concat(filteredFavChannelIds)
           : filteredFavChannelIds
       };
+    }
     case 'SET_IM_LIVE':
       return {
         ...state,
