@@ -111,6 +111,7 @@ function XPVideoPlayer({
   const rewardingXP = useRef(false);
   const themeColor = profileTheme || 'logoBlue';
   const rewardLevelRef = useRef(0);
+  const twinkleCoinsRef = useRef(twinkleCoins);
 
   useEffect(() => {
     init();
@@ -124,6 +125,10 @@ function XPVideoPlayer({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
+
+  useEffect(() => {
+    twinkleCoinsRef.current = twinkleCoins;
+  }, [twinkleCoins]);
 
   const handleVideoStop = useCallback(() => {
     setPlaying(false);
@@ -195,7 +200,11 @@ function XPVideoPlayer({
           videoId,
           progress: 0
         });
-        if (twinkleCoins <= 1000 && rewardLevel > 2 && !rewardingCoin.current) {
+        if (
+          twinkleCoinsRef.current <= 1000 &&
+          rewardLevel > 2 &&
+          !rewardingCoin.current
+        ) {
           rewardingCoin.current = true;
           try {
             const coins = await updateUserCoins({
@@ -233,7 +242,7 @@ function XPVideoPlayer({
             rewardingXP.current = false;
           }
         }
-        if (twinkleCoins <= 1000 && rewardLevel > 2) {
+        if (twinkleCoinsRef.current <= 1000 && rewardLevel > 2) {
           onIncreaseNumCoinsEarned({
             videoId,
             amount: coinRewardAmountRef.current
@@ -273,7 +282,7 @@ function XPVideoPlayer({
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [rewardLevel, twinkleCoins, videoId]
+    [rewardLevel, videoId]
   );
 
   const onVideoPlay = useCallback(
