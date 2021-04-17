@@ -580,7 +580,6 @@ export default function Body({
         />
         {!isNotification && (
           <Comments
-            autoFocus={false}
             autoExpand={
               (autoExpand && !secretHidden) ||
               (contentType === 'subject' && secretHidden)
