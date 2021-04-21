@@ -6,7 +6,7 @@ import Googling from './Googling';
 import Grammar from './Grammar';
 import TwinkleStore from './TwinkleStore';
 
-Main.propTypes = {
+SingleMission.propTypes = {
   fileUploadComplete: PropTypes.bool,
   fileUploadProgress: PropTypes.number,
   isRepeating: PropTypes.bool,
@@ -15,7 +15,7 @@ Main.propTypes = {
   style: PropTypes.object
 };
 
-export default function Main({
+export default function SingleMission({
   mission,
   fileUploadComplete,
   fileUploadProgress,

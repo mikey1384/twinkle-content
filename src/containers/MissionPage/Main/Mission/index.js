@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import LongText from 'components/Texts/LongText';
-import Main from './Main';
+import SingleMission from './SingleMission';
+import MultiMission from './MultiMission';
 import ApprovedStatus from './ApprovedStatus';
 import PendingStatus from './PendingStatus';
 import RewardText from 'components/Texts/RewardText';
@@ -147,8 +148,10 @@ export default function Mission({
           myAttempt={myAttempt}
           style={{ marginTop: '3rem' }}
         />
+      ) : mission.isMultiMission ? (
+        <MultiMission />
       ) : (
-        <Main
+        <SingleMission
           mission={mission}
           isRepeating={isRepeating}
           fileUploadComplete={fileUploadComplete}
