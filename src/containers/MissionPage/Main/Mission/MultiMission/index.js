@@ -8,7 +8,6 @@ export default function MultiMission() {
     <div
       className={css`
         margin-top: 2rem;
-        padding: 1rem;
         border-radius: ${borderRadius};
         margin-bottom: -1rem;
       `}
