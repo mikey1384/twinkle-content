@@ -299,6 +299,10 @@ function App({ location, history }) {
           <Route path="/subjects/:contentId" component={ContentPage} />
           <Route path="/subjects" component={Explore} />
           <Route path="/playlists" component={PlaylistPage} />
+          <Route
+            path="/missions/:missionType/:subMissionId"
+            component={MissionPage}
+          />
           <Route path="/missions/:missionType" component={MissionPage} />
           <Route path="/missions" component={Mission} />
           <Route
