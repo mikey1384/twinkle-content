@@ -139,7 +139,7 @@ export default function MissionItem({
 
   function handleLinkClick() {
     if (userId) {
-      history.push(`/missions/${mission.missionType}`);
+      history.push(`/missions/${mission.missionType}/1`);
     } else {
       onOpenSigninModal();
     }

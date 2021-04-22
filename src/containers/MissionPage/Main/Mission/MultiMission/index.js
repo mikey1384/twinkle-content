@@ -1,7 +1,7 @@
 import React from 'react';
 import { borderRadius } from 'constants/css';
 import { css } from '@emotion/css';
-import MissionItem from 'containers/Mission/MissionItem';
+import MissionItem from './MissionItem';
 
 export default function MultiMission() {
   return (
@@ -13,15 +13,30 @@ export default function MultiMission() {
       `}
     >
       <MissionItem
-        mission={{ title: 'something mission', id: 1, subtitle: 'hello' }}
+        mission={{
+          title: 'something mission',
+          id: 1,
+          subtitle: 'hello',
+          missionType: 'twinkle-website-features'
+        }}
       />
       <MissionItem
         style={{ marginTop: '1rem' }}
-        mission={{ title: 'something mission', id: 2, subtitle: 'hello' }}
+        mission={{
+          title: 'something mission',
+          id: 2,
+          subtitle: 'hello',
+          missionType: 'twinkle-website-features'
+        }}
       />
       <MissionItem
         style={{ marginTop: '1rem' }}
-        mission={{ title: 'something mission', id: 3, subtitle: 'hello' }}
+        mission={{
+          title: 'something mission',
+          id: 3,
+          subtitle: 'hello',
+          missionType: 'twinkle-website-features'
+        }}
       />
     </div>
   );
