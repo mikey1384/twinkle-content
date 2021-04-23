@@ -38,6 +38,11 @@ export default function ViewReducer(state, action) {
         ...state,
         profileNav: action.nav
       };
+    case 'SET_USERS_NAV':
+      return {
+        ...state,
+        usersNav: action.nav
+      };
     default:
       return state;
   }

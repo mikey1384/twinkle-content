@@ -42,6 +42,12 @@ export default function ViewActions(dispatch) {
         type: 'SET_PROFILE_NAV',
         nav
       });
+    },
+    onSetUsersNav(nav) {
+      return dispatch({
+        type: 'SET_USERS_NAV',
+        nav
+      });
     }
   };
 }

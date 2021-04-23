@@ -34,13 +34,21 @@ function MainNavs({
 }) {
   const { twinkleCoins, userId } = useMyState();
   const {
-    state: { exploreCategory, contentPath, contentNav, profileNav, homeNav },
+    state: {
+      exploreCategory,
+      contentPath,
+      contentNav,
+      profileNav,
+      homeNav,
+      usersNav
+    },
     actions: {
       onSetExploreCategory,
       onSetContentPath,
       onSetContentNav,
       onSetProfileNav,
-      onSetHomeNav
+      onSetHomeNav,
+      onSetUsersNav
     }
   } = useViewContext();
   const {
@@ -142,6 +150,9 @@ function MainNavs({
     if (profilePageMatch) {
       onSetProfileNav(pathname);
     }
+    if (usersMatch || profilePageMatch) {
+      onSetUsersNav(pathname);
+    }
     if (['links', 'videos', 'subjects'].includes(section)) {
       onSetExploreCategory(section);
       loaded.current = true;
@@ -202,9 +213,9 @@ function MainNavs({
         imgLabel="bars"
         onClick={onMobileMenuOpen}
       />
-      {profileNav && (
+      {usersNav && (
         <HeaderNav
-          to={profileNav}
+          to={usersNav}
           pathname={pathname}
           className="mobile"
           imgLabel="user"
