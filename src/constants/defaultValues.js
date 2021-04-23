@@ -8,6 +8,7 @@ export const defaultContentState = {
   likes: [],
   pictures: [],
   questions: [],
+  status: {},
   recommendations: [],
   subjects: [],
   tags: [],
