@@ -18,7 +18,7 @@ export default function Main({ mission, onSetMissionState, style }) {
       {mission ? (
         <Switch>
           <Route
-            path={`/missions/${mission.missionType}/:subMissionId`}
+            path={`/missions/${mission.missionType}/:subMissionPath`}
             render={() => <MultiMissionPage />}
           />
           <Route
