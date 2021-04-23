@@ -29,6 +29,7 @@ export default function GoBack({ isMobile, to, text }) {
         line-height: 1.7;
         @media (max-width: ${mobileMaxWidth}) {
           font-size: 2rem;
+          padding-bottom: 1.5rem;
           &:hover {
             background: #fff;
             color: #000;
