@@ -49,7 +49,9 @@ export default function RightMenu({ className, missionType, style }) {
       >
         <nav
           className={
-            location.pathname === `/missions/${missionType}` ? 'active' : ''
+            location.pathname !== `/missions/${missionType}/manage`
+              ? 'active'
+              : ''
           }
           onClick={() => history.push(`/missions/${missionType}`)}
           style={{

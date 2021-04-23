@@ -1,9 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { borderRadius } from 'constants/css';
 import { css } from '@emotion/css';
 import MissionItem from './MissionItem';
 
-export default function MultiMission() {
+MultiMission.propTypes = {
+  mission: PropTypes.object.isRequired
+};
+
+export default function MultiMission({ mission }) {
+  console.log(mission);
   return (
     <div
       className={css`

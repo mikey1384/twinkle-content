@@ -167,22 +167,22 @@ export default function MissionPage({
             <Switch>
               <Route
                 exact
-                path={path}
-                render={() => (
-                  <Main
-                    onSetMissionState={onSetMissionState}
-                    mission={mission}
-                  />
-                )}
-              />
-              <Route
-                exact
-                path={`${path}/manage`}
+                path={`/missions/${missionType}/manage`}
                 render={() => (
                   <Management
                     missionId={missionId}
                     mission={mission}
                     onSetMissionState={onSetMissionState}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path={path}
+                render={() => (
+                  <Main
+                    onSetMissionState={onSetMissionState}
+                    mission={mission}
                   />
                 )}
               />

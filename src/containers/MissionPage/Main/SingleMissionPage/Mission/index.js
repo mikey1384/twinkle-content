@@ -149,7 +149,7 @@ export default function Mission({
           style={{ marginTop: '3rem' }}
         />
       ) : mission.isMultiMission ? (
-        <MultiMission />
+        <MultiMission mission={mission} />
       ) : (
         <SingleMission
           mission={mission}
