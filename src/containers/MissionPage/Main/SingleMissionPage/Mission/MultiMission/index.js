@@ -8,8 +8,7 @@ MultiMission.propTypes = {
   mission: PropTypes.object.isRequired
 };
 
-export default function MultiMission({ mission }) {
-  console.log(mission);
+export default function MultiMission({ mission: { levels } }) {
   return (
     <div
       className={css`
@@ -18,32 +17,18 @@ export default function MultiMission({ mission }) {
         margin-bottom: -1rem;
       `}
     >
-      <MissionItem
-        mission={{
-          title: 'something mission',
-          id: 1,
-          subtitle: 'hello',
-          missionType: 'twinkle-website-features'
-        }}
-      />
-      <MissionItem
-        style={{ marginTop: '1rem' }}
-        mission={{
-          title: 'something mission',
-          id: 2,
-          subtitle: 'hello',
-          missionType: 'twinkle-website-features'
-        }}
-      />
-      <MissionItem
-        style={{ marginTop: '1rem' }}
-        mission={{
-          title: 'something mission',
-          id: 3,
-          subtitle: 'hello',
-          missionType: 'twinkle-website-features'
-        }}
-      />
+      {levels.map((level, index) => (
+        <MissionItem
+          key={level.id}
+          style={{ marginTop: index === 0 ? 0 : '1rem' }}
+          mission={{
+            title: level.title,
+            id: level.id,
+            subtitle: level.subtitle,
+            levelKey: level.levelKey
+          }}
+        />
+      ))}
     </div>
   );
 }
