@@ -8,7 +8,9 @@ MultiMission.propTypes = {
   mission: PropTypes.object.isRequired
 };
 
-export default function MultiMission({ mission: { subMissions } }) {
+export default function MultiMission({
+  mission: { missionType, subMissions }
+}) {
   return (
     <div
       className={css`
@@ -25,11 +27,8 @@ export default function MultiMission({ mission: { subMissions } }) {
               <TaskItem
                 key={task.id}
                 style={{ marginTop: index === 0 ? 0 : '1rem' }}
-                mission={{
-                  title: task.title,
-                  id: task.id,
-                  subtitle: task.subtitle
-                }}
+                parentType={missionType}
+                mission={task}
               />
             ))}
           </div>

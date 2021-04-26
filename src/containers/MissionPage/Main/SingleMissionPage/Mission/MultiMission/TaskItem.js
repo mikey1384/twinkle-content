@@ -12,12 +12,14 @@ TaskItem.propTypes = {
   isRepeatable: PropTypes.bool,
   style: PropTypes.object,
   mission: PropTypes.object.isRequired,
+  parentType: PropTypes.string.isRequired,
   showStatus: PropTypes.bool
 };
 export default function TaskItem({
   isRepeatable,
   style,
   mission,
+  parentType,
   showStatus = true
 }) {
   const history = useHistory();
@@ -139,7 +141,7 @@ export default function TaskItem({
 
   function handleLinkClick() {
     if (userId) {
-      history.push(`/missions/${mission.missionType}/${mission.id}`);
+      history.push(`/missions/${parentType}/${mission.missionType}`);
     } else {
       onOpenSigninModal();
     }
