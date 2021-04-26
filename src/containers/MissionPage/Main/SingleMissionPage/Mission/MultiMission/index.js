@@ -8,7 +8,7 @@ MultiMission.propTypes = {
   mission: PropTypes.object.isRequired
 };
 
-export default function MultiMission({ mission: { levels } }) {
+export default function MultiMission({ mission: { tasks } }) {
   return (
     <div
       className={css`
@@ -17,15 +17,15 @@ export default function MultiMission({ mission: { levels } }) {
         margin-bottom: -1rem;
       `}
     >
-      {levels.map((level, index) => (
+      {tasks.map((task, index) => (
         <MissionItem
-          key={level.id}
+          key={task.id}
           style={{ marginTop: index === 0 ? 0 : '1rem' }}
           mission={{
-            title: level.title,
-            id: level.id,
-            subtitle: level.subtitle,
-            levelKey: level.levelKey
+            title: task.title,
+            id: task.id,
+            subtitle: task.subtitle,
+            taskKey: task.key
           }}
         />
       ))}
