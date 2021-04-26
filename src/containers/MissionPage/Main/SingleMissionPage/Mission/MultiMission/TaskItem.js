@@ -8,13 +8,13 @@ import { useHistory } from 'react-router-dom';
 import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
-MissionItem.propTypes = {
+TaskItem.propTypes = {
   isRepeatable: PropTypes.bool,
   style: PropTypes.object,
   mission: PropTypes.object.isRequired,
   showStatus: PropTypes.bool
 };
-export default function MissionItem({
+export default function TaskItem({
   isRepeatable,
   style,
   mission,
