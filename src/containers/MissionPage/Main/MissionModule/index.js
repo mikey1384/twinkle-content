@@ -5,6 +5,7 @@ import CopyAndPaste from './CopyAndPaste';
 import Googling from './Googling';
 import Grammar from './Grammar';
 import TwinkleStore from './TwinkleStore';
+import Email from './Email';
 
 MissionModule.propTypes = {
   fileUploadComplete: PropTypes.bool,
@@ -46,7 +47,9 @@ export default function MissionModule({
       {mission.missionType === 'grammar' && (
         <Grammar mission={mission} isRepeating={isRepeating} />
       )}
-      {mission.missionType === 'email' && <div>this is email module</div>}
+      {mission.missionType === 'email' && (
+        <Email mission={mission} onSetMissionState={onSetMissionState} />
+      )}
     </div>
   );
 }
