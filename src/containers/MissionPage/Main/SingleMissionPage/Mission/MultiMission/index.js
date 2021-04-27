@@ -16,12 +16,19 @@ export default function MultiMission({
       className={css`
         margin-top: 2rem;
         border-radius: ${borderRadius};
-        margin-bottom: -1rem;
       `}
     >
-      {subMissions.map((subMission) => (
+      {subMissions.map((subMission, index) => (
         <div key={subMission.id}>
-          <p>title: {subMission.title}</p>
+          <p
+            className={css`
+              font-weight: bold;
+              font-size: 2.5rem;
+              margin-bottom: 1rem;
+            `}
+          >
+            {index + 1}. {subMission.title}
+          </p>
           <div>
             {subMission.tasks.map((task, index) => (
               <TaskItem
