@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TakeScreenshot from '../../../MissionModules/TakeScreenshot';
-import CopyAndPaste from '../../../MissionModules/CopyAndPaste';
-import Googling from '../../../MissionModules/Googling';
-import Grammar from '../../../MissionModules/Grammar';
-import TwinkleStore from '../../../MissionModules/TwinkleStore';
+import TakeScreenshot from '../../MissionModules/TakeScreenshot';
+import CopyAndPaste from '../../MissionModules/CopyAndPaste';
+import Googling from '../../MissionModules/Googling';
+import Grammar from '../../MissionModules/Grammar';
+import TwinkleStore from '../../MissionModules/TwinkleStore';
 
 SingleMission.propTypes = {
   fileUploadComplete: PropTypes.bool,
