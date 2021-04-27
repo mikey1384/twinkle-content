@@ -80,6 +80,7 @@ export default function RepeatMissionAddon({ mission, onSetMissionState }) {
   }, [mission]);
 
   useEffect(() => {
+    mounted.current = true;
     return function onUnmount() {
       mounted.current = false;
     };

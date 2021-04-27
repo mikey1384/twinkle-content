@@ -86,6 +86,7 @@ export default function MissionPage({
   }, [userId, prevUserId, missionId, mission.loaded]);
 
   useEffect(() => {
+    mounted.current = true;
     return function onUnmount() {
       mounted.current = false;
     };

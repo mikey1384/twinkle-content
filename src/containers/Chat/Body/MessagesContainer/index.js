@@ -173,6 +173,7 @@ export default function MessagesContainer({
   ]);
 
   useEffect(() => {
+    mounted.current = true;
     return function onUnmount() {
       mounted.current = false;
     };

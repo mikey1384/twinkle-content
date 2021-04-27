@@ -59,6 +59,7 @@ export default function SubmittedQuestions({
   }, [activeTab, isCreator]);
 
   useEffect(() => {
+    mounted.current = true;
     return function onUnmount() {
       mounted.current = false;
     };

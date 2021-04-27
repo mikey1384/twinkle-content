@@ -142,6 +142,7 @@ export default function InteractiveContent({ autoFocus, interactiveId }) {
   }, [displayedSlideIds, slideObj]);
 
   useEffect(() => {
+    mounted.current = true;
     return function onUnmount() {
       mounted.current = false;
     };

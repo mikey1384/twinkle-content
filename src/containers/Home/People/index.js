@@ -85,6 +85,7 @@ function People() {
   }, [orderUsersBy, profilesLoaded]);
 
   useEffect(() => {
+    mounted.current = true;
     return function onUnmount() {
       mounted.current = false;
     };
