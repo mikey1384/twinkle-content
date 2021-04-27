@@ -19,7 +19,10 @@ export default function MultiMission({
       `}
     >
       {subMissions.map((subMission, index) => (
-        <div key={subMission.id}>
+        <div
+          key={subMission.id}
+          style={{ marginTop: index === 0 ? 0 : '2.5rem' }}
+        >
           <p
             className={css`
               font-weight: bold;
