@@ -14,15 +14,12 @@ export default function MultiMission({
   return (
     <div
       className={css`
-        margin-top: 2rem;
+        margin-top: 3rem;
         border-radius: ${borderRadius};
       `}
     >
       {subMissions.map((subMission, index) => (
-        <div
-          key={subMission.id}
-          style={{ marginTop: index === 0 ? 0 : '2.5rem' }}
-        >
+        <div key={index} style={{ marginTop: index === 0 ? 0 : '3rem' }}>
           <p
             className={css`
               font-weight: bold;
