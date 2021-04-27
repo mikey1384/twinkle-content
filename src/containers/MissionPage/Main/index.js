@@ -18,9 +18,10 @@ export default function Main({ mission, onSetMissionState, style }) {
       {mission ? (
         <Switch>
           <Route
-            path={`/missions/${mission.missionType}/:taskPath`}
-            render={() => (
+            path={`/missions/${mission.missionType}/:taskType`}
+            render={({ match }) => (
               <TaskPage
+                match={match}
                 mission={mission}
                 onSetMissionState={onSetMissionState}
               />

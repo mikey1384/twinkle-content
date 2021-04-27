@@ -7,11 +7,20 @@ import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 
 TaskPage.propTypes = {
+  match: PropTypes.object.isRequired,
   mission: PropTypes.object.isRequired,
   onSetMissionState: PropTypes.func.isRequired
 };
 
-export default function TaskPage({ mission, onSetMissionState }) {
+export default function TaskPage({
+  match: {
+    path,
+    params: { taskType }
+  },
+  mission,
+  onSetMissionState
+}) {
+  console.log(path, taskType);
   return (
     <div style={{ width: '100%' }}>
       <GoBack to="./" text="Users" />
