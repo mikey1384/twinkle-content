@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Mission from './Mission';
 import Tutorial from '../Tutorial';
-import RepeatMissionAddons from '../MissionModules/RepeatMissionAddons';
+import RepeatMissionAddons from '../RepeatMissionAddons';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 

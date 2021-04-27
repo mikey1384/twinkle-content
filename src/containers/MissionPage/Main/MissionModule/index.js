@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TakeScreenshot from '../../MissionModules/TakeScreenshot';
-import CopyAndPaste from '../../MissionModules/CopyAndPaste';
-import Googling from '../../MissionModules/Googling';
-import Grammar from '../../MissionModules/Grammar';
-import TwinkleStore from '../../MissionModules/TwinkleStore';
+import TakeScreenshot from './TakeScreenshot';
+import CopyAndPaste from './CopyAndPaste';
+import Googling from './Googling';
+import Grammar from './Grammar';
+import TwinkleStore from './TwinkleStore';
 
-SingleMission.propTypes = {
+MissionModule.propTypes = {
   fileUploadComplete: PropTypes.bool,
   fileUploadProgress: PropTypes.number,
   isRepeating: PropTypes.bool,
@@ -15,7 +15,7 @@ SingleMission.propTypes = {
   style: PropTypes.object
 };
 
-export default function SingleMission({
+export default function MissionModule({
   mission,
   fileUploadComplete,
   fileUploadProgress,

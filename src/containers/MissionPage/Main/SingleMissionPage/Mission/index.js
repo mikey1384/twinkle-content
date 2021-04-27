@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import LongText from 'components/Texts/LongText';
-import SingleMission from './SingleMission';
+import MissionModule from '../../MissionModule';
 import MultiMission from './MultiMission';
 import RewardText from 'components/Texts/RewardText';
 import ErrorBoundary from 'components/ErrorBoundary';
@@ -151,7 +151,7 @@ export default function Mission({
       ) : mission.isMultiMission ? (
         <MultiMission mission={mission} />
       ) : (
-        <SingleMission
+        <MissionModule
           mission={mission}
           isRepeating={isRepeating}
           fileUploadComplete={fileUploadComplete}
