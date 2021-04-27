@@ -1,15 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import MissionModule from '../MissionModule';
 
 Task.propTypes = {
-  task: PropTypes.object
+  task: PropTypes.object,
+  onSetMissionState: PropTypes.func.isRequired
 };
 
-export default function Task({ task }) {
-  console.log(task);
+export default function Task({
+  task,
+  task: { fileUploadComplete, fileUploadProgress },
+  onSetMissionState
+}) {
   return (
     <div>
-      <div>This is a task page</div>
+      <MissionModule
+        mission={task}
+        fileUploadComplete={fileUploadComplete}
+        fileUploadProgress={fileUploadProgress}
+        onSetMissionState={onSetMissionState}
+        style={{ marginTop: '4.5rem' }}
+      />
     </div>
   );
 }

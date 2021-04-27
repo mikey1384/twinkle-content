@@ -46,6 +46,7 @@ export default function MissionModule({
       {mission.missionType === 'grammar' && (
         <Grammar mission={mission} isRepeating={isRepeating} />
       )}
+      {mission.missionType === 'email' && <div>this is email module</div>}
     </div>
   );
 }
