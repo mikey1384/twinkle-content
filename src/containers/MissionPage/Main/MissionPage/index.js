@@ -6,12 +6,12 @@ import RepeatMissionAddons from '../RepeatMissionAddons';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 
-SingleMissionPage.propTypes = {
+MissionPage.propTypes = {
   mission: PropTypes.object.isRequired,
   onSetMissionState: PropTypes.func.isRequired
 };
 
-export default function SingleMissionPage({ mission, onSetMissionState }) {
+export default function MissionPage({ mission, onSetMissionState }) {
   const isRepeatMission = useMemo(() => {
     const repeatMissionTypes = ['grammar'];
     return repeatMissionTypes.includes(mission.missionType);

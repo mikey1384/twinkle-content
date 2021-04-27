@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
 import ErrorBoundary from 'components/ErrorBoundary';
-import SingleMissionPage from './SingleMissionPage';
+import MissionPage from './MissionPage';
 import { Switch, Route } from 'react-router-dom';
-import MultiMissionPage from './MultiMissionPage';
+import TaskPage from './TaskPage';
 
 Main.propTypes = {
   mission: PropTypes.object.isRequired,
@@ -18,14 +18,19 @@ export default function Main({ mission, onSetMissionState, style }) {
       {mission ? (
         <Switch>
           <Route
-            path={`/missions/${mission.missionType}/:subMissionPath`}
-            render={() => <MultiMissionPage />}
+            path={`/missions/${mission.missionType}/:taskPath`}
+            render={() => (
+              <TaskPage
+                mission={mission}
+                onSetMissionState={onSetMissionState}
+              />
+            )}
           />
           <Route
             exact
             path={`/missions/${mission.missionType}`}
             render={() => (
-              <SingleMissionPage
+              <MissionPage
                 mission={mission}
                 onSetMissionState={onSetMissionState}
               />
