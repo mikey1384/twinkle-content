@@ -12,7 +12,7 @@ export default function Email() {
           font-weight: bold;
         `}
       >
-        Type in your email address and press the submit button
+        Type in your email address and tap submit
       </p>
     </div>
   );
