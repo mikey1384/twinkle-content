@@ -65,7 +65,7 @@ export default function TaskPage({
     <div style={{ width: '100%' }}>
       <GoBack bordered to="./" text="Task List" />
       <Task
-        style={{ width: '100%' }}
+        style={{ width: '100%', marginTop: '2rem' }}
         task={task}
         onSetMissionState={onSetMissionState}
       />
