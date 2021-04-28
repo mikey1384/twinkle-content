@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MissionModule from '../MissionModule';
 import ErrorBoundary from 'components/ErrorBoundary';
+import { mobileMaxWidth } from 'constants/css';
+import { css } from '@emotion/css';
+import { gifTable } from 'constants/defaultValues';
 import { panel } from '../../Styles';
 
 Task.propTypes = {
@@ -12,7 +15,7 @@ Task.propTypes = {
 
 export default function Task({
   task,
-  task: { fileUploadComplete, fileUploadProgress },
+  task: { id: taskId, title, subtitle, fileUploadComplete, fileUploadProgress },
   onSetMissionState,
   style
 }) {
@@ -24,6 +27,38 @@ export default function Task({
         ...style
       }}
     >
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          width: '100%'
+        }}
+      >
+        <div style={{ width: '80%' }}>
+          <h1
+            className={css`
+              @media (max-width: ${mobileMaxWidth}) {
+                font-size: 2.3rem;
+              }
+            `}
+          >
+            {title}
+          </h1>
+          <p
+            className={css`
+              font-size: 1.7rem;
+              @media (max-width: ${mobileMaxWidth}) {
+                font-size: 1.5rem;
+              }
+            `}
+          >
+            {subtitle}
+          </p>
+        </div>
+        <div style={{ width: '20%' }}>
+          <img style={{ width: '100%' }} src={gifTable[taskId]} />
+        </div>
+      </div>
       <MissionModule
         mission={task}
         fileUploadComplete={fileUploadComplete}
