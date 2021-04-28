@@ -94,8 +94,14 @@ export default function Mission({
         ...style
       }}
     >
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <div>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          width: '100%'
+        }}
+      >
+        <div style={{ width: '80%' }}>
           <h1>{title}</h1>
           <p style={{ fontSize: '1.7rem' }}>{subtitle}</p>
         </div>
