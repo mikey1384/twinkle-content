@@ -34,6 +34,10 @@ export default function GoBack({ bordered, isMobile, to, text }) {
         @media (max-width: ${mobileMaxWidth}) {
           font-size: 2rem;
           padding-bottom: 1.5rem;
+          border-radius: 0;
+          border-top: 0;
+          border-left: 0;
+          border-right: 0;
           &:hover {
             background: #fff;
             color: #000;

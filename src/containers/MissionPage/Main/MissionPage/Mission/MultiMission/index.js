@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { borderRadius } from 'constants/css';
+import { borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import TaskItem from './TaskItem';
 
@@ -25,6 +25,9 @@ export default function MultiMission({
               font-weight: bold;
               font-size: 2.5rem;
               margin-bottom: 1rem;
+              @media (max-width: ${mobileMaxWidth}) {
+                font-size: 2.1rem;
+              }
             `}
           >
             {index + 1}. {subMission.title}

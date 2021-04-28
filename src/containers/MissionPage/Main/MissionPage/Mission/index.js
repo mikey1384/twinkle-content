@@ -102,8 +102,25 @@ export default function Mission({
         }}
       >
         <div style={{ width: '80%' }}>
-          <h1>{title}</h1>
-          <p style={{ fontSize: '1.7rem' }}>{subtitle}</p>
+          <h1
+            className={css`
+              @media (max-width: ${mobileMaxWidth}) {
+                font-size: 2.3rem;
+              }
+            `}
+          >
+            {title}
+          </h1>
+          <p
+            className={css`
+              font-size: 1.7rem;
+              @media (max-width: ${mobileMaxWidth}) {
+                font-size: 1.5rem;
+              }
+            `}
+          >
+            {subtitle}
+          </p>
         </div>
         <div style={{ width: '20%' }}>
           <img style={{ width: '100%' }} src={gifTable[missionId]} />
@@ -117,12 +134,22 @@ export default function Mission({
           }}
         >
           <div>
-            <p style={{ fontWeight: 'bold', fontSize: '2rem' }}>Objective:</p>
+            <p
+              className={css`
+                font-weight: bold;
+                font-size: 2rem;
+              `}
+            >
+              Objective:
+            </p>
             <LongText
-              style={{
-                fontSize: '1.7rem',
-                marginTop: '0.5rem'
-              }}
+              className={css`
+                font-size: 1.7rem;
+                margin-top: 0.5rem;
+                @media (max-width: ${mobileMaxWidth}) {
+                  font-size: 1.5rem;
+                }
+              `}
             >
               {objective}
             </LongText>
