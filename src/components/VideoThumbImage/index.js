@@ -87,6 +87,12 @@ function VideoThumbImage({
           cursor: onClick && 'pointer',
           ...style
         }}
+        className={css`
+          margin-bottom: ${progressBarPercentage > 0 ? '5px' : 0};
+          @media (max-width: ${mobileMaxWidth}) {
+            margin-bottom: ${progressBarPercentage > 0 ? '3px' : 0};
+          }
+        `}
         onClick={onClick}
       >
         <img
@@ -125,10 +131,23 @@ function VideoThumbImage({
             <div style={{ fontSize: '1rem', lineHeight: 1 }}>{Stars}</div>
           </div>
         )}
+        {progressBarPercentage > 0 && (
+          <WatchProgressBar
+            style={{
+              position: 'absolute',
+              width: '100%',
+              background: Color.darkerBorderGray()
+            }}
+            className={css`
+              bottom: -5px;
+              @media (max-width: ${mobileMaxWidth}) {
+                bottom: -3px;
+              }
+            `}
+            percentage={progressBarPercentage}
+          />
+        )}
       </div>
-      {progressBarPercentage > 0 && (
-        <WatchProgressBar percentage={progressBarPercentage} />
-      )}
     </div>
   );
 }

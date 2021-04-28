@@ -4,19 +4,14 @@ import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 
 WatchProgressBar.propTypes = {
-  percentage: PropTypes.number
+  className: PropTypes.string,
+  percentage: PropTypes.number,
+  style: PropTypes.object
 };
 
-function WatchProgressBar({ percentage = 0 }) {
+function WatchProgressBar({ className, style, percentage = 0 }) {
   return (
-    <div
-      style={{
-        position: 'absolute',
-        width: '100%',
-        bottom: 0,
-        background: Color.darkerBorderGray()
-      }}
-    >
+    <div className={className} style={style}>
       <div
         className={css`
           background: ${Color.red()};
