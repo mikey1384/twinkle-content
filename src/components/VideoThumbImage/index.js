@@ -87,12 +87,6 @@ function VideoThumbImage({
           cursor: onClick && 'pointer',
           ...style
         }}
-        className={css`
-          margin-bottom: ${progressBarPercentage > 0 ? '5px' : 0};
-          @media (max-width: ${mobileMaxWidth}) {
-            margin-bottom: ${progressBarPercentage > 0 ? '3px' : 0};
-          }
-        `}
         onClick={onClick}
       >
         <img
@@ -139,10 +133,7 @@ function VideoThumbImage({
               background: Color.darkerBorderGray()
             }}
             className={css`
-              bottom: -5px;
-              @media (max-width: ${mobileMaxWidth}) {
-                bottom: -3px;
-              }
+              bottom: 0;
             `}
             percentage={progressBarPercentage}
           />
