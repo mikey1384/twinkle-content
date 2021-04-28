@@ -1,9 +1,19 @@
 import React from 'react';
+import { css } from '@emotion/css';
 
 export default function Email() {
   return (
-    <div>
-      <div>this is an email verifier</div>
+    <div style={{ width: '100%' }}>
+      <p
+        className={css`
+          width: 100%;
+          text-align: center;
+          font-size: 2rem;
+          font-weight: bold;
+        `}
+      >
+        Type in your email address and press the submit button
+      </p>
     </div>
   );
 }
