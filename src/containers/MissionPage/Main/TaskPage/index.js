@@ -63,7 +63,7 @@ export default function TaskPage({
 
   return (
     <div style={{ width: '100%' }}>
-      <GoBack to="./" text="Users" />
+      <GoBack bordered to="./" text="Task List" />
       <Task
         style={{ width: '100%' }}
         task={task}
