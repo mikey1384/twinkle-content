@@ -6,19 +6,21 @@ import { Color } from 'constants/css';
 import { renderText } from 'helpers/stringHelpers';
 
 Input.propTypes = {
-  className: PropTypes.string,
   hasError: PropTypes.bool,
   inputRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   onChange: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  style: PropTypes.object,
   type: PropTypes.string
 };
 
 export default function Input({
-  className,
   hasError,
   inputRef,
   onChange,
   type = 'text',
+  className,
+  style,
   ...props
 }) {
   return (
@@ -26,12 +28,19 @@ export default function Input({
       <input
         {...props}
         type={type}
-        className={`${css`
-          border: 1px solid ${Color.darkerBorderGray()};
-          width: 100%;
-          line-height: 2rem;
-          font-size: 1.7rem;
-          padding: 1rem;
+        style={{
+          border: `1px solid ${Color.darkerBorderGray()}`,
+          lineHeight: '2rem',
+          fontSize: '1.7rem',
+          padding: '1rem',
+          ...style
+        }}
+        className={`${
+          className ||
+          css`
+            width: 100%;
+          `
+        } ${css`
           &:focus {
             outline: none;
             ::placeholder {
@@ -42,7 +51,7 @@ export default function Input({
             color: ${Color.gray()};
           }
           ${hasError ? 'color: red; border: 1px solid red;' : ''};
-        `} ${className}`}
+        `}`}
         ref={inputRef}
         onChange={(event) => onChange(renderText(event.target.value))}
       />

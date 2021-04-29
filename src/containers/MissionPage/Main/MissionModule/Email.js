@@ -18,7 +18,12 @@ export default function Email() {
         Enter your email address below and tap submit
       </p>
       <div
-        style={{ marginTop: '1rem', display: 'flex', justifyContent: 'center' }}
+        style={{
+          marginTop: '1rem',
+          display: 'flex',
+          justifyContent: 'center',
+          width: '100%'
+        }}
       >
         <Input
           className={css`

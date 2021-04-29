@@ -273,10 +273,7 @@ export default function Description({
           <div>
             <Input
               placeholder="Enter URL"
-              className={css`
-                margin-bottom: '1rem';
-              `}
-              style={urlExceedsCharLimit?.style}
+              style={{ marginBottom: '1rem', ...urlExceedsCharLimit?.style }}
               value={editedUrl}
               onChange={handleUrlChange}
             />
