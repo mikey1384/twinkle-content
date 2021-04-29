@@ -4,6 +4,8 @@ import MissionModule from '../MissionModule';
 import ErrorBoundary from 'components/ErrorBoundary';
 import LongText from 'components/Texts/LongText';
 import RewardText from 'components/Texts/RewardText';
+import ApprovedStatus from '../ApprovedStatus';
+import PendingStatus from '../PendingStatus';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { gifTable } from 'constants/defaultValues';
@@ -107,12 +109,26 @@ export default function Task({
           />
         </div>
       )}
-      <MissionModule
-        mission={task}
-        fileUploadComplete={fileUploadComplete}
-        fileUploadProgress={fileUploadProgress}
-        onSetMissionState={onSetMissionState}
-      />
+      {myAttempt?.status === 'pending' ? (
+        <PendingStatus style={{ marginTop: '7rem' }} />
+      ) : myAttempt?.status === 'pass' ||
+        (myAttempt?.status === 'fail' && !myAttempt?.tryingAgain) ? (
+        <ApprovedStatus
+          missionId={taskId}
+          xpReward={xpReward}
+          coinReward={coinReward}
+          myAttempt={myAttempt}
+          style={{ marginTop: '3rem' }}
+        />
+      ) : (
+        <MissionModule
+          mission={task}
+          fileUploadComplete={fileUploadComplete}
+          fileUploadProgress={fileUploadProgress}
+          onSetMissionState={onSetMissionState}
+          style={{ marginTop: '4.5rem' }}
+        />
+      )}
     </ErrorBoundary>
   );
 }
