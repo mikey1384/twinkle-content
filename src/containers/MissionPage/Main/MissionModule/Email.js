@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Input from 'components/Texts/Input';
-import { mobileMaxWidth } from 'constants/css';
+import Button from 'components/Button';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import { isValidEmail } from 'helpers/stringHelpers';
 
 export default function Email() {
   const [email, setEmail] = useState('');
+  const emailIsValid = useMemo(() => isValidEmail(email), [email]);
   return (
     <div style={{ width: '100%' }}>
       <p
@@ -15,12 +18,15 @@ export default function Email() {
           font-weight: bold;
         `}
       >
-        Enter your email address below and tap submit
+        Enter your email address below and tap{' '}
+        <b style={{ color: Color.green() }}>submit</b>
       </p>
       <div
         style={{
           marginTop: '1rem',
           display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
           justifyContent: 'center',
           width: '100%'
         }}
@@ -38,6 +44,18 @@ export default function Email() {
           onChange={setEmail}
           value={email}
         />
+        {emailIsValid && (
+          <div style={{ marginTop: '1.5rem' }}>
+            <Button
+              disabled={!emailIsValid}
+              style={{ fontSize: '1.7rem' }}
+              filled
+              color="green"
+            >
+              Submit
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
