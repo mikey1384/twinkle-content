@@ -79,7 +79,7 @@ export default function ChangeUsername({ style }) {
         <Input
           maxLength={20}
           placeholder="Enter new username"
-          onChange={(text) => setNewUsername(text)}
+          onChange={setNewUsername}
           value={newUsername}
         />
       </div>
