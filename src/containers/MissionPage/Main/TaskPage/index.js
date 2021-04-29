@@ -70,7 +70,7 @@ export default function TaskPage({
         onSetMissionState={onSetMissionState}
       />
       <Tutorial
-        mission={mission}
+        mission={task}
         className={css`
           margin-top: 5rem;
           margin-bottom: 1rem;
