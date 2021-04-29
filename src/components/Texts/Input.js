@@ -31,7 +31,6 @@ export default function Input({
         style={{
           border: `1px solid ${Color.darkerBorderGray()}`,
           lineHeight: '2rem',
-          fontSize: '1.7rem',
           padding: '1rem',
           ...style
         }}
@@ -41,6 +40,7 @@ export default function Input({
             width: 100%;
           `
         } ${css`
+          font-size: 1.7rem;
           &:focus {
             outline: none;
             ::placeholder {
