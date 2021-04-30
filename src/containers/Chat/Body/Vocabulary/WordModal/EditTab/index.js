@@ -8,6 +8,8 @@ import Button from 'components/Button';
 import FilterBar from 'components/FilterBar';
 import Reorder from './Reorder';
 import Remove from './Remove';
+import { mobileMaxWidth } from 'constants/css';
+import { css } from '@emotion/css';
 
 EditTab.propTypes = {
   deletedDefIds: PropTypes.array.isRequired,
@@ -77,11 +79,14 @@ export default function EditTab({
     <>
       <main>
         <p
-          style={{
-            fontWeight: 'bold',
-            fontSize: '3rem',
-            width: '100%'
-          }}
+          className={css`
+            font-weight: bold;
+            font-size: 3rem;
+            width: 100%;
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: 2rem;
+            }
+          `}
         >
           {`${capitalize(selectedTab)} Definitions of "${word}"`}
         </p>
