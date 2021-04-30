@@ -26,11 +26,14 @@ export default function DictionaryTab({
     <>
       <main>
         <p
-          style={{
-            fontWeight: 'bold',
-            fontSize: '3rem',
-            marginBottom: '1.5rem'
-          }}
+          className={css`
+            font-weight: bold;
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: 2rem;
+            }
+          `}
         >
           {word}
         </p>
