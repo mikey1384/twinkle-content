@@ -74,6 +74,12 @@ function MemberListItem({ onlineMembers, creatorId, isClass, member, style }) {
                 ? usernameWidth
                 : `CALC(${usernameWidth} + 2rem)`
           }}
+          className={css`
+            font-size: 1.5rem;
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: 1.3rem;
+            }
+          `}
           user={{ id: member.id, username }}
         />
         {creatorId === member.id ? (

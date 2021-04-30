@@ -73,8 +73,9 @@ export default function UsernameText({
           display: 'inline'
         }}
       >
-        <span
+        <p
           style={{
+            display: 'inline',
             cursor: 'pointer',
             fontWeight: 'bold',
             ...(wordBreakEnabled
@@ -88,7 +89,7 @@ export default function UsernameText({
           onMouseEnter={onMouseEnter}
         >
           {user.username || '(Deleted)'}
-        </span>
+        </p>
       </div>
       {menuShown && (
         <DropdownList style={{ width: '100%' }}>

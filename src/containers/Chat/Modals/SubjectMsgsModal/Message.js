@@ -5,8 +5,9 @@ import UsernameText from 'components/Texts/UsernameText';
 import ContentFileViewer from 'components/ContentFileViewer';
 import LongText from 'components/Texts/LongText';
 import { MessageStyle } from '../../Styles';
-import { Color } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { unix } from 'moment';
+import { css } from '@emotion/css';
 
 Message.propTypes = {
   id: PropTypes.number,
@@ -42,10 +43,33 @@ export default function Message({
         userId={userId}
         profilePicUrl={profilePicUrl}
       />
-      <div className={MessageStyle.contentWrapper}>
+      <div
+        className={css`
+          width: CALC(100% - 5vw - 3rem);
+          display: flex;
+          flex-direction: column;
+          margin-left: 2rem;
+          margin-right: 1rem;
+          position: relative;
+          white-space: pre-wrap;
+          overflow-wrap: break-word;
+          word-break: break-word;
+          @media (max-width: ${mobileMaxWidth}) {
+            margin-left: 1rem;
+          }
+        `}
+      >
         <div>
           <UsernameText
-            style={MessageStyle.usernameText}
+            className={css`
+              p {
+                font-size: 1.7rem;
+              }
+              line-height: 1;
+              @media (max-width: ${mobileMaxWidth}) {
+                font-size: 1.6rem;
+              }
+            `}
             user={{
               id: userId,
               username: username

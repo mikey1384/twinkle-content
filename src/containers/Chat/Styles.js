@@ -17,22 +17,6 @@ export const MessageStyle = {
       height: 5.8vw;
     }
   `,
-  contentWrapper: css`
-    width: CALC(100% - 5vw - 3rem);
-    display: flex;
-    flex-direction: column;
-    margin-left: 2rem;
-    margin-right: 1rem;
-    position: relative;
-    white-space: pre-wrap;
-    overflow-wrap: break-word;
-    word-break: break-word;
-    @media (max-width: ${mobileMaxWidth}) {
-      font-size: 1.2rem;
-      margin-left: 1rem;
-    }
-  `,
-  usernameText: { fontSize: '1.8rem', lineHeight: '100%' },
   messageWrapper: css`
     margin-top: 0.5rem;
     position: relative;
