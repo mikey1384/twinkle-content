@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import UsernameText from 'components/Texts/UsernameText';
 import ProfilePic from 'components/ProfilePic';
-import { Color } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { css } from '@emotion/css';
 
@@ -31,12 +31,27 @@ export default function RankingsListItem({ myId, small, style, user }) {
     return user.rank < 100 ? '2rem' : '1.5rem';
   }, [small, user.rank]);
 
+  const mobileRankFontSize = useMemo(() => {
+    if (small) {
+      return user.rank < 100 ? '1.2rem' : '1rem';
+    }
+    return user.rank < 100 ? '1.5rem' : '1.2rem';
+  }, [small, user.rank]);
+
   const usernameFontSize = useMemo(() => {
     return small ? '1.2rem' : '1.5rem';
   }, [small]);
 
+  const mobileUsernameFontSize = useMemo(() => {
+    return small ? '1rem' : '1.2rem';
+  }, [small]);
+
   const xpFontSize = useMemo(() => {
     return small ? '1.3rem' : '1.6rem';
+  }, [small]);
+
+  const mobileXpFontSize = useMemo(() => {
+    return small ? '1.1rem' : '1.3rem';
   }, [small]);
 
   const profileSize = useMemo(() => {
@@ -64,6 +79,9 @@ export default function RankingsListItem({ myId, small, style, user }) {
             text-align: center;
             color: ${rankColor ||
             (user.rank <= 10 ? Color.logoBlue() : Color.darkGray())};
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: ${mobileRankFontSize};
+            }
           `}
         >
           {user.rank ? `#${user.rank}` : '--'}
@@ -88,9 +106,14 @@ export default function RankingsListItem({ myId, small, style, user }) {
             user={{ ...user, username: user.username }}
             userId={myId}
             className={css`
+              max-width: 15rem;
               margin-top: 0.5rem;
               text-align: center;
               font-size: ${usernameFontSize};
+              @media (max-width: ${mobileMaxWidth}) {
+                max-width: 7rem;
+                font-size: ${mobileUsernameFontSize};
+              }
             `}
           />
         </div>
@@ -99,6 +122,9 @@ export default function RankingsListItem({ myId, small, style, user }) {
         className={css`
           font-weight: bold;
           font-size: ${xpFontSize};
+          @media (max-width: ${mobileMaxWidth}) {
+            font-size: ${mobileXpFontSize};
+          }
         `}
       >
         <span style={{ color: Color.logoGreen() }}>

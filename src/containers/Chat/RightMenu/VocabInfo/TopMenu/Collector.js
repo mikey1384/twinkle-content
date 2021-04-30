@@ -2,9 +2,10 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import UsernameText from 'components/Texts/UsernameText';
 import ProfilePic from 'components/ProfilePic';
-import { Color } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { isMobile } from 'helpers';
+import { css } from '@emotion/css';
 import Icon from 'components/Icon';
 
 Collector.propTypes = {
@@ -41,16 +42,18 @@ export default function Collector({ myId, style, user }) {
     >
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <span
-          style={{
-            fontWeight: 'bold',
-            fontSize: '1.5rem',
-            width: '3rem',
-            marginRight: '1rem',
-            textAlign: 'center',
-            color:
-              rankColor ||
-              (user.rank <= 10 ? Color.logoBlue() : Color.darkGray())
-          }}
+          className={css`
+            font-weight: bold;
+            font-size: 1.5rem;
+            width: 3rem;
+            margin-right: 1rem;
+            text-align: center;
+            color: ${rankColor ||
+            (user.rank <= 10 ? Color.logoBlue() : Color.darkGray())};
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: 1.2rem;
+            }
+          `}
         >
           {user.rank ? `#${user.rank}` : '--'}
         </span>
@@ -70,31 +73,42 @@ export default function Collector({ myId, style, user }) {
             color={textColor}
             user={{ ...user, username: user.username }}
             userId={myId}
-            style={{
-              marginTop: '0.5rem',
-              textAlign: 'center',
-              fontSize: '1.2rem'
-            }}
+            className={css`
+              max-width: 15rem;
+              margin-top: 0.5rem;
+              text-align: center;
+              font-size: 1.2rem;
+              @media (max-width: ${mobileMaxWidth}) {
+                max-width: 7rem;
+                font-size: 1rem;
+              }
+            `}
           />
         </div>
       </div>
       <div>
         {isMobile(navigator) && (
           <Icon
-            style={{
-              color: textColor,
-              marginRight: '0.7rem',
-              fontSize: '1.1rem'
-            }}
+            className={css`
+              color: ${textColor};
+              margin-right: 0.7rem;
+              font-size: 1.1rem;
+              @media (max-width: ${mobileMaxWidth}) {
+                font-size: 1rem;
+              }
+            `}
             icon="times"
           />
         )}
         <span
-          style={{
-            color: textColor,
-            fontSize: '1.5rem',
-            fontWeight: 'bold'
-          }}
+          className={css`
+            color: ${textColor};
+            font-size: 1.5rem;
+            font-weight: bold;
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: 1.1rem;
+            }
+          `}
         >
           {addCommasToNumber(user.numWordsCollected || 0)}
           {!isMobile(navigator) && <span> collected</span>}

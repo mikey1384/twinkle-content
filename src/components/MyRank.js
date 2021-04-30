@@ -97,8 +97,7 @@ export default function MyRank({
           >
             XP
           </span>
-          &nbsp;&nbsp;
-          <span
+          <p
             className="rank"
             style={{
               color:
@@ -107,7 +106,7 @@ export default function MyRank({
             }}
           >
             {rank ? `Rank #${rank}` : 'Unranked'}
-          </span>
+          </p>
         </p>
       }
     </div>
