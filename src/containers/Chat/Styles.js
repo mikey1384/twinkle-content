@@ -28,6 +28,7 @@ export const MessageStyle = {
     overflow-wrap: break-word;
     word-break: break-word;
     @media (max-width: ${mobileMaxWidth}) {
+      font-size: 1.2rem;
       margin-left: 1rem;
     }
   `,

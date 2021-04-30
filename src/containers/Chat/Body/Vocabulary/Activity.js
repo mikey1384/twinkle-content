@@ -102,9 +102,14 @@ export default function Activity({
           collected {wordLevel === 1 ? 'a' : 'an'}{' '}
           <b
             style={{
-              fontSize: '1.7rem',
               color: Color[vocabRewardHash[wordLevel].color]()
             }}
+            className={css`
+              font-size: 1.7rem;
+              @media (max-width: ${mobileMaxWidth}) {
+                font-size: 1.5rem;
+              }
+            `}
           >
             {vocabRewardHash[wordLevel].label}
           </b>{' '}
@@ -113,7 +118,7 @@ export default function Activity({
             className={css`
               font-size: 3rem;
               @media (max-width: ${mobileMaxWidth}) {
-                font-size: 2rem;
+                font-size: 1.7rem;
               }
             `}
             style={{
@@ -127,14 +132,20 @@ export default function Activity({
           </span>{' '}
           and earned{' '}
           <b
-            style={{
-              fontSize:
-                wordLevel === 5
-                  ? '2.5rem'
+            className={css`
+              font-size: ${wordLevel === 5
+                ? '2.5rem'
+                : wordLevel === 4
+                ? '2.3rem'
+                : '1.7rem'};
+              @media (max-width: ${mobileMaxWidth}) {
+                font-size: ${wordLevel === 5
+                  ? '1.7rem'
                   : wordLevel === 4
-                  ? '2.3rem'
-                  : '1.7rem'
-            }}
+                  ? '1.5rem'
+                  : '1.3rem'};
+              }
+            `}
           >
             <span style={{ color: Color.logoGreen() }}>
               {addCommasToNumber(vocabRewardHash[wordLevel].rewardAmount)}
@@ -146,10 +157,13 @@ export default function Activity({
               {' '}
               <span>and</span>{' '}
               <b
-                style={{
-                  marginLeft: '0.3rem',
-                  fontSize: wordLevel === 5 ? '2.5rem' : '2.3rem'
-                }}
+                className={css`
+                  margin-left: 0.3rem;
+                  font-size: ${wordLevel === 5 ? '2.5rem' : '2.3rem'};
+                  @media (max-width: ${mobileMaxWidth}) {
+                    font-size: ${wordLevel === 5 ? '1.7rem' : '1.5rem'};
+                  }
+                `}
               >
                 <Icon
                   icon={['far', 'badge-dollar']}
