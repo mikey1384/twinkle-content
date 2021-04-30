@@ -114,6 +114,11 @@ function Channel({
                 overflow: 'hidden',
                 lineHeight: 'normal'
               }}
+              className={css`
+                @media (max-width: ${mobileMaxWidth}) {
+                  font-size: 1.5rem;
+                }
+              `}
             >
               {ChannelName}
             </p>

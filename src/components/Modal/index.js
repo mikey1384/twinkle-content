@@ -112,6 +112,9 @@ export default function Modal({
                 font-size: 2rem;
                 padding: 2rem;
                 margin-top: 0.5rem;
+                @media (max-width: ${mobileMaxWidth}) {
+                  font-size: 1.7rem;
+                }
               }
               > main {
                 display: flex;
