@@ -24,11 +24,6 @@ export default function PosBlock({
   return filteredDefinitionIds.length > 0 ? (
     <div style={style}>
       <p
-        style={{
-          fontSize: '2.5rem',
-          fontWeight: 'bold',
-          marginBottom: '0.5rem'
-        }}
         className={css`
           font-size: 2.5rem;
           font-weight: bold;
