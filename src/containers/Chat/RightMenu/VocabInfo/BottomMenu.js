@@ -18,7 +18,7 @@ export default function BottomMenu() {
         twinkleXP={twinkleXP}
         style={{ marginTop: 0 }}
       />
-      {allRanks.map(user => (
+      {allRanks.map((user) => (
         <RankingsListItem
           key={user.id}
           small
