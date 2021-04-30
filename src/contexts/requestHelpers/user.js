@@ -411,6 +411,17 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
+    async sendVerificationCodeEmail({ email, userId }) {
+      try {
+        const { data } = await request.put(`${URL}/user/email/verify/code`, {
+          email,
+          userId
+        });
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async setDefaultSearchFilter(filter) {
       try {
         const { data } = await request.post(
