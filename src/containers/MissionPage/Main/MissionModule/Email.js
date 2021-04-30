@@ -16,6 +16,9 @@ export default function Email() {
           text-align: center;
           font-size: 2rem;
           font-weight: bold;
+          @media (max-width: ${mobileMaxWidth}) {
+            font-size: 1.5rem;
+          }
         `}
       >
         Enter your email address below and tap{' '}
@@ -44,19 +47,22 @@ export default function Email() {
           onChange={setEmail}
           value={email}
         />
-        {emailIsValid && (
-          <div style={{ marginTop: '1.5rem' }}>
-            <Button
-              disabled={!emailIsValid}
-              style={{ fontSize: '1.7rem' }}
-              filled
-              color="green"
-            >
-              Submit
-            </Button>
-          </div>
-        )}
+        <div style={{ marginTop: '1.5rem' }}>
+          <Button
+            disabled={!emailIsValid}
+            style={{ fontSize: '1.7rem' }}
+            filled
+            color="green"
+            onClick={handleConfirmEmail}
+          >
+            Submit
+          </Button>
+        </div>
       </div>
     </div>
   );
+
+  async function handleConfirmEmail() {
+    console.log(email);
+  }
 }
