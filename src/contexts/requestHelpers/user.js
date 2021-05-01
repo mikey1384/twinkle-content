@@ -413,14 +413,16 @@ export default function userRequestHelpers({ auth, handleError, token }) {
     },
     async sendVerificationOTPEmail(email) {
       try {
-        const { data } = await request.put(
+        const {
+          data: { success }
+        } = await request.put(
           `${URL}/user/email/verify/otp`,
           {
             email
           },
           auth()
         );
-        return Promise.resolve(data);
+        return Promise.resolve(success);
       } catch (error) {
         return handleError(error);
       }

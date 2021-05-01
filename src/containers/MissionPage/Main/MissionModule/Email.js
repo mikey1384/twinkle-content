@@ -1,6 +1,7 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import Input from 'components/Texts/Input';
 import Button from 'components/Button';
+import Icon from 'components/Icon';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { isValidEmail } from 'helpers/stringHelpers';
@@ -10,6 +11,8 @@ export default function Email() {
   const {
     requestHelpers: { sendVerificationOTPEmail }
   } = useAppContext();
+  const [sendingEmail, setSendingEmail] = useState(false);
+  const sendingEmailRef = useRef(false);
   const [email, setEmail] = useState('');
   const emailIsValid = useMemo(() => isValidEmail(email), [email]);
   return (
@@ -53,20 +56,40 @@ export default function Email() {
         />
         <div style={{ marginTop: '1.5rem' }}>
           <Button
-            disabled={!emailIsValid}
+            disabled={!emailIsValid || sendingEmail}
             style={{ fontSize: '1.7rem' }}
             filled
             color="green"
-            onClick={handleConfirmEmail}
+            onClick={() => handleConfirmEmail(email)}
           >
-            Submit
+            {sendingEmail ? (
+              <>
+                <Icon style={{ marginLeft: '0.7rem' }} icon="spinner" pulse />
+                <span style={{ marginLeft: '0.7rem' }}>One moment...</span>
+              </>
+            ) : (
+              'Submit'
+            )}
           </Button>
         </div>
       </div>
     </div>
   );
 
-  async function handleConfirmEmail() {
-    await sendVerificationOTPEmail(email);
+  async function handleConfirmEmail(email) {
+    if (sendingEmailRef.current) return;
+    setEmail('');
+    try {
+      sendingEmailRef.current = true;
+      setSendingEmail(true);
+      const success = await sendVerificationOTPEmail(email);
+      sendingEmailRef.current = false;
+      setSendingEmail(false);
+      console.log(success);
+    } catch (error) {
+      sendingEmailRef.current = false;
+      setSendingEmail(false);
+      console.error(error);
+    }
   }
 }
