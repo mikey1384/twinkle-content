@@ -29,7 +29,9 @@ export default function Email() {
         )}
       </p>
       {!emailSent && <EmailSubmitForm onSetEmailSent={setEmailSent} />}
-      {emailSent && <VerificationCodeInput />}
+      {emailSent && (
+        <VerificationCodeInput onRetry={() => setEmailSent(false)} />
+      )}
     </div>
   );
 }
