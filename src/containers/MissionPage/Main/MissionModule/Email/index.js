@@ -20,7 +20,7 @@ export default function Email() {
         `}
       >
         {emailSent ? (
-          'Enter the 6 digit number sent to your email'
+          'Enter the 6-digit number sent to your email'
         ) : (
           <>
             Enter your email address below and tap{' '}
