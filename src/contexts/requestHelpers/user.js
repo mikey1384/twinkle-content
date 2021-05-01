@@ -411,10 +411,10 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
-    async sendVerificationCodeEmail(email) {
+    async sendVerificationOTPEmail(email) {
       try {
         const { data } = await request.put(
-          `${URL}/user/email/verify/code`,
+          `${URL}/user/email/verify/otp`,
           {
             email
           },

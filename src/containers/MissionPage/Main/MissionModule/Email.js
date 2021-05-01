@@ -8,7 +8,7 @@ import { useAppContext } from 'contexts';
 
 export default function Email() {
   const {
-    requestHelpers: { sendVerificationCodeEmail }
+    requestHelpers: { sendVerificationOTPEmail }
   } = useAppContext();
   const [email, setEmail] = useState('');
   const emailIsValid = useMemo(() => isValidEmail(email), [email]);
@@ -67,6 +67,6 @@ export default function Email() {
   );
 
   async function handleConfirmEmail() {
-    await sendVerificationCodeEmail(email);
+    await sendVerificationOTPEmail(email);
   }
 }
