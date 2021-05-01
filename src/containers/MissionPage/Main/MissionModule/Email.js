@@ -4,8 +4,12 @@ import Button from 'components/Button';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { isValidEmail } from 'helpers/stringHelpers';
+import { useAppContext } from 'contexts';
 
 export default function Email() {
+  const {
+    requestHelpers: { sendVerificationCodeEmail }
+  } = useAppContext();
   const [email, setEmail] = useState('');
   const emailIsValid = useMemo(() => isValidEmail(email), [email]);
   return (
@@ -63,6 +67,6 @@ export default function Email() {
   );
 
   async function handleConfirmEmail() {
-    console.log(email);
+    await sendVerificationCodeEmail(email);
   }
 }

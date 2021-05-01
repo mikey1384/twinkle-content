@@ -411,12 +411,15 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
-    async sendVerificationCodeEmail({ email, userId }) {
+    async sendVerificationCodeEmail(email) {
       try {
-        const { data } = await request.put(`${URL}/user/email/verify/code`, {
-          email,
-          userId
-        });
+        const { data } = await request.put(
+          `${URL}/user/email/verify/code`,
+          {
+            email
+          },
+          auth()
+        );
         return Promise.resolve(data);
       } catch (error) {
         return handleError(error);
