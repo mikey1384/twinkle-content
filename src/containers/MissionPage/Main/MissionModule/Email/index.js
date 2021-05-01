@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import EmailSubmitForm from './EmailSubmitForm';
+import VerificationCodeInput from './VerificationCodeInput';
 
 export default function Email() {
   const [emailSent, setEmailSent] = useState(false);
@@ -28,6 +29,7 @@ export default function Email() {
         )}
       </p>
       {!emailSent && <EmailSubmitForm onSetEmailSent={setEmailSent} />}
+      {emailSent && <VerificationCodeInput />}
     </div>
   );
 }
