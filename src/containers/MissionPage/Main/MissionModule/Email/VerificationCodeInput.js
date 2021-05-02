@@ -64,7 +64,11 @@ export default function VerificationCodeInput({ onRetry, email }) {
     if (text.length === 6) {
       setVerifying(true);
       const success = await verifyEmailViaOTP({ otp: text, email });
-      setVerifying(false);
+      if (success) {
+        setVerifying(false);
+      } else {
+        console.log('failed');
+      }
       console.log(success);
     }
   }
