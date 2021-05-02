@@ -5,6 +5,7 @@ import EmailSubmitForm from './EmailSubmitForm';
 import VerificationCodeInput from './VerificationCodeInput';
 
 export default function Email() {
+  const [email, setEmail] = useState('');
   const [emailSent, setEmailSent] = useState(false);
   return (
     <div style={{ width: '100%' }}>
@@ -28,9 +29,18 @@ export default function Email() {
           </>
         )}
       </p>
-      {!emailSent && <EmailSubmitForm onSetEmailSent={setEmailSent} />}
+      {!emailSent && (
+        <EmailSubmitForm
+          email={email}
+          onSetEmail={setEmail}
+          onSetEmailSent={setEmailSent}
+        />
+      )}
       {emailSent && (
-        <VerificationCodeInput onRetry={() => setEmailSent(false)} />
+        <VerificationCodeInput
+          email={email}
+          onRetry={() => setEmailSent(false)}
+        />
       )}
     </div>
   );

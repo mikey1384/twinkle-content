@@ -9,14 +9,15 @@ import { isValidEmail } from 'helpers/stringHelpers';
 import { useAppContext } from 'contexts';
 
 EmailSubmitForm.propTypes = {
-  onSetEmailSent: PropTypes.func.isRequired
+  email: PropTypes.string,
+  onSetEmailSent: PropTypes.func.isRequired,
+  onSetEmail: PropTypes.func.isRequired
 };
 
-export default function EmailSubmitForm({ onSetEmailSent }) {
+export default function EmailSubmitForm({ email, onSetEmail, onSetEmailSent }) {
   const {
     requestHelpers: { sendVerificationOTPEmail }
   } = useAppContext();
-  const [email, setEmail] = useState('');
   const [sendingEmail, setSendingEmail] = useState(false);
   const sendingEmailRef = useRef(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -43,7 +44,7 @@ export default function EmailSubmitForm({ onSetEmailSent }) {
         type="email"
         maxLength={100}
         placeholder="somebody@something.com"
-        onChange={setEmail}
+        onChange={onSetEmail}
         value={email}
       />
       <div style={{ marginTop: '1.5rem' }}>

@@ -81,34 +81,34 @@ export default function MyRank({
         }
       `}
     >
-      {
-        <p>
-          <span
-            style={{
-              color: rankedColor || Color.logoGreen()
-            }}
-          >
-            {twinkleXP ? addCommasToNumber(twinkleXP) : 0}
-          </span>{' '}
-          <span
-            style={{
-              color: rankedColor || Color.gold()
-            }}
-          >
-            XP
-          </span>
-          <p
-            className="rank"
-            style={{
-              color:
-                rankedColor ||
-                (rank > 0 && rank <= 10 ? Color.pink() : Color.darkGray())
-            }}
-          >
-            {rank ? `Rank #${rank}` : 'Unranked'}
-          </p>
+      <div>
+        <span
+          style={{
+            fontWeight: 'bold',
+            color: rankedColor || Color.logoGreen()
+          }}
+        >
+          {twinkleXP ? addCommasToNumber(twinkleXP) : 0}
+        </span>{' '}
+        <span
+          style={{
+            fontWeight: 'bold',
+            color: rankedColor || Color.gold()
+          }}
+        >
+          XP
+        </span>
+        <p
+          className="rank"
+          style={{
+            color:
+              rankedColor ||
+              (rank > 0 && rank <= 10 ? Color.pink() : Color.darkGray())
+          }}
+        >
+          {rank ? `Rank #${rank}` : 'Unranked'}
         </p>
-      }
+      </div>
     </div>
   );
 }

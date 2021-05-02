@@ -7,14 +7,15 @@ import { css } from '@emotion/css';
 import { useAppContext } from 'contexts';
 
 VerificationCodeInput.propTypes = {
+  email: PropTypes.string.isRequired,
   onRetry: PropTypes.func.isRequired
 };
 
-export default function VerificationCodeInput({ onRetry }) {
+export default function VerificationCodeInput({ onRetry, email }) {
   const [verificationCode, setVerificationCode] = useState('');
   const [verifying, setVerifying] = useState(false);
   const {
-    requestHelpers: { verifyOTP }
+    requestHelpers: { verifyEmailViaOTP }
   } = useAppContext();
   return (
     <ErrorBoundary
@@ -62,7 +63,7 @@ export default function VerificationCodeInput({ onRetry }) {
     setVerificationCode(text);
     if (text.length === 6) {
       setVerifying(true);
-      const success = await verifyOTP(text);
+      const success = await verifyEmailViaOTP({ otp: text, email });
       setVerifying(false);
       console.log(success);
     }

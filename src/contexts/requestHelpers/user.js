@@ -636,12 +636,12 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
-    async verifyOTP(otp) {
+    async verifyEmailViaOTP({ otp, email }) {
       try {
         const {
           data: { success }
         } = await request.get(
-          `${URL}/user/email/verify/otp?otp=${otp}`,
+          `${URL}/user/email/verify/otp?otp=${otp}&email=${email}`,
           auth()
         );
         return Promise.resolve(success);
