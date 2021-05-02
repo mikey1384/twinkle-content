@@ -4,6 +4,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import Input from 'components/Texts/Input';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import { useAppContext } from 'contexts';
 
 VerificationCodeInput.propTypes = {
   onRetry: PropTypes.func.isRequired
@@ -11,6 +12,9 @@ VerificationCodeInput.propTypes = {
 
 export default function VerificationCodeInput({ onRetry }) {
   const [verificationCode, setVerificationCode] = useState('');
+  const {
+    requestHelpers: { verifyOTP }
+  } = useAppContext();
   return (
     <ErrorBoundary
       style={{
@@ -32,7 +36,7 @@ export default function VerificationCodeInput({ onRetry }) {
         type="text"
         maxLength={6}
         placeholder="Enter the 6-digit number"
-        onChange={setVerificationCode}
+        onChange={handleCodeInput}
         value={verificationCode}
       />
       <p
@@ -51,4 +55,12 @@ export default function VerificationCodeInput({ onRetry }) {
       >{`Didn't receive an email? Tap here to retry`}</p>
     </ErrorBoundary>
   );
+
+  async function handleCodeInput(text) {
+    setVerificationCode(text);
+    if (text.length === 6) {
+      const success = await verifyOTP(text);
+      console.log(success);
+    }
+  }
 }
