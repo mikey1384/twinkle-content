@@ -94,7 +94,11 @@ export default function NotEnoughKarmaInstructions({
           style={{ marginTop: '0.5rem' }}
         >{`Right now that button is faded out and doesn't work`}</p>
         <p style={{ marginTop: '20rem' }}>
-          <span>{`This is because you only have ${karmaPoints} karma points`}</span>
+          <span>{`This is because you ${
+            karmaPoints > 0 ? 'only ' : ''
+          }have ${karmaPoints} karma point${
+            karmaPoints === 1 ? '' : 's'
+          }`}</span>
         </p>
         <div style={{ width: '100%', padding: '0 1rem' }}>
           <ProgressBar
@@ -104,16 +108,28 @@ export default function NotEnoughKarmaInstructions({
             }
             progress={unlockProgress}
           />
-          <p style={{ fontSize: '1.2rem', marginTop: '0.5rem' }}>
+          <p
+            style={{
+              fontSize: '1.2rem',
+              marginTop: '0.5rem',
+              textAlign: 'center'
+            }}
+          >
             You need{' '}
             <b>{addCommasToNumber(requiredKarmaPoints)} karma points</b> to
             unlock this item. You have{' '}
-            <b>{addCommasToNumber(karmaPoints)} karma points</b>
+            <b>
+              {addCommasToNumber(karmaPoints)} karma point
+              {karmaPoints === 1 ? '' : 's'}
+            </b>
           </p>
         </div>
         <p style={{ marginTop: '2rem' }}>
           To make the button work you need{' '}
-          <b>{requiredKarmaPoints - karmaPoints} more karma points</b>
+          <b>
+            {requiredKarmaPoints - karmaPoints} more karma point
+            {requiredKarmaPoints - karmaPoints === 1 ? '' : 's'}
+          </b>
         </p>
         <p style={{ marginTop: '20rem' }}>
           Your <b>mission</b> is to press the{' '}

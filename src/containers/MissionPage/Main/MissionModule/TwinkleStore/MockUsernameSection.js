@@ -90,10 +90,15 @@ export default function ItemPanel({
         color={unlockProgress === 100 ? Color.green() : Color[profileTheme]()}
         progress={unlockProgress}
       />
-      <p style={{ fontSize: '1.2rem', marginTop: '0.5rem' }}>
+      <p
+        style={{ fontSize: '1.2rem', marginTop: '0.5rem', textAlign: 'center' }}
+      >
         You need <b>{addCommasToNumber(requiredKarmaPoints)} karma points</b> to
         unlock this item. You have{' '}
-        <b>{addCommasToNumber(karmaPoints)} karma points</b>
+        <b>
+          {addCommasToNumber(karmaPoints)} karma point
+          {karmaPoints === 1 ? '' : 's'}
+        </b>
       </p>
     </div>
   );

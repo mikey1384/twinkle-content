@@ -150,11 +150,20 @@ export default function ItemPanel({
               }
               progress={unlockProgress}
             />
-            <p style={{ fontSize: '1.2rem', marginTop: '0.5rem' }}>
+            <p
+              style={{
+                fontSize: '1.2rem',
+                marginTop: '0.5rem',
+                textAlign: 'center'
+              }}
+            >
               You need{' '}
               <b>{addCommasToNumber(requiredKarmaPoints)} karma points</b> to{' '}
               {notUpgraded ? 'upgrade' : 'unlock'} this item. You have{' '}
-              <b>{addCommasToNumber(karmaPoints)} karma points</b>
+              <b>
+                {addCommasToNumber(karmaPoints)} karma point
+                {karmaPoints === 1 ? '' : 's'}
+              </b>
             </p>
           </>
         ) : (
