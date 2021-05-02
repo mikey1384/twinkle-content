@@ -12,6 +12,7 @@ VerificationCodeInput.propTypes = {
 
 export default function VerificationCodeInput({ onRetry }) {
   const [verificationCode, setVerificationCode] = useState('');
+  const [verifying, setVerifying] = useState(false);
   const {
     requestHelpers: { verifyOTP }
   } = useAppContext();
@@ -33,6 +34,7 @@ export default function VerificationCodeInput({ onRetry }) {
             width: 100%;
           }
         `}
+        disabled={verifying}
         type="text"
         maxLength={6}
         placeholder="Enter the 6-digit number"
@@ -59,7 +61,9 @@ export default function VerificationCodeInput({ onRetry }) {
   async function handleCodeInput(text) {
     setVerificationCode(text);
     if (text.length === 6) {
+      setVerifying(true);
       const success = await verifyOTP(text);
+      setVerifying(false);
       console.log(success);
     }
   }
