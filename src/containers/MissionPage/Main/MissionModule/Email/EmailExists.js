@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 
@@ -7,6 +7,14 @@ EmailExists.propTypes = {
 };
 
 export default function EmailExists({ emailMissionAttempted }) {
+  const passMessage = useMemo(
+    () =>
+      emailMissionAttempted
+        ? 'Congratulations on successfully setting up your own email address'
+        : `Looks like you already have an email address`,
+    [emailMissionAttempted]
+  );
+
   return (
     <ErrorBoundary
       style={{
@@ -16,11 +24,7 @@ export default function EmailExists({ emailMissionAttempted }) {
         alignItems: 'center'
       }}
     >
-      <p>
-        {emailMissionAttempted
-          ? 'Congratulations on successfully setting up your own email address'
-          : `Looks like you already have an email address`}
-      </p>
+      <p>{passMessage}</p>
       <div>email exists</div>
     </ErrorBoundary>
   );
