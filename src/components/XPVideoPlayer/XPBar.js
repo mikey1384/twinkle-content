@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import ProgressBar from 'components/ProgressBar';
@@ -22,7 +22,7 @@ XPBar.propTypes = {
 
 const isViewingOnMobile = isMobile(navigator);
 
-export default function XPBar({
+function XPBar({
   isChat,
   rewardLevel,
   started,
@@ -272,3 +272,5 @@ export default function XPBar({
     </ErrorBoundary>
   ) : null;
 }
+
+export default memo(XPBar);
