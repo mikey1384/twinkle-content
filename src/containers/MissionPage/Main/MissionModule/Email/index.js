@@ -1,47 +1,15 @@
-import React, { useState } from 'react';
-import { Color, mobileMaxWidth } from 'constants/css';
-import { css } from '@emotion/css';
-import EmailSubmitForm from './EmailSubmitForm';
-import VerificationCodeInput from './VerificationCodeInput';
+import React from 'react';
+import { useMyState } from 'helpers/hooks';
+import EmailVerifier from './EmailVerifier';
 
 export default function Email() {
-  const [email, setEmail] = useState('');
-  const [emailSent, setEmailSent] = useState(false);
+  const { userId, verifiedEmail, emailMissionAttempted } = useMyState();
+
+  console.log(userId, verifiedEmail, emailMissionAttempted);
+
   return (
     <div style={{ width: '100%' }}>
-      <p
-        className={css`
-          width: 100%;
-          text-align: center;
-          font-size: 2rem;
-          font-weight: bold;
-          @media (max-width: ${mobileMaxWidth}) {
-            font-size: 1.5rem;
-          }
-        `}
-      >
-        {emailSent ? (
-          'Enter the 6-digit number sent to your email'
-        ) : (
-          <>
-            Enter your email address below and tap{' '}
-            <b style={{ color: Color.green() }}>submit</b>
-          </>
-        )}
-      </p>
-      {!emailSent && (
-        <EmailSubmitForm
-          email={email}
-          onSetEmail={setEmail}
-          onSetEmailSent={setEmailSent}
-        />
-      )}
-      {emailSent && (
-        <VerificationCodeInput
-          email={email}
-          onRetry={() => setEmailSent(false)}
-        />
-      )}
+      <EmailVerifier />
     </div>
   );
 }
