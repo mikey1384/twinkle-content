@@ -293,7 +293,10 @@ export default function BasicInfos({
       {passwordInputModalShown && (
         <PasswordInputModal
           onHide={() => setPasswordInputModalShown(false)}
-          onConfirm={() => onSetUserInfoOnEdit(true)}
+          onConfirm={() => {
+            setVerificationEmailSent(false);
+            onSetUserInfoOnEdit(true);
+          }}
         />
       )}
     </div>
