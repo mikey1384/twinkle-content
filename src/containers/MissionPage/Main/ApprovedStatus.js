@@ -41,14 +41,10 @@ export default function ApprovedStatus({
         {xpReward ? (
           <span style={{ color: Color.logoGreen(), fontWeight: 'bold' }}>
             {addCommasToNumber(xpReward)}{' '}
+            <span style={{ color: Color.gold(), fontWeight: 'bold' }}>XP</span>
           </span>
         ) : null}
-        {xpReward && coinReward ? (
-          <>
-            <span style={{ color: Color.gold(), fontWeight: 'bold' }}>XP</span>{' '}
-            and{' '}
-          </>
-        ) : null}
+        {xpReward && coinReward ? <> and </> : null}
         {coinReward ? (
           <>
             <Icon
