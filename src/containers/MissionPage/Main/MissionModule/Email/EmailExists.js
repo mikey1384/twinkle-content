@@ -48,11 +48,15 @@ export default function EmailExists({ emailMissionAttempted }) {
         style={{ marginTop: '3.5rem', fontSize: '1.7rem' }}
         skeuomorphic
         color="brownOrange"
-        onClick={() => console.log('clicked')}
+        onClick={handleTaskComplete}
       >
         <Icon icon="bolt" />
         <span style={{ marginLeft: '1rem' }}>Task Complete</span>
       </Button>
     </ErrorBoundary>
   );
+
+  async function handleTaskComplete() {
+    console.log('task is complete');
+  }
 }
