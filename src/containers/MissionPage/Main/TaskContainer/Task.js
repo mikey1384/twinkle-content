@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import MissionModule from '../MissionModule';
 import ErrorBoundary from 'components/ErrorBoundary';
@@ -6,6 +6,7 @@ import LongText from 'components/Texts/LongText';
 import RewardText from 'components/Texts/RewardText';
 import ApprovedStatus from '../ApprovedStatus';
 import PendingStatus from '../PendingStatus';
+import { useMissionContext } from 'contexts';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { gifTable } from 'constants/defaultValues';
@@ -26,7 +27,6 @@ export default function Task({
     subtitle,
     fileUploadComplete,
     fileUploadProgress,
-    myAttempt,
     objective,
     xpReward,
     coinReward
@@ -34,6 +34,10 @@ export default function Task({
   onSetMissionState,
   style
 }) {
+  const {
+    state: { myAttempts }
+  } = useMissionContext();
+  const myAttempt = useMemo(() => myAttempts[taskId], [myAttempts, taskId]);
   return (
     <ErrorBoundary
       className={panel}

@@ -5,7 +5,7 @@ import { gifTable } from 'constants/defaultValues';
 import { css } from '@emotion/css';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { useHistory } from 'react-router-dom';
-import { useAppContext } from 'contexts';
+import { useAppContext, useMissionContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
 MissionItem.propTypes = {
@@ -14,19 +14,24 @@ MissionItem.propTypes = {
   mission: PropTypes.object.isRequired,
   showStatus: PropTypes.bool
 };
+
 export default function MissionItem({
   isRepeatable,
   style,
   mission,
   showStatus = true
 }) {
-  const history = useHistory();
-  const { userId } = useMyState();
   const {
     user: {
       actions: { onOpenSigninModal }
     }
   } = useAppContext();
+  const {
+    state: { myAttempts }
+  } = useMissionContext();
+  const history = useHistory();
+  const { userId } = useMyState();
+
   return (
     <div
       onClick={handleLinkClick}
@@ -110,8 +115,8 @@ export default function MissionItem({
                 isRepeatable ? mission.repeatXpReward : mission.xpReward
               }
             />
-            {mission.myAttempt?.status &&
-              mission.myAttempt?.status !== 'pending' &&
+            {myAttempts[mission.id]?.status &&
+              myAttempts[mission.id]?.status !== 'pending' &&
               showStatus && (
                 <div
                   className={css`
@@ -123,12 +128,12 @@ export default function MissionItem({
                   style={{
                     fontWeight: 'bold',
                     color:
-                      mission.myAttempt?.status === 'pass'
+                      myAttempts[mission.id]?.status === 'pass'
                         ? Color.green()
                         : Color.rose()
                   }}
                 >
-                  {mission.myAttempt?.status}ed
+                  {myAttempts[mission.id]?.status}ed
                 </div>
               )}
           </div>

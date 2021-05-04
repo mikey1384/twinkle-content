@@ -18,7 +18,8 @@ export default function Grammar({ isRepeating, mission }) {
     requestHelpers: { loadMission }
   } = useAppContext();
   const {
-    actions: { onSetMissionState }
+    state: { myAttempts },
+    actions: { onSetMissionState, onUpdateMissionAttempt }
   } = useMissionContext();
   useEffect(() => {
     mounted.current = true;
@@ -41,6 +42,7 @@ export default function Grammar({ isRepeating, mission }) {
         <StartScreen
           isRepeating={isRepeating}
           mission={mission}
+          myAttempts={myAttempts}
           onInitMission={handleInitMission}
           onStartButtonClick={() =>
             onSetMissionState({
@@ -95,6 +97,12 @@ export default function Grammar({ isRepeating, mission }) {
             ...data,
             managementTab: mission.managementTab
           }
+        });
+      }
+      if (mounted.current) {
+        onUpdateMissionAttempt({
+          missionId: mission.id,
+          newState: data.myAttempt
         });
       }
     }

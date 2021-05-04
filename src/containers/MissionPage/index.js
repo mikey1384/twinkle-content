@@ -34,8 +34,13 @@ export default function MissionPage({
     actions: { onUpdateCurrentMission }
   } = useContentContext();
   const {
-    actions: { onLoadMission, onLoadMissionTypeIdHash, onSetMissionState },
-    state: { missionObj, prevUserId, missionTypeIdHash }
+    actions: {
+      onLoadMission,
+      onLoadMissionTypeIdHash,
+      onSetMissionState,
+      onSetMissionAttempt
+    },
+    state: { missionObj, prevUserId, missionTypeIdHash, myAttempts }
   } = useMissionContext();
 
   const missionId = useMemo(() => {
@@ -76,6 +81,9 @@ export default function MissionPage({
         const data = await loadMission(missionId);
         if (mounted.current) {
           onLoadMission({ mission: data, prevUserId: userId });
+        }
+        if (mounted.current) {
+          onSetMissionAttempt({ missionId, attempt: data.myAttempt });
         }
       } else {
         onLoadMission({ mission: { id: missionId }, prevUserId: userId });
@@ -184,6 +192,7 @@ export default function MissionPage({
                   <Main
                     onSetMissionState={onSetMissionState}
                     mission={mission}
+                    myAttempts={myAttempts}
                   />
                 )}
               />

@@ -10,14 +10,16 @@ Tutorial.propTypes = {
   onSetMissionState: PropTypes.func,
   className: PropTypes.string,
   style: PropTypes.object,
-  mission: PropTypes.object.isRequired
+  mission: PropTypes.object.isRequired,
+  myAttempts: PropTypes.object.isRequired
 };
 
 export default function Tutorial({
   className,
   onSetMissionState,
   style,
-  mission
+  mission,
+  myAttempts
 }) {
   const { isCreator } = useMyState();
   return (
@@ -53,7 +55,7 @@ export default function Tutorial({
         )}
       {!!mission.tutorialId && (mission.tutorialStarted || isCreator) && (
         <InteractiveContent
-          autoFocus={!isCreator && !mission.myAttempt?.status}
+          autoFocus={!isCreator && !myAttempts[mission.id]?.status}
           interactiveId={mission.tutorialId}
         />
       )}

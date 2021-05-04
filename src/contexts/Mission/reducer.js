@@ -24,15 +24,19 @@ export default function MissionReducer(state, action) {
     case 'LOAD_MISSION_LIST': {
       const newMissionObj = state.missionObj || {};
       for (let mission of action.missions) {
-        if (newMissionObj[mission.id]?.myAttempt?.tryingAgain) {
-          mission.myAttempt.tryingAgain =
-            newMissionObj[mission.id]?.myAttempt?.tryingAgain;
-        }
         newMissionObj[mission.id] = {
           ...newMissionObj[mission.id],
           ...mission,
           tutorialId: mission.tutorialId || 0
         };
+      }
+      let newMyAttempts = action.myAttempts;
+      if (action.prevUserId === state.prevUserId) {
+        for (let key in state.myAttempts) {
+          if (newMyAttempts[key] && state.myAttempts[key]?.tryingAgain) {
+            newMyAttempts[key].tryingAgain = true;
+          }
+        }
       }
       return {
         ...state,
@@ -40,6 +44,7 @@ export default function MissionReducer(state, action) {
         prevUserId: action.prevUserId,
         missions: action.missions.map(({ id }) => id),
         missionObj: newMissionObj,
+        myAttempts: newMyAttempts,
         loadMoreButton: action.loadMoreButton
       };
     }
@@ -73,17 +78,23 @@ export default function MissionReducer(state, action) {
         ...state,
         selectedMissionListTab: action.selectedTab
       };
+    case 'SET_MISSION_ATTEMPT': {
+      return {
+        ...state,
+        myAttempts: {
+          ...state.myAttempts,
+          [action.missionId]: action.attempt
+        }
+      };
+    }
     case 'UPDATE_MISSION_ATTEMPT': {
       return {
         ...state,
-        missionObj: {
-          ...state.missionObj,
+        myAttempts: {
+          ...state.myAttempts,
           [action.missionId]: {
-            ...state.missionObj[action.missionId],
-            myAttempt: {
-              ...state.missionObj[action.missionId].myAttempt,
-              ...action.newState
-            }
+            ...state.myAttempts[action.missionId],
+            ...action.newState
           }
         }
       };

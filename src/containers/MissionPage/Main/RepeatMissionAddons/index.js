@@ -4,7 +4,7 @@ import GrammarReview from './GrammarReview';
 import FilterBar from 'components/FilterBar';
 import ErrorBoundary from 'components/ErrorBoundary';
 import GrammarRankings from './GrammarRankings';
-import { useAppContext } from 'contexts';
+import { useAppContext, useMissionContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
 RepeatMissionAddon.propTypes = {
@@ -13,11 +13,14 @@ RepeatMissionAddon.propTypes = {
 };
 
 export default function RepeatMissionAddon({ mission, onSetMissionState }) {
-  const mounted = useRef(true);
-  const { userId } = useMyState();
   const {
     requestHelpers: { loadGrammarAttempts }
   } = useAppContext();
+  const {
+    state: { myAttempts }
+  } = useMissionContext();
+  const mounted = useRef(true);
+  const { userId } = useMyState();
   const [loadingReview, setLoadingReview] = useState(false);
   const {
     grammarReviewPrevUserId,
@@ -75,9 +78,9 @@ export default function RepeatMissionAddon({ mission, onSetMissionState }) {
     return (
       (mission.gotWrongAttempts?.length || 0) +
         (mission.gotRightAttempts?.length || 0) >
-        0 || mission.myAttempt.status === 'pass'
+        0 || myAttempts[mission.id]?.status === 'pass'
     );
-  }, [mission]);
+  }, [mission, myAttempts]);
 
   useEffect(() => {
     mounted.current = true;
@@ -126,7 +129,7 @@ export default function RepeatMissionAddon({ mission, onSetMissionState }) {
             />
           )}
           {(activeTab === 'rankings' || !missionAttemptExist) && (
-            <GrammarRankings mission={mission} />
+            <GrammarRankings mission={mission} myAttempts={myAttempts} />
           )}
         </ErrorBoundary>
       )}

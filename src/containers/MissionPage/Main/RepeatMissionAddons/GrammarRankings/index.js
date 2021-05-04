@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import FilterBar from 'components/FilterBar';
 import Ranker from './Ranker';
@@ -8,29 +8,38 @@ import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 
 GrammarRankings.propTypes = {
-  mission: PropTypes.object.isRequired
+  mission: PropTypes.object.isRequired,
+  myAttempts: PropTypes.object.isRequired
 };
 
-export default function GrammarRankings({
-  mission,
-  mission: {
-    myAttempt: { status }
-  }
-}) {
+export default function GrammarRankings({ mission, myAttempts }) {
   const { profileTheme, userId } = useMyState();
-  const [allSelected, setAllSelected] = useState(status === 'pass');
+  const [allSelected, setAllSelected] = useState(
+    myAttempts[mission.id]?.status === 'pass'
+  );
   const [top30s, setTop30s] = useState([]);
   const [all, setAll] = useState([]);
+  const mounted = useRef(true);
   const {
     requestHelpers: { loadMissionRankings }
   } = useAppContext();
+  useEffect(() => {
+    mounted.current = true;
+    return function onUnmount() {
+      mounted.current = false;
+    };
+  }, []);
   useEffect(() => {
     init();
 
     async function init() {
       const { top30s, all } = await loadMissionRankings(mission.id);
-      setTop30s(top30s);
-      setAll(all);
+      if (mounted.current) {
+        setTop30s(top30s);
+      }
+      if (mounted.current) {
+        setAll(all);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -43,7 +52,7 @@ export default function GrammarRankings({
 
   return (
     <div>
-      {status === 'pass' && (
+      {myAttempts[mission.id]?.status === 'pass' && (
         <FilterBar bordered>
           <nav
             onClick={() => setAllSelected(true)}

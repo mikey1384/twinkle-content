@@ -9,10 +9,11 @@ import ProfilePic from 'components/ProfilePic';
 
 Cover.propTypes = {
   missionIds: PropTypes.array.isRequired,
-  missionObj: PropTypes.object.isRequired
+  missionObj: PropTypes.object.isRequired,
+  myAttempts: PropTypes.object.isRequired
 };
 
-export default function Cover({ missionIds, missionObj }) {
+export default function Cover({ missionIds, missionObj, myAttempts }) {
   const history = useHistory();
   const { profileTheme, profilePicUrl, userId, username } = useMyState();
   const {
@@ -23,7 +24,7 @@ export default function Cover({ missionIds, missionObj }) {
   useEffect(() => {
     let numCompleteCount = 0;
     for (let missionId of missionIds) {
-      if (missionObj[missionId].myAttempt.status === 'pass') {
+      if (myAttempts[missionId].status === 'pass') {
         numCompleteCount++;
       }
       if (missionObj[missionId].missionType === 'grammar') {

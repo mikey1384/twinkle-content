@@ -8,6 +8,7 @@ import { borderRadius, Color } from 'constants/css';
 StartScreen.propTypes = {
   isRepeating: PropTypes.bool,
   mission: PropTypes.object.isRequired,
+  myAttempts: PropTypes.object.isRequired,
   onInitMission: PropTypes.func.isRequired,
   onStartButtonClick: PropTypes.func.isRequired
 };
@@ -15,6 +16,7 @@ StartScreen.propTypes = {
 export default function StartScreen({
   isRepeating,
   mission,
+  myAttempts,
   onInitMission,
   onStartButtonClick
 }) {
@@ -28,7 +30,7 @@ export default function StartScreen({
 
   const rewardDetails = useMemo(() => {
     return (mission.xpReward || mission.coinReward) &&
-      mission.myAttempt.status === 'pass' ? (
+      myAttempts[mission.id]?.status === 'pass' ? (
       <div
         style={{
           marginTop: '0.5rem',
@@ -60,7 +62,7 @@ export default function StartScreen({
         ) : null}
       </div>
     ) : null;
-  }, [mission.coinReward, mission.myAttempt.status, mission.xpReward]);
+  }, [mission.coinReward, mission.id, mission.xpReward, myAttempts]);
 
   return (
     <div

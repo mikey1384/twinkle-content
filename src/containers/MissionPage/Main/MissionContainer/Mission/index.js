@@ -30,7 +30,6 @@ export default function Mission({
     description,
     objective,
     id: missionId,
-    myAttempt,
     xpReward,
     coinReward,
     repeatXpReward,
@@ -43,11 +42,17 @@ export default function Mission({
     requestHelpers: { checkMissionStatus }
   } = useAppContext();
   const {
+    state: { myAttempts },
     actions: { onUpdateMissionAttempt }
   } = useMissionContext();
   const {
     state: { pageVisible }
   } = useViewContext();
+
+  const myAttempt = useMemo(() => myAttempts[missionId], [
+    missionId,
+    myAttempts
+  ]);
 
   const isRepeating = useMemo(
     () => myAttempt?.status === 'pass' && !!mission.repeatable,

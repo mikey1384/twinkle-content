@@ -17,7 +17,7 @@ export default function Mission() {
     requestHelpers: { loadMissionList }
   } = useAppContext();
   const {
-    state: { missions, missionObj, prevUserId, listLoaded },
+    state: { missions, missionObj, myAttempts, prevUserId, listLoaded },
     actions: { onLoadMissionList }
   } = useMissionContext();
   const mounted = useRef(true);
@@ -36,7 +36,7 @@ export default function Mission() {
 
     async function init() {
       setLoading(true);
-      const { missions, loadMoreButton } = await loadMissionList();
+      const { missions, myAttempts, loadMoreButton } = await loadMissionList();
       if (mounted.current) {
         let displayedMissions = missions;
         if (!isCreator) {
@@ -45,6 +45,7 @@ export default function Mission() {
         setLoading(false);
         onLoadMissionList({
           missions: displayedMissions,
+          myAttempts,
           loadMoreButton,
           prevUserId: userId
         });
@@ -56,7 +57,13 @@ export default function Mission() {
   return (
     <ErrorBoundary>
       <div>
-        {userId && <Cover missionIds={missions} missionObj={missionObj} />}
+        {userId && (
+          <Cover
+            missionIds={missions}
+            missionObj={missionObj}
+            myAttempts={myAttempts}
+          />
+        )}
         {missions.length === 0 && loading && <Loading />}
         {missions.length > 0 && (
           <div
@@ -113,6 +120,7 @@ export default function Mission() {
                           margin-top: 0;
                         }
                       `}
+                      myAttempts={myAttempts}
                       missions={missions}
                       missionObj={missionObj}
                     />

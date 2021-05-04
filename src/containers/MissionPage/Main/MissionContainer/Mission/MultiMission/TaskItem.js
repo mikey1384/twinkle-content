@@ -5,23 +5,26 @@ import { gifTable } from 'constants/defaultValues';
 import { css } from '@emotion/css';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { useHistory } from 'react-router-dom';
-import { useAppContext } from 'contexts';
+import { useAppContext, useMissionContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
 TaskItem.propTypes = {
   isRepeatable: PropTypes.bool,
   style: PropTypes.object,
-  mission: PropTypes.object.isRequired,
+  task: PropTypes.object.isRequired,
   parentType: PropTypes.string.isRequired,
   showStatus: PropTypes.bool
 };
 export default function TaskItem({
   isRepeatable,
   style,
-  mission,
+  task,
   parentType,
   showStatus = true
 }) {
+  const {
+    state: { myAttempts }
+  } = useMissionContext();
   const history = useHistory();
   const { userId } = useMyState();
   const {
@@ -53,11 +56,11 @@ export default function TaskItem({
           }
         `}
       >
-        {mission.title}
+        {task.title}
       </p>
       <div style={{ marginTop: '1rem', display: 'flex' }}>
         <img
-          src={gifTable[mission.id]}
+          src={gifTable[task.id]}
           style={{ width: '10rem', height: '6rem' }}
         />
         <div
@@ -78,7 +81,7 @@ export default function TaskItem({
               }
             `}
           >
-            {mission.subtitle}
+            {task.subtitle}
           </div>
           <div
             style={{
@@ -106,14 +109,12 @@ export default function TaskItem({
               rewardStyle={{ fontSize: '1.2rem' }}
               isRepeating={isRepeatable}
               coinReward={
-                isRepeatable ? mission.repeatCoinReward : mission.coinReward
+                isRepeatable ? task.repeatCoinReward : task.coinReward
               }
-              xpReward={
-                isRepeatable ? mission.repeatXpReward : mission.xpReward
-              }
+              xpReward={isRepeatable ? task.repeatXpReward : task.xpReward}
             />
-            {mission.myAttempt?.status &&
-              mission.myAttempt?.status !== 'pending' &&
+            {myAttempts[task.id]?.status &&
+              myAttempts[task.id]?.status !== 'pending' &&
               showStatus && (
                 <div
                   className={css`
@@ -125,12 +126,12 @@ export default function TaskItem({
                   style={{
                     fontWeight: 'bold',
                     color:
-                      mission.myAttempt?.status === 'pass'
+                      myAttempts[task.id]?.status === 'pass'
                         ? Color.green()
                         : Color.rose()
                   }}
                 >
-                  {mission.myAttempt?.status}ed
+                  {myAttempts[task.id]?.status}ed
                 </div>
               )}
           </div>
@@ -141,7 +142,7 @@ export default function TaskItem({
 
   function handleLinkClick() {
     if (userId) {
-      history.push(`/missions/${parentType}/${mission.missionType}`);
+      history.push(`/missions/${parentType}/${task.missionType}`);
     } else {
       onOpenSigninModal();
     }

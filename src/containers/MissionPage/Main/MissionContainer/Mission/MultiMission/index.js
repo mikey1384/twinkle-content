@@ -38,7 +38,7 @@ export default function MultiMission({
                 key={task.id}
                 style={{ marginTop: index === 0 ? 0 : '1rem' }}
                 parentType={missionType}
-                mission={task}
+                task={task}
               />
             ))}
           </div>

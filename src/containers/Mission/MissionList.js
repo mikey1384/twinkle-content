@@ -23,20 +23,20 @@ export default function MissionList({
   missionObj
 }) {
   const {
-    state: { selectedMissionListTab },
+    state: { selectedMissionListTab, myAttempts },
     actions: { onSetSelectedMissionListTab }
   } = useMissionContext();
   const { userId } = useMyState();
   const ongoingMissions = useMemo(() => {
     return missions.filter(
-      (missionId) => missionObj[missionId].myAttempt?.status !== 'pass'
+      (missionId) => myAttempts[missionId]?.status !== 'pass'
     );
-  }, [missionObj, missions]);
+  }, [missions, myAttempts]);
   const completedMissions = useMemo(() => {
     return missions.filter(
-      (missionId) => missionObj[missionId].myAttempt?.status === 'pass'
+      (missionId) => myAttempts[missionId]?.status === 'pass'
     );
-  }, [missionObj, missions]);
+  }, [missions, myAttempts]);
   useEffect(() => {
     if (selectedMissionListTab) {
       return;

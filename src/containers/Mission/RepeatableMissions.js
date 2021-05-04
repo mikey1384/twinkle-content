@@ -7,6 +7,7 @@ RepeatableMissions.propTypes = {
   missions: PropTypes.array.isRequired,
   missionObj: PropTypes.object.isRequired,
   className: PropTypes.string,
+  myAttempts: PropTypes.object.isRequired,
   style: PropTypes.object
 };
 
@@ -14,17 +15,18 @@ export default function RepeatableMissions({
   className,
   missions,
   missionObj,
+  myAttempts,
   style
 }) {
   const repeatableMissions = useMemo(() => {
     return missions.reduce((prevMissions, currMissionId) => {
       const mission = missionObj[currMissionId];
-      if (mission.repeatable && mission.myAttempt.status === 'pass') {
+      if (mission.repeatable && myAttempts[mission.id].status === 'pass') {
         return prevMissions.concat(mission);
       }
       return prevMissions;
     }, []);
-  }, [missionObj, missions]);
+  }, [missionObj, missions, myAttempts]);
 
   return repeatableMissions.length > 0 ? (
     <div className={className} style={style}>

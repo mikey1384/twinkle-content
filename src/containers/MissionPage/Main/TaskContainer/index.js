@@ -8,12 +8,12 @@ import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import { useAppContext, useMissionContext } from 'contexts';
 
-TaskPage.propTypes = {
+TaskContainer.propTypes = {
   match: PropTypes.object.isRequired,
   mission: PropTypes.object.isRequired
 };
 
-export default function TaskPage({
+export default function TaskContainer({
   match: {
     params: { taskType }
   },
@@ -25,8 +25,13 @@ export default function TaskPage({
     requestHelpers: { loadMission, loadMissionTypeIdHash }
   } = useAppContext();
   const {
-    actions: { onSetMissionState, onLoadMission, onLoadMissionTypeIdHash },
-    state: { missionObj, missionTypeIdHash, prevUserId }
+    actions: {
+      onSetMissionState,
+      onLoadMission,
+      onLoadMissionTypeIdHash,
+      onSetMissionAttempt
+    },
+    state: { missionObj, missionTypeIdHash, myAttempts, prevUserId }
   } = useMissionContext();
 
   const taskId = useMemo(() => {
@@ -53,6 +58,12 @@ export default function TaskPage({
         if (mounted.current) {
           onLoadMission({ mission: data, prevUserId: userId });
         }
+        if (mounted.current) {
+          onSetMissionAttempt({
+            missionId: taskId,
+            attempt: data.myAttempt
+          });
+        }
       } else {
         onLoadMission({ mission: { id: taskId }, prevUserId: userId });
       }
@@ -71,6 +82,7 @@ export default function TaskPage({
       />
       <Tutorial
         mission={task}
+        myAttempts={myAttempts}
         className={css`
           margin-top: 5rem;
           margin-bottom: 1rem;
