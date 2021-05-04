@@ -1,16 +1,29 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Color } from 'constants/css';
+import { useAppContext, useMissionContext, useContentContext } from 'contexts';
+import { useMyState } from 'helpers/hooks';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 
 EmailExists.propTypes = {
+  taskId: PropTypes.number.isRequired,
   emailMissionAttempted: PropTypes.bool
 };
 
-export default function EmailExists({ emailMissionAttempted }) {
-  const [submitDisabled] = useState(false);
+export default function EmailExists({ taskId, emailMissionAttempted }) {
+  const { userId } = useMyState();
+  const {
+    requestHelpers: { uploadMissionAttempt }
+  } = useAppContext();
+  const {
+    actions: { onUpdateMissionAttempt }
+  } = useMissionContext();
+  const {
+    actions: { onChangeUserXP, onUpdateUserCoins }
+  } = useContentContext();
+  const [submitDisabled, setSubmitDisabled] = useState(false);
   const passMessage = useMemo(
     () =>
       emailMissionAttempted
@@ -18,6 +31,13 @@ export default function EmailExists({ emailMissionAttempted }) {
         : `It looks like you already have an email address!`,
     [emailMissionAttempted]
   );
+  const mounted = useRef(true);
+  useEffect(() => {
+    mounted.current = true;
+    return function onUnmount() {
+      mounted.current = false;
+    };
+  }, []);
 
   return (
     <ErrorBoundary
@@ -57,6 +77,31 @@ export default function EmailExists({ emailMissionAttempted }) {
   );
 
   async function handleTaskComplete() {
-    console.log('task is complete');
+    setSubmitDisabled(true);
+    const { success, newXpAndRank, newCoins } = await uploadMissionAttempt({
+      missionId: taskId,
+      attempt: { status: 'pass' }
+    });
+    if (success) {
+      if (newXpAndRank.xp && mounted.current) {
+        onChangeUserXP({
+          xp: newXpAndRank.xp,
+          rank: newXpAndRank.rank,
+          userId
+        });
+      }
+      if (newCoins.netCoins && mounted.current) {
+        onUpdateUserCoins({ coins: newCoins.netCoins, userId });
+      }
+      if (mounted.current) {
+        onUpdateMissionAttempt({
+          missionId: taskId,
+          newState: { status: 'pass' }
+        });
+      }
+    }
+    if (mounted.current) {
+      setSubmitDisabled(false);
+    }
   }
 }

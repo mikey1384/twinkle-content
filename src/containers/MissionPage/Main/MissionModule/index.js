@@ -48,7 +48,11 @@ export default function MissionModule({
         <Grammar mission={mission} isRepeating={isRepeating} />
       )}
       {mission.missionType === 'email' && (
-        <Email mission={mission} onSetMissionState={onSetMissionState} />
+        <Email
+          isTask
+          taskId={mission.id}
+          onSetMissionState={onSetMissionState}
+        />
       )}
     </div>
   );
