@@ -21,7 +21,7 @@ export default function RepeatableMissions({
   const repeatableMissions = useMemo(() => {
     return missions.reduce((prevMissions, currMissionId) => {
       const mission = missionObj[currMissionId];
-      if (mission.repeatable && myAttempts[mission.id].status === 'pass') {
+      if (mission.repeatable && myAttempts[mission.id]?.status === 'pass') {
         return prevMissions.concat(mission);
       }
       return prevMissions;
