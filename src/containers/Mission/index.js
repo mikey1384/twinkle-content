@@ -17,7 +17,7 @@ export default function Mission() {
     requestHelpers: { loadMissionList }
   } = useAppContext();
   const {
-    state: { missions, missionObj, myAttempts, prevUserId, listLoaded },
+    state: { missions, missionObj, myAttempts },
     actions: { onLoadMissionList }
   } = useMissionContext();
   const mounted = useRef(true);
@@ -30,9 +30,7 @@ export default function Mission() {
   }, []);
 
   useEffect(() => {
-    if (!listLoaded || userId !== prevUserId) {
-      init();
-    }
+    init();
 
     async function init() {
       setLoading(true);
@@ -52,7 +50,7 @@ export default function Mission() {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [listLoaded, prevUserId, userId, isCreator]);
+  }, [userId, isCreator]);
 
   return (
     <ErrorBoundary>

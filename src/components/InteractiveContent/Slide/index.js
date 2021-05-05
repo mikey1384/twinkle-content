@@ -294,14 +294,10 @@ export default function Slide({
           />
         )}
         {!isPublished && !isEditing && !isDeleted && (
-          <div>
-            <Button
-              onClick={handlePublishSlide}
-              style={{ marginBottom: '1.5rem' }}
-              skeuomorphic
-            >
+          <div style={{ bottom: '1rem', right: '1rem', position: 'absolute' }}>
+            <Button color="darkBlue" onClick={handlePublishSlide} skeuomorphic>
               <Icon icon="upload" />
-              <span style={{ marginLeft: '0.7rem' }}>Publish Slide</span>
+              <span style={{ marginLeft: '0.7rem' }}>Publish</span>
             </Button>
           </div>
         )}
