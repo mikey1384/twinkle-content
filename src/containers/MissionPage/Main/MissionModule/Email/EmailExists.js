@@ -27,7 +27,7 @@ export default function EmailExists({ taskId, emailMissionAttempted }) {
   const passMessage = useMemo(
     () =>
       emailMissionAttempted
-        ? 'Congratulations on successfully setting up your own email address'
+        ? 'Congratulations on successfully setting up your own email address!'
         : `It looks like you already have an email address!`,
     [emailMissionAttempted]
   );

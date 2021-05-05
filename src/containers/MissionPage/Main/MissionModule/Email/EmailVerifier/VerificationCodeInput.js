@@ -4,7 +4,8 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import Input from 'components/Texts/Input';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useAppContext } from 'contexts';
+import { useAppContext, useContentContext } from 'contexts';
+import { useMyState } from 'helpers/hooks';
 
 VerificationCodeInput.propTypes = {
   email: PropTypes.string.isRequired,
@@ -14,9 +15,15 @@ VerificationCodeInput.propTypes = {
 export default function VerificationCodeInput({ onRetry, email }) {
   const [verificationCode, setVerificationCode] = useState('');
   const [verifying, setVerifying] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
   const {
     requestHelpers: { verifyEmailViaOTP }
   } = useAppContext();
+  const {
+    actions: { onUpdateProfileInfo }
+  } = useContentContext();
+  const { userId } = useMyState();
+
   return (
     <ErrorBoundary
       style={{
@@ -42,6 +49,19 @@ export default function VerificationCodeInput({ onRetry, email }) {
         onChange={handleCodeInput}
         value={verificationCode}
       />
+      {errorMsg && (
+        <p
+          style={{
+            color: Color.red(),
+            fontWeight: 'bold',
+            fontSize: '1.3rem',
+            marginTop: '0.5rem',
+            marginBottom: '0.5rem'
+          }}
+        >
+          {errorMsg}
+        </p>
+      )}
       <p
         onClick={onRetry}
         style={{
@@ -60,16 +80,18 @@ export default function VerificationCodeInput({ onRetry, email }) {
   );
 
   async function handleCodeInput(text) {
+    setErrorMsg('');
     setVerificationCode(text);
     if (text.length === 6) {
       setVerifying(true);
       const success = await verifyEmailViaOTP({ otp: text, email });
       if (success) {
         setVerifying(false);
+        onUpdateProfileInfo({ userId, verifiedEmail: email });
       } else {
-        console.log('failed');
+        setErrorMsg(`That is not the number we sent you. Please try again`);
+        setVerifying(false);
       }
-      console.log(success);
     }
   }
 }
