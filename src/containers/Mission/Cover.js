@@ -24,7 +24,7 @@ export default function Cover({ missionIds, missionObj, myAttempts }) {
   useEffect(() => {
     let numCompleteCount = 0;
     for (let missionId of missionIds) {
-      if (myAttempts[missionId].status === 'pass') {
+      if (myAttempts[missionId]?.status === 'pass') {
         numCompleteCount++;
       }
       if (missionObj[missionId].missionType === 'grammar') {
