@@ -10,7 +10,7 @@ export default function EmailVerifier() {
   const [emailSent, setEmailSent] = useState(false);
   return (
     <ErrorBoundary>
-      <p
+      <div
         className={css`
           width: 100%;
           text-align: center;
@@ -22,14 +22,32 @@ export default function EmailVerifier() {
         `}
       >
         {emailSent ? (
-          'Enter the 6-digit number sent to your email'
+          <div style={{ marginBottom: '2rem' }}>
+            <p>
+              An email with a 6-digit number was sent to{' '}
+              <span
+                onClick={handleEmailClick}
+                style={{ color: Color.blue(), cursor: 'pointer' }}
+                className={css`
+                  &:hover {
+                    text-decoration: underline;
+                  }
+                `}
+              >
+                {email}
+              </span>
+            </p>
+            <p style={{ marginTop: '0.5rem' }}>
+              Enter the number in the field below
+            </p>
+          </div>
         ) : (
           <>
             Enter your email address below and tap{' '}
             <b style={{ color: Color.green() }}>submit</b>
           </>
         )}
-      </p>
+      </div>
       {!emailSent && (
         <EmailSubmitForm
           email={email}
@@ -45,4 +63,9 @@ export default function EmailVerifier() {
       )}
     </ErrorBoundary>
   );
+
+  function handleEmailClick() {
+    const emailProvider = 'http://www.' + email.split('@')[1];
+    window.open(emailProvider);
+  }
 }
