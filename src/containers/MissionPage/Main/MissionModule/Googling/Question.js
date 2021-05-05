@@ -29,7 +29,7 @@ export default function Question({
         onChange={(text) => onInputChange(text)}
         style={{
           marginTop: '0.5rem',
-          border: hasError ? '2px solid red' : null
+          ...(hasError ? { border: '2px solid red' } : {})
         }}
         placeholder="Type your answer here..."
       />
