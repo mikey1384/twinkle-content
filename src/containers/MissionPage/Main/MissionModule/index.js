@@ -6,6 +6,7 @@ import Googling from './Googling';
 import Grammar from './Grammar';
 import TwinkleStore from './TwinkleStore';
 import Email from './Email';
+import GitHub from './GitHub';
 
 MissionModule.propTypes = {
   fileUploadComplete: PropTypes.bool,
@@ -49,6 +50,13 @@ export default function MissionModule({
       )}
       {mission.missionType === 'email' && (
         <Email
+          isTask
+          taskId={mission.id}
+          onSetMissionState={onSetMissionState}
+        />
+      )}
+      {mission.missionType === 'github' && (
+        <GitHub
           isTask
           taskId={mission.id}
           onSetMissionState={onSetMissionState}
