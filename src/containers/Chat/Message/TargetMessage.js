@@ -187,7 +187,7 @@ export default function TargetMessage({ message, onSetScrollToBottom }) {
           {fileType !== 'image' && (
             <div
               style={{
-                marginTop: '1rem',
+                marginTop: '0.5rem',
                 textAlign: 'center'
               }}
               className={css`
@@ -204,6 +204,12 @@ export default function TargetMessage({ message, onSetScrollToBottom }) {
                   textOverflow: 'ellipsis',
                   maxWidth: '100%'
                 }}
+                className={css`
+                  min-width: 6.5rem;
+                  @media (max-width: ${mobileMaxWidth}) {
+                    min-width: 0;
+                  }
+                `}
               >
                 {message.fileName}
               </p>
