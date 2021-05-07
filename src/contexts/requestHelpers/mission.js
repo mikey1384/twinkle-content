@@ -83,6 +83,17 @@ export default function missionRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async loadGitHubData(code) {
+      try {
+        const { data } = await request.get(
+          `${URL}/mission/github?code=${code}`,
+          auth()
+        );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async loadGrammarAttempts() {
       try {
         const { data } = await request.get(
