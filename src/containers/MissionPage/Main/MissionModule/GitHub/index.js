@@ -1,8 +1,9 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Button from 'components/Button';
 import queryString from 'query-string';
+import { Color } from 'constants/css';
 import { GITHUB_APP_ID } from 'constants/defaultValues';
 import { useAppContext } from 'contexts';
 
@@ -11,6 +12,7 @@ export default function GitHub() {
     requestHelpers: { loadGitHubData }
   } = useAppContext();
   const location = useLocation();
+  const [errorMsg, setErrorMsg] = useState('');
   const { search } = location;
   const { code } = useMemo(() => queryString.parse(search), [search]);
 
@@ -19,8 +21,12 @@ export default function GitHub() {
       initGitHubData();
     }
     async function initGitHubData() {
-      const data = await loadGitHubData(code);
-      console.log(data);
+      try {
+        const githubUsername = await loadGitHubData(code);
+        console.log(githubUsername);
+      } catch (error) {
+        setErrorMsg('Failed to fetch your GitHub username - try again');
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code]);
@@ -32,6 +38,17 @@ export default function GitHub() {
           GitHub Button
         </Button>
       </div>
+      {errorMsg && (
+        <p
+          style={{
+            marginTop: '0.5rem',
+            color: Color.red(),
+            textAlign: 'center'
+          }}
+        >
+          {errorMsg}
+        </p>
+      )}
     </ErrorBoundary>
   );
 

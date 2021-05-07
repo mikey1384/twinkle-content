@@ -97,6 +97,6 @@ export function AppContextProvider({ children }) {
         window.location.reload();
       }
     }
-    return Promise.reject(error);
+    return Promise.reject(error?.response || error);
   }
 }

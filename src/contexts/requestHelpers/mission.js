@@ -85,11 +85,10 @@ export default function missionRequestHelpers({ auth, handleError }) {
     },
     async loadGitHubData(code) {
       try {
-        const { data } = await request.get(
-          `${URL}/mission/github?code=${code}`,
-          auth()
-        );
-        return Promise.resolve(data);
+        const {
+          data: { githubUsername }
+        } = await request.get(`${URL}/mission/github?code=${code}`, auth());
+        return Promise.resolve(githubUsername);
       } catch (error) {
         return handleError(error);
       }
