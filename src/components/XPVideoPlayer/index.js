@@ -72,7 +72,7 @@ function XPVideoPlayer({
   }, [coinRewardAmount]);
 
   const xpRewardAmount = useMemo(
-    () => videoRewardHash[rewardBoostLvl].xp * rewardLevel,
+    () => (videoRewardHash?.[rewardBoostLvl]?.xp || 20) * rewardLevel,
     [rewardBoostLvl, rewardLevel]
   );
   const xpRewardAmountRef = useRef(xpRewardAmount);

@@ -34,12 +34,13 @@ export default function XPBar({
   const watching = startingPosition > 0;
   const { rewardBoostLvl, twinkleCoins } = useMyState();
   const xpRewardAmount = useMemo(
-    () => rewardLevel * videoRewardHash[rewardBoostLvl].xp,
+    () => rewardLevel * (videoRewardHash?.[rewardBoostLvl]?.xp || 20),
     [rewardBoostLvl, rewardLevel]
   );
-  const coinRewardAmount = useMemo(() => videoRewardHash[rewardBoostLvl].coin, [
-    rewardBoostLvl
-  ]);
+  const coinRewardAmount = useMemo(
+    () => videoRewardHash?.[rewardBoostLvl]?.coin || 2,
+    [rewardBoostLvl]
+  );
   const canEarnCoins = rewardLevel >= 3;
   const {
     videoProgress = 0,
