@@ -7,12 +7,12 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 
-EmailExists.propTypes = {
+TaskComplete.propTypes = {
   taskId: PropTypes.number.isRequired,
   emailMissionAttempted: PropTypes.bool
 };
 
-export default function EmailExists({ taskId, emailMissionAttempted }) {
+export default function TaskComplete({ taskId, emailMissionAttempted }) {
   const { userId } = useMyState();
   const {
     requestHelpers: { uploadMissionAttempt }

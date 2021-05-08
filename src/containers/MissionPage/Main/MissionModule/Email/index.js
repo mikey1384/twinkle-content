@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useMyState } from 'helpers/hooks';
 import EmailVerifier from './EmailVerifier';
-import EmailExists from './EmailExists';
+import TaskComplete from '../components/TaskComplete';
 import ErrorBoundary from 'components/ErrorBoundary';
 
 Email.propTypes = {
@@ -16,7 +16,7 @@ export default function Email({ taskId }) {
   return (
     <ErrorBoundary style={{ width: '100%' }}>
       {conditionPassed ? (
-        <EmailExists
+        <TaskComplete
           taskId={taskId}
           emailMissionAttempted={emailMissionAttempted}
         />

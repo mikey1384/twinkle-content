@@ -87,7 +87,11 @@ export default function VerificationCodeInput({ onRetry, email }) {
       const success = await verifyEmailViaOTP({ otp: text, email });
       if (success) {
         setVerifying(false);
-        onUpdateProfileInfo({ userId, verifiedEmail: email });
+        onUpdateProfileInfo({
+          userId,
+          verifiedEmail: email,
+          emailMissionAttempted: true
+        });
       } else {
         setErrorMsg(`That is not the number we sent you. Please try again`);
         setVerifying(false);
