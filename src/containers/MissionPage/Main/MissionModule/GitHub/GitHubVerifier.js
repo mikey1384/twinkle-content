@@ -1,10 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import Button from 'components/Button';
 import { useLocation } from 'react-router-dom';
 import { Color } from 'constants/css';
-import { GITHUB_APP_ID } from 'constants/defaultValues';
 import { useAppContext } from 'contexts';
 import queryString from 'query-string';
+import GitHubButton from './GitHubButton';
 
 export default function GitHubVerifier() {
   const {
@@ -32,9 +31,7 @@ export default function GitHubVerifier() {
   return (
     <div>
       <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-        <Button filled color="logoBlue" onClick={handleGitHubButtonClick}>
-          GitHub Button
-        </Button>
+        <GitHubButton />
       </div>
       {errorMsg && (
         <p
@@ -49,8 +46,4 @@ export default function GitHubVerifier() {
       )}
     </div>
   );
-
-  function handleGitHubButtonClick() {
-    window.location = `https://github.com/login/oauth/authorize?scope=user&client_id=${GITHUB_APP_ID}`;
-  }
 }
