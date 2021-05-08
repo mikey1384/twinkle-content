@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Color } from 'constants/css';
 import { useAppContext, useMissionContext, useContentContext } from 'contexts';
@@ -9,10 +9,10 @@ import Icon from 'components/Icon';
 
 TaskComplete.propTypes = {
   taskId: PropTypes.number.isRequired,
-  emailMissionAttempted: PropTypes.bool
+  passMessage: PropTypes.string
 };
 
-export default function TaskComplete({ taskId, emailMissionAttempted }) {
+export default function TaskComplete({ taskId, passMessage }) {
   const { userId } = useMyState();
   const {
     requestHelpers: { uploadMissionAttempt }
@@ -24,13 +24,6 @@ export default function TaskComplete({ taskId, emailMissionAttempted }) {
     actions: { onChangeUserXP, onUpdateUserCoins }
   } = useContentContext();
   const [submitDisabled, setSubmitDisabled] = useState(false);
-  const passMessage = useMemo(
-    () =>
-      emailMissionAttempted
-        ? 'Congratulations on successfully setting up your own email address!'
-        : `It looks like you already have an email address!`,
-    [emailMissionAttempted]
-  );
   const mounted = useRef(true);
   useEffect(() => {
     mounted.current = true;

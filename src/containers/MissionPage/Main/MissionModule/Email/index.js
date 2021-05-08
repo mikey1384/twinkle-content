@@ -12,14 +12,18 @@ Email.propTypes = {
 export default function Email({ taskId }) {
   const { verifiedEmail, emailMissionAttempted } = useMyState();
   const conditionPassed = useMemo(() => !!verifiedEmail, [verifiedEmail]);
+  const passMessage = useMemo(
+    () =>
+      emailMissionAttempted
+        ? 'Congratulations on successfully setting up your own email address!'
+        : `It looks like you already have an email address!`,
+    [emailMissionAttempted]
+  );
 
   return (
     <ErrorBoundary style={{ width: '100%' }}>
       {conditionPassed ? (
-        <TaskComplete
-          taskId={taskId}
-          emailMissionAttempted={emailMissionAttempted}
-        />
+        <TaskComplete taskId={taskId} passMessage={passMessage} />
       ) : (
         <EmailVerifier />
       )}
