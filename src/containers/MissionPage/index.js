@@ -85,6 +85,18 @@ export default function MissionPage({
         if (mounted.current) {
           onSetMissionAttempt({ missionId, attempt: data.myAttempt });
         }
+        if (data.subMissions?.length > 0) {
+          for (let subMission of data.subMissions) {
+            if (subMission.tasks?.length > 0) {
+              for (let task of subMission.tasks) {
+                onSetMissionAttempt({
+                  missionId: task.id,
+                  attempt: task.myAttempt
+                });
+              }
+            }
+          }
+        }
       } else {
         onLoadMission({ mission: { id: missionId }, prevUserId: userId });
       }
