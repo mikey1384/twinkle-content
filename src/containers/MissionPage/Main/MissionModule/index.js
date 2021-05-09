@@ -7,6 +7,7 @@ import Grammar from './Grammar';
 import TwinkleStore from './TwinkleStore';
 import Email from './Email';
 import GitHub from './GitHub';
+import Replit from './Replit';
 
 MissionModule.propTypes = {
   fileUploadComplete: PropTypes.bool,
@@ -57,6 +58,13 @@ export default function MissionModule({
       )}
       {mission.missionType === 'github' && (
         <GitHub
+          isTask
+          taskId={mission.id}
+          onSetMissionState={onSetMissionState}
+        />
+      )}
+      {mission.missionType === 'replit' && (
+        <Replit
           isTask
           taskId={mission.id}
           onSetMissionState={onSetMissionState}
