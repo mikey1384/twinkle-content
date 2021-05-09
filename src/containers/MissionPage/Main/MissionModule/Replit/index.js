@@ -5,7 +5,8 @@ export default function Replit() {
   const Space = () => <>&nbsp;&nbsp;</>;
   return (
     <ErrorBoundary style={{ width: '100%' }}>
-      <code>
+      {`https://github.com/FormidableLabs/prism-react-renderer`}
+      <code style={{ fontSize: '1.5rem' }}>
         <div>{`import { useEffect, useState } from 'react';`}</div>
         <br />
         <div>{`function HomePage() {`}</div>
@@ -66,7 +67,7 @@ export default function Replit() {
         <div>
           <Space />
           <Space />
-          {`<div style={{width: '100%'}}>`}
+          {`<div style={{ width: '100%' }}>`}
         </div>
         <div>
           <Space />
