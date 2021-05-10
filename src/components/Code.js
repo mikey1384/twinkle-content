@@ -22,7 +22,7 @@ export default function Code({ children, className, style }) {
         return (
           <pre
             className={`${defaultClassName} ${className}`}
-            style={{ ...defaultStyle, ...style }}
+            style={{ ...defaultStyle, marginTop: 0, ...style }}
           >
             {tokens.map((line, i) => (
               <div key={i} {...getLineProps({ line, key: i })}>

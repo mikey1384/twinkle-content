@@ -4,7 +4,7 @@ import Code from 'components/Code';
 import { mobileMaxWidth, borderRadius } from 'constants/css';
 import { css } from '@emotion/css';
 
-const code = `import { useEffect, useState } from 'react';
+const codeToCopy = `import { useEffect, useState } from 'react';
 
 function HomePage() {
   const [code, setCode] = useState('');
@@ -50,7 +50,7 @@ export default function Replit() {
           }
         `}
       >
-        {code}
+        {codeToCopy}
       </Code>
     </ErrorBoundary>
   );
