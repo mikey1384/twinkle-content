@@ -3,16 +3,18 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import Code from 'components/Code';
 import { mobileMaxWidth, borderRadius } from 'constants/css';
 import { css } from '@emotion/css';
+import Button from 'components/Button';
 
+const initialCode = `${Math.floor(Math.random() * 1000000)}`;
 const codeToCopy = `import { useEffect, useState } from 'react';
 
 function HomePage() {
   const [code, setCode] = useState('');
+  const initialCode = '${initialCode}';
   useEffect(() => {
-    const name = 'mikey';
     let result = '';
-    for (let i = 0; i < name.length; i++) {
-      const number = name.charCodeAt(i) % 10;
+    for (let i = 0; i < initialCode.length; i++) {
+      const number = initialCode.charCodeAt(i) % 10;
       result += number;
     }
     setCode(result);
@@ -40,6 +42,7 @@ export default HomePage;`;
 export default function Replit() {
   return (
     <ErrorBoundary style={{ width: '100%' }}>
+      <Button onClick={() => console.log(initialCode)}>click me</Button>
       <Code
         language="jsx"
         theme="dracula"
