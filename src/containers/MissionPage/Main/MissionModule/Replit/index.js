@@ -5,7 +5,7 @@ import { mobileMaxWidth, borderRadius } from 'constants/css';
 import { css } from '@emotion/css';
 import Button from 'components/Button';
 
-const initialCode = `${Math.floor(Math.random() * 1000000)}`;
+const initialCode = `${Math.random().toString(36).substr(2, 6)}`;
 const codeToCopy = `import { useEffect, useState } from 'react';
 
 function HomePage() {
