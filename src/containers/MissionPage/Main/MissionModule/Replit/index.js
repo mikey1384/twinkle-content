@@ -41,9 +41,11 @@ export default function Replit() {
   return (
     <ErrorBoundary style={{ width: '100%' }}>
       <Code
+        language="jsx"
+        theme="dracula"
         className={css`
           border-radius: ${borderRadius};
-          padding: 2rem;
+          padding: 1.5rem;
           font-size: 1.5rem;
           @media (max-width: ${mobileMaxWidth}) {
             font-size: 1.3rem;
