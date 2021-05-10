@@ -47,6 +47,12 @@ export default function MissionActions(dispatch) {
         attempt
       });
     },
+    onSetMyMissionAttempts(myAttempts) {
+      return dispatch({
+        type: 'SET_MY_MISSION_ATTEMPTS',
+        myAttempts
+      });
+    },
     onUpdateMissionAttempt({ missionId, newState }) {
       return dispatch({
         type: 'UPDATE_MISSION_ATTEMPT',

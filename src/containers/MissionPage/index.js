@@ -38,7 +38,7 @@ export default function MissionPage({
       onLoadMission,
       onLoadMissionTypeIdHash,
       onSetMissionState,
-      onSetMissionAttempt
+      onSetMyMissionAttempts
     },
     state: { missionObj, prevUserId, missionTypeIdHash, myAttempts }
   } = useMissionContext();
@@ -78,24 +78,12 @@ export default function MissionPage({
 
     async function init() {
       if (userId) {
-        const data = await loadMission(missionId);
+        const { page, myAttempts } = await loadMission(missionId);
         if (mounted.current) {
-          onLoadMission({ mission: data, prevUserId: userId });
+          onLoadMission({ mission: page, prevUserId: userId });
         }
         if (mounted.current) {
-          onSetMissionAttempt({ missionId, attempt: data.myAttempt });
-        }
-        if (data.subMissions?.length > 0) {
-          for (let subMission of data.subMissions) {
-            if (subMission.tasks?.length > 0) {
-              for (let task of subMission.tasks) {
-                onSetMissionAttempt({
-                  missionId: task.id,
-                  attempt: task.myAttempt
-                });
-              }
-            }
-          }
+          onSetMyMissionAttempts(myAttempts);
         }
       } else {
         onLoadMission({ mission: { id: missionId }, prevUserId: userId });

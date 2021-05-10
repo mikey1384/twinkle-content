@@ -8,7 +8,7 @@ export const initialMissionState = {
   missions: [],
   loadMoreButton: false,
   missionObj: {},
-  missionIdHash: {},
+  missionTypeIdHash: {},
   myAttempts: {},
   prevUserId: null,
   selectedMissionListTab: ''

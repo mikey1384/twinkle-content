@@ -87,6 +87,11 @@ export default function MissionReducer(state, action) {
         }
       };
     }
+    case 'SET_MY_MISSION_ATTEMPTS':
+      return {
+        ...state,
+        myAttempts: action.myAttempts
+      };
     case 'UPDATE_MISSION_ATTEMPT': {
       return {
         ...state,

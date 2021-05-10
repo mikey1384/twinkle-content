@@ -29,7 +29,7 @@ export default function TaskContainer({
       onSetMissionState,
       onLoadMission,
       onLoadMissionTypeIdHash,
-      onSetMissionAttempt
+      onSetMyMissionAttempts
     },
     state: { missionObj, missionTypeIdHash, myAttempts, prevUserId }
   } = useMissionContext();
@@ -54,15 +54,12 @@ export default function TaskContainer({
 
     async function init() {
       if (userId) {
-        const data = await loadMission(taskId);
+        const { page, myAttempts } = await loadMission(taskId);
         if (mounted.current) {
-          onLoadMission({ mission: data, prevUserId: userId });
+          onLoadMission({ mission: page, prevUserId: userId });
         }
         if (mounted.current) {
-          onSetMissionAttempt({
-            missionId: taskId,
-            attempt: data.myAttempt
-          });
+          onSetMyMissionAttempts(myAttempts);
         }
       } else {
         onLoadMission({ mission: { id: taskId }, prevUserId: userId });
