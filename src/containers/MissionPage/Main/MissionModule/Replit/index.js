@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import ErrorBoundary from 'components/ErrorBoundary';
 import ReplitVerifier from './ReplitVerifier';
+import DidNotPassCopyAndPaste from './DidNotPassCopyAndPaste';
 import { useMissionContext } from 'contexts';
 
 export default function Replit() {
@@ -21,11 +22,8 @@ export default function Replit() {
 
   return (
     <ErrorBoundary style={{ width: '100%' }}>
-      {copyAndPasteAttemptPassed ? (
-        <ReplitVerifier />
-      ) : (
-        <div>Did not pass copy and paste yet</div>
-      )}
+      {!copyAndPasteAttemptPassed && <DidNotPassCopyAndPaste />}
+      {copyAndPasteAttemptPassed && <ReplitVerifier />}
     </ErrorBoundary>
   );
 }
