@@ -32,6 +32,7 @@ export default function Code({
   const selectedTheme = useMemo(() => availableThemes[theme] || vsDark, [
     theme
   ]);
+
   return (
     <Highlight
       {...defaultProps}
