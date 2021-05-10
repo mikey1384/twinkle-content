@@ -82,9 +82,10 @@ export default function MyRank({
       `}
     >
       {
-        <p>
+        <div>
           <span
             style={{
+              fontWeight: 'bold',
               color: rankedColor || Color.logoGreen()
             }}
           >
@@ -92,6 +93,7 @@ export default function MyRank({
           </span>{' '}
           <span
             style={{
+              fontWeight: 'bold',
               color: rankedColor || Color.gold()
             }}
           >
@@ -107,7 +109,7 @@ export default function MyRank({
           >
             {rank ? `Rank #${rank}` : 'Unranked'}
           </p>
-        </p>
+        </div>
       }
     </div>
   );
