@@ -226,7 +226,7 @@ function MainNavs({
         isHome
         className="mobile"
         imgLabel="home"
-        alert={numNewPosts > 0 || feedsOutdated}
+        alert={pathname === '/' && (numNewPosts > 0 || feedsOutdated)}
       />
       <HeaderNav
         to={`/${exploreCategory}`}
@@ -272,10 +272,12 @@ function MainNavs({
         pathname={pathname}
         className="desktop"
         imgLabel="home"
-        alert={!usersMatch && numNewPosts > 0}
+        alert={pathname === '/' && !usersMatch && numNewPosts > 0}
       >
         HOME
-        {!usersMatch && numNewPosts > 0 ? ` (${numNewPosts})` : ''}
+        {pathname === '/' && !usersMatch && numNewPosts > 0
+          ? ` (${numNewPosts})`
+          : ''}
       </HeaderNav>
       <HeaderNav
         to={`/${exploreCategory}`}
