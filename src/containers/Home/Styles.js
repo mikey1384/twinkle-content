@@ -32,7 +32,7 @@ export const Center = css`
 
 export const Right = css`
   width: CALC(27vw - 1rem);
-  right: 0;
+  right: 1rem;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   top: 4.5rem;

@@ -38,6 +38,9 @@ export default function HomeMenuItems({ history, style = {} }) {
           flex-direction: column;
           border: 1px solid ${Color.borderGray()};
           border-radius: ${borderRadius};
+          border-left: 0;
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
           padding-top: 1rem;
           > nav {
             height: 4rem;
@@ -61,7 +64,7 @@ export default function HomeMenuItems({ history, style = {} }) {
               width: 100%;
               height: 100%;
               display: grid;
-              grid-template-columns: 3px 4rem 1fr;
+              grid-template-columns: 2px 4rem 1fr;
               grid-template-rows: 100%;
               grid-template-areas: 'selection icon label';
               > .selection {
@@ -93,8 +96,11 @@ export default function HomeMenuItems({ history, style = {} }) {
             .homemenu__item {
               > .selection {
                 background: ${Color[profileTheme]()};
+                border: 1px solid ${Color[profileTheme]()};
+                box-shadow: 0 0 1px ${Color[profileTheme]()};
               }
             }
+            font-weight: bold;
             color: ${Color.black()};
             a {
               color: ${Color.black()};
