@@ -1,22 +1,14 @@
 import React from 'react';
-import { borderRadius, Color } from 'constants/css';
-import { css } from '@emotion/css';
+import PropTypes from 'prop-types';
+import { panel } from './Styles';
 
-export default function HighXPSubjects() {
+HighXPSubjects.propTypes = {
+  style: PropTypes.object
+};
+
+export default function HighXPSubjects({ style }) {
   return (
-    <div
-      className={css`
-        background: #fff;
-        font-size: 1.7rem;
-        padding: 1rem;
-        border: 1px solid ${Color.borderGray()};
-        border-radius: ${borderRadius};
-        > p {
-          font-size: 2rem;
-          font-weight: bold;
-        }
-      `}
-    >
+    <div style={style} className={panel}>
       <p>{`Today's High XP Subjects`}</p>
     </div>
   );
