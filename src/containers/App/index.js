@@ -60,13 +60,8 @@ function App({ location, history }) {
       uploadFileOnChat
     }
   } = useAppContext();
-  const {
-    authLevel,
-    profilePicUrl,
-    signinModalShown,
-    userId,
-    username
-  } = useMyState();
+  const { authLevel, profilePicUrl, signinModalShown, userId, username } =
+    useMyState();
   const {
     state: {
       channelOnCall,
@@ -111,10 +106,10 @@ function App({ location, history }) {
     actions: { onResetSubjectInput }
   } = useInputContext();
   const [mobileMenuShown, setMobileMenuShown] = useState(false);
-  const currentChannel = useMemo(() => channelsObj[selectedChannelId] || {}, [
-    channelsObj,
-    selectedChannelId
-  ]);
+  const currentChannel = useMemo(
+    () => channelsObj[selectedChannelId] || {},
+    [channelsObj, selectedChannelId]
+  );
   const visibilityChangeRef = useRef(null);
   const hiddenRef = useRef(null);
   const authRef = useRef(null);
@@ -319,6 +314,12 @@ function App({ location, history }) {
                 location={location}
                 onFileUpload={handleFileUploadOnHome}
               />
+            )}
+          />
+          <Route
+            path="/earn"
+            render={({ history, location }) => (
+              <Home history={history} location={location} />
             )}
           />
           <Route
