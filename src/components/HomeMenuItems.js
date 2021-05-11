@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link, Route } from 'react-router-dom';
 import Icon from 'components/Icon';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { Color, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { isMobile } from 'helpers';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
@@ -20,7 +20,7 @@ export default function HomeMenuItems({ history, style = {} }) {
       actions: { onSetProfilesLoaded }
     }
   } = useAppContext();
-  const { managementLevel } = useMyState();
+  const { managementLevel, profileTheme } = useMyState();
   const year = useMemo(() => {
     const dt = new Date();
     return dt.getFullYear();
@@ -36,7 +36,11 @@ export default function HomeMenuItems({ history, style = {} }) {
           font-size: 1.7rem;
           font-family: sans-serif, Arial, Helvetica;
           flex-direction: column;
+          border: 1px solid ${Color.borderGray()};
+          border-radius: ${borderRadius};
+          padding-top: 1rem;
           > nav {
+            height: 3rem;
             width: 100%;
             cursor: pointer;
             display: flex;
@@ -44,9 +48,8 @@ export default function HomeMenuItems({ history, style = {} }) {
             color: ${Color.gray()};
             justify-content: center;
             > a {
-              margin-left: -2rem;
-              text-align: center;
               width: 100%;
+              text-align: center;
               display: flex;
               align-items: center;
               justify-content: center;
@@ -56,9 +59,12 @@ export default function HomeMenuItems({ history, style = {} }) {
             .homemenu__item {
               width: 100%;
               display: grid;
-              grid-template-columns: 1fr 1fr;
+              grid-template-columns: 0.5rem 1fr 1fr;
               grid-template-rows: auto;
-              grid-template-areas: 'icon label';
+              grid-template-areas: 'selection icon label';
+              > .selection {
+                grid-area: selection;
+              }
               > .icon {
                 grid-area: icon;
               }
@@ -69,13 +75,16 @@ export default function HomeMenuItems({ history, style = {} }) {
           }
           > nav:hover {
             color: ${Color.black()};
-            font-weight: bold;
             a {
               color: ${Color.black()};
             }
           }
           > nav.active {
-            font-weight: bold;
+            .homemenu__item {
+              > .selection {
+                background: ${Color[profileTheme]()};
+              }
+            }
             color: ${Color.black()};
             a {
               color: ${Color.black()};
@@ -85,8 +94,9 @@ export default function HomeMenuItems({ history, style = {} }) {
             font-size: 3rem;
             padding: 1rem 0;
             background: #fff;
-            border-top: 1px solid ${Color.borderGray()};
-            border-bottom: 1px solid ${Color.borderGray()};
+            border-radius: 0;
+            border-left: 0;
+            border-right: 0;
             > nav {
               a {
                 justify-content: center;
@@ -107,6 +117,7 @@ export default function HomeMenuItems({ history, style = {} }) {
             >
               <a href="/" onClick={(e) => e.preventDefault()}>
                 <div className="homemenu__item">
+                  <div className="selection" />
                   <div className="icon">
                     <Icon icon="book" size="1x" />
                   </div>
@@ -126,6 +137,7 @@ export default function HomeMenuItems({ history, style = {} }) {
             >
               <a href="/users" onClick={(e) => e.preventDefault()}>
                 <div className="homemenu__item">
+                  <div className="selection" />
                   <div className="icon">
                     <Icon icon="users" size="1x" />
                   </div>
@@ -145,6 +157,7 @@ export default function HomeMenuItems({ history, style = {} }) {
             >
               <a href="/earn" onClick={(e) => e.preventDefault()}>
                 <div className="homemenu__item">
+                  <div className="selection" />
                   <div className="icon">
                     <Icon icon="bolt" size="1x" />
                   </div>
@@ -164,6 +177,7 @@ export default function HomeMenuItems({ history, style = {} }) {
             >
               <a href="/store" onClick={(e) => e.preventDefault()}>
                 <div className="homemenu__item">
+                  <div className="selection" />
                   <div className="icon">
                     <Icon icon="shopping-bag" size="1x" />
                   </div>
@@ -184,6 +198,7 @@ export default function HomeMenuItems({ history, style = {} }) {
               >
                 <a href="/management" onClick={(e) => e.preventDefault()}>
                   <div className="homemenu__item">
+                    <div className="selection" />
                     <div className="icon">
                       <Icon icon="sliders-h" size="1x" />
                     </div>
