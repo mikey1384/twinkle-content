@@ -75,6 +75,15 @@ function MainNavs({
     [pathname]
   );
 
+  const earnMatch = useMemo(
+    () =>
+      matchPath(pathname, {
+        path: '/earn',
+        exact: true
+      }),
+    [pathname]
+  );
+
   const storeMatch = useMemo(
     () =>
       matchPath(pathname, {
@@ -129,6 +138,8 @@ function MainNavs({
       onSetHomeNav('/');
     } else if (usersMatch) {
       onSetHomeNav('/users');
+    } else if (earnMatch) {
+      onSetHomeNav('/earn');
     } else if (storeMatch) {
       onSetHomeNav('/store');
     }
