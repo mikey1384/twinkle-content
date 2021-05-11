@@ -8,7 +8,6 @@ import { useAppContext, useContentContext, useProfileContext } from 'contexts';
 import { useContentState, useMyState, useProfileState } from 'helpers/hooks';
 import InvalidPage from 'components/InvalidPage';
 import Loading from 'components/Loading';
-import GoBack from 'components/GoBack';
 
 Profile.propTypes = {
   history: PropTypes.object.isRequired,
@@ -75,7 +74,6 @@ export default function Profile({ history, location, match }) {
 
   return (
     <ErrorBoundary style={{ minHeight: '10rem' }}>
-      <GoBack isMobile to="/users" text="Users" />
       {!notExist ? (
         <>
           {loading && <Loading text="Loading Profile..." />}

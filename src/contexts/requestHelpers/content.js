@@ -306,6 +306,14 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async loadHighXPSubjects() {
+      try {
+        const { data } = await request.get(`${URL}/content/highxp/subjects`);
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async loadMorePlaylistList(playlistId) {
       try {
         const { data } = await request.get(

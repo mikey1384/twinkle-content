@@ -15,8 +15,10 @@ export const container = css`
     border: 1px solid ${Color.borderGray()};
     border-bottom: none;
     border-radius: ${borderRadius};
+    border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+    border-left: 0;
     display: flex;
     background: #fff;
     width: 100%;
@@ -49,7 +51,8 @@ export const container = css`
   .details {
     font-size: 1.3rem;
     border: 1px solid ${Color.borderGray()};
-    border-bottom-left-radius: ${borderRadius};
+    border-left: 0;
+    border-bottom-left-radius: 0;
     border-bottom-right-radius: ${borderRadius};
     background: #fff;
     padding: 1rem;
@@ -64,11 +67,11 @@ export const container = css`
     .heading {
       border: 0;
       border-radius: 0;
-      justify-content: center;
+      justify-content: space-around;
       .names {
         text-align: center;
         a {
-          font-size: 4rem;
+          font-size: 2.5rem;
         }
         span {
           font-size: 1.5rem;
@@ -87,7 +90,7 @@ export const container = css`
         font-size: 3rem;
       }
       button {
-        font-size: 3rem;
+        font-size: 2rem;
       }
     }
   }

@@ -83,6 +83,15 @@ function MainNavs({
     [pathname]
   );
 
+  const earnMatch = useMemo(
+    () =>
+      matchPath(pathname, {
+        path: '/earn',
+        exact: true
+      }),
+    [pathname]
+  );
+
   const storeMatch = useMemo(
     () =>
       matchPath(pathname, {
@@ -137,6 +146,8 @@ function MainNavs({
       onSetHomeNav('/');
     } else if (usersMatch) {
       onSetHomeNav('/users');
+    } else if (earnMatch) {
+      onSetHomeNav('/earn');
     } else if (storeMatch) {
       onSetHomeNav('/store');
     }
@@ -222,11 +233,11 @@ function MainNavs({
         />
       )}
       <HeaderNav
-        to="/"
+        to={homeNav}
         isHome
         className="mobile"
         imgLabel="home"
-        alert={numNewPosts > 0 || feedsOutdated}
+        alert={pathname === '/' && (numNewPosts > 0 || feedsOutdated)}
       />
       <HeaderNav
         to={`/${exploreCategory}`}
@@ -272,10 +283,12 @@ function MainNavs({
         pathname={pathname}
         className="desktop"
         imgLabel="home"
-        alert={!usersMatch && numNewPosts > 0}
+        alert={pathname === '/' && !usersMatch && numNewPosts > 0}
       >
         HOME
-        {!usersMatch && numNewPosts > 0 ? ` (${numNewPosts})` : ''}
+        {pathname === '/' && !usersMatch && numNewPosts > 0
+          ? ` (${numNewPosts})`
+          : ''}
       </HeaderNav>
       <HeaderNav
         to={`/${exploreCategory}`}

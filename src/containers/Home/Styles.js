@@ -12,7 +12,7 @@ export const container = css`
 
 export const Left = css`
   width: CALC(18vw - 1rem);
-  left: 5vw;
+  left: 0;
   display: block;
   position: fixed;
   @media (max-width: ${mobileMaxWidth}) {
@@ -32,7 +32,7 @@ export const Center = css`
 
 export const Right = css`
   width: CALC(27vw - 1rem);
-  right: 5vw;
+  right: 1rem;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   top: 4.5rem;
