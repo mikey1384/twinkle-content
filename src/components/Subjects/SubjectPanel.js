@@ -126,8 +126,7 @@ export default function SubjectPanel({
     recommendationInterfaceShown,
     setRecommendationInterfaceShown
   ] = useState(false);
-  const userIsUploader = myId === userId;
-
+  const userIsUploader = useMemo(() => myId === userId, [myId, userId]);
   const editButtonShown = useMemo(() => {
     const userHasHigherAuthLevel = authLevel > uploaderAuthLevel;
     const userCanEditThis = (canEdit || canDelete) && userHasHigherAuthLevel;
@@ -147,7 +146,6 @@ export default function SubjectPanel({
   const finalRewardLevel = useMemo(() => {
     return byUser ? 5 : rootRewardLevel > 0 ? 1 : 0;
   }, [byUser, rootRewardLevel]);
-
   const isRecommendedByUser = useMemo(() => {
     return (
       recommendations.filter((recommendation) => recommendation.userId === myId)
