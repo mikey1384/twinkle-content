@@ -5,6 +5,7 @@ import { useAppContext } from 'contexts';
 import Icon from 'components/Icon';
 import ContentListItem from 'components/ContentListItem';
 import Button from 'components/Button';
+import Loading from 'components/Loading';
 
 HighXPSubjects.propTypes = {
   style: PropTypes.object
@@ -12,6 +13,7 @@ HighXPSubjects.propTypes = {
 
 export default function HighXPSubjects({ style }) {
   const [subjects, setSubjects] = useState([]);
+  const [loading, setLoading] = useState(false);
   const {
     requestHelpers: { loadHighXPSubjects }
   } = useAppContext();
@@ -24,12 +26,18 @@ export default function HighXPSubjects({ style }) {
     <div style={style} className={panel}>
       <p>{`Random High XP Subject`}</p>
       <div style={{ marginTop: '1.5rem' }}>
-        {subjects.map((subject) => (
-          <ContentListItem key={subject.id} contentObj={subject} />
-        ))}
+        {loading ? (
+          <Loading />
+        ) : (
+          <>
+            {subjects.map((subject) => (
+              <ContentListItem key={subject.id} contentObj={subject} />
+            ))}
+          </>
+        )}
         <div
           style={{
-            marginTop: '1rem',
+            marginTop: '2rem',
             width: '100%',
             display: 'flex',
             justifyContent: 'center'
@@ -47,7 +55,9 @@ export default function HighXPSubjects({ style }) {
   );
 
   async function handleLoadHighXPSubjects() {
+    setLoading(true);
     const data = await loadHighXPSubjects();
     setSubjects(data);
+    setLoading(false);
   }
 }
