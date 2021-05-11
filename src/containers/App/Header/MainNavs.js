@@ -222,7 +222,7 @@ function MainNavs({
         />
       )}
       <HeaderNav
-        to="/"
+        to={homeNav}
         isHome
         className="mobile"
         imgLabel="home"
