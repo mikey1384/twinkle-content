@@ -145,8 +145,8 @@ export default function SubjectPanel({
     );
   }, [authLevel, canReward, onEdit, uploaderAuthLevel, userIsUploader]);
   const finalRewardLevel = useMemo(() => {
-    return byUser ? 5 : 0;
-  }, [byUser]);
+    return byUser ? 5 : rootRewardLevel > 0 ? 1 : 0;
+  }, [byUser, rootRewardLevel]);
 
   const isRecommendedByUser = useMemo(() => {
     return (
@@ -426,7 +426,7 @@ export default function SubjectPanel({
                   )
                 }
                 rewardLevel={finalRewardLevel}
-                uploaderAuthLevel={authLevel}
+                uploaderAuthLevel={uploaderAuthLevel}
                 uploaderId={userId}
                 rewards={rewards}
               />
