@@ -97,7 +97,7 @@
     "workbox-webpack-plugin": "5.1.4"
   },
   "scripts": {
-    "start": "node scripts/start.js",
+    "start": "BROWSER=brave-browser node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js"
   },

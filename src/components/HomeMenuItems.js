@@ -30,13 +30,14 @@ export default function HomeMenuItems({ history, style = {} }) {
     <ErrorBoundary>
       <div
         className={`unselectable ${css`
+          width: 100%;
           background: #fff;
           display: flex;
           font-size: 1.7rem;
           font-family: sans-serif, Arial, Helvetica;
           flex-direction: column;
           > nav {
-            padding: 1.5rem;
+            width: 100%;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -52,8 +53,18 @@ export default function HomeMenuItems({ history, style = {} }) {
               color: ${Color.darkGray()};
               text-decoration: none;
             }
-            .homemenu__label {
-              margin-left: 2rem;
+            .homemenu__item {
+              width: 100%;
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              grid-template-rows: auto;
+              grid-template-areas: 'icon label';
+              > .icon {
+                grid-area: icon;
+              }
+              > .label {
+                grid-area: label;
+              }
             }
           }
           > nav:hover {
@@ -81,9 +92,6 @@ export default function HomeMenuItems({ history, style = {} }) {
                 justify-content: center;
                 padding: 0;
               }
-              .homemenu__label {
-                margin-left: 10%;
-              }
             }
           }
         `}`}
@@ -98,16 +106,12 @@ export default function HomeMenuItems({ history, style = {} }) {
               onClick={() => history.push('/')}
             >
               <a href="/" onClick={(e) => e.preventDefault()}>
-                <div
-                  style={{
-                    width: '3rem',
-                    display: 'flex',
-                    justifyContent: 'center'
-                  }}
-                >
-                  <Icon icon="book" size="1x" />
+                <div className="homemenu__item">
+                  <div className="icon">
+                    <Icon icon="book" size="1x" />
+                  </div>
+                  <div className="label">Stories</div>
                 </div>
-                <span className="homemenu__label">Stories</span>
               </a>
             </nav>
           )}
@@ -121,16 +125,12 @@ export default function HomeMenuItems({ history, style = {} }) {
               onClick={handleOnPeopleClick}
             >
               <a href="/users" onClick={(e) => e.preventDefault()}>
-                <div
-                  style={{
-                    width: '3rem',
-                    display: 'flex',
-                    justifyContent: 'center'
-                  }}
-                >
-                  <Icon icon="users" size="1x" />
+                <div className="homemenu__item">
+                  <div className="icon">
+                    <Icon icon="users" size="1x" />
+                  </div>
+                  <div className="label">People</div>
                 </div>
-                <span className="homemenu__label">People</span>
               </a>
             </nav>
           )}
@@ -144,16 +144,12 @@ export default function HomeMenuItems({ history, style = {} }) {
               onClick={handleOnPeopleClick}
             >
               <a href="/earn" onClick={(e) => e.preventDefault()}>
-                <div
-                  style={{
-                    width: '3rem',
-                    display: 'flex',
-                    justifyContent: 'center'
-                  }}
-                >
-                  <Icon icon="bolt" size="1x" />
+                <div className="homemenu__item">
+                  <div className="icon">
+                    <Icon icon="bolt" size="1x" />
+                  </div>
+                  <div className="label">Earn XP</div>
                 </div>
-                <span className="homemenu__label">Earn XP</span>
               </a>
             </nav>
           )}
@@ -167,16 +163,12 @@ export default function HomeMenuItems({ history, style = {} }) {
               onClick={() => history.push('/store')}
             >
               <a href="/store" onClick={(e) => e.preventDefault()}>
-                <div
-                  style={{
-                    width: '3rem',
-                    display: 'flex',
-                    justifyContent: 'center'
-                  }}
-                >
-                  <Icon icon="shopping-bag" size="1x" />
+                <div className="homemenu__item">
+                  <div className="icon">
+                    <Icon icon="shopping-bag" size="1x" />
+                  </div>
+                  <div className="label">Store</div>
                 </div>
-                <span className="homemenu__label">Store</span>
               </a>
             </nav>
           )}
@@ -191,16 +183,12 @@ export default function HomeMenuItems({ history, style = {} }) {
                 onClick={() => history.push('/management')}
               >
                 <a href="/management" onClick={(e) => e.preventDefault()}>
-                  <div
-                    style={{
-                      width: '3rem',
-                      display: 'flex',
-                      justifyContent: 'center'
-                    }}
-                  >
-                    <Icon icon="sliders-h" size="1x" />
+                  <div className="homemenu__item">
+                    <div className="icon">
+                      <Icon icon="sliders-h" size="1x" />
+                    </div>
+                    <span className="label">Manage</span>
                   </div>
-                  <span className="homemenu__label">Manage</span>
                 </a>
               </nav>
             )}
