@@ -183,7 +183,7 @@ export default function HomeMenuItems({ history, style = {} }) {
           children={({ match }) => (
             <nav
               className={match ? 'active' : ''}
-              onClick={handleOnPeopleClick}
+              onClick={() => history.push('/earn')}
             >
               <a href="/earn" onClick={(e) => e.preventDefault()}>
                 <div className="homemenu__item">
