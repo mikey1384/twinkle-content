@@ -64,11 +64,11 @@ export const container = css`
     .heading {
       border: 0;
       border-radius: 0;
-      justify-content: center;
+      justify-content: space-around;
       .names {
         text-align: center;
         a {
-          font-size: 4rem;
+          font-size: 2.5rem;
         }
         span {
           font-size: 1.5rem;
@@ -87,7 +87,7 @@ export const container = css`
         font-size: 3rem;
       }
       button {
-        font-size: 3rem;
+        font-size: 2rem;
       }
     }
   }

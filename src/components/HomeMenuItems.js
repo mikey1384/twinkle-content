@@ -61,7 +61,7 @@ export default function HomeMenuItems({ history, style = {} }) {
               width: 100%;
               height: 100%;
               display: grid;
-              grid-template-columns: 0.5rem 3rem 1fr;
+              grid-template-columns: 3px 4rem 1fr;
               grid-template-rows: 100%;
               grid-template-areas: 'selection icon label';
               > .selection {
@@ -83,6 +83,7 @@ export default function HomeMenuItems({ history, style = {} }) {
             }
           }
           > nav:hover {
+            background: ${Color.highlightGray()};
             color: ${Color.black()};
             a {
               color: ${Color.black()};
@@ -100,16 +101,23 @@ export default function HomeMenuItems({ history, style = {} }) {
             }
           }
           @media (max-width: ${mobileMaxWidth}) {
-            font-size: 3rem;
-            padding: 1rem 0;
+            font-size: 2rem;
             background: #fff;
             border-radius: 0;
             border-left: 0;
             border-right: 0;
             > nav {
+              height: 5rem;
               a {
                 justify-content: center;
                 padding: 0;
+              }
+            }
+            > nav:hover {
+              background: none;
+              color: ${Color.darkGray()};
+              a {
+                color: ${Color.darkGray()};
               }
             }
             > nav.active {
