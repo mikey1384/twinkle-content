@@ -6,7 +6,7 @@ import NextMilestone from './NextMilestone';
 export default function Earn() {
   return (
     <ErrorBoundary>
-      <NextMilestone />
+      {false && <NextMilestone />}
       <HighXPSubjects style={{ marginTop: '1rem' }} />
     </ErrorBoundary>
   );
