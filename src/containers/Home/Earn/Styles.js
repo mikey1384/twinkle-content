@@ -1,4 +1,4 @@
-import { borderRadius, Color } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 
 export const panel = css`
@@ -10,5 +10,11 @@ export const panel = css`
   > p {
     font-size: 2rem;
     font-weight: bold;
+  }
+  @media (max-width: ${mobileMaxWidth}) {
+    border-radius: 0;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
   }
 `;
