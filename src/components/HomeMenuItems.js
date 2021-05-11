@@ -40,7 +40,7 @@ export default function HomeMenuItems({ history, style = {} }) {
           border-radius: ${borderRadius};
           padding-top: 1rem;
           > nav {
-            height: 3rem;
+            height: 4rem;
             width: 100%;
             cursor: pointer;
             display: flex;
@@ -49,6 +49,7 @@ export default function HomeMenuItems({ history, style = {} }) {
             justify-content: center;
             > a {
               width: 100%;
+              height: 100%;
               text-align: center;
               display: flex;
               align-items: center;
@@ -58,18 +59,26 @@ export default function HomeMenuItems({ history, style = {} }) {
             }
             .homemenu__item {
               width: 100%;
+              height: 100%;
               display: grid;
-              grid-template-columns: 0.5rem 1fr 1fr;
-              grid-template-rows: auto;
+              grid-template-columns: 0.5rem 3rem 1fr;
+              grid-template-rows: 100%;
               grid-template-areas: 'selection icon label';
               > .selection {
                 grid-area: selection;
+                margin-left: -1px;
               }
               > .icon {
                 grid-area: icon;
+                padding-left: 1rem;
+                justify-self: center;
+                align-self: center;
               }
               > .label {
                 grid-area: label;
+                padding-left: 2rem;
+                justify-self: start;
+                align-self: center;
               }
             }
           }
@@ -101,6 +110,13 @@ export default function HomeMenuItems({ history, style = {} }) {
               a {
                 justify-content: center;
                 padding: 0;
+              }
+            }
+            > nav.active {
+              .homemenu__item {
+                > .selection {
+                  margin-left: 0;
+                }
               }
             }
           }
@@ -213,8 +229,10 @@ export default function HomeMenuItems({ history, style = {} }) {
           style={{
             fontSize: '1rem',
             display: 'flex',
-            justifyContent: 'center',
+            justifyContent: 'flex-start',
             marginTop: '1.5rem',
+            marginLeft: '1rem',
+            marginBottom: '0.5rem',
             color: Color.gray()
           }}
         >
