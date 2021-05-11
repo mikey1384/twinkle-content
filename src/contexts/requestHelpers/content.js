@@ -308,10 +308,7 @@ export default function contentRequestHelpers({ auth, handleError }) {
     },
     async loadHighXPSubjects() {
       try {
-        const { data } = await request.get(
-          `${URL}/content/highxp/subjects`,
-          auth()
-        );
+        const { data } = await request.get(`${URL}/content/highxp/subjects`);
         return Promise.resolve(data);
       } catch (error) {
         return handleError(error);
