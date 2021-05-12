@@ -53,13 +53,8 @@ export default function Header({
       updateChatLastRead
     }
   } = useAppContext();
-  const {
-    defaultSearchFilter,
-    userId,
-    username,
-    loggedIn,
-    profilePicUrl
-  } = useMyState();
+  const { defaultSearchFilter, userId, username, loggedIn, profilePicUrl } =
+    useMyState();
   const {
     state: {
       channelOnCall,
@@ -617,7 +612,8 @@ export default function Header({
   }, [channelOnCall.id, channelOnCall.incomingShown, channelOnCall.imCalling]);
 
   useEffect(() => {
-    const newNotiNum = numNewPosts + numNewNotis + numUnreads;
+    const newNotiNum =
+      (pathname === '/' ? numNewPosts : 0) + numNewNotis + numUnreads;
     document.title = `Twinkle${newNotiNum > 0 ? ' *' : ''}`;
   }, [numNewNotis, numNewPosts, numUnreads, pathname]);
 
