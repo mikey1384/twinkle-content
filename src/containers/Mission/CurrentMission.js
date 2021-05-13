@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import MissionItem from './MissionItem';
+import MissionItem from 'components/MissionItem';
 import { css } from '@emotion/css';
 import { useMissionContext } from 'contexts';
 
@@ -13,10 +13,10 @@ export default function CurrentMission({ style, missionId }) {
   const {
     state: { missionObj }
   } = useMissionContext();
-  const mission = useMemo(() => missionObj[missionId] || {}, [
-    missionId,
-    missionObj
-  ]);
+  const mission = useMemo(
+    () => missionObj[missionId] || {},
+    [missionId, missionObj]
+  );
 
   return (
     <div style={style} className="desktop">

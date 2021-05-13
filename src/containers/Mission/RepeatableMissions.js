@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import MissionItem from './MissionItem';
+import MissionItem from 'components/MissionItem';
 import { css } from '@emotion/css';
 
 RepeatableMissions.propTypes = {

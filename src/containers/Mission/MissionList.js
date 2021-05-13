@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import MissionItem from './MissionItem';
+import MissionItem from 'components/MissionItem';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FilterBar from 'components/FilterBar';
 import Loading from 'components/Loading';
@@ -126,6 +126,7 @@ export default function MissionList({
                     style={{ marginTop: index > 0 ? '1rem' : 0 }}
                     key={missionId}
                     mission={mission}
+                    missionLink={`/missions/${mission.missionType}`}
                   />
                 );
               })

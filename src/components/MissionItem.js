@@ -33,6 +33,7 @@ export default function MissionItem({
       actions: { onOpenSigninModal }
     }
   } = useAppContext();
+
   return (
     <div
       onClick={handleLinkClick}
