@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import TaskItem from './TaskItem';
+import MissionItem from 'components/MissionItem';
 
 MultiMission.propTypes = {
   mission: PropTypes.object.isRequired
@@ -34,11 +34,11 @@ export default function MultiMission({
           </p>
           <div>
             {subMission.tasks.map((task, index) => (
-              <TaskItem
+              <MissionItem
                 key={task.id}
                 style={{ marginTop: index === 0 ? 0 : '1rem' }}
-                parentType={missionType}
-                task={task}
+                missionLink={`/missions/${missionType}/${task.missionType}`}
+                mission={task}
               />
             ))}
           </div>

@@ -8,19 +8,19 @@ import { useHistory } from 'react-router-dom';
 import { useAppContext, useMissionContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
-TaskItem.propTypes = {
+MissionItem.propTypes = {
   isRepeatable: PropTypes.bool,
   style: PropTypes.object,
-  task: PropTypes.object.isRequired,
-  parentType: PropTypes.string.isRequired,
+  mission: PropTypes.object.isRequired,
+  missionLink: PropTypes.string.isRequired,
   showStatus: PropTypes.bool
 };
 
-export default function TaskItem({
+export default function MissionItem({
   isRepeatable,
   style,
-  task,
-  parentType,
+  mission,
+  missionLink,
   showStatus = true
 }) {
   const {
@@ -57,11 +57,11 @@ export default function TaskItem({
           }
         `}
       >
-        {task.title}
+        {mission.title}
       </p>
       <div style={{ marginTop: '1rem', display: 'flex' }}>
         <img
-          src={gifTable[task.id]}
+          src={gifTable[mission.id]}
           style={{ width: '10rem', height: '6rem' }}
         />
         <div
@@ -82,7 +82,7 @@ export default function TaskItem({
               }
             `}
           >
-            {task.subtitle}
+            {mission.subtitle}
           </div>
           <div
             style={{
@@ -110,12 +110,14 @@ export default function TaskItem({
               rewardStyle={{ fontSize: '1.2rem' }}
               isRepeating={isRepeatable}
               coinReward={
-                isRepeatable ? task.repeatCoinReward : task.coinReward
+                isRepeatable ? mission.repeatCoinReward : mission.coinReward
               }
-              xpReward={isRepeatable ? task.repeatXpReward : task.xpReward}
+              xpReward={
+                isRepeatable ? mission.repeatXpReward : mission.xpReward
+              }
             />
-            {myAttempts[task.id]?.status &&
-              myAttempts[task.id]?.status !== 'pending' &&
+            {myAttempts[mission.id]?.status &&
+              myAttempts[mission.id]?.status !== 'pending' &&
               showStatus && (
                 <div
                   className={css`
@@ -127,12 +129,12 @@ export default function TaskItem({
                   style={{
                     fontWeight: 'bold',
                     color:
-                      myAttempts[task.id]?.status === 'pass'
+                      myAttempts[mission.id]?.status === 'pass'
                         ? Color.green()
                         : Color.rose()
                   }}
                 >
-                  {myAttempts[task.id]?.status}ed
+                  {myAttempts[mission.id]?.status}ed
                 </div>
               )}
           </div>
@@ -143,7 +145,7 @@ export default function TaskItem({
 
   function handleLinkClick() {
     if (userId) {
-      history.push(`/missions/${parentType}/${task.missionType}`);
+      history.push(missionLink);
     } else {
       onOpenSigninModal();
     }
