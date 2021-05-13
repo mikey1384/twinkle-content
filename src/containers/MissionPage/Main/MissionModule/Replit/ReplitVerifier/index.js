@@ -11,7 +11,7 @@ export default function ReplitVerifier() {
         accountMade={accountMade}
         onMakeAccount={() => setAccountMade(true)}
       />
-      {accountMade && <CreateNewRepl style={{ marginTop: '2.5rem' }} />}
+      {accountMade && <CreateNewRepl style={{ marginTop: '15rem' }} />}
     </ErrorBoundary>
   );
 }
