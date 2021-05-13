@@ -28,7 +28,11 @@ export default function CurrentMission({ style, missionId }) {
       >
         Current Mission
       </p>
-      <MissionItem style={{ marginTop: '1rem' }} mission={mission} />
+      <MissionItem
+        style={{ marginTop: '1rem' }}
+        mission={mission}
+        missionLink={`/missions/${mission.missionType}`}
+      />
     </div>
   );
 }

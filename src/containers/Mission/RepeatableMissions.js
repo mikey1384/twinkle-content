@@ -45,6 +45,7 @@ export default function RepeatableMissions({
             isRepeatable
             style={{ marginTop: '1rem' }}
             mission={mission}
+            missionLink={`/missions/${mission.missionType}`}
             showStatus={false}
           />
         ))}

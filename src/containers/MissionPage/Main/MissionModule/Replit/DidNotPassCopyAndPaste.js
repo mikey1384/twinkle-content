@@ -33,6 +33,7 @@ export default function DidNotPassCopyAndPaste() {
         <MissionItem
           style={{ marginTop: '1rem' }}
           mission={copyAndPasteMission}
+          missionLink={`/missions/${copyAndPasteMission.missionType}`}
         />
       )}
     </ErrorBoundary>
