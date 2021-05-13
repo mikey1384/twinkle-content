@@ -15,6 +15,7 @@ TaskItem.propTypes = {
   parentType: PropTypes.string.isRequired,
   showStatus: PropTypes.bool
 };
+
 export default function TaskItem({
   isRepeatable,
   style,
