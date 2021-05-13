@@ -8,13 +8,14 @@ export default function Replit() {
   const {
     state: { missionTypeIdHash, myAttempts }
   } = useMissionContext();
-  const copyAndPasteId = useMemo(() => missionTypeIdHash['copy-and-paste'], [
-    missionTypeIdHash
-  ]);
-  const myCopyAndPasteAttempt = useMemo(() => myAttempts[copyAndPasteId], [
-    copyAndPasteId,
-    myAttempts
-  ]);
+  const copyAndPasteId = useMemo(
+    () => missionTypeIdHash['copy-and-paste'],
+    [missionTypeIdHash]
+  );
+  const myCopyAndPasteAttempt = useMemo(
+    () => myAttempts[copyAndPasteId],
+    [copyAndPasteId, myAttempts]
+  );
   const copyAndPasteAttemptPassed = useMemo(
     () => myCopyAndPasteAttempt?.status === 'pass',
     [myCopyAndPasteAttempt?.status]

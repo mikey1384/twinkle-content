@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ErrorBoundary from 'components/ErrorBoundary';
 import MakeAccount from './MakeAccount';
-import PasteCodeToProject from './PasteCodeToProject';
+import CreateNewRepl from './CreateNewRepl';
 
 export default function ReplitVerifier() {
   const [accountMade, setAccountMade] = useState(false);
@@ -11,7 +11,7 @@ export default function ReplitVerifier() {
         accountMade={accountMade}
         onMakeAccount={() => setAccountMade(true)}
       />
-      {accountMade && <PasteCodeToProject />}
+      {accountMade && <CreateNewRepl style={{ marginTop: '2.5rem' }} />}
     </ErrorBoundary>
   );
 }
