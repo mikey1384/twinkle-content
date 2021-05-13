@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState, useRef } from 'react';
 import ErrorBoundary from 'components/ErrorBoundary';
 import MissionItem from 'components/MissionItem';
 import Loading from 'components/Loading';
+import { Color } from 'constants/css';
 import { css } from '@emotion/css';
 import { useAppContext, useMissionContext } from 'contexts';
 
@@ -60,8 +61,11 @@ export default function DidNotPassCopyAndPaste() {
         flex-direction: column;
         align-items: center;
         > p {
-          font-weight: bold;
           font-size: 1.7rem;
+        }
+        > h2 {
+          color: ${Color.cranberry()};
+          font-size: 2.2rem;
         }
       `}
     >
@@ -69,10 +73,13 @@ export default function DidNotPassCopyAndPaste() {
         <Loading />
       ) : (
         <>
-          <h3>You did not pass the Copy and Paste mission, yet</h3>
+          <h2>Requirement not met</h2>
+          <p style={{ marginTop: '1rem' }}>
+            Please come back after completing the <b>Copy and Paste</b> mission
+          </p>
           {copyAndPasteMission && (
             <MissionItem
-              style={{ marginTop: '1rem' }}
+              style={{ marginTop: '2.5rem' }}
               mission={copyAndPasteMission}
               missionLink={`/missions/${copyAndPasteMission.missionType}`}
             />
