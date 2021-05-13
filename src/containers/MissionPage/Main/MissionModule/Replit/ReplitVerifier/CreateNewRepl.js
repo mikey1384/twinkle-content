@@ -29,10 +29,10 @@ export default function CreateNewRepl({ style }) {
         }
       `}
     >
-      <p>2. Create a new Next.js Repl</p>
+      <p>2. Great job! Now, create a new Next.js Repl</p>
       <div
         style={{
-          marginTop: '2rem',
+          marginTop: '2.5rem',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -53,7 +53,7 @@ export default function CreateNewRepl({ style }) {
           </Button>
         )}
         {helpButtonPressed && (
-          <div style={{ marginTop: '2.5rem', marginBottom: '-1rem' }}>
+          <div style={{ marginTop: '3rem', marginBottom: '-1rem' }}>
             Read the <b style={{ color: Color.green() }}>tutorial</b> below{' '}
             <Icon icon="arrow-down" /> to learn how to create a Next.js Repl
           </div>
