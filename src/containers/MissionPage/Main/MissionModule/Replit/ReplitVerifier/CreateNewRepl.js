@@ -29,7 +29,7 @@ export default function CreateNewRepl({ style }) {
         }
       `}
     >
-      <p>2. Great job! Now, create a new Next.js Repl</p>
+      <p>2. Great job! Now, create a Next.js Repl</p>
       <div
         style={{
           marginTop: '2.5rem',
