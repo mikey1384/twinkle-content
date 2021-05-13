@@ -6,7 +6,7 @@ import CopyCode from './CopyCode';
 export default function ReplitVerifier() {
   const [accountMade, setAccountMade] = useState(false);
   return (
-    <ErrorBoundary style={{ width: '100%' }}>
+    <ErrorBoundary style={{ width: '100%', marginTop: '1rem' }}>
       <MakeAccount
         accountMade={accountMade}
         onMakeAccount={() => setAccountMade(true)}
