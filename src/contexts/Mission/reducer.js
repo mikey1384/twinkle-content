@@ -3,7 +3,7 @@ export default function MissionReducer(state, action) {
     case 'LOAD_MISSION': {
       return {
         ...state,
-        prevUserId: action.prevUserId,
+        ...(action.prevUserId ? { prevUserId: action.prevUserId } : {}),
         missionObj: {
           ...state.missionObj,
           [action.mission.id]: {
