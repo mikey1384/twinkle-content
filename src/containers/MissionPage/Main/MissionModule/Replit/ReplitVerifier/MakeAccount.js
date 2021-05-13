@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import Button from 'components/Button';
+import Icon from 'components/Icon';
+import { Color } from 'constants/css';
 import { css } from '@emotion/css';
 
-export default function MakeAccount() {
+MakeAccount.propTypes = {
+  accountMade: PropTypes.bool,
+  onMakeAccount: PropTypes.func.isRequired
+};
+
+export default function MakeAccount({ accountMade, onMakeAccount }) {
+  const [okayPressed, setOkayPressed] = useState(false);
   return (
     <div
       className={css`
@@ -19,20 +28,56 @@ export default function MakeAccount() {
     >
       <p>
         1. Make a new Replit account at{' '}
-        <a href="https://replit.com" target="_blank" rel="noreferrer">
+        <a
+          onClick={() => setOkayPressed(true)}
+          href="https://replit.com"
+          target="_blank"
+          rel="noreferrer"
+        >
           https://replit.com
         </a>
+        {accountMade && (
+          <Icon
+            style={{ marginLeft: '1rem' }}
+            color={Color.green()}
+            icon="check"
+          />
+        )}
       </p>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <Button
-          style={{ marginTop: '2.5rem' }}
-          filled
-          color="logoBlue"
-          onClick={() => console.log('clicked')}
-        >
-          I made an account
-        </Button>
-      </div>
+      {!accountMade && (
+        <>
+          {!okayPressed && (
+            <div>
+              <Button
+                style={{ marginTop: '2rem' }}
+                filled
+                color="logoBlue"
+                onClick={() => {
+                  window.open(`https://replit.com`);
+                  setOkayPressed(true);
+                }}
+              >
+                Okay
+              </Button>
+            </div>
+          )}
+          {okayPressed && (
+            <>
+              <p style={{ marginTop: '4.5rem' }}>Did you make an account?</p>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <Button
+                  style={{ marginTop: '2rem' }}
+                  filled
+                  color="green"
+                  onClick={onMakeAccount}
+                >
+                  I made an account
+                </Button>
+              </div>
+            </>
+          )}
+        </>
+      )}
     </div>
   );
 }
