@@ -13,6 +13,7 @@ CreateNewRepl.propTypes = {
 
 export default function CreateNewRepl({ replCreated, onCreateRepl, style }) {
   const [helpButtonPressed, setHelpButtonPressed] = useState(false);
+  const [okayPressed, setOkayPressed] = useState(false);
 
   return (
     <div
@@ -56,26 +57,49 @@ export default function CreateNewRepl({ replCreated, onCreateRepl, style }) {
               flexDirection: 'column'
             }}
           >
-            <Button filled color="logoBlue" onClick={onCreateRepl}>
-              I created it
-            </Button>
-            {!helpButtonPressed && (
+            {!okayPressed && (
               <Button
-                style={{ marginTop: '1rem' }}
                 filled
-                color="orange"
-                onClick={() => setHelpButtonPressed(true)}
+                color="logoBlue"
+                onClick={() => setOkayPressed(true)}
               >
-                {`I don't understand what I am supposed to do`}
+                Okay
               </Button>
             )}
-            {helpButtonPressed && (
-              <div style={{ marginTop: '3rem', marginBottom: '-1rem' }}>
-                Read the <b style={{ color: Color.green() }}>tutorial</b> below{' '}
-                <Icon icon="arrow-down" /> to learn how to create a Next.js Repl
-              </div>
-            )}
           </div>
+          {okayPressed && (
+            <>
+              <p style={{ marginTop: '4.5rem' }}>
+                Did you create a Next.js Repl?
+              </p>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <Button
+                  style={{ marginTop: '2rem' }}
+                  filled
+                  color="green"
+                  onClick={onCreateRepl}
+                >
+                  Yes, I did
+                </Button>
+              </div>
+            </>
+          )}
+          {!helpButtonPressed && (
+            <Button
+              style={{ marginTop: '3rem' }}
+              filled
+              color="cranberry"
+              onClick={() => setHelpButtonPressed(true)}
+            >
+              {`I don't understand what I am supposed to do`}
+            </Button>
+          )}
+          {helpButtonPressed && (
+            <div style={{ marginTop: '3rem', marginBottom: '-1rem' }}>
+              Read the <b style={{ color: Color.green() }}>tutorial</b> below{' '}
+              <Icon icon="arrow-down" /> to learn how to create a Next.js Repl
+            </div>
+          )}
         </>
       )}
     </div>

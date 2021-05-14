@@ -54,7 +54,7 @@ export default function MakeAccount({ accountMade, onMakeAccount }) {
                 color="logoBlue"
                 onClick={() => {
                   window.open(`https://replit.com`);
-                  setOkayPressed(true);
+                  setTimeout(() => setOkayPressed(true), 1000);
                 }}
               >
                 Okay
@@ -71,7 +71,7 @@ export default function MakeAccount({ accountMade, onMakeAccount }) {
                   color="green"
                   onClick={onMakeAccount}
                 >
-                  I made an account
+                  Yes, I made an account
                 </Button>
               </div>
             </>

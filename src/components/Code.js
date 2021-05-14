@@ -22,7 +22,8 @@ Code.propTypes = {
   className: PropTypes.string,
   language: PropTypes.string,
   style: PropTypes.object,
-  theme: PropTypes.string
+  theme: PropTypes.string,
+  codeRef: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
 };
 
 const availableThemes = {
@@ -47,11 +48,13 @@ export default function Code({
   className,
   language = 'js',
   style,
-  theme
+  theme,
+  codeRef
 }) {
-  const selectedTheme = useMemo(() => availableThemes?.[theme] || okaidia, [
-    theme
-  ]);
+  const selectedTheme = useMemo(
+    () => availableThemes?.[theme] || okaidia,
+    [theme]
+  );
 
   return (
     <Highlight
@@ -76,6 +79,7 @@ export default function Code({
               border: `1px solid ${Color.borderGray()}`,
               ...style
             }}
+            ref={codeRef}
           >
             {tokens.map((line, i) => (
               <div key={i} {...getLineProps({ line, key: i })}>

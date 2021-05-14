@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Code from 'components/Code';
+import Button from 'components/Button';
+import Icon from 'components/Icon';
 import { css } from '@emotion/css';
-import { mobileMaxWidth, borderRadius } from 'constants/css';
+import { Color, mobileMaxWidth, borderRadius } from 'constants/css';
 
 const initialCode = `${Math.random().toString(36).substr(2, 6)}`;
 const codeToCopy = `import { useEffect, useState } from 'react';
@@ -44,9 +46,12 @@ CopyCode.propTypes = {
 };
 
 export default function CopyCode({ className, style }) {
+  const [copiedShown, setCopiedShown] = useState(false);
+  const codeRef = useRef(null);
   return (
     <div className={className} style={style}>
       <Code
+        codeRef={codeRef}
         language="jsx"
         theme="dracula"
         className={css`
@@ -60,6 +65,48 @@ export default function CopyCode({ className, style }) {
       >
         {codeToCopy}
       </Code>
+      <div
+        className={css`
+          margin-left: 1rem;
+          @media (max-width: ${mobileMaxWidth}) {
+            margin-left: 0;
+          }
+        `}
+        style={{ position: 'relative' }}
+      >
+        <Button
+          transparent
+          onClick={() => {
+            setCopiedShown(true);
+            handleCopyToClipboard();
+            setTimeout(() => setCopiedShown(false), 700);
+          }}
+        >
+          <Icon icon="copy" />
+        </Button>
+        <div
+          style={{
+            zIndex: 300,
+            display: copiedShown ? 'block' : 'none',
+            marginTop: '0.2rem',
+            position: 'absolute',
+            background: '#fff',
+            fontSize: '1.2rem',
+            padding: '1rem',
+            border: `1px solid ${Color.borderGray()}`
+          }}
+        >
+          Copied!
+        </div>
+      </div>
     </div>
   );
+
+  function handleCopyToClipboard() {
+    const range = document.createRange();
+    range.selectNode(codeRef.current);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+  }
 }
