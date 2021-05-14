@@ -95,6 +95,7 @@ export default function CopyCode({ className, style }) {
             zIndex: 300,
             display: copiedShown ? 'block' : 'none',
             marginTop: '0.2rem',
+            right: 0,
             position: 'absolute',
             background: '#fff',
             fontSize: '1.2rem',
