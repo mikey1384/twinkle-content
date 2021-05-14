@@ -7,6 +7,7 @@ import CopyAndPasteCode from './CopyAndPasteCode';
 export default function ReplitVerifier() {
   const [accountMade, setAccountMade] = useState(false);
   const [replCreated, setReplCreated] = useState(false);
+
   return (
     <ErrorBoundary style={{ width: '100%', marginTop: '1rem' }}>
       <MakeAccount
