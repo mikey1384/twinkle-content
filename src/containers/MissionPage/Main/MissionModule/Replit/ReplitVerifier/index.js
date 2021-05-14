@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ErrorBoundary from 'components/ErrorBoundary';
 import MakeAccount from './MakeAccount';
 import CreateNewRepl from './CreateNewRepl';
+import CopyAndPasteCode from './CopyAndPasteCode';
 
 export default function ReplitVerifier() {
   const [accountMade, setAccountMade] = useState(false);
@@ -19,6 +20,7 @@ export default function ReplitVerifier() {
           onCreateRepl={() => setReplCreated(true)}
         />
       )}
+      {replCreated && <CopyAndPasteCode style={{ marginTop: '15rem' }} />}
     </ErrorBoundary>
   );
 }
