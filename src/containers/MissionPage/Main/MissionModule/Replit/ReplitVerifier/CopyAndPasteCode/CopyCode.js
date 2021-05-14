@@ -49,7 +49,7 @@ export default function CopyCode({ className, style }) {
   const [copiedShown, setCopiedShown] = useState(false);
   const codeRef = useRef(null);
   return (
-    <div className={className} style={style}>
+    <div className={className} style={{ position: 'relative', ...style }}>
       <Code
         codeRef={codeRef}
         language="jsx"
@@ -67,15 +67,20 @@ export default function CopyCode({ className, style }) {
       </Code>
       <div
         className={css`
-          margin-left: 1rem;
+          top: 1rem;
+          right: 1rem;
+          opacity: 0.8;
+          position: absolute;
+          &:hover {
+            opacity: 1;
+          }
           @media (max-width: ${mobileMaxWidth}) {
             margin-left: 0;
           }
         `}
-        style={{ position: 'relative' }}
       >
         <Button
-          transparent
+          skeuomorphic
           onClick={() => {
             setCopiedShown(true);
             handleCopyToClipboard();
@@ -83,6 +88,7 @@ export default function CopyCode({ className, style }) {
           }}
         >
           <Icon icon="copy" />
+          <span style={{ marginLeft: '0.7rem' }}>Copy</span>
         </Button>
         <div
           style={{
