@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Code from 'components/Code';
-import { mobileMaxWidth, borderRadius } from 'constants/css';
 import { css } from '@emotion/css';
+import { mobileMaxWidth, borderRadius } from 'constants/css';
 
 const initialCode = `${Math.random().toString(36).substr(2, 6)}`;
 const codeToCopy = `import { useEffect, useState } from 'react';
@@ -37,18 +38,23 @@ function HomePage() {
 
 export default HomePage;`;
 
-export default function CopyCode() {
+CopyCode.propTypes = {
+  className: PropTypes.string,
+  style: PropTypes.object
+};
+
+export default function CopyCode({ className, style }) {
   return (
-    <div>
+    <div className={className} style={style}>
       <Code
         language="jsx"
         theme="dracula"
         className={css`
           border-radius: ${borderRadius};
           padding: 1.5rem;
-          font-size: 1.5rem;
+          font-size: 1.2rem;
           @media (max-width: ${mobileMaxWidth}) {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
           }
         `}
       >

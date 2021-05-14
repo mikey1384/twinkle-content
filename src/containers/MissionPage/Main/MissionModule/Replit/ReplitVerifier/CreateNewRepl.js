@@ -33,7 +33,10 @@ export default function CreateNewRepl({ replCreated, onCreateRepl, style }) {
       `}
     >
       <p>
-        2. Great job! Now, create a Next.js Repl
+        2.{' '}
+        {replCreated
+          ? 'Create a Next.js Repl'
+          : `Great job! Now, create a Next.js Repl`}
         {replCreated && (
           <Icon
             style={{ marginLeft: '1rem' }}
@@ -53,7 +56,7 @@ export default function CreateNewRepl({ replCreated, onCreateRepl, style }) {
               flexDirection: 'column'
             }}
           >
-            <Button filled color="green" onClick={onCreateRepl}>
+            <Button filled color="logoBlue" onClick={onCreateRepl}>
               I created it
             </Button>
             {!helpButtonPressed && (

@@ -16,12 +16,12 @@ export default function ReplitVerifier() {
       />
       {accountMade && (
         <CreateNewRepl
-          style={{ marginTop: replCreated ? '2rem' : '15rem' }}
+          style={{ marginTop: replCreated ? '2rem' : '10rem' }}
           replCreated={replCreated}
           onCreateRepl={() => setReplCreated(true)}
         />
       )}
-      {replCreated && <CopyAndPasteCode style={{ marginTop: '15rem' }} />}
+      {replCreated && <CopyAndPasteCode style={{ marginTop: '10rem' }} />}
     </ErrorBoundary>
   );
 }

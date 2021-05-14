@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import CopyCode from './CopyCode';
 import { css } from '@emotion/css';
 
 CopyAndPasteCode.propTypes = {
@@ -22,7 +23,8 @@ export default function CopyAndPasteCode({ style }) {
         }
       `}
     >
-      <p>3. copy and paste code here</p>
+      <p>3. Fan-tastic. Now, copy the code below</p>
+      <CopyCode style={{ marginTop: '1.5rem' }} />
     </div>
   );
 }
