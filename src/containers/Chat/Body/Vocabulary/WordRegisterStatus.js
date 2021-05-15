@@ -22,6 +22,11 @@ export default function WordRegisterStatus() {
     });
   }, [content, frequency]);
 
+  const wordLabel = useMemo(
+    () => (/\s/.test(content) ? 'term' : 'word'),
+    [content]
+  );
+
   return (
     <div
       style={{
@@ -85,7 +90,7 @@ export default function WordRegisterStatus() {
             <b style={{ color: Color[vocabRewardHash[wordLevel].color]() }}>
               {vocabRewardHash[wordLevel].label}
             </b>{' '}
-            word.
+            {wordLabel}.
           </>{' '}
           {isMobile(navigator) ? (
             <span>Earned </span>

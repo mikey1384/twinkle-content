@@ -76,6 +76,12 @@ export default function Activity({
       }),
     [content, frequency]
   );
+
+  const wordLabel = useMemo(
+    () => (/\s/.test(content) ? 'term' : 'word'),
+    [content]
+  );
+
   return (
     <div className={MessageStyle.container}>
       <div className={MessageStyle.profilePic}>
@@ -135,7 +141,7 @@ export default function Activity({
           >
             {vocabRewardHash[wordLevel].label}
           </b>{' '}
-          word,{' '}
+          {wordLabel},{' '}
           <span
             className={css`
               font-size: 3rem;
