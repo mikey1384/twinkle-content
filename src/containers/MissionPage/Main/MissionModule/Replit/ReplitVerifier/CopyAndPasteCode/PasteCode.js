@@ -22,7 +22,7 @@ export default function PasteCode({ style }) {
       <p>{`1. Tap "pages"`}</p>
       <img
         className={css`
-          width: 60%;
+          width: 70%;
           @media (max-width: ${mobileMaxWidth}) {
             width: 100%;
           }
@@ -34,7 +34,7 @@ export default function PasteCode({ style }) {
       <img
         style={{ marginTop: '2rem' }}
         className={css`
-          width: 60%;
+          width: 70%;
           @media (max-width: ${mobileMaxWidth}) {
             width: 100%;
           }
