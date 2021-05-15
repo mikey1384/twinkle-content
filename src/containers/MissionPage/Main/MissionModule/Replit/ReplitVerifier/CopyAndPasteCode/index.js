@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import CopyCode from './CopyCode';
+import PasteCode from './PasteCode';
 import Button from 'components/Button';
 import { css } from '@emotion/css';
 
@@ -9,6 +10,7 @@ CopyAndPasteCode.propTypes = {
 };
 
 export default function CopyAndPasteCode({ style }) {
+  const [codeCopied, setCodeCopied] = useState(false);
   return (
     <div
       style={style}
@@ -26,24 +28,27 @@ export default function CopyAndPasteCode({ style }) {
     >
       <p>3. Fan-tastic! Now, copy the code below</p>
       <CopyCode style={{ marginTop: '1.5rem' }} />
-      <div
-        style={{
-          marginTop: '2rem',
-          display: 'flex',
-          alignItems: 'center',
-          flexDirection: 'column'
-        }}
-      >
-        <p>Did you copy it?</p>
-        <Button
-          filled
-          color="green"
-          style={{ marginTop: '1.5rem' }}
-          onClick={() => console.log('clicked')}
+      {codeCopied && <PasteCode />}
+      {!codeCopied && (
+        <div
+          style={{
+            marginTop: '2rem',
+            display: 'flex',
+            alignItems: 'center',
+            flexDirection: 'column'
+          }}
         >
-          Yes
-        </Button>
-      </div>
+          <p>Did you copy it?</p>
+          <Button
+            filled
+            color="green"
+            style={{ marginTop: '1.5rem' }}
+            onClick={() => setCodeCopied(true)}
+          >
+            Yes
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
