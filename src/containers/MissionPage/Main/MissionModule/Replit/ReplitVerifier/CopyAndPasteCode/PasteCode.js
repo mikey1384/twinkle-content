@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { mobileMaxWidth } from 'constants/css';
-import { css } from '@emotion/css';
+import ReactPlayer from 'react-player';
 import { cloudFrontURL } from 'constants/defaultValues';
+import { css } from '@emotion/css';
+import { mobileMaxWidth } from 'constants/css';
 
 PasteCode.propTypes = {
   style: PropTypes.object
@@ -19,28 +20,39 @@ export default function PasteCode({ style }) {
         ...style
       }}
     >
-      <p>{`1. Tap "pages"`}</p>
-      <img
+      <p>{`Follow along this video`}</p>
+      <div
         className={css`
           width: 70%;
           @media (max-width: ${mobileMaxWidth}) {
             width: 100%;
           }
         `}
-        style={{ marginTop: '2rem' }}
-        src={`${cloudFrontURL}/missions/replit/select-pages-folder.png`}
-      />
-      <p style={{ marginTop: '5rem' }}>{`2. Tap "index.js"`}</p>
-      <img
-        style={{ marginTop: '2rem' }}
-        className={css`
-          width: 70%;
-          @media (max-width: ${mobileMaxWidth}) {
-            width: 100%;
-          }
-        `}
-        src={`${cloudFrontURL}/missions/replit/select-indexjs.png`}
-      />
+      >
+        <div
+          className="unselectable"
+          style={{
+            width: '100%',
+            paddingTop: '57.25%',
+            position: 'relative'
+          }}
+        >
+          <ReactPlayer
+            width="100%"
+            height="100%"
+            style={{
+              marginTop: '1rem',
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              left: 0,
+              bottom: 0
+            }}
+            url={`${cloudFrontURL}/missions/replit/video-instruction.mp4`}
+            controls
+          />
+        </div>
+      </div>
     </div>
   );
 }

@@ -28,7 +28,7 @@ export default function CopyAndPasteCode({ style }) {
     >
       <p>3. Fan-tastic! Now, copy the following code</p>
       <CopyCode style={{ marginTop: '1.5rem' }} />
-      <div style={{ marginTop: '2.5rem' }}>
+      <div style={{ marginTop: '2.5rem', width: '100%' }}>
         {!codeCopied && (
           <div
             style={{
