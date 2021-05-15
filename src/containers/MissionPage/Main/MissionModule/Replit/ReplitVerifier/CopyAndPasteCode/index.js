@@ -26,29 +26,30 @@ export default function CopyAndPasteCode({ style }) {
         }
       `}
     >
-      <p>3. Fan-tastic! Now, copy the code below</p>
+      <p>3. Fan-tastic! Now, copy the following code</p>
       <CopyCode style={{ marginTop: '1.5rem' }} />
-      {codeCopied && <PasteCode />}
-      {!codeCopied && (
-        <div
-          style={{
-            marginTop: '2rem',
-            display: 'flex',
-            alignItems: 'center',
-            flexDirection: 'column'
-          }}
-        >
-          <p>Did you copy it?</p>
-          <Button
-            filled
-            color="green"
-            style={{ marginTop: '1.5rem' }}
-            onClick={() => setCodeCopied(true)}
+      <div style={{ marginTop: '2.5rem' }}>
+        {!codeCopied && (
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              flexDirection: 'column'
+            }}
           >
-            Yes
-          </Button>
-        </div>
-      )}
+            <p>Did you copy it?</p>
+            <Button
+              filled
+              color="green"
+              style={{ marginTop: '1.5rem' }}
+              onClick={() => setCodeCopied(true)}
+            >
+              Yes
+            </Button>
+          </div>
+        )}
+        {codeCopied && <PasteCode />}
+      </div>
     </div>
   );
 }
