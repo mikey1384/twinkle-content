@@ -41,10 +41,10 @@ export default function Vocabulary() {
   } = useInputContext();
   const { userId } = useMyState();
   const inputText = state['vocabulary']?.text || '';
-  const wordObj = useMemo(() => wordsObj[inputText] || {}, [
-    inputText,
-    wordsObj
-  ]);
+  const wordObj = useMemo(
+    () => wordsObj[inputText] || {},
+    [inputText, wordsObj]
+  );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -96,6 +96,11 @@ export default function Vocabulary() {
       !stringIsEmpty(inputText) &&
       !loading,
     [wordObj.content, wordObj.isNew, inputText, loading]
+  );
+
+  const wordLabel = useMemo(
+    () => (/\s/.test(wordObj.content) ? 'term' : 'word'),
+    [wordObj.content]
   );
 
   return (
@@ -220,8 +225,8 @@ export default function Vocabulary() {
             (notRegistered
               ? isSubmitting
                 ? 'Collecting...'
-                : 'This word has not been collected yet. Collect and earn XP!'
-              : 'This word has already been collected')}
+                : `This ${wordLabel} has not been collected yet. Collect it and earn XP!`
+              : `This ${wordLabel} has already been collected`)}
         </div>
       )}
       <div

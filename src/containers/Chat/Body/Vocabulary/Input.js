@@ -4,7 +4,11 @@ import Textarea from 'components/Texts/Textarea';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
 import { isMobile } from 'helpers';
-import { stringIsEmpty, exceedsCharLimit } from 'helpers/stringHelpers';
+import {
+  stringIsEmpty,
+  exceedsCharLimit,
+  truncateText
+} from 'helpers/stringHelpers';
 import { useChatContext, useInputContext } from 'contexts';
 
 Input.propTypes = {
@@ -90,7 +94,10 @@ export default function Input({
     const isInvalid = regex.test(event.target.value.trim());
     if (isInvalid) {
       return onSetVocabErrorMessage(
-        `"${event.target.value}" is not allowed for vocabulary section. Please enter english letters only.`
+        `"${truncateText({
+          text: event.target.value,
+          limit: 20
+        })}" is not allowed for vocabulary section. Please enter english letters only.`
       );
     }
     onInput();
