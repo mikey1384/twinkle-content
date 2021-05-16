@@ -4,7 +4,7 @@ import ReactPlayer from 'react-player';
 import Button from 'components/Button';
 import { cloudFrontURL } from 'constants/defaultValues';
 import { css } from '@emotion/css';
-import { mobileMaxWidth } from 'constants/css';
+import { mobileMaxWidth, Color } from 'constants/css';
 
 PasteCode.propTypes = {
   style: PropTypes.object
@@ -70,7 +70,30 @@ export default function PasteCode({ style }) {
         </div>
       )}
       {watched && (
-        <div style={{ marginTop: '5rem' }}>This is the final step</div>
+        <div style={{ marginTop: '5rem', width: '100%' }}>
+          <p>
+            {`1. Patiently wait until you see the message, "[ `}
+            <b style={{ color: Color.green() }}>ready</b> ] compliled
+            successfully{`" shows up in the console`}
+          </p>
+          <p style={{ marginTop: '2rem' }}>
+            2. A six-digit number code will show up in the top right side screen
+          </p>
+          <div
+            style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+          >
+            <img
+              className={css`
+                margin-top: 2rem;
+                width: 80%;
+                @media (max-width: ${mobileMaxWidth}) {
+                  width: 100%;
+                }
+              `}
+              src={`${cloudFrontURL}/missions/replit/6-digit-code.png`}
+            />
+          </div>
+        </div>
       )}
     </div>
   );
