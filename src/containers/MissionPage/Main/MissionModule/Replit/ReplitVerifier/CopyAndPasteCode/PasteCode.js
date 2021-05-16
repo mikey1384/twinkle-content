@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import Button from 'components/Button';
+import Input from 'components/Texts/Input';
 import { cloudFrontURL } from 'constants/defaultValues';
 import { css } from '@emotion/css';
 import { mobileMaxWidth, Color } from 'constants/css';
@@ -12,6 +13,7 @@ PasteCode.propTypes = {
 
 export default function PasteCode({ style }) {
   const [watched, setWatched] = useState(false);
+  const [verificationCode, setVerificationCode] = useState('');
   return (
     <div
       style={{
@@ -80,7 +82,13 @@ export default function PasteCode({ style }) {
             2. A six-digit code will show up in the top right screen
           </p>
           <div
-            style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+            style={{
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column'
+            }}
           >
             <img
               className={css`
@@ -92,9 +100,29 @@ export default function PasteCode({ style }) {
               `}
               src={`${cloudFrontURL}/missions/replit/6-digit-code.png`}
             />
+            <p style={{ marginTop: '5rem' }}>Enter the six-digit code below</p>
+            <Input
+              className={css`
+                margin-top: 1.5rem;
+                width: 50%;
+                @media (max-width: ${mobileMaxWidth}) {
+                  width: 100%;
+                }
+              `}
+              type="text"
+              maxLength={6}
+              placeholder="Enter the 6-digit number"
+              onChange={handleCodeInput}
+              value={verificationCode}
+            />
           </div>
         </div>
       )}
     </div>
   );
+
+  function handleCodeInput(text) {
+    console.log(text);
+    setVerificationCode(text);
+  }
 }
