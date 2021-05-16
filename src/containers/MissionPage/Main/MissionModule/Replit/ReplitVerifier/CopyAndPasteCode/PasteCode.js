@@ -128,7 +128,18 @@ export default function PasteCode({ initialCode, style }) {
   );
 
   function handleCodeInput(text) {
-    console.log(text, initialCode);
     setVerificationCode(text);
+    if (text.length === 6) {
+      let correctSixDigit = '';
+      for (let i = 0; i < initialCode.length; i++) {
+        const number = initialCode.charCodeAt(i) % 10;
+        correctSixDigit += number;
+      }
+      if (text === correctSixDigit) {
+        console.log('pass');
+      } else {
+        console.log('fail');
+      }
+    }
   }
 }
