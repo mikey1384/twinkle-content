@@ -65,19 +65,19 @@ export default function PasteCode({ style }) {
           }}
         >
           <Button filled color="green" onClick={() => setWatched(true)}>
-            I watched the video. What now?
+            I followed along the video. What now?
           </Button>
         </div>
       )}
       {watched && (
         <div style={{ marginTop: '5rem', width: '100%' }}>
           <p>
-            {`1. Patiently wait until you see the message, "[ `}
+            {`1. Patiently wait until "[ `}
             <b style={{ color: Color.green() }}>ready</b> ] compliled
             successfully{`" shows up in the console`}
           </p>
           <p style={{ marginTop: '2rem' }}>
-            2. A six-digit number code will show up in the top right side screen
+            2. A six-digit code will show up in the top right screen
           </p>
           <div
             style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
