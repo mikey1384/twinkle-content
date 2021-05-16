@@ -7,6 +7,7 @@ import CopyAndPasteCode from './CopyAndPasteCode';
 export default function ReplitVerifier() {
   const [accountMade, setAccountMade] = useState(false);
   const [replCreated, setReplCreated] = useState(false);
+  const [correctCodeEntered, setCorrectCodeEntered] = useState(false);
 
   return (
     <ErrorBoundary style={{ width: '100%', marginTop: '1rem' }}>
@@ -23,7 +24,8 @@ export default function ReplitVerifier() {
       )}
       {replCreated && (
         <CopyAndPasteCode
-          style={{ marginTop: '10rem' }}
+          style={{ marginTop: correctCodeEntered ? '2rem' : '10rem' }}
+          correctCodeEntered={correctCodeEntered}
           onCorrectCodeEntered={handleCorrectCodeEntered}
         />
       )}
@@ -31,6 +33,6 @@ export default function ReplitVerifier() {
   );
 
   function handleCorrectCodeEntered() {
-    console.log('passed yay');
+    setCorrectCodeEntered(true);
   }
 }

@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 import CopyCode from './CopyCode';
 import PasteCode from './PasteCode';
 import Button from 'components/Button';
+import Icon from 'components/Icon';
+import { Color } from 'constants/css';
 import { css } from '@emotion/css';
 
 CopyAndPasteCode.propTypes = {
   style: PropTypes.object,
+  correctCodeEntered: PropTypes.bool,
   onCorrectCodeEntered: PropTypes.func.isRequired
 };
 
@@ -44,7 +47,11 @@ function HomePage() {
 
 export default HomePage;`;
 
-export default function CopyAndPasteCode({ style, onCorrectCodeEntered }) {
+export default function CopyAndPasteCode({
+  style,
+  correctCodeEntered,
+  onCorrectCodeEntered
+}) {
   const [codeCopied, setCodeCopied] = useState(false);
   return (
     <div
@@ -61,35 +68,51 @@ export default function CopyAndPasteCode({ style, onCorrectCodeEntered }) {
         }
       `}
     >
-      <p>3. Fan-tastic! Now, copy the following code</p>
-      <CopyCode codeToCopy={codeToCopy} style={{ marginTop: '1.5rem' }} />
-      <div style={{ marginTop: '2.5rem', width: '100%' }}>
-        {!codeCopied && (
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              flexDirection: 'column'
-            }}
-          >
-            <p>Did you copy it?</p>
-            <Button
-              filled
-              color="green"
-              style={{ marginTop: '1.5rem' }}
-              onClick={() => setCodeCopied(true)}
-            >
-              Yes
-            </Button>
-          </div>
-        )}
-        {codeCopied && (
-          <PasteCode
-            initialCode={initialCode}
-            onCorrectCodeEntered={onCorrectCodeEntered}
+      <p>
+        3.{' '}
+        {correctCodeEntered
+          ? 'Enter verification code'
+          : `Fan-tastic! Now, copy the following code`}
+        {correctCodeEntered && (
+          <Icon
+            style={{ marginLeft: '1rem' }}
+            color={Color.green()}
+            icon="check"
           />
         )}
-      </div>
+      </p>
+      {!correctCodeEntered && (
+        <>
+          <CopyCode codeToCopy={codeToCopy} style={{ marginTop: '1.5rem' }} />
+          <div style={{ marginTop: '2.5rem', width: '100%' }}>
+            {!codeCopied && (
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  flexDirection: 'column'
+                }}
+              >
+                <p>Did you copy it?</p>
+                <Button
+                  filled
+                  color="green"
+                  style={{ marginTop: '1.5rem' }}
+                  onClick={() => setCodeCopied(true)}
+                >
+                  Yes
+                </Button>
+              </div>
+            )}
+            {codeCopied && (
+              <PasteCode
+                initialCode={initialCode}
+                onCorrectCodeEntered={onCorrectCodeEntered}
+              />
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 }
