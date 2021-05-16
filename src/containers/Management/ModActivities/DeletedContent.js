@@ -98,7 +98,7 @@ export default function DeletedContent({
               }}
             >
               {contentType === 'video' && (
-                <div>
+                <div style={{ width: '100%' }}>
                   <div>
                     <UsernameText
                       style={{ fontSize: '1.5rem' }}
@@ -131,14 +131,24 @@ export default function DeletedContent({
                     {description}
                   </div>
                   <div
+                    className="unselectable"
                     style={{
                       width: '100%',
-                      position: 'relative',
-                      height: 'auto'
+                      paddingTop: '57.25%',
+                      marginTop: '1rem',
+                      position: 'relative'
                     }}
                   >
                     <ReactPlayer
-                      style={{ position: 'relative' }}
+                      width="100%"
+                      height="100%"
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0
+                      }}
                       url={`https://www.youtube.com/watch?v=${content}`}
                       controls
                     />

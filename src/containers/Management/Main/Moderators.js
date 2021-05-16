@@ -9,6 +9,7 @@ import EditModeratorModal from '../Modals/EditModeratorModal';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { useManagementContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
+import { isMobile } from 'helpers';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import Icon from 'components/Icon';
 
@@ -32,6 +33,7 @@ export default function Moderators({ canManage }) {
         : moderator
     );
   }, [moderators, searchQuery]);
+  const isMobileView = isMobile(navigator);
 
   return (
     <ErrorBoundary>
@@ -52,7 +54,9 @@ export default function Moderators({ canManage }) {
               onClick={() => setAddModeratorModalShown(true)}
             >
               <Icon icon="plus" />
-              <span style={{ marginLeft: '0.7rem' }}>Add Moderators</span>
+              <span style={{ marginLeft: '0.7rem' }}>
+                Add{isMobileView ? '' : ' Moderators'}
+              </span>
             </Button>
           ) : null
         }
