@@ -9,6 +9,40 @@ CopyAndPasteCode.propTypes = {
   style: PropTypes.object
 };
 
+const initialCode = `${Math.random().toString(36).substr(2, 6)}`;
+const codeToCopy = `import { useEffect, useState } from 'react';
+
+function HomePage() {
+  const [code, setCode] = useState('');
+  const initialCode = '${initialCode}';
+  useEffect(() => {
+    let result = '';
+    for (let i = 0; i < initialCode.length; i++) {
+      const number = initialCode.charCodeAt(i) % 10;
+      result += number;
+    }
+    setCode(result);
+  }, []);
+
+  return (
+    <div style={{ width: '100%' }}>
+      <div
+        style={{
+          height: 'CALC(100vh - 1rem)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '2rem'
+        }}
+      >
+        {code}
+      </div>
+    </div>
+  )
+}
+
+export default HomePage;`;
+
 export default function CopyAndPasteCode({ style }) {
   const [codeCopied, setCodeCopied] = useState(false);
   return (
@@ -27,7 +61,7 @@ export default function CopyAndPasteCode({ style }) {
       `}
     >
       <p>3. Fan-tastic! Now, copy the following code</p>
-      <CopyCode style={{ marginTop: '1.5rem' }} />
+      <CopyCode codeToCopy={codeToCopy} style={{ marginTop: '1.5rem' }} />
       <div style={{ marginTop: '2.5rem', width: '100%' }}>
         {!codeCopied && (
           <div
@@ -48,7 +82,7 @@ export default function CopyAndPasteCode({ style }) {
             </Button>
           </div>
         )}
-        {codeCopied && <PasteCode />}
+        {codeCopied && <PasteCode initialCode={initialCode} />}
       </div>
     </div>
   );

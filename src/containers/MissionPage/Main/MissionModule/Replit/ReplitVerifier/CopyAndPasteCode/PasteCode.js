@@ -8,10 +8,11 @@ import { css } from '@emotion/css';
 import { mobileMaxWidth, Color } from 'constants/css';
 
 PasteCode.propTypes = {
+  initialCode: PropTypes.string.isRequired,
   style: PropTypes.object
 };
 
-export default function PasteCode({ style }) {
+export default function PasteCode({ initialCode, style }) {
   const [watched, setWatched] = useState(false);
   const [verificationCode, setVerificationCode] = useState('');
   return (
@@ -59,8 +60,13 @@ export default function PasteCode({ style }) {
       </div>
       {!watched && (
         <div
+          className={css`
+            margin-top: 5rem;
+            @media (max-width: ${mobileMaxWidth}) {
+              margin-top: 4rem;
+            }
+          `}
           style={{
-            marginTop: '5rem',
             width: '100%',
             display: 'flex',
             justifyContent: 'center'
@@ -122,7 +128,7 @@ export default function PasteCode({ style }) {
   );
 
   function handleCodeInput(text) {
-    console.log(text);
+    console.log(text, initialCode);
     setVerificationCode(text);
   }
 }

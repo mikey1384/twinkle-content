@@ -27,7 +27,7 @@ export default function MakeAccount({ accountMade, onMakeAccount }) {
       `}
     >
       <p>
-        1. Make a new Replit account at{' '}
+        1. Go to{' '}
         <a
           onClick={() => setOkayPressed(true)}
           href="https://replit.com"
@@ -35,7 +35,8 @@ export default function MakeAccount({ accountMade, onMakeAccount }) {
           rel="noreferrer"
         >
           https://replit.com
-        </a>
+        </a>{' '}
+        and make a new account.
         {accountMade && (
           <Icon
             style={{ marginLeft: '1rem' }}
