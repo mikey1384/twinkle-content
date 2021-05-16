@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
+import Button from 'components/Button';
 import { cloudFrontURL } from 'constants/defaultValues';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
@@ -10,6 +11,7 @@ PasteCode.propTypes = {
 };
 
 export default function PasteCode({ style }) {
+  const [watched, setWatched] = useState(false);
   return (
     <div
       style={{
@@ -53,6 +55,23 @@ export default function PasteCode({ style }) {
           />
         </div>
       </div>
+      {!watched && (
+        <div
+          style={{
+            marginTop: '5rem',
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center'
+          }}
+        >
+          <Button filled color="green" onClick={() => setWatched(true)}>
+            I watched the video. What now?
+          </Button>
+        </div>
+      )}
+      {watched && (
+        <div style={{ marginTop: '5rem' }}>This is the final step</div>
+      )}
     </div>
   );
 }
