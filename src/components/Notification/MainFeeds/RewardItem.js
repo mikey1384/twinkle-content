@@ -57,7 +57,9 @@ export default function RewardItem({
           content={{
             id: contentId,
             title: `${contentType}${
-              !targetObj || (contentType === 'comment' && targetObj?.filePath)
+              !targetObj ||
+              targetObj.notFound ||
+              (contentType === 'comment' && targetObj?.filePath)
                 ? ''
                 : contentType === 'comment'
                 ? ` (${truncateText({
