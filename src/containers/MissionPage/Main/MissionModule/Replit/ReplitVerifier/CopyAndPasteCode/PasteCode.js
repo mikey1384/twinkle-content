@@ -9,12 +9,18 @@ import { mobileMaxWidth, Color } from 'constants/css';
 
 PasteCode.propTypes = {
   initialCode: PropTypes.string.isRequired,
-  style: PropTypes.object
+  style: PropTypes.object,
+  onCorrectCodeEntered: PropTypes.func.isRequired
 };
 
-export default function PasteCode({ initialCode, style }) {
+export default function PasteCode({
+  initialCode,
+  style,
+  onCorrectCodeEntered
+}) {
   const [watched, setWatched] = useState(false);
   const [verificationCode, setVerificationCode] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
   return (
     <div
       style={{
@@ -121,6 +127,19 @@ export default function PasteCode({ initialCode, style }) {
               onChange={handleCodeInput}
               value={verificationCode}
             />
+            {errorMsg && (
+              <p
+                style={{
+                  color: Color.red(),
+                  fontWeight: 'bold',
+                  fontSize: '1.3rem',
+                  marginTop: '0.5rem',
+                  marginBottom: '0.5rem'
+                }}
+              >
+                {errorMsg}
+              </p>
+            )}
           </div>
         </div>
       )}
@@ -128,6 +147,7 @@ export default function PasteCode({ initialCode, style }) {
   );
 
   function handleCodeInput(text) {
+    setErrorMsg('');
     setVerificationCode(text);
     if (text.length === 6) {
       let correctSixDigit = '';
@@ -136,9 +156,9 @@ export default function PasteCode({ initialCode, style }) {
         correctSixDigit += number;
       }
       if (text === correctSixDigit) {
-        console.log('pass');
+        onCorrectCodeEntered();
       } else {
-        console.log('fail');
+        setErrorMsg(`The code you entered is incorrect. Please try again`);
       }
     }
   }

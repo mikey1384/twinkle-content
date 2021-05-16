@@ -6,7 +6,8 @@ import Button from 'components/Button';
 import { css } from '@emotion/css';
 
 CopyAndPasteCode.propTypes = {
-  style: PropTypes.object
+  style: PropTypes.object,
+  onCorrectCodeEntered: PropTypes.func.isRequired
 };
 
 const initialCode = `${Math.random().toString(36).substr(2, 6)}`;
@@ -43,7 +44,7 @@ function HomePage() {
 
 export default HomePage;`;
 
-export default function CopyAndPasteCode({ style }) {
+export default function CopyAndPasteCode({ style, onCorrectCodeEntered }) {
   const [codeCopied, setCodeCopied] = useState(false);
   return (
     <div
@@ -82,7 +83,12 @@ export default function CopyAndPasteCode({ style }) {
             </Button>
           </div>
         )}
-        {codeCopied && <PasteCode initialCode={initialCode} />}
+        {codeCopied && (
+          <PasteCode
+            initialCode={initialCode}
+            onCorrectCodeEntered={onCorrectCodeEntered}
+          />
+        )}
       </div>
     </div>
   );

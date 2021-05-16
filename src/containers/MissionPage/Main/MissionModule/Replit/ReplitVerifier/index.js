@@ -21,7 +21,16 @@ export default function ReplitVerifier() {
           onCreateRepl={() => setReplCreated(true)}
         />
       )}
-      {replCreated && <CopyAndPasteCode style={{ marginTop: '10rem' }} />}
+      {replCreated && (
+        <CopyAndPasteCode
+          style={{ marginTop: '10rem' }}
+          onCorrectCodeEntered={handleCorrectCodeEntered}
+        />
+      )}
     </ErrorBoundary>
   );
+
+  function handleCorrectCodeEntered() {
+    console.log('passed yay');
+  }
 }
