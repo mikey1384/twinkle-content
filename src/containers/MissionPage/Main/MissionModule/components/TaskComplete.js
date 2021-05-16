@@ -8,11 +8,18 @@ import Button from 'components/Button';
 import Icon from 'components/Icon';
 
 TaskComplete.propTypes = {
+  style: PropTypes.object,
   taskId: PropTypes.number.isRequired,
-  passMessage: PropTypes.string
+  passMessage: PropTypes.string,
+  passMessageFontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 
-export default function TaskComplete({ taskId, passMessage }) {
+export default function TaskComplete({
+  style,
+  taskId,
+  passMessage,
+  passMessageFontSize
+}) {
   const { userId } = useMyState();
   const {
     requestHelpers: { uploadMissionAttempt }
@@ -39,13 +46,14 @@ export default function TaskComplete({ taskId, passMessage }) {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        fontSize: '1.7rem'
+        fontSize: '1.7rem',
+        ...style
       }}
     >
       <p
         style={{
           fontWeight: 'bold',
-          fontSize: '1.8rem',
+          fontSize: passMessageFontSize || '1.8rem',
           marginBottom: '1.5rem'
         }}
       >

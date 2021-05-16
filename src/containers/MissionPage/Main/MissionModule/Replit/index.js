@@ -1,10 +1,15 @@
 import React, { useMemo } from 'react';
+import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import ReplitVerifier from './ReplitVerifier';
 import DidNotPassCopyAndPaste from './DidNotPassCopyAndPaste';
 import { useMissionContext } from 'contexts';
 
-export default function Replit() {
+Replit.propTypes = {
+  taskId: PropTypes.number.isRequired
+};
+
+export default function Replit({ taskId }) {
   const {
     state: { missionTypeIdHash, myAttempts }
   } = useMissionContext();
@@ -24,7 +29,7 @@ export default function Replit() {
   return (
     <ErrorBoundary style={{ width: '100%' }}>
       {!copyAndPasteAttemptPassed && <DidNotPassCopyAndPaste />}
-      {copyAndPasteAttemptPassed && <ReplitVerifier />}
+      {copyAndPasteAttemptPassed && <ReplitVerifier taskId={taskId} />}
     </ErrorBoundary>
   );
 }
