@@ -59,10 +59,10 @@ export default function MissionPage({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [missionId, userId]);
 
-  const mission = useMemo(() => missionObj[missionId] || {}, [
-    missionId,
-    missionObj
-  ]);
+  const mission = useMemo(
+    () => missionObj[missionId] || {},
+    [missionId, missionObj]
+  );
 
   useEffect(() => {
     if (!missionId) {
@@ -78,7 +78,7 @@ export default function MissionPage({
 
     async function init() {
       if (userId) {
-        const { page, myAttempts } = await loadMission(missionId);
+        const { page, myAttempts } = await loadMission({ missionId });
         if (mounted.current) {
           onLoadMission({ mission: page, prevUserId: userId });
         }
@@ -105,10 +105,11 @@ export default function MissionPage({
   }
 
   if (
-    userId &&
-    missionType &&
-    missionTypeIdHash &&
-    !missionTypeIdHash[missionType]
+    mission.notFound ||
+    (userId &&
+      missionType &&
+      missionTypeIdHash &&
+      !missionTypeIdHash[missionType])
   ) {
     return <InvalidPage />;
   }

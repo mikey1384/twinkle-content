@@ -128,12 +128,14 @@ export default function missionRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async loadMission(missionId) {
+    async loadMission({ missionId, isTask }) {
       try {
         const {
           data: { page, myAttempts }
         } = await request.get(
-          `${URL}/mission/page?missionId=${missionId}`,
+          `${URL}/mission/page?missionId=${missionId}${
+            isTask ? '&isTask=1' : ''
+          }`,
           auth()
         );
         return Promise.resolve({ page, myAttempts });

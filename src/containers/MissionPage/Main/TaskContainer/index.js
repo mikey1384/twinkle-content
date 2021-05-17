@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import GoBack from 'components/GoBack';
 import Task from './Task';
 import Tutorial from '../Tutorial';
+import InvalidPage from 'components/InvalidPage';
 import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
@@ -54,7 +55,10 @@ export default function TaskContainer({
 
     async function init() {
       if (userId) {
-        const { page, myAttempts } = await loadMission(taskId);
+        const { page, myAttempts } = await loadMission({
+          missionId: taskId,
+          isTask: true
+        });
         if (mounted.current) {
           onLoadMission({ mission: page, prevUserId: userId });
         }
@@ -68,6 +72,10 @@ export default function TaskContainer({
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId, prevUserId, taskId, mission.loaded]);
+
+  if (userId && taskType && missionTypeIdHash && !missionTypeIdHash[taskType]) {
+    return <InvalidPage />;
+  }
 
   return (
     <div style={{ width: '100%' }}>

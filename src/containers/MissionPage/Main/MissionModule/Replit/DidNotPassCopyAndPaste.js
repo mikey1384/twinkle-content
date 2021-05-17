@@ -29,7 +29,7 @@ export default function DidNotPassCopyAndPaste() {
     }
     async function handleLoadCopyAndPasteMission(missionId) {
       setLoading(true);
-      const { page } = await loadMission(missionId);
+      const { page } = await loadMission({ missionId });
       if (mounted.current) {
         onLoadMission({ mission: page });
       }

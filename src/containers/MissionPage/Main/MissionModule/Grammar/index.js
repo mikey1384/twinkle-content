@@ -89,7 +89,7 @@ export default function Grammar({ isRepeating, mission }) {
 
   async function handleInitMission() {
     if (userId) {
-      const { page, myAttempts } = await loadMission(mission.id);
+      const { page, myAttempts } = await loadMission({ missionId: mission.id });
       if (mounted.current) {
         onSetMissionState({
           missionId: mission.id,
