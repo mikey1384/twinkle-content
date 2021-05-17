@@ -115,6 +115,7 @@ function Embedly({
   }, [contentType, url]);
   const YTPlayerRef = useRef(null);
   const mounted = useRef(true);
+  const loadingRef = useRef(false);
   const fallbackImage = '/img/link.png';
   const contentCss = useMemo(
     () => css`
@@ -140,6 +141,7 @@ function Embedly({
       return setTwinkleVideoId(extractedVideoId);
     }
     if (
+      !loadingRef.current &&
       url &&
       ((typeof siteUrl !== 'string' && !thumbUrl) ||
         (prevUrl && url !== prevUrl))
@@ -148,8 +150,9 @@ function Embedly({
     }
     onSetPrevUrl({ contentId, contentType, prevUrl: url, thumbUrl });
     async function fetchUrlData() {
+      setLoading(true);
+      loadingRef.current = true;
       try {
-        setLoading(true);
         const {
           data: { image, title, description, site }
         } = await request.put(`${API_URL}/embed`, {
@@ -163,16 +166,32 @@ function Embedly({
             contentType,
             thumbUrl: image.url.replace('http://', 'https://')
           });
+        }
+        if (mounted.current) {
           onSetActualDescription({ contentId, contentType, description });
+        }
+        if (mounted.current) {
           onSetActualTitle({ contentId, contentType, title });
+        }
+        if (mounted.current) {
           onSetSiteUrl({ contentId, contentType, siteUrl: site });
+        }
+        if (mounted.current) {
           setLoading(false);
         }
       } catch (error) {
-        setLoading(false);
-        setImageUrl(fallbackImage);
+        if (mounted.current) {
+          setLoading(false);
+        }
+        if (mounted.current) {
+          setImageUrl(fallbackImage);
+        }
+        if (mounted.current) {
+          onHideAttachment();
+        }
         console.error(error.response || error);
       }
+      loadingRef.current = false;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prevUrl, url, thumbLoaded, siteUrl, thumbUrl]);
