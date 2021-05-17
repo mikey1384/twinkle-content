@@ -171,6 +171,7 @@ function Embedly({
       } catch (error) {
         setLoading(false);
         setImageUrl(fallbackImage);
+        onHideAttachment();
         console.error(error.response || error);
       }
     }
