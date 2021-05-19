@@ -49,10 +49,10 @@ export default function Mission({
     state: { pageVisible }
   } = useViewContext();
 
-  const myAttempt = useMemo(() => myAttempts[missionId], [
-    missionId,
-    myAttempts
-  ]);
+  const myAttempt = useMemo(
+    () => myAttempts[missionId],
+    [missionId, myAttempts]
+  );
 
   const isRepeating = useMemo(
     () => myAttempt?.status === 'pass' && !!mission.repeatable,
@@ -65,13 +65,8 @@ export default function Mission({
     }
 
     async function handleCheckMissionStatus() {
-      const {
-        filePath,
-        feedback,
-        status,
-        reviewTimeStamp,
-        reviewer
-      } = await checkMissionStatus(missionId);
+      const { filePath, feedback, status, reviewTimeStamp, reviewer } =
+        await checkMissionStatus(missionId);
       if (status && !(status === 'fail' && myAttempt?.tryingAgain)) {
         onUpdateMissionAttempt({
           missionId,
@@ -187,7 +182,7 @@ export default function Mission({
           style={{ marginTop: '3rem' }}
         />
       ) : mission.isMultiMission ? (
-        <MultiMission mission={mission} />
+        <MultiMission myAttempts={myAttempts} mission={mission} />
       ) : (
         <MissionModule
           mission={mission}
