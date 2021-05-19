@@ -125,6 +125,7 @@ export function addAdvancedEmoji(string) {
     .replace(/(\:hen\:)/gi, '🐔')
     .replace(/(\:horror\:)/gi, '😱')
     .replace(/(\:horse\:)/gi, '🐴')
+    .replace(/(\:hug\:)/gi, '🤗')
     .replace(/(\:infinity\:)/gi, '∞')
     .replace(/(\:japan\:)/gi, '🇯🇵')
     .replace(/(\:korea\:)/gi, '🇰🇷')
@@ -201,12 +202,14 @@ export function capitalize(string = '') {
 }
 
 export function containsTwinkleVideoUrl(string) {
-  const regex = /(^((http[s]?:\/\/(www\.)?|www\.)(twin-kle.com)\/videos\/[0-9]+))/g;
+  const regex =
+    /(^((http[s]?:\/\/(www\.)?|www\.)(twin-kle.com)\/videos\/[0-9]+))/g;
   return regex.test(string);
 }
 
 export function extractVideoIdFromTwinkleVideoUrl(string) {
-  const regex = /(^((http[s]?:\/\/(www\.)?|www\.)(twin-kle.com)\/videos\/[0-9]+))/g;
+  const regex =
+    /(^((http[s]?:\/\/(www\.)?|www\.)(twin-kle.com)\/videos\/[0-9]+))/g;
   if (!regex.test(string)) return null;
   const urlArray = string.match(regex);
   const videoId = urlArray?.[0].split('videos/')[1];
@@ -245,7 +248,8 @@ export function exceedsCharLimit({ inputType, contentType, text }) {
 }
 
 export function fetchURLFromText(text) {
-  const regex = /(\b(http[s]?:\/\/(www\.)?|ftp:\/\/(www\.)?|www\.){1}([0-9A-Za-z-.,;:?@%_\+~#=\/()])+(\.[A-Z])?([^\s-.,;:?'")])+)/gi;
+  const regex =
+    /(\b(http[s]?:\/\/(www\.)?|ftp:\/\/(www\.)?|www\.){1}([0-9A-Za-z-.,;:?@%_\+~#=\/()])+(\.[A-Z])?([^\s-.,;:?'")])+)/gi;
   let url = text.match(regex)?.[0] || '';
   const processedURL =
     (url.split('.')[0] || '').toLowerCase() + (url.split('.')[1] || '');
@@ -340,7 +344,8 @@ export function isValidSpoiler(content = '') {
 }
 
 export function isValidUrl(url = '') {
-  const regex = /^(http[s]?:\/\/(www\.)?|ftp:\/\/(www\.)?|www\.){1}([0-9A-Za-z-\.@:%_\+~#=]+)+((\.[a-zA-Z]{2,3})+)(\/(.)*)?(\?(.)*)?/g;
+  const regex =
+    /^(http[s]?:\/\/(www\.)?|ftp:\/\/(www\.)?|www\.){1}([0-9A-Za-z-\.@:%_\+~#=]+)+((\.[a-zA-Z]{2,3})+)(\/(.)*)?(\?(.)*)?/g;
   if (!url.includes('://') && !url.includes('www.')) {
     url = 'www.' + url;
   }
@@ -358,7 +363,8 @@ export function isValidUsername(username) {
 }
 
 export function isValidYoutubeUrl(url = '') {
-  const regex = /^(http[s]?:\/\/(www\.)?|ftp:\/\/(www\.)?|www\.){1}([0-9A-Za-z-\.@:%_\+~#=]+)+((\.[a-zA-Z]{2,3})+)(\/(.)*)?(\?(.)*)?/g;
+  const regex =
+    /^(http[s]?:\/\/(www\.)?|ftp:\/\/(www\.)?|www\.){1}([0-9A-Za-z-\.@:%_\+~#=]+)+((\.[a-zA-Z]{2,3})+)(\/(.)*)?(\?(.)*)?/g;
   if (!url.includes('://') && !url.includes('www.')) {
     url = 'www.' + url;
   }
@@ -371,7 +377,8 @@ export function isValidYoutubeUrl(url = '') {
 }
 
 export function isValidYoutubeChannelUrl(url = '') {
-  const regex = /^(http[s]?:\/\/(www\.)?|ftp:\/\/(www\.)?|www\.){1}([0-9A-Za-z-\.@:%_\+~#=]+)+((\.[a-zA-Z]{2,3})+)(\/(.)*)?(\?(.)*)?/g;
+  const regex =
+    /^(http[s]?:\/\/(www\.)?|ftp:\/\/(www\.)?|www\.){1}([0-9A-Za-z-\.@:%_\+~#=]+)+((\.[a-zA-Z]{2,3})+)(\/(.)*)?(\?(.)*)?/g;
   const trim = url.split('youtube.com/')[1];
   if (!url.includes('://') && !url.includes('www.')) {
     url = 'www.' + url;
@@ -401,7 +408,8 @@ export function processedStringWithURL(string) {
   const maxChar = 100;
   const trimmedString = (string) =>
     string.length > maxChar ? `${string.substring(0, maxChar)}...` : string;
-  const urlRegex = /(((http[s]?:\/\/|ftp:\/\/)?(www\.){1}([0-9\p{L}/])+([0-9\p{L}/\-.,;:?!&@%_\+~#=\/()])+([0-9\p{L}/])+)|((?!.*www)(http[s]?:\/\/|ftp:\/\/){1}([0-9\p{L}/])+([0-9\p{L}/\-.,;:?!&@%_\+~#=\/()])+([0-9\p{L}/])+))/giu;
+  const urlRegex =
+    /(((http[s]?:\/\/|ftp:\/\/)?(www\.){1}([0-9\p{L}/])+([0-9\p{L}/\-.,;:?!&@%_\+~#=\/()])+([0-9\p{L}/])+)|((?!.*www)(http[s]?:\/\/|ftp:\/\/){1}([0-9\p{L}/])+([0-9\p{L}/\-.,;:?!&@%_\+~#=\/()])+([0-9\p{L}/])+))/giu;
   const blueWordRegex = /(b\|[^\s]+\|b)/gi;
   const blueSentenceRegex = /((b\|[^\s]){1}([^\n])+([^\s]\|b){1})/gi;
   const grayWordRegex = /(gr\|[^\s]+\|gr)/gi;
@@ -429,7 +437,8 @@ export function processedStringWithURL(string) {
   const tinyWordRegex = /(t\[[^\s]+\]t)/gi;
   const tinySentenceRegex = /((t\[[^\s]){1}([^\n])+([^\s]\]t){1})/gi;
   const boldItalicWordRegex = /(\*\*\*[^\s]+\*\*\*)/gi;
-  const boldItalicSentenceRegex = /((\*\*\*[^\s]){1}([^\n])+([^\s]\*\*\*){1})/gi;
+  const boldItalicSentenceRegex =
+    /((\*\*\*[^\s]){1}([^\n])+([^\s]\*\*\*){1})/gi;
   const boldWordRegex = /(\*[^\s*]+\*)/gi;
   const italicWordRegex = /(\*\*[^\s*]+\*\*)/gi;
   const italicSentenceRegex = /((\*\*[^\s]){1}([^\n])+([^\s]\*\*){1})/gi;
