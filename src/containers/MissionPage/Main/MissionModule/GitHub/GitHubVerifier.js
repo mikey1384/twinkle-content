@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Color } from 'constants/css';
 import { useAppContext, useContentContext } from 'contexts';
@@ -23,6 +23,15 @@ export default function GitHubVerifier() {
   const [errorMsg, setErrorMsg] = useState('');
   const [loading, setLoading] = useState(false);
   const [githubAccountMade, setGithubAccountMade] = useState(false);
+  const mounted = useRef(true);
+
+  useEffect(() => {
+    mounted.current = true;
+    return function onUnmount() {
+      mounted.current = false;
+    };
+  }, []);
+
   useEffect(() => {
     if (code) {
       initGitHubData();
@@ -31,14 +40,20 @@ export default function GitHubVerifier() {
       try {
         setLoading(true);
         const githubUsername = await loadGitHubData(code);
-        onUpdateProfileInfo({
-          userId,
-          githubUsername
-        });
+        if (mounted.current) {
+          onUpdateProfileInfo({
+            userId,
+            githubUsername
+          });
+        }
       } catch (error) {
-        setErrorMsg('Failed to fetch your GitHub username - try again');
+        if (mounted.current) {
+          setErrorMsg('Failed to fetch your GitHub username - try again');
+        }
       }
-      setLoading(false);
+      if (mounted.current) {
+        setLoading(false);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code]);
