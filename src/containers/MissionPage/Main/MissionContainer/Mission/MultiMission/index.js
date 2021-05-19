@@ -17,14 +17,17 @@ export default function MultiMission({
     const result = {};
     for (let i = 0; i < subMissions.length; i++) {
       let passed = true;
+      let currentTaskIndex = 0;
       const subMission = subMissions[i];
-      for (let task of subMission.tasks) {
+      for (let j = 0; j < subMission.tasks.length; j++) {
+        const task = subMission.tasks[j];
         if (myAttempts[task.id]?.status !== 'pass') {
           passed = false;
+          currentTaskIndex = j;
           break;
         }
       }
-      result[i] = { passed };
+      result[i] = { passed, currentTaskIndex };
     }
     return result;
   }, [myAttempts, subMissions]);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import MissionItem from 'components/MissionItem';
 import { mobileMaxWidth } from 'constants/css';
@@ -8,20 +8,25 @@ SubMission.propTypes = {
   index: PropTypes.number,
   subMission: PropTypes.object.isRequired,
   missionType: PropTypes.string.isRequired,
-  previousSubmissionPassed: PropTypes.bool
+  previousSubmissionPassed: PropTypes.bool,
+  subMissionProgress: PropTypes.object
 };
 
 export default function SubMission({
   index,
   subMission,
   missionType,
-  previousSubmissionPassed
+  previousSubmissionPassed,
+  subMissionProgress
 }) {
+  const subMissionIsLocked = useMemo(
+    () => index !== 0 && !previousSubmissionPassed,
+    [index, previousSubmissionPassed]
+  );
   return (
     <div
       style={{
-        marginTop: index === 0 ? 0 : '3rem',
-        opacity: index === 0 ? 1 : previousSubmissionPassed ? 1 : 0.2
+        marginTop: index === 0 ? 0 : '3rem'
       }}
     >
       <p
@@ -29,6 +34,7 @@ export default function SubMission({
           font-weight: bold;
           font-size: 2.5rem;
           margin-bottom: 1rem;
+          opacity: ${index === 0 ? 1 : subMissionIsLocked ? 0.2 : 1};
           @media (max-width: ${mobileMaxWidth}) {
             font-size: 2.1rem;
           }
@@ -37,14 +43,23 @@ export default function SubMission({
         {index + 1}. {subMission.title}
       </p>
       <div>
-        {subMission.tasks.map((task, index) => (
-          <MissionItem
-            key={task.id}
-            style={{ marginTop: index === 0 ? 0 : '1rem' }}
-            missionLink={`/missions/${missionType}/${task.missionType}`}
-            mission={task}
-          />
-        ))}
+        {subMission.tasks.map((task, index) => {
+          const taskIsLocked =
+            index !== 0 &&
+            !subMissionProgress.passed &&
+            index > subMissionProgress.currentTaskIndex;
+          return (
+            <MissionItem
+              key={task.id}
+              locked={subMissionIsLocked || taskIsLocked}
+              style={{
+                marginTop: index === 0 ? 0 : '1rem'
+              }}
+              missionLink={`/missions/${missionType}/${task.missionType}`}
+              mission={task}
+            />
+          );
+        })}
       </div>
     </div>
   );

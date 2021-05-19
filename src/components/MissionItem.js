@@ -11,6 +11,7 @@ import { useMyState } from 'helpers/hooks';
 MissionItem.propTypes = {
   isRepeatable: PropTypes.bool,
   style: PropTypes.object,
+  locked: PropTypes.bool,
   mission: PropTypes.object.isRequired,
   missionLink: PropTypes.string.isRequired,
   showStatus: PropTypes.bool
@@ -19,6 +20,7 @@ MissionItem.propTypes = {
 export default function MissionItem({
   isRepeatable,
   style,
+  locked,
   mission,
   missionLink,
   showStatus = true
@@ -38,16 +40,19 @@ export default function MissionItem({
     <div
       onClick={handleLinkClick}
       style={style}
-      className={css`
+      className={`${css`
         background: #fff;
         padding: 1rem;
         border: 1px solid ${Color.borderGray()};
         border-radius: ${borderRadius};
-        cursor: pointer;
-        &:hover {
+        cursor: ${locked ? 'default' : 'pointer'};
+        opacity: ${locked ? 0.2 : 1};
+        ${locked
+          ? ''
+          : `&:hover {
           background: ${Color.highlightGray()};
-        }
-      `}
+        }`}
+      `}${locked ? ' unselectable' : ''}`}
     >
       <p
         className={css`
@@ -145,6 +150,7 @@ export default function MissionItem({
   );
 
   function handleLinkClick() {
+    if (locked) return;
     if (userId) {
       history.push(missionLink);
     } else {
