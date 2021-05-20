@@ -53,7 +53,7 @@ export default function MissionModule({
       {mission.missionType === 'email' && <Email taskId={mission.id} />}
       {mission.missionType === 'github' && <GitHub taskId={mission.id} />}
       {mission.missionType === 'replit' && (
-        <Replit isTask taskId={mission.id} />
+        <Replit task={mission} onSetMissionState={onSetMissionState} />
       )}
       {mission.missionType === 'hello-world' && (
         <HelloWorld taskId={mission.id} />

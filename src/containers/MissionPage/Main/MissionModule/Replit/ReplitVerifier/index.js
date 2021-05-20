@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import MakeAccount from './MakeAccount';
@@ -7,38 +7,47 @@ import CopyAndPasteCode from './CopyAndPasteCode';
 import TaskComplete from '../../components/TaskComplete';
 
 ReplitVerifier.propTypes = {
-  taskId: PropTypes.number.isRequired
+  task: PropTypes.object.isRequired,
+  onSetMissionState: PropTypes.func.isRequired
 };
 
-export default function ReplitVerifier({ taskId }) {
-  const [accountMade, setAccountMade] = useState(false);
-  const [replCreated, setReplCreated] = useState(false);
-  const [correctCodeEntered, setCorrectCodeEntered] = useState(false);
+export default function ReplitVerifier({ task, onSetMissionState }) {
+  const { accountMade, replCreated, correctCodeEntered } = task;
 
   return (
     <ErrorBoundary style={{ width: '100%', marginTop: '1rem' }}>
       <MakeAccount
-        accountMade={accountMade}
-        onMakeAccount={() => setAccountMade(true)}
+        accountMade={!!accountMade}
+        onMakeAccount={() =>
+          onSetMissionState({
+            missionId: task.id,
+            newState: { accountMade: true }
+          })
+        }
       />
       {accountMade && (
         <CreateNewRepl
           style={{ marginTop: replCreated ? '2rem' : '10rem' }}
-          replCreated={replCreated}
-          onCreateRepl={() => setReplCreated(true)}
+          replCreated={!!replCreated}
+          onCreateRepl={() =>
+            onSetMissionState({
+              missionId: task.id,
+              newState: { replCreated: true }
+            })
+          }
         />
       )}
       {replCreated && (
         <CopyAndPasteCode
           style={{ marginTop: correctCodeEntered ? '2rem' : '10rem' }}
-          correctCodeEntered={correctCodeEntered}
+          correctCodeEntered={!!correctCodeEntered}
           onCorrectCodeEntered={handleCorrectCodeEntered}
         />
       )}
       {correctCodeEntered && (
         <TaskComplete
           style={{ marginTop: '10rem' }}
-          taskId={taskId}
+          taskId={task.id}
           passMessage="That's it! Excellent work"
           passMessageFontSize="2.2rem"
         />
@@ -47,6 +56,9 @@ export default function ReplitVerifier({ taskId }) {
   );
 
   function handleCorrectCodeEntered() {
-    setCorrectCodeEntered(true);
+    onSetMissionState({
+      missionId: task.id,
+      newState: { correctCodeEntered: true }
+    });
   }
 }
