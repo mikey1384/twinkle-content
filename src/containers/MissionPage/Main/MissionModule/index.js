@@ -7,6 +7,7 @@ import Grammar from './Grammar';
 import TwinkleStore from './TwinkleStore';
 import Email from './Email';
 import GitHub from './GitHub';
+import HelloWorld from './HelloWorld';
 import Replit from './Replit';
 
 MissionModule.propTypes = {
@@ -49,26 +50,13 @@ export default function MissionModule({
       {mission.missionType === 'grammar' && (
         <Grammar mission={mission} isRepeating={isRepeating} />
       )}
-      {mission.missionType === 'email' && (
-        <Email
-          isTask
-          taskId={mission.id}
-          onSetMissionState={onSetMissionState}
-        />
-      )}
-      {mission.missionType === 'github' && (
-        <GitHub
-          isTask
-          taskId={mission.id}
-          onSetMissionState={onSetMissionState}
-        />
-      )}
+      {mission.missionType === 'email' && <Email taskId={mission.id} />}
+      {mission.missionType === 'github' && <GitHub taskId={mission.id} />}
       {mission.missionType === 'replit' && (
-        <Replit
-          isTask
-          taskId={mission.id}
-          onSetMissionState={onSetMissionState}
-        />
+        <Replit isTask taskId={mission.id} />
+      )}
+      {mission.missionType === 'hello-world' && (
+        <HelloWorld taskId={mission.id} />
       )}
     </div>
   );
