@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from '@emotion/css';
 import DeleteCode from './DeleteCode';
+import CodingHelloWorld from './CodingHelloWorld';
 
 export default function HelloWorld() {
   const [deletedCode, setDeletedCode] = useState(false);
@@ -20,7 +21,11 @@ export default function HelloWorld() {
           }
         `}
       >
-        {!deletedCode && <DeleteCode onSetDeletedCode={setDeletedCode} />}
+        <DeleteCode
+          onSetDeletedCode={setDeletedCode}
+          deletedCode={deletedCode}
+        />
+        {deletedCode && <CodingHelloWorld style={{ marginTop: '5rem' }} />}
       </div>
     </ErrorBoundary>
   );
