@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import Code from 'components/Code';
+import Code from 'components/Texts/Code';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import { css } from '@emotion/css';
