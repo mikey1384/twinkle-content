@@ -94,37 +94,24 @@ function Reply({
   const {
     requestHelpers: { editContent, loadReplies }
   } = useAppContext();
-  const {
-    authLevel,
-    canDelete,
-    canEdit,
-    canReward,
-    twinkleCoins,
-    userId
-  } = useMyState();
+  const { authLevel, canDelete, canEdit, canReward, twinkleCoins, userId } =
+    useMyState();
   const {
     actions: { onSetIsEditing, onSetXpRewardInterfaceShown }
   } = useContentContext();
-  const {
-    deleted,
-    isEditing,
-    thumbUrl,
-    xpRewardInterfaceShown
-  } = useContentState({
-    contentType: 'comment',
-    contentId: reply.id
-  });
-  const { onEditDone, onLikeClick, onRewardCommentEdit } = useContext(
-    LocalContext
-  );
+  const { deleted, isEditing, thumbUrl, xpRewardInterfaceShown } =
+    useContentState({
+      contentType: 'comment',
+      contentId: reply.id
+    });
+  const { onEditDone, onLikeClick, onRewardCommentEdit } =
+    useContext(LocalContext);
   const { fileType } = getFileInfoFromFileName(fileName);
   const [loadingReplies, setLoadingReplies] = useState(false);
   const [userListModalShown, setUserListModalShown] = useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
-  const [
-    recommendationInterfaceShown,
-    setRecommendationInterfaceShown
-  ] = useState(false);
+  const [recommendationInterfaceShown, setRecommendationInterfaceShown] =
+    useState(false);
   const ReplyInputAreaRef = useRef(null);
   const RewardInterfaceRef = useRef(null);
   const userIsUploader = userId === uploader.id;
