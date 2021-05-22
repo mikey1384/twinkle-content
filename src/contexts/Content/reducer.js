@@ -278,12 +278,13 @@ export default function ContentReducer(state, action) {
                       deleted:
                         prevContentState.targetObj.comment.id ===
                         action.commentId,
-                      comments: prevContentState.targetObj.comment.comments?.map(
-                        (comment) =>
-                          comment.id === action.commentId
-                            ? { ...comment, deleted: true }
-                            : comment
-                      )
+                      comments:
+                        prevContentState.targetObj.comment.comments?.map(
+                          (comment) =>
+                            comment.id === action.commentId
+                              ? { ...comment, deleted: true }
+                              : comment
+                        )
                     }
                   : undefined
               }
@@ -356,15 +357,16 @@ export default function ContentReducer(state, action) {
                 comment: prevContentState.targetObj.comment
                   ? {
                       ...prevContentState.targetObj.comment,
-                      comments: prevContentState.targetObj.comment.comments?.map(
-                        (comment) =>
-                          comment.id === action.commentId
-                            ? {
-                                ...comment,
-                                content: action.editedComment
-                              }
-                            : comment
-                      )
+                      comments:
+                        prevContentState.targetObj.comment.comments?.map(
+                          (comment) =>
+                            comment.id === action.commentId
+                              ? {
+                                  ...comment,
+                                  content: action.editedComment
+                                }
+                              : comment
+                        )
                     }
                   : undefined
               }
@@ -861,11 +863,15 @@ export default function ContentReducer(state, action) {
           ...prevContentState,
           comments: prevContentState.comments.map((comment) => {
             if (comment.id === action.commentId) {
+              const replies = comment.replies || [];
+              const targetReplyIndex = replies
+                .map((reply) => reply.id)
+                .indexOf(action.replyId);
               return {
                 ...comment,
                 replies: [
-                  ...(comment.replies || [])
-                    .filter((reply) => reply.id <= action.replyId)
+                  ...replies
+                    .filter((reply, index) => index <= targetReplyIndex)
                     .map((reply) =>
                       reply.id === action.replyId
                         ? {
@@ -875,9 +881,7 @@ export default function ContentReducer(state, action) {
                         : reply
                     ),
                   ...action.replies,
-                  ...(comment.replies || []).filter(
-                    (reply) => reply.id > action.replyId
-                  )
+                  ...replies.filter((reply, index) => index > targetReplyIndex)
                 ]
               };
             }
@@ -1255,9 +1259,8 @@ export default function ContentReducer(state, action) {
         ...state,
         [contentKey]: {
           ...prevContentState,
-          [action.contentType === 'url'
-            ? 'actualTitle'
-            : 'linkTitle']: action.title
+          [action.contentType === 'url' ? 'actualTitle' : 'linkTitle']:
+            action.title
         }
       };
     case 'SET_CHAT_INVITATION_DETAIL':
