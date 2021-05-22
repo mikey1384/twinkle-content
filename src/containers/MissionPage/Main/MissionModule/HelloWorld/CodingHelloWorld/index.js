@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
-import CodeSandbox from './CodeSandbox';
+import CodeSandbox from 'components/Forms/CodeSandbox';
 
 CodingHelloWorld.propTypes = {
   style: PropTypes.object
