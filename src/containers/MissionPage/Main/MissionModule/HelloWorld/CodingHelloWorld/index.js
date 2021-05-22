@@ -9,7 +9,16 @@ CodingHelloWorld.propTypes = {
 
 export default function CodingHelloWorld({ style }) {
   return (
-    <ErrorBoundary style={style}>
+    <ErrorBoundary
+      style={{
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+        ...style
+      }}
+    >
       <p>{`2. Let's code your first Hello World`}</p>
       <div style={{ width: '100%' }}>
         <CodeSandbox />

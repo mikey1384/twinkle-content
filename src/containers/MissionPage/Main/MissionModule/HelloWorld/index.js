@@ -26,7 +26,11 @@ export default function HelloWorld() {
           deletedCode={deletedCode}
         />
         {deletedCode && (
-          <CodingHelloWorld style={{ marginTop: '5rem', width: '100%' }} />
+          <CodingHelloWorld
+            style={{
+              marginTop: '5rem'
+            }}
+          />
         )}
       </div>
     </ErrorBoundary>
