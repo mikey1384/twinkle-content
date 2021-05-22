@@ -11,7 +11,9 @@ export default function CodingHelloWorld({ style }) {
   return (
     <ErrorBoundary style={style}>
       <p>{`2. Let's code your first Hello World`}</p>
-      <CodeSandbox />
+      <div style={{ width: '100%' }}>
+        <CodeSandbox />
+      </div>
     </ErrorBoundary>
   );
 }

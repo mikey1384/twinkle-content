@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import CodeMirror from '@uiw/react-codemirror';
-import 'codemirror/keymap/sublime';
-import 'codemirror/theme/monokai.css';
+import Editor from './Editor';
 
 // https://github.com/uiwjs/react-codemirror/blob/master/src/index.js
 // https://krasimirtsonev.com/blog/article/build-your-own-interactive-javascript-playground
@@ -9,19 +7,16 @@ import 'codemirror/theme/monokai.css';
 // https://github.com/rohanchandra/react-terminal-component
 // https://codemirror.net/
 export default function CodeSandbox() {
-  const [code] = useState(`
-  
-  
-  
-  `);
+  const [code] = useState(`function HomePage() {
+  return <div>Welcome to Next.js!</div>
+}
+   
+export default HomePage`);
 
   return (
-    <CodeMirror
+    <Editor
       value={code}
       options={{
-        theme: 'monokai',
-        tabSize: 2,
-        keyMap: 'sublime',
         mode: 'jsx'
       }}
     />
