@@ -3,6 +3,12 @@ import PropTypes from 'prop-types';
 import CodeMirror from 'codemirror';
 import 'codemirror/mode/meta';
 import 'codemirror/lib/codemirror.css';
+import 'codemirror/addon/lint/lint.js';
+import 'codemirror/addon/lint/javascript-lint.js';
+import 'codemirror/addon/lint/css-lint.js';
+import 'codemirror/addon/lint/lint.css';
+import { JSHINT } from 'jshint';
+window.JSHINT = JSHINT;
 
 const defaultOptions = {
   tabSize: 2,
@@ -10,7 +16,8 @@ const defaultOptions = {
   matchBrackets: true,
   showCursorWhenSelecting: true,
   lineNumbers: true,
-  fullScreen: true
+  fullScreen: true,
+  gutters: ['CodeMirror-lint-markers']
 };
 
 Editor.propTypes = {
