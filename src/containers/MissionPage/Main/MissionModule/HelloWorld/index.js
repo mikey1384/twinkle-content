@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from '@emotion/css';
 import DeleteCode from './DeleteCode';
 import CodingHelloWorld from './CodingHelloWorld';
 
-export default function HelloWorld() {
-  const [deletedCode, setDeletedCode] = useState(false);
+HelloWorld.propTypes = {
+  task: PropTypes.object.isRequired,
+  onSetMissionState: PropTypes.func.isRequired
+};
+
+export default function HelloWorld({ task, onSetMissionState }) {
+  const { deletedCode } = task;
+
   return (
     <ErrorBoundary>
       <div
@@ -22,7 +29,12 @@ export default function HelloWorld() {
         `}
       >
         <DeleteCode
-          onSetDeletedCode={setDeletedCode}
+          onSetDeletedCode={() =>
+            onSetMissionState({
+              missionId: task.id,
+              newState: { deletedCode: true }
+            })
+          }
           deletedCode={deletedCode}
         />
         {deletedCode && (

@@ -56,7 +56,7 @@ export default function MissionModule({
         <Replit task={mission} onSetMissionState={onSetMissionState} />
       )}
       {mission.missionType === 'hello-world' && (
-        <HelloWorld taskId={mission.id} />
+        <HelloWorld task={mission} onSetMissionState={onSetMissionState} />
       )}
     </div>
   );

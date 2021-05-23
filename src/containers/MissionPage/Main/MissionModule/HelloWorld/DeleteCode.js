@@ -27,7 +27,7 @@ export default function DeleteCode({ deletedCode, onSetDeletedCode }) {
           />
         )}
       </p>
-      {!okayPressed && (
+      {!okayPressed && !deletedCode && (
         <img
           className={css`
             margin-top: 2rem;
