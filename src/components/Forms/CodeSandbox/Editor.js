@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useMemo } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import CodeMirror from 'codemirror';
 import 'codemirror/mode/meta';
@@ -25,11 +25,11 @@ export default function Editor({
   width = '100%',
   height = '100%'
 }) {
-  const [editor, setEditor] = useState();
+  const editorRef = useRef(null);
   const textareaRef = useRef();
 
   useEffect(() => {
-    if (!editor && window) {
+    if (!editorRef.current) {
       const instance = CodeMirror.fromTextArea(textareaRef.current, {
         ...defaultOptions,
         ...options
@@ -39,35 +39,29 @@ export default function Editor({
       if (width || height) {
         instance.setSize(width, height);
       }
-      setEditor(instance);
+      editorRef.current = instance;
       handleSetOptions(instance, { ...defaultOptions, ...options });
     }
-    return () => {
-      if (editor && window) {
-        editor.toTextArea();
-        setEditor(undefined);
-      }
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useMemo(() => {
-    if (!editor || !window) return;
-    const val = editor.getValue();
+    if (!editorRef.current) return;
+    const val = editorRef.current.getValue();
     if (value !== undefined && value !== val) {
-      editor.setValue(value);
+      editorRef.current.setValue(value);
     }
-  }, [editor, value]);
+  }, [value]);
 
   useMemo(() => {
-    if (!editor || !window) return;
-    editor.setSize(width, height);
-  }, [editor, width, height]);
+    if (!editorRef.current) return;
+    editorRef.current.setSize(width, height);
+  }, [width, height]);
 
   useMemo(() => {
-    if (!editor || !window) return;
-    handleSetOptions(editor, { ...defaultOptions, ...options });
-  }, [editor, options]);
+    if (!editorRef.current) return;
+    handleSetOptions(editorRef.current, { ...defaultOptions, ...options });
+  }, [options]);
 
   return <textarea ref={textareaRef} />;
 
