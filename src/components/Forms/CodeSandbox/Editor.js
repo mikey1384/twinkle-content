@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useMemo } from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import CodeMirror from 'codemirror';
 import 'codemirror/mode/meta';
@@ -17,67 +17,55 @@ Editor.propTypes = {
   options: PropTypes.object,
   value: PropTypes.string,
   width: PropTypes.string,
-  height: PropTypes.string
+  height: PropTypes.string,
+  onChange: PropTypes.func
 };
 export default function Editor({
   options = {},
   value = '',
   width = '100%',
-  height = '100%'
+  height = '100%',
+  onChange
 }) {
-  const editorRef = useRef(null);
+  const instanceRef = useRef(null);
   const textareaRef = useRef();
 
   useEffect(() => {
-    if (!editorRef.current) {
+    if (!instanceRef.current) {
       const instance = CodeMirror.fromTextArea(textareaRef.current, {
         ...defaultOptions,
         ...options
       });
+      instance.on('change', () => {
+        onChange(instance.getValue());
+      });
       instance.setValue(value || '');
-
       if (width || height) {
         instance.setSize(width, height);
       }
-      editorRef.current = instance;
-      handleSetOptions(instance, { ...defaultOptions, ...options });
+      handleSetOptions({
+        instance,
+        options: { ...defaultOptions, ...options }
+      });
+      instanceRef.current = instance;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useMemo(() => {
-    if (!editorRef.current) return;
-    const val = editorRef.current.getValue();
-    if (value !== undefined && value !== val) {
-      editorRef.current.setValue(value);
-    }
-  }, [value]);
-
-  useMemo(() => {
-    if (!editorRef.current) return;
-    editorRef.current.setSize(width, height);
-  }, [width, height]);
-
-  useMemo(() => {
-    if (!editorRef.current) return;
-    handleSetOptions(editorRef.current, { ...defaultOptions, ...options });
-  }, [options]);
-
   return <textarea ref={textareaRef} />;
 
-  // http://codemirror.net/doc/manual.html#config
-  async function handleSetOptions(instance, opt = {}) {
-    if (typeof opt === 'object' && window) {
-      const mode = CodeMirror.findModeByName(opt.mode || '');
+  async function handleSetOptions({ instance, options = {} }) {
+    if (typeof options === 'object') {
+      const mode = CodeMirror.findModeByName(options.mode || '');
       if (mode && mode.mode) {
         await import(`codemirror/mode/${mode.mode}/${mode.mode}.js`);
       }
       if (mode) {
-        opt.mode = mode.mime;
+        options.mode = mode.mime;
       }
-      Object.keys(opt).forEach((name) => {
-        if (opt[name] && JSON.stringify(opt[name])) {
-          instance.setOption(name, opt[name]);
+      Object.keys(options).forEach((name) => {
+        if (options[name] && JSON.stringify(options[name])) {
+          instance.setOption(name, options[name]);
         }
       });
     }

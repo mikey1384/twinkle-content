@@ -7,7 +7,7 @@ import Editor from './Editor';
 // https://github.com/rohanchandra/react-terminal-component
 // https://codemirror.net/
 export default function CodeSandbox() {
-  const [code] = useState(`function HomePage() {
+  const [code, setCode] = useState(`function HomePage() {
   return <div>Welcome to Next.js!</div>
 }
 
@@ -19,6 +19,7 @@ export default HomePage`);
       options={{
         mode: 'jsx'
       }}
+      onChange={setCode}
     />
   );
 }
