@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import Editor from './Editor';
 
-// https://github.com/uiwjs/react-codemirror/blob/master/src/index.js
 // https://krasimirtsonev.com/blog/article/build-your-own-interactive-javascript-playground
-// https://codemirror.net/
 export default function CodeSandbox() {
   const [code, setCode] = useState(`function HomePage() {
   return <div>Welcome to Next.js!</div>
