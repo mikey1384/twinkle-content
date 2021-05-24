@@ -16,7 +16,8 @@ export default HomePage`);
         mode: 'jsx',
         lineWrapping: true,
         matchBrackets: true,
-        autoCloseBrackets: true
+        autoCloseBrackets: true,
+        lint: true
       }}
       onChange={setCode}
     />
