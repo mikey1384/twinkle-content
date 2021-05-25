@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Editor from './Editor';
 
-// https://krasimirtsonev.com/blog/article/build-your-own-interactive-javascript-playground
-export default function CodeSandbox() {
-  const [code, setCode] = useState(`function HomePage() {
-  return <div>Welcome to Next.js!</div>
-}
+CodeSandbox.propTypes = {
+  code: PropTypes.string,
+  onSetCode: PropTypes.func.isRequired
+};
 
-export default HomePage`);
-
+export default function CodeSandbox({ code, onSetCode }) {
   return (
     <Editor
       value={code}
@@ -19,7 +18,7 @@ export default HomePage`);
         autoCloseBrackets: true,
         lint: true
       }}
-      onChange={setCode}
+      onChange={onSetCode}
     />
   );
 }

@@ -11,7 +11,14 @@ HelloWorld.propTypes = {
 };
 
 export default function HelloWorld({ task, onSetMissionState }) {
-  const { deletedCode } = task;
+  const {
+    deletedCode,
+    code = `function HomePage() {
+  return <div>Welcome to Next.js!</div>;
+}
+
+export default HomePage;`
+  } = task;
 
   return (
     <ErrorBoundary>
@@ -39,6 +46,13 @@ export default function HelloWorld({ task, onSetMissionState }) {
         />
         {deletedCode && (
           <CodingHelloWorld
+            code={code}
+            onSetCode={(code) =>
+              onSetMissionState({
+                missionId: task.id,
+                newState: { code }
+              })
+            }
             style={{
               marginTop: '5rem'
             }}

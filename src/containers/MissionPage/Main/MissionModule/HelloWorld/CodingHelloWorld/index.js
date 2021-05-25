@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import CodeSandbox from 'components/Forms/CodeSandbox';
-import { Color } from 'constants/css';
 
 CodingHelloWorld.propTypes = {
+  code: PropTypes.string,
+  onSetCode: PropTypes.func.isRequired,
   style: PropTypes.object
 };
 
-export default function CodingHelloWorld({ style }) {
+export default function CodingHelloWorld({ code, onSetCode, style }) {
   return (
     <ErrorBoundary
       style={{
@@ -24,11 +25,10 @@ export default function CodingHelloWorld({ style }) {
       <div
         style={{
           width: '70%',
-          marginTop: '2rem',
-          border: `1px solid ${Color.borderGray()}`
+          marginTop: '2rem'
         }}
       >
-        <CodeSandbox />
+        <CodeSandbox code={code} onSetCode={onSetCode} />
       </div>
     </ErrorBoundary>
   );
