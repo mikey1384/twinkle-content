@@ -2,6 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import CodeSandbox from 'components/Forms/CodeSandbox';
+import Button from 'components/Button';
+import { useAppContext } from 'contexts';
+import { mobileMaxWidth } from 'constants/css';
+import { css } from '@emotion/css';
 
 CodingHelloWorld.propTypes = {
   code: PropTypes.string,
@@ -10,6 +14,9 @@ CodingHelloWorld.propTypes = {
 };
 
 export default function CodingHelloWorld({ code, onSetCode, style }) {
+  const {
+    requestHelpers: { transpileCode }
+  } = useAppContext();
   return (
     <ErrorBoundary
       style={{
@@ -23,13 +30,25 @@ export default function CodingHelloWorld({ code, onSetCode, style }) {
     >
       <p>{`2. Let's code your first Hello World`}</p>
       <div
-        style={{
-          width: '70%',
-          marginTop: '2rem'
-        }}
+        className={css`
+          width: 70%;
+          margin-top: 2rem;
+          @media (max-width: ${mobileMaxWidth}) {
+            width: 100%;
+            margin-top: 1.5rem;
+          }
+        `}
       >
         <CodeSandbox code={code} onSetCode={onSetCode} />
+        <Button filled color="logoBlue" onClick={handleRunCode}>
+          Run
+        </Button>
       </div>
     </ErrorBoundary>
   );
+
+  async function handleRunCode() {
+    const transpiledCode = await transpileCode(code);
+    console.log(transpiledCode, 'is here');
+  }
 }

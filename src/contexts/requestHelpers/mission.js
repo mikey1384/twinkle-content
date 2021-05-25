@@ -95,6 +95,18 @@ export default function missionRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async transpileCode(code) {
+      try {
+        const {
+          data: { transpiledCode }
+        } = await request.post(`${URL}/mission/code/transpile`, {
+          code
+        });
+        return Promise.resolve(transpiledCode);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async loadGitHubData(code) {
       try {
         const {
