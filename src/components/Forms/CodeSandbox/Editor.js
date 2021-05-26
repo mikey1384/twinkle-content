@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import CodeMirror from 'codemirror';
 import 'codemirror/mode/meta';
@@ -7,6 +7,8 @@ import 'codemirror/addon/lint/lint.js';
 import 'codemirror/addon/lint/css-lint.js';
 import 'codemirror/addon/lint/lint.css';
 import './material-darker.css';
+import Compiler from './Compiler';
+import { transformBeforeCompilation } from './ast';
 import { useAppContext } from 'contexts';
 
 const defaultOptions = {
@@ -34,6 +36,7 @@ export default function Editor({
   height = '100%',
   onChange
 }) {
+  const [error, setError] = useState('');
   const instanceRef = useRef(null);
   const textareaRef = useRef();
   const {
@@ -63,7 +66,20 @@ export default function Editor({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <textarea ref={textareaRef} />;
+  return (
+    <div style={{ width: '100%' }}>
+      <div>
+        <Compiler
+          code={value}
+          transformations={[(ast) => transformBeforeCompilation(ast)]}
+          minHeight={62}
+          setError={(error) => setError(error)}
+        />
+      </div>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      <textarea ref={textareaRef} />
+    </div>
+  );
 
   async function handleSetOptions({ instance, options = {} }) {
     if (typeof options === 'object') {

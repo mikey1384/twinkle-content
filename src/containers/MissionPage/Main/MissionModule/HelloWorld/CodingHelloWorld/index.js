@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import CodeSandbox from 'components/Forms/CodeSandbox';
 import Button from 'components/Button';
-import { useAppContext } from 'contexts';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 
@@ -14,9 +13,6 @@ CodingHelloWorld.propTypes = {
 };
 
 export default function CodingHelloWorld({ code, onSetCode, style }) {
-  const {
-    requestHelpers: { transpileCode }
-  } = useAppContext();
   return (
     <ErrorBoundary
       style={{
@@ -43,12 +39,12 @@ export default function CodingHelloWorld({ code, onSetCode, style }) {
         <Button filled color="logoBlue" onClick={handleRunCode}>
           Run
         </Button>
+        <div id="here"></div>
       </div>
     </ErrorBoundary>
   );
 
   async function handleRunCode() {
-    const transpiledCode = await transpileCode(code);
-    console.log(transpiledCode, 'is here');
+    console.log('ok');
   }
 }
