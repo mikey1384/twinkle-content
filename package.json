@@ -73,7 +73,6 @@
     "postcss-preset-env": "6.7.0",
     "postcss-safe-parser": "5.0.2",
     "prism-react-renderer": "^1.2.0",
-    "prismjs": "^1.23.0",
     "query-string": "^7.0.0",
     "react": "^17.0.1",
     "react-app-polyfill": "^2.0.0",
