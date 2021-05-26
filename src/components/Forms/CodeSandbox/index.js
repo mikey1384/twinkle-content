@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Editor from './Editor';
+import Button from 'components/Button';
+import { formatCode } from './code-generator';
 
 CodeSandbox.propTypes = {
   code: PropTypes.string,
@@ -24,8 +26,16 @@ export default function CodeSandbox({ code: globalCode, onSetCode }) {
         }}
         onChange={handleSetCode}
       />
+      <Button filled color="green" onClick={handleFormatCode}>
+        Format
+      </Button>
     </div>
   );
+
+  function handleFormatCode() {
+    onSetCode(formatCode(globalCode));
+    setCode(formatCode(code));
+  }
 
   function handleSetCode(text) {
     clearTimeout(timerRef.current);
