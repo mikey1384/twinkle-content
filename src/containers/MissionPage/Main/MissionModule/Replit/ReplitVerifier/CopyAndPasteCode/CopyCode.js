@@ -20,7 +20,6 @@ export default function CopyCode({ className, codeToCopy, style }) {
       <Code
         codeRef={codeRef}
         language="jsx"
-        theme="dracula"
         className={css`
           border-radius: ${borderRadius};
           padding: 1.5rem;

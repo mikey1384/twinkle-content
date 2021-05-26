@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import 'codemirror/mode/meta';
-import 'codemirror/lib/codemirror.css';
-import 'codemirror/addon/lint/lint.js';
-import 'codemirror/addon/lint/css-lint.js';
-import 'codemirror/addon/lint/lint.css';
-import './material-darker.css';
 import Compiler from './Compiler';
 import SimpleEditor from 'react-simple-code-editor';
-import { highlight, languages } from 'prismjs/components/prism-core';
+import 'prismjs/components/prism-core';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
-import 'prismjs/themes/prism.css';
+import 'prismjs/themes/prism-okaidia.css';
+import okaidia from 'prism-react-renderer/themes/okaidia';
+import Highlight, { Prism } from 'prism-react-renderer';
 import { transformBeforeCompilation } from './ast';
 
 Editor.propTypes = {
@@ -33,16 +29,48 @@ export default function Editor({ value = '', valueOnTextEditor, onChange }) {
         />
       </div>
       {error && <p style={{ color: 'red' }}>{error}</p>}
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `.npm__react-simple-code-editor__textarea { outline: none !important; }`
+        }}
+      />
       <SimpleEditor
         value={valueOnTextEditor}
         onValueChange={onChange}
-        highlight={(code) => highlight(code, languages.js)}
-        padding={10}
         style={{
-          fontFamily: '"Fira code", "Fira Mono", monospace',
-          fontSize: 12
+          fontSize: '14px',
+          color: '#fff',
+          backgroundColor: 'rgb(39, 40, 34)',
+          fontFamily: `Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace`,
+          margin: 0
         }}
+        highlight={(code) =>
+          highlightCode({
+            code,
+            theme: okaidia
+          })
+        }
+        padding={8}
       />
     </div>
   );
+
+  function highlightCode({ code, theme }) {
+    return (
+      <Highlight Prism={Prism} code={code} theme={theme} language="jsx">
+        {({ tokens, getLineProps, getTokenProps }) => (
+          <>
+            {tokens.map((line, i) => (
+              <div key={i} {...getLineProps({ line, key: i })}>
+                {line.map((token, key) => {
+                  const tokenProps = getTokenProps({ token, key });
+                  return <span key={key} {...tokenProps} />;
+                })}
+              </div>
+            ))}
+          </>
+        )}
+      </Highlight>
+    );
+  }
 }

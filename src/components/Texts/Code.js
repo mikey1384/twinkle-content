@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import Highlight, { defaultProps } from 'prism-react-renderer';
+import Highlight, { Prism } from 'prism-react-renderer';
 import { Color } from 'constants/css';
+import dracula from 'prism-react-renderer/themes/dracula';
 import github from 'prism-react-renderer/themes/github';
 import okaidia from 'prism-react-renderer/themes/okaidia';
 import vsDark from 'prism-react-renderer/themes/vsDark';
@@ -16,6 +17,7 @@ Code.propTypes = {
 };
 
 const availableThemes = {
+  dracula,
   github,
   okaidia,
   vsDark
@@ -24,7 +26,7 @@ const availableThemes = {
 export default function Code({
   children,
   className,
-  language = 'js',
+  language = 'jsx',
   style,
   theme,
   codeRef
@@ -36,7 +38,7 @@ export default function Code({
 
   return (
     <Highlight
-      {...defaultProps}
+      Prism={Prism}
       theme={selectedTheme}
       code={children}
       language={language}
@@ -45,6 +47,7 @@ export default function Code({
         className: defaultClassName,
         style: defaultStyle,
         tokens,
+        transformToken,
         getLineProps,
         getTokenProps
       }) => {
@@ -61,9 +64,13 @@ export default function Code({
           >
             {tokens.map((line, i) => (
               <div key={i} {...getLineProps({ line, key: i })}>
-                {line.map((token, key) => (
-                  <span key={token} {...getTokenProps({ token, key })} />
-                ))}
+                {line.map((token, key) => {
+                  const tokenProps = getTokenProps({ token, key });
+                  if (transformToken) {
+                    return transformToken(tokenProps);
+                  }
+                  return <span key={key} {...tokenProps} />;
+                })}
               </div>
             ))}
           </pre>
