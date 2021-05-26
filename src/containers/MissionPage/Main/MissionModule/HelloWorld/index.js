@@ -10,15 +10,13 @@ HelloWorld.propTypes = {
   onSetMissionState: PropTypes.func.isRequired
 };
 
-export default function HelloWorld({ task, onSetMissionState }) {
-  const {
-    deletedCode,
-    code = `function HomePage() {
+const initialCode = `function HomePage() {
   return <div>Welcome to Next.js!</div>;
 }
+export default HomePage;`;
 
-export default HomePage;`
-  } = task;
+export default function HelloWorld({ task, onSetMissionState }) {
+  const { deletedCode, code } = task;
 
   return (
     <ErrorBoundary>
@@ -46,7 +44,7 @@ export default HomePage;`
         />
         {deletedCode && (
           <CodingHelloWorld
-            code={code}
+            code={code || initialCode}
             onSetCode={(code) =>
               onSetMissionState({
                 missionId: task.id,

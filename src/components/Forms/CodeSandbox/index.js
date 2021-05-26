@@ -17,13 +17,6 @@ export default function CodeSandbox({ code: globalCode, onSetCode }) {
       <Editor
         value={globalCode}
         valueOnTextEditor={code}
-        options={{
-          mode: 'jsx',
-          lineWrapping: true,
-          matchBrackets: true,
-          autoCloseBrackets: true,
-          lint: true
-        }}
         onChange={handleSetCode}
       />
       <Button filled color="green" onClick={handleFormatCode}>
