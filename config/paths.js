@@ -26,6 +26,10 @@ const moduleFileExtensions = [
   'mjs',
   'web.js',
   'js',
+  'web.ts',
+  'ts',
+  'web.tsx',
+  'tsx',
   'json',
   'web.jsx',
   'jsx'
@@ -54,6 +58,7 @@ module.exports = {
   appIndexJs: resolveModule(resolveApp, 'src/index'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
+  appTsConfig: resolveApp('tsconfig.json'),
   appJsConfig: resolveApp('jsconfig.json'),
   yarnLockFile: resolveApp('yarn.lock'),
   testsSetup: resolveModule(resolveApp, 'src/setupTests'),
