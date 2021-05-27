@@ -14,14 +14,6 @@ export default function reducer(state, action) {
         providerValue: action.payload.providerValue,
         codeNoRecompile: ''
       };
-    case 'UPDATE':
-      return {
-        ...state,
-        code: action.payload.code,
-        providerValue: action.payload.providerValue,
-        codeNoRecompile: '',
-        props: buildPropsObj(state.props, action.payload.updatedPropValues)
-      };
     case 'UPDATE_PROPS_AND_CODE_NO_RECOMPILE':
       return {
         ...state,

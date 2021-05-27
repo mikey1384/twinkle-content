@@ -1,5 +1,3 @@
-import { parseCode } from './ast';
-
 export const updateCode = (dispatch, newCode) => {
   dispatch({
     type: 'UPDATE_CODE',
@@ -12,50 +10,6 @@ export const updateCodeAndProvider = (dispatch, newCode, providerValue) => {
     payload: {
       code: newCode,
       providerValue
-    }
-  });
-};
-export const updateAll = (
-  dispatch,
-  newCode,
-  componentName,
-  propsConfig,
-  parseProvider,
-  customProps
-) => {
-  const propValues = {};
-  const { parsedProps, parsedProvider } = parseCode(
-    newCode,
-    componentName,
-    parseProvider
-  );
-  Object.keys(propsConfig).forEach((name) => {
-    propValues[name] = propsConfig[name].value;
-    if (customProps && customProps[name] && customProps[name].parse) {
-      // custom prop parser
-      propValues[name] = customProps[name].parse(
-        parsedProps[name],
-        propsConfig
-      );
-    } else if (propsConfig[name].type === 'date') {
-      const match = parsedProps[name].match(
-        /^new\s*Date\(\s*"([0-9-T:.Z]+)"\s*\)$/
-      );
-      if (match) {
-        propValues[name] = match[1];
-      } else {
-        propValues[name] = parsedProps[name];
-      }
-    } else {
-      propValues[name] = parsedProps[name];
-    }
-  });
-  dispatch({
-    type: 'UPDATE',
-    payload: {
-      code: newCode,
-      updatedPropValues: propValues,
-      providerValue: parsedProvider
     }
   });
 };
