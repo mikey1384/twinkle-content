@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import CodeSandbox from 'components/Forms/CodeSandbox';
-import Button from 'components/Button';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 
@@ -35,10 +34,11 @@ export default function CodingHelloWorld({ code, onSetCode, style }) {
           }
         `}
       >
-        <CodeSandbox code={code} onSetCode={onSetCode} />
-        <Button filled color="logoBlue" onClick={handleRunCode}>
-          Run
-        </Button>
+        <CodeSandbox
+          code={code}
+          onSetCode={onSetCode}
+          onRunCode={handleRunCode}
+        />
         <div id="here"></div>
       </div>
     </ErrorBoundary>
