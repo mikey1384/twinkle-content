@@ -7,15 +7,15 @@ import { parse } from './ast';
 Compiler.propTypes = {
   code: PropTypes.string,
   setError: PropTypes.func,
-  transformations: PropTypes.array,
+  transformation: PropTypes.func,
   placeholder: PropTypes.node,
   minHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 
-function Compiler({ code, setError, transformations, placeholder, minHeight }) {
+function Compiler({ code, setError, transformation, placeholder, minHeight }) {
   const [output, setOutput] = React.useState({ component: null });
   useEffect(() => {
-    transpile(code, transformations, setOutput, setError);
+    transpile(code, transformation, setOutput, setError);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code]);
   const Element = output.component;
@@ -40,12 +40,9 @@ function Compiler({ code, setError, transformations, placeholder, minHeight }) {
     </div>
   );
 
-  async function transpile(code, transformations, setOutput, setError) {
+  async function transpile(code, transformation, setOutput, setError) {
     try {
-      const ast = transformations.reduce(
-        (result, transformation) => transformation(result),
-        parse(code)
-      );
+      const ast = transformation(parse(code));
       const component = handleGenerateElement(ast, (error) => {
         setError(error.toString());
       });

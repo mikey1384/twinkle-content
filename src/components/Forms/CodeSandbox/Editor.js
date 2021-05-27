@@ -16,14 +16,12 @@ export default function Editor({ value = '', valueOnTextEditor, onChange }) {
 
   return (
     <div style={{ width: '100%' }}>
-      <div>
-        <Compiler
-          code={value}
-          transformations={[(ast) => transformBeforeCompilation(ast)]}
-          minHeight={62}
-          setError={(error) => setError(error)}
-        />
-      </div>
+      <Compiler
+        code={value}
+        transformation={transformBeforeCompilation}
+        minHeight={62}
+        setError={(error) => setError(error)}
+      />
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <style
         dangerouslySetInnerHTML={{
