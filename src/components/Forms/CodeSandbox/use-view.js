@@ -8,7 +8,6 @@ import {
   reset,
   updateAll,
   updateCode,
-  updateCodeAndProvider,
   updateProps,
   updatePropsAndCode,
   updatePropsAndCodeNoRecompile
@@ -178,17 +177,6 @@ const useView = (config = {}) => {
             });
         reset(dispatch, newCode, providerValue, propsConfig);
         onUpdate({ code: newCode });
-      },
-      updateProvider: (providerValue) => {
-        const newCode = getCode({
-          props: buildPropsObj(state.props, {}),
-          componentName,
-          provider,
-          providerValue,
-          importsConfig,
-          customProps
-        });
-        updateCodeAndProvider(dispatch, newCode, providerValue);
       },
       updateProp: (propName, propValue) => {
         try {
