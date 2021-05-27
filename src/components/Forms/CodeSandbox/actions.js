@@ -4,15 +4,6 @@ export const updateCode = (dispatch, newCode) => {
     payload: newCode
   });
 };
-export const updateCodeAndProvider = (dispatch, newCode, providerValue) => {
-  dispatch({
-    type: 'UPDATE_CODE_AND_PROVIDER',
-    payload: {
-      code: newCode,
-      providerValue
-    }
-  });
-};
 export const updatePropsAndCodeNoRecompile = (
   dispatch,
   newCode,
