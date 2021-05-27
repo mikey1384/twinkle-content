@@ -62,6 +62,7 @@ import { faHeart } from '@fortawesome/pro-solid-svg-icons/faHeart';
 import { faHeartSquare } from '@fortawesome/pro-solid-svg-icons/faHeartSquare';
 import { faHistory } from '@fortawesome/pro-solid-svg-icons/faHistory';
 import { faHome } from '@fortawesome/pro-solid-svg-icons/faHome';
+import { faIndent } from '@fortawesome/pro-solid-svg-icons/faIndent';
 import { faImage } from '@fortawesome/pro-solid-svg-icons/faImage';
 import { faLock } from '@fortawesome/pro-solid-svg-icons/faLock';
 import { faMinus } from '@fortawesome/pro-solid-svg-icons/faMinus';
@@ -70,6 +71,7 @@ import { faPaperclip } from '@fortawesome/pro-solid-svg-icons/faPaperclip';
 import { faPaperPlane } from '@fortawesome/pro-solid-svg-icons/faPaperPlane';
 import { faPencilAlt } from '@fortawesome/pro-solid-svg-icons/faPencilAlt';
 import { faPhoneVolume } from '@fortawesome/pro-solid-svg-icons/faPhoneVolume';
+import { faPlay } from '@fortawesome/pro-solid-svg-icons/faPlay';
 import { faPlus } from '@fortawesome/pro-solid-svg-icons/faPlus';
 import { faPortalEnter } from '@fortawesome/pro-solid-svg-icons/faPortalEnter';
 import { faQuestion } from '@fortawesome/pro-solid-svg-icons/faQuestion';
@@ -160,6 +162,7 @@ library.add(
   faHistory,
   faHome,
   faImage,
+  faIndent,
   faLevelUp,
   faLink,
   faLock,
@@ -169,6 +172,7 @@ library.add(
   faPaperPlane,
   faPencilAlt,
   faPhoneVolume,
+  faPlay,
   faPlus,
   faPortalEnter,
   faRecycle,

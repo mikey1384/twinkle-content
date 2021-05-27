@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Editor from './Editor';
 import Button from 'components/Button';
 import ErrorBoundary from 'components/ErrorBoundary';
+import Icon from 'components/Icon';
 import { formatCode } from './code-generator';
 
 CodeSandbox.propTypes = {
@@ -42,13 +43,15 @@ export default function CodeSandbox({
       >
         <div>
           <Button filled color="logoBlue" onClick={handleFormatCode}>
-            Format
+            <Icon icon="indent" />
+            <span style={{ marginLeft: '0.7rem' }}>Format</span>
           </Button>
         </div>
         <div>
           {onRunCode && (
             <Button filled color="green" onClick={onRunCode}>
-              Run
+              <Icon icon="play" />
+              <span style={{ marginLeft: '0.7rem' }}>Run</span>
             </Button>
           )}
         </div>
