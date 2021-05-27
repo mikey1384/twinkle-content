@@ -3,15 +3,8 @@ import debounce from 'lodash/debounce';
 // transformations, code generation
 import { transformBeforeCompilation } from './ast';
 import { buildPropsObj } from './utils';
-import { getCode, formatCode } from './code-generator';
-import {
-  reset,
-  updateAll,
-  updateCode,
-  updateProps,
-  updatePropsAndCode,
-  updatePropsAndCodeNoRecompile
-} from './actions';
+import { getCode } from './code-generator';
+import { updateAll } from './actions';
 import reducer from './reducer';
 const useView = (config = {}) => {
   // setting defaults
@@ -77,7 +70,6 @@ const useView = (config = {}) => {
       importsConfig,
       customProps
     });
-    updatePropsAndCodeNoRecompile(dispatch, newCode, propName, propValue);
     onUpdate({ code: newCode });
   }, 200);
   return {
@@ -91,110 +83,9 @@ const useView = (config = {}) => {
         __reactViewOnChange
       })
     },
-    knobProps: {
-      state: state.props,
-      error,
-      set: (propValue, propName) => {
-        try {
-          !hydrated && setHydrated(true);
-          const newCode = getCode({
-            props: buildPropsObj(state.props, { [propName]: propValue }),
-            componentName,
-            provider,
-            providerValue: state.providerValue,
-            importsConfig,
-            customProps
-          });
-          setError({ where: '', msg: null });
-          if (state.codeNoRecompile !== '') {
-            // fixes https://github.com/uber/react-view/issues/19
-            // We don't run compiler when the state change comes from interacting
-            // with the component since that causes remount and lost of focus.
-            // That's a bad experience for interactions like typing. But, we
-            // still want to display correct code snippet. That's why we have
-            // a separate state.codeNoRecompile. The problem is that compiler runs
-            // only if state.code changes and that doesn't really happen in the modal
-            // case since we are only flipping a boolean flag. So state.code stays same
-            // each even cycle of "open the modal through the knob and close it by its button".
-            // so here we need to force an addition state.code update (aka recompile
-            // with show=false
-            updateCode(dispatch, state.codeNoRecompile);
-            // and now we need to do the sequential state.code update with show=true
-            // in the next tick
-            setTimeout(() => {
-              updatePropsAndCode(dispatch, newCode, propName, propValue);
-              onUpdate({ code: newCode });
-            }, 0);
-          } else {
-            updatePropsAndCode(dispatch, newCode, propName, propValue);
-            onUpdate({ code: newCode });
-          }
-        } catch (e) {
-          updateProps(dispatch, propName, propValue);
-          setError({ where: propName, msg: e.toString() });
-        }
-      }
-    },
-    providerValue: state.providerValue,
-    editorProps: {
-      code: state.codeNoRecompile !== '' ? state.codeNoRecompile : state.code,
-      onChange: (newCode) => {
-        try {
-          updateAll(
-            dispatch,
-            newCode,
-            componentName,
-            propsConfig,
-            provider ? provider.parse : undefined,
-            customProps
-          );
-          onUpdate({ code: newCode });
-        } catch (e) {
-          updateCode(dispatch, newCode);
-        }
-      }
-    },
     errorProps: {
       msg: error.where === '__compiler' ? error.msg : null,
       code: state.code
-    },
-    actions: {
-      formatCode: () => {
-        updateCode(dispatch, formatCode(state.code));
-      },
-      reset: () => {
-        const editorOnlyMode = Object.keys(propsConfig).length === 0;
-        const providerValue = provider ? provider.value : undefined;
-        const newCode = editorOnlyMode
-          ? initialCode
-          : getCode({
-              props: propsConfig,
-              componentName,
-              provider,
-              providerValue,
-              importsConfig,
-              customProps
-            });
-        reset(dispatch, newCode, providerValue, propsConfig);
-        onUpdate({ code: newCode });
-      },
-      updateProp: (propName, propValue) => {
-        try {
-          const newCode = getCode({
-            props: buildPropsObj(state.props, { [propName]: propValue }),
-            componentName,
-            provider,
-            providerValue: state.providerValue,
-            importsConfig,
-            customProps
-          });
-          setError({ where: '', msg: null });
-          updatePropsAndCode(dispatch, newCode, propName, propValue);
-        } catch (e) {
-          updateProps(dispatch, propName, propValue);
-          setError({ where: propName, msg: e.toString() });
-        }
-      }
     }
   };
 };
