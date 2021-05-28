@@ -41,9 +41,10 @@ export default function TakeScreenshot({
   const [alertModalShown, setAlertModalShown] = useState(false);
   const [uploadingFile, setUploadingFile] = useState(false);
   const FileInputRef = useRef(null);
-  const maxSize = useMemo(() => returnMaxUploadSize(fileUploadLvl), [
-    fileUploadLvl
-  ]);
+  const maxSize = useMemo(
+    () => returnMaxUploadSize(fileUploadLvl),
+    [fileUploadLvl]
+  );
   const BodyRef = useRef(document.scrollingElement || document.documentElement);
   const mounted = useRef(true);
 
@@ -81,10 +82,9 @@ export default function TakeScreenshot({
             Follow the instructions below
           </div>
           <div>
-            <b>1.</b> Take the screenshot of{' '}
-            <b>
-              this screen you are looking at right now{' '}
-              <Icon icon="arrow-down" />
+            <b>1.</b> Take a screenshot of{' '}
+            <b style={{ color: Color.red() }}>
+              this section <Icon icon="arrow-down" />
             </b>
             <div
               className={css`
@@ -122,7 +122,9 @@ export default function TakeScreenshot({
                 }}
               >
                 <p style={{ fontWeight: 'bold' }}>
-                  Your screenshot must include this section
+                  Your screenshot{' '}
+                  <b style={{ color: Color.red() }}>must include</b> this
+                  section
                 </p>
                 <p style={{ marginTop: '1.5rem' }}>
                   <b>{username}</b> captured this screenshot on {returnNow()}
@@ -246,7 +248,10 @@ export default function TakeScreenshot({
               {`If you don't know what the word "screenshot" means, `}
               press the <b style={{ color: Color.green() }}>button</b> below
             </span>
-            <Icon style={{ marginLeft: '1rem' }} icon="arrow-down" />
+            <Icon
+              style={{ marginLeft: '1rem', color: Color.green() }}
+              icon="arrow-down"
+            />
           </div>
         </div>
       )}
