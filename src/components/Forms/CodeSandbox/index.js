@@ -4,7 +4,9 @@ import Editor from './Editor';
 import Button from 'components/Button';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Icon from 'components/Icon';
-import { formatCode } from './code-generator';
+import prettier from '@miksu/prettier/lib/standalone';
+import parsers from '@miksu/prettier/lib/language-js/parser-babylon';
+import { parse } from './ast';
 
 CodeSandbox.propTypes = {
   code: PropTypes.string,
@@ -62,6 +64,15 @@ export default function CodeSandbox({
   function handleFormatCode() {
     onSetCode(formatCode(globalCode));
     setCode(formatCode(code));
+
+    function formatCode(code) {
+      const result = prettier.__debug.formatAST(parse(code), {
+        originalText: '',
+        parser: 'babel',
+        plugins: [parsers]
+      });
+      return result.formatted.replace(/[\r\n]+$/, '').replace(/[;]+$/, '');
+    }
   }
 
   function handleSetCode(text) {

@@ -11,9 +11,8 @@ HelloWorld.propTypes = {
 };
 
 const initialCode = `function HomePage() {
-  return <div>Welcome to Next.js!</div>;
-}
-export default HomePage;`;
+  return <div></div>;
+}`;
 
 export default function HelloWorld({ task, onSetMissionState }) {
   const { deletedCode, code } = task;
