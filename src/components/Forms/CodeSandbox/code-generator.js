@@ -101,47 +101,6 @@ export const getAstJsxElement = (name, attrs, children) => {
     true
   );
 };
-export const addToImportList = (importList, imports) => {
-  for (const [importFrom, importNames] of Object.entries(imports)) {
-    if (!importList.hasOwnProperty(importFrom)) {
-      importList[importFrom] = {
-        named: [],
-        default: ''
-      };
-    }
-    if (importNames.default) {
-      importList[importFrom].default = importNames.default;
-    }
-    if (importNames.named && importNames.named.length > 0) {
-      if (!importList[importFrom].hasOwnProperty('named')) {
-        importList[importFrom]['named'] = [];
-      }
-      importList[importFrom].named = [
-        ...new Set(importList[importFrom].named.concat(importNames.named))
-      ];
-    }
-  }
-};
-export const getAstImports = (importsConfig, providerImports, props) => {
-  // global scoped import that are always displayed
-  const importList = clone(importsConfig);
-  // prop level imports (typically enums related) that are displayed
-  // only when the prop is being used
-  Object.values(props).forEach((prop) => {
-    if (
-      prop.imports &&
-      prop.value &&
-      prop.value !== '' &&
-      prop.value !== prop.defaultValue
-    ) {
-      addToImportList(importList, prop.imports);
-    }
-  });
-  addToImportList(importList, providerImports);
-  return Object.keys(importList).map((from) =>
-    getAstImport(importList[from].named || [], from, importList[from].default)
-  );
-};
 export const formatAstAndPrint = (ast, printWidth) => {
   const result = prettier.__debug.formatAST(ast, {
     originalText: '',
@@ -165,20 +124,3 @@ export const formatAstAndPrint = (ast, printWidth) => {
 export const formatCode = (code) => {
   return formatAstAndPrint(parse(code));
 };
-
-function clone(obj) {
-  if (typeof obj === 'function') {
-    return obj;
-  }
-  const result = Array.isArray(obj) ? [] : {};
-  for (const key in obj) {
-    const value = obj[key];
-    const type = {}.toString.call(value).slice(8, -1);
-    if (type === 'Array' || type === 'Object') {
-      result[key] = clone(value);
-    } else {
-      result[key] = value;
-    }
-  }
-  return result;
-}
