@@ -4,7 +4,7 @@ import Compiler from './Compiler';
 import SimpleEditor from 'react-simple-code-editor';
 import okaidia from 'prism-react-renderer/themes/okaidia';
 import Highlight, { Prism } from 'prism-react-renderer';
-import { transformBeforeCompilation } from './ast';
+import { transformBeforeCompilation } from '../ast';
 
 Editor.propTypes = {
   value: PropTypes.string,
@@ -33,7 +33,7 @@ export default function Editor({
           __html: `.npm__react-simple-code-editor__textarea { outline: none !important; }`
         }}
       />
-      <div style={{ marginTop: '1.5rem' }}>
+      <div style={{ marginTop: '2rem' }}>
         <SimpleEditor
           value={valueOnTextEditor}
           onValueChange={onChange}

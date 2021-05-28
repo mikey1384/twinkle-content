@@ -4,37 +4,7 @@ import { parse as babelParse } from '@babel/parser';
 export function parse(code) {
   return babelParse(code, {
     sourceType: 'module',
-    plugins: [
-      'jsx',
-      'flowComments',
-      'typescript',
-      'asyncGenerators',
-      'classProperties',
-      'classPrivateProperties',
-      'classPrivateMethods',
-      [
-        'decorators',
-        {
-          decoratorsBeforeExport: true
-        }
-      ],
-      'doExpressions',
-      'dynamicImport',
-      'exportDefaultFrom',
-      'exportNamespaceFrom',
-      'functionBind',
-      'functionSent',
-      'importMeta',
-      'logicalAssignment',
-      'nullishCoalescingOperator',
-      'numericSeparator',
-      'objectRestSpread',
-      'optionalCatchBinding',
-      'optionalChaining',
-      'partialApplication',
-      'throwExpressions',
-      'topLevelAwait'
-    ]
+    plugins: ['jsx']
   });
 }
 

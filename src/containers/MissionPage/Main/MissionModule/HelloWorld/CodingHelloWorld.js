@@ -23,7 +23,7 @@ export default function CodingHelloWorld({ code, onSetCode, style }) {
         ...style
       }}
     >
-      <p>{`2. Let's code`}</p>
+      <p>{`1. Let's code`}</p>
       <div
         className={css`
           width: 70%;

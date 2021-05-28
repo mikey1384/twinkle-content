@@ -2,7 +2,7 @@ import React, { createElement, memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { transformFromAstSync } from '@babel/core';
 import presetReact from '@babel/preset-react';
-import { parse } from './ast';
+import { parse } from '../ast';
 
 Compiler.propTypes = {
   code: PropTypes.string,

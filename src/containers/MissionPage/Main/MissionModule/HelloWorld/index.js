@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from '@emotion/css';
-import DeleteCode from './DeleteCode';
 import CodingHelloWorld from './CodingHelloWorld';
 
 HelloWorld.propTypes = {
@@ -26,7 +25,7 @@ const initialCode = `function HomePage() {
 }`;
 
 export default function HelloWorld({ task, onSetMissionState }) {
-  const { deletedReplitCode, code } = task;
+  const { code } = task;
 
   return (
     <ErrorBoundary>
@@ -43,29 +42,15 @@ export default function HelloWorld({ task, onSetMissionState }) {
           }
         `}
       >
-        <DeleteCode
-          onSetDeletedCode={() =>
+        <CodingHelloWorld
+          code={code || initialCode}
+          onSetCode={(code) =>
             onSetMissionState({
               missionId: task.id,
-              newState: { deletedReplitCode: true }
+              newState: { code }
             })
           }
-          deletedCode={deletedReplitCode}
         />
-        {deletedReplitCode && (
-          <CodingHelloWorld
-            code={code || initialCode}
-            onSetCode={(code) =>
-              onSetMissionState({
-                missionId: task.id,
-                newState: { code }
-              })
-            }
-            style={{
-              marginTop: '5rem'
-            }}
-          />
-        )}
       </div>
     </ErrorBoundary>
   );
