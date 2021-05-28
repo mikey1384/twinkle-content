@@ -1,10 +1,9 @@
 import template from '@babel/template';
 import * as t from '@babel/types';
 import { parse } from './ast';
-// forked prettier on a diet
 import prettier from '@miksu/prettier/lib/standalone';
 import parsers from '@miksu/prettier/lib/language-js/parser-babylon';
-const reactImport = template.ast(`import * as React from 'react';`);
+
 export const getAstPropValue = (prop, name, customProps) => {
   const value = prop.value;
   switch (prop.type) {
@@ -57,42 +56,6 @@ export const getAstPropValue = (prop, name, customProps) => {
       }
       return customProps[name].generate(value);
   }
-};
-export const getAstPropsArray = (props, customProps) => {
-  return Object.entries(props).map(([name, prop]) => {
-    const { value, stateful, defaultValue } = prop;
-    if (stateful) {
-      return t.jsxAttribute(
-        t.jsxIdentifier(name),
-        t.jsxExpressionContainer(t.identifier(name))
-      );
-    }
-    // When the `defaultValue` is set and `value` is the same as the `defaultValue`
-    // we don't add it to the list of props.
-    // It handles boolean props where `defaultValue` set to true,
-    // and enum props that have a `defaultValue` set to be displayed
-    // in the view correctly (checked checkboxes and selected default value in radio groups)
-    // and not rendered in the component's props.
-    if (
-      (typeof value !== 'boolean' && typeof value !== 'number' && !value) ||
-      value === defaultValue ||
-      (typeof value === 'boolean' && !value && !defaultValue)
-    ) {
-      return null;
-    }
-    const astValue = getAstPropValue(prop, name, customProps);
-    if (!astValue) return null;
-    // shortcut render "isDisabled" vs "isDisabled={true}"
-    if (astValue.type === 'BooleanLiteral' && astValue.value === true) {
-      return t.jsxAttribute(t.jsxIdentifier(name), null);
-    }
-    return t.jsxAttribute(
-      t.jsxIdentifier(name),
-      astValue.type === 'StringLiteral'
-        ? astValue
-        : t.jsxExpressionContainer(astValue)
-    );
-  });
 };
 export const getAstReactHooks = (props, customProps) => {
   const hooks = [];
@@ -179,51 +142,6 @@ export const getAstImports = (importsConfig, providerImports, props) => {
     getAstImport(importList[from].named || [], from, importList[from].default)
   );
 };
-const getChildrenAst = (value) => {
-  return template.ast(`<>${value}</>`, {
-    plugins: ['jsx']
-  }).expression.children;
-};
-export const getAst = (
-  props,
-  componentName,
-  provider,
-  providerValue,
-  importsConfig,
-  customProps
-) => {
-  const { children, ...restProps } = props;
-  const buildExport = template(`export default () => {%%body%%}`);
-  return t.file(
-    t.program([
-      reactImport,
-      ...getAstImports(
-        importsConfig,
-        providerValue ? provider.imports : {},
-        props
-      ),
-      buildExport({
-        body: [
-          ...getAstReactHooks(restProps, customProps),
-          t.returnStatement(
-            provider.generate(
-              providerValue,
-              getAstJsxElement(
-                componentName,
-                getAstPropsArray(restProps, customProps),
-                children && children.value
-                  ? getChildrenAst(String(children.value))
-                  : []
-              )
-            )
-          )
-        ]
-      })
-    ]),
-    [],
-    []
-  );
-};
 export const formatAstAndPrint = (ast, printWidth) => {
   const result = prettier.__debug.formatAST(ast, {
     originalText: '',
@@ -246,27 +164,6 @@ export const formatAstAndPrint = (ast, printWidth) => {
 };
 export const formatCode = (code) => {
   return formatAstAndPrint(parse(code));
-};
-export const getCode = ({
-  props,
-  componentName,
-  provider,
-  providerValue,
-  importsConfig,
-  customProps
-}) => {
-  if (Object.keys(props).length === 0) {
-    return '';
-  }
-  const ast = getAst(
-    props,
-    componentName,
-    provider,
-    providerValue,
-    importsConfig,
-    customProps
-  );
-  return formatAstAndPrint(ast);
 };
 
 function clone(obj) {
