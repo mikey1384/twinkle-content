@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { createElement, memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { transformFromAstSync } from '@babel/core';
 import presetReact from '@babel/preset-react';
@@ -7,36 +7,25 @@ import { parse } from './ast';
 Compiler.propTypes = {
   code: PropTypes.string,
   setError: PropTypes.func,
-  transformation: PropTypes.func,
-  placeholder: PropTypes.node,
-  minHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  transformation: PropTypes.func
 };
 
-function Compiler({ code, setError, transformation, placeholder, minHeight }) {
-  const [output, setOutput] = React.useState({ component: null });
+function Compiler({ code, setError, transformation }) {
+  const [output, setOutput] = useState({ component: null });
   useEffect(() => {
     transpile(code, transformation, setOutput, setError);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code]);
   const Element = output.component;
-  const Placeholder = placeholder;
+
   return (
     <div
       style={{
         display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'baseline',
-        flexWrap: 'wrap',
-        minHeight: `${minHeight || 0}px`,
-        paddingTop: minHeight ? '16px' : 0,
-        paddingBottom: minHeight ? '16px' : 0
+        justifyContent: 'center'
       }}
     >
-      {Element
-        ? React.createElement(Element, null)
-        : Placeholder
-        ? React.createElement(Placeholder, { height: minHeight || 32 })
-        : null}
+      {Element ? createElement(Element, null) : null}
     </div>
   );
 

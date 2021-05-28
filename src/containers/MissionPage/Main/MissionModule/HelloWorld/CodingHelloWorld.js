@@ -23,11 +23,11 @@ export default function CodingHelloWorld({ code, onSetCode, style }) {
         ...style
       }}
     >
-      <p>{`2. Let's code your first Hello World`}</p>
+      <p>{`2. Let's code`}</p>
       <div
         className={css`
           width: 70%;
-          margin-top: 2rem;
+          margin-top: 1rem;
           @media (max-width: ${mobileMaxWidth}) {
             width: 100%;
             margin-top: 1.5rem;
@@ -39,7 +39,6 @@ export default function CodingHelloWorld({ code, onSetCode, style }) {
           onSetCode={onSetCode}
           onRunCode={handleRunCode}
         />
-        <div id="here"></div>
       </div>
     </ErrorBoundary>
   );

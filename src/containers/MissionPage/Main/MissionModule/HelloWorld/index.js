@@ -11,11 +11,22 @@ HelloWorld.propTypes = {
 };
 
 const initialCode = `function HomePage() {
-  return <div></div>;
+  return (
+    <div
+      style={{
+        color: "blue",
+        border: "1px solid blue",
+        fontSize: "2rem",
+        padding: "1rem"
+      }}
+    >
+      Change me
+    </div>
+  );
 }`;
 
 export default function HelloWorld({ task, onSetMissionState }) {
-  const { deletedCode, code } = task;
+  const { deletedReplitCode, code } = task;
 
   return (
     <ErrorBoundary>
@@ -36,12 +47,12 @@ export default function HelloWorld({ task, onSetMissionState }) {
           onSetDeletedCode={() =>
             onSetMissionState({
               missionId: task.id,
-              newState: { deletedCode: true }
+              newState: { deletedReplitCode: true }
             })
           }
-          deletedCode={deletedCode}
+          deletedCode={deletedReplitCode}
         />
-        {deletedCode && (
+        {deletedReplitCode && (
           <CodingHelloWorld
             code={code || initialCode}
             onSetCode={(code) =>

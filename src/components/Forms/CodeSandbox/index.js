@@ -31,6 +31,7 @@ export default function CodeSandbox({
       }}
     >
       <Editor
+        style={{ marginTop: '2rem' }}
         value={globalCode}
         valueOnTextEditor={code}
         onChange={handleSetCode}

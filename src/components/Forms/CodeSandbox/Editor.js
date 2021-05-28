@@ -9,17 +9,22 @@ import { transformBeforeCompilation } from './ast';
 Editor.propTypes = {
   value: PropTypes.string,
   valueOnTextEditor: PropTypes.string,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  style: PropTypes.object
 };
-export default function Editor({ value = '', valueOnTextEditor, onChange }) {
+export default function Editor({
+  value = '',
+  valueOnTextEditor,
+  onChange,
+  style
+}) {
   const [error, setError] = useState('');
 
   return (
-    <div style={{ width: '100%' }}>
+    <div style={{ width: '100%', ...style }}>
       <Compiler
         code={value}
         transformation={transformBeforeCompilation}
-        minHeight={62}
         setError={(error) => setError(error)}
       />
       {error && <p style={{ color: 'red' }}>{error}</p>}
@@ -28,24 +33,26 @@ export default function Editor({ value = '', valueOnTextEditor, onChange }) {
           __html: `.npm__react-simple-code-editor__textarea { outline: none !important; }`
         }}
       />
-      <SimpleEditor
-        value={valueOnTextEditor}
-        onValueChange={onChange}
-        style={{
-          fontSize: '14px',
-          color: '#fff',
-          backgroundColor: 'rgb(39, 40, 34)',
-          fontFamily: `Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace`,
-          margin: 0
-        }}
-        highlight={(code) =>
-          highlightCode({
-            code,
-            theme: okaidia
-          })
-        }
-        padding={8}
-      />
+      <div style={{ marginTop: '1.5rem' }}>
+        <SimpleEditor
+          value={valueOnTextEditor}
+          onValueChange={onChange}
+          style={{
+            fontSize: '14px',
+            color: '#fff',
+            backgroundColor: 'rgb(39, 40, 34)',
+            fontFamily: `Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace`,
+            margin: 0
+          }}
+          highlight={(code) =>
+            highlightCode({
+              code,
+              theme: okaidia
+            })
+          }
+          padding={8}
+        />
+      </div>
     </div>
   );
 
