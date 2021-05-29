@@ -23,7 +23,20 @@ export default function CodingHelloWorld({ code, onSetCode, style }) {
         ...style
       }}
     >
-      <p>{`1. Let's code`}</p>
+      <p>{`1. Time to code!`}</p>
+      <div
+        className={css`
+          width: 80%;
+          font-size: 1.7rem;
+          line-height: 2;
+          @media (max-width: ${mobileMaxWidth}) {
+            width: 100%;
+          }
+        `}
+        style={{ marginTop: '2rem' }}
+      >
+        {`Great job setting up a replit. A replit is to a website as a canvas is to a painting. Just as a painting doesn't magically appear after you prepare a canvas, a website like this Twinkle Website doesn't get made automatically after you set up a replit - it needs to be coded, just as a painting needs to be painted.`}
+      </div>
       <div
         className={css`
           width: 70%;
