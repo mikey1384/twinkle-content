@@ -210,7 +210,7 @@ export default function Stories() {
                     opacity: loadingNewFeeds ? 0.5 : 1
                   }}
                 >
-                  Tap to See {numNewPosts} new Post
+                  Tap to See {numNewPosts} New Post
                   {numNewPosts > 1 ? 's' : ''}
                   {loadingNewFeeds && (
                     <Icon style={{ marginLeft: '1rem' }} icon="spinner" pulse />
