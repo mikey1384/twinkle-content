@@ -13,30 +13,28 @@ export default function HelloWorld({ task, onSetMissionState }) {
   const { code } = task;
 
   return (
-    <ErrorBoundary>
-      <div
-        className={css`
-          width: 100%;
-          font-size: 1.5rem;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          p {
-            font-size: 2rem;
-            font-weight: bold;
-          }
-        `}
-      >
-        <CodingHelloWorld
-          code={code}
-          onSetCode={(code) =>
-            onSetMissionState({
-              missionId: task.id,
-              newState: { code }
-            })
-          }
-        />
-      </div>
+    <ErrorBoundary
+      className={css`
+        width: 100%;
+        font-size: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        p {
+          font-size: 2rem;
+          font-weight: bold;
+        }
+      `}
+    >
+      <CodingHelloWorld
+        code={code}
+        onSetCode={(code) =>
+          onSetMissionState({
+            missionId: task.id,
+            newState: { code }
+          })
+        }
+      />
     </ErrorBoundary>
   );
 }
