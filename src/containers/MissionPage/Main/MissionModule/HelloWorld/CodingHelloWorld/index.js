@@ -56,7 +56,13 @@ export default function CodingHelloWorld({ code, onSetCode, style }) {
           </Button>
         </div>
       )}
-      {readIntro && <FirstCodingExercise code={code} onSetCode={onSetCode} />}
+      {readIntro && (
+        <FirstCodingExercise
+          style={{ marginTop: '3rem' }}
+          code={code}
+          onSetCode={onSetCode}
+        />
+      )}
     </ErrorBoundary>
   );
 }

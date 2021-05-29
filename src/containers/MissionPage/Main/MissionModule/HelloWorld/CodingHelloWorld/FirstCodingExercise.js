@@ -6,33 +6,33 @@ import { css } from '@emotion/css';
 
 FirstCodingExercise.propTypes = {
   code: PropTypes.string,
-  onSetCode: PropTypes.func.isRequired
+  onSetCode: PropTypes.func.isRequired,
+  style: PropTypes.object
 };
 
-export default function FirstCodingExercise({ code, onSetCode }) {
+export default function FirstCodingExercise({ code, onSetCode, style }) {
   const initialCode = `function HomePage() {
-    return (
-      <div
-        style={{
-          color: "blue",
-          border: "1px solid blue",
-          fontSize: "2rem",
-          padding: "1rem"
-        }}
-      >
-        Change me
-      </div>
-    );
-  }`;
+  return (
+    <div
+      style={{
+        color: "blue",
+        border: "1px solid blue",
+        fontSize: "2rem",
+        padding: "1rem"
+      }}
+    >
+      Change me
+    </div>
+  );
+}`;
 
   return (
     <div
+      style={style}
       className={css`
-        width: 70%;
-        margin-top: 1rem;
+        width: 80%;
         @media (max-width: ${mobileMaxWidth}) {
           width: 100%;
-          margin-top: 1.5rem;
         }
       `}
     >
