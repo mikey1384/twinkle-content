@@ -9,21 +9,6 @@ HelloWorld.propTypes = {
   onSetMissionState: PropTypes.func.isRequired
 };
 
-const initialCode = `function HomePage() {
-  return (
-    <div
-      style={{
-        color: "blue",
-        border: "1px solid blue",
-        fontSize: "2rem",
-        padding: "1rem"
-      }}
-    >
-      Change me
-    </div>
-  );
-}`;
-
 export default function HelloWorld({ task, onSetMissionState }) {
   const { code } = task;
 
@@ -43,7 +28,7 @@ export default function HelloWorld({ task, onSetMissionState }) {
         `}
       >
         <CodingHelloWorld
-          code={code || initialCode}
+          code={code}
           onSetCode={(code) =>
             onSetMissionState({
               missionId: task.id,
