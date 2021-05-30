@@ -19,13 +19,16 @@ export default function Editor({
   style
 }) {
   const [error, setError] = useState('');
+  const [output, setOutput] = useState({ component: null });
 
   return (
     <div style={{ width: '100%', ...style }}>
       <Compiler
         code={value}
+        output={output?.component}
+        onSetOutput={setOutput}
         transformation={transformBeforeCompilation}
-        setError={setError}
+        onSetError={setError}
       />
       <style
         dangerouslySetInnerHTML={{

@@ -1,4 +1,4 @@
-import React, { createElement, memo, useEffect, useState } from 'react';
+import React, { createElement, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { transformFromAstSync } from '@babel/core';
 import presetReact from '@babel/preset-react';
@@ -6,17 +6,28 @@ import { parse } from '../ast';
 
 Compiler.propTypes = {
   code: PropTypes.string,
-  setError: PropTypes.func,
+  output: PropTypes.func,
+  onSetOutput: PropTypes.func,
+  onSetError: PropTypes.func,
   transformation: PropTypes.func
 };
 
-function Compiler({ code, setError, transformation }) {
-  const [output, setOutput] = useState({ component: null });
+export default function Compiler({
+  code,
+  output,
+  onSetError,
+  onSetOutput,
+  transformation
+}) {
   useEffect(() => {
-    transpile(code, transformation, setOutput, setError);
+    transpile(code, transformation);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code]);
-  const Element = output.component;
+
+  const Element = useMemo(
+    () => (output ? createElement(output, null) : null),
+    [output]
+  );
 
   return (
     <div
@@ -25,20 +36,20 @@ function Compiler({ code, setError, transformation }) {
         justifyContent: 'center'
       }}
     >
-      {Element ? createElement(Element, null) : null}
+      {Element}
     </div>
   );
 
-  async function transpile(code, transformation, setOutput, setError) {
+  function transpile(code, transformation) {
     try {
       const ast = transformation(parse(code));
       const component = handleGenerateElement(ast, (error) => {
-        setError(error.toString());
+        onSetError(error.toString());
       });
-      setOutput({ component });
-      setError(null);
+      onSetOutput({ component });
+      onSetError(null);
     } catch (error) {
-      setError(error.toString());
+      onSetError(error.toString());
     }
   }
 
@@ -74,8 +85,3 @@ function Compiler({ code, setError, transformation }) {
     return ErrorBoundary;
   }
 }
-
-export default memo(
-  Compiler,
-  (prevProps, nextProps) => prevProps.code === nextProps.code
-);
