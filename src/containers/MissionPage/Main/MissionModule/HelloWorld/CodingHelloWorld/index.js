@@ -40,7 +40,7 @@ export default function CodingHelloWorld({ code, onSetCode, style }) {
         `}
         style={{ marginTop: '2rem' }}
       >
-        {`Great job setting up a replit. Everything you've done up to this point was kind of like preparing a canvas before painting a picture. Now that we have a "canvas," it's time to "paint" our website. We do this by telling the computer what to do using a language it can understand. This is called "coding" or "programming" and the computer language we are going to use to code our website is called "Javascript."`}
+        {`Everything you did up to this point was kind of like preparing a canvas before painting a picture. Replit is our "canvas," and now it's time to "paint" our website. We do this by telling the computer what to do using a language it can understand. This is called "coding" or "programming" and the computer language we are going to use to code our website is called "Javascript."`}
       </div>
       {!readIntro && (
         <div
