@@ -13,16 +13,19 @@ FirstCodingExercise.propTypes = {
 export default function FirstCodingExercise({ code, onSetCode, style }) {
   const initialCode = `function HomePage() {
   return (
-    <div
+    <button
       style={{
-        color: "blue",
-        border: "1px solid blue",
+        color: "white",
+        background: "red",
+        border: "none",
         fontSize: "2rem",
-        padding: "1rem"
+        padding: "1rem",
+        cursor: "pointer"
       }}
+      onClick={() => alert('I am a button')}
     >
       Change me
-    </div>
+    </button>
   );
 }`;
 
@@ -36,15 +39,7 @@ export default function FirstCodingExercise({ code, onSetCode, style }) {
         }
       `}
     >
-      <CodeSandbox
-        code={code || initialCode}
-        onSetCode={onSetCode}
-        onRunCode={handleRunCode}
-      />
+      <CodeSandbox code={code || initialCode} onSetCode={onSetCode} />
     </div>
   );
-
-  async function handleRunCode() {
-    console.log('ok');
-  }
 }

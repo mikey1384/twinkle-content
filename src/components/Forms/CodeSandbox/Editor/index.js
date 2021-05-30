@@ -25,15 +25,15 @@ export default function Editor({
       <Compiler
         code={value}
         transformation={transformBeforeCompilation}
-        setError={(error) => setError(error)}
+        setError={setError}
       />
-      {error && <p style={{ color: 'red' }}>{error}</p>}
       <style
         dangerouslySetInnerHTML={{
           __html: `.npm__react-simple-code-editor__textarea { outline: none !important; }`
         }}
       />
       <div style={{ marginTop: '2rem' }}>
+        {error && <p style={{ color: 'red', marginBottom: '1rem' }}>{error}</p>}
         <SimpleEditor
           value={valueOnTextEditor}
           onValueChange={onChange}
