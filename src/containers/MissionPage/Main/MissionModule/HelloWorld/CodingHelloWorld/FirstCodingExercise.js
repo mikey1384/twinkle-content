@@ -53,10 +53,10 @@ export default function FirstCodingExercise({ code, onSetCode, style }) {
   function handleRunCode(ast) {
     const results = [];
     for (let key in ast) {
-      analyseAstProp(ast[key]);
+      analyzeAstProp(ast[key]);
     }
 
-    function analyseAstProp(astProp) {
+    function analyzeAstProp(astProp) {
       if (typeof astProp === 'object') {
         if (astProp?.type) {
           console.log(astProp);
@@ -65,7 +65,7 @@ export default function FirstCodingExercise({ code, onSetCode, style }) {
           results.push(astProp);
         }
         for (let key in astProp) {
-          analyseAstProp(astProp[key]);
+          analyzeAstProp(astProp[key]);
         }
       }
     }

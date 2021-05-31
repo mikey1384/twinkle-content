@@ -163,7 +163,7 @@ export default function Privacy() {
         anonymous unique identifier. Cookies are sent to your browser from a
         website and stored on your device. Other tracking technologies are also
         used such as beacons, tags and scripts to collect and track information
-        and to improve and analyse our Service.
+        and to improve and analyze our Service.
       </p>
       <p>
         You can instruct your browser to refuse all cookies or to indicate when
@@ -406,7 +406,7 @@ export default function Privacy() {
 
       <h3>Analytics</h3>
       <p>
-        We may use third-party Service Providers to monitor and analyse the use
+        We may use third-party Service Providers to monitor and analyze the use
         of our Service.
       </p>
       <ul>
