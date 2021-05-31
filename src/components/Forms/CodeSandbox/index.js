@@ -11,16 +11,23 @@ import { parse } from './ast';
 CodeSandbox.propTypes = {
   code: PropTypes.string,
   onSetCode: PropTypes.func.isRequired,
-  onRunCode: PropTypes.func
+  onRunCode: PropTypes.func,
+  runButtonLabel: PropTypes.string,
+  simulatorRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
 };
 
 export default function CodeSandbox({
   code: globalCode,
   onSetCode,
-  onRunCode
+  onRunCode,
+  runButtonLabel = 'Run',
+  simulatorRef
 }) {
   const timerRef = useRef(null);
+  const [runButtonDisabled, setRunButtonDisabled] = useState(false);
   const [code, setCode] = useState(globalCode);
+  const [ast, setAst] = useState(null);
+
   return (
     <ErrorBoundary
       style={{
@@ -35,6 +42,9 @@ export default function CodeSandbox({
         value={globalCode}
         valueOnTextEditor={code}
         onChange={handleSetCode}
+        onSetAst={setAst}
+        ast={ast}
+        simulatorRef={simulatorRef}
       />
       <div
         style={{
@@ -52,9 +62,14 @@ export default function CodeSandbox({
         </div>
         <div>
           {onRunCode && (
-            <Button filled color="green" onClick={onRunCode}>
+            <Button
+              disabled={runButtonDisabled}
+              filled
+              color="green"
+              onClick={handleRunCode}
+            >
               <Icon icon="play" />
-              <span style={{ marginLeft: '0.7rem' }}>Run</span>
+              <span style={{ marginLeft: '0.7rem' }}>{runButtonLabel}</span>
             </Button>
           )}
         </div>
@@ -76,9 +91,17 @@ export default function CodeSandbox({
     }
   }
 
+  function handleRunCode() {
+    onRunCode?.(ast);
+  }
+
   function handleSetCode(text) {
     clearTimeout(timerRef.current);
     setCode(text);
-    timerRef.current = setTimeout(() => onSetCode(text), 1000);
+    setRunButtonDisabled(true);
+    timerRef.current = setTimeout(() => {
+      onSetCode(text);
+      setRunButtonDisabled(false);
+    }, 1000);
   }
 }

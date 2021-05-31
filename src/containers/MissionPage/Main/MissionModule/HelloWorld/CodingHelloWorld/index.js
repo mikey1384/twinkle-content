@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { mobileMaxWidth } from 'constants/css';
+import { mobileMaxWidth, Color } from 'constants/css';
 import { css } from '@emotion/css';
 import FirstCodingExercise from './FirstCodingExercise';
 
@@ -37,7 +37,8 @@ export default function CodingHelloWorld({ code, onSetCode, style }) {
         style={{ marginTop: '2rem' }}
       >
         Change the color of the <b style={{ color: 'red' }}>red</b> button below
-        to <b style={{ color: 'blue' }}>blue</b>
+        to <b style={{ color: 'blue' }}>blue</b> and tap the{' '}
+        <b style={{ color: Color.green() }}>check</b> button
       </div>
       <FirstCodingExercise
         style={{ marginTop: '3rem' }}

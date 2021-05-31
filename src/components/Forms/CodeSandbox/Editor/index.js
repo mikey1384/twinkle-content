@@ -10,25 +10,31 @@ Editor.propTypes = {
   value: PropTypes.string,
   valueOnTextEditor: PropTypes.string,
   onChange: PropTypes.func,
+  onSetAst: PropTypes.func.isRequired,
+  ast: PropTypes.object,
+  simulatorRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   style: PropTypes.object
 };
 export default function Editor({
   value = '',
   valueOnTextEditor,
   onChange,
+  onSetAst,
+  ast,
+  simulatorRef,
   style
 }) {
   const [error, setError] = useState('');
-  const [output, setOutput] = useState({ component: null });
 
   return (
     <div style={{ width: '100%', ...style }}>
       <Compiler
         code={value}
-        output={output?.component}
-        onSetOutput={setOutput}
+        ast={ast}
+        onSetAst={onSetAst}
         transformation={transformBeforeCompilation}
         onSetError={setError}
+        simulatorRef={simulatorRef}
       />
       <style
         dangerouslySetInnerHTML={{

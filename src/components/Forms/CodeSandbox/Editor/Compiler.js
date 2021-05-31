@@ -6,27 +6,72 @@ import { parse } from '../ast';
 
 Compiler.propTypes = {
   code: PropTypes.string,
-  output: PropTypes.func,
-  onSetOutput: PropTypes.func,
+  ast: PropTypes.object,
+  onSetAst: PropTypes.func,
   onSetError: PropTypes.func,
+  simulatorRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   transformation: PropTypes.func
 };
 
 export default function Compiler({
   code,
-  output,
+  ast,
   onSetError,
-  onSetOutput,
+  onSetAst,
+  simulatorRef,
   transformation
 }) {
   useEffect(() => {
-    transpile(code, transformation);
+    transpile(code);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code]);
 
   const Element = useMemo(
-    () => (output ? createElement(output, null) : null),
-    [output]
+    () => {
+      if (ast) {
+        const component = handleGenerateElement(
+          handleEvalCode(transformation(ast)),
+          (error) => {
+            onSetError(error.toString());
+          }
+        );
+        return createElement(component, null);
+      }
+      return null;
+
+      function handleGenerateElement(code, errorCallback) {
+        return errorBoundary(code, errorCallback);
+        function errorBoundary(Element, errorCallback) {
+          class ErrorBoundary extends React.Component {
+            state = { hasError: false };
+            componentDidCatch(error) {
+              return errorCallback(error);
+            }
+            render() {
+              return typeof Element === 'function'
+                ? createElement(Element, null)
+                : Element;
+            }
+          }
+          return ErrorBoundary;
+        }
+      }
+
+      function handleEvalCode(ast) {
+        const transformedCode = transformFromAstSync(ast, undefined, {
+          presets: [presetReact],
+          inputSourceMap: false,
+          sourceMaps: false,
+          comments: false
+        });
+        const resultCode = transformedCode ? transformedCode.code : '';
+        // eslint-disable-next-line no-new-func
+        const res = new Function('React', `return ${resultCode}`);
+        return res(React);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [ast]
   );
 
   return (
@@ -35,53 +80,19 @@ export default function Compiler({
         display: 'flex',
         justifyContent: 'center'
       }}
+      ref={simulatorRef}
     >
       {Element}
     </div>
   );
 
-  function transpile(code, transformation) {
+  function transpile(code) {
     try {
-      const ast = transformation(parse(code));
-      const component = handleGenerateElement(ast, (error) => {
-        onSetError(error.toString());
-      });
-      onSetOutput({ component });
+      const ast = parse(code);
+      onSetAst(ast);
       onSetError(null);
     } catch (error) {
       onSetError(error.toString());
     }
-  }
-
-  function handleGenerateElement(ast, errorCallback) {
-    return errorBoundary(handleEvalCode(ast), errorCallback);
-  }
-
-  function handleEvalCode(ast) {
-    const transformedCode = transformFromAstSync(ast, undefined, {
-      presets: [presetReact],
-      inputSourceMap: false,
-      sourceMaps: false,
-      comments: false
-    });
-    const resultCode = transformedCode ? transformedCode.code : '';
-    // eslint-disable-next-line no-new-func
-    const res = new Function('React', `return ${resultCode}`);
-    return res(React);
-  }
-
-  function errorBoundary(Element, errorCallback) {
-    class ErrorBoundary extends React.Component {
-      state = { hasError: false };
-      componentDidCatch(error) {
-        return errorCallback(error);
-      }
-      render() {
-        return typeof Element === 'function'
-          ? React.createElement(Element, null)
-          : Element;
-      }
-    }
-    return ErrorBoundary;
   }
 }
