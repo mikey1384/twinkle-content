@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import CodeSandbox from 'components/Forms/CodeSandbox';
 import { mobileMaxWidth } from 'constants/css';
@@ -11,7 +11,6 @@ FirstCodingExercise.propTypes = {
 };
 
 export default function FirstCodingExercise({ code, onSetCode, style }) {
-  const simulatorRef = useRef(null);
   const initialCode = `function HomePage() {
   return (
     <div>
@@ -46,7 +45,6 @@ export default function FirstCodingExercise({ code, onSetCode, style }) {
         code={code || initialCode}
         onSetCode={onSetCode}
         onRunCode={handleRunCode}
-        simulatorRef={simulatorRef}
         runButtonLabel="check"
       />
     </div>
