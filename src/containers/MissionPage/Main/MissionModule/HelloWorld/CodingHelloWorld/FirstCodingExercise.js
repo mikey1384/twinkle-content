@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import CodeSandbox from 'components/Forms/CodeSandbox';
-import { mobileMaxWidth } from 'constants/css';
+import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 
 FirstCodingExercise.propTypes = {
@@ -49,7 +49,21 @@ export default function FirstCodingExercise({ code, onSetCode, style }) {
         onSetErrorMsg={setErrorMsg}
         runButtonLabel="check"
       />
-      {errorMsg}
+      {errorMsg && (
+        <div
+          style={{
+            marginTop: '1rem',
+            padding: '1rem',
+            border: `1px solid ${Color.cranberry()}`,
+            borderRadius,
+            textAlign: 'center',
+            color: '#fff',
+            background: Color.cranberry(0.6)
+          }}
+        >
+          {errorMsg}
+        </div>
+      )}
     </div>
   );
 
