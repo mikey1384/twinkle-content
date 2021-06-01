@@ -42,7 +42,7 @@ export default function Editor({
           setError(error);
           if (error) {
             onSetErrorMsg?.(
-              `There's an error in your code. Please fix it first`
+              <b>{`There's an error in your code. Please fix it first`}</b>
             );
           }
         }}
