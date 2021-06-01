@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import CodeSandbox from 'components/Forms/CodeSandbox';
 import { mobileMaxWidth } from 'constants/css';
@@ -11,6 +11,7 @@ FirstCodingExercise.propTypes = {
 };
 
 export default function FirstCodingExercise({ code, onSetCode, style }) {
+  const [errorMsg, setErrorMsg] = useState('');
   const initialCode = `function HomePage() {
   return (
     <div>
@@ -45,8 +46,10 @@ export default function FirstCodingExercise({ code, onSetCode, style }) {
         code={code || initialCode}
         onSetCode={onSetCode}
         onRunCode={handleRunCode}
+        onSetErrorMsg={setErrorMsg}
         runButtonLabel="check"
       />
+      {errorMsg}
     </div>
   );
 
@@ -71,7 +74,27 @@ export default function FirstCodingExercise({ code, onSetCode, style }) {
         }
       }
     }
-    console.log(buttonColor);
+    if (
+      buttonColor === 'blue' ||
+      buttonColor.toLowerCase() === '#0000ff' ||
+      buttonColor === 'rgb(0, 0, 255)'
+    ) {
+      return console.log('success');
+    }
+    if (!buttonColor) {
+      return setErrorMsg(
+        <>
+          Please change the color of the button to{' '}
+          <b style={{ color: 'blue' }}>blue</b>
+        </>
+      );
+    }
+    setErrorMsg(
+      <>
+        Please change the color of the button to{' '}
+        <b style={{ color: 'blue' }}>blue</b>, not {buttonColor}
+      </>
+    );
   }
 
   function fetchAstProps({ ast, propType }) {

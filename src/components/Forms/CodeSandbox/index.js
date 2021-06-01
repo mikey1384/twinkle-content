@@ -11,6 +11,7 @@ import { parse } from '@babel/parser';
 CodeSandbox.propTypes = {
   code: PropTypes.string,
   onSetCode: PropTypes.func.isRequired,
+  onSetErrorMsg: PropTypes.func,
   onRunCode: PropTypes.func,
   runButtonLabel: PropTypes.string,
   simulatorRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
@@ -19,6 +20,7 @@ CodeSandbox.propTypes = {
 export default function CodeSandbox({
   code: globalCode,
   onSetCode,
+  onSetErrorMsg,
   onRunCode,
   runButtonLabel = 'Run',
   simulatorRef
@@ -104,6 +106,7 @@ export default function CodeSandbox({
   }
 
   function handleSetCode(text) {
+    onSetErrorMsg?.('');
     clearTimeout(timerRef.current);
     setCode(text);
     setRunButtonDisabled(true);
