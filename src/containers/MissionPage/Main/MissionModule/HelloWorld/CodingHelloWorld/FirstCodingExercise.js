@@ -51,21 +51,22 @@ export default function FirstCodingExercise({ code, onSetCode, style }) {
   );
 
   function handleRunCode(ast) {
+    fetchAstProp({ ast, propType: 'ArrowFunctionExpression' });
+  }
+
+  function fetchAstProp({ ast, propType }) {
     const results = [];
     for (let key in ast) {
-      analyzeAstProp(ast[key]);
+      _fetchAstProp({ astProp: ast[key], propType });
     }
 
-    function analyzeAstProp(astProp) {
+    function _fetchAstProp({ astProp, propType }) {
       if (typeof astProp === 'object') {
-        if (astProp?.type) {
-          console.log(astProp);
-        }
-        if (astProp?.type === 'ArrowFunctionExpression') {
+        if (astProp?.type === propType) {
           results.push(astProp);
         }
         for (let key in astProp) {
-          analyzeAstProp(astProp[key]);
+          _fetchAstProp({ astProp: astProp[key], propType });
         }
       }
     }
