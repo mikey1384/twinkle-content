@@ -32,10 +32,10 @@ export default function CodingTasks({ code, onSetCode, style }) {
       }}
     >
       <p>
-        {`1. Make it blue`}
+        1. Make it blue
         {changeButtonColor?.status === 'pass' && (
           <Icon
-            style={{ marginLeft: '0.7rem' }}
+            style={{ marginLeft: '1rem' }}
             icon="check"
             color={Color.green()}
           />
