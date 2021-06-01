@@ -51,25 +51,29 @@ export default function FirstCodingExercise({ code, onSetCode, style }) {
   );
 
   function handleRunCode(ast) {
-    fetchAstProp({ ast, propType: 'ArrowFunctionExpression' });
+    const results = fetchAstProps({ ast, propType: 'JSXOpeningElement' });
+    console.log(results);
   }
 
-  function fetchAstProp({ ast, propType }) {
+  function fetchAstProps({ ast, propType }) {
     const results = [];
     for (let key in ast) {
-      _fetchAstProp({ astProp: ast[key], propType });
+      _fetchAstProps({ astProp: ast[key], propType });
     }
 
-    function _fetchAstProp({ astProp, propType }) {
-      if (typeof astProp === 'object') {
-        if (astProp?.type === propType) {
+    function _fetchAstProps({ astProp, propType }) {
+      if (astProp && typeof astProp === 'object') {
+        if (
+          (!propType && astProp?.type) ||
+          (!!propType && astProp?.type === propType)
+        ) {
           results.push(astProp);
         }
         for (let key in astProp) {
-          _fetchAstProp({ astProp: astProp[key], propType });
+          _fetchAstProps({ astProp: astProp[key], propType });
         }
       }
     }
-    console.log(results);
+    return results;
   }
 }
