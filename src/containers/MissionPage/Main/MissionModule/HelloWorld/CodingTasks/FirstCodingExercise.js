@@ -47,7 +47,7 @@ export default function FirstCodingExercise({ code, onSetCode, style }) {
         onSetCode={onSetCode}
         onRunCode={handleRunCode}
         onSetErrorMsg={setErrorMsg}
-        hasError={errorMsg}
+        hasError={!!errorMsg}
         runButtonLabel="check"
       />
       {errorMsg && (

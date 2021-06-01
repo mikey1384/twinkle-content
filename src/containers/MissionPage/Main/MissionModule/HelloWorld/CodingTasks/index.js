@@ -1,17 +1,25 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
+import FirstCodingExercise from './FirstCodingExercise';
+import Icon from 'components/Icon';
 import { mobileMaxWidth, Color } from 'constants/css';
 import { css } from '@emotion/css';
-import FirstCodingExercise from './FirstCodingExercise';
+import { useMyState } from 'helpers/hooks';
 
-CodingHelloWorld.propTypes = {
+CodingTasks.propTypes = {
   code: PropTypes.string,
   onSetCode: PropTypes.func.isRequired,
   style: PropTypes.object
 };
 
-export default function CodingHelloWorld({ code, onSetCode, style }) {
+export default function CodingTasks({ code, onSetCode, style }) {
+  const { status } = useMyState();
+  const codingStatus = useMemo(() => {
+    return status?.missions?.['building-a-website'];
+  }, [status?.missions]);
+  const { changeButtonColor } = codingStatus;
+
   return (
     <ErrorBoundary
       style={{
@@ -23,7 +31,16 @@ export default function CodingHelloWorld({ code, onSetCode, style }) {
         ...style
       }}
     >
-      <p>{`1. Time to code`}</p>
+      <p>
+        {`1. Make it blue`}
+        {changeButtonColor?.status === 'pass' && (
+          <Icon
+            style={{ marginLeft: '0.7rem' }}
+            icon="check"
+            color={Color.green()}
+          />
+        )}
+      </p>
       <div
         className={css`
           width: 80%;

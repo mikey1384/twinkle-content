@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from '@emotion/css';
-import CodingHelloWorld from './CodingHelloWorld';
+import CodingTasks from './CodingTasks';
 
 HelloWorld.propTypes = {
   task: PropTypes.object.isRequired,
@@ -26,7 +26,7 @@ export default function HelloWorld({ task, onSetMissionState }) {
         }
       `}
     >
-      <CodingHelloWorld
+      <CodingTasks
         code={code}
         onSetCode={(code) =>
           onSetMissionState({
