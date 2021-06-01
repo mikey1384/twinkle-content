@@ -2,11 +2,11 @@ import React, { createElement, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { transformFromAstSync } from '@babel/core';
 import presetReact from '@babel/preset-react';
-import { parse } from '../ast';
 
 Compiler.propTypes = {
   code: PropTypes.string,
   ast: PropTypes.object,
+  onParse: PropTypes.func.isRequired,
   onSetAst: PropTypes.func,
   onSetError: PropTypes.func,
   simulatorRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
@@ -16,6 +16,7 @@ Compiler.propTypes = {
 export default function Compiler({
   code,
   ast,
+  onParse,
   onSetError,
   onSetAst,
   simulatorRef,
@@ -88,7 +89,7 @@ export default function Compiler({
 
   function transpile(code) {
     try {
-      const ast = parse(code);
+      const ast = onParse(code);
       onSetAst(ast);
       onSetError(null);
     } catch (error) {

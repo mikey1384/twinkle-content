@@ -6,7 +6,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import Icon from 'components/Icon';
 import prettier from '@miksu/prettier/lib/standalone';
 import parsers from '@miksu/prettier/lib/language-js/parser-babylon';
-import { parse } from './ast';
+import { parse } from '@babel/parser';
 
 CodeSandbox.propTypes = {
   code: PropTypes.string,
@@ -44,6 +44,7 @@ export default function CodeSandbox({
         onChange={handleSetCode}
         onSetAst={setAst}
         ast={ast}
+        onParse={handleParse}
         simulatorRef={simulatorRef}
       />
       <div
@@ -82,13 +83,20 @@ export default function CodeSandbox({
     setCode(formatCode(code));
 
     function formatCode(code) {
-      const result = prettier.__debug.formatAST(parse(code), {
+      const result = prettier.__debug.formatAST(handleParse(code), {
         originalText: '',
         parser: 'babel',
         plugins: [parsers]
       });
       return result.formatted.replace(/[\r\n]+$/, '').replace(/[;]+$/, '');
     }
+  }
+
+  function handleParse(code) {
+    return parse(code, {
+      sourceType: 'module',
+      plugins: ['jsx']
+    });
   }
 
   function handleRunCode() {

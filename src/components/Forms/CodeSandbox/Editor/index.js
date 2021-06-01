@@ -4,7 +4,7 @@ import Compiler from './Compiler';
 import SimpleEditor from 'react-simple-code-editor';
 import okaidia from 'prism-react-renderer/themes/okaidia';
 import Highlight, { Prism } from 'prism-react-renderer';
-import { transformBeforeCompilation } from '../ast';
+import traverse from '@babel/traverse';
 
 Editor.propTypes = {
   value: PropTypes.string,
@@ -12,15 +12,17 @@ Editor.propTypes = {
   onChange: PropTypes.func,
   onSetAst: PropTypes.func.isRequired,
   ast: PropTypes.object,
+  onParse: PropTypes.func.isRequired,
   simulatorRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   style: PropTypes.object
 };
 export default function Editor({
+  ast,
   value = '',
   valueOnTextEditor,
   onChange,
   onSetAst,
-  ast,
+  onParse,
   simulatorRef,
   style
 }) {
@@ -32,7 +34,8 @@ export default function Editor({
         code={value}
         ast={ast}
         onSetAst={onSetAst}
-        transformation={transformBeforeCompilation}
+        transformation={handleTransformBeforeCompilation}
+        onParse={onParse}
         onSetError={setError}
         simulatorRef={simulatorRef}
       />
@@ -54,7 +57,7 @@ export default function Editor({
             margin: 0
           }}
           highlight={(code) =>
-            highlightCode({
+            handleHighlightCode({
               code,
               theme: okaidia
             })
@@ -65,7 +68,7 @@ export default function Editor({
     </div>
   );
 
-  function highlightCode({ code, theme }) {
+  function handleHighlightCode({ code, theme }) {
     return (
       <Highlight Prism={Prism} code={code} theme={theme} language="jsx">
         {({ tokens, getLineProps, getTokenProps }) => (
@@ -82,5 +85,31 @@ export default function Editor({
         )}
       </Highlight>
     );
+  }
+
+  function handleTransformBeforeCompilation(ast) {
+    try {
+      traverse(ast, {
+        VariableDeclaration(path) {
+          if (path.parent.type === 'Program') {
+            path.replaceWith(path.node.declarations[0].init);
+          }
+        },
+        ImportDeclaration(path) {
+          path.remove();
+        },
+        ExportDefaultDeclaration(path) {
+          if (
+            path.node.declaration.type === 'ArrowFunctionExpression' ||
+            path.node.declaration.type === 'FunctionDeclaration'
+          ) {
+            path.replaceWith(path.node.declaration);
+          } else {
+            path.remove();
+          }
+        }
+      });
+    } catch (e) {}
+    return ast;
   }
 }
