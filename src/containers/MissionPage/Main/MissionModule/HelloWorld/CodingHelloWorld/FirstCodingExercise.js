@@ -51,8 +51,27 @@ export default function FirstCodingExercise({ code, onSetCode, style }) {
   );
 
   function handleRunCode(ast) {
-    const results = fetchAstProps({ ast, propType: 'JSXOpeningElement' });
-    console.log(results);
+    const jsxElements = fetchAstProps({ ast, propType: 'JSXOpeningElement' });
+    let buttonColor = '';
+    for (let element of jsxElements) {
+      if (element.attributes?.length > 0 && element?.name?.name === 'button') {
+        for (let attribute of element.attributes) {
+          if (attribute?.name?.name === 'style') {
+            const styleProps = attribute?.value?.expression?.properties;
+            for (let prop of styleProps) {
+              if (
+                prop?.key?.name === 'background' ||
+                prop?.key?.name === 'backgroundColor'
+              ) {
+                buttonColor = prop?.value?.value;
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+    console.log(buttonColor);
   }
 
   function fetchAstProps({ ast, propType }) {
