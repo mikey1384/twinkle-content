@@ -10,6 +10,7 @@ import { parse } from '@babel/parser';
 
 CodeSandbox.propTypes = {
   code: PropTypes.string,
+  hasError: PropTypes.bool,
   onSetCode: PropTypes.func.isRequired,
   onSetErrorMsg: PropTypes.func,
   onRunCode: PropTypes.func,
@@ -19,6 +20,7 @@ CodeSandbox.propTypes = {
 
 export default function CodeSandbox({
   code: globalCode,
+  hasError,
   onSetCode,
   onSetErrorMsg,
   onRunCode,
@@ -47,6 +49,7 @@ export default function CodeSandbox({
         onSetAst={setAst}
         ast={ast}
         onParse={handleParse}
+        onSetErrorMsg={onSetErrorMsg}
         simulatorRef={simulatorRef}
       />
       <div
@@ -66,7 +69,7 @@ export default function CodeSandbox({
         <div>
           {onRunCode && (
             <Button
-              disabled={runButtonDisabled}
+              disabled={runButtonDisabled || hasError}
               filled
               color="green"
               onClick={handleRunCode}

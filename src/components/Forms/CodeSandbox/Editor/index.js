@@ -13,6 +13,7 @@ Editor.propTypes = {
   onSetAst: PropTypes.func.isRequired,
   ast: PropTypes.object,
   onParse: PropTypes.func.isRequired,
+  onSetErrorMsg: PropTypes.func,
   simulatorRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   style: PropTypes.object
 };
@@ -23,6 +24,7 @@ export default function Editor({
   onChange,
   onSetAst,
   onParse,
+  onSetErrorMsg,
   simulatorRef,
   style
 }) {
@@ -36,7 +38,14 @@ export default function Editor({
         onSetAst={onSetAst}
         transformation={handleTransformBeforeCompilation}
         onParse={onParse}
-        onSetError={setError}
+        onSetError={(error) => {
+          setError(error);
+          if (error) {
+            onSetErrorMsg?.(
+              `There's an error in your code. Please fix it first`
+            );
+          }
+        }}
         simulatorRef={simulatorRef}
       />
       <style

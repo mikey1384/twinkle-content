@@ -47,6 +47,7 @@ export default function FirstCodingExercise({ code, onSetCode, style }) {
         onSetCode={onSetCode}
         onRunCode={handleRunCode}
         onSetErrorMsg={setErrorMsg}
+        hasError={errorMsg}
         runButtonLabel="check"
       />
       {errorMsg && (
@@ -97,17 +98,17 @@ export default function FirstCodingExercise({ code, onSetCode, style }) {
     }
     if (!buttonColor) {
       return setErrorMsg(
-        <>
+        <b>
           Please change the color of the button to{' '}
-          <b style={{ color: 'blue' }}>blue</b>
-        </>
+          <span style={{ color: 'blue' }}>blue</span>
+        </b>
       );
     }
     setErrorMsg(
-      <>
-        Please change the color of the button to{' '}
-        <b style={{ color: 'blue' }}>blue</b>, not {buttonColor}
-      </>
+      <b>
+        The {`button's`} color needs to be{' '}
+        <span style={{ color: 'blue' }}>blue,</span> not {buttonColor}
+      </b>
     );
   }
 
