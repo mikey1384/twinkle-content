@@ -15,9 +15,10 @@ CodingTasks.propTypes = {
 
 export default function CodingTasks({ code, onSetCode, style }) {
   const { status } = useMyState();
-  const codingStatus = useMemo(() => {
-    return status?.missions?.['building-a-website'];
-  }, [status?.missions]);
+  const codingStatus = useMemo(
+    () => status?.missions?.['building-a-website'] || {},
+    [status?.missions]
+  );
   const { changeButtonColor } = codingStatus;
 
   return (
