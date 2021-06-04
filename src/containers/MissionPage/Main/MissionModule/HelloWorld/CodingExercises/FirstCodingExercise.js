@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import CodeSandbox from 'components/Forms/CodeSandbox';
 import Icon from 'components/Icon';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { Color, mobileMaxWidth } from 'constants/css';
-import { css } from '@emotion/css';
 import FailMessage from './FailMessage';
 import SuccessMessage from './SuccessMessage';
+import { Color, mobileMaxWidth } from 'constants/css';
+import { css } from '@emotion/css';
+import { useContentContext } from 'contexts';
+import { useMyState } from 'helpers/hooks';
 
 FirstCodingExercise.propTypes = {
   code: PropTypes.string,
@@ -25,6 +27,10 @@ export default function FirstCodingExercise({
   onSuccess,
   style
 }) {
+  const {
+    actions: { onUpdateProfileInfo }
+  } = useContentContext();
+  const { userId, status = {} } = useMyState();
   const [errorMsg, setErrorMsg] = useState('');
   const initialCode = `function HomePage() {
   return (
@@ -92,8 +98,26 @@ export default function FirstCodingExercise({
           passed={passed || success}
           runButtonLabel="check"
         />
-        {success && (
-          <SuccessMessage onNextClick={() => console.log('next clicked')} />
+        {success && !passed && (
+          <SuccessMessage
+            onNextClick={() =>
+              onUpdateProfileInfo({
+                userId,
+                status: {
+                  ...status,
+                  missions: {
+                    ...status.missions,
+                    'building-a-website': {
+                      ...status?.missions?.['building-a-website'],
+                      changeButtonColor: {
+                        status: 'pass'
+                      }
+                    }
+                  }
+                }
+              })
+            }
+          />
         )}
         {errorMsg && <FailMessage message={errorMsg} />}
       </div>
