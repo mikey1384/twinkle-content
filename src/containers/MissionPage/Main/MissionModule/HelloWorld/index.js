@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from '@emotion/css';
-import CodingTasks from './CodingTasks';
+import CodingExercises from './CodingExercises';
 
 HelloWorld.propTypes = {
   task: PropTypes.object.isRequired,
@@ -10,7 +10,7 @@ HelloWorld.propTypes = {
 };
 
 export default function HelloWorld({ task, onSetMissionState }) {
-  const { code } = task;
+  const { code, exerciseSuccessStatus = {} } = task;
 
   return (
     <ErrorBoundary
@@ -26,14 +26,23 @@ export default function HelloWorld({ task, onSetMissionState }) {
         }
       `}
     >
-      <CodingTasks
+      <CodingExercises
         code={code}
+        exerciseSuccessStatus={exerciseSuccessStatus}
+        onSetMissionState={onSetMissionState}
+        onSetSuccess={() =>
+          onSetMissionState({
+            missionId: task.id,
+            newState: { success: true }
+          })
+        }
         onSetCode={(code) =>
           onSetMissionState({
             missionId: task.id,
             newState: { code }
           })
         }
+        taskId={task.id}
       />
     </ErrorBoundary>
   );

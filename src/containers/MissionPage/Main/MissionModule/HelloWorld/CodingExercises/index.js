@@ -5,13 +5,23 @@ import FirstCodingExercise from './FirstCodingExercise';
 import { useMyState } from 'helpers/hooks';
 import SecondCodingExercise from './SecondCodingExercise';
 
-CodingTasks.propTypes = {
+CodingExercises.propTypes = {
   code: PropTypes.string,
+  exerciseSuccessStatus: PropTypes.object.isRequired,
   onSetCode: PropTypes.func.isRequired,
+  onSetMissionState: PropTypes.func.isRequired,
+  taskId: PropTypes.number.isRequired,
   style: PropTypes.object
 };
 
-export default function CodingTasks({ code, onSetCode, style }) {
+export default function CodingExercises({
+  code,
+  exerciseSuccessStatus,
+  onSetCode,
+  onSetMissionState,
+  taskId,
+  style
+}) {
   const { status } = useMyState();
   const firstExercisePassed = useMemo(
     () =>
@@ -32,9 +42,21 @@ export default function CodingTasks({ code, onSetCode, style }) {
       }}
     >
       <FirstCodingExercise
+        success={!!exerciseSuccessStatus?.changeButtonColor}
         passed={firstExercisePassed}
         style={{ marginTop: '2rem' }}
         code={code}
+        onSuccess={() =>
+          onSetMissionState({
+            missionId: taskId,
+            newState: {
+              exerciseSuccessStatus: {
+                ...exerciseSuccessStatus,
+                changeButtonColor: true
+              }
+            }
+          })
+        }
         onSetCode={onSetCode}
       />
       {firstExercisePassed && <SecondCodingExercise />}

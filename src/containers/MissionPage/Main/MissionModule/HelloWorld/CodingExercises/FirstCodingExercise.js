@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import CodeSandbox from 'components/Forms/CodeSandbox';
+import Icon from 'components/Icon';
+import Button from 'components/Button';
+import ErrorBoundary from 'components/ErrorBoundary';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import Icon from 'components/Icon';
-import ErrorBoundary from 'components/ErrorBoundary';
 
 FirstCodingExercise.propTypes = {
   code: PropTypes.string,
   onSetCode: PropTypes.func.isRequired,
   passed: PropTypes.bool.isRequired,
+  success: PropTypes.bool,
+  onSuccess: PropTypes.func.isRequired,
   style: PropTypes.object
 };
 
@@ -17,6 +20,8 @@ export default function FirstCodingExercise({
   code,
   onSetCode,
   passed,
+  success,
+  onSuccess,
   style
 }) {
   const [errorMsg, setErrorMsg] = useState('');
@@ -83,9 +88,38 @@ export default function FirstCodingExercise({
           onRunCode={handleRunCode}
           onSetErrorMsg={setErrorMsg}
           hasError={!!errorMsg}
-          passed={passed}
+          passed={passed || success}
           runButtonLabel="check"
         />
+        {success && (
+          <div
+            style={{
+              marginTop: '1rem',
+              padding: '1rem',
+              border: `1px solid ${Color.darkBlue()}`,
+              borderRadius,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              color: '#fff',
+              background: Color.darkBlue(0.6),
+              fontSize: '1.7rem',
+              fontWeight: 'bold'
+            }}
+          >
+            <div>
+              You did it! Tap <b style={{ color: Color.gold() }}>Next</b> to
+              continue
+              <Icon
+                icon="arrow-right"
+                style={{ color: Color.gold(), marginLeft: '1rem' }}
+              />
+            </div>
+            <Button color="gold" filled>
+              Next
+            </Button>
+          </div>
+        )}
         {errorMsg && (
           <div
             style={{
@@ -95,7 +129,9 @@ export default function FirstCodingExercise({
               borderRadius,
               textAlign: 'center',
               color: '#fff',
-              background: Color.cranberry(0.6)
+              background: Color.cranberry(0.6),
+              fontSize: '1.7rem',
+              fontWeight: 'bold'
             }}
           >
             {errorMsg}
@@ -131,21 +167,21 @@ export default function FirstCodingExercise({
       buttonColor.toLowerCase() === '#0000ff' ||
       buttonColor === 'rgb(0, 0, 255)'
     ) {
-      return console.log('success');
+      return onSuccess(true);
     }
     if (!buttonColor) {
       return setErrorMsg(
-        <b>
+        <>
           Please change the color of the button to{' '}
           <span style={{ color: 'blue' }}>blue</span>
-        </b>
+        </>
       );
     }
     setErrorMsg(
-      <b>
+      <>
         The {`button's`} color needs to be{' '}
         <span style={{ color: 'blue' }}>blue,</span> not {buttonColor}
-      </b>
+      </>
     );
   }
 
