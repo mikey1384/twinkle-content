@@ -35,11 +35,6 @@ export default function MissionActions(dispatch) {
         newState
       });
     },
-    onResetMissionState() {
-      return dispatch({
-        type: 'RESET_MISSION_STATE'
-      });
-    },
     onSetMissionAttempt({ missionId, attempt }) {
       return dispatch({
         type: 'SET_MISSION_ATTEMPT',

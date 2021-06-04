@@ -7,6 +7,7 @@ import FailMessage from './FailMessage';
 import SuccessMessage from './SuccessMessage';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import { getAstProps } from 'helpers';
 import { useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
@@ -14,8 +15,6 @@ FirstCodingExercise.propTypes = {
   code: PropTypes.string,
   onSetCode: PropTypes.func.isRequired,
   passed: PropTypes.bool.isRequired,
-  success: PropTypes.bool,
-  onSuccess: PropTypes.func.isRequired,
   style: PropTypes.object
 };
 
@@ -23,14 +22,13 @@ export default function FirstCodingExercise({
   code,
   onSetCode,
   passed,
-  success,
-  onSuccess,
   style
 }) {
   const {
     actions: { onUpdateProfileInfo }
   } = useContentContext();
   const { userId, status = {} } = useMyState();
+  const [success, setSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const initialCode = `function HomePage() {
   return (
@@ -125,7 +123,7 @@ export default function FirstCodingExercise({
   );
 
   function handleRunCode(ast) {
-    const jsxElements = fetchAstProps({ ast, propType: 'JSXOpeningElement' });
+    const jsxElements = getAstProps({ ast, propType: 'JSXOpeningElement' });
     let buttonColor = '';
     for (let element of jsxElements) {
       if (element.attributes?.length > 0 && element?.name?.name === 'button') {
@@ -150,7 +148,7 @@ export default function FirstCodingExercise({
       buttonColor.toLowerCase() === '#0000ff' ||
       buttonColor === 'rgb(0, 0, 255)'
     ) {
-      return onSuccess(true);
+      return setSuccess(true);
     }
     if (!buttonColor) {
       return setErrorMsg(
@@ -166,27 +164,5 @@ export default function FirstCodingExercise({
         <span style={{ color: 'blue' }}>blue,</span> not {buttonColor}
       </>
     );
-  }
-
-  function fetchAstProps({ ast, propType }) {
-    const results = [];
-    for (let key in ast) {
-      _fetchAstProps({ astProp: ast[key], propType });
-    }
-
-    function _fetchAstProps({ astProp, propType }) {
-      if (astProp && typeof astProp === 'object') {
-        if (
-          (!propType && astProp?.type) ||
-          (!!propType && astProp?.type === propType)
-        ) {
-          results.push(astProp);
-        }
-        for (let key in astProp) {
-          _fetchAstProps({ astProp: astProp[key], propType });
-        }
-      }
-    }
-    return results;
   }
 }

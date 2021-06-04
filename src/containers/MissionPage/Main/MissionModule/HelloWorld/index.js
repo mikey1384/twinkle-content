@@ -10,7 +10,7 @@ HelloWorld.propTypes = {
 };
 
 export default function HelloWorld({ task, onSetMissionState }) {
-  const { code, exerciseSuccessStatus = {} } = task;
+  const { code } = task;
 
   return (
     <ErrorBoundary
@@ -28,21 +28,13 @@ export default function HelloWorld({ task, onSetMissionState }) {
     >
       <CodingExercises
         code={code}
-        exerciseSuccessStatus={exerciseSuccessStatus}
         onSetMissionState={onSetMissionState}
-        onSetSuccess={() =>
-          onSetMissionState({
-            missionId: task.id,
-            newState: { success: true }
-          })
-        }
         onSetCode={(code) =>
           onSetMissionState({
             missionId: task.id,
             newState: { code }
           })
         }
-        taskId={task.id}
       />
     </ErrorBoundary>
   );
