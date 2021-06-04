@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import CodeSandbox from 'components/Forms/CodeSandbox';
 import Icon from 'components/Icon';
-import Button from 'components/Button';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import FailMessage from './FailMessage';
+import SuccessMessage from './SuccessMessage';
 
 FirstCodingExercise.propTypes = {
   code: PropTypes.string,
@@ -92,51 +93,9 @@ export default function FirstCodingExercise({
           runButtonLabel="check"
         />
         {success && (
-          <div
-            style={{
-              marginTop: '1rem',
-              padding: '1rem',
-              border: `1px solid ${Color.darkBlue()}`,
-              borderRadius,
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              color: '#fff',
-              background: Color.darkBlue(0.6),
-              fontSize: '1.7rem',
-              fontWeight: 'bold'
-            }}
-          >
-            <div>
-              You did it! Tap <b style={{ color: Color.gold() }}>Next</b> to
-              continue
-              <Icon
-                icon="arrow-right"
-                style={{ color: Color.gold(), marginLeft: '1rem' }}
-              />
-            </div>
-            <Button color="gold" filled>
-              Next
-            </Button>
-          </div>
+          <SuccessMessage onNextClick={() => console.log('next clicked')} />
         )}
-        {errorMsg && (
-          <div
-            style={{
-              marginTop: '1rem',
-              padding: '1rem',
-              border: `1px solid ${Color.cranberry()}`,
-              borderRadius,
-              textAlign: 'center',
-              color: '#fff',
-              background: Color.cranberry(0.6),
-              fontSize: '1.7rem',
-              fontWeight: 'bold'
-            }}
-          >
-            {errorMsg}
-          </div>
-        )}
+        {errorMsg && <FailMessage message={errorMsg} />}
       </div>
     </ErrorBoundary>
   );
