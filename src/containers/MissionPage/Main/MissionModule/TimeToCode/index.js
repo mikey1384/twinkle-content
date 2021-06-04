@@ -4,12 +4,12 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from '@emotion/css';
 import CodingExercises from './CodingExercises';
 
-HelloWorld.propTypes = {
+TimeToCode.propTypes = {
   task: PropTypes.object.isRequired,
   onSetMissionState: PropTypes.func.isRequired
 };
 
-export default function HelloWorld({ task, onSetMissionState }) {
+export default function TimeToCode({ task, onSetMissionState }) {
   const { code } = task;
 
   return (

@@ -7,7 +7,7 @@ import Grammar from './Grammar';
 import TwinkleStore from './TwinkleStore';
 import Email from './Email';
 import GitHub from './GitHub';
-import HelloWorld from './HelloWorld';
+import TimeToCode from './TimeToCode';
 import Replit from './Replit';
 
 MissionModule.propTypes = {
@@ -56,7 +56,7 @@ export default function MissionModule({
         <Replit task={mission} onSetMissionState={onSetMissionState} />
       )}
       {mission.missionType === 'time-to-code' && (
-        <HelloWorld task={mission} onSetMissionState={onSetMissionState} />
+        <TimeToCode task={mission} onSetMissionState={onSetMissionState} />
       )}
     </div>
   );

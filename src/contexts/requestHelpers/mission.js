@@ -195,6 +195,18 @@ export default function missionRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async updateMissionStatus({ missionType, newStatus }) {
+      try {
+        await request.put(
+          `${URL}/user/status/mission`,
+          { missionType, newStatus },
+          auth()
+        );
+        return Promise.resolve();
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async updateTutorialPrompt({ missionId, tutorialPrompt, buttonLabel }) {
       try {
         const {

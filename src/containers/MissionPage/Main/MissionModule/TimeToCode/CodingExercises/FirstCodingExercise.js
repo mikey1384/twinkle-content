@@ -8,7 +8,7 @@ import SuccessMessage from './SuccessMessage';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { getAstProps } from 'helpers';
-import { useContentContext } from 'contexts';
+import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
 FirstCodingExercise.propTypes = {
@@ -24,6 +24,9 @@ export default function FirstCodingExercise({
   passed,
   style
 }) {
+  const {
+    requestHelpers: { updateMissionStatus }
+  } = useAppContext();
   const {
     actions: { onUpdateProfileInfo }
   } = useContentContext();
@@ -105,11 +108,9 @@ export default function FirstCodingExercise({
                   ...status,
                   missions: {
                     ...status.missions,
-                    'building-a-website': {
-                      ...status?.missions?.['building-a-website'],
-                      changeButtonColor: {
-                        status: 'pass'
-                      }
+                    'time-to-code': {
+                      ...status?.missions?.['time-to-code'],
+                      changeButtonColor: 'pass'
                     }
                   }
                 }
@@ -148,7 +149,7 @@ export default function FirstCodingExercise({
       buttonColor.toLowerCase() === '#0000ff' ||
       buttonColor === 'rgb(0, 0, 255)'
     ) {
-      return setSuccess(true);
+      return handleSuccess();
     }
     if (!buttonColor) {
       return setErrorMsg(
@@ -164,5 +165,13 @@ export default function FirstCodingExercise({
         <span style={{ color: 'blue' }}>blue,</span> not {buttonColor}
       </>
     );
+  }
+
+  async function handleSuccess() {
+    await updateMissionStatus({
+      missionType: 'time-to-code',
+      newStatus: { changeButtonColor: 'pass' }
+    });
+    setSuccess(true);
   }
 }

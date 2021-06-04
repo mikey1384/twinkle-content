@@ -14,9 +14,7 @@ CodingExercises.propTypes = {
 export default function CodingExercises({ code, onSetCode, style }) {
   const { status } = useMyState();
   const firstExercisePassed = useMemo(
-    () =>
-      status?.missions?.['building-a-website']?.changeButtonColor?.status ===
-      'pass',
+    () => status?.missions?.['time-to-code']?.changeButtonColor === 'pass',
     [status?.missions]
   );
 
