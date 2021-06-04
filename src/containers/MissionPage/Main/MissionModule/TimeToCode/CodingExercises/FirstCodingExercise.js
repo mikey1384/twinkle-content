@@ -14,16 +14,10 @@ import { useMyState } from 'helpers/hooks';
 FirstCodingExercise.propTypes = {
   code: PropTypes.string,
   onSetCode: PropTypes.func.isRequired,
-  passed: PropTypes.bool.isRequired,
-  style: PropTypes.object
+  passed: PropTypes.bool.isRequired
 };
 
-export default function FirstCodingExercise({
-  code,
-  onSetCode,
-  passed,
-  style
-}) {
+export default function FirstCodingExercise({ code, onSetCode, passed }) {
   const {
     requestHelpers: { updateMissionStatus }
   } = useAppContext();
@@ -56,7 +50,7 @@ export default function FirstCodingExercise({
   return (
     <ErrorBoundary>
       <p>
-        1. Make it blue
+        1. Make It Blue
         {passed && (
           <Icon
             style={{ marginLeft: '1rem' }}
@@ -82,8 +76,8 @@ export default function FirstCodingExercise({
         <b style={{ color: Color.green() }}>check</b> button
       </div>
       <div
-        style={style}
         className={css`
+          margin-top: 2rem;
           width: 80%;
           @media (max-width: ${mobileMaxWidth}) {
             width: 100%;
@@ -92,7 +86,9 @@ export default function FirstCodingExercise({
       >
         <CodeSandbox
           code={code || initialCode}
-          onSetCode={onSetCode}
+          onSetCode={(code) =>
+            onSetCode({ code, exerciseLabel: 'changeButtonColor' })
+          }
           onRunCode={handleRunCode}
           onSetErrorMsg={setErrorMsg}
           hasError={!!errorMsg}

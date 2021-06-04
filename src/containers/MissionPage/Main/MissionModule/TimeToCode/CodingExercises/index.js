@@ -6,15 +6,19 @@ import { useMyState } from 'helpers/hooks';
 import SecondCodingExercise from './SecondCodingExercise';
 
 CodingExercises.propTypes = {
-  code: PropTypes.string,
+  codeObj: PropTypes.object,
   onSetCode: PropTypes.func.isRequired,
   style: PropTypes.object
 };
 
-export default function CodingExercises({ code, onSetCode, style }) {
+export default function CodingExercises({ codeObj, onSetCode, style }) {
   const { status } = useMyState();
   const firstExercisePassed = useMemo(
     () => status?.missions?.['time-to-code']?.changeButtonColor === 'pass',
+    [status?.missions]
+  );
+  const secondExercisePassed = useMemo(
+    () => status?.missions?.['time-to-code']?.changeLabel === 'pass',
     [status?.missions]
   );
 
@@ -31,11 +35,17 @@ export default function CodingExercises({ code, onSetCode, style }) {
     >
       <FirstCodingExercise
         passed={firstExercisePassed}
-        style={{ marginTop: '2rem' }}
-        code={code}
+        code={codeObj.changeButtonColor}
         onSetCode={onSetCode}
       />
-      {firstExercisePassed && <SecondCodingExercise />}
+      {firstExercisePassed && (
+        <SecondCodingExercise
+          passed={secondExercisePassed}
+          code={codeObj.changeLabel}
+          onSetCode={onSetCode}
+          style={{ marginTop: '5rem' }}
+        />
+      )}
     </ErrorBoundary>
   );
 }

@@ -10,7 +10,7 @@ TimeToCode.propTypes = {
 };
 
 export default function TimeToCode({ task, onSetMissionState }) {
-  const { code } = task;
+  const { codeObj = {} } = task;
 
   return (
     <ErrorBoundary
@@ -27,12 +27,12 @@ export default function TimeToCode({ task, onSetMissionState }) {
       `}
     >
       <CodingExercises
-        code={code}
+        codeObj={codeObj}
         onSetMissionState={onSetMissionState}
-        onSetCode={(code) =>
+        onSetCode={({ code, exerciseLabel }) =>
           onSetMissionState({
             missionId: task.id,
-            newState: { code }
+            newState: { codeObj: { ...codeObj, [exerciseLabel]: code } }
           })
         }
       />
