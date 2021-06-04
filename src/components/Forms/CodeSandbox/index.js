@@ -14,6 +14,7 @@ CodeSandbox.propTypes = {
   onSetCode: PropTypes.func.isRequired,
   onSetErrorMsg: PropTypes.func,
   onRunCode: PropTypes.func,
+  passed: PropTypes.bool,
   runButtonLabel: PropTypes.string,
   simulatorRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
 };
@@ -24,6 +25,7 @@ export default function CodeSandbox({
   onSetCode,
   onSetErrorMsg,
   onRunCode,
+  passed,
   runButtonLabel = 'Run',
   simulatorRef
 }) {
@@ -67,7 +69,7 @@ export default function CodeSandbox({
           </Button>
         </div>
         <div>
-          {onRunCode && (
+          {onRunCode && !passed && (
             <Button
               disabled={runButtonDisabled || hasError}
               filled

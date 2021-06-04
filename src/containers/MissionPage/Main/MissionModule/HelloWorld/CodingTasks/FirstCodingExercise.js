@@ -3,14 +3,22 @@ import PropTypes from 'prop-types';
 import CodeSandbox from 'components/Forms/CodeSandbox';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import Icon from 'components/Icon';
+import ErrorBoundary from 'components/ErrorBoundary';
 
 FirstCodingExercise.propTypes = {
   code: PropTypes.string,
   onSetCode: PropTypes.func.isRequired,
+  passed: PropTypes.bool.isRequired,
   style: PropTypes.object
 };
 
-export default function FirstCodingExercise({ code, onSetCode, style }) {
+export default function FirstCodingExercise({
+  code,
+  onSetCode,
+  passed,
+  style
+}) {
   const [errorMsg, setErrorMsg] = useState('');
   const initialCode = `function HomePage() {
   return (
@@ -33,39 +41,68 @@ export default function FirstCodingExercise({ code, onSetCode, style }) {
 }`;
 
   return (
-    <div
-      style={style}
-      className={css`
-        width: 80%;
-        @media (max-width: ${mobileMaxWidth}) {
-          width: 100%;
-        }
-      `}
-    >
-      <CodeSandbox
-        code={code || initialCode}
-        onSetCode={onSetCode}
-        onRunCode={handleRunCode}
-        onSetErrorMsg={setErrorMsg}
-        hasError={!!errorMsg}
-        runButtonLabel="check"
-      />
-      {errorMsg && (
-        <div
-          style={{
-            marginTop: '1rem',
-            padding: '1rem',
-            border: `1px solid ${Color.cranberry()}`,
-            borderRadius,
-            textAlign: 'center',
-            color: '#fff',
-            background: Color.cranberry(0.6)
-          }}
-        >
-          {errorMsg}
-        </div>
-      )}
-    </div>
+    <ErrorBoundary>
+      <p>
+        1. Make it blue
+        {passed && (
+          <Icon
+            style={{ marginLeft: '1rem' }}
+            icon="check"
+            color={Color.green()}
+          />
+        )}
+      </p>
+      <div
+        className={css`
+          width: 80%;
+          font-size: 1.7rem;
+          line-height: 2;
+          text-align: center;
+          @media (max-width: ${mobileMaxWidth}) {
+            width: 100%;
+          }
+        `}
+        style={{ marginTop: '2rem' }}
+      >
+        Change the color of the <b style={{ color: 'red' }}>red</b> button below
+        to <b style={{ color: 'blue' }}>blue</b> and tap the{' '}
+        <b style={{ color: Color.green() }}>check</b> button
+      </div>
+      <div
+        style={style}
+        className={css`
+          width: 80%;
+          @media (max-width: ${mobileMaxWidth}) {
+            width: 100%;
+          }
+        `}
+      >
+        <CodeSandbox
+          code={code || initialCode}
+          onSetCode={onSetCode}
+          onRunCode={handleRunCode}
+          onSetErrorMsg={setErrorMsg}
+          hasError={!!errorMsg}
+          passed={passed}
+          runButtonLabel="check"
+        />
+        {errorMsg && (
+          <div
+            style={{
+              marginTop: '1rem',
+              padding: '1rem',
+              border: `1px solid ${Color.cranberry()}`,
+              borderRadius,
+              textAlign: 'center',
+              color: '#fff',
+              background: Color.cranberry(0.6)
+            }}
+          >
+            {errorMsg}
+          </div>
+        )}
+      </div>
+    </ErrorBoundary>
   );
 
   function handleRunCode(ast) {
