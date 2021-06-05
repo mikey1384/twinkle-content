@@ -12,14 +12,14 @@ CodingExercises.propTypes = {
 };
 
 export default function CodingExercises({ codeObj, onSetCode, style }) {
-  const { status } = useMyState();
+  const { state } = useMyState();
   const firstExercisePassed = useMemo(
-    () => status?.missions?.['time-to-code']?.changeButtonColor === 'pass',
-    [status?.missions]
+    () => state?.missions?.['time-to-code']?.changeButtonColor === 'pass',
+    [state?.missions]
   );
   const secondExercisePassed = useMemo(
-    () => status?.missions?.['time-to-code']?.changeLabel === 'pass',
-    [status?.missions]
+    () => state?.missions?.['time-to-code']?.changeLabel === 'pass',
+    [state?.missions]
   );
 
   return (
