@@ -4,8 +4,8 @@ import Editor from './Editor';
 import Button from 'components/Button';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Icon from 'components/Icon';
-import prettier from '@miksu/prettier/lib/standalone';
-import parsers from '@miksu/prettier/lib/language-js/parser-babylon';
+import prettier from 'prettier/standalone';
+import parsers from 'prettier/parser-babel';
 import { parse } from '@babel/parser';
 
 CodeSandbox.propTypes = {
@@ -63,7 +63,12 @@ export default function CodeSandbox({
         }}
       >
         <div>
-          <Button filled color="logoBlue" onClick={handleFormatCode}>
+          <Button
+            disabled={runButtonDisabled || hasError}
+            filled
+            color="logoBlue"
+            onClick={handleFormatCode}
+          >
             <Icon icon="indent" />
             <span style={{ marginLeft: '0.7rem' }}>Format</span>
           </Button>
@@ -88,14 +93,13 @@ export default function CodeSandbox({
   function handleFormatCode() {
     onSetCode(formatCode(globalCode));
     setCode(formatCode(code));
-
     function formatCode(code) {
-      const result = prettier.__debug.formatAST(handleParse(code), {
-        originalText: '',
+      const result = prettier.format(code, {
         parser: 'babel',
-        plugins: [parsers]
+        plugins: [parsers],
+        trailingComma: 'none'
       });
-      return result.formatted.replace(/[\r\n]+$/, '').replace(/[;]+$/, '');
+      return result.replace(/[\r\n]+$/, '').replace(/[;]+$/, '');
     }
   }
 

@@ -78,8 +78,7 @@ export default function Compiler({
   return (
     <div
       style={{
-        display: 'flex',
-        justifyContent: 'center'
+        width: '100%'
       }}
       ref={simulatorRef}
     >

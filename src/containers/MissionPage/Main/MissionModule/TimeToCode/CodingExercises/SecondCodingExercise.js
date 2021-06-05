@@ -35,7 +35,14 @@ export default function SecondCodingExercise({
   const [errorMsg, setErrorMsg] = useState('');
   const initialCode = `function HomePage() {
   return (
-    <div>
+    <div
+      style={{
+        width: '100%',
+        height: "100%",
+        display: 'flex',
+        justifyContent: 'center'
+      }}
+    >
       <button
         style={{
           color: "white",

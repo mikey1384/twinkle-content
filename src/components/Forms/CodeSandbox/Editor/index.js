@@ -59,7 +59,7 @@ export default function Editor({
           value={valueOnTextEditor}
           onValueChange={onChange}
           style={{
-            fontSize: '14px',
+            fontSize: '1.3rem',
             color: '#fff',
             backgroundColor: 'rgb(39, 40, 34)',
             fontFamily: `Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace`,
