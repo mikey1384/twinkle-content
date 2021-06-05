@@ -100,7 +100,7 @@ export default function SecondCodingExercise({
         <CodeSandbox
           code={code || initialCode}
           onSetCode={(code) =>
-            onSetCode({ code, exerciseLabel: 'changeLabel' })
+            onSetCode({ code, exerciseLabel: 'changeButtonLabel' })
           }
           onRunCode={handleRunCode}
           onSetErrorMsg={setErrorMsg}
@@ -119,7 +119,7 @@ export default function SecondCodingExercise({
                     ...status.missions,
                     'time-to-code': {
                       ...status?.missions?.['time-to-code'],
-                      changeButtonColor: 'pass'
+                      changeButtonLabel: 'pass'
                     }
                   }
                 }
@@ -133,34 +133,22 @@ export default function SecondCodingExercise({
   );
 
   function handleRunCode(ast) {
-    const jsxElements = getAstProps({ ast, propType: 'JSXOpeningElement' });
-    let buttonColor = '';
+    const jsxElements = getAstProps({ ast, propType: 'JSXElement' });
+    let buttonText = '';
     for (let element of jsxElements) {
-      if (element.attributes?.length > 0 && element?.name?.name === 'button') {
-        for (let attribute of element.attributes) {
-          if (attribute?.name?.name === 'style') {
-            const styleProps = attribute?.value?.expression?.properties;
-            for (let prop of styleProps) {
-              if (
-                prop?.key?.name === 'background' ||
-                prop?.key?.name === 'backgroundColor'
-              ) {
-                buttonColor = prop?.value?.value;
-                break;
-              }
-            }
-          }
+      if (
+        element.openingElement?.name?.name === 'button' &&
+        element?.children
+      ) {
+        for (let child of element?.children) {
+          buttonText = child?.value || '';
         }
       }
     }
-    if (
-      buttonColor === 'blue' ||
-      buttonColor.toLowerCase() === '#0000ff' ||
-      buttonColor === 'rgb(0, 0, 255)'
-    ) {
+    if (buttonText.trim().toLowerCase() === 'Hello world'.toLowerCase()) {
       return handleSuccess();
     }
-    if (!buttonColor) {
+    if (!buttonText) {
       return setErrorMsg(
         <>
           Please change the color of the button to{' '}
@@ -171,7 +159,7 @@ export default function SecondCodingExercise({
     setErrorMsg(
       <>
         The {`button's`} color needs to be{' '}
-        <span style={{ color: 'blue' }}>blue,</span> not {buttonColor}
+        <span style={{ color: 'blue' }}>blue,</span> not {buttonText}
       </>
     );
   }
@@ -179,7 +167,7 @@ export default function SecondCodingExercise({
   async function handleSuccess() {
     await updateMissionStatus({
       missionType: 'time-to-code',
-      newStatus: { changeButtonColor: 'pass' }
+      newStatus: { changeButtonLabel: 'pass' }
     });
     setSuccess(true);
   }

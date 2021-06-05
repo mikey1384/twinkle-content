@@ -18,7 +18,7 @@ export default function CodingExercises({ codeObj, onSetCode, style }) {
     [state?.missions]
   );
   const secondExercisePassed = useMemo(
-    () => state?.missions?.['time-to-code']?.changeLabel === 'pass',
+    () => state?.missions?.['time-to-code']?.changeButtonLabel === 'pass',
     [state?.missions]
   );
 
@@ -41,7 +41,7 @@ export default function CodingExercises({ codeObj, onSetCode, style }) {
       {firstExercisePassed && (
         <SecondCodingExercise
           passed={secondExercisePassed}
-          code={codeObj.changeLabel}
+          code={codeObj.changeButtonLabel}
           onSetCode={onSetCode}
           style={{ marginTop: '5rem' }}
         />
