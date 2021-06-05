@@ -198,7 +198,7 @@ export default function missionRequestHelpers({ auth, handleError }) {
     async updateMissionStatus({ missionType, newStatus }) {
       try {
         await request.put(
-          `${URL}/user/status/mission`,
+          `${URL}/user/state/mission`,
           { missionType, newStatus },
           auth()
         );
