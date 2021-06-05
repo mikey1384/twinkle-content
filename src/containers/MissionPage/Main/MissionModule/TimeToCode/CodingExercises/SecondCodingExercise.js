@@ -30,7 +30,7 @@ export default function SecondCodingExercise({
   const {
     actions: { onUpdateProfileInfo }
   } = useContentContext();
-  const { userId, status = {} } = useMyState();
+  const { userId, state = {} } = useMyState();
   const [success, setSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const initialCode = `function HomePage() {
@@ -113,12 +113,12 @@ export default function SecondCodingExercise({
             onNextClick={() =>
               onUpdateProfileInfo({
                 userId,
-                status: {
-                  ...status,
+                state: {
+                  ...state,
                   missions: {
-                    ...status.missions,
+                    ...state.missions,
                     'time-to-code': {
-                      ...status?.missions?.['time-to-code'],
+                      ...state.missions?.['time-to-code'],
                       changeButtonLabel: 'pass'
                     }
                   }
@@ -149,18 +149,10 @@ export default function SecondCodingExercise({
       return handleSuccess();
     }
     if (!buttonText) {
-      return setErrorMsg(
-        <>
-          Please change the color of the button to{' '}
-          <span style={{ color: 'blue' }}>blue</span>
-        </>
-      );
+      return setErrorMsg(`Hmmm... The button doesn't seem to have any label`);
     }
     setErrorMsg(
-      <>
-        The {`button's`} color needs to be{' '}
-        <span style={{ color: 'blue' }}>blue,</span> not {buttonText}
-      </>
+      `The button's label needs to be "Hello world," not "${buttonText.trim()}"`
     );
   }
 

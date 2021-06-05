@@ -24,7 +24,7 @@ export default function FirstCodingExercise({ code, onSetCode, passed }) {
   const {
     actions: { onUpdateProfileInfo }
   } = useContentContext();
-  const { userId, status = {} } = useMyState();
+  const { userId, state = {} } = useMyState();
   const [success, setSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const initialCode = `function HomePage() {
@@ -100,12 +100,12 @@ export default function FirstCodingExercise({ code, onSetCode, passed }) {
             onNextClick={() =>
               onUpdateProfileInfo({
                 userId,
-                status: {
-                  ...status,
+                state: {
+                  ...state,
                   missions: {
-                    ...status.missions,
+                    ...state.missions,
                     'time-to-code': {
-                      ...status?.missions?.['time-to-code'],
+                      ...state.missions?.['time-to-code'],
                       changeButtonColor: 'pass'
                     }
                   }
