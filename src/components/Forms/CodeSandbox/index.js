@@ -4,8 +4,7 @@ import Editor from './Editor';
 import Button from 'components/Button';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Icon from 'components/Icon';
-import prettier from 'prettier/standalone';
-import parsers from 'prettier/parser-babel';
+import { useAppContext } from 'contexts';
 import { parse } from '@babel/parser';
 
 CodeSandbox.propTypes = {
@@ -29,6 +28,9 @@ export default function CodeSandbox({
   runButtonLabel = 'Run',
   simulatorRef
 }) {
+  const {
+    requestHelpers: { formatCode }
+  } = useAppContext();
   const timerRef = useRef(null);
   const [runButtonDisabled, setRunButtonDisabled] = useState(false);
   const [code, setCode] = useState(globalCode);
@@ -64,7 +66,7 @@ export default function CodeSandbox({
       >
         <div>
           <Button
-            disabled={runButtonDisabled || hasError}
+            disabled={hasError}
             filled
             color="logoBlue"
             onClick={handleFormatCode}
@@ -90,16 +92,13 @@ export default function CodeSandbox({
     </ErrorBoundary>
   );
 
-  function handleFormatCode() {
-    onSetCode(formatCode(globalCode));
-    setCode(formatCode(code));
-    function formatCode(code) {
-      const result = prettier.format(code, {
-        parser: 'babel',
-        plugins: [parsers],
-        trailingComma: 'none'
-      });
-      return result.replace(/[\r\n]+$/, '').replace(/[;]+$/, '');
+  async function handleFormatCode() {
+    try {
+      const formattedCode = await formatCode(code);
+      onSetCode(formattedCode);
+      setCode(formattedCode);
+    } catch (error) {
+      console.log(error);
     }
   }
 

@@ -83,6 +83,16 @@ export default function missionRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async formatCode(code) {
+      try {
+        const {
+          data: { formattedCode }
+        } = await request.put(`${URL}/mission/formatCode`, { code });
+        return Promise.resolve(formattedCode);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async loadGitHubData(code) {
       try {
         const {
