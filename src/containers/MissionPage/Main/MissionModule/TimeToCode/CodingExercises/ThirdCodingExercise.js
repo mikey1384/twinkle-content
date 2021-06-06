@@ -11,20 +11,20 @@ import { getAstProps } from 'helpers';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
-SecondCodingExercise.propTypes = {
+ThirdCodingExercise.propTypes = {
   code: PropTypes.string,
   onSetCode: PropTypes.func.isRequired,
   passed: PropTypes.bool.isRequired,
   style: PropTypes.object
 };
 
-export default function SecondCodingExercise({
+export default function ThirdCodingExercise({
   code,
   onSetCode,
   passed,
   style
 }) {
-  const BUTTON_LABEL = 'Tap me';
+  const ALERT_MSG = 'Hello World';
   const {
     requestHelpers: { updateMissionStatus }
   } = useAppContext();
@@ -55,7 +55,7 @@ export default function SecondCodingExercise({
         }}
         onClick={() => alert('I am a button')}
       >
-        Change me
+        Tap me
       </button>
     </div>
   );
@@ -72,7 +72,7 @@ export default function SecondCodingExercise({
       }}
     >
       <p>
-        2. Hello World!
+        3. Hello World!
         {passed && (
           <Icon
             style={{ marginLeft: '1rem' }}
@@ -93,9 +93,8 @@ export default function SecondCodingExercise({
         `}
         style={{ marginTop: '2rem' }}
       >
-        Change the label of the button from {`"Change me"`} to{' '}
-        {`"${BUTTON_LABEL}"`} and tap the{' '}
-        <b style={{ color: Color.green() }}>check</b> button
+        Make it so that when you tap the {`"Tap me"`} button you get an alert
+        message that says {`"${ALERT_MSG}"`}
       </div>
       <div
         className={css`
@@ -109,7 +108,7 @@ export default function SecondCodingExercise({
         <CodeSandbox
           code={code || initialCode}
           onSetCode={(code) =>
-            onSetCode({ code, exerciseLabel: 'changeButtonLabel' })
+            onSetCode({ code, exerciseLabel: 'changeAlertMsg' })
           }
           onRunCode={handleRunCode}
           onSetErrorMsg={setErrorMsg}
@@ -128,7 +127,7 @@ export default function SecondCodingExercise({
                     ...state.missions,
                     'time-to-code': {
                       ...state.missions?.['time-to-code'],
-                      changeButtonLabel: 'pass'
+                      changeAlertMsg: 'pass'
                     }
                   }
                 }
@@ -154,21 +153,21 @@ export default function SecondCodingExercise({
         }
       }
     }
-    if (buttonText.trim().toLowerCase() === BUTTON_LABEL.toLowerCase()) {
+    if (buttonText.trim().toLowerCase() === 'Hello world'.toLowerCase()) {
       return handleSuccess();
     }
     if (!buttonText) {
       return setErrorMsg(`Hmmm... The button doesn't seem to have any label`);
     }
     setErrorMsg(
-      `The button's label needs to be "${BUTTON_LABEL}," not "${buttonText.trim()}"`
+      `The button's label needs to be "Hello world," not "${buttonText.trim()}"`
     );
   }
 
   async function handleSuccess() {
     await updateMissionStatus({
       missionType: 'time-to-code',
-      newStatus: { changeButtonLabel: 'pass' }
+      newStatus: { changeAlertMsg: 'pass' }
     });
     setSuccess(true);
   }
