@@ -8,6 +8,7 @@ import SuccessMessage from './SuccessMessage';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { getAstProps } from 'helpers';
+import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
@@ -157,7 +158,7 @@ export default function SecondCodingExercise({
     if (buttonText.trim().toLowerCase() === BUTTON_LABEL.toLowerCase()) {
       return handleSuccess();
     }
-    if (!buttonText) {
+    if (stringIsEmpty(buttonText)) {
       return setErrorMsg(`Hmmm... The button doesn't seem to have any label`);
     }
     setErrorMsg(

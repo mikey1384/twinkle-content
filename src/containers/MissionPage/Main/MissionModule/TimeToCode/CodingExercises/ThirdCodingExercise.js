@@ -8,6 +8,7 @@ import SuccessMessage from './SuccessMessage';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { getAstProps } from 'helpers';
+import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
@@ -141,26 +142,31 @@ export default function ThirdCodingExercise({
   );
 
   function handleRunCode(ast) {
-    const jsxElements = getAstProps({ ast, propType: 'JSXElement' });
-    let buttonText = '';
+    const jsxElements = getAstProps({ ast, propType: 'JSXOpeningElement' });
+    let alertText = '';
     for (let element of jsxElements) {
-      if (
-        element.openingElement?.name?.name === 'button' &&
-        element?.children
-      ) {
-        for (let child of element?.children) {
-          buttonText = child?.value || '';
+      if (element.attributes?.length > 0 && element?.name?.name === 'button') {
+        for (let attribute of element.attributes) {
+          if (
+            attribute.name?.name === 'onClick' &&
+            attribute?.value?.expression?.body?.callee?.name === 'alert'
+          ) {
+            alertText =
+              attribute?.value?.expression?.body?.arguments?.[0]?.value;
+          }
         }
       }
     }
-    if (buttonText.trim().toLowerCase() === 'Hello world'.toLowerCase()) {
+    if (alertText.trim().toLowerCase() === 'Hello world'.toLowerCase()) {
       return handleSuccess();
     }
-    if (!buttonText) {
-      return setErrorMsg(`Hmmm... The button doesn't seem to have any label`);
+    if (stringIsEmpty(alertText)) {
+      return setErrorMsg(
+        `Hmmm... The alert popup does not seem to have any message in it`
+      );
     }
     setErrorMsg(
-      `The button's label needs to be "Hello world," not "${buttonText.trim()}"`
+      `The alert message should say, "Hello world," not "${alertText.trim()}"`
     );
   }
 
