@@ -52,24 +52,19 @@ export default function InputForm({
   style = {},
   targetCommentId
 }) {
-  const {
-    userId,
-    profileTheme,
-    authLevel,
-    twinkleXP,
-    fileUploadLvl
-  } = useMyState();
-  const maxSize = useMemo(() => returnMaxUploadSize(fileUploadLvl), [
-    fileUploadLvl
-  ]);
+  const { userId, profileTheme, authLevel, twinkleXP, fileUploadLvl } =
+    useMyState();
+  const maxSize = useMemo(
+    () => returnMaxUploadSize(fileUploadLvl),
+    [fileUploadLvl]
+  );
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [
-    secretViewMessageSubmitting,
-    setSecretViewMessageSubmitting
-  ] = useState(false);
+  const [secretViewMessageSubmitting, setSecretViewMessageSubmitting] =
+    useState(false);
   const [alertModalShown, setAlertModalShown] = useState(false);
   const FileInputRef = useRef(null);
+  const secretViewMessageSubmittingRef = useRef(false);
   const {
     state,
     actions: { onEnterComment, onSetCommentAttachment }
@@ -77,11 +72,10 @@ export default function InputForm({
   const contentType = targetCommentId ? 'comment' : parent.contentType;
   const contentId = targetCommentId || parent.contentId;
   const attachment = state[contentType + contentId]?.attachment;
-  const prevText = useMemo(() => state[contentType + contentId]?.text || '', [
-    contentId,
-    contentType,
-    state
-  ]);
+  const prevText = useMemo(
+    () => state[contentType + contentId]?.text || '',
+    [contentId, contentType, state]
+  );
   const textRef = useRef(prevText);
   const mounted = useRef(true);
   const [text, setText] = useState(prevText);
@@ -371,13 +365,19 @@ export default function InputForm({
   }
 
   async function handleViewAnswer() {
+    if (secretViewMessageSubmittingRef.current) {
+      return;
+    }
+    secretViewMessageSubmittingRef.current = true;
     setSecretViewMessageSubmitting(true);
     try {
       await onViewSecretAnswer();
       setSecretViewMessageSubmitting(false);
+      secretViewMessageSubmittingRef.current = false;
     } catch (error) {
-      setSecretViewMessageSubmitting(false);
       console.error(error);
+      setSecretViewMessageSubmitting(false);
+      secretViewMessageSubmittingRef.current = false;
     }
     setConfirmModalShown(false);
   }

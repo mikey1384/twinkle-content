@@ -154,9 +154,10 @@ function Comments({
         : [],
     [comments, commentsShown, numPreviews]
   );
-  const isPreview = useMemo(() => previewComments.length > 0, [
-    previewComments.length
-  ]);
+  const isPreview = useMemo(
+    () => previewComments.length > 0,
+    [previewComments.length]
+  );
 
   return (
     <Context.Provider
@@ -395,6 +396,7 @@ function Comments({
         contentId: parent.contentId,
         contentType: parent.contentType
       });
+      return Promise.resolve();
     } catch (error) {
       console.error(error);
     }
