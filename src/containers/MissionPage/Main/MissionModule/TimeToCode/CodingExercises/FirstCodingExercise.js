@@ -10,6 +10,7 @@ import { css } from '@emotion/css';
 import { getAstProps } from 'helpers';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
+import { firstCode } from './initialCodes';
 
 FirstCodingExercise.propTypes = {
   code: PropTypes.string,
@@ -27,32 +28,6 @@ export default function FirstCodingExercise({ code, onSetCode, passed }) {
   const { userId, state = {} } = useMyState();
   const [success, setSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
-  const initialCode = `function HomePage() {
-  return (
-    <div
-      style={{
-        width: '100%',
-        height: "100%",
-        display: 'flex',
-        justifyContent: 'center'
-      }}
-    >
-      <button
-        style={{
-          color: "white",
-          background: "red",
-          border: "none",
-          fontSize: "2rem",
-          padding: "1rem",
-          cursor: "pointer"
-        }}
-        onClick={() => alert('I am a button')}
-      >
-        Change me
-      </button>
-    </div>
-  );
-}`;
 
   return (
     <ErrorBoundary>
@@ -92,7 +67,7 @@ export default function FirstCodingExercise({ code, onSetCode, passed }) {
         `}
       >
         <CodeSandbox
-          code={code || initialCode}
+          code={code || firstCode}
           onSetCode={(code) =>
             onSetCode({ code, exerciseLabel: 'changeButtonColor' })
           }

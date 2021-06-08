@@ -11,6 +11,7 @@ import { getAstProps } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
+import { secondCode } from './initialCodes';
 
 SecondCodingExercise.propTypes = {
   code: PropTypes.string,
@@ -35,32 +36,6 @@ export default function SecondCodingExercise({
   const { userId, state = {} } = useMyState();
   const [success, setSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
-  const initialCode = `function HomePage() {
-  return (
-    <div
-      style={{
-        width: '100%',
-        height: "100%",
-        display: 'flex',
-        justifyContent: 'center'
-      }}
-    >
-      <button
-        style={{
-          color: "white",
-          background: "blue",
-          border: "none",
-          fontSize: "2rem",
-          padding: "1rem",
-          cursor: "pointer"
-        }}
-        onClick={() => alert('I am a button')}
-      >
-        Change me
-      </button>
-    </div>
-  );
-}`;
 
   return (
     <ErrorBoundary
@@ -108,7 +83,7 @@ export default function SecondCodingExercise({
         `}
       >
         <CodeSandbox
-          code={code || initialCode}
+          code={code || secondCode}
           onSetCode={(code) =>
             onSetCode({ code, exerciseLabel: 'changeButtonLabel' })
           }
