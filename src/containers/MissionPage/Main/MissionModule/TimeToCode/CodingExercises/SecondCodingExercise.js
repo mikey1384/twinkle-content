@@ -73,7 +73,7 @@ export default function SecondCodingExercise({
       }}
     >
       <p>
-        2. Hello World!
+        2. Tap Me
         {passed && (
           <Icon
             style={{ marginLeft: '1rem' }}

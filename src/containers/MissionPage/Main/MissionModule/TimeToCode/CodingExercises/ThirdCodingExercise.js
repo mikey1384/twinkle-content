@@ -73,7 +73,7 @@ export default function ThirdCodingExercise({
       }}
     >
       <p>
-        3. Hello World!
+        3. Hello World
         {passed && (
           <Icon
             style={{ marginLeft: '1rem' }}
