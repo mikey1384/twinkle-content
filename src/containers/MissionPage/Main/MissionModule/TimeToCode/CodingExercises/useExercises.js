@@ -7,6 +7,7 @@ const BUTTON_LABEL = 'Tap me';
 const ALERT_MSG = 'Hello World';
 
 export default function useExercises({
+  codeObj,
   index,
   state = {},
   onUpdateProfileInfo,
@@ -41,32 +42,33 @@ export default function useExercises({
     const exerciseArray = [
       {
         title: '1. Make It Blue',
+        code: codeObj?.changeButtonColor?.code,
         initialCode: `function HomePage() {
-      return (
-        <div
-          style={{
-            width: '100%',
-            height: "100%",
-            display: 'flex',
-            justifyContent: 'center'
-          }}
-        >
-          <button
-            style={{
-              color: "white",
-              background: "red",
-              border: "none",
-              fontSize: "2rem",
-              padding: "1rem",
-              cursor: "pointer"
-            }}
-            onClick={() => alert('I am a button')}
-          >
-            Change me
-          </button>
-        </div>
-      );
-    }`,
+  return (
+    <div
+      style={{
+        width: '100%',
+        height: "100%",
+        display: 'flex',
+        justifyContent: 'center'
+      }}
+    >
+      <button
+        style={{
+          color: "white",
+          background: "red",
+          border: "none",
+          fontSize: "2rem",
+          padding: "1rem",
+          cursor: "pointer"
+        }}
+        onClick={() => alert('I am a button')}
+      >
+        Change me
+      </button>
+    </div>
+  );
+}`,
         instruction: (
           <>
             Change the color of the <b style={{ color: 'red' }}>red</b> button
@@ -146,32 +148,33 @@ export default function useExercises({
       {
         BUTTON_LABEL,
         title: '2. Tap Me',
+        code: codeObj?.changeButtonLabel?.code,
         initialCode: `function HomePage() {
-      return (
-        <div
-          style={{
-            width: '100%',
-            height: "100%",
-            display: 'flex',
-            justifyContent: 'center'
-          }}
-        >
-          <button
-            style={{
-              color: "white",
-              background: "blue",
-              border: "none",
-              fontSize: "2rem",
-              padding: "1rem",
-              cursor: "pointer"
-            }}
-            onClick={() => alert('I am a button')}
-          >
-            Change me
-          </button>
-        </div>
-      );
-    }`,
+  return (
+    <div
+      style={{
+        width: '100%',
+        height: "100%",
+        display: 'flex',
+        justifyContent: 'center'
+      }}
+    >
+      <button
+        style={{
+          color: "white",
+          background: "blue",
+          border: "none",
+          fontSize: "2rem",
+          padding: "1rem",
+          cursor: "pointer"
+        }}
+        onClick={() => alert('I am a button')}
+      >
+        Change me
+      </button>
+    </div>
+  );
+}`,
         instruction: (
           <>
             Change the label of the button from {`"Change me"`} to{' '}
@@ -227,32 +230,33 @@ export default function useExercises({
       {
         ALERT_MSG,
         title: '3. Hello World',
+        code: codeObj?.changeAlertMsg?.code,
         initialCode: `function HomePage() {
-      return (
-        <div
-          style={{
-            width: '100%',
-            height: "100%",
-            display: 'flex',
-            justifyContent: 'center'
-          }}
-        >
-          <button
-            style={{
-              color: "white",
-              background: "blue",
-              border: "none",
-              fontSize: "2rem",
-              padding: "1rem",
-              cursor: "pointer"
-            }}
-            onClick={() => alert('I am a button')}
-          >
-            Tap me
-          </button>
-        </div>
-      );
-    }`,
+  return (
+    <div
+      style={{
+        width: '100%',
+        height: "100%",
+        display: 'flex',
+        justifyContent: 'center'
+      }}
+    >
+      <button
+        style={{
+          color: "white",
+          background: "blue",
+          border: "none",
+          fontSize: "2rem",
+          padding: "1rem",
+          cursor: "pointer"
+        }}
+        onClick={() => alert('I am a button')}
+      >
+        Tap me
+      </button>
+    </div>
+  );
+}`,
         instruction: `Make it so that when you tap the "Tap me" button you get an alert
     message that says "${ALERT_MSG}"`,
         onNextClick: () =>

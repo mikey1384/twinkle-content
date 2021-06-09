@@ -12,13 +12,18 @@ import { useAppContext, useContentContext } from 'contexts';
 import useExercises from './useExercises';
 
 ExerciseContainer.propTypes = {
-  code: PropTypes.string,
+  codeObj: PropTypes.object,
   index: PropTypes.number.isRequired,
   onSetCode: PropTypes.func.isRequired,
   style: PropTypes.object
 };
 
-export default function ExerciseContainer({ index, code, onSetCode, style }) {
+export default function ExerciseContainer({
+  index,
+  codeObj,
+  onSetCode,
+  style
+}) {
   const {
     requestHelpers: { updateMissionStatus }
   } = useAppContext();
@@ -28,6 +33,7 @@ export default function ExerciseContainer({ index, code, onSetCode, style }) {
   const { userId, state = {} } = useMyState();
   const { passed, errorMsg, setErrorMsg, success, exercise } = useExercises({
     index,
+    codeObj,
     state,
     onUpdateProfileInfo,
     updateMissionStatus,
@@ -78,7 +84,7 @@ export default function ExerciseContainer({ index, code, onSetCode, style }) {
         `}
       >
         <CodeSandbox
-          code={code || exercise.initialCode}
+          code={exercise.code || exercise.initialCode}
           onSetCode={(code) =>
             onSetCode({ code, exerciseLabel: 'changeButtonColor' })
           }
