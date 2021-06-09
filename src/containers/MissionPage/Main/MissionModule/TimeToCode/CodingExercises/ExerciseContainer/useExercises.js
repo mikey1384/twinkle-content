@@ -11,6 +11,7 @@ export default function useExercises({
   index,
   state = {},
   onUpdateProfileInfo,
+  onSetCode,
   userId,
   updateMissionStatus
 } = {}) {
@@ -42,7 +43,7 @@ export default function useExercises({
     const exerciseArray = [
       {
         title: '1. Make It Blue',
-        code: codeObj?.changeButtonColor?.code,
+        code: codeObj?.changeButtonColor,
         initialCode: `function HomePage() {
   return (
     <div
@@ -90,6 +91,8 @@ export default function useExercises({
               }
             }
           }),
+        onSetCode: (code) =>
+          onSetCode({ code, exerciseLabel: 'changeButtonColor' }),
         async onRunCode(ast) {
           const jsxElements = getAstProps({
             ast,
@@ -148,7 +151,7 @@ export default function useExercises({
       {
         BUTTON_LABEL,
         title: '2. Tap Me',
-        code: codeObj?.changeButtonLabel?.code,
+        code: codeObj?.changeButtonLabel,
         initialCode: `function HomePage() {
   return (
     <div
@@ -196,6 +199,8 @@ export default function useExercises({
               }
             }
           }),
+        onSetCode: (code) =>
+          onSetCode({ code, exerciseLabel: 'changeButtonLabel' }),
         async onRunCode(ast) {
           const jsxElements = getAstProps({ ast, propType: 'JSXElement' });
           let buttonText = '';
@@ -230,7 +235,7 @@ export default function useExercises({
       {
         ALERT_MSG,
         title: '3. Hello World',
-        code: codeObj?.changeAlertMsg?.code,
+        code: codeObj?.changeAlertMsg,
         initialCode: `function HomePage() {
   return (
     <div
@@ -273,6 +278,8 @@ export default function useExercises({
               }
             }
           }),
+        onSetCode: (code) =>
+          onSetCode({ code, exerciseLabel: 'changeAlertMsg' }),
         async onRunCode(ast) {
           const jsxElements = getAstProps({
             ast,
@@ -316,7 +323,7 @@ export default function useExercises({
     ];
     return exerciseArray[index];
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [index, userId]);
+  }, [codeObj, index, userId]);
 
   return {
     passed,

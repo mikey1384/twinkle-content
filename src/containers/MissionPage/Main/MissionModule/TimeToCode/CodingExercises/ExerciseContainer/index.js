@@ -36,6 +36,7 @@ export default function ExerciseContainer({
     codeObj,
     state,
     onUpdateProfileInfo,
+    onSetCode,
     updateMissionStatus,
     userId
   });
@@ -85,9 +86,7 @@ export default function ExerciseContainer({
       >
         <CodeSandbox
           code={exercise.code || exercise.initialCode}
-          onSetCode={(code) =>
-            onSetCode({ code, exerciseLabel: 'changeButtonColor' })
-          }
+          onSetCode={exercise.onSetCode}
           onRunCode={exercise.onRunCode}
           onSetErrorMsg={setErrorMsg}
           hasError={!!errorMsg}
