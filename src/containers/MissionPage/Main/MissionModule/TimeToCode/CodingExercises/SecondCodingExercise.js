@@ -33,11 +33,9 @@ export default function SecondCodingExercise({
   return (
     <ExerciseContainer
       passed={passed}
-      title={exercises[1].title}
-      instruction={exercises[1].instruction}
+      index={1}
       code={code}
       errorMsg={errorMsg}
-      initialCode={exercises[1].initialCode}
       onSetCode={onSetCode}
       onSetErrorMsg={setErrorMsg}
       onRunCode={handleRunCode}

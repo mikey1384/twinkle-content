@@ -4,7 +4,6 @@ import { getAstProps } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
-import exercises from './exercises';
 import ExerciseContainer from './ExerciseContainer';
 
 ThirdCodingExercise.propTypes = {
@@ -33,11 +32,9 @@ export default function ThirdCodingExercise({
   return (
     <ExerciseContainer
       passed={passed}
-      title={exercises[2].title}
-      instruction={exercises[2].instruction}
+      index={2}
       code={code}
       errorMsg={errorMsg}
-      initialCode={exercises[2].initialCode}
       onSetCode={onSetCode}
       onSetErrorMsg={setErrorMsg}
       onRunCode={handleRunCode}

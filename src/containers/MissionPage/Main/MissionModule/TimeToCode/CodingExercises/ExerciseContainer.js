@@ -7,14 +7,13 @@ import Icon from 'components/Icon';
 import CodeSandbox from 'components/Forms/CodeSandbox';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import exercises from './exercises';
 
 ExerciseContainer.propTypes = {
   code: PropTypes.string,
   errorMsg: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  title: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
   passed: PropTypes.bool.isRequired,
-  initialCode: PropTypes.string,
-  instruction: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   onNextClick: PropTypes.func.isRequired,
   onSetCode: PropTypes.func.isRequired,
   onSetErrorMsg: PropTypes.func.isRequired,
@@ -24,12 +23,10 @@ ExerciseContainer.propTypes = {
 };
 
 export default function ExerciseContainer({
+  index,
   code,
   errorMsg,
   passed,
-  title,
-  initialCode,
-  instruction,
   onSetCode,
   onSetErrorMsg,
   onNextClick,
@@ -48,7 +45,7 @@ export default function ExerciseContainer({
       }}
     >
       <p>
-        {title}
+        {exercises[index].title}
         {passed && (
           <Icon
             style={{ marginLeft: '1rem' }}
@@ -69,7 +66,7 @@ export default function ExerciseContainer({
         `}
         style={{ marginTop: '2rem' }}
       >
-        {instruction}
+        {exercises[index].instruction}
       </div>
       <div
         className={css`
@@ -81,7 +78,7 @@ export default function ExerciseContainer({
         `}
       >
         <CodeSandbox
-          code={code || initialCode}
+          code={code || exercises[index].initialCode}
           onSetCode={(code) =>
             onSetCode({ code, exerciseLabel: 'changeButtonColor' })
           }
