@@ -7,6 +7,8 @@ import Icon from 'components/Icon';
 import CodeSandbox from 'components/Forms/CodeSandbox';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import { useMyState } from 'helpers/hooks';
+import { useContentContext } from 'contexts';
 import useExercises from './useExercises';
 
 ExerciseContainer.propTypes = {
@@ -14,7 +16,6 @@ ExerciseContainer.propTypes = {
   errorMsg: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   index: PropTypes.number.isRequired,
   passed: PropTypes.bool.isRequired,
-  onNextClick: PropTypes.func.isRequired,
   onSetCode: PropTypes.func.isRequired,
   onSetErrorMsg: PropTypes.func.isRequired,
   onRunCode: PropTypes.func.isRequired,
@@ -29,12 +30,15 @@ export default function ExerciseContainer({
   passed,
   onSetCode,
   onSetErrorMsg,
-  onNextClick,
   onRunCode,
   style,
   success
 }) {
-  const exercises = useExercises();
+  const {
+    actions: { onUpdateProfileInfo }
+  } = useContentContext();
+  const { userId, state = {} } = useMyState();
+  const exercises = useExercises({ state, onUpdateProfileInfo, userId });
   return (
     <ErrorBoundary
       style={{
@@ -89,7 +93,9 @@ export default function ExerciseContainer({
           passed={passed || success}
           runButtonLabel="check"
         />
-        {success && !passed && <SuccessMessage onNextClick={onNextClick} />}
+        {success && !passed && (
+          <SuccessMessage onNextClick={exercises[index].onNextClick} />
+        )}
         {errorMsg && <FailMessage message={errorMsg} />}
       </div>
     </ErrorBoundary>

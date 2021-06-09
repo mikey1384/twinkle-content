@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { getAstProps } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { useAppContext, useContentContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useAppContext } from 'contexts';
 import useExercises from './useExercises';
 import ExerciseContainer from './ExerciseContainer';
 
@@ -24,10 +23,6 @@ export default function SecondCodingExercise({
   const {
     requestHelpers: { updateMissionStatus }
   } = useAppContext();
-  const {
-    actions: { onUpdateProfileInfo }
-  } = useContentContext();
-  const { userId, state = {} } = useMyState();
   const [success, setSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -42,21 +37,6 @@ export default function SecondCodingExercise({
       onRunCode={handleRunCode}
       success={success}
       style={style}
-      onNextClick={() =>
-        onUpdateProfileInfo({
-          userId,
-          state: {
-            ...state,
-            missions: {
-              ...state.missions,
-              'time-to-code': {
-                ...state.missions?.['time-to-code'],
-                changeButtonLabel: 'pass'
-              }
-            }
-          }
-        })
-      }
     />
   );
 

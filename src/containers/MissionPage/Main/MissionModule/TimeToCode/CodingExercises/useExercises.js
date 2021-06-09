@@ -4,7 +4,11 @@ import { Color } from 'constants/css';
 const BUTTON_LABEL = 'Tap me';
 const ALERT_MSG = 'Hello World';
 
-export default function useExercises() {
+export default function useExercises({
+  state = {},
+  onUpdateProfileInfo,
+  userId
+} = {}) {
   return [
     {
       title: '1. Make It Blue',
@@ -40,7 +44,21 @@ export default function useExercises() {
           below to <b style={{ color: 'blue' }}>blue</b> and tap the{' '}
           <b style={{ color: Color.green() }}>check</b> button
         </>
-      )
+      ),
+      onNextClick: () =>
+        onUpdateProfileInfo({
+          userId,
+          state: {
+            ...state,
+            missions: {
+              ...state.missions,
+              'time-to-code': {
+                ...state.missions?.['time-to-code'],
+                changeButtonColor: 'pass'
+              }
+            }
+          }
+        })
     },
     {
       BUTTON_LABEL,
@@ -77,7 +95,21 @@ export default function useExercises() {
           {`"${BUTTON_LABEL}"`} and tap the{' '}
           <b style={{ color: Color.green() }}>check</b> button
         </>
-      )
+      ),
+      onNextClick: () =>
+        onUpdateProfileInfo({
+          userId,
+          state: {
+            ...state,
+            missions: {
+              ...state.missions,
+              'time-to-code': {
+                ...state.missions?.['time-to-code'],
+                changeButtonLabel: 'pass'
+              }
+            }
+          }
+        })
     },
     {
       ALERT_MSG,
@@ -109,7 +141,21 @@ export default function useExercises() {
       );
     }`,
       instruction: `Make it so that when you tap the "Tap me" button you get an alert
-    message that says "${ALERT_MSG}"`
+    message that says "${ALERT_MSG}"`,
+      onNextClick: () =>
+        onUpdateProfileInfo({
+          userId,
+          state: {
+            ...state,
+            missions: {
+              ...state.missions,
+              'time-to-code': {
+                ...state.missions?.['time-to-code'],
+                changeAlertMsg: 'pass'
+              }
+            }
+          }
+        })
     }
   ];
 }

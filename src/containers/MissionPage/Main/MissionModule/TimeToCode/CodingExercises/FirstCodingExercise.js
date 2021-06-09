@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { getAstProps } from 'helpers';
-import { useAppContext, useContentContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useAppContext } from 'contexts';
 import ExerciseContainer from './ExerciseContainer';
 
 FirstCodingExercise.propTypes = {
@@ -15,10 +14,6 @@ export default function FirstCodingExercise({ code, onSetCode, passed }) {
   const {
     requestHelpers: { updateMissionStatus }
   } = useAppContext();
-  const {
-    actions: { onUpdateProfileInfo }
-  } = useContentContext();
-  const { userId, state = {} } = useMyState();
   const [success, setSuccess] = useState();
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -32,21 +27,6 @@ export default function FirstCodingExercise({ code, onSetCode, passed }) {
       onSetErrorMsg={setErrorMsg}
       onRunCode={handleRunCode}
       success={success}
-      onNextClick={() =>
-        onUpdateProfileInfo({
-          userId,
-          state: {
-            ...state,
-            missions: {
-              ...state.missions,
-              'time-to-code': {
-                ...state.missions?.['time-to-code'],
-                changeButtonColor: 'pass'
-              }
-            }
-          }
-        })
-      }
     />
   );
 
