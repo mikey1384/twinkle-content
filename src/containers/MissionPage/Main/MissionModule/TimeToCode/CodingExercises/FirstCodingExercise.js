@@ -4,7 +4,7 @@ import { Color } from 'constants/css';
 import { getAstProps } from 'helpers';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
-import { firstCode } from './initialCodes';
+import exercises from './exercises';
 import ExerciseContainer from './ExerciseContainer';
 
 FirstCodingExercise.propTypes = {
@@ -37,7 +37,7 @@ export default function FirstCodingExercise({ code, onSetCode, passed }) {
       }
       code={code}
       errorMsg={errorMsg}
-      initialCode={firstCode}
+      initialCode={exercises[0].initialCode}
       onSetCode={onSetCode}
       onSetErrorMsg={setErrorMsg}
       onRunCode={handleRunCode}

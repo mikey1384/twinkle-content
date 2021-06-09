@@ -11,7 +11,7 @@ import { getAstProps } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
-import { secondCode } from './initialCodes';
+import exercises from './exercises';
 
 SecondCodingExercise.propTypes = {
   code: PropTypes.string,
@@ -83,7 +83,7 @@ export default function SecondCodingExercise({
         `}
       >
         <CodeSandbox
-          code={code || secondCode}
+          code={code || exercises[1].initialCode}
           onSetCode={(code) =>
             onSetCode({ code, exerciseLabel: 'changeButtonLabel' })
           }

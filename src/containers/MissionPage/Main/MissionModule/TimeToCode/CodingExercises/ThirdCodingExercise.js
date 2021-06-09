@@ -11,7 +11,7 @@ import { getAstProps } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
-import { thirdCode } from './initialCodes';
+import exercises from './exercises';
 
 ThirdCodingExercise.propTypes = {
   code: PropTypes.string,
@@ -82,7 +82,7 @@ export default function ThirdCodingExercise({
         `}
       >
         <CodeSandbox
-          code={code || thirdCode}
+          code={code || exercises[2].initialCode}
           onSetCode={(code) =>
             onSetCode({ code, exerciseLabel: 'changeAlertMsg' })
           }
