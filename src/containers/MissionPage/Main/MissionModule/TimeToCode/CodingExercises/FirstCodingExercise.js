@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Color } from 'constants/css';
 import { getAstProps } from 'helpers';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
@@ -27,14 +26,8 @@ export default function FirstCodingExercise({ code, onSetCode, passed }) {
   return (
     <ExerciseContainer
       passed={passed}
-      title="1. Make It Blue"
-      instruction={
-        <>
-          Change the color of the <b style={{ color: 'red' }}>red</b> button
-          below to <b style={{ color: 'blue' }}>blue</b> and tap the{' '}
-          <b style={{ color: Color.green() }}>check</b> button
-        </>
-      }
+      title={exercises[0].title}
+      instruction={exercises[0].instruction}
       code={code}
       errorMsg={errorMsg}
       initialCode={exercises[0].initialCode}

@@ -19,6 +19,7 @@ ExerciseContainer.propTypes = {
   onSetCode: PropTypes.func.isRequired,
   onSetErrorMsg: PropTypes.func.isRequired,
   onRunCode: PropTypes.func.isRequired,
+  style: PropTypes.object,
   success: PropTypes.bool
 };
 
@@ -33,10 +34,19 @@ export default function ExerciseContainer({
   onSetErrorMsg,
   onNextClick,
   onRunCode,
+  style,
   success
 }) {
   return (
-    <ErrorBoundary>
+    <ErrorBoundary
+      style={{
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        ...style
+      }}
+    >
       <p>
         {title}
         {passed && (
