@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Color } from 'constants/css';
+import { getAstProps } from 'helpers';
+import { stringIsEmpty } from 'helpers/stringHelpers';
 
 const BUTTON_LABEL = 'Tap me';
 const ALERT_MSG = 'Hello World';
@@ -7,9 +9,15 @@ const ALERT_MSG = 'Hello World';
 export default function useExercises({
   state = {},
   onUpdateProfileInfo,
-  userId
+  userId,
+  updateMissionStatus
 } = {}) {
+  const [errorMsg, setErrorMsg] = useState('');
+  const [success, setSuccess] = useState();
   return [
+    errorMsg,
+    setErrorMsg,
+    success,
     {
       title: '1. Make It Blue',
       initialCode: `function HomePage() {
@@ -58,7 +66,58 @@ export default function useExercises({
               }
             }
           }
-        })
+        }),
+      async onRunCode(ast) {
+        const jsxElements = getAstProps({ ast, propType: 'JSXOpeningElement' });
+        let buttonColor = '';
+        for (let element of jsxElements) {
+          if (
+            element.attributes?.length > 0 &&
+            element?.name?.name === 'button'
+          ) {
+            for (let attribute of element.attributes) {
+              if (attribute?.name?.name === 'style') {
+                const styleProps = attribute?.value?.expression?.properties;
+                for (let prop of styleProps) {
+                  if (
+                    prop?.key?.name === 'background' ||
+                    prop?.key?.name === 'backgroundColor'
+                  ) {
+                    buttonColor = prop?.value?.value;
+                    break;
+                  }
+                }
+              }
+            }
+          }
+        }
+        if (
+          buttonColor === 'blue' ||
+          buttonColor.toLowerCase() === '#0000ff' ||
+          buttonColor === 'rgb(0, 0, 255)'
+        ) {
+          await updateMissionStatus({
+            missionType: 'time-to-code',
+            newStatus: { changeButtonColor: 'pass' }
+          });
+          setSuccess(true);
+          return;
+        }
+        if (!buttonColor) {
+          return setErrorMsg(
+            <>
+              Please change the color of the button to{' '}
+              <span style={{ color: 'blue' }}>blue</span>
+            </>
+          );
+        }
+        setErrorMsg(
+          <>
+            The {`button's`} color needs to be{' '}
+            <span style={{ color: 'blue' }}>blue,</span> not {buttonColor}
+          </>
+        );
+      }
     },
     {
       BUTTON_LABEL,
@@ -109,7 +168,37 @@ export default function useExercises({
               }
             }
           }
-        })
+        }),
+      async onRunCode(ast) {
+        const jsxElements = getAstProps({ ast, propType: 'JSXElement' });
+        let buttonText = '';
+        for (let element of jsxElements) {
+          if (
+            element.openingElement?.name?.name === 'button' &&
+            element?.children
+          ) {
+            for (let child of element?.children) {
+              buttonText = child?.value || '';
+            }
+          }
+        }
+        if (buttonText.trim().toLowerCase() === BUTTON_LABEL.toLowerCase()) {
+          await updateMissionStatus({
+            missionType: 'time-to-code',
+            newStatus: { changeButtonLabel: 'pass' }
+          });
+          setSuccess(true);
+          return;
+        }
+        if (stringIsEmpty(buttonText)) {
+          return setErrorMsg(
+            `Hmmm... The button doesn't seem to have any label`
+          );
+        }
+        setErrorMsg(
+          `The button's label needs to be "${BUTTON_LABEL}," not "${buttonText.trim()}"`
+        );
+      }
     },
     {
       ALERT_MSG,
@@ -155,7 +244,43 @@ export default function useExercises({
               }
             }
           }
-        })
+        }),
+      async onRunCode(ast) {
+        const jsxElements = getAstProps({ ast, propType: 'JSXOpeningElement' });
+        let alertText = '';
+        for (let element of jsxElements) {
+          if (
+            element.attributes?.length > 0 &&
+            element?.name?.name === 'button'
+          ) {
+            for (let attribute of element.attributes) {
+              if (
+                attribute.name?.name === 'onClick' &&
+                attribute?.value?.expression?.body?.callee?.name === 'alert'
+              ) {
+                alertText =
+                  attribute?.value?.expression?.body?.arguments?.[0]?.value;
+              }
+            }
+          }
+        }
+        if (alertText.trim().toLowerCase() === 'Hello world'.toLowerCase()) {
+          await updateMissionStatus({
+            missionType: 'time-to-code',
+            newStatus: { changeAlertMsg: 'pass' }
+          });
+          setSuccess(true);
+          return;
+        }
+        if (stringIsEmpty(alertText)) {
+          return setErrorMsg(
+            `Hmmm... The alert popup does not seem to have any message in it`
+          );
+        }
+        setErrorMsg(
+          `The alert message should say, "Hello world," not "${alertText.trim()}"`
+        );
+      }
     }
   ];
 }

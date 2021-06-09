@@ -8,37 +8,37 @@ import CodeSandbox from 'components/Forms/CodeSandbox';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
-import { useContentContext } from 'contexts';
+import { useAppContext, useContentContext } from 'contexts';
 import useExercises from './useExercises';
 
 ExerciseContainer.propTypes = {
   code: PropTypes.string,
-  errorMsg: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   index: PropTypes.number.isRequired,
-  passed: PropTypes.bool.isRequired,
   onSetCode: PropTypes.func.isRequired,
-  onSetErrorMsg: PropTypes.func.isRequired,
-  onRunCode: PropTypes.func.isRequired,
-  style: PropTypes.object,
-  success: PropTypes.bool
+  passed: PropTypes.bool.isRequired,
+  style: PropTypes.object
 };
 
 export default function ExerciseContainer({
   index,
   code,
-  errorMsg,
-  passed,
   onSetCode,
-  onSetErrorMsg,
-  onRunCode,
-  style,
-  success
+  passed,
+  style
 }) {
+  const {
+    requestHelpers: { updateMissionStatus }
+  } = useAppContext();
   const {
     actions: { onUpdateProfileInfo }
   } = useContentContext();
   const { userId, state = {} } = useMyState();
-  const exercises = useExercises({ state, onUpdateProfileInfo, userId });
+  const [errorMsg, setErrorMsg, success, ...exercises] = useExercises({
+    state,
+    onUpdateProfileInfo,
+    updateMissionStatus,
+    userId
+  });
   return (
     <ErrorBoundary
       style={{
@@ -87,8 +87,8 @@ export default function ExerciseContainer({
           onSetCode={(code) =>
             onSetCode({ code, exerciseLabel: 'changeButtonColor' })
           }
-          onRunCode={onRunCode}
-          onSetErrorMsg={onSetErrorMsg}
+          onRunCode={exercises[index].onRunCode}
+          onSetErrorMsg={setErrorMsg}
           hasError={!!errorMsg}
           passed={passed || success}
           runButtonLabel="check"
