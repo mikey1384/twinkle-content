@@ -5,19 +5,12 @@ import ExerciseContainer from './ExerciseContainer';
 SecondCodingExercise.propTypes = {
   code: PropTypes.string,
   onSetCode: PropTypes.func.isRequired,
-  passed: PropTypes.bool.isRequired,
   style: PropTypes.object
 };
 
-export default function SecondCodingExercise({
-  code,
-  onSetCode,
-  passed,
-  style
-}) {
+export default function SecondCodingExercise({ code, onSetCode, style }) {
   return (
     <ExerciseContainer
-      passed={passed}
       index={1}
       code={code}
       onSetCode={onSetCode}

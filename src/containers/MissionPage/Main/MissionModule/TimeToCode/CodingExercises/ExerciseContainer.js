@@ -15,17 +15,10 @@ ExerciseContainer.propTypes = {
   code: PropTypes.string,
   index: PropTypes.number.isRequired,
   onSetCode: PropTypes.func.isRequired,
-  passed: PropTypes.bool.isRequired,
   style: PropTypes.object
 };
 
-export default function ExerciseContainer({
-  index,
-  code,
-  onSetCode,
-  passed,
-  style
-}) {
+export default function ExerciseContainer({ index, code, onSetCode, style }) {
   const {
     requestHelpers: { updateMissionStatus }
   } = useAppContext();
@@ -33,12 +26,14 @@ export default function ExerciseContainer({
     actions: { onUpdateProfileInfo }
   } = useContentContext();
   const { userId, state = {} } = useMyState();
-  const [errorMsg, setErrorMsg, success, ...exercises] = useExercises({
+  const { passed, errorMsg, setErrorMsg, success, exercise } = useExercises({
+    index,
     state,
     onUpdateProfileInfo,
     updateMissionStatus,
     userId
   });
+
   return (
     <ErrorBoundary
       style={{
@@ -50,7 +45,7 @@ export default function ExerciseContainer({
       }}
     >
       <p>
-        {exercises[index].title}
+        {exercise.title}
         {passed && (
           <Icon
             style={{ marginLeft: '1rem' }}
@@ -71,7 +66,7 @@ export default function ExerciseContainer({
         `}
         style={{ marginTop: '2rem' }}
       >
-        {exercises[index].instruction}
+        {exercise.instruction}
       </div>
       <div
         className={css`
@@ -83,18 +78,18 @@ export default function ExerciseContainer({
         `}
       >
         <CodeSandbox
-          code={code || exercises[index].initialCode}
+          code={code || exercise.initialCode}
           onSetCode={(code) =>
             onSetCode({ code, exerciseLabel: 'changeButtonColor' })
           }
-          onRunCode={exercises[index].onRunCode}
+          onRunCode={exercise.onRunCode}
           onSetErrorMsg={setErrorMsg}
           hasError={!!errorMsg}
           passed={passed || success}
           runButtonLabel="check"
         />
         {success && !passed && (
-          <SuccessMessage onNextClick={exercises[index].onNextClick} />
+          <SuccessMessage onNextClick={exercise.onNextClick} />
         )}
         {errorMsg && <FailMessage message={errorMsg} />}
       </div>
