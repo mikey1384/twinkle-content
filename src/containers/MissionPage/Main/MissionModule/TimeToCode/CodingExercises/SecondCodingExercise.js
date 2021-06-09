@@ -4,7 +4,7 @@ import { getAstProps } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
-import exercises from './exercises';
+import useExercises from './useExercises';
 import ExerciseContainer from './ExerciseContainer';
 
 SecondCodingExercise.propTypes = {
@@ -20,6 +20,7 @@ export default function SecondCodingExercise({
   passed,
   style
 }) {
+  const exercises = useExercises();
   const {
     requestHelpers: { updateMissionStatus }
   } = useAppContext();

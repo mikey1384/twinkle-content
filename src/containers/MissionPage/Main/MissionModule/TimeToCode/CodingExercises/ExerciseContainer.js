@@ -7,7 +7,7 @@ import Icon from 'components/Icon';
 import CodeSandbox from 'components/Forms/CodeSandbox';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import exercises from './exercises';
+import useExercises from './useExercises';
 
 ExerciseContainer.propTypes = {
   code: PropTypes.string,
@@ -34,6 +34,7 @@ export default function ExerciseContainer({
   style,
   success
 }) {
+  const exercises = useExercises();
   return (
     <ErrorBoundary
       style={{
