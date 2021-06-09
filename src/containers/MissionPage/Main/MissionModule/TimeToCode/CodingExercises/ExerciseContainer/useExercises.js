@@ -30,14 +30,19 @@ export default function useExercises({
     [state?.missions]
   );
 
+  const passArray = useMemo(
+    () => [firstExercisePassed, secondExercisePassed, thirdExercisePassed],
+    [firstExercisePassed, secondExercisePassed, thirdExercisePassed]
+  );
+
   const passed = useMemo(() => {
-    const passArray = [
-      firstExercisePassed,
-      secondExercisePassed,
-      thirdExercisePassed
-    ];
     return passArray[index];
-  }, [firstExercisePassed, index, secondExercisePassed, thirdExercisePassed]);
+  }, [index, passArray]);
+
+  const prevPassed = useMemo(
+    () => index === 0 || passArray[index - 1],
+    [index, passArray]
+  );
 
   const exercise = useMemo(() => {
     const exerciseArray = [
@@ -327,6 +332,7 @@ export default function useExercises({
 
   return {
     passed,
+    prevPassed,
     errorMsg,
     setErrorMsg,
     exercise,

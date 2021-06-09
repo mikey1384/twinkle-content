@@ -31,17 +31,18 @@ export default function ExerciseContainer({
     actions: { onUpdateProfileInfo }
   } = useContentContext();
   const { userId, state = {} } = useMyState();
-  const { passed, errorMsg, setErrorMsg, success, exercise } = useExercises({
-    index,
-    codeObj,
-    state,
-    onUpdateProfileInfo,
-    onSetCode,
-    updateMissionStatus,
-    userId
-  });
+  const { passed, prevPassed, errorMsg, setErrorMsg, success, exercise } =
+    useExercises({
+      index,
+      codeObj,
+      state,
+      onUpdateProfileInfo,
+      onSetCode,
+      updateMissionStatus,
+      userId
+    });
 
-  return (
+  return prevPassed ? (
     <ErrorBoundary
       style={{
         width: '100%',
@@ -99,5 +100,5 @@ export default function ExerciseContainer({
         {errorMsg && <FailMessage message={errorMsg} />}
       </div>
     </ErrorBoundary>
-  );
+  ) : null;
 }
