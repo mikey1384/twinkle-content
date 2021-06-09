@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import CodeSandbox from 'components/Forms/CodeSandbox';
-import Icon from 'components/Icon';
-import ErrorBoundary from 'components/ErrorBoundary';
-import FailMessage from './FailMessage';
-import SuccessMessage from './SuccessMessage';
-import { Color, mobileMaxWidth } from 'constants/css';
-import { css } from '@emotion/css';
+import { Color } from 'constants/css';
 import { getAstProps } from 'helpers';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { firstCode } from './initialCodes';
+import ExerciseContainer from './ExerciseContainer';
 
 FirstCodingExercise.propTypes = {
   code: PropTypes.string,
@@ -26,79 +21,43 @@ export default function FirstCodingExercise({ code, onSetCode, passed }) {
     actions: { onUpdateProfileInfo }
   } = useContentContext();
   const { userId, state = {} } = useMyState();
-  const [success, setSuccess] = useState(false);
+  const [success, setSuccess] = useState();
   const [errorMsg, setErrorMsg] = useState('');
 
   return (
-    <ErrorBoundary>
-      <p>
-        1. Make It Blue
-        {passed && (
-          <Icon
-            style={{ marginLeft: '1rem' }}
-            icon="check"
-            color={Color.green()}
-          />
-        )}
-      </p>
-      <div
-        className={css`
-          width: 80%;
-          font-size: 1.7rem;
-          line-height: 2;
-          text-align: center;
-          @media (max-width: ${mobileMaxWidth}) {
-            width: 100%;
-          }
-        `}
-        style={{ marginTop: '2rem' }}
-      >
-        Change the color of the <b style={{ color: 'red' }}>red</b> button below
-        to <b style={{ color: 'blue' }}>blue</b> and tap the{' '}
-        <b style={{ color: Color.green() }}>check</b> button
-      </div>
-      <div
-        className={css`
-          margin-top: 2rem;
-          width: 80%;
-          @media (max-width: ${mobileMaxWidth}) {
-            width: 100%;
-          }
-        `}
-      >
-        <CodeSandbox
-          code={code || firstCode}
-          onSetCode={(code) =>
-            onSetCode({ code, exerciseLabel: 'changeButtonColor' })
-          }
-          onRunCode={handleRunCode}
-          onSetErrorMsg={setErrorMsg}
-          hasError={!!errorMsg}
-          passed={passed || success}
-          runButtonLabel="check"
-        />
-        {success && !passed && (
-          <SuccessMessage
-            onNextClick={() =>
-              onUpdateProfileInfo({
-                userId,
-                state: {
-                  ...state,
-                  missions: {
-                    ...state.missions,
-                    'time-to-code': {
-                      ...state.missions?.['time-to-code'],
-                      changeButtonColor: 'pass'
-                    }
-                  }
-                }
-              })
+    <ExerciseContainer
+      passed={passed}
+      title="1. Make It Blue"
+      instruction={
+        <>
+          Change the color of the <b style={{ color: 'red' }}>red</b> button
+          below to <b style={{ color: 'blue' }}>blue</b> and tap the{' '}
+          <b style={{ color: Color.green() }}>check</b> button
+        </>
+      }
+      code={code}
+      errorMsg={errorMsg}
+      initialCode={firstCode}
+      onSetCode={onSetCode}
+      onSetErrorMsg={setErrorMsg}
+      onRunCode={handleRunCode}
+      success={success}
+      onNextClick={() =>
+        onUpdateProfileInfo({
+          userId,
+          state: {
+            ...state,
+            missions: {
+              ...state.missions,
+              'time-to-code': {
+                ...state.missions?.['time-to-code'],
+                changeButtonColor: 'pass'
+              }
             }
-          />
-        )}
-        {errorMsg && <FailMessage message={errorMsg} />}
-      </div>
-    </ErrorBoundary>
+          }
+        })
+      }
+    />
   );
 
   function handleRunCode(ast) {
