@@ -1,4 +1,4 @@
-import { ALERT_MSG } from '../constants';
+import { ALERT_MSG } from './constants';
 import { getAstProps } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 

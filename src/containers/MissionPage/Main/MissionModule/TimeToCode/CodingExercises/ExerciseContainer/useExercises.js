@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import exercises from './exercises';
+import exercises from '../exercises';
 
 export default function useExercises({
   codeObj,
