@@ -2,9 +2,8 @@ import React, { useMemo, useState } from 'react';
 import { Color } from 'constants/css';
 import { getAstProps } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-
-const BUTTON_LABEL = 'Tap me';
-const ALERT_MSG = 'Hello World';
+import { BUTTON_LABEL, ALERT_MSG } from './constants';
+import exercises from './exercises';
 
 export default function useExercises({
   codeObj,
@@ -55,33 +54,8 @@ export default function useExercises({
     const exerciseObj = {
       changeButtonColor: {
         title: '1. Make It Blue',
-        code: codeObj?.changeButtonColor,
-        initialCode: `function HomePage() {
-  return (
-    <div
-      style={{
-        width: '100%',
-        height: "100%",
-        display: 'flex',
-        justifyContent: 'center'
-      }}
-    >
-      <button
-        style={{
-          color: "white",
-          background: "red",
-          border: "none",
-          fontSize: "2rem",
-          padding: "1rem",
-          cursor: "pointer"
-        }}
-        onClick={() => alert('I am a button')}
-      >
-        Change me
-      </button>
-    </div>
-  );
-}`,
+        code: codeObj?.[exerciseKey],
+        initialCode: exercises[exerciseKey].initialCode,
         instruction: (
           <>
             Change the color of the <b style={{ color: 'red' }}>red</b> button
@@ -164,32 +138,7 @@ export default function useExercises({
         BUTTON_LABEL,
         title: '2. Tap Me',
         code: codeObj?.changeButtonLabel,
-        initialCode: `function HomePage() {
-  return (
-    <div
-      style={{
-        width: '100%',
-        height: "100%",
-        display: 'flex',
-        justifyContent: 'center'
-      }}
-    >
-      <button
-        style={{
-          color: "white",
-          background: "blue",
-          border: "none",
-          fontSize: "2rem",
-          padding: "1rem",
-          cursor: "pointer"
-        }}
-        onClick={() => alert('I am a button')}
-      >
-        Change me
-      </button>
-    </div>
-  );
-}`,
+        initialCode: exercises[exerciseKey].initialCode,
         instruction: (
           <>
             Change the label of the button from {`"Change me"`} to{' '}
@@ -248,32 +197,7 @@ export default function useExercises({
         ALERT_MSG,
         title: '3. Hello World',
         code: codeObj?.changeAlertMsg,
-        initialCode: `function HomePage() {
-  return (
-    <div
-      style={{
-        width: '100%',
-        height: "100%",
-        display: 'flex',
-        justifyContent: 'center'
-      }}
-    >
-      <button
-        style={{
-          color: "white",
-          background: "blue",
-          border: "none",
-          fontSize: "2rem",
-          padding: "1rem",
-          cursor: "pointer"
-        }}
-        onClick={() => alert('I am a button')}
-      >
-        Tap me
-      </button>
-    </div>
-  );
-}`,
+        initialCode: exercises[exerciseKey].initialCode,
         instruction: `Make it so that when you tap the "Tap me" button you get an alert
     message that says "${ALERT_MSG}"`,
         onNextClick: () =>
