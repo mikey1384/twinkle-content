@@ -1,4 +1,8 @@
+import { ALERT_MSG } from '../constants';
+
 export const title = `3. Hello World`;
+export const instruction = `Make it so that when you tap the "Tap me" button you get an alert
+message that says "${ALERT_MSG}"`;
 export const initialCode = `function HomePage() {
   return (
     <div

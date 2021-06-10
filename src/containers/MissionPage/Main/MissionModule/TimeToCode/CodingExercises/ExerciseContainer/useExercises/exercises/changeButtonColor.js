@@ -1,4 +1,14 @@
+import React from 'react';
+import { Color } from 'constants/css';
+
 export const title = `1. Make It Blue`;
+export const instruction = (
+  <>
+    Change the color of the <b style={{ color: 'red' }}>red</b> button below to{' '}
+    <b style={{ color: 'blue' }}>blue</b> and tap the{' '}
+    <b style={{ color: Color.green() }}>check</b> button
+  </>
+);
 export const initialCode = `function HomePage() {
   return (
     <div

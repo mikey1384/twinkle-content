@@ -1,5 +1,4 @@
 import React, { useMemo, useState } from 'react';
-import { Color } from 'constants/css';
 import { getAstProps } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { BUTTON_LABEL, ALERT_MSG } from './constants';
@@ -56,13 +55,7 @@ export default function useExercises({
         title: exercises[exerciseKey].title,
         code: codeObj?.[exerciseKey],
         initialCode: exercises[exerciseKey].initialCode,
-        instruction: (
-          <>
-            Change the color of the <b style={{ color: 'red' }}>red</b> button
-            below to <b style={{ color: 'blue' }}>blue</b> and tap the{' '}
-            <b style={{ color: Color.green() }}>check</b> button
-          </>
-        ),
+        instruction: exercises[exerciseKey].instruction,
         onNextClick: () =>
           onUpdateProfileInfo({
             userId,
@@ -139,13 +132,7 @@ export default function useExercises({
         title: exercises[exerciseKey].title,
         code: codeObj?.[exerciseKey],
         initialCode: exercises[exerciseKey].initialCode,
-        instruction: (
-          <>
-            Change the label of the button from {`"Change me"`} to{' '}
-            {`"${BUTTON_LABEL}"`} and tap the{' '}
-            <b style={{ color: Color.green() }}>check</b> button
-          </>
-        ),
+        instruction: exercises[exerciseKey].instruction,
         onNextClick: () =>
           onUpdateProfileInfo({
             userId,
@@ -198,8 +185,7 @@ export default function useExercises({
         title: exercises[exerciseKey].title,
         code: codeObj?.[exerciseKey],
         initialCode: exercises[exerciseKey].initialCode,
-        instruction: `Make it so that when you tap the "Tap me" button you get an alert
-    message that says "${ALERT_MSG}"`,
+        instruction: exercises[exerciseKey].instruction,
         onNextClick: () =>
           onUpdateProfileInfo({
             userId,
