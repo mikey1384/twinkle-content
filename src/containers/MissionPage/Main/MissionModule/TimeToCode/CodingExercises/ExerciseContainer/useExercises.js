@@ -8,7 +8,8 @@ const ALERT_MSG = 'Hello World';
 
 export default function useExercises({
   codeObj,
-  index,
+  exerciseKey,
+  prevExerciseKey,
   state = {},
   onUpdateProfileInfo,
   onSetCode,
@@ -30,23 +31,29 @@ export default function useExercises({
     [state?.missions]
   );
 
-  const passArray = useMemo(
-    () => [firstExercisePassed, secondExercisePassed, thirdExercisePassed],
+  const passObj = useMemo(
+    () => ({
+      changeButtonColor: firstExercisePassed,
+      changeButtonLabel: secondExercisePassed,
+      changeAlertMsg: thirdExercisePassed
+    }),
     [firstExercisePassed, secondExercisePassed, thirdExercisePassed]
   );
 
   const passed = useMemo(() => {
-    return passArray[index];
-  }, [index, passArray]);
+    return passObj[exerciseKey];
+  }, [exerciseKey, passObj]);
 
-  const prevPassed = useMemo(
-    () => index === 0 || passArray[index - 1],
-    [index, passArray]
-  );
+  const prevPassed = useMemo(() => {
+    if (!prevExerciseKey) {
+      return true;
+    }
+    return passObj[prevExerciseKey];
+  }, [passObj, prevExerciseKey]);
 
   const exercise = useMemo(() => {
-    const exerciseArray = [
-      {
+    const exerciseObj = {
+      changeButtonColor: {
         title: '1. Make It Blue',
         code: codeObj?.changeButtonColor,
         initialCode: `function HomePage() {
@@ -153,7 +160,7 @@ export default function useExercises({
           );
         }
       },
-      {
+      changeButtonLabel: {
         BUTTON_LABEL,
         title: '2. Tap Me',
         code: codeObj?.changeButtonLabel,
@@ -237,7 +244,7 @@ export default function useExercises({
           );
         }
       },
-      {
+      changeAlertMsg: {
         ALERT_MSG,
         title: '3. Hello World',
         code: codeObj?.changeAlertMsg,
@@ -325,10 +332,10 @@ export default function useExercises({
           );
         }
       }
-    ];
-    return exerciseArray[index];
+    };
+    return exerciseObj[exerciseKey];
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [codeObj, index, userId]);
+  }, [codeObj, exerciseKey, userId]);
 
   return {
     passed,

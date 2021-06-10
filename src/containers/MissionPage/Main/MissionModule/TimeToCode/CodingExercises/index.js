@@ -9,6 +9,12 @@ CodingExercises.propTypes = {
   style: PropTypes.object
 };
 
+const exerciseKeys = [
+  'changeButtonColor',
+  'changeButtonLabel',
+  'changeAlertMsg'
+];
+
 export default function CodingExercises({ codeObj, onSetCode, style }) {
   return (
     <ErrorBoundary
@@ -21,17 +27,16 @@ export default function CodingExercises({ codeObj, onSetCode, style }) {
         ...style
       }}
     >
-      {Array(3)
-        .fill()
-        .map((elem, index) => (
-          <ExerciseContainer
-            key={index}
-            codeObj={codeObj}
-            index={index}
-            onSetCode={onSetCode}
-            style={{ marginTop: index === 0 ? 0 : '10rem' }}
-          />
-        ))}
+      {exerciseKeys.map((exerciseKey, index) => (
+        <ExerciseContainer
+          key={exerciseKey}
+          exerciseKey={exerciseKey}
+          prevExerciseKey={index === 0 ? null : exerciseKeys[index - 1]}
+          codeObj={codeObj}
+          onSetCode={onSetCode}
+          style={{ marginTop: index === 0 ? 0 : '10rem' }}
+        />
+      ))}
     </ErrorBoundary>
   );
 }

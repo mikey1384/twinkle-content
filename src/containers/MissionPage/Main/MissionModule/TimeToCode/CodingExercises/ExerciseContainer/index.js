@@ -13,14 +13,16 @@ import useExercises from './useExercises';
 
 ExerciseContainer.propTypes = {
   codeObj: PropTypes.object,
-  index: PropTypes.number.isRequired,
+  exerciseKey: PropTypes.string.isRequired,
+  prevExerciseKey: PropTypes.string,
   onSetCode: PropTypes.func.isRequired,
   style: PropTypes.object
 };
 
 export default function ExerciseContainer({
-  index,
   codeObj,
+  exerciseKey,
+  prevExerciseKey,
   onSetCode,
   style
 }) {
@@ -33,7 +35,8 @@ export default function ExerciseContainer({
   const { userId, state = {} } = useMyState();
   const { passed, prevPassed, errorMsg, setErrorMsg, success, exercise } =
     useExercises({
-      index,
+      exerciseKey,
+      prevExerciseKey,
       codeObj,
       state,
       onUpdateProfileInfo,
