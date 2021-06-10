@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react';
-import { BUTTON_LABEL, ALERT_MSG } from './constants';
 import exercises from './exercises';
 
 export default function useExercises({
@@ -48,53 +47,20 @@ export default function useExercises({
   }, [passObj, prevExerciseKey]);
 
   const exercise = useMemo(() => {
-    const exerciseObj = {
-      changeButtonColor: {
-        title: exercises[exerciseKey].title,
-        code: codeObj?.[exerciseKey],
-        initialCode: exercises[exerciseKey].initialCode,
-        instruction: exercises[exerciseKey].instruction,
-        onNextClick: handleNextClick,
-        onSetCode: handleSetCode,
-        onRunCode: (ast) =>
-          exercises[exerciseKey].onRunCode({
-            ast,
-            onSetErrorMsg: setErrorMsg,
-            onUpdateMissionStatus: handleUpdateMissionStatus
-          })
-      },
-      changeButtonLabel: {
-        BUTTON_LABEL,
-        title: exercises[exerciseKey].title,
-        code: codeObj?.[exerciseKey],
-        initialCode: exercises[exerciseKey].initialCode,
-        instruction: exercises[exerciseKey].instruction,
-        onNextClick: handleNextClick,
-        onSetCode: handleSetCode,
-        onRunCode: (ast) =>
-          exercises[exerciseKey].onRunCode({
-            ast,
-            onSetErrorMsg: setErrorMsg,
-            onUpdateMissionStatus: handleUpdateMissionStatus
-          })
-      },
-      changeAlertMsg: {
-        ALERT_MSG,
-        title: exercises[exerciseKey].title,
-        code: codeObj?.[exerciseKey],
-        initialCode: exercises[exerciseKey].initialCode,
-        instruction: exercises[exerciseKey].instruction,
-        onNextClick: handleNextClick,
-        onSetCode: handleSetCode,
-        onRunCode: (ast) =>
-          exercises[exerciseKey].onRunCode({
-            ast,
-            onSetErrorMsg: setErrorMsg,
-            onUpdateMissionStatus: handleUpdateMissionStatus
-          })
-      }
+    return {
+      title: exercises[exerciseKey].title,
+      code: codeObj?.[exerciseKey],
+      initialCode: exercises[exerciseKey].initialCode,
+      instruction: exercises[exerciseKey].instruction,
+      onNextClick: handleNextClick,
+      onSetCode: handleSetCode,
+      onRunCode: (ast) =>
+        exercises[exerciseKey].onRunCode({
+          ast,
+          onSetErrorMsg: setErrorMsg,
+          onUpdateMissionStatus: handleUpdateMissionStatus
+        })
     };
-    return exerciseObj[exerciseKey];
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [codeObj, exerciseKey, userId]);
 
