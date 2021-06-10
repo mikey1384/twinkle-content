@@ -56,22 +56,8 @@ export default function useExercises({
         code: codeObj?.[exerciseKey],
         initialCode: exercises[exerciseKey].initialCode,
         instruction: exercises[exerciseKey].instruction,
-        onNextClick: () =>
-          onUpdateProfileInfo({
-            userId,
-            state: {
-              ...state,
-              missions: {
-                ...state.missions,
-                'time-to-code': {
-                  ...state.missions?.['time-to-code'],
-                  changeButtonColor: 'pass'
-                }
-              }
-            }
-          }),
-        onSetCode: (code) =>
-          onSetCode({ code, exerciseLabel: 'changeButtonColor' }),
+        onNextClick: handleNextClick,
+        onSetCode: handleSetCode,
         async onRunCode(ast) {
           const jsxElements = getAstProps({
             ast,
@@ -133,22 +119,8 @@ export default function useExercises({
         code: codeObj?.[exerciseKey],
         initialCode: exercises[exerciseKey].initialCode,
         instruction: exercises[exerciseKey].instruction,
-        onNextClick: () =>
-          onUpdateProfileInfo({
-            userId,
-            state: {
-              ...state,
-              missions: {
-                ...state.missions,
-                'time-to-code': {
-                  ...state.missions?.['time-to-code'],
-                  changeButtonLabel: 'pass'
-                }
-              }
-            }
-          }),
-        onSetCode: (code) =>
-          onSetCode({ code, exerciseLabel: 'changeButtonLabel' }),
+        onNextClick: handleNextClick,
+        onSetCode: handleSetCode,
         async onRunCode(ast) {
           const jsxElements = getAstProps({ ast, propType: 'JSXElement' });
           let buttonText = '';
@@ -186,22 +158,8 @@ export default function useExercises({
         code: codeObj?.[exerciseKey],
         initialCode: exercises[exerciseKey].initialCode,
         instruction: exercises[exerciseKey].instruction,
-        onNextClick: () =>
-          onUpdateProfileInfo({
-            userId,
-            state: {
-              ...state,
-              missions: {
-                ...state.missions,
-                'time-to-code': {
-                  ...state.missions?.['time-to-code'],
-                  changeAlertMsg: 'pass'
-                }
-              }
-            }
-          }),
-        onSetCode: (code) =>
-          onSetCode({ code, exerciseLabel: 'changeAlertMsg' }),
+        onNextClick: handleNextClick,
+        onSetCode: handleSetCode,
         async onRunCode(ast) {
           const jsxElements = getAstProps({
             ast,
@@ -255,4 +213,24 @@ export default function useExercises({
     exercise,
     success
   };
+
+  function handleNextClick() {
+    onUpdateProfileInfo({
+      userId,
+      state: {
+        ...state,
+        missions: {
+          ...state.missions,
+          'time-to-code': {
+            ...state.missions?.['time-to-code'],
+            [exerciseKey]: 'pass'
+          }
+        }
+      }
+    });
+  }
+
+  function handleSetCode(code) {
+    onSetCode({ code, exerciseLabel: exerciseKey });
+  }
 }
