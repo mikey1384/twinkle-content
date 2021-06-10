@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import ExerciseContainer from './ExerciseContainer';
+import exercises from './exercises';
 
 CodingExercises.propTypes = {
   codeObj: PropTypes.object,
@@ -9,11 +10,7 @@ CodingExercises.propTypes = {
   style: PropTypes.object
 };
 
-const exerciseKeys = [
-  'changeButtonColor',
-  'changeButtonLabel',
-  'changeAlertMsg'
-];
+const exerciseKeys = Object.keys(exercises);
 
 export default function CodingExercises({ codeObj, onSetCode, style }) {
   return (
