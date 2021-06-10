@@ -53,7 +53,7 @@ export default function useExercises({
   const exercise = useMemo(() => {
     const exerciseObj = {
       changeButtonColor: {
-        title: '1. Make It Blue',
+        title: exercises[exerciseKey].title,
         code: codeObj?.[exerciseKey],
         initialCode: exercises[exerciseKey].initialCode,
         instruction: (
@@ -136,8 +136,8 @@ export default function useExercises({
       },
       changeButtonLabel: {
         BUTTON_LABEL,
-        title: '2. Tap Me',
-        code: codeObj?.changeButtonLabel,
+        title: exercises[exerciseKey].title,
+        code: codeObj?.[exerciseKey],
         initialCode: exercises[exerciseKey].initialCode,
         instruction: (
           <>
@@ -195,8 +195,8 @@ export default function useExercises({
       },
       changeAlertMsg: {
         ALERT_MSG,
-        title: '3. Hello World',
-        code: codeObj?.changeAlertMsg,
+        title: exercises[exerciseKey].title,
+        code: codeObj?.[exerciseKey],
         initialCode: exercises[exerciseKey].initialCode,
         instruction: `Make it so that when you tap the "Tap me" button you get an alert
     message that says "${ALERT_MSG}"`,

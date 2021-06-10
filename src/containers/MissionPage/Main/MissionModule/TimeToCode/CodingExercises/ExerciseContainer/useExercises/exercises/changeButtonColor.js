@@ -1,3 +1,4 @@
+export const title = `1. Make It Blue`;
 export const initialCode = `function HomePage() {
   return (
     <div

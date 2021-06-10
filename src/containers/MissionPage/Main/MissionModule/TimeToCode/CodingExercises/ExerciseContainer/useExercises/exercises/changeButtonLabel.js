@@ -1,3 +1,4 @@
+export const title = `'2. Tap Me'`;
 export const initialCode = `function HomePage() {
   return (
     <div
