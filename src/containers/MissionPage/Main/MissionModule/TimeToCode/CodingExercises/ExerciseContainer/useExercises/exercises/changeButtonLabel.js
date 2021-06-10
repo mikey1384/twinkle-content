@@ -2,7 +2,7 @@ import React from 'react';
 import { Color } from 'constants/css';
 import { BUTTON_LABEL } from '../constants';
 
-export const title = `'2. Tap Me'`;
+export const title = `2. Tap Me`;
 export const instruction = (
   <>
     Change the label of the button from {`"Change me"`} to {`"${BUTTON_LABEL}"`}{' '}

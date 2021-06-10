@@ -90,12 +90,7 @@ export default function useExercises({
             buttonColor.toLowerCase() === '#0000ff' ||
             buttonColor === 'rgb(0, 0, 255)'
           ) {
-            await updateMissionStatus({
-              missionType: 'time-to-code',
-              newStatus: { changeButtonColor: 'pass' }
-            });
-            setSuccess(true);
-            return;
+            return await handleUpdateMissionStatus();
           }
           if (!buttonColor) {
             return setErrorMsg(
@@ -135,12 +130,7 @@ export default function useExercises({
             }
           }
           if (buttonText.trim().toLowerCase() === BUTTON_LABEL.toLowerCase()) {
-            await updateMissionStatus({
-              missionType: 'time-to-code',
-              newStatus: { changeButtonLabel: 'pass' }
-            });
-            setSuccess(true);
-            return;
+            return await handleUpdateMissionStatus();
           }
           if (stringIsEmpty(buttonText)) {
             return setErrorMsg(
@@ -183,12 +173,7 @@ export default function useExercises({
             }
           }
           if (alertText.trim().toLowerCase() === 'Hello world'.toLowerCase()) {
-            await updateMissionStatus({
-              missionType: 'time-to-code',
-              newStatus: { changeAlertMsg: 'pass' }
-            });
-            setSuccess(true);
-            return;
+            return await handleUpdateMissionStatus;
           }
           if (stringIsEmpty(alertText)) {
             return setErrorMsg(
@@ -232,5 +217,13 @@ export default function useExercises({
 
   function handleSetCode(code) {
     onSetCode({ code, exerciseLabel: exerciseKey });
+  }
+
+  async function handleUpdateMissionStatus() {
+    await updateMissionStatus({
+      missionType: 'time-to-code',
+      newStatus: { [exerciseKey]: 'pass' }
+    });
+    setSuccess(true);
   }
 }
