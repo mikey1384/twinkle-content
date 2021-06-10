@@ -121,6 +121,6 @@ export default function CodeSandbox({
     timerRef.current = setTimeout(() => {
       onSetCode(text);
       setRunButtonDisabled(false);
-    }, 1000);
+    }, 200);
   }
 }
