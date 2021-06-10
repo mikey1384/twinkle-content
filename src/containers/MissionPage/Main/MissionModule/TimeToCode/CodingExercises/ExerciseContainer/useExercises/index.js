@@ -1,6 +1,4 @@
-import React, { useMemo, useState } from 'react';
-import { getAstProps } from 'helpers';
-import { stringIsEmpty } from 'helpers/stringHelpers';
+import { useMemo, useState } from 'react';
 import { BUTTON_LABEL, ALERT_MSG } from './constants';
 import exercises from './exercises';
 
@@ -58,55 +56,12 @@ export default function useExercises({
         instruction: exercises[exerciseKey].instruction,
         onNextClick: handleNextClick,
         onSetCode: handleSetCode,
-        async onRunCode(ast) {
-          const jsxElements = getAstProps({
+        onRunCode: (ast) =>
+          exercises[exerciseKey].onRunCode({
             ast,
-            propType: 'JSXOpeningElement'
-          });
-          let buttonColor = '';
-          for (let element of jsxElements) {
-            if (
-              element.attributes?.length > 0 &&
-              element?.name?.name === 'button'
-            ) {
-              for (let attribute of element.attributes) {
-                if (attribute?.name?.name === 'style') {
-                  const styleProps = attribute?.value?.expression?.properties;
-                  for (let prop of styleProps) {
-                    if (
-                      prop?.key?.name === 'background' ||
-                      prop?.key?.name === 'backgroundColor'
-                    ) {
-                      buttonColor = prop?.value?.value;
-                      break;
-                    }
-                  }
-                }
-              }
-            }
-          }
-          if (
-            buttonColor === 'blue' ||
-            buttonColor.toLowerCase() === '#0000ff' ||
-            buttonColor === 'rgb(0, 0, 255)'
-          ) {
-            return await handleUpdateMissionStatus();
-          }
-          if (!buttonColor) {
-            return setErrorMsg(
-              <>
-                Please change the color of the button to{' '}
-                <span style={{ color: 'blue' }}>blue</span>
-              </>
-            );
-          }
-          setErrorMsg(
-            <>
-              The {`button's`} color needs to be{' '}
-              <span style={{ color: 'blue' }}>blue,</span> not {buttonColor}
-            </>
-          );
-        }
+            onSetErrorMsg: setErrorMsg,
+            onUpdateMissionStatus: handleUpdateMissionStatus
+          })
       },
       changeButtonLabel: {
         BUTTON_LABEL,
@@ -116,31 +71,12 @@ export default function useExercises({
         instruction: exercises[exerciseKey].instruction,
         onNextClick: handleNextClick,
         onSetCode: handleSetCode,
-        async onRunCode(ast) {
-          const jsxElements = getAstProps({ ast, propType: 'JSXElement' });
-          let buttonText = '';
-          for (let element of jsxElements) {
-            if (
-              element.openingElement?.name?.name === 'button' &&
-              element?.children
-            ) {
-              for (let child of element?.children) {
-                buttonText = child?.value || '';
-              }
-            }
-          }
-          if (buttonText.trim().toLowerCase() === BUTTON_LABEL.toLowerCase()) {
-            return await handleUpdateMissionStatus();
-          }
-          if (stringIsEmpty(buttonText)) {
-            return setErrorMsg(
-              `Hmmm... The button doesn't seem to have any label`
-            );
-          }
-          setErrorMsg(
-            `The button's label needs to be "${BUTTON_LABEL}," not "${buttonText.trim()}"`
-          );
-        }
+        onRunCode: (ast) =>
+          exercises[exerciseKey].onRunCode({
+            ast,
+            onSetErrorMsg: setErrorMsg,
+            onUpdateMissionStatus: handleUpdateMissionStatus
+          })
       },
       changeAlertMsg: {
         ALERT_MSG,
@@ -150,40 +86,12 @@ export default function useExercises({
         instruction: exercises[exerciseKey].instruction,
         onNextClick: handleNextClick,
         onSetCode: handleSetCode,
-        async onRunCode(ast) {
-          const jsxElements = getAstProps({
+        onRunCode: (ast) =>
+          exercises[exerciseKey].onRunCode({
             ast,
-            propType: 'JSXOpeningElement'
-          });
-          let alertText = '';
-          for (let element of jsxElements) {
-            if (
-              element.attributes?.length > 0 &&
-              element?.name?.name === 'button'
-            ) {
-              for (let attribute of element.attributes) {
-                if (
-                  attribute.name?.name === 'onClick' &&
-                  attribute?.value?.expression?.body?.callee?.name === 'alert'
-                ) {
-                  alertText =
-                    attribute?.value?.expression?.body?.arguments?.[0]?.value;
-                }
-              }
-            }
-          }
-          if (alertText.trim().toLowerCase() === 'Hello world'.toLowerCase()) {
-            return await handleUpdateMissionStatus;
-          }
-          if (stringIsEmpty(alertText)) {
-            return setErrorMsg(
-              `Hmmm... The alert popup does not seem to have any message in it`
-            );
-          }
-          setErrorMsg(
-            `The alert message should say, "Hello world," not "${alertText.trim()}"`
-          );
-        }
+            onSetErrorMsg: setErrorMsg,
+            onUpdateMissionStatus: handleUpdateMissionStatus
+          })
       }
     };
     return exerciseObj[exerciseKey];

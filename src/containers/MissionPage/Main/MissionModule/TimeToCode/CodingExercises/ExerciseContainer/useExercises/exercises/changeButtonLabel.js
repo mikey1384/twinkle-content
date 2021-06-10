@@ -1,6 +1,8 @@
 import React from 'react';
 import { Color } from 'constants/css';
 import { BUTTON_LABEL } from '../constants';
+import { getAstProps } from 'helpers';
+import { stringIsEmpty } from 'helpers/stringHelpers';
 
 export const title = `2. Tap Me`;
 export const instruction = (
@@ -35,3 +37,24 @@ export const initialCode = `function HomePage() {
     </div>
   );
 }`;
+
+export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
+  const jsxElements = getAstProps({ ast, propType: 'JSXElement' });
+  let buttonText = '';
+  for (let element of jsxElements) {
+    if (element.openingElement?.name?.name === 'button' && element?.children) {
+      for (let child of element?.children) {
+        buttonText = child?.value || '';
+      }
+    }
+  }
+  if (buttonText.trim().toLowerCase() === BUTTON_LABEL.toLowerCase()) {
+    return await onUpdateMissionStatus();
+  }
+  if (stringIsEmpty(buttonText)) {
+    return onSetErrorMsg(`Hmmm... The button doesn't seem to have any label`);
+  }
+  onSetErrorMsg(
+    `The button's label needs to be "${BUTTON_LABEL}," not "${buttonText.trim()}"`
+  );
+}
