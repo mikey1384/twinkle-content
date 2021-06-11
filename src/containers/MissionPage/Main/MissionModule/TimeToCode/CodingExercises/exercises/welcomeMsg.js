@@ -6,7 +6,7 @@ import { stringIsEmpty } from 'helpers/stringHelpers';
 export const title = `4. Welcoming Your Visitors`;
 export const instruction = (
   <>
-    Add a message that says <b>{WELCOME_MSG}</b> between <b>{`<p>`}</b> and{' '}
+    Type a message that says <b>{WELCOME_MSG}</b> between <b>{`<p>`}</b> and{' '}
     <b>{`</p>`}</b>
   </>
 );
@@ -31,7 +31,7 @@ export const initialCode = `function HomePage() {
           padding: "1rem",
           cursor: "pointer"
         }}
-        onClick={() => alert('I am a button')}
+        onClick={() => alert('Hello World')}
       >
         Tap me
       </button>
