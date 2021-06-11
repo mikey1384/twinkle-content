@@ -1,6 +1,7 @@
 import React, { createElement, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { transformFromAstSync } from '@babel/core';
+import { css } from '@emotion/css';
 import presetReact from '@babel/preset-react';
 
 Compiler.propTypes = {
@@ -80,6 +81,11 @@ export default function Compiler({
       style={{
         width: '100%'
       }}
+      className={css`
+        p {
+          font-weight: normal;
+        }
+      `}
       ref={simulatorRef}
     >
       {Element}
