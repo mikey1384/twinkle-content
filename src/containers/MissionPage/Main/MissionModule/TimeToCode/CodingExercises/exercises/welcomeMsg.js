@@ -1,10 +1,15 @@
-import { ALERT_MSG } from './constants';
+import React from 'react';
+import { WELCOME_MSG } from './constants';
 import { getAstProps } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
-export const title = `3. Hello World`;
-export const instruction = `Make it so that when you tap the "Tap me" button you get an alert
-message that says "${ALERT_MSG}"`;
+export const title = `4. Welcoming Your Visitors`;
+export const instruction = (
+  <>
+    Add a message that says <b>{WELCOME_MSG}</b> between <b>{`<p>`}</b> and{' '}
+    <b>{`</p>`}</b>
+  </>
+);
 export const initialCode = `function HomePage() {
   return (
     <div
@@ -16,6 +21,7 @@ export const initialCode = `function HomePage() {
         alignItems: 'center'
       }}
     >
+      <p></p>
       <button
         style={{
           color: "white",
