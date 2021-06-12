@@ -6,8 +6,9 @@ import { stringIsEmpty } from 'helpers/stringHelpers';
 export const title = `5. Changing the font`;
 export const instruction = (
   <>
-    Type a message that says <b>{WELCOME_MSG}</b> between <b>{`<p>`}</b> and{' '}
-    <b>{`</p>`}</b>
+    Change the `font weight` of your welcome message ({WELCOME_MSG}) to{' '}
+    <b>bold</b> and change its `font size` to <b>2rem</b>. You can change its
+    color to any color your want
   </>
 );
 export const initialCode = `function HomePage() {
@@ -24,7 +25,7 @@ export const initialCode = `function HomePage() {
       <p
         style={{
           color: "black",
-          fontFamily: "none",
+          fontFamily: "sans-serif",
           fontWeight: "normal",
           fontSize: "1rem"
         }}
