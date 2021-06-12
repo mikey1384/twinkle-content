@@ -1,14 +1,12 @@
 import React from 'react';
-import { WELCOME_MSG } from './constants';
 import { getAstProps } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
-export const title = `Adding Some Margin`;
+export const title = `Margin and Padding`;
 export const instruction = (
   <>
-    Change the `font weight` of your welcome message ({WELCOME_MSG}) to{' '}
-    <b>{`"bold"`}</b> and change its `font size` to <b>{`"2rem"`}</b>. You may
-    change its color to any color your want
+    Set the <b>top margin</b> of the <b style={{ color: 'blue' }}>Tap Me</b>{' '}
+    button to <b>{`"10rem"`}</b> and its <b>padding</b> to <b>{`"3rem"`}</b>
   </>
 );
 export const initialCode = `function HomePage() {
@@ -34,11 +32,12 @@ export const initialCode = `function HomePage() {
       </p>
       <button
         style={{
+          marginTop: "0rem",
+          padding: "1rem",
           color: "white",
           background: "blue",
           border: "none",
           fontSize: "2rem",
-          padding: "1rem",
           cursor: "pointer"
         }}
         onClick={() => alert('Hello World')}

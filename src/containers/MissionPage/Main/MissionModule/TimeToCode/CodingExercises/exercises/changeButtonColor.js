@@ -23,11 +23,11 @@ export const initialCode = `function HomePage() {
     >
       <button
         style={{
+          padding: "1rem",
           color: "white",
           background: "red",
           border: "none",
           fontSize: "2rem",
-          padding: "1rem",
           cursor: "pointer"
         }}
         onClick={() => alert('I am a button')}

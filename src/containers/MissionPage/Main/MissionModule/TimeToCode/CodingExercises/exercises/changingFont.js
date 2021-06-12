@@ -34,11 +34,11 @@ export const initialCode = `function HomePage() {
       </p>
       <button
         style={{
+          padding: "1rem",
           color: "white",
           background: "blue",
           border: "none",
           fontSize: "2rem",
-          padding: "1rem",
           cursor: "pointer"
         }}
         onClick={() => alert('Hello World')}
