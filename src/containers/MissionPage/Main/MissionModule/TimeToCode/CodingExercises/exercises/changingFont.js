@@ -52,34 +52,30 @@ export const initialCode = `function HomePage() {
 export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   const jsxElements = getAstProps({
     ast,
-    propType: 'JSXElement'
+    propType: 'JSXOpeningElement'
   });
-  let welcomeText = '';
+  let fontSize = '';
+  let fontWeight = '';
   for (let element of jsxElements) {
-    if (element.openingElement?.name?.name === 'p' && element?.children) {
-      for (let child of element?.children) {
-        welcomeText = child?.value || '';
+    if (element.attributes?.length > 0 && element?.name?.name === 'p') {
+      for (let attribute of element.attributes) {
+        if (attribute?.name?.name === 'style') {
+          const styleProps = attribute?.value?.expression?.properties;
+          for (let prop of styleProps) {
+            console.log(prop);
+          }
+        }
       }
     }
   }
-  if (
-    welcomeText.trim().toLowerCase() === 'Welcome to my website!'.toLowerCase()
-  ) {
+  if (fontSize === '2rem' && fontWeight === 'bold') {
     return await onUpdateMissionStatus();
   }
-  if (stringIsEmpty(welcomeText)) {
-    return onSetErrorMsg(
-      `Hmmm... There doesn't seem to be any message between <p> and </p>`
-    );
+  if (stringIsEmpty(fontSize)) {
+    return onSetErrorMsg(`You forgot to enter the font size value`);
   }
-  if (
-    welcomeText.trim().toLowerCase() === 'Welcome to my website'.toLowerCase()
-  ) {
-    return onSetErrorMsg(
-      `You forgot to add an exclamation mark (!) at the end`
-    );
+  if (fontSize !== '2rem') {
+    return onSetErrorMsg(`The font size must be 2rem, not ${fontSize}`);
   }
-  onSetErrorMsg(
-    `The alert message should say, "Hello world," not "${welcomeText.trim()}"`
-  );
+  onSetErrorMsg(`The font weight should be bold`);
 }
