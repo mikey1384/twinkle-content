@@ -7,7 +7,7 @@ export const title = `5. Changing the font`;
 export const instruction = (
   <>
     Change the `font weight` of your welcome message ({WELCOME_MSG}) to{' '}
-    <b>{`"bold"`}</b> and change its `font size` to <b>{`"2rem"`}</b>. You can
+    <b>{`"bold"`}</b> and change its `font size` to <b>{`"2rem"`}</b>. You may
     change its color to any color your want
   </>
 );
