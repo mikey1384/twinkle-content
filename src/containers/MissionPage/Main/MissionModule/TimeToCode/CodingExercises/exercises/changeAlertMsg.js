@@ -1,10 +1,15 @@
+import React from 'react';
 import { ALERT_MSG } from './constants';
 import { getAstProps } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
 export const title = `3. Hello World`;
-export const instruction = `Make it so that when you tap the "Tap me" button you get an alert
-message that says "${ALERT_MSG}"`;
+export const instruction = (
+  <>
+    Make it so that when you tap the <b>Tap me</b> button you get an alert
+    message that says {`"${ALERT_MSG}"`}
+  </>
+);
 export const initialCode = `function HomePage() {
   return (
     <div
@@ -25,7 +30,7 @@ export const initialCode = `function HomePage() {
           padding: "1rem",
           cursor: "pointer"
         }}
-        onClick={() => alert('I am a button')}
+        onClick={() => alert("I am a button")}
       >
         Tap me
       </button>
