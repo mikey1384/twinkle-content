@@ -15,6 +15,7 @@ import useExercises from './useExercises';
 ExerciseContainer.propTypes = {
   codeObj: PropTypes.object,
   exerciseKey: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
   prevExerciseKey: PropTypes.string,
   onSetCode: PropTypes.func.isRequired,
   style: PropTypes.object
@@ -23,6 +24,7 @@ ExerciseContainer.propTypes = {
 export default function ExerciseContainer({
   codeObj,
   exerciseKey,
+  index,
   prevExerciseKey,
   onSetCode,
   style
@@ -66,7 +68,7 @@ export default function ExerciseContainer({
         }}
       >
         <p>
-          {exercise.title}
+          {index + 1}. {exercise.title}
           {passed && (
             <Icon
               style={{ marginLeft: '1rem' }}

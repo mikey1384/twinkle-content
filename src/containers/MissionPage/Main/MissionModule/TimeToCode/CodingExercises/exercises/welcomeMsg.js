@@ -3,7 +3,7 @@ import { WELCOME_MSG } from './constants';
 import { getAstProps } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
-export const title = `4. Welcoming Your Visitors`;
+export const title = `Welcoming Your Visitors`;
 export const instruction = (
   <>
     Type a message that says <b>{WELCOME_MSG}</b> between <b>{`<p>`}</b> and{' '}

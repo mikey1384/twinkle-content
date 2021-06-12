@@ -2,7 +2,7 @@ import React from 'react';
 import { Color } from 'constants/css';
 import { getAstProps } from 'helpers';
 
-export const title = `1. Make It Blue`;
+export const title = `Make It Blue`;
 export const instruction = (
   <>
     Change the color of the <b style={{ color: 'red' }}>red</b> button below to{' '}

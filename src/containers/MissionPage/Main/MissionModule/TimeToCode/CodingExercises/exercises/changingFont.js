@@ -3,7 +3,7 @@ import { WELCOME_MSG } from './constants';
 import { getAstProps } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
-export const title = `5. Changing the Font`;
+export const title = `Changing the Font`;
 export const instruction = (
   <>
     Change the `font weight` of your welcome message ({WELCOME_MSG}) to{' '}

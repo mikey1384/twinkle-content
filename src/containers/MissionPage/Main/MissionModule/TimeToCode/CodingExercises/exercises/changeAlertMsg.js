@@ -3,7 +3,7 @@ import { ALERT_MSG } from './constants';
 import { getAstProps } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
-export const title = `3. Hello World`;
+export const title = `Hello World`;
 export const instruction = (
   <>
     Make it so that when you tap the <b>Tap me</b> button you get an alert

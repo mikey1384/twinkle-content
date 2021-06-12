@@ -3,7 +3,7 @@ import { WELCOME_MSG } from './constants';
 import { getAstProps } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
-export const title = `6. Adding Some Margin`;
+export const title = `Adding Some Margin`;
 export const instruction = (
   <>
     Change the `font weight` of your welcome message ({WELCOME_MSG}) to{' '}

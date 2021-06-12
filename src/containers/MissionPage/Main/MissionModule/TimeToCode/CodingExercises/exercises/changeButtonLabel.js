@@ -4,7 +4,7 @@ import { BUTTON_LABEL } from './constants';
 import { getAstProps } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
-export const title = `2. Tap Me`;
+export const title = `Tap Me`;
 export const instruction = (
   <>
     Change the label of the button from <b>Change me</b> to{' '}

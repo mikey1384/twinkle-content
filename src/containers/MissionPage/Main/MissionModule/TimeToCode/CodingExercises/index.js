@@ -27,6 +27,7 @@ export default function CodingExercises({ codeObj, onSetCode, style }) {
       {exerciseKeys.map((exerciseKey, index) => (
         <ExerciseContainer
           key={exerciseKey}
+          index={index}
           exerciseKey={exerciseKey}
           prevExerciseKey={index === 0 ? null : exerciseKeys[index - 1]}
           codeObj={codeObj}
