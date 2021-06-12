@@ -82,9 +82,9 @@ export default function Compiler({
         width: '100%'
       }}
       className={css`
-        font-size: 16px;
+        font-size: 1rem;
         p {
-          font-size: 16px;
+          font-size: 1rem;
           font-family: none;
           font-weight: normal;
           display: block;
