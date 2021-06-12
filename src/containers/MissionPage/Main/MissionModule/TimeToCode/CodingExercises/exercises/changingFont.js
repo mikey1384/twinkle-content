@@ -62,7 +62,12 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
         if (attribute?.name?.name === 'style') {
           const styleProps = attribute?.value?.expression?.properties;
           for (let prop of styleProps) {
-            console.log(prop);
+            if (prop?.key?.name === 'fontSize') {
+              fontSize = prop?.value?.value;
+            }
+            if (prop?.key?.name === 'fontWeight') {
+              fontWeight = prop?.value?.value;
+            }
           }
         }
       }
