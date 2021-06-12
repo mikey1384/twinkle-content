@@ -82,8 +82,16 @@ export default function Compiler({
         width: '100%'
       }}
       className={css`
+        font-size: 16px;
         p {
+          font-size: 16px;
+          font-family: none;
           font-weight: normal;
+          display: block;
+          margin-block-start: 1em;
+          margin-block-end: 1em;
+          margin-inline-start: 0px;
+          margin-inline-end: 0px;
         }
       `}
       ref={simulatorRef}

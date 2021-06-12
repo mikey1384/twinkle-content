@@ -21,7 +21,16 @@ export const initialCode = `function HomePage() {
         alignItems: "center"
       }}
     >
-      <p></p>
+      <p
+        style={{
+          color: "black",
+          fontFamily: "none",
+          fontWeight: "normal",
+          fontSize: "1rem"
+        }}
+      >
+        Welcome to My Website!
+      </p>
       <button
         style={{
           color: "white",
