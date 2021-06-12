@@ -42,30 +42,34 @@ export const initialCode = `function HomePage() {
 export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   const jsxElements = getAstProps({
     ast,
-    propType: 'JSXOpeningElement'
+    propType: 'JSXElement'
   });
-  let alertText = '';
+  let welcomeText = '';
   for (let element of jsxElements) {
-    if (element.attributes?.length > 0 && element?.name?.name === 'button') {
-      for (let attribute of element.attributes) {
-        if (
-          attribute.name?.name === 'onClick' &&
-          attribute?.value?.expression?.body?.callee?.name === 'alert'
-        ) {
-          alertText = attribute?.value?.expression?.body?.arguments?.[0]?.value;
-        }
+    if (element.openingElement?.name?.name === 'p' && element?.children) {
+      for (let child of element?.children) {
+        welcomeText = child?.value || '';
       }
     }
   }
-  if (alertText.trim().toLowerCase() === 'Hello world'.toLowerCase()) {
+  if (
+    welcomeText.trim().toLowerCase() === 'Welcome to my website!'.toLowerCase()
+  ) {
     return await onUpdateMissionStatus();
   }
-  if (stringIsEmpty(alertText)) {
+  if (stringIsEmpty(welcomeText)) {
     return onSetErrorMsg(
-      `Hmmm... The alert popup does not seem to have any message in it`
+      `Hmmm... There doesn't seem to be any message between <p> and </p>`
+    );
+  }
+  if (
+    welcomeText.trim().toLowerCase() === 'Welcome to my website'.toLowerCase()
+  ) {
+    return onSetErrorMsg(
+      `You forgot to add an exclamation mark (!) at the end`
     );
   }
   onSetErrorMsg(
-    `The alert message should say, "Hello world," not "${alertText.trim()}"`
+    `The alert message should say, "Hello world," not "${welcomeText.trim()}"`
   );
 }

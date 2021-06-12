@@ -13,27 +13,13 @@ export default function useExercises({
 } = {}) {
   const [errorMsg, setErrorMsg] = useState('');
   const [success, setSuccess] = useState();
-  const firstExercisePassed = useMemo(
-    () => state?.missions?.['time-to-code']?.changeButtonColor === 'pass',
-    [state?.missions]
-  );
-  const secondExercisePassed = useMemo(
-    () => state?.missions?.['time-to-code']?.changeButtonLabel === 'pass',
-    [state?.missions]
-  );
-  const thirdExercisePassed = useMemo(
-    () => state?.missions?.['time-to-code']?.changeAlertMsg === 'pass',
-    [state?.missions]
-  );
-
-  const passObj = useMemo(
-    () => ({
-      changeButtonColor: firstExercisePassed,
-      changeButtonLabel: secondExercisePassed,
-      changeAlertMsg: thirdExercisePassed
-    }),
-    [firstExercisePassed, secondExercisePassed, thirdExercisePassed]
-  );
+  const passObj = useMemo(() => {
+    const result = {};
+    for (let key of Object.keys(exercises)) {
+      result[key] = state?.missions?.['time-to-code']?.[key] === 'pass';
+    }
+    return result;
+  }, [state?.missions]);
 
   const passed = useMemo(() => {
     return passObj[exerciseKey];
