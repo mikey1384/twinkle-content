@@ -2,11 +2,15 @@ import React from 'react';
 import { getAstProps } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
+const PADDING = '3rem';
+const MARGIN_TOP = '7rem';
+
 export const title = `Margin and Padding`;
 export const instruction = (
   <>
     Set the <b>top margin</b> of the <b style={{ color: 'blue' }}>Tap Me</b>{' '}
-    button to <b>{`"10rem"`}</b> and its <b>padding</b> to <b>{`"3rem"`}</b>
+    button to <b>{`"${MARGIN_TOP}"`}</b> and its <b>padding</b> to{' '}
+    <b>{`"${PADDING}"`}</b>
   </>
 );
 export const initialCode = `function HomePage() {
@@ -53,33 +57,47 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     ast,
     propType: 'JSXOpeningElement'
   });
-  let fontSize = '';
-  let fontWeight = '';
+  let marginTop = '';
+  let padding = '';
   for (let element of jsxElements) {
-    if (element.attributes?.length > 0 && element?.name?.name === 'p') {
+    if (element.attributes?.length > 0 && element?.name?.name === 'button') {
       for (let attribute of element.attributes) {
         if (attribute?.name?.name === 'style') {
           const styleProps = attribute?.value?.expression?.properties;
           for (let prop of styleProps) {
-            if (prop?.key?.name === 'fontSize') {
-              fontSize = prop?.value?.value;
+            if (prop?.key?.name === 'marginTop') {
+              marginTop = prop?.value?.value;
             }
-            if (prop?.key?.name === 'fontWeight') {
-              fontWeight = prop?.value?.value;
+            if (prop?.key?.name === 'padding') {
+              padding = prop?.value?.value;
             }
           }
         }
       }
     }
   }
-  if (fontSize === '2rem' && fontWeight === 'bold') {
+  if (marginTop === MARGIN_TOP && padding === PADDING) {
     return await onUpdateMissionStatus();
   }
-  if (stringIsEmpty(fontSize)) {
-    return onSetErrorMsg(`You forgot to enter the font size value`);
+  if (stringIsEmpty(marginTop)) {
+    return onSetErrorMsg(
+      `Please set the top margin of the button to "${MARGIN_TOP}"`
+    );
   }
-  if (fontSize !== '2rem') {
-    return onSetErrorMsg(`The font size must be 2rem, not ${fontSize}`);
+  if (stringIsEmpty(padding)) {
+    return onSetErrorMsg(
+      `Please set the padding of the button to "${PADDING}"`
+    );
   }
-  onSetErrorMsg(`The font weight should be bold`);
+  if (marginTop !== MARGIN_TOP) {
+    return onSetErrorMsg(
+      `The button's top margin must be "${MARGIN_TOP}," not "${marginTop}"`
+    );
+  }
+  if (padding !== PADDING) {
+    return onSetErrorMsg(
+      `The button's padding must be "${PADDING}," not "${padding}"`
+    );
+  }
+  onSetErrorMsg(`Something's not right - please check the code`);
 }

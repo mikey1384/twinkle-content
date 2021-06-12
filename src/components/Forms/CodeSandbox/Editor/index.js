@@ -54,7 +54,6 @@ export default function Editor({
         }}
       />
       <div style={{ marginTop: '2rem' }}>
-        {error && <p style={{ color: 'red', marginBottom: '1rem' }}>{error}</p>}
         <SimpleEditor
           value={valueOnTextEditor}
           onValueChange={onChange}
@@ -73,6 +72,7 @@ export default function Editor({
           }
           padding={8}
         />
+        {error && <p style={{ color: 'red', marginTop: '0.5rem' }}>{error}</p>}
       </div>
     </div>
   );
