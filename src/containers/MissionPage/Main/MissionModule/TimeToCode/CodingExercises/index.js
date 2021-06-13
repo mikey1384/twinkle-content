@@ -29,6 +29,7 @@ export default function CodingExercises({
     for (let key of exerciseKeys) {
       if (state?.missions?.[taskType]?.[key] !== 'pass') {
         passed = false;
+        break;
       }
     }
     return passed;
