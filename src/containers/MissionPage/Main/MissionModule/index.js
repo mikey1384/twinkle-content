@@ -6,6 +6,7 @@ import Googling from './Googling';
 import Grammar from './Grammar';
 import TwinkleStore from './TwinkleStore';
 import Email from './Email';
+import FixingBugs from './FixingBugs';
 import GitHub from './GitHub';
 import TimeToCode from './TimeToCode';
 import Replit from './Replit';
@@ -57,6 +58,9 @@ export default function MissionModule({
       )}
       {mission.missionType === 'time-to-code' && (
         <TimeToCode task={mission} onSetMissionState={onSetMissionState} />
+      )}
+      {mission.missionType === 'fixing-bugs' && (
+        <FixingBugs task={mission} onSetMissionState={onSetMissionState} />
       )}
     </div>
   );
