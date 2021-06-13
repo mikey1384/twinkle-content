@@ -41,8 +41,9 @@ export default function useExercises({
       instruction: exercises[exerciseKey].instruction,
       onNextClick: handleNextClick,
       onSetCode: handleSetCode,
-      onRunCode: (ast) =>
+      onRunCode: ({ ast, code }) =>
         exercises[exerciseKey].onRunCode({
+          code,
           ast,
           onSetErrorMsg: setErrorMsg,
           onUpdateMissionStatus: handleUpdateMissionStatus

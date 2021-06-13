@@ -30,7 +30,7 @@ export const initialCode = `function HomePage() {
           fontSize: "2rem",
           cursor: "pointer"
         }}
-        onClick={() => alert('I am a button')}
+        onClick={() => alert("I am a button")}
       >
         Change me
       </button>

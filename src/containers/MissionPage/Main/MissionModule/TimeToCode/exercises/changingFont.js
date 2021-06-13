@@ -41,7 +41,7 @@ export const initialCode = `function HomePage() {
           fontSize: "2rem",
           cursor: "pointer"
         }}
-        onClick={() => alert('Hello World')}
+        onClick={() => alert("Hello World")}
       >
         Tap me
       </button>

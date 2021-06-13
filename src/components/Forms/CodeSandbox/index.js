@@ -65,12 +65,7 @@ export default function CodeSandbox({
         }}
       >
         <div>
-          <Button
-            disabled={hasError}
-            filled
-            color="logoBlue"
-            onClick={handleFormatCode}
-          >
+          <Button filled color="logoBlue" onClick={handleFormatCode}>
             <Icon icon="indent" />
             <span style={{ marginLeft: '0.7rem' }}>Format</span>
           </Button>
@@ -94,6 +89,7 @@ export default function CodeSandbox({
 
   async function handleFormatCode() {
     try {
+      onSetErrorMsg?.('');
       const formattedCode = await formatCode(code);
       onSetCode(formattedCode);
       setCode(formattedCode);
@@ -110,7 +106,7 @@ export default function CodeSandbox({
   }
 
   function handleRunCode() {
-    onRunCode?.(ast);
+    onRunCode?.({ ast, code });
   }
 
   function handleSetCode(text) {
