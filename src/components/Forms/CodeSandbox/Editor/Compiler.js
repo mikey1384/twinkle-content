@@ -122,6 +122,6 @@ export default function Compiler({
     const firstCut = errorString?.split('(')?.[1];
     const secondCut = firstCut?.split(':')?.[0];
     const errorLineNumber = Number(secondCut);
-    return errorLineNumber || 0;
+    return isNaN(errorLineNumber) || !errorLineNumber ? 0 : errorLineNumber;
   }
 }
