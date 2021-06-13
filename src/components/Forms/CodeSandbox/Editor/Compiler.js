@@ -119,9 +119,9 @@ export default function Compiler({
   }
 
   function getErrorLineNumber(errorString) {
-    const firstCut = errorString?.split('(')[1];
-    const secondCut = firstCut?.split(':')[0];
+    const firstCut = errorString?.split('(')?.[1];
+    const secondCut = firstCut?.split(':')?.[0];
     const errorLineNumber = Number(secondCut);
-    return errorLineNumber;
+    return errorLineNumber || 0;
   }
 }
