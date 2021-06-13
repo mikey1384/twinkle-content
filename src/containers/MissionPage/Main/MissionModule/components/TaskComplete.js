@@ -54,12 +54,13 @@ export default function TaskComplete({
         style={{
           fontWeight: 'bold',
           fontSize: passMessageFontSize || '1.8rem',
-          marginBottom: '1.5rem'
+          marginBottom: '1.5rem',
+          color: Color.black()
         }}
       >
         {passMessage}
       </p>
-      <p>
+      <p style={{ color: Color.black() }}>
         Press the <b style={{ color: Color.brownOrange() }}>button</b> below to
         collect your reward
       </p>

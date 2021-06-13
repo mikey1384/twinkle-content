@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import ExerciseContainer from './ExerciseContainer';
 import exercises from './exercises';
+import TaskComplete from '../../components/TaskComplete';
 import { useMyState } from 'helpers/hooks';
 
 CodingExercises.propTypes = {
   codeObj: PropTypes.object,
   onSetCode: PropTypes.func.isRequired,
   style: PropTypes.object,
+  taskId: PropTypes.number.isRequired,
   taskType: PropTypes.string.isRequired
 };
 
@@ -18,6 +20,7 @@ export default function CodingExercises({
   codeObj,
   onSetCode,
   style,
+  taskId,
   taskType
 }) {
   const { state = {} } = useMyState();
@@ -54,7 +57,14 @@ export default function CodingExercises({
           style={{ marginTop: index === 0 ? 0 : '10rem' }}
         />
       ))}
-      {allPassed && <div>you passed em all</div>}
+      {allPassed && (
+        <TaskComplete
+          style={{ marginTop: '10rem' }}
+          taskId={taskId}
+          passMessage="Fantastic! That's it for this section"
+          passMessageFontSize="2.2rem"
+        />
+      )}
     </ErrorBoundary>
   );
 }
