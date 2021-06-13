@@ -34,7 +34,11 @@ export default function Compiler({
         const component = handleGenerateElement(
           handleEvalCode(transformation(ast)),
           (error) => {
-            onSetError(error.toString());
+            const errorString = error.toString();
+            onSetError({
+              error: errorString,
+              lineNumber: getErrorLineNumber(errorString)
+            });
           }
         );
         return createElement(component, null);
@@ -104,9 +108,20 @@ export default function Compiler({
     try {
       const ast = onParse(code);
       onSetAst(ast);
-      onSetError(null);
+      onSetError({ error: '', lineNumber: 0 });
     } catch (error) {
-      onSetError(error.toString());
+      const errorString = error.toString();
+      onSetError({
+        error: errorString,
+        lineNumber: getErrorLineNumber(errorString)
+      });
     }
+  }
+
+  function getErrorLineNumber(errorString) {
+    const firstCut = errorString?.split('(')[1];
+    const secondCut = firstCut?.split(':')[0];
+    const errorLineNumber = Number(secondCut);
+    return errorLineNumber;
   }
 }

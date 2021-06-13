@@ -4,6 +4,7 @@ import Compiler from './Compiler';
 import SimpleEditor from 'react-simple-code-editor';
 import okaidia from 'prism-react-renderer/themes/okaidia';
 import Highlight, { Prism } from 'prism-react-renderer';
+import { Color } from 'constants/css';
 import traverse from '@babel/traverse';
 
 Editor.propTypes = {
@@ -29,6 +30,7 @@ export default function Editor({
   style
 }) {
   const [error, setError] = useState('');
+  const [errorLineNumber, setErrorLineNumber] = useState(null);
 
   return (
     <div style={{ width: '100%', ...style }}>
@@ -38,12 +40,11 @@ export default function Editor({
         onSetAst={onSetAst}
         transformation={handleTransformBeforeCompilation}
         onParse={onParse}
-        onSetError={(error) => {
+        onSetError={({ error, lineNumber }) => {
           setError(error);
+          setErrorLineNumber(lineNumber);
           if (error) {
-            onSetErrorMsg?.(
-              `There's an error in your code. Please fix it first`
-            );
+            onSetErrorMsg?.(`There's a bug in your code. Please fix it first`);
           }
         }}
         simulatorRef={simulatorRef}
@@ -82,14 +83,30 @@ export default function Editor({
       <Highlight Prism={Prism} code={code} theme={theme} language="jsx">
         {({ tokens, getLineProps, getTokenProps }) => (
           <>
-            {tokens.map((line, i) => (
-              <div key={i} {...getLineProps({ line, key: i })}>
-                {line.map((token, key) => {
-                  const tokenProps = getTokenProps({ token, key });
-                  return <span key={key} {...tokenProps} />;
-                })}
-              </div>
-            ))}
+            {tokens.map((line, i) => {
+              const lineProps = getLineProps({ line, key: i });
+              const lineStyle = lineProps.style || {};
+              return (
+                <div
+                  key={i}
+                  {...{
+                    ...getLineProps({ line, key: i }),
+                    style: {
+                      ...lineStyle,
+                      backgroundColor:
+                        errorLineNumber === i + 1
+                          ? Color.red(0.3)
+                          : lineStyle?.backgroundColor
+                    }
+                  }}
+                >
+                  {line.map((token, key) => {
+                    const tokenProps = getTokenProps({ token, key });
+                    return <span key={key} {...tokenProps} />;
+                  })}
+                </div>
+              );
+            })}
           </>
         )}
       </Highlight>
