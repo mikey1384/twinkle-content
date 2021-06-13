@@ -1,16 +1,32 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
+import ExerciseContainer from './ExerciseContainer';
+import exercises from './exercises';
+import TaskComplete from '../components/TaskComplete';
+import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
-import CodingExercises from './CodingExercises';
 
 TimeToCode.propTypes = {
   task: PropTypes.object.isRequired,
   onSetMissionState: PropTypes.func.isRequired
 };
 
+const exerciseKeys = Object.keys(exercises);
+
 export default function TimeToCode({ task, onSetMissionState }) {
   const { codeObj = {} } = task;
+  const { state = {} } = useMyState();
+  const allPassed = useMemo(() => {
+    let passed = true;
+    for (let key of exerciseKeys) {
+      if (state?.missions?.[task.missionType]?.[key] !== 'pass') {
+        passed = false;
+        break;
+      }
+    }
+    return passed;
+  }, [state?.missions, task.missionType]);
 
   return (
     <ErrorBoundary
@@ -26,18 +42,31 @@ export default function TimeToCode({ task, onSetMissionState }) {
         }
       `}
     >
-      <CodingExercises
-        codeObj={codeObj}
-        taskType={task.missionType}
-        taskId={task.id}
-        onSetMissionState={onSetMissionState}
-        onSetCode={({ code, exerciseLabel }) =>
-          onSetMissionState({
-            missionId: task.id,
-            newState: { codeObj: { ...codeObj, [exerciseLabel]: code } }
-          })
-        }
-      />
+      {exerciseKeys.map((exerciseKey, index) => (
+        <ExerciseContainer
+          key={exerciseKey}
+          index={index}
+          exerciseKey={exerciseKey}
+          prevExerciseKey={index === 0 ? null : exerciseKeys[index - 1]}
+          codeObj={codeObj}
+          onSetCode={({ code, exerciseLabel }) =>
+            onSetMissionState({
+              missionId: task.id,
+              newState: { codeObj: { ...codeObj, [exerciseLabel]: code } }
+            })
+          }
+          taskType={task.missionType}
+          style={{ marginTop: index === 0 ? 0 : '10rem' }}
+        />
+      ))}
+      {allPassed && (
+        <TaskComplete
+          style={{ marginTop: '10rem' }}
+          taskId={task.id}
+          passMessage="Fantastic! That's it for this section"
+          passMessageFontSize="2.2rem"
+        />
+      )}
     </ErrorBoundary>
   );
 }
