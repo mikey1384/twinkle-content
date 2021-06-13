@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
-import ExerciseContainer from './ExerciseContainer';
+import ExerciseContainer from '../components/ExerciseContainer';
 import exercises from './exercises';
 import TaskComplete from '../components/TaskComplete';
 import { useMyState } from 'helpers/hooks';
@@ -45,6 +45,7 @@ export default function TimeToCode({ task, onSetMissionState }) {
       {exerciseKeys.map((exerciseKey, index) => (
         <ExerciseContainer
           key={exerciseKey}
+          exercises={exercises}
           index={index}
           exerciseKey={exerciseKey}
           prevExerciseKey={index === 0 ? null : exerciseKeys[index - 1]}

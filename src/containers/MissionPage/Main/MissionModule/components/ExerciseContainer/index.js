@@ -14,6 +14,7 @@ import useExercises from './useExercises';
 
 ExerciseContainer.propTypes = {
   codeObj: PropTypes.object,
+  exercises: PropTypes.object.isRequired,
   exerciseKey: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   prevExerciseKey: PropTypes.string,
@@ -24,6 +25,7 @@ ExerciseContainer.propTypes = {
 
 export default function ExerciseContainer({
   codeObj,
+  exercises,
   exerciseKey,
   index,
   prevExerciseKey,
@@ -40,6 +42,7 @@ export default function ExerciseContainer({
   const { userId, state = {} } = useMyState();
   const { passed, prevPassed, errorMsg, setErrorMsg, success, exercise } =
     useExercises({
+      exercises,
       exerciseKey,
       prevExerciseKey,
       codeObj,

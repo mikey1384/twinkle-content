@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react';
-import exercises from '../exercises';
 
 export default function useExercises({
   codeObj,
+  exercises,
   exerciseKey,
   prevExerciseKey,
   state = {},
@@ -20,7 +20,7 @@ export default function useExercises({
       result[key] = state?.missions?.[taskType]?.[key] === 'pass';
     }
     return result;
-  }, [state?.missions, taskType]);
+  }, [exercises, state?.missions, taskType]);
 
   const passed = useMemo(() => {
     return passObj[exerciseKey];
