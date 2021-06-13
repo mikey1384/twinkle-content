@@ -28,6 +28,7 @@ export default function TimeToCode({ task, onSetMissionState }) {
     >
       <CodingExercises
         codeObj={codeObj}
+        taskType={task.missionType}
         onSetMissionState={onSetMissionState}
         onSetCode={({ code, exerciseLabel }) =>
           onSetMissionState({

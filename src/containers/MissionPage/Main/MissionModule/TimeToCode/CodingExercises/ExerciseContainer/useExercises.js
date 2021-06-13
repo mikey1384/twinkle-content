@@ -8,6 +8,7 @@ export default function useExercises({
   state = {},
   onUpdateProfileInfo,
   onSetCode,
+  taskType,
   userId,
   updateMissionStatus
 } = {}) {
@@ -16,10 +17,10 @@ export default function useExercises({
   const passObj = useMemo(() => {
     const result = {};
     for (let key of Object.keys(exercises)) {
-      result[key] = state?.missions?.['time-to-code']?.[key] === 'pass';
+      result[key] = state?.missions?.[taskType]?.[key] === 'pass';
     }
     return result;
-  }, [state?.missions]);
+  }, [state?.missions, taskType]);
 
   const passed = useMemo(() => {
     return passObj[exerciseKey];

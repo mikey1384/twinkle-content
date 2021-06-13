@@ -18,7 +18,8 @@ ExerciseContainer.propTypes = {
   index: PropTypes.number.isRequired,
   prevExerciseKey: PropTypes.string,
   onSetCode: PropTypes.func.isRequired,
-  style: PropTypes.object
+  style: PropTypes.object,
+  taskType: PropTypes.string
 };
 
 export default function ExerciseContainer({
@@ -27,7 +28,8 @@ export default function ExerciseContainer({
   index,
   prevExerciseKey,
   onSetCode,
-  style
+  style,
+  taskType
 }) {
   const {
     requestHelpers: { updateMissionStatus }
@@ -45,6 +47,7 @@ export default function ExerciseContainer({
       onUpdateProfileInfo,
       onSetCode,
       updateMissionStatus,
+      taskType,
       userId
     });
   const ComponentRef = useRef(null);
