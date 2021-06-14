@@ -64,7 +64,7 @@ export default function TimeToCode({ task, onSetMissionState }) {
         <TaskComplete
           style={{ marginTop: '10rem' }}
           taskId={task.id}
-          passMessage="Fantastic! That's it for this section"
+          passMessage="Brilliant! That's it for this section"
           passMessageFontSize="2.2rem"
         />
       )}

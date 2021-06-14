@@ -68,8 +68,8 @@ export default function useExercises({
         ...state,
         missions: {
           ...state.missions,
-          'time-to-code': {
-            ...state.missions?.['time-to-code'],
+          [taskType]: {
+            ...state.missions?.[taskType],
             [exerciseKey]: 'pass'
           }
         }
@@ -83,7 +83,7 @@ export default function useExercises({
 
   async function handleUpdateMissionStatus() {
     await updateMissionStatus({
-      missionType: 'time-to-code',
+      missionType: taskType,
       newStatus: { [exerciseKey]: 'pass' }
     });
     setSuccess(true);
