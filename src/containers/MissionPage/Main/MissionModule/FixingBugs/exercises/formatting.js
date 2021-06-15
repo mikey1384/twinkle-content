@@ -15,7 +15,7 @@ export const initialCode = `function HomePage() {
     >
       <p
         style={{
-          color: "#D35400",
+          color: "#4B9BE1",
           fontFamily: "sans-serif",
           fontWeight: "bold",
           fontSize: "2rem"
@@ -54,7 +54,7 @@ const formattedCode = `function HomePage() {
     >
       <p
         style={{
-          color: "#D35400",
+          color: "#4B9BE1",
           fontFamily: "sans-serif",
           fontWeight: "bold",
           fontSize: "2rem"

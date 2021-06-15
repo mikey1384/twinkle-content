@@ -31,7 +31,7 @@ export default function QuestionCarousel({
 }) {
   const CarouselRef = useRef(null);
   useEffect(() => {
-    let scrollModifier = isMobile(navigator) ? -100 : -200;
+    let scrollModifier = isMobile(navigator) ? -150 : -250;
     scrollElementToCenter(CarouselRef.current, scrollModifier);
   }, []);
   return (

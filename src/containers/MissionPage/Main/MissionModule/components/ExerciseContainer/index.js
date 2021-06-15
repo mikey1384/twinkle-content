@@ -57,7 +57,7 @@ export default function ExerciseContainer({
   const prevPassedRef = useRef(prevPassed);
   useEffect(() => {
     if (!prevPassedRef.current && prevPassed) {
-      scrollElementToCenter(ComponentRef.current, -100);
+      scrollElementToCenter(ComponentRef.current, -250);
     }
   }, [exerciseKey, prevPassed]);
 
