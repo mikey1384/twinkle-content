@@ -135,7 +135,9 @@ export default function Editor({
           }
         }
       });
-    } catch (e) {}
+    } catch (error) {
+      setError(error);
+    }
     return ast;
   }
 }

@@ -1,4 +1,4 @@
-import React, { createElement, useEffect, useMemo } from 'react';
+import React, { createElement, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { transformFromAstSync } from '@babel/core';
 import { css } from '@emotion/css';
@@ -23,8 +23,32 @@ export default function Compiler({
   simulatorRef,
   transformation
 }) {
+  const [error, setError] = useState('');
+
   useEffect(() => {
-    transpile(code);
+    if (error) {
+      onSetError({ error });
+      setError('');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error]);
+
+  useEffect(() => {
+    handleTranspile(code);
+
+    function handleTranspile(code) {
+      try {
+        const ast = onParse(code);
+        onSetAst(ast);
+        onSetError({ error: '', lineNumber: 0 });
+      } catch (error) {
+        const errorString = error.toString();
+        onSetError({
+          error: errorString,
+          lineNumber: getErrorLineNumber(errorString)
+        });
+      }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code]);
 
@@ -64,16 +88,21 @@ export default function Compiler({
       }
 
       function handleEvalCode(ast) {
-        const transformedCode = transformFromAstSync(ast, undefined, {
-          presets: [presetReact],
-          inputSourceMap: false,
-          sourceMaps: false,
-          comments: false
-        });
-        const resultCode = transformedCode ? transformedCode.code : '';
-        // eslint-disable-next-line no-new-func
-        const res = new Function('React', `return ${resultCode}`);
-        return res(React);
+        try {
+          const transformedCode = transformFromAstSync(ast, undefined, {
+            presets: [presetReact],
+            inputSourceMap: false,
+            sourceMaps: false,
+            comments: false
+          });
+          const resultCode = transformedCode ? transformedCode.code : '';
+          // eslint-disable-next-line no-new-func
+          const res = new Function('React', `return ${resultCode}`);
+          return res(React);
+        } catch (error) {
+          setError(error.toString());
+          return null;
+        }
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -103,20 +132,6 @@ export default function Compiler({
       {Element}
     </div>
   );
-
-  function transpile(code) {
-    try {
-      const ast = onParse(code);
-      onSetAst(ast);
-      onSetError({ error: '', lineNumber: 0 });
-    } catch (error) {
-      const errorString = error.toString();
-      onSetError({
-        error: errorString,
-        lineNumber: getErrorLineNumber(errorString)
-      });
-    }
-  }
 
   function getErrorLineNumber(errorString) {
     const firstCut = errorString?.split('(')?.[1];
