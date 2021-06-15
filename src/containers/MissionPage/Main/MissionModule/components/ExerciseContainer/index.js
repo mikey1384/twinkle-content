@@ -108,6 +108,7 @@ export default function ExerciseContainer({
         >
           <CodeSandbox
             code={exercise.code || exercise.initialCode}
+            initialCode={exercise.initialCode}
             onSetCode={exercise.onSetCode}
             onRunCode={exercise.onRunCode}
             onSetErrorMsg={setErrorMsg}

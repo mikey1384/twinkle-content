@@ -9,6 +9,7 @@ import { parse } from '@babel/parser';
 
 CodeSandbox.propTypes = {
   code: PropTypes.string,
+  initialCode: PropTypes.string,
   hasError: PropTypes.bool,
   onSetCode: PropTypes.func.isRequired,
   onSetErrorMsg: PropTypes.func,
@@ -20,6 +21,7 @@ CodeSandbox.propTypes = {
 
 export default function CodeSandbox({
   code: globalCode,
+  initialCode,
   hasError,
   onSetCode,
   onSetErrorMsg,
@@ -64,10 +66,24 @@ export default function CodeSandbox({
           justifyContent: 'space-between'
         }}
       >
-        <div>
-          <Button filled color="logoBlue" onClick={handleFormatCode}>
+        <div style={{ display: 'flex' }}>
+          <Button
+            style={{ fontSize: '1.3rem' }}
+            filled
+            color="logoBlue"
+            onClick={handleFormatCode}
+          >
             <Icon icon="indent" />
             <span style={{ marginLeft: '0.7rem' }}>Format</span>
+          </Button>
+          <Button
+            style={{ marginLeft: '1rem', fontSize: '1.3rem' }}
+            filled
+            color="orange"
+            onClick={handleReset}
+          >
+            <Icon icon="undo" />
+            <span style={{ marginLeft: '0.7rem' }}>Reset</span>
           </Button>
         </div>
         <div>
@@ -96,6 +112,12 @@ export default function CodeSandbox({
     } catch (error) {
       console.log(error);
     }
+  }
+
+  async function handleReset() {
+    onSetErrorMsg?.('');
+    setCode(initialCode);
+    onSetCode(initialCode);
   }
 
   function handleParse(code) {
