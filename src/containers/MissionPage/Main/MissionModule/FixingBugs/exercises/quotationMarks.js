@@ -10,11 +10,13 @@ export const initialCode = `function HomePage() {
     <div
       style={{
         width: "100%",
-        height: "100%"
+        height: "100%",
+        fontSize: "2rem",
+        textAlign: "center"
       }}
     >
       <div>First</div>
-      <div style={{ marginTop: "2rem" }}>Second</div>
+      <div style={{ marginTop: "1rem" }}>Second</div>
       <div style={{ marginTop: 3rem }}>Third</div>
     </div>
   );
