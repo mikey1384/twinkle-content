@@ -4,7 +4,7 @@ import { stringIsEmpty } from 'helpers/stringHelpers';
 const MARGIN_TOP = '3rem';
 
 export const title = `Remember the Quotation Marks`;
-export const instruction = `There's a bug in the code below. Fix it!`;
+export const instruction = `Can you fix the bug in the code below?`;
 export const initialCode = `function HomePage() {
   return (
     <div

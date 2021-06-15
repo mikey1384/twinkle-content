@@ -73,7 +73,16 @@ export default function Editor({
           }
           padding={8}
         />
-        {error && <p style={{ color: 'red', marginTop: '0.5rem' }}>{error}</p>}
+        {error && (
+          <p
+            style={{
+              marginTop: '0.5rem',
+              fontSize: '1.5rem'
+            }}
+          >
+            {error}
+          </p>
+        )}
       </div>
     </div>
   );
