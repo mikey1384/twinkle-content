@@ -1,8 +1,7 @@
 import { getAstProps } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
-const PADDING = '3rem';
-const MARGIN_TOP = '7rem';
+const MARGIN_TOP = '3rem';
 
 export const title = `Remember the Quotation Marks`;
 export const instruction = `There's a bug in the code below. Fix it!`;
@@ -24,48 +23,42 @@ export const initialCode = `function HomePage() {
 export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   const jsxElements = getAstProps({
     ast,
-    propType: 'JSXOpeningElement'
+    propType: 'JSXElement'
   });
   let marginTop = '';
-  let padding = '';
   for (let element of jsxElements) {
-    if (element.attributes?.length > 0 && element?.name?.name === 'button') {
-      for (let attribute of element.attributes) {
-        if (attribute?.name?.name === 'style') {
-          const styleProps = attribute?.value?.expression?.properties;
-          for (let prop of styleProps) {
-            if (prop?.key?.name === 'marginTop') {
-              marginTop = prop?.value?.value;
-            }
-            if (prop?.key?.name === 'padding') {
-              padding = prop?.value?.value;
+    if (
+      element.openingElement?.attributes?.length > 0 &&
+      element.openingElement?.name?.name === 'div' &&
+      element?.children
+    ) {
+      for (let child of element?.children) {
+        if (child?.value === 'Third') {
+          for (let attribute of element.openingElement?.attributes) {
+            if (attribute?.name?.name === 'style') {
+              const styleProps = attribute?.value?.expression?.properties;
+              for (let prop of styleProps) {
+                if (prop?.key?.name === 'marginTop') {
+                  marginTop = prop?.value?.value;
+                }
+              }
             }
           }
         }
       }
     }
   }
-  if (marginTop === MARGIN_TOP && padding === PADDING) {
+  if (marginTop === MARGIN_TOP) {
     return await onUpdateMissionStatus();
   }
   if (stringIsEmpty(marginTop)) {
     return onSetErrorMsg(
-      `Please set the top margin of the button to "${MARGIN_TOP}"`
-    );
-  }
-  if (stringIsEmpty(padding)) {
-    return onSetErrorMsg(
-      `Please set the padding of the button to "${PADDING}"`
+      `Please set the top margin of the third element to "${MARGIN_TOP}"`
     );
   }
   if (marginTop !== MARGIN_TOP) {
     return onSetErrorMsg(
-      `The button's top margin must be "${MARGIN_TOP}," not "${marginTop}"`
-    );
-  }
-  if (padding !== PADDING) {
-    return onSetErrorMsg(
-      `The button's padding must be "${PADDING}," not "${padding}"`
+      `The third element's top margin must be "${MARGIN_TOP}," not "${marginTop}"`
     );
   }
   onSetErrorMsg(`Something's not right - please check the code`);
