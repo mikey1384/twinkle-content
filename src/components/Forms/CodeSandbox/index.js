@@ -4,6 +4,7 @@ import Editor from './Editor';
 import Button from 'components/Button';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Icon from 'components/Icon';
+import { scrollElementToCenter } from 'helpers';
 import { useAppContext } from 'contexts';
 import { parse } from '@babel/parser';
 
@@ -34,12 +35,14 @@ export default function CodeSandbox({
     requestHelpers: { formatCode }
   } = useAppContext();
   const timerRef = useRef(null);
+  const ComponentRef = useRef(null);
   const [runButtonDisabled, setRunButtonDisabled] = useState(false);
   const [code, setCode] = useState(globalCode);
   const [ast, setAst] = useState(null);
 
   return (
     <ErrorBoundary
+      innerRef={ComponentRef}
       style={{
         display: 'flex',
         width: '100%',
@@ -118,6 +121,7 @@ export default function CodeSandbox({
     onSetErrorMsg?.('');
     setCode(initialCode);
     onSetCode(initialCode);
+    scrollElementToCenter(ComponentRef.current, -250);
   }
 
   function handleParse(code) {

@@ -18,6 +18,7 @@ Editor.propTypes = {
   simulatorRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   style: PropTypes.object
 };
+
 export default function Editor({
   ast,
   value = '',
