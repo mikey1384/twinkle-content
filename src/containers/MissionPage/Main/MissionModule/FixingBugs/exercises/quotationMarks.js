@@ -17,7 +17,7 @@ export const initialCode = `function HomePage() {
     >
       <div>First</div>
       <div style={{ marginTop: "1rem" }}>Second</div>
-      <div style={{ marginTop: 3rem }}>Third</div>
+      <div style={{ marginTop: ${MARGIN_TOP} }}>Third</div>
     </div>
   );
 }`;
@@ -36,7 +36,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     ) {
       for (let child of element?.children) {
         if (child?.value === 'Third') {
-          for (let attribute of element.openingElement?.attributes) {
+          for (let attribute of element?.openingElement?.attributes) {
             if (attribute?.name?.name === 'style') {
               const styleProps = attribute?.value?.expression?.properties;
               for (let prop of styleProps) {

@@ -2,7 +2,6 @@ import { getAstProps } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
 const FONT_SIZE = '30px';
-const MARGIN_TOP = '3rem';
 
 export const title = `Is it camelCased?`;
 export const instruction = `Can you fix the bug in the code below?`;
@@ -15,8 +14,12 @@ export const initialCode = `function HomePage() {
         textAlign: "center"
       }}
     >
-      <div style={{ fontSize: "${FONT_SIZE}" }}>My font size is ${FONT_SIZE}</div>
-      <div style={{ fontsize: "${FONT_SIZE}" }}>My font size is ${FONT_SIZE}, too!</div>
+      <div style={{ color: "blue", fontSize: "${FONT_SIZE}" }}>
+        My font size is ${FONT_SIZE}
+      </div>
+      <div style={{ color: "orange", fontsize: "${FONT_SIZE}" }}>
+        My font size should be ${FONT_SIZE}, too!
+      </div>
     </div>
   );
 }`;
@@ -26,22 +29,23 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     ast,
     propType: 'JSXElement'
   });
-  let marginTop = '';
+  let fontSize = '';
   for (let element of jsxElements) {
     if (
       element.openingElement?.attributes?.length > 0 &&
       element.openingElement?.name?.name === 'div' &&
       element?.children
     ) {
-      for (let child of element?.children) {
-        if (child?.value === 'Third') {
-          for (let attribute of element.openingElement?.attributes) {
-            if (attribute?.name?.name === 'style') {
-              const styleProps = attribute?.value?.expression?.properties;
-              for (let prop of styleProps) {
-                if (prop?.key?.name === 'marginTop') {
-                  marginTop = prop?.value?.value;
-                }
+      const JSXChildren = element.children.filter(
+        (child) => child.type === 'JSXElement'
+      );
+      if (JSXChildren?.[1] && JSXChildren?.[1]?.openingElement) {
+        for (let attribute of JSXChildren?.[1]?.openingElement?.attributes) {
+          if (attribute?.name?.name === 'style') {
+            const styleProps = attribute?.value?.expression?.properties;
+            for (let prop of styleProps) {
+              if (prop?.key?.name === 'fontSize') {
+                fontSize = prop?.value?.value;
               }
             }
           }
@@ -49,18 +53,16 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
       }
     }
   }
-  if (marginTop === MARGIN_TOP) {
+  if (fontSize === FONT_SIZE) {
     return await onUpdateMissionStatus();
   }
-  if (stringIsEmpty(marginTop)) {
+  if (stringIsEmpty(fontSize)) {
     return onSetErrorMsg(
-      `Please set the top margin of the third element to "${MARGIN_TOP}"`
+      `The font size property for the second sentence still isn't working`
     );
   }
-  if (marginTop !== MARGIN_TOP) {
-    return onSetErrorMsg(
-      `The third element's top margin must be "${MARGIN_TOP}," not "${marginTop}"`
-    );
+  if (fontSize !== FONT_SIZE) {
+    return onSetErrorMsg(`The font size must be ${FONT_SIZE}, not ${fontSize}`);
   }
   onSetErrorMsg(`Something's not right - please check the code`);
 }

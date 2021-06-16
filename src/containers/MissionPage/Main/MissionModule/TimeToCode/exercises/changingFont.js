@@ -3,12 +3,13 @@ import { WELCOME_MSG } from './constants';
 import { getAstProps } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
+const FONT_SIZE = '2rem';
 export const title = `Changing the Font`;
 export const instruction = (
   <>
     Change the `font weight` of your welcome message ({WELCOME_MSG}) to{' '}
-    <b>{`"bold"`}</b> and change its `font size` to <b>{`"2rem"`}</b>. You may
-    change its color to any color your want
+    <b>{`"bold"`}</b> and change its `font size` to <b>{`"${FONT_SIZE}"`}</b>.
+    You may change its color to any color your want
   </>
 );
 export const initialCode = `function HomePage() {
@@ -73,14 +74,14 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
       }
     }
   }
-  if (fontSize === '2rem' && fontWeight === 'bold') {
+  if (fontSize === FONT_SIZE && fontWeight === 'bold') {
     return await onUpdateMissionStatus();
   }
   if (stringIsEmpty(fontSize)) {
     return onSetErrorMsg(`You forgot to enter the font size value`);
   }
-  if (fontSize !== '2rem') {
-    return onSetErrorMsg(`The font size must be 2rem, not ${fontSize}`);
+  if (fontSize !== FONT_SIZE) {
+    return onSetErrorMsg(`The font size must be ${FONT_SIZE}, not ${fontSize}`);
   }
   onSetErrorMsg(`The font weight should be bold`);
 }
