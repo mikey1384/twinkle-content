@@ -1,6 +1,7 @@
 import { getAstProps } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
+const FONT_SIZE = '30px';
 const MARGIN_TOP = '3rem';
 
 export const title = `Is it camelCased?`;
@@ -11,12 +12,11 @@ export const initialCode = `function HomePage() {
       style={{
         width: "100%",
         height: "100%",
-        fontSize: "2rem",
         textAlign: "center"
       }}
     >
-      <div>First</div>
-      <div style={{ marginTop: "1rem" }}>Second</div>
+      <div style={{ fontSize: "${FONT_SIZE}" }}>My font size is ${FONT_SIZE}</div>
+      <div style={{ fontsize: "${FONT_SIZE}" }}>My font size is ${FONT_SIZE}, too!</div>
     </div>
   );
 }`;
