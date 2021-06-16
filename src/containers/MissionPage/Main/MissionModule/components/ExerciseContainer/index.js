@@ -18,7 +18,9 @@ ExerciseContainer.propTypes = {
   exerciseKey: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   prevExerciseKey: PropTypes.string,
+  prevUserId: PropTypes.number,
   onSetCode: PropTypes.func.isRequired,
+  onSetPrevUserId: PropTypes.func.isRequired,
   style: PropTypes.object,
   taskType: PropTypes.string
 };
@@ -30,6 +32,8 @@ export default function ExerciseContainer({
   index,
   prevExerciseKey,
   onSetCode,
+  onSetPrevUserId,
+  prevUserId,
   style,
   taskType
 }) {
@@ -110,10 +114,12 @@ export default function ExerciseContainer({
             code={exercise.code || exercise.initialCode}
             initialCode={exercise.initialCode}
             onSetCode={exercise.onSetCode}
+            onSetPrevUserId={onSetPrevUserId}
             onRunCode={exercise.onRunCode}
             onSetErrorMsg={setErrorMsg}
             hasError={!!errorMsg}
             passed={passed || success}
+            prevUserId={prevUserId}
             runButtonLabel="check"
           />
           {success && !passed && (

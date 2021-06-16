@@ -56,6 +56,13 @@ export default function TimeToCode({ task, onSetMissionState }) {
               newState: { codeObj: { ...codeObj, [exerciseLabel]: code } }
             })
           }
+          onSetPrevUserId={(userId) =>
+            onSetMissionState({
+              missionId: task.id,
+              newState: { prevUserId: userId }
+            })
+          }
+          prevUserId={task.prevUserId}
           taskType={task.missionType}
           style={{ marginTop: index === 0 ? 0 : '10rem' }}
         />

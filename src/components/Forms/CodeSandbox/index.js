@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Editor from './Editor';
 import Button from 'components/Button';
@@ -6,6 +6,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import Icon from 'components/Icon';
 import { scrollElementToCenter } from 'helpers';
 import { useAppContext } from 'contexts';
+import { useMyState } from 'helpers/hooks';
 import { parse } from '@babel/parser';
 
 CodeSandbox.propTypes = {
@@ -14,8 +15,10 @@ CodeSandbox.propTypes = {
   hasError: PropTypes.bool,
   onSetCode: PropTypes.func.isRequired,
   onSetErrorMsg: PropTypes.func,
+  onSetPrevUserId: PropTypes.func,
   onRunCode: PropTypes.func,
   passed: PropTypes.bool,
+  prevUserId: PropTypes.number,
   runButtonLabel: PropTypes.string,
   simulatorRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
 };
@@ -26,19 +29,33 @@ export default function CodeSandbox({
   hasError,
   onSetCode,
   onSetErrorMsg,
+  onSetPrevUserId,
   onRunCode,
   passed,
+  prevUserId,
   runButtonLabel = 'Run',
   simulatorRef
 }) {
   const {
     requestHelpers: { formatCode }
   } = useAppContext();
+  const { userId } = useMyState();
   const timerRef = useRef(null);
   const ComponentRef = useRef(null);
   const [runButtonDisabled, setRunButtonDisabled] = useState(false);
   const [code, setCode] = useState(globalCode);
   const [ast, setAst] = useState(null);
+
+  useEffect(() => {
+    if (userId !== prevUserId) {
+      onSetErrorMsg?.('');
+      setCode(initialCode);
+      onSetCode(initialCode);
+      setAst(handleParse(initialCode));
+      onSetPrevUserId(userId);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialCode, prevUserId, userId]);
 
   return (
     <ErrorBoundary

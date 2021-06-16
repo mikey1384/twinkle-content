@@ -50,6 +50,12 @@ export default function FixingBugs({ task, onSetMissionState }) {
           exerciseKey={exerciseKey}
           prevExerciseKey={index === 0 ? null : exerciseKeys[index - 1]}
           codeObj={codeObj}
+          onSetPrevUserId={(userId) =>
+            onSetMissionState({
+              missionId: task.id,
+              newState: { prevUserId: userId }
+            })
+          }
           onSetCode={({ code, exerciseLabel }) =>
             onSetMissionState({
               missionId: task.id,
@@ -57,6 +63,7 @@ export default function FixingBugs({ task, onSetMissionState }) {
             })
           }
           taskType={task.missionType}
+          prevUserId={task.prevUserId}
           style={{ marginTop: index === 0 ? 0 : '10rem' }}
         />
       ))}
