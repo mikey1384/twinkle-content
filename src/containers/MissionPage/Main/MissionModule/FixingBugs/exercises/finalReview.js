@@ -13,8 +13,8 @@ export const initialCode = `function HomePage() {
         width: "100%",
         height: "100%",
         display: "flex",
-        flexDirection: "column",
-        alignItems: "center"
+        flexdirection: "column",
+        alignitems: "center"
       }}
     >
       <p
@@ -32,7 +32,7 @@ export const initialCode = `function HomePage() {
           margintop: "3rem",
           padding: "1rem",
           color: "white",
-          background: "blue",
+          background: blue,
           border: "none",
           fontSize: 2rem,
           cursor: "pointer"
