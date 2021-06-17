@@ -66,7 +66,7 @@ export default function XPRewardInterface({
   const myRewardables = useMemo(() => {
     const prevRewards = rewards.reduce((prev, reward) => {
       if (reward.rewarderId === userId) {
-        return prev + reward.rewardAmount;
+        return prev + (reward?.rewardAmount || 0);
       }
       return prev;
     }, 0);
@@ -76,7 +76,10 @@ export default function XPRewardInterface({
   const remainingRewards = useMemo(() => {
     let currentRewards =
       rewards.length > 0
-        ? rewards.reduce((prev, reward) => prev + reward.rewardAmount, 0)
+        ? rewards.reduce(
+            (prev, reward) => prev + (reward?.rewardAmount || 0),
+            0
+          )
         : 0;
     return returnMaxRewards({ rewardLevel }) - currentRewards;
   }, [rewardLevel, rewards]);
