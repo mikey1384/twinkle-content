@@ -5,20 +5,42 @@ const SECOND_MARGIN_TOP = '2rem';
 const THIRD_MARGIN_TOP = '2rem';
 
 export const title = `Final Review`;
-export const instruction = `Can you fix the bug in the code below?`;
+export const instruction = `Fix all the bugs in the code below`;
 export const initialCode = `function HomePage() {
   return (
     <div
       style={{
         width: "100%",
         height: "100%",
-        fontSize: "2rem",
-        textAlign: "center"
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
       }}
     >
-      <div>All Tags</div>
-      <div style={{ marginTop: "${SECOND_MARGIN_TOP}" }}>Must</div>
-      <div style={{ marginTop: "${THIRD_MARGIN_TOP}" }}>Be Closed</div>
+      <p
+        style={{
+          color: "#FF00FF",
+          fontfamily: "sans-serif",
+          fontweight: "bold",
+          fontsize: "2rem"
+        }}
+      >
+        Welcome to My Website!
+      </p>
+      <button
+        style={{
+          margintop: "3rem",
+          padding: "1rem",
+          color: "white",
+          background: "blue",
+          border: "none",
+          fontSize: 2rem,
+          cursor: "pointer"
+        }}
+        onClick={() => alert("Hello World")}
+      >
+        Tap me
+      </button>
     <div>
   );
 }`;
