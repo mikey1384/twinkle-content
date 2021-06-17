@@ -12,7 +12,7 @@ export const initialCode = `function HomePage() {
       style={{
         width: "100%",
         height: "100%",
-        display: "flex",
+        display: flex,
         flexdirection: "column",
         alignitems: "center"
       }}

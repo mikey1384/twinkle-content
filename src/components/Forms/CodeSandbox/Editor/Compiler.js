@@ -2,6 +2,7 @@ import React, { createElement, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { transformFromAstSync } from '@babel/core';
 import { css } from '@emotion/css';
+import { useAppContext } from 'contexts';
 import presetReact from '@babel/preset-react';
 
 Compiler.propTypes = {
@@ -23,8 +24,10 @@ export default function Compiler({
   simulatorRef,
   transformation
 }) {
+  const {
+    requestHelpers: { lintCode }
+  } = useAppContext();
   const [error, setError] = useState('');
-
   useEffect(() => {
     if (error) {
       onSetError({ error });
@@ -36,8 +39,17 @@ export default function Compiler({
   useEffect(() => {
     handleTranspile(code);
 
-    function handleTranspile(code) {
+    async function handleTranspile(code) {
+      const results = await lintCode(code);
+      if (results[0]) {
+        return onSetError({
+          error: results[0].message.split('[')[0],
+          lineNumber: results[0].line
+        });
+      }
       try {
+        // run the code through eslint first
+
         const ast = onParse(code);
         onSetAst(ast);
         onSetError({ error: '', lineNumber: 0 });

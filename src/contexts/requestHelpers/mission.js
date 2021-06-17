@@ -93,6 +93,16 @@ export default function missionRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async lintCode(code) {
+      try {
+        const {
+          data: { results }
+        } = await request.post(`${URL}/mission/lintCode`, { code });
+        return Promise.resolve(results);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async loadGitHubData(code) {
       try {
         const {
