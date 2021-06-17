@@ -3,7 +3,7 @@ import { stringIsEmpty } from 'helpers/stringHelpers';
 
 const FONT_SIZE = '30px';
 
-export const title = `Is it camelCased?`;
+export const title = `Is It CamelCased?`;
 export const instruction = `Can you fix the bug in the code below?`;
 export const initialCode = `function HomePage() {
   return (
