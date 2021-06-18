@@ -1,5 +1,9 @@
 import React from 'react';
-import { getAstProps } from '../../helpers';
+import {
+  getAstProps,
+  filterOpeningElementsByType,
+  getElementAttribute
+} from '../../helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
 const PADDING = '3rem';
@@ -59,21 +63,22 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   });
   let marginTop = '';
   let padding = '';
-  for (let element of jsxElements) {
-    if (element.attributes?.length > 0 && element?.name?.name === 'button') {
-      for (let attribute of element.attributes) {
-        if (attribute?.name?.name === 'style') {
-          const styleProps = attribute?.value?.expression?.properties;
-          for (let prop of styleProps) {
-            if (prop?.key?.name === 'marginTop') {
-              marginTop = prop?.value?.value;
-            }
-            if (prop?.key?.name === 'padding') {
-              padding = prop?.value?.value;
-            }
-          }
-        }
-      }
+  const buttons = filterOpeningElementsByType({
+    elements: jsxElements,
+    filter: 'button'
+  });
+  const button = buttons[0];
+  const style = getElementAttribute({
+    element: button,
+    attributeName: 'style'
+  });
+  const styleProps = style?.value?.expression?.properties;
+  for (let prop of styleProps) {
+    if (prop?.key?.name === 'marginTop') {
+      marginTop = prop?.value?.value;
+    }
+    if (prop?.key?.name === 'padding') {
+      padding = prop?.value?.value;
     }
   }
   if (marginTop === MARGIN_TOP && padding === PADDING) {
