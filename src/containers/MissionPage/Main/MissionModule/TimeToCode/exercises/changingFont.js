@@ -67,7 +67,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   });
   for (let paragraph of paragraphs) {
     const style = getElementAttribute({
-      element: paragraph,
+      openingElement: paragraph,
       attributeName: 'style'
     });
     const styleProps = style?.value?.expression?.properties;

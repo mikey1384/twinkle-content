@@ -1,4 +1,9 @@
-import { getAstProps } from '../../helpers';
+import {
+  getAstProps,
+  filterElementsByType,
+  getElementInnerText,
+  getElementAttribute
+} from '../../helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
 const MARGIN_TOP = '3rem';
@@ -28,24 +33,21 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     propType: 'JSXElement'
   });
   let marginTop = '';
-  for (let element of jsxElements) {
-    if (
-      element.openingElement?.attributes?.length > 0 &&
-      element.openingElement?.name?.name === 'div' &&
-      element?.children
-    ) {
-      for (let child of element?.children) {
-        if (child?.value === 'Third') {
-          for (let attribute of element?.openingElement?.attributes) {
-            if (attribute?.name?.name === 'style') {
-              const styleProps = attribute?.value?.expression?.properties;
-              for (let prop of styleProps) {
-                if (prop?.key?.name === 'marginTop') {
-                  marginTop = prop?.value?.value;
-                }
-              }
-            }
-          }
+  const dividers = filterElementsByType({
+    elements: jsxElements,
+    filter: 'div'
+  });
+  for (let divider of dividers) {
+    const innerText = getElementInnerText(divider);
+    if (innerText === 'Third') {
+      const style = getElementAttribute({
+        openingElement: divider.openingElement,
+        attributeName: 'style'
+      });
+      const styleProps = style?.value?.expression?.properties;
+      for (let prop of styleProps) {
+        if (prop?.key?.name === 'marginTop') {
+          marginTop = prop?.value?.value;
         }
       }
     }

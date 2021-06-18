@@ -69,7 +69,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   });
   const button = buttons[0];
   const style = getElementAttribute({
-    element: button,
+    openingElement: button,
     attributeName: 'style'
   });
   const styleProps = style?.value?.expression?.properties;

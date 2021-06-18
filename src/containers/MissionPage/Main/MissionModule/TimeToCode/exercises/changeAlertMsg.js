@@ -54,7 +54,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   });
   const button = buttons[0];
   const onClickFunc = getElementAttribute({
-    element: button,
+    openingElement: button,
     attributeName: 'onClick'
   });
   if (onClickFunc?.value?.expression?.body?.callee?.name === 'alert') {

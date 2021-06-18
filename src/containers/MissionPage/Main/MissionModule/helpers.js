@@ -23,7 +23,6 @@ export function getAstProps({ ast, propType }) {
 export function filterElementsByType({ elements, filter }) {
   const results = [];
   for (let element of elements) {
-    console.log(element);
     if (element.openingElement.name.name === filter) {
       results.push(element);
     }
@@ -41,9 +40,9 @@ export function filterOpeningElementsByType({ elements, filter }) {
   return results;
 }
 
-export function getElementAttribute({ element, attributeName }) {
-  if (element?.attributes?.length > 0) {
-    for (let attribute of element.attributes) {
+export function getElementAttribute({ openingElement, attributeName }) {
+  if (openingElement?.attributes?.length > 0) {
+    for (let attribute of openingElement.attributes) {
       if (attribute?.name?.name === attributeName) {
         return attribute;
       }

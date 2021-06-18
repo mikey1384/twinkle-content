@@ -55,7 +55,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   const button = buttonElements[0];
   if (button) {
     const style = getElementAttribute({
-      element: button,
+      openingElement: button,
       attributeName: 'style'
     });
     const styleProps = style?.value?.expression?.properties;
