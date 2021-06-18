@@ -1,4 +1,8 @@
-import { getAstProps } from '../../helpers';
+import {
+  getAstProps,
+  filterElementsByType,
+  getElementAttribute
+} from '../../helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
 const FONT_SIZE = '30px';
@@ -30,25 +34,24 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     propType: 'JSXElement'
   });
   let fontSize = '';
-  for (let element of jsxElements) {
-    if (
-      element.openingElement?.attributes?.length > 0 &&
-      element.openingElement?.name?.name === 'div' &&
-      element?.children
-    ) {
-      const JSXChildren = element.children.filter(
-        (child) => child.type === 'JSXElement'
-      );
-      if (JSXChildren?.[1] && JSXChildren?.[1]?.openingElement) {
-        for (let attribute of JSXChildren?.[1]?.openingElement?.attributes) {
-          if (attribute?.name?.name === 'style') {
-            const styleProps = attribute?.value?.expression?.properties;
-            for (let prop of styleProps) {
-              if (prop?.key?.name === 'fontSize') {
-                fontSize = prop?.value?.value;
-              }
-            }
-          }
+  const dividers = filterElementsByType({
+    elements: jsxElements,
+    filter: 'div'
+  });
+  for (let divider of dividers) {
+    const JSXChildren = divider.children.filter(
+      (child) => child.type === 'JSXElement'
+    );
+    if (JSXChildren?.[1] && JSXChildren?.[1]?.openingElement) {
+      const secondChild = JSXChildren?.[1];
+      const style = getElementAttribute({
+        openingElement: secondChild.openingElement,
+        attributeName: 'style'
+      });
+      const styleProps = style?.value?.expression?.properties;
+      for (let prop of styleProps) {
+        if (prop?.key?.name === 'fontSize') {
+          fontSize = prop?.value?.value;
         }
       }
     }
