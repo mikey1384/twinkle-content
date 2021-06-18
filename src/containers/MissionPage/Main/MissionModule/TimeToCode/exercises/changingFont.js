@@ -1,6 +1,10 @@
 import React from 'react';
 import { WELCOME_MSG } from './constants';
-import { getAstProps } from '../../helpers';
+import {
+  getAstProps,
+  filterOpeningElementsByType,
+  getElementAttribute
+} from '../../helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
 const FONT_SIZE = '2rem';
@@ -57,20 +61,22 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   });
   let fontSize = '';
   let fontWeight = '';
-  for (let element of jsxElements) {
-    if (element.attributes?.length > 0 && element?.name?.name === 'p') {
-      for (let attribute of element.attributes) {
-        if (attribute?.name?.name === 'style') {
-          const styleProps = attribute?.value?.expression?.properties;
-          for (let prop of styleProps) {
-            if (prop?.key?.name === 'fontSize') {
-              fontSize = prop?.value?.value;
-            }
-            if (prop?.key?.name === 'fontWeight') {
-              fontWeight = prop?.value?.value;
-            }
-          }
-        }
+  const paragraphs = filterOpeningElementsByType({
+    elements: jsxElements,
+    filter: 'p'
+  });
+  for (let paragraph of paragraphs) {
+    const style = getElementAttribute({
+      element: paragraph,
+      attributeName: 'style'
+    });
+    const styleProps = style?.value?.expression?.properties;
+    for (let prop of styleProps) {
+      if (prop?.key?.name === 'fontSize') {
+        fontSize = prop?.value?.value;
+      }
+      if (prop?.key?.name === 'fontWeight') {
+        fontWeight = prop?.value?.value;
       }
     }
   }
