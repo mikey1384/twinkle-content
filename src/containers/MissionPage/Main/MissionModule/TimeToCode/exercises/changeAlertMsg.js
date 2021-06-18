@@ -1,6 +1,10 @@
 import React from 'react';
 import { ALERT_MSG } from './constants';
-import { getAstProps } from '../../helpers';
+import {
+  getAstProps,
+  filterOpeningElementsByType,
+  getElementAttribute
+} from '../../helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
 export const title = `Hello World`;
@@ -44,17 +48,17 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     propType: 'JSXOpeningElement'
   });
   let alertText = '';
-  for (let element of jsxElements) {
-    if (element.attributes?.length > 0 && element?.name?.name === 'button') {
-      for (let attribute of element.attributes) {
-        if (
-          attribute.name?.name === 'onClick' &&
-          attribute?.value?.expression?.body?.callee?.name === 'alert'
-        ) {
-          alertText = attribute?.value?.expression?.body?.arguments?.[0]?.value;
-        }
-      }
-    }
+  const buttons = filterOpeningElementsByType({
+    elements: jsxElements,
+    filter: 'button'
+  });
+  const button = buttons[0];
+  const onClickFunc = getElementAttribute({
+    element: button,
+    attributeName: 'onClick'
+  });
+  if (onClickFunc?.value?.expression?.body?.callee?.name === 'alert') {
+    alertText = onClickFunc?.value?.expression?.body?.arguments?.[0]?.value;
   }
   if (alertText.trim().toLowerCase() === 'Hello world'.toLowerCase()) {
     return await onUpdateMissionStatus();
