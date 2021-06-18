@@ -1,11 +1,16 @@
+import React from 'react';
 import { getAstProps } from '../../helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
 const CONTAINER_FLEX_DIRECTION = 'column';
 const CONTAINER_ALIGN_ITEMS = 'center';
 
-export const title = `Let's Review the Things We Learned`;
-export const instruction = `Fix all the bugs in the code below`;
+export const title = `Let's Review Everything We Learned`;
+export const instruction = (
+  <>
+    Fix <b>all</b> bugs in the code below
+  </>
+);
 export const initialCode = `function HomePage() {
   return (
     <div
