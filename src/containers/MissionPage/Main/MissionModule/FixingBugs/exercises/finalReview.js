@@ -1,5 +1,5 @@
 import React from 'react';
-import { getAstProps } from '../../helpers';
+import { getAstProps, getElementAttribute } from '../../helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
 const CONTAINER_FLEX_DIRECTION = 'column';
@@ -60,16 +60,54 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   let containerAlignItems = '';
   const containerDiv = jsxElements[0];
   const containerDivOpening = containerDiv?.openingElement;
-  console.log(containerDivOpening, CONTAINER_FLEX_DIRECTION);
-  if (containerFlexDirection === 'column' && containerAlignItems === 'center') {
+  const containerStyle = getElementAttribute({
+    openingElement: containerDivOpening,
+    attributeName: 'style'
+  });
+  const containerStyleProps = containerStyle?.value?.expression?.properties;
+  for (let prop of containerStyleProps) {
+    if (prop?.key?.name === 'flexDirection') {
+      containerFlexDirection = prop?.value?.value;
+    }
+    if (prop?.key?.name === 'alignItems') {
+      containerAlignItems = prop?.value?.value;
+    }
+  }
+  if (
+    containerFlexDirection === CONTAINER_FLEX_DIRECTION &&
+    containerAlignItems === CONTAINER_ALIGN_ITEMS
+  ) {
     return await onUpdateMissionStatus();
   }
   if (stringIsEmpty(containerFlexDirection)) {
-    return onSetErrorMsg(`Please set flex-direction of the container element`);
+    return onSetErrorMsg(
+      <>
+        Please set <b>flexDirection</b> of the container element
+      </>
+    );
+  }
+  if (containerFlexDirection !== CONTAINER_FLEX_DIRECTION) {
+    return onSetErrorMsg(
+      <>
+        The <b>flexDirection</b> of the container should be{' '}
+        {`"${CONTAINER_FLEX_DIRECTION}"`}, not {`"${containerFlexDirection}"`}
+      </>
+    );
   }
   if (stringIsEmpty(containerAlignItems)) {
     return onSetErrorMsg(
-      `Please align the items inside the container element to ${CONTAINER_ALIGN_ITEMS}`
+      <>
+        Please set the container {`element's`} <b>alignItems</b> value to{' '}
+        {`"${CONTAINER_ALIGN_ITEMS}"`}
+      </>
+    );
+  }
+  if (containerAlignItems !== CONTAINER_ALIGN_ITEMS) {
+    return onSetErrorMsg(
+      <>
+        The container {`element's`} <b>alignItems</b> value should be set to{' '}
+        {`"${CONTAINER_FLEX_DIRECTION}"`}, not {`"${containerAlignItems}"`}
+      </>
     );
   }
   onSetErrorMsg(`Something's not right - please check the code`);

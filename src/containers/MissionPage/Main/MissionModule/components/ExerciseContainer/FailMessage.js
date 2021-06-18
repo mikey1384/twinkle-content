@@ -16,8 +16,7 @@ export default function FailMessage({ message }) {
         textAlign: 'center',
         color: '#fff',
         background: Color.cranberry(0.6),
-        fontSize: '1.7rem',
-        fontWeight: 'bold'
+        fontSize: '1.7rem'
       }}
     >
       {message}
