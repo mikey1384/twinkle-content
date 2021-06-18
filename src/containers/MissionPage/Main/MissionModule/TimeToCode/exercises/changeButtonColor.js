@@ -2,7 +2,7 @@ import React from 'react';
 import { Color } from 'constants/css';
 import {
   getAstProps,
-  filterElementByType,
+  filterOpeningElementsByType,
   getElementAttribute
 } from '../../helpers';
 
@@ -48,7 +48,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
     propType: 'JSXOpeningElement'
   });
   let buttonColor = '';
-  const buttonElements = filterElementByType({
+  const buttonElements = filterOpeningElementsByType({
     elements: jsxElements,
     filter: 'button'
   });

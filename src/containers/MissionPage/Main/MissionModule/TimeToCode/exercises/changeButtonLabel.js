@@ -1,7 +1,11 @@
 import React from 'react';
 import { Color } from 'constants/css';
 import { BUTTON_LABEL } from './constants';
-import { getAstProps } from '../../helpers';
+import {
+  filterElementsByType,
+  getElementInnerText,
+  getAstProps
+} from '../../helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
 export const title = `Tap Me`;
@@ -41,16 +45,15 @@ export const initialCode = `function HomePage() {
 }`;
 
 export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
-  const jsxElements = getAstProps({ ast, propType: 'JSXElement' });
   let buttonText = '';
-  for (let element of jsxElements) {
-    if (element.openingElement?.name?.name === 'button' && element?.children) {
-      for (let child of element?.children) {
-        buttonText = child?.value || '';
-      }
-    }
-  }
-  if (buttonText.trim().toLowerCase() === BUTTON_LABEL.toLowerCase()) {
+  const jsxElements = getAstProps({ ast, propType: 'JSXElement' });
+  const buttonElements = filterElementsByType({
+    elements: jsxElements,
+    filter: 'button'
+  });
+  const button = buttonElements[0];
+  buttonText = getElementInnerText(button);
+  if (buttonText === BUTTON_LABEL.toLowerCase()) {
     return await onUpdateMissionStatus();
   }
   if (stringIsEmpty(buttonText)) {

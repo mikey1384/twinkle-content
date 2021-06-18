@@ -20,7 +20,17 @@ export function getAstProps({ ast, propType }) {
   return results;
 }
 
-export function filterElementByType({ elements, filter }) {
+export function filterElementsByType({ elements, filter }) {
+  const results = [];
+  for (let element of elements) {
+    if (element.openingElement.name.name === filter) {
+      results.push(element);
+    }
+  }
+  return results;
+}
+
+export function filterOpeningElementsByType({ elements, filter }) {
   const results = [];
   for (let element of elements) {
     if (element?.name?.name === filter) {
@@ -39,4 +49,13 @@ export function getElementAttribute({ element, attributeName }) {
     }
   }
   return null;
+}
+
+export function getElementInnerText(element) {
+  for (let child of element.children) {
+    if (child.type === 'JSXText') {
+      return child.value.trim().toLowerCase();
+    }
+  }
+  return '';
 }
