@@ -53,7 +53,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   });
   const button = buttonElements[0];
   buttonText = getElementInnerText(button);
-  if (buttonText === BUTTON_LABEL.toLowerCase()) {
+  if (buttonText.toLowerCase() === BUTTON_LABEL.toLowerCase()) {
     return await onUpdateMissionStatus();
   }
   if (stringIsEmpty(buttonText)) {

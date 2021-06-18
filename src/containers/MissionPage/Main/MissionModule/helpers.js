@@ -54,7 +54,7 @@ export function getElementAttribute({ element, attributeName }) {
 export function getElementInnerText(element) {
   for (let child of element.children) {
     if (child.type === 'JSXText') {
-      return child.value.trim().toLowerCase();
+      return child.value.trim();
     }
   }
   return '';
