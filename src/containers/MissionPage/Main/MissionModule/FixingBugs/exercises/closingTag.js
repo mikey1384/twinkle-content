@@ -1,4 +1,8 @@
-import { getAstProps } from '../../helpers';
+import {
+  getAstProps,
+  filterElementsByType,
+  getElementAttribute
+} from '../../helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
 const SECOND_MARGIN_TOP = '2rem';
@@ -30,37 +34,39 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   });
   let secondMarginTop = '';
   let thirdMarginTop = '';
-  for (let element of jsxElements) {
-    if (
-      element.openingElement?.attributes?.length > 0 &&
-      element.openingElement?.name?.name === 'div' &&
-      element?.children
-    ) {
-      const JSXChildren = element?.children?.filter(
-        (child) => child.type === 'JSXElement'
-      );
-      if (JSXChildren[1] && JSXChildren?.[1]?.openingElement) {
-        for (let attribute of JSXChildren?.[1]?.openingElement?.attributes) {
-          if (attribute?.name?.name === 'style') {
-            const styleProps = attribute?.value?.expression?.properties;
-            for (let prop of styleProps) {
-              if (prop?.key?.name === 'marginTop') {
-                secondMarginTop = prop?.value?.value;
-              }
-            }
-          }
+  const dividers = filterElementsByType({
+    elements: jsxElements,
+    filter: 'div'
+  });
+  for (let divider of dividers) {
+    const JSXChildren = divider.children.filter(
+      (child) => child.type === 'JSXElement'
+    );
+    const secondChild = JSXChildren?.[1];
+    if (secondChild) {
+      const secondChildStyle = getElementAttribute({
+        openingElement: secondChild.openingElement,
+        attributeName: 'style'
+      });
+      const secondChildStyleProps =
+        secondChildStyle?.value?.expression?.properties;
+      for (let prop of secondChildStyleProps) {
+        if (prop?.key?.name === 'marginTop') {
+          secondMarginTop = prop?.value?.value;
         }
       }
-      if (JSXChildren[2] && JSXChildren?.[2]?.openingElement) {
-        for (let attribute of JSXChildren?.[2]?.openingElement?.attributes) {
-          if (attribute?.name?.name === 'style') {
-            const styleProps = attribute?.value?.expression?.properties;
-            for (let prop of styleProps) {
-              if (prop?.key?.name === 'marginTop') {
-                thirdMarginTop = prop?.value?.value;
-              }
-            }
-          }
+    }
+    const thirdChild = JSXChildren?.[2];
+    if (thirdChild) {
+      const thirdChildStyle = getElementAttribute({
+        openingElement: thirdChild.openingElement,
+        attributeName: 'style'
+      });
+      const thirdChildStyleProps =
+        thirdChildStyle?.value?.expression?.properties;
+      for (let prop of thirdChildStyleProps) {
+        if (prop?.key?.name === 'marginTop') {
+          thirdMarginTop = prop?.value?.value;
         }
       }
     }
