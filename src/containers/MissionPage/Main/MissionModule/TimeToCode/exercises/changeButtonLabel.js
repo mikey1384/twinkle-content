@@ -1,7 +1,7 @@
 import React from 'react';
 import { Color } from 'constants/css';
 import { BUTTON_LABEL } from './constants';
-import { getAstProps } from 'helpers';
+import { getAstProps } from '../../helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
 export const title = `Tap Me`;

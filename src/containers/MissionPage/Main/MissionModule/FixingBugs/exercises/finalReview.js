@@ -1,4 +1,4 @@
-import { getAstProps } from 'helpers';
+import { getAstProps } from '../../helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
 const CONTAINER_FLEX_DIRECTION = 'column';

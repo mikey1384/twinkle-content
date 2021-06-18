@@ -52,28 +52,6 @@ export function determineXpButtonDisabled({
   return false;
 }
 
-export function getAstProps({ ast, propType }) {
-  const results = [];
-  for (let key in ast) {
-    _getAstProps({ astProp: ast[key], propType });
-  }
-
-  function _getAstProps({ astProp, propType }) {
-    if (astProp && typeof astProp === 'object') {
-      if (
-        (!propType && astProp?.type) ||
-        (!!propType && astProp?.type === propType)
-      ) {
-        results.push(astProp);
-      }
-      for (let key in astProp) {
-        _getAstProps({ astProp: astProp[key], propType });
-      }
-    }
-  }
-  return results;
-}
-
 export function getSectionFromPathname(pathname) {
   const result = pathname?.split('/')[1];
   return {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { WELCOME_MSG } from './constants';
-import { getAstProps } from 'helpers';
+import { getAstProps } from '../../helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
 const FONT_SIZE = '2rem';

@@ -1,6 +1,10 @@
 import React from 'react';
 import { Color } from 'constants/css';
-import { getAstProps } from 'helpers';
+import {
+  getAstProps,
+  filterElementByType,
+  getElementAttribute
+} from '../../helpers';
 
 export const title = `Make It Blue`;
 export const instruction = (
@@ -86,25 +90,4 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
       <span style={{ color: 'blue' }}>blue,</span> not {buttonColor}
     </>
   );
-}
-
-function filterElementByType({ elements, filter }) {
-  const results = [];
-  for (let element of elements) {
-    if (element?.name?.name === filter) {
-      results.push(element);
-    }
-  }
-  return results;
-}
-
-function getElementAttribute({ element, attributeName }) {
-  if (element?.attributes?.length > 0) {
-    for (let attribute of element.attributes) {
-      if (attribute?.name?.name === attributeName) {
-        return attribute;
-      }
-    }
-  }
-  return null;
 }

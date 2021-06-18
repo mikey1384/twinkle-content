@@ -1,5 +1,5 @@
 import React from 'react';
-import { getAstProps } from 'helpers';
+import { getAstProps } from '../../helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
 const PADDING = '3rem';

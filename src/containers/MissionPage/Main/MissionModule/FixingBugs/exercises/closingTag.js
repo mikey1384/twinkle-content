@@ -1,4 +1,4 @@
-import { getAstProps } from 'helpers';
+import { getAstProps } from '../../helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
 const SECOND_MARGIN_TOP = '2rem';
