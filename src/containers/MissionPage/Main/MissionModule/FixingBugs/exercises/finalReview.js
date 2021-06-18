@@ -4,7 +4,7 @@ import { stringIsEmpty } from 'helpers/stringHelpers';
 const SECOND_MARGIN_TOP = '2rem';
 const THIRD_MARGIN_TOP = '2rem';
 
-export const title = `Final Review`;
+export const title = `Let's Review the Things We Learned`;
 export const instruction = `Fix all the bugs in the code below`;
 export const initialCode = `function HomePage() {
   return (
