@@ -49,19 +49,19 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
     filter: 'button'
   });
   const button = buttonElements[0];
-  if (button && button?.attributes?.length > 0) {
-    for (let attribute of button.attributes) {
-      if (attribute?.name?.name === 'style') {
-        const styleProps = attribute?.value?.expression?.properties;
-        for (let prop of styleProps) {
-          if (
-            prop?.key?.name === 'background' ||
-            prop?.key?.name === 'backgroundColor'
-          ) {
-            buttonColor = prop?.value?.value;
-            break;
-          }
-        }
+  if (button) {
+    const style = getElementAttribute({
+      element: button,
+      attributeName: 'style'
+    });
+    const styleProps = style?.value?.expression?.properties;
+    for (let prop of styleProps) {
+      if (
+        prop?.key?.name === 'background' ||
+        prop?.key?.name === 'backgroundColor'
+      ) {
+        buttonColor = prop?.value?.value;
+        break;
       }
     }
   }
@@ -96,4 +96,15 @@ function filterElementByType({ elements, filter }) {
     }
   }
   return results;
+}
+
+function getElementAttribute({ element, attributeName }) {
+  if (element?.attributes?.length > 0) {
+    for (let attribute of element.attributes) {
+      if (attribute?.name?.name === attributeName) {
+        return attribute;
+      }
+    }
+  }
+  return null;
 }
