@@ -1,6 +1,6 @@
 import React from 'react';
 import { WELCOME_MSG } from './constants';
-import { getAstProps } from '../../helpers';
+import { getAstProps, filterElementsByType } from '../../helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
 export const title = `Welcoming Your Visitors`;
@@ -45,16 +45,16 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     propType: 'JSXElement'
   });
   let welcomeText = '';
-  for (let element of jsxElements) {
-    if (element.openingElement?.name?.name === 'p' && element?.children) {
-      for (let child of element?.children) {
-        welcomeText = child?.value || '';
-      }
+  const paragraphs = filterElementsByType({
+    elements: jsxElements,
+    filter: 'p'
+  });
+  for (let paragraph of paragraphs) {
+    for (let child of paragraph?.children) {
+      welcomeText = child?.value || '';
     }
   }
-  if (
-    welcomeText.trim().toLowerCase() === 'Welcome to my website!'.toLowerCase()
-  ) {
+  if (welcomeText.trim().toLowerCase() === WELCOME_MSG.toLowerCase()) {
     return await onUpdateMissionStatus();
   }
   if (stringIsEmpty(welcomeText)) {
@@ -63,13 +63,13 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     );
   }
   if (
-    welcomeText.trim().toLowerCase() === 'Welcome to my website'.toLowerCase()
+    welcomeText.trim().toLowerCase() === WELCOME_MSG.slice(0, -1).toLowerCase()
   ) {
     return onSetErrorMsg(
       `You forgot to add an exclamation mark (!) at the end`
     );
   }
   onSetErrorMsg(
-    `The alert message should say, "Hello world," not "${welcomeText.trim()}"`
+    `The alert message should say, "${WELCOME_MSG}," not "${welcomeText.trim()}"`
   );
 }

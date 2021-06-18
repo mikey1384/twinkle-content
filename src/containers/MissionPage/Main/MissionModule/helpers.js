@@ -23,6 +23,7 @@ export function getAstProps({ ast, propType }) {
 export function filterElementsByType({ elements, filter }) {
   const results = [];
   for (let element of elements) {
+    console.log(element);
     if (element.openingElement.name.name === filter) {
       results.push(element);
     }
