@@ -44,19 +44,22 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
     propType: 'JSXOpeningElement'
   });
   let buttonColor = '';
-  for (let element of jsxElements) {
-    if (element.attributes?.length > 0 && element?.name?.name === 'button') {
-      for (let attribute of element.attributes) {
-        if (attribute?.name?.name === 'style') {
-          const styleProps = attribute?.value?.expression?.properties;
-          for (let prop of styleProps) {
-            if (
-              prop?.key?.name === 'background' ||
-              prop?.key?.name === 'backgroundColor'
-            ) {
-              buttonColor = prop?.value?.value;
-              break;
-            }
+  const buttonElements = filterElementByType({
+    elements: jsxElements,
+    filter: 'button'
+  });
+  const button = buttonElements[0];
+  if (button && button?.attributes?.length > 0) {
+    for (let attribute of button.attributes) {
+      if (attribute?.name?.name === 'style') {
+        const styleProps = attribute?.value?.expression?.properties;
+        for (let prop of styleProps) {
+          if (
+            prop?.key?.name === 'background' ||
+            prop?.key?.name === 'backgroundColor'
+          ) {
+            buttonColor = prop?.value?.value;
+            break;
           }
         }
       }
@@ -83,4 +86,14 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
       <span style={{ color: 'blue' }}>blue,</span> not {buttonColor}
     </>
   );
+}
+
+function filterElementByType({ elements, filter }) {
+  const results = [];
+  for (let element of elements) {
+    if (element?.name?.name === filter) {
+      results.push(element);
+    }
+  }
+  return results;
 }

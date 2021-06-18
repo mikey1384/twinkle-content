@@ -1,14 +1,15 @@
 import { getAstProps } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
-const SECOND_MARGIN_TOP = '2rem';
-const THIRD_MARGIN_TOP = '2rem';
+const CONTAINER_FLEX_DIRECTION = 'column';
+const CONTAINER_ALIGN_ITEMS = 'center';
 
 export const title = `Let's Review the Things We Learned`;
 export const instruction = `Fix all the bugs in the code below`;
 export const initialCode = `function HomePage() {
   return (
     <div
+      id="container"
       style={{
         width: "100%",
         height: "100%",
@@ -50,67 +51,20 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     ast,
     propType: 'JSXElement'
   });
-  let secondMarginTop = '';
-  let thirdMarginTop = '';
-  for (let element of jsxElements) {
-    if (
-      element.openingElement?.attributes?.length > 0 &&
-      element.openingElement?.name?.name === 'div' &&
-      element?.children
-    ) {
-      const JSXChildren = element?.children?.filter(
-        (child) => child.type === 'JSXElement'
-      );
-      if (JSXChildren[1] && JSXChildren?.[1]?.openingElement) {
-        for (let attribute of JSXChildren?.[1]?.openingElement?.attributes) {
-          if (attribute?.name?.name === 'style') {
-            const styleProps = attribute?.value?.expression?.properties;
-            for (let prop of styleProps) {
-              if (prop?.key?.name === 'marginTop') {
-                secondMarginTop = prop?.value?.value;
-              }
-            }
-          }
-        }
-      }
-      if (JSXChildren[2] && JSXChildren?.[2]?.openingElement) {
-        for (let attribute of JSXChildren?.[2]?.openingElement?.attributes) {
-          if (attribute?.name?.name === 'style') {
-            const styleProps = attribute?.value?.expression?.properties;
-            for (let prop of styleProps) {
-              if (prop?.key?.name === 'marginTop') {
-                thirdMarginTop = prop?.value?.value;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  if (
-    secondMarginTop === SECOND_MARGIN_TOP &&
-    thirdMarginTop === THIRD_MARGIN_TOP
-  ) {
+  let containerFlexDirection = '';
+  let containerAlignItems = '';
+  const containerDiv = jsxElements[0];
+  const containerDivOpening = containerDiv?.openingElement;
+  console.log(containerDivOpening, CONTAINER_FLEX_DIRECTION);
+  if (containerFlexDirection === 'column' && containerAlignItems === 'center') {
     return await onUpdateMissionStatus();
   }
-  if (stringIsEmpty(secondMarginTop)) {
-    return onSetErrorMsg(
-      `Please set the top margin of the second element to "${SECOND_MARGIN_TOP}"`
-    );
+  if (stringIsEmpty(containerFlexDirection)) {
+    return onSetErrorMsg(`Please set flex-direction of the container element`);
   }
-  if (stringIsEmpty(thirdMarginTop)) {
+  if (stringIsEmpty(containerAlignItems)) {
     return onSetErrorMsg(
-      `Please set the top margin of the third element to "${THIRD_MARGIN_TOP}"`
-    );
-  }
-  if (secondMarginTop !== SECOND_MARGIN_TOP) {
-    return onSetErrorMsg(
-      `The second element's top margin must be "${SECOND_MARGIN_TOP}," not "${secondMarginTop}"`
-    );
-  }
-  if (thirdMarginTop !== THIRD_MARGIN_TOP) {
-    return onSetErrorMsg(
-      `The third element's top margin must be "${THIRD_MARGIN_TOP}," not "${thirdMarginTop}"`
+      `Please align the items inside the container element to ${CONTAINER_ALIGN_ITEMS}`
     );
   }
   onSetErrorMsg(`Something's not right - please check the code`);
