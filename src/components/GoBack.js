@@ -6,16 +6,26 @@ import { css } from '@emotion/css';
 import { useHistory } from 'react-router-dom';
 
 GoBack.propTypes = {
+  isAtTop: PropTypes.bool,
   bordered: PropTypes.bool,
   to: PropTypes.string,
   isMobile: PropTypes.bool,
+  style: PropTypes.object,
   text: PropTypes.string
 };
 
-export default function GoBack({ bordered, isMobile, to, text }) {
+export default function GoBack({
+  isAtTop = true,
+  bordered,
+  isMobile,
+  to,
+  style,
+  text
+}) {
   const history = useHistory();
   return (
     <div
+      style={style}
       className={`${isMobile ? 'mobile ' : ''}${css`
         background: #fff;
         font-size: 2rem;
@@ -32,10 +42,11 @@ export default function GoBack({ bordered, isMobile, to, text }) {
           ? `border: 1px solid ${Color.borderGray()}; border-radius: ${borderRadius};`
           : ''}
         @media (max-width: ${mobileMaxWidth}) {
-          font-size: 2rem;
+          font-size: 1.7rem;
+          ${isAtTop ? `` : 'padding-top: 1.5rem;'}
           padding-bottom: 1.5rem;
           border-radius: 0;
-          border-top: 0;
+          ${isAtTop ? `border-top: 0;` : ''}
           border-left: 0;
           border-right: 0;
           &:hover {

@@ -4,9 +4,11 @@ import GoBack from 'components/GoBack';
 import Task from './Task';
 import Tutorial from '../Tutorial';
 import InvalidPage from 'components/InvalidPage';
+import Loading from 'components/Loading';
+import Icon from 'components/Icon';
 import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
-import { mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { useAppContext, useMissionContext } from 'contexts';
 
 TaskContainer.propTypes = {
@@ -73,8 +75,67 @@ export default function TaskContainer({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId, prevUserId, taskId, mission.loaded]);
 
+  const taskOrder = useMemo(() => {
+    const result = [];
+    for (let subMission of mission.subMissions) {
+      for (let task of subMission.tasks) {
+        result.push(task.missionType);
+      }
+    }
+    return result;
+  }, [mission.subMissions]);
+
+  const prevTaskPassed = useMemo(() => {
+    const currentTaskOrderIndex = taskOrder.indexOf(taskType);
+    if (currentTaskOrderIndex === 0) {
+      return true;
+    }
+    if (currentTaskOrderIndex > 0 && myAttempts.loaded) {
+      const prevTaskType = taskOrder[currentTaskOrderIndex - 1];
+      const prevTaskId = missionTypeIdHash[prevTaskType];
+      if (myAttempts[prevTaskId].status === 'passed') {
+        return true;
+      }
+    }
+    return false;
+  }, [missionTypeIdHash, myAttempts, taskOrder, taskType]);
+
   if (userId && taskType && missionTypeIdHash && !missionTypeIdHash[taskType]) {
     return <InvalidPage />;
+  }
+
+  if (!myAttempts.loaded) {
+    return <Loading />;
+  }
+
+  if (!prevTaskPassed) {
+    return (
+      <div>
+        <div
+          className={css`
+            text-align: center;
+            padding: 5rem 1rem;
+            background: #fff;
+            border: 1px solid ${Color.borderGray()};
+            border-radius: ${borderRadius};
+            font-size: 2rem;
+            font-weight: bold;
+          `}
+        >
+          <Icon icon="lock" />
+          <span style={{ marginLeft: '2rem' }}>
+            This task has not been unlocked, yet
+          </span>
+        </div>
+        <GoBack
+          isAtTop={false}
+          style={{ marginTop: '5rem' }}
+          bordered
+          to="./"
+          text={mission.title}
+        />
+      </div>
+    );
   }
 
   return (
