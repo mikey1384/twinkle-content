@@ -11,11 +11,13 @@ import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { gifTable } from 'constants/defaultValues';
 import { panel } from '../../Styles';
+import GoToNextTask from './GoToNextTask';
 
 Task.propTypes = {
   task: PropTypes.object,
   onSetMissionState: PropTypes.func.isRequired,
-  style: PropTypes.object
+  style: PropTypes.object,
+  nextTaskType: PropTypes.string
 };
 
 export default function Task({
@@ -32,7 +34,8 @@ export default function Task({
     coinReward
   },
   onSetMissionState,
-  style
+  style,
+  nextTaskType
 }) {
   const {
     state: { myAttempts }
@@ -131,6 +134,12 @@ export default function Task({
           fileUploadProgress={fileUploadProgress}
           onSetMissionState={onSetMissionState}
           style={{ marginTop: '4.5rem' }}
+        />
+      )}
+      {myAttempt?.status === 'pass' && (
+        <GoToNextTask
+          style={{ marginTop: '7rem' }}
+          nextTaskType={nextTaskType}
         />
       )}
     </ErrorBoundary>

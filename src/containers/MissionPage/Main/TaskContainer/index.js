@@ -85,8 +85,20 @@ export default function TaskContainer({
     return result;
   }, [mission.subMissions]);
 
+  const currentTaskOrderIndex = useMemo(
+    () => taskOrder.indexOf(taskType),
+    [taskOrder, taskType]
+  );
+
+  const nextTask = useMemo(() => {
+    const finalTaskIndex = taskOrder.length - 1;
+    if (currentTaskOrderIndex < finalTaskIndex) {
+      return taskOrder[currentTaskOrderIndex + 1];
+    }
+    return '';
+  }, [currentTaskOrderIndex, taskOrder]);
+
   const prevTaskPassed = useMemo(() => {
-    const currentTaskOrderIndex = taskOrder.indexOf(taskType);
     if (currentTaskOrderIndex === 0) {
       return true;
     }
@@ -98,7 +110,7 @@ export default function TaskContainer({
       }
     }
     return false;
-  }, [missionTypeIdHash, myAttempts, taskOrder, taskType]);
+  }, [currentTaskOrderIndex, missionTypeIdHash, myAttempts, taskOrder]);
 
   if (userId && taskType && missionTypeIdHash && !missionTypeIdHash[taskType]) {
     return <InvalidPage />;
@@ -119,6 +131,7 @@ export default function TaskContainer({
         style={{ width: '100%', marginTop: '2rem' }}
         task={task}
         onSetMissionState={onSetMissionState}
+        nextTaskType={nextTask}
       />
       <Tutorial
         mission={task}
