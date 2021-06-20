@@ -41,6 +41,19 @@ export default function Task({
     state: { myAttempts }
   } = useMissionContext();
   const myAttempt = useMemo(() => myAttempts[taskId], [myAttempts, taskId]);
+  const approvedStatusShown = useMemo(
+    () =>
+      myAttempt?.status === 'pass' ||
+      (myAttempt?.status === 'fail' && !myAttempt?.tryingAgain),
+    [myAttempt?.status, myAttempt?.tryingAgain]
+  );
+  const missionModuleShown = useMemo(
+    () =>
+      !myAttempt?.status ||
+      (myAttempt?.status === 'fail' && myAttempt?.tryingAgain),
+    [myAttempt?.status, myAttempt?.tryingAgain]
+  );
+
   return (
     <ErrorBoundary
       className={panel}
@@ -116,18 +129,7 @@ export default function Task({
           />
         </div>
       )}
-      {myAttempt?.status === 'pending' ? (
-        <PendingStatus style={{ marginTop: '7rem' }} />
-      ) : myAttempt?.status === 'pass' ||
-        (myAttempt?.status === 'fail' && !myAttempt?.tryingAgain) ? (
-        <ApprovedStatus
-          missionId={taskId}
-          xpReward={xpReward}
-          coinReward={coinReward}
-          myAttempt={myAttempt}
-          style={{ marginTop: '3rem' }}
-        />
-      ) : (
+      {missionModuleShown && (
         <MissionModule
           mission={task}
           fileUploadComplete={fileUploadComplete}
@@ -136,9 +138,20 @@ export default function Task({
           style={{ marginTop: '4.5rem' }}
         />
       )}
+      {myAttempt?.status === 'pending' ? (
+        <PendingStatus style={{ marginTop: '7rem' }} />
+      ) : approvedStatusShown ? (
+        <ApprovedStatus
+          missionId={taskId}
+          xpReward={xpReward}
+          coinReward={coinReward}
+          myAttempt={myAttempt}
+          style={{ marginTop: '3rem' }}
+        />
+      ) : null}
       {myAttempt?.status === 'pass' && (
         <GoToNextTask
-          style={{ marginTop: '7rem' }}
+          style={{ marginTop: '5rem' }}
           nextTaskType={nextTaskType}
         />
       )}
