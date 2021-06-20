@@ -31,7 +31,8 @@ export default function Task({
     fileUploadProgress,
     objective,
     xpReward,
-    coinReward
+    coinReward,
+    retryable
   },
   onSetMissionState,
   style,
@@ -49,9 +50,10 @@ export default function Task({
   );
   const missionModuleShown = useMemo(
     () =>
+      !!retryable ||
       !myAttempt?.status ||
       (myAttempt?.status === 'fail' && myAttempt?.tryingAgain),
-    [myAttempt?.status, myAttempt?.tryingAgain]
+    [myAttempt?.status, myAttempt?.tryingAgain, retryable]
   );
 
   return (
@@ -146,7 +148,7 @@ export default function Task({
           xpReward={xpReward}
           coinReward={coinReward}
           myAttempt={myAttempt}
-          style={{ marginTop: '3rem' }}
+          style={{ marginTop: myAttempt?.status ? '10rem' : '3rem' }}
         />
       ) : null}
       {myAttempt?.status === 'pass' && (

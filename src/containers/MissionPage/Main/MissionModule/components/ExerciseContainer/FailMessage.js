@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { borderRadius, Color } from 'constants/css';
+import { scrollElementToCenter } from 'helpers';
 
 FailMessage.propTypes = {
   message: PropTypes.oneOfType([PropTypes.string, PropTypes.node])
 };
 export default function FailMessage({ message }) {
+  const ComponentRef = useRef(null);
+  useEffect(() => {
+    scrollElementToCenter(ComponentRef.current);
+  }, []);
+
   return (
     <div
+      ref={ComponentRef}
       style={{
         marginTop: '1rem',
         padding: '1rem',
