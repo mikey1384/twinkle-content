@@ -80,7 +80,7 @@ export default function CodeSandbox({
       />
       <div
         style={{
-          marginTop: '1rem',
+          marginTop: '5rem',
           width: '100%',
           display: 'flex',
           justifyContent: 'space-between'

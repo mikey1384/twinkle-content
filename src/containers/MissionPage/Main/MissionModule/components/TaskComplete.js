@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Color } from 'constants/css';
 import { useAppContext, useMissionContext, useContentContext } from 'contexts';
@@ -25,8 +25,10 @@ export default function TaskComplete({
     requestHelpers: { uploadMissionAttempt }
   } = useAppContext();
   const {
+    state: { myAttempts },
     actions: { onUpdateMissionAttempt }
   } = useMissionContext();
+  const myAttempt = useMemo(() => myAttempts[taskId], [myAttempts, taskId]);
   const {
     actions: { onChangeUserXP, onUpdateUserCoins }
   } = useContentContext();
@@ -39,7 +41,7 @@ export default function TaskComplete({
     };
   }, []);
 
-  return (
+  return myAttempt?.status ? null : (
     <ErrorBoundary
       style={{
         width: '100%',

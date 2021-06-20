@@ -55,7 +55,7 @@ export default function Editor({
           __html: `.npm__react-simple-code-editor__textarea { outline: none !important; }`
         }}
       />
-      <div style={{ marginTop: '2rem' }}>
+      <div style={{ marginTop: '2rem', marginBottom: '2rem' }}>
         <SimpleEditor
           value={valueOnTextEditor}
           onValueChange={onChange}
@@ -77,6 +77,7 @@ export default function Editor({
         {error && (
           <p
             style={{
+              color: Color.rose(),
               marginTop: '0.5rem',
               fontSize: '1.5rem'
             }}
@@ -85,6 +86,26 @@ export default function Editor({
           </p>
         )}
       </div>
+      <Compiler
+        code={value}
+        ast={ast}
+        onSetAst={onSetAst}
+        transformation={handleTransformBeforeCompilation}
+        onParse={onParse}
+        onSetError={({ error, lineNumber }) => {
+          setError(error);
+          setErrorLineNumber(lineNumber);
+          if (error) {
+            onSetErrorMsg?.(`There's a bug in your code. Please fix it first`);
+          }
+        }}
+        simulatorRef={simulatorRef}
+      />
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `.npm__react-simple-code-editor__textarea { outline: none !important; }`
+        }}
+      />
     </div>
   );
 
