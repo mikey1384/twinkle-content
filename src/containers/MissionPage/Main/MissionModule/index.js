@@ -10,6 +10,7 @@ import FixingBugs from './FixingBugs';
 import GitHub from './GitHub';
 import TimeToCode from './TimeToCode';
 import Replit from './Replit';
+import WriteItYourself from './WriteItYourself';
 
 MissionModule.propTypes = {
   fileUploadComplete: PropTypes.bool,
@@ -61,6 +62,9 @@ export default function MissionModule({
       )}
       {mission.missionType === 'fixing-bugs' && (
         <FixingBugs task={mission} onSetMissionState={onSetMissionState} />
+      )}
+      {mission.missionType === 'write-it-yourself' && (
+        <WriteItYourself task={mission} onSetMissionState={onSetMissionState} />
       )}
     </div>
   );
