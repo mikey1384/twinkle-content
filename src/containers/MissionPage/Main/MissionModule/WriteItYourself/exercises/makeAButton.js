@@ -6,7 +6,7 @@ import {
   getElementAttribute
 } from '../../helpers';
 
-export const title = `Make It Blue`;
+export const title = `Make a Button`;
 export const instruction = (
   <>
     Change the color of the <b style={{ color: 'red' }}>red</b> button below to{' '}
@@ -15,31 +15,7 @@ export const instruction = (
   </>
 );
 export const initialCode = `function HomePage() {
-  return (
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center"
-      }}
-    >
-      <button
-        style={{
-          padding: "1rem",
-          color: "white",
-          background: "red",
-          border: "none",
-          fontSize: "2rem",
-          cursor: "pointer"
-        }}
-        onClick={() => alert("I am a button")}
-      >
-        Change me
-      </button>
-    </div>
-  );
+  return ();
 }`;
 
 export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {

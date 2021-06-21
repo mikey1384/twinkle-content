@@ -1,5 +1,7 @@
-import * as changeButtonColor from './changeButtonColor';
+import * as makeAButton from './makeAButton';
+import * as flexDisplay from './flexDisplay';
 
 export default {
-  changeButtonColor
+  makeAButton,
+  flexDisplay
 };
