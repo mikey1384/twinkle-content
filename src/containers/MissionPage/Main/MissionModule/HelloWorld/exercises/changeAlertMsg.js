@@ -60,8 +60,16 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   if (onClickFunc?.value?.expression?.body?.callee?.name === 'alert') {
     alertText = onClickFunc?.value?.expression?.body?.arguments?.[0]?.value;
   }
-  if (alertText.trim().toLowerCase() === 'Hello world'.toLowerCase()) {
+  if (alertText.trim().toLowerCase() === ALERT_MSG.toLowerCase()) {
     return await onUpdateMissionStatus();
+  }
+  if (!onClickFunc) {
+    return onSetErrorMsg(
+      <>
+        The button {`doesn't`} have an <b>onClick</b> property. Please check
+        your code
+      </>
+    );
   }
   if (stringIsEmpty(alertText)) {
     return onSetErrorMsg(
@@ -69,6 +77,6 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     );
   }
   onSetErrorMsg(
-    `The alert message should say, "Hello world," not "${alertText.trim()}"`
+    `The alert message should say, "${ALERT_MSG}," not "${alertText.trim()}"`
   );
 }
