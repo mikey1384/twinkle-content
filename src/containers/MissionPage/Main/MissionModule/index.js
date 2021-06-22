@@ -8,7 +8,7 @@ import TwinkleStore from './TwinkleStore';
 import Email from './Email';
 import FixingBugs from './FixingBugs';
 import GitHub from './GitHub';
-import TimeToCode from './TimeToCode';
+import HelloWorld from './HelloWorld';
 import Replit from './Replit';
 import WriteItYourself from './WriteItYourself';
 
@@ -58,7 +58,7 @@ export default function MissionModule({
         <Replit task={mission} onSetMissionState={onSetMissionState} />
       )}
       {mission.missionType === 'hello-world' && (
-        <TimeToCode task={mission} onSetMissionState={onSetMissionState} />
+        <HelloWorld task={mission} onSetMissionState={onSetMissionState} />
       )}
       {mission.missionType === 'fixing-bugs' && (
         <FixingBugs task={mission} onSetMissionState={onSetMissionState} />

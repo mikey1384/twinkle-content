@@ -7,14 +7,14 @@ import TaskComplete from '../components/TaskComplete';
 import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
 
-TimeToCode.propTypes = {
+HelloWorld.propTypes = {
   task: PropTypes.object.isRequired,
   onSetMissionState: PropTypes.func.isRequired
 };
 
 const exerciseKeys = Object.keys(exercises);
 
-export default function TimeToCode({ task, onSetMissionState }) {
+export default function HelloWorld({ task, onSetMissionState }) {
   const { codeObj = {} } = task;
   const { state = {} } = useMyState();
   const allPassed = useMemo(() => {
