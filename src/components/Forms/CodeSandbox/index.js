@@ -111,11 +111,13 @@ export default function CodeSandbox({
             <Button
               disabled={runButtonDisabled || hasError}
               filled
-              color="green"
+              color={hasError ? 'cranberry' : 'green'}
               onClick={handleRunCode}
             >
-              <Icon icon="play" />
-              <span style={{ marginLeft: '0.7rem' }}>{runButtonLabel}</span>
+              {!hasError && <Icon icon="play" />}
+              <span style={{ marginLeft: '0.7rem' }}>
+                {hasError ? 'Failed...' : runButtonLabel}
+              </span>
             </Button>
           )}
         </div>
