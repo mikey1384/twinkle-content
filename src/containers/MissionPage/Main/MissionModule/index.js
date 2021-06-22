@@ -57,7 +57,7 @@ export default function MissionModule({
       {mission.missionType === 'replit' && (
         <Replit task={mission} onSetMissionState={onSetMissionState} />
       )}
-      {mission.missionType === 'time-to-code' && (
+      {mission.missionType === 'hello-world' && (
         <TimeToCode task={mission} onSetMissionState={onSetMissionState} />
       )}
       {mission.missionType === 'fixing-bugs' && (
