@@ -15,7 +15,6 @@ CodeSandbox.propTypes = {
   hasError: PropTypes.bool,
   onSetCode: PropTypes.func.isRequired,
   onSetErrorMsg: PropTypes.func,
-  onSetPrevUserId: PropTypes.func,
   onRunCode: PropTypes.func,
   passed: PropTypes.bool,
   prevUserId: PropTypes.number,
@@ -29,7 +28,6 @@ export default function CodeSandbox({
   hasError,
   onSetCode,
   onSetErrorMsg,
-  onSetPrevUserId,
   onRunCode,
   passed,
   prevUserId,
@@ -48,14 +46,10 @@ export default function CodeSandbox({
 
   useEffect(() => {
     if (userId !== prevUserId) {
-      onSetErrorMsg?.('');
-      setCode(initialCode);
-      onSetCode(initialCode);
-      setAst(handleParse(initialCode));
-      onSetPrevUserId(userId);
+      window.location.reload();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initialCode, prevUserId, userId]);
+  }, [prevUserId, userId]);
 
   return (
     <ErrorBoundary
@@ -115,8 +109,8 @@ export default function CodeSandbox({
               onClick={handleRunCode}
             >
               {!hasError && <Icon icon="play" />}
-              <span style={{ marginLeft: '0.7rem' }}>
-                {hasError ? 'Failed...' : runButtonLabel}
+              <span style={{ marginLeft: hasError ? 0 : '0.7rem' }}>
+                {runButtonLabel}
               </span>
             </Button>
           )}
