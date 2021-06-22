@@ -2,7 +2,7 @@ import {
   getAstProps,
   filterElementsByType,
   getElementInnerText,
-  getElementAttribute
+  getElementStyleProps
 } from '../../helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
@@ -40,11 +40,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   for (let divider of dividers) {
     const innerText = getElementInnerText(divider);
     if (innerText === 'Third') {
-      const style = getElementAttribute({
-        openingElement: divider.openingElement,
-        attributeName: 'style'
-      });
-      const styleProps = style?.value?.expression?.properties;
+      const styleProps = getElementStyleProps(divider.openingElement);
       for (let prop of styleProps) {
         if (prop?.key?.name === 'marginTop') {
           marginTop = prop?.value?.value;

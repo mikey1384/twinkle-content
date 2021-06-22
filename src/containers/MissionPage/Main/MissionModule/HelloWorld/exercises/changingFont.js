@@ -3,7 +3,7 @@ import { WELCOME_MSG } from './constants';
 import {
   getAstProps,
   filterOpeningElementsByType,
-  getElementAttribute
+  getElementStyleProps
 } from '../../helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
@@ -66,11 +66,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     filter: 'p'
   });
   for (let paragraph of paragraphs) {
-    const style = getElementAttribute({
-      openingElement: paragraph,
-      attributeName: 'style'
-    });
-    const styleProps = style?.value?.expression?.properties;
+    const styleProps = getElementStyleProps(paragraph);
     for (let prop of styleProps) {
       if (prop?.key?.name === 'fontSize') {
         fontSize = prop?.value?.value;

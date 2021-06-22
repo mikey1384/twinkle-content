@@ -51,6 +51,15 @@ export function getElementAttribute({ openingElement, attributeName }) {
   return null;
 }
 
+export function getElementStyleProps(openingElement) {
+  const style = getElementAttribute({
+    openingElement,
+    attributeName: 'style'
+  });
+  const styleProps = style?.value?.expression?.properties || [];
+  return styleProps;
+}
+
 export function getElementInnerText(element) {
   for (let child of element.children) {
     if (child.type === 'JSXText') {

@@ -3,7 +3,7 @@ import { Color } from 'constants/css';
 import {
   getAstProps,
   filterOpeningElementsByType,
-  getElementAttribute
+  getElementStyleProps
 } from '../../helpers';
 
 export const title = `Make It Blue`;
@@ -54,11 +54,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   });
   const button = buttonElements[0];
   if (button) {
-    const style = getElementAttribute({
-      openingElement: button,
-      attributeName: 'style'
-    });
-    const styleProps = style?.value?.expression?.properties;
+    const styleProps = getElementStyleProps(button);
     for (let prop of styleProps) {
       if (
         prop?.key?.name === 'background' ||

@@ -2,7 +2,7 @@ import React from 'react';
 import {
   getAstProps,
   filterElementsByType,
-  getElementAttribute
+  getElementStyleProps
 } from '../../helpers';
 
 export const title = `Make a Button`;
@@ -49,11 +49,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   });
   const button = buttonElements[0];
   if (button) {
-    const buttonStyle = getElementAttribute({
-      openingElement: button.openingElement,
-      attributeName: 'style'
-    });
-    const styleProps = buttonStyle?.value?.expression?.properties;
+    const styleProps = getElementStyleProps(button.openingElement);
     for (let prop of styleProps) {
       if (
         prop?.key?.name === 'background' ||
@@ -77,6 +73,9 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
 
   if (buttonIsBlue && buttonTextColorIsWhite) {
     return await onUpdateMissionStatus();
+  }
+  if (!button) {
+    return onSetErrorMsg(`Where's the button?`);
   }
   if (!buttonColor) {
     return onSetErrorMsg(

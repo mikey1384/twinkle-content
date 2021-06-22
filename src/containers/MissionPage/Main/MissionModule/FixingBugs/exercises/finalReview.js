@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   getAstProps,
-  getElementAttribute,
+  getElementStyleProps,
   filterElementsByType
 } from '../../helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
@@ -72,11 +72,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   let buttonMarginTop = '';
   const containerDiv = jsxElements[0];
   const containerDivOpening = containerDiv?.openingElement;
-  const containerStyle = getElementAttribute({
-    openingElement: containerDivOpening,
-    attributeName: 'style'
-  });
-  const containerStyleProps = containerStyle?.value?.expression?.properties;
+  const containerStyleProps = getElementStyleProps(containerDivOpening);
   for (let prop of containerStyleProps) {
     if (prop?.key?.name === 'flexDirection') {
       containerFlexDirection = prop?.value?.value;
@@ -90,11 +86,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     filter: 'p'
   });
   const paragraph = paragraphs[0];
-  const paragraphStyle = getElementAttribute({
-    openingElement: paragraph.openingElement,
-    attributeName: 'style'
-  });
-  const paragraphStyleProps = paragraphStyle?.value?.expression?.properties;
+  const paragraphStyleProps = getElementStyleProps(paragraph.openingElement);
   for (let prop of paragraphStyleProps) {
     if (prop?.key?.name === 'fontFamily') {
       paragraphFontFamily = prop?.value?.value;
@@ -112,11 +104,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     filter: 'button'
   });
   const button = buttons[0];
-  const buttonStyle = getElementAttribute({
-    openingElement: button.openingElement,
-    attributeName: 'style'
-  });
-  const buttonStyleProps = buttonStyle?.value?.expression?.properties;
+  const buttonStyleProps = getElementStyleProps(button.openingElement);
   for (let prop of buttonStyleProps) {
     if (prop?.key?.name === 'marginTop') {
       buttonMarginTop = prop?.value?.value;

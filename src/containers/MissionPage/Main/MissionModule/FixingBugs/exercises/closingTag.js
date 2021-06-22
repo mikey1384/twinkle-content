@@ -1,7 +1,7 @@
 import {
   getAstProps,
   filterElementsByType,
-  getElementAttribute
+  getElementStyleProps
 } from '../../helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
@@ -44,12 +44,9 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     );
     const secondChild = JSXChildren?.[1];
     if (secondChild) {
-      const secondChildStyle = getElementAttribute({
-        openingElement: secondChild.openingElement,
-        attributeName: 'style'
-      });
-      const secondChildStyleProps =
-        secondChildStyle?.value?.expression?.properties;
+      const secondChildStyleProps = getElementStyleProps(
+        secondChild.openingElement
+      );
       for (let prop of secondChildStyleProps) {
         if (prop?.key?.name === 'marginTop') {
           secondMarginTop = prop?.value?.value;
@@ -58,12 +55,9 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     }
     const thirdChild = JSXChildren?.[2];
     if (thirdChild) {
-      const thirdChildStyle = getElementAttribute({
-        openingElement: thirdChild.openingElement,
-        attributeName: 'style'
-      });
-      const thirdChildStyleProps =
-        thirdChildStyle?.value?.expression?.properties;
+      const thirdChildStyleProps = getElementStyleProps(
+        thirdChild.openingElement
+      );
       for (let prop of thirdChildStyleProps) {
         if (prop?.key?.name === 'marginTop') {
           thirdMarginTop = prop?.value?.value;

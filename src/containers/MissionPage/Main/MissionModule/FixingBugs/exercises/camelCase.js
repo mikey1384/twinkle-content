@@ -1,7 +1,7 @@
 import {
   getAstProps,
   filterElementsByType,
-  getElementAttribute
+  getElementStyleProps
 } from '../../helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
@@ -44,11 +44,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     );
     if (JSXChildren?.[1] && JSXChildren?.[1]?.openingElement) {
       const secondChild = JSXChildren?.[1];
-      const style = getElementAttribute({
-        openingElement: secondChild.openingElement,
-        attributeName: 'style'
-      });
-      const styleProps = style?.value?.expression?.properties;
+      const styleProps = getElementStyleProps(secondChild.openingElement);
       for (let prop of styleProps) {
         if (prop?.key?.name === 'fontSize') {
           fontSize = prop?.value?.value;

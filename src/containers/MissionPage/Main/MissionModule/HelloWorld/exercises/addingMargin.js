@@ -2,7 +2,7 @@ import React from 'react';
 import {
   getAstProps,
   filterOpeningElementsByType,
-  getElementAttribute
+  getElementStyleProps
 } from '../../helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
@@ -68,11 +68,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     filter: 'button'
   });
   const button = buttons[0];
-  const style = getElementAttribute({
-    openingElement: button,
-    attributeName: 'style'
-  });
-  const styleProps = style?.value?.expression?.properties;
+  const styleProps = getElementStyleProps(button);
   for (let prop of styleProps) {
     if (prop?.key?.name === 'marginTop') {
       marginTop = prop?.value?.value;
