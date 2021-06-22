@@ -42,6 +42,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
     propType: 'JSXOpeningElement'
   });
   let buttonColor = '';
+  let buttonTextColor = '';
   const buttonElements = filterOpeningElementsByType({
     elements: jsxElements,
     filter: 'button'
@@ -63,24 +64,38 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
       }
     }
   }
-  if (
+  const buttonIsBlue =
     buttonColor === 'blue' ||
     buttonColor.toLowerCase() === '#0000ff' ||
-    buttonColor === 'rgb(0, 0, 255)'
-  ) {
+    buttonColor === 'rgb(0, 0, 255)' ||
+    buttonColor === 'RGB(0, 0, 255)';
+  const buttonTextColorIsWhite =
+    buttonTextColor === 'white' ||
+    buttonTextColor.toLowerCase() === '#fff' ||
+    buttonTextColor === 'rgb(255, 255, 255)' ||
+    buttonTextColor === 'RGB(255, 255, 255)';
+
+  if (buttonIsBlue && buttonTextColorIsWhite) {
     return await onUpdateMissionStatus();
   }
   if (!buttonColor) {
     return onSetErrorMsg(
       <>
-        Please change the color of the button to{' '}
+        Please set the background color of the button to{' '}
         <span style={{ color: 'blue' }}>blue</span>
+      </>
+    );
+  }
+  if (!buttonTextColor) {
+    return onSetErrorMsg(
+      <>
+        Please set the color of the {`button's`} text to <b>white</b>
       </>
     );
   }
   onSetErrorMsg(
     <>
-      The {`button's`} color needs to be{' '}
+      The {`button's`} background color needs to be{' '}
       <span style={{ color: 'blue' }}>blue,</span> not {buttonColor}
     </>
   );
