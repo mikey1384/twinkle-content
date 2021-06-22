@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   getAstProps,
-  filterOpeningElementsByType,
+  filterElementsByType,
   getElementAttribute
 } from '../../helpers';
 
@@ -39,21 +39,21 @@ export const initialCode = `function HomePage() {
 export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   const jsxElements = getAstProps({
     ast,
-    propType: 'JSXOpeningElement'
+    propType: 'JSXElement'
   });
   let buttonColor = '';
   let buttonTextColor = '';
-  const buttonElements = filterOpeningElementsByType({
+  const buttonElements = filterElementsByType({
     elements: jsxElements,
     filter: 'button'
   });
   const button = buttonElements[0];
   if (button) {
-    const style = getElementAttribute({
-      openingElement: button,
+    const buttonStyle = getElementAttribute({
+      openingElement: button.openingElement,
       attributeName: 'style'
     });
-    const styleProps = style?.value?.expression?.properties;
+    const styleProps = buttonStyle?.value?.expression?.properties;
     for (let prop of styleProps) {
       if (
         prop?.key?.name === 'background' ||
@@ -86,6 +86,14 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
       </>
     );
   }
+  if (!buttonIsBlue) {
+    return onSetErrorMsg(
+      <>
+        The {`button's`} background color needs to be{' '}
+        <span style={{ color: 'blue' }}>blue,</span> not {buttonColor}
+      </>
+    );
+  }
   if (!buttonTextColor) {
     return onSetErrorMsg(
       <>
@@ -93,10 +101,5 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
       </>
     );
   }
-  onSetErrorMsg(
-    <>
-      The {`button's`} background color needs to be{' '}
-      <span style={{ color: 'blue' }}>blue,</span> not {buttonColor}
-    </>
-  );
+  onSetErrorMsg(`Something's not right - please check the code`);
 }
