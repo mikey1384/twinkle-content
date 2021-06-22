@@ -1,5 +1,4 @@
 import React from 'react';
-import { Color } from 'constants/css';
 import {
   getAstProps,
   filterOpeningElementsByType,
@@ -9,9 +8,28 @@ import {
 export const title = `Make a Button`;
 export const instruction = (
   <>
-    Change the color of the <b style={{ color: 'red' }}>red</b> button below to{' '}
-    <b style={{ color: 'blue' }}>{`"blue"`}</b> and tap the{' '}
-    <b style={{ color: Color.green() }}>check</b> button
+    <div>
+      Make a <b style={{ color: 'blue' }}>blue</b> button with <b>white</b> text
+      that says {`"Welcome"`}
+    </div>
+    <div>
+      Give the button a padding of <b>1rem</b>
+    </div>
+    <div>
+      Make it so that when you tap/click the button you get a popup saying{' '}
+      {`"Hello there"`}
+    </div>
+    <div style={{ marginTop: '2rem' }}>
+      <button
+        style={{ color: 'white', background: 'blue', padding: '1rem' }}
+        onClick={() => alert('Hello there')}
+      >
+        Welcome
+      </button>
+    </div>
+    <div style={{ fontSize: '1.3rem', fontWeight: 'bold' }}>
+      This is what your button should look like. Try tapping/clicking it
+    </div>
   </>
 );
 export const initialCode = `function HomePage() {
