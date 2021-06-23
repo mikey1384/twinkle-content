@@ -19,7 +19,7 @@ export default function MultiMission({
       let passed = true;
       let currentTaskIndex = 0;
       const subMission = subMissions[i];
-      for (let j = 0; j < subMission.tasks.length; j++) {
+      for (let j = 0; j < subMission?.tasks?.length; j++) {
         const task = subMission.tasks[j];
         if (myAttempts[task.id]?.status !== 'pass') {
           passed = false;

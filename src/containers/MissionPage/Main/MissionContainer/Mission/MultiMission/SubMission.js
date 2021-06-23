@@ -43,7 +43,7 @@ export default function SubMission({
         {index + 1}. {subMission.title}
       </p>
       <div>
-        {subMission.tasks.map((task, index) => {
+        {subMission?.tasks?.map((task, index) => {
           const taskIsLocked =
             index !== 0 &&
             !subMissionProgress.passed &&
