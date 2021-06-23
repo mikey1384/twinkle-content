@@ -6,6 +6,8 @@ import {
 } from '../../helpers';
 
 const WIDTH = '100%';
+const DISPLAY = 'flex';
+const JUSTIFY_CONTENT = 'center';
 
 export const title = `Center the button`;
 export const instruction = (
@@ -19,8 +21,8 @@ export const instruction = (
     </div>
     <div>
       Set the <b>{`<div>`}</b>
-      {`'s`} <b>display</b> value to <b>{`"flex"`}</b> and its{' '}
-      <b>justifyContent</b> value to <b>{`"center"`}</b>
+      {`'s`} <b>display</b> value to <b>{`"${DISPLAY}"`}</b> and its{' '}
+      <b>justifyContent</b> value to <b>{`"${JUSTIFY_CONTENT}"`}</b>
     </div>
   </>
 );
@@ -42,6 +44,8 @@ export const initialCode = `function HomePage() {
 
 export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   let divWidth = '';
+  let divDisplay = '';
+  let divJustifyContent = '';
   const jsxElements = getAstProps({
     ast,
     propType: 'JSXElement'
@@ -58,11 +62,20 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
       const propValue = prop?.value?.value;
       if (propName === 'width') {
         divWidth = propValue;
-        break;
+      }
+      if (propName === 'display') {
+        divDisplay = propValue;
+      }
+      if (propName === 'justifyContent') {
+        divJustifyContent = propValue;
       }
     }
   }
-  if (divWidth === '100%') {
+  if (
+    divWidth === WIDTH &&
+    divDisplay === DISPLAY &&
+    divJustifyContent === JUSTIFY_CONTENT
+  ) {
     return await onUpdateMissionStatus();
   }
   if (!divElement) {
@@ -75,14 +88,47 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   if (!divWidth) {
     return onSetErrorMsg(
       <>
-        Please set the width of the <b>{`<div>`}</b> to <b>{`"100%"`}</b>
+        Please set the width of the <b>{`<div>`}</b> to <b>{`"${WIDTH}"`}</b>
       </>
     );
   }
   if (divWidth !== WIDTH) {
     return onSetErrorMsg(
       <>
-        The width of the <b>{`<div>`}</b> must be <b>100%</b>, not {divWidth}
+        The <b>width</b> of the <b>{`<div>`}</b> must be <b>{WIDTH}</b>, not{' '}
+        {divWidth}
+      </>
+    );
+  }
+  if (!divDisplay) {
+    return onSetErrorMsg(
+      <>
+        Please set the <b>display</b> value of the <b>{`<div>`}</b> to{' '}
+        <b>{`"${DISPLAY}"`}</b>
+      </>
+    );
+  }
+  if (divDisplay !== DISPLAY) {
+    return onSetErrorMsg(
+      <>
+        The <b>display</b> value of the <b>{`<div>`}</b> must be set to{' '}
+        <b>{DISPLAY}</b>, not {divDisplay}
+      </>
+    );
+  }
+  if (!divJustifyContent) {
+    return onSetErrorMsg(
+      <>
+        Please set the <b>justifyContent</b> value of the <b>{`<div>`}</b> to{' '}
+        <b>{`"${JUSTIFY_CONTENT}"`}</b>
+      </>
+    );
+  }
+  if (divJustifyContent !== JUSTIFY_CONTENT) {
+    return onSetErrorMsg(
+      <>
+        The <b>justifyContent</b> value of the <b>{`<div>`}</b> must be set to{' '}
+        <b>{JUSTIFY_CONTENT}</b>, not {divJustifyContent}
       </>
     );
   }
