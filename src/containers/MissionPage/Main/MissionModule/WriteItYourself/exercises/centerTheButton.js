@@ -1,9 +1,11 @@
 import React from 'react';
 import {
   getAstProps,
-  filterOpeningElementsByType,
+  filterElementsByType,
   getElementStyleProps
 } from '../../helpers';
+
+const WIDTH = '100%';
 
 export const title = `Center the button`;
 export const instruction = (
@@ -13,7 +15,7 @@ export const instruction = (
       <b>{`<div></div>`}</b> tags
     </div>
     <div>
-      Set the width of the <b>{`<div>`}</b> to <b>{`"100%"`}</b>
+      Set the width of the <b>{`<div>`}</b> to <b>{`"${WIDTH}"`}</b>
     </div>
     <div>
       Set the <b>{`<div>`}</b>
@@ -39,47 +41,50 @@ export const initialCode = `function HomePage() {
 }`;
 
 export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
+  let divWidth = '';
   const jsxElements = getAstProps({
     ast,
-    propType: 'JSXOpeningElement'
+    propType: 'JSXElement'
   });
-  let buttonColor = '';
-  const buttonElements = filterOpeningElementsByType({
+  const divElements = filterElementsByType({
     elements: jsxElements,
-    filter: 'button'
+    filter: 'div'
   });
-  const button = buttonElements[0];
-  if (button) {
-    const styleProps = getElementStyleProps(button);
+  const divElement = divElements[0];
+  if (divElement) {
+    const styleProps = getElementStyleProps(divElement.openingElement);
     for (let prop of styleProps) {
-      if (
-        prop?.key?.name === 'background' ||
-        prop?.key?.name === 'backgroundColor'
-      ) {
-        buttonColor = prop?.value?.value;
+      const propName = prop?.key?.name;
+      const propValue = prop?.value?.value;
+      if (propName === 'width') {
+        divWidth = propValue;
         break;
       }
     }
   }
-  if (
-    buttonColor === 'blue' ||
-    buttonColor.toLowerCase() === '#0000ff' ||
-    buttonColor === 'rgb(0, 0, 255)'
-  ) {
+  if (divWidth === '100%') {
     return await onUpdateMissionStatus();
   }
-  if (!buttonColor) {
+  if (!divElement) {
     return onSetErrorMsg(
       <>
-        Please change the color of the button to{' '}
-        <span style={{ color: 'blue' }}>blue</span>
+        {`Where's`} the <b>{`<div></div>`}</b> pair?
       </>
     );
   }
-  onSetErrorMsg(
-    <>
-      The {`button's`} color needs to be{' '}
-      <span style={{ color: 'blue' }}>blue,</span> not {buttonColor}
-    </>
-  );
+  if (!divWidth) {
+    return onSetErrorMsg(
+      <>
+        Please set the width of the <b>{`<div>`}</b> to <b>{`"100%"`}</b>
+      </>
+    );
+  }
+  if (divWidth !== WIDTH) {
+    return onSetErrorMsg(
+      <>
+        The width of the <b>{`<div>`}</b> must be <b>100%</b>, not {divWidth}
+      </>
+    );
+  }
+  onSetErrorMsg(`Something's not right - please check the code`);
 }

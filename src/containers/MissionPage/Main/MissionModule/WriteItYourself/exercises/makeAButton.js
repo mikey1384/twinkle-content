@@ -51,16 +51,16 @@ export const initialCode = `function HomePage() {
 }`;
 
 export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
-  const jsxElements = getAstProps({
-    ast,
-    propType: 'JSXElement'
-  });
   let buttonColor = '';
   let buttonTextColor = '';
   let buttonText = '';
   let buttonPadding = '';
   let alertText = '';
   let fontSize = '';
+  const jsxElements = getAstProps({
+    ast,
+    propType: 'JSXElement'
+  });
   const buttonElements = filterElementsByType({
     elements: jsxElements,
     filter: 'button'
