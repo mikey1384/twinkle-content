@@ -1,44 +1,30 @@
 import React from 'react';
-import { Color } from 'constants/css';
 import {
   getAstProps,
   filterOpeningElementsByType,
   getElementStyleProps
 } from '../../helpers';
 
-export const title = `display: "flex"`;
+export const title = `Center the button`;
 export const instruction = (
   <>
-    Change the color of the <b style={{ color: 'red' }}>red</b> button below to{' '}
-    <b style={{ color: 'blue' }}>{`"blue"`}</b> and tap the{' '}
-    <b style={{ color: Color.green() }}>check</b> button
+    Wrap the <b style={{ color: 'blue' }}>button</b> inside a pair of{' '}
+    <b>{`<div></div>`}</b> tags
   </>
 );
 export const initialCode = `function HomePage() {
   return (
-    <div
+    <button
       style={{
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center"
+        padding: "1rem",
+        fontSize: "2rem",
+        background: "blue",
+        color: "white"
       }}
+      onClick={() => alert("Hello there")}
     >
-      <button
-        style={{
-          padding: "1rem",
-          color: "white",
-          background: "red",
-          border: "none",
-          fontSize: "2rem",
-          cursor: "pointer"
-        }}
-        onClick={() => alert("I am a button")}
-      >
-        Change me
-      </button>
-    </div>
+      Welcome
+    </button>
   );
 }`;
 
