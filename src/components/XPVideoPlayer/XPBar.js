@@ -51,9 +51,10 @@ function XPBar({
     contentId: videoId
   });
 
-  const numXpEarnedWithComma = useMemo(() => addCommasToNumber(numXpEarned), [
-    numXpEarned
-  ]);
+  const numXpEarnedWithComma = useMemo(
+    () => addCommasToNumber(numXpEarned),
+    [numXpEarned]
+  );
   const numCoinsEarnedWithComma = useMemo(
     () => addCommasToNumber(numCoinsEarned),
     [numCoinsEarned]
@@ -73,10 +74,10 @@ function XPBar({
     [rewardLevel]
   );
 
-  const continuingStatusShown = useMemo(() => watching && !started, [
-    started,
-    watching
-  ]);
+  const continuingStatusShown = useMemo(
+    () => watching && !started,
+    [started, watching]
+  );
 
   const Bar = useMemo(() => {
     if (!userId || !rewardLevel) {
@@ -123,7 +124,11 @@ function XPBar({
           }}
         >
           <div style={{ marginLeft: '0.7rem' }}>
-            {continuingStatusShown && <span>Continue watching (</span>}
+            {continuingStatusShown && (
+              <span>
+                Continue{isMobile(navigator) && isChat ? '' : ' watching'} (
+              </span>
+            )}
             <span>{addCommasToNumber(xpRewardAmount)} XP</span>
             {rewardLevel > 2 ? (
               <>
