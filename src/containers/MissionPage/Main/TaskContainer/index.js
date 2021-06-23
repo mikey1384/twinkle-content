@@ -78,7 +78,7 @@ export default function TaskContainer({
   const taskOrder = useMemo(() => {
     const result = [];
     for (let subMission of mission?.subMissions) {
-      for (let task of subMission?.tasks) {
+      for (let task of subMission?.tasks || []) {
         result.push(task.missionType);
       }
     }
