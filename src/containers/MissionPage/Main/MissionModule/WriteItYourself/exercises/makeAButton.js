@@ -21,8 +21,8 @@ export const instruction = (
       that says {`"${BUTTON_LABEL}"`}
     </div>
     <div>
-      Give the button a padding of <b>{PADDING}</b> and set its font size to{' '}
-      <b>{FONT_SIZE}</b>
+      Give the button a <b>padding</b> of <b>{`"${PADDING}"`}</b> and set its{' '}
+      <b>fontSize</b> value to <b>{`"${FONT_SIZE}"`}</b>
     </div>
     <div>
       Make it so that when you tap/click the button you get a popup saying{' '}

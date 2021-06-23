@@ -8,8 +8,18 @@ import {
 export const title = `Center the button`;
 export const instruction = (
   <>
-    Wrap the <b style={{ color: 'blue' }}>button</b> inside a pair of{' '}
-    <b>{`<div></div>`}</b> tags
+    <div>
+      Surround the <b style={{ color: 'blue' }}>button</b> with a pair of{' '}
+      <b>{`<div></div>`}</b> tags
+    </div>
+    <div>
+      Set the width of the <b>{`<div>`}</b> to <b>{`"100%"`}</b>
+    </div>
+    <div>
+      Set the <b>{`<div>`}</b>
+      {`'s`} <b>display</b> value to <b>{`"flex"`}</b> and its{' '}
+      <b>justifyContent</b> value to <b>{`"center"`}</b>
+    </div>
   </>
 );
 export const initialCode = `function HomePage() {
