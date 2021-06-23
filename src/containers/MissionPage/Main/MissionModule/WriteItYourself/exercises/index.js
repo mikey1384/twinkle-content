@@ -1,7 +1,7 @@
 import * as makeAButton from './makeAButton';
-import * as flexDisplay from './flexDisplay';
+import * as centerTheButton from './centerTheButton';
 
 export default {
   makeAButton,
-  flexDisplay
+  centerTheButton
 };
