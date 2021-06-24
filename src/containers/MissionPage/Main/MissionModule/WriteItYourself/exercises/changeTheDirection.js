@@ -55,8 +55,14 @@ export const initialCode = `function HomePage() {
           color: "white"
         }}
         onClick={() => {
-          let name = prompt("what's your name?");
-          alert(${'`' + 'Nice to meet you, ' + '${' + 'name' + '}' + '`'});
+          let name = prompt("What's your name?");
+          if (name) {
+            alert(${
+              '"' + 'Nice to meet you, ' + `"` + ' + ' + 'name' + ' + ' + '"!"'
+            });
+          } else {
+            alert("Please tell me your name!");
+          }
         }}
       >
         My Website
