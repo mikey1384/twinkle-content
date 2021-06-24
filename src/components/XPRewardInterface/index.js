@@ -81,7 +81,7 @@ export default function XPRewardInterface({
             0
           )
         : 0;
-    return returnMaxRewards({ rewardLevel }) - currentRewards;
+    return Math.max(returnMaxRewards({ rewardLevel }) - currentRewards, 0);
   }, [rewardLevel, rewards]);
 
   const rewardables = useMemo(() => {
