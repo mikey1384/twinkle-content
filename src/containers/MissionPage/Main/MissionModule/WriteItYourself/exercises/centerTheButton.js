@@ -88,7 +88,8 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   if (!divWidth) {
     return onSetErrorMsg(
       <>
-        Please set the width of the <b>{`<div>`}</b> to <b>{`"${WIDTH}"`}</b>
+        Please set the <b>width</b> of the <b>{`<div>`}</b> to{' '}
+        <b>{`"${WIDTH}"`}</b>
       </>
     );
   }

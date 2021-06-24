@@ -4,7 +4,6 @@ import {
   filterOpeningElementsByType,
   getElementStyleProps
 } from '../../helpers';
-import { stringIsEmpty } from 'helpers/stringHelpers';
 
 const PADDING = '3rem';
 const MARGIN_TOP = '7rem';
@@ -80,19 +79,27 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   if (marginTop === MARGIN_TOP && padding === PADDING) {
     return await onUpdateMissionStatus();
   }
-  if (stringIsEmpty(marginTop)) {
+  if (!marginTop) {
     return onSetErrorMsg(
-      `Please set the top margin of the button to "${MARGIN_TOP}"`
-    );
-  }
-  if (stringIsEmpty(padding)) {
-    return onSetErrorMsg(
-      `Please set the padding of the button to "${PADDING}"`
+      <>
+        Please set the <b>marginTop</b> value of the button to{' '}
+        {`"${MARGIN_TOP}"`}
+      </>
     );
   }
   if (marginTop !== MARGIN_TOP) {
     return onSetErrorMsg(
-      `The button's top margin must be "${MARGIN_TOP}," not "${marginTop}"`
+      <>
+        The {`button's`} <b>marginTop</b> value must be{' '}
+        <b>{`"${MARGIN_TOP}"`}</b>, not {`"${marginTop}"`}
+      </>
+    );
+  }
+  if (!padding) {
+    return onSetErrorMsg(
+      <>
+        Please set the <b>padding</b> of the button to {`"${PADDING}"`}
+      </>
     );
   }
   if (padding !== PADDING) {
