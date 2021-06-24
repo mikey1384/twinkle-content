@@ -6,6 +6,7 @@ import {
   getElementStyleProps,
   getElementInnerText
 } from '../../helpers';
+import { Color } from 'constants/css';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
 const BUTTON_LABEL = 'Welcome';
@@ -17,8 +18,19 @@ export const title = `Change the Direction`;
 export const instruction = (
   <>
     <div>
-      Surround the <b style={{ color: 'blue' }}>button</b> with a pair of{' '}
-      <b>{`<div></div>`}</b> tags
+      Set the <b>{`<div>`}</b>
+      {`'s`} <b>flexDirection</b> value to <b>{`"column"`}</b>
+    </div>
+    <div>
+      and its <b>alignItems</b> value to <b>{`"center"`}</b>
+    </div>
+    <div style={{ marginTop: '2rem' }}>
+      Set the <b style={{ color: 'orange' }}>orange button</b>
+      {`'s`} <b>marginTop</b> value to <b>{`"2rem"`}</b>
+    </div>
+    <div style={{ marginTop: '2rem' }}>
+      Tap the <b style={{ color: Color.logoBlue() }}>format</b> button to make
+      our code look nice and clean
     </div>
   </>
 );
@@ -40,17 +52,6 @@ export const initialCode = `function HomePage() {
         style={{
           padding: "1rem",
           fontSize: "2rem",
-          background: "red",
-          color: "white"
-        }}
-        onClick={() => alert("Welcome to my website")}
-      >
-        To
-      </button>
-      <button
-        style={{
-          padding: "1rem",
-          fontSize: "2rem",
           background: "orange",
           color: "white"
         }}
@@ -65,7 +66,7 @@ export const initialCode = `function HomePage() {
           }
         }}
       >
-        My Website
+        {"What's your name?"}
       </button>
     </div>
   );
