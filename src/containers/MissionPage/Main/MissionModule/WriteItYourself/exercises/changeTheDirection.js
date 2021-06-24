@@ -58,7 +58,7 @@ export const initialCode = `function HomePage() {
               '"' + 'Nice to meet you, ' + `"` + ' + ' + 'name' + ' + ' + '"!"'
             });
           } else {
-            alert("Please tell me your name!");
+            alert("Nice to meet you, stranger");
           }
         }}
       >
