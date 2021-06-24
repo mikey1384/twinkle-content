@@ -161,7 +161,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   if (!buttonMarginTop) {
     return onSetErrorMsg(
       <>
-        Please set the <b>marginTop</b> value of the button to{' '}
+        Please set the <b>marginTop</b> value of the second button to{' '}
         {`"${BUTTON_MARGIN_TOP}"`}
       </>
     );
@@ -169,7 +169,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   if (buttonMarginTop !== BUTTON_MARGIN_TOP) {
     return onSetErrorMsg(
       <>
-        The {`button's`} <b>marginTop</b> value must be{' '}
+        The {`second button's`} <b>marginTop</b> value must be{' '}
         <b>{`"${BUTTON_MARGIN_TOP}"`}</b>, not {`"${buttonMarginTop}"`}
       </>
     );
