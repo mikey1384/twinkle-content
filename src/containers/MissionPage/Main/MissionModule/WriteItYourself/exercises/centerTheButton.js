@@ -9,7 +9,7 @@ const WIDTH = '100%';
 const DISPLAY = 'flex';
 const JUSTIFY_CONTENT = 'center';
 
-export const title = `Center the button`;
+export const title = `Center the Button`;
 export const instruction = (
   <>
     <div>
