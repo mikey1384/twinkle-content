@@ -3,11 +3,12 @@ import { WELCOME_MSG } from './constants';
 import {
   getAstProps,
   filterOpeningElementsByType,
-  getElementStyleProps
+  getElementStyleProps,
+  returnStyleErrorMsg
 } from '../../helpers';
-import { stringIsEmpty } from 'helpers/stringHelpers';
 
 const FONT_SIZE = '2rem';
+const FONT_WEIGHT = 'bold';
 export const title = `Changing the Font`;
 export const instruction = (
   <>
@@ -76,14 +77,28 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
       }
     }
   }
-  if (fontSize === FONT_SIZE && fontWeight === 'bold') {
+  if (fontSize === FONT_SIZE && fontWeight === FONT_WEIGHT) {
     return await onUpdateMissionStatus();
   }
-  if (stringIsEmpty(fontSize)) {
-    return onSetErrorMsg(`You forgot to enter the font size value`);
-  }
   if (fontSize !== FONT_SIZE) {
-    return onSetErrorMsg(`The font size must be ${FONT_SIZE}, not ${fontSize}`);
+    return onSetErrorMsg(
+      returnStyleErrorMsg({
+        elementName: '<p>',
+        propName: 'fontSize',
+        correctValue: FONT_SIZE,
+        valueEntered: fontSize
+      })
+    );
   }
-  onSetErrorMsg(`The font weight should be bold`);
+  if (fontWeight !== FONT_WEIGHT) {
+    return onSetErrorMsg(
+      returnStyleErrorMsg({
+        elementName: '<p>',
+        propName: 'fontWeight',
+        correctValue: FONT_WEIGHT,
+        valueEntered: fontWeight
+      })
+    );
+  }
+  onSetErrorMsg(`Something's not right - please check the code`);
 }
