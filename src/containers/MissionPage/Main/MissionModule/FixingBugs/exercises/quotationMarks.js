@@ -2,9 +2,9 @@ import {
   getAstProps,
   filterElementsByType,
   getElementInnerText,
-  getElementStyleProps
+  getElementStyleProps,
+  returnStyleErrorMsg
 } from '../../helpers';
-import { stringIsEmpty } from 'helpers/stringHelpers';
 
 const MARGIN_TOP = '3rem';
 
@@ -51,14 +51,14 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   if (marginTop === MARGIN_TOP) {
     return await onUpdateMissionStatus();
   }
-  if (stringIsEmpty(marginTop)) {
-    return onSetErrorMsg(
-      `Please set the top margin of the third element to "${MARGIN_TOP}"`
-    );
-  }
   if (marginTop !== MARGIN_TOP) {
     return onSetErrorMsg(
-      `The third element's top margin must be "${MARGIN_TOP}," not "${marginTop}"`
+      returnStyleErrorMsg({
+        elementName: 'third <div>',
+        propName: 'marginTop',
+        correctValue: MARGIN_TOP,
+        valueEntered: marginTop
+      })
     );
   }
   onSetErrorMsg(`Something's not right - please check the code`);

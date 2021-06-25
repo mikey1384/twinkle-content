@@ -1,9 +1,9 @@
 import {
   getAstProps,
   filterElementsByType,
-  getElementStyleProps
+  getElementStyleProps,
+  returnStyleErrorMsg
 } from '../../helpers';
-import { stringIsEmpty } from 'helpers/stringHelpers';
 
 const SECOND_MARGIN_TOP = '2rem';
 const THIRD_MARGIN_TOP = '2rem';
@@ -71,24 +71,24 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   ) {
     return await onUpdateMissionStatus();
   }
-  if (stringIsEmpty(secondMarginTop)) {
-    return onSetErrorMsg(
-      `Please set the top margin of the second element to "${SECOND_MARGIN_TOP}"`
-    );
-  }
-  if (stringIsEmpty(thirdMarginTop)) {
-    return onSetErrorMsg(
-      `Please set the top margin of the third element to "${THIRD_MARGIN_TOP}"`
-    );
-  }
   if (secondMarginTop !== SECOND_MARGIN_TOP) {
     return onSetErrorMsg(
-      `The second element's top margin must be "${SECOND_MARGIN_TOP}," not "${secondMarginTop}"`
+      returnStyleErrorMsg({
+        elementName: 'second <div>',
+        propName: 'marginTop',
+        correctValue: SECOND_MARGIN_TOP,
+        valueEntered: secondMarginTop
+      })
     );
   }
   if (thirdMarginTop !== THIRD_MARGIN_TOP) {
     return onSetErrorMsg(
-      `The third element's top margin must be "${THIRD_MARGIN_TOP}," not "${thirdMarginTop}"`
+      returnStyleErrorMsg({
+        elementName: 'third <div>',
+        propName: 'marginTop',
+        correctValue: THIRD_MARGIN_TOP,
+        valueEntered: thirdMarginTop
+      })
     );
   }
   onSetErrorMsg(`Something's not right - please check the code`);

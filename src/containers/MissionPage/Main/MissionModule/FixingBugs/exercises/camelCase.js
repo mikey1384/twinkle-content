@@ -1,9 +1,9 @@
 import {
   getAstProps,
   filterElementsByType,
-  getElementStyleProps
+  getElementStyleProps,
+  returnStyleErrorMsg
 } from '../../helpers';
-import { stringIsEmpty } from 'helpers/stringHelpers';
 
 const FONT_SIZE = '30px';
 
@@ -55,13 +55,20 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   if (fontSize === FONT_SIZE) {
     return await onUpdateMissionStatus();
   }
-  if (stringIsEmpty(fontSize)) {
+  if (!fontSize) {
     return onSetErrorMsg(
       `The font size property for the second sentence still isn't working`
     );
   }
   if (fontSize !== FONT_SIZE) {
-    return onSetErrorMsg(`The font size must be ${FONT_SIZE}, not ${fontSize}`);
+    return onSetErrorMsg(
+      returnStyleErrorMsg({
+        elementName: 'second <div>',
+        propName: 'fontSize',
+        correctValue: FONT_SIZE,
+        valueEntered: fontSize
+      })
+    );
   }
   onSetErrorMsg(`Something's not right - please check the code`);
 }

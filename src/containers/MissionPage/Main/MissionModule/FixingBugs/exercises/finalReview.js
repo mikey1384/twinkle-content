@@ -2,9 +2,9 @@ import React from 'react';
 import {
   getAstProps,
   getElementStyleProps,
-  filterElementsByType
+  filterElementsByType,
+  returnStyleErrorMsg
 } from '../../helpers';
-import { stringIsEmpty } from 'helpers/stringHelpers';
 
 const CONTAINER_FLEX_DIRECTION = 'column';
 const CONTAINER_ALIGN_ITEMS = 'center';
@@ -121,99 +121,64 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   ) {
     return await onUpdateMissionStatus();
   }
-  if (stringIsEmpty(containerFlexDirection)) {
-    return onSetErrorMsg(
-      <>
-        Please set <b>flexDirection</b> of the container element
-      </>
-    );
-  }
   if (containerFlexDirection !== CONTAINER_FLEX_DIRECTION) {
     return onSetErrorMsg(
-      <>
-        The <b>flexDirection</b> of the container should be{' '}
-        {`"${CONTAINER_FLEX_DIRECTION}"`}, not {`"${containerFlexDirection}"`}
-      </>
-    );
-  }
-  if (stringIsEmpty(containerAlignItems)) {
-    return onSetErrorMsg(
-      <>
-        Please set the container {`element's`} <b>alignItems</b> value to{' '}
-        {`"${CONTAINER_ALIGN_ITEMS}"`}
-      </>
+      returnStyleErrorMsg({
+        elementName: 'container',
+        propName: 'flexDirection',
+        correctValue: CONTAINER_FLEX_DIRECTION,
+        valueEntered: containerFlexDirection
+      })
     );
   }
   if (containerAlignItems !== CONTAINER_ALIGN_ITEMS) {
     return onSetErrorMsg(
-      <>
-        The container {`element's`} <b>alignItems</b> value should be set to{' '}
-        {`"${CONTAINER_FLEX_DIRECTION}"`}, not {`"${containerAlignItems}"`}
-      </>
-    );
-  }
-  if (stringIsEmpty(paragraphFontFamily)) {
-    return onSetErrorMsg(
-      <>
-        Please set the welcome {`message's`} <b>fontFamily</b> value to{' '}
-        {`"${PARAGRAPH_FONT_FAMILY}"`}
-      </>
+      returnStyleErrorMsg({
+        elementName: 'container',
+        propName: 'alignItems',
+        correctValue: CONTAINER_ALIGN_ITEMS,
+        valueEntered: containerAlignItems
+      })
     );
   }
   if (paragraphFontFamily !== PARAGRAPH_FONT_FAMILY) {
     return onSetErrorMsg(
-      <>
-        The <b>fontFamily</b> of the welcome message should be{' '}
-        {`"${PARAGRAPH_FONT_FAMILY}"`}, not {`"${paragraphFontFamily}"`}
-      </>
-    );
-  }
-  if (stringIsEmpty(paragraphFontSize)) {
-    return onSetErrorMsg(
-      <>
-        Please set the welcome {`message's`} <b>fontSize</b> value to{' '}
-        {`"${PARAGRAPH_FONT_SIZE}"`}
-      </>
+      returnStyleErrorMsg({
+        elementName: 'welcome message',
+        propName: 'fontFamily',
+        correctValue: PARAGRAPH_FONT_FAMILY,
+        valueEntered: paragraphFontFamily
+      })
     );
   }
   if (paragraphFontSize !== PARAGRAPH_FONT_SIZE) {
     return onSetErrorMsg(
-      <>
-        The <b>fontSize</b> of the welcome message should be{' '}
-        {`"${PARAGRAPH_FONT_SIZE}"`}, not {`"${paragraphFontSize}"`}
-      </>
-    );
-  }
-  if (stringIsEmpty(paragraphFontWeight)) {
-    return onSetErrorMsg(
-      <>
-        Please set the welcome {`message's`} <b>fontWeight</b> value to{' '}
-        {`"${PARAGRAPH_FONT_WEIGHT}"`}
-      </>
+      returnStyleErrorMsg({
+        elementName: 'welcome message',
+        propName: 'fontSize',
+        correctValue: PARAGRAPH_FONT_SIZE,
+        valueEntered: paragraphFontSize
+      })
     );
   }
   if (paragraphFontWeight !== PARAGRAPH_FONT_WEIGHT) {
     return onSetErrorMsg(
-      <>
-        The <b>fontWeight</b> of the welcome message should be{' '}
-        {`"${PARAGRAPH_FONT_WEIGHT}"`}, not {`"${paragraphFontWeight}"`}
-      </>
-    );
-  }
-  if (stringIsEmpty(buttonMarginTop)) {
-    return onSetErrorMsg(
-      <>
-        Please set the {`button's`} <b>marginTop</b> value to{' '}
-        {`"${BUTTON_MARGIN_TOP}"`}
-      </>
+      returnStyleErrorMsg({
+        elementName: 'welcome message',
+        propName: 'fontWeight',
+        correctValue: PARAGRAPH_FONT_WEIGHT,
+        valueEntered: paragraphFontWeight
+      })
     );
   }
   if (buttonMarginTop !== BUTTON_MARGIN_TOP) {
     return onSetErrorMsg(
-      <>
-        The <b>marginTop</b> of the button should be {`"${BUTTON_MARGIN_TOP}"`},
-        not {`"${buttonMarginTop}"`}
-      </>
+      returnStyleErrorMsg({
+        elementName: 'button',
+        propName: 'marginTop',
+        correctValue: BUTTON_MARGIN_TOP,
+        valueEntered: buttonMarginTop
+      })
     );
   }
   onSetErrorMsg(`Something's not right - please check the code`);
