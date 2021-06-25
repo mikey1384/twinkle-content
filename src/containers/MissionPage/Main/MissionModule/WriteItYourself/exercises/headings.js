@@ -30,6 +30,7 @@ export const initialCode = `function HomePage() {
         alignItems: "center"
       }}
     >
+      <h1></h1>
       <button
         style={{
           padding: "1rem",
