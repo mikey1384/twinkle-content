@@ -2,7 +2,8 @@ import React from 'react';
 import {
   getAstProps,
   filterOpeningElementsByType,
-  getElementStyleProps
+  getElementStyleProps,
+  returnStyleErrorMsg
 } from '../../helpers';
 
 const PADDING = '3rem';
@@ -79,32 +80,24 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   if (marginTop === MARGIN_TOP && padding === PADDING) {
     return await onUpdateMissionStatus();
   }
-  if (!marginTop) {
-    return onSetErrorMsg(
-      <>
-        Please set the <b>marginTop</b> value of the button to{' '}
-        {`"${MARGIN_TOP}"`}
-      </>
-    );
-  }
   if (marginTop !== MARGIN_TOP) {
     return onSetErrorMsg(
-      <>
-        The {`button's`} <b>marginTop</b> value must be{' '}
-        <b>{`"${MARGIN_TOP}"`}</b>, not {`"${marginTop}"`}
-      </>
-    );
-  }
-  if (!padding) {
-    return onSetErrorMsg(
-      <>
-        Please set the <b>padding</b> of the button to {`"${PADDING}"`}
-      </>
+      returnStyleErrorMsg({
+        elementName: 'button',
+        propName: 'marginTop',
+        correctValue: MARGIN_TOP,
+        valueEntered: marginTop
+      })
     );
   }
   if (padding !== PADDING) {
     return onSetErrorMsg(
-      `The button's padding must be "${PADDING}," not "${padding}"`
+      returnStyleErrorMsg({
+        elementName: 'button',
+        propName: 'padding',
+        correctValue: PADDING,
+        valueEntered: padding
+      })
     );
   }
   onSetErrorMsg(`Something's not right - please check the code`);
