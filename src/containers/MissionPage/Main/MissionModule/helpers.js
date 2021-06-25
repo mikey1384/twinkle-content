@@ -1,3 +1,5 @@
+import React from 'react';
+
 export function getAstProps({ ast, propType }) {
   const results = [];
   for (let key in ast) {
@@ -67,4 +69,19 @@ export function getElementInnerText(element) {
     }
   }
   return '';
+}
+
+export function returnErrorMsg({
+  elementName,
+  propName,
+  correctValue,
+  valueEntered
+}) {
+  return (
+    <>
+      The <b>{propName}</b> value of the <b>{elementName}</b> must be set to{' '}
+      <b>{correctValue}</b>
+      {valueEntered ? `, not ${valueEntered}` : ''}
+    </>
+  );
 }
