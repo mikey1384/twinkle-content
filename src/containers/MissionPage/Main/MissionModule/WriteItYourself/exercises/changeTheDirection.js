@@ -2,7 +2,8 @@ import React from 'react';
 import {
   getAstProps,
   filterElementsByType,
-  getElementStyleProps
+  getElementStyleProps,
+  returnStyleErrorMsg
 } from '../../helpers';
 import { Color } from 'constants/css';
 
@@ -121,55 +122,37 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
       </>
     );
   }
-  if (!divFlexDirection) {
-    return onSetErrorMsg(
-      <>
-        Please set the <b>flexDirection</b> value of the <b>{`<div>`}</b> to{' '}
-        <b>{`"${FLEX_DIRECTION}"`}</b>
-      </>
-    );
-  }
   if (divFlexDirection !== FLEX_DIRECTION) {
     return onSetErrorMsg(
-      <>
-        The <b>flexDirection</b> value of the <b>{`<div>`}</b> must be set to{' '}
-        <b>{FLEX_DIRECTION}</b>, not {divFlexDirection}
-      </>
-    );
-  }
-  if (!divAlignItems) {
-    return onSetErrorMsg(
-      <>
-        Please set the <b>alignItems</b> value of the <b>{`<div>`}</b> to{' '}
-        <b>{`"${ALIGN_ITEMS}"`}</b>
-      </>
+      returnStyleErrorMsg({
+        elementName: '<div>',
+        propName: 'flexDirection',
+        correctValue: FLEX_DIRECTION,
+        valueEntered: divFlexDirection
+      })
     );
   }
   if (divAlignItems !== ALIGN_ITEMS) {
     return onSetErrorMsg(
-      <>
-        The <b>alignItems</b> value of the <b>{`<div>`}</b> must be set to{' '}
-        <b>{ALIGN_ITEMS}</b>, not {divAlignItems}
-      </>
+      returnStyleErrorMsg({
+        elementName: '<div>',
+        propName: 'alignItems',
+        correctValue: ALIGN_ITEMS,
+        valueEntered: divAlignItems
+      })
     );
   }
   if (!buttonElement) {
     return onSetErrorMsg(`Did you delete the second button?`);
   }
-  if (!buttonMarginTop) {
-    return onSetErrorMsg(
-      <>
-        Please set the <b>marginTop</b> value of the second button to{' '}
-        {`"${BUTTON_MARGIN_TOP}"`}
-      </>
-    );
-  }
   if (buttonMarginTop !== BUTTON_MARGIN_TOP) {
     return onSetErrorMsg(
-      <>
-        The {`second button's`} <b>marginTop</b> value must be{' '}
-        <b>{`"${BUTTON_MARGIN_TOP}"`}</b>, not {`"${buttonMarginTop}"`}
-      </>
+      returnStyleErrorMsg({
+        elementName: 'second button',
+        propName: 'marginTop',
+        correctValue: BUTTON_MARGIN_TOP,
+        valueEntered: buttonMarginTop
+      })
     );
   }
   onSetErrorMsg(`Something's not right - please check the code`);
