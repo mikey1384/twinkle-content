@@ -41,7 +41,7 @@ export default function useExercises({
       initialCode: exercises[exerciseKey].initialCode,
       instruction:
         typeof exercises[exerciseKey].instruction === 'function'
-          ? exercises[exerciseKey].instruction(username)
+          ? exercises[exerciseKey].instruction({ username })
           : exercises[exerciseKey].instruction,
       onNextClick: handleNextClick,
       onSetCode: handleSetCode,

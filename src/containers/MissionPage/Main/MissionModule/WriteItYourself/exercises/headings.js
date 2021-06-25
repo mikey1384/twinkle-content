@@ -11,7 +11,7 @@ const ALIGN_ITEMS = 'center';
 const BUTTON_MARGIN_TOP = '2rem';
 
 export const title = `Add a Heading and a Subheading`;
-export const instruction = (username) => (
+export const instruction = ({ username }) => (
   <>
     <div>Add {username}</div>
     <div>
