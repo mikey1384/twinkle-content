@@ -18,7 +18,7 @@ export default function FailMessage({ message }) {
         borderRadius,
         textAlign: 'center',
         color: '#fff',
-        background: Color.cranberry(0.6),
+        background: Color.rose(0.6),
         fontSize: '1.7rem'
       }}
     >

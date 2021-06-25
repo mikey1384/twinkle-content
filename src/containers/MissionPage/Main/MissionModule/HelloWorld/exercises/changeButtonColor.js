@@ -3,7 +3,8 @@ import { Color } from 'constants/css';
 import {
   getAstProps,
   filterOpeningElementsByType,
-  getElementStyleProps
+  getElementStyleProps,
+  returnStyleErrorMsg
 } from '../../helpers';
 
 export const title = `Make It Blue`;
@@ -73,18 +74,12 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   ) {
     return await onUpdateMissionStatus();
   }
-  if (!buttonColor) {
-    return onSetErrorMsg(
-      <>
-        Please change the color of the button to{' '}
-        <span style={{ color: 'blue' }}>blue</span>
-      </>
-    );
-  }
   onSetErrorMsg(
-    <>
-      The {`button's`} color needs to be{' '}
-      <span style={{ color: 'blue' }}>blue,</span> not {buttonColor}
-    </>
+    returnStyleErrorMsg({
+      elementName: 'button',
+      propName: 'background',
+      correctValue: 'blue',
+      valueEntered: buttonColor
+    })
   );
 }

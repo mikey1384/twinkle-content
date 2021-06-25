@@ -71,17 +71,28 @@ export function getElementInnerText(element) {
   return '';
 }
 
-export function returnErrorMsg({
+export function returnStyleErrorMsg({
   elementName,
   propName,
   correctValue,
   valueEntered
 }) {
-  return (
-    <>
-      The <b>{propName}</b> value of the <b>{elementName}</b> must be set to{' '}
-      <b>{correctValue}</b>
-      {valueEntered ? `, not ${valueEntered}` : ''}
-    </>
-  );
+  let errorMsg;
+  if (!valueEntered) {
+    errorMsg = (
+      <>
+        Please set the <b>{propName}</b> value of the <b>{elementName}</b>
+        {`'s`} <b>style</b> property to <b>{correctValue}</b>
+      </>
+    );
+  } else {
+    errorMsg = (
+      <>
+        The <b>{propName}</b> value of the <b>{elementName}</b>
+        {`'s`} <b>style</b> property must be set to <b>{correctValue}</b>
+        {valueEntered ? `, not ${valueEntered}` : ''}
+      </>
+    );
+  }
+  return errorMsg;
 }
