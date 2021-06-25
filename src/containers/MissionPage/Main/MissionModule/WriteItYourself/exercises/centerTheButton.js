@@ -2,7 +2,8 @@ import React from 'react';
 import {
   getAstProps,
   filterElementsByType,
-  getElementStyleProps
+  getElementStyleProps,
+  returnStyleErrorMsg
 } from '../../helpers';
 
 const WIDTH = '100%';
@@ -85,52 +86,34 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
       </>
     );
   }
-  if (!divWidth) {
-    return onSetErrorMsg(
-      <>
-        Please set the <b>width</b> of the <b>{`<div>`}</b> to{' '}
-        <b>{`"${WIDTH}"`}</b>
-      </>
-    );
-  }
   if (divWidth !== WIDTH) {
     return onSetErrorMsg(
-      <>
-        The <b>width</b> of the <b>{`<div>`}</b> must be <b>{WIDTH}</b>, not{' '}
-        {divWidth}
-      </>
-    );
-  }
-  if (!divDisplay) {
-    return onSetErrorMsg(
-      <>
-        Please set the <b>display</b> value of the <b>{`<div>`}</b> to{' '}
-        <b>{`"${DISPLAY}"`}</b>
-      </>
+      returnStyleErrorMsg({
+        elementName: '<div>',
+        propName: 'width',
+        correctValue: WIDTH,
+        valueEntered: divWidth
+      })
     );
   }
   if (divDisplay !== DISPLAY) {
     return onSetErrorMsg(
-      <>
-        The <b>display</b> value of the <b>{`<div>`}</b> must be set to{' '}
-        <b>{DISPLAY}</b>, not {divDisplay}
-      </>
-    );
-  }
-  if (!divJustifyContent) {
-    return onSetErrorMsg(
-      <>
-        Please set the <b>justifyContent</b> value of the <b>{`<div>`}</b> to{' '}
-        <b>{`"${JUSTIFY_CONTENT}"`}</b>
-      </>
+      returnStyleErrorMsg({
+        elementName: '<div>',
+        propName: 'display',
+        correctValue: DISPLAY,
+        valueEntered: divDisplay
+      })
     );
   }
   if (divJustifyContent !== JUSTIFY_CONTENT) {
     return onSetErrorMsg(
-      <>
-        The <b>justifyContent</b> value of the <b>{`<div>`}</b> must be set to{' '}
-        <b>{JUSTIFY_CONTENT}</b>, not {divJustifyContent}
-      </>
+      returnStyleErrorMsg({
+        elementName: '<div>',
+        propName: 'justifyContent',
+        correctValue: JUSTIFY_CONTENT,
+        valueEntered: divJustifyContent
+      })
     );
   }
   onSetErrorMsg(`Something's not right - please check the code`);
