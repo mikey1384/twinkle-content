@@ -4,7 +4,8 @@ import {
   filterElementsByType,
   getElementAttribute,
   getElementStyleProps,
-  getElementInnerText
+  getElementInnerText,
+  returnStyleErrorMsg
 } from '../../helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
@@ -124,35 +125,24 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   if (!button) {
     return onSetErrorMsg(`Where's the button?`);
   }
-  if (!buttonColor) {
-    return onSetErrorMsg(
-      <>
-        Please set the background color of the button to{' '}
-        <span style={{ color: 'blue' }}>blue</span>
-      </>
-    );
-  }
   if (!buttonIsBlue) {
     return onSetErrorMsg(
-      <>
-        The {`button's`} background color needs to be{' '}
-        <span style={{ color: 'blue' }}>blue,</span> not {buttonColor}
-      </>
-    );
-  }
-  if (!buttonTextColor) {
-    return onSetErrorMsg(
-      <>
-        Please set the color of the {`button's`} text to <b>white</b>
-      </>
+      returnStyleErrorMsg({
+        elementName: 'button',
+        propName: 'background',
+        correctValue: 'blue',
+        valueEntered: buttonColor
+      })
     );
   }
   if (!buttonTextColorIsWhite) {
     return onSetErrorMsg(
-      <>
-        The {`button's`} text color needs to be <b>white</b>, not{' '}
-        {buttonTextColor}
-      </>
+      returnStyleErrorMsg({
+        elementName: 'button',
+        propName: 'color',
+        correctValue: 'white',
+        valueEntered: buttonTextColor
+      })
     );
   }
   if (stringIsEmpty(buttonText)) {
@@ -163,21 +153,25 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
       `The button's label needs to be "${BUTTON_LABEL}," not "${buttonText.trim()}"`
     );
   }
-  if (stringIsEmpty(buttonPadding)) {
-    return onSetErrorMsg(
-      `Please set the padding of the button to "${PADDING}"`
-    );
-  }
   if (!buttonPaddingMatches) {
     return onSetErrorMsg(
-      `The button's padding must be "${PADDING}," not "${buttonPadding}"`
+      returnStyleErrorMsg({
+        elementName: 'button',
+        propName: 'padding',
+        correctValue: PADDING,
+        valueEntered: buttonPadding
+      })
     );
   }
-  if (stringIsEmpty(fontSize)) {
-    return onSetErrorMsg(`You forgot to enter the font size value`);
-  }
   if (!fontSizeMatches) {
-    return onSetErrorMsg(`The font size must be ${FONT_SIZE}, not ${fontSize}`);
+    return onSetErrorMsg(
+      returnStyleErrorMsg({
+        elementName: 'button',
+        propName: 'fontSize',
+        correctValue: FONT_SIZE,
+        valueEntered: fontSize
+      })
+    );
   }
   if (!onClickFunc) {
     return onSetErrorMsg(
