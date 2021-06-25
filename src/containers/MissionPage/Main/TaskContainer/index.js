@@ -133,6 +133,13 @@ export default function TaskContainer({
         onSetMissionState={onSetMissionState}
         nextTaskType={nextTask}
       />
+      <GoBack
+        isAtTop={false}
+        style={{ marginTop: '2rem' }}
+        bordered
+        to="./"
+        text={mission.title}
+      />
       <Tutorial
         mission={task}
         myAttempts={myAttempts}
