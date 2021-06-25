@@ -41,7 +41,7 @@ export default function ExerciseContainer({
   const {
     actions: { onUpdateProfileInfo }
   } = useContentContext();
-  const { userId, state = {} } = useMyState();
+  const { userId, username, state = {} } = useMyState();
   const { passed, prevPassed, errorMsg, setErrorMsg, success, exercise } =
     useExercises({
       exercises,
@@ -53,6 +53,7 @@ export default function ExerciseContainer({
       onSetCode,
       updateMissionStatus,
       taskType,
+      username,
       userId
     });
   const ComponentRef = useRef(null);

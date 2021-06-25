@@ -5,29 +5,17 @@ import {
   getElementStyleProps,
   returnStyleErrorMsg
 } from '../../helpers';
-import { Color } from 'constants/css';
 
 const FLEX_DIRECTION = 'column';
 const ALIGN_ITEMS = 'center';
 const BUTTON_MARGIN_TOP = '2rem';
 
 export const title = `Add a Heading and a Subheading`;
-export const instruction = (
+export const instruction = (username) => (
   <>
-    <div>
-      Set the <b>{`<div>`}</b>
-      {`'s`} <b>flexDirection</b> value to <b>{`"${FLEX_DIRECTION}"`}</b>
-    </div>
+    <div>Add {username}</div>
     <div>
       and its <b>alignItems</b> value to <b>{`"${ALIGN_ITEMS}"`}</b>
-    </div>
-    <div style={{ marginTop: '2rem' }}>
-      Set the <b style={{ color: 'orange' }}>second button</b>
-      {`'s`} <b>marginTop</b> value to <b>{`"${BUTTON_MARGIN_TOP}"`}</b>
-    </div>
-    <div style={{ marginTop: '2rem' }}>
-      Tap the <b style={{ color: Color.logoBlue() }}>format</b> button to make
-      our code look nice and clean
     </div>
   </>
 );

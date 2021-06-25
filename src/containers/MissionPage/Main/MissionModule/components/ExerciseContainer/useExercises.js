@@ -10,6 +10,7 @@ export default function useExercises({
   onSetCode,
   taskType,
   userId,
+  username,
   updateMissionStatus
 } = {}) {
   const [errorMsg, setErrorMsg] = useState('');
@@ -38,7 +39,10 @@ export default function useExercises({
       title: exercises[exerciseKey].title,
       code: codeObj?.[exerciseKey],
       initialCode: exercises[exerciseKey].initialCode,
-      instruction: exercises[exerciseKey].instruction,
+      instruction:
+        typeof exercises[exerciseKey].instruction === 'function'
+          ? exercises[exerciseKey].instruction(username)
+          : exercises[exerciseKey].instruction,
       onNextClick: handleNextClick,
       onSetCode: handleSetCode,
       onRunCode: ({ ast, code }) =>
