@@ -59,6 +59,9 @@ export async function onRunCode({
     return await onUpdateMissionStatus();
   }
   onSetErrorMsg(
-    `Just tap the "format" button without making any changes to the code itself.`
+    <>
+      Just tap the <b>FORMAT</b> button without making any changes to the code
+      itself.
+    </>
   );
 }
