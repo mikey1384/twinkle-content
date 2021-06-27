@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import SuccessMessage from './SuccessMessage';
@@ -7,7 +7,6 @@ import Icon from 'components/Icon';
 import CodeSandbox from 'components/Forms/CodeSandbox';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { scrollElementToCenter } from 'helpers';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
 import useExercises from './useExercises';
@@ -57,17 +56,10 @@ export default function ExerciseContainer({
       userId
     });
   const ComponentRef = useRef(null);
-  const prevPassedRef = useRef(prevPassed);
-  useEffect(() => {
-    if (!prevPassedRef.current && prevPassed) {
-      scrollElementToCenter(ComponentRef.current, -250);
-    }
-  }, [exerciseKey, prevPassed]);
 
   return prevPassed ? (
     <ErrorBoundary>
       <div
-        ref={ComponentRef}
         style={{
           width: '100%',
           display: 'flex',
@@ -101,6 +93,7 @@ export default function ExerciseContainer({
           {exercise.instruction}
         </div>
         <div
+          ref={ComponentRef}
           className={css`
             margin-top: 2rem;
             width: 80%;
