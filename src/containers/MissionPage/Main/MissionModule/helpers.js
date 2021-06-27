@@ -76,15 +76,32 @@ export function returnInnerTextErrorMsg({
   correctValue,
   valueEntered
 }) {
-  return (
-    <>
-      The <b>{targetName}</b> needs to be{' '}
-      <b>
-        <i>{correctValue}</i>
-      </b>{' '}
-      not {valueEntered}
-    </>
-  );
+  let errorMsg;
+  if (!valueEntered) {
+    errorMsg = (
+      <>
+        <b>{targetName}</b> is empty. Please enter{' '}
+        <b>
+          <i>{correctValue}</i>
+        </b>{' '}
+        inside <b>{targetName}</b>
+      </>
+    );
+  } else {
+    errorMsg = (
+      <>
+        The text inside <b>{targetName}</b> needs to be{' '}
+        <b>
+          <i>{correctValue}</i>
+        </b>{' '}
+        not{' '}
+        <b>
+          <i>{valueEntered}</i>
+        </b>
+      </>
+    );
+  }
+  return errorMsg;
 }
 
 export function returnStyleErrorMsg({

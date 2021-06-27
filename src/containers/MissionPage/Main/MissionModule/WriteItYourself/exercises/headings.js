@@ -152,23 +152,24 @@ export async function onRunCode({
   if (!headingMatches) {
     return onSetErrorMsg(
       returnInnerTextErrorMsg({
-        targetName: 'heading',
+        targetName: '<h1></h1>',
         correctValue: HEADING_LABEL(username),
         valueEntered: headingLabel
       })
     );
   }
   if (!subheadingElement) {
-    return (
+    return onSetErrorMsg(
       <>
-        {`Where's`} the <b>{`<h2></h2>`}</b> pair?
+        Please write <b>{`<h2>${SUBHEADING_LABEL}</h2>`}</b> in the empty line
+        below the heading
       </>
     );
   }
   if (!subheadingMatches) {
     return onSetErrorMsg(
       returnInnerTextErrorMsg({
-        targetName: 'subheading',
+        targetName: '<h2></h2>',
         correctValue: SUBHEADING_LABEL,
         valueEntered: subheadingLabel
       })
