@@ -122,7 +122,7 @@ export function returnStyleErrorMsg({
     errorMsg = (
       <>
         The <b>{propName}</b> value of the <b>{targetName}</b>
-        {`'s`} <b>style</b> property must be set to <b>{correctValue}</b>
+        {`'s`} <b>style</b> property must be <b>{correctValue}</b>
         {valueEntered ? `, not ${valueEntered}` : ''}
       </>
     );

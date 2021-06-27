@@ -12,9 +12,10 @@ const FONT_WEIGHT = 'bold';
 export const title = `Changing the Font`;
 export const instruction = (
   <>
-    Change the <b>fontWeight</b> of your welcome message ({WELCOME_MSG}) from{' '}
-    <b>{`"normal"`}</b> to <b>{`"bold"`}</b> and increase its <b>fontSize</b> to{' '}
-    <b>{`"${FONT_SIZE}"`}</b>. You may change its color to any color your want
+    Change the <b>fontWeight</b> of your welcome message (
+    {`<p>${WELCOME_MSG}</p>`}) from <b>{`"normal"`}</b> to <b>{`"bold"`}</b> and
+    increase its <b>fontSize</b> to <b>{`"${FONT_SIZE}"`}</b>. You may change
+    its color to any color your want
   </>
 );
 export const initialCode = `function HomePage() {
@@ -66,19 +67,21 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     elements: jsxElements,
     filter: 'p'
   });
-  for (let paragraph of paragraphs) {
-    const styleProps = getElementStyleProps(paragraph);
-    for (let prop of styleProps) {
-      if (prop?.key?.name === 'fontSize') {
-        fontSize = prop?.value?.value;
-      }
-      if (prop?.key?.name === 'fontWeight') {
-        fontWeight = prop?.value?.value;
-      }
+  const paragraph = paragraphs[0];
+  const styleProps = getElementStyleProps(paragraph);
+  for (let prop of styleProps) {
+    if (prop?.key?.name === 'fontSize') {
+      fontSize = prop?.value?.value;
+    }
+    if (prop?.key?.name === 'fontWeight') {
+      fontWeight = prop?.value?.value;
     }
   }
   if (fontSize === FONT_SIZE && fontWeight === FONT_WEIGHT) {
     return await onUpdateMissionStatus();
+  }
+  if (!paragraph) {
+    return onSetErrorMsg(`Did you delete your welcome message?`);
   }
   if (fontSize !== FONT_SIZE) {
     return onSetErrorMsg(
