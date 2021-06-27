@@ -94,7 +94,12 @@ export const initialCode = `function HomePage() {
   );
 }`;
 
-export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
+export async function onRunCode({
+  ast,
+  onUpdateMissionStatus,
+  onSetErrorMsg,
+  username
+}) {
   let headingLabel = '';
   let subheadingLabel = '';
   let subheadingMarginBottom = '';
@@ -127,7 +132,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
     }
   }
   const headingMatches =
-    headingLabel.trim().toLowerCase() === HEADING_LABEL.toLowerCase();
+    headingLabel.trim().toLowerCase() === HEADING_LABEL(username).toLowerCase();
   const subheadingMatches =
     subheadingLabel.trim().toLowerCase() === SUBHEADING_LABEL.toLowerCase();
   if (
@@ -148,7 +153,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
     return onSetErrorMsg(
       returnInnerTextErrorMsg({
         targetName: 'heading',
-        correctValue: HEADING_LABEL,
+        correctValue: HEADING_LABEL(username),
         valueEntered: headingLabel
       })
     );

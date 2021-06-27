@@ -47,6 +47,7 @@ export default function useExercises({
       onSetCode: handleSetCode,
       onRunCode: ({ ast, code }) =>
         exercises[exerciseKey].onRunCode({
+          username,
           code,
           ast,
           onSetErrorMsg: setErrorMsg,
