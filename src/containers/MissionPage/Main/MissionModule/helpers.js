@@ -80,7 +80,7 @@ export function returnInnerTextErrorMsg({
   if (!valueEntered) {
     errorMsg = (
       <>
-        <b>{targetName}</b> is empty. Please enter{' '}
+        <b>{targetName}</b> is empty. Please write{' '}
         <b>
           <i>{correctValue}</i>
         </b>{' '}

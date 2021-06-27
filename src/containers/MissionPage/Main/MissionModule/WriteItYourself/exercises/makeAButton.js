@@ -5,6 +5,7 @@ import {
   getElementAttribute,
   getElementStyleProps,
   getElementInnerText,
+  returnInnerTextErrorMsg,
   returnStyleErrorMsg
 } from '../../helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
@@ -150,12 +151,13 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
       })
     );
   }
-  if (stringIsEmpty(buttonText)) {
-    return onSetErrorMsg(`Hmmm... The button doesn't seem to have any label`);
-  }
   if (!buttonTextMatches) {
     return onSetErrorMsg(
-      `The button's label needs to be "${BUTTON_LABEL}," not "${buttonText.trim()}"`
+      returnInnerTextErrorMsg({
+        targetName: '<button></button>',
+        correctValue: BUTTON_LABEL,
+        valueEntered: buttonText
+      })
     );
   }
   if (!buttonPaddingMatches) {
@@ -184,6 +186,11 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
         The button {`doesn't`} have an <b>onClick</b> property. Please check
         your code
       </>
+    );
+  }
+  if (onClickFunc?.value?.expression?.body?.callee?.name !== 'alert') {
+    return onSetErrorMsg(
+      `The alert function is missing. Please check the code`
     );
   }
   if (stringIsEmpty(alertText)) {
