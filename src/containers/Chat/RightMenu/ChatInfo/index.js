@@ -46,11 +46,8 @@ function ChatInfo({
       if (currentChannel.members?.length !== 2) return false;
       return !!currentChannel.id;
     }
-    return (
-      currentChannel.isClass &&
-      (callOngoing || currentChannel.creatorId === myId)
-    );
-  }, [callOngoing, currentChannel, myId]);
+    return false;
+  }, [currentChannel]);
 
   const displayedChannelMembers = useMemo(() => {
     const totalChannelMembers = currentChannel?.members || [];
@@ -64,16 +61,17 @@ function ChatInfo({
       const totalChannelMemberIds = totalChannelMembers.map(
         (member) => member.id
       );
-      currentChannelOnlineMembersOtherThanMe = currentChannelOnlineMembersOtherThanMe.filter(
-        (member) => totalChannelMemberIds.includes(member.id)
-      );
+      currentChannelOnlineMembersOtherThanMe =
+        currentChannelOnlineMembersOtherThanMe.filter((member) =>
+          totalChannelMemberIds.includes(member.id)
+        );
     }
     const totalValidChannelMembers = totalChannelMembers.filter(
       (member) => !!member.id
     );
-    const currentlyOnlineIds = Object.keys(
-      currentChannelOnlineMembers
-    ).map((memberId) => Number(memberId));
+    const currentlyOnlineIds = Object.keys(currentChannelOnlineMembers).map(
+      (memberId) => Number(memberId)
+    );
     if (totalValidChannelMembers.length > 0) {
       const offlineChannelMembers = totalValidChannelMembers.filter(
         (member) =>
