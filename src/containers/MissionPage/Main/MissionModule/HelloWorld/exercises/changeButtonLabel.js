@@ -4,9 +4,9 @@ import { BUTTON_LABEL } from './constants';
 import {
   filterElementsByType,
   getElementInnerText,
-  getAstProps
+  getAstProps,
+  returnInnerTextErrorMsg
 } from '../../helpers';
-import { stringIsEmpty } from 'helpers/stringHelpers';
 
 export const title = `Tap Me`;
 export const instruction = (
@@ -62,10 +62,18 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   if (buttonText.toLowerCase() === BUTTON_LABEL.toLowerCase()) {
     return await onUpdateMissionStatus();
   }
-  if (stringIsEmpty(buttonText)) {
-    return onSetErrorMsg(`Hmmm... The button doesn't seem to have any label`);
+  if (!button) {
+    return onSetErrorMsg(
+      <>
+        {`Where's`} the <b>button</b>?
+      </>
+    );
   }
   onSetErrorMsg(
-    `The button's label needs to be "${BUTTON_LABEL}," not "${buttonText.trim()}"`
+    returnInnerTextErrorMsg({
+      targetName: '<button></button>',
+      correctValue: BUTTON_LABEL,
+      valueEntered: buttonText
+    })
   );
 }

@@ -63,7 +63,7 @@ export function getElementStyleProps(openingElement) {
 }
 
 export function getElementInnerText(element) {
-  for (let child of element.children) {
+  for (let child of element?.children || []) {
     if (child.type === 'JSXText') {
       return child.value.trim();
     }
