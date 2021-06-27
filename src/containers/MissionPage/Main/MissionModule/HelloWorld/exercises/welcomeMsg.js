@@ -1,7 +1,10 @@
 import React from 'react';
 import { WELCOME_MSG } from './constants';
-import { getAstProps, filterElementsByType } from '../../helpers';
-import { stringIsEmpty } from 'helpers/stringHelpers';
+import {
+  getAstProps,
+  filterElementsByType,
+  returnInnerTextErrorMsg
+} from '../../helpers';
 
 export const title = `Welcoming Your Visitors`;
 export const instruction = (
@@ -60,16 +63,20 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   if (welcomeText.trim().toLowerCase() === WELCOME_MSG.toLowerCase()) {
     return await onUpdateMissionStatus();
   }
-  if (stringIsEmpty(welcomeText)) {
-    return onSetErrorMsg(
-      `Hmmm... There doesn't seem to be any message between <p> and </p>`
-    );
-  }
   if (
     welcomeText.trim().toLowerCase() === WELCOME_MSG.slice(0, -1).toLowerCase()
   ) {
     return onSetErrorMsg(
       `You forgot to add an exclamation mark (!) at the end`
+    );
+  }
+  if (welcomeText.trim().toLowerCase() !== WELCOME_MSG.toLowerCase()) {
+    return onSetErrorMsg(
+      returnInnerTextErrorMsg({
+        targetName: '<p></p>',
+        correctValue: WELCOME_MSG,
+        valueEntered: welcomeText
+      })
     );
   }
   onSetErrorMsg(
