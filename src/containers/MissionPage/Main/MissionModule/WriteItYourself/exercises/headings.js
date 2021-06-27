@@ -5,6 +5,7 @@ import {
   getElementStyleProps,
   returnStyleErrorMsg
 } from '../../helpers';
+import { Color } from 'constants/css';
 
 const FLEX_DIRECTION = 'column';
 const ALIGN_ITEMS = 'center';
@@ -13,9 +14,29 @@ const BUTTON_MARGIN_TOP = '2rem';
 export const title = `Add a Heading and a Subheading`;
 export const instruction = ({ username }) => (
   <>
-    <div>Add {username}</div>
     <div>
-      and its <b>alignItems</b> value to <b>{`"${ALIGN_ITEMS}"`}</b>
+      1) Write <b>{`${username}'s website`}</b> between <b>{`<h1>`}</b> and{' '}
+      <b>{`</h1>`}</b>
+    </div>
+    <div>
+      This is your {`website's`} <b>heading</b>
+    </div>
+    <div style={{ marginTop: '2rem' }}>
+      2) In the empty line right below <b>{`<h1>${username}'s website</h1>`}</b>
+      ,
+    </div>
+    <div>
+      write <b>{`<h2>click the buttons below</h2>`}</b>
+    </div>
+    <div>
+      This is your <b>subheading</b>
+    </div>
+    <div style={{ marginTop: '2rem' }}>
+      3) Set your <b>subheading</b>
+      {`'s`} <b>marginBottom</b> value to <b>{`"10rem"`}</b>
+    </div>
+    <div style={{ marginTop: '2rem' }}>
+      4) Tap the <b style={{ color: Color.logoBlue() }}>format</b> button
     </div>
   </>
 );
@@ -31,6 +52,7 @@ export const initialCode = `function HomePage() {
       }}
     >
       <h1></h1>
+
       <button
         style={{
           padding: "1rem",
