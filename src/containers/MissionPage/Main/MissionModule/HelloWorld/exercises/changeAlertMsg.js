@@ -66,6 +66,13 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   if (alertText.trim().toLowerCase() === ALERT_MSG.toLowerCase()) {
     return await onUpdateMissionStatus();
   }
+  if (!button) {
+    return onSetErrorMsg(
+      <>
+        {`Where's`} the <b>button</b>?
+      </>
+    );
+  }
   if (!onClickFunc) {
     return onSetErrorMsg(
       <>
