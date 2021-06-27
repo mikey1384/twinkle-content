@@ -15,15 +15,14 @@ export const title = `Add a Heading and a Subheading`;
 export const instruction = ({ username }) => (
   <>
     <div>
-      1) Write <b>{`${username}'s website`}</b> between <b>{`<h1>`}</b> and{' '}
+      Write <b>{`${username}'s website`}</b> between <b>{`<h1>`}</b> and{' '}
       <b>{`</h1>`}</b>
     </div>
     <div>
       This is your {`website's`} <b>heading</b>
     </div>
     <div style={{ marginTop: '2rem' }}>
-      2) In the empty line right below <b>{`<h1>${username}'s website</h1>`}</b>
-      ,
+      In the empty line right below <b>{`<h1>${username}'s website</h1>`}</b>,
     </div>
     <div>
       write <b>{`<h2>click the buttons below</h2>`}</b>
@@ -32,11 +31,11 @@ export const instruction = ({ username }) => (
       This is your <b>subheading</b>
     </div>
     <div style={{ marginTop: '2rem' }}>
-      3) Set your <b>subheading</b>
+      Set your <b>subheading</b>
       {`'s`} <b>marginBottom</b> value to <b>{`"10rem"`}</b>
     </div>
     <div style={{ marginTop: '2rem' }}>
-      4) Tap the <b style={{ color: Color.logoBlue() }}>format</b> button
+      Tap the <b style={{ color: Color.logoBlue() }}>format</b> button
     </div>
   </>
 );
