@@ -38,22 +38,24 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     elements: jsxElements,
     filter: 'div'
   });
-  for (let divider of dividers) {
-    const JSXChildren = divider.children.filter(
-      (child) => child.type === 'JSXElement'
-    );
-    if (JSXChildren?.[1] && JSXChildren?.[1]?.openingElement) {
-      const secondChild = JSXChildren?.[1];
-      const styleProps = getElementStyleProps(secondChild.openingElement);
-      for (let prop of styleProps) {
-        if (prop?.key?.name === 'fontSize') {
-          fontSize = prop?.value?.value;
-        }
+  let secondChild = null;
+  const JSXChildren = dividers[0]?.children?.filter(
+    (child) => child.type === 'JSXElement'
+  );
+  secondChild = JSXChildren?.[1];
+  if (secondChild && secondChild.openingElement) {
+    const styleProps = getElementStyleProps(secondChild.openingElement);
+    for (let prop of styleProps) {
+      if (prop?.key?.name === 'fontSize') {
+        fontSize = prop?.value?.value;
       }
     }
   }
   if (fontSize === FONT_SIZE) {
     return await onUpdateMissionStatus();
+  }
+  if (!secondChild) {
+    return onSetErrorMsg(`Don't delete any <div>s`);
   }
   if (!fontSize) {
     return onSetErrorMsg(
