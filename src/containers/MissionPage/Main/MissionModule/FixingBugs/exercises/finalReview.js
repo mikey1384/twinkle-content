@@ -71,6 +71,9 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   let paragraphFontSize = '';
   let buttonMarginTop = '';
   const containerDiv = jsxElements[0];
+  if (!containerDiv) {
+    return onSetErrorMsg("Don't delete the container");
+  }
   const containerDivOpening = containerDiv?.openingElement;
   const containerStyleProps = getElementStyleProps(containerDivOpening);
   for (let prop of containerStyleProps) {
@@ -86,7 +89,10 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     filter: 'p'
   });
   const paragraph = paragraphs[0];
-  const paragraphStyleProps = getElementStyleProps(paragraph.openingElement);
+  if (!paragraph) {
+    return onSetErrorMsg("Don't delete the welcome message");
+  }
+  const paragraphStyleProps = getElementStyleProps(paragraph?.openingElement);
   for (let prop of paragraphStyleProps) {
     if (prop?.key?.name === 'fontFamily') {
       paragraphFontFamily = prop?.value?.value;
@@ -104,7 +110,10 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     filter: 'button'
   });
   const button = buttons[0];
-  const buttonStyleProps = getElementStyleProps(button.openingElement);
+  if (!button) {
+    return onSetErrorMsg("Don't delete the button");
+  }
+  const buttonStyleProps = getElementStyleProps(button?.openingElement);
   for (let prop of buttonStyleProps) {
     if (prop?.key?.name === 'marginTop') {
       buttonMarginTop = prop?.value?.value;
