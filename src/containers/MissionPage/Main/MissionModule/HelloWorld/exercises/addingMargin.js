@@ -80,6 +80,9 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   if (marginTop === MARGIN_TOP && padding === PADDING) {
     return await onUpdateMissionStatus();
   }
+  if (!button) {
+    return onSetErrorMsg('Did you delete the button?');
+  }
   if (marginTop !== MARGIN_TOP) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
