@@ -11,7 +11,11 @@ import { stringIsEmpty } from 'helpers/stringHelpers';
 export const title = `Tap Me`;
 export const instruction = (
   <>
-    Change the label of the button from <b>Change me</b> to{' '}
+    Change the label of the <b style={{ color: 'blue' }}>button</b> from{' '}
+    <b>
+      <i>Change me</i>
+    </b>{' '}
+    to{' '}
     <b>
       <i>{BUTTON_LABEL}</i>
     </b>{' '}

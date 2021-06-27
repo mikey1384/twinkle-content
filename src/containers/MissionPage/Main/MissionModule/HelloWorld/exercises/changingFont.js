@@ -12,9 +12,9 @@ const FONT_WEIGHT = 'bold';
 export const title = `Changing the Font`;
 export const instruction = (
   <>
-    Change the `font weight` of your welcome message ({WELCOME_MSG}) to{' '}
-    <b>{`"bold"`}</b> and change its `font size` to <b>{`"${FONT_SIZE}"`}</b>.
-    You may change its color to any color your want
+    Change the <b>fontWeight</b> of your welcome message ({WELCOME_MSG}) from{' '}
+    <b>{`"normal"`}</b> to <b>{`"bold"`}</b> and increase its <b>fontSize</b> to{' '}
+    <b>{`"${FONT_SIZE}"`}</b>. You may change its color to any color your want
   </>
 );
 export const initialCode = `function HomePage() {
