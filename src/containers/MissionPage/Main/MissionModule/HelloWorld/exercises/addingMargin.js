@@ -13,7 +13,7 @@ export const title = `Margin and Padding`;
 export const instruction = (
   <>
     Set the <b>marginTop</b> value of the{' '}
-    <b style={{ color: 'blue' }}>Tap Me</b> button to <b>{`"${MARGIN_TOP}"`}</b>{' '}
+    <b style={{ color: 'blue' }}>Tap me</b> button to <b>{`"${MARGIN_TOP}"`}</b>{' '}
     and its <b>padding</b> to <b>{`"${PADDING}"`}</b>
   </>
 );
