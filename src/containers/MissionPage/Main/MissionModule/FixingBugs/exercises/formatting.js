@@ -5,7 +5,9 @@ export const instruction = (
   <>
     Our code looks really messy right now. Tap the{' '}
     <b style={{ color: '#4B9BE1' }}>format</b> button to clean it up.{' '}
-    {`Don't make any changes to the code itself`}
+    <i>
+      {`Don't`} make <b>any</b> changes to the code itself
+    </i>
   </>
 );
 export const initialCode = `function HomePage() {
