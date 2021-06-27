@@ -124,7 +124,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   if (containerFlexDirection !== CONTAINER_FLEX_DIRECTION) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        elementName: 'container',
+        targetName: 'container',
         propName: 'flexDirection',
         correctValue: CONTAINER_FLEX_DIRECTION,
         valueEntered: containerFlexDirection
@@ -134,7 +134,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   if (containerAlignItems !== CONTAINER_ALIGN_ITEMS) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        elementName: 'container',
+        targetName: 'container',
         propName: 'alignItems',
         correctValue: CONTAINER_ALIGN_ITEMS,
         valueEntered: containerAlignItems
@@ -144,7 +144,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   if (paragraphFontFamily !== PARAGRAPH_FONT_FAMILY) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        elementName: 'welcome message',
+        targetName: 'welcome message',
         propName: 'fontFamily',
         correctValue: PARAGRAPH_FONT_FAMILY,
         valueEntered: paragraphFontFamily
@@ -154,7 +154,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   if (paragraphFontSize !== PARAGRAPH_FONT_SIZE) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        elementName: 'welcome message',
+        targetName: 'welcome message',
         propName: 'fontSize',
         correctValue: PARAGRAPH_FONT_SIZE,
         valueEntered: paragraphFontSize
@@ -164,7 +164,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   if (paragraphFontWeight !== PARAGRAPH_FONT_WEIGHT) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        elementName: 'welcome message',
+        targetName: 'welcome message',
         propName: 'fontWeight',
         correctValue: PARAGRAPH_FONT_WEIGHT,
         valueEntered: paragraphFontWeight
@@ -174,7 +174,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   if (buttonMarginTop !== BUTTON_MARGIN_TOP) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        elementName: 'button',
+        targetName: 'button',
         propName: 'marginTop',
         correctValue: BUTTON_MARGIN_TOP,
         valueEntered: buttonMarginTop

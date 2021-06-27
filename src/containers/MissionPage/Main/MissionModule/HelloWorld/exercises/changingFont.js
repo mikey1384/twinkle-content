@@ -83,7 +83,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   if (fontSize !== FONT_SIZE) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        elementName: '<p>',
+        targetName: '<p>',
         propName: 'fontSize',
         correctValue: FONT_SIZE,
         valueEntered: fontSize
@@ -93,7 +93,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   if (fontWeight !== FONT_WEIGHT) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        elementName: '<p>',
+        targetName: '<p>',
         propName: 'fontWeight',
         correctValue: FONT_WEIGHT,
         valueEntered: fontWeight

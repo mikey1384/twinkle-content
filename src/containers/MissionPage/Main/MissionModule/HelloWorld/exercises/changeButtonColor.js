@@ -76,7 +76,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   }
   onSetErrorMsg(
     returnStyleErrorMsg({
-      elementName: 'button',
+      targetName: 'button',
       propName: 'background',
       correctValue: 'blue',
       valueEntered: buttonColor

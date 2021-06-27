@@ -125,7 +125,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   if (divFlexDirection !== FLEX_DIRECTION) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        elementName: '<div>',
+        targetName: '<div>',
         propName: 'flexDirection',
         correctValue: FLEX_DIRECTION,
         valueEntered: divFlexDirection
@@ -135,7 +135,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   if (divAlignItems !== ALIGN_ITEMS) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        elementName: '<div>',
+        targetName: '<div>',
         propName: 'alignItems',
         correctValue: ALIGN_ITEMS,
         valueEntered: divAlignItems
@@ -148,7 +148,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   if (buttonMarginTop !== BUTTON_MARGIN_TOP) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        elementName: 'second button',
+        targetName: 'second button',
         propName: 'marginTop',
         correctValue: BUTTON_MARGIN_TOP,
         valueEntered: buttonMarginTop

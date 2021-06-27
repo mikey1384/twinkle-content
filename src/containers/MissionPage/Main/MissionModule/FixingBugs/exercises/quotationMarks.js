@@ -54,7 +54,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   if (marginTop !== MARGIN_TOP) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        elementName: 'third <div>',
+        targetName: 'third <div>',
         propName: 'marginTop',
         correctValue: MARGIN_TOP,
         valueEntered: marginTop

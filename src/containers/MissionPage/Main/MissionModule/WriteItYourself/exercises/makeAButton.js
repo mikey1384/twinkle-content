@@ -133,7 +133,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   if (!buttonIsBlue) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        elementName: 'button',
+        targetName: 'button',
         propName: 'background',
         correctValue: 'blue',
         valueEntered: buttonColor
@@ -143,7 +143,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   if (!buttonTextColorIsWhite) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        elementName: 'button',
+        targetName: 'button',
         propName: 'color',
         correctValue: 'white',
         valueEntered: buttonTextColor
@@ -161,7 +161,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   if (!buttonPaddingMatches) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        elementName: 'button',
+        targetName: 'button',
         propName: 'padding',
         correctValue: PADDING,
         valueEntered: buttonPadding
@@ -171,7 +171,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   if (!fontSizeMatches) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        elementName: 'button',
+        targetName: 'button',
         propName: 'fontSize',
         correctValue: FONT_SIZE,
         valueEntered: fontSize

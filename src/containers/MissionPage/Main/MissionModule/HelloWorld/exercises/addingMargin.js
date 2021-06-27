@@ -83,7 +83,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   if (marginTop !== MARGIN_TOP) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        elementName: 'button',
+        targetName: 'button',
         propName: 'marginTop',
         correctValue: MARGIN_TOP,
         valueEntered: marginTop
@@ -93,7 +93,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   if (padding !== PADDING) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        elementName: 'button',
+        targetName: 'button',
         propName: 'padding',
         correctValue: PADDING,
         valueEntered: padding

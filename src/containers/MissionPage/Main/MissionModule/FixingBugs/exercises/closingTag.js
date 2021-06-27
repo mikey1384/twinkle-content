@@ -74,7 +74,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   if (secondMarginTop !== SECOND_MARGIN_TOP) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        elementName: 'second <div>',
+        targetName: 'second <div>',
         propName: 'marginTop',
         correctValue: SECOND_MARGIN_TOP,
         valueEntered: secondMarginTop
@@ -84,7 +84,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   if (thirdMarginTop !== THIRD_MARGIN_TOP) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        elementName: 'third <div>',
+        targetName: 'third <div>',
         propName: 'marginTop',
         correctValue: THIRD_MARGIN_TOP,
         valueEntered: thirdMarginTop

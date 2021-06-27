@@ -3,13 +3,15 @@ import {
   getAstProps,
   filterElementsByType,
   getElementStyleProps,
-  returnStyleErrorMsg
+  returnStyleErrorMsg,
+  returnInnerTextErrorMsg,
+  getElementInnerText
 } from '../../helpers';
 import { Color } from 'constants/css';
 
 const HEADING_LABEL = (username) => `${username}'s website`;
-const ALIGN_ITEMS = 'center';
-const BUTTON_MARGIN_TOP = '2rem';
+const SUBHEADING_LABEL = 'click the buttons below';
+const MARGIN_BOTTOM = '10rem';
 
 export const title = `Add a Heading and a Subheading`;
 export const instruction = ({ username }) => (
@@ -30,7 +32,7 @@ export const instruction = ({ username }) => (
     <div>
       write{' '}
       <b>
-        <i>{`<h2>click the buttons below</h2>`}</i>
+        <i>{`<h2>${SUBHEADING_LABEL}</h2>`}</i>
       </b>
     </div>
     <div>
@@ -38,7 +40,7 @@ export const instruction = ({ username }) => (
     </div>
     <div style={{ marginTop: '2rem' }}>
       Set your <b>subheading</b>
-      {`'s`} <b>marginBottom</b> value to <b>{`"10rem"`}</b>
+      {`'s`} <b>marginBottom</b> value to <b>{`"${MARGIN_BOTTOM}"`}</b>
     </div>
     <div style={{ marginTop: '2rem' }}>
       Tap the <b style={{ color: Color.logoBlue() }}>format</b> button
@@ -93,72 +95,87 @@ export const initialCode = `function HomePage() {
 }`;
 
 export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
-  let divAlignItems = '';
-  let buttonMarginTop = '';
+  let headingLabel = '';
+  let subheadingLabel = '';
+  let subheadingMarginBottom = '';
   const jsxElements = getAstProps({
     ast,
     propType: 'JSXElement'
   });
-  const divElements = filterElementsByType({
+  const headingElements = filterElementsByType({
     elements: jsxElements,
-    filter: 'div'
+    filter: 'h1'
   });
-  const divElement = divElements[0];
-  const buttonElements = filterElementsByType({
+  const headingElement = headingElements[0];
+  const subheadingElements = filterElementsByType({
     elements: jsxElements,
-    filter: 'button'
+    filter: 'h2'
   });
-  const buttonElement = buttonElements[1];
-  if (divElement) {
-    const styleProps = getElementStyleProps(divElement.openingElement);
+  const subheadingElement = subheadingElements[0];
+  if (headingElement) {
+    headingLabel = getElementInnerText(headingElement);
+  }
+  if (subheadingElement) {
+    subheadingLabel = getElementInnerText(subheadingElement);
+    const styleProps = getElementStyleProps(subheadingElement.openingElement);
     for (let prop of styleProps) {
       const propName = prop?.key?.name;
       const propValue = prop?.value?.value;
-      if (propName === 'alignItems') {
-        divAlignItems = propValue;
+      if (propName === 'marginBottom') {
+        subheadingMarginBottom = propValue;
       }
     }
   }
-  if (buttonElement) {
-    const styleProps = getElementStyleProps(buttonElement.openingElement);
-    for (let prop of styleProps) {
-      const propName = prop?.key?.name;
-      const propValue = prop?.value?.value;
-      if (propName === 'marginTop') {
-        buttonMarginTop = propValue;
-      }
-    }
-  }
-  if (divAlignItems === ALIGN_ITEMS && buttonMarginTop === BUTTON_MARGIN_TOP) {
+  const headingMatches =
+    headingLabel.trim().toLowerCase() === HEADING_LABEL.toLowerCase();
+  const subheadingMatches =
+    subheadingLabel.trim().toLowerCase() === SUBHEADING_LABEL.toLowerCase();
+  if (
+    headingMatches &&
+    subheadingMatches &&
+    subheadingMarginBottom === MARGIN_BOTTOM
+  ) {
     return await onUpdateMissionStatus();
   }
-  if (!divElement) {
+  if (!headingElement) {
     return onSetErrorMsg(
       <>
-        {`Where's`} the <b>{`<div></div>`}</b> pair?
+        {`Where's`} the <b>{`<h1></h1>`}</b> pair?
       </>
     );
   }
-  if (divAlignItems !== ALIGN_ITEMS) {
+  if (!headingMatches) {
     return onSetErrorMsg(
-      returnStyleErrorMsg({
-        elementName: '<div>',
-        propName: 'alignItems',
-        correctValue: ALIGN_ITEMS,
-        valueEntered: divAlignItems
+      returnInnerTextErrorMsg({
+        targetName: 'heading',
+        correctValue: HEADING_LABEL,
+        valueEntered: headingLabel
       })
     );
   }
-  if (!buttonElement) {
-    return onSetErrorMsg(`Did you delete the second button?`);
+  if (!subheadingElement) {
+    return (
+      <>
+        {`Where's`} the <b>{`<h2></h2>`}</b> pair?
+      </>
+    );
   }
-  if (buttonMarginTop !== BUTTON_MARGIN_TOP) {
+  if (!subheadingMatches) {
+    return onSetErrorMsg(
+      returnInnerTextErrorMsg({
+        targetName: 'subheading',
+        correctValue: SUBHEADING_LABEL,
+        valueEntered: subheadingLabel
+      })
+    );
+  }
+  if (subheadingMarginBottom !== MARGIN_BOTTOM) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        elementName: 'second button',
-        propName: 'marginTop',
-        correctValue: BUTTON_MARGIN_TOP,
-        valueEntered: buttonMarginTop
+        targetName: 'subheading',
+        propName: 'marginBottom',
+        correctValue: MARGIN_BOTTOM,
+        valueEntered: subheadingMarginBottom
       })
     );
   }

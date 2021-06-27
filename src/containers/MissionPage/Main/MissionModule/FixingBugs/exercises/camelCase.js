@@ -63,7 +63,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   if (fontSize !== FONT_SIZE) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        elementName: 'second <div>',
+        targetName: 'second <div>',
         propName: 'fontSize',
         correctValue: FONT_SIZE,
         valueEntered: fontSize

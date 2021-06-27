@@ -89,7 +89,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   if (divWidth !== WIDTH) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        elementName: '<div>',
+        targetName: '<div>',
         propName: 'width',
         correctValue: WIDTH,
         valueEntered: divWidth
@@ -99,7 +99,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   if (divDisplay !== DISPLAY) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        elementName: '<div>',
+        targetName: '<div>',
         propName: 'display',
         correctValue: DISPLAY,
         valueEntered: divDisplay
@@ -109,7 +109,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   if (divJustifyContent !== JUSTIFY_CONTENT) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        elementName: '<div>',
+        targetName: '<div>',
         propName: 'justifyContent',
         correctValue: JUSTIFY_CONTENT,
         valueEntered: divJustifyContent
