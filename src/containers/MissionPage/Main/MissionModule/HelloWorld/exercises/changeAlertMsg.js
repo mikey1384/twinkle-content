@@ -11,7 +11,10 @@ export const title = `Hello World`;
 export const instruction = (
   <>
     Make it so that when you tap the <b>Tap me</b> button you get an alert
-    message that says {`"${ALERT_MSG}"`}
+    message that says{' '}
+    <b>
+      <i>{`"${ALERT_MSG}"`}</i>
+    </b>
   </>
 );
 export const initialCode = `function HomePage() {

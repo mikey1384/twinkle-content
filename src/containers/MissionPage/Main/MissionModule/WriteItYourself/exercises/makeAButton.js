@@ -19,7 +19,10 @@ export const instruction = (
   <>
     <div>
       Make a <b style={{ color: 'blue' }}>blue</b> button with <b>white</b> text
-      that says <b>{`${BUTTON_LABEL}`}</b>
+      that says{' '}
+      <b>
+        <i>{`${BUTTON_LABEL}`}</i>
+      </b>
     </div>
     <div>
       Give the button a <b>padding</b> of <b>{`"${PADDING}"`}</b> and set its{' '}
@@ -27,7 +30,9 @@ export const instruction = (
     </div>
     <div>
       Make it so that when you tap/click the button you get a popup saying{' '}
-      <b>{`"${ALERT_TEXT}"`}</b>
+      <b>
+        <i>{`"${ALERT_TEXT}"`}</i>
+      </b>
     </div>
     <div style={{ marginTop: '2rem' }}>
       <button

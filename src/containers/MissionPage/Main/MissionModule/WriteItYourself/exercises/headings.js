@@ -7,7 +7,7 @@ import {
 } from '../../helpers';
 import { Color } from 'constants/css';
 
-const FLEX_DIRECTION = 'column';
+const HEADING_LABEL = (username) => `${username}'s website`;
 const ALIGN_ITEMS = 'center';
 const BUTTON_MARGIN_TOP = '2rem';
 
@@ -15,8 +15,11 @@ export const title = `Add a Heading and a Subheading`;
 export const instruction = ({ username }) => (
   <>
     <div>
-      Write <b>{`${username}'s website`}</b> between <b>{`<h1>`}</b> and{' '}
-      <b>{`</h1>`}</b>
+      Write{' '}
+      <b>
+        <i>{HEADING_LABEL(username)}</i>
+      </b>{' '}
+      between <b>{`<h1>`}</b> and <b>{`</h1>`}</b>
     </div>
     <div>
       This is your {`website's`} <b>heading</b>
@@ -25,7 +28,10 @@ export const instruction = ({ username }) => (
       In the empty line right below <b>{`<h1>${username}'s website</h1>`}</b>,
     </div>
     <div>
-      write <b>{`<h2>click the buttons below</h2>`}</b>
+      write{' '}
+      <b>
+        <i>{`<h2>click the buttons below</h2>`}</i>
+      </b>
     </div>
     <div>
       This is your <b>subheading</b>
@@ -87,7 +93,6 @@ export const initialCode = `function HomePage() {
 }`;
 
 export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
-  let divFlexDirection = '';
   let divAlignItems = '';
   let buttonMarginTop = '';
   const jsxElements = getAstProps({
@@ -109,9 +114,6 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
     for (let prop of styleProps) {
       const propName = prop?.key?.name;
       const propValue = prop?.value?.value;
-      if (propName === 'flexDirection') {
-        divFlexDirection = propValue;
-      }
       if (propName === 'alignItems') {
         divAlignItems = propValue;
       }
@@ -127,11 +129,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
       }
     }
   }
-  if (
-    divFlexDirection === FLEX_DIRECTION &&
-    divAlignItems === ALIGN_ITEMS &&
-    buttonMarginTop === BUTTON_MARGIN_TOP
-  ) {
+  if (divAlignItems === ALIGN_ITEMS && buttonMarginTop === BUTTON_MARGIN_TOP) {
     return await onUpdateMissionStatus();
   }
   if (!divElement) {
@@ -139,16 +137,6 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
       <>
         {`Where's`} the <b>{`<div></div>`}</b> pair?
       </>
-    );
-  }
-  if (divFlexDirection !== FLEX_DIRECTION) {
-    return onSetErrorMsg(
-      returnStyleErrorMsg({
-        elementName: '<div>',
-        propName: 'flexDirection',
-        correctValue: FLEX_DIRECTION,
-        valueEntered: divFlexDirection
-      })
     );
   }
   if (divAlignItems !== ALIGN_ITEMS) {

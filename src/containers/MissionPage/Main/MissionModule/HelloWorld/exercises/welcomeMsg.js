@@ -6,8 +6,11 @@ import { stringIsEmpty } from 'helpers/stringHelpers';
 export const title = `Welcoming Your Visitors`;
 export const instruction = (
   <>
-    Type a message that says <b>{WELCOME_MSG}</b> between <b>{`<p>`}</b> and{' '}
-    <b>{`</p>`}</b>
+    Type a message that says{' '}
+    <b>
+      <i>{WELCOME_MSG}</i>
+    </b>{' '}
+    between <b>{`<p>`}</b> and <b>{`</p>`}</b>
   </>
 );
 export const initialCode = `function HomePage() {

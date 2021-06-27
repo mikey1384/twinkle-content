@@ -12,8 +12,10 @@ export const title = `Tap Me`;
 export const instruction = (
   <>
     Change the label of the button from <b>Change me</b> to{' '}
-    <b>{BUTTON_LABEL}</b> and tap the{' '}
-    <b style={{ color: Color.green() }}>check</b> button
+    <b>
+      <i>{BUTTON_LABEL}</i>
+    </b>{' '}
+    and tap the <b style={{ color: Color.green() }}>check</b> button
   </>
 );
 export const initialCode = `function HomePage() {
