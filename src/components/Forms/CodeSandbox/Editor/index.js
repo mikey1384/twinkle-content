@@ -1,6 +1,6 @@
 import React, { createElement, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import Compiler from './Compiler';
+import Preview from './Preview';
 import SimpleEditor from 'react-simple-code-editor';
 import okaidia from 'prism-react-renderer/themes/okaidia';
 import Highlight, { Prism } from 'prism-react-renderer';
@@ -123,7 +123,7 @@ export default function Editor({
 
   return (
     <div style={{ width: '100%', ...style }}>
-      <Compiler style={{ marginBottom: '5rem' }}>{CompiledElement}</Compiler>
+      <Preview style={{ marginBottom: '5rem' }}>{CompiledElement}</Preview>
       <style
         dangerouslySetInnerHTML={{
           __html: `.npm__react-simple-code-editor__textarea { outline: none !important; }`
@@ -158,7 +158,7 @@ export default function Editor({
           {error}
         </p>
       )}
-      <Compiler style={{ marginTop: '5rem' }}>{CompiledElement}</Compiler>
+      <Preview style={{ marginTop: '5rem' }}>{CompiledElement}</Preview>
       <style
         dangerouslySetInnerHTML={{
           __html: `.npm__react-simple-code-editor__textarea { outline: none !important; }`

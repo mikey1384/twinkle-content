@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { css } from '@emotion/css';
 
-Compiler.propTypes = {
+Preview.propTypes = {
   style: PropTypes.object,
   children: PropTypes.node
 };
 
-export default function Compiler({ style, children }) {
+export default function Preview({ style, children }) {
   return (
     <div
       style={{
