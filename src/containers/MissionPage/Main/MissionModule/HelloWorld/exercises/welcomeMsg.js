@@ -6,7 +6,7 @@ import {
   returnInnerTextErrorMsg
 } from '../../helpers';
 
-export const title = `Welcoming Your Visitors`;
+export const title = `Welcome Your Visitors`;
 export const instruction = (
   <>
     Type a message that says{' '}

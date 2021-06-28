@@ -9,7 +9,7 @@ import {
 
 const FONT_SIZE = '2rem';
 const FONT_WEIGHT = 'bold';
-export const title = `Changing the Font`;
+export const title = `Make the Text Bigger and Thicker`;
 export const instruction = (
   <>
     Change the <b>fontWeight</b> of your welcome message (
