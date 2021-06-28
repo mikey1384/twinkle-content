@@ -183,8 +183,9 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   if (!onClickFunc) {
     return onSetErrorMsg(
       <>
-        The button {`doesn't`} have an <b>onClick</b> property. Please check
-        your code
+        Right now the button {`doesn't`} do anything when you click it. Add an{' '}
+        <b>onClick</b> property containing the function:{' '}
+        <b>{`() => alert("${ALERT_TEXT}")`}</b>
       </>
     );
   }
