@@ -69,6 +69,7 @@ export default function CodeSandbox({
         onSetAst={setAst}
         ast={ast}
         onParse={handleParse}
+        onClearTimeout={() => clearTimeout(timerRef.current)}
         onSetErrorMsg={onSetErrorMsg}
       />
       <div

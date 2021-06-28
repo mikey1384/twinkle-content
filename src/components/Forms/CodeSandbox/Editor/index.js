@@ -18,7 +18,8 @@ Editor.propTypes = {
   ast: PropTypes.object,
   onParse: PropTypes.func.isRequired,
   onSetErrorMsg: PropTypes.func,
-  style: PropTypes.object
+  style: PropTypes.object,
+  onClearTimeout: PropTypes.func.isRequired
 };
 
 export default function Editor({
@@ -29,6 +30,7 @@ export default function Editor({
   onSetAst,
   onParse,
   onSetErrorMsg,
+  onClearTimeout,
   style
 }) {
   const {
@@ -38,6 +40,7 @@ export default function Editor({
   const [errorLineNumber, setErrorLineNumber] = useState(null);
 
   useEffect(() => {
+    onClearTimeout();
     setError('');
     setErrorLineNumber(0);
     handleTranspile(value);
