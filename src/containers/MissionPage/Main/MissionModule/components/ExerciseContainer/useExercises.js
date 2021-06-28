@@ -38,7 +38,10 @@ export default function useExercises({
     return {
       title: exercises[exerciseKey].title,
       code: codeObj?.[exerciseKey],
-      initialCode: exercises[exerciseKey].initialCode,
+      initialCode:
+        typeof exercises[exerciseKey].initialCode === 'function'
+          ? exercises[exerciseKey].initialCode({ username })
+          : exercises[exerciseKey].initialCode,
       instruction:
         typeof exercises[exerciseKey].instruction === 'function'
           ? exercises[exerciseKey].instruction({ username })
