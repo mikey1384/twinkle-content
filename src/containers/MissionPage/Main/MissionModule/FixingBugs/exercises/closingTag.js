@@ -5,8 +5,8 @@ import {
   returnStyleErrorMsg
 } from '../../helpers';
 
-const SECOND_MARGIN_TOP = '2rem';
 const THIRD_MARGIN_TOP = '2rem';
+const FOURTH_MARGIN_TOP = '2rem';
 
 export const title = `All Tags Must Be Closed`;
 export const instruction = `Can you fix the bug in the code below?`;
@@ -20,9 +20,10 @@ export const initialCode = `function HomePage() {
         textAlign: "center"
       }}
     >
-      <div>All Tags</div>
-      <div style={{ marginTop: "${SECOND_MARGIN_TOP}" }}>Must</div>
-      <div style={{ marginTop: "${THIRD_MARGIN_TOP}" }}>Be Closed</div>
+      <div>All tags</div>
+      <div>${`{"That Were Opened <div>"}`}</div>
+      <div style={{ marginTop: "${THIRD_MARGIN_TOP}" }}>Must</div>
+      <div style={{ marginTop: "${FOURTH_MARGIN_TOP}" }}>${`{"Be Closed </div>"}`}</div>
     <div>
   );
 }`;
@@ -32,8 +33,8 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     ast,
     propType: 'JSXElement'
   });
-  let secondMarginTop = '';
   let thirdMarginTop = '';
+  let fourthMarginTop = '';
   const dividers = filterElementsByType({
     elements: jsxElements,
     filter: 'div'
@@ -42,17 +43,6 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     const JSXChildren = divider.children.filter(
       (child) => child.type === 'JSXElement'
     );
-    const secondChild = JSXChildren?.[1];
-    if (secondChild) {
-      const secondChildStyleProps = getElementStyleProps(
-        secondChild.openingElement
-      );
-      for (let prop of secondChildStyleProps) {
-        if (prop?.key?.name === 'marginTop') {
-          secondMarginTop = prop?.value?.value;
-        }
-      }
-    }
     const thirdChild = JSXChildren?.[2];
     if (thirdChild) {
       const thirdChildStyleProps = getElementStyleProps(
@@ -64,22 +54,23 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
         }
       }
     }
+    const fourthChild = JSXChildren?.[3];
+    if (fourthChild) {
+      const fourthChildStyleProps = getElementStyleProps(
+        fourthChild.openingElement
+      );
+      for (let prop of fourthChildStyleProps) {
+        if (prop?.key?.name === 'marginTop') {
+          fourthMarginTop = prop?.value?.value;
+        }
+      }
+    }
   }
   if (
-    secondMarginTop === SECOND_MARGIN_TOP &&
-    thirdMarginTop === THIRD_MARGIN_TOP
+    thirdMarginTop === THIRD_MARGIN_TOP &&
+    fourthMarginTop === FOURTH_MARGIN_TOP
   ) {
     return await onUpdateMissionStatus();
-  }
-  if (secondMarginTop !== SECOND_MARGIN_TOP) {
-    return onSetErrorMsg(
-      returnStyleErrorMsg({
-        targetName: 'second <div>',
-        propName: 'marginTop',
-        correctValue: SECOND_MARGIN_TOP,
-        valueEntered: secondMarginTop
-      })
-    );
   }
   if (thirdMarginTop !== THIRD_MARGIN_TOP) {
     return onSetErrorMsg(
@@ -88,6 +79,16 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
         propName: 'marginTop',
         correctValue: THIRD_MARGIN_TOP,
         valueEntered: thirdMarginTop
+      })
+    );
+  }
+  if (fourthMarginTop !== FOURTH_MARGIN_TOP) {
+    return onSetErrorMsg(
+      returnStyleErrorMsg({
+        targetName: 'fourth <div>',
+        propName: 'marginTop',
+        correctValue: FOURTH_MARGIN_TOP,
+        valueEntered: fourthMarginTop
       })
     );
   }
