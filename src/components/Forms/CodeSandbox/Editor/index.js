@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { createElement, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Compiler from './Compiler';
 import SimpleEditor from 'react-simple-code-editor';
 import okaidia from 'prism-react-renderer/themes/okaidia';
 import Highlight, { Prism } from 'prism-react-renderer';
-import { Color } from 'constants/css';
 import traverse from '@babel/traverse';
+import presetReact from '@babel/preset-react';
+import { useAppContext } from 'contexts';
+import { Color } from 'constants/css';
+import { transformFromAstSync } from '@babel/core';
 
 Editor.propTypes = {
   value: PropTypes.string,
@@ -15,7 +18,6 @@ Editor.propTypes = {
   ast: PropTypes.object,
   onParse: PropTypes.func.isRequired,
   onSetErrorMsg: PropTypes.func,
-  simulatorRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   style: PropTypes.object
 };
 
@@ -27,29 +29,101 @@ export default function Editor({
   onSetAst,
   onParse,
   onSetErrorMsg,
-  simulatorRef,
   style
 }) {
+  const {
+    requestHelpers: { lintCode }
+  } = useAppContext();
   const [error, setError] = useState('');
   const [errorLineNumber, setErrorLineNumber] = useState(null);
 
+  useEffect(() => {
+    setError('');
+    setErrorLineNumber(0);
+    handleTranspile(value);
+
+    async function handleTranspile(code) {
+      try {
+        const results = await lintCode(code);
+        if (results[0]) {
+          return handleSetError({
+            error: results[0].message.split('[')[0],
+            lineNumber: results[0].line
+          });
+        }
+        const ast = onParse(code);
+        onSetAst(ast);
+      } catch (error) {
+        const errorString = error.toString();
+        handleSetError({
+          error: errorString,
+          lineNumber: getErrorLineNumber(errorString)
+        });
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+
+  const CompiledElement = useMemo(
+    () => {
+      if (ast) {
+        const component = handleGenerateElement(
+          handleEvalCode(handleTransformBeforeCompilation(ast)),
+          (error) => {
+            const errorString = error.toString();
+            handleSetError({
+              error: errorString,
+              lineNumber: getErrorLineNumber(errorString)
+            });
+          }
+        );
+        return createElement(component, null);
+      }
+      return null;
+
+      function handleGenerateElement(code, errorCallback) {
+        return errorBoundary(code, errorCallback);
+        function errorBoundary(Element, errorCallback) {
+          class ErrorBoundary extends React.Component {
+            state = { hasError: false };
+            componentDidCatch(error) {
+              return errorCallback(error);
+            }
+            render() {
+              return typeof Element === 'function'
+                ? createElement(Element, null)
+                : Element;
+            }
+          }
+          return ErrorBoundary;
+        }
+      }
+
+      function handleEvalCode(ast) {
+        try {
+          const transformedCode = transformFromAstSync(ast, undefined, {
+            presets: [presetReact],
+            inputSourceMap: false,
+            sourceMaps: false,
+            comments: false
+          });
+          const resultCode = transformedCode ? transformedCode.code : '';
+          // eslint-disable-next-line no-new-func
+          const res = new Function('React', `return ${resultCode}`);
+          return res(React);
+        } catch (error) {
+          setError(error.toString());
+          return null;
+        }
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [ast]
+  );
+
   return (
     <div style={{ width: '100%', ...style }}>
-      <Compiler
-        code={value}
-        ast={ast}
-        onSetAst={onSetAst}
-        transformation={handleTransformBeforeCompilation}
-        onParse={onParse}
-        onSetError={({ error, lineNumber }) => {
-          setError(error);
-          setErrorLineNumber(lineNumber);
-          if (error) {
-            onSetErrorMsg?.(`There's a bug in your code. Please fix it first`);
-          }
-        }}
-        simulatorRef={simulatorRef}
-      />
+      <Compiler style={{ marginBottom: '5rem' }}>{CompiledElement}</Compiler>
       <style
         dangerouslySetInnerHTML={{
           __html: `.npm__react-simple-code-editor__textarea { outline: none !important; }`
@@ -59,7 +133,6 @@ export default function Editor({
         value={valueOnTextEditor}
         onValueChange={onChange}
         style={{
-          marginTop: '5rem',
           fontSize: '1.3rem',
           color: '#fff',
           backgroundColor: 'rgb(39, 40, 34)',
@@ -85,22 +158,7 @@ export default function Editor({
           {error}
         </p>
       )}
-      <Compiler
-        style={{ marginTop: '5rem' }}
-        code={value}
-        ast={ast}
-        onSetAst={onSetAst}
-        transformation={handleTransformBeforeCompilation}
-        onParse={onParse}
-        onSetError={({ error, lineNumber }) => {
-          setError(error);
-          setErrorLineNumber(lineNumber);
-          if (error) {
-            onSetErrorMsg?.(`There's a bug in your code. Please fix it first`);
-          }
-        }}
-        simulatorRef={simulatorRef}
-      />
+      <Compiler style={{ marginTop: '5rem' }}>{CompiledElement}</Compiler>
       <style
         dangerouslySetInnerHTML={{
           __html: `.npm__react-simple-code-editor__textarea { outline: none !important; }`
@@ -108,6 +166,13 @@ export default function Editor({
       />
     </div>
   );
+
+  function getErrorLineNumber(errorString) {
+    const firstCut = errorString?.split('(')?.[1];
+    const secondCut = firstCut?.split(':')?.[0];
+    const errorLineNumber = Number(secondCut);
+    return isNaN(errorLineNumber) || !errorLineNumber ? 0 : errorLineNumber;
+  }
 
   function handleHighlightCode({ code, theme }) {
     return (
@@ -142,6 +207,14 @@ export default function Editor({
         )}
       </Highlight>
     );
+  }
+
+  function handleSetError({ error, lineNumber }) {
+    setError(error);
+    setErrorLineNumber(lineNumber);
+    if (error) {
+      onSetErrorMsg?.(`There's a bug in your code. Please fix it first`);
+    }
   }
 
   function handleTransformBeforeCompilation(ast) {

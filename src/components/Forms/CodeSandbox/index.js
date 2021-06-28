@@ -19,8 +19,7 @@ CodeSandbox.propTypes = {
   passed: PropTypes.bool,
   prevUserId: PropTypes.number,
   runButtonLabel: PropTypes.string,
-  style: PropTypes.object,
-  simulatorRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
+  style: PropTypes.object
 };
 
 export default function CodeSandbox({
@@ -33,7 +32,6 @@ export default function CodeSandbox({
   passed,
   prevUserId,
   runButtonLabel = 'Run',
-  simulatorRef,
   style
 }) {
   const {
@@ -72,7 +70,6 @@ export default function CodeSandbox({
         ast={ast}
         onParse={handleParse}
         onSetErrorMsg={onSetErrorMsg}
-        simulatorRef={simulatorRef}
       />
       <div
         style={{
