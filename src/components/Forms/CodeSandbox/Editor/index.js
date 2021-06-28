@@ -55,38 +55,38 @@ export default function Editor({
           __html: `.npm__react-simple-code-editor__textarea { outline: none !important; }`
         }}
       />
-      <div style={{ marginTop: '2rem', marginBottom: '2rem' }}>
-        <SimpleEditor
-          value={valueOnTextEditor}
-          onValueChange={onChange}
+      <SimpleEditor
+        value={valueOnTextEditor}
+        onValueChange={onChange}
+        style={{
+          marginTop: '5rem',
+          fontSize: '1.3rem',
+          color: '#fff',
+          backgroundColor: 'rgb(39, 40, 34)',
+          fontFamily: `Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace`,
+          margin: 0
+        }}
+        highlight={(code) =>
+          handleHighlightCode({
+            code,
+            theme: okaidia
+          })
+        }
+        padding={8}
+      />
+      {error && (
+        <p
           style={{
-            fontSize: '1.3rem',
-            color: '#fff',
-            backgroundColor: 'rgb(39, 40, 34)',
-            fontFamily: `Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace`,
-            margin: 0
+            color: Color.rose(),
+            marginTop: '0.5rem',
+            fontSize: '1.5rem'
           }}
-          highlight={(code) =>
-            handleHighlightCode({
-              code,
-              theme: okaidia
-            })
-          }
-          padding={8}
-        />
-        {error && (
-          <p
-            style={{
-              color: Color.rose(),
-              marginTop: '0.5rem',
-              fontSize: '1.5rem'
-            }}
-          >
-            {error}
-          </p>
-        )}
-      </div>
+        >
+          {error}
+        </p>
+      )}
       <Compiler
+        style={{ marginTop: '5rem' }}
         code={value}
         ast={ast}
         onSetAst={onSetAst}

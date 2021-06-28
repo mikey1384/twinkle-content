@@ -12,6 +12,7 @@ Compiler.propTypes = {
   onSetAst: PropTypes.func,
   onSetError: PropTypes.func,
   simulatorRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  style: PropTypes.object,
   transformation: PropTypes.func
 };
 
@@ -22,7 +23,8 @@ export default function Compiler({
   onSetError,
   onSetAst,
   simulatorRef,
-  transformation
+  transformation,
+  style
 }) {
   const {
     requestHelpers: { lintCode }
@@ -124,7 +126,8 @@ export default function Compiler({
   return (
     <div
       style={{
-        width: '100%'
+        width: '100%',
+        ...style
       }}
       className={css`
         font-size: 1rem;

@@ -103,6 +103,7 @@ export default function ExerciseContainer({
           `}
         >
           <CodeSandbox
+            style={{ marginTop: '5rem' }}
             code={exercise.code || exercise.initialCode}
             initialCode={exercise.initialCode}
             onSetCode={exercise.onSetCode}

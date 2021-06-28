@@ -19,6 +19,7 @@ CodeSandbox.propTypes = {
   passed: PropTypes.bool,
   prevUserId: PropTypes.number,
   runButtonLabel: PropTypes.string,
+  style: PropTypes.object,
   simulatorRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
 };
 
@@ -32,7 +33,8 @@ export default function CodeSandbox({
   passed,
   prevUserId,
   runButtonLabel = 'Run',
-  simulatorRef
+  simulatorRef,
+  style
 }) {
   const {
     requestHelpers: { formatCode }
@@ -58,11 +60,11 @@ export default function CodeSandbox({
         display: 'flex',
         width: '100%',
         flexDirection: 'column',
-        alignItems: 'center'
+        alignItems: 'center',
+        ...style
       }}
     >
       <Editor
-        style={{ marginTop: '2rem' }}
         value={globalCode}
         valueOnTextEditor={code}
         onChange={handleSetCode}
