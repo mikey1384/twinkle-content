@@ -218,6 +218,13 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
       })
     );
   }
+  if (!firstButton) {
+    return onSetErrorMsg(
+      <>
+        {`Don't`} delete the <b>buttons</b>
+      </>
+    );
+  }
   if (firstButtonFontFamily !== BUTTON_FONT_FAMILY) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
@@ -226,6 +233,13 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
         correctValue: BUTTON_FONT_FAMILY,
         valueEntered: firstButtonFontFamily
       })
+    );
+  }
+  if (!secondButton) {
+    return onSetErrorMsg(
+      <>
+        {`Don't`} delete the <b>second button</b>
+      </>
     );
   }
   if (secondButtonFontFamily !== BUTTON_FONT_FAMILY) {
