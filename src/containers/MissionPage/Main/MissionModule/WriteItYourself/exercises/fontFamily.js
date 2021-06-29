@@ -1,32 +1,35 @@
 import React from 'react';
 import {
   getAstProps,
-  filterElementsByType,
   getElementStyleProps,
   returnStyleErrorMsg,
-  returnInnerTextErrorMsg,
-  getElementInnerText
+  filterOpeningElementsByType
 } from '../../helpers';
 
-const HEADING_LABEL = (username) => `${username}'s website`;
-const SUBHEADING_LABEL = 'click the buttons below';
-const MARGIN_BOTTOM = '10rem';
+const HEADING_FONT_FAMILY = 'fantasy';
+const HEADING_COLOR = '#4B9BE1';
+const SUBHEADING_FONT_FAMILY = 'cursive';
+const SUBHEADING_COLOR = 'rgb(243, 103, 123)';
+const BUTTON_FONT_FAMILY = 'monospace';
 
 export const title = `Change the Font Styles`;
 export const instruction = (
   <>
     <div>
       Set the <b>heading</b>
-      {`'s`} <b>fontFamily</b> to <b>{`"fantasy"`}</b> and its <b>color</b> to{' '}
-      <b style={{ color: '#4B9BE1' }}>{`"#4B9BE1"`}</b>
+      {`'s`} <b>fontFamily</b> to <b>{`"${HEADING_FONT_FAMILY}"`}</b> and its{' '}
+      <b>color</b> to{' '}
+      <b style={{ color: HEADING_COLOR }}>{`"${HEADING_COLOR}"`}</b>
     </div>
     <div>
       Set the <b>subheading</b>
-      {`'s`} <b>fontFamily</b> to <b>{`"cursive"`}</b> and its <b>color</b> to{' '}
-      <b style={{ color: 'rgb(243, 103, 123)' }}>{`"rgb(243, 103, 123)"`}</b>
+      {`'s`} <b>fontFamily</b> to <b>{`"${SUBHEADING_FONT_FAMILY}"`}</b> and its{' '}
+      <b>color</b> to{' '}
+      <b style={{ color: SUBHEADING_COLOR }}>{`"${SUBHEADING_COLOR}"`}</b>
     </div>
     <div>
-      Set <b>both button{`s'`}</b> <b>fontFamily</b> to <b>{`"monospace"`}</b>
+      Set <b>both button{`s'`}</b> <b>fontFamily</b> to{' '}
+      <b>{`"${BUTTON_FONT_FAMILY}"`}</b>
     </div>
   </>
 );
@@ -77,94 +80,161 @@ export const initialCode = ({ username }) => `function HomePage() {
   );
 }`;
 
-export async function onRunCode({
-  ast,
-  onUpdateMissionStatus,
-  onSetErrorMsg,
-  username
-}) {
-  let headingLabel = '';
-  let subheadingLabel = '';
-  let subheadingMarginBottom = '';
+export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
+  let headingFontFamily = '';
+  let headingColor = '';
+  let subheadingFontFamily = '';
+  let subheadingColor = '';
+  let firstButtonFontFamily = '';
+  let secondButtonFontFamily = '';
   const jsxElements = getAstProps({
     ast,
     propType: 'JSXElement'
   });
-  const headingElements = filterElementsByType({
+  const headingElements = filterOpeningElementsByType({
     elements: jsxElements,
     filter: 'h1'
   });
   const headingElement = headingElements[0];
-  const subheadingElements = filterElementsByType({
+  if (headingElement) {
+    const styleProps = getElementStyleProps(headingElement);
+    for (let prop of styleProps) {
+      const propName = prop?.key?.name;
+      const propValue = prop?.value?.value;
+      if (propName === 'fontFamily') {
+        headingFontFamily = propValue;
+      }
+      if (propName === 'color') {
+        headingColor = propValue;
+      }
+    }
+  }
+  const subheadingElements = filterOpeningElementsByType({
     elements: jsxElements,
     filter: 'h2'
   });
   const subheadingElement = subheadingElements[0];
-  if (headingElement) {
-    headingLabel = getElementInnerText(headingElement);
-  }
   if (subheadingElement) {
-    subheadingLabel = getElementInnerText(subheadingElement);
-    const styleProps = getElementStyleProps(subheadingElement.openingElement);
+    const styleProps = getElementStyleProps(subheadingElement);
     for (let prop of styleProps) {
       const propName = prop?.key?.name;
       const propValue = prop?.value?.value;
-      if (propName === 'marginBottom') {
-        subheadingMarginBottom = propValue;
+      if (propName === 'fontFamily') {
+        subheadingFontFamily = propValue;
+      }
+      if (propName === 'color') {
+        subheadingColor = propValue;
       }
     }
   }
-  const headingMatches =
-    headingLabel.trim().toLowerCase() === HEADING_LABEL(username).toLowerCase();
-  const subheadingMatches =
-    subheadingLabel.trim().toLowerCase() === SUBHEADING_LABEL.toLowerCase();
+  const buttons = filterOpeningElementsByType({
+    elements: jsxElements,
+    filter: 'button'
+  });
+  const firstButton = buttons[0];
+  if (firstButton) {
+    const styleProps = getElementStyleProps(firstButton);
+    for (let prop of styleProps) {
+      const propName = prop?.key?.name;
+      const propValue = prop?.value?.value;
+      if (propName === 'fontFamily') {
+        firstButtonFontFamily = propValue;
+      }
+    }
+  }
+  const secondButton = buttons[0];
+  if (secondButton) {
+    const styleProps = getElementStyleProps(firstButton);
+    for (let prop of styleProps) {
+      const propName = prop?.key?.name;
+      const propValue = prop?.value?.value;
+      if (propName === 'fontFamily') {
+        secondButtonFontFamily = propValue;
+      }
+    }
+  }
+
   if (
-    headingMatches &&
-    subheadingMatches &&
-    subheadingMarginBottom === MARGIN_BOTTOM
+    headingFontFamily === HEADING_FONT_FAMILY &&
+    headingColor === HEADING_COLOR &&
+    subheadingFontFamily === SUBHEADING_FONT_FAMILY &&
+    subheadingColor === SUBHEADING_COLOR &&
+    firstButtonFontFamily === BUTTON_FONT_FAMILY &&
+    secondButtonFontFamily === BUTTON_FONT_FAMILY
   ) {
     return await onUpdateMissionStatus();
   }
   if (!headingElement) {
     return onSetErrorMsg(
       <>
-        {`Where's`} the <b>{`<h1></h1>`}</b> pair?
+        {`Don't`} delete the <b>heading</b>
       </>
     );
   }
-  if (!headingMatches) {
+  if (headingFontFamily !== HEADING_FONT_FAMILY) {
     return onSetErrorMsg(
-      returnInnerTextErrorMsg({
+      returnStyleErrorMsg({
         targetName: '<h1></h1>',
-        correctValue: HEADING_LABEL(username),
-        valueEntered: headingLabel
+        propName: 'fontFamily',
+        correctValue: HEADING_FONT_FAMILY,
+        valueEntered: headingFontFamily
+      })
+    );
+  }
+  if (headingColor !== HEADING_COLOR) {
+    return onSetErrorMsg(
+      returnStyleErrorMsg({
+        targetName: '<h1></h1>',
+        propName: 'color',
+        correctValue: HEADING_COLOR,
+        valueEntered: headingColor
       })
     );
   }
   if (!subheadingElement) {
     return onSetErrorMsg(
       <>
-        Please write <b>{`<h2>${SUBHEADING_LABEL}</h2>`}</b> in the empty line
-        below the heading
+        {`Don't`} delete the <b>subheading</b>
       </>
     );
   }
-  if (!subheadingMatches) {
+  if (subheadingFontFamily !== SUBHEADING_FONT_FAMILY) {
     return onSetErrorMsg(
-      returnInnerTextErrorMsg({
+      returnStyleErrorMsg({
         targetName: '<h2></h2>',
-        correctValue: SUBHEADING_LABEL,
-        valueEntered: subheadingLabel
+        propName: 'fontFamily',
+        correctValue: SUBHEADING_FONT_FAMILY,
+        valueEntered: subheadingFontFamily
       })
     );
   }
-  if (subheadingMarginBottom !== MARGIN_BOTTOM) {
+  if (subheadingColor !== SUBHEADING_COLOR) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        targetName: 'subheading',
-        propName: 'marginBottom',
-        correctValue: MARGIN_BOTTOM,
-        valueEntered: subheadingMarginBottom
+        targetName: '<h2></h2>',
+        propName: 'color',
+        correctValue: SUBHEADING_COLOR,
+        valueEntered: subheadingColor
+      })
+    );
+  }
+  if (firstButtonFontFamily !== BUTTON_FONT_FAMILY) {
+    return onSetErrorMsg(
+      returnStyleErrorMsg({
+        targetName: 'first button',
+        propName: 'fontFamily',
+        correctValue: BUTTON_FONT_FAMILY,
+        valueEntered: firstButtonFontFamily
+      })
+    );
+  }
+  if (secondButtonFontFamily !== BUTTON_FONT_FAMILY) {
+    return onSetErrorMsg(
+      returnStyleErrorMsg({
+        targetName: 'second button',
+        propName: 'fontFamily',
+        correctValue: BUTTON_FONT_FAMILY,
+        valueEntered: secondButtonFontFamily
       })
     );
   }
