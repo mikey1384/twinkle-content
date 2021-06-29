@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   getAstProps,
   filterElementsByType,
@@ -5,6 +6,7 @@ import {
   getElementStyleProps,
   returnStyleErrorMsg
 } from '../../helpers';
+import { stringsAreCaseInsensitiveEqual } from 'helpers/stringHelpers';
 
 const MARGIN_TOP = '3rem';
 
@@ -33,12 +35,13 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     propType: 'JSXElement'
   });
   let marginTop = '';
+  let innerText = '';
   const dividers = filterElementsByType({
     elements: jsxElements,
     filter: 'div'
   });
   for (let divider of dividers) {
-    const innerText = getElementInnerText(divider);
+    innerText = getElementInnerText(divider);
     if (innerText === 'Third') {
       const styleProps = getElementStyleProps(divider.openingElement);
       for (let prop of styleProps) {
@@ -48,18 +51,23 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
       }
     }
   }
-  if (marginTop === MARGIN_TOP) {
+  if (stringsAreCaseInsensitiveEqual(marginTop, MARGIN_TOP)) {
     return await onUpdateMissionStatus();
   }
-  if (marginTop !== MARGIN_TOP) {
+  if (innerText !== 'Third') {
     return onSetErrorMsg(
-      returnStyleErrorMsg({
-        targetName: 'third <div>',
-        propName: 'marginTop',
-        correctValue: MARGIN_TOP,
-        valueEntered: marginTop
-      })
+      <>
+        {`Don't`} delete/modify the parts of the code that are not causing the
+        bug. Press <b>RESET</b> if needed
+      </>
     );
   }
-  onSetErrorMsg(`Something's not right - please check the code`);
+  onSetErrorMsg(
+    returnStyleErrorMsg({
+      targetName: 'third <div>',
+      propName: 'marginTop',
+      correctValue: MARGIN_TOP,
+      valueEntered: marginTop
+    })
+  );
 }

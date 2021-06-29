@@ -4,6 +4,7 @@ import {
   getElementStyleProps,
   returnStyleErrorMsg
 } from '../../helpers';
+import { stringsAreCaseInsensitiveEqual } from 'helpers/stringHelpers';
 
 const FONT_SIZE = '30px';
 
@@ -51,7 +52,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
       }
     }
   }
-  if (fontSize === FONT_SIZE) {
+  if (stringsAreCaseInsensitiveEqual(fontSize, FONT_SIZE)) {
     return await onUpdateMissionStatus();
   }
   if (!secondChild) {
@@ -62,15 +63,12 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
       `The font size property for the second sentence still isn't working`
     );
   }
-  if (fontSize !== FONT_SIZE) {
-    return onSetErrorMsg(
-      returnStyleErrorMsg({
-        targetName: 'second <div>',
-        propName: 'fontSize',
-        correctValue: FONT_SIZE,
-        valueEntered: fontSize
-      })
-    );
-  }
-  onSetErrorMsg(`Something's not right - please check the code`);
+  onSetErrorMsg(
+    returnStyleErrorMsg({
+      targetName: 'second <div>',
+      propName: 'fontSize',
+      correctValue: FONT_SIZE,
+      valueEntered: fontSize
+    })
+  );
 }

@@ -4,6 +4,7 @@ import {
   getElementStyleProps,
   returnStyleErrorMsg
 } from '../../helpers';
+import { stringsAreCaseInsensitiveEqual } from 'helpers/stringHelpers';
 
 const THIRD_MARGIN_TOP = '2rem';
 const FOURTH_MARGIN_TOP = '2rem';
@@ -67,12 +68,12 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     }
   }
   if (
-    thirdMarginTop === THIRD_MARGIN_TOP &&
-    fourthMarginTop === FOURTH_MARGIN_TOP
+    stringsAreCaseInsensitiveEqual(thirdMarginTop, THIRD_MARGIN_TOP) &&
+    stringsAreCaseInsensitiveEqual(fourthMarginTop, FOURTH_MARGIN_TOP)
   ) {
     return await onUpdateMissionStatus();
   }
-  if (thirdMarginTop !== THIRD_MARGIN_TOP) {
+  if (!stringsAreCaseInsensitiveEqual(thirdMarginTop, THIRD_MARGIN_TOP)) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
         targetName: 'third <div>',
@@ -82,7 +83,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
       })
     );
   }
-  if (fourthMarginTop !== FOURTH_MARGIN_TOP) {
+  if (!stringsAreCaseInsensitiveEqual(fourthMarginTop, FOURTH_MARGIN_TOP)) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
         targetName: 'fourth <div>',
