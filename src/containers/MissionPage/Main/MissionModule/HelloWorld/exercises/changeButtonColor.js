@@ -67,7 +67,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
     }
   }
   if (
-    buttonColor === 'blue' ||
+    buttonColor.toLowerCase() === 'blue' ||
     buttonColor.toLowerCase() === '#0000ff' ||
     buttonColor === 'rgb(0, 0, 255)' ||
     buttonColor === 'RGB(0, 0, 255)'
