@@ -5,7 +5,7 @@ import {
   returnStyleErrorMsg,
   filterOpeningElementsByType
 } from '../../helpers';
-import { stringsAreCaseInsensitiveEqual } from 'helpers/stringHelpers';
+import { stringsAreCaseInsensitivelyEqual } from 'helpers/stringHelpers';
 
 const HEADING_FONT_FAMILY = 'fantasy';
 const HEADING_COLOR = '#4B9BE1';
@@ -156,15 +156,18 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   }
 
   if (
-    stringsAreCaseInsensitiveEqual(headingFontFamily, HEADING_FONT_FAMILY) &&
-    stringsAreCaseInsensitiveEqual(headingColor, HEADING_COLOR) &&
-    stringsAreCaseInsensitiveEqual(
+    stringsAreCaseInsensitivelyEqual(headingFontFamily, HEADING_FONT_FAMILY) &&
+    stringsAreCaseInsensitivelyEqual(headingColor, HEADING_COLOR) &&
+    stringsAreCaseInsensitivelyEqual(
       subheadingFontFamily,
       SUBHEADING_FONT_FAMILY
     ) &&
-    stringsAreCaseInsensitiveEqual(subheadingColor, SUBHEADING_COLOR) &&
-    stringsAreCaseInsensitiveEqual(firstButtonFontFamily, BUTTON_FONT_FAMILY) &&
-    stringsAreCaseInsensitiveEqual(secondButtonFontFamily, BUTTON_FONT_FAMILY)
+    stringsAreCaseInsensitivelyEqual(subheadingColor, SUBHEADING_COLOR) &&
+    stringsAreCaseInsensitivelyEqual(
+      firstButtonFontFamily,
+      BUTTON_FONT_FAMILY
+    ) &&
+    stringsAreCaseInsensitivelyEqual(secondButtonFontFamily, BUTTON_FONT_FAMILY)
   ) {
     return await onUpdateMissionStatus();
   }
@@ -175,7 +178,9 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
       </>
     );
   }
-  if (!stringsAreCaseInsensitiveEqual(headingFontFamily, HEADING_FONT_FAMILY)) {
+  if (
+    !stringsAreCaseInsensitivelyEqual(headingFontFamily, HEADING_FONT_FAMILY)
+  ) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
         targetName: '<h1>',
@@ -185,7 +190,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
       })
     );
   }
-  if (!stringsAreCaseInsensitiveEqual(headingColor, HEADING_COLOR)) {
+  if (!stringsAreCaseInsensitivelyEqual(headingColor, HEADING_COLOR)) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
         targetName: '<h1>',
@@ -203,7 +208,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
     );
   }
   if (
-    !stringsAreCaseInsensitiveEqual(
+    !stringsAreCaseInsensitivelyEqual(
       subheadingFontFamily,
       SUBHEADING_FONT_FAMILY
     )
@@ -217,7 +222,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
       })
     );
   }
-  if (!stringsAreCaseInsensitiveEqual(subheadingColor, SUBHEADING_COLOR)) {
+  if (!stringsAreCaseInsensitivelyEqual(subheadingColor, SUBHEADING_COLOR)) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
         targetName: '<h2>',
@@ -235,7 +240,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
     );
   }
   if (
-    !stringsAreCaseInsensitiveEqual(firstButtonFontFamily, BUTTON_FONT_FAMILY)
+    !stringsAreCaseInsensitivelyEqual(firstButtonFontFamily, BUTTON_FONT_FAMILY)
   ) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
@@ -254,7 +259,10 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
     );
   }
   if (
-    !stringsAreCaseInsensitiveEqual(secondButtonFontFamily, BUTTON_FONT_FAMILY)
+    !stringsAreCaseInsensitivelyEqual(
+      secondButtonFontFamily,
+      BUTTON_FONT_FAMILY
+    )
   ) {
     return onSetErrorMsg(
       returnStyleErrorMsg({

@@ -7,7 +7,7 @@ import {
   getAstProps,
   returnInnerTextErrorMsg
 } from '../../helpers';
-import { stringsAreCaseInsensitiveEqual } from 'helpers/stringHelpers';
+import { stringsAreCaseInsensitivelyEqual } from 'helpers/stringHelpers';
 
 export const title = `Tap Me`;
 export const instruction = (
@@ -60,7 +60,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   });
   const button = buttonElements[0];
   buttonText = getElementInnerText(button);
-  if (stringsAreCaseInsensitiveEqual(buttonText, BUTTON_LABEL)) {
+  if (stringsAreCaseInsensitivelyEqual(buttonText, BUTTON_LABEL)) {
     return await onUpdateMissionStatus();
   }
   if (!button) {

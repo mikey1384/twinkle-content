@@ -6,7 +6,7 @@ import {
   getElementStyleProps,
   returnStyleErrorMsg
 } from '../../helpers';
-import { stringsAreCaseInsensitiveEqual } from 'helpers/stringHelpers';
+import { stringsAreCaseInsensitivelyEqual } from 'helpers/stringHelpers';
 
 const FONT_SIZE = '2rem';
 const FONT_WEIGHT = 'bold';
@@ -79,15 +79,15 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     }
   }
   if (
-    stringsAreCaseInsensitiveEqual(fontSize, FONT_SIZE) &&
-    stringsAreCaseInsensitiveEqual(fontWeight, FONT_WEIGHT)
+    stringsAreCaseInsensitivelyEqual(fontSize, FONT_SIZE) &&
+    stringsAreCaseInsensitivelyEqual(fontWeight, FONT_WEIGHT)
   ) {
     return await onUpdateMissionStatus();
   }
   if (!paragraph) {
     return onSetErrorMsg(`Did you delete your welcome message?`);
   }
-  if (!stringsAreCaseInsensitiveEqual(fontSize, FONT_SIZE)) {
+  if (!stringsAreCaseInsensitivelyEqual(fontSize, FONT_SIZE)) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
         targetName: '<p>',
@@ -97,7 +97,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
       })
     );
   }
-  if (!stringsAreCaseInsensitiveEqual(fontWeight, FONT_WEIGHT)) {
+  if (!stringsAreCaseInsensitivelyEqual(fontWeight, FONT_WEIGHT)) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
         targetName: '<p>',

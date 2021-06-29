@@ -5,7 +5,7 @@ import {
   getElementStyleProps,
   returnStyleErrorMsg
 } from '../../helpers';
-import { stringsAreCaseInsensitiveEqual } from 'helpers/stringHelpers';
+import { stringsAreCaseInsensitivelyEqual } from 'helpers/stringHelpers';
 
 const PADDING = '3rem';
 const MARGIN_TOP = '7rem';
@@ -79,15 +79,15 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     }
   }
   if (
-    stringsAreCaseInsensitiveEqual(marginTop, MARGIN_TOP) &&
-    stringsAreCaseInsensitiveEqual(padding, PADDING)
+    stringsAreCaseInsensitivelyEqual(marginTop, MARGIN_TOP) &&
+    stringsAreCaseInsensitivelyEqual(padding, PADDING)
   ) {
     return await onUpdateMissionStatus();
   }
   if (!button) {
     return onSetErrorMsg('Did you delete the button?');
   }
-  if (!stringsAreCaseInsensitiveEqual(marginTop, MARGIN_TOP)) {
+  if (!stringsAreCaseInsensitivelyEqual(marginTop, MARGIN_TOP)) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
         targetName: 'button',
@@ -97,7 +97,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
       })
     );
   }
-  if (!stringsAreCaseInsensitiveEqual(padding, PADDING)) {
+  if (!stringsAreCaseInsensitivelyEqual(padding, PADDING)) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
         targetName: 'button',

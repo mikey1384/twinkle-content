@@ -7,7 +7,7 @@ import {
 } from '../../helpers';
 import {
   stringIsEmpty,
-  stringsAreCaseInsensitiveEqual
+  stringsAreCaseInsensitivelyEqual
 } from 'helpers/stringHelpers';
 
 export const title = `Hello World`;
@@ -66,7 +66,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   if (onClickFunc?.value?.expression?.body?.callee?.name === 'alert') {
     alertText = onClickFunc?.value?.expression?.body?.arguments?.[0]?.value;
   }
-  if (stringsAreCaseInsensitiveEqual(alertText.trim(), ALERT_MSG)) {
+  if (stringsAreCaseInsensitivelyEqual(alertText.trim(), ALERT_MSG)) {
     return await onUpdateMissionStatus();
   }
   if (!button) {

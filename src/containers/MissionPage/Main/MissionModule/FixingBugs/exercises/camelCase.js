@@ -4,7 +4,7 @@ import {
   getElementStyleProps,
   returnStyleErrorMsg
 } from '../../helpers';
-import { stringsAreCaseInsensitiveEqual } from 'helpers/stringHelpers';
+import { stringsAreCaseInsensitivelyEqual } from 'helpers/stringHelpers';
 
 const FONT_SIZE = '30px';
 
@@ -52,7 +52,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
       }
     }
   }
-  if (stringsAreCaseInsensitiveEqual(fontSize, FONT_SIZE)) {
+  if (stringsAreCaseInsensitivelyEqual(fontSize, FONT_SIZE)) {
     return await onUpdateMissionStatus();
   }
   if (!secondChild) {

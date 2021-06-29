@@ -5,7 +5,7 @@ import {
   filterElementsByType,
   returnInnerTextErrorMsg
 } from '../../helpers';
-import { stringsAreCaseInsensitiveEqual } from 'helpers/stringHelpers';
+import { stringsAreCaseInsensitivelyEqual } from 'helpers/stringHelpers';
 
 export const title = `Welcome Your Visitors`;
 export const instruction = (
@@ -61,7 +61,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
       welcomeText = child?.value || '';
     }
   }
-  if (stringsAreCaseInsensitiveEqual(welcomeText.trim(), WELCOME_MSG)) {
+  if (stringsAreCaseInsensitivelyEqual(welcomeText.trim(), WELCOME_MSG)) {
     return await onUpdateMissionStatus();
   }
   if (paragraphs.length === 0) {
@@ -72,7 +72,10 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     );
   }
   if (
-    stringsAreCaseInsensitiveEqual(welcomeText.trim(), WELCOME_MSG.slice(0, -1))
+    stringsAreCaseInsensitivelyEqual(
+      welcomeText.trim(),
+      WELCOME_MSG.slice(0, -1)
+    )
   ) {
     return onSetErrorMsg(
       `You forgot to add an exclamation mark (!) at the end`

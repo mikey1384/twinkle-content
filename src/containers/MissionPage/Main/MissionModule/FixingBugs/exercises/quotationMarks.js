@@ -6,7 +6,7 @@ import {
   getElementStyleProps,
   returnStyleErrorMsg
 } from '../../helpers';
-import { stringsAreCaseInsensitiveEqual } from 'helpers/stringHelpers';
+import { stringsAreCaseInsensitivelyEqual } from 'helpers/stringHelpers';
 
 const MARGIN_TOP = '3rem';
 
@@ -51,7 +51,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
       }
     }
   }
-  if (stringsAreCaseInsensitiveEqual(marginTop, MARGIN_TOP)) {
+  if (stringsAreCaseInsensitivelyEqual(marginTop, MARGIN_TOP)) {
     return await onUpdateMissionStatus();
   }
   if (innerText !== 'Third') {
