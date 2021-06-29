@@ -5,6 +5,7 @@ import {
   filterElementsByType,
   returnInnerTextErrorMsg
 } from '../../helpers';
+import { stringsAreCaseInsensitiveEqual } from 'helpers/stringHelpers';
 
 export const title = `Welcome Your Visitors`;
 export const instruction = (
@@ -60,26 +61,28 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
       welcomeText = child?.value || '';
     }
   }
-  if (welcomeText.trim().toLowerCase() === WELCOME_MSG.toLowerCase()) {
+  if (stringsAreCaseInsensitiveEqual(welcomeText.trim(), WELCOME_MSG)) {
     return await onUpdateMissionStatus();
   }
+  if (paragraphs.length === 0) {
+    return onSetErrorMsg(
+      <>
+        {`Don't`} delete the <b>{`<p></p>`}</b> tags
+      </>
+    );
+  }
   if (
-    welcomeText.trim().toLowerCase() === WELCOME_MSG.slice(0, -1).toLowerCase()
+    stringsAreCaseInsensitiveEqual(welcomeText.trim(), WELCOME_MSG.slice(0, -1))
   ) {
     return onSetErrorMsg(
       `You forgot to add an exclamation mark (!) at the end`
     );
   }
-  if (welcomeText.trim().toLowerCase() !== WELCOME_MSG.toLowerCase()) {
-    return onSetErrorMsg(
-      returnInnerTextErrorMsg({
-        targetName: '<p></p>',
-        correctValue: WELCOME_MSG,
-        valueEntered: welcomeText
-      })
-    );
-  }
   onSetErrorMsg(
-    `The alert message should say, "${WELCOME_MSG}," not "${welcomeText.trim()}"`
+    returnInnerTextErrorMsg({
+      targetName: '<p></p>',
+      correctValue: WELCOME_MSG,
+      valueEntered: welcomeText
+    })
   );
 }
