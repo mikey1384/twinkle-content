@@ -16,12 +16,12 @@ export const title = `Change the Font Styles`;
 export const instruction = (
   <>
     <div>
-      Set <b>heading</b>
+      Set the <b>heading</b>
       {`'s`} <b>fontFamily</b> to <b>{`"fantasy"`}</b> and its <b>color</b> to{' '}
       <b style={{ color: '#4B9BE1' }}>{`"#4B9BE1"`}</b>
     </div>
     <div>
-      Set <b>subheading</b>
+      Set the <b>subheading</b>
       {`'s`} <b>fontFamily</b> to <b>{`"cursive"`}</b> and its <b>color</b> to{' '}
       <b style={{ color: 'rgb(243, 103, 123)' }}>{`"rgb(243, 103, 123)"`}</b>
     </div>
