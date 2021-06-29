@@ -5,7 +5,10 @@ import {
   filterOpeningElementsByType,
   getElementAttribute
 } from '../../helpers';
-import { stringIsEmpty } from 'helpers/stringHelpers';
+import {
+  stringIsEmpty,
+  stringsAreCaseInsensitiveEqual
+} from 'helpers/stringHelpers';
 
 export const title = `Hello World`;
 export const instruction = (
@@ -63,7 +66,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
   if (onClickFunc?.value?.expression?.body?.callee?.name === 'alert') {
     alertText = onClickFunc?.value?.expression?.body?.arguments?.[0]?.value;
   }
-  if (alertText.trim().toLowerCase() === ALERT_MSG.toLowerCase()) {
+  if (stringsAreCaseInsensitiveEqual(alertText.trim(), ALERT_MSG)) {
     return await onUpdateMissionStatus();
   }
   if (!button) {
