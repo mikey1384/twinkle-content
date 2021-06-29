@@ -115,14 +115,24 @@ export function returnStyleErrorMsg({
     errorMsg = (
       <>
         Please set the <b>{propName}</b> value of the <b>{targetName}</b>
-        {`'s`} <b>style</b> property to <b>{correctValue}</b>
+        {`'s`} <b>style</b> property to{' '}
+        <b>
+          {typeof correctValue === 'string'
+            ? `"${correctValue}"`
+            : correctValue}
+        </b>
       </>
     );
   } else {
     errorMsg = (
       <>
         The <b>{propName}</b> value of the <b>{targetName}</b>
-        {`'s`} <b>style</b> property must be <b>{correctValue}</b>
+        {`'s`} <b>style</b> property must be{' '}
+        <b>
+          {typeof correctValue === 'string'
+            ? `"${correctValue}"`
+            : correctValue}
+        </b>
         {valueEntered ? `, not ${valueEntered}` : ''}
       </>
     );

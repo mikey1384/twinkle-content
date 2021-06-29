@@ -817,4 +817,13 @@ export function turnStringIntoQuestion(string) {
   return string + '?';
 }
 
+export function stringsAreCaseInsensitiveEqual(string1, string2) {
+  const string1IsString = typeof string1 === 'string';
+  const string2IsString = typeof string2 === 'string';
+  if (!string1IsString || !string2IsString) {
+    return false;
+  }
+  return string1.toLowerCase() === string2.toLowerCase();
+}
+
 /* eslint-enable no-useless-escape */

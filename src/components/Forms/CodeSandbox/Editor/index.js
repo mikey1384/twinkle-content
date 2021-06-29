@@ -40,6 +40,11 @@ export default function Editor({
   const [errorLineNumber, setErrorLineNumber] = useState(null);
 
   useEffect(() => {
+    setError('');
+    setErrorLineNumber(0);
+  }, [valueOnTextEditor]);
+
+  useEffect(() => {
     onClearTimeout();
     setError('');
     setErrorLineNumber(0);

@@ -5,6 +5,7 @@ import {
   returnStyleErrorMsg,
   filterOpeningElementsByType
 } from '../../helpers';
+import { stringsAreCaseInsensitiveEqual } from 'helpers/stringHelpers';
 
 const HEADING_FONT_FAMILY = 'fantasy';
 const HEADING_COLOR = '#4B9BE1';
@@ -89,7 +90,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   let secondButtonFontFamily = '';
   const jsxElements = getAstProps({
     ast,
-    propType: 'JSXElement'
+    propType: 'JSXOpeningElement'
   });
   const headingElements = filterOpeningElementsByType({
     elements: jsxElements,
@@ -142,9 +143,9 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
       }
     }
   }
-  const secondButton = buttons[0];
+  const secondButton = buttons[1];
   if (secondButton) {
-    const styleProps = getElementStyleProps(firstButton);
+    const styleProps = getElementStyleProps(secondButton);
     for (let prop of styleProps) {
       const propName = prop?.key?.name;
       const propValue = prop?.value?.value;
@@ -155,12 +156,15 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   }
 
   if (
-    headingFontFamily === HEADING_FONT_FAMILY &&
-    headingColor === HEADING_COLOR &&
-    subheadingFontFamily === SUBHEADING_FONT_FAMILY &&
-    subheadingColor === SUBHEADING_COLOR &&
-    firstButtonFontFamily === BUTTON_FONT_FAMILY &&
-    secondButtonFontFamily === BUTTON_FONT_FAMILY
+    stringsAreCaseInsensitiveEqual(headingFontFamily, HEADING_FONT_FAMILY) &&
+    stringsAreCaseInsensitiveEqual(headingColor, HEADING_COLOR) &&
+    stringsAreCaseInsensitiveEqual(
+      subheadingFontFamily,
+      SUBHEADING_FONT_FAMILY
+    ) &&
+    stringsAreCaseInsensitiveEqual(subheadingColor, SUBHEADING_COLOR) &&
+    stringsAreCaseInsensitiveEqual(firstButtonFontFamily, BUTTON_FONT_FAMILY) &&
+    stringsAreCaseInsensitiveEqual(secondButtonFontFamily, BUTTON_FONT_FAMILY)
   ) {
     return await onUpdateMissionStatus();
   }
@@ -171,20 +175,20 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
       </>
     );
   }
-  if (headingFontFamily !== HEADING_FONT_FAMILY) {
+  if (!stringsAreCaseInsensitiveEqual(headingFontFamily, HEADING_FONT_FAMILY)) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        targetName: '<h1></h1>',
+        targetName: '<h1>',
         propName: 'fontFamily',
         correctValue: HEADING_FONT_FAMILY,
         valueEntered: headingFontFamily
       })
     );
   }
-  if (headingColor !== HEADING_COLOR) {
+  if (!stringsAreCaseInsensitiveEqual(headingColor, HEADING_COLOR)) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        targetName: '<h1></h1>',
+        targetName: '<h1>',
         propName: 'color',
         correctValue: HEADING_COLOR,
         valueEntered: headingColor
@@ -198,20 +202,25 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
       </>
     );
   }
-  if (subheadingFontFamily !== SUBHEADING_FONT_FAMILY) {
+  if (
+    !stringsAreCaseInsensitiveEqual(
+      subheadingFontFamily,
+      SUBHEADING_FONT_FAMILY
+    )
+  ) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        targetName: '<h2></h2>',
+        targetName: '<h2>',
         propName: 'fontFamily',
         correctValue: SUBHEADING_FONT_FAMILY,
         valueEntered: subheadingFontFamily
       })
     );
   }
-  if (subheadingColor !== SUBHEADING_COLOR) {
+  if (!stringsAreCaseInsensitiveEqual(subheadingColor, SUBHEADING_COLOR)) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
-        targetName: '<h2></h2>',
+        targetName: '<h2>',
         propName: 'color',
         correctValue: SUBHEADING_COLOR,
         valueEntered: subheadingColor
@@ -225,7 +234,9 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
       </>
     );
   }
-  if (firstButtonFontFamily !== BUTTON_FONT_FAMILY) {
+  if (
+    !stringsAreCaseInsensitiveEqual(firstButtonFontFamily, BUTTON_FONT_FAMILY)
+  ) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
         targetName: 'first button',
@@ -242,7 +253,9 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
       </>
     );
   }
-  if (secondButtonFontFamily !== BUTTON_FONT_FAMILY) {
+  if (
+    !stringsAreCaseInsensitiveEqual(secondButtonFontFamily, BUTTON_FONT_FAMILY)
+  ) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
         targetName: 'second button',
