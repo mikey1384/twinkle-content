@@ -6,6 +6,7 @@ import {
   getElementStyleProps,
   returnStyleErrorMsg
 } from '../../helpers';
+import { stringsAreCaseInsensitiveEqual } from 'helpers/stringHelpers';
 
 const FONT_SIZE = '2rem';
 const FONT_WEIGHT = 'bold';
@@ -77,13 +78,16 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
       fontWeight = prop?.value?.value;
     }
   }
-  if (fontSize === FONT_SIZE && fontWeight === FONT_WEIGHT) {
+  if (
+    stringsAreCaseInsensitiveEqual(fontSize, FONT_SIZE) &&
+    stringsAreCaseInsensitiveEqual(fontWeight, FONT_WEIGHT)
+  ) {
     return await onUpdateMissionStatus();
   }
   if (!paragraph) {
     return onSetErrorMsg(`Did you delete your welcome message?`);
   }
-  if (fontSize !== FONT_SIZE) {
+  if (!stringsAreCaseInsensitiveEqual(fontSize, FONT_SIZE)) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
         targetName: '<p>',
@@ -93,7 +97,7 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
       })
     );
   }
-  if (fontWeight !== FONT_WEIGHT) {
+  if (!stringsAreCaseInsensitiveEqual(fontWeight, FONT_WEIGHT)) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
         targetName: '<p>',
