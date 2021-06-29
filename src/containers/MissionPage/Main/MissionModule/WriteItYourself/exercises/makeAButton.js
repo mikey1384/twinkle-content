@@ -8,7 +8,10 @@ import {
   returnInnerTextErrorMsg,
   returnStyleErrorMsg
 } from '../../helpers';
-import { stringIsEmpty } from 'helpers/stringHelpers';
+import {
+  stringIsEmpty,
+  stringsAreCaseInsensitivelyEqual
+} from 'helpers/stringHelpers';
 
 const BUTTON_LABEL = 'Welcome';
 const FONT_SIZE = '2rem';
@@ -102,21 +105,27 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
     }
   }
   const buttonIsBlue =
-    buttonColor === 'blue' ||
-    buttonColor.toLowerCase() === '#0000ff' ||
-    buttonColor === 'rgb(0, 0, 255)' ||
-    buttonColor === 'RGB(0, 0, 255)';
+    stringsAreCaseInsensitivelyEqual(buttonColor, 'blue') ||
+    stringsAreCaseInsensitivelyEqual(buttonColor, '#0000ff') ||
+    stringsAreCaseInsensitivelyEqual(buttonColor, 'rgb(0, 0, 255)');
   const buttonTextColorIsWhite =
-    buttonTextColor === 'white' ||
-    buttonTextColor.toLowerCase() === '#fff' ||
-    buttonTextColor === 'rgb(255, 255, 255)' ||
-    buttonTextColor === 'RGB(255, 255, 255)';
-  const buttonTextMatches =
-    buttonText.toLowerCase() === BUTTON_LABEL.toLowerCase();
-  const buttonPaddingMatches = buttonPadding === PADDING;
-  const fontSizeMatches = fontSize === FONT_SIZE;
-  const alertTextMatches =
-    alertText.trim().toLowerCase() === ALERT_TEXT.toLowerCase();
+    stringsAreCaseInsensitivelyEqual(buttonTextColor, 'white') ||
+    stringsAreCaseInsensitivelyEqual(buttonTextColor, '#fff') ||
+    stringsAreCaseInsensitivelyEqual(buttonTextColor, '#ffffff') ||
+    stringsAreCaseInsensitivelyEqual(buttonTextColor, 'rgb(255, 255, 255)');
+  const buttonTextMatches = stringsAreCaseInsensitivelyEqual(
+    buttonText,
+    BUTTON_LABEL
+  );
+  const buttonPaddingMatches = stringsAreCaseInsensitivelyEqual(
+    buttonPadding,
+    PADDING
+  );
+  const fontSizeMatches = stringsAreCaseInsensitivelyEqual(fontSize, FONT_SIZE);
+  const alertTextMatches = stringsAreCaseInsensitivelyEqual(
+    alertText.trim(),
+    ALERT_TEXT
+  );
 
   if (
     buttonIsBlue &&
