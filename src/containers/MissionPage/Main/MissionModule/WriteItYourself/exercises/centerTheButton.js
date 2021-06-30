@@ -5,6 +5,7 @@ import {
   getElementStyleProps,
   returnStyleErrorMsg
 } from '../../helpers';
+import { stringsAreCaseInsensitivelyEqual } from 'helpers/stringHelpers';
 
 const WIDTH = '100%';
 const DISPLAY = 'flex';
@@ -73,9 +74,9 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
     }
   }
   if (
-    divWidth === WIDTH &&
-    divDisplay === DISPLAY &&
-    divJustifyContent === JUSTIFY_CONTENT
+    stringsAreCaseInsensitivelyEqual(divWidth, WIDTH) &&
+    stringsAreCaseInsensitivelyEqual(divDisplay, DISPLAY) &&
+    stringsAreCaseInsensitivelyEqual(divJustifyContent, JUSTIFY_CONTENT)
   ) {
     return await onUpdateMissionStatus();
   }
@@ -86,7 +87,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
       </>
     );
   }
-  if (divWidth !== WIDTH) {
+  if (!stringsAreCaseInsensitivelyEqual(divWidth, WIDTH)) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
         targetName: '<div>',
@@ -96,7 +97,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
       })
     );
   }
-  if (divDisplay !== DISPLAY) {
+  if (!stringsAreCaseInsensitivelyEqual(divDisplay, DISPLAY)) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
         targetName: '<div>',
@@ -106,7 +107,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
       })
     );
   }
-  if (divJustifyContent !== JUSTIFY_CONTENT) {
+  if (!stringsAreCaseInsensitivelyEqual(divJustifyContent, JUSTIFY_CONTENT)) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
         targetName: '<div>',
