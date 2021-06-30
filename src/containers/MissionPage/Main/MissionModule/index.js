@@ -11,6 +11,7 @@ import GitHub from './GitHub';
 import HelloWorld from './HelloWorld';
 import Replit from './Replit';
 import WriteItYourself from './WriteItYourself';
+import LaunchTheWebsite from './LaunchTheWebsite';
 
 MissionModule.propTypes = {
   fileUploadComplete: PropTypes.bool,
@@ -66,6 +67,7 @@ export default function MissionModule({
       {mission.missionType === 'write-it-yourself' && (
         <WriteItYourself task={mission} onSetMissionState={onSetMissionState} />
       )}
+      {mission.missionType === 'launch-the-website' && <LaunchTheWebsite />}
     </div>
   );
 }
