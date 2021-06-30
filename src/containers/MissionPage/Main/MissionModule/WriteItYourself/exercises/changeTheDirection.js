@@ -6,6 +6,7 @@ import {
   returnStyleErrorMsg
 } from '../../helpers';
 import { Color } from 'constants/css';
+import { stringsAreCaseInsensitivelyEqual } from 'helpers/stringHelpers';
 
 const FLEX_DIRECTION = 'column';
 const ALIGN_ITEMS = 'center';
@@ -109,9 +110,9 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
     }
   }
   if (
-    divFlexDirection === FLEX_DIRECTION &&
-    divAlignItems === ALIGN_ITEMS &&
-    buttonMarginTop === BUTTON_MARGIN_TOP
+    stringsAreCaseInsensitivelyEqual(divFlexDirection, FLEX_DIRECTION) &&
+    stringsAreCaseInsensitivelyEqual(divAlignItems, ALIGN_ITEMS) &&
+    stringsAreCaseInsensitivelyEqual(buttonMarginTop, BUTTON_MARGIN_TOP)
   ) {
     return await onUpdateMissionStatus();
   }
@@ -122,7 +123,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
       </>
     );
   }
-  if (divFlexDirection !== FLEX_DIRECTION) {
+  if (!stringsAreCaseInsensitivelyEqual(divFlexDirection, FLEX_DIRECTION)) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
         targetName: '<div>',
@@ -132,7 +133,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
       })
     );
   }
-  if (divAlignItems !== ALIGN_ITEMS) {
+  if (!stringsAreCaseInsensitivelyEqual(divAlignItems, ALIGN_ITEMS)) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
         targetName: '<div>',
@@ -145,7 +146,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   if (!buttonElement) {
     return onSetErrorMsg(`Did you delete the second button?`);
   }
-  if (buttonMarginTop !== BUTTON_MARGIN_TOP) {
+  if (!stringsAreCaseInsensitivelyEqual(buttonMarginTop, BUTTON_MARGIN_TOP)) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
         targetName: 'second button',

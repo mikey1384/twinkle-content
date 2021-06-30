@@ -154,6 +154,7 @@ export default function CodeSandbox({
     setCode(text);
     setRunButtonDisabled(true);
     timerRef.current = setTimeout(() => {
+      onSetErrorMsg?.('');
       onSetCode(text);
       setRunButtonDisabled(false);
     }, 500);

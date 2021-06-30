@@ -18,8 +18,7 @@ Editor.propTypes = {
   ast: PropTypes.object,
   onParse: PropTypes.func.isRequired,
   onSetErrorMsg: PropTypes.func,
-  style: PropTypes.object,
-  onClearTimeout: PropTypes.func.isRequired
+  style: PropTypes.object
 };
 
 export default function Editor({
@@ -30,7 +29,6 @@ export default function Editor({
   onSetAst,
   onParse,
   onSetErrorMsg,
-  onClearTimeout,
   style
 }) {
   const {
@@ -42,10 +40,10 @@ export default function Editor({
   useEffect(() => {
     setError('');
     setErrorLineNumber(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [valueOnTextEditor]);
 
   useEffect(() => {
-    onClearTimeout();
     setError('');
     setErrorLineNumber(0);
     handleTranspile(value);
