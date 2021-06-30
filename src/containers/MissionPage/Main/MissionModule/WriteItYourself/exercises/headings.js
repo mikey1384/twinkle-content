@@ -7,6 +7,7 @@ import {
   returnInnerTextErrorMsg,
   getElementInnerText
 } from '../../helpers';
+import { stringsAreCaseInsensitivelyEqual } from 'helpers/stringHelpers';
 import { Color } from 'constants/css';
 
 const HEADING_LABEL = (username) => `${username}'s website`;
@@ -131,14 +132,18 @@ export async function onRunCode({
       }
     }
   }
-  const headingMatches =
-    headingLabel.trim().toLowerCase() === HEADING_LABEL(username).toLowerCase();
-  const subheadingMatches =
-    subheadingLabel.trim().toLowerCase() === SUBHEADING_LABEL.toLowerCase();
+  const headingMatches = stringsAreCaseInsensitivelyEqual(
+    headingLabel.trim(),
+    HEADING_LABEL(username)
+  );
+  const subheadingMatches = stringsAreCaseInsensitivelyEqual(
+    subheadingLabel.trim(),
+    SUBHEADING_LABEL
+  );
   if (
     headingMatches &&
     subheadingMatches &&
-    subheadingMarginBottom === MARGIN_BOTTOM
+    stringsAreCaseInsensitivelyEqual(subheadingMarginBottom, MARGIN_BOTTOM)
   ) {
     return await onUpdateMissionStatus();
   }
@@ -175,7 +180,9 @@ export async function onRunCode({
       })
     );
   }
-  if (subheadingMarginBottom !== MARGIN_BOTTOM) {
+  if (
+    !stringsAreCaseInsensitivelyEqual(subheadingMarginBottom, MARGIN_BOTTOM)
+  ) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
         targetName: 'subheading',
