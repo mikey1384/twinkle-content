@@ -75,9 +75,9 @@ export default function GitHubVerifier() {
               style={{
                 width: '100%',
                 display: 'flex',
-                justifyContent: 'center',
                 alignItems: 'center',
-                flexDirection: 'column'
+                flexDirection: 'column',
+                height: '7rem'
               }}
             >
               <p
@@ -101,9 +101,9 @@ export default function GitHubVerifier() {
               style={{
                 width: '100%',
                 display: 'flex',
-                justifyContent: 'center',
                 alignItems: 'center',
-                flexDirection: 'column'
+                flexDirection: 'column',
+                height: '15rem'
               }}
             >
               <p
@@ -115,7 +115,7 @@ export default function GitHubVerifier() {
               >
                 2. Tap the button below
               </p>
-              <GitHubButton />
+              <GitHubButton style={{ marginTop: '1.5rem' }} />
               <p
                 style={{
                   fontSize: '1.2rem',

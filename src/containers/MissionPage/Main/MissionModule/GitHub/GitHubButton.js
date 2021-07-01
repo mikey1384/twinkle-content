@@ -1,16 +1,22 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { GITHUB_APP_ID } from 'constants/defaultValues';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 
-export default function GitHubButton() {
+GitHubButton.propTypes = {
+  style: PropTypes.object
+};
+
+export default function GitHubButton({ style }) {
   return (
     <Button
       style={{
         fontSize: '2rem',
         textTransform: 'none',
         fontWeight: 'normal',
-        color: 'black'
+        color: 'black',
+        ...style
       }}
       skeuomorphic
       onClick={handleGitHubButtonClick}
