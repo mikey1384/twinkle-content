@@ -62,7 +62,15 @@ export default function GitHubVerifier() {
       <div>
         {loading && <Loading />}
         {!loading && (
-          <MultiStepContainer>
+          <MultiStepContainer
+            nextButtons={[
+              {
+                label: 'I created a github account',
+                color: 'logoBlue',
+                skeuomorphic: true
+              }
+            ]}
+          >
             <div
               style={{
                 width: '100%',
