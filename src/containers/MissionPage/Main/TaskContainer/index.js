@@ -23,7 +23,7 @@ export default function TaskContainer({
   mission
 }) {
   const mounted = useRef(true);
-  const { userId } = useMyState();
+  const { userId, isCreator } = useMyState();
   const {
     requestHelpers: { loadMission, loadMissionTypeIdHash }
   } = useAppContext();
@@ -99,7 +99,7 @@ export default function TaskContainer({
   }, [currentTaskOrderIndex, taskOrder]);
 
   const prevTaskPassed = useMemo(() => {
-    if (currentTaskOrderIndex === 0) {
+    if (isCreator || currentTaskOrderIndex === 0) {
       return true;
     }
     if (currentTaskOrderIndex > 0 && myAttempts.loaded) {
@@ -110,7 +110,13 @@ export default function TaskContainer({
       }
     }
     return false;
-  }, [currentTaskOrderIndex, missionTypeIdHash, myAttempts, taskOrder]);
+  }, [
+    isCreator,
+    currentTaskOrderIndex,
+    missionTypeIdHash,
+    myAttempts,
+    taskOrder
+  ]);
 
   if (userId && taskType && missionTypeIdHash && !missionTypeIdHash[taskType]) {
     return <InvalidPage />;

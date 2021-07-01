@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { borderRadius } from 'constants/css';
 import { css } from '@emotion/css';
+import { useMyState } from 'helpers/hooks';
 import SubMission from './SubMission';
 
 MultiMission.propTypes = {
@@ -13,6 +14,7 @@ export default function MultiMission({
   mission: { missionType, subMissions },
   myAttempts
 }) {
+  const { isCreator } = useMyState();
   const missionProgress = useMemo(() => {
     const result = {};
     for (let i = 0; i < subMissions.length; i++) {
@@ -43,6 +45,7 @@ export default function MultiMission({
         <SubMission
           key={index}
           index={index}
+          isCreator={isCreator}
           subMission={subMission}
           missionType={missionType}
           subMissionProgress={missionProgress[index]}
