@@ -4,10 +4,10 @@ import { Color } from 'constants/css';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import queryString from 'query-string';
-import Button from 'components/Button';
 import GitHubButton from './GitHubButton';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Loading from 'components/Loading';
+import MultiStepContainer from '../components/MultiStepContainer';
 
 export default function GitHubVerifier() {
   const {
@@ -22,7 +22,6 @@ export default function GitHubVerifier() {
   const { code } = useMemo(() => queryString.parse(search), [search]);
   const [errorMsg, setErrorMsg] = useState('');
   const [loading, setLoading] = useState(false);
-  const [githubAccountMade, setGithubAccountMade] = useState(false);
   const mounted = useRef(true);
 
   useEffect(() => {
@@ -63,74 +62,63 @@ export default function GitHubVerifier() {
       <div>
         {loading && <Loading />}
         {!loading && (
-          <>
-            {!githubAccountMade && (
-              <div
+          <MultiStepContainer>
+            <div
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'column'
+              }}
+            >
+              <p
                 style={{
-                  width: '100%',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  flexDirection: 'column'
+                  marginBottom: '3rem',
+                  fontSize: '1.7rem',
+                  fontWeight: 'bold'
                 }}
               >
-                <p
-                  style={{
-                    marginBottom: '3rem',
-                    fontSize: '1.7rem',
-                    fontWeight: 'bold'
-                  }}
+                1. Create a GitHub account from{' '}
+                <a
+                  href="https://www.github.com"
+                  target="_blank"
+                  rel="noreferrer"
                 >
-                  1. Create a GitHub account from{' '}
-                  <a
-                    href="https://www.github.com"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    www.github.com
-                  </a>
-                </p>
-                <Button
-                  skeuomorphic
-                  color="logoBlue"
-                  onClick={() => setGithubAccountMade(true)}
-                >
-                  I created a github account
-                </Button>
-              </div>
-            )}
-            {githubAccountMade && (
-              <div
+                  www.github.com
+                </a>
+              </p>
+            </div>
+            <div
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'column'
+              }}
+            >
+              <p
                 style={{
-                  width: '100%',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  flexDirection: 'column'
+                  marginBottom: '2rem',
+                  fontSize: '1.7rem',
+                  fontWeight: 'bold'
                 }}
               >
-                <p
-                  style={{
-                    marginBottom: '2rem',
-                    fontSize: '1.7rem',
-                    fontWeight: 'bold'
-                  }}
-                >
-                  2. Tap the button below
-                </p>
-                <GitHubButton />
-                <p
-                  style={{
-                    fontSize: '1.2rem',
-                    marginTop: '0.5rem',
-                    color: Color.red()
-                  }}
-                >
-                  {errorMsg}
-                </p>
-              </div>
-            )}
-          </>
+                2. Tap the button below
+              </p>
+              <GitHubButton />
+              <p
+                style={{
+                  fontSize: '1.2rem',
+                  marginTop: '0.5rem',
+                  color: Color.red()
+                }}
+              >
+                {errorMsg}
+              </p>
+            </div>
+          </MultiStepContainer>
         )}
       </div>
     </ErrorBoundary>
