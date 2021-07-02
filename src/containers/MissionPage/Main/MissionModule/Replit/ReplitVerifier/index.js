@@ -6,6 +6,9 @@ import CreateNewRepl from './CreateNewRepl';
 import CopyAndPasteCode from './CopyAndPasteCode';
 import MultiStepContainer from '../../components/MultiStepContainer';
 import TaskComplete from '../../components/TaskComplete';
+import Button from 'components/Button';
+import Icon from 'components/Icon';
+import { Color } from 'constants/css';
 
 ReplitVerifier.propTypes = {
   task: PropTypes.object.isRequired,
@@ -14,16 +17,19 @@ ReplitVerifier.propTypes = {
 
 export default function ReplitVerifier({ task, onSetMissionState }) {
   const { accountMade, replCreated, correctCodeEntered } = task;
-  const [okayPressed, setOkayPressed] = useState(false);
+  const [makeAccountOkayPressed, setMakeAccountOkayPressed] = useState(false);
+  const [createReplOkayPressed, setCreateReplOkayPressed] = useState(false);
+  const [helpButtonPressed, setHelpButtonPressed] = useState(false);
+
   const FirstButton = useMemo(() => {
-    if (!okayPressed && !accountMade) {
+    if (!makeAccountOkayPressed && !accountMade) {
       return {
         label: 'Okay',
         color: 'logoBlue',
         skeuomorphic: true,
         onClick: () => {
           window.open(`https://replit.com`);
-          setTimeout(() => setOkayPressed(true), 1000);
+          setTimeout(() => setMakeAccountOkayPressed(true), 1000);
         }
       };
     }
@@ -40,30 +46,49 @@ export default function ReplitVerifier({ task, onSetMissionState }) {
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [okayPressed, task.id]);
+  }, [makeAccountOkayPressed, task.id]);
+
+  const SecondButton = useMemo(() => {
+    if (!createReplOkayPressed && !replCreated) {
+      return {
+        label: 'Okay',
+        color: 'logoBlue',
+        skeuomorphic: true,
+        onClick: () => setCreateReplOkayPressed(true)
+      };
+    }
+    return {
+      label: 'Yes, I did',
+      color: 'green',
+      skeuomorphic: true,
+      onClick: (goNext) => {
+        onSetMissionState({
+          missionId: task.id,
+          newState: { replCreated: true }
+        });
+        goNext();
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [createReplOkayPressed, task.id]);
 
   return (
     <ErrorBoundary style={{ width: '100%', marginTop: '1rem' }}>
       {!correctCodeEntered ? (
         <MultiStepContainer
-          buttons={[FirstButton]}
+          buttons={[FirstButton, SecondButton]}
           onSetMissionState={onSetMissionState}
           selectedIndex={task.selectedIndex}
           taskId={task.id}
         >
           <MakeAccount
-            onSetOkayPressed={setOkayPressed}
+            onSetOkayPressed={setMakeAccountOkayPressed}
             accountMade={!!accountMade}
+            okayPressed={makeAccountOkayPressed}
           />
           <CreateNewRepl
-            style={{ marginTop: replCreated ? '2rem' : '10rem' }}
             replCreated={!!replCreated}
-            onCreateRepl={() =>
-              onSetMissionState({
-                missionId: task.id,
-                newState: { replCreated: true }
-              })
-            }
+            okayPressed={createReplOkayPressed}
           />
           <CopyAndPasteCode
             style={{ marginTop: correctCodeEntered ? '2rem' : '10rem' }}
@@ -73,11 +98,35 @@ export default function ReplitVerifier({ task, onSetMissionState }) {
         </MultiStepContainer>
       ) : (
         <TaskComplete
-          style={{ marginTop: '10rem' }}
           taskId={task.id}
           passMessage="That's it! Excellent work"
           passMessageFontSize="2.2rem"
         />
+      )}
+      {!correctCodeEntered && (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            fontSize: '1.5rem'
+          }}
+        >
+          {!helpButtonPressed ? (
+            <Button
+              style={{ marginTop: '7rem' }}
+              skeuomorphic
+              color="pink"
+              onClick={() => setHelpButtonPressed(true)}
+            >
+              {`I don't understand what I am supposed to do`}
+            </Button>
+          ) : (
+            <div style={{ marginTop: '3rem', marginBottom: '-1rem' }}>
+              Read the <b style={{ color: Color.green() }}>tutorial</b> below{' '}
+              <Icon icon="arrow-down" /> to learn how to create a Next.js Repl
+            </div>
+          )}
+        </div>
       )}
     </ErrorBoundary>
   );
