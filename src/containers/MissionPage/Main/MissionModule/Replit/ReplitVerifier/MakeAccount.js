@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import Button from 'components/Button';
 import Icon from 'components/Icon';
 import { Color } from 'constants/css';
 import { css } from '@emotion/css';
 
 MakeAccount.propTypes = {
   accountMade: PropTypes.bool,
-  onMakeAccount: PropTypes.func.isRequired
+  okayPressed: PropTypes.bool,
+  onSetOkayPressed: PropTypes.func.isRequired
 };
 
-export default function MakeAccount({ accountMade, onMakeAccount }) {
-  const [okayPressed, setOkayPressed] = useState(false);
+export default function MakeAccount({
+  accountMade,
+  okayPressed,
+  onSetOkayPressed
+}) {
   return (
     <div
       className={css`
@@ -29,7 +32,7 @@ export default function MakeAccount({ accountMade, onMakeAccount }) {
       <p>
         1. Go to{' '}
         <a
-          onClick={() => setOkayPressed(true)}
+          onClick={() => onSetOkayPressed(true)}
           href="https://replit.com"
           target="_blank"
           rel="noreferrer"
@@ -45,39 +48,8 @@ export default function MakeAccount({ accountMade, onMakeAccount }) {
           />
         )}
       </p>
-      {!accountMade && (
-        <>
-          {!okayPressed && (
-            <div>
-              <Button
-                style={{ marginTop: '2rem' }}
-                filled
-                color="logoBlue"
-                onClick={() => {
-                  window.open(`https://replit.com`);
-                  setTimeout(() => setOkayPressed(true), 1000);
-                }}
-              >
-                Okay
-              </Button>
-            </div>
-          )}
-          {okayPressed && (
-            <>
-              <p style={{ marginTop: '4.5rem' }}>Did you make an account?</p>
-              <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <Button
-                  style={{ marginTop: '2rem' }}
-                  filled
-                  color="green"
-                  onClick={onMakeAccount}
-                >
-                  Yes, I made an account
-                </Button>
-              </div>
-            </>
-          )}
-        </>
+      {okayPressed && (
+        <p style={{ marginTop: '4.5rem' }}>Did you make an account?</p>
       )}
     </div>
   );

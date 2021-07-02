@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import { Color } from 'constants/css';
 import { useAppContext, useContentContext } from 'contexts';
@@ -9,7 +10,12 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import Loading from 'components/Loading';
 import MultiStepContainer from '../components/MultiStepContainer';
 
-export default function GitHubVerifier() {
+GitHubVerifier.propTypes = {
+  task: PropTypes.object.isRequired,
+  onSetMissionState: PropTypes.func.isRequired
+};
+
+export default function GitHubVerifier({ task, onSetMissionState }) {
   const {
     requestHelpers: { loadGitHubData }
   } = useAppContext();
@@ -63,7 +69,10 @@ export default function GitHubVerifier() {
         {loading && <Loading />}
         {!loading && (
           <MultiStepContainer
-            nextButtons={[
+            onSetMissionState={onSetMissionState}
+            selectedIndex={task.selectedIndex}
+            taskId={task.id}
+            buttons={[
               {
                 label: 'I created a github account',
                 color: 'logoBlue',

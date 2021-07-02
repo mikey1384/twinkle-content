@@ -54,7 +54,9 @@ export default function MissionModule({
         <Grammar mission={mission} isRepeating={isRepeating} />
       )}
       {mission.missionType === 'email' && <Email taskId={mission.id} />}
-      {mission.missionType === 'github' && <GitHub taskId={mission.id} />}
+      {mission.missionType === 'github' && (
+        <GitHub task={mission} onSetMissionState={onSetMissionState} />
+      )}
       {mission.missionType === 'replit' && (
         <Replit task={mission} onSetMissionState={onSetMissionState} />
       )}

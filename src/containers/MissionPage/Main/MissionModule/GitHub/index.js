@@ -6,10 +6,11 @@ import TaskComplete from '../components/TaskComplete';
 import { useMyState } from 'helpers/hooks';
 
 GitHub.propTypes = {
-  taskId: PropTypes.number.isRequired
+  task: PropTypes.object.isRequired,
+  onSetMissionState: PropTypes.func.isRequired
 };
 
-export default function GitHub({ taskId }) {
+export default function GitHub({ task, onSetMissionState }) {
   const { githubUsername } = useMyState();
   const conditionPassed = useMemo(() => !!githubUsername, [githubUsername]);
 
@@ -17,11 +18,11 @@ export default function GitHub({ taskId }) {
     <ErrorBoundary style={{ width: '100%' }}>
       {conditionPassed ? (
         <TaskComplete
-          taskId={taskId}
+          taskId={task.id}
           passMessage="Great job creating your GitHub account!"
         />
       ) : (
-        <GitHubVerifier />
+        <GitHubVerifier task={task} onSetMissionState={onSetMissionState} />
       )}
     </ErrorBoundary>
   );
