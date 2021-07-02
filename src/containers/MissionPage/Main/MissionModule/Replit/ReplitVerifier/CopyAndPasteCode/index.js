@@ -72,7 +72,7 @@ export default function CopyAndPasteCode({
         3.{' '}
         {correctCodeEntered
           ? 'Enter verification code'
-          : `Fan-tastic! Now, copy the following code`}
+          : `Copy the following code`}
         {correctCodeEntered && (
           <Icon
             style={{ marginLeft: '1rem' }}
@@ -95,9 +95,9 @@ export default function CopyAndPasteCode({
               >
                 <p>Did you copy it?</p>
                 <Button
-                  filled
+                  skeuomorphic
                   color="green"
-                  style={{ marginTop: '1.5rem' }}
+                  style={{ marginTop: '3rem' }}
                   onClick={() => setCodeCopied(true)}
                 >
                   Yes

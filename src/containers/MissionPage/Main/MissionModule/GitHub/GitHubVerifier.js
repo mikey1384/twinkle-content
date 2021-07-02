@@ -85,8 +85,7 @@ export default function GitHubVerifier({ task, onSetMissionState }) {
                 width: '100%',
                 display: 'flex',
                 alignItems: 'center',
-                flexDirection: 'column',
-                height: '7rem'
+                flexDirection: 'column'
               }}
             >
               <p

@@ -48,6 +48,7 @@ export default function Task({
       (myAttempt?.status === 'fail' && !myAttempt?.tryingAgain),
     [myAttempt?.status, myAttempt?.tryingAgain]
   );
+
   const missionModuleShown = useMemo(
     () =>
       !!retryable ||
@@ -148,7 +149,7 @@ export default function Task({
           xpReward={xpReward}
           coinReward={coinReward}
           myAttempt={myAttempt}
-          style={{ marginTop: myAttempt?.status ? '10rem' : '3rem' }}
+          style={{ marginTop: myAttempt?.status ? '8rem' : '3rem' }}
         />
       ) : null}
       {myAttempt?.status === 'pass' && (

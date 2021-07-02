@@ -78,7 +78,7 @@ export default function PasteCode({
             justifyContent: 'center'
           }}
         >
-          <Button filled color="green" onClick={() => setWatched(true)}>
+          <Button skeuomorphic color="green" onClick={() => setWatched(true)}>
             I followed along the video. What now?
           </Button>
         </div>

@@ -1,8 +1,9 @@
-import React, { Children, useMemo } from 'react';
+import React, { Children, useEffect, useMemo, useState } from 'react';
 import Button from 'components/Button';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Icon from 'components/Icon';
+import { Color } from 'constants/css';
 
 MultiStepContainer.propTypes = {
   children: PropTypes.node,
@@ -19,6 +20,10 @@ export default function MultiStepContainer({
   onSetMissionState,
   selectedIndex = 0
 }) {
+  const [helpButtonPressed, setHelpButtonPressed] = useState(false);
+  useEffect(() => {
+    setHelpButtonPressed(false);
+  }, [selectedIndex]);
   const childrenArray = useMemo(() => Children.toArray(children), [children]);
   const NextButton = useMemo(() => {
     const CustomButton = buttons
@@ -65,23 +70,24 @@ export default function MultiStepContainer({
 
   return (
     <ErrorBoundary style={{ width: '100%' }}>
-      <div style={{ width: '100%' }}>
+      <div style={{ width: '100%', minHeight: '7rem' }}>
         {childrenArray.filter((child, index) => index === selectedIndex)}
       </div>
       <div
         style={{
           width: '100%',
           display: 'flex',
-          justifyContent: 'center',
+          flexDirection: 'column',
+          alignItems: 'center',
           marginTop: '2rem'
         }}
       >
         {NextButton}
         {selectedIndex > 0 && (
           <Button
-            filled
-            marginTop={NextButton ? '1rem' : 0}
-            color="darkGray"
+            skeuomorphic
+            style={{ marginTop: NextButton ? '5rem' : 0 }}
+            color="black"
             onClick={() =>
               onSetMissionState({
                 missionId: taskId,
@@ -95,6 +101,29 @@ export default function MultiStepContainer({
             <span style={{ marginLeft: '0.7rem' }}>Back</span>
           </Button>
         )}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            fontSize: '1.7rem',
+            marginTop: '7rem'
+          }}
+        >
+          {!helpButtonPressed ? (
+            <Button
+              skeuomorphic
+              color="pink"
+              onClick={() => setHelpButtonPressed(true)}
+            >
+              {`I don't understand what I am supposed to do`}
+            </Button>
+          ) : (
+            <div style={{ marginTop: '3rem', marginBottom: '-1rem' }}>
+              Read the <b style={{ color: Color.green() }}>tutorial</b> below{' '}
+              <Icon icon="arrow-down" />
+            </div>
+          )}
+        </div>
       </div>
     </ErrorBoundary>
   );

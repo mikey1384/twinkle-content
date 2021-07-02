@@ -6,9 +6,6 @@ import CreateNewRepl from './CreateNewRepl';
 import CopyAndPasteCode from './CopyAndPasteCode';
 import MultiStepContainer from '../../components/MultiStepContainer';
 import TaskComplete from '../../components/TaskComplete';
-import Button from 'components/Button';
-import Icon from 'components/Icon';
-import { Color } from 'constants/css';
 
 ReplitVerifier.propTypes = {
   task: PropTypes.object.isRequired,
@@ -19,7 +16,6 @@ export default function ReplitVerifier({ task, onSetMissionState }) {
   const { accountMade, replCreated, correctCodeEntered } = task;
   const [makeAccountOkayPressed, setMakeAccountOkayPressed] = useState(false);
   const [createReplOkayPressed, setCreateReplOkayPressed] = useState(false);
-  const [helpButtonPressed, setHelpButtonPressed] = useState(false);
 
   const FirstButton = useMemo(() => {
     if (!makeAccountOkayPressed && !accountMade) {
@@ -73,7 +69,7 @@ export default function ReplitVerifier({ task, onSetMissionState }) {
   }, [createReplOkayPressed, task.id]);
 
   return (
-    <ErrorBoundary style={{ width: '100%', marginTop: '1rem' }}>
+    <ErrorBoundary style={{ width: '100%' }}>
       {!correctCodeEntered ? (
         <MultiStepContainer
           buttons={[FirstButton, SecondButton]}
@@ -91,7 +87,6 @@ export default function ReplitVerifier({ task, onSetMissionState }) {
             okayPressed={createReplOkayPressed}
           />
           <CopyAndPasteCode
-            style={{ marginTop: correctCodeEntered ? '2rem' : '10rem' }}
             correctCodeEntered={!!correctCodeEntered}
             onCorrectCodeEntered={handleCorrectCodeEntered}
           />
@@ -102,31 +97,6 @@ export default function ReplitVerifier({ task, onSetMissionState }) {
           passMessage="That's it! Excellent work"
           passMessageFontSize="2.2rem"
         />
-      )}
-      {!correctCodeEntered && (
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            fontSize: '1.5rem'
-          }}
-        >
-          {!helpButtonPressed ? (
-            <Button
-              style={{ marginTop: '7rem' }}
-              skeuomorphic
-              color="pink"
-              onClick={() => setHelpButtonPressed(true)}
-            >
-              {`I don't understand what I am supposed to do`}
-            </Button>
-          ) : (
-            <div style={{ marginTop: '3rem', marginBottom: '-1rem' }}>
-              Read the <b style={{ color: Color.green() }}>tutorial</b> below{' '}
-              <Icon icon="arrow-down" /> to learn how to create a Next.js Repl
-            </div>
-          )}
-        </div>
       )}
     </ErrorBoundary>
   );

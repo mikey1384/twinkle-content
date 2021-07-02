@@ -30,7 +30,7 @@ export default function CreateNewRepl({ okayPressed, replCreated, style }) {
       `}
     >
       <p>
-        2. {replCreated ? `Great job!` : 'Create a Next.js Repl'}
+        2. Create a Next.js Repl
         {replCreated && (
           <Icon
             style={{ marginLeft: '1rem' }}
@@ -39,14 +39,10 @@ export default function CreateNewRepl({ okayPressed, replCreated, style }) {
           />
         )}
       </p>
-      {!replCreated && (
-        <>
-          {okayPressed && (
-            <p style={{ marginTop: '4.5rem' }}>
-              Did you create a Next.js Repl?
-            </p>
-          )}
-        </>
+      {okayPressed && (
+        <p style={{ marginTop: '4.5rem', marginBottom: '2rem' }}>
+          Did you create a Next.js Repl?
+        </p>
       )}
     </div>
   );

@@ -49,7 +49,9 @@ export default function MakeAccount({
         )}
       </p>
       {okayPressed && (
-        <p style={{ marginTop: '4.5rem' }}>Did you make an account?</p>
+        <p style={{ marginTop: '4.5rem', marginBottom: '2rem' }}>
+          Did you make an account?
+        </p>
       )}
     </div>
   );
