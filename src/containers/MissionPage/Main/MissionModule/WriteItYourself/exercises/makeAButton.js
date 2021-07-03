@@ -140,6 +140,15 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   if (!button) {
     return onSetErrorMsg(`Where's the button?`);
   }
+  if (!buttonTextMatches) {
+    return onSetErrorMsg(
+      returnInnerTextErrorMsg({
+        targetName: '<button></button>',
+        correctValue: BUTTON_LABEL,
+        valueEntered: buttonText
+      })
+    );
+  }
   if (!buttonIsBlue) {
     return onSetErrorMsg(
       returnStyleErrorMsg({
@@ -157,15 +166,6 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
         propName: 'color',
         correctValue: 'white',
         valueEntered: buttonTextColor
-      })
-    );
-  }
-  if (!buttonTextMatches) {
-    return onSetErrorMsg(
-      returnInnerTextErrorMsg({
-        targetName: '<button></button>',
-        correctValue: BUTTON_LABEL,
-        valueEntered: buttonText
       })
     );
   }
