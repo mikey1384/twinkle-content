@@ -25,7 +25,7 @@ export default function MultiStepContainer({
     requestHelpers: { updateMissionStatus }
   } = useAppContext();
   const {
-    actions: { onUpdateProfileInfo }
+    actions: { onUpdateMissionState }
   } = useContentContext();
   const selectedIndex = useMemo(
     () => state?.missions?.[taskType]?.selectedIndex || 0,
@@ -56,7 +56,7 @@ export default function MultiStepContainer({
         >
           {buttonObj.label}
         </Button>
-      ));
+      ))?.[0];
     if (CustomButton) {
       return CustomButton;
     }
@@ -69,7 +69,7 @@ export default function MultiStepContainer({
     }
 
     async function handleGoNext() {
-      handleUpdateSelectedIndex(selectedIndex + 1);
+      await handleUpdateSelectedIndex(selectedIndex + 1);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [buttons, selectedIndex, childrenArray.length, taskId]);
@@ -92,7 +92,7 @@ export default function MultiStepContainer({
         {selectedIndex > 0 && (
           <Button
             skeuomorphic
-            style={{ marginTop: NextButton ? '5rem' : 0 }}
+            style={{ marginTop: NextButton ? '7rem' : '3rem' }}
             color="black"
             onClick={() =>
               handleUpdateSelectedIndex(Math.max(selectedIndex - 1, 0))
@@ -134,18 +134,10 @@ export default function MultiStepContainer({
       missionType: taskType,
       newStatus: { selectedIndex: newIndex }
     });
-    onUpdateProfileInfo({
+    onUpdateMissionState({
       userId,
-      state: {
-        ...state,
-        missions: {
-          ...state.missions,
-          [taskType]: {
-            ...state.missions?.[taskType],
-            selectedIndex: newIndex
-          }
-        }
-      }
+      missionType: taskType,
+      newState: { selectedIndex: newIndex }
     });
   }
 }

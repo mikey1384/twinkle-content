@@ -617,6 +617,15 @@ export default function ContentActions(dispatch) {
         greeting
       });
     },
+    onUpdateMissionState({ userId, missionType, newState }) {
+      return dispatch({
+        type: 'UPDATE_MISSION_STATE',
+        contentId: userId,
+        contentType: 'user',
+        missionType,
+        newState
+      });
+    },
     onUpdateProfileInfo({ userId, ...data }) {
       return dispatch({
         type: 'UPDATE_PROFILE_INFO',

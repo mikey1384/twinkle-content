@@ -6,7 +6,7 @@ export default function useExercises({
   exerciseKey,
   prevExerciseKey,
   state = {},
-  onUpdateProfileInfo,
+  onUpdateMissionState,
   onSetCode,
   taskType,
   userId,
@@ -70,18 +70,10 @@ export default function useExercises({
   };
 
   function handleNextClick() {
-    onUpdateProfileInfo({
+    onUpdateMissionState({
       userId,
-      state: {
-        ...state,
-        missions: {
-          ...state.missions,
-          [taskType]: {
-            ...state.missions?.[taskType],
-            [exerciseKey]: 'pass'
-          }
-        }
-      }
+      missionType: taskType,
+      newState: { [exerciseKey]: 'pass' }
     });
   }
 

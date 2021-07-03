@@ -1573,6 +1573,23 @@ export default function ContentReducer(state, action) {
           currentMissionId: action.missionId
         }
       };
+    case 'UPDATE_MISSION_STATE':
+      return {
+        ...state,
+        [contentKey]: {
+          ...prevContentState,
+          state: {
+            ...prevContentState.state,
+            missions: {
+              ...prevContentState.state?.missions,
+              [action.missionType]: {
+                ...prevContentState.state?.missions?.[action.missionType],
+                ...action.newState
+              }
+            }
+          }
+        }
+      };
     case 'UPDATE_PROFILE_INFO':
       return {
         ...state,

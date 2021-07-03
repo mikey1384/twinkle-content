@@ -19,7 +19,7 @@ export default function ReplitVerifier({ task }) {
     requestHelpers: { updateMissionStatus }
   } = useAppContext();
   const {
-    actions: { onUpdateProfileInfo }
+    actions: { onUpdateMissionState }
   } = useContentContext();
 
   const taskState = useMemo(
@@ -55,8 +55,8 @@ export default function ReplitVerifier({ task }) {
       color: 'green',
       skeuomorphic: true,
       onClick: async (goNext) => {
-        await handleUpdateTaskProgress({ accountMade: true });
-        goNext();
+        await goNext();
+        handleUpdateTaskProgress({ accountMade: true });
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -76,8 +76,8 @@ export default function ReplitVerifier({ task }) {
       color: 'green',
       skeuomorphic: true,
       onClick: async (goNext) => {
-        await handleUpdateTaskProgress({ replCreated: true });
-        goNext();
+        await goNext();
+        handleUpdateTaskProgress({ replCreated: true });
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -124,18 +124,10 @@ export default function ReplitVerifier({ task }) {
       missionType: task.missionType,
       newStatus: newState
     });
-    onUpdateProfileInfo({
+    onUpdateMissionState({
       userId,
-      state: {
-        ...state,
-        missions: {
-          ...state.missions,
-          [task.missionType]: {
-            ...state.missions?.[task.missionType],
-            ...newState
-          }
-        }
-      }
+      missionType: task.missionType,
+      newState
     });
   }
 }
