@@ -22,15 +22,15 @@ export default function MultiStepContainer({
 }) {
   const { userId, state } = useMyState();
   const {
+    requestHelpers: { updateMissionStatus }
+  } = useAppContext();
+  const {
     actions: { onUpdateProfileInfo }
   } = useContentContext();
   const selectedIndex = useMemo(
     () => state?.missions?.[taskType]?.selectedIndex || 0,
     [state?.missions, taskType]
   );
-  const {
-    requestHelpers: { updateMissionStatus }
-  } = useAppContext();
   const [helpButtonPressed, setHelpButtonPressed] = useState(false);
   useEffect(() => {
     setHelpButtonPressed(false);
@@ -68,7 +68,7 @@ export default function MultiStepContainer({
       );
     }
 
-    function handleGoNext() {
+    async function handleGoNext() {
       handleUpdateSelectedIndex(selectedIndex + 1);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -129,8 +129,8 @@ export default function MultiStepContainer({
     </ErrorBoundary>
   );
 
-  function handleUpdateSelectedIndex(newIndex) {
-    updateMissionStatus({
+  async function handleUpdateSelectedIndex(newIndex) {
+    await updateMissionStatus({
       missionType: taskType,
       newStatus: { selectedIndex: newIndex }
     });
