@@ -4,22 +4,33 @@ import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Icon from 'components/Icon';
 import { Color } from 'constants/css';
+import { useAppContext, useContentContext } from 'contexts';
+import { useMyState } from 'helpers/hooks';
 
 MultiStepContainer.propTypes = {
   children: PropTypes.node,
   buttons: PropTypes.array,
   taskId: PropTypes.number.isRequired,
-  onSetMissionState: PropTypes.func.isRequired,
-  selectedIndex: PropTypes.number
+  taskType: PropTypes.string.isRequired
 };
 
 export default function MultiStepContainer({
   children,
   buttons,
   taskId,
-  onSetMissionState,
-  selectedIndex = 0
+  taskType
 }) {
+  const { userId, state } = useMyState();
+  const {
+    actions: { onUpdateProfileInfo }
+  } = useContentContext();
+  const selectedIndex = useMemo(
+    () => state?.missions?.[taskType]?.selectedIndex || 0,
+    [state?.missions, taskType]
+  );
+  const {
+    requestHelpers: { updateMissionStatus }
+  } = useAppContext();
   const [helpButtonPressed, setHelpButtonPressed] = useState(false);
   useEffect(() => {
     setHelpButtonPressed(false);
@@ -58,12 +69,7 @@ export default function MultiStepContainer({
     }
 
     function handleGoNext() {
-      onSetMissionState({
-        missionId: taskId,
-        newState: {
-          selectedIndex: selectedIndex + 1
-        }
-      });
+      handleUpdateSelectedIndex(selectedIndex + 1);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [buttons, selectedIndex, childrenArray.length, taskId]);
@@ -89,12 +95,7 @@ export default function MultiStepContainer({
             style={{ marginTop: NextButton ? '5rem' : 0 }}
             color="black"
             onClick={() =>
-              onSetMissionState({
-                missionId: taskId,
-                newState: {
-                  selectedIndex: Math.max(selectedIndex - 1, 0)
-                }
-              })
+              handleUpdateSelectedIndex(Math.max(selectedIndex - 1, 0))
             }
           >
             <Icon icon="arrow-left" />
@@ -127,4 +128,24 @@ export default function MultiStepContainer({
       </div>
     </ErrorBoundary>
   );
+
+  function handleUpdateSelectedIndex(newIndex) {
+    updateMissionStatus({
+      missionType: taskType,
+      newStatus: { selectedIndex: newIndex }
+    });
+    onUpdateProfileInfo({
+      userId,
+      state: {
+        ...state,
+        missions: {
+          ...state.missions,
+          [taskType]: {
+            ...state.missions?.[taskType],
+            selectedIndex: newIndex
+          }
+        }
+      }
+    });
+  }
 }

@@ -73,9 +73,8 @@ export default function ReplitVerifier({ task, onSetMissionState }) {
       {!correctCodeEntered ? (
         <MultiStepContainer
           buttons={[FirstButton, SecondButton]}
-          onSetMissionState={onSetMissionState}
-          selectedIndex={task.selectedIndex}
           taskId={task.id}
+          tsskType={task.missionType}
         >
           <MakeAccount
             onSetOkayPressed={setMakeAccountOkayPressed}

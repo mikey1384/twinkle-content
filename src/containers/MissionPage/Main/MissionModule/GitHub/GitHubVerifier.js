@@ -11,11 +11,10 @@ import Loading from 'components/Loading';
 import MultiStepContainer from '../components/MultiStepContainer';
 
 GitHubVerifier.propTypes = {
-  task: PropTypes.object.isRequired,
-  onSetMissionState: PropTypes.func.isRequired
+  task: PropTypes.object.isRequired
 };
 
-export default function GitHubVerifier({ task, onSetMissionState }) {
+export default function GitHubVerifier({ task }) {
   const {
     requestHelpers: { loadGitHubData }
   } = useAppContext();
@@ -69,9 +68,8 @@ export default function GitHubVerifier({ task, onSetMissionState }) {
         {loading && <Loading />}
         {!loading && (
           <MultiStepContainer
-            onSetMissionState={onSetMissionState}
-            selectedIndex={task.selectedIndex}
             taskId={task.id}
+            taskType={task.missionType}
             buttons={[
               {
                 label: 'I created a github account',
