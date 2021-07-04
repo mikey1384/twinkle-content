@@ -16,7 +16,7 @@ MultiStepContainer.propTypes = {
 
 export default function MultiStepContainer({
   children,
-  buttons,
+  buttons = [],
   taskId,
   taskType
 }) {

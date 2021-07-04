@@ -65,7 +65,9 @@ export default function MissionModule({
       {mission.missionType === 'write-it-yourself' && (
         <WriteItYourself task={mission} onSetMissionState={onSetMissionState} />
       )}
-      {mission.missionType === 'launch-the-website' && <LaunchTheWebsite />}
+      {mission.missionType === 'launch-the-website' && (
+        <LaunchTheWebsite task={mission} />
+      )}
     </div>
   );
 }
