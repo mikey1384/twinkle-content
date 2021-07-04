@@ -9,6 +9,7 @@ Bio.propTypes = {
   small: PropTypes.bool,
   style: PropTypes.object
 };
+
 export default function Bio({ firstRow, secondRow, thirdRow, small, style }) {
   const processedFirstRow = useMemo(
     () => processedStringWithURL(firstRow),
