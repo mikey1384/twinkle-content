@@ -18,19 +18,19 @@ export const instruction = (
   <>
     <div>
       Set the <b>heading</b>
-      {`'s`} <b>fontFamily</b> to <b>{`"${HEADING_FONT_FAMILY}"`}</b> and its{' '}
+      {`'s`} <b>fontFamily</b> to <b>{`'${HEADING_FONT_FAMILY}'`}</b> and its{' '}
       <b>color</b> to{' '}
-      <b style={{ color: HEADING_COLOR }}>{`"${HEADING_COLOR}"`}</b>
+      <b style={{ color: HEADING_COLOR }}>{`'${HEADING_COLOR}'`}</b>
     </div>
     <div>
       Set the <b>subheading</b>
-      {`'s`} <b>fontFamily</b> to <b>{`"${SUBHEADING_FONT_FAMILY}"`}</b> and its{' '}
+      {`'s`} <b>fontFamily</b> to <b>{`'${SUBHEADING_FONT_FAMILY}'`}</b> and its{' '}
       <b>color</b> to{' '}
-      <b style={{ color: SUBHEADING_COLOR }}>{`"${SUBHEADING_COLOR}"`}</b>
+      <b style={{ color: SUBHEADING_COLOR }}>{`'${SUBHEADING_COLOR}'`}</b>
     </div>
     <div>
       Set <b>both button{`s'`}</b> <b>fontFamily</b> to{' '}
-      <b>{`"${BUTTON_FONT_FAMILY}"`}</b>
+      <b>{`'${BUTTON_FONT_FAMILY}'`}</b>
     </div>
   </>
 );
@@ -38,40 +38,40 @@ export const initialCode = ({ username }) => `function HomePage() {
   return (
     <div
       style={{
-        width: "100%",
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-        alignItems: "center"
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        alignItems: 'center'
       }}
     >
       <h1>${username}'s website</h1>
-      <h2 style={{ marginBottom: "10rem" }}>click the buttons below</h2>
+      <h2 style={{ marginBottom: '10rem' }}>click the buttons below</h2>
       <button
         style={{
-          padding: "1rem",
-          fontSize: "2rem",
-          background: "blue",
-          color: "white"
+          padding: '1rem',
+          fontSize: '2rem',
+          background: 'blue',
+          color: 'white'
         }}
-        onClick={() => alert("Hello there")}
+        onClick={() => alert('Hello there')}
       >
         Welcome
       </button>
       <button
         style={{
-          padding: "1rem",
-          fontSize: "2rem",
-          background: "orange",
-          color: "white",
-          marginTop: "2rem"
+          padding: '1rem',
+          fontSize: '2rem',
+          background: 'orange',
+          color: 'white',
+          marginTop: '2rem'
         }}
         onClick={() => {
           let name = prompt("What's your name?");
           if (name) {
-            alert("Nice to meet you, " + name + "!");
+            alert('Nice to meet you, ' + name + '!');
           } else {
-            alert("Nice to meet you, stranger");
+            alert('Nice to meet you, stranger');
           }
         }}
       >
