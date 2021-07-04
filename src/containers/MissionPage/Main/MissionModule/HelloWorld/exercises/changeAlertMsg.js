@@ -16,7 +16,7 @@ export const instruction = (
     Make it so that when you tap the <b>Tap me</b> button you get an alert
     message that says{' '}
     <b>
-      <i>{`"${ALERT_MSG}"`}</i>
+      <i>{`'${ALERT_MSG}'`}</i>
     </b>
   </>
 );
@@ -24,23 +24,23 @@ export const initialCode = `function HomePage() {
   return (
     <div
       style={{
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center"
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
       }}
     >
       <button
         style={{
-          padding: "1rem",
-          color: "white",
-          background: "blue",
-          border: "none",
-          fontSize: "2rem",
-          cursor: "pointer"
+          padding: '1rem',
+          color: 'white',
+          background: 'blue',
+          border: 'none',
+          fontSize: '2rem',
+          cursor: 'pointer'
         }}
-        onClick={() => alert("I am a button")}
+        onClick={() => alert('I am a button')}
       >
         Tap me
       </button>
@@ -90,6 +90,6 @@ export async function onRunCode({ ast, onSetErrorMsg, onUpdateMissionStatus }) {
     );
   }
   onSetErrorMsg(
-    `The alert message should say, "${ALERT_MSG}," not "${alertText.trim()}"`
+    `The alert message should say, '${ALERT_MSG}', not '${alertText.trim()}'`
   );
 }
