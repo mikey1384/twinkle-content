@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import MultiStepContainer from '../components/MultiStepContainer';
 import WebsiteVerfier from './WebsiteVerifier';
+import MakeAccount from './MakeAccount';
+import FinalizeYourCode from './FinalizeYourCode';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
-import MakeAccount from './MakeAccount';
 
 LaunchTheWebsite.propTypes = {
   style: PropTypes.object,
@@ -68,7 +69,7 @@ export default function LaunchTheWebsite({ style, task }) {
         taskId={task.id}
         taskType={task.missionType}
       >
-        <div>First page</div>
+        <FinalizeYourCode />
         <MakeAccount
           onSetOkayPressed={() =>
             handleUpdateTaskProgress({ makeAccountOkayPressed: true })
