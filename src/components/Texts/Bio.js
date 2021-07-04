@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { processedStringWithURL } from 'helpers/stringHelpers';
 
@@ -10,6 +10,19 @@ Bio.propTypes = {
   style: PropTypes.object
 };
 export default function Bio({ firstRow, secondRow, thirdRow, small, style }) {
+  const processedFirstRow = useMemo(
+    () => processedStringWithURL(firstRow),
+    [firstRow]
+  );
+  const processedSecondRow = useMemo(
+    () => processedStringWithURL(secondRow),
+    [secondRow]
+  );
+  const processedThirdRow = useMemo(
+    () => processedStringWithURL(thirdRow),
+    [thirdRow]
+  );
+
   return (
     <ul
       style={{
@@ -28,21 +41,21 @@ export default function Bio({ firstRow, secondRow, thirdRow, small, style }) {
       {firstRow && (
         <li
           dangerouslySetInnerHTML={{
-            __html: processedStringWithURL(firstRow)
+            __html: processedFirstRow
           }}
         />
       )}
       {secondRow && (
         <li
           dangerouslySetInnerHTML={{
-            __html: processedStringWithURL(secondRow)
+            __html: processedSecondRow
           }}
         />
       )}
       {thirdRow && (
         <li
           dangerouslySetInnerHTML={{
-            __html: processedStringWithURL(thirdRow)
+            __html: processedThirdRow
           }}
         />
       )}
