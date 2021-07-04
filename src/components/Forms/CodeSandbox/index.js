@@ -63,7 +63,7 @@ export default function CodeSandbox({
       }}
     >
       <Editor
-        value={code}
+        value={globalCode || initialCode}
         valueOnTextEditor={code}
         onChange={handleSetCode}
         onSetAst={setAst}
