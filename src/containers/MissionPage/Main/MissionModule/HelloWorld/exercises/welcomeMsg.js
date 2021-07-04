@@ -21,24 +21,24 @@ export const initialCode = `function HomePage() {
   return (
     <div
       style={{
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center"
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
       }}
     >
       <p></p>
       <button
         style={{
-          padding: "1rem",
-          color: "white",
-          background: "blue",
-          border: "none",
-          fontSize: "2rem",
-          cursor: "pointer"
+          padding: '1rem',
+          color: 'white',
+          background: 'blue',
+          border: 'none',
+          fontSize: '2rem',
+          cursor: 'pointer'
         }}
-        onClick={() => alert("Hello World")}
+        onClick={() => alert('Hello World')}
       >
         Tap me
       </button>

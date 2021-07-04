@@ -14,8 +14,8 @@ export const title = `Make the Text Bigger and Thicker`;
 export const instruction = (
   <>
     Change the <b>fontWeight</b> of your welcome message (
-    {`<p>${WELCOME_MSG}</p>`}) from <b>{`"normal"`}</b> to <b>{`"bold"`}</b> and
-    increase its <b>fontSize</b> to <b>{`"${FONT_SIZE}"`}</b>. You may change
+    {`<p>${WELCOME_MSG}</p>`}) from <b>{`'normal'`}</b> to <b>{`'bold'`}</b> and
+    increase its <b>fontSize</b> to <b>{`'${FONT_SIZE}'`}</b>. You may change
     its color to any color your want
   </>
 );
@@ -23,33 +23,33 @@ export const initialCode = `function HomePage() {
   return (
     <div
       style={{
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center"
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
       }}
     >
       <p
         style={{
-          color: "black",
-          fontFamily: "sans-serif",
-          fontWeight: "normal",
-          fontSize: "1rem"
+          color: 'black',
+          fontFamily: 'sans-serif',
+          fontWeight: 'normal',
+          fontSize: '1rem'
         }}
       >
         Welcome to My Website!
       </p>
       <button
         style={{
-          padding: "1rem",
-          color: "white",
-          background: "blue",
-          border: "none",
-          fontSize: "2rem",
-          cursor: "pointer"
+          padding: '1rem',
+          color: 'white',
+          background: 'blue',
+          border: 'none',
+          fontSize: '2rem',
+          cursor: 'pointer'
         }}
-        onClick={() => alert("Hello World")}
+        onClick={() => alert('Hello World')}
       >
         Tap me
       </button>
