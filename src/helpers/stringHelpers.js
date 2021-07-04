@@ -412,281 +412,11 @@ export function processedStringWithURL(string) {
     string.length > maxChar ? `${string.substring(0, maxChar)}...` : string;
   const urlRegex =
     /(((http[s]?:\/\/|ftp:\/\/)?(www\.){1}([0-9\p{L}/])+([0-9\p{L}/\-.,;:?!&@%_\+~#=\/()])+([0-9\p{L}/])+)|((?!.*www)(http[s]?:\/\/|ftp:\/\/){1}([0-9\p{L}/])+([0-9\p{L}/\-.,;:?!&@%_\+~#=\/()])+([0-9\p{L}/])+))/giu;
-  const blueWordRegex = /(b\|[^\s]+\|b)/gi;
-  const blueSentenceRegex = /((b\|[^\s]){1}([^\n])+([^\s]\|b){1})/gi;
-  const grayWordRegex = /(gr\|[^\s]+\|gr)/gi;
-  const graySentenceRegex = /((gr\|[^\s]){1}([^\n])+([^\s]\|gr){1})/gi;
-  const greenWordRegex = /(g\|[^\s]+\|g)/gi;
-  const greenSentenceRegex = /((g\|[^\s]){1}([^\n])+([^\s]\|g){1})/gi;
-  const limeWordRegex = /(l\|[^\s]+\|l)/gi;
-  const limeSentenceRegex = /((l\|[^\s]){1}([^\n])+([^\s]\|l){1})/gi;
-  const orangeWordRegex = /(o\|[^\s]+\|o)/gi;
-  const orangeSentenceRegex = /((o\|[^\s]){1}([^\n])+([^\s]\|o){1})/gi;
-  const pinkWordRegex = /(p\|[^\s]+\|p)/gi;
-  const pinkSentenceRegex = /((p\|[^\s]){1}([^\n])+([^\s]\|p){1})/gi;
-  const purpleWordRegex = /(pu\|[^\s]+\|pu)/gi;
-  const purpleSentenceRegex = /((pu\|[^\s]){1}([^\n])+([^\s]\|pu){1})/gi;
-  const redWordRegex = /(r\|[^\s]+\|r)/gi;
-  const redSentenceRegex = /((r\|[^\s]){1}([^\n])+([^\s]\|r){1})/gi;
-  const yellowWordRegex = /(y\|[^\s]+\|y)/gi;
-  const yellowSentenceRegex = /((y\|[^\s]){1}([^\n])+([^\s]\|y){1})/gi;
-  const hugeWordRegex = /(h\[[^\s]+\]h)/gi;
-  const hugeSentenceRegex = /((h\[[^\s]){1}([^\n])+([^\s]\]h){1})/gi;
-  const bigWordRegex = /(b\[[^\s]+\]b)/gi;
-  const bigSentenceRegex = /((b\[[^\s]){1}([^\n])+([^\s]\]b){1})/gi;
-  const smallWordRegex = /(s\[[^\s]+\]s)/gi;
-  const smallSentenceRegex = /((s\[[^\s]){1}([^\n])+([^\s]\]s){1})/gi;
-  const tinyWordRegex = /(t\[[^\s]+\]t)/gi;
-  const tinySentenceRegex = /((t\[[^\s]){1}([^\n])+([^\s]\]t){1})/gi;
-  const boldItalicWordRegex = /(\*\*\*[^\s]+\*\*\*)/gi;
-  const boldItalicSentenceRegex =
-    /((\*\*\*[^\s]){1}([^\n])+([^\s]\*\*\*){1})/gi;
-  const boldWordRegex = /(\*[^\s*]+\*)/gi;
-  const italicWordRegex = /(\*\*[^\s*]+\*\*)/gi;
-  const italicSentenceRegex = /((\*\*[^\s]){1}([^\n])+([^\s]\*\*){1})/gi;
-  const underlineWordRegex = /(__[\S]+__)/gi;
-  const linethroughWordRegex = /(--[\S]+--)/gi;
   let tempString = string
     .replace(/&/g, '&amp')
     .replace(/</g, '&lt')
     .replace(/>/g, '&gt')
     .replace(urlRegex, `<a href=\"$1\" target=\"_blank\">$1</a>`)
-    .replace(
-      boldItalicWordRegex,
-      (string) => `<b><i>${string.substring(3, string.length - 3)}</i></b>`
-    )
-    .replace(
-      italicWordRegex,
-      (string) => `<i>${string.substring(2, string.length - 2)}</i>`
-    )
-    .replace(
-      boldWordRegex,
-      (string) => `<b>${string.substring(1, string.length - 1)}</b>`
-    )
-    .replace(
-      underlineWordRegex,
-      (string) => `<u>${string.substring(2, string.length - 2)}</u>`
-    )
-    .replace(
-      linethroughWordRegex,
-      (string) => `<strike>${string.substring(2, string.length - 2)}</strike>`
-    )
-    .replace(
-      blueWordRegex,
-      (string) =>
-        `<span style="color: blue;">${string.substring(
-          2,
-          string.length - 2
-        )}</span>`
-    )
-    .replace(
-      greenWordRegex,
-      (string) =>
-        `<span style="color: green;">${string.substring(
-          2,
-          string.length - 2
-        )}</span>`
-    )
-    .replace(
-      limeWordRegex,
-      (string) =>
-        `<span style="color: lawngreen;">${string.substring(
-          2,
-          string.length - 2
-        )}</span>`
-    )
-    .replace(
-      orangeWordRegex,
-      (string) =>
-        `<span style="color: orange;">${string.substring(
-          2,
-          string.length - 2
-        )}</span>`
-    )
-    .replace(
-      pinkWordRegex,
-      (string) =>
-        `<span style="color: rgb(255,105,180);">${string.substring(
-          2,
-          string.length - 2
-        )}</span>`
-    )
-    .replace(
-      purpleWordRegex,
-      (string) =>
-        `<span style="color: purple;">${string.substring(
-          3,
-          string.length - 3
-        )}</span>`
-    )
-    .replace(
-      grayWordRegex,
-      (string) =>
-        `<span style="color: gray;">${string.substring(
-          3,
-          string.length - 3
-        )}</span>`
-    )
-    .replace(
-      redWordRegex,
-      (string) =>
-        `<span style="color: red;">${string.substring(
-          2,
-          string.length - 2
-        )}</span>`
-    )
-    .replace(
-      yellowWordRegex,
-      (string) =>
-        `<span style="color: rgb(255,210,0);">${string.substring(
-          2,
-          string.length - 2
-        )}</span>`
-    )
-    .replace(
-      hugeWordRegex,
-      (string) =>
-        `<span style="font-size: 1.9em;">${string.substring(
-          2,
-          string.length - 2
-        )}</span>`
-    )
-    .replace(
-      bigWordRegex,
-      (string) =>
-        `<span style="font-size: 1.4em;">${string.substring(
-          2,
-          string.length - 2
-        )}</span>`
-    )
-    .replace(
-      smallWordRegex,
-      (string) =>
-        `<span style="font-size: 0.7em;">${string.substring(
-          2,
-          string.length - 2
-        )}</span>`
-    )
-    .replace(
-      tinyWordRegex,
-      (string) =>
-        `<span style="font-size: 0.5em;">${string.substring(
-          2,
-          string.length - 2
-        )}</span>`
-    )
-    .replace(
-      boldItalicSentenceRegex,
-      (string) => `<b><i>${string.substring(3, string.length - 3)}</i></b>`
-    )
-    .replace(
-      italicSentenceRegex,
-      (string) => `<i>${string.substring(2, string.length - 2)}</i>`
-    )
-    .replace(
-      graySentenceRegex,
-      (string) =>
-        `<span style="color: gray;">${string.substring(
-          3,
-          string.length - 3
-        )}</span>`
-    )
-    .replace(
-      blueSentenceRegex,
-      (string) =>
-        `<span style="color: blue;">${string.substring(
-          2,
-          string.length - 2
-        )}</span>`
-    )
-    .replace(
-      greenSentenceRegex,
-      (string) =>
-        `<span style="color: green;">${string.substring(
-          2,
-          string.length - 2
-        )}</span>`
-    )
-    .replace(
-      limeSentenceRegex,
-      (string) =>
-        `<span style="color: lawngreen;">${string.substring(
-          2,
-          string.length - 2
-        )}</span>`
-    )
-    .replace(
-      pinkSentenceRegex,
-      (string) =>
-        `<span style="color: rgb(255,105,180);">${string.substring(
-          2,
-          string.length - 2
-        )}</span>`
-    )
-    .replace(
-      purpleSentenceRegex,
-      (string) =>
-        `<span style="color: purple;">${string.substring(
-          3,
-          string.length - 3
-        )}</span>`
-    )
-    .replace(
-      redSentenceRegex,
-      (string) =>
-        `<span style="color: red;">${string.substring(
-          2,
-          string.length - 2
-        )}</span>`
-    )
-    .replace(
-      yellowSentenceRegex,
-      (string) =>
-        `<span style="color: rgb(255,210,0);">${string.substring(
-          2,
-          string.length - 2
-        )}</span>`
-    )
-    .replace(
-      orangeSentenceRegex,
-      (string) =>
-        `<span style="color: orange;">${string.substring(
-          2,
-          string.length - 2
-        )}</span>`
-    )
-    .replace(
-      smallSentenceRegex,
-      (string) =>
-        `<span style="font-size: 0.7em;">${string.substring(
-          2,
-          string.length - 2
-        )}</span>`
-    )
-    .replace(
-      tinySentenceRegex,
-      (string) =>
-        `<span style="font-size: 0.5em;">${string.substring(
-          2,
-          string.length - 2
-        )}</span>`
-    )
-    .replace(
-      bigSentenceRegex,
-      (string) =>
-        `<span style="font-size: 1.4em;">${string.substring(
-          2,
-          string.length - 2
-        )}</span>`
-    )
-    .replace(
-      hugeSentenceRegex,
-      (string) =>
-        `<span style="font-size: 1.9em;">${string.substring(
-          2,
-          string.length - 2
-        )}</span>`
-    )
     .replace(/\r?\n/g, '<br>');
   let newString = '';
   while (tempString.length > 0) {
@@ -714,7 +444,290 @@ export function processedStringWithURL(string) {
       newString += 'http://';
     }
   }
-  return newString;
+  const splitNewString = newString.split('<a href');
+  const splitNewStringWithTextEffects = splitNewString.map((part) => {
+    const splitPart = part.split('</a>');
+    if (splitPart.length === 1) {
+      return applyTextEffects(splitPart[0]);
+    }
+    return [splitPart[0], applyTextEffects(splitPart[1])].join('</a>');
+  });
+  return splitNewStringWithTextEffects.join('<a href');
+
+  // eslint-disable-next-line no-unused-vars
+  function applyTextEffects(string) {
+    const blueWordRegex = /(b\|[^\s]+\|b)/gi;
+    const blueSentenceRegex = /((b\|[^\s]){1}([^\n])+([^\s]\|b){1})/gi;
+    const grayWordRegex = /(gr\|[^\s]+\|gr)/gi;
+    const graySentenceRegex = /((gr\|[^\s]){1}([^\n])+([^\s]\|gr){1})/gi;
+    const greenWordRegex = /(g\|[^\s]+\|g)/gi;
+    const greenSentenceRegex = /((g\|[^\s]){1}([^\n])+([^\s]\|g){1})/gi;
+    const limeWordRegex = /(l\|[^\s]+\|l)/gi;
+    const limeSentenceRegex = /((l\|[^\s]){1}([^\n])+([^\s]\|l){1})/gi;
+    const orangeWordRegex = /(o\|[^\s]+\|o)/gi;
+    const orangeSentenceRegex = /((o\|[^\s]){1}([^\n])+([^\s]\|o){1})/gi;
+    const pinkWordRegex = /(p\|[^\s]+\|p)/gi;
+    const pinkSentenceRegex = /((p\|[^\s]){1}([^\n])+([^\s]\|p){1})/gi;
+    const purpleWordRegex = /(pu\|[^\s]+\|pu)/gi;
+    const purpleSentenceRegex = /((pu\|[^\s]){1}([^\n])+([^\s]\|pu){1})/gi;
+    const redWordRegex = /(r\|[^\s]+\|r)/gi;
+    const redSentenceRegex = /((r\|[^\s]){1}([^\n])+([^\s]\|r){1})/gi;
+    const yellowWordRegex = /(y\|[^\s]+\|y)/gi;
+    const yellowSentenceRegex = /((y\|[^\s]){1}([^\n])+([^\s]\|y){1})/gi;
+    const hugeWordRegex = /(h\[[^\s]+\]h)/gi;
+    const hugeSentenceRegex = /((h\[[^\s]){1}([^\n])+([^\s]\]h){1})/gi;
+    const bigWordRegex = /(b\[[^\s]+\]b)/gi;
+    const bigSentenceRegex = /((b\[[^\s]){1}([^\n])+([^\s]\]b){1})/gi;
+    const smallWordRegex = /(s\[[^\s]+\]s)/gi;
+    const smallSentenceRegex = /((s\[[^\s]){1}([^\n])+([^\s]\]s){1})/gi;
+    const tinyWordRegex = /(t\[[^\s]+\]t)/gi;
+    const tinySentenceRegex = /((t\[[^\s]){1}([^\n])+([^\s]\]t){1})/gi;
+    const boldItalicWordRegex = /(\*\*\*[^\s]+\*\*\*)/gi;
+    const boldItalicSentenceRegex =
+      /((\*\*\*[^\s]){1}([^\n])+([^\s]\*\*\*){1})/gi;
+    const boldWordRegex = /(\*[^\s*]+\*)/gi;
+    const italicWordRegex = /(\*\*[^\s*]+\*\*)/gi;
+    const italicSentenceRegex = /((\*\*[^\s]){1}([^\n])+([^\s]\*\*){1})/gi;
+    const underlineWordRegex = /(__[\S]+__)/gi;
+    const linethroughWordRegex = /(--[\S]+--)/gi;
+    return string
+      .replace(
+        boldItalicWordRegex,
+        (string) => `<b><i>${string.substring(3, string.length - 3)}</i></b>`
+      )
+      .replace(
+        italicWordRegex,
+        (string) => `<i>${string.substring(2, string.length - 2)}</i>`
+      )
+      .replace(
+        boldWordRegex,
+        (string) => `<b>${string.substring(1, string.length - 1)}</b>`
+      )
+      .replace(
+        underlineWordRegex,
+        (string) => `<u>${string.substring(2, string.length - 2)}</u>`
+      )
+      .replace(
+        linethroughWordRegex,
+        (string) => `<strike>${string.substring(2, string.length - 2)}</strike>`
+      )
+      .replace(
+        blueWordRegex,
+        (string) =>
+          `<span style="color: blue;">${string.substring(
+            2,
+            string.length - 2
+          )}</span>`
+      )
+      .replace(
+        greenWordRegex,
+        (string) =>
+          `<span style="color: green;">${string.substring(
+            2,
+            string.length - 2
+          )}</span>`
+      )
+      .replace(
+        limeWordRegex,
+        (string) =>
+          `<span style="color: lawngreen;">${string.substring(
+            2,
+            string.length - 2
+          )}</span>`
+      )
+      .replace(
+        orangeWordRegex,
+        (string) =>
+          `<span style="color: orange;">${string.substring(
+            2,
+            string.length - 2
+          )}</span>`
+      )
+      .replace(
+        pinkWordRegex,
+        (string) =>
+          `<span style="color: rgb(255,105,180);">${string.substring(
+            2,
+            string.length - 2
+          )}</span>`
+      )
+      .replace(
+        purpleWordRegex,
+        (string) =>
+          `<span style="color: purple;">${string.substring(
+            3,
+            string.length - 3
+          )}</span>`
+      )
+      .replace(
+        grayWordRegex,
+        (string) =>
+          `<span style="color: gray;">${string.substring(
+            3,
+            string.length - 3
+          )}</span>`
+      )
+      .replace(
+        redWordRegex,
+        (string) =>
+          `<span style="color: red;">${string.substring(
+            2,
+            string.length - 2
+          )}</span>`
+      )
+      .replace(
+        yellowWordRegex,
+        (string) =>
+          `<span style="color: rgb(255,210,0);">${string.substring(
+            2,
+            string.length - 2
+          )}</span>`
+      )
+      .replace(
+        hugeWordRegex,
+        (string) =>
+          `<span style="font-size: 1.9em;">${string.substring(
+            2,
+            string.length - 2
+          )}</span>`
+      )
+      .replace(
+        bigWordRegex,
+        (string) =>
+          `<span style="font-size: 1.4em;">${string.substring(
+            2,
+            string.length - 2
+          )}</span>`
+      )
+      .replace(
+        smallWordRegex,
+        (string) =>
+          `<span style="font-size: 0.7em;">${string.substring(
+            2,
+            string.length - 2
+          )}</span>`
+      )
+      .replace(
+        tinyWordRegex,
+        (string) =>
+          `<span style="font-size: 0.5em;">${string.substring(
+            2,
+            string.length - 2
+          )}</span>`
+      )
+      .replace(
+        boldItalicSentenceRegex,
+        (string) => `<b><i>${string.substring(3, string.length - 3)}</i></b>`
+      )
+      .replace(
+        italicSentenceRegex,
+        (string) => `<i>${string.substring(2, string.length - 2)}</i>`
+      )
+      .replace(
+        graySentenceRegex,
+        (string) =>
+          `<span style="color: gray;">${string.substring(
+            3,
+            string.length - 3
+          )}</span>`
+      )
+      .replace(
+        blueSentenceRegex,
+        (string) =>
+          `<span style="color: blue;">${string.substring(
+            2,
+            string.length - 2
+          )}</span>`
+      )
+      .replace(
+        greenSentenceRegex,
+        (string) =>
+          `<span style="color: green;">${string.substring(
+            2,
+            string.length - 2
+          )}</span>`
+      )
+      .replace(
+        limeSentenceRegex,
+        (string) =>
+          `<span style="color: lawngreen;">${string.substring(
+            2,
+            string.length - 2
+          )}</span>`
+      )
+      .replace(
+        pinkSentenceRegex,
+        (string) =>
+          `<span style="color: rgb(255,105,180);">${string.substring(
+            2,
+            string.length - 2
+          )}</span>`
+      )
+      .replace(
+        purpleSentenceRegex,
+        (string) =>
+          `<span style="color: purple;">${string.substring(
+            3,
+            string.length - 3
+          )}</span>`
+      )
+      .replace(
+        redSentenceRegex,
+        (string) =>
+          `<span style="color: red;">${string.substring(
+            2,
+            string.length - 2
+          )}</span>`
+      )
+      .replace(
+        yellowSentenceRegex,
+        (string) =>
+          `<span style="color: rgb(255,210,0);">${string.substring(
+            2,
+            string.length - 2
+          )}</span>`
+      )
+      .replace(
+        orangeSentenceRegex,
+        (string) =>
+          `<span style="color: orange;">${string.substring(
+            2,
+            string.length - 2
+          )}</span>`
+      )
+      .replace(
+        smallSentenceRegex,
+        (string) =>
+          `<span style="font-size: 0.7em;">${string.substring(
+            2,
+            string.length - 2
+          )}</span>`
+      )
+      .replace(
+        tinySentenceRegex,
+        (string) =>
+          `<span style="font-size: 0.5em;">${string.substring(
+            2,
+            string.length - 2
+          )}</span>`
+      )
+      .replace(
+        bigSentenceRegex,
+        (string) =>
+          `<span style="font-size: 1.4em;">${string.substring(
+            2,
+            string.length - 2
+          )}</span>`
+      )
+      .replace(
+        hugeSentenceRegex,
+        (string) =>
+          `<span style="font-size: 1.9em;">${string.substring(
+            2,
+            string.length - 2
+          )}</span>`
+      );
+  }
 }
 
 export function processedURL(url) {
