@@ -37,35 +37,40 @@ export default function MultiStepContainer({
   }, [selectedIndex]);
   const childrenArray = useMemo(() => Children.toArray(children), [children]);
   const NextButton = useMemo(() => {
+    const DefaultButton = (
+      <Button skeuomorphic filled color="logoBlue" onClick={handleGoNext}>
+        Next
+      </Button>
+    );
     const CustomButton = buttons
       .filter(
         (buttonObj, index) =>
           index === selectedIndex && index < childrenArray.length - 1
       )
-      .map((buttonObj, index) => (
-        <Button
-          key={index}
-          color={buttonObj.color || 'logoBlue'}
-          skeuomorphic={buttonObj.skeuomorphic}
-          filled={buttonObj.filled}
-          onClick={
-            buttonObj.onClick
-              ? () => buttonObj.onClick(handleGoNext)
-              : handleGoNext
-          }
-        >
-          {buttonObj.label}
-        </Button>
-      ))?.[0];
+      .map((buttonObj, index) =>
+        buttonObj ? (
+          <Button
+            key={index}
+            color={buttonObj.color || 'logoBlue'}
+            skeuomorphic={buttonObj.skeuomorphic}
+            filled={buttonObj.filled}
+            onClick={
+              buttonObj.onClick
+                ? () => buttonObj.onClick(handleGoNext)
+                : handleGoNext
+            }
+          >
+            {buttonObj.label}
+          </Button>
+        ) : (
+          DefaultButton
+        )
+      )?.[0];
     if (CustomButton) {
       return CustomButton;
     }
     if (selectedIndex < childrenArray.length - 1) {
-      return (
-        <Button filled color="logoBlue" onClick={handleGoNext}>
-          Next
-        </Button>
-      );
+      return DefaultButton;
     }
 
     async function handleGoNext() {

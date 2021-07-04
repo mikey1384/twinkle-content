@@ -25,7 +25,7 @@ export default function LaunchTheWebsite({ style, task }) {
     [state?.missions, task?.missionType]
   );
   const { accountMade, makeAccountOkayPressed } = taskState;
-  const FirstButton = useMemo(() => {
+  const SecondButton = useMemo(() => {
     if (!makeAccountOkayPressed && !accountMade) {
       return {
         label: 'Okay',
@@ -64,10 +64,11 @@ export default function LaunchTheWebsite({ style, task }) {
   return (
     <ErrorBoundary style={style}>
       <MultiStepContainer
-        buttons={[FirstButton]}
+        buttons={[null, SecondButton]}
         taskId={task.id}
         taskType={task.missionType}
       >
+        <div>First page</div>
         <MakeAccount
           onSetOkayPressed={() =>
             handleUpdateTaskProgress({ makeAccountOkayPressed: true })
