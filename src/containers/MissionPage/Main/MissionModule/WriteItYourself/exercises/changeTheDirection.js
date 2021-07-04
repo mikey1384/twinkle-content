@@ -17,14 +17,14 @@ export const instruction = (
   <>
     <div>
       Set the <b>{`<div>`}</b>
-      {`'s`} <b>flexDirection</b> value to <b>{`"${FLEX_DIRECTION}"`}</b>
+      {`'s`} <b>flexDirection</b> value to <b>{`'${FLEX_DIRECTION}'`}</b>
     </div>
     <div>
-      and its <b>alignItems</b> value to <b>{`"${ALIGN_ITEMS}"`}</b>
+      and its <b>alignItems</b> value to <b>{`'${ALIGN_ITEMS}'`}</b>
     </div>
     <div style={{ marginTop: '2rem' }}>
       Set the <b style={{ color: 'orange' }}>second button</b>
-      {`'s`} <b>marginTop</b> value to <b>{`"${BUTTON_MARGIN_TOP}"`}</b>
+      {`'s`} <b>marginTop</b> value to <b>{`'${BUTTON_MARGIN_TOP}'`}</b>
     </div>
     <div style={{ marginTop: '2rem' }}>
       Tap the <b style={{ color: Color.logoBlue() }}>format</b> button to make
@@ -34,31 +34,31 @@ export const instruction = (
 );
 export const initialCode = `function HomePage() {
   return (
-    <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+    <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
       <button
         style={{
-          padding: "1rem",
-          fontSize: "2rem",
-          background: "blue",
-          color: "white"
+          padding: '1rem',
+          fontSize: '2rem',
+          background: 'blue',
+          color: 'white'
         }}
-        onClick={() => alert("Hello there")}
+        onClick={() => alert('Hello there')}
       >
         Welcome
       </button>
       <button
         style={{
-          padding: "1rem",
-          fontSize: "2rem",
-          background: "orange",
-          color: "white"
+          padding: '1rem',
+          fontSize: '2rem',
+          background: 'orange',
+          color: 'white'
         }}
         onClick={() => {
           let name = prompt("What's your name?");
           if (name) {
-            alert(${'"Nice to meet you, "' + ' + ' + 'name' + ' + ' + '"!"'});
+            alert(${"'Nice to meet you, '" + ' + ' + 'name' + ' + ' + "'!'"});
           } else {
-            alert("Nice to meet you, stranger");
+            alert('Nice to meet you, stranger');
           }
         }}
       >

@@ -19,12 +19,12 @@ export const instruction = (
       <b>{`<div></div>`}</b> tags
     </div>
     <div>
-      Set the width of the <b>{`<div>`}</b> to <b>{`"${WIDTH}"`}</b>
+      Set the width of the <b>{`<div>`}</b> to <b>{`'${WIDTH}'`}</b>
     </div>
     <div>
       Set the <b>{`<div>`}</b>
-      {`'s`} <b>display</b> value to <b>{`"${DISPLAY}"`}</b> and its{' '}
-      <b>justifyContent</b> value to <b>{`"${JUSTIFY_CONTENT}"`}</b>
+      {`'s`} <b>display</b> value to <b>{`'${DISPLAY}'`}</b> and its{' '}
+      <b>justifyContent</b> value to <b>{`'${JUSTIFY_CONTENT}'`}</b>
     </div>
   </>
 );
@@ -32,12 +32,12 @@ export const initialCode = `function HomePage() {
   return (
     <button
       style={{
-        padding: "1rem",
-        fontSize: "2rem",
-        background: "blue",
-        color: "white"
+        padding: '1rem',
+        fontSize: '2rem',
+        background: 'blue',
+        color: 'white'
       }}
-      onClick={() => alert("Hello there")}
+      onClick={() => alert('Hello there')}
     >
       Welcome
     </button>
