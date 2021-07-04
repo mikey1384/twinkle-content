@@ -16,14 +16,14 @@ export const initialCode = `function HomePage() {
   return (
     <div
       style={{
-        width: "100%",
-        height: "100%",
-        fontSize: "2rem",
-        textAlign: "center"
+        width: '100%',
+        height: '100%',
+        fontSize: '2rem',
+        textAlign: 'center'
       }}
     >
       <div>First</div>
-      <div style={{ marginTop: "1rem" }}>Second</div>
+      <div style={{ marginTop: '1rem' }}>Second</div>
       <div style={{ marginTop: ${MARGIN_TOP} }}>Third</div>
     </div>
   );

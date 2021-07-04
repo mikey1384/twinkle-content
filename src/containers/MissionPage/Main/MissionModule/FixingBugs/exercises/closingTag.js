@@ -15,16 +15,16 @@ export const initialCode = `function HomePage() {
   return (
     <div
       style={{
-        width: "100%",
-        height: "100%",
-        fontSize: "2rem",
-        textAlign: "center"
+        width: '100%',
+        height: '100%',
+        fontSize: '2rem',
+        textAlign: 'center'
       }}
     >
       <div>All tags</div>
-      <div>${`{"That Were Opened <div>"}`}</div>
-      <div style={{ marginTop: "${THIRD_MARGIN_TOP}" }}>Must</div>
-      <div style={{ marginTop: "${FOURTH_MARGIN_TOP}" }}>${`{"Be Closed </div>"}`}</div>
+      <div>${`{'That Were Opened <div>'}`}</div>
+      <div style={{ marginTop: '${THIRD_MARGIN_TOP}' }}>Must</div>
+      <div style={{ marginTop: '${FOURTH_MARGIN_TOP}' }}>${`{'Be Closed </div>'}`}</div>
     <div>
   );
 }`;
