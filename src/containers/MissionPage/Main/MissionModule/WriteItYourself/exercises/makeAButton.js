@@ -12,6 +12,7 @@ import {
   stringIsEmpty,
   stringsAreCaseInsensitivelyEqual
 } from 'helpers/stringHelpers';
+import Icon from 'components/Icon';
 
 const BUTTON_LABEL = 'Welcome';
 const FONT_SIZE = '2rem';
@@ -29,13 +30,13 @@ export const instruction = (
       </b>
     </div>
     <div>
-      Give the button a <b>padding</b> of <b>{`"${PADDING}"`}</b> and set its{' '}
-      <b>fontSize</b> value to <b>{`"${FONT_SIZE}"`}</b>
+      Give the button a <b>padding</b> of <b>{`'${PADDING}'`}</b> and set its{' '}
+      <b>fontSize</b> value to <b>{`'${FONT_SIZE}'`}</b>
     </div>
     <div>
       Make it so that when you tap/click the button you get a popup saying{' '}
       <b>
-        <i>{`"${ALERT_TEXT}"`}</i>
+        <i>{`'${ALERT_TEXT}'`}</i>
       </b>
     </div>
     <div style={{ marginTop: '2rem' }}>
@@ -51,8 +52,11 @@ export const instruction = (
         {BUTTON_LABEL}
       </button>
     </div>
-    <div style={{ fontSize: '1.3rem', fontWeight: 'bold' }}>
-      This is what your button should look like. Try tapping/clicking it
+    <div style={{ fontSize: '1.3rem', fontWeight: 'bold', lineHeight: 1.5 }}>
+      <div style={{ marginTop: '1rem' }}>
+        <Icon icon="arrow-up" /> This
+      </div>
+      <div>is what your button should look like. Try tapping/clicking it</div>
     </div>
   </>
 );
@@ -194,7 +198,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
       <>
         Right now the button {`doesn't`} do anything when you click it. Add an{' '}
         <b>onClick</b> property containing the function:{' '}
-        <b>{`() => alert("${ALERT_TEXT}")`}</b>
+        <b>{`() => alert('${ALERT_TEXT}')`}</b>
       </>
     );
   }
@@ -210,7 +214,7 @@ export async function onRunCode({ ast, onUpdateMissionStatus, onSetErrorMsg }) {
   }
   if (!alertTextMatches) {
     return onSetErrorMsg(
-      `The alert message should say, "${ALERT_TEXT}," not "${alertText.trim()}"`
+      `The alert message should say, '${ALERT_TEXT}', not '${alertText.trim()}'`
     );
   }
   onSetErrorMsg(`Something's not right - please check the code`);
