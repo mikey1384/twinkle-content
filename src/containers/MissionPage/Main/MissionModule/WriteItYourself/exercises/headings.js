@@ -41,7 +41,7 @@ export const instruction = ({ username }) => (
     </div>
     <div style={{ marginTop: '2rem' }}>
       Set your <b>subheading</b>
-      {`'s`} <b>marginBottom</b> value to <b>{`"${MARGIN_BOTTOM}"`}</b>
+      {`'s`} <b>marginBottom</b> value to <b>{`'${MARGIN_BOTTOM}'`}</b>
     </div>
     <div style={{ marginTop: '2rem' }}>
       Tap the <b style={{ color: Color.logoBlue() }}>format</b> button
@@ -52,40 +52,40 @@ export const initialCode = `function HomePage() {
   return (
     <div
       style={{
-        width: "100%",
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-        alignItems: "center"
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        alignItems: 'center'
       }}
     >
       <h1></h1>
 
       <button
         style={{
-          padding: "1rem",
-          fontSize: "2rem",
-          background: "blue",
-          color: "white"
+          padding: '1rem',
+          fontSize: '2rem',
+          background: 'blue',
+          color: 'white'
         }}
-        onClick={() => alert("Hello there")}
+        onClick={() => alert('Hello there')}
       >
         Welcome
       </button>
       <button
         style={{
-          padding: "1rem",
-          fontSize: "2rem",
-          background: "orange",
-          color: "white",
-          marginTop: "2rem"
+          padding: '1rem',
+          fontSize: '2rem',
+          background: 'orange',
+          color: 'white',
+          marginTop: '2rem'
         }}
         onClick={() => {
           let name = prompt("What's your name?");
           if (name) {
-            alert("Nice to meet you, " + name + "!");
+            alert('Nice to meet you, ' + name + '!');
           } else {
-            alert("Nice to meet you, stranger");
+            alert('Nice to meet you, stranger');
           }
         }}
       >

@@ -56,7 +56,7 @@ export const initialCode = `function HomePage() {
         onClick={() => {
           let name = prompt("What's your name?");
           if (name) {
-            alert(${"'Nice to meet you, '" + ' + ' + 'name' + ' + ' + "'!'"});
+            alert('Nice to meet you, ' + name + '!');
           } else {
             alert('Nice to meet you, stranger');
           }
