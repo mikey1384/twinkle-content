@@ -30,7 +30,7 @@ export default function CreateNewRepl({ okayPressed, replCreated, style }) {
       `}
     >
       <p>
-        2. Create a Next.js Repl
+        Create a Next.js Repl
         {replCreated && (
           <Icon
             style={{ marginLeft: '1rem' }}

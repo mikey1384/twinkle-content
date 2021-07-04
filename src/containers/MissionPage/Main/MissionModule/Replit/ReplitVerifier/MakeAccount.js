@@ -30,7 +30,7 @@ export default function MakeAccount({
       `}
     >
       <p>
-        1. Go to{' '}
+        Go to{' '}
         <a
           onClick={() => onSetOkayPressed(true)}
           href="https://replit.com"

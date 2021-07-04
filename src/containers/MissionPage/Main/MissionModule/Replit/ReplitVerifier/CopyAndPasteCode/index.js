@@ -69,7 +69,6 @@ export default function CopyAndPasteCode({
       `}
     >
       <p>
-        3.{' '}
         {correctCodeEntered
           ? 'Enter verification code'
           : `Copy the following code`}

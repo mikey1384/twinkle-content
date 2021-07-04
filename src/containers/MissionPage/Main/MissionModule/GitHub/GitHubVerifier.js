@@ -93,7 +93,7 @@ export default function GitHubVerifier({ task }) {
                   fontWeight: 'bold'
                 }}
               >
-                1. Create a GitHub account from{' '}
+                Create a GitHub account from{' '}
                 <a
                   href="https://www.github.com"
                   target="_blank"
@@ -119,7 +119,7 @@ export default function GitHubVerifier({ task }) {
                   fontWeight: 'bold'
                 }}
               >
-                2. Tap the button below
+                Tap the button below
               </p>
               <GitHubButton style={{ marginTop: '1.5rem' }} />
               <p

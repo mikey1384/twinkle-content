@@ -30,7 +30,7 @@ export default function MakeAccount({
       `}
     >
       <p>
-        2. Go to{' '}
+        Go to{' '}
         <a
           onClick={() => onSetOkayPressed(true)}
           href="https://vercel.com"
