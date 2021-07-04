@@ -149,7 +149,7 @@ export default function Task({
           xpReward={xpReward}
           coinReward={coinReward}
           myAttempt={myAttempt}
-          style={{ marginTop: myAttempt?.status ? '8rem' : '3rem' }}
+          style={{ marginTop: myAttempt?.status ? '7rem' : '3rem' }}
         />
       ) : null}
       {myAttempt?.status === 'pass' && (
