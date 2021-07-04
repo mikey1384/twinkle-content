@@ -14,42 +14,42 @@ export const title = `Margin and Padding`;
 export const instruction = (
   <>
     Set the <b>marginTop</b> value of the{' '}
-    <b style={{ color: 'blue' }}>Tap me</b> button to <b>{`"${MARGIN_TOP}"`}</b>{' '}
-    and its <b>padding</b> to <b>{`"${PADDING}"`}</b>
+    <b style={{ color: 'blue' }}>Tap me</b> button to <b>{`'${MARGIN_TOP}'`}</b>{' '}
+    and its <b>padding</b> to <b>{`'${PADDING}'`}</b>
   </>
 );
 export const initialCode = `function HomePage() {
   return (
     <div
       style={{
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center"
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
       }}
     >
       <p
         style={{
-          color: "#4B9BE1",
-          fontFamily: "sans-serif",
-          fontWeight: "bold",
-          fontSize: "2rem"
+          color: '#4B9BE1',
+          fontFamily: 'sans-serif',
+          fontWeight: 'bold',
+          fontSize: '2rem'
         }}
       >
         Welcome to My Website!
       </p>
       <button
         style={{
-          marginTop: "0rem",
-          padding: "1rem",
-          color: "white",
-          background: "blue",
-          border: "none",
-          fontSize: "2rem",
-          cursor: "pointer"
+          marginTop: '0rem',
+          padding: '1rem',
+          color: 'white',
+          background: 'blue',
+          border: 'none',
+          fontSize: '2rem',
+          cursor: 'pointer'
         }}
-        onClick={() => alert("Hello World")}
+        onClick={() => alert('Hello World')}
       >
         Tap me
       </button>
