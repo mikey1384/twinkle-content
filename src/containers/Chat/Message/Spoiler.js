@@ -12,8 +12,12 @@ export default function Spoiler({ content, onSpoilerClick }) {
   const [spoilerShown, setSpoilerShown] = useState(false);
   const [grayness, setGrayness] = useState(105);
   const displayedContent = useMemo(() => {
-    if (content.startsWith('/spoiler ')) return content.substr(9);
-    if (content.startsWith('/secret ')) return content.substr(8);
+    if (content.startsWith('/spoiler ')) {
+      return processedStringWithURL(content.substr(9));
+    }
+    if (content.startsWith('/secret ')) {
+      return processedStringWithURL(content.substr(8));
+    }
   }, [content]);
 
   return (
@@ -25,7 +29,7 @@ export default function Spoiler({ content, onSpoilerClick }) {
             borderRadius: '2px'
           }}
           dangerouslySetInnerHTML={{
-            __html: processedStringWithURL(displayedContent)
+            __html: displayedContent
           }}
         />
       ) : (
