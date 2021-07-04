@@ -41,7 +41,7 @@ export default function CodeSandbox({
   const timerRef = useRef(null);
   const ComponentRef = useRef(null);
   const [runButtonDisabled, setRunButtonDisabled] = useState(false);
-  const [code, setCode] = useState(globalCode);
+  const [code, setCode] = useState(globalCode || initialCode);
   const [ast, setAst] = useState(null);
 
   useEffect(() => {
@@ -63,7 +63,7 @@ export default function CodeSandbox({
       }}
     >
       <Editor
-        value={globalCode}
+        value={code}
         valueOnTextEditor={code}
         onChange={handleSetCode}
         onSetAst={setAst}

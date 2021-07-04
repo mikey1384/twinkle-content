@@ -5,11 +5,11 @@ import SuccessMessage from './SuccessMessage';
 import FailMessage from './FailMessage';
 import Icon from 'components/Icon';
 import CodeSandbox from 'components/Forms/CodeSandbox';
+import useExercises from './useExercises';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
-import useExercises from './useExercises';
 
 ExerciseContainer.propTypes = {
   codeObj: PropTypes.object,
@@ -104,7 +104,7 @@ export default function ExerciseContainer({
         >
           <CodeSandbox
             style={{ marginTop: '5rem' }}
-            code={exercise.code || exercise.initialCode}
+            code={exercise.code}
             initialCode={exercise.initialCode}
             onSetCode={exercise.onSetCode}
             onRunCode={exercise.onRunCode}

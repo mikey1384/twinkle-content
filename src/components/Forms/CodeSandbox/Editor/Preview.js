@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import PreviewErrorBoundary from './PreviewErrorBoundary';
 import { css } from '@emotion/css';
 
 Preview.propTypes = {
@@ -9,7 +10,7 @@ Preview.propTypes = {
 
 export default function Preview({ style, children }) {
   return (
-    <div
+    <PreviewErrorBoundary
       style={{
         width: '100%',
         ...style
@@ -29,6 +30,6 @@ export default function Preview({ style, children }) {
       `}
     >
       {children}
-    </div>
+    </PreviewErrorBoundary>
   );
 }

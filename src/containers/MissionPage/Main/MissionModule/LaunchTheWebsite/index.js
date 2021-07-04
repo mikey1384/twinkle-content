@@ -14,7 +14,7 @@ LaunchTheWebsite.propTypes = {
 };
 
 export default function LaunchTheWebsite({ style, task }) {
-  const { userId, state } = useMyState();
+  const { userId, state, username } = useMyState();
   const {
     requestHelpers: { updateMissionStatus }
   } = useAppContext();
@@ -69,7 +69,7 @@ export default function LaunchTheWebsite({ style, task }) {
         taskId={task.id}
         taskType={task.missionType}
       >
-        <FinalizeYourCode />
+        <FinalizeYourCode task={task} username={username} />
         <MakeAccount
           onSetOkayPressed={() =>
             handleUpdateTaskProgress({ makeAccountOkayPressed: true })
