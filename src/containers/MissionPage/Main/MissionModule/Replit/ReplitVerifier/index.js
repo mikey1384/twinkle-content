@@ -42,7 +42,7 @@ export default function ReplitVerifier({ task }) {
         color: 'logoBlue',
         skeuomorphic: true,
         onClick: () => {
-          window.open(`https://replit.com`);
+          window.open('https://replit.com');
           setTimeout(
             () => handleUpdateTaskProgress({ makeAccountOkayPressed: true }),
             1000
