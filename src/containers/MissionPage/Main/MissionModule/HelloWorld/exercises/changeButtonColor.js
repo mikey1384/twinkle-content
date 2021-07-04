@@ -10,8 +10,8 @@ import {
 export const title = `Make It Blue`;
 export const instruction = (
   <>
-    Change the color of the <b style={{ color: 'red' }}>red</b> button below to{' '}
-    <b style={{ color: 'blue' }}>{`"blue"`}</b> and tap the{' '}
+    Change the color of the <b style={{ color: 'red' }}>{`'red'`}</b> button
+    below to <b style={{ color: 'blue' }}>{`'blue'`}</b> and tap the{' '}
     <b style={{ color: Color.green() }}>check</b> button
   </>
 );
@@ -19,23 +19,23 @@ export const initialCode = `function HomePage() {
   return (
     <div
       style={{
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center"
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
       }}
     >
       <button
         style={{
-          padding: "1rem",
-          color: "white",
-          background: "red",
-          border: "none",
-          fontSize: "2rem",
-          cursor: "pointer"
+          padding: '1rem',
+          color: 'white',
+          background: 'red',
+          border: 'none',
+          fontSize: '2rem',
+          cursor: 'pointer'
         }}
-        onClick={() => alert("I am a button")}
+        onClick={() => alert('I am a button')}
       >
         Change me
       </button>

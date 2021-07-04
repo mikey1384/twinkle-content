@@ -118,7 +118,7 @@ export function returnStyleErrorMsg({
         {`'s`} <b>style</b> property to{' '}
         <b>
           {typeof correctValue === 'string'
-            ? `"${correctValue}"`
+            ? `'${correctValue}'`
             : correctValue}
         </b>
       </>
@@ -130,7 +130,7 @@ export function returnStyleErrorMsg({
         {`'s`} <b>style</b> property must be{' '}
         <b>
           {typeof correctValue === 'string'
-            ? `"${correctValue}"`
+            ? `'${correctValue}'`
             : correctValue}
         </b>
         {valueEntered ? `, not ${valueEntered}` : ''}
