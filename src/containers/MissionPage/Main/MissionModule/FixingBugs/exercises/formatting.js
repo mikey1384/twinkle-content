@@ -17,34 +17,34 @@ const formattedCode = `function HomePage() {
   return (
     <div
       style={{
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center"
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
       }}
     >
       <p
         style={{
-          color: "#FF00FF",
-          fontFamily: "sans-serif",
-          fontWeight: "bold",
-          fontSize: "2rem"
+          color: '#FF00FF',
+          fontFamily: 'sans-serif',
+          fontWeight: 'bold',
+          fontSize: '2rem'
         }}
       >
         Welcome to My Website!
       </p>
       <button
         style={{
-          marginTop: "3rem",
-          padding: "1rem",
-          color: "white",
-          background: "blue",
-          border: "none",
-          fontSize: "2rem",
-          cursor: "pointer"
+          marginTop: '3rem',
+          padding: '1rem',
+          color: 'white',
+          background: 'blue',
+          border: 'none',
+          fontSize: '2rem',
+          cursor: 'pointer'
         }}
-        onClick={() => alert("Hello World")}
+        onClick={() => alert('Hello World')}
       >
         Tap me
       </button>
