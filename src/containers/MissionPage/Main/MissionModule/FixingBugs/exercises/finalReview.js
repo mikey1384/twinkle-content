@@ -25,34 +25,34 @@ export const initialCode = `function HomePage() {
     <div
       id="container"
       style={{
-        width: "100%",
-        height: "100%",
+        width: '100%',
+        height: '100%',
         display: flex,
-        flexdirection: "column",
-        alignitems: "center"
+        flexdirection: 'column',
+        alignitems: 'center'
       }}
     >
       <p
         style={{
-          color: "#FF00FF",
-          fontfamily: "sans-serif",
-          fontweight: "bold",
-          fontsize: "2rem"
+          color: '#FF00FF',
+          fontfamily: 'sans-serif',
+          fontweight: 'bold',
+          fontsize: '2rem'
         }}
       >
         Welcome to My Website!
       </p>
       <button
         style={{
-          margintop: "3rem",
-          padding: "1rem",
-          color: "white",
+          margintop: '3rem',
+          padding: '1rem',
+          color: 'white',
           background: blue,
-          border: "none",
+          border: 'none',
           fontSize: 2rem,
-          cursor: "pointer"
+          cursor: 'pointer'
         }}
-        onClick={() => alert("Hello World")}
+        onClick={() => alert('Hello World')}
       >
         Tap me
       </button>
