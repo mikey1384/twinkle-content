@@ -1,10 +1,11 @@
 import React, { useRef, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import ErrorBoundary from 'components/ErrorBoundary';
 import CodeSandbox from 'components/Forms/CodeSandbox';
 import defaultCode from './defaultCode';
+import StepSlide from '../components/StepSlide';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import ErrorBoundary from 'components/ErrorBoundary';
 
 FinalizeYourCode.propTypes = {
   task: PropTypes.object.isRequired,
@@ -20,51 +21,47 @@ export default function FinalizeYourCode({ task, username }) {
   return (
     <ErrorBoundary
       className={css`
-        width: 100%;
-        font-size: 1.7rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        > p {
-          font-size: 2rem;
-          font-weight: bold;
-          line-height: 2;
-        }
+        margin-top: 3rem;
         @media (max-width: ${mobileMaxWidth}) {
-          font-size: 1.5rem;
+          margin-top: 2rem;
         }
       `}
     >
-      <p>Below is the website code we worked on earlier</p>
-      <p>
-        Feel free to change it anyway you want before we publish it on the
-        internet!
-      </p>
-      <p>
-        Check out the <b style={{ color: Color.green() }}>tutorial</b> if you
-        need any help
-      </p>
-      <div
-        ref={ComponentRef}
-        className={css`
-          margin-top: 2rem;
-          width: 80%;
-          @media (max-width: ${mobileMaxWidth}) {
-            width: 100%;
-          }
-        `}
+      <StepSlide
+        title={
+          <>
+            Below is the website code we worked on earlier
+            <br />
+            Feel free to change it anyway you want before we publish it on the
+            internet!
+            <br /> Check out the{' '}
+            <b style={{ color: Color.green() }}>tutorial</b> if you need any
+            help
+          </>
+        }
       >
-        <CodeSandbox
-          style={{ marginTop: '5rem' }}
-          code={code}
-          initialCode={initialCode}
-          onSetCode={setCode}
-          onSetErrorMsg={setErrorMsg}
-          hasError={!!errorMsg}
-          prevUserId={task.prevUserId}
-          runButtonLabel="check"
-        />
-      </div>
+        <div
+          ref={ComponentRef}
+          className={css`
+            margin-top: 2rem;
+            width: 80%;
+            @media (max-width: ${mobileMaxWidth}) {
+              width: 100%;
+            }
+          `}
+        >
+          <CodeSandbox
+            style={{ marginTop: '5rem' }}
+            code={code}
+            initialCode={initialCode}
+            onSetCode={setCode}
+            onSetErrorMsg={setErrorMsg}
+            hasError={!!errorMsg}
+            prevUserId={task.prevUserId}
+            runButtonLabel="check"
+          />
+        </div>
+      </StepSlide>
     </ErrorBoundary>
   );
 }

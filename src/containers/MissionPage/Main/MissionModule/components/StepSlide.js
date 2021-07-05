@@ -5,12 +5,14 @@ import { css } from '@emotion/css';
 
 StepSlide.propTypes = {
   children: PropTypes.node,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.node])
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  style: PropTypes.object
 };
 
-export default function StepSlide({ children, title }) {
+export default function StepSlide({ children, title, style }) {
   return (
     <div
+      style={style}
       className={css`
         width: 100%;
         min-height: 10rem;
@@ -21,6 +23,7 @@ export default function StepSlide({ children, title }) {
         p {
           font-size: 2rem;
           font-weight: bold;
+          line-height: 1.7;
           @media (max-width: ${mobileMaxWidth}) {
             font-size: 1.7rem;
           }
