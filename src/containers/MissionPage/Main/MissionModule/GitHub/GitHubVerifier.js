@@ -8,6 +8,7 @@ import queryString from 'query-string';
 import GitHubButton from './GitHubButton';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Loading from 'components/Loading';
+import StepSlide from '../components/StepSlide';
 import MultiStepContainer from '../components/MultiStepContainer';
 
 GitHubVerifier.propTypes = {
@@ -78,60 +79,33 @@ export default function GitHubVerifier({ task }) {
               }
             ]}
           >
-            <div
-              style={{
-                width: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                flexDirection: 'column'
-              }}
-            >
-              <p
-                style={{
-                  marginBottom: '3rem',
-                  fontSize: '1.7rem',
-                  fontWeight: 'bold'
-                }}
-              >
-                Create a GitHub account from{' '}
-                <a
-                  href="https://www.github.com"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  www.github.com
-                </a>
-              </p>
-            </div>
-            <div
-              style={{
-                width: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                flexDirection: 'column',
-                height: '15rem'
-              }}
-            >
-              <p
-                style={{
-                  marginBottom: '2rem',
-                  fontSize: '1.7rem',
-                  fontWeight: 'bold'
-                }}
-              >
-                Tap the button below
-              </p>
+            <StepSlide
+              title={
+                <>
+                  Create a GitHub account from{' '}
+                  <a
+                    href="https://www.github.com"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    www.github.com
+                  </a>
+                </>
+              }
+            />
+            <StepSlide title="Tap the button below">
               <GitHubButton style={{ marginTop: '1.5rem' }} />
               <p
                 style={{
                   fontSize: '1.2rem',
-                  marginTop: '0.5rem',
+                  fontWeight: 'bold',
+                  marginTop: '1rem',
                   color: Color.red()
                 }}
               >
                 {errorMsg}
               </p>
-            </div>
+            </StepSlide>
           </MultiStepContainer>
         )}
       </div>
