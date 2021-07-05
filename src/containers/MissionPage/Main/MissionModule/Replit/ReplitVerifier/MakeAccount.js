@@ -5,13 +5,15 @@ import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 
 MakeAccount.propTypes = {
+  index: PropTypes.number,
   okayPressed: PropTypes.bool,
   onSetOkayPressed: PropTypes.func.isRequired
 };
 
-export default function MakeAccount({ okayPressed, onSetOkayPressed }) {
+export default function MakeAccount({ index, okayPressed, onSetOkayPressed }) {
   return (
     <StepSlide
+      index={index}
       title={
         <>
           Go to{' '}

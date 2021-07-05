@@ -25,9 +25,9 @@ export default function LaunchTheWebsite({ style, task }) {
     () => state?.missions?.[task?.missionType] || {},
     [state?.missions, task?.missionType]
   );
-  const { accountMade, makeAccountOkayPressed } = taskState;
+  const { makeAccountOkayPressed } = taskState;
   const SecondButton = useMemo(() => {
-    if (!makeAccountOkayPressed && !accountMade) {
+    if (!makeAccountOkayPressed) {
       return {
         label: 'Okay',
         color: 'logoBlue',
@@ -44,11 +44,7 @@ export default function LaunchTheWebsite({ style, task }) {
     return {
       label: 'I made an account',
       color: 'green',
-      skeuomorphic: true,
-      onClick: async (goNext) => {
-        await goNext();
-        handleUpdateTaskProgress({ accountMade: true });
-      }
+      skeuomorphic: true
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [makeAccountOkayPressed, task.id]);
@@ -74,7 +70,6 @@ export default function LaunchTheWebsite({ style, task }) {
           onSetOkayPressed={() =>
             handleUpdateTaskProgress({ makeAccountOkayPressed: true })
           }
-          accountMade={!!accountMade}
           okayPressed={makeAccountOkayPressed}
         />
         <WebsiteVerfier />

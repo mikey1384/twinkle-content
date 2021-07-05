@@ -7,6 +7,7 @@ import StepSlide from '../../../components/StepSlide';
 import { css } from '@emotion/css';
 
 CopyAndPasteCode.propTypes = {
+  index: PropTypes.number,
   onCorrectCodeEntered: PropTypes.func.isRequired
 };
 
@@ -44,10 +45,10 @@ function HomePage() {
 
 export default HomePage;`;
 
-export default function CopyAndPasteCode({ onCorrectCodeEntered }) {
+export default function CopyAndPasteCode({ index, onCorrectCodeEntered }) {
   const [codeCopied, setCodeCopied] = useState(false);
   return (
-    <StepSlide title="Copy the following code">
+    <StepSlide index={index} title="Copy the following code">
       <CopyCode codeToCopy={codeToCopy} style={{ marginTop: '1.5rem' }} />
       <div style={{ marginTop: '2.5rem', width: '100%' }}>
         {!codeCopied && (

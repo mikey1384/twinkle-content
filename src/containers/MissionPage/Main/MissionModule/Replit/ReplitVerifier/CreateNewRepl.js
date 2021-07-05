@@ -5,12 +5,13 @@ import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 
 CreateNewRepl.propTypes = {
+  index: PropTypes.number,
   okayPressed: PropTypes.bool
 };
 
-export default function CreateNewRepl({ okayPressed }) {
+export default function CreateNewRepl({ index, okayPressed }) {
   return (
-    <StepSlide title={<>Create a Next.js Repl</>}>
+    <StepSlide index={index} title={<>Create a Next.js Repl</>}>
       {okayPressed && (
         <p
           className={css`

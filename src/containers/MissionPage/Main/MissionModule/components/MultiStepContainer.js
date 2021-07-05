@@ -36,6 +36,19 @@ export default function MultiStepContainer({
     setHelpButtonPressed(false);
   }, [selectedIndex]);
   const childrenArray = useMemo(() => Children.toArray(children), [children]);
+  const DisplayedSlide = useMemo(() => {
+    const SlideComponent = childrenArray.filter(
+      (child, index) => index === selectedIndex
+    )[0];
+    return {
+      ...SlideComponent,
+      props: {
+        ...SlideComponent?.props,
+        index: selectedIndex
+      }
+    };
+  }, [childrenArray, selectedIndex]);
+
   const NextButton = useMemo(() => {
     const DefaultButton = (
       <Button skeuomorphic filled color="logoBlue" onClick={handleGoNext}>
@@ -81,9 +94,7 @@ export default function MultiStepContainer({
 
   return (
     <ErrorBoundary style={{ width: '100%' }}>
-      <div style={{ width: '100%', minHeight: '7rem' }}>
-        {childrenArray.filter((child, index) => index === selectedIndex)}
-      </div>
+      <div style={{ width: '100%', minHeight: '7rem' }}>{DisplayedSlide}</div>
       <div
         style={{
           width: '100%',

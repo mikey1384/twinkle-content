@@ -6,10 +6,11 @@ import { css } from '@emotion/css';
 StepSlide.propTypes = {
   children: PropTypes.node,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  style: PropTypes.object
+  style: PropTypes.object,
+  index: PropTypes.number
 };
 
-export default function StepSlide({ children, title, style }) {
+export default function StepSlide({ children, title, style, index }) {
   return (
     <div
       style={style}
@@ -35,7 +36,7 @@ export default function StepSlide({ children, title, style }) {
           margin-bottom: 3rem;
         `}
       >
-        {title}
+        {index + 1}. {title}
       </p>
       {children}
     </div>
