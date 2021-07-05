@@ -95,7 +95,7 @@ export default function GitHubVerifier({ task }) {
             />
             <StepSlide title="Tap the button below">
               <GitHubButton style={{ marginTop: '1.5rem' }} />
-              <p
+              <div
                 style={{
                   fontSize: '1.2rem',
                   fontWeight: 'bold',
@@ -104,7 +104,7 @@ export default function GitHubVerifier({ task }) {
                 }}
               >
                 {errorMsg}
-              </p>
+              </div>
             </StepSlide>
           </MultiStepContainer>
         )}

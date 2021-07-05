@@ -112,7 +112,7 @@ export default function MultiStepContainer({
             display: 'flex',
             justifyContent: 'center',
             fontSize: '1.7rem',
-            marginTop: '7rem'
+            marginTop: '5rem'
           }}
         >
           {!helpButtonPressed ? (

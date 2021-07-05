@@ -3,13 +3,10 @@ import PropTypes from 'prop-types';
 import CopyCode from './CopyCode';
 import PasteCode from './PasteCode';
 import Button from 'components/Button';
-import Icon from 'components/Icon';
-import { Color } from 'constants/css';
+import StepSlide from '../../../components/StepSlide';
 import { css } from '@emotion/css';
 
 CopyAndPasteCode.propTypes = {
-  style: PropTypes.object,
-  correctCodeEntered: PropTypes.bool,
   onCorrectCodeEntered: PropTypes.func.isRequired
 };
 
@@ -47,71 +44,46 @@ function HomePage() {
 
 export default HomePage;`;
 
-export default function CopyAndPasteCode({
-  style,
-  correctCodeEntered,
-  onCorrectCodeEntered
-}) {
+export default function CopyAndPasteCode({ onCorrectCodeEntered }) {
   const [codeCopied, setCodeCopied] = useState(false);
   return (
-    <div
-      style={style}
-      className={css`
-        width: 100%;
-        font-size: 1.5rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        p {
-          font-size: 2rem;
-          font-weight: bold;
-        }
-      `}
-    >
-      <p>
-        {correctCodeEntered
-          ? 'Enter verification code'
-          : `Copy the following code`}
-        {correctCodeEntered && (
-          <Icon
-            style={{ marginLeft: '1rem' }}
-            color={Color.green()}
-            icon="check"
+    <StepSlide title="Copy the following code">
+      <CopyCode codeToCopy={codeToCopy} style={{ marginTop: '1.5rem' }} />
+      <div style={{ marginTop: '2.5rem', width: '100%' }}>
+        {!codeCopied && (
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              flexDirection: 'column'
+            }}
+          >
+            <p
+              className={css`
+                margin-top: 3.5rem;
+                margin-bottom: 3.5rem;
+              `}
+            >
+              Did you copy it?
+            </p>
+            <Button
+              skeuomorphic
+              color="green"
+              style={{ marginTop: '3rem' }}
+              onClick={() => setCodeCopied(true)}
+            >
+              Yes
+            </Button>
+          </div>
+        )}
+        {codeCopied && (
+          <PasteCode
+            style={{ marginTop: '2rem' }}
+            initialCode={initialCode}
+            onCorrectCodeEntered={onCorrectCodeEntered}
           />
         )}
-      </p>
-      {!correctCodeEntered && (
-        <>
-          <CopyCode codeToCopy={codeToCopy} style={{ marginTop: '1.5rem' }} />
-          <div style={{ marginTop: '2.5rem', width: '100%' }}>
-            {!codeCopied && (
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  flexDirection: 'column'
-                }}
-              >
-                <p>Did you copy it?</p>
-                <Button
-                  skeuomorphic
-                  color="green"
-                  style={{ marginTop: '3rem' }}
-                  onClick={() => setCodeCopied(true)}
-                >
-                  Yes
-                </Button>
-              </div>
-            )}
-            {codeCopied && (
-              <PasteCode
-                initialCode={initialCode}
-                onCorrectCodeEntered={onCorrectCodeEntered}
-              />
-            )}
-          </div>
-        </>
-      )}
-    </div>
+      </div>
+    </StepSlide>
   );
 }

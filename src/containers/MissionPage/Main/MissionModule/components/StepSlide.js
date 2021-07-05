@@ -18,16 +18,18 @@ export default function StepSlide({ children, title }) {
         align-items: center;
         justify-content: center;
         flex-direction: column;
-      `}
-    >
-      <p
-        className={css`
-          margin-bottom: 3rem;
+        p {
           font-size: 2rem;
           font-weight: bold;
           @media (max-width: ${mobileMaxWidth}) {
             font-size: 1.7rem;
           }
+        }
+      `}
+    >
+      <p
+        className={css`
+          margin-bottom: 3rem;
         `}
       >
         {title}

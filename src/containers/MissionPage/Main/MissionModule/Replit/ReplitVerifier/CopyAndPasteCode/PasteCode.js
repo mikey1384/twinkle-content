@@ -31,7 +31,7 @@ export default function PasteCode({
         ...style
       }}
     >
-      <p>{`Follow along this video`}</p>
+      <p style={{ marginBottom: '3.5rem' }}>{`Follow along this video`}</p>
       <div
         className={css`
           width: 70%;
@@ -52,7 +52,6 @@ export default function PasteCode({
             width="100%"
             height="100%"
             style={{
-              marginTop: '1rem',
               position: 'absolute',
               top: 0,
               right: 0,
@@ -67,7 +66,7 @@ export default function PasteCode({
       {!watched && (
         <div
           className={css`
-            margin-top: 5rem;
+            margin-top: 7rem;
             @media (max-width: ${mobileMaxWidth}) {
               margin-top: 4rem;
             }

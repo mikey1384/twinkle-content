@@ -29,7 +29,6 @@ export default function ReplitVerifier({ task }) {
 
   const {
     accountMade,
-    replCreated,
     correctCodeEntered,
     makeAccountOkayPressed,
     createReplOkayPressed
@@ -53,17 +52,13 @@ export default function ReplitVerifier({ task }) {
     return {
       label: 'I made an account',
       color: 'green',
-      skeuomorphic: true,
-      onClick: async (goNext) => {
-        await goNext();
-        handleUpdateTaskProgress({ accountMade: true });
-      }
+      skeuomorphic: true
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [makeAccountOkayPressed, task.id]);
 
   const SecondButton = useMemo(() => {
-    if (!createReplOkayPressed && !replCreated) {
+    if (!createReplOkayPressed) {
       return {
         label: 'Okay',
         color: 'logoBlue',
@@ -74,11 +69,7 @@ export default function ReplitVerifier({ task }) {
     return {
       label: 'Yes, I did',
       color: 'green',
-      skeuomorphic: true,
-      onClick: async (goNext) => {
-        await goNext();
-        handleUpdateTaskProgress({ replCreated: true });
-      }
+      skeuomorphic: true
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createReplOkayPressed, task.id]);
@@ -95,15 +86,10 @@ export default function ReplitVerifier({ task }) {
             onSetOkayPressed={() =>
               handleUpdateTaskProgress({ makeAccountOkayPressed: true })
             }
-            accountMade={!!accountMade}
             okayPressed={makeAccountOkayPressed}
           />
-          <CreateNewRepl
-            replCreated={!!replCreated}
-            okayPressed={createReplOkayPressed}
-          />
+          <CreateNewRepl okayPressed={createReplOkayPressed} />
           <CopyAndPasteCode
-            correctCodeEntered={!!correctCodeEntered}
             onCorrectCodeEntered={() =>
               handleUpdateTaskProgress({ correctCodeEntered: true })
             }
