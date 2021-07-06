@@ -5,23 +5,24 @@ import defaultCode from './defaultCode';
 import StepSlide from '../components/StepSlide';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useMyState } from 'helpers/hooks';
 import ErrorBoundary from 'components/ErrorBoundary';
 
 FinalizeYourCode.propTypes = {
   index: PropTypes.number,
+  code: PropTypes.string,
   task: PropTypes.object.isRequired,
   username: PropTypes.string,
   onSetCode: PropTypes.func.isRequired
 };
 
-export default function FinalizeYourCode({ index, task, username, onSetCode }) {
+export default function FinalizeYourCode({
+  code,
+  index,
+  task,
+  username,
+  onSetCode
+}) {
   const [errorMsg, setErrorMsg] = useState('');
-  const { state } = useMyState();
-  const taskState = useMemo(
-    () => state?.missions?.[task?.missionType] || {},
-    [state?.missions, task?.missionType]
-  );
   const ComponentRef = useRef(null);
   const initialCode = useMemo(() => defaultCode({ username }), [username]);
 
@@ -61,7 +62,7 @@ export default function FinalizeYourCode({ index, task, username, onSetCode }) {
         >
           <CodeSandbox
             style={{ marginTop: '5rem' }}
-            code={taskState.code}
+            code={code}
             initialCode={initialCode}
             onSetCode={onSetCode}
             onSetErrorMsg={setErrorMsg}

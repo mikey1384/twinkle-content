@@ -26,6 +26,25 @@ export default function LaunchTheWebsite({ style, task }) {
     [state?.missions, task?.missionType]
   );
   const { makeAccountOkayPressed } = taskState;
+  const FirstButton = useMemo(() => {
+    return {
+      label: 'Save and move on',
+      color: 'logoBlue',
+      skeuomorphic: true,
+      onClick: async (onNext) => {
+        await handleSaveCode(taskState.code);
+        onNext();
+      }
+    };
+
+    async function handleSaveCode(code) {
+      await updateMissionStatus({
+        missionType: task.missionType,
+        newStatus: { code }
+      });
+    }
+  }, [task.missionType, taskState.code, updateMissionStatus]);
+
   const SecondButton = useMemo(() => {
     if (!makeAccountOkayPressed) {
       return {
@@ -61,11 +80,12 @@ export default function LaunchTheWebsite({ style, task }) {
   return (
     <ErrorBoundary style={style}>
       <MultiStepContainer
-        buttons={[null, SecondButton]}
+        buttons={[FirstButton, SecondButton]}
         taskId={task.id}
         taskType={task.missionType}
       >
         <FinalizeYourCode
+          code={taskState.code}
           onSetCode={handleSetCode}
           task={task}
           username={username}
