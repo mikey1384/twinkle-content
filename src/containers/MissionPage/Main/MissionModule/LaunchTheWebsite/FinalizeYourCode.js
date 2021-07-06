@@ -2,10 +2,10 @@ import React, { useRef, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import CodeSandbox from 'components/Forms/CodeSandbox';
 import defaultCode from './defaultCode';
+import ErrorBoundary from 'components/ErrorBoundary';
 import StepSlide from '../components/StepSlide';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import ErrorBoundary from 'components/ErrorBoundary';
 
 FinalizeYourCode.propTypes = {
   index: PropTypes.number,

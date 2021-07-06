@@ -5,6 +5,8 @@ import MultiStepContainer from '../components/MultiStepContainer';
 import WebsiteVerfier from './WebsiteVerifier';
 import MakeAccount from './MakeAccount';
 import FinalizeYourCode from './FinalizeYourCode';
+import ConnectToGitHub from './ConnectToGitHub';
+import UpdateYourRepl from './UpdateYourRepl';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
@@ -29,7 +31,7 @@ export default function LaunchTheWebsite({ style, task }) {
   const FirstButton = useMemo(() => {
     return {
       label: 'Save and move on',
-      color: 'logoBlue',
+      color: 'green',
       skeuomorphic: true,
       onClick: async (onNext) => {
         await handleSaveCode(taskState.code);
@@ -96,6 +98,8 @@ export default function LaunchTheWebsite({ style, task }) {
           }
           okayPressed={makeAccountOkayPressed}
         />
+        <UpdateYourRepl />
+        <ConnectToGitHub />
         <WebsiteVerfier />
       </MultiStepContainer>
     </ErrorBoundary>
