@@ -46,6 +46,7 @@ export default function FinalizeYourCode({ index, task, username }) {
           ref={ComponentRef}
           className={css`
             margin-top: 2rem;
+            margin-bottom: 2.5rem;
             width: 80%;
             @media (max-width: ${mobileMaxWidth}) {
               width: 100%;
