@@ -31,13 +31,20 @@ export default function StepSlide({ children, title, style, index }) {
         }
       `}
     >
-      <p
-        className={css`
-          margin-bottom: 3rem;
-        `}
-      >
-        {index + 1}. {title}
-      </p>
+      <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+        <div>
+          <p>{index + 1}. </p>
+        </div>
+        <div style={{ marginLeft: '0.7rem' }}>
+          <p
+            className={css`
+              margin-bottom: 3rem;
+            `}
+          >
+            {title}
+          </p>
+        </div>
+      </div>
       {children}
     </div>
   );
