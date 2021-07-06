@@ -12,7 +12,7 @@ export default function UpdateYourRepl({ index }) {
     <StepSlide
       title={
         <>
-          Remember the Repl you made earlier?
+          Remember the Repl we made earlier?
           <br />
           The code we used for that Repl is no longer needed.
           <br />
