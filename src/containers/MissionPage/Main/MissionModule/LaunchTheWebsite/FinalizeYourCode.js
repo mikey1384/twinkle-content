@@ -34,11 +34,11 @@ export default function FinalizeYourCode({ index, task, username }) {
           <>
             Below is the website code we worked on earlier.
             <br />
-            Feel free to change it anyway you want before we publish it on the
-            internet!
-            <br /> Check out the{' '}
-            <b style={{ color: Color.green() }}>tutorial</b> if you need any
-            help.
+            <span style={{ color: Color.logoBlue() }}>
+              Feel free to change it anyway you want
+            </span>{' '}
+            before we publish it on the internet!
+            <br /> Check out the tutorial if you need any help.
           </>
         }
       >
