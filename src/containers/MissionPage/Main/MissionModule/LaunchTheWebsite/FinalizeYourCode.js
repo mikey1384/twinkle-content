@@ -10,12 +10,13 @@ import ErrorBoundary from 'components/ErrorBoundary';
 FinalizeYourCode.propTypes = {
   index: PropTypes.number,
   task: PropTypes.object.isRequired,
-  username: PropTypes.string
+  username: PropTypes.string,
+  onSetCode: PropTypes.func.isRequired
 };
 
-export default function FinalizeYourCode({ index, task, username }) {
-  const [code, setCode] = useState('');
+export default function FinalizeYourCode({ index, task, username, onSetCode }) {
   const [errorMsg, setErrorMsg] = useState('');
+  const { code } = task;
   const ComponentRef = useRef(null);
   const initialCode = useMemo(() => defaultCode({ username }), [username]);
 
@@ -57,7 +58,7 @@ export default function FinalizeYourCode({ index, task, username }) {
             style={{ marginTop: '5rem' }}
             code={code}
             initialCode={initialCode}
-            onSetCode={setCode}
+            onSetCode={onSetCode}
             onSetErrorMsg={setErrorMsg}
             hasError={!!errorMsg}
             prevUserId={task.prevUserId}

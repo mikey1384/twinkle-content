@@ -5,7 +5,7 @@ import MultiStepContainer from '../components/MultiStepContainer';
 import WebsiteVerfier from './WebsiteVerifier';
 import MakeAccount from './MakeAccount';
 import FinalizeYourCode from './FinalizeYourCode';
-import { useAppContext, useContentContext } from 'contexts';
+import { useAppContext, useContentContext, useMissionContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
 LaunchTheWebsite.propTypes = {
@@ -19,7 +19,10 @@ export default function LaunchTheWebsite({ style, task }) {
     requestHelpers: { updateMissionStatus }
   } = useAppContext();
   const {
-    actions: { onUpdateMissionState }
+    actions: { onSetMissionState }
+  } = useMissionContext();
+  const {
+    actions: { onUpdateUserMissionState }
   } = useContentContext();
   const taskState = useMemo(
     () => state?.missions?.[task?.missionType] || {},
@@ -65,7 +68,11 @@ export default function LaunchTheWebsite({ style, task }) {
         taskId={task.id}
         taskType={task.missionType}
       >
-        <FinalizeYourCode task={task} username={username} />
+        <FinalizeYourCode
+          onSetCode={handleSetCode}
+          task={task}
+          username={username}
+        />
         <MakeAccount
           onSetOkayPressed={() =>
             handleUpdateTaskProgress({ makeAccountOkayPressed: true })
@@ -77,12 +84,19 @@ export default function LaunchTheWebsite({ style, task }) {
     </ErrorBoundary>
   );
 
+  function handleSetCode(code) {
+    onSetMissionState({
+      missionId: task.id,
+      newState: { code }
+    });
+  }
+
   async function handleUpdateTaskProgress(newState) {
     await updateMissionStatus({
       missionType: task.missionType,
       newStatus: newState
     });
-    onUpdateMissionState({
+    onUpdateUserMissionState({
       userId,
       missionType: task.missionType,
       newState

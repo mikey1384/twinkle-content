@@ -38,7 +38,7 @@ export default function ExerciseContainer({
     requestHelpers: { updateMissionStatus }
   } = useAppContext();
   const {
-    actions: { onUpdateMissionState }
+    actions: { onUpdateUserMissionState }
   } = useContentContext();
   const { userId, username, state = {} } = useMyState();
   const { passed, prevPassed, errorMsg, setErrorMsg, success, exercise } =
@@ -48,7 +48,7 @@ export default function ExerciseContainer({
       prevExerciseKey,
       codeObj,
       state,
-      onUpdateMissionState,
+      onUpdateUserMissionState,
       onSetCode,
       updateMissionStatus,
       taskType,

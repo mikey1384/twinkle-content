@@ -1573,7 +1573,7 @@ export default function ContentReducer(state, action) {
           currentMissionId: action.missionId
         }
       };
-    case 'UPDATE_MISSION_STATE':
+    case 'UPDATE_USER_MISSION_STATE':
       return {
         ...state,
         [contentKey]: {

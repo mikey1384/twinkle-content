@@ -19,7 +19,7 @@ export default function ReplitVerifier({ task }) {
     requestHelpers: { updateMissionStatus }
   } = useAppContext();
   const {
-    actions: { onUpdateMissionState }
+    actions: { onUpdateUserMissionState }
   } = useContentContext();
 
   const taskState = useMemo(
@@ -110,7 +110,7 @@ export default function ReplitVerifier({ task }) {
       missionType: task.missionType,
       newStatus: newState
     });
-    onUpdateMissionState({
+    onUpdateUserMissionState({
       userId,
       missionType: task.missionType,
       newState
