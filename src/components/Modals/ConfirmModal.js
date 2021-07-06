@@ -1,5 +1,5 @@
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import React from 'react';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 
@@ -25,6 +25,7 @@ export default function ConfirmModal({
   title,
   onConfirm
 }) {
+  const [submitting, setSubmitting] = useState(false);
   return (
     <Modal modalOverModal={modalOverModal} onHide={onHide}>
       <header>{title}</header>
@@ -35,10 +36,19 @@ export default function ConfirmModal({
         <Button transparent style={{ marginRight: '0.7rem' }} onClick={onHide}>
           Cancel
         </Button>
-        <Button disabled={disabled} color="blue" onClick={onConfirm}>
+        <Button
+          disabled={submitting || disabled}
+          color="blue"
+          onClick={handleConfirm}
+        >
           Confirm
         </Button>
       </footer>
     </Modal>
   );
+
+  function handleConfirm() {
+    setSubmitting(true);
+    onConfirm();
+  }
 }
