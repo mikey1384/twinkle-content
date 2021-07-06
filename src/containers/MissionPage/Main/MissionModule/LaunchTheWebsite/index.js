@@ -5,7 +5,7 @@ import MultiStepContainer from '../components/MultiStepContainer';
 import WebsiteVerfier from './WebsiteVerifier';
 import MakeAccount from './MakeAccount';
 import FinalizeYourCode from './FinalizeYourCode';
-import { useAppContext, useContentContext, useMissionContext } from 'contexts';
+import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
 LaunchTheWebsite.propTypes = {
@@ -18,9 +18,6 @@ export default function LaunchTheWebsite({ style, task }) {
   const {
     requestHelpers: { updateMissionStatus }
   } = useAppContext();
-  const {
-    actions: { onSetMissionState }
-  } = useMissionContext();
   const {
     actions: { onUpdateUserMissionState }
   } = useContentContext();
@@ -85,8 +82,9 @@ export default function LaunchTheWebsite({ style, task }) {
   );
 
   function handleSetCode(code) {
-    onSetMissionState({
-      missionId: task.id,
+    onUpdateUserMissionState({
+      userId,
+      missionType: task.missionType,
       newState: { code }
     });
   }

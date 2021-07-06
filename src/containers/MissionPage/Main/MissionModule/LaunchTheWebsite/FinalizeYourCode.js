@@ -1,10 +1,11 @@
-import React, { useRef, useState, useMemo } from 'react';
+import React, { useRef, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import CodeSandbox from 'components/Forms/CodeSandbox';
 import defaultCode from './defaultCode';
 import StepSlide from '../components/StepSlide';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import { useMyState } from 'helpers/hooks';
 import ErrorBoundary from 'components/ErrorBoundary';
 
 FinalizeYourCode.propTypes = {
@@ -16,7 +17,11 @@ FinalizeYourCode.propTypes = {
 
 export default function FinalizeYourCode({ index, task, username, onSetCode }) {
   const [errorMsg, setErrorMsg] = useState('');
-  const { code } = task;
+  const { state } = useMyState();
+  const taskState = useMemo(
+    () => state?.missions?.[task?.missionType] || {},
+    [state?.missions, task?.missionType]
+  );
   const ComponentRef = useRef(null);
   const initialCode = useMemo(() => defaultCode({ username }), [username]);
 
@@ -56,7 +61,7 @@ export default function FinalizeYourCode({ index, task, username, onSetCode }) {
         >
           <CodeSandbox
             style={{ marginTop: '5rem' }}
-            code={code}
+            code={taskState.code}
             initialCode={initialCode}
             onSetCode={onSetCode}
             onSetErrorMsg={setErrorMsg}
