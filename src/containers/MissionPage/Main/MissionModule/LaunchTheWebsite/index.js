@@ -98,7 +98,7 @@ export default function LaunchTheWebsite({ style, task }) {
           }
           okayPressed={makeAccountOkayPressed}
         />
-        <UpdateYourRepl />
+        <UpdateYourRepl code={taskState.code} />
         <ConnectToGitHub />
         <WebsiteVerfier />
       </MultiStepContainer>
