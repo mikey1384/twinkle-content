@@ -7,7 +7,6 @@ import FilterBar from 'components/FilterBar';
 import Loading from 'components/Loading';
 import { container } from './Styles';
 import { defaultChatSubject } from 'constants/defaultValues';
-import { socket } from 'constants/io';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useNotiContext } from 'contexts';
 
@@ -114,18 +113,6 @@ function Notification({ className, location, style }) {
     prevTwinkleXP.current = twinkleXP;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [twinkleXP]);
-
-  useEffect(() => {
-    socket.on('new_reward_posted', handleNewReward);
-    function handleNewReward({ receiverId }) {
-      if (receiverId === userId) {
-        fetchNews();
-      }
-    }
-    return function cleanUp() {
-      socket.removeListener('new_reward_posted', handleNewReward);
-    };
-  });
 
   const rewardTabShown = useMemo(() => {
     return (
