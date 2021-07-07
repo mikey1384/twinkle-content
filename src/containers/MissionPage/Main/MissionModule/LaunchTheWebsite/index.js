@@ -82,7 +82,11 @@ export default function LaunchTheWebsite({ style, task }) {
   return (
     <ErrorBoundary style={style}>
       <MultiStepContainer
-        buttons={[FirstButton, SecondButton]}
+        buttons={[
+          FirstButton,
+          SecondButton,
+          { label: 'Yes I did', color: 'green', skeuomorphic: true }
+        ]}
         taskId={task.id}
         taskType={task.missionType}
       >

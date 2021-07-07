@@ -51,8 +51,9 @@ export default function MultiStepContainer({
 
   const NextButton = useMemo(() => {
     const DefaultButton = (
-      <Button skeuomorphic filled color="logoBlue" onClick={handleGoNext}>
-        Next
+      <Button skeuomorphic filled color="green" onClick={handleGoNext}>
+        <span>Next</span>
+        <Icon style={{ marginLeft: '0.7rem' }} icon="arrow-right" />
       </Button>
     );
     const CustomButton = buttons
@@ -73,7 +74,10 @@ export default function MultiStepContainer({
                 : handleGoNext
             }
           >
-            {buttonObj.label}
+            <span>{buttonObj.label}</span>
+            {!buttonObj.noArrow && (
+              <Icon style={{ marginLeft: '0.7rem' }} icon="arrow-right" />
+            )}
           </Button>
         ) : (
           DefaultButton

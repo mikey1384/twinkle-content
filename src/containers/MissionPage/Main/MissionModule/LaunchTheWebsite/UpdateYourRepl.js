@@ -87,6 +87,15 @@ export default function UpdateYourRepl({ code, index }) {
             Copied!
           </div>
         </div>
+        <div
+          style={{
+            textAlign: 'center',
+            marginTop: '5rem',
+            marginBottom: '3rem'
+          }}
+        >
+          <p>Did you replace the code?</p>
+        </div>
       </div>
     </StepSlide>
   );
