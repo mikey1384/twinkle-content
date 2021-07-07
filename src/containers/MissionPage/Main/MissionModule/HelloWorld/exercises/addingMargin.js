@@ -13,9 +13,10 @@ const MARGIN_TOP = '7rem';
 export const title = `Margin and Padding`;
 export const instruction = (
   <>
-    Set the <b>marginTop</b> value of the{' '}
-    <b style={{ color: 'blue' }}>Tap me</b> button to <b>{`'${MARGIN_TOP}'`}</b>{' '}
-    and its <b>padding</b> to <b>{`'${PADDING}'`}</b>
+    Change the <b>marginTop</b> value of the{' '}
+    <b style={{ color: 'blue' }}>Tap me</b> {`button's`} <b>style</b> property
+    to <b>{`'${MARGIN_TOP}'`}</b> and the <b>padding</b> value to{' '}
+    <b>{`'${PADDING}'`}</b>
   </>
 );
 export const initialCode = `function HomePage() {
