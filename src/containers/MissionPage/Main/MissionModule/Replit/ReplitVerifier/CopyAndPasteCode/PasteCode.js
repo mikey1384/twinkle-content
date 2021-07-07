@@ -31,7 +31,7 @@ export default function PasteCode({
         ...style
       }}
     >
-      <p style={{ marginBottom: '3.5rem' }}>{`Follow along this video`}</p>
+      <h1 style={{ marginBottom: '3.5rem' }}>{`Follow along this video`}</h1>
       <div
         className={css`
           width: 70%;
@@ -84,14 +84,14 @@ export default function PasteCode({
       )}
       {watched && (
         <div style={{ marginTop: '5rem', width: '100%' }}>
-          <p>
+          <h2>
             {`1. Patiently wait until "[ `}
             <b style={{ color: Color.green() }}>ready</b> ] compliled
             successfully{`" shows up in the console`}
-          </p>
-          <p style={{ marginTop: '2rem' }}>
+          </h2>
+          <h2 style={{ marginTop: '2rem' }}>
             2. A six-digit code will show up in the top right screen
-          </p>
+          </h2>
           <div
             style={{
               width: '100%',
@@ -111,7 +111,9 @@ export default function PasteCode({
               `}
               src={`${cloudFrontURL}/missions/replit/6-digit-code.png`}
             />
-            <p style={{ marginTop: '5rem' }}>Enter the six-digit code below</p>
+            <h1 style={{ marginTop: '5rem' }}>
+              Enter the six-digit code below
+            </h1>
             <Input
               className={css`
                 margin-top: 1.5rem;

@@ -40,6 +40,7 @@ export default function ReplitVerifier({ task }) {
         label: 'Okay',
         color: 'logoBlue',
         skeuomorphic: true,
+        noArrow: true,
         onClick: () => {
           window.open('https://replit.com');
           setTimeout(
@@ -63,6 +64,7 @@ export default function ReplitVerifier({ task }) {
         label: 'Okay',
         color: 'logoBlue',
         skeuomorphic: true,
+        noArrow: true,
         onClick: () => handleUpdateTaskProgress({ createReplOkayPressed: true })
       };
     }

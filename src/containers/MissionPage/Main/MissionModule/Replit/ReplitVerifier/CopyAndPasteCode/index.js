@@ -59,14 +59,14 @@ export default function CopyAndPasteCode({ index, onCorrectCodeEntered }) {
               flexDirection: 'column'
             }}
           >
-            <p
+            <h1
               className={css`
                 margin-top: 3.5rem;
-                margin-bottom: 3.5rem;
+                margin-bottom: 2rem;
               `}
             >
               Did you copy it?
-            </p>
+            </h1>
             <Button
               skeuomorphic
               color="green"
