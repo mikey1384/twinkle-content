@@ -7,5 +7,12 @@ ConnectReplToGitHub.propTypes = {
 };
 
 export default function ConnectReplToGitHub({ index }) {
-  return <StepSlide title="Connect to GitHub" index={index}></StepSlide>;
+  return (
+    <StepSlide title="Connect your Repl to GitHub" index={index}>
+      <p>
+        Follow the instructions in the tutorial to connect your Repl to your
+        GitHub
+      </p>
+    </StepSlide>
+  );
 }

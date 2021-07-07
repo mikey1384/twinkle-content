@@ -21,28 +21,41 @@ export default function StepSlide({ children, title, style, index }) {
         align-items: center;
         justify-content: center;
         flex-direction: column;
-        p {
+        h1 {
           font-size: 2rem;
-          font-weight: bold;
           line-height: 1.7;
           @media (max-width: ${mobileMaxWidth}) {
             font-size: 1.7rem;
+          }
+        }
+        h2 {
+          font-weight: bold;
+          font-size: 1.7rem;
+          line-height: 1.7;
+          @media (max-width: ${mobileMaxWidth}) {
+            font-size: 1.5rem;
+          }
+        }
+        p {
+          font-size: 1.7rem;
+          @media (max-width: ${mobileMaxWidth}) {
+            font-size: 1.5rem;
           }
         }
       `}
     >
       <div style={{ display: 'flex', alignItems: 'flex-start' }}>
         <div>
-          <p>{index + 1}. </p>
+          <h1>{index + 1}. </h1>
         </div>
         <div style={{ marginLeft: '0.7rem' }}>
-          <p
+          <h1
             className={css`
               margin-bottom: 3rem;
             `}
           >
             {title}
-          </p>
+          </h1>
         </div>
       </div>
       {children}

@@ -10,7 +10,7 @@ import { stringsAreCaseInsensitivelyEqual } from 'helpers/stringHelpers';
 
 const MARGIN_TOP = '3rem';
 
-export const title = `Remember the Quotation Marks`;
+export const title = `Remember the 'Quotation Marks'`;
 export const instruction = `Can you fix the bug in the code below?`;
 export const initialCode = `function HomePage() {
   return (
