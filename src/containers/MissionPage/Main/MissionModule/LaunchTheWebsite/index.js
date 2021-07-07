@@ -5,7 +5,7 @@ import MultiStepContainer from '../components/MultiStepContainer';
 import WebsiteVerfier from './WebsiteVerifier';
 import MakeAccount from './MakeAccount';
 import FinalizeYourCode from './FinalizeYourCode';
-import ConnectToGitHub from './ConnectToGitHub';
+import ConnectReplToGitHub from './ConnectReplToGitHub';
 import UpdateYourRepl from './UpdateYourRepl';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
@@ -103,7 +103,7 @@ export default function LaunchTheWebsite({ style, task }) {
           okayPressed={makeAccountOkayPressed}
         />
         <UpdateYourRepl code={taskState.code} />
-        <ConnectToGitHub />
+        <ConnectReplToGitHub />
         <WebsiteVerfier />
       </MultiStepContainer>
     </ErrorBoundary>
