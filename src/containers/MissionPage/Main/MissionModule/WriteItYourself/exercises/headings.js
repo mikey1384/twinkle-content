@@ -22,26 +22,33 @@ export const instruction = ({ username }) => (
       <b>
         <i>{HEADING_LABEL(username)}</i>
       </b>{' '}
-      between <b>{`<h1>`}</b> and <b>{`</h1>`}</b>
+      between <b style={{ color: Color.logoBlue() }}>{`<h1>`}</b> and{' '}
+      <b style={{ color: Color.logoBlue() }}>{`</h1>`}</b>
     </div>
     <div>
-      This is your {`website's`} <b>heading</b>
+      This is your {`website's`}{' '}
+      <b style={{ color: Color.logoBlue() }}>heading</b>
     </div>
     <div style={{ marginTop: '2rem' }}>
-      In the empty line right below <b>{`<h1>${username}'s website</h1>`}</b>,
+      In the empty line right below{' '}
+      <b
+        style={{ color: Color.logoBlue() }}
+      >{`<h1>${username}'s website</h1>`}</b>
+      ,
     </div>
     <div>
       write{' '}
-      <b>
+      <b style={{ color: Color.pink() }}>
         <i>{`<h2>${SUBHEADING_LABEL}</h2>`}</i>
       </b>
     </div>
     <div>
-      This is your <b>subheading</b>
+      This is your <b style={{ color: Color.pink() }}>subheading</b>
     </div>
     <div style={{ marginTop: '2rem' }}>
-      Set your <b>subheading</b>
-      {`'s`} <b>marginBottom</b> value to <b>{`'${MARGIN_BOTTOM}'`}</b>
+      Set the <b>marginBottom</b> value of your{' '}
+      <b style={{ color: Color.pink() }}>subheading</b>
+      {`'s`} <b>style</b> property to <b>{`'${MARGIN_BOTTOM}'`}</b>
     </div>
     <div style={{ marginTop: '2rem' }}>
       Tap the <b style={{ color: Color.logoBlue() }}>format</b> button

@@ -16,15 +16,16 @@ export const title = `Change the Direction`;
 export const instruction = (
   <>
     <div>
-      Set the <b>{`<div>`}</b>
-      {`'s`} <b>flexDirection</b> value to <b>{`'${FLEX_DIRECTION}'`}</b>
+      Set the <b>flexDirection</b> value of the <b>{`<div>`}</b>
+      {`'s`} <b>style</b> property to <b>{`'${FLEX_DIRECTION}'`}</b>
     </div>
     <div>
       and its <b>alignItems</b> value to <b>{`'${ALIGN_ITEMS}'`}</b>
     </div>
     <div style={{ marginTop: '2rem' }}>
-      Set the <b style={{ color: 'orange' }}>second button</b>
-      {`'s`} <b>marginTop</b> value to <b>{`'${BUTTON_MARGIN_TOP}'`}</b>
+      Set the <b>marginTop</b> value of the{' '}
+      <b style={{ color: 'orange' }}>second button</b>
+      {`'s`} <b>style</b> property to <b>{`'${BUTTON_MARGIN_TOP}'`}</b>
     </div>
     <div style={{ marginTop: '2rem' }}>
       Tap the <b style={{ color: Color.logoBlue() }}>format</b> button to make
