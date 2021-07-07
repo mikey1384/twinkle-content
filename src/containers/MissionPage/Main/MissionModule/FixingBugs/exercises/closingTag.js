@@ -9,7 +9,7 @@ import { stringsAreCaseInsensitivelyEqual } from 'helpers/stringHelpers';
 const THIRD_MARGIN_TOP = '2rem';
 const FOURTH_MARGIN_TOP = '2rem';
 
-export const title = `All Tags Must Be Closed`;
+export const title = `All <Tags> Must Be </Closed>`;
 export const instruction = `Can you fix the bug in the code below?`;
 export const initialCode = `function HomePage() {
   return (
