@@ -52,6 +52,7 @@ export default function LaunchTheWebsite({ style, task }) {
       return {
         label: 'Okay',
         color: 'logoBlue',
+        noArrow: true,
         skeuomorphic: true,
         onClick: () => {
           window.open('https://vercel.com');

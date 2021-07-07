@@ -22,10 +22,28 @@ export default function Preview({ style, children }) {
           font-family: none;
           font-weight: normal;
           display: block;
-          margin-block-start: 1em;
-          margin-block-end: 1em;
+          margin-block-start: 1rem;
+          margin-block-end: 1rem;
           margin-inline-start: 0px;
           margin-inline-end: 0px;
+        }
+        h1 {
+          display: block;
+          font-size: 3rem;
+          margin-block-start: 0.67rem;
+          margin-block-end: 0.67rem;
+          margin-inline-start: 0px;
+          margin-inline-end: 0px;
+          font-weight: bold;
+        }
+        h2 {
+          display: block;
+          font-size: 2rem;
+          margin-block-start: 0.83rem;
+          margin-block-end: 0.83rem;
+          margin-inline-start: 0px;
+          margin-inline-end: 0px;
+          font-weight: bold;
         }
       `}
     >

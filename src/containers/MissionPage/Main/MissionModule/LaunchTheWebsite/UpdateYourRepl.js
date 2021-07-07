@@ -21,17 +21,17 @@ export default function UpdateYourRepl({ code, index }) {
         <>
           Remember the Repl you set up earlier?
           <br />
-          The code we provided you for that Repl is no longer needed.
+          The code we gave you for that Repl is no longer needed
           <br />
           <span style={{ color: Color.logoBlue() }}>
-            Replace that code with the one below which you wrote for your
-            website.
+            Replace that code with the code below ({`it's`} the one you wrote
+            for your website)
           </span>
         </>
       }
       index={index}
     >
-      <div style={{ position: 'relative' }}>
+      <div style={{ position: 'relative', marginTop: '2rem' }}>
         <Code
           codeRef={codeRef}
           language="jsx"
@@ -94,7 +94,7 @@ export default function UpdateYourRepl({ code, index }) {
             marginBottom: '3rem'
           }}
         >
-          <p>Did you replace the code?</p>
+          <h1>Did you replace the code?</h1>
         </div>
       </div>
     </StepSlide>
