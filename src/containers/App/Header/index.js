@@ -44,6 +44,7 @@ export default function Header({
     requestHelpers: {
       checkIfHomeOutdated,
       checkVersion,
+      fetchNotifications,
       getNumberOfUnreadMessages,
       loadChatChannel,
       loadChat,
@@ -114,6 +115,7 @@ export default function Header({
     actions: {
       onChangeSocketStatus,
       onCheckVersion,
+      onFetchNotifications,
       onGetRanks,
       onIncreaseNumNewPosts,
       onIncreaseNumNewNotis,
@@ -439,13 +441,18 @@ export default function Header({
       }
     }
 
-    function handleNewReward({ target, reward }) {
+    async function handleNewReward({ target, reward, receiverId }) {
+      socket.on('new_reward_posted', handleNewReward);
       if (reward.rewarderId !== userId) {
         onAttachReward({
           reward,
           contentId: target.contentId,
           contentType: target.contentType
         });
+      }
+      if (receiverId === userId) {
+        const data = await fetchNotifications();
+        onFetchNotifications(data);
       }
     }
 
