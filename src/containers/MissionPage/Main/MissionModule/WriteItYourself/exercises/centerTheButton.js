@@ -19,11 +19,11 @@ export const instruction = (
       <b>{`<div></div>`}</b> tags
     </div>
     <div>
-      Set the width of the <b>{`<div>`}</b> to <b>{`'${WIDTH}'`}</b>
+      Set the <b>width</b> value of the <b>{`<div>`}</b>
+      {`'s`} <b>style</b> property to <b>{`'${WIDTH}'`}</b>,
     </div>
     <div>
-      Set the <b>{`<div>`}</b>
-      {`'s`} <b>display</b> value to <b>{`'${DISPLAY}'`}</b> and its{' '}
+      its <b>display</b> value to <b>{`'${DISPLAY}'`}</b> and{' '}
       <b>justifyContent</b> value to <b>{`'${JUSTIFY_CONTENT}'`}</b>
     </div>
   </>
