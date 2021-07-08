@@ -463,7 +463,7 @@ export default function ChatReducer(state, action) {
         reconnecting: false,
         selectedChannelId: action.data.currentChannelId,
         wordsObj: {
-          ...state.wordObj,
+          ...state.wordsObj,
           ...action.data.wordsObj
         },
         wordCollectors: action.data.wordCollectors
