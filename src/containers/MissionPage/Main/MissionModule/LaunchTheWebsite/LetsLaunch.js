@@ -1,12 +1,29 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import Input from 'components/Texts/Input';
+import StepSlide from '../components/StepSlide';
 import { Color } from 'constants/css';
 
-export default function ConnectVercelToGitHub() {
+LetsLaunch.propTypes = {
+  index: PropTypes.number
+};
+
+export default function LetsLaunch({ index }) {
   const [url, setUrl] = useState('');
   const [hasUrlError] = useState(false);
   return (
-    <div>
+    <StepSlide
+      title={
+        <>
+          Launch your website by importing your {`website's`} GitHub repository
+          to Vercel.
+          <br />
+          When you are done, copy the {`website's`} url address and paste it
+          into the text box below.
+        </>
+      }
+      index={index}
+    >
       <Input
         autoFocus
         value={url}
@@ -19,6 +36,6 @@ export default function ConnectVercelToGitHub() {
           {`That is not a valid vercel URL`}
         </p>
       )}
-    </div>
+    </StepSlide>
   );
 }

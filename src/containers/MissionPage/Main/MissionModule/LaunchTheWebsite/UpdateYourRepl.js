@@ -21,7 +21,7 @@ export default function UpdateYourRepl({ code, index }) {
         <>
           Remember the Repl you set up earlier?
           <br />
-          The code we gave you for that Repl is no longer needed
+          The code we gave you for that Repl is no longer needed.
           <br />
           <span style={{ color: Color.logoBlue() }}>
             Replace that code with the code below ({`it's`} the one you wrote

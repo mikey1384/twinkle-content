@@ -48,7 +48,7 @@ export default HomePage;`;
 export default function CopyAndPasteCode({ index, onCorrectCodeEntered }) {
   const [codeCopied, setCodeCopied] = useState(false);
   return (
-    <StepSlide index={index} title="Copy the following code">
+    <StepSlide index={index} title="Copy the following code.">
       <CopyCode codeToCopy={codeToCopy} style={{ marginTop: '1.5rem' }} />
       <div style={{ marginTop: '2.5rem', width: '100%' }}>
         {!codeCopied && (
