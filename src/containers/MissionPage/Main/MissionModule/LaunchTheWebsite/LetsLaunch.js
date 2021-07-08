@@ -32,7 +32,7 @@ export default function LetsLaunch({ index }) {
           onChange={setUrl}
           placeholder="Paste your website's vercel url here..."
           className={css`
-            margin-top: 2rem;
+            margin-top: 3rem;
             width: 50%;
             @media (max-width: ${mobileMaxWidth}) {
               margin-top: 1rem;
