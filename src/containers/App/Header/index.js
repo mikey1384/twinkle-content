@@ -442,7 +442,6 @@ export default function Header({
     }
 
     async function handleNewReward({ target, reward, receiverId }) {
-      socket.on('new_reward_posted', handleNewReward);
       if (reward.rewarderId !== userId) {
         onAttachReward({
           reward,
