@@ -27,7 +27,7 @@ export default function LaunchTheWebsite({ style, task }) {
     () => state?.missions?.[task?.missionType] || {},
     [state?.missions, task?.missionType]
   );
-  const { makeAccountOkayPressed } = taskState;
+  const { makeAccountOkayPressed, connectReplToGitHubOkayPressed } = taskState;
   const FirstButton = useMemo(() => {
     return {
       label: 'Save and move on',
@@ -71,6 +71,25 @@ export default function LaunchTheWebsite({ style, task }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [makeAccountOkayPressed, task.id]);
 
+  const FourthButton = useMemo(() => {
+    if (!connectReplToGitHubOkayPressed) {
+      return {
+        label: 'Okay',
+        color: 'logoBlue',
+        noArrow: true,
+        skeuomorphic: true,
+        onClick: () =>
+          handleUpdateTaskProgress({ connectReplToGitHubOkayPressed: true })
+      };
+    }
+    return {
+      label: 'Yes',
+      color: 'green',
+      skeuomorphic: true
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [connectReplToGitHubOkayPressed, task.id]);
+
   const mounted = useRef(true);
 
   useEffect(() => {
@@ -86,7 +105,8 @@ export default function LaunchTheWebsite({ style, task }) {
         buttons={[
           FirstButton,
           SecondButton,
-          { label: 'Yes I did', color: 'green', skeuomorphic: true }
+          { label: 'Yes I did', color: 'green', skeuomorphic: true },
+          FourthButton
         ]}
         taskId={task.id}
         taskType={task.missionType}
@@ -104,7 +124,7 @@ export default function LaunchTheWebsite({ style, task }) {
           okayPressed={makeAccountOkayPressed}
         />
         <UpdateYourRepl code={taskState.code} />
-        <ConnectReplToGitHub />
+        <ConnectReplToGitHub okayPressed={connectReplToGitHubOkayPressed} />
         <WebsiteVerfier />
       </MultiStepContainer>
     </ErrorBoundary>
