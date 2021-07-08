@@ -462,7 +462,10 @@ export default function ChatReducer(state, action) {
         recentChessMessage: undefined,
         reconnecting: false,
         selectedChannelId: action.data.currentChannelId,
-        wordsObj: action.data.wordsObj,
+        wordsObj: {
+          ...state.wordObj,
+          ...action.data.wordsObj
+        },
         wordCollectors: action.data.wordCollectors
       };
     }
