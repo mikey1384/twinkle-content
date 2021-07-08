@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import MultiStepContainer from '../components/MultiStepContainer';
-import WebsiteVerfier from './WebsiteVerifier';
+import ConnectVercelToGitHub from './ConnectVercelToGitHub';
 import MakeAccount from './MakeAccount';
 import FinalizeYourCode from './FinalizeYourCode';
 import ConnectReplToGitHub from './ConnectReplToGitHub';
@@ -125,7 +125,7 @@ export default function LaunchTheWebsite({ style, task }) {
         />
         <UpdateYourRepl code={taskState.code} />
         <ConnectReplToGitHub okayPressed={connectReplToGitHubOkayPressed} />
-        <WebsiteVerfier />
+        <ConnectVercelToGitHub />
       </MultiStepContainer>
     </ErrorBoundary>
   );

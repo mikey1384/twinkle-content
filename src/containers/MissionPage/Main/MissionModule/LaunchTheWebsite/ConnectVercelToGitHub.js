@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Input from 'components/Texts/Input';
 import { Color } from 'constants/css';
 
-export default function WebsiteVerifier() {
+export default function ConnectVercelToGitHub() {
   const [url, setUrl] = useState('');
   const [hasUrlError] = useState(false);
   return (
