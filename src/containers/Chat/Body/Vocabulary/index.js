@@ -10,7 +10,8 @@ import {
   useAppContext,
   useChatContext,
   useContentContext,
-  useInputContext
+  useInputContext,
+  useNotiContext
 } from 'contexts';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
@@ -39,6 +40,9 @@ export default function Vocabulary() {
     state,
     actions: { onEnterComment }
   } = useInputContext();
+  const {
+    state: { socketConnected }
+  } = useNotiContext();
   const { userId } = useMyState();
   const inputText = state['vocabulary']?.text || '';
   const wordObj = useMemo(
@@ -56,8 +60,10 @@ export default function Vocabulary() {
     text.current = inputText;
     if (!stringIsEmpty(inputText)) {
       clearTimeout(timerRef.current);
-      setLoading(true);
-      timerRef.current = setTimeout(() => changeInput(inputText), 1000);
+      if (socketConnected) {
+        setLoading(true);
+        timerRef.current = setTimeout(() => changeInput(inputText), 1000);
+      }
     }
     async function changeInput(input) {
       const word = await lookUpWord(input);
@@ -70,23 +76,24 @@ export default function Vocabulary() {
       setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inputText]);
+  }, [inputText, socketConnected]);
 
   const widgetHeight = useMemo(() => {
-    return stringIsEmpty(inputText) || loading
+    return stringIsEmpty(inputText) || loading || !socketConnected
       ? wordRegisterStatus
         ? '16rem'
         : '10rem'
       : `20rem`;
-  }, [inputText, loading, wordRegisterStatus]);
+  }, [inputText, loading, wordRegisterStatus, socketConnected]);
 
   const containerHeight = useMemo(() => {
     return `CALC(100% - ${widgetHeight} - 6.5rem)`;
   }, [widgetHeight]);
 
   const notRegistered = useMemo(
-    () => wordObj.isNew && !stringIsEmpty(inputText) && !loading,
-    [wordObj.isNew, inputText, loading]
+    () =>
+      wordObj.isNew && !stringIsEmpty(inputText) && !loading && socketConnected,
+    [wordObj.isNew, inputText, loading, socketConnected]
   );
 
   const alreadyRegistered = useMemo(
@@ -160,8 +167,11 @@ export default function Vocabulary() {
           </div>
         )}
         {!stringIsEmpty(inputText) &&
-          (loading ? (
-            <Loading style={{ height: '100%' }} text="Looking up..." />
+          (loading || !socketConnected ? (
+            <Loading
+              style={{ height: '100%' }}
+              text={socketConnected ? 'Looking up...' : 'Loading...'}
+            />
           ) : (
             <div
               style={{
