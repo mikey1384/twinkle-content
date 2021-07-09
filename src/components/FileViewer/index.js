@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import FileInfo from './FileInfo';
 import ReactPlayer from 'react-player';
@@ -22,7 +22,16 @@ export default function FileViewer({
   thumbUrl
 }) {
   const PlayerRef = useRef(null);
-  const { fileType } = getFileInfoFromFileName(src);
+  const { fileType } = useMemo(() => getFileInfoFromFileName(src), [src]);
+  const filePath = useMemo(() => {
+    const srcArray = src.split('/');
+    const fileName = srcArray[srcArray.length - 1];
+    srcArray.pop();
+    const result = [...srcArray, encodeURIComponent(fileName)].join('/');
+    return result;
+  }, [src]);
+
+  console.log(src);
 
   return (
     <div
@@ -42,7 +51,7 @@ export default function FileViewer({
             objectFit: 'contain',
             maxHeight: '50vh'
           }}
-          src={`${cloudFrontURL}${src}`}
+          src={`${cloudFrontURL}${filePath}`}
         />
       ) : fileType === 'video' || fileType === 'audio' ? (
         <div
