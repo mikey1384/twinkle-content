@@ -125,7 +125,7 @@ export default function LaunchTheWebsite({ style, task }) {
         />
         <UpdateYourRepl code={taskState.code} />
         <ConnectReplToGitHub okayPressed={connectReplToGitHubOkayPressed} />
-        <LetsLaunch />
+        <LetsLaunch taskId={task.id} />
       </MultiStepContainer>
     </ErrorBoundary>
   );

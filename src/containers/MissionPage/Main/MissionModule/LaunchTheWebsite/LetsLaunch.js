@@ -6,17 +6,26 @@ import Button from 'components/Button';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { stringIsEmpty, isValidUrl } from 'helpers/stringHelpers';
+import { useAppContext, useMissionContext } from 'contexts';
 
 LetsLaunch.propTypes = {
-  index: PropTypes.number
+  index: PropTypes.number,
+  taskId: PropTypes.number.isRequired
 };
 
-export default function LetsLaunch({ index }) {
+export default function LetsLaunch({ index, taskId }) {
+  const {
+    requestHelpers: { uploadMissionAttempt }
+  } = useAppContext();
+  const {
+    actions: { onUpdateMissionAttempt }
+  } = useMissionContext();
   const [url, setUrl] = useState('');
   const [urlError, setUrlError] = useState(false);
   const timerRef = useRef(null);
   const urlErrorRef = useRef('');
   const urlIsNotEmpty = useMemo(() => !stringIsEmpty(url), [url]);
+  const mounted = useRef(true);
 
   useEffect(() => {
     const notValidUrl = `That's not a valid url`;
@@ -46,6 +55,13 @@ export default function LetsLaunch({ index }) {
       return setUrlError('');
     }
   }, [url, urlError, urlIsNotEmpty]);
+
+  useEffect(() => {
+    mounted.current = true;
+    return function onUnmount() {
+      mounted.current = false;
+    };
+  }, []);
 
   return (
     <StepSlide
@@ -95,11 +111,33 @@ export default function LetsLaunch({ index }) {
           </p>
         )}
         {urlIsNotEmpty && !urlError && (
-          <Button style={{ marginTop: '3rem' }} skeuomorphic color="green">
+          <Button
+            style={{ marginTop: '3rem' }}
+            skeuomorphic
+            color="green"
+            onClick={handleSubmit}
+          >
             Submit
           </Button>
         )}
       </div>
     </StepSlide>
   );
+
+  async function handleSubmit() {
+    const { success } = await uploadMissionAttempt({
+      missionId: taskId,
+      attempt: {
+        content: url
+      }
+    });
+    if (success) {
+      if (mounted.current) {
+        onUpdateMissionAttempt({
+          missionId: taskId,
+          newState: { status: 'pending', tryingAgain: false }
+        });
+      }
+    }
+  }
 }
