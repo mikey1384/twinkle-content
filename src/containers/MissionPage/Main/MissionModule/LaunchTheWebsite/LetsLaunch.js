@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Input from 'components/Texts/Input';
 import StepSlide from '../components/StepSlide';
+import Button from 'components/Button';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import { stringIsEmpty, isValidUrl } from 'helpers/stringHelpers';
 
 LetsLaunch.propTypes = {
   index: PropTypes.number
@@ -11,7 +13,40 @@ LetsLaunch.propTypes = {
 
 export default function LetsLaunch({ index }) {
   const [url, setUrl] = useState('');
-  const [hasUrlError] = useState(false);
+  const [urlError, setUrlError] = useState(false);
+  const timerRef = useRef(null);
+  const urlErrorRef = useRef('');
+  const urlIsNotEmpty = useMemo(() => !stringIsEmpty(url), [url]);
+
+  useEffect(() => {
+    const notValidUrl = `That's not a valid url`;
+    const notValidVercelUrl = `That's not a valid Vercel url`;
+    if (urlIsNotEmpty) {
+      clearTimeout(timerRef.current);
+      if (url.length < 3) {
+        setUrlError(`Please copy and paste the url. Don't type`);
+        setUrl('');
+        timerRef.current = setTimeout(() => setUrlError(''), 2000);
+        return;
+      }
+      if (!isValidUrl(url) && !urlError) {
+        urlErrorRef.current = notValidUrl;
+        setUrlError(notValidUrl);
+        setUrl('');
+        timerRef.current = setTimeout(() => setUrlError(''), 3000);
+        return;
+      }
+      if (!url.includes('vercel.app')) {
+        urlErrorRef.current = notValidVercelUrl;
+        setUrlError(notValidVercelUrl);
+        setUrl('');
+        timerRef.current = setTimeout(() => setUrlError(''), 3000);
+        return;
+      }
+      return setUrlError('');
+    }
+  }, [url, urlError, urlIsNotEmpty]);
+
   return (
     <StepSlide
       title={
@@ -25,7 +60,15 @@ export default function LetsLaunch({ index }) {
       }
       index={index}
     >
-      <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+      <div
+        style={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
         <Input
           autoFocus
           value={url}
@@ -40,10 +83,21 @@ export default function LetsLaunch({ index }) {
             }
           `}
         />
-        {hasUrlError && (
-          <p style={{ fontSize: '1.5rem', color: Color.red() }}>
-            {`That is not a valid vercel URL`}
+        {urlError && (
+          <p
+            style={{
+              fontSize: '1.5rem',
+              color: Color.red(),
+              marginTop: '0.5rem'
+            }}
+          >
+            {urlError}
           </p>
+        )}
+        {urlIsNotEmpty && !urlError && (
+          <Button style={{ marginTop: '3rem' }} skeuomorphic color="green">
+            Submit
+          </Button>
         )}
       </div>
     </StepSlide>
