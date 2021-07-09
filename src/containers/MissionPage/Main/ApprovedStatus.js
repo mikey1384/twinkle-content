@@ -107,7 +107,7 @@ export default function ApprovedStatus({
           src={myAttempt.filePath}
         />
       )}
-      {myAttempt.content && (
+      {myAttempt.content && myAttempt.status === 'fail' && (
         <LongText style={{ marginTop: '3rem' }}>{myAttempt.content}</LongText>
       )}
       {myAttempt.reviewer && (

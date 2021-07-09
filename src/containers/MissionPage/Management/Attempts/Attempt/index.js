@@ -72,7 +72,13 @@ export default function Attempt({
         </div>
       )}
       {attempt.content && (
-        <div style={{ fontSize: '1.5rem', marginTop: '2rem' }}>
+        <div
+          style={{
+            fontSize: '1.5rem',
+            marginTop: '2rem',
+            paddingBottom: '1.5rem'
+          }}
+        >
           <LongText>{attempt.content}</LongText>
         </div>
       )}
