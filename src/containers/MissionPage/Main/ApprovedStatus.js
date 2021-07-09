@@ -107,6 +107,9 @@ export default function ApprovedStatus({
           src={myAttempt.filePath}
         />
       )}
+      {myAttempt.content && (
+        <LongText style={{ marginTop: '3rem' }}>{myAttempt.content}</LongText>
+      )}
       {myAttempt.reviewer && (
         <div
           style={{
