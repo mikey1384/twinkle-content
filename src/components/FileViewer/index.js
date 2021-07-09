@@ -31,8 +31,6 @@ export default function FileViewer({
     return result;
   }, [src]);
 
-  console.log(src);
-
   return (
     <div
       style={{
