@@ -7,6 +7,7 @@ import MakeAccount from './MakeAccount';
 import FinalizeYourCode from './FinalizeYourCode';
 import ConnectReplToGitHub from './ConnectReplToGitHub';
 import UpdateYourRepl from './UpdateYourRepl';
+import defaultCode from './defaultCode';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
@@ -89,7 +90,10 @@ export default function LaunchTheWebsite({ style, task }) {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connectReplToGitHubOkayPressed, task.id]);
-
+  const code = useMemo(
+    () => taskState.code || defaultCode({ username }),
+    [taskState.code, username]
+  );
   const mounted = useRef(true);
 
   useEffect(() => {
@@ -123,7 +127,7 @@ export default function LaunchTheWebsite({ style, task }) {
           }
           okayPressed={makeAccountOkayPressed}
         />
-        <UpdateYourRepl code={taskState.code} />
+        <UpdateYourRepl code={code} />
         <ConnectReplToGitHub okayPressed={connectReplToGitHubOkayPressed} />
         <LetsLaunch taskId={task.id} />
       </MultiStepContainer>
