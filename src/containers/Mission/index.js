@@ -54,7 +54,7 @@ export default function Mission() {
 
   return (
     <ErrorBoundary>
-      <div>
+      <div style={{ width: '100%' }}>
         {userId && (
           <Cover
             missionIds={missions}
@@ -66,17 +66,25 @@ export default function Mission() {
         {missions.length > 0 && (
           <div
             className={css`
-              margin: 5rem;
+              padding-top: 3rem;
+              padding-bottom: 3rem;
+              display: flex;
+              width: 100%;
               @media (max-width: ${mobileMaxWidth}) {
-                margin: 1rem;
+                padding-top: 0;
+                padding-bottom: 2rem;
               }
             `}
           >
             <div
               className={css`
+                width: CALC(100% - 5rem);
+                margin-left: 5rem;
                 display: flex;
                 @media (max-width: ${mobileMaxWidth}) {
-                  margin-top: 2rem;
+                  width: CALC(100% - 2rem);
+                  margin-top: 1.5rem;
+                  margin-left: 1rem;
                   flex-direction: column;
                 }
               `}
@@ -96,7 +104,7 @@ export default function Mission() {
               {missionObj[currentMissionId] && (
                 <div
                   className={css`
-                    width: 35%;
+                    width: CALC(35% - 5rem);
                     margin-left: 5rem;
                     @media (max-width: ${mobileMaxWidth}) {
                       margin-left: 0;

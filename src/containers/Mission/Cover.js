@@ -43,6 +43,7 @@ export default function Cover({ missionIds, missionObj, myAttempts }) {
   return (
     <div
       className={css`
+        width: 100%;
         height: 15vh;
         display: flex;
         justify-content: space-between;
