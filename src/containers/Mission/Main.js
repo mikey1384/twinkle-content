@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import CurrentMission from './CurrentMission';
 import MissionList from './MissionList';
+import Loading from 'components/Loading';
 import RepeatableMissions from './RepeatableMissions';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
@@ -9,6 +10,8 @@ import { css } from '@emotion/css';
 Main.propTypes = {
   className: PropTypes.string,
   currentMissionId: PropTypes.number,
+  isCreator: PropTypes.bool,
+  loading: PropTypes.bool,
   missions: PropTypes.array,
   missionObj: PropTypes.object,
   myAttempts: PropTypes.object,
@@ -18,17 +21,27 @@ Main.propTypes = {
 export default function Main({
   className,
   currentMissionId,
+  isCreator,
+  loading,
   missions,
   missionObj,
   myAttempts,
   userId
 }) {
-  return (
+  const width = useMemo(
+    () => (isCreator ? '100%' : 'CALC(100% - 5rem)'),
+    [isCreator]
+  );
+  const marginLeft = useMemo(() => (isCreator ? '3rem' : '5rem'), [isCreator]);
+  if (missions.length === 0 && loading) {
+    return <Loading />;
+  }
+  return missions.length > 0 ? (
     <div className={className}>
       <div
         className={css`
-          width: CALC(100% - 5rem);
-          margin-left: 5rem;
+          width: ${width};
+          margin-left: ${marginLeft};
           display: flex;
           @media (max-width: ${mobileMaxWidth}) {
             width: CALC(100% - 2rem);
@@ -82,5 +95,5 @@ export default function Main({
         )}
       </div>
     </div>
-  );
+  ) : null;
 }

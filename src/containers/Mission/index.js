@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Cover from './Cover';
-import Loading from 'components/Loading';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Main from './Main';
+import RightMenu from './RightMenu';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useMissionContext } from 'contexts';
 import { mobileMaxWidth } from 'constants/css';
@@ -60,8 +60,7 @@ export default function Mission() {
             myAttempts={myAttempts}
           />
         )}
-        {missions.length === 0 && loading && <Loading />}
-        {missions.length > 0 && (
+        <div style={{ width: '100%', display: 'flex' }}>
           <Main
             className={css`
               padding-top: 3rem;
@@ -73,13 +72,21 @@ export default function Mission() {
                 padding-bottom: 2rem;
               }
             `}
+            isCreator={isCreator}
+            loading={loading}
             userId={userId}
             currentMissionId={currentMissionId}
             missions={missions}
             missionObj={missionObj}
             myAttempts={myAttempts}
           />
-        )}
+          {isCreator && (
+            <RightMenu
+              className="desktop"
+              style={{ marginTop: '3rem', width: '14rem', marginRight: '2rem' }}
+            />
+          )}
+        </div>
       </div>
     </ErrorBoundary>
   );

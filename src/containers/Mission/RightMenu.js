@@ -41,19 +41,14 @@ export default function RightMenu({ className, missionType, style }) {
           }
         `}
         style={{
-          paddingLeft: '1rem',
           textAlign: 'center',
           position: 'sticky',
           top: '1rem'
         }}
       >
         <nav
-          className={
-            location.pathname !== `/missions/${missionType}/manage`
-              ? 'active'
-              : ''
-          }
-          onClick={() => history.push(`/missions/${missionType}`)}
+          className={location.pathname !== `/missions/manage` ? 'active' : ''}
+          onClick={() => history.push(`/missions`)}
           style={{
             cursor: 'pointer',
             display: 'flex',
@@ -62,7 +57,7 @@ export default function RightMenu({ className, missionType, style }) {
           }}
         >
           <Icon icon="clipboard-check" />
-          <span style={{ marginLeft: '1.5rem' }}>Mission</span>
+          <span style={{ marginLeft: '1.5rem' }}>Missions</span>
         </nav>
         <nav
           onClick={() => history.push(`/missions/${missionType}/manage`)}
