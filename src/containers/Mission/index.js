@@ -1,14 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Cover from './Cover';
-import CurrentMission from './CurrentMission';
-import MissionList from './MissionList';
 import Loading from 'components/Loading';
 import ErrorBoundary from 'components/ErrorBoundary';
-import RepeatableMissions from './RepeatableMissions';
-import { mobileMaxWidth } from 'constants/css';
-import { css } from '@emotion/css';
+import Main from './Main';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useMissionContext } from 'contexts';
+import { mobileMaxWidth } from 'constants/css';
+import { css } from '@emotion/css';
 
 export default function Mission() {
   const [loading, setLoading] = useState(false);
@@ -64,7 +62,7 @@ export default function Mission() {
         )}
         {missions.length === 0 && loading && <Loading />}
         {missions.length > 0 && (
-          <div
+          <Main
             className={css`
               padding-top: 3rem;
               padding-bottom: 3rem;
@@ -75,66 +73,12 @@ export default function Mission() {
                 padding-bottom: 2rem;
               }
             `}
-          >
-            <div
-              className={css`
-                width: CALC(100% - 5rem);
-                margin-left: 5rem;
-                display: flex;
-                @media (max-width: ${mobileMaxWidth}) {
-                  width: CALC(100% - 2rem);
-                  margin-top: 1.5rem;
-                  margin-left: 1rem;
-                  flex-direction: column;
-                }
-              `}
-            >
-              <MissionList
-                missions={missions}
-                missionObj={missionObj}
-                className={css`
-                  width: CALC(
-                    ${missionObj[currentMissionId] ? '65%' : '80%'} - 5rem
-                  );
-                  @media (max-width: ${mobileMaxWidth}) {
-                    width: 100%;
-                  }
-                `}
-              />
-              {missionObj[currentMissionId] && (
-                <div
-                  className={css`
-                    width: CALC(35% - 5rem);
-                    margin-left: 5rem;
-                    @media (max-width: ${mobileMaxWidth}) {
-                      margin-left: 0;
-                      margin-top: 3rem;
-                      width: 100%;
-                    }
-                  `}
-                >
-                  <CurrentMission
-                    mission={missionObj[currentMissionId]}
-                    missionId={currentMissionId}
-                    style={{ width: '100%' }}
-                  />
-                  {userId && (
-                    <RepeatableMissions
-                      className={css`
-                        margin-top: 2rem;
-                        @media (max-width: ${mobileMaxWidth}) {
-                          margin-top: 0;
-                        }
-                      `}
-                      myAttempts={myAttempts}
-                      missions={missions}
-                      missionObj={missionObj}
-                    />
-                  )}
-                </div>
-              )}
-            </div>
-          </div>
+            userId={userId}
+            currentMissionId={currentMissionId}
+            missions={missions}
+            missionObj={missionObj}
+            myAttempts={myAttempts}
+          />
         )}
       </div>
     </ErrorBoundary>
