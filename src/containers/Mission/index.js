@@ -83,7 +83,7 @@ export default function Mission() {
           {isCreator && (
             <RightMenu
               className="desktop"
-              style={{ marginTop: '3rem', width: '14rem', marginRight: '2rem' }}
+              style={{ marginTop: '3rem', width: '12rem', marginRight: '3rem' }}
             />
           )}
         </div>
