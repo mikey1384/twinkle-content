@@ -26,7 +26,7 @@ export default function Attempts({ mission, missionId, onSetMissionState }) {
   const { isCreator } = useMyState();
   const { managementTab: activeTab = 'pending' } = mission;
   const {
-    requestHelpers: { loadMissionAttempts }
+    requestHelpers: { loadMissionAttemptsForPage }
   } = useAppContext();
   useEffect(() => {
     if (isCreator) {
@@ -38,7 +38,7 @@ export default function Attempts({ mission, missionId, onSetMissionState }) {
         attemptObj,
         [`${activeTab}AttemptIds`]: attemptIds,
         loadMoreButton
-      } = await loadMissionAttempts({
+      } = await loadMissionAttemptsForPage({
         activeTab,
         missionId
       });
@@ -148,7 +148,7 @@ export default function Attempts({ mission, missionId, onSetMissionState }) {
       attemptObj,
       [`${activeTab}AttemptIds`]: attemptIds,
       loadMoreButton
-    } = await loadMissionAttempts({
+    } = await loadMissionAttemptsForPage({
       activeTab,
       missionId,
       lastAttemptId: currentAttemptIds[currentAttemptIds.length - 1]

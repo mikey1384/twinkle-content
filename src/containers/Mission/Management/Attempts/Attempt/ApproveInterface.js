@@ -12,16 +12,18 @@ import {
 
 ApproveInterface.propTypes = {
   activeTab: PropTypes.string.isRequired,
-  mission: PropTypes.object.isRequired,
-  onSetMissionState: PropTypes.func.isRequired,
-  attempt: PropTypes.object.isRequired
+  attempt: PropTypes.object.isRequired,
+  managementObj: PropTypes.object.isRequired,
+  onSetManagementObj: PropTypes.func.isRequired,
+  onSetAttemptObj: PropTypes.func.isRequired
 };
 
 export default function ApproveInterface({
   activeTab,
   attempt,
-  mission,
-  onSetMissionState
+  managementObj,
+  onSetManagementObj,
+  onSetAttemptObj
 }) {
   const mounted = useRef(true);
   const {
@@ -141,20 +143,16 @@ export default function ApproveInterface({
       status
     });
     if (success) {
-      onSetMissionState({
-        missionId: mission.id,
-        newState: {
-          [`${activeTab}AttemptIds`]: mission[`${activeTab}AttemptIds`].filter(
-            (attemptId) => attemptId !== attempt.id
-          ),
-          attemptObj: {
-            ...mission.attemptObj,
-            [attempt.id]: {
-              ...mission.attemptObj[attempt.id],
-              feedback,
-              status
-            }
-          }
+      onSetManagementObj({
+        [activeTab]: managementObj[activeTab].filter(
+          (attemptId) => attemptId !== attempt.id
+        )
+      });
+      onSetAttemptObj({
+        [attempt.id]: {
+          ...attempt,
+          feedback,
+          status
         }
       });
     }

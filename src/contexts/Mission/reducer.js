@@ -62,6 +62,27 @@ export default function MissionReducer(state, action) {
         }
       };
     }
+    case 'SET_ATTEMPT_OBJ':
+      return {
+        ...state,
+        attemptObj: {
+          ...state.attemptObj,
+          ...action.attemptObj
+        }
+      };
+    case 'SET_MANAGEMENT_OBJ':
+      return {
+        ...state,
+        managementObj: {
+          ...state.managementObj,
+          ...action.managementObj
+        }
+      };
+    case 'SET_SELECTED_MANAGEMENT_TAB':
+      return {
+        ...state,
+        selectedManagementTab: action.selectedTab
+      };
     case 'SET_SELECTED_MISSIONS_TAB':
       return {
         ...state,

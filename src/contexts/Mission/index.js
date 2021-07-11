@@ -7,9 +7,12 @@ export const MissionContext = createContext();
 export const initialMissionState = {
   missions: [],
   loadMoreButton: false,
+  attemptObj: {},
+  managementObj: {},
   missionObj: {},
   myAttempts: {},
   prevUserId: null,
+  selectedManagementTab: 'pending',
   selectedMissionsTab: 'missions',
   selectedMissionListTab: ''
 };

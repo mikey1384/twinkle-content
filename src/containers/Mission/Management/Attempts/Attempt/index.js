@@ -12,16 +12,18 @@ import { stringIsEmpty, processedStringWithURL } from 'helpers/stringHelpers';
 Attempt.propTypes = {
   activeTab: PropTypes.string.isRequired,
   attempt: PropTypes.object.isRequired,
-  onSetMissionState: PropTypes.func.isRequired,
-  mission: PropTypes.object.isRequired,
+  managementObj: PropTypes.object.isRequired,
+  onSetManagementObj: PropTypes.func.isRequired,
+  onSetAttemptObj: PropTypes.func.isRequired,
   style: PropTypes.object
 };
 
 export default function Attempt({
   activeTab,
   attempt,
-  onSetMissionState,
-  mission,
+  managementObj,
+  onSetManagementObj,
+  onSetAttemptObj,
   style
 }) {
   return (
@@ -103,10 +105,11 @@ export default function Attempt({
       )}
       {attempt.status === 'pending' && (
         <ApproveInterface
+          managementObj={managementObj}
           activeTab={activeTab}
-          onSetMissionState={onSetMissionState}
-          mission={mission}
           attempt={attempt}
+          onSetManagementObj={onSetManagementObj}
+          onSetAttemptObj={onSetAttemptObj}
         />
       )}
       {(attempt.status === 'pass' || attempt.status === 'fail') && (

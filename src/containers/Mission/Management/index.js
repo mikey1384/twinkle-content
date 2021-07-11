@@ -1,38 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Attempts from './Attempts';
-import InvalidPage from 'components/InvalidPage';
 import ErrorBoundary from 'components/ErrorBoundary';
-import Loading from 'components/Loading';
-import { useMyState } from 'helpers/hooks';
 
 Management.propTypes = {
-  mission: PropTypes.object,
-  missionId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  onSetMissionState: PropTypes.func.isRequired
+  attemptObj: PropTypes.object,
+  managementObj: PropTypes.object,
+  selectedTab: PropTypes.string,
+  onSelectTab: PropTypes.func.isRequired,
+  onSetAttemptObj: PropTypes.func.isRequired,
+  onSetManagementObj: PropTypes.func.isRequired
 };
 
-export default function Management({ mission, missionId, onSetMissionState }) {
-  const { isCreator } = useMyState();
-  if (!isCreator) {
-    return (
-      <InvalidPage
-        title="For moderators only"
-        text="You are not authorized to view this page"
-      />
-    );
-  }
-
-  if (!mission?.missionType) {
-    return <Loading />;
-  }
-
+export default function Management({
+  attemptObj,
+  managementObj,
+  selectedTab,
+  onSelectTab,
+  onSetAttemptObj,
+  onSetManagementObj
+}) {
   return (
     <ErrorBoundary style={{ width: '100%', marginBottom: '10rem' }}>
       <Attempts
-        mission={mission}
-        missionId={missionId}
-        onSetMissionState={onSetMissionState}
+        attemptObj={attemptObj}
+        managementObj={managementObj}
+        selectedTab={selectedTab}
+        onSelectTab={onSelectTab}
+        onSetAttemptObj={onSetAttemptObj}
+        onSetManagementObj={onSetManagementObj}
       />
     </ErrorBoundary>
   );

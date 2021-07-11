@@ -16,8 +16,22 @@ export default function Mission() {
     requestHelpers: { loadMissionList }
   } = useAppContext();
   const {
-    state: { missions, missionObj, myAttempts, selectedMissionsTab },
-    actions: { onLoadMissionList, onSetSelectedMissionsTab }
+    state: {
+      attemptObj,
+      managementObj,
+      missions,
+      missionObj,
+      myAttempts,
+      selectedManagementTab,
+      selectedMissionsTab
+    },
+    actions: {
+      onLoadMissionList,
+      onSetAttemptObj,
+      onSetManagementObj,
+      onSetSelectedManagementTab,
+      onSetSelectedMissionsTab
+    }
   } = useMissionContext();
   const mounted = useRef(true);
 
@@ -92,7 +106,16 @@ export default function Mission() {
                 myAttempts={myAttempts}
               />
             )}
-            {selectedMissionsTab === 'management' && <Management />}
+            {selectedMissionsTab === 'management' && (
+              <Management
+                attemptObj={attemptObj}
+                managementObj={managementObj}
+                onSetAttemptObj={onSetAttemptObj}
+                onSetManagementObj={onSetManagementObj}
+                selectedTab={selectedManagementTab}
+                onSelectTab={onSetSelectedManagementTab}
+              />
+            )}
           </div>
           {isCreator && (
             <RightMenu

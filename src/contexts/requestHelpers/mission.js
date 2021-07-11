@@ -174,10 +174,23 @@ export default function missionRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async loadMissionAttempts({ activeTab, missionId, lastAttemptId }) {
+    async loadMissionAttempts({ activeTab, lastAttemptId }) {
       try {
         const { data } = await request.get(
-          `${URL}/mission/attempt?activeTab=${activeTab}&missionId=${missionId}${
+          `${URL}/mission/attempt?activeTab=${activeTab}${
+            lastAttemptId ? `&lastAttemptId=${lastAttemptId}` : ''
+          }`,
+          auth()
+        );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
+    async loadMissionAttemptsForPage({ activeTab, missionId, lastAttemptId }) {
+      try {
+        const { data } = await request.get(
+          `${URL}/mission/page/attempt?activeTab=${activeTab}&missionId=${missionId}${
             lastAttemptId ? `&lastAttemptId=${lastAttemptId}` : ''
           }`,
           auth()

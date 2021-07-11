@@ -22,6 +22,24 @@ export default function MissionActions(dispatch) {
         hash
       });
     },
+    onSetAttemptObj(attemptObj) {
+      return dispatch({
+        type: 'SET_ATTEMPT_OBJ',
+        attemptObj
+      });
+    },
+    onSetManagementObj(managementObj) {
+      return dispatch({
+        type: 'SET_MANAGEMENT_OBJ',
+        managementObj
+      });
+    },
+    onSetSelectedManagementTab(selectedTab) {
+      return dispatch({
+        type: 'SET_SELECTED_MANAGEMENT_TAB',
+        selectedTab
+      });
+    },
     onSetSelectedMissionsTab(selectedTab) {
       return dispatch({
         type: 'SET_SELECTED_MISSIONS_TAB',
