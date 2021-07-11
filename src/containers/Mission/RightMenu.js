@@ -17,6 +17,7 @@ export default function RightMenu({
   onSelectTab,
   style
 }) {
+  console.log(selectedTab);
   return (
     <div
       className={className}
@@ -50,7 +51,7 @@ export default function RightMenu({
         }}
       >
         <nav
-          className={!selectedTab || selectedTab === 'missions' ? 'active' : ''}
+          className={selectedTab === 'missions' ? 'active' : ''}
           onClick={() => onSelectTab('missions')}
           style={{
             cursor: 'pointer',

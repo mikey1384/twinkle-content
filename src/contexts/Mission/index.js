@@ -10,7 +10,7 @@ export const initialMissionState = {
   missionObj: {},
   myAttempts: {},
   prevUserId: null,
-  selectedMissionsTab: '',
+  selectedMissionsTab: 'missions',
   selectedMissionListTab: ''
 };
 

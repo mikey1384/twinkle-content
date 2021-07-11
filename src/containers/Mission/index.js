@@ -61,25 +61,36 @@ export default function Mission() {
           />
         )}
         <div style={{ width: '100%', display: 'flex' }}>
-          <Main
+          <div
             className={css`
-              padding-top: 3rem;
-              padding-bottom: 3rem;
-              display: flex;
-              width: 100%;
+              width: CALC(100% - 15rem);
               @media (max-width: ${mobileMaxWidth}) {
-                padding-top: 0;
-                padding-bottom: 2rem;
+                width: 100%;
               }
             `}
-            isCreator={isCreator}
-            loading={loading}
-            userId={userId}
-            currentMissionId={currentMissionId}
-            missions={missions}
-            missionObj={missionObj}
-            myAttempts={myAttempts}
-          />
+          >
+            {selectedMissionsTab === 'missions' && (
+              <Main
+                className={css`
+                  padding-top: 3rem;
+                  padding-bottom: 3rem;
+                  display: flex;
+                  width: 100%;
+                  @media (max-width: ${mobileMaxWidth}) {
+                    padding-top: 0;
+                    padding-bottom: 2rem;
+                  }
+                `}
+                isCreator={isCreator}
+                loading={loading}
+                userId={userId}
+                currentMissionId={currentMissionId}
+                missions={missions}
+                missionObj={missionObj}
+                myAttempts={myAttempts}
+              />
+            )}
+          </div>
           {isCreator && (
             <RightMenu
               className="desktop"
