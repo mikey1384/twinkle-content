@@ -3,6 +3,7 @@ import Cover from './Cover';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Main from './Main';
 import RightMenu from './RightMenu';
+import Management from './Management';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useMissionContext } from 'contexts';
 import { mobileMaxWidth } from 'constants/css';
@@ -37,6 +38,7 @@ export default function Mission() {
         let displayedMissions = missions;
         if (!isCreator) {
           displayedMissions = missions.filter((mission) => !mission.isHidden);
+          onSetSelectedMissionsTab('missions');
         }
         setLoading(false);
         onLoadMissionList({
@@ -63,7 +65,7 @@ export default function Mission() {
         <div style={{ width: '100%', display: 'flex' }}>
           <div
             className={css`
-              width: CALC(100% - 15rem);
+              width: ${isCreator ? 'CALC(100% - 15rem)' : '100%'};
               @media (max-width: ${mobileMaxWidth}) {
                 width: 100%;
               }
@@ -90,6 +92,7 @@ export default function Mission() {
                 myAttempts={myAttempts}
               />
             )}
+            {selectedMissionsTab === 'management' && <Management />}
           </div>
           {isCreator && (
             <RightMenu
