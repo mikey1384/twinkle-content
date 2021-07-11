@@ -3,17 +3,20 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import { css } from '@emotion/css';
 import { Color } from 'constants/css';
-import { useLocation, useHistory } from 'react-router-dom';
 
 RightMenu.propTypes = {
   className: PropTypes.string,
-  missionType: PropTypes.string,
+  selectedTab: PropTypes.string,
+  onSelectTab: PropTypes.func,
   style: PropTypes.object
 };
 
-export default function RightMenu({ className, missionType, style }) {
-  const history = useHistory();
-  const location = useLocation();
+export default function RightMenu({
+  className,
+  selectedTab,
+  onSelectTab,
+  style
+}) {
   return (
     <div
       className={className}
@@ -47,8 +50,8 @@ export default function RightMenu({ className, missionType, style }) {
         }}
       >
         <nav
-          className={location.pathname !== `/missions/manage` ? 'active' : ''}
-          onClick={() => history.push(`/missions`)}
+          className={!selectedTab || selectedTab === 'missions' ? 'active' : ''}
+          onClick={() => onSelectTab('missions')}
           style={{
             cursor: 'pointer',
             display: 'flex',
@@ -60,12 +63,8 @@ export default function RightMenu({ className, missionType, style }) {
           <span style={{ marginLeft: '1.5rem' }}>Missions</span>
         </nav>
         <nav
-          onClick={() => history.push(`/missions/${missionType}/manage`)}
-          className={
-            location.pathname === `/missions/${missionType}/manage`
-              ? 'active'
-              : ''
-          }
+          onClick={() => onSelectTab('management')}
+          className={selectedTab === 'management' ? 'active' : ''}
           style={{
             cursor: 'pointer',
             display: 'flex',

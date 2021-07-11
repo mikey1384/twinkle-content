@@ -15,8 +15,8 @@ export default function Mission() {
     requestHelpers: { loadMissionList }
   } = useAppContext();
   const {
-    state: { missions, missionObj, myAttempts },
-    actions: { onLoadMissionList }
+    state: { missions, missionObj, myAttempts, selectedMissionsTab },
+    actions: { onLoadMissionList, onSetSelectedMissionsTab }
   } = useMissionContext();
   const mounted = useRef(true);
 
@@ -84,6 +84,8 @@ export default function Mission() {
             <RightMenu
               className="desktop"
               style={{ marginTop: '3rem', width: '12rem', marginRight: '3rem' }}
+              selectedTab={selectedMissionsTab}
+              onSelectTab={onSetSelectedMissionsTab}
             />
           )}
         </div>

@@ -22,6 +22,12 @@ export default function MissionActions(dispatch) {
         hash
       });
     },
+    onSetSelectedMissionsTab(selectedTab) {
+      return dispatch({
+        type: 'SET_SELECTED_MISSIONS_TAB',
+        selectedTab
+      });
+    },
     onSetSelectedMissionListTab(selectedTab) {
       return dispatch({
         type: 'SET_SELECTED_MISSION_LIST_TAB',
