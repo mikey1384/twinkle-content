@@ -17,7 +17,6 @@ export default function RightMenu({
   onSelectTab,
   style
 }) {
-  console.log(selectedTab);
   return (
     <div
       className={className}

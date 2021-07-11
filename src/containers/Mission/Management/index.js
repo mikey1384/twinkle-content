@@ -21,7 +21,15 @@ export default function Management({
   onSetManagementObj
 }) {
   return (
-    <ErrorBoundary style={{ width: '100%', marginBottom: '10rem' }}>
+    <ErrorBoundary
+      style={{
+        width: 'CALC(100% - 12rem)',
+        marginLeft: '6rem',
+        marginRight: '6rem',
+        marginTop: '1rem',
+        marginBottom: '10rem'
+      }}
+    >
       <Attempts
         attemptObj={attemptObj}
         managementObj={managementObj}

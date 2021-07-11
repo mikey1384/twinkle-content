@@ -50,7 +50,7 @@ export default function Attempts({
       setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [selectedTab]);
   return (
     <div style={{ width: '100%' }}>
       <FilterBar
@@ -135,8 +135,11 @@ export default function Attempts({
       activeTab: selectedTab,
       lastAttemptId: currentAttemptIds[currentAttemptIds.length - 1]
     });
-    onSetManagementObj({ [selectedTab]: attemptIds, loadMoreButton });
     onSetAttemptObj(attemptObj);
+    onSetManagementObj({
+      [selectedTab]: [...currentAttemptIds, ...attemptIds],
+      loadMoreButton
+    });
     setLoadingMore(false);
   }
 }
