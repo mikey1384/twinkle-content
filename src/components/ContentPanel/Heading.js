@@ -107,8 +107,11 @@ function Heading({
             <ContentLink
               content={{
                 id: rootObj.id,
-                title: `mission: ${rootObj.title}`,
-                missionType: rootObj.missionType
+                title: `${rootObj.isTask ? 'task' : 'mission'}: ${
+                  rootObj.title
+                }`,
+                missionType: rootObj.missionType,
+                rootMissionType: rootObj.rootMission?.missionType
               }}
               contentType="mission"
               style={{ color: Color.orange() }}

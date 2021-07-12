@@ -11,6 +11,7 @@ ContentLink.propTypes = {
     content: PropTypes.string,
     id: PropTypes.number,
     missionType: PropTypes.string,
+    rootMissionType: PropTypes.string,
     title: PropTypes.string,
     username: PropTypes.string
   }).isRequired,
@@ -20,7 +21,15 @@ ContentLink.propTypes = {
 
 export default function ContentLink({
   style,
-  content: { byUser, id, content, missionType, title, username },
+  content: {
+    byUser,
+    id,
+    content,
+    missionType,
+    rootMissionType,
+    title,
+    username
+  },
   contentType
 }) {
   const { profileTheme } = useMyState();
@@ -45,7 +54,7 @@ export default function ContentLink({
         contentType === 'user'
           ? username
           : contentType === 'mission'
-          ? missionType
+          ? rootMissionType || missionType
           : id
       }`}
     >

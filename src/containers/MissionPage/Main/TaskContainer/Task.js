@@ -145,6 +145,7 @@ export default function Task({
         <PendingStatus style={{ marginTop: '7rem' }} />
       ) : approvedStatusShown ? (
         <ApprovedStatus
+          isTask
           missionId={taskId}
           xpReward={xpReward}
           coinReward={coinReward}

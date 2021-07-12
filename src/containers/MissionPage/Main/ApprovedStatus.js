@@ -11,6 +11,7 @@ import { timeSince } from 'helpers/timeStampHelpers';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 
 ApprovedStatus.propTypes = {
+  isTask: PropTypes.bool,
   xpReward: PropTypes.number,
   coinReward: PropTypes.number,
   missionId: PropTypes.number.isRequired,
@@ -19,6 +20,7 @@ ApprovedStatus.propTypes = {
 };
 
 export default function ApprovedStatus({
+  isTask,
   xpReward,
   coinReward,
   missionId,
@@ -96,7 +98,9 @@ export default function ApprovedStatus({
         }}
       >
         {myAttempt.status === 'pass'
-          ? 'Mission Accomplished'
+          ? isTask
+            ? 'Task Complete'
+            : 'Mission Accomplished'
           : 'Mission Failed...'}
       </div>
       {rewardDetails}

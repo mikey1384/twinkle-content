@@ -63,7 +63,8 @@ export default function MissionContent({ uploader, rootObj: mission }) {
         content={{
           id: mission.id,
           missionType: mission.missionType,
-          title: mission.title
+          title: mission.title,
+          rootMissionType: mission.rootMission?.missionType
         }}
         contentType="mission"
         style={{ fontWeight: 'bold', fontSize: '2.2rem', color: Color.black() }}
@@ -80,7 +81,7 @@ export default function MissionContent({ uploader, rootObj: mission }) {
           color: '#fff'
         }}
       >
-        Mission Accomplished
+        {mission.isTask ? 'Task Complete' : 'Mission Accomplished'}
       </div>
       {rewardDetails}
     </div>
