@@ -27,6 +27,7 @@ export default function NotiItem({
     rewardRootType,
     rewardRootMissionType,
     isNotification,
+    isTask,
     rootMissionType
   }
 }) {
@@ -143,7 +144,11 @@ export default function NotiItem({
                 content={{
                   id: rewardRootId,
                   title: `this ${
-                    rewardRootType === 'pass' ? 'mission' : rewardRootType
+                    rewardRootType === 'pass'
+                      ? isTask
+                        ? 'task'
+                        : 'mission'
+                      : rewardRootType
                   }`,
                   missionType: rewardRootMissionType
                 }}

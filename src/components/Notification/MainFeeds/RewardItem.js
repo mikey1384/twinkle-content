@@ -14,6 +14,7 @@ RewardItem.propTypes = {
 export default function RewardItem({
   reward: {
     id,
+    isTask,
     contentId,
     contentType,
     rootId,
@@ -88,7 +89,9 @@ export default function RewardItem({
           style={{ color: Color.green() }}
           content={{
             id: rootId,
-            title: `this ${rootType === 'pass' ? 'mission' : rootType}`,
+            title: `this ${
+              rootType === 'pass' ? (isTask ? 'task' : 'mission') : rootType
+            }`,
             missionType: rootMissionType
           }}
           contentType={rootType === 'pass' ? 'mission' : rootType}
