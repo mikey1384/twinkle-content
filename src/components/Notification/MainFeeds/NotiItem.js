@@ -26,7 +26,8 @@ export default function NotiItem({
     rewardRootId,
     rewardRootType,
     rewardRootMissionType,
-    isNotification
+    isNotification,
+    rootMissionType
   }
 }) {
   const { userId } = useMyState();
@@ -283,7 +284,7 @@ export default function NotiItem({
               contentType="mission"
               content={{
                 id: targetObj.id,
-                missionType: targetObj.missionType,
+                missionType: rootMissionType || targetObj.missionType,
                 title: `(${truncateText({
                   text: targetObj.content,
                   limit: 100
