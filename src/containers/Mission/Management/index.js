@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Attempts from './Attempts';
 import ErrorBoundary from 'components/ErrorBoundary';
+import { css } from '@emotion/css';
+import { mobileMaxWidth } from 'constants/css';
 
 Management.propTypes = {
   attemptObj: PropTypes.object,
@@ -22,13 +24,18 @@ export default function Management({
 }) {
   return (
     <ErrorBoundary
-      style={{
-        width: 'CALC(100% - 12rem)',
-        marginLeft: '6rem',
-        marginRight: '6rem',
-        marginTop: '1rem',
-        marginBottom: '10rem'
-      }}
+      className={css`
+        width: CALC(100% - 12rem);
+        margin-left: 6rem;
+        margin-right: 6rem;
+        margin-top: 1rem;
+        margin-bottom: 10rem;
+        @media (max-width: ${mobileMaxWidth}) {
+          width: 100%;
+          margin-left: 0;
+          margin-right: 0;
+        }
+      `}
     >
       <Attempts
         attemptObj={attemptObj}

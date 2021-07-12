@@ -8,6 +8,7 @@ import { useMyState } from 'helpers/hooks';
 import { useAppContext, useMissionContext } from 'contexts';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import FilterBar from 'components/FilterBar';
 
 export default function Mission() {
   const [loading, setLoading] = useState(false);
@@ -85,6 +86,30 @@ export default function Mission() {
               }
             `}
           >
+            {isCreator && (
+              <FilterBar
+                className="mobile"
+                style={{
+                  fontSize: '1.6rem',
+                  height: '5rem'
+                }}
+              >
+                <nav
+                  className={selectedMissionsTab === 'missions' ? 'active' : ''}
+                  onClick={() => onSetSelectedMissionsTab('missions')}
+                >
+                  Missions
+                </nav>
+                <nav
+                  className={
+                    selectedMissionsTab === 'management' ? 'active' : ''
+                  }
+                  onClick={() => onSetSelectedMissionsTab('management')}
+                >
+                  Manage
+                </nav>
+              </FilterBar>
+            )}
             {selectedMissionsTab === 'missions' && (
               <Main
                 className={css`
