@@ -38,34 +38,27 @@ export default function MissionItem({
   const statusShown = useMemo(() => {
     if (!showStatus) return false;
     if (mission.isMultiMission) {
-      return mission.numPassedTasks > 0;
+      const { numPassedTasks } = handleCheckMultiMissionPassStatus(mission);
+      return numPassedTasks > 0;
     }
     return (
       myAttempts[mission.id]?.status &&
       myAttempts[mission.id]?.status !== 'pending'
     );
-  }, [
-    mission.id,
-    mission.isMultiMission,
-    mission.numPassedTasks,
-    myAttempts,
-    showStatus
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mission, myAttempts, showStatus]);
   const passStatus = useMemo(() => {
     if (mission.isMultiMission) {
-      if (mission.numPassedTasks === mission.numTasks) {
+      const { numTasks, numPassedTasks } =
+        handleCheckMultiMissionPassStatus(mission);
+      if (numTasks > 0 && numPassedTasks === numTasks) {
         return 'passed';
       }
-      return `${mission.numPassedTasks}/${mission.numTasks} passed`;
+      return `${numPassedTasks}/${numTasks} passed`;
     }
     return `${myAttempts[mission.id]?.status}ed`;
-  }, [
-    mission.id,
-    mission.isMultiMission,
-    mission.numPassedTasks,
-    mission.numTasks,
-    myAttempts
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mission, myAttempts]);
 
   return (
     <div
@@ -178,6 +171,20 @@ export default function MissionItem({
       </div>
     </div>
   );
+
+  function handleCheckMultiMissionPassStatus(mission) {
+    let numTasks = 0;
+    let numPassedTasks = 0;
+    for (let subMission of mission.subMissions) {
+      for (let task of subMission.tasks) {
+        numTasks++;
+        if (myAttempts[task.id]?.status === 'pass') {
+          numPassedTasks++;
+        }
+      }
+    }
+    return { numTasks, numPassedTasks };
+  }
 
   function handleLinkClick() {
     if (locked) return;
