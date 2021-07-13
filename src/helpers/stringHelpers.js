@@ -126,6 +126,7 @@ export function addAdvancedEmoji(string) {
     .replace(/(\:horror\:)/gi, '😱')
     .replace(/(\:horse\:)/gi, '🐴')
     .replace(/(\:hug\:)/gi, '🤗')
+    .replace(/(\:icecream\:)/gi, '🍦')
     .replace(/(\:infinity\:)/gi, '∞')
     .replace(/(\:japan\:)/gi, '🇯🇵')
     .replace(/(\:korea\:)/gi, '🇰🇷')
