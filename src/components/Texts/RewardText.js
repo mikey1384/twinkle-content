@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import { addCommasToNumber } from 'helpers/stringHelpers';
@@ -24,6 +24,14 @@ export default function RewardText({
   rewardClassName,
   style
 }) {
+  const displayedXpReward = useMemo(
+    () => addCommasToNumber(xpReward),
+    [xpReward]
+  );
+  const displayedCoinReward = useMemo(
+    () => addCommasToNumber(coinReward),
+    [coinReward]
+  );
   return xpReward || coinReward ? (
     <div style={{ ...style, display: 'flex' }}>
       <p
@@ -49,7 +57,7 @@ export default function RewardText({
         {xpReward && (
           <div>
             <span style={{ fontWeight: 'bold', color: Color.logoGreen() }}>
-              {addCommasToNumber(xpReward)}
+              {displayedXpReward}
             </span>{' '}
             <span style={{ color: Color.gold(), fontWeight: 'bold' }}>XP</span>
             {coinReward && ','}
@@ -63,7 +71,7 @@ export default function RewardText({
               fontWeight: 'bold'
             }}
           >
-            <Icon icon={['far', 'badge-dollar']} /> {coinReward}
+            <Icon icon={['far', 'badge-dollar']} /> {displayedCoinReward}
           </div>
         )}
         {checked && (
