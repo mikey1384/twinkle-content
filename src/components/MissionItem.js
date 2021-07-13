@@ -7,6 +7,7 @@ import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { useHistory } from 'react-router-dom';
 import { useAppContext, useMissionContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
+import { checkMultiMissionPassStatus } from 'helpers/userDataHelpers';
 
 MissionItem.propTypes = {
   isRepeatable: PropTypes.bool,
@@ -38,7 +39,10 @@ export default function MissionItem({
   const statusShown = useMemo(() => {
     if (!showStatus) return false;
     if (mission.isMultiMission) {
-      const { numPassedTasks } = handleCheckMultiMissionPassStatus(mission);
+      const { numPassedTasks } = checkMultiMissionPassStatus({
+        mission,
+        myAttempts
+      });
       return numPassedTasks > 0;
     }
     return (
@@ -49,8 +53,10 @@ export default function MissionItem({
   }, [mission, myAttempts, showStatus]);
   const passStatus = useMemo(() => {
     if (mission.isMultiMission) {
-      const { numTasks, numPassedTasks } =
-        handleCheckMultiMissionPassStatus(mission);
+      const { numTasks, numPassedTasks } = checkMultiMissionPassStatus({
+        mission,
+        myAttempts
+      });
       if (numTasks > 0 && numPassedTasks === numTasks) {
         return 'passed';
       }
@@ -171,20 +177,6 @@ export default function MissionItem({
       </div>
     </div>
   );
-
-  function handleCheckMultiMissionPassStatus(mission) {
-    let numTasks = 0;
-    let numPassedTasks = 0;
-    for (let subMission of mission.subMissions) {
-      for (let task of subMission.tasks) {
-        numTasks++;
-        if (myAttempts[task.id]?.status === 'pass') {
-          numPassedTasks++;
-        }
-      }
-    }
-    return { numTasks, numPassedTasks };
-  }
 
   function handleLinkClick() {
     if (locked) return;

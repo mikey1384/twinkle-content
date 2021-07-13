@@ -6,6 +6,7 @@ import FilterBar from 'components/FilterBar';
 import Loading from 'components/Loading';
 import { useMissionContext } from 'contexts';
 import { mobileMaxWidth } from 'constants/css';
+import { checkMultiMissionPassStatus } from 'helpers/userDataHelpers';
 import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
 
@@ -29,13 +30,15 @@ export default function MissionList({
   const { userId } = useMyState();
   const ongoingMissions = useMemo(() => {
     return missions.filter(
-      (missionId) => myAttempts[missionId]?.status !== 'pass'
+      (missionId) => !returnPassStatus({ missionId, myAttempts })
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [missions, myAttempts]);
   const completedMissions = useMemo(() => {
-    return missions.filter(
-      (missionId) => myAttempts[missionId]?.status === 'pass'
+    return missions.filter((missionId) =>
+      returnPassStatus({ missionId, myAttempts })
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [missions, myAttempts]);
   useEffect(() => {
     if (selectedMissionListTab) {
@@ -136,4 +139,16 @@ export default function MissionList({
       </div>
     </ErrorBoundary>
   );
+
+  function returnPassStatus({ missionId, myAttempts }) {
+    const mission = missionObj[missionId];
+    if (mission.isMultiMission) {
+      const { numTasks, numPassedTasks } = checkMultiMissionPassStatus({
+        mission,
+        myAttempts
+      });
+      return numTasks > 0 && numTasks === numPassedTasks;
+    }
+    return myAttempts[missionId]?.status === 'pass';
+  }
 }

@@ -1,9 +1,13 @@
-import request from 'axios';
-import { auth } from './requestHelpers';
-import URL from 'constants/URL';
-
-const API_URL = `${URL}/user`;
-
-export function recordUserAction({ action, ...rest }) {
-  return request.post(`${API_URL}/action/${action}`, rest, auth());
+export function checkMultiMissionPassStatus({ mission, myAttempts }) {
+  let numTasks = 0;
+  let numPassedTasks = 0;
+  for (let subMission of mission.subMissions) {
+    for (let task of subMission.tasks) {
+      numTasks++;
+      if (myAttempts[task.id]?.status === 'pass') {
+        numPassedTasks++;
+      }
+    }
+  }
+  return { numTasks, numPassedTasks };
 }
