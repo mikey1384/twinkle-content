@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import RewardText from 'components/Texts/RewardText';
 import { gifTable } from 'constants/defaultValues';
@@ -35,6 +35,37 @@ export default function MissionItem({
       actions: { onOpenSigninModal }
     }
   } = useAppContext();
+  const statusShown = useMemo(() => {
+    if (!showStatus) return false;
+    if (mission.isMultiMission) {
+      return mission.numPassedTasks > 0;
+    }
+    return (
+      myAttempts[mission.id]?.status &&
+      myAttempts[mission.id]?.status !== 'pending'
+    );
+  }, [
+    mission.id,
+    mission.isMultiMission,
+    mission.numPassedTasks,
+    myAttempts,
+    showStatus
+  ]);
+  const passStatus = useMemo(() => {
+    if (mission.isMultiMission) {
+      if (mission.numPassedTasks === mission.numTasks) {
+        return 'passed';
+      }
+      return `${mission.numPassedTasks}/${mission.numTasks} passed`;
+    }
+    return `${myAttempts[mission.id]?.status}ed`;
+  }, [
+    mission.id,
+    mission.isMultiMission,
+    mission.numPassedTasks,
+    mission.numTasks,
+    myAttempts
+  ]);
 
   return (
     <div
@@ -122,27 +153,26 @@ export default function MissionItem({
                 isRepeatable ? mission.repeatXpReward : mission.xpReward
               }
             />
-            {myAttempts[mission.id]?.status &&
-              myAttempts[mission.id]?.status !== 'pending' &&
-              showStatus && (
-                <div
-                  className={css`
-                    font-size: 1.3rem;
-                    @media (max-width: ${mobileMaxWidth}) {
-                      font-size: 1.1rem;
-                    }
-                  `}
-                  style={{
-                    fontWeight: 'bold',
-                    color:
-                      myAttempts[mission.id]?.status === 'pass'
-                        ? Color.green()
-                        : Color.rose()
-                  }}
-                >
-                  {myAttempts[mission.id]?.status}ed
-                </div>
-              )}
+            {statusShown && (
+              <div
+                className={css`
+                  font-size: 1.3rem;
+                  @media (max-width: ${mobileMaxWidth}) {
+                    font-size: 1.1rem;
+                  }
+                `}
+                style={{
+                  fontWeight: 'bold',
+                  color:
+                    myAttempts[mission.id]?.status === 'pass' ||
+                    mission.isMultiMission
+                      ? Color.green()
+                      : Color.rose()
+                }}
+              >
+                {passStatus}
+              </div>
+            )}
           </div>
         </div>
       </div>
