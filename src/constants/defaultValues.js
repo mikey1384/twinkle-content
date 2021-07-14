@@ -32,13 +32,6 @@ export const TURN_USERNAME = process.env.REACT_APP_TURN_USERNAME;
 export const TURN_PASSWORD = process.env.REACT_APP_TURN_PASSWORD;
 export const REWARD_VALUE = 200;
 export const mb = 1000;
-export const gifTable = {
-  1: `${cloudFrontURL}/missions/copy-and-paste/thumb.gif`,
-  2: `${cloudFrontURL}/missions/take-a-screenshot/thumb.gif`,
-  3: `${cloudFrontURL}/missions/how-to-google/thumb.gif`,
-  4: `${cloudFrontURL}/missions/grammar/thumb.gif`,
-  5: `${cloudFrontURL}/missions/twinkle-store/thumb.gif`
-};
 export const priceTable = {
   chatSubject: 20,
   chatTheme: 30,
@@ -224,6 +217,9 @@ export const rewardReasons = {
     message: 'for participating in a group project or event'
   }
 };
+
+export const returnMissionThumb = (missionType) =>
+  `${cloudFrontURL}/missions/${missionType}/thumb.gif`;
 
 export const returnMaxRewards = ({ rewardLevel }) => {
   let maxRewards = 5;

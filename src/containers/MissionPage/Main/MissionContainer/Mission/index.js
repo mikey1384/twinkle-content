@@ -8,7 +8,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import ApprovedStatus from '../../ApprovedStatus';
 import PendingStatus from '../../PendingStatus';
 import { panel } from '../../../Styles';
-import { gifTable } from 'constants/defaultValues';
+import { returnMissionThumb } from 'constants/defaultValues';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useViewContext, useAppContext, useMissionContext } from 'contexts';
@@ -48,15 +48,17 @@ export default function Mission({
   const {
     state: { pageVisible }
   } = useViewContext();
-
   const myAttempt = useMemo(
     () => myAttempts[missionId],
     [missionId, myAttempts]
   );
-
   const isRepeating = useMemo(
     () => myAttempt?.status === 'pass' && !!mission.repeatable,
     [mission.repeatable, myAttempt?.status]
+  );
+  const missionThumb = useMemo(
+    () => returnMissionThumb(mission.missionType),
+    [mission.missionType]
   );
 
   useEffect(() => {
@@ -123,7 +125,7 @@ export default function Mission({
           </p>
         </div>
         <div style={{ width: '20%' }}>
-          <img style={{ width: '100%' }} src={gifTable[missionId]} />
+          <img style={{ width: '100%' }} src={missionThumb} />
         </div>
       </div>
       <LongText style={{ fontSize: '1.5rem' }}>{description}</LongText>

@@ -1,13 +1,13 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import RewardText from 'components/Texts/RewardText';
-import { gifTable } from 'constants/defaultValues';
 import { css } from '@emotion/css';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { useHistory } from 'react-router-dom';
 import { useAppContext, useMissionContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { checkMultiMissionPassStatus } from 'helpers/userDataHelpers';
+import { returnMissionThumb } from 'constants/defaultValues';
 
 MissionItem.propTypes = {
   isRepeatable: PropTypes.bool,
@@ -65,6 +65,10 @@ export default function MissionItem({
     return `${myAttempts[mission.id]?.status}ed`;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mission, myAttempts]);
+  const missionThumb = useMemo(
+    () => returnMissionThumb(mission.missionType),
+    [mission.missionType]
+  );
 
   return (
     <div
@@ -96,10 +100,7 @@ export default function MissionItem({
         {mission.title}
       </p>
       <div style={{ marginTop: '1rem', display: 'flex' }}>
-        <img
-          src={gifTable[mission.id]}
-          style={{ width: '10rem', height: '6rem' }}
-        />
+        <img src={missionThumb} style={{ width: '10rem', height: '6rem' }} />
         <div
           style={{
             marginLeft: '1rem',

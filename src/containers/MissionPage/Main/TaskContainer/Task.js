@@ -8,8 +8,8 @@ import ApprovedStatus from '../ApprovedStatus';
 import PendingStatus from '../PendingStatus';
 import { useMissionContext } from 'contexts';
 import { mobileMaxWidth } from 'constants/css';
+import { returnMissionThumb } from 'constants/defaultValues';
 import { css } from '@emotion/css';
-import { gifTable } from 'constants/defaultValues';
 import { panel } from '../../Styles';
 import GoToNextTask from './GoToNextTask';
 
@@ -48,13 +48,16 @@ export default function Task({
       (myAttempt?.status === 'fail' && !myAttempt?.tryingAgain),
     [myAttempt?.status, myAttempt?.tryingAgain]
   );
-
   const missionModuleShown = useMemo(
     () =>
       !!retryable ||
       !myAttempt?.status ||
       (myAttempt?.status === 'fail' && myAttempt?.tryingAgain),
     [myAttempt?.status, myAttempt?.tryingAgain, retryable]
+  );
+  const taskThumb = useMemo(
+    () => returnMissionThumb(task.missionType),
+    [task.missionType]
   );
 
   return (
@@ -94,7 +97,7 @@ export default function Task({
           </p>
         </div>
         <div style={{ width: '20%' }}>
-          <img style={{ width: '100%' }} src={gifTable[taskId]} />
+          <img style={{ width: '100%' }} src={taskThumb} />
         </div>
       </div>
       <LongText style={{ fontSize: '1.5rem' }}>{description}</LongText>
