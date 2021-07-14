@@ -125,7 +125,10 @@ export default function Mission({
           </p>
         </div>
         <div style={{ width: '20%' }}>
-          <img style={{ width: '100%' }} src={missionThumb} />
+          <img
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            src={missionThumb}
+          />
         </div>
       </div>
       <LongText style={{ fontSize: '1.5rem' }}>{description}</LongText>

@@ -75,7 +75,7 @@ export default function Task({
           width: '100%'
         }}
       >
-        <div style={{ width: '80%' }}>
+        <div style={{ width: '80%', height: '100%' }}>
           <h1
             className={css`
               @media (max-width: ${mobileMaxWidth}) {
@@ -96,8 +96,11 @@ export default function Task({
             {subtitle}
           </p>
         </div>
-        <div style={{ width: '20%' }}>
-          <img style={{ width: '100%' }} src={taskThumb} />
+        <div style={{ width: '20%', height: '100%' }}>
+          <img
+            style={{ width: '100%', height: '100%', aspectFit: 'cover' }}
+            src={taskThumb}
+          />
         </div>
       </div>
       <LongText style={{ fontSize: '1.5rem' }}>{description}</LongText>
