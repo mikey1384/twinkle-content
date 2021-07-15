@@ -435,6 +435,19 @@ export default function ChatReducer(state, action) {
         ...initialChatState,
         allFavoriteChannelIds: action.data.allFavoriteChannelIds,
         chatType: state.chatType || action.data.chatType,
+        vocabActivities:
+          state.chatType === 'vocabulary'
+            ? state.vocabActivities
+            : action.data.vocabActivities,
+        vocabActivitiesLoadMoreButton:
+          state.chatType === 'vocabulary'
+            ? state.vocabActivitiesLoadMoreButton
+            : vocabActivitiesLoadMoreButton,
+        wordsObj: {
+          ...state.wordsObj,
+          ...action.data.wordsObj
+        },
+        wordCollectors: action.data.wordCollectors,
         loaded: true,
         classChannelIds: action.data.classChannelIds,
         favoriteChannelIds: action.data.favoriteChannelIds,
@@ -450,8 +463,6 @@ export default function ChatReducer(state, action) {
         favoriteLoadMoreButton,
         homeLoadMoreButton,
         customChannelNames: action.data.customChannelNames,
-        vocabActivities: action.data.vocabActivities,
-        vocabActivitiesLoadMoreButton,
         messagesLoadMoreButton,
         messages: uploadStatusMessages
           ? [...action.data.messages, ...uploadStatusMessages]
@@ -460,12 +471,7 @@ export default function ChatReducer(state, action) {
         numUnreads: Math.max(state.numUnreads - originalNumUnreads, 0),
         recentChessMessage: undefined,
         reconnecting: false,
-        selectedChannelId: action.data.currentChannelId,
-        wordsObj: {
-          ...state.wordsObj,
-          ...action.data.wordsObj
-        },
-        wordCollectors: action.data.wordCollectors
+        selectedChannelId: action.data.currentChannelId
       };
     }
     case 'INVITE_USERS_TO_CHANNEL':
