@@ -71,7 +71,7 @@ function RightMenu({
       `}
     >
       {chatType === 'vocabulary' && <VocabInfo />}
-      {!chatType && (
+      {(!chatType || chatType === 'default') && (
         <ChatInfo
           channelName={channelName}
           channelOnCall={channelOnCall}
