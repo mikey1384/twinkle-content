@@ -80,14 +80,8 @@ export default function Body({
     requestHelpers: { deleteContent, loadComments }
   } = useAppContext();
 
-  const {
-    authLevel,
-    canDelete,
-    canEdit,
-    canReward,
-    twinkleCoins,
-    userId
-  } = useMyState();
+  const { authLevel, canDelete, canEdit, canReward, twinkleCoins, userId } =
+    useMyState();
 
   const {
     actions: { onSetIsEditing, onSetXpRewardInterfaceShown }
@@ -133,10 +127,8 @@ export default function Body({
   const [userListModalShown, setUserListModalShown] = useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   const [loadingComments, setLoadingComments] = useState(false);
-  const [
-    recommendationInterfaceShown,
-    setRecommendationInterfaceShown
-  ] = useState(false);
+  const [recommendationInterfaceShown, setRecommendationInterfaceShown] =
+    useState(false);
   const CommentInputAreaRef = useRef(null);
   const RewardInterfaceRef = useRef(null);
 
@@ -162,7 +154,7 @@ export default function Body({
     );
     return contentType === 'subject' && (secretAnswer || secretAttachment)
       ? contentSecretHidden
-      : targetObj.subject?.secretAnswer
+      : targetObj.subject?.secretAnswer || targetObj.subject?.secretAttachment
       ? targetSubjectSecretHidden
       : !!rootObj?.secretAnswer && rootObjSecretHidden;
   }, [
@@ -175,6 +167,7 @@ export default function Body({
     secretShown,
     subjectSecretShown,
     targetObj.subject?.secretAnswer,
+    targetObj.subject?.secretAttachment,
     targetObj.subject?.uploader?.id,
     uploader.id,
     userId
