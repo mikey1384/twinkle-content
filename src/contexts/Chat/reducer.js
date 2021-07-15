@@ -430,12 +430,11 @@ export default function ChatReducer(state, action) {
         vocabActivitiesLoadMoreButton = true;
       }
       action.data.vocabActivities?.reverse();
-
       return {
         ...state,
         ...initialChatState,
         allFavoriteChannelIds: action.data.allFavoriteChannelIds,
-        chatType: action.data.chatType,
+        chatType: state.chatType || action.data.chatType,
         loaded: true,
         classChannelIds: action.data.classChannelIds,
         favoriteChannelIds: action.data.favoriteChannelIds,
