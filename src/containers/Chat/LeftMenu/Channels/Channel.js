@@ -31,11 +31,10 @@ function Channel({
     () => customChannelNames[id] || channelName,
     [channelName, customChannelNames, id]
   );
-  const selected = useMemo(() => !chatType && id === selectedChannelId, [
-    chatType,
-    id,
-    selectedChannelId
-  ]);
+  const selected = useMemo(
+    () => (!chatType || chatType === 'default') && id === selectedChannelId,
+    [chatType, id, selectedChannelId]
+  );
   const PreviewMessage = useMemo(
     () => renderPreviewMessage(lastMessage || {}),
     // eslint-disable-next-line react-hooks/exhaustive-deps
