@@ -32,7 +32,8 @@ export default function Task({
     objective,
     xpReward,
     coinReward,
-    retryable
+    retryable,
+    missionType
   },
   onSetMissionState,
   style,
@@ -56,8 +57,8 @@ export default function Task({
     [myAttempt?.status, myAttempt?.tryingAgain, retryable]
   );
   const taskThumb = useMemo(
-    () => returnMissionThumb(task.missionType),
-    [task.missionType]
+    () => (missionType ? returnMissionThumb(missionType) : null),
+    [missionType]
   );
 
   return (
@@ -75,7 +76,7 @@ export default function Task({
           width: '100%'
         }}
       >
-        <div style={{ width: '80%', height: '100%' }}>
+        <div style={{ width: 'CALC(80% - 1rem)', height: '100%' }}>
           <h1
             className={css`
               @media (max-width: ${mobileMaxWidth}) {
@@ -97,10 +98,12 @@ export default function Task({
           </p>
         </div>
         <div style={{ width: '20%', height: '100%' }}>
-          <img
-            style={{ width: '100%', height: '100%', aspectFit: 'cover' }}
-            src={taskThumb}
-          />
+          {taskThumb && (
+            <img
+              style={{ width: '100%', height: '100%', aspectFit: 'cover' }}
+              src={taskThumb}
+            />
+          )}
         </div>
       </div>
       <LongText style={{ fontSize: '1.5rem' }}>{description}</LongText>
