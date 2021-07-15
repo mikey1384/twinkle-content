@@ -149,7 +149,7 @@ export default function ChatReducer(state, action) {
       const { channelId } = action.data.message;
       return {
         ...state,
-        chatType: null,
+        chatType: 'default',
         subject: {},
         homeChannelIds: [channelId].concat(state.homeChannelIds),
         favoriteChannelIds: [channelId].concat(state.favoriteChannelIds),
@@ -339,7 +339,7 @@ export default function ChatReducer(state, action) {
     case 'ENTER_EMPTY_CHAT':
       return {
         ...state,
-        chatType: null,
+        chatType: 'default',
         recentChessMessage: undefined,
         subject: {},
         selectedChannelId: 0,
@@ -702,7 +702,7 @@ export default function ChatReducer(state, action) {
       return {
         ...state,
         selectedChatTab: 'home',
-        chatType: null,
+        chatType: 'default',
         loaded: true,
         recentChessMessage: undefined,
         subject: {},
@@ -726,7 +726,7 @@ export default function ChatReducer(state, action) {
     case 'OPEN_NEW_TAB':
       return {
         ...state,
-        chatType: null,
+        chatType: 'default',
         recentChessMessage: undefined,
         subject: {},
         homeChannelIds: [
@@ -1307,7 +1307,7 @@ export default function ChatReducer(state, action) {
     case 'UPDATE_SELECTED_CHANNEL_ID':
       return {
         ...state,
-        chatType: null,
+        chatType: 'default',
         channelLoading: true,
         messages: [],
         messagesLoaded: false,
