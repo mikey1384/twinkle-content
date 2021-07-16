@@ -5,6 +5,7 @@ import Slide from './Slide';
 import Loading from 'components/Loading';
 import BottomInterface from './BottomInterface';
 import Button from 'components/Button';
+import Icon from 'components/Icon';
 import { useAppContext, useInteractiveContext, useViewContext } from 'contexts';
 import { scrollElementToCenter, scrollElementTo } from 'helpers';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
@@ -253,7 +254,8 @@ export default function InteractiveContent({ autoFocus, interactiveId }) {
                 BodyRef.current.scrollTop = 0;
               }}
             >
-              Back to Top
+              <Icon icon="arrow-up" />
+              <span style={{ marginLeft: '0.7rem' }}>Back to Top</span>
             </Button>
           </div>
         )}
