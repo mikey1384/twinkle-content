@@ -48,9 +48,10 @@ export default function Content({
   selectedForkButtonId
 }) {
   const { profileTheme } = useMyState();
-  const descriptionShown = useMemo(() => !stringIsEmpty(description), [
-    description
-  ]);
+  const descriptionShown = useMemo(
+    () => !stringIsEmpty(description),
+    [description]
+  );
   const bodyShown = useMemo(() => {
     return (
       descriptionShown ||
@@ -107,7 +108,7 @@ export default function Content({
             className={css`
               margin-top: ${headingShown && !bodyShown ? '0' : '1rem'};
               text-align: center;
-              font-size: 3rem;
+              font-size: 2.5rem;
               font-weight: bold;
               @media (max-width: ${mobileMaxWidth}) {
                 font-size: 1.7rem;
