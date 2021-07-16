@@ -81,11 +81,11 @@ export default function Editor({
         : {
             1: {
               id: 1,
-              label: 'path 1'
+              label: 'option 1'
             },
             2: {
               id: 2,
-              label: 'path 2'
+              label: 'option 2'
             }
           }
   };

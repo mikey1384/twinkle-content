@@ -133,7 +133,7 @@ export default function InteractiveContent({ autoFocus, interactiveId }) {
       ) {
         scrollElementToCenter(
           SlideRefs.current[
-            slideObj[displayedSlideIds[displayedSlideIds.length - 1]].id
+            slideObj[displayedSlideIds[displayedSlideIds.length - 1]]?.id
           ]
         );
       }
