@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { useAppContext } from 'contexts';
+import { checkMultiMissionPassStatus } from 'helpers/userDataHelpers';
 import ProfilePic from 'components/ProfilePic';
 
 Cover.propTypes = {
@@ -24,10 +25,19 @@ export default function Cover({ missionIds, missionObj, myAttempts }) {
   useEffect(() => {
     let numCompleteCount = 0;
     for (let missionId of missionIds) {
-      if (myAttempts[missionId]?.status === 'pass') {
+      const mission = missionObj[missionId];
+      if (mission.isMultiMission) {
+        const { passed } = checkMultiMissionPassStatus({
+          mission,
+          myAttempts
+        });
+        if (passed) {
+          numCompleteCount++;
+        }
+      } else if (myAttempts[missionId]?.status === 'pass') {
         numCompleteCount++;
       }
-      if (missionObj[missionId].missionType === 'grammar') {
+      if (mission.missionType === 'grammar') {
         handleLoadRanking(missionId, (myRank) => setMyGrammarRank(myRank));
       }
     }

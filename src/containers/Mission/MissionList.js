@@ -143,11 +143,11 @@ export default function MissionList({
   function returnPassStatus({ missionId, myAttempts }) {
     const mission = missionObj[missionId];
     if (mission.isMultiMission) {
-      const { numTasks, numPassedTasks } = checkMultiMissionPassStatus({
+      const { passed } = checkMultiMissionPassStatus({
         mission,
         myAttempts
       });
-      return numTasks > 0 && numTasks === numPassedTasks;
+      return passed;
     }
     return myAttempts[missionId]?.status === 'pass';
   }

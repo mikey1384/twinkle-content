@@ -9,5 +9,9 @@ export function checkMultiMissionPassStatus({ mission, myAttempts }) {
       }
     }
   }
-  return { numTasks, numPassedTasks };
+  return {
+    numTasks,
+    numPassedTasks,
+    passed: numTasks > 0 && numTasks === numPassedTasks
+  };
 }

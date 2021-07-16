@@ -53,11 +53,11 @@ export default function MissionItem({
   }, [mission, myAttempts, showStatus]);
   const passStatus = useMemo(() => {
     if (mission.isMultiMission) {
-      const { numTasks, numPassedTasks } = checkMultiMissionPassStatus({
+      const { numTasks, numPassedTasks, passed } = checkMultiMissionPassStatus({
         mission,
         myAttempts
       });
-      if (numTasks > 0 && numPassedTasks === numTasks) {
+      if (passed) {
         return 'passed';
       }
       return `${numPassedTasks}/${numTasks} passed`;
