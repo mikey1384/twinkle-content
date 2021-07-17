@@ -8,6 +8,7 @@ import SlideListItem from '../../../SlideListItem';
 import { Color } from 'constants/css';
 import { exceedsCharLimit } from 'helpers/stringHelpers';
 import SelectDestinationModal from './SelectDestinationModal';
+import GoBackToMissionItem from './GoBackToMissionItem';
 
 GoBackField.propTypes = {
   style: PropTypes.object,
@@ -35,6 +36,24 @@ export default function GoBackField({
       }),
     [button.label]
   );
+  const Destination = useMemo(() => {
+    if (button.destination === 0) {
+      return (
+        <GoBackToMissionItem
+          style={{ marginTop: '1rem' }}
+          onClick={() => setSelectDestinationModalShown(true)}
+        />
+      );
+    }
+    return (
+      <SlideListItem
+        style={{ marginTop: '1rem' }}
+        slide={slideObj[button.destination || forkedFrom]}
+        interactiveId={interactiveId}
+        onClick={() => setSelectDestinationModalShown(true)}
+      />
+    );
+  }, [button.destination, forkedFrom, interactiveId, slideObj]);
   const [iconSelectionModalShown, setIconSelectionModalShown] = useState(false);
   const [selectDestinationModalShown, setSelectDestinationModalShown] =
     useState(false);
@@ -88,12 +107,7 @@ export default function GoBackField({
         <p
           style={{ fontWeight: 'bold', fontSize: '1.7rem' }}
         >{`Go Back Button's Destination:`}</p>
-        <SlideListItem
-          style={{ marginTop: '1rem' }}
-          slide={slideObj[button.destination || forkedFrom]}
-          interactiveId={interactiveId}
-          onClick={() => setSelectDestinationModalShown(true)}
-        />
+        {Destination}
       </div>
       {selectDestinationModalShown && (
         <SelectDestinationModal
