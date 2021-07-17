@@ -38,6 +38,7 @@ Slide.propTypes = {
   onMoveSlide: PropTypes.func,
   forkButtonIds: PropTypes.array,
   forkButtonsObj: PropTypes.object,
+  onGoBackToMission: PropTypes.func,
   portalButton: PropTypes.object,
   slideId: PropTypes.number,
   slideObj: PropTypes.object,
@@ -69,6 +70,7 @@ export default function Slide({
   onMoveSlide,
   forkButtonIds,
   forkButtonsObj,
+  onGoBackToMission,
   portalButton,
   slideId,
   paths,
@@ -284,9 +286,7 @@ export default function Slide({
             forkButtonIds={forkButtonIds}
             forkButtonsObj={forkButtonsObj}
             onForkButtonClick={handleForkButtonClick}
-            onPortalButtonClick={(forkId) =>
-              onGoBack({ interactiveId, forkId })
-            }
+            onPortalButtonClick={handlePortalButtonClick}
             onSetEmbedProps={handleSetEmbedProps}
             onThumbnailUpload={handleThumbnailUpload}
             slideId={slideId}
@@ -324,6 +324,13 @@ export default function Slide({
     if (onExpandPath) {
       onExpandPath({ newSlides: paths[buttonId], slideId, buttonId });
     }
+  }
+
+  function handlePortalButtonClick(forkId) {
+    if (forkId === 0) {
+      return onGoBackToMission?.();
+    }
+    onGoBack({ interactiveId, forkId: forkId || forkedFrom });
   }
 
   async function handlePublishSlide() {

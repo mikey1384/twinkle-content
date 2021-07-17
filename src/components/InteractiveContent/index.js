@@ -13,10 +13,15 @@ import { css } from '@emotion/css';
 
 InteractiveContent.propTypes = {
   autoFocus: PropTypes.bool,
-  interactiveId: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  interactiveId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  onGoBackToMission: PropTypes.func
 };
 
-export default function InteractiveContent({ autoFocus, interactiveId }) {
+export default function InteractiveContent({
+  autoFocus,
+  interactiveId,
+  onGoBackToMission
+}) {
   const {
     requestHelpers: {
       checkInteractiveNumUpdates,
@@ -219,6 +224,7 @@ export default function InteractiveContent({ autoFocus, interactiveId }) {
               slideId={slideId}
               slideObj={slideObj}
               isLastSlide={index === displayedSlideIds.length - 1}
+              onGoBackToMission={onGoBackToMission}
             />
           ))}
         </>

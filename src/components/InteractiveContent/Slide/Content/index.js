@@ -197,9 +197,7 @@ export default function Content({
               }}
             >
               <Button
-                onClick={() =>
-                  onPortalButtonClick(portalButton.destination || forkedFrom)
-                }
+                onClick={() => onPortalButtonClick(portalButton.destination)}
                 color={profileTheme}
                 skeuomorphic
                 style={{ fontSize: '1.7rem' }}
