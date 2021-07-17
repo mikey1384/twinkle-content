@@ -46,7 +46,7 @@ export default function SelectDestinationModal({
 
   return (
     <Modal onHide={onHide}>
-      <header>Select a Slide</header>
+      <header>Select Destination</header>
       <main>
         <GoBackToMissionItem />
         {forkIds.map((id) => (

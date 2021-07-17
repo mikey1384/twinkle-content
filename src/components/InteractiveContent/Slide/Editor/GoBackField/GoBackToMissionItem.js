@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Icon from 'components/Icon';
 import { Color, borderRadius } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
@@ -40,10 +41,10 @@ export default function GoBackToMissionItem({ style, selected }) {
         }
       `}
     >
-      <div>
-        <span>Go back to</span>
-        <span>Mission Item</span>
-      </div>
+      <p style={{ fontWeight: 'bold', fontSize: '1.5rem' }}>
+        <Icon icon="home" />
+        <span style={{ marginLeft: '0.7rem' }}>Back to Mission</span>
+      </p>
     </div>
   );
 }
