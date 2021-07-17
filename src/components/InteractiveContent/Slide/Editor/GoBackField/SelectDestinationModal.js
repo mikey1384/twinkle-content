@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import SlideListItem from '../../../SlideListItem';
+import GoBackToMissionItem from './GoBackToMissionItem';
 
 SelectDestinationModal.propTypes = {
   interactiveId: PropTypes.number.isRequired,
@@ -47,6 +48,7 @@ export default function SelectDestinationModal({
     <Modal onHide={onHide}>
       <header>Select a Slide</header>
       <main>
+        <GoBackToMissionItem />
         {forkIds.map((id) => (
           <SlideListItem
             key={id}
