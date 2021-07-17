@@ -4,7 +4,7 @@ import Modal from 'components/Modal';
 import Button from 'components/Button';
 import SlideListItem from '../../../SlideListItem';
 
-SelectForkModal.propTypes = {
+SelectDestinationModal.propTypes = {
   interactiveId: PropTypes.number.isRequired,
   onHide: PropTypes.func.isRequired,
   onDone: PropTypes.func.isRequired,
@@ -12,7 +12,7 @@ SelectForkModal.propTypes = {
   slideObj: PropTypes.object
 };
 
-export default function SelectForkModal({
+export default function SelectDestinationModal({
   interactiveId,
   onDone,
   onHide,
