@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Attachment from './Attachment';
 import { css } from '@emotion/css';
@@ -26,14 +26,17 @@ export default function SlideListItem({
   const {
     actions: { onSetSlideState }
   } = useInteractiveContext();
-  const selected = selectedSlideId === slide.id;
+  const selected = useMemo(
+    () => selectedSlideId === slide.id,
+    [selectedSlideId, slide.id]
+  );
 
   return (
     <div
       style={{
         ...style,
         boxShadow: selected ? `0 0 3px ${Color[profileTheme](0.5)}` : null,
-        border: selected ? `0.5rem solid ${Color[profileTheme](0.5)}` : null
+        border: selected ? `0.3rem solid ${Color[profileTheme](0.5)}` : null
       }}
       onClick={() => onClick(slide.id)}
       className={css`

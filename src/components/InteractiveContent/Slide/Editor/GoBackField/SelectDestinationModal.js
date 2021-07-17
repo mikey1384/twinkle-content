@@ -48,7 +48,10 @@ export default function SelectDestinationModal({
     <Modal onHide={onHide}>
       <header>Select Destination</header>
       <main>
-        <GoBackToMissionItem />
+        <GoBackToMissionItem
+          selectedSlideId={selectedSlideId}
+          onClick={() => setSelectedSlideId(0)}
+        />
         {forkIds.map((id) => (
           <SlideListItem
             key={id}
@@ -65,7 +68,7 @@ export default function SelectDestinationModal({
           Cancel
         </Button>
         <Button
-          disabled={!selectedSlideId}
+          disabled={selectedSlideId === null}
           color="blue"
           onClick={() => onDone(selectedSlideId)}
         >
