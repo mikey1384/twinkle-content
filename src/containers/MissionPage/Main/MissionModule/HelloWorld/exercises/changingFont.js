@@ -13,10 +13,10 @@ const FONT_WEIGHT = 'bold';
 export const title = `Make the Text Bigger and Thicker`;
 export const instruction = (
   <>
-    Change the <b>fontWeight</b> of your welcome message (
-    {`<p>${WELCOME_MSG}</p>`}) from <b>{`'normal'`}</b> to <b>{`'bold'`}</b> and
-    increase its <b>fontSize</b> to <b>{`'${FONT_SIZE}'`}</b>. You may change
-    its color to any color your want
+    Change the <b>fontWeight</b> of your welcome message,{' '}
+    <b>{`<p>${WELCOME_MSG}</p>`}</b>, from <b>{`'normal'`}</b> to{' '}
+    <b>{`'bold'`}</b> and increase its <b>fontSize</b> to{' '}
+    <b>{`'${FONT_SIZE}'`}</b>. You may change its color to any color your want
   </>
 );
 export const initialCode = `function HomePage() {
