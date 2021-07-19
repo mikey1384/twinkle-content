@@ -148,7 +148,16 @@ export default function Content({
                 }
               `}
             >
-              <LongText maxLines={100}>{description}</LongText>
+              <LongText
+                className={css`
+                  white-space: pre-wrap;
+                  overflow-wrap: break-word;
+                  word-break: break-word;
+                `}
+                maxLines={100}
+              >
+                {description}
+              </LongText>
             </div>
           )}
           {(attachment?.fileUrl || attachment?.linkUrl) && (
