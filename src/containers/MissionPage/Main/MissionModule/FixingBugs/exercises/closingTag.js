@@ -1,4 +1,4 @@
-import React from 'ract';
+import React from 'react';
 import {
   getAstProps,
   filterElementsByType,
