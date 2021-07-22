@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import { css } from '@emotion/css';
@@ -25,6 +25,7 @@ export default function FileInfo({
   isThumb,
   src
 }) {
+  const displayedFileSize = useMemo(() => renderFileSize(fileSize), [fileSize]);
   return (
     <div
       style={{
@@ -114,7 +115,7 @@ export default function FileInfo({
                   }
                 `}
               >
-                {renderFileSize(fileSize)}
+                {displayedFileSize}
               </div>
             </div>
             <p

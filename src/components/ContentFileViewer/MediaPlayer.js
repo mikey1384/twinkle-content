@@ -35,13 +35,11 @@ export default function MediaPlayer({
     actions: { onSetThumbUrl, onSetVideoCurrentTime }
   } = useContentContext();
   const {
-    [isSecretAttachment
-      ? 'secretAttachmentCurrentTime'
-      : 'currentTime']: currentTime = 0
+    [isSecretAttachment ? 'secretAttachmentCurrentTime' : 'currentTime']:
+      currentTime = 0
   } = useContentState({ contentType, contentId });
   const timeAtRef = useRef(0);
   const PlayerRef = useRef(null);
-  const mobile = isMobile(navigator);
 
   useEffect(() => {
     if (currentTime > 0) {
@@ -56,21 +54,28 @@ export default function MediaPlayer({
         onSetVideoCurrentTime({
           contentType,
           contentId,
-          [isSecretAttachment
-            ? 'secretAttachmentCurrentTime'
-            : 'currentTime']: timeAtRef.current
+          [isSecretAttachment ? 'secretAttachmentCurrentTime' : 'currentTime']:
+            timeAtRef.current
         });
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const isNotLight = useMemo(
+    () =>
+      fileType === 'audio' ||
+      currentTime ||
+      (!isMobile(navigator) && !thumbUrl),
+    [currentTime, fileType, thumbUrl]
+  );
+
   const light = useMemo(() => {
-    if (fileType === 'audio' || currentTime || (!mobile && !thumbUrl)) {
+    if (isNotLight) {
       return false;
     }
     return thumbUrl;
-  }, [currentTime, fileType, mobile, thumbUrl]);
+  }, [isNotLight, thumbUrl]);
 
   return (
     <div
