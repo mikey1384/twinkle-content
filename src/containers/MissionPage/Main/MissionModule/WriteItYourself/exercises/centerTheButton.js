@@ -16,7 +16,7 @@ export const instruction = (
   <>
     <div>
       Surround the <b style={{ color: 'blue' }}>button</b> with a pair of{' '}
-      <b>{`<div></div>`}</b> tags
+      <b>{`<div></div>`}</b> tags.
     </div>
     <div>
       Set the <b>width</b> value of the <b>{`<div>`}</b>
