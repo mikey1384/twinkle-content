@@ -20,7 +20,7 @@ export const instruction = (
     </div>
     <div>
       Set the <b>width</b> value of the <b>{`<div>`}</b>
-      {`'s`} <b>style</b> property to <b>{`'${WIDTH}'`}</b>,
+      {`'s`} style property to <b>{`'${WIDTH}'`}</b>,
     </div>
     <div>
       its <b>display</b> value to <b>{`'${DISPLAY}'`}</b> and{' '}
