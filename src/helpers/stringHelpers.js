@@ -526,7 +526,7 @@ export function processedStringWithURL(string) {
       .replace(
         greenWordRegex,
         (string) =>
-          `<span style="color: green;">${string.substring(
+          `<span style="color: rgb(40,182,44);">${string.substring(
             2,
             string.length - 2
           )}</span>`
@@ -646,7 +646,7 @@ export function processedStringWithURL(string) {
       .replace(
         greenSentenceRegex,
         (string) =>
-          `<span style="color: green;">${string.substring(
+          `<span style="color: rgb(40,182,44);">${string.substring(
             2,
             string.length - 2
           )}</span>`
