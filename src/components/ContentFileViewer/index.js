@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import FileInfo from './FileInfo';
 import ImagePreview from './ImagePreview';
@@ -33,12 +33,21 @@ export default function ContentFileViewer({
   thumbUrl,
   videoHeight
 }) {
-  const isDisplayedOnHome =
-    contentType === 'subject' || contentType === 'comment';
-  const { fileType } = getFileInfoFromFileName(fileName);
-  const src = `${fileType === 'video' ? S3URL : cloudFrontURL}/attachments/${
-    isDisplayedOnHome ? 'feed' : contentType
-  }/${filePath}/${encodeURIComponent(fileName)}`;
+  const isDisplayedOnHome = useMemo(
+    () => contentType === 'subject' || contentType === 'comment',
+    [contentType]
+  );
+  const { fileType } = useMemo(
+    () => getFileInfoFromFileName(fileName),
+    [fileName]
+  );
+  const src = useMemo(
+    () =>
+      `${fileType === 'video' ? S3URL : cloudFrontURL}/attachments/${
+        isDisplayedOnHome ? 'feed' : contentType
+      }/${filePath}/${encodeURIComponent(fileName)}`,
+    [contentType, fileName, filePath, fileType, isDisplayedOnHome]
+  );
 
   return (
     <div
