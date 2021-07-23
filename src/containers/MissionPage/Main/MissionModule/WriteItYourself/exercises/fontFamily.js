@@ -8,7 +8,7 @@ import {
 import { stringsAreCaseInsensitivelyEqual } from 'helpers/stringHelpers';
 
 const HEADING_FONT_FAMILY = 'fantasy';
-const HEADING_COLOR = '#4B9BE1';
+const HEADING_COLOR = '#4b9be1';
 const SUBHEADING_FONT_FAMILY = 'cursive';
 const SUBHEADING_COLOR = 'rgb(243, 103, 123)';
 const BUTTON_FONT_FAMILY = 'monospace';
