@@ -20,7 +20,12 @@ Chat.propTypes = {
 
 function Chat({ onFileUpload }) {
   const {
-    requestHelpers: { createNewChat, loadChatChannel, updateChatLastRead }
+    requestHelpers: {
+      createNewChat,
+      getNumberOfUnreadMessages,
+      loadChatChannel,
+      updateChatLastRead
+    }
   } = useAppContext();
   const { userId } = useMyState();
   const {
@@ -36,6 +41,7 @@ function Chat({ onFileUpload }) {
       onCreateNewChannel,
       onEnterChannelWithId,
       onEnterEmptyChat,
+      onGetNumberOfUnreadMessages,
       onNotifyThatMemberLeftChannel,
       onReceiveMessage,
       onReceiveMessageOnDifferentChannel,
@@ -48,19 +54,17 @@ function Chat({ onFileUpload }) {
   const {
     state: { pageVisible }
   } = useViewContext();
-  const [
-    currentChannelOnlineMembers,
-    setCurrentChannelOnlineMembers
-  ] = useState({});
+  const [currentChannelOnlineMembers, setCurrentChannelOnlineMembers] =
+    useState({});
   const [creatingChat, setCreatingChat] = useState(false);
   const [createNewChatModalShown, setCreateNewChatModalShown] = useState(false);
   const [userListModalShown, setUserListModalShown] = useState(false);
   const [partner, setPartner] = useState(null);
   const mounted = useRef(true);
-  const currentChannel = useMemo(() => channelsObj[selectedChannelId] || {}, [
-    channelsObj,
-    selectedChannelId
-  ]);
+  const currentChannel = useMemo(
+    () => channelsObj[selectedChannelId] || {},
+    [channelsObj, selectedChannelId]
+  );
 
   useEffect(() => {
     if (userId && (loaded || !userId || !socket.connected)) {
@@ -145,6 +149,17 @@ function Chat({ onFileUpload }) {
       }
     );
   }, [selectedChannelId]);
+
+  useEffect(() => {
+    if (mounted.current) {
+      handleGetNumberOfUnreadMessages();
+    }
+    async function handleGetNumberOfUnreadMessages() {
+      const numUnreads = await getNumberOfUnreadMessages();
+      onGetNumberOfUnreadMessages(numUnreads);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     mounted.current = true;
