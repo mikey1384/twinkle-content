@@ -13,6 +13,7 @@ import { socket } from 'constants/io';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useViewContext, useChatContext } from 'contexts';
+import { GENERAL_CHAT_ID } from 'constants/defaultValues';
 
 Chat.propTypes = {
   onFileUpload: PropTypes.func
@@ -34,7 +35,8 @@ function Chat({ onFileUpload }) {
       selectedChannelId,
       channelsObj,
       channelOnCall,
-      currentChannelName
+      currentChannelName,
+      chatStatus
     },
     actions: {
       onClearNumUnreads,
@@ -54,8 +56,6 @@ function Chat({ onFileUpload }) {
   const {
     state: { pageVisible }
   } = useViewContext();
-  const [currentChannelOnlineMembers, setCurrentChannelOnlineMembers] =
-    useState({});
   const [creatingChat, setCreatingChat] = useState(false);
   const [createNewChatModalShown, setCreateNewChatModalShown] = useState(false);
   const [userListModalShown, setUserListModalShown] = useState(false);
@@ -95,11 +95,7 @@ function Chat({ onFileUpload }) {
     socket.on('subject_changed', onSubjectChange);
     socket.on('members_online_changed', handleChangeMembersOnline);
 
-    function handleChangeMembersOnline({
-      channelId,
-      leftChannel,
-      membersOnline
-    }) {
+    function handleChangeMembersOnline({ channelId, leftChannel }) {
       const forCurrentChannel = channelId === selectedChannelId;
       if (forCurrentChannel) {
         if (leftChannel) {
@@ -111,7 +107,6 @@ function Chat({ onFileUpload }) {
             profilePicUrl
           });
         }
-        setCurrentChannelOnlineMembers(membersOnline);
       }
     }
 
@@ -139,18 +134,6 @@ function Chat({ onFileUpload }) {
   });
 
   useEffect(() => {
-    socket.emit(
-      'check_online_members',
-      selectedChannelId,
-      ({ membersOnline }) => {
-        if (mounted.current) {
-          setCurrentChannelOnlineMembers(membersOnline);
-        }
-      }
-    );
-  }, [selectedChannelId]);
-
-  useEffect(() => {
     if (mounted.current) {
       handleGetNumberOfUnreadMessages();
     }
@@ -167,6 +150,26 @@ function Chat({ onFileUpload }) {
       mounted.current = false;
     };
   }, []);
+
+  const currentChannelOnlineMembers = useMemo(() => {
+    if (currentChannel.id === GENERAL_CHAT_ID) {
+      const result = {};
+      for (let [, member] of Object.entries(chatStatus)) {
+        if (member.isOnline) {
+          result[member.id] = member;
+        }
+      }
+      return result;
+    }
+    const onlineMembersArray = (currentChannel?.members || []).filter(
+      (member) => !!chatStatus[member.id]?.isOnline
+    );
+    const result = {};
+    for (let member of onlineMembersArray) {
+      result[member.id] = member;
+    }
+    return result;
+  }, [chatStatus, currentChannel.id, currentChannel?.members]);
 
   return (
     <LocalContext.Provider
@@ -244,7 +247,6 @@ function Chat({ onFileUpload }) {
 
   async function handleChannelEnter(id) {
     if (id === 0) {
-      setCurrentChannelOnlineMembers({});
       return onEnterEmptyChat();
     }
     onUpdateSelectedChannelId(id);

@@ -34,9 +34,9 @@ export default function ChatReducer(state, action) {
         ...state,
         chatStatus: {
           ...state.chatStatus,
-          ['user' + action.userId]: action.isOnline
+          [action.userId]: action.isOnline
             ? {
-                ...(state['user' + action.userId] || {}),
+                ...(state.chatStatus[action.userId] || {}),
                 isOnline: true
               }
             : undefined
@@ -48,9 +48,9 @@ export default function ChatReducer(state, action) {
         ...state,
         chatStatus: {
           ...state.chatStatus,
-          ['user' + action.userId]: state['user' + action.userId]
+          [action.userId]: state.chatStatus[action.userId]
             ? {
-                ...state['user' + action.userId],
+                ...state.chatStatus[action.userId],
                 isAway: action.isAway
               }
             : undefined
@@ -62,9 +62,9 @@ export default function ChatReducer(state, action) {
         ...state,
         chatStatus: {
           ...state.chatStatus,
-          ['user' + action.userId]: state['user' + action.userId]
+          [action.userId]: state.chatStatus[action.userId]
             ? {
-                ...state['user' + action.userId],
+                ...state.chatStatus[action.userId],
                 isBusy: action.isBusy
               }
             : undefined
@@ -1099,7 +1099,10 @@ export default function ChatReducer(state, action) {
     case 'SET_USER_DATA':
       return {
         ...state,
-        ['user' + action.profile.id]: action.profile
+        chatStatus: {
+          ...state.chatStatus,
+          [action.profile.id]: action.profile
+        }
       };
     case 'SET_MY_STREAM':
       return {

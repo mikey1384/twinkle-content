@@ -302,24 +302,18 @@ export default function Header({
     }
 
     function handleOnlineStatusChange({ userId, isOnline }) {
-      if (!!chatStatus['user' + userId]?.isOnline !== isOnline) {
+      if (!!chatStatus[userId]?.isOnline !== isOnline) {
         onChangeOnlineStatus({ userId, isOnline });
       }
     }
     function handleAwayStatusChange({ userId, isAway }) {
-      if (
-        chatStatus['user' + userId] &&
-        chatStatus['user' + userId].isAway !== isAway
-      ) {
+      if (chatStatus[userId] && chatStatus[userId].isAway !== isAway) {
         onChangeAwayStatus({ userId, isAway });
       }
     }
 
     function handleBusyStatusChange({ userId, isBusy }) {
-      if (
-        chatStatus['user' + userId] &&
-        chatStatus['user' + userId].isBusy !== isBusy
-      ) {
+      if (chatStatus[userId] && chatStatus[userId].isBusy !== isBusy) {
         onChangeBusyStatus({ userId, isBusy });
       }
     }

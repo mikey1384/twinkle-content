@@ -18,7 +18,9 @@ MemberListItem.propTypes = {
 function MemberListItem({ onlineMembers, creatorId, isClass, member, style }) {
   const {
     state: {
-      ['user' + member.id]: { isAway, isBusy, username, profilePicUrl } = {}
+      chatStatus: {
+        [member.id]: { isAway, isBusy, username, profilePicUrl } = {}
+      }
     },
     actions: { onSetUserData }
   } = useChatContext();
@@ -28,7 +30,7 @@ function MemberListItem({ onlineMembers, creatorId, isClass, member, style }) {
       onSetUserData(member);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [member]);
+  }, []);
 
   const usernameWidth = useMemo(() => (isClass ? '20%' : '42%'), [isClass]);
 

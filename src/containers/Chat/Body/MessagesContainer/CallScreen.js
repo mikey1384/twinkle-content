@@ -14,7 +14,7 @@ CallScreen.propTypes = {
 
 export default function CallScreen({ style }) {
   const {
-    state: { channelOnCall, ...state },
+    state: { channelOnCall, chatStatus },
     actions: { onShowIncoming }
   } = useChatContext();
 
@@ -66,7 +66,7 @@ export default function CallScreen({ style }) {
                   }
                 `}
                 userId={peerId}
-                profilePicUrl={state['user' + peerId]?.profilePicUrl}
+                profilePicUrl={chatStatus[peerId]?.profilePicUrl}
               />
             );
           })}
