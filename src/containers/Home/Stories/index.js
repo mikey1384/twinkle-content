@@ -325,13 +325,13 @@ export default function Stories() {
   }
 
   async function handleFetchNewFeeds() {
+    onResetNumNewPosts();
     onChangeSubFilter('all');
     if (
       category !== 'uploads' ||
       displayOrder === 'asc' ||
       (category === 'uploads' && subFilter === 'subject')
     ) {
-      onResetNumNewPosts();
       categoryRef.current = 'uploads';
       onChangeCategory('uploads');
       const { data } = await loadFeeds();
@@ -342,7 +342,6 @@ export default function Stories() {
     }
     if (!loadingNewFeeds) {
       setLoadingNewFeeds(true);
-      onResetNumNewPosts();
       const data = await loadNewFeeds({
         lastInteraction: feeds[0] ? feeds[0].lastInteraction : 0
       });
