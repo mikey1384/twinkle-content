@@ -35,9 +35,10 @@ function Members({ channelId, creatorId, isClass, members, onlineMembers }) {
     [channelId, channelOnCallId, members, membersOnCallObj]
   );
 
-  const callIsOnGoing = useMemo(() => membersOnCall.length > 0, [
-    membersOnCall.length
-  ]);
+  const callIsOnGoing = useMemo(
+    () => membersOnCall.length > 0,
+    [membersOnCall.length]
+  );
 
   return (
     <div style={{ width: '100%' }}>
