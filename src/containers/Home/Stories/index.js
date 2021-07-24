@@ -249,6 +249,7 @@ export default function Stories() {
     categoryRef.current = 'uploads';
     onChangeCategory('uploads');
     onChangeSubFilter(filter);
+    onResetNumNewPosts();
     const { data, filter: newFilter } = await loadFeeds({ filter });
     if (
       filter === newFilter &&
@@ -297,6 +298,7 @@ export default function Stories() {
 
   async function handleChangeCategory(newCategory) {
     categoryRef.current = newCategory;
+    onResetNumNewPosts();
     setLoadingFeeds(true);
     onChangeCategory(newCategory);
     onChangeSubFilter(categoryObj[newCategory].filter);
