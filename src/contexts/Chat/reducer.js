@@ -29,26 +29,46 @@ export default function ChatReducer(state, action) {
           [action.channelId]: action.channelName
         }
       };
+    case 'CHANGE_ONLINE_STATUS': {
+      return {
+        ...state,
+        chatStatus: {
+          ...state.chatStatus,
+          ['user' + action.userId]: action.isOnline
+            ? {
+                ...(state['user' + action.userId] || {}),
+                isOnline: true
+              }
+            : undefined
+        }
+      };
+    }
     case 'CHANGE_AWAY_STATUS': {
       return {
         ...state,
-        ['user' + action.userId]: state['user' + action.userId]
-          ? {
-              ...state['user' + action.userId],
-              isAway: action.isAway
-            }
-          : undefined
+        chatStatus: {
+          ...state.chatStatus,
+          ['user' + action.userId]: state['user' + action.userId]
+            ? {
+                ...state['user' + action.userId],
+                isAway: action.isAway
+              }
+            : undefined
+        }
       };
     }
     case 'CHANGE_BUSY_STATUS': {
       return {
         ...state,
-        ['user' + action.userId]: state['user' + action.userId]
-          ? {
-              ...state['user' + action.userId],
-              isBusy: action.isBusy
-            }
-          : undefined
+        chatStatus: {
+          ...state.chatStatus,
+          ['user' + action.userId]: state['user' + action.userId]
+            ? {
+                ...state['user' + action.userId],
+                isBusy: action.isBusy
+              }
+            : undefined
+        }
       };
     }
     case 'CHANGE_CALL_MUTED': {

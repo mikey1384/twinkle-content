@@ -64,11 +64,12 @@ export default function Header({
       selectedChannelId,
       myStream,
       numUnreads,
-      ...chatState
+      chatStatus
     },
     actions: {
       onChangeAwayStatus,
       onChangeBusyStatus,
+      onChangeOnlineStatus,
       onChangeChatSubject,
       onEnableChatSubject,
       onSetReconnecting,
@@ -162,6 +163,7 @@ export default function Header({
   useEffect(() => {
     socket.on('ban_status_updated', handleBanStatusUpdate);
     socket.on('signal_received', handleCallSignal);
+    socket.on('online_status_changed', handleOnlineStatusChange);
     socket.on('away_status_changed', handleAwayStatusChange);
     socket.on('busy_status_changed', handleBusyStatusChange);
     socket.on('call_terminated', handleCallTerminated);
@@ -193,6 +195,7 @@ export default function Header({
     return function cleanUp() {
       socket.removeListener('ban_status_updated', handleBanStatusUpdate);
       socket.removeListener('signal_received', handleCallSignal);
+      socket.removeListener('online_status_changed', handleOnlineStatusChange);
       socket.removeListener('away_status_changed', handleAwayStatusChange);
       socket.removeListener('busy_status_changed', handleBusyStatusChange);
       socket.removeListener('call_terminated', handleCallTerminated);
@@ -298,10 +301,15 @@ export default function Header({
       }
     }
 
+    function handleOnlineStatusChange({ userId, isOnline }) {
+      if (!!chatStatus['user' + userId]?.isOnline !== isOnline) {
+        onChangeOnlineStatus({ userId, isOnline });
+      }
+    }
     function handleAwayStatusChange({ userId, isAway }) {
       if (
-        chatState['user' + userId] &&
-        chatState['user' + userId].isAway !== isAway
+        chatStatus['user' + userId] &&
+        chatStatus['user' + userId].isAway !== isAway
       ) {
         onChangeAwayStatus({ userId, isAway });
       }
@@ -309,8 +317,8 @@ export default function Header({
 
     function handleBusyStatusChange({ userId, isBusy }) {
       if (
-        chatState['user' + userId] &&
-        chatState['user' + userId].isBusy !== isBusy
+        chatStatus['user' + userId] &&
+        chatStatus['user' + userId].isBusy !== isBusy
       ) {
         onChangeBusyStatus({ userId, isBusy });
       }

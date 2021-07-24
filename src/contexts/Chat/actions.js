@@ -14,6 +14,13 @@ export default function ChatActions(dispatch) {
         channelId
       });
     },
+    onChangeOnlineStatus({ userId, isOnline }) {
+      return dispatch({
+        type: 'CHANGE_ONLINE_STATUS',
+        userId,
+        isOnline
+      });
+    },
     onChangeAwayStatus({ userId, isAway }) {
       return dispatch({
         type: 'CHANGE_AWAY_STATUS',
