@@ -34,10 +34,10 @@ export default function ChatReducer(state, action) {
         ...state,
         chatStatus: {
           ...state.chatStatus,
-          [action.userId]: action.isOnline
+          [action.userId]: state.chatStatus[action.userId]
             ? {
-                ...(state.chatStatus[action.userId] || {}),
-                isOnline: true
+                ...state.chatStatus[action.userId],
+                isOnline: action.isOnline
               }
             : undefined
         }

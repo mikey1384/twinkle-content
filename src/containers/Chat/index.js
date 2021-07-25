@@ -155,7 +155,7 @@ function Chat({ onFileUpload }) {
     if (currentChannel.id === GENERAL_CHAT_ID) {
       const result = {};
       for (let [, member] of Object.entries(chatStatus)) {
-        if (member.isOnline) {
+        if (member?.isOnline) {
           result[member.id] = member;
         }
       }

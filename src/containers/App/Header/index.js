@@ -302,9 +302,7 @@ export default function Header({
     }
 
     function handleOnlineStatusChange({ userId, isOnline }) {
-      if (!!chatStatus[userId]?.isOnline !== isOnline) {
-        onChangeOnlineStatus({ userId, isOnline });
-      }
+      onChangeOnlineStatus({ userId, isOnline });
     }
     function handleAwayStatusChange({ userId, isAway }) {
       if (chatStatus[userId] && chatStatus[userId].isAway !== isAway) {
