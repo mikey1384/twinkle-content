@@ -6,6 +6,7 @@ import Icon from 'components/Icon';
 import { useChatContext } from 'contexts';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
+import { useMyState } from 'helpers/hooks';
 
 MemberListItem.propTypes = {
   onlineMembers: PropTypes.object,
@@ -23,7 +24,7 @@ function MemberListItem({ onlineMembers, creatorId, isClass, member, style }) {
       }
     }
   } = useChatContext();
-
+  const { userId: myId } = useMyState();
   const usernameWidth = useMemo(() => (isClass ? '20%' : '42%'), [isClass]);
   return username || member.username ? (
     <div
@@ -54,8 +55,8 @@ function MemberListItem({ onlineMembers, creatorId, isClass, member, style }) {
           userId={member.id}
           profilePicUrl={profilePicUrl || member.profilePicUrl}
           online={!!onlineMembers[member.id]}
-          isAway={isAway}
-          isBusy={isBusy}
+          isAway={member.id === myId ? false : isAway}
+          isBusy={member.id === myId ? false : isBusy}
           statusShown
         />
         <UsernameText

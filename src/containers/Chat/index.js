@@ -140,10 +140,12 @@ function Chat({ onFileUpload }) {
   }, []);
 
   useEffect(() => {
+    socket.emit('change_away_status', pageVisible);
     mounted.current = true;
     return function cleanUp() {
       mounted.current = false;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const currentChannelOnlineMembers = useMemo(() => {
