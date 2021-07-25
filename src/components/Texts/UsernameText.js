@@ -103,7 +103,7 @@ export default function UsernameText({
           </li>
           {user.id !== userId && (
             <li onClick={onLinkClick}>
-              <a style={{ color: Color.darkerGray() }}>Talk</a>
+              <a style={{ color: Color.darkerGray() }}>Chat</a>
             </li>
           )}
           {userXP && (

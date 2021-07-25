@@ -280,7 +280,7 @@ export default function BasicInfos({
               >
                 <Icon icon="comments" />
                 <span style={{ marginLeft: '0.7rem' }}>
-                  {online ? 'Talk' : 'Message'}
+                  {online ? 'Chat' : 'Message'}
                   <span className="desktop">
                     {online ? ' with' : ''} {username}
                   </span>

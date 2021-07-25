@@ -422,7 +422,7 @@ function ProfilePanel({ expandable, profileId, style }) {
                       >
                         <Button color="green" onClick={handleTalkClick}>
                           <Icon icon="comments" />
-                          <span style={{ marginLeft: '0.7rem' }}>Talk</span>
+                          <span style={{ marginLeft: '0.7rem' }}>Chat</span>
                         </Button>
                         {renderMessagesButton()}
                       </div>
