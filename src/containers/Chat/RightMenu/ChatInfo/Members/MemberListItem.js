@@ -25,8 +25,7 @@ function MemberListItem({ onlineMembers, creatorId, isClass, member, style }) {
   } = useChatContext();
 
   const usernameWidth = useMemo(() => (isClass ? '20%' : '42%'), [isClass]);
-
-  return username ? (
+  return username || member.username ? (
     <div
       style={{
         display: 'flex',
@@ -53,7 +52,7 @@ function MemberListItem({ onlineMembers, creatorId, isClass, member, style }) {
             }
           `}
           userId={member.id}
-          profilePicUrl={profilePicUrl}
+          profilePicUrl={profilePicUrl || member.profilePicUrl}
           online={!!onlineMembers[member.id]}
           isAway={isAway}
           isBusy={isBusy}
@@ -74,7 +73,7 @@ function MemberListItem({ onlineMembers, creatorId, isClass, member, style }) {
               font-size: 1.3rem;
             }
           `}
-          user={{ id: member.id, username }}
+          user={{ id: member.id, username: username || member.username }}
         />
         {creatorId === member.id ? (
           <div
