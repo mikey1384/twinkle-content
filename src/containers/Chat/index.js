@@ -93,20 +93,18 @@ function Chat({ onFileUpload }) {
     socket.on('chess_move_made', onNotifiedMoveMade);
     socket.on('chess_move_viewed', onNotifyMoveViewed);
     socket.on('subject_changed', onSubjectChange);
-    socket.on('members_online_changed', handleChangeMembersOnline);
+    socket.on('member_left', handleMemberLeft);
 
-    function handleChangeMembersOnline({ channelId, leftChannel }) {
+    function handleMemberLeft({ channelId, leaver }) {
       const forCurrentChannel = channelId === selectedChannelId;
       if (forCurrentChannel) {
-        if (leftChannel) {
-          const { userId, username, profilePicUrl } = leftChannel;
-          onNotifyThatMemberLeftChannel({
-            channelId,
-            userId,
-            username,
-            profilePicUrl
-          });
-        }
+        const { userId, username, profilePicUrl } = leaver;
+        onNotifyThatMemberLeftChannel({
+          channelId,
+          userId,
+          username,
+          profilePicUrl
+        });
       }
     }
 
@@ -126,10 +124,7 @@ function Chat({ onFileUpload }) {
       socket.removeListener('chess_move_made', onNotifiedMoveMade);
       socket.removeListener('chess_move_viewed', onNotifyMoveViewed);
       socket.removeListener('subject_changed', onSubjectChange);
-      socket.removeListener(
-        'members_online_changed',
-        handleChangeMembersOnline
-      );
+      socket.removeListener('member_left', handleMemberLeft);
     };
   });
 
