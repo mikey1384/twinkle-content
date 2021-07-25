@@ -10,10 +10,10 @@ import { Color } from 'constants/css';
 import { css } from '@emotion/css';
 import { useHistory } from 'react-router-dom';
 import { useAppContext, useChatContext } from 'contexts';
+import { GENERAL_CHAT_ID } from 'constants/defaultValues';
 
 ChatFeeds.propTypes = {
   content: PropTypes.string,
-  loaded: PropTypes.bool,
   myId: PropTypes.number,
   reloadedBy: PropTypes.number,
   reloaderName: PropTypes.string,
@@ -27,7 +27,6 @@ ChatFeeds.propTypes = {
 function ChatFeeds({
   content,
   myId,
-  loaded,
   reloadedBy,
   reloaderName,
   reloadTimeStamp,
@@ -43,6 +42,7 @@ function ChatFeeds({
     requestHelpers: { loadChat, loadChatChannel }
   } = useAppContext();
   const {
+    state: { loaded },
     actions: { onEnterChannelWithId, onInitChat }
   } = useChatContext();
   const [timeSincePost, setTimeSincePost] = useState(timeSince(timeStamp));
@@ -147,12 +147,12 @@ function ChatFeeds({
     if (myId) {
       setLoadingChat(true);
       if (!loaded) {
-        const data = await loadChat({ channelId: 2 });
+        const data = await loadChat({ channelId: GENERAL_CHAT_ID });
         if (mounted.current) {
           onInitChat(data);
         }
       } else {
-        const data = await loadChatChannel({ channelId: 2 });
+        const data = await loadChatChannel({ channelId: GENERAL_CHAT_ID });
         if (mounted.current) {
           onEnterChannelWithId({ data });
         }

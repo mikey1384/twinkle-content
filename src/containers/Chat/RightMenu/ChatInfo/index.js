@@ -93,6 +93,10 @@ function ChatInfo({
     selectedChannelId
   ]);
 
+  const numOnline = useMemo(() => {
+    return Object.keys(currentChannelOnlineMembers).length;
+  }, [currentChannelOnlineMembers]);
+
   return (
     <>
       <div
@@ -132,7 +136,7 @@ function ChatInfo({
                 }
               `}
             >
-              {Object.keys(currentChannelOnlineMembers).length}
+              {numOnline}
               {currentChannel.id !== GENERAL_CHAT_ID &&
                 '/' + displayedChannelMembers.length}{' '}
               online

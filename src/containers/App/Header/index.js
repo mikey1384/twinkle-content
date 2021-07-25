@@ -27,16 +27,11 @@ import {
 } from 'constants/defaultValues';
 
 Header.propTypes = {
-  onChatButtonClick: PropTypes.func,
   onMobileMenuOpen: PropTypes.func,
   style: PropTypes.object
 };
 
-export default function Header({
-  onChatButtonClick,
-  onMobileMenuOpen,
-  style = {}
-}) {
+export default function Header({ onMobileMenuOpen, style = {} }) {
   const { pathname } = useLocation();
   const history = useHistory();
   const usingChat = getSectionFromPathname(pathname)?.section === 'chat';
@@ -697,7 +692,6 @@ export default function Header({
             numChatUnreads={numUnreads}
             numNewNotis={numNewNotis}
             numNewPosts={numNewPosts}
-            onChatButtonClick={onChatButtonClick}
             onMobileMenuOpen={onMobileMenuOpen}
             pathname={pathname}
             totalRewardAmount={
