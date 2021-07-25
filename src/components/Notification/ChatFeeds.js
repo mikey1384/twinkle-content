@@ -39,11 +39,10 @@ function ChatFeeds({
   const [loadingChat, setLoadingChat] = useState(false);
   const history = useHistory();
   const {
-    requestHelpers: { loadChat, loadChatChannel }
+    requestHelpers: { loadChatChannel }
   } = useAppContext();
   const {
-    state: { loaded },
-    actions: { onEnterChannelWithId, onInitChat }
+    actions: { onEnterChannelWithId }
   } = useChatContext();
   const [timeSincePost, setTimeSincePost] = useState(timeSince(timeStamp));
   const [timeSinceReload, setTimeSinceReload] = useState(
@@ -146,16 +145,9 @@ function ChatFeeds({
   async function initChatFromThis() {
     if (myId) {
       setLoadingChat(true);
-      if (!loaded) {
-        const data = await loadChat({ channelId: GENERAL_CHAT_ID });
-        if (mounted.current) {
-          onInitChat(data);
-        }
-      } else {
-        const data = await loadChatChannel({ channelId: GENERAL_CHAT_ID });
-        if (mounted.current) {
-          onEnterChannelWithId({ data });
-        }
+      const data = await loadChatChannel({ channelId: GENERAL_CHAT_ID });
+      if (mounted.current) {
+        onEnterChannelWithId({ data });
       }
     }
     history.push('/chat');

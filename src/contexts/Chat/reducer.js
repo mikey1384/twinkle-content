@@ -503,7 +503,8 @@ export default function ChatReducer(state, action) {
         numUnreads: Math.max(state.numUnreads - originalNumUnreads, 0),
         recentChessMessage: undefined,
         reconnecting: false,
-        selectedChannelId: action.data.currentChannelId
+        selectedChannelId:
+          state.selectedChannelId || action.data.currentChannelId
       };
     }
     case 'INVITE_USERS_TO_CHANNEL':
