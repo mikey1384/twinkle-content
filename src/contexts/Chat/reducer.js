@@ -428,6 +428,9 @@ export default function ChatReducer(state, action) {
         }
       };
     case 'INIT_CHAT': {
+      const alreadyUsingChat =
+        !!state.selectedChannelId &&
+        state.selectedChannelId !== action.data.currentChannelId;
       let messagesLoadMoreButton = false;
       let originalNumUnreads = 0;
       let classLoadMoreButton = false;
@@ -493,16 +496,16 @@ export default function ChatReducer(state, action) {
         },
         classLoadMoreButton,
         favoriteLoadMoreButton,
-        homeLoadMoreButton,
+        homeLoadMoreButton: alreadyUsingChat
+          ? state.homeLoadMoreButton
+          : homeLoadMoreButton,
         customChannelNames: action.data.customChannelNames,
         messagesLoadMoreButton,
-        messages:
-          !!state.selectedChannelId &&
-          state.selectedChannelId !== action.data.currentChannelId
-            ? state.messages
-            : uploadStatusMessages
-            ? [...action.data.messages, ...uploadStatusMessages]
-            : action.data.messages,
+        messages: alreadyUsingChat
+          ? state.messages
+          : uploadStatusMessages
+          ? [...action.data.messages, ...uploadStatusMessages]
+          : action.data.messages,
         messagesLoaded: true,
         numUnreads: Math.max(state.numUnreads - originalNumUnreads, 0),
         recentChessMessage: undefined,
