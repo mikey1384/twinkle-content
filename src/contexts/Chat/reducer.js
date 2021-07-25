@@ -463,6 +463,7 @@ export default function ChatReducer(state, action) {
       return {
         ...state,
         ...initialChatState,
+        chatStatus: state.chatStatus,
         allFavoriteChannelIds: action.data.allFavoriteChannelIds,
         chatType:
           state.chatType === 'vocabulary' ? 'vocabulary' : action.data.chatType,
