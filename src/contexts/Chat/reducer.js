@@ -1096,7 +1096,7 @@ export default function ChatReducer(state, action) {
               : {}
         }
       };
-    case 'SET_USER_DATA':
+    case 'SET_ONLINE_USER_DATA':
       return {
         ...state,
         chatStatus: {

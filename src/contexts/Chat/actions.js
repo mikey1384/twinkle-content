@@ -486,9 +486,9 @@ export default function ChatActions(dispatch) {
         target
       });
     },
-    onSetUserData(profile) {
+    onSetOnlineUserData(profile) {
       return dispatch({
-        type: 'SET_USER_DATA',
+        type: 'SET_ONLINE_USER_DATA',
         profile
       });
     },

@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useEffect } from 'react';
+import React, { memo, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ProfilePic from 'components/ProfilePic';
 import UsernameText from 'components/Texts/UsernameText';
@@ -21,16 +21,8 @@ function MemberListItem({ onlineMembers, creatorId, isClass, member, style }) {
       chatStatus: {
         [member.id]: { isAway, isBusy, username, profilePicUrl } = {}
       }
-    },
-    actions: { onSetUserData }
-  } = useChatContext();
-
-  useEffect(() => {
-    if (member.id && member.username) {
-      onSetUserData(member);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  } = useChatContext();
 
   const usernameWidth = useMemo(() => (isClass ? '20%' : '42%'), [isClass]);
 

@@ -92,8 +92,8 @@ export default function Header({
       onSetCall,
       onSetMembersOnCall,
       onSetMyStream,
+      onSetOnlineUserData,
       onSetPeerStreams,
-      onSetUserData,
       onShowIncoming,
       onShowOutgoing,
       onUpdateCollectorsRankings
@@ -269,7 +269,7 @@ export default function Header({
               ([, member]) => member
             );
             for (let member of members) {
-              onSetUserData(member);
+              onSetOnlineUserData(member);
             }
           }
         );
