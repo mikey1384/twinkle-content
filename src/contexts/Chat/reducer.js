@@ -496,9 +496,13 @@ export default function ChatReducer(state, action) {
         homeLoadMoreButton,
         customChannelNames: action.data.customChannelNames,
         messagesLoadMoreButton,
-        messages: uploadStatusMessages
-          ? [...action.data.messages, ...uploadStatusMessages]
-          : action.data.messages,
+        messages:
+          !!state.selectedChannelId &&
+          state.selectedChannelId !== action.data.currentChannelId
+            ? state.messages
+            : uploadStatusMessages
+            ? [...action.data.messages, ...uploadStatusMessages]
+            : action.data.messages,
         messagesLoaded: true,
         numUnreads: Math.max(state.numUnreads - originalNumUnreads, 0),
         recentChessMessage: undefined,
