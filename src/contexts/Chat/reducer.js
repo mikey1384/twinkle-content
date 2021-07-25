@@ -37,7 +37,13 @@ export default function ChatReducer(state, action) {
           [action.userId]: state.chatStatus[action.userId]
             ? {
                 ...state.chatStatus[action.userId],
-                isOnline: action.isOnline
+                isOnline: action.isOnline,
+                isAway: action.isOnline
+                  ? false
+                  : state.chatStatus[action.userId].isAway,
+                isBusy: action.isOnline
+                  ? false
+                  : state.chatStatus[action.userId].isBusy
               }
             : {
                 ...action.member,
