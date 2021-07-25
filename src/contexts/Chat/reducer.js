@@ -39,7 +39,10 @@ export default function ChatReducer(state, action) {
                 ...state.chatStatus[action.userId],
                 isOnline: action.isOnline
               }
-            : undefined
+            : {
+                ...action.member,
+                isOnline: action.isOnline
+              }
         }
       };
     }

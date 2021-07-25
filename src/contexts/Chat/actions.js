@@ -14,10 +14,11 @@ export default function ChatActions(dispatch) {
         channelId
       });
     },
-    onChangeOnlineStatus({ userId, isOnline }) {
+    onChangeOnlineStatus({ userId, member, isOnline }) {
       return dispatch({
         type: 'CHANGE_ONLINE_STATUS',
         userId,
+        member,
         isOnline
       });
     },
