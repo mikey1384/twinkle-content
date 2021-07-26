@@ -23,6 +23,8 @@ StartScreen.propTypes = {
   onHide: PropTypes.func.isRequired
 };
 
+const deviceIsMobile = isMobile(navigator);
+
 export default function StartScreen({ navigateTo, onHide }) {
   const {
     actions: { onSetSubjectAttachment }
@@ -30,9 +32,10 @@ export default function StartScreen({ navigateTo, onHide }) {
   const { authLevel, fileUploadLvl, twinkleXP } = useMyState();
   const [alertModalShown, setAlertModalShown] = useState(false);
   const FileInputRef = useRef(null);
-  const maxSize = useMemo(() => returnMaxUploadSize(fileUploadLvl), [
-    fileUploadLvl
-  ]);
+  const maxSize = useMemo(
+    () => returnMaxUploadSize(fileUploadLvl),
+    [fileUploadLvl]
+  );
   const disabled = useMemo(() => {
     if (authLevel > 1) return false;
     if (twinkleXP >= FILE_UPLOAD_XP_REQUIREMENT) return false;
@@ -56,7 +59,7 @@ export default function StartScreen({ navigateTo, onHide }) {
             color: Color.black()
           }}
         >
-          from Your {isMobile(navigator) ? 'Device' : 'Computer'}
+          from Your {deviceIsMobile ? 'Device' : 'Computer'}
         </div>
         <div
           style={{

@@ -16,6 +16,8 @@ UsernameText.propTypes = {
   wordBreakEnabled: PropTypes.bool
 };
 
+const deviceIsMobile = isMobile(navigator);
+
 export default function UsernameText({
   className,
   color,
@@ -149,7 +151,7 @@ export default function UsernameText({
   async function onMouseEnter() {
     mouseEntered.current = true;
     clearTimeout(timerRef.current);
-    if (user.username && !isMobile(navigator)) {
+    if (user.username && !deviceIsMobile) {
       if (!twinkleXP && !user.twinkleXP) {
         timerRef.current = setTimeout(async () => {
           const data = await loadProfile(user.id);

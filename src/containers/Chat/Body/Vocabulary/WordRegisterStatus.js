@@ -9,6 +9,8 @@ import Button from 'components/Button';
 import Icon from 'components/Icon';
 import WordModal from './WordModal';
 
+const deviceIsMobile = isMobile(navigator);
+
 export default function WordRegisterStatus() {
   const {
     state: { wordRegisterStatus: { frequency, content } = {} }
@@ -77,7 +79,7 @@ export default function WordRegisterStatus() {
         `}
       >
         <div>
-          {!isMobile(navigator) && (
+          {!deviceIsMobile && (
             <>
               <b style={{ color: Color[vocabRewardHash[wordLevel].color]() }}>
                 {content}
@@ -92,11 +94,7 @@ export default function WordRegisterStatus() {
             </b>{' '}
             {wordLabel}.
           </>{' '}
-          {isMobile(navigator) ? (
-            <span>Earned </span>
-          ) : (
-            <span>You earned </span>
-          )}
+          {deviceIsMobile ? <span>Earned </span> : <span>You earned </span>}
           <b style={{ color: Color[vocabRewardHash[wordLevel].color]() }}>
             {addCommasToNumber(vocabRewardHash[wordLevel].rewardAmount)} XP
           </b>

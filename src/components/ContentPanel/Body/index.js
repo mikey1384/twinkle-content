@@ -37,6 +37,8 @@ Body.propTypes = {
   onChangeSpoilerStatus: PropTypes.func.isRequired
 };
 
+const deviceIsMobile = isMobile(navigator);
+
 export default function Body({
   autoExpand,
   commentsShown,
@@ -667,7 +669,7 @@ export default function Body({
     if (!commentsShown && !(autoExpand && !secretHidden)) {
       await handleExpandComments();
     }
-    if (!isMobile(navigator)) {
+    if (!deviceIsMobile) {
       CommentInputAreaRef.current?.focus();
     }
     scrollElementToCenter(CommentInputAreaRef.current);

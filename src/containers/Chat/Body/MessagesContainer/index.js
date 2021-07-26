@@ -49,6 +49,7 @@ MessagesContainer.propTypes = {
 };
 
 const CALL_SCREEN_HEIGHT = '30%';
+const deviceIsMobile = isMobile(navigator);
 
 export default function MessagesContainer({
   channelName,
@@ -110,13 +111,8 @@ export default function MessagesContainer({
       onUpdateLastMessages
     }
   } = useChatContext();
-  const {
-    fileUploadLvl,
-    banned,
-    profilePicUrl,
-    userId,
-    username
-  } = useMyState();
+  const { fileUploadLvl, banned, profilePicUrl, userId, username } =
+    useMyState();
   const [chessCountdownObj, setChessCountdownObj] = useState({});
   const [textAreaHeight, setTextAreaHeight] = useState(0);
   const [fileObj, setFileObj] = useState(null);
@@ -141,9 +137,8 @@ export default function MessagesContainer({
   const [settingsModalShown, setSettingsModalShown] = useState(false);
   const [leaveConfirmModalShown, setLeaveConfirmModalShown] = useState(false);
   const [scrollAtBottom, setScrollAtBottom] = useState(true);
-  const [selectNewOwnerModalShown, setSelectNewOwnerModalShown] = useState(
-    false
-  );
+  const [selectNewOwnerModalShown, setSelectNewOwnerModalShown] =
+    useState(false);
   const [placeholderHeight, setPlaceholderHeight] = useState(0);
   const [hideModalShown, setHideModalShown] = useState(false);
   const [addToFavoritesShown, setAddToFavoritesShown] = useState(false);
@@ -156,7 +151,7 @@ export default function MessagesContainer({
   const ChatInputRef = useRef(null);
   const favoritingRef = useRef(false);
   const timerRef = useRef(null);
-  const menuLabel = isMobile(navigator) ? '' : 'Menu';
+  const menuLabel = deviceIsMobile ? '' : 'Menu';
 
   const favorited = useMemo(() => {
     return allFavoriteChannelIds[selectedChannelId];
@@ -167,10 +162,10 @@ export default function MessagesContainer({
     [channelOnCall.id, selectedChannelId]
   );
 
-  const subjectId = useMemo(() => subjectObj[selectedChannelId]?.id, [
-    selectedChannelId,
-    subjectObj
-  ]);
+  const subjectId = useMemo(
+    () => subjectObj[selectedChannelId]?.id,
+    [selectedChannelId, subjectObj]
+  );
 
   useEffect(() => {
     mounted.current = true;
@@ -211,9 +206,10 @@ export default function MessagesContainer({
     [channelLoading, creatingNewDMChannel, reconnecting]
   );
 
-  const maxSize = useMemo(() => returnMaxUploadSize(fileUploadLvl), [
-    fileUploadLvl
-  ]);
+  const maxSize = useMemo(
+    () => returnMaxUploadSize(fileUploadLvl),
+    [fileUploadLvl]
+  );
 
   const menuProps = useMemo(() => {
     if (currentChannel.twoPeople) {

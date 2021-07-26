@@ -31,6 +31,8 @@ ChannelHeader.propTypes = {
   selectedChannelId: PropTypes.number
 };
 
+const deviceIsMobile = isMobile(navigator);
+
 export default function ChannelHeader({
   currentChannel,
   currentChannel: { theme },
@@ -68,7 +70,7 @@ export default function ChannelHeader({
   const favorited = useMemo(() => {
     return allFavoriteChannelIds[selectedChannelId];
   }, [allFavoriteChannelIds, selectedChannelId]);
-  const menuLabel = isMobile(navigator) ? '' : 'Menu';
+  const menuLabel = deviceIsMobile ? '' : 'Menu';
 
   const {
     content = defaultChatSubject,
@@ -376,7 +378,7 @@ export default function ChannelHeader({
   );
 
   function handleMouseOver() {
-    if (textIsOverflown(HeaderLabelRef.current) && !isMobile(navigator)) {
+    if (textIsOverflown(HeaderLabelRef.current) && !deviceIsMobile) {
       setOnHover(true);
     }
   }
@@ -395,7 +397,7 @@ export default function ChannelHeader({
     });
     setOnEdit(false);
     onClearSubjectSearchResults();
-    if (!isMobile(navigator)) {
+    if (!deviceIsMobile) {
       onInputFocus();
     }
   }
@@ -447,7 +449,7 @@ export default function ChannelHeader({
         });
         setOnEdit(false);
         setSubmitting(false);
-        if (!isMobile(navigator)) {
+        if (!deviceIsMobile) {
           onInputFocus();
         }
       } catch (error) {

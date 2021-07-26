@@ -11,6 +11,8 @@ Deleted.propTypes = {
   onUndeleteSlide: PropTypes.func.isRequired
 };
 
+const deviceIsMobile = isMobile(navigator);
+
 export default function Deleted({ onRemoveInteractiveSlide, onUndeleteSlide }) {
   return (
     <div
@@ -52,7 +54,7 @@ export default function Deleted({ onRemoveInteractiveSlide, onUndeleteSlide }) {
         >
           <Icon icon="minus" />
           <span style={{ marginLeft: '1rem' }}>
-            Hide{isMobile(navigator) ? '' : ' this message'}
+            Hide{deviceIsMobile ? '' : ' this message'}
           </span>
         </Button>
       </div>

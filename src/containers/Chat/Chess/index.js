@@ -50,6 +50,8 @@ Chess.propTypes = {
   style: PropTypes.object
 };
 
+const deviceIsMobile = isMobile(navigator);
+
 export default function Chess({
   countdownNumber,
   channelId,
@@ -108,10 +110,10 @@ export default function Chess({
     }
   }, [parsedState]);
 
-  const myColor = useMemo(() => parsedState?.playerColors[myId] || 'white', [
-    myId,
-    parsedState
-  ]);
+  const myColor = useMemo(
+    () => parsedState?.playerColors[myId] || 'white',
+    [myId, parsedState]
+  );
 
   const userMadeLastMove = move.by === myId;
   const isCheck = parsedState?.isCheck;
@@ -404,18 +406,13 @@ export default function Chess({
               squares: newSquares,
               type: 'king'
             });
-            const {
-              moved,
-              isCheck,
-              isCheckmate,
-              isDraw,
-              isStalemate
-            } = processResult({
-              myKingIndex,
-              newSquares,
-              dest: i,
-              src: selectedIndex
-            });
+            const { moved, isCheck, isCheckmate, isDraw, isStalemate } =
+              processResult({
+                myKingIndex,
+                newSquares,
+                dest: i,
+                src: selectedIndex
+              });
             if (moved) {
               handleMove({
                 newSquares,
@@ -561,7 +558,7 @@ export default function Chess({
       className={css`
         height: 515px;
         @media (max-width: ${mobileMaxWidth}) {
-          height: ${isFromModal || !isMobile(navigator)
+          height: ${isFromModal || !deviceIsMobile
             ? 'auto'
             : statusText
             ? '335px'

@@ -10,6 +10,8 @@ StatusTag.propTypes = {
   isProfilePage: PropTypes.bool
 };
 
+const deviceIsMobile = isMobile(navigator);
+
 export default function StatusTag({ isProfilePage, large, status = 'online' }) {
   const backgroundColor = {
     online: Color.green(),
@@ -17,7 +19,7 @@ export default function StatusTag({ isProfilePage, large, status = 'online' }) {
     away: Color.orange()
   };
 
-  return !(isMobile(navigator) && isProfilePage) && large ? (
+  return !(deviceIsMobile && isProfilePage) && large ? (
     <div
       className={css`
         top: 74%;

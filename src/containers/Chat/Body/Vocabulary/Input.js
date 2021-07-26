@@ -20,6 +20,8 @@ Input.propTypes = {
   isSubmitting: PropTypes.bool
 };
 
+const deviceIsMobile = isMobile(navigator);
+
 export default function Input({
   innerRef,
   loading,
@@ -35,11 +37,10 @@ export default function Input({
   const {
     actions: { onSetVocabErrorMessage }
   } = useChatContext();
-
-  const text = state['vocabulary']?.text || '';
+  const text = useMemo(() => state['vocabulary']?.text || '', [state]);
 
   useEffect(() => {
-    if (!isMobile(navigator)) {
+    if (!deviceIsMobile) {
       innerRef.current.focus();
     }
   }, [innerRef]);

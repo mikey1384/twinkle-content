@@ -20,7 +20,7 @@ XPBar.propTypes = {
   videoId: PropTypes.number.isRequired
 };
 
-const isViewingOnMobile = isMobile(navigator);
+const deviceIsMobile = isMobile(navigator);
 
 function XPBar({
   isChat,
@@ -126,7 +126,7 @@ function XPBar({
           <div style={{ marginLeft: '0.7rem' }}>
             {continuingStatusShown && (
               <span>
-                Continue{isMobile(navigator) && isChat ? '' : ' watching'} (
+                Continue{deviceIsMobile && isChat ? '' : ' watching'} (
               </span>
             )}
             <span>{addCommasToNumber(xpRewardAmount)} XP</span>
@@ -214,7 +214,7 @@ function XPBar({
             >
               {numXpEarned > 0
                 ? `+ ${numXpEarnedWithComma}`
-                : isViewingOnMobile
+                : deviceIsMobile
                 ? `${rewardLevel}-STAR`
                 : Stars}
             </div>
@@ -222,7 +222,7 @@ function XPBar({
               <div>
                 <div
                   onClick={() =>
-                    isViewingOnMobile ? setHovered((hovered) => !hovered) : {}
+                    deviceIsMobile ? setHovered((hovered) => !hovered) : {}
                   }
                   onMouseEnter={
                     twinkleCoins > 1000 ? () => setHovered(true) : () => {}

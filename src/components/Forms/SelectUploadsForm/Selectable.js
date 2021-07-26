@@ -17,6 +17,8 @@ Selectable.propTypes = {
   contentType: PropTypes.string
 };
 
+const deviceIsMobile = isMobile(navigator);
+
 export default function Selectable({
   contentType = 'video',
   item = {},
@@ -121,7 +123,7 @@ export default function Selectable({
   );
 
   function handleMouseOver() {
-    if (textIsOverflown(ThumbLabelRef.current) && !isMobile(navigator)) {
+    if (textIsOverflown(ThumbLabelRef.current) && !deviceIsMobile) {
       setOnTitleHover(true);
     }
   }

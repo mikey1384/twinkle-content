@@ -16,6 +16,8 @@ StartScreen.propTypes = {
   profileId: PropTypes.number.isRequired
 };
 
+const deviceIsMobile = isMobile(navigator);
+
 export default function StartScreen({ navigateTo, onHide, profileId }) {
   const {
     actions: { onUpdateProfileInfo }
@@ -42,7 +44,7 @@ export default function StartScreen({ navigateTo, onHide, profileId }) {
             color: Color.black()
           }}
         >
-          from Your {isMobile(navigator) ? 'Device' : 'Computer'}
+          from Your {deviceIsMobile ? 'Device' : 'Computer'}
         </div>
         <div
           style={{

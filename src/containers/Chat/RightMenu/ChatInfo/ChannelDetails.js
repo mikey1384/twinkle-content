@@ -12,6 +12,8 @@ ChannelDetails.propTypes = {
   style: PropTypes.object
 };
 
+const deviceIsMobile = isMobile(navigator);
+
 export default function ChannelDetails({ channelId, channelName, style }) {
   const {
     state: { customChannelNames }
@@ -56,7 +58,7 @@ export default function ChannelDetails({ channelId, channelName, style }) {
   );
 
   function handleMouseOver() {
-    if (textIsOverflown(ChannelNameRef.current) && !isMobile(navigator)) {
+    if (textIsOverflown(ChannelNameRef.current) && !deviceIsMobile) {
       setChannelNameHovered(true);
     }
   }

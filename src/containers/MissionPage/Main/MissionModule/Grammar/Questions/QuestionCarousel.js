@@ -18,6 +18,8 @@ QuestionCarousel.propTypes = {
   submitDisabled: PropTypes.bool
 };
 
+const deviceIsMobile = isMobile(navigator);
+
 export default function QuestionCarousel({
   conditionPassStatus,
   currentSlideIndex,
@@ -31,9 +33,10 @@ export default function QuestionCarousel({
 }) {
   const CarouselRef = useRef(null);
   useEffect(() => {
-    let scrollModifier = isMobile(navigator) ? -150 : -250;
+    let scrollModifier = deviceIsMobile ? -150 : -250;
     scrollElementToCenter(CarouselRef.current, scrollModifier);
   }, []);
+
   return (
     <div ref={CarouselRef}>
       <Carousel

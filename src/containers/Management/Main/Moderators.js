@@ -17,6 +17,8 @@ Moderators.propTypes = {
   canManage: PropTypes.bool.isRequired
 };
 
+const deviceIsMobile = isMobile(navigator);
+
 export default function Moderators({ canManage }) {
   const { userId, profileTheme } = useMyState();
   const {
@@ -33,7 +35,6 @@ export default function Moderators({ canManage }) {
         : moderator
     );
   }, [moderators, searchQuery]);
-  const isMobileView = isMobile(navigator);
 
   return (
     <ErrorBoundary>
@@ -55,7 +56,7 @@ export default function Moderators({ canManage }) {
             >
               <Icon icon="plus" />
               <span style={{ marginLeft: '0.7rem' }}>
-                Add{isMobileView ? '' : ' Moderators'}
+                Add{deviceIsMobile ? '' : ' Moderators'}
               </span>
             </Button>
           ) : null

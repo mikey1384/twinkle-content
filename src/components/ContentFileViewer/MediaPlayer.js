@@ -18,6 +18,8 @@ MediaPlayer.propTypes = {
   videoHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 
+const deviceIsMobile = isMobile(navigator);
+
 export default function MediaPlayer({
   contentId,
   contentType,
@@ -63,10 +65,7 @@ export default function MediaPlayer({
   }, []);
 
   const isNotLight = useMemo(
-    () =>
-      fileType === 'audio' ||
-      currentTime ||
-      (!isMobile(navigator) && !thumbUrl),
+    () => fileType === 'audio' || currentTime || (!deviceIsMobile && !thumbUrl),
     [currentTime, fileType, thumbUrl]
   );
 

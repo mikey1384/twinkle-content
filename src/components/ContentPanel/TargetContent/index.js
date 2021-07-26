@@ -45,6 +45,8 @@ TargetContent.propTypes = {
   targetObj: PropTypes.object
 };
 
+const deviceIsMobile = isMobile(navigator);
+
 export default function TargetContent({
   className,
   contentId,
@@ -95,14 +97,11 @@ export default function TargetContent({
     onEditRewardComment,
     onUploadTargetComment
   } = useContext(LocalContext);
-  const {
-    xpRewardInterfaceShown,
-    fileUploadComplete,
-    fileUploadProgress
-  } = useContentState({
-    contentType: 'comment',
-    contentId: comment.id
-  });
+  const { xpRewardInterfaceShown, fileUploadComplete, fileUploadProgress } =
+    useContentState({
+      contentType: 'comment',
+      contentId: comment.id
+    });
   const subjectState = useContentState({
     contentType: 'subject',
     contentId: subject?.id
@@ -116,10 +115,8 @@ export default function TargetContent({
     ? getFileInfoFromFileName(comment?.fileName)
     : '';
   const [uploadingFile, setUploadingFile] = useState(false);
-  const [
-    recommendationInterfaceShown,
-    setRecommendationInterfaceShown
-  ] = useState(false);
+  const [recommendationInterfaceShown, setRecommendationInterfaceShown] =
+    useState(false);
   const [userListModalShown, setUserListModalShown] = useState(false);
   const InputFormRef = useRef(null);
   const RewardInterfaceRef = useRef(null);
@@ -555,7 +552,7 @@ export default function TargetContent({
 
   function handleReplyClick() {
     if (!replyInputShown) onShowTCReplyInput({ contentId, contentType });
-    if (!isMobile(navigator)) {
+    if (!deviceIsMobile) {
       setTimeout(() => InputFormRef.current.focus(), 0);
     }
   }

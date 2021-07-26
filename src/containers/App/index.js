@@ -46,6 +46,8 @@ App.propTypes = {
   location: PropTypes.object
 };
 
+const deviceIsMobile = isMobile(navigator);
+
 function App({ location, history }) {
   const {
     user: {
@@ -119,7 +121,7 @@ function App({ location, history }) {
     onRecordScrollPosition,
     pathname: location.pathname,
     scrollPositions,
-    isMobile: isMobile(navigator)
+    isMobile: deviceIsMobile
   });
 
   useEffect(() => {

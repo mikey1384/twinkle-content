@@ -14,6 +14,8 @@ Collector.propTypes = {
   user: PropTypes.object
 };
 
+const deviceIsMobile = isMobile(navigator);
+
 export default function Collector({ myId, style, user }) {
   const rankColor = useMemo(() => {
     return user.rank === 1
@@ -87,7 +89,7 @@ export default function Collector({ myId, style, user }) {
         </div>
       </div>
       <div>
-        {isMobile(navigator) && (
+        {deviceIsMobile && (
           <Icon
             className={css`
               color: ${textColor};
@@ -111,7 +113,7 @@ export default function Collector({ myId, style, user }) {
           `}
         >
           {addCommasToNumber(user.numWordsCollected || 0)}
-          {!isMobile(navigator) && <span> collected</span>}
+          {!deviceIsMobile && <span> collected</span>}
         </span>
       </div>
     </nav>

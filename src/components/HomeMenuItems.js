@@ -14,6 +14,8 @@ HomeMenuItems.propTypes = {
   style: PropTypes.object
 };
 
+const deviceIsMobile = isMobile(navigator);
+
 export default function HomeMenuItems({ history, style = {} }) {
   const {
     user: {
@@ -217,7 +219,7 @@ export default function HomeMenuItems({ history, style = {} }) {
             </nav>
           )}
         />
-        {managementLevel > 0 && isMobile(navigator) && (
+        {managementLevel > 0 && deviceIsMobile && (
           <Route
             exact
             path="/management"
@@ -262,7 +264,7 @@ export default function HomeMenuItems({ history, style = {} }) {
   );
 
   function handleOnPeopleClick() {
-    if (isMobile(navigator)) {
+    if (deviceIsMobile) {
       onSetProfilesLoaded(false);
     }
     history.push('/users');

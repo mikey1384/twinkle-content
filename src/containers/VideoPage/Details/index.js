@@ -57,6 +57,8 @@ Details.propTypes = {
   videoViews: PropTypes.number.isRequired
 };
 
+const deviceIsMobile = isMobile(navigator);
+
 export default function Details({
   addTags,
   byUser,
@@ -101,17 +103,15 @@ export default function Details({
     contentType: 'video',
     contentId: videoId
   });
-  const [
-    recommendationInterfaceShown,
-    setRecommendationInterfaceShown
-  ] = useState(false);
+  const [recommendationInterfaceShown, setRecommendationInterfaceShown] =
+    useState(false);
   const [titleHovered, setTitleHovered] = useState(false);
   const TitleRef = useRef(null);
   const RewardInterfaceRef = useRef(null);
-  const editState = useMemo(() => inputState['edit' + 'video' + videoId], [
-    inputState,
-    videoId
-  ]);
+  const editState = useMemo(
+    () => inputState['edit' + 'video' + videoId],
+    [inputState, videoId]
+  );
 
   useEffect(() => {
     if (!editState) {
@@ -591,7 +591,7 @@ export default function Details({
   }
 
   function onMouseOver() {
-    if (!isMobile(navigator) && textIsOverflown(TitleRef.current)) {
+    if (!deviceIsMobile && textIsOverflown(TitleRef.current)) {
       setTitleHovered(true);
     }
   }

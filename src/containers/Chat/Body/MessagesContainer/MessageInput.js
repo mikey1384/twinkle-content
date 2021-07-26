@@ -32,6 +32,8 @@ MessageInput.propTypes = {
   socketConnected: PropTypes.bool
 };
 
+const deviceIsMobile = isMobile(navigator);
+
 function MessageInput({
   currentChannelId = 0,
   innerRef,
@@ -89,7 +91,7 @@ function MessageInput({
   }, [innerRef, loading]);
 
   useEffect(() => {
-    if (!isMobile(navigator)) {
+    if (!deviceIsMobile) {
       innerRef.current.focus();
     }
   }, [currentChannelId, innerRef]);
@@ -217,7 +219,7 @@ function MessageInput({
     const enterKeyPressed = event.keyCode === 13;
     if (
       enterKeyPressed &&
-      !isMobile(navigator) &&
+      !deviceIsMobile &&
       !shiftKeyPressed &&
       !messageExceedsCharLimit &&
       !loading
