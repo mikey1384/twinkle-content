@@ -553,6 +553,7 @@ export default function MessagesContainer({
               {messages.map((message, index) => (
                 <Message
                   key={selectedChannelId + (message.id || 'newMessage' + index)}
+                  zIndex={messages.length - index}
                   channelId={selectedChannelId}
                   channelName={channelName}
                   chessCountdownNumber={chessCountdownObj[selectedChannelId]}

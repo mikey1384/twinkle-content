@@ -65,7 +65,8 @@ Message.propTypes = {
   onRewardMessageSubmit: PropTypes.func.isRequired,
   onSetScrollToBottom: PropTypes.func,
   onShowSubjectMsgsModal: PropTypes.func,
-  recepientId: PropTypes.number
+  recepientId: PropTypes.number,
+  zIndex: PropTypes.number
 };
 
 function Message({
@@ -120,7 +121,8 @@ function Message({
   onReplyClick,
   onRewardMessageSubmit,
   onSetScrollToBottom,
-  onShowSubjectMsgsModal
+  onShowSubjectMsgsModal,
+  zIndex
 }) {
   const [ComponentRef, inView] = useInView({
     threshold: 0
@@ -173,7 +175,11 @@ function Message({
       onSetVideoStarted
     }
   } = useContentContext();
-  const { thumbUrl: recentThumbUrl, isEditing, started } = useContentState({
+  const {
+    thumbUrl: recentThumbUrl,
+    isEditing,
+    started
+  } = useContentState({
     contentType: 'chat',
     contentId: messageId
   });
@@ -420,9 +426,10 @@ function Message({
     userIsUploader
   ]);
 
-  const displayedTimeStamp = useMemo(() => unix(timeStamp).format('LLL'), [
-    timeStamp
-  ]);
+  const displayedTimeStamp = useMemo(
+    () => unix(timeStamp).format('LLL'),
+    [timeStamp]
+  );
 
   const fileViewerMarginBottom = useMemo(
     () => getFileInfoFromFileName(fileName)?.fileType === 'audio' && '2rem',
@@ -524,7 +531,8 @@ function Message({
       ref={ComponentRef}
       className={MessageStyle.container}
       style={{
-        width: '100%'
+        width: '100%',
+        zIndex
       }}
     >
       {contentShown ? (
