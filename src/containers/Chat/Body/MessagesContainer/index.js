@@ -417,7 +417,7 @@ export default function MessagesContainer({
 
   return (
     <ErrorBoundary>
-      {!channelHeaderShown && !banned?.chat && (
+      {!channelHeaderShown && !banned?.chat && selectedChannelId !== 0 && (
         <div
           style={{
             display: 'flex',
@@ -428,57 +428,53 @@ export default function MessagesContainer({
             right: '1rem'
           }}
         >
-          {selectedChannelId !== 0 && (
-            <DropdownButton
-              skeuomorphic
-              color="darkerGray"
-              opacity={0.7}
-              listStyle={{
-                width: '15rem'
-              }}
-              direction="left"
-              icon="bars"
-              text={menuLabel}
-              menuProps={menuProps}
-            />
-          )}
-          {selectedChannelId !== 0 && (
+          <DropdownButton
+            skeuomorphic
+            color="darkerGray"
+            opacity={0.7}
+            listStyle={{
+              width: '15rem'
+            }}
+            direction="left"
+            icon="bars"
+            text={menuLabel}
+            menuProps={menuProps}
+          />
+          <div
+            style={{
+              marginLeft: '1.5rem'
+            }}
+          >
             <div
-              style={{
-                marginLeft: '1.5rem'
+              style={{ cursor: 'pointer', fontSize: '2rem' }}
+              onClick={handleFavoriteClick}
+              onMouseEnter={() => {
+                if (!favorited) {
+                  setAddToFavoritesShown(true);
+                }
               }}
+              onMouseLeave={() => setAddToFavoritesShown(false)}
             >
-              <div
-                style={{ cursor: 'pointer', fontSize: '2rem' }}
-                onClick={handleFavoriteClick}
-                onMouseEnter={() => {
-                  if (!favorited) {
-                    setAddToFavoritesShown(true);
-                  }
-                }}
-                onMouseLeave={() => setAddToFavoritesShown(false)}
-              >
-                <Icon
-                  color={Color.brownOrange()}
-                  icon={favorited ? 'star' : ['far', 'star']}
-                />
-              </div>
-              <FullTextReveal
-                direction="left"
-                className="desktop"
-                show={addToFavoritesShown && !favorited}
-                text="Add to favorites"
-                style={{
-                  marginTop: '0.5rem',
-                  fontSize: '1.3rem',
-                  width: 'auto',
-                  minWidth: null,
-                  maxWidth: null,
-                  padding: '1rem'
-                }}
+              <Icon
+                color={Color.brownOrange()}
+                icon={favorited ? 'star' : ['far', 'star']}
               />
             </div>
-          )}
+            <FullTextReveal
+              direction="left"
+              className="desktop"
+              show={addToFavoritesShown && !favorited}
+              text="Add to favorites"
+              style={{
+                marginTop: '0.5rem',
+                fontSize: '1.3rem',
+                width: 'auto',
+                minWidth: null,
+                maxWidth: null,
+                padding: '1rem'
+              }}
+            />
+          </div>
         </div>
       )}
       <input
