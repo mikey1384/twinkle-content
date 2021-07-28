@@ -428,38 +428,42 @@ export default function MessagesContainer({
             right: '1rem'
           }}
         >
-          <DropdownButton
-            skeuomorphic
-            color="darkerGray"
-            opacity={0.7}
-            listStyle={{
-              width: '15rem'
-            }}
-            direction="left"
-            icon="bars"
-            text={menuLabel}
-            menuProps={menuProps}
-          />
+          {selectedChannelId !== 0 && (
+            <DropdownButton
+              skeuomorphic
+              color="darkerGray"
+              opacity={0.7}
+              listStyle={{
+                width: '15rem'
+              }}
+              direction="left"
+              icon="bars"
+              text={menuLabel}
+              menuProps={menuProps}
+            />
+          )}
           <div
             style={{
               marginLeft: '1.5rem'
             }}
           >
-            <div
-              style={{ cursor: 'pointer', fontSize: '2rem' }}
-              onClick={handleFavoriteClick}
-              onMouseEnter={() => {
-                if (!favorited) {
-                  setAddToFavoritesShown(true);
-                }
-              }}
-              onMouseLeave={() => setAddToFavoritesShown(false)}
-            >
-              <Icon
-                color={Color.brownOrange()}
-                icon={favorited ? 'star' : ['far', 'star']}
-              />
-            </div>
+            {selectedChannelId !== 0 && (
+              <div
+                style={{ cursor: 'pointer', fontSize: '2rem' }}
+                onClick={handleFavoriteClick}
+                onMouseEnter={() => {
+                  if (!favorited) {
+                    setAddToFavoritesShown(true);
+                  }
+                }}
+                onMouseLeave={() => setAddToFavoritesShown(false)}
+              >
+                <Icon
+                  color={Color.brownOrange()}
+                  icon={favorited ? 'star' : ['far', 'star']}
+                />
+              </div>
+            )}
             <FullTextReveal
               direction="left"
               className="desktop"
