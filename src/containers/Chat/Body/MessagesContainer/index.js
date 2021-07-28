@@ -442,12 +442,12 @@ export default function MessagesContainer({
               menuProps={menuProps}
             />
           )}
-          <div
-            style={{
-              marginLeft: '1.5rem'
-            }}
-          >
-            {selectedChannelId !== 0 && (
+          {selectedChannelId !== 0 && (
+            <div
+              style={{
+                marginLeft: '1.5rem'
+              }}
+            >
               <div
                 style={{ cursor: 'pointer', fontSize: '2rem' }}
                 onClick={handleFavoriteClick}
@@ -463,22 +463,22 @@ export default function MessagesContainer({
                   icon={favorited ? 'star' : ['far', 'star']}
                 />
               </div>
-            )}
-            <FullTextReveal
-              direction="left"
-              className="desktop"
-              show={addToFavoritesShown && !favorited}
-              text="Add to favorites"
-              style={{
-                marginTop: '0.5rem',
-                fontSize: '1.3rem',
-                width: 'auto',
-                minWidth: null,
-                maxWidth: null,
-                padding: '1rem'
-              }}
-            />
-          </div>
+              <FullTextReveal
+                direction="left"
+                className="desktop"
+                show={addToFavoritesShown && !favorited}
+                text="Add to favorites"
+                style={{
+                  marginTop: '0.5rem',
+                  fontSize: '1.3rem',
+                  width: 'auto',
+                  minWidth: null,
+                  maxWidth: null,
+                  padding: '1rem'
+                }}
+              />
+            </div>
+          )}
         </div>
       )}
       <input
