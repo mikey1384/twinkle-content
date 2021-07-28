@@ -21,12 +21,7 @@ Chat.propTypes = {
 
 function Chat({ onFileUpload }) {
   const {
-    requestHelpers: {
-      createNewChat,
-      getNumberOfUnreadMessages,
-      loadChatChannel,
-      updateChatLastRead
-    }
+    requestHelpers: { createNewChat, loadChatChannel, updateChatLastRead }
   } = useAppContext();
   const { userId } = useMyState();
   const {
@@ -43,7 +38,6 @@ function Chat({ onFileUpload }) {
       onCreateNewChannel,
       onEnterChannelWithId,
       onEnterEmptyChat,
-      onGetNumberOfUnreadMessages,
       onNotifyThatMemberLeftChannel,
       onReceiveMessage,
       onReceiveMessageOnDifferentChannel,
@@ -127,17 +121,6 @@ function Chat({ onFileUpload }) {
       socket.removeListener('member_left', handleMemberLeft);
     };
   });
-
-  useEffect(() => {
-    if (mounted.current) {
-      handleGetNumberOfUnreadMessages();
-    }
-    async function handleGetNumberOfUnreadMessages() {
-      const numUnreads = await getNumberOfUnreadMessages();
-      onGetNumberOfUnreadMessages(numUnreads);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     socket.emit('change_away_status', pageVisible);
