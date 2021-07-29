@@ -22,17 +22,16 @@ export default function AddSlide({ archivedSlides, interactiveId, lastFork }) {
       onAddNewInteractiveSlide,
       onChangeNumUpdates,
       onConcatDisplayedSlides,
-      onRecoverArchivedSlide
+      onRecoverArchivedSlide,
+      onSetSlideState
     }
   } = useInteractiveContext();
   const forkOptionNotSelected = useMemo(() => {
     return lastFork && !lastFork?.selectedForkButtonId;
   }, [lastFork]);
 
-  const [
-    selectArchivedSlideModalShown,
-    setSelectArchivedSlideModalShown
-  ] = useState(false);
+  const [selectArchivedSlideModalShown, setSelectArchivedSlideModalShown] =
+    useState(false);
 
   return (
     <div
@@ -120,6 +119,13 @@ export default function AddSlide({ archivedSlides, interactiveId, lastFork }) {
     onConcatDisplayedSlides({
       interactiveId,
       newSlides: [selectedSlideId]
+    });
+    onSetSlideState({
+      interactiveId,
+      slideId: selectedSlideId,
+      newState: {
+        forkedFrom: lastFork?.id
+      }
     });
     setSelectArchivedSlideModalShown(false);
   }

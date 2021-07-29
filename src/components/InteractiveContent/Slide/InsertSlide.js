@@ -35,10 +35,8 @@ export default function InsertSlide({
       onRecoverArchivedSlide
     }
   } = useInteractiveContext();
-  const [
-    selectArchivedSlideModalShown,
-    setSelectArchivedSlideModalShown
-  ] = useState(false);
+  const [selectArchivedSlideModalShown, setSelectArchivedSlideModalShown] =
+    useState(false);
 
   return (
     <div
