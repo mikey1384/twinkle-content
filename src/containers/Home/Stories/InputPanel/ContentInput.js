@@ -243,7 +243,7 @@ function ContentInput() {
             <div style={{ marginTop: '1rem' }}>
               <div style={{ fontSize: '1.5rem' }}>
                 For every star you add, the amount of XP viewers of this video
-                earn per minute by the rises.
+                earn per minute rises.
               </div>
               <RewardLevelForm
                 themed
