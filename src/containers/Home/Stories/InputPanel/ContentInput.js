@@ -242,10 +242,8 @@ function ContentInput() {
           {!buttonDisabled && !urlHelper && form.isVideo && canEditRewardLevel && (
             <div style={{ marginTop: '1rem' }}>
               <div style={{ fontSize: '1.5rem' }}>
-                For every star you add, the amount of XP gained by the viewers
-                of this video rises by 200 XP. Please consider both difficulty
-                and educational importance of your video when setting the reward
-                level.
+                For every star you add, the amount of XP viewers of this video
+                earn per minute by the rises.
               </div>
               <RewardLevelForm
                 themed
@@ -360,7 +358,11 @@ function ContentInput() {
 
   async function handleCheckUrl(url) {
     const isVideo = isValidYoutubeUrl(url);
-    const { exists, content, ytDetails: details } = await checkContentUrl({
+    const {
+      exists,
+      content,
+      ytDetails: details
+    } = await checkContentUrl({
       url,
       contentType: isVideo ? 'video' : 'url'
     });

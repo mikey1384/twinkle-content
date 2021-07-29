@@ -263,9 +263,9 @@ function SubjectInput() {
               {canEditRewardLevel && (
                 <div style={{ marginTop: '1rem' }}>
                   <div style={{ fontSize: '1.5rem' }}>
-                    For every star you add, the amount of maximum XP you and
-                    other moderators could reward the participants of this
-                    subject rises by 1,000 XP.
+                    For every star you add, the maximum amount of XP that could
+                    be rewarded to the participants of this subject rises by
+                    2,000 XP.
                   </div>
                   <RewardLevelForm
                     themed
