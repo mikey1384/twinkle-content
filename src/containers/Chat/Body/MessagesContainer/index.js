@@ -423,7 +423,7 @@ export default function MessagesContainer({
             display: 'flex',
             position: 'absolute',
             alignItems: 'center',
-            zIndex: 99999,
+            zIndex: 50000,
             top: '1rem',
             right: '1rem'
           }}
