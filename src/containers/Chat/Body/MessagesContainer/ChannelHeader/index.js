@@ -146,7 +146,7 @@ export default function ChannelHeader({
         label: (
           <>
             <Icon icon="exchange-alt" />
-            <span style={{ marginLeft: '1rem' }}>Change Subject</span>
+            <span style={{ marginLeft: '1rem' }}>Change Topic</span>
           </>
         ),
         onClick: () => setOnEdit(true)

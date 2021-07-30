@@ -61,15 +61,13 @@ export default function SettingsModal({
   } = useContentContext();
   const { twinkleCoins, userId } = useMyState();
   const [hovered, setHovered] = useState(false);
-  const [selectNewOwnerModalShown, setSelectNewOwnerModalShown] = useState(
-    false
-  );
+  const [selectNewOwnerModalShown, setSelectNewOwnerModalShown] =
+    useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   const [editedChannelName, setEditedChannelName] = useState(channelName);
   const [editedIsClosed, setEditedIsClosed] = useState(isClosed);
-  const [editedCanChangeSubject, setEditedCanChangeSubject] = useState(
-    canChangeSubject
-  );
+  const [editedCanChangeSubject, setEditedCanChangeSubject] =
+    useState(canChangeSubject);
   const currentTheme = theme || 'green';
   const [selectedTheme, setSelectedTheme] = useState(currentTheme);
   const [themeToPurchase, setThemeToPurchase] = useState('');
@@ -169,7 +167,7 @@ export default function SettingsModal({
                   }}
                 >
                   <span style={{ color: Color.logoBlue() }}>Anyone</span> can
-                  change subject:
+                  change topic:
                 </p>
                 <SwitchButton
                   disabled={!canChangeSubject}

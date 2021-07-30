@@ -70,7 +70,7 @@ export default function SubjectsModal({
 
   return (
     <Modal onHide={onHide}>
-      <header>View Subjects</header>
+      <header>View Topics</header>
       <main>
         {!loaded && <Loading />}
         {mySubjects.subjects.length > 0 && (
@@ -81,7 +81,7 @@ export default function SubjectsModal({
                 marginBottom: '1rem'
               }}
             >
-              My Subjects
+              My Topics
             </h3>
             {mySubjects.subjects.map((subject) => (
               <SubjectItem
@@ -115,7 +115,7 @@ export default function SubjectsModal({
                 color: Color.green()
               }}
             >
-              All Subjects
+              All Topics
             </h3>
           </div>
         )}

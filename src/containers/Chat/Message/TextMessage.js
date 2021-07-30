@@ -73,7 +73,7 @@ function TextMessage({
     if (isReloadedSubject) {
       prefix = (
         <span style={{ fontWeight: 'bold', color: Color[theme || 'green']() }}>
-          {'Returning Subject: '}
+          {'Returning Topic: '}
         </span>
       );
     }

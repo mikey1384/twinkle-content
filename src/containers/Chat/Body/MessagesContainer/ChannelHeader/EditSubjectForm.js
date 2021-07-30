@@ -155,7 +155,7 @@ export default function EditSubjectForm({
               color={theme || 'green'}
               onClick={() => setSubjectsModalShown(true)}
             >
-              View Subjects
+              View Topics
             </Button>
           </div>
         </div>
