@@ -270,8 +270,8 @@ function SubjectInput() {
                 <div style={{ marginTop: '1rem' }}>
                   <div style={{ fontSize: '1.5rem' }}>
                     For every star you add, the maximum amount of XP that could
-                    be rewarded to the users who participated in this subject
-                    rises by 2,000 XP.
+                    be rewarded to each participant of this subject rises by
+                    2,000 XP.
                   </div>
                   <RewardLevelForm
                     themed
