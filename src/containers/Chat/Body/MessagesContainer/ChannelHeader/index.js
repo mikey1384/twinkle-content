@@ -211,6 +211,7 @@ export default function ChannelHeader({
   return (
     <ErrorBoundary
       className={css`
+        z-index: 50000;
         position: relative;
         width: 100%;
         height: 100%;
