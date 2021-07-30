@@ -153,13 +153,7 @@ function SubjectInput() {
             }}
           >
             <div style={{ width: '100%' }}>
-              <input
-                autoComplete="on"
-                style={{ display: 'none' }}
-                id="chrome-is-so-stupid"
-              />
               <Input
-                autoComplete="off"
                 placeholder="A subject Twinkle users can talk about"
                 value={title}
                 onChange={handleInputChange}

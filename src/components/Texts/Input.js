@@ -6,6 +6,7 @@ import { Color } from 'constants/css';
 import { renderText } from 'helpers/stringHelpers';
 
 Input.propTypes = {
+  autoComplete: PropTypes.string,
   hasError: PropTypes.bool,
   inputRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   onChange: PropTypes.func.isRequired,
@@ -16,6 +17,7 @@ Input.propTypes = {
 
 export default function Input({
   hasError,
+  autoComplete = 'off',
   inputRef,
   onChange,
   type = 'text',
@@ -25,6 +27,13 @@ export default function Input({
 }) {
   return (
     <ErrorBoundary>
+      {autoComplete === 'off' && (
+        <input
+          autoComplete="on"
+          style={{ display: 'none' }}
+          id="chrome-is-so-stupid"
+        />
+      )}
       <input
         {...props}
         type={type}
