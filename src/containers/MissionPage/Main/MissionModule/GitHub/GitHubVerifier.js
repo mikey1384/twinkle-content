@@ -93,7 +93,7 @@ export default function GitHubVerifier({ task }) {
                 </>
               }
             />
-            <StepSlide title="Tap the button below">
+            <StepSlide title="Tap the GitHub button below">
               <GitHubButton style={{ marginTop: '1.5rem' }} />
               <div
                 style={{

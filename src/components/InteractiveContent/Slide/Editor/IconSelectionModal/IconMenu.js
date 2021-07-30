@@ -47,6 +47,7 @@ const availableIcons = [
   'file-pdf',
   'file-video',
   'file-word',
+  ['fab', 'github'],
   'heart',
   'heart-square',
   'history',
