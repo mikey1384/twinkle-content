@@ -76,10 +76,9 @@ export default function ChatActions(dispatch) {
         type: 'CHANNEL_LOADING_DONE'
       });
     },
-    onClearNumUnreads(channelId) {
+    onClearNumUnreads() {
       return dispatch({
-        type: 'CLEAR_NUM_UNREADS',
-        channelId
+        type: 'CLEAR_NUM_UNREADS'
       });
     },
     onClearRecentChessMessage() {
