@@ -64,9 +64,13 @@ function Chat({ onFileUpload }) {
     if (userId && loaded && selectedChannelId) {
       updateChatLastRead(selectedChannelId);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loaded, userId, selectedChannelId]);
+
+  useEffect(() => {
     onClearNumUnreads();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loaded, pageVisible, userId, selectedChannelId]);
+  }, [pageVisible]);
 
   useEffect(() => {
     const otherMember = currentChannel.twoPeople
