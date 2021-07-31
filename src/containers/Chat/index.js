@@ -61,12 +61,10 @@ function Chat({ onFileUpload }) {
   );
 
   useEffect(() => {
-    if (userId && (loaded || !userId || !socket.connected)) {
-      if (userId && selectedChannelId) {
-        updateChatLastRead(selectedChannelId);
-      }
-      onClearNumUnreads();
+    if (userId && loaded && selectedChannelId) {
+      updateChatLastRead(selectedChannelId);
     }
+    onClearNumUnreads();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loaded, pageVisible, userId, selectedChannelId]);
 
