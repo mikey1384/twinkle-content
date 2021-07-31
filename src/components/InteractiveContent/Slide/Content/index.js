@@ -78,6 +78,10 @@ export default function Content({
     }
     return '';
   }, [bodyShown, descriptionShown, heading]);
+  const attachmentMarginTop = useMemo(
+    () => (descriptionShown ? '3rem' : 0),
+    [descriptionShown]
+  );
   const headingShown = useMemo(() => !!displayedHeading, [displayedHeading]);
 
   return (
@@ -126,7 +130,9 @@ export default function Content({
             flexDirection: 'column',
             justifyContent: 'center',
             flexGrow: 1,
-            ...(headingShown ? {} : { marginTop: '0.5rem' })
+            ...(headingShown
+              ? {}
+              : { marginTop: descriptionShown ? '0.5rem' : 0 })
           }}
         >
           {descriptionShown && (
@@ -142,7 +148,7 @@ export default function Content({
                 display: flex;
                 justify-content: center;
                 font-size: 2rem;
-                line-height: 2;
+                line-height: 1.6;
                 @media (max-width: ${mobileMaxWidth}) {
                   font-size: 1.5rem;
                 }
@@ -163,7 +169,7 @@ export default function Content({
           {(attachment?.fileUrl || attachment?.linkUrl) && (
             <div
               style={{
-                marginTop: '2rem',
+                marginTop: attachmentMarginTop,
                 width: '100%',
                 height: '100%',
                 display: 'flex',
