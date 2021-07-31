@@ -70,7 +70,7 @@ function Chat({ onFileUpload }) {
   useEffect(() => {
     onClearNumUnreads();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageVisible]);
+  }, []);
 
   useEffect(() => {
     const otherMember = currentChannel.twoPeople
