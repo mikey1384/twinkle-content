@@ -15,7 +15,7 @@ export default function MakeAccount({ index, okayPressed, onSetOkayPressed }) {
       index={index}
       title={
         <>
-          Go to{' '}
+          Create a Replit account from{' '}
           <a
             onClick={() => onSetOkayPressed(true)}
             href="https://replit.com"
@@ -23,8 +23,7 @@ export default function MakeAccount({ index, okayPressed, onSetOkayPressed }) {
             rel="noreferrer"
           >
             https://replit.com
-          </a>{' '}
-          and make a new account.
+          </a>
         </>
       }
     >

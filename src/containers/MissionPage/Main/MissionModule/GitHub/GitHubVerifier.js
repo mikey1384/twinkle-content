@@ -88,7 +88,7 @@ export default function GitHubVerifier({ task }) {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    www.github.com
+                    https://github.com
                   </a>
                 </>
               }

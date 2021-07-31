@@ -31,7 +31,7 @@ export default function Input({
         <input
           autoComplete="on"
           style={{ display: 'none' }}
-          id="chrome-is-so-stupid"
+          className="chrome-is-so-stupid"
         />
       )}
       <input
