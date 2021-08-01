@@ -22,6 +22,9 @@ export default function TaskContainer({
   },
   mission
 }) {
+  if (!mission.isMultiMission) {
+    return <InvalidPage />;
+  }
   const mounted = useRef(true);
   const { userId, isCreator } = useMyState();
   const {
@@ -77,7 +80,7 @@ export default function TaskContainer({
 
   const taskOrder = useMemo(() => {
     const result = [];
-    for (let subMission of mission?.subMissions) {
+    for (let subMission of mission?.subMissions || []) {
       for (let task of subMission?.tasks || []) {
         result.push(task.missionType);
       }
@@ -89,6 +92,10 @@ export default function TaskContainer({
     () => taskOrder.indexOf(taskType),
     [taskOrder, taskType]
   );
+
+  if (currentTaskOrderIndex === -1) {
+    return <InvalidPage />;
+  }
 
   const nextTask = useMemo(() => {
     const finalTaskIndex = taskOrder.length - 1;
