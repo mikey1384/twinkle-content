@@ -79,8 +79,8 @@ export default function Content({
     return '';
   }, [bodyShown, descriptionShown, heading]);
   const attachmentMarginTop = useMemo(
-    () => (descriptionShown ? '3rem' : 0),
-    [descriptionShown]
+    () => (!!displayedHeading || descriptionShown ? '3rem' : 0),
+    [descriptionShown, displayedHeading]
   );
   const headingShown = useMemo(() => !!displayedHeading, [displayedHeading]);
 
