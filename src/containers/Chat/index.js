@@ -12,7 +12,12 @@ import { phoneMaxWidth } from 'constants/css';
 import { socket } from 'constants/io';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
-import { useAppContext, useViewContext, useChatContext } from 'contexts';
+import {
+  useAppContext,
+  useNotiContext,
+  useViewContext,
+  useChatContext
+} from 'contexts';
 import { GENERAL_CHAT_ID } from 'constants/defaultValues';
 
 Chat.propTypes = {
@@ -50,6 +55,9 @@ function Chat({ onFileUpload }) {
   const {
     state: { pageVisible }
   } = useViewContext();
+  const {
+    state: { socketConnected }
+  } = useNotiContext();
   const [creatingChat, setCreatingChat] = useState(false);
   const [createNewChatModalShown, setCreateNewChatModalShown] = useState(false);
   const [userListModalShown, setUserListModalShown] = useState(false);
@@ -72,7 +80,7 @@ function Chat({ onFileUpload }) {
       onClearNumUnreads();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageVisible]);
+  }, [pageVisible, socketConnected]);
 
   useEffect(() => {
     const otherMember = currentChannel.twoPeople
