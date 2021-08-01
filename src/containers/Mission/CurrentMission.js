@@ -29,6 +29,7 @@ export default function CurrentMission({ style, missionId }) {
         Current Mission
       </p>
       <MissionItem
+        showStatus={false}
         style={{ marginTop: '1rem' }}
         mission={mission}
         missionLink={`/missions/${mission.missionType}`}
