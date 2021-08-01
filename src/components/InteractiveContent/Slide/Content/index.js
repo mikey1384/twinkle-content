@@ -78,11 +78,11 @@ export default function Content({
     }
     return '';
   }, [bodyShown, descriptionShown, heading]);
-  const attachmentMarginTop = useMemo(
-    () => (!!displayedHeading || descriptionShown ? '3rem' : 0),
-    [descriptionShown, displayedHeading]
-  );
   const headingShown = useMemo(() => !!displayedHeading, [displayedHeading]);
+  const attachmentMarginTop = useMemo(
+    () => (headingShown || descriptionShown ? '3rem' : 0),
+    [descriptionShown, headingShown]
+  );
 
   return (
     <div
