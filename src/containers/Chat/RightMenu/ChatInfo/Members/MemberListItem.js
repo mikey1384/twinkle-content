@@ -6,7 +6,7 @@ import Icon from 'components/Icon';
 import { useChatContext } from 'contexts';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useContentState } from 'helpers/hooks';
 
 MemberListItem.propTypes = {
   onlineMembers: PropTypes.object,
@@ -24,6 +24,8 @@ function MemberListItem({ onlineMembers, creatorId, isClass, member, style }) {
       }
     }
   } = useChatContext();
+  const { username: memberName, profilePicUrl: memberProfilePicUrl } =
+    useContentState({ contentId: member.id, contentType: 'user' });
   const { userId: myId } = useMyState();
   const usernameWidth = useMemo(() => (isClass ? '20%' : '42%'), [isClass]);
   return username || member.username ? (
@@ -53,7 +55,9 @@ function MemberListItem({ onlineMembers, creatorId, isClass, member, style }) {
             }
           `}
           userId={member.id}
-          profilePicUrl={member.profilePicUrl || profilePicUrl}
+          profilePicUrl={
+            memberProfilePicUrl || profilePicUrl || member.profilePicUrl
+          }
           online={!!onlineMembers[member.id]}
           isAway={member.id === myId ? false : isAway}
           isBusy={member.id === myId ? false : isBusy}
@@ -74,7 +78,10 @@ function MemberListItem({ onlineMembers, creatorId, isClass, member, style }) {
               font-size: 1.3rem;
             }
           `}
-          user={{ id: member.id, username: member.username || username }}
+          user={{
+            id: member.id,
+            username: memberName || username || member.username
+          }}
         />
         {creatorId === member.id ? (
           <div
