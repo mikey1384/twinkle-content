@@ -4,6 +4,7 @@ import CopyCode from './CopyCode';
 import PasteCode from './PasteCode';
 import Button from 'components/Button';
 import StepSlide from '../../../components/StepSlide';
+import { isMobile } from 'helpers';
 import { css } from '@emotion/css';
 
 CopyAndPasteCode.propTypes = {
@@ -11,6 +12,7 @@ CopyAndPasteCode.propTypes = {
   onCorrectCodeEntered: PropTypes.func.isRequired
 };
 
+const deviceIsMobile = isMobile(navigator);
 const initialCode = `${Math.random().toString(36).substr(2, 6)}`;
 const codeToCopy = `import { useEffect, useState } from 'react';
 
@@ -47,6 +49,28 @@ export default HomePage;`;
 
 export default function CopyAndPasteCode({ index, onCorrectCodeEntered }) {
   const [codeCopied, setCodeCopied] = useState(false);
+
+  if (deviceIsMobile) {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          width: '100%',
+          height: '7rem',
+          fontSize: '1.7rem',
+          fontWeight: 'bold',
+          alignItems: 'center',
+          lineHeight: 2
+        }}
+      >
+        <p>Sorry, you need to use a computer for this step</p>
+        <p>Come back when you are using a computer</p>
+      </div>
+    );
+  }
+
   return (
     <StepSlide index={index} title="Copy the following code.">
       <CopyCode codeToCopy={codeToCopy} style={{ marginTop: '1.5rem' }} />
