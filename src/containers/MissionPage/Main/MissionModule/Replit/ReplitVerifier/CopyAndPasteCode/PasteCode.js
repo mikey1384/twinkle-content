@@ -14,6 +14,8 @@ PasteCode.propTypes = {
   onCorrectCodeEntered: PropTypes.func.isRequired
 };
 
+const deviceIsMobile = isMobile(navigator);
+
 export default function PasteCode({
   initialCode,
   style,
@@ -22,7 +24,7 @@ export default function PasteCode({
   const [watched, setWatched] = useState(false);
   const [verificationCode, setVerificationCode] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
-  const deviceIsMobile = isMobile(navigator);
+
   return (
     <div
       style={{
