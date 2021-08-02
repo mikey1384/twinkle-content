@@ -45,7 +45,7 @@ export default function FinalizeYourCode({
               Feel free to change it anyway you want
             </span>{' '}
             before we publish it on the internet!
-            <br /> Check out the tutorial if you need any help.
+            <br /> Check out the tutorial for cool tips
           </>
         }
       >
