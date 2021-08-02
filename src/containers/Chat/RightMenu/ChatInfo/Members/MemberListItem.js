@@ -53,7 +53,7 @@ function MemberListItem({ onlineMembers, creatorId, isClass, member, style }) {
             }
           `}
           userId={member.id}
-          profilePicUrl={profilePicUrl || member.profilePicUrl}
+          profilePicUrl={member.profilePicUrl || profilePicUrl}
           online={!!onlineMembers[member.id]}
           isAway={member.id === myId ? false : isAway}
           isBusy={member.id === myId ? false : isBusy}
@@ -74,7 +74,7 @@ function MemberListItem({ onlineMembers, creatorId, isClass, member, style }) {
               font-size: 1.3rem;
             }
           `}
-          user={{ id: member.id, username: username || member.username }}
+          user={{ id: member.id, username: member.username || username }}
         />
         {creatorId === member.id ? (
           <div
