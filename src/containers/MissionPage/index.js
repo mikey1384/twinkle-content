@@ -120,7 +120,6 @@ export default function MissionPage({
         {isCreator && (
           <FilterBar
             className="mobile"
-            bordered
             style={{
               fontSize: '1.6rem',
               height: '5rem'
@@ -128,7 +127,9 @@ export default function MissionPage({
           >
             <nav
               className={
-                location.pathname === `/missions/${missionType}` ? 'active' : ''
+                location.pathname !== `/missions/${missionType}/manage`
+                  ? 'active'
+                  : ''
               }
               onClick={() => history.push(`/missions/${missionType}`)}
             >
