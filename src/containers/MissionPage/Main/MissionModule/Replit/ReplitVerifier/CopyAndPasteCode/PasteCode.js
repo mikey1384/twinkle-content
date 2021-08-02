@@ -4,7 +4,6 @@ import ReactPlayer from 'react-player';
 import Button from 'components/Button';
 import Input from 'components/Texts/Input';
 import { cloudFrontURL } from 'constants/defaultValues';
-import { isMobile } from 'helpers';
 import { css } from '@emotion/css';
 import { mobileMaxWidth, Color } from 'constants/css';
 
@@ -13,8 +12,6 @@ PasteCode.propTypes = {
   style: PropTypes.object,
   onCorrectCodeEntered: PropTypes.func.isRequired
 };
-
-const deviceIsMobile = isMobile(navigator);
 
 export default function PasteCode({
   initialCode,
@@ -62,11 +59,7 @@ export default function PasteCode({
               left: 0,
               bottom: 0
             }}
-            url={`${cloudFrontURL}/missions/replit/${
-              deviceIsMobile
-                ? 'mobile-video-instruction'
-                : 'desktop-video-instruction'
-            }.mp4`}
+            url={`${cloudFrontURL}/missions/replit/desktop-video-instruction.mp4`}
             controls
           />
         </div>
