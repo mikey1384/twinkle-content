@@ -16,7 +16,10 @@ export default function Picture({ numPictures, onDelete, picture, style }) {
   const imageUrl = useMemo(() => {
     return picture?.src ? `${cloudFrontURL}${picture?.src}` : '';
   }, [picture]);
-  const width = Math.min(100 / (numPictures + 1), 33);
+  const width = useMemo(
+    () => Math.min(100 / (numPictures + 1), 33),
+    [numPictures]
+  );
 
   return (
     <div
