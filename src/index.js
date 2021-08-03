@@ -85,6 +85,7 @@ import { faShoppingBag } from '@fortawesome/pro-solid-svg-icons/faShoppingBag';
 import { faSignOutAlt } from '@fortawesome/pro-solid-svg-icons/faSignOutAlt';
 import { faSlidersH } from '@fortawesome/pro-solid-svg-icons/faSlidersH';
 import { faSort } from '@fortawesome/pro-solid-svg-icons/faSort';
+import { faSparkles } from '@fortawesome/pro-solid-svg-icons/faSparkles';
 import { faSpinner } from '@fortawesome/pro-solid-svg-icons/faSpinner';
 import { faStar } from '@fortawesome/pro-solid-svg-icons/faStar';
 import { faStarHalfAlt } from '@fortawesome/pro-solid-svg-icons/faStarHalfAlt';
@@ -188,6 +189,7 @@ library.add(
   faSignOutAlt,
   faSlidersH,
   faSort,
+  faSparkles,
   faSpinner,
   faStar,
   faStarHalfAlt,

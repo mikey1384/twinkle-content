@@ -71,6 +71,7 @@ const availableIcons = [
   'sign-out-alt',
   'sliders-h',
   'sort',
+  'sparkles',
   'star',
   ['far', 'star'],
   'surprise',

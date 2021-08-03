@@ -45,7 +45,9 @@ export default function FinalizeYourCode({
               Feel free to change it anyway you want
             </span>{' '}
             before we publish it on the internet!
-            <br /> Check out the tutorial for cool tips
+            <br /> Check out the{' '}
+            <span style={{ color: Color.green() }}>tutorial</span> for some cool
+            tips
           </>
         }
       >
