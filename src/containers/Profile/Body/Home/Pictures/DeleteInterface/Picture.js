@@ -26,7 +26,7 @@ export default function Picture({ numPictures, onDelete, picture, style }) {
         border: 1px solid ${Color.borderGray()};
         border-radius: ${borderRadius};
         width: ${width}%;
-        padding-bottom: ${width}%;
+        padding-bottom: CALC(${width}% - 2px);
       `}
       style={style}
     >
