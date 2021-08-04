@@ -57,7 +57,7 @@ export default function SelectFeaturedSubjectsModal({
         ...objectify(results),
         ...objectify(subjects)
       });
-      setAllSubjects(results.map(subject => subject.id));
+      setAllSubjects(results.map((subject) => subject.id));
       setLoadMoreButton(loadMoreShown);
       setLoaded(true);
     }
@@ -119,7 +119,7 @@ export default function SelectFeaturedSubjectsModal({
                   No Subjects{stringIsEmpty(searchText) ? '' : ' Found'}
                 </p>
               ) : (
-                displayedSubjects.map(subjectId => (
+                displayedSubjects.map((subjectId) => (
                   <ContentListItem
                     selectable
                     selected={selected.includes(subjectId)}
@@ -177,11 +177,11 @@ export default function SelectFeaturedSubjectsModal({
           Cancel
         </Button>
         <Button
-          disabled={selected.length > 5 || submitting}
+          disabled={selected.length > 10 || submitting}
           color="blue"
           onClick={handleSubmit}
         >
-          {selected.length > 5 ? 'Cannot select more than 5' : 'Done'}
+          {selected.length > 10 ? 'Cannot select more than 10' : 'Done'}
         </Button>
       </footer>
     </Modal>
@@ -193,11 +193,11 @@ export default function SelectFeaturedSubjectsModal({
       filter: 'subject',
       searchText: text
     });
-    setSubjectObj(subjectObj => ({
+    setSubjectObj((subjectObj) => ({
       ...subjectObj,
       ...objectify(results)
     }));
-    setSearchedSubjects(results.map(result => result.id));
+    setSearchedSubjects(results.map((result) => result.id));
     setSearchLoadMoreButton(loadMoreShown);
   }
 
@@ -214,7 +214,9 @@ export default function SelectFeaturedSubjectsModal({
           limit: 10,
           filter: 'subject',
           searchText,
-          shownResults: searchedSubjects.map(subjectId => subjectObj[subjectId])
+          shownResults: searchedSubjects.map(
+            (subjectId) => subjectObj[subjectId]
+          )
         };
     const method = stringIsEmpty(searchText) ? loadUploads : searchContent;
     const { results, loadMoreButton: loadMoreShown } = await method(options);
@@ -225,8 +227,8 @@ export default function SelectFeaturedSubjectsModal({
     const setSubjectsMethod = stringIsEmpty(searchText)
       ? setAllSubjects
       : setSearchedSubjects;
-    setSubjectsMethod(subjects =>
-      subjects.concat(results.map(subject => subject.id))
+    setSubjectsMethod((subjects) =>
+      subjects.concat(results.map((subject) => subject.id))
     );
     setLoadingMore(false);
     const setLoadMoreButtonMethod = stringIsEmpty(searchText)
@@ -237,15 +239,15 @@ export default function SelectFeaturedSubjectsModal({
 
   function handleSelect(selectedId) {
     if (selected.includes(selectedId)) {
-      setSelected(selected => selected.filter(id => id !== selectedId));
+      setSelected((selected) => selected.filter((id) => id !== selectedId));
     } else {
-      setSelected(selected => [selectedId].concat(selected));
+      setSelected((selected) => [selectedId].concat(selected));
     }
   }
 
   async function handleSubmit() {
     setSubmitting(true);
     await uploadFeaturedSubjects({ selected });
-    onSubmit(selected.map(selectedId => subjectObj[selectedId]));
+    onSubmit(selected.map((selectedId) => subjectObj[selectedId]));
   }
 }
