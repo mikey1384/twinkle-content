@@ -11,7 +11,7 @@ import {
   useProfileContext
 } from 'contexts';
 
-HeaderNav.propTypes = {
+Nav.propTypes = {
   isMobileSideMenu: PropTypes.bool,
   active: PropTypes.bool,
   alert: PropTypes.bool,
@@ -26,7 +26,7 @@ HeaderNav.propTypes = {
   to: PropTypes.string
 };
 
-function HeaderNav({
+function Nav({
   active,
   alert,
   alertColor,
@@ -214,4 +214,4 @@ function HeaderNav({
   }
 }
 
-export default memo(HeaderNav);
+export default memo(Nav);

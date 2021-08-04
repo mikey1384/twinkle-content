@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
-import HeaderNav from './HeaderNav';
+import Nav from './Nav';
 import Icon from 'components/Icon';
 import { matchPath } from 'react-router';
 import { Color, mobileMaxWidth } from 'constants/css';
@@ -210,7 +210,7 @@ function MainNavs({
         }
       `}
     >
-      <HeaderNav
+      <Nav
         isMobileSideMenu
         className="mobile"
         alert={numNewNotis > 0 || totalRewardAmount > 0}
@@ -219,41 +219,41 @@ function MainNavs({
         onClick={onMobileMenuOpen}
       />
       {profileNav && (
-        <HeaderNav
+        <Nav
           to={profileNav}
           pathname={pathname}
           className="mobile"
           imgLabel="user"
         />
       )}
-      <HeaderNav
+      <Nav
         to={homeNav}
         isHome
         className="mobile"
         imgLabel="home"
         alert={pathname === '/' && (numNewPosts > 0 || feedsOutdated)}
       />
-      <HeaderNav
+      <Nav
         to={`/${exploreCategory}`}
         pathname={pathname}
         className="mobile"
         imgLabel="search"
       />
       {contentNav && (
-        <HeaderNav
+        <Nav
           to={`/${contentPath}`}
           pathname={pathname}
           className="mobile"
           imgLabel={contentIconType}
         />
       )}
-      <HeaderNav
+      <Nav
         to={`/missions`}
         pathname={pathname}
         className="mobile"
         imgLabel="tasks"
       />
-      <HeaderNav
+      <Nav
         to="/chat"
         pathname={pathname}
         className="mobile"
@@ -261,7 +261,7 @@ function MainNavs({
         alert={chatAlertShown}
       />
       {profileNav && (
-        <HeaderNav
+        <Nav
           to={profileNav}
           pathname={pathname}
           className="desktop"
@@ -269,9 +269,9 @@ function MainNavs({
           imgLabel="user"
         >
           {truncateText({ text: profileUsername.toUpperCase(), limit: 7 })}
-        </HeaderNav>
+        </Nav>
       )}
-      <HeaderNav
+      <Nav
         to={homeNav}
         isHome
         pathname={pathname}
@@ -283,8 +283,8 @@ function MainNavs({
         {pathname === '/' && !usersMatch && numNewPosts > 0
           ? ` (${numNewPosts})`
           : ''}
-      </HeaderNav>
-      <HeaderNav
+      </Nav>
+      <Nav
         to={`/${exploreCategory}`}
         pathname={pathname}
         className="desktop"
@@ -292,9 +292,9 @@ function MainNavs({
         imgLabel="search"
       >
         EXPLORE
-      </HeaderNav>
+      </Nav>
       {contentNav && (
-        <HeaderNav
+        <Nav
           to={`/${contentPath}`}
           pathname={pathname}
           className="desktop"
@@ -302,9 +302,9 @@ function MainNavs({
           imgLabel={contentIconType}
         >
           {contentNav.substring(0, contentNav.length - 1).toUpperCase()}
-        </HeaderNav>
+        </Nav>
       )}
-      <HeaderNav
+      <Nav
         to={`/missions`}
         pathname={pathname}
         className="desktop"
@@ -312,7 +312,7 @@ function MainNavs({
         imgLabel="tasks"
       >
         MISSIONS
-      </HeaderNav>
+      </Nav>
       <div
         className={css`
           margin-left: 2rem;
@@ -321,7 +321,7 @@ function MainNavs({
           }
         `}
       >
-        <HeaderNav
+        <Nav
           to="/chat"
           pathname={pathname}
           className="desktop"
@@ -329,7 +329,7 @@ function MainNavs({
           alert={chatAlertShown}
         >
           CHAT
-        </HeaderNav>
+        </Nav>
       </div>
       {userId && typeof twinkleCoins === 'number' && (
         <div
