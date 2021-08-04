@@ -189,6 +189,11 @@ function MainNavs({
     return result;
   }, [profileNav]);
 
+  const chatAlertShown = useMemo(
+    () => loggedIn && !chatMatch && numChatUnreads > 0,
+    [chatMatch, loggedIn, numChatUnreads]
+  );
+
   useEffect(() => {
     socket.emit('change_busy_status', !chatMatch);
   }, [chatMatch]);
@@ -253,7 +258,7 @@ function MainNavs({
         pathname={pathname}
         className="mobile"
         imgLabel="comments"
-        alert={loggedIn && !chatMatch && numChatUnreads > 0}
+        alert={chatAlertShown}
       />
       {profileNav && (
         <HeaderNav
@@ -321,7 +326,7 @@ function MainNavs({
           pathname={pathname}
           className="desktop"
           imgLabel="comments"
-          alert={loggedIn && !chatMatch && numChatUnreads > 0}
+          alert={chatAlertShown}
         >
           CHAT
         </HeaderNav>
