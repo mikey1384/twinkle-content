@@ -115,14 +115,13 @@ export default function EditSubjectForm({
                 position: 'relative',
                 marginTop: '1.5rem'
               }}
-              onSubmit={handleEditSubmit}
             >
               <Input
                 autoFocus={autoFocus}
                 placeholder={edit.subject}
                 value={title}
                 onChange={onInputChange}
-                onKeyUp={(event) => setTitle(addEmoji(event.target.value))}
+                onKeyUp={onKeyUp}
                 onKeyDown={onKeyDown}
               />
               {searchResults.length > 0 && (
@@ -188,6 +187,13 @@ export default function EditSubjectForm({
     }
   }
 
+  function onKeyUp(event) {
+    setTitle(addEmoji(event.target.value));
+    if (event.keyCode === 13) {
+      handleEditSubmit();
+    }
+  }
+
   function onInputChange(text) {
     setTitle(text);
     setHighlightedIndex(-1);
@@ -205,8 +211,7 @@ export default function EditSubjectForm({
     setHighlightedIndex(-1);
   }
 
-  function handleEditSubmit(event) {
-    event.preventDefault();
+  function handleEditSubmit() {
     if (!readyForSubmit) return;
     if (highlightedIndex > -1) {
       const { id: subjectId } = searchResults[highlightedIndex];
