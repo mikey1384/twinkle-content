@@ -469,8 +469,13 @@ export function processedStringWithURL(string) {
     const greenSentenceRegex = /((g\|[^\s]){1}([^\n])+([^\s]\|g){1})/gi;
     const limeWordRegex = /(l\|[^\s]+\|l)/gi;
     const limeSentenceRegex = /((l\|[^\s]){1}([^\n])+([^\s]\|l){1})/gi;
+    const logoBlueWordRegex = /(lb\|[^\s]+\|lb)/gi;
+    const logoBlueSentenceRegex = /((lb\|[^\s]){1}([^\n])+([^\s]\|lb){1})/gi;
     const orangeWordRegex = /(o\|[^\s]+\|o)/gi;
     const orangeSentenceRegex = /((o\|[^\s]){1}([^\n])+([^\s]\|o){1})/gi;
+    const passionFruitWordRegex = /(pf\|[^\s]+\|pf)/gi;
+    const passionFruitSentenceRegex =
+      /((pf\|[^\s]){1}([^\n])+([^\s]\|pf){1})/gi;
     const pinkWordRegex = /(p\|[^\s]+\|p)/gi;
     const pinkSentenceRegex = /((p\|[^\s]){1}([^\n])+([^\s]\|p){1})/gi;
     const purpleWordRegex = /(pu\|[^\s]+\|pu)/gi;
@@ -541,11 +546,27 @@ export function processedStringWithURL(string) {
           )}</span>`
       )
       .replace(
+        logoBlueWordRegex,
+        (string) =>
+          `<span style="color: rgb(75, 155, 225);">${string.substring(
+            3,
+            string.length - 3
+          )}</span>`
+      )
+      .replace(
         orangeWordRegex,
         (string) =>
           `<span style="color: orange;">${string.substring(
             2,
             string.length - 2
+          )}</span>`
+      )
+      .replace(
+        passionFruitWordRegex,
+        (string) =>
+          `<span style="color: rgb(243,103,123);">${string.substring(
+            3,
+            string.length - 3
           )}</span>`
       )
       .replace(
@@ -658,6 +679,22 @@ export function processedStringWithURL(string) {
           `<span style="color: lawngreen;">${string.substring(
             2,
             string.length - 2
+          )}</span>`
+      )
+      .replace(
+        logoBlueSentenceRegex,
+        (string) =>
+          `<span style="color: rgb(75, 155, 225);">${string.substring(
+            3,
+            string.length - 3
+          )}</span>`
+      )
+      .replace(
+        passionFruitSentenceRegex,
+        (string) =>
+          `<span style="color: rgb(243,103,123);">${string.substring(
+            3,
+            string.length - 3
           )}</span>`
       )
       .replace(
