@@ -32,7 +32,7 @@ export const initialCode = `function HomePage() {
     >
       <p
         style={{
-          color: '#4B9BE1',
+          color: '#4b9be1',
           fontFamily: 'sans-serif',
           fontWeight: 'bold',
           fontSize: '2rem'

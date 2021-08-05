@@ -9,7 +9,7 @@ const defaultCode = ({ username }) => `function HomePage() {
         alignItems: 'center'
       }}
     >
-      <h1 style={{ fontFamily: 'fantasy', color: '#4B9BE1' }}>
+      <h1 style={{ fontFamily: 'fantasy', color: '#4b9be1' }}>
         ${username}'s website
       </h1>
       <h2
