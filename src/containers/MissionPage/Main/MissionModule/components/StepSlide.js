@@ -7,12 +7,14 @@ StepSlide.propTypes = {
   children: PropTypes.node,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   style: PropTypes.object,
-  index: PropTypes.number
+  index: PropTypes.number,
+  innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
 };
 
-export default function StepSlide({ children, title, style, index }) {
+export default function StepSlide({ children, title, style, index, innerRef }) {
   return (
     <div
+      ref={innerRef}
       style={style}
       className={css`
         width: 100%;

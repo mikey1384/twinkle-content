@@ -5,12 +5,17 @@ import { Color } from 'constants/css';
 
 ConnectReplToGitHub.propTypes = {
   index: PropTypes.number,
+  innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   okayPressed: PropTypes.bool
 };
 
-export default function ConnectReplToGitHub({ index, okayPressed }) {
+export default function ConnectReplToGitHub({ index, innerRef, okayPressed }) {
   return (
-    <StepSlide title="Connect your Repl to GitHub" index={index}>
+    <StepSlide
+      title="Connect your Repl to GitHub"
+      innerRef={innerRef}
+      index={index}
+    >
       <div
         style={{
           marginBottom: okayPressed ? '2rem' : '2.5rem',

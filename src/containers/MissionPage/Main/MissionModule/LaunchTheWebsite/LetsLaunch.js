@@ -10,10 +10,11 @@ import { useAppContext, useMissionContext } from 'contexts';
 
 LetsLaunch.propTypes = {
   index: PropTypes.number,
+  innerRef: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   taskId: PropTypes.number.isRequired
 };
 
-export default function LetsLaunch({ index, taskId }) {
+export default function LetsLaunch({ index, innerRef, taskId }) {
   const {
     requestHelpers: { uploadMissionAttempt }
   } = useAppContext();
@@ -74,6 +75,7 @@ export default function LetsLaunch({ index, taskId }) {
           Vercel and paste it into the text box below.
         </>
       }
+      innerRef={innerRef}
       index={index}
     >
       <div

@@ -1,4 +1,4 @@
-import React, { Children, useEffect, useMemo, useState } from 'react';
+import React, { Children, useEffect, useMemo, useRef, useState } from 'react';
 import Button from 'components/Button';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
@@ -6,6 +6,7 @@ import Icon from 'components/Icon';
 import { Color } from 'constants/css';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
+import { scrollElementToCenter } from 'helpers';
 
 MultiStepContainer.propTypes = {
   children: PropTypes.node,
@@ -35,6 +36,7 @@ export default function MultiStepContainer({
   useEffect(() => {
     setHelpButtonPressed(false);
   }, [selectedIndex]);
+  const SlideRefs = useRef({});
   const childrenArray = useMemo(() => Children.toArray(children), [children]);
   const DisplayedSlide = useMemo(() => {
     const SlideComponent = childrenArray.filter(
@@ -44,6 +46,7 @@ export default function MultiStepContainer({
       ...SlideComponent,
       props: {
         ...SlideComponent?.props,
+        innerRef: (ref) => (SlideRefs.current[selectedIndex] = ref),
         index: selectedIndex
       }
     };
@@ -95,6 +98,10 @@ export default function MultiStepContainer({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [buttons, selectedIndex, childrenArray.length, taskId]);
+
+  useEffect(() => {
+    scrollElementToCenter(SlideRefs.current[selectedIndex]);
+  }, [selectedIndex]);
 
   return (
     <ErrorBoundary style={{ width: '100%' }}>

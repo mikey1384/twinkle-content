@@ -5,14 +5,21 @@ import { css } from '@emotion/css';
 
 MakeAccount.propTypes = {
   index: PropTypes.number,
+  innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   okayPressed: PropTypes.bool,
   onSetOkayPressed: PropTypes.func.isRequired
 };
 
-export default function MakeAccount({ index, okayPressed, onSetOkayPressed }) {
+export default function MakeAccount({
+  index,
+  innerRef,
+  okayPressed,
+  onSetOkayPressed
+}) {
   return (
     <StepSlide
       index={index}
+      innerRef={innerRef}
       title={
         <>
           Go to{' '}
