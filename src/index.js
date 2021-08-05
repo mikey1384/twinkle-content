@@ -39,6 +39,7 @@ import { faChevronDown } from '@fortawesome/pro-solid-svg-icons/faChevronDown';
 import { faChevronLeft } from '@fortawesome/pro-solid-svg-icons/faChevronLeft';
 import { faChevronRight } from '@fortawesome/pro-solid-svg-icons/faChevronRight';
 import { faClipboardCheck } from '@fortawesome/pro-solid-svg-icons/faClipboardCheck';
+import { faCloudUploadAlt } from '@fortawesome/pro-solid-svg-icons/faCloudUploadAlt';
 import { faCodeBranch } from '@fortawesome/pro-solid-svg-icons/faCodeBranch';
 import { faComment } from '@fortawesome/pro-solid-svg-icons/faComment';
 import { faCommentAlt } from '@fortawesome/pro-solid-svg-icons/faCommentAlt';
@@ -79,6 +80,7 @@ import { faQuestion } from '@fortawesome/pro-solid-svg-icons/faQuestion';
 import { faRecycle } from '@fortawesome/pro-solid-svg-icons/faRecycle';
 import { faRedo } from '@fortawesome/pro-solid-svg-icons/faRedo';
 import { faReply } from '@fortawesome/pro-solid-svg-icons/faReply';
+import { faSave } from '@fortawesome/pro-solid-svg-icons/faSave';
 import { faSearch } from '@fortawesome/pro-solid-svg-icons/faSearch';
 import { faSchool } from '@fortawesome/pro-solid-svg-icons/faSchool';
 import { faShoppingBag } from '@fortawesome/pro-solid-svg-icons/faShoppingBag';
@@ -144,6 +146,7 @@ library.add(
   faChevronLeft,
   faChevronRight,
   faClipboardCheck,
+  faCloudUploadAlt,
   faComment,
   faCommentAlt,
   faComments,
@@ -185,6 +188,7 @@ library.add(
   faQuestion,
   faSchool,
   faShoppingBag,
+  faSave,
   faSearch,
   faSignOutAlt,
   faSlidersH,

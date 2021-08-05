@@ -32,7 +32,7 @@ export default function LaunchTheWebsite({ style, task }) {
   const FirstButton = useMemo(() => {
     return {
       label: 'Save and move on',
-      color: 'green',
+      color: 'blue',
       skeuomorphic: true,
       onClick: async (onNext) => {
         await handleSaveCode(taskState.code);

@@ -4,8 +4,11 @@ import CodeSandbox from 'components/Forms/CodeSandbox';
 import defaultCode from './defaultCode';
 import ErrorBoundary from 'components/ErrorBoundary';
 import StepSlide from '../components/StepSlide';
+import Button from 'components/Button';
+import Icon from 'components/Icon';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import { useAppContext } from 'contexts';
 
 FinalizeYourCode.propTypes = {
   index: PropTypes.number,
@@ -22,9 +25,13 @@ export default function FinalizeYourCode({
   username,
   onSetCode
 }) {
+  const {
+    requestHelpers: { updateMissionStatus }
+  } = useAppContext();
   const [errorMsg, setErrorMsg] = useState('');
   const ComponentRef = useRef(null);
   const initialCode = useMemo(() => defaultCode({ username }), [username]);
+  const [saveAvailable, setSaveAvailable] = useState(true);
 
   return (
     <ErrorBoundary
@@ -66,14 +73,37 @@ export default function FinalizeYourCode({
             style={{ marginTop: '5rem' }}
             code={code}
             initialCode={initialCode}
-            onSetCode={onSetCode}
+            onSetCode={(code) => {
+              onSetCode(code);
+              setSaveAvailable(true);
+            }}
             onSetErrorMsg={setErrorMsg}
             hasError={!!errorMsg}
             prevUserId={task.prevUserId}
             runButtonLabel="check"
           />
         </div>
+        <Button
+          disabled={!saveAvailable}
+          onClick={handleSave}
+          style={{ marginTop: '2rem', marginBottom: '-0.5rem' }}
+          skeuomorphic
+          color="blue"
+        >
+          <Icon icon="save" />
+          <span style={{ marginLeft: '0.7rem' }}>
+            {saveAvailable ? 'Save' : 'Saved'}
+          </span>
+        </Button>
       </StepSlide>
     </ErrorBoundary>
   );
+
+  async function handleSave() {
+    await updateMissionStatus({
+      missionType: task.missionType,
+      newStatus: { code }
+    });
+    setSaveAvailable(false);
+  }
 }
