@@ -188,9 +188,10 @@ export default function EditSubjectForm({
   }
 
   function onKeyUp(event) {
-    setTitle(addEmoji(event.target.value));
     if (event.keyCode === 13) {
       handleEditSubmit();
+    } else {
+      setTitle(addEmoji(event.target.value));
     }
   }
 
