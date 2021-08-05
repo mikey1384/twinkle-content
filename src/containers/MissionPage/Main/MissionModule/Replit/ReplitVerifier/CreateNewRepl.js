@@ -5,12 +5,17 @@ import { css } from '@emotion/css';
 
 CreateNewRepl.propTypes = {
   index: PropTypes.number,
+  innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   okayPressed: PropTypes.bool
 };
 
-export default function CreateNewRepl({ index, okayPressed }) {
+export default function CreateNewRepl({ index, innerRef, okayPressed }) {
   return (
-    <StepSlide index={index} title={<>Create a Next.js Repl</>}>
+    <StepSlide
+      innerRef={innerRef}
+      index={index}
+      title={<>Create a Next.js Repl</>}
+    >
       {okayPressed && (
         <h1
           className={css`

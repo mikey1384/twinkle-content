@@ -8,7 +8,6 @@ import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 
 FinalizeYourCode.propTypes = {
-  innerRef: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   index: PropTypes.number,
   code: PropTypes.string,
   task: PropTypes.object.isRequired,
@@ -18,7 +17,6 @@ FinalizeYourCode.propTypes = {
 
 export default function FinalizeYourCode({
   code,
-  innerRef,
   index,
   task,
   username,
@@ -38,7 +36,6 @@ export default function FinalizeYourCode({
       `}
     >
       <StepSlide
-        innerRef={innerRef}
         index={index}
         title={
           <>
