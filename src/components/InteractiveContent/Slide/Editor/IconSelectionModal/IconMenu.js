@@ -64,6 +64,7 @@ const availableIcons = [
   'plus',
   'portal-enter',
   'question',
+  'repeat',
   'reply',
   'search',
   'school',
