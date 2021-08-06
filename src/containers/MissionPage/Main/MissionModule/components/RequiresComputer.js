@@ -24,8 +24,8 @@ export default function RequiresComputer({ children, ...props }) {
           lineHeight: 2
         }}
       >
-        <p>Sorry, you need to use a computer for this step</p>
-        <p>Come back when you are using a computer</p>
+        <p>Sorry, you need to use a computer for this step.</p>
+        <p>Come back when you are using a computer.</p>
       </div>
     );
   }
