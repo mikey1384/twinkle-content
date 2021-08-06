@@ -71,13 +71,14 @@ export default function MultiStepContainer({
             color={buttonObj.color || 'logoBlue'}
             skeuomorphic={buttonObj.skeuomorphic}
             filled={buttonObj.filled}
+            disabled={buttonObj.disabled}
             onClick={
               buttonObj.onClick
                 ? () => buttonObj.onClick(handleGoNext)
                 : handleGoNext
             }
           >
-            <span>{buttonObj.label}</span>
+            <span>{buttonObj.disabled ? 'Next' : buttonObj.label}</span>
             {!buttonObj.noArrow && (
               <Icon style={{ marginLeft: '0.7rem' }} icon="arrow-right" />
             )}

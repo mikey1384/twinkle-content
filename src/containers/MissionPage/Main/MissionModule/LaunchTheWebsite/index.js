@@ -8,13 +8,17 @@ import FinalizeYourCode from './FinalizeYourCode';
 import ConnectReplToGitHub from './ConnectReplToGitHub';
 import UpdateYourRepl from './UpdateYourRepl';
 import defaultCode from './defaultCode';
+import RequiresComputer from '../components/RequiresComputer';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
+import { isMobile } from 'helpers';
 
 LaunchTheWebsite.propTypes = {
   style: PropTypes.object,
   task: PropTypes.object
 };
+
+const deviceIsMobile = isMobile(navigator);
 
 export default function LaunchTheWebsite({ style, task }) {
   const { userId, state, username } = useMyState();
@@ -109,7 +113,12 @@ export default function LaunchTheWebsite({ style, task }) {
         buttons={[
           FirstButton,
           SecondButton,
-          { label: 'Yes I did', color: 'green', skeuomorphic: true },
+          {
+            label: 'Yes I did',
+            color: 'green',
+            skeuomorphic: true,
+            disabled: deviceIsMobile
+          },
           FourthButton
         ]}
         taskId={task.id}
@@ -127,7 +136,9 @@ export default function LaunchTheWebsite({ style, task }) {
           }
           okayPressed={makeAccountOkayPressed}
         />
-        <UpdateYourRepl code={code} />
+        <RequiresComputer>
+          <UpdateYourRepl code={code} />
+        </RequiresComputer>
         <ConnectReplToGitHub okayPressed={connectReplToGitHubOkayPressed} />
         <LetsLaunch taskId={task.id} />
       </MultiStepContainer>

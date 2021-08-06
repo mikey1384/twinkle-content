@@ -8,6 +8,7 @@ import MultiStepContainer from '../../components/MultiStepContainer';
 import TaskComplete from '../../components/TaskComplete';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
+import RequiresComputer from '../../components/RequiresComputer';
 
 ReplitVerifier.propTypes = {
   task: PropTypes.object.isRequired
@@ -91,11 +92,13 @@ export default function ReplitVerifier({ task }) {
             okayPressed={makeAccountOkayPressed}
           />
           <CreateNewRepl okayPressed={createReplOkayPressed} />
-          <CopyAndPasteCode
-            onCorrectCodeEntered={() =>
-              handleUpdateTaskProgress({ correctCodeEntered: true })
-            }
-          />
+          <RequiresComputer>
+            <CopyAndPasteCode
+              onCorrectCodeEntered={() =>
+                handleUpdateTaskProgress({ correctCodeEntered: true })
+              }
+            />
+          </RequiresComputer>
         </MultiStepContainer>
       ) : (
         <TaskComplete
