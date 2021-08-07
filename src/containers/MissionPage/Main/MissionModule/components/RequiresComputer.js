@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { isMobile } from 'helpers';
 
-const deviceIsMobile = isMobile(navigator);
-
 RequiresComputer.propTypes = {
   children: PropTypes.node
 };
+
+const deviceIsMobile = isMobile(navigator);
 
 export default function RequiresComputer({ children, ...props }) {
   if (deviceIsMobile) {
