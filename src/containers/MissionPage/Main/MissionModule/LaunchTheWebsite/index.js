@@ -82,6 +82,7 @@ export default function LaunchTheWebsite({ style, task }) {
         label: 'Okay',
         color: 'logoBlue',
         noArrow: true,
+        disabled: deviceIsMobile,
         skeuomorphic: true,
         onClick: () =>
           handleUpdateTaskProgress({ connectReplToGitHubOkayPressed: true })
@@ -90,6 +91,7 @@ export default function LaunchTheWebsite({ style, task }) {
     return {
       label: 'Yes',
       color: 'green',
+      disabled: deviceIsMobile,
       skeuomorphic: true
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -139,7 +141,9 @@ export default function LaunchTheWebsite({ style, task }) {
         <RequiresComputer>
           <UpdateYourRepl code={code} />
         </RequiresComputer>
-        <ConnectReplToGitHub okayPressed={connectReplToGitHubOkayPressed} />
+        <RequiresComputer>
+          <ConnectReplToGitHub okayPressed={connectReplToGitHubOkayPressed} />
+        </RequiresComputer>
         <LetsLaunch taskId={task.id} />
       </MultiStepContainer>
     </ErrorBoundary>
