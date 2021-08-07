@@ -615,9 +615,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
   useEffect(() => {
     const newNotiNum =
       (pathname === '/' ? numNewPosts : 0) + numNewNotis + numUnreads;
-    if (newNotiNum > 0) {
-      console.log(numNewPosts, numNewNotis, numUnreads);
-    }
+    console.log(numNewPosts, numNewNotis, numUnreads);
     document.title = `Twinkle${newNotiNum > 0 ? ' *' : ''}`;
   }, [numNewNotis, numNewPosts, numUnreads, pathname]);
 
