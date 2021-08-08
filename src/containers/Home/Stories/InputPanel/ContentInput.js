@@ -242,8 +242,8 @@ function ContentInput() {
           {!buttonDisabled && !urlHelper && form.isVideo && canEditRewardLevel && (
             <div style={{ marginTop: '1rem' }}>
               <div style={{ fontSize: '1.5rem' }}>
-                For every star you add, the amount of XP viewers of this video
-                earn per minute rises.
+                For every star you add, the amount of XP viewers earn per minute
+                rises.
               </div>
               <RewardLevelForm
                 themed
