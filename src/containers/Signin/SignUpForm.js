@@ -233,7 +233,7 @@ export default function SignUpForm({
       onSignup(data);
       onInitContent({ contentType: 'user', contentId: data.id, ...data });
     } catch (error) {
-      setErrorMessage(error?.response?.data);
+      setErrorMessage(error?.data);
     }
   }
 }

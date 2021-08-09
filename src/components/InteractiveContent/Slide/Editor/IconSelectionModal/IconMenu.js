@@ -66,6 +66,7 @@ const availableIcons = [
   'question',
   'repeat',
   'reply',
+  'rocket-launch',
   'search',
   'school',
   'shopping-bag',
