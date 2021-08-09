@@ -63,8 +63,10 @@ import { faHeart } from '@fortawesome/pro-solid-svg-icons/faHeart';
 import { faHeartSquare } from '@fortawesome/pro-solid-svg-icons/faHeartSquare';
 import { faHistory } from '@fortawesome/pro-solid-svg-icons/faHistory';
 import { faHome } from '@fortawesome/pro-solid-svg-icons/faHome';
+import { faHtml5 } from '@fortawesome/free-brands-svg-icons/faHtml5';
 import { faIndent } from '@fortawesome/pro-solid-svg-icons/faIndent';
 import { faImage } from '@fortawesome/pro-solid-svg-icons/faImage';
+import { faJs } from '@fortawesome/free-brands-svg-icons/faJs';
 import { faLightbulb } from '@fortawesome/pro-solid-svg-icons/faLightbulb';
 import { faLock } from '@fortawesome/pro-solid-svg-icons/faLock';
 import { faMinus } from '@fortawesome/pro-solid-svg-icons/faMinus';
@@ -77,12 +79,13 @@ import { faPlay } from '@fortawesome/pro-solid-svg-icons/faPlay';
 import { faPlus } from '@fortawesome/pro-solid-svg-icons/faPlus';
 import { faPortalEnter } from '@fortawesome/pro-solid-svg-icons/faPortalEnter';
 import { faQuestion } from '@fortawesome/pro-solid-svg-icons/faQuestion';
+import { faReact } from '@fortawesome/free-brands-svg-icons/faReact';
 import { faRecycle } from '@fortawesome/pro-solid-svg-icons/faRecycle';
 import { faRedo } from '@fortawesome/pro-solid-svg-icons/faRedo';
 import { faRepeat } from '@fortawesome/pro-solid-svg-icons/faRepeat';
 import { faReply } from '@fortawesome/pro-solid-svg-icons/faReply';
-import { faSave } from '@fortawesome/pro-solid-svg-icons/faSave';
 import { faRocketLaunch } from '@fortawesome/pro-solid-svg-icons/faRocketLaunch';
+import { faSave } from '@fortawesome/pro-solid-svg-icons/faSave';
 import { faSearch } from '@fortawesome/pro-solid-svg-icons/faSearch';
 import { faSchool } from '@fortawesome/pro-solid-svg-icons/faSchool';
 import { faShoppingBag } from '@fortawesome/pro-solid-svg-icons/faShoppingBag';
@@ -169,8 +172,10 @@ library.add(
   faHeartSquare,
   faHistory,
   faHome,
+  faHtml5,
   faImage,
   faIndent,
+  faJs,
   faLevelUp,
   faLightbulb,
   faLink,
@@ -184,6 +189,7 @@ library.add(
   faPlay,
   faPlus,
   faPortalEnter,
+  faReact,
   faRecycle,
   faRedo,
   faRepeat,
