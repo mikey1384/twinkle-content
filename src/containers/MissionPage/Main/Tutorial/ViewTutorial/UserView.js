@@ -33,7 +33,7 @@ export default function UserView({
         >
           <Icon icon="chalkboard-teacher" />
           <span style={{ marginLeft: '1rem' }}>
-            {tutorialButtonLabel || 'Start Tutorial'}
+            {tutorialButtonLabel || 'Press This Button'}
           </span>
         </Button>
       </div>

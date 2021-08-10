@@ -77,7 +77,7 @@ export default function CreatorView({
               border: `1px solid ${Color.borderGray()}`
             }}
           >
-            {tutorialButtonLabel || 'Start Tutorial'}
+            {tutorialButtonLabel || 'Press This Button'}
           </div>
         </div>
       )}

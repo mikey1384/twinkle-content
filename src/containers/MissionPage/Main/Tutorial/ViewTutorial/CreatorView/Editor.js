@@ -29,7 +29,7 @@ export default function Editor({
     tutorialPrompt || 'Need help?'
   );
   const [editedTutorialButtonLabel, setEditedTutorialButtonLabel] = useState(
-    tutorialButtonLabel || 'Start Tutorial'
+    tutorialButtonLabel || 'Press This Button'
   );
   return (
     <div
