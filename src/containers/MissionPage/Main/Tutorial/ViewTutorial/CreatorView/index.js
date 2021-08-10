@@ -66,9 +66,7 @@ export default function CreatorView({
             flexDirection: 'column'
           }}
         >
-          <h2 style={{ marginBottom: '2rem' }}>
-            {tutorialPrompt || 'Need help?'}
-          </h2>
+          <h2 style={{ marginBottom: '2rem' }}>{tutorialPrompt || 'Stuck?'}</h2>
           <div
             style={{
               fontSize: '2rem',
