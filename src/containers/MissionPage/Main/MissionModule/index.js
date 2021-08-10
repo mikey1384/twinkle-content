@@ -59,7 +59,7 @@ export default function MissionModule({
       {mission.missionType === 'hello-world' && (
         <HelloWorld task={mission} onSetMissionState={onSetMissionState} />
       )}
-      {mission.missionType === 'fixing-bugs' && (
+      {mission.missionType === 'fix-bugs' && (
         <FixingBugs task={mission} onSetMissionState={onSetMissionState} />
       )}
       {mission.missionType === 'write-it-yourself' && (
