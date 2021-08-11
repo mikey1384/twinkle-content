@@ -53,7 +53,7 @@ export default function Editor({
         const results = await lintCode(code);
         if (results[0].message) {
           return handleSetError({
-            error: results[0].message.split('\n')[0],
+            error: results[0]?.message.split('\n')[0],
             lineNumber: results[0].line
           });
         }
