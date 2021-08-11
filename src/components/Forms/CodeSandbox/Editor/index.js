@@ -51,7 +51,7 @@ export default function Editor({
     async function handleTranspile(code) {
       try {
         const results = await lintCode(code);
-        if (results[0].message) {
+        if (results[0]?.message) {
           return handleSetError({
             error: results[0]?.message.split('\n')[0],
             lineNumber: results[0].line
