@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import StepSlide from '../../components/StepSlide';
 import { css } from '@emotion/css';
+import { Color } from 'constants/css';
 
 MakeAccount.propTypes = {
   index: PropTypes.number,
@@ -23,7 +24,8 @@ export default function MakeAccount({ index, okayPressed, onSetOkayPressed }) {
             rel="noreferrer"
           >
             https://replit.com
-          </a>
+          </a>{' '}
+          using the <b style={{ color: Color.orange() }}>GitHub</b> button
         </>
       }
     >

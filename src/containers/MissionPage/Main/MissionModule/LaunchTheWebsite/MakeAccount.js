@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import StepSlide from '../components/StepSlide';
+import { Color } from 'constants/css';
 import { css } from '@emotion/css';
 
 MakeAccount.propTypes = {
@@ -31,7 +32,8 @@ export default function MakeAccount({
           >
             https://vercel.com
           </a>{' '}
-          and make a new account.
+          and make a new account using the{' '}
+          <b style={{ color: Color.orange() }}>GitHub</b> button
         </>
       }
     >
