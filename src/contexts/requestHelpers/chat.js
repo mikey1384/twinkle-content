@@ -199,11 +199,11 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async loadChat({ channelId, testAuth } = {}) {
+    async loadChat(channelId) {
       try {
         const { data } = await request.get(
           `${URL}/chat?channelId=${channelId}`,
-          testAuth || auth()
+          auth()
         );
         return Promise.resolve(data);
       } catch (error) {

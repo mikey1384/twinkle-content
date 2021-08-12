@@ -254,7 +254,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
 
       async function handleLoadChat() {
         onSetReconnecting(true);
-        const data = await loadChat();
+        const data = await loadChat(selectedChannelId);
         onInitChat(data);
         socket.emit(
           'check_online_members',
