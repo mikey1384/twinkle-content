@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import MissionModule from '../MissionModule';
 import ErrorBoundary from 'components/ErrorBoundary';
@@ -6,7 +6,7 @@ import LongText from 'components/Texts/LongText';
 import RewardText from 'components/Texts/RewardText';
 import ApprovedStatus from '../ApprovedStatus';
 import PendingStatus from '../PendingStatus';
-import { useMissionContext } from 'contexts';
+import { useAppContext, useMissionContext, useViewContext } from 'contexts';
 import { mobileMaxWidth } from 'constants/css';
 import { returnMissionThumb } from 'constants/defaultValues';
 import { css } from '@emotion/css';
@@ -40,8 +40,15 @@ export default function Task({
   nextTaskType
 }) {
   const {
-    state: { myAttempts }
+    requestHelpers: { checkMissionStatus }
+  } = useAppContext();
+  const {
+    state: { myAttempts },
+    actions: { onUpdateMissionAttempt }
   } = useMissionContext();
+  const {
+    state: { pageVisible }
+  } = useViewContext();
   const myAttempt = useMemo(() => myAttempts[taskId], [myAttempts, taskId]);
   const approvedStatusShown = useMemo(
     () =>
@@ -60,6 +67,23 @@ export default function Task({
     () => (missionType ? returnMissionThumb(missionType) : null),
     [missionType]
   );
+  useEffect(() => {
+    if (pageVisible) {
+      handleCheckMissionStatus();
+    }
+
+    async function handleCheckMissionStatus() {
+      const { filePath, feedback, status, reviewTimeStamp, reviewer } =
+        await checkMissionStatus(taskId);
+      if (status && !(status === 'fail' && myAttempt?.tryingAgain)) {
+        onUpdateMissionAttempt({
+          missionId: taskId,
+          newState: { filePath, feedback, reviewer, reviewTimeStamp, status }
+        });
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageVisible]);
 
   return (
     <ErrorBoundary
