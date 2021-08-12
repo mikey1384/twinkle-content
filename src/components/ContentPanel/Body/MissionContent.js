@@ -59,6 +59,11 @@ export default function MissionContent({ uploader, rootObj: mission }) {
         marginBottom: '-4rem'
       }}
     >
+      {mission.rootMission?.title && (
+        <div style={{ marginBottom: '0.3rem' }}>
+          {mission.rootMission.title}
+        </div>
+      )}
       <ContentLink
         content={{
           id: mission.id,
