@@ -499,18 +499,25 @@ export function processedStringWithURL(string) {
     const redSentenceRegex = /((r\|[^\s]){1}[^\n]+([^\s]\|r){1})/gi;
     const yellowWordRegex = /(y\|[^\s]+\|y)/gi;
     const yellowSentenceRegex = /((y\|[^\s]){1}[^\n]+([^\s]\|y){1})/gi;
+    const hugeWordRegex = /(h\[[^\s]+\]h)/gi;
     const hugeSentenceRegex =
       /((h\[[^\s]){1}((?!(h\[|\]h))[^\n])+([^\s]\]h){1})/gi;
+    const bigWordRegex = /(b\[[^\s]+\]b)/gi;
     const bigSentenceRegex =
       /((b\[[^\s]){1}((?!(b\[|\]b))[^\n])+([^\s]\]b){1})/gi;
+    const smallWordRegex = /(s\[[^\s]+\]s)/gi;
     const smallSentenceRegex =
       /((s\[[^\s]){1}((?!(s\[|\]s))[^\n])+([^\s]\]s){1})/gi;
+    const tinyWordRegex = /(t\[[^\s]+\]t)/gi;
     const tinySentenceRegex =
       /((t\[[^\s]){1}((?!(t\[|\]t))[^\n])+([^\s]\]t){1})/gi;
+    const boldItalicWordRegex = /(\*\*\*[^\s]+\*\*\*)/gi;
     const boldItalicSentenceRegex =
       /((\*\*\*[^\s]){1}((?!(\*\*\*))[^\n])+([^\s]\*\*\*){1})/gi;
+    const boldWordRegex = /(\*(?![0-9])[^0-9\s*]+\*)(?![0-9])/gi;
     const boldSentenceRegex =
       /((\*(?![0-9])[^\s]){1}((?!(\*))[^0-9\n])+([^\s]\*)(?![0-9]){1})/gi;
+    const italicWordRegex = /(\*\*(?![0-9])[^0-9\s*]+\*\*)(?![0-9])/gi;
     const italicSentenceRegex =
       /((\*\*(?![0-9])[^\s]){1}((?!(\*\*))[^0-9\n])+([^\s]\*\*)(?![0-9]){1})/gi;
     const underlineWordRegex = /(__[\S]+__)/gi;
@@ -518,6 +525,18 @@ export function processedStringWithURL(string) {
 
     return string
       .replace(/(<br>)/gi, '\n')
+      .replace(
+        boldItalicWordRegex,
+        (string) => `<b><i>${string.substring(3, string.length - 3)}</i></b>`
+      )
+      .replace(
+        italicWordRegex,
+        (string) => `<i>${string.substring(2, string.length - 2)}</i>`
+      )
+      .replace(
+        boldWordRegex,
+        (string) => `<b>${string.substring(1, string.length - 1)}</b>`
+      )
       .replace(
         underlineWordRegex,
         (string) => `<u>${string.substring(2, string.length - 2)}</u>`
@@ -610,6 +629,38 @@ export function processedStringWithURL(string) {
         yellowWordRegex,
         (string) =>
           `<span style="color: rgb(255,210,0);">${string.substring(
+            2,
+            string.length - 2
+          )}</span>`
+      )
+      .replace(
+        hugeWordRegex,
+        (string) =>
+          `<span style="font-size: 1.9em;">${string.substring(
+            2,
+            string.length - 2
+          )}</span>`
+      )
+      .replace(
+        bigWordRegex,
+        (string) =>
+          `<span style="font-size: 1.4em;">${string.substring(
+            2,
+            string.length - 2
+          )}</span>`
+      )
+      .replace(
+        smallWordRegex,
+        (string) =>
+          `<span style="font-size: 0.7em;">${string.substring(
+            2,
+            string.length - 2
+          )}</span>`
+      )
+      .replace(
+        tinyWordRegex,
+        (string) =>
+          `<span style="font-size: 0.5em;">${string.substring(
             2,
             string.length - 2
           )}</span>`
