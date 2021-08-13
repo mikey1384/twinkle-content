@@ -478,45 +478,49 @@ export function processedStringWithURL(string) {
   // eslint-disable-next-line no-unused-vars
   function applyTextEffects(string) {
     const blueWordRegex = /(b\|[^\s]+\|b)/gi;
-    const blueSentenceRegex = /((b\|[^\s]){1}([^\n])+([^\s]\|b){1})/gi;
+    const blueSentenceRegex = /((b\|[^\s]){1}[^\n]+([^\s]\|b){1})/gi;
     const grayWordRegex = /(gr\|[^\s]+\|gr)/gi;
-    const graySentenceRegex = /((gr\|[^\s]){1}([^\n])+([^\s]\|gr){1})/gi;
+    const graySentenceRegex = /((gr\|[^\s]){1}[^\n]+([^\s]\|gr){1})/gi;
     const greenWordRegex = /(g\|[^\s]+\|g)/gi;
-    const greenSentenceRegex = /((g\|[^\s]){1}([^\n])+([^\s]\|g){1})/gi;
+    const greenSentenceRegex = /((g\|[^\s]){1}[^\n]+([^\s]\|g){1})/gi;
     const limeWordRegex = /(l\|[^\s]+\|l)/gi;
-    const limeSentenceRegex = /((l\|[^\s]){1}([^\n])+([^\s]\|l){1})/gi;
+    const limeSentenceRegex = /((l\|[^\s]){1}[^\n]+([^\s]\|l){1})/gi;
     const logoBlueWordRegex = /(lb\|[^\s]+\|lb)/gi;
-    const logoBlueSentenceRegex = /((lb\|[^\s]){1}([^\n])+([^\s]\|lb){1})/gi;
+    const logoBlueSentenceRegex = /((lb\|[^\s]){1}[^\n]+([^\s]\|lb){1})/gi;
     const orangeWordRegex = /(o\|[^\s]+\|o)/gi;
-    const orangeSentenceRegex = /((o\|[^\s]){1}([^\n])+([^\s]\|o){1})/gi;
+    const orangeSentenceRegex = /((o\|[^\s]){1}[^\n]+([^\s]\|o){1})/gi;
     const passionFruitWordRegex = /(pf\|[^\s]+\|pf)/gi;
-    const passionFruitSentenceRegex =
-      /((pf\|[^\s]){1}([^\n])+([^\s]\|pf){1})/gi;
+    const passionFruitSentenceRegex = /((pf\|[^\s]){1}[^\n]+([^\s]\|pf){1})/gi;
     const pinkWordRegex = /(p\|[^\s]+\|p)/gi;
-    const pinkSentenceRegex = /((p\|[^\s]){1}([^\n])+([^\s]\|p){1})/gi;
+    const pinkSentenceRegex = /((p\|[^\s]){1}[^\n]+([^\s]\|p){1})/gi;
     const purpleWordRegex = /(pu\|[^\s]+\|pu)/gi;
-    const purpleSentenceRegex = /((pu\|[^\s]){1}([^\n])+([^\s]\|pu){1})/gi;
+    const purpleSentenceRegex = /((pu\|[^\s]){1}[^\n]+([^\s]\|pu){1})/gi;
     const redWordRegex = /(r\|[^\s]+\|r)/gi;
-    const redSentenceRegex = /((r\|[^\s]){1}([^\n])+([^\s]\|r){1})/gi;
+    const redSentenceRegex = /((r\|[^\s]){1}[^\n]+([^\s]\|r){1})/gi;
     const yellowWordRegex = /(y\|[^\s]+\|y)/gi;
-    const yellowSentenceRegex = /((y\|[^\s]){1}([^\n])+([^\s]\|y){1})/gi;
+    const yellowSentenceRegex = /((y\|[^\s]){1}[^\n]+([^\s]\|y){1})/gi;
     const hugeWordRegex = /(h\[[^\s]+\]h)/gi;
-    const hugeSentenceRegex = /((h\[[^\s]){1}([^\n])+([^\s]\]h){1})/gi;
+    const hugeSentenceRegex = /((h\[[^\s]){1}((?!(h\[|\]h)).)+([^\s]\]h){1})/gi;
     const bigWordRegex = /(b\[[^\s]+\]b)/gi;
-    const bigSentenceRegex = /((b\[[^\s]){1}([^\n])+([^\s]\]b){1})/gi;
+    const bigSentenceRegex = /((b\[[^\s]){1}((?!(b\[|\]b)).)+([^\s]\]b){1})/gi;
     const smallWordRegex = /(s\[[^\s]+\]s)/gi;
-    const smallSentenceRegex = /((s\[[^\s]){1}([^\n])+([^\s]\]s){1})/gi;
+    const smallSentenceRegex = /((s\[[^\s]){1}[^\n]+([^\s]\]s){1})/gi;
     const tinyWordRegex = /(t\[[^\s]+\]t)/gi;
-    const tinySentenceRegex = /((t\[[^\s]){1}([^\n])+([^\s]\]t){1})/gi;
+    const tinySentenceRegex = /((t\[[^\s]){1}[^\n]+([^\s]\]t){1})/gi;
     const boldItalicWordRegex = /(\*\*\*[^\s]+\*\*\*)/gi;
     const boldItalicSentenceRegex =
-      /((\*\*\*[^\s]){1}([^\n])+([^\s]\*\*\*){1})/gi;
-    const boldWordRegex = /(\*[^\s*]+\*)/gi;
+      /((\*\*\*[^\s]){1}((?!(\*\*\*)).)+([^\s]\*\*\*){1})/gi;
+    const boldWordRegex = /(\*(?![0-9])[^\s*]+\*)(?![0-9])/gi;
+    const boldSentenceRegex =
+      /((\*(?![0-9])[^\s]){1}((?!(\*))[^\n])+([^\s]\*)(?![0-9]){1})/gi;
     const italicWordRegex = /(\*\*[^\s*]+\*\*)/gi;
-    const italicSentenceRegex = /((\*\*[^\s]){1}([^\n])+([^\s]\*\*){1})/gi;
+    const italicSentenceRegex =
+      /((\*\*[^\s]){1}((?!(\*\*)).)+([^\s]\*\*){1})/gi;
     const underlineWordRegex = /(__[\S]+__)/gi;
     const linethroughWordRegex = /(--[\S]+--)/gi;
+
     return string
+      .replace(/(<br>)/gi, '\n')
       .replace(
         boldItalicWordRegex,
         (string) => `<b><i>${string.substring(3, string.length - 3)}</i></b>`
@@ -666,6 +670,10 @@ export function processedStringWithURL(string) {
         (string) => `<i>${string.substring(2, string.length - 2)}</i>`
       )
       .replace(
+        boldSentenceRegex,
+        (string) => `<b>${string.substring(1, string.length - 1)}</b>`
+      )
+      .replace(
         graySentenceRegex,
         (string) =>
           `<span style="color: gray;">${string.substring(
@@ -784,7 +792,8 @@ export function processedStringWithURL(string) {
             2,
             string.length - 2
           )}</span>`
-      );
+      )
+      .replace(/\n/g, '<br>');
   }
 }
 
