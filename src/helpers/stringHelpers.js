@@ -478,27 +478,38 @@ export function processedStringWithURL(string) {
   // eslint-disable-next-line no-unused-vars
   function applyTextEffects(string) {
     const blueWordRegex = /(b\|[^\s]+\|b)/gi;
-    const blueSentenceRegex = /((b\|[^\s]){1}[^\n]+([^\s]\|b){1})/gi;
+    const blueSentenceRegex =
+      /((b\|[^\s]){1}((?!(b\||\|b))[^\n])+([^\s]\|b){1})/gi;
     const grayWordRegex = /(gr\|[^\s]+\|gr)/gi;
-    const graySentenceRegex = /((gr\|[^\s]){1}[^\n]+([^\s]\|gr){1})/gi;
+    const graySentenceRegex =
+      /((gr\|[^\s]){1}((?!(g\||\|g))[^\n])+([^\s]\|gr){1})/gi;
     const greenWordRegex = /(g\|[^\s]+\|g)/gi;
-    const greenSentenceRegex = /((g\|[^\s]){1}[^\n]+([^\s]\|g){1})/gi;
+    const greenSentenceRegex =
+      /((g\|[^\s]){1}((?!(g\||\|g))[^\n])+([^\s]\|g){1})/gi;
     const limeWordRegex = /(l\|[^\s]+\|l)/gi;
-    const limeSentenceRegex = /((l\|[^\s]){1}[^\n]+([^\s]\|l){1})/gi;
+    const limeSentenceRegex =
+      /((l\|[^\s]){1}((?!(l\||\|l))[^\n])+([^\s]\|l){1})/gi;
     const logoBlueWordRegex = /(lb\|[^\s]+\|lb)/gi;
-    const logoBlueSentenceRegex = /((lb\|[^\s]){1}[^\n]+([^\s]\|lb){1})/gi;
+    const logoBlueSentenceRegex =
+      /((lb\|[^\s]){1}((?!(lb\||\|lb))[^\n])+([^\s]\|lb){1})/gi;
     const orangeWordRegex = /(o\|[^\s]+\|o)/gi;
-    const orangeSentenceRegex = /((o\|[^\s]){1}[^\n]+([^\s]\|o){1})/gi;
+    const orangeSentenceRegex =
+      /((o\|[^\s]){1}((?!(o\||\|o))[^\n])+([^\s]\|o){1})/gi;
     const passionFruitWordRegex = /(pf\|[^\s]+\|pf)/gi;
-    const passionFruitSentenceRegex = /((pf\|[^\s]){1}[^\n]+([^\s]\|pf){1})/gi;
+    const passionFruitSentenceRegex =
+      /((pf\|[^\s]){1}((?!(pf\||\|pf))[^\n])+([^\s]\|pf){1})/gi;
     const pinkWordRegex = /(p\|[^\s]+\|p)/gi;
-    const pinkSentenceRegex = /((p\|[^\s]){1}[^\n]+([^\s]\|p){1})/gi;
+    const pinkSentenceRegex =
+      /((p\|[^\s]){1}((?!(p\||\|p))[^\n])+([^\s]\|p){1})/gi;
     const purpleWordRegex = /(pu\|[^\s]+\|pu)/gi;
-    const purpleSentenceRegex = /((pu\|[^\s]){1}[^\n]+([^\s]\|pu){1})/gi;
+    const purpleSentenceRegex =
+      /((pu\|[^\s]){1}((?!(pu\||\|pu))[^\n])+([^\s]\|pu){1})/gi;
     const redWordRegex = /(r\|[^\s]+\|r)/gi;
-    const redSentenceRegex = /((r\|[^\s]){1}[^\n]+([^\s]\|r){1})/gi;
+    const redSentenceRegex =
+      /((r\|[^\s]){1}((?!(r\||\|r))[^\n])+([^\s]\|r){1})/gi;
     const yellowWordRegex = /(y\|[^\s]+\|y)/gi;
-    const yellowSentenceRegex = /((y\|[^\s]){1}[^\n]+([^\s]\|y){1})/gi;
+    const yellowSentenceRegex =
+      /((y\|[^\s]){1}((?!(y\||\|y))[^\n])+([^\s]\|y){1})/gi;
     const hugeWordRegex = /(h\[[^\s]+\]h)/gi;
     const hugeSentenceRegex =
       /((h\[[^\s]){1}((?!(h\[|\]h))[^\n])+([^\s]\]h){1})/gi;
