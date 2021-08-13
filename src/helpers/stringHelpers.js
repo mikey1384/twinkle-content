@@ -507,13 +507,10 @@ export function processedStringWithURL(string) {
       /((s\[[^\s]){1}((?!(s\[|\]s))[^\n])+([^\s]\]s){1})/gi;
     const tinySentenceRegex =
       /((t\[[^\s]){1}((?!(t\[|\]t))[^\n])+([^\s]\]t){1})/gi;
-    const boldItalicWordRegex = /(\*\*\*[^\s]+\*\*\*)/gi;
     const boldItalicSentenceRegex =
       /((\*\*\*[^\s]){1}((?!(\*\*\*))[^\n])+([^\s]\*\*\*){1})/gi;
-    const boldWordRegex = /(\*(?![0-9])[^0-9\s*]+\*)(?![0-9])/gi;
     const boldSentenceRegex =
       /((\*(?![0-9])[^\s]){1}((?!(\*))[^0-9\n])+([^\s]\*)(?![0-9]){1})/gi;
-    const italicWordRegex = /(\*\*(?![0-9])[^0-9\s*]+\*\*)(?![0-9])/gi;
     const italicSentenceRegex =
       /((\*\*(?![0-9])[^\s]){1}((?!(\*\*))[^0-9\n])+([^\s]\*\*)(?![0-9]){1})/gi;
     const underlineWordRegex = /(__[\S]+__)/gi;
@@ -521,18 +518,6 @@ export function processedStringWithURL(string) {
 
     return string
       .replace(/(<br>)/gi, '\n')
-      .replace(
-        boldItalicWordRegex,
-        (string) => `<b><i>${string.substring(3, string.length - 3)}</i></b>`
-      )
-      .replace(
-        italicWordRegex,
-        (string) => `<i>${string.substring(2, string.length - 2)}</i>`
-      )
-      .replace(
-        boldWordRegex,
-        (string) => `<b>${string.substring(1, string.length - 1)}</b>`
-      )
       .replace(
         underlineWordRegex,
         (string) => `<u>${string.substring(2, string.length - 2)}</u>`
