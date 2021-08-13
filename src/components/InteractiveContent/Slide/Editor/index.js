@@ -527,7 +527,7 @@ export default function Editor({
       editedDescription: finalizeEmoji(editedDescription)
     };
 
-    if (editedAttachment?.newAttachment) {
+    if (editedAttachment?.newAttachment && editedAttachment?.type !== 'none') {
       setUploadingFile(true);
       const uploadedFilePath = await uploadFile({
         context: 'interactive',

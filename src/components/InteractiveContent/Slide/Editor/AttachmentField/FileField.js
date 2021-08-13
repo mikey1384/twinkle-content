@@ -28,9 +28,10 @@ export default function FileField({
   uploadingFile
 }) {
   const { fileUploadLvl } = useMyState();
-  const maxSize = useMemo(() => returnMaxUploadSize(fileUploadLvl), [
-    fileUploadLvl
-  ]);
+  const maxSize = useMemo(
+    () => returnMaxUploadSize(fileUploadLvl),
+    [fileUploadLvl]
+  );
   const [alertModalShown, setAlertModalShown] = useState(false);
   const FileInputRef = useRef(null);
 
@@ -105,7 +106,7 @@ export default function FileField({
                   onClick={() =>
                     onSetAttachmentState({
                       isChanging: false,
-                      newAttachment: undefined
+                      newAttachment: null
                     })
                   }
                   style={{ marginTop: '1rem' }}
