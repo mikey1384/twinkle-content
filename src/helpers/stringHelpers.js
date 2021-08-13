@@ -525,7 +525,7 @@ export function processedStringWithURL(string) {
     const boldItalicWordRegex = /(\*\*\*[^\s]+\*\*\*)/gi;
     const boldItalicSentenceRegex =
       /((\*\*\*[^\s]){1}((?!(\*\*\*))[^\n])+([^\s]\*\*\*){1})/gi;
-    const boldWordRegex = /(\*(?![0-9])[^0-9\s*]+\*)(?![0-9])/gi;
+    const boldWordRegex = /(\*(?![0-9])[^\s*]+\*)(?![0-9])/gi;
     const boldSentenceRegex =
       /((\*(?![0-9])[^\s]){1}((?!(\*))[^0-9\n])+([^\s]\*)(?![0-9]){1})/gi;
     const italicWordRegex = /(\*\*(?![0-9])[^0-9\s*]+\*\*)(?![0-9])/gi;
