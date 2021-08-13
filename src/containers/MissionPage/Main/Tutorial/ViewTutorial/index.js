@@ -24,7 +24,14 @@ export default function ViewTutorial({
   tutorialButtonLabel
 }) {
   return (
-    <div className={panel} style={{ padding: '2rem', width: '100%', ...style }}>
+    <div
+      className={panel}
+      style={{
+        padding: '2rem',
+        width: '100%',
+        ...style
+      }}
+    >
       {isCreator ? (
         <CreatorView
           missionId={missionId}

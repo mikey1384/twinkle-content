@@ -27,11 +27,12 @@ export default function UserView({
       >
         <Button
           style={{ marginLeft: '1rem', fontSize: '2rem' }}
-          color="green"
+          color="brownOrange"
+          filled
           skeuomorphic
           onClick={onStartClick}
         >
-          <Icon icon="chalkboard-teacher" />
+          <Icon icon="star" />
           <span style={{ marginLeft: '1rem' }}>
             {tutorialButtonLabel || 'Press This Button'}
           </span>
