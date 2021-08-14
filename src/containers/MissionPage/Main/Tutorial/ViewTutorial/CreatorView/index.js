@@ -67,7 +67,7 @@ export default function CreatorView({
           }}
         >
           <h2 style={{ marginBottom: '2rem' }}>
-            {tutorialPrompt || 'Need Help?'}
+            {tutorialPrompt || 'Need Help? Read the Tutorial'}
           </h2>
           <div
             style={{
@@ -77,7 +77,7 @@ export default function CreatorView({
               border: `1px solid ${Color.borderGray()}`
             }}
           >
-            {tutorialButtonLabel || 'Press This Button'}
+            {tutorialButtonLabel || 'Tutorial'}
           </div>
         </div>
       )}

@@ -53,8 +53,8 @@ export default function FinalizeYourCode({
             </span>{' '}
             before we publish it on the internet!
             <br /> Check out the{' '}
-            <span style={{ color: Color.green() }}>tutorial</span> for ways to
-            make it look better
+            <span style={{ color: Color.brownOrange() }}>tutorial</span> for
+            ways to make it look better
           </>
         }
       >

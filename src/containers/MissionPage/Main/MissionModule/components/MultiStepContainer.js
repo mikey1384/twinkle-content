@@ -148,8 +148,8 @@ export default function MultiStepContainer({
             </Button>
           ) : (
             <div style={{ marginTop: '3rem', marginBottom: '-1rem' }}>
-              Read the <b style={{ color: Color.green() }}>tutorial</b> below{' '}
-              <Icon icon="arrow-down" />
+              Read the <b style={{ color: Color.brownOrange() }}>tutorial</b>{' '}
+              below <Icon icon="arrow-down" />
             </div>
           )}
         </div>

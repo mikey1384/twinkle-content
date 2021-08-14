@@ -24,8 +24,8 @@ export default function ConnectReplToGitHub({ index, innerRef, okayPressed }) {
       >
         <p>
           Follow the instructions in the{' '}
-          <b style={{ color: Color.green() }}>tutorial</b> to connect your Repl
-          to your GitHub.
+          <b style={{ color: Color.brownOrange() }}>tutorial</b> to connect your
+          Repl to your GitHub.
         </p>
         {okayPressed && (
           <div style={{ marginTop: '4rem' }}>

@@ -17,7 +17,7 @@ export default function UserView({
   return (
     <div>
       <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>
-        {tutorialPrompt || 'Need Help?'}
+        {tutorialPrompt || 'Need Help? Read the Tutorial'}
       </h2>
       <div
         style={{
@@ -34,7 +34,7 @@ export default function UserView({
         >
           <Icon icon="star" />
           <span style={{ marginLeft: '1rem' }}>
-            {tutorialButtonLabel || 'Press This Button'}
+            {tutorialButtonLabel || 'Tutorial'}
           </span>
         </Button>
       </div>
