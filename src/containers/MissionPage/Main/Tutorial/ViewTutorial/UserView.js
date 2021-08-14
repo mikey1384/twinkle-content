@@ -34,7 +34,7 @@ export default function UserView({
         >
           <Icon icon="star" />
           <span style={{ marginLeft: '1rem' }}>
-            {tutorialButtonLabel || 'Tutorial'}
+            {tutorialButtonLabel || 'Show Tutorial'}
           </span>
         </Button>
       </div>
