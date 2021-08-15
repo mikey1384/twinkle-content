@@ -530,7 +530,7 @@ export function processedStringWithURL(string) {
       /((\*(?!([0-9]|\*))[^\s]){1}[^\n*]+([^\s]\*(?![0-9])){1})/gi;
     const italicWordRegex = /((?![0-9])\*\*[^\s*]+\*\*(?![0-9]))/gi;
     const italicSentenceRegex =
-      /((\*\*(?![0-9])[^\s]){1}[^\n]+([^\s]\*\*(?![0-9])){1})/gi;
+      /((\*\*(?![0-9])[^\s]){1}((?!(\*\*))[^\n])+([^\s]\*\*(?![0-9])){1})/gi;
     const underlineWordRegex = /(__[\S]+__)/gi;
     const linethroughWordRegex = /(--[\S]+--)/gi;
 
