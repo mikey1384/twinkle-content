@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import InputForm from 'components/Forms/InputForm';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
@@ -6,6 +6,7 @@ import LocalContext from './Context';
 import { useInputContext } from 'contexts';
 import { useContentState } from 'helpers/hooks';
 import { v1 as uuidv1 } from 'uuid';
+import RewardLevelExpectation from './RewardLevelExpectation';
 
 CommentInputArea.propTypes = {
   autoFocus: PropTypes.bool,
@@ -20,6 +21,7 @@ CommentInputArea.propTypes = {
   rootCommentId: PropTypes.number,
   subjectId: PropTypes.number,
   style: PropTypes.object,
+  subjectRewardLevel: PropTypes.number,
   targetCommentId: PropTypes.number
 };
 
@@ -36,14 +38,18 @@ export default function CommentInputArea({
   rootCommentId,
   subjectId,
   style,
+  subjectRewardLevel,
   targetCommentId
 }) {
-  const contentType = targetCommentId
-    ? 'comment'
-    : subjectId
-    ? 'subject'
-    : parent.contentType;
-  const contentId = targetCommentId || subjectId || parent.contentId;
+  const contentType = useMemo(
+    () =>
+      targetCommentId ? 'comment' : subjectId ? 'subject' : parent.contentType,
+    [parent, targetCommentId, subjectId]
+  );
+  const contentId = useMemo(
+    () => targetCommentId || subjectId || parent.contentId,
+    [parent, targetCommentId, subjectId]
+  );
   const { onSubmitWithAttachment } = useContext(LocalContext);
   const {
     state,
@@ -56,10 +62,16 @@ export default function CommentInputArea({
   });
 
   const [uploadingFile, setUploadingFile] = useState(false);
-  const attachment = state[contentType + contentId]?.attachment;
+  const attachment = useMemo(
+    () => state[contentType + contentId]?.attachment,
+    [contentId, contentType, state]
+  );
 
   return (
     <div style={{ ...style, position: 'relative' }} ref={InputFormRef}>
+      {!!subjectRewardLevel && (
+        <RewardLevelExpectation rewardLevel={subjectRewardLevel} />
+      )}
       {!uploadingFile && (
         <InputForm
           innerRef={innerRef}

@@ -41,7 +41,8 @@ Comments.propTypes = {
     commentId: PropTypes.number,
     contentId: PropTypes.number.isRequired,
     contentType: PropTypes.string.isRequired,
-    pinnedCommentId: PropTypes.number
+    pinnedCommentId: PropTypes.number,
+    rewardLevel: PropTypes.number
   }).isRequired,
   rootContent: PropTypes.object,
   showSecretButtonAvailable: PropTypes.bool,
@@ -256,6 +257,11 @@ function Comments({
           parent.contentType === 'comment' ? parent.commentId : null
         }
         subjectId={subject?.id}
+        subjectRewardLevel={
+          parent?.contentType === 'subject'
+            ? parent?.rewardLevel
+            : subject?.rewardLevel || 0
+        }
         style={style}
         targetCommentId={
           parent.contentType === 'comment' ? parent.contentId : null
