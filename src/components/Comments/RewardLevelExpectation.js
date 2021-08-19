@@ -45,10 +45,11 @@ export default function RewardLevelExpectation({ rewardLevel }) {
           }
         `}
       >
+        <b style={{ color: rewardColor }}>Lvl {rewardLevel}:</b>
         <span style={{ color: '#fff' }}>
-          Put {rewardLevelExpectation} Into Your Response to Get Recommendations{' '}
+          {' '}
+          Put {rewardLevelExpectation} Into Your Response to Get Recommendations
         </span>
-        <b style={{ color: rewardColor }}>(Lvl {rewardLevel})</b>
       </div>
     );
   }, [rewardLevel, rewardLevelExpectation, rewardColor]);
