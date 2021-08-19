@@ -14,13 +14,13 @@ export default function RewardLevelExpectation({ rewardLevel }) {
   const rewardLevelExpectation = useMemo(() => {
     switch (rewardLevel) {
       case 2:
-        return `Minimal Effort`;
+        return `Minimal Efforts`;
       case 3:
-        return 'Moderate Effort';
+        return 'Moderate Efforts';
       case 4:
-        return 'Significant Effort';
+        return 'Significant Efforts';
       case 5:
-        return 'Maximum Effort';
+        return 'Maximum Efforts';
       default:
         return '';
     }
@@ -41,9 +41,9 @@ export default function RewardLevelExpectation({ rewardLevel }) {
     return (
       <>
         <span style={{ color: '#fff' }}>
-          {rewardLevelExpectation} Expected for Recommendations{' '}
+          Put In {rewardLevelExpectation} to Earn Recommendations{' '}
         </span>
-        <b style={{ color: rewardColor }}>(Level {rewardLevel})</b>
+        <b style={{ color: rewardColor }}>(Lvl {rewardLevel})</b>
       </>
     );
   }, [rewardLevel, rewardLevelExpectation, rewardColor]);
