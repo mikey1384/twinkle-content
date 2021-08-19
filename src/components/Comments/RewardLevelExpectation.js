@@ -20,7 +20,7 @@ export default function RewardLevelExpectation({ rewardLevel }) {
       case 4:
         return 'Significant Efforts';
       case 5:
-        return 'Maximum Efforts';
+        return 'Substantial Efforts';
       default:
         return '';
     }
@@ -39,12 +39,20 @@ export default function RewardLevelExpectation({ rewardLevel }) {
       return '';
     }
     return (
-      <>
+      <div
+        className={css`
+          font-size: 1.5rem;
+          @media (max-width: ${mobileMaxWidth}) {
+            font-size: 1.2rem;
+          }
+        `}
+      >
         <span style={{ color: '#fff' }}>
-          Put In {rewardLevelExpectation} to Earn Recommendations{' '}
+          Put {rewardLevelExpectation} Into Your Response to Earn
+          Recommendations{' '}
         </span>
         <b style={{ color: rewardColor }}>(Lvl {rewardLevel})</b>
-      </>
+      </div>
     );
   }, [rewardLevel, rewardLevelExpectation, rewardColor]);
   if (!rewardLevelExpectation) return null;
