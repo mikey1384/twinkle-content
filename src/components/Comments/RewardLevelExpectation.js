@@ -16,7 +16,7 @@ export default function RewardLevelExpectation({ rewardLevel }) {
       case 3:
         return 'Moderate Effort';
       case 4:
-        return 'A Lot of Effort';
+        return 'a Lot of Effort';
       case 5:
         return 'Huge Effort';
       default:
