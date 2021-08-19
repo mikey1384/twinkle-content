@@ -13,8 +13,6 @@ export default function RewardLevelExpectation({ rewardLevel }) {
   }
   const rewardLevelExpectation = useMemo(() => {
     switch (rewardLevel) {
-      case 2:
-        return `Minimal Effort`;
       case 3:
         return 'Moderate Effort';
       case 4:
