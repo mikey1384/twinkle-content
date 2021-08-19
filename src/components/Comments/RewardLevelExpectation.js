@@ -47,6 +47,7 @@ export default function RewardLevelExpectation({ rewardLevel }) {
       </>
     );
   }, [rewardLevel, rewardLevelExpectation, rewardColor]);
+  if (!rewardLevelExpectation) return null;
   return (
     <div
       className={css`
