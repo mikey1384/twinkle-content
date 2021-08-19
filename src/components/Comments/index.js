@@ -260,7 +260,9 @@ function Comments({
         subjectRewardLevel={
           parent?.contentType === 'subject'
             ? parent?.rewardLevel
-            : subject?.rewardLevel || 0
+            : parent?.contentType !== 'comment'
+            ? subject?.rewardLevel || 0
+            : 0
         }
         style={style}
         targetCommentId={
