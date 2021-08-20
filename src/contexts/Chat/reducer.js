@@ -1053,7 +1053,6 @@ export default function ChatReducer(state, action) {
           ? {
               imCalling: action.imCalling,
               id: action.channelId,
-              isClass: action.isClass,
               members: {}
             }
           : {}

@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import ProfilePic from 'components/ProfilePic';
 import UsernameText from 'components/Texts/UsernameText';
@@ -11,12 +11,11 @@ import { useMyState, useContentState } from 'helpers/hooks';
 MemberListItem.propTypes = {
   onlineMembers: PropTypes.object,
   creatorId: PropTypes.number,
-  isClass: PropTypes.bool,
   member: PropTypes.object,
   style: PropTypes.object
 };
 
-function MemberListItem({ onlineMembers, creatorId, isClass, member, style }) {
+function MemberListItem({ onlineMembers, creatorId, member, style }) {
   const {
     state: {
       chatStatus: {
@@ -27,7 +26,6 @@ function MemberListItem({ onlineMembers, creatorId, isClass, member, style }) {
   const { username: memberName, profilePicUrl: memberProfilePicUrl } =
     useContentState({ contentId: member.id, contentType: 'user' });
   const { userId: myId } = useMyState();
-  const usernameWidth = useMemo(() => (isClass ? '20%' : '42%'), [isClass]);
   return username || member.username ? (
     <div
       style={{
@@ -67,10 +65,7 @@ function MemberListItem({ onlineMembers, creatorId, isClass, member, style }) {
           style={{
             color: Color.darkerGray(),
             marginLeft: '2rem',
-            maxWidth:
-              creatorId === member.id
-                ? usernameWidth
-                : `CALC(${usernameWidth} + 2rem)`
+            maxWidth: creatorId === member.id ? '42%' : `CALC(42% + 2rem)`
           }}
           className={css`
             font-size: 1.5rem;

@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Members from './Members';
 import ChannelDetails from './ChannelDetails';
@@ -97,6 +97,59 @@ function ChatInfo({
     return Object.keys(currentChannelOnlineMembers).length;
   }, [currentChannelOnlineMembers]);
 
+  const handleCall = useCallback(async () => {
+    if (!channelOnCall.id) {
+      onSubmitMessage({
+        message: {
+          content: 'made a call',
+          channelId: selectedChannelId,
+          profilePicUrl,
+          userId: myId,
+          username,
+          isNotification: true,
+          isCallNotification: true
+        }
+      });
+      onSetCall({
+        imCalling: true,
+        channelId: selectedChannelId
+      });
+    } else {
+      if (calling) {
+        onSetCall({});
+      } else {
+        onHangUp({ memberId: myId, iHungUp: true });
+      }
+      socket.emit('hang_up_call', channelOnCall.id, () => {
+        if (selectedChannelId !== channelOnCall.id) {
+          onSubmitMessage({
+            message: {
+              content: 'made a call',
+              channelId: selectedChannelId,
+              profilePicUrl,
+              userId: myId,
+              username,
+              isNotification: true,
+              isCallNotification: true
+            }
+          });
+          onSetCall({
+            imCalling: true,
+            channelId: selectedChannelId
+          });
+        }
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    calling,
+    channelOnCall?.id,
+    myId,
+    profilePicUrl,
+    selectedChannelId,
+    username
+  ]);
+
   return (
     <>
       <div
@@ -145,7 +198,6 @@ function ChatInfo({
         </div>
       </div>
       <Members
-        isClass={!!currentChannel.isClass}
         channelId={selectedChannelId}
         creatorId={currentChannel.creatorId}
         members={displayedChannelMembers}
@@ -153,53 +205,6 @@ function ChatInfo({
       />
     </>
   );
-
-  function handleCall() {
-    if (!channelOnCall.id) {
-      onSubmitMessage({
-        message: {
-          content: 'made a call',
-          channelId: selectedChannelId,
-          profilePicUrl,
-          userId: myId,
-          username,
-          isNotification: true,
-          isCallNotification: true
-        }
-      });
-      onSetCall({
-        imCalling: true,
-        channelId: selectedChannelId,
-        isClass: currentChannel.isClass
-      });
-    } else {
-      if (calling) {
-        onSetCall({});
-      } else {
-        onHangUp({ memberId: myId, iHungUp: true });
-      }
-      socket.emit('hang_up_call', channelOnCall.id, () => {
-        if (selectedChannelId !== channelOnCall.id) {
-          onSubmitMessage({
-            message: {
-              content: 'made a call',
-              channelId: selectedChannelId,
-              profilePicUrl,
-              userId: myId,
-              username,
-              isNotification: true,
-              isCallNotification: true
-            }
-          });
-          onSetCall({
-            imCalling: true,
-            channelId: selectedChannelId,
-            isClass: currentChannel.isClass
-          });
-        }
-      });
-    }
-  }
 }
 
 export default memo(ChatInfo);

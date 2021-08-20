@@ -1,4 +1,4 @@
-import React, { memo, useRef, useEffect } from 'react';
+import React, { memo, useCallback, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ChatInfo from './ChatInfo';
 import VocabInfo from './VocabInfo';
@@ -55,6 +55,12 @@ function RightMenu({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [twinkleXP]);
 
+  const handleLoadRankings = useCallback(async () => {
+    const { all, top30s } = await loadRankings();
+    onGetRanks({ all, top30s });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div
       ref={MenuRef}
@@ -82,11 +88,6 @@ function RightMenu({
       )}
     </div>
   );
-
-  async function handleLoadRankings() {
-    const { all, top30s } = await loadRankings();
-    onGetRanks({ all, top30s });
-  }
 }
 
 export default memo(RightMenu);

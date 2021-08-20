@@ -7,12 +7,11 @@ import { Color } from 'constants/css';
 Members.propTypes = {
   channelId: PropTypes.number.isRequired,
   creatorId: PropTypes.number,
-  isClass: PropTypes.bool,
   members: PropTypes.array.isRequired,
   onlineMembers: PropTypes.object.isRequired
 };
 
-function Members({ channelId, creatorId, isClass, members, onlineMembers }) {
+function Members({ channelId, creatorId, members, onlineMembers }) {
   const {
     state: {
       channelOnCall: { id: channelOnCallId, members: membersOnCallObj }
@@ -62,7 +61,6 @@ function Members({ channelId, creatorId, isClass, members, onlineMembers }) {
               creatorId={creatorId}
               onlineMembers={onlineMembers}
               member={member}
-              isClass={isClass}
             />
           ))}
         </div>
