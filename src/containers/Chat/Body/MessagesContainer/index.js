@@ -1,4 +1,5 @@
 import React, {
+  memo,
   useCallback,
   useEffect,
   useMemo,
@@ -51,7 +52,7 @@ MessagesContainer.propTypes = {
 const CALL_SCREEN_HEIGHT = '30%';
 const deviceIsMobile = isMobile(navigator);
 
-export default function MessagesContainer({
+function MessagesContainer({
   channelName,
   chessOpponent,
   currentChannel,
@@ -414,6 +415,398 @@ export default function MessagesContainer({
     setHideModalShown(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedChannelId]);
+
+  const handleChessSpoilerClick = useCallback(
+    (senderId) => {
+      socket.emit('viewed_chess_move', selectedChannelId);
+      socket.emit('start_chess_timer', {
+        currentChannel,
+        targetUserId: userId,
+        winnerId: senderId,
+        isResign: false
+      });
+      onSetChessModalShown(true);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [currentChannel, selectedChannelId, userId]
+  );
+
+  const handleConfirmChessMove = useCallback(
+    async ({ state, isCheckmate, isStalemate }) => {
+      const gameWinnerId = isCheckmate ? userId : isStalemate ? 0 : undefined;
+      const params = {
+        userId,
+        chessState: state,
+        isChessMsg: 1,
+        gameWinnerId
+      };
+      const content = 'Made a chess move';
+      try {
+        if (selectedChannelId) {
+          onSubmitMessage({
+            message: {
+              ...params,
+              profilePicUrl,
+              username,
+              content,
+              channelId: selectedChannelId
+            }
+          });
+          onSetReplyTarget(null);
+          socket.emit('user_made_a_move', {
+            userId,
+            channelId: selectedChannelId
+          });
+        } else {
+          const { channel, message } = await startNewDMChannel({
+            ...params,
+            content,
+            recepientId
+          });
+          socket.emit('join_chat_group', message.channelId);
+          socket.emit('send_bi_chat_invitation', recepientId, message);
+          onSendFirstDirectMessage({ channel, message });
+          return;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [profilePicUrl, recepientId, selectedChannelId, userId, username]
+  );
+
+  const handleDelete = useCallback(async () => {
+    const { fileName, filePath, messageId } = deleteModal;
+    await deleteChatMessage({ fileName, filePath, messageId });
+    onDeleteMessage(messageId);
+    setDeleteModal({
+      shown: false,
+      fileName: '',
+      filePath: '',
+      messageId: null
+    });
+    socket.emit('delete_chat_message', {
+      channelId: selectedChannelId,
+      messageId
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deleteModal, selectedChannelId]);
+
+  const handleEditSettings = useCallback(
+    async ({
+      editedChannelName,
+      editedIsClosed,
+      editedCanChangeSubject,
+      editedTheme
+    }) => {
+      await editChannelSettings({
+        channelName: editedChannelName,
+        isClosed: editedIsClosed,
+        channelId: selectedChannelId,
+        canChangeSubject: editedCanChangeSubject,
+        theme: editedTheme
+      });
+      onEditChannelSettings({
+        channelName: editedChannelName,
+        isClosed: editedIsClosed,
+        channelId: selectedChannelId,
+        canChangeSubject: editedCanChangeSubject,
+        theme: editedTheme
+      });
+      if (userId === currentChannel.creatorId) {
+        socket.emit('new_channel_settings', {
+          channelName: editedChannelName,
+          isClosed: editedIsClosed,
+          channelId: selectedChannelId,
+          canChangeSubject: editedCanChangeSubject,
+          theme: editedTheme
+        });
+      }
+      setSettingsModalShown(false);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [currentChannel?.creatorId, selectedChannelId, userId]
+  );
+
+  const handleInviteUsersDone = useCallback(
+    async ({ users, message, isClass }) => {
+      if (isClass) {
+        socket.emit('new_chat_message', {
+          message: {
+            ...message,
+            channelId: message.channelId
+          },
+          channel: {
+            ...currentChannel,
+            numUnreads: 1,
+            lastMessage: {
+              content: message.content,
+              sender: { id: userId, username }
+            },
+            channelName
+          },
+          newMembers: users
+        });
+        socket.emit(
+          'send_group_chat_invitation',
+          users.map((user) => user.id),
+          {
+            message: { ...message, messageId: message.id },
+            isClass
+          }
+        );
+      } else {
+        const recepientIds = users.map((user) => user.id);
+        const { invitationMessage, channels } = await sendInvitationMessage({
+          recepients: recepientIds,
+          origin: currentChannel.id
+        });
+
+        onUpdateLastMessages({
+          channels,
+          message: invitationMessage,
+          sender: { id: userId, username }
+        });
+      }
+      setInviteUsersModalShown(false);
+      if (!isClass) {
+        onSubmitMessage({
+          message: {
+            channelId: selectedChannelId,
+            userId,
+            username,
+            id: uuidv1(),
+            profilePicUrl,
+            content: `sent ${
+              users.length === 1 ? 'an ' : ''
+            }invitation message${users.length > 1 ? 's' : ''} to ${
+              users.length > 1 ? `${users.length} users` : users[0].username
+            }`,
+            isNotification: true
+          }
+        });
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      channelName,
+      currentChannel,
+      profilePicUrl,
+      selectedChannelId,
+      userId,
+      username
+    ]
+  );
+
+  const handleLeaveChannel = useCallback(async () => {
+    if (!leaving) {
+      try {
+        setLeaving(true);
+        await leaveChannel(selectedChannelId);
+        onLeaveChannel(selectedChannelId);
+        socket.emit('leave_chat_channel', {
+          channelId: selectedChannelId,
+          userId,
+          username,
+          profilePicUrl
+        });
+        const data = await loadChatChannel({ channelId: GENERAL_CHAT_ID });
+        onEnterChannelWithId({ data });
+        setLeaveConfirmModalShown(false);
+        setLeaving(false);
+      } catch (error) {
+        console.error(error);
+        setLeaving(false);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [leaving, profilePicUrl, selectedChannelId, userId, username]);
+
+  const handleLeaveConfirm = useCallback(() => {
+    if (currentChannel.creatorId === userId) {
+      setLeaveConfirmModalShown(false);
+      if (currentChannel.members.length === 1) {
+        handleLeaveChannel();
+      } else {
+        setSelectNewOwnerModalShown(true);
+      }
+    } else {
+      handleLeaveChannel();
+    }
+  }, [
+    currentChannel?.creatorId,
+    currentChannel?.members?.length,
+    handleLeaveChannel,
+    userId
+  ]);
+
+  const handleLoadMore = useCallback(async () => {
+    if (messagesLoadMoreButton) {
+      const messageId = messages[0].id;
+      const prevContentHeight = ContentRef.current?.offsetHeight || 0;
+      if (!loadMoreButtonLock) {
+        setLoadMoreButtonLock(true);
+        try {
+          const { messages, loadedChannelId } = await loadMoreChatMessages({
+            userId,
+            messageId,
+            channelId: selectedChannelId
+          });
+          onLoadMoreMessages({ messages, loadedChannelId });
+          if (MessagesContainerRef.current) {
+            MessagesContainerRef.current.scrollTop = Math.max(
+              MessagesContainerRef.current.scrollTop,
+              (ContentRef.current?.offsetHeight || 0) - prevContentHeight
+            );
+          }
+          setLoadMoreButtonLock(false);
+        } catch (error) {
+          console.error(error);
+          setLoadMoreButtonLock(false);
+        }
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    loadMoreButtonLock,
+    messages,
+    messagesLoadMoreButton,
+    selectedChannelId,
+    userId
+  ]);
+
+  const handleAcceptGroupInvitation = useCallback(
+    async (invitationChannelId) => {
+      onUpdateSelectedChannelId(invitationChannelId);
+      const { channel, messages, joinMessage } = await acceptInvitation(
+        invitationChannelId
+      );
+      if (channel.id === invitationChannelId) {
+        socket.emit('join_chat_group', channel.id);
+        onEnterChannelWithId({ data: { channel, messages }, showOnTop: true });
+        socket.emit('new_chat_message', {
+          message: joinMessage,
+          channel,
+          newMembers: [{ id: userId, username, profilePicUrl }]
+        });
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [currentChannel?.creatorId, selectedChannelId, userId]
+  );
+
+  const handleFavoriteClick = useCallback(async () => {
+    if (!favoritingRef.current) {
+      favoritingRef.current = true;
+      try {
+        const favorited = await putFavoriteChannel(selectedChannelId);
+        onSetFavoriteChannel({ channelId: selectedChannelId, favorited });
+        favoritingRef.current = false;
+      } catch (error) {
+        console.error(error);
+        favoritingRef.current = false;
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedChannelId]);
+
+  const handleMessageSubmit = useCallback(
+    async ({ content, rewardAmount, rewardReason, target }) => {
+      setTextAreaHeight(0);
+      let isFirstDirectMessage = selectedChannelId === 0;
+      if (isFirstDirectMessage) {
+        if (creatingNewDMChannel) return;
+        onSetCreatingNewDMChannel(true);
+        try {
+          const { channel, message } = await startNewDMChannel({
+            content,
+            userId,
+            recepientId
+          });
+          socket.emit('join_chat_group', message.channelId);
+          socket.emit('send_bi_chat_invitation', recepientId, message);
+          onSendFirstDirectMessage({ channel, message });
+          onSetCreatingNewDMChannel(false);
+          return Promise.resolve();
+        } catch (error) {
+          return Promise.reject(error);
+        }
+      }
+      const message = {
+        userId,
+        username,
+        profilePicUrl,
+        content,
+        channelId: selectedChannelId,
+        subjectId: isRespondingToSubject ? subjectId : null
+      };
+      onSubmitMessage({
+        message,
+        replyTarget: target,
+        rewardReason,
+        rewardAmount,
+        isRespondingToSubject
+      });
+      onSetReplyTarget(null);
+      return Promise.resolve();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      creatingNewDMChannel,
+      isRespondingToSubject,
+      profilePicUrl,
+      recepientId,
+      selectedChannelId,
+      subjectId,
+      userId,
+      username
+    ]
+  );
+
+  const handleRewardMessageSubmit = useCallback(
+    async ({ amount, reasonId, message }) => {
+      handleMessageSubmit({
+        content: rewardReasons[reasonId].message,
+        rewardAmount: amount,
+        rewardReason: reasonId,
+        target: message
+      });
+      await updateUserXP({
+        amount,
+        action: 'reward',
+        target: 'chat',
+        targetId: message.id,
+        type: 'increase',
+        userId: message.userId
+      });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [handleMessageSubmit]
+  );
+
+  const handleSelectNewOwner = useCallback(
+    async ({ newOwner, andLeave }) => {
+      const notificationMsg = await changeChannelOwner({
+        channelId: selectedChannelId,
+        newOwner
+      });
+      socket.emit('new_channel_owner', {
+        channelId: selectedChannelId,
+        userId,
+        username,
+        profilePicUrl,
+        newOwner,
+        notificationMsg
+      });
+      if (andLeave) {
+        handleLeaveChannel();
+      }
+      setSelectNewOwnerModalShown(false);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [handleLeaveChannel, profilePicUrl, selectedChannelId, userId, username]
+  );
 
   return (
     <ErrorBoundary>
@@ -781,346 +1174,12 @@ export default function MessagesContainer({
     </ErrorBoundary>
   );
 
-  function handleChessSpoilerClick(senderId) {
-    socket.emit('viewed_chess_move', selectedChannelId);
-    socket.emit('start_chess_timer', {
-      currentChannel,
-      targetUserId: userId,
-      winnerId: senderId,
-      isResign: false
-    });
-    onSetChessModalShown(true);
-  }
-
-  async function handleConfirmChessMove({ state, isCheckmate, isStalemate }) {
-    const gameWinnerId = isCheckmate ? userId : isStalemate ? 0 : undefined;
-    const params = {
-      userId,
-      chessState: state,
-      isChessMsg: 1,
-      gameWinnerId
-    };
-    const content = 'Made a chess move';
-    try {
-      if (selectedChannelId) {
-        onSubmitMessage({
-          message: {
-            ...params,
-            profilePicUrl,
-            username,
-            content,
-            channelId: selectedChannelId
-          }
-        });
-        onSetReplyTarget(null);
-        socket.emit('user_made_a_move', {
-          userId,
-          channelId: selectedChannelId
-        });
-      } else {
-        const { channel, message } = await startNewDMChannel({
-          ...params,
-          content,
-          recepientId
-        });
-        socket.emit('join_chat_group', message.channelId);
-        socket.emit('send_bi_chat_invitation', recepientId, message);
-        onSendFirstDirectMessage({ channel, message });
-        return;
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  async function handleDelete() {
-    const { fileName, filePath, messageId } = deleteModal;
-    await deleteChatMessage({ fileName, filePath, messageId });
-    onDeleteMessage(messageId);
-    setDeleteModal({
-      shown: false,
-      fileName: '',
-      filePath: '',
-      messageId: null
-    });
-    socket.emit('delete_chat_message', {
-      channelId: selectedChannelId,
-      messageId
-    });
-  }
-
-  async function handleEditSettings({
-    editedChannelName,
-    editedIsClosed,
-    editedCanChangeSubject,
-    editedTheme
-  }) {
-    await editChannelSettings({
-      channelName: editedChannelName,
-      isClosed: editedIsClosed,
-      channelId: selectedChannelId,
-      canChangeSubject: editedCanChangeSubject,
-      theme: editedTheme
-    });
-    onEditChannelSettings({
-      channelName: editedChannelName,
-      isClosed: editedIsClosed,
-      channelId: selectedChannelId,
-      canChangeSubject: editedCanChangeSubject,
-      theme: editedTheme
-    });
-    if (userId === currentChannel.creatorId) {
-      socket.emit('new_channel_settings', {
-        channelName: editedChannelName,
-        isClosed: editedIsClosed,
-        channelId: selectedChannelId,
-        canChangeSubject: editedCanChangeSubject,
-        theme: editedTheme
-      });
-    }
-    setSettingsModalShown(false);
-  }
-
-  async function handleInviteUsersDone({ users, message, isClass }) {
-    if (isClass) {
-      socket.emit('new_chat_message', {
-        message: {
-          ...message,
-          channelId: message.channelId
-        },
-        channel: {
-          ...currentChannel,
-          numUnreads: 1,
-          lastMessage: {
-            content: message.content,
-            sender: { id: userId, username }
-          },
-          channelName
-        },
-        newMembers: users
-      });
-      socket.emit(
-        'send_group_chat_invitation',
-        users.map((user) => user.id),
-        {
-          message: { ...message, messageId: message.id },
-          isClass
-        }
-      );
-    } else {
-      const recepientIds = users.map((user) => user.id);
-      const { invitationMessage, channels } = await sendInvitationMessage({
-        recepients: recepientIds,
-        origin: currentChannel.id
-      });
-
-      onUpdateLastMessages({
-        channels,
-        message: invitationMessage,
-        sender: { id: userId, username }
-      });
-    }
-    setInviteUsersModalShown(false);
-    if (!isClass) {
-      onSubmitMessage({
-        message: {
-          channelId: selectedChannelId,
-          userId,
-          username,
-          id: uuidv1(),
-          profilePicUrl,
-          content: `sent ${users.length === 1 ? 'an ' : ''}invitation message${
-            users.length > 1 ? 's' : ''
-          } to ${
-            users.length > 1 ? `${users.length} users` : users[0].username
-          }`,
-          isNotification: true
-        }
-      });
-    }
-  }
-
-  function handleLeaveConfirm() {
-    if (currentChannel.creatorId === userId) {
-      setLeaveConfirmModalShown(false);
-      if (currentChannel.members.length === 1) {
-        handleLeaveChannel();
-      } else {
-        setSelectNewOwnerModalShown(true);
-      }
-    } else {
-      handleLeaveChannel();
-    }
-  }
-
-  async function handleLeaveChannel() {
-    if (!leaving) {
-      try {
-        setLeaving(true);
-        await leaveChannel(selectedChannelId);
-        onLeaveChannel(selectedChannelId);
-        socket.emit('leave_chat_channel', {
-          channelId: selectedChannelId,
-          userId,
-          username,
-          profilePicUrl
-        });
-        const data = await loadChatChannel({ channelId: GENERAL_CHAT_ID });
-        onEnterChannelWithId({ data });
-        setLeaveConfirmModalShown(false);
-        setLeaving(false);
-      } catch (error) {
-        console.error(error);
-        setLeaving(false);
-      }
-    }
-  }
-
-  async function handleLoadMore() {
-    if (messagesLoadMoreButton) {
-      const messageId = messages[0].id;
-      const prevContentHeight = ContentRef.current?.offsetHeight || 0;
-      if (!loadMoreButtonLock) {
-        setLoadMoreButtonLock(true);
-        try {
-          const { messages, loadedChannelId } = await loadMoreChatMessages({
-            userId,
-            messageId,
-            channelId: selectedChannelId
-          });
-          onLoadMoreMessages({ messages, loadedChannelId });
-          if (MessagesContainerRef.current) {
-            MessagesContainerRef.current.scrollTop = Math.max(
-              MessagesContainerRef.current.scrollTop,
-              (ContentRef.current?.offsetHeight || 0) - prevContentHeight
-            );
-          }
-          setLoadMoreButtonLock(false);
-        } catch (error) {
-          console.error(error);
-          setLoadMoreButtonLock(false);
-        }
-      }
-    }
-  }
-
-  async function handleAcceptGroupInvitation(invitationChannelId) {
-    onUpdateSelectedChannelId(invitationChannelId);
-    const { channel, messages, joinMessage } = await acceptInvitation(
-      invitationChannelId
-    );
-    if (channel.id === invitationChannelId) {
-      socket.emit('join_chat_group', channel.id);
-      onEnterChannelWithId({ data: { channel, messages }, showOnTop: true });
-      socket.emit('new_chat_message', {
-        message: joinMessage,
-        channel,
-        newMembers: [{ id: userId, username, profilePicUrl }]
-      });
-    }
-  }
-
-  async function handleFavoriteClick() {
-    if (!favoritingRef.current) {
-      favoritingRef.current = true;
-      try {
-        const favorited = await putFavoriteChannel(selectedChannelId);
-        onSetFavoriteChannel({ channelId: selectedChannelId, favorited });
-        favoritingRef.current = false;
-      } catch (error) {
-        console.error(error);
-        favoritingRef.current = false;
-      }
-    }
-  }
-
-  async function handleMessageSubmit({
-    content,
-    rewardAmount,
-    rewardReason,
-    target
-  }) {
-    setTextAreaHeight(0);
-    let isFirstDirectMessage = selectedChannelId === 0;
-    if (isFirstDirectMessage) {
-      if (creatingNewDMChannel) return;
-      onSetCreatingNewDMChannel(true);
-      try {
-        const { channel, message } = await startNewDMChannel({
-          content,
-          userId,
-          recepientId
-        });
-        socket.emit('join_chat_group', message.channelId);
-        socket.emit('send_bi_chat_invitation', recepientId, message);
-        onSendFirstDirectMessage({ channel, message });
-        onSetCreatingNewDMChannel(false);
-        return Promise.resolve();
-      } catch (error) {
-        return Promise.reject(error);
-      }
-    }
-    const message = {
-      userId,
-      username,
-      profilePicUrl,
-      content,
-      channelId: selectedChannelId,
-      subjectId: isRespondingToSubject ? subjectId : null
-    };
-    onSubmitMessage({
-      message,
-      replyTarget: target,
-      rewardReason,
-      rewardAmount,
-      isRespondingToSubject
-    });
-    onSetReplyTarget(null);
-    return Promise.resolve();
-  }
-
-  async function handleRewardMessageSubmit({ amount, reasonId, message }) {
-    handleMessageSubmit({
-      content: rewardReasons[reasonId].message,
-      rewardAmount: amount,
-      rewardReason: reasonId,
-      target: message
-    });
-    await updateUserXP({
-      amount,
-      action: 'reward',
-      target: 'chat',
-      targetId: message.id,
-      type: 'increase',
-      userId: message.userId
-    });
-  }
-
   function handleReceiveNewMessage() {
     if (scrollAtBottom) {
       handleSetScrollToBottom();
     } else {
       setNewUnseenMessage(true);
     }
-  }
-
-  async function handleSelectNewOwner({ newOwner, andLeave }) {
-    const notificationMsg = await changeChannelOwner({
-      channelId: selectedChannelId,
-      newOwner
-    });
-    socket.emit('new_channel_owner', {
-      channelId: selectedChannelId,
-      userId,
-      username,
-      profilePicUrl,
-      newOwner,
-      notificationMsg
-    });
-    if (andLeave) {
-      handleLeaveChannel();
-    }
-    setSelectNewOwnerModalShown(false);
   }
 
   function handleSetScrollToBottom() {
@@ -1148,3 +1207,5 @@ export default function MessagesContainer({
     });
   }
 }
+
+export default memo(MessagesContainer);
