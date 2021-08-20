@@ -1,4 +1,11 @@
-import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import PropTypes from 'prop-types';
 import request from 'axios';
 import Loading from 'components/Loading';
@@ -237,6 +244,15 @@ function Embedly({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handlePlay = useCallback(() => {
+    onSetVideoStarted({
+      contentType,
+      contentId,
+      started: true
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [contentId, contentType]);
 
   const InnerContent = useMemo(() => {
     return (
@@ -490,14 +506,6 @@ function Embedly({
       </div>
     </div>
   );
-
-  function handlePlay() {
-    onSetVideoStarted({
-      contentType,
-      contentId,
-      started: true
-    });
-  }
 
   function handleVideoProgress() {
     setTimeAt(YTPlayerRef.current.getCurrentTime());
