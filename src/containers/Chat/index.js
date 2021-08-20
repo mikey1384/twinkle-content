@@ -1,4 +1,11 @@
-import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import PropTypes from 'prop-types';
 import CreateNewChatModal from './Modals/CreateNewChat';
 import UserListModal from 'components/Modals/UserListModal';
@@ -98,7 +105,7 @@ function Chat({ onFileUpload }) {
   useEffect(() => {
     socket.on('chess_move_made', onNotifiedMoveMade);
     socket.on('chess_move_viewed', onNotifyMoveViewed);
-    socket.on('subject_changed', onSubjectChange);
+    socket.on('subject_changed', handleTopicChange);
     socket.on('member_left', handleMemberLeft);
 
     function handleMemberLeft({ channelId, leaver }) {
@@ -129,7 +136,7 @@ function Chat({ onFileUpload }) {
     return function cleanUp() {
       socket.removeListener('chess_move_made', onNotifiedMoveMade);
       socket.removeListener('chess_move_viewed', onNotifyMoveViewed);
-      socket.removeListener('subject_changed', onSubjectChange);
+      socket.removeListener('subject_changed', handleTopicChange);
       socket.removeListener('member_left', handleMemberLeft);
     };
   });
@@ -163,6 +170,66 @@ function Chat({ onFileUpload }) {
     }
     return result;
   }, [chatStatus, currentChannel.id, currentChannel?.members]);
+
+  const handleChannelEnter = useCallback(async (id) => {
+    if (id === 0) {
+      return onEnterEmptyChat();
+    }
+    onUpdateSelectedChannelId(id);
+    const data = await loadChatChannel({ channelId: id });
+    if (mounted.current) {
+      onEnterChannelWithId({ data });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleCreateNewChannel = useCallback(
+    async ({ userId, channelName, isClosed }) => {
+      setCreatingChat(true);
+      const { message, members } = await createNewChat({
+        userId,
+        channelName,
+        isClosed
+      });
+      onCreateNewChannel({ message, isClosed, members });
+      socket.emit('join_chat_group', message.channelId);
+      setCreateNewChatModalShown(false);
+      setCreatingChat(false);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+
+  const handleTopicChange = useCallback(
+    ({ message, channelId, channelName }) => {
+      let messageIsForCurrentChannel = message.channelId === selectedChannelId;
+      let senderIsUser = message.userId === userId;
+      if (senderIsUser) return;
+      if (messageIsForCurrentChannel) {
+        onReceiveMessage({ message, pageVisible });
+      }
+      if (!messageIsForCurrentChannel) {
+        onReceiveMessageOnDifferentChannel({
+          pageVisible,
+          channel: {
+            id: channelId,
+            channelName,
+            isHidden: false,
+            lastMessage: {
+              content: message.content,
+              sender: {
+                id: message.userId,
+                username: message.username
+              }
+            },
+            numUnreads: 1
+          }
+        });
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [pageVisible, selectedChannelId, userId]
+  );
 
   return (
     <LocalContext.Provider
@@ -236,57 +303,6 @@ function Chat({ onFileUpload }) {
     return allMembers.length > 0
       ? allMembers
       : Object.entries(currentChannelOnlineMembers).map(([, member]) => member);
-  }
-
-  async function handleChannelEnter(id) {
-    if (id === 0) {
-      return onEnterEmptyChat();
-    }
-    onUpdateSelectedChannelId(id);
-    const data = await loadChatChannel({ channelId: id });
-    if (mounted.current) {
-      onEnterChannelWithId({ data });
-    }
-  }
-
-  async function handleCreateNewChannel({ userId, channelName, isClosed }) {
-    setCreatingChat(true);
-    const { message, members } = await createNewChat({
-      userId,
-      channelName,
-      isClosed
-    });
-    onCreateNewChannel({ message, isClosed, members });
-    socket.emit('join_chat_group', message.channelId);
-    setCreateNewChatModalShown(false);
-    setCreatingChat(false);
-  }
-
-  function onSubjectChange({ message, channelId, channelName }) {
-    let messageIsForCurrentChannel = message.channelId === selectedChannelId;
-    let senderIsUser = message.userId === userId;
-    if (senderIsUser) return;
-    if (messageIsForCurrentChannel) {
-      onReceiveMessage({ message, pageVisible });
-    }
-    if (!messageIsForCurrentChannel) {
-      onReceiveMessageOnDifferentChannel({
-        pageVisible,
-        channel: {
-          id: channelId,
-          channelName,
-          isHidden: false,
-          lastMessage: {
-            content: message.content,
-            sender: {
-              id: message.userId,
-              username: message.username
-            }
-          },
-          numUnreads: 1
-        }
-      });
-    }
   }
 }
 
