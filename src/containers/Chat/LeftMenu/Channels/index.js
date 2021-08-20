@@ -1,4 +1,11 @@
-import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import PropTypes from 'prop-types';
 import Channel from './Channel';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
@@ -60,6 +67,40 @@ function Channels({ onChannelEnter }) {
     classLoadMoreButton,
     favoriteLoadMoreButton,
     homeLoadMoreButton,
+    selectedChatTab
+  ]);
+
+  const handleLoadMoreChannels = useCallback(async () => {
+    const chatTabHash = {
+      home: homeChannelIds,
+      favorite: favoriteChannelIds,
+      class: classChannelIds
+    };
+    if (!loading.current) {
+      loading.current = true;
+      setChannelsLoading(true);
+      const channelIds = chatTabHash[selectedChatTab];
+      const lastId = channelIds[channelIds.length - 1];
+      const { lastUpdated } = channelsObj[lastId];
+      const channels = await loadMoreChannels({
+        type: selectedChatTab,
+        lastUpdated,
+        lastId,
+        currentChannelId: selectedChannelId
+      });
+      if (selectedChatTabRef.current === selectedChatTab) {
+        setChannelsLoading(false);
+        onLoadMoreChannels({ type: selectedChatTab, channels });
+      }
+      loading.current = false;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    channelsObj,
+    classChannelIds,
+    favoriteChannelIds,
+    homeChannelIds,
+    selectedChannelId,
     selectedChatTab
   ]);
 
@@ -143,32 +184,6 @@ function Channels({ onChannelEnter }) {
       )}
     </ErrorBoundary>
   );
-
-  async function handleLoadMoreChannels() {
-    const chatTabHash = {
-      home: homeChannelIds,
-      favorite: favoriteChannelIds,
-      class: classChannelIds
-    };
-    if (!loading.current) {
-      loading.current = true;
-      setChannelsLoading(true);
-      const channelIds = chatTabHash[selectedChatTab];
-      const lastId = channelIds[channelIds.length - 1];
-      const { lastUpdated } = channelsObj[lastId];
-      const channels = await loadMoreChannels({
-        type: selectedChatTab,
-        lastUpdated,
-        lastId,
-        currentChannelId: selectedChannelId
-      });
-      if (selectedChatTabRef.current === selectedChatTab) {
-        setChannelsLoading(false);
-        onLoadMoreChannels({ type: selectedChatTab, channels });
-      }
-      loading.current = false;
-    }
-  }
 }
 
 export default memo(Channels);

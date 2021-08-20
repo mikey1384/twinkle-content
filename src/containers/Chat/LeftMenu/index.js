@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ChatSearchBox from './ChatSearchBox';
 import Channels from './Channels';
@@ -29,6 +29,14 @@ function LeftMenu({ onChannelEnter, onNewButtonClick }) {
     actions: { onLoadVocabulary, onSetLoadingVocabulary }
   } = useChatContext();
   const { profileTheme } = useMyState();
+  const handleEnterVocabulary = useCallback(async () => {
+    onSetLoadingVocabulary(true);
+    const { vocabActivities, wordsObj, wordCollectors } =
+      await loadVocabulary();
+    onLoadVocabulary({ vocabActivities, wordsObj, wordCollectors });
+    onSetLoadingVocabulary(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div
@@ -105,17 +113,6 @@ function LeftMenu({ onChannelEnter, onNewButtonClick }) {
       </div>
     </div>
   );
-
-  async function handleEnterVocabulary() {
-    onSetLoadingVocabulary(true);
-    const {
-      vocabActivities,
-      wordsObj,
-      wordCollectors
-    } = await loadVocabulary();
-    onLoadVocabulary({ vocabActivities, wordsObj, wordCollectors });
-    onSetLoadingVocabulary(false);
-  }
 }
 
 export default memo(LeftMenu);

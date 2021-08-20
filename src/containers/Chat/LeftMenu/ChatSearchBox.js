@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
 import SearchInput from 'components/Texts/SearchInput';
@@ -10,7 +10,7 @@ ChatSearchBox.propTypes = {
   style: PropTypes.object
 };
 
-export default function ChatSearchBox({ style }) {
+function ChatSearchBox({ style }) {
   const {
     requestHelpers: { loadChatChannel, searchChat }
   } = useAppContext();
@@ -26,11 +26,46 @@ export default function ChatSearchBox({ style }) {
     }
   } = useChatContext();
   const [searchText, setSearchText] = useState('');
+  const handleSearchChat = useCallback(async (text) => {
+    const data = await searchChat(text);
+    onSearchChat(data);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const { handleSearch, searching } = useSearch({
     onSearch: handleSearchChat,
     onClear: onClearChatSearchResults,
     onSetSearchText: setSearchText
   });
+  const handleSelect = useCallback(
+    async (item) => {
+      if (item.primary || !!item.channelId) {
+        if (item.channelId === selectedChannelId) {
+          setSearchText('');
+          onClearChatSearchResults();
+          return;
+        }
+        onUpdateSelectedChannelId(item.channelId);
+        const data = await loadChatChannel({
+          channelId: item.channelId
+        });
+        onEnterChannelWithId({ data });
+      } else {
+        onOpenNewChatTab({
+          user: { username, id: userId, profilePicUrl, authLevel },
+          recepient: {
+            username: item.label,
+            id: item.id,
+            profilePicUrl: item.profilePicUrl,
+            authLevel: item.authLevel
+          }
+        });
+      }
+      setSearchText('');
+      onClearChatSearchResults();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [authLevel, profilePicUrl, selectedChannelId, userId, username]
+  );
 
   return (
     <div style={style}>
@@ -67,36 +102,6 @@ export default function ChatSearchBox({ style }) {
       )}
     </div>
   );
-
-  async function handleSearchChat(text) {
-    const data = await searchChat(text);
-    onSearchChat(data);
-  }
-
-  async function handleSelect(item) {
-    if (item.primary || !!item.channelId) {
-      if (item.channelId === selectedChannelId) {
-        setSearchText('');
-        onClearChatSearchResults();
-        return;
-      }
-      onUpdateSelectedChannelId(item.channelId);
-      const data = await loadChatChannel({
-        channelId: item.channelId
-      });
-      onEnterChannelWithId({ data });
-    } else {
-      onOpenNewChatTab({
-        user: { username, id: userId, profilePicUrl, authLevel },
-        recepient: {
-          username: item.label,
-          id: item.id,
-          profilePicUrl: item.profilePicUrl,
-          authLevel: item.authLevel
-        }
-      });
-    }
-    setSearchText('');
-    onClearChatSearchResults();
-  }
 }
+
+export default memo(ChatSearchBox);

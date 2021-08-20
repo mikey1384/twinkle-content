@@ -35,11 +35,55 @@ function Channel({
     () => (!chatType || chatType === 'default') && id === selectedChannelId,
     [chatType, id, selectedChannelId]
   );
-  const PreviewMessage = useMemo(
-    () => renderPreviewMessage(lastMessage || {}),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [lastMessage]
-  );
+  const PreviewMessage = useMemo(() => {
+    return renderPreviewMessage(lastMessage || {});
+    function renderPreviewMessage({
+      content,
+      fileName,
+      gameWinnerId,
+      sender,
+      isDraw
+    }) {
+      const messageSender = sender?.id
+        ? sender.id === userId
+          ? 'You'
+          : sender.username
+        : '';
+      if (fileName) {
+        return (
+          <span>
+            {`${messageSender}:`} {`"${fileName}"`}
+          </span>
+        );
+      }
+      if (isDraw) {
+        return <span>chess match ended in a draw</span>;
+      }
+      if (typeof gameWinnerId === 'number') {
+        if (gameWinnerId === 0) {
+          return <span>The chess match ended in a draw</span>;
+        }
+        return gameWinnerId === userId ? (
+          <span>You won the chess match!</span>
+        ) : (
+          <span>You lost the chess match</span>
+        );
+      }
+      if (messageSender && content) {
+        const truncatedContent =
+          content.startsWith('/spoiler ') || content.startsWith('/secret ')
+            ? 'Secret Message'
+            : content.substr(0, 100);
+        return (
+          <>
+            <span>{`${messageSender}: `}</span>
+            <span>{truncatedContent}</span>
+          </>
+        );
+      }
+      return '\u00a0';
+    }
+  }, [lastMessage, userId]);
   const otherMember = twoPeople
     ? members
         ?.filter(({ id: memberId }) => memberId !== userId)
@@ -162,53 +206,6 @@ function Channel({
       </div>
     </div>
   );
-
-  function renderPreviewMessage({
-    content,
-    fileName,
-    gameWinnerId,
-    sender,
-    isDraw
-  }) {
-    const messageSender = sender?.id
-      ? sender.id === userId
-        ? 'You'
-        : sender.username
-      : '';
-    if (fileName) {
-      return (
-        <span>
-          {`${messageSender}:`} {`"${fileName}"`}
-        </span>
-      );
-    }
-    if (isDraw) {
-      return <span>chess match ended in a draw</span>;
-    }
-    if (typeof gameWinnerId === 'number') {
-      if (gameWinnerId === 0) {
-        return <span>The chess match ended in a draw</span>;
-      }
-      return gameWinnerId === userId ? (
-        <span>You won the chess match!</span>
-      ) : (
-        <span>You lost the chess match</span>
-      );
-    }
-    if (messageSender && content) {
-      const truncatedContent =
-        content.startsWith('/spoiler ') || content.startsWith('/secret ')
-          ? 'Secret Message'
-          : content.substr(0, 100);
-      return (
-        <>
-          <span>{`${messageSender}: `}</span>
-          <span>{truncatedContent}</span>
-        </>
-      );
-    }
-    return '\u00a0';
-  }
 }
 
 export default memo(Channel);

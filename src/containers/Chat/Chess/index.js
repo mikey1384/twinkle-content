@@ -1,4 +1,5 @@
 import React, {
+  memo,
   useCallback,
   useEffect,
   useMemo,
@@ -52,7 +53,7 @@ Chess.propTypes = {
 
 const deviceIsMobile = isMobile(navigator);
 
-export default function Chess({
+function Chess({
   countdownNumber,
   channelId,
   gameWinnerId,
@@ -926,3 +927,5 @@ export default function Chess({
     </div>
   );
 }
+
+export default memo(Chess);
