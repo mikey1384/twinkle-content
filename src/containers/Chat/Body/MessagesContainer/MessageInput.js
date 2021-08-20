@@ -1,4 +1,11 @@
-import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import PropTypes from 'prop-types';
 import Textarea from 'components/Texts/Textarea';
 import Button from 'components/Button';
@@ -58,12 +65,16 @@ function MessageInput({
     actions: { onEnterComment }
   } = useInputContext();
   const prevChannelId = useRef(currentChannelId);
-  const textForThisChannel = state['chat' + currentChannelId]?.text || '';
+  const textForThisChannel = useMemo(
+    () => state['chat' + currentChannelId]?.text || '',
+    [currentChannelId, state]
+  );
   const textRef = useRef(textForThisChannel);
   const inputCoolingDown = useRef(false);
   const timerRef = useRef(null);
   const [coolingDown, setCoolingDown] = useState(false);
   const [text, setText] = useState(textForThisChannel);
+  const textIsEmpty = useMemo(() => stringIsEmpty(text), [text]);
 
   useEffect(() => {
     if (prevChannelId !== currentChannelId) {
@@ -116,6 +127,97 @@ function MessageInput({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleSendMsg = useCallback(async () => {
+    if (!socketConnected || inputCoolingDown.current) {
+      if (inputCoolingDown.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = setTimeout(() => {
+          setCoolingDown(false);
+          inputCoolingDown.current = false;
+        }, 700);
+      }
+      return;
+    }
+    setCoolingDown(true);
+    inputCoolingDown.current = true;
+    timerRef.current = setTimeout(() => {
+      setCoolingDown(false);
+      inputCoolingDown.current = false;
+    }, 500);
+    if (banned?.chat && recepientId !== 5) {
+      return;
+    }
+    innerRef.current.focus();
+    if (stringIsEmpty(text)) return;
+    try {
+      await onMessageSubmit(finalizeEmoji(text));
+      handleSetText('');
+      onEnterComment({
+        contentType: 'chat',
+        contentId: currentChannelId,
+        text: ''
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }, [
+    banned?.chat,
+    currentChannelId,
+    innerRef,
+    onEnterComment,
+    onMessageSubmit,
+    recepientId,
+    socketConnected,
+    text
+  ]);
+
+  const handleSetText = (newText) => {
+    setText(newText);
+    textRef.current = newText;
+  };
+
+  const handleKeyDown = useCallback(
+    (event) => {
+      const shiftKeyPressed = event.shiftKey;
+      const enterKeyPressed = event.keyCode === 13;
+      if (
+        enterKeyPressed &&
+        !deviceIsMobile &&
+        !shiftKeyPressed &&
+        !messageExceedsCharLimit &&
+        !loading
+      ) {
+        event.preventDefault();
+        handleSendMsg();
+      }
+      if (enterKeyPressed && shiftKeyPressed) {
+        onHeightChange(innerRef.current?.clientHeight + 20);
+      }
+    },
+    [handleSendMsg, innerRef, loading, messageExceedsCharLimit, onHeightChange]
+  );
+
+  const handleChange = useCallback(
+    (event) => {
+      setTimeout(() => {
+        onHeightChange(innerRef.current?.clientHeight);
+      }, 0);
+      handleSetText(event.target.value);
+    },
+    [innerRef, onHeightChange]
+  );
+
+  const handlePaste = useCallback(
+    (event) => {
+      const { items } = event.clipboardData;
+      for (let i = 0; i < items.length; i++) {
+        if (!items[i].type.includes('image')) continue;
+        onImagePaste(items[i].getAsFile());
+      }
+    },
+    [onImagePaste]
+  );
 
   return (
     <div
@@ -171,7 +273,7 @@ function MessageInput({
             ...(messageExceedsCharLimit?.style || {})
           }}
         />
-        {!stringIsEmpty(text) && (
+        {!textIsEmpty && (
           <div
             style={{
               margin: `0.2rem 1rem 0.2rem 0`
@@ -206,79 +308,6 @@ function MessageInput({
       </div>
     </div>
   );
-
-  function handleChange(event) {
-    setTimeout(() => {
-      onHeightChange(innerRef.current?.clientHeight);
-    }, 0);
-    handleSetText(event.target.value);
-  }
-
-  function handleKeyDown(event) {
-    const shiftKeyPressed = event.shiftKey;
-    const enterKeyPressed = event.keyCode === 13;
-    if (
-      enterKeyPressed &&
-      !deviceIsMobile &&
-      !shiftKeyPressed &&
-      !messageExceedsCharLimit &&
-      !loading
-    ) {
-      event.preventDefault();
-      handleSendMsg();
-    }
-    if (enterKeyPressed && shiftKeyPressed) {
-      onHeightChange(innerRef.current?.clientHeight + 20);
-    }
-  }
-
-  function handlePaste(event) {
-    const { items } = event.clipboardData;
-    for (let i = 0; i < items.length; i++) {
-      if (!items[i].type.includes('image')) continue;
-      onImagePaste(items[i].getAsFile());
-    }
-  }
-
-  async function handleSendMsg() {
-    if (!socketConnected || inputCoolingDown.current) {
-      if (inputCoolingDown.current) {
-        clearTimeout(timerRef.current);
-        timerRef.current = setTimeout(() => {
-          setCoolingDown(false);
-          inputCoolingDown.current = false;
-        }, 700);
-      }
-      return;
-    }
-    setCoolingDown(true);
-    inputCoolingDown.current = true;
-    timerRef.current = setTimeout(() => {
-      setCoolingDown(false);
-      inputCoolingDown.current = false;
-    }, 500);
-    if (banned?.chat && recepientId !== 5) {
-      return;
-    }
-    innerRef.current.focus();
-    if (stringIsEmpty(text)) return;
-    try {
-      await onMessageSubmit(finalizeEmoji(text));
-      handleSetText('');
-      onEnterComment({
-        contentType: 'chat',
-        contentId: currentChannelId,
-        text: ''
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  function handleSetText(newText) {
-    setText(newText);
-    textRef.current = newText;
-  }
 }
 
 export default memo(MessageInput);
