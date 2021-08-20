@@ -55,25 +55,23 @@ export function AppContextProvider({ children }) {
             <NotiContextProvider>
               <MissionContextProvider>
                 <HomeContextProvider>
-                  <ChatContextProvider>
-                    <InputContextProvider>
-                      <ContentContextProvider>
-                        <InteractiveContextProvider>
-                          <AppContext.Provider
-                            value={{
-                              user: {
-                                state: userState,
-                                actions: UserActions(userDispatch)
-                              },
-                              requestHelpers: requestHelpers(handleError)
-                            }}
-                          >
-                            {children}
-                          </AppContext.Provider>
-                        </InteractiveContextProvider>
-                      </ContentContextProvider>
-                    </InputContextProvider>
-                  </ChatContextProvider>
+                  <InputContextProvider>
+                    <ContentContextProvider>
+                      <InteractiveContextProvider>
+                        <AppContext.Provider
+                          value={{
+                            user: {
+                              state: userState,
+                              actions: UserActions(userDispatch)
+                            },
+                            requestHelpers: requestHelpers(handleError)
+                          }}
+                        >
+                          <ChatContextProvider>{children}</ChatContextProvider>
+                        </AppContext.Provider>
+                      </InteractiveContextProvider>
+                    </ContentContextProvider>
+                  </InputContextProvider>
                 </HomeContextProvider>
               </MissionContextProvider>
             </NotiContextProvider>
