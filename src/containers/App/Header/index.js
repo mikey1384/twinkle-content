@@ -176,7 +176,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
     socket.on('mission_rewards_received', handleMissionRewards);
     socket.on('new_call_member', handleNewCallMember);
     socket.on('new_call_started', handleNewCall);
-    socket.on('new_post_uploaded', onIncreaseNumNewPosts);
+    socket.on('new_post_uploaded', handleNewPost);
     socket.on('new_notification_received', handleNewNotification);
     socket.on('new_message_received', handleReceiveMessage);
     socket.on('new_reward_posted', handleNewReward);
@@ -217,7 +217,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
       socket.removeListener('mission_rewards_received', handleMissionRewards);
       socket.removeListener('new_call_member', handleNewCallMember);
       socket.removeListener('new_call_started', handleNewCall);
-      socket.removeListener('new_post_uploaded', onIncreaseNumNewPosts);
+      socket.removeListener('new_post_uploaded', handleNewPost);
       socket.removeListener('new_notification_received', handleNewNotification);
       socket.removeListener('new_message_received', handleReceiveMessage);
       socket.removeListener('new_reward_posted', handleNewReward);
@@ -387,15 +387,19 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
       });
     }
 
-    function handleNewNotification({ type, target, likes, comment }) {
-      if (type === 'like') {
+    function handleNewNotification({ likes, target }) {
+      if (likes) {
         onLikeContent({
           likes,
           contentId: target.contentId,
           contentType: target.contentType
         });
       }
-      if (type === 'comment') {
+      onIncreaseNumNewNotis();
+    }
+
+    function handleNewPost({ comment, target }) {
+      if (comment) {
         if (target.commentId || target.replyId) {
           onUploadReply({
             ...target,
@@ -409,7 +413,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
           });
         }
       }
-      onIncreaseNumNewNotis();
+      onIncreaseNumNewPosts();
     }
 
     function handleNewRecommendation({
