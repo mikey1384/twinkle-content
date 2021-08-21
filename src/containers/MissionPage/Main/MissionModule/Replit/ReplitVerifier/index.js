@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import MakeAccount from './MakeAccount';
@@ -8,6 +8,7 @@ import MultiStepContainer from '../../components/MultiStepContainer';
 import TaskComplete from '../../components/TaskComplete';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
+import { scrollElementToCenter } from 'helpers';
 import RequiresComputer from '../../components/RequiresComputer';
 
 ReplitVerifier.propTypes = {
@@ -76,6 +77,7 @@ export default function ReplitVerifier({ task }) {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createReplOkayPressed, task.id]);
+  const TaskCompleteRef = useRef(null);
 
   return (
     <ErrorBoundary style={{ width: '100%' }}>
@@ -102,6 +104,7 @@ export default function ReplitVerifier({ task }) {
         </MultiStepContainer>
       ) : (
         <TaskComplete
+          innerRef={TaskCompleteRef}
           taskId={task.id}
           passMessage="That's it! Excellent work"
           passMessageFontSize="2.2rem"
@@ -120,5 +123,6 @@ export default function ReplitVerifier({ task }) {
       missionType: task.missionType,
       newState
     });
+    scrollElementToCenter(TaskCompleteRef.current);
   }
 }

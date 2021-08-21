@@ -8,6 +8,7 @@ import Button from 'components/Button';
 import Icon from 'components/Icon';
 
 TaskComplete.propTypes = {
+  innerRef: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   style: PropTypes.object,
   taskId: PropTypes.number.isRequired,
   passMessage: PropTypes.string,
@@ -15,6 +16,7 @@ TaskComplete.propTypes = {
 };
 
 export default function TaskComplete({
+  innerRef,
   style,
   taskId,
   passMessage,
@@ -43,6 +45,7 @@ export default function TaskComplete({
 
   return myAttempt?.status ? null : (
     <ErrorBoundary
+      innerRef={innerRef}
       style={{
         width: '100%',
         display: 'flex',
