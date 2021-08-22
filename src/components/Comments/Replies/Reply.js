@@ -94,8 +94,15 @@ function Reply({
   const {
     requestHelpers: { editContent, loadReplies }
   } = useAppContext();
-  const { authLevel, canDelete, canEdit, canReward, twinkleCoins, userId } =
-    useMyState();
+  const {
+    authLevel,
+    canDelete,
+    canEdit,
+    canReward,
+    isCreator,
+    twinkleCoins,
+    userId
+  } = useMyState();
   const {
     actions: { onSetIsEditing, onSetXpRewardInterfaceShown }
   } = useContentContext();
@@ -220,7 +227,7 @@ function Reply({
           })
       });
     }
-    if (userIsParentUploader) {
+    if (userIsParentUploader || isCreator) {
       items.push({
         label: (
           <>

@@ -121,6 +121,7 @@ function Comment({
     canDelete,
     canEdit,
     canReward,
+    isCreator,
     twinkleCoins,
     userId
   } = useMyState();
@@ -141,22 +142,19 @@ function Comment({
     contentId: comment.id
   });
 
-  const thumbUrl = useMemo(() => thumbUrlFromContext || originalThumbUrl, [
-    originalThumbUrl,
-    thumbUrlFromContext
-  ]);
+  const thumbUrl = useMemo(
+    () => thumbUrlFromContext || originalThumbUrl,
+    [originalThumbUrl, thumbUrlFromContext]
+  );
   const subjectState = useContentState({
     contentType: 'subject',
     contentId: subject.id
   });
-  const { onDelete, onEditDone, onLikeClick, onRewardCommentEdit } = useContext(
-    LocalContext
-  );
+  const { onDelete, onEditDone, onLikeClick, onRewardCommentEdit } =
+    useContext(LocalContext);
 
-  const [
-    recommendationInterfaceShown,
-    setRecommendationInterfaceShown
-  ] = useState(false);
+  const [recommendationInterfaceShown, setRecommendationInterfaceShown] =
+    useState(false);
   const [userListModalShown, setUserListModalShown] = useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   const [replying, setReplying] = useState(false);
@@ -164,10 +162,10 @@ function Comment({
   const ReplyRefs = {};
   const RewardInterfaceRef = useRef(null);
 
-  const subjectId = useMemo(() => subjectState?.id || subject?.id, [
-    subject?.id,
-    subjectState?.id
-  ]);
+  const subjectId = useMemo(
+    () => subjectState?.id || subject?.id,
+    [subject?.id, subjectState?.id]
+  );
   const subjectHasSecretMessage = useMemo(
     () => !!subjectState?.secretAnswer || !!subject?.secretAnswer,
     [subject?.secretAnswer, subjectState?.secretAnswer]
@@ -232,10 +230,10 @@ function Comment({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [replies]);
 
-  const userIsUploader = useMemo(() => uploader.id === userId, [
-    uploader.id,
-    userId
-  ]);
+  const userIsUploader = useMemo(
+    () => uploader.id === userId,
+    [uploader.id, userId]
+  );
   const userIsParentUploader = useMemo(
     () =>
       userId &&
@@ -243,10 +241,10 @@ function Comment({
       parent.uploader?.id === userId,
     [parent.contentType, parent.uploader?.id, userId]
   );
-  const userIsHigherAuth = useMemo(() => authLevel > uploader.authLevel, [
-    authLevel,
-    uploader.authLevel
-  ]);
+  const userIsHigherAuth = useMemo(
+    () => authLevel > uploader.authLevel,
+    [authLevel, uploader.authLevel]
+  );
   const dropdownButtonShown = useMemo(() => {
     const isForSecretSubject =
       (rootContent?.secretAnswer &&
@@ -310,7 +308,7 @@ function Comment({
           })
       });
     }
-    if (userIsParentUploader) {
+    if (userIsParentUploader || isCreator) {
       items.push({
         label: (
           <>
