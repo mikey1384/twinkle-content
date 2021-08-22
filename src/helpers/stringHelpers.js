@@ -272,7 +272,7 @@ export function exceedsCharLimit({ inputType, contentType, text }) {
 
 export function fetchURLFromText(text) {
   const regex =
-    /(\b(http[s]?:\/\/(www\.)?|ftp:\/\/(www\.)?|www\.){1}([0-9A-Za-z-.,;:?@%_\+~#=\/()])+(\.[A-Z])?([^\s-.,;:?'")])+)/gi;
+    /(\b(http[s]?:\/\/(www\.)?|ftp:\/\/(www\.)?|www\.){1}([0-9A-Za-z-.,;:?@%_\+~#=\/])+(\.[A-Z])?([^\s-.,;:?'"()]|(\([a-zA-Z]*?\)))+)/gi;
   let url = text.match(regex)?.[0] || '';
   const processedURL =
     (url.split('.')[0] || '').toLowerCase() + (url.split('.')[1] || '');
@@ -432,7 +432,7 @@ export function processedStringWithURL(string) {
   const trimmedString = (string) =>
     string.length > maxChar ? `${string.substring(0, maxChar)}...` : string;
   const urlRegex =
-    /(((http[s]?:\/\/|ftp:\/\/)|www\.)([0-9\p{L}/])+([0-9\p{L}/\-.,;:?!&@%_\+~#=\/()])+([0-9\p{L}_)/])+)/giu;
+    /(((http[s]?:\/\/|ftp:\/\/)|www\.)([0-9\p{L}/])+([0-9\p{L}/\-.,;:?!&@%_\+~#=\/])+([0-9\p{L}_/]|(\([a-zA-Z]*?\)))+)/giu;
   let tempString = string
     .replace(/&/g, '&amp')
     .replace(/</g, '&lt')
