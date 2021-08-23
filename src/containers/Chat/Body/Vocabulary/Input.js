@@ -91,7 +91,7 @@ export default function Input({
   );
 
   function handleChange(event) {
-    const regex = /[^a-zA-Z\s]/gi;
+    const regex = /[^a-zA-Z\-\s]/gi;
     const isInvalid = regex.test(event.target.value.trim());
     if (isInvalid) {
       return onSetVocabErrorMessage(
