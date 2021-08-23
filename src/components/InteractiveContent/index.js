@@ -58,9 +58,13 @@ export default function InteractiveContent({
     loaded,
     slideObj = {},
     archivedSlideIds,
-    displayedSlideIds,
+    displayedSlideIds = [],
     isPublished
   } = useMemo(() => state[interactiveId] || {}, [interactiveId, state]);
+  const displayedSlidesThatAreNotDeleted = useMemo(
+    () => displayedSlideIds?.filter((slideId) => !slideObj[slideId].isDeleted),
+    [displayedSlideIds, slideObj]
+  );
 
   const lastFork = useMemo(() => {
     const slides = displayedSlideIds?.map((slideId) => slideObj[slideId]);
@@ -223,7 +227,9 @@ export default function InteractiveContent({
               portalButton={slideObj[slideId].portalButton}
               slideId={slideId}
               slideObj={slideObj}
-              isLastSlide={index === displayedSlideIds.length - 1}
+              isLastSlide={
+                index === displayedSlidesThatAreNotDeleted.length - 1
+              }
               onGoBackToMission={onGoBackToMission}
             />
           ))}

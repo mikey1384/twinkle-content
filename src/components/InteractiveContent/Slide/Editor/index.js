@@ -40,6 +40,7 @@ Editor.propTypes = {
   portalButton: PropTypes.object,
   paths: PropTypes.object,
   interactiveId: PropTypes.number,
+  onHideDeletedMessages: PropTypes.func,
   slideId: PropTypes.number,
   slideObj: PropTypes.object,
   isLastSlide: PropTypes.bool
@@ -58,6 +59,7 @@ export default function Editor({
   isLastSlide,
   forkButtonIds,
   forkButtonsObj,
+  onHideDeletedMessages,
   portalButton,
   paths,
   slideId,
@@ -596,6 +598,9 @@ export default function Editor({
       if (mounted.current) {
         handleSetInputState(post);
       }
+    }
+    if (editForm.editedIsFork && mounted.current) {
+      onHideDeletedMessages(slideId);
     }
 
     function handleUploadProgress({ loaded, total }) {

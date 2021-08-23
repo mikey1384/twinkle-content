@@ -261,6 +261,7 @@ export default function Slide({
             isLastSlide={isLastSlide}
             forkButtonIds={forkButtonIds}
             forkButtonsObj={forkButtonsObj}
+            onHideDeletedMessages={handleHideDeletedMessages}
             paths={paths}
             portalButton={portalButton}
             slideId={slideId}
@@ -316,6 +317,18 @@ export default function Slide({
     for (let [key, slide] of Object.entries(slideObj)) {
       if (slide.forkedFrom === slideId) {
         onArchiveSlide({ interactiveId, slideId: Number(key) });
+      }
+    }
+  }
+
+  function handleHideDeletedMessages(forkSlideId) {
+    for (let slideId of displayedSlideIds) {
+      if (
+        displayedSlideIds.indexOf(slideId) >
+          displayedSlideIds.indexOf(forkSlideId) &&
+        slideObj[slideId]?.isDeleted
+      ) {
+        onRemoveInteractiveSlide({ interactiveId, slideId });
       }
     }
   }
