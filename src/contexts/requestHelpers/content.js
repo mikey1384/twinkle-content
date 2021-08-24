@@ -539,12 +539,12 @@ export default function contentRequestHelpers({ auth, handleError }) {
     async loadVideoCurrentTime(videoId) {
       try {
         const {
-          data: { currentTime }
+          data: { currentTime, userViewDuration }
         } = await request.get(
           `${URL}/video/currentTime?videoId=${videoId}`,
           auth()
         );
-        return Promise.resolve(currentTime);
+        return Promise.resolve({ currentTime, userViewDuration });
       } catch (error) {
         return handleError(error);
       }

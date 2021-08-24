@@ -14,6 +14,7 @@ import { addCommasToNumber } from 'helpers/stringHelpers';
 XPBar.propTypes = {
   isChat: PropTypes.bool,
   rewardLevel: PropTypes.number,
+  reachedMaxWatchDuration: PropTypes.bool,
   started: PropTypes.bool,
   startingPosition: PropTypes.number,
   userId: PropTypes.number,
@@ -28,9 +29,11 @@ function XPBar({
   started,
   startingPosition,
   userId,
+  reachedMaxWatchDuration,
   videoId
 }) {
-  const [hovered, setHovered] = useState(false);
+  const [coinHovered, setCoinHovered] = useState(false);
+  const [xpHovered, setXPHovered] = useState(false);
   const watching = startingPosition > 0;
   const { rewardBoostLvl, twinkleCoins } = useMyState();
   const xpRewardAmount = useMemo(
@@ -60,19 +63,17 @@ function XPBar({
     [numCoinsEarned]
   );
 
-  const xpLevelColor = useMemo(
-    () =>
-      rewardLevel === 5
-        ? Color.gold()
-        : rewardLevel === 4
-        ? Color.cranberry()
-        : rewardLevel === 3
-        ? Color.orange()
-        : rewardLevel === 2
-        ? Color.pink()
-        : Color.logoBlue(),
-    [rewardLevel]
-  );
+  const xpLevelColor = useMemo(() => {
+    return rewardLevel === 5
+      ? 'gold'
+      : rewardLevel === 4
+      ? 'cranberry'
+      : rewardLevel === 3
+      ? 'orange'
+      : rewardLevel === 2
+      ? 'pink'
+      : 'logoBlue';
+  }, [rewardLevel]);
 
   const continuingStatusShown = useMemo(
     () => watching && !started,
@@ -98,7 +99,7 @@ function XPBar({
             }
           `}
           progress={videoProgress}
-          color={xpLevelColor}
+          color={Color[xpLevelColor]()}
           noBorderRadius
         />
       );
@@ -196,38 +197,66 @@ function XPBar({
           >
             <div
               className={css`
-                height: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: #fff;
                 flex-grow: 1;
-                font-weight: bold;
-                background: ${xpLevelColor};
-                font-size: 1.3rem;
-                @media (max-width: ${mobileMaxWidth}) {
-                  flex-grow: 0;
-                  width: 5rem;
-                  font-size: ${numXpEarned > 0 ? '0.7rem' : '1rem'};
-                }
               `}
             >
-              {numXpEarned > 0
-                ? `+ ${numXpEarnedWithComma}`
-                : deviceIsMobile
-                ? `${rewardLevel}-STAR`
-                : Stars}
+              <div
+                className={css`
+                  height: 100%;
+                  width: 100%;
+                  display: flex;
+                  position: relative;
+                  justify-content: center;
+                  align-items: center;
+                  color: #fff;
+                  font-size: 1.3rem;
+                  font-weight: bold;
+                  background: ${Color[xpLevelColor](
+                    reachedMaxWatchDuration ? 0.3 : 1
+                  )};
+                  cursor: default;
+                  @media (max-width: ${mobileMaxWidth}) {
+                    flex-grow: 0;
+                    width: 5rem;
+                    font-size: ${numXpEarned > 0 ? '0.7rem' : '1rem'};
+                  }
+                `}
+                onMouseEnter={
+                  reachedMaxWatchDuration ? () => setXPHovered(true) : () => {}
+                }
+                onMouseLeave={() => setXPHovered(false)}
+              >
+                {numXpEarned > 0 && !reachedMaxWatchDuration
+                  ? `+ ${numXpEarnedWithComma}`
+                  : deviceIsMobile
+                  ? `${rewardLevel}-STAR`
+                  : Stars}
+              </div>
+              {xpHovered && (
+                <FullTextReveal
+                  show
+                  direction="left"
+                  style={{
+                    marginTop: '0.5rem',
+                    color: '#000',
+                    width: '30rem',
+                    fontSize: '1.2rem',
+                    position: 'absolute'
+                  }}
+                  text={`You have earned all the XP you can earn from this video`}
+                />
+              )}
             </div>
             {canEarnCoins && (
               <div>
                 <div
                   onClick={() =>
-                    deviceIsMobile ? setHovered((hovered) => !hovered) : {}
+                    deviceIsMobile ? setCoinHovered((hovered) => !hovered) : {}
                   }
                   onMouseEnter={
-                    twinkleCoins > 1000 ? () => setHovered(true) : () => {}
+                    twinkleCoins > 1000 ? () => setCoinHovered(true) : () => {}
                   }
-                  onMouseLeave={() => setHovered(false)}
+                  onMouseLeave={() => setCoinHovered(false)}
                   className={css`
                     height: 100%;
                     position: relative;
@@ -256,7 +285,7 @@ function XPBar({
                     <Icon size="lg" icon={['far', 'badge-dollar']} />
                   )}
                 </div>
-                {hovered && (
+                {coinHovered && (
                   <FullTextReveal
                     show
                     direction="left"

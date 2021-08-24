@@ -99,7 +99,9 @@ function XPVideoPlayer({
     contentId: videoId
   });
   const [playing, setPlaying] = useState(false);
+  const [reachedMaxWatchDuration, setReachedMaxWatchDuration] = useState(false);
   const [startingPosition, setStartingPosition] = useState(0);
+  const [myViewDuration, setMyViewDuration] = useState(0);
   const requiredDurationForCoin = 60;
   const PlayerRef = useRef(null);
   const timerRef = useRef(null);
@@ -117,9 +119,14 @@ function XPVideoPlayer({
     init();
     async function init() {
       if (userId) {
-        const currentTime = await loadVideoCurrentTime(videoId);
+        const { currentTime, userViewDuration } = await loadVideoCurrentTime(
+          videoId
+        );
         if (currentTime && mounted.current) {
           setStartingPosition(currentTime);
+        }
+        if (userViewDuration && mounted.current) {
+          setMyViewDuration(userViewDuration);
         }
       }
     }
@@ -173,7 +180,13 @@ function XPVideoPlayer({
     totalDurationRef.current = PlayerRef.current
       ?.getInternalPlayer()
       ?.getDuration();
-  }, []);
+    if (
+      totalDurationRef.current > 180 &&
+      myViewDuration > totalDurationRef.current * 1.5
+    ) {
+      setReachedMaxWatchDuration(true);
+    }
+  }, [myViewDuration]);
 
   const handleIncreaseMeter = useCallback(
     async ({ userId }) => {
@@ -226,15 +239,20 @@ function XPVideoPlayer({
         if (!rewardingXP.current) {
           rewardingXP.current = true;
           try {
-            const { xp, rank } = await updateUserXP({
+            const { xp, rank, alreadyDone } = await updateUserXP({
               action: 'watch',
               target: 'video',
               amount: xpRewardAmountRef.current,
               targetId: videoId,
+              totalDuration: totalDurationRef.current,
               type: 'increase'
             });
             if (mounted.current) {
-              onChangeUserXP({ xp, rank, userId });
+              if (alreadyDone) {
+                setReachedMaxWatchDuration(true);
+              } else {
+                onChangeUserXP({ xp, rank, userId });
+              }
             }
             rewardingXP.current = false;
           } catch (error) {
@@ -269,12 +287,11 @@ function XPVideoPlayer({
 
       async function checkAlreadyWatchingAnotherVideo() {
         if (rewardLevelRef.current) {
-          const currentlyWatchingAnotherVideo = await checkCurrentlyWatchingAnotherVideo(
-            {
+          const currentlyWatchingAnotherVideo =
+            await checkCurrentlyWatchingAnotherVideo({
               rewardLevel: rewardLevelRef.current,
               watchCode: watchCodeRef.current
-            }
-          );
+            });
           if (currentlyWatchingAnotherVideo && mounted.current) {
             PlayerRef.current?.getInternalPlayer()?.pauseVideo?.();
           }
@@ -405,6 +422,7 @@ function XPVideoPlayer({
       {(!!rewardLevel || (startingPosition > 0 && !started)) && (
         <XPBar
           isChat={isChat}
+          reachedMaxWatchDuration={reachedMaxWatchDuration}
           rewardLevel={rewardLevel}
           started={started}
           startingPosition={startingPosition}

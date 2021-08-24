@@ -507,13 +507,21 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
-    async updateUserXP({ amount, action, target, targetId, type, userId }) {
+    async updateUserXP({
+      amount,
+      action,
+      target,
+      targetId,
+      totalDuration,
+      type,
+      userId
+    }) {
       try {
         const {
           data: { xp, alreadyDone, rank, coins }
         } = await request.post(
           `${URL}/user/xp`,
-          { amount, action, target, targetId, type, userId },
+          { amount, action, target, targetId, totalDuration, type, userId },
           auth()
         );
         return Promise.resolve({ xp, alreadyDone, rank, coins });
