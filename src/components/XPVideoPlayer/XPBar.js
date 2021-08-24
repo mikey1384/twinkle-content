@@ -115,7 +115,9 @@ function XPBar({
             }
           `}
           style={{
-            background: continuingStatusShown ? Color.darkBlue() : xpLevelColor,
+            background: continuingStatusShown
+              ? Color.darkBlue()
+              : Color[xpLevelColor](),
             color: '#fff',
             fontWeight: 'bold',
             display: 'flex',
