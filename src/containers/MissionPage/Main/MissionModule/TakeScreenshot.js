@@ -246,10 +246,13 @@ export default function TakeScreenshot({
           <div style={{ marginTop: '5rem' }}>
             <span>
               {`If you don't know what the word "screenshot" means, `}
-              press the <b style={{ color: Color.green() }}>button</b> below
+              press the <b style={{ color: Color.brownOrange() }}>
+                button
+              </b>{' '}
+              below
             </span>
             <Icon
-              style={{ marginLeft: '1rem', color: Color.green() }}
+              style={{ marginLeft: '1rem', color: Color.brownOrange() }}
               icon="arrow-down"
             />
           </div>
