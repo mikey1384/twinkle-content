@@ -116,6 +116,19 @@ function ContentInput() {
     url
   ]);
 
+  const rewardLevelDescription = useMemo(() => {
+    switch (form.rewardLevel) {
+      case 3:
+        return `This video is mostly for entertainment, but it's good for English listening`;
+      case 4:
+        return 'This video is educational and good for English listening';
+      case 5:
+        return 'This video is educational, good for English listening, and I want every single user to watch it';
+      default:
+        return '';
+    }
+  }, [form.rewardLevel]);
+
   useEffect(() => {
     return function saveFormBeforeUnmount() {
       onSetContentDescription(descriptionRef.current);
@@ -241,6 +254,11 @@ function ContentInput() {
           </div>
           {!buttonDisabled && !urlHelper && form.isVideo && canEditRewardLevel && (
             <div style={{ marginTop: '1rem' }}>
+              {rewardLevelDescription && (
+                <div style={{ fontSize: '1.7rem', fontWeight: 'bold' }}>
+                  {rewardLevelDescription}
+                </div>
+              )}
               <div style={{ fontSize: '1.5rem' }}>
                 For every star you add, the amount of XP viewers earn per minute
                 rises.
