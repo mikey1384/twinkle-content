@@ -143,6 +143,7 @@ export default function Attempts({ mission, missionId, onSetMissionState }) {
 
   async function handleLoadMoreAttempts() {
     const currentAttemptIds = mission[`${activeTab}AttemptIds`];
+    const lastAttemptId = currentAttemptIds[currentAttemptIds.length - 1];
     setLoadingMore(true);
     const {
       attemptObj,
@@ -151,7 +152,9 @@ export default function Attempts({ mission, missionId, onSetMissionState }) {
     } = await loadMissionAttemptsForPage({
       activeTab,
       missionId,
-      lastAttemptId: currentAttemptIds[currentAttemptIds.length - 1]
+      lastAttemptId,
+      lastAttemptReviewTimeStamp:
+        mission.attemptObj[lastAttemptId].reviewTimeStamp
     });
     onSetMissionState({
       missionId,
