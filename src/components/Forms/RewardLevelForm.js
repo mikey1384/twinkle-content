@@ -13,6 +13,7 @@ RewardLevelForm.propTypes = {
   isFromSubjectInput: PropTypes.bool,
   rewardLevel: PropTypes.number.isRequired,
   onSetRewardLevel: PropTypes.func.isRequired,
+  recommendedRewardLevel: PropTypes.number,
   style: PropTypes.object,
   themed: PropTypes.bool
 };
@@ -27,6 +28,7 @@ export default function RewardLevelForm({
   themed,
   rewardLevel,
   onSetRewardLevel,
+  recommendedRewardLevel,
   style
 }) {
   const { authLevel, profileTheme } = useMyState();
@@ -39,7 +41,7 @@ export default function RewardLevelForm({
         onSetRewardLevel(1);
       }
       if (isFromContentInput && authLevel > 2) {
-        onSetRewardLevel(4);
+        onSetRewardLevel(Math.max(4, recommendedRewardLevel));
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

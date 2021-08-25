@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import UsernameText from 'components/Texts/UsernameText';
 import UserListModal from 'components/Modals/UserListModal';
 import DropdownButton from 'components/Buttons/DropdownButton';
-import EditTitleForm from 'components/Texts/EditTitleForm';
+import EditTitleForm from 'components/Forms/EditTitleForm';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import Embedly from 'components/Embedly';
 import { useHistory } from 'react-router-dom';

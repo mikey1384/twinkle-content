@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Carousel from 'components/Carousel';
 import VideoThumb from 'components/VideoThumb';
 import DropdownButton from 'components/Buttons/DropdownButton';
-import EditTitleForm from 'components/Texts/EditTitleForm';
+import EditTitleForm from 'components/Forms/EditTitleForm';
 import EditPlaylistModal from './Modals/EditPlaylistModal';
 import PlaylistModal from 'components/Modals/PlaylistModal';
 import ConfirmModal from 'components/Modals/ConfirmModal';
@@ -46,12 +46,10 @@ export default function PlaylistCarousel({
     actions: { onDeletePlaylist, onEditPlaylistTitle }
   } = useExploreContext();
   const [onEdit, setOnEdit] = useState(false);
-  const [changePLVideosModalShown, setChangePLVideosModalShown] = useState(
-    false
-  );
-  const [reorderPLVideosModalShown, setReorderPLVideosModalShown] = useState(
-    false
-  );
+  const [changePLVideosModalShown, setChangePLVideosModalShown] =
+    useState(false);
+  const [reorderPLVideosModalShown, setReorderPLVideosModalShown] =
+    useState(false);
   const [deleteConfirmModalShown, setDeleteConfirmModalShown] = useState(false);
   const [playlistModalShown, setPlaylistModalShown] = useState(false);
   const numSlides = 4;

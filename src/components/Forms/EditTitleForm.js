@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import Input from './Input';
+import Input from 'components/Texts/Input';
 import { useOutsideClick } from 'helpers/hooks';
 import { addEmoji, finalizeEmoji } from 'helpers/stringHelpers';
 import { edit } from 'constants/placeholders';
@@ -28,11 +28,7 @@ export default function EditTitleForm({
   useOutsideClick(FormRef, onClickOutSide);
 
   return (
-    <form
-      style={style}
-      ref={FormRef}
-      onSubmit={event => onEditSubmit(event, title)}
-    >
+    <form style={style} ref={FormRef}>
       <Input
         style={{
           width: '100%',
@@ -42,8 +38,8 @@ export default function EditTitleForm({
         autoFocus={autoFocus}
         placeholder={edit.title}
         value={title}
-        onChange={text => setTitle(text)}
-        onKeyUp={event => setTitle(addEmoji(event.target.value))}
+        onChange={(text) => setTitle(text)}
+        onKeyUp={handleKeyUp}
       />
       <div>
         <small
@@ -59,7 +55,15 @@ export default function EditTitleForm({
     </form>
   );
 
-  function onEditSubmit(event, title) {
+  function handleKeyUp(event) {
+    setTitle(addEmoji(event.target.value));
+    if (event.keyCode === 13) {
+      finalizeEmoji(event.target.value);
+      onEditSubmit({ event, title });
+    }
+  }
+
+  function onEditSubmit({ event, title }) {
     event.preventDefault();
     if (title && title.length > maxLength) return;
     if (title && title !== props.title) {
