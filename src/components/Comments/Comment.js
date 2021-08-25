@@ -433,6 +433,14 @@ function Comment({
     [heightNotSet, inView, visible]
   );
 
+  const maxLines = useMemo(() => {
+    return isPreview &&
+      filePath &&
+      (fileType === 'video' || fileType === 'image')
+      ? 3
+      : 10;
+  }, [filePath, isPreview, fileType]);
+
   useEffect(() => {
     if (mounted.current) {
       if (
@@ -632,6 +640,7 @@ function Comment({
                             contentId={commentId}
                             contentType="comment"
                             section="comment"
+                            maxLines={maxLines}
                             className="comment__content"
                           >
                             {comment.content}
