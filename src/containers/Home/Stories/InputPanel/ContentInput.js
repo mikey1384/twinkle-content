@@ -68,7 +68,6 @@ function ContentInput() {
   const UrlFieldRef = useRef(null);
   const checkContentExistsTimerRef = useRef(null);
   const showHelperMessageTimerRef = useRef(null);
-  const [recommendedRewardLevel, setRecommendedRewardLevel] = useState(0);
 
   const loadingYTDetails = useMemo(() => {
     return form.isVideo && !ytDetails;
@@ -277,7 +276,6 @@ function ContentInput() {
                   padding: '1rem',
                   fontSize: '3rem'
                 }}
-                recommendedRewardLevel={recommendedRewardLevel}
                 rewardLevel={form.rewardLevel}
                 onSetRewardLevel={onSetContentRewardLevel}
               />
@@ -381,8 +379,7 @@ function ContentInput() {
     const {
       exists,
       content,
-      ytDetails: details,
-      playlistRewardLevel
+      ytDetails: details
     } = await checkContentUrl({
       url,
       contentType: isVideo ? 'video' : 'url'
@@ -393,7 +390,6 @@ function ContentInput() {
       }
       onSetYouTubeVideoDetails(details);
     }
-    setRecommendedRewardLevel(playlistRewardLevel);
     return onSetContentAlreadyPosted(exists ? content : false);
   }
 

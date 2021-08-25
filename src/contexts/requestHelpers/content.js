@@ -26,7 +26,7 @@ export default function contentRequestHelpers({ auth, handleError }) {
     async checkContentUrl({ url, videoCode, contentType }) {
       try {
         const {
-          data: { exists, content, ytDetails, playlistRewardLevel }
+          data: { exists, content, ytDetails }
         } = await request.get(
           `${URL}/content/checkUrl?url=${encodeURIComponent(
             url
@@ -37,8 +37,7 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return Promise.resolve({
           exists,
           content,
-          ytDetails,
-          playlistRewardLevel
+          ytDetails
         });
       } catch (error) {
         return handleError(error);
