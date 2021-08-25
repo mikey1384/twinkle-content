@@ -50,7 +50,8 @@ export default function RewardLevelForm({
     isFromContentInput,
     isFromSubjectInput,
     isMadeByUser,
-    alreadyPosted
+    alreadyPosted,
+    recommendedRewardLevel
   ]);
 
   return (
