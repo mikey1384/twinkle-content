@@ -67,9 +67,7 @@ export default function PinnedComment({
             }}
           >
             <Icon icon={['fas', 'thumbtack']} />
-            <span style={{ marginLeft: '0.7rem' }}>
-              Pinned by {parent.uploader?.username}
-            </span>
+            <span style={{ marginLeft: '0.7rem' }}>Pinned</span>
           </div>
           <Comment
             parent={parent}

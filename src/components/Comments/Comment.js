@@ -503,9 +503,7 @@ function Comment({
                 }}
               >
                 <Icon icon={['fas', 'thumbtack']} />
-                <span style={{ marginLeft: '0.7rem' }}>
-                  Pinned by {parent.uploader?.username}
-                </span>
+                <span style={{ marginLeft: '0.7rem' }}>Pinned</span>
               </div>
             )}
             <div className="content-wrapper">
