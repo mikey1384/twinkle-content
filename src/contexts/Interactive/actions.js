@@ -66,11 +66,12 @@ export default function InteractiveActions(dispatch) {
         numUpdates
       });
     },
-    onRecoverArchivedSlide({ interactiveId, slideId }) {
+    onRecoverArchivedSlide({ interactiveId, slideId, forkedFrom }) {
       return dispatch({
         type: 'RECOVER_ARCHIVED_SLIDE',
         interactiveId,
-        slideId
+        slideId,
+        forkedFrom
       });
     },
     onRemoveInteractiveSlide({ interactiveId, slideId }) {

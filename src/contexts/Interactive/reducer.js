@@ -43,9 +43,9 @@ export default function InteractiveReducer(state, action) {
       return {
         [action.interactiveId]: {
           ...state[action.interactiveId],
-          archivedSlideIds: state[
-            action.interactiveId
-          ].archivedSlideIds.concat([action.slideId]),
+          archivedSlideIds: state[action.interactiveId].archivedSlideIds.concat(
+            [action.slideId]
+          ),
           displayedSlideIds: state[
             action.interactiveId
           ].displayedSlideIds.filter((slideId) => {
@@ -176,13 +176,37 @@ export default function InteractiveReducer(state, action) {
       };
     }
     case 'RECOVER_ARCHIVED_SLIDE': {
+      let newForkSlide;
+      if (action.forkedFrom) {
+        const forkSlide =
+          state[action.interactiveId].slideObj[action.forkedFrom];
+        const { selectedForkButtonId, paths } = forkSlide;
+        const newPath = forkSlide.paths[selectedForkButtonId].concat([
+          action.slideId
+        ]);
+        newForkSlide = {
+          ...forkSlide,
+          paths: {
+            ...paths,
+            [selectedForkButtonId]: newPath
+          }
+        };
+      }
       return {
         ...state,
         [action.interactiveId]: {
           ...state[action.interactiveId],
           archivedSlideIds: state[action.interactiveId].archivedSlideIds.filter(
             (slideId) => slideId !== action.slideId
-          )
+          ),
+          slideObj: {
+            ...state[action.interactiveId].slideObj,
+            ...(newForkSlide
+              ? {
+                  [action.forkedFrom]: newForkSlide
+                }
+              : {})
+          }
         }
       };
     }

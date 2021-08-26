@@ -115,7 +115,11 @@ export default function AddSlide({ archivedSlides, interactiveId, lastFork }) {
       lastFork
     });
     onChangeNumUpdates({ interactiveId, numUpdates });
-    onRecoverArchivedSlide({ interactiveId, slideId: selectedSlideId });
+    onRecoverArchivedSlide({
+      interactiveId,
+      slideId: selectedSlideId,
+      forkedFrom: lastFork?.id
+    });
     onConcatDisplayedSlides({
       interactiveId,
       newSlides: [selectedSlideId]
