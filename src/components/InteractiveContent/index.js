@@ -76,9 +76,10 @@ export default function InteractiveContent({
   }, [displayedSlideIds, slideObj]);
 
   const archivedSlides = useMemo(() => {
-    return archivedSlideIds?.map((slideId) => slideObj[slideId]);
+    return archivedSlideIds
+      ?.map((slideId) => slideObj[slideId])
+      .filter((slide) => !slide.isFork);
   }, [archivedSlideIds, slideObj]);
-
   useEffect(() => {
     if (pageVisible) {
       handleCheckNumUpdates();

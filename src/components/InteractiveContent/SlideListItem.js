@@ -60,7 +60,9 @@ export default function SlideListItem({
         }
       `}
     >
-      <p style={{ fontWeight: 'bold', fontSize: '1.5rem' }}>{slide.heading}</p>
+      <p style={{ fontWeight: 'bold', fontSize: '1.5rem' }}>
+        {slide.heading || 'New Slide'}
+      </p>
       <div
         style={{
           width: '100%',
