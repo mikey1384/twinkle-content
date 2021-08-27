@@ -19,7 +19,7 @@ ConfirmModal.propTypes = {
 export default function ConfirmModal({
   disabled = false,
   description = 'Are you sure?',
-  descriptionFontSize = '3rem',
+  descriptionFontSize = '2.5rem',
   modalOverModal,
   onHide,
   title,

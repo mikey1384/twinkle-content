@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useAppContext, useInteractiveContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
@@ -11,6 +11,7 @@ import Button from 'components/Button';
 import Icon from 'components/Icon';
 import InsertSlide from './InsertSlide';
 import DropdownButton from 'components/Buttons/DropdownButton';
+import ConfirmModal from 'components/Modals/ConfirmModal';
 
 Slide.propTypes = {
   archivedSlides: PropTypes.array,
@@ -97,6 +98,7 @@ export default function Slide({
     }
   } = useInteractiveContext();
   const { canEdit } = useMyState();
+  const [confirmModalShown, setConfirmModalShown] = useState(false);
 
   const dropdownMenuProps = useMemo(() => {
     return [
@@ -160,18 +162,19 @@ export default function Slide({
             }
           ]),
       {
-        label: isPublished ? (
-          <>
-            <Icon icon="ban" />
-            <span style={{ marginLeft: '1rem' }}>Unpublish</span>
-          </>
-        ) : (
-          <>
-            <Icon icon="trash-alt" />
-            <span style={{ marginLeft: '1rem' }}>Delete</span>
-          </>
-        ),
-        onClick: isPublished ? handleUnpublishSlide : handleDeleteSlide
+        label:
+          isPublished && !isFork ? (
+            <>
+              <Icon icon="ban" />
+              <span style={{ marginLeft: '1rem' }}>Unpublish</span>
+            </>
+          ) : (
+            <>
+              <Icon icon="trash-alt" />
+              <span style={{ marginLeft: '1rem' }}>Delete</span>
+            </>
+          ),
+        onClick: handleDeleteClick
       }
     ];
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -180,6 +183,7 @@ export default function Slide({
     interactiveId,
     isPublished,
     isDeleted,
+    isFork,
     slideId,
     cannotMoveDown,
     cannotMoveUp
@@ -302,18 +306,40 @@ export default function Slide({
             </Button>
           </div>
         )}
+        {confirmModalShown && (
+          <ConfirmModal
+            onHide={() => setConfirmModalShown(false)}
+            title="Remove Fork Slide"
+            description="Are you sure? This action cannot be undone"
+            onConfirm={() => handleDeleteSlide({ noUndelete: true })}
+          />
+        )}
       </div>
     </>
   );
 
-  async function handleDeleteSlide() {
+  function handleDeleteClick() {
+    if (isFork) {
+      return setConfirmModalShown(true);
+    }
+    if (isPublished) {
+      return handleUnpublishSlide();
+    }
+    handleDeleteSlide();
+  }
+
+  async function handleDeleteSlide({ noUndelete } = {}) {
     const numUpdates = await deleteInteractiveSlide(slideId);
     onChangeNumUpdates({ interactiveId, numUpdates });
-    onSetSlideState({
-      interactiveId,
-      slideId,
-      newState: { isDeleted: true, selectedForkButtonId: null }
-    });
+    if (noUndelete) {
+      onRemoveInteractiveSlide({ interactiveId, slideId });
+    } else {
+      onSetSlideState({
+        interactiveId,
+        slideId,
+        newState: { isDeleted: true, selectedForkButtonId: null }
+      });
+    }
     for (let [key, slide] of Object.entries(slideObj)) {
       if (slide.forkedFrom === slideId) {
         onArchiveSlide({ interactiveId, slideId: Number(key) });
