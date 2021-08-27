@@ -23,7 +23,7 @@ export default function Grammar({ isRepeating, mission }) {
   } = useMissionContext();
   useEffect(() => {
     mounted.current = true;
-    return function nUnmount() {
+    return function onUnmount() {
       mounted.current = false;
       onSetMissionState({
         missionId: mission.id,

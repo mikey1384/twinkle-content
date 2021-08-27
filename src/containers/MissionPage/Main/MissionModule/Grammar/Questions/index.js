@@ -14,7 +14,7 @@ Questions.propTypes = {
 
 export default function Questions({ isRepeating, mission, onFail }) {
   const mounted = useRef(true);
-  const [submitDisabled, setSubmitDisabled] = useState(false);
+  const [submitDisabled, setSubmitDisabled] = useState(true);
   const { userId } = useMyState();
   const [repeatMissionComplete, setRepeatMissionComplete] = useState(false);
   const {
@@ -95,6 +95,7 @@ export default function Questions({ isRepeating, mission, onFail }) {
           currentSlideIndex={currentSlideIndex}
           onAfterSlide={(index) => {
             statusRef.current = null;
+            setSubmitDisabled(true);
             setConditionPassStatus('');
             setCurrentSlideIndex(index);
           }}
@@ -141,6 +142,7 @@ export default function Questions({ isRepeating, mission, onFail }) {
         selectedChoiceIndex: selectedIndex
       }));
       selectedAnswerIndex.current = selectedIndex;
+      setSubmitDisabled(false);
     }
   }
 
@@ -163,6 +165,7 @@ export default function Questions({ isRepeating, mission, onFail }) {
       questionId: questionObj[currentSlideIndex].id
     });
     setConditionPassStatus(statusRef.current);
+    selectedAnswerIndex.current = null;
   }
 
   async function handleSuccess() {
