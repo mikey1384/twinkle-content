@@ -85,7 +85,7 @@ function Embedly({
       onSetSiteUrl,
       onSetThumbUrl,
       onSetVideoCurrentTime,
-      onSetVideoStarted
+      onSetMediaStarted
     }
   } = useContentContext();
   const {
@@ -246,7 +246,7 @@ function Embedly({
   }, []);
 
   const handlePlay = useCallback(() => {
-    onSetVideoStarted({
+    onSetMediaStarted({
       contentType,
       contentId,
       started: true

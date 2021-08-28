@@ -86,7 +86,7 @@ function XPVideoPlayer({
       onIncreaseNumCoinsEarned,
       onIncreaseNumXpEarned,
       onSetVideoProgress,
-      onSetVideoStarted,
+      onSetMediaStarted,
       onSetTimeWatched
     }
   } = useContentContext();
@@ -145,7 +145,7 @@ function XPVideoPlayer({
   useEffect(() => {
     return function cleanUp() {
       handleVideoStop();
-      onSetVideoStarted({
+      onSetMediaStarted({
         contentType: 'video',
         contentId: videoId,
         started: false
@@ -304,7 +304,7 @@ function XPVideoPlayer({
 
   const onVideoPlay = useCallback(
     async ({ userId }) => {
-      onSetVideoStarted({
+      onSetMediaStarted({
         contentType: 'video',
         contentId: videoId,
         started: true

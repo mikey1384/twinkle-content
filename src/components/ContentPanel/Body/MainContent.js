@@ -88,10 +88,10 @@ export default function MainContent({
       ? title
       : '';
   }, [contentType, description, title]);
-  const displayedContent = useMemo(() => content || rootContent, [
-    content,
-    rootContent
-  ]);
+  const displayedContent = useMemo(
+    () => content || rootContent,
+    [content, rootContent]
+  );
 
   return (
     <ErrorBoundary>

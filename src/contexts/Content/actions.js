@@ -525,9 +525,9 @@ export default function ContentActions(dispatch) {
         contentId
       });
     },
-    onSetVideoStarted({ contentType, contentId, started }) {
+    onSetMediaStarted({ contentType, contentId, started }) {
       return dispatch({
-        type: 'SET_VIDEO_STARTED',
+        type: 'SET_MEDIA_STARTED',
         contentType,
         contentId,
         started

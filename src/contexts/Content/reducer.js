@@ -1493,7 +1493,7 @@ export default function ContentReducer(state, action) {
           questions: action.questions
         }
       };
-    case 'SET_VIDEO_STARTED':
+    case 'SET_MEDIA_STARTED':
       return {
         ...state,
         [contentKey]: {

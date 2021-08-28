@@ -172,7 +172,7 @@ function Message({
       onSetIsEditing,
       onSetSiteUrl,
       onSetThumbUrl,
-      onSetVideoStarted
+      onSetMediaStarted
     }
   } = useContentContext();
   const {
@@ -261,7 +261,7 @@ function Message({
     }
 
     return function cleanUp() {
-      onSetVideoStarted({
+      onSetMediaStarted({
         contentType: 'chat',
         contentId: messageId,
         started: false
@@ -634,6 +634,13 @@ function Message({
                       filePath={filePath}
                       fileName={fileName}
                       fileSize={fileSize}
+                      onMediaPlay={() =>
+                        onSetMediaStarted({
+                          contentType: 'chat',
+                          contentId: messageId,
+                          started: true
+                        })
+                      }
                       thumbUrl={thumbUrl || recentThumbUrl}
                       style={{
                         marginTop: '1rem',
