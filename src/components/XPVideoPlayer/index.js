@@ -14,7 +14,7 @@ import { videoRewardHash, strongColors } from 'constants/defaultValues';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useContentState, useMyState } from 'helpers/hooks';
-import { useAppContext, useContentContext } from 'contexts';
+import { useAppContext, useContentContext, useViewContext } from 'contexts';
 
 const intervalLength = 2000;
 
@@ -60,6 +60,9 @@ function XPVideoPlayer({
       updateTotalViewDuration
     }
   } = useAppContext();
+  const {
+    state: { pageVisible }
+  } = useViewContext();
   const { profileTheme, rewardBoostLvl, userId, twinkleCoins } = useMyState();
   const coinRewardAmount = useMemo(
     () => videoRewardHash?.[rewardBoostLvl]?.coin || 2,
@@ -113,7 +116,12 @@ function XPVideoPlayer({
   const rewardingXP = useRef(false);
   const themeColor = profileTheme || 'logoBlue';
   const rewardLevelRef = useRef(0);
+  const pageVisibleRef = useRef(pageVisible);
   const twinkleCoinsRef = useRef(twinkleCoins);
+
+  useEffect(() => {
+    pageVisibleRef.current = pageVisible;
+  }, [pageVisible]);
 
   useEffect(() => {
     init();
@@ -236,7 +244,8 @@ function XPVideoPlayer({
             rewardingCoin.current = false;
           }
         }
-        if (!rewardingXP.current) {
+        let rewarded = false;
+        if (!rewardingXP.current && pageVisibleRef.current) {
           rewardingXP.current = true;
           try {
             const { xp, rank, alreadyDone } = await updateUserXP({
@@ -255,10 +264,17 @@ function XPVideoPlayer({
               }
             }
             rewardingXP.current = false;
+            rewarded = true;
           } catch (error) {
             console.error(error.response || error);
             rewardingXP.current = false;
           }
+        }
+        if (rewarded) {
+          onIncreaseNumXpEarned({
+            videoId,
+            amount: xpRewardAmountRef.current
+          });
         }
         if (twinkleCoinsRef.current <= 1000 && rewardLevel > 2) {
           onIncreaseNumCoinsEarned({
@@ -266,10 +282,6 @@ function XPVideoPlayer({
             amount: coinRewardAmountRef.current
           });
         }
-        onIncreaseNumXpEarned({
-          videoId,
-          amount: xpRewardAmountRef.current
-        });
         return;
       }
       onSetTimeWatched({
@@ -299,7 +311,7 @@ function XPVideoPlayer({
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [rewardLevel, videoId]
+    [rewardLevel, videoId, pageVisible]
   );
 
   const onVideoPlay = useCallback(
