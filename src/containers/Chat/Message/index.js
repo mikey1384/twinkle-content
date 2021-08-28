@@ -129,7 +129,7 @@ function Message({
   });
   const PanelRef = useRef(null);
   const [placeholderHeight, setPlaceholderHeight] = useState(0);
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   useLazyLoad({
     PanelRef,
     inView,
@@ -148,11 +148,22 @@ function Message({
     profilePicUrl: myProfilePicUrl
   } = useMyState();
   const userIsUploader = myId === userId;
-  const userCanEditThis =
-    !inviteFrom &&
-    !isDrawOffer &&
-    (((canEdit || canDelete) && authLevel > uploaderAuthLevel) ||
-      userIsUploader);
+  const userCanEditThis = useMemo(
+    () =>
+      !inviteFrom &&
+      !isDrawOffer &&
+      (((canEdit || canDelete) && authLevel > uploaderAuthLevel) ||
+        userIsUploader),
+    [
+      authLevel,
+      canDelete,
+      canEdit,
+      inviteFrom,
+      isDrawOffer,
+      uploaderAuthLevel,
+      userIsUploader
+    ]
+  );
   const userCanRewardThis = useMemo(
     () => canReward && authLevel > uploaderAuthLevel && myId !== userId,
     [authLevel, canReward, uploaderAuthLevel, userId, myId]
@@ -261,6 +272,7 @@ function Message({
     }
 
     return function cleanUp() {
+      setVisible(false);
       onSetMediaStarted({
         contentType: 'chat',
         contentId: messageId,
