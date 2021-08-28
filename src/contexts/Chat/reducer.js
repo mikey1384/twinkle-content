@@ -1290,6 +1290,14 @@ export default function ChatReducer(state, action) {
         channelsObj: newChannelsObj
       };
     }
+    case 'TRIM_MESSAGES':
+      return {
+        ...state,
+        messagesLoadMoreButton: true,
+        messages: state.messages.filter(
+          (message, index) => index > state.messages.length - 20
+        )
+      };
     case 'UPDATE_UPLOAD_PROGRESS':
       return {
         ...state,

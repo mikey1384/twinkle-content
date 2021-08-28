@@ -55,6 +55,7 @@ function Chat({ onFileUpload }) {
       onReceiveMessageOnDifferentChannel,
       onSetChessModalShown,
       onSetCurrentChannelName,
+      onTrimMessages,
       onUpdateChessMoveViewTimeStamp,
       onUpdateSelectedChannelId
     }
@@ -146,6 +147,7 @@ function Chat({ onFileUpload }) {
     mounted.current = true;
     return function cleanUp() {
       onClearNumUnreads();
+      onTrimMessages();
       mounted.current = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

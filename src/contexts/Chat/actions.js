@@ -538,6 +538,11 @@ export default function ChatActions(dispatch) {
         replyTarget
       });
     },
+    onTrimMessages() {
+      return dispatch({
+        type: 'TRIM_MESSAGES'
+      });
+    },
     onUpdateChessMoveViewTimeStamp() {
       return dispatch({
         type: 'UPDATE_CHESS_MOVE_VIEW_STAMP'
