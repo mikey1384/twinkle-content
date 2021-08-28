@@ -129,7 +129,7 @@ function Message({
   });
   const PanelRef = useRef(null);
   const [placeholderHeight, setPlaceholderHeight] = useState(0);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
   useLazyLoad({
     PanelRef,
     inView,
@@ -272,7 +272,6 @@ function Message({
     }
 
     return function cleanUp() {
-      setVisible(false);
       onSetMediaStarted({
         contentType: 'chat',
         contentId: messageId,
