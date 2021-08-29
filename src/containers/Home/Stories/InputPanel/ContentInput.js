@@ -119,11 +119,31 @@ function ContentInput() {
   const rewardLevelDescription = useMemo(() => {
     switch (form.rewardLevel) {
       case 3:
-        return `This video is mostly for entertainment, but it's good for English listening`;
+        return (
+          <>
+            This video is{' '}
+            <span style={{ color: Color.green() }}>
+              mostly for entertainment
+            </span>
+            , but {`it's`} good for English listening
+          </>
+        );
       case 4:
-        return 'This video is educational and good for English listening';
+        return (
+          <>
+            This video is{' '}
+            <span style={{ color: Color.green() }}>educational</span> and good
+            for English listening
+          </>
+        );
       case 5:
-        return 'This video is educational, good for English listening, and I want every single user to watch it';
+        return (
+          <>
+            This video is{' '}
+            <span style={{ color: Color.green() }}>educational</span>, good for
+            English listening, and I want every single user to watch it
+          </>
+        );
       default:
         return '';
     }
