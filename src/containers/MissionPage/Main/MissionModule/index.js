@@ -19,7 +19,8 @@ MissionModule.propTypes = {
   isRepeating: PropTypes.bool,
   mission: PropTypes.object.isRequired,
   onSetMissionState: PropTypes.func,
-  style: PropTypes.object
+  style: PropTypes.object,
+  tutorialRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
 };
 
 export default function MissionModule({
@@ -28,7 +29,8 @@ export default function MissionModule({
   fileUploadProgress,
   isRepeating,
   onSetMissionState,
-  style
+  style,
+  tutorialRef
 }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', ...style }}>
@@ -57,13 +59,25 @@ export default function MissionModule({
       {mission.missionType === 'github' && <GitHub task={mission} />}
       {mission.missionType === 'replit' && <Replit task={mission} />}
       {mission.missionType === 'hello-world' && (
-        <HelloWorld task={mission} onSetMissionState={onSetMissionState} />
+        <HelloWorld
+          task={mission}
+          onSetMissionState={onSetMissionState}
+          tutorialRef={tutorialRef}
+        />
       )}
       {mission.missionType === 'fix-bugs' && (
-        <FixingBugs task={mission} onSetMissionState={onSetMissionState} />
+        <FixingBugs
+          task={mission}
+          onSetMissionState={onSetMissionState}
+          tutorialRef={tutorialRef}
+        />
       )}
       {mission.missionType === 'write-it-yourself' && (
-        <WriteItYourself task={mission} onSetMissionState={onSetMissionState} />
+        <WriteItYourself
+          task={mission}
+          onSetMissionState={onSetMissionState}
+          tutorialRef={tutorialRef}
+        />
       )}
       {mission.missionType === 'launch-the-website' && (
         <LaunchTheWebsite task={mission} />

@@ -12,7 +12,8 @@ Tutorial.propTypes = {
   className: PropTypes.string,
   style: PropTypes.object,
   mission: PropTypes.object.isRequired,
-  myAttempts: PropTypes.object.isRequired
+  myAttempts: PropTypes.object.isRequired,
+  innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
 };
 
 export default function Tutorial({
@@ -20,7 +21,8 @@ export default function Tutorial({
   onSetMissionState,
   style,
   mission,
-  myAttempts
+  myAttempts,
+  innerRef
 }) {
   const { isCreator } = useMyState();
   const divToCenter = useRef(null);
@@ -34,6 +36,7 @@ export default function Tutorial({
         ...style
       }}
     >
+      <div ref={innerRef} />
       <div ref={divToCenter} />
       {isCreator && !mission.tutorialId && (
         <AddTutorial missionId={mission.id} missionTitle={mission.title} />

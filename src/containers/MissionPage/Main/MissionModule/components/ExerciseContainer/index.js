@@ -10,6 +10,7 @@ import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
+import { scrollElementToCenter } from 'helpers';
 
 ExerciseContainer.propTypes = {
   codeObj: PropTypes.object,
@@ -20,7 +21,8 @@ ExerciseContainer.propTypes = {
   prevUserId: PropTypes.number,
   onSetCode: PropTypes.func.isRequired,
   style: PropTypes.object,
-  taskType: PropTypes.string
+  taskType: PropTypes.string,
+  tutorialRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
 };
 
 export default function ExerciseContainer({
@@ -32,7 +34,8 @@ export default function ExerciseContainer({
   onSetCode,
   prevUserId,
   style,
-  taskType
+  taskType,
+  tutorialRef
 }) {
   const {
     requestHelpers: { updateMissionStatus }
@@ -118,6 +121,17 @@ export default function ExerciseContainer({
             <SuccessMessage onNextClick={exercise.onNextClick} />
           )}
           {errorMsg && <FailMessage message={errorMsg} />}
+          {errorMsg && (
+            <div style={{ marginTop: '1rem', fontSize: '1.7rem' }}>
+              Need help?{' '}
+              <a
+                style={{ fontWeight: 'bold', cursor: 'pointer' }}
+                onClick={() => scrollElementToCenter(tutorialRef.current)}
+              >
+                Read the tutorial for {`"${exercise.title}"`}
+              </a>
+            </div>
+          )}
         </div>
       </div>
     </ErrorBoundary>

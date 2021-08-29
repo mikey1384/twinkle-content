@@ -26,6 +26,7 @@ export default function TaskContainer({
     return <InvalidPage />;
   }
   const mounted = useRef(true);
+  const TutorialRef = useRef(null);
   const { userId, isCreator } = useMyState();
   const {
     requestHelpers: { loadMission, loadMissionTypeIdHash }
@@ -144,6 +145,7 @@ export default function TaskContainer({
         style={{ width: '100%', marginTop: '2rem' }}
         task={task}
         onSetMissionState={onSetMissionState}
+        tutorialRef={TutorialRef}
         nextTaskType={nextTask}
       />
       <GoBack
@@ -156,6 +158,7 @@ export default function TaskContainer({
       <Tutorial
         mission={task}
         myAttempts={myAttempts}
+        innerRef={TutorialRef}
         className={css`
           margin-top: 5rem;
           margin-bottom: 1rem;
