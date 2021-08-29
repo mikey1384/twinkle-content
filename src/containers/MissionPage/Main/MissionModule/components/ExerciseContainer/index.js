@@ -125,10 +125,15 @@ export default function ExerciseContainer({
             <div style={{ marginTop: '1rem', fontSize: '1.7rem' }}>
               Need help?{' '}
               <a
-                style={{ fontWeight: 'bold', cursor: 'pointer' }}
+                style={{
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  color: Color.logoBlue()
+                }}
                 onClick={() => scrollElementToCenter(tutorialRef.current)}
               >
-                Read the tutorial for {`"${exercise.title}"`}
+                Read the tutorial for {`"${exercise.title}"`}{' '}
+                <Icon icon="arrow-down" />
               </a>
             </div>
           )}
