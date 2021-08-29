@@ -27,6 +27,12 @@ export default function UpdateYourRepl({ code, index }) {
             Replace that code with the code below ({`it's`} the one you wrote
             for your website)
           </span>
+          <br />
+          <span>
+            by following the intructions in the{' '}
+            <b style={{ color: Color.brownOrange() }}>tutorial</b> (very
+            important!)
+          </span>
         </>
       }
       index={index}
@@ -94,7 +100,10 @@ export default function UpdateYourRepl({ code, index }) {
             marginBottom: '3rem'
           }}
         >
-          <h1>Did you replace the code?</h1>
+          <h1>
+            Did you carefully follow the instructions in the{' '}
+            <b style={{ color: Color.brownOrange() }}>tutorial?</b>
+          </h1>
         </div>
       </div>
     </StepSlide>

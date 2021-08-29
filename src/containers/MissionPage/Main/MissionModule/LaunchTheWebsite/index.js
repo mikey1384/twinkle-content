@@ -142,7 +142,10 @@ export default function LaunchTheWebsite({ style, task }) {
           <UpdateYourRepl code={code} />
         </RequiresComputer>
         <RequiresComputer>
-          <ConnectReplToGitHub okayPressed={connectReplToGitHubOkayPressed} />
+          <ConnectReplToGitHub
+            taskType={task.missionType}
+            okayPressed={connectReplToGitHubOkayPressed}
+          />
         </RequiresComputer>
         <LetsLaunch taskId={task.id} />
       </MultiStepContainer>
