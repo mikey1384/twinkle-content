@@ -12,6 +12,7 @@ import {
   isValidUrl,
   isValidYoutubeUrl
 } from 'helpers/stringHelpers';
+import AttachmentEditSection from './AttachmentEditSection';
 
 ContentEditor.propTypes = {
   comment: PropTypes.string,
@@ -223,6 +224,7 @@ export default function ContentEditor({
       `}
     >
       <form onSubmit={handleSubmit}>
+        {contentType === 'subject' && <AttachmentEditSection />}
         <TextEditSection
           editedComment={editedComment}
           editedDescription={editedDescription}
