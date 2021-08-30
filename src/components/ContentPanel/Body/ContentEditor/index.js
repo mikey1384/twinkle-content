@@ -224,7 +224,9 @@ export default function ContentEditor({
       `}
     >
       <form onSubmit={handleSubmit}>
-        {contentType === 'subject' && <AttachmentEditSection />}
+        {contentType === 'subject' && (
+          <AttachmentEditSection filePath={filePath} />
+        )}
         <TextEditSection
           editedComment={editedComment}
           editedDescription={editedDescription}
