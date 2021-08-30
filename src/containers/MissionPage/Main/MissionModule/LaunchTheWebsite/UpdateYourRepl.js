@@ -21,7 +21,8 @@ export default function UpdateYourRepl({ code, index }) {
         <>
           Remember the Repl you set up earlier?
           <br />
-          The code we gave you for that Repl is no longer needed.
+          The code we gave you for that Repl is{' '}
+          <span style={{ color: Color.orange() }}>no longer needed.</span>
           <br />
           <span style={{ color: Color.logoBlue() }}>
             Replace that code with the code below ({`it's`} the one you wrote
@@ -102,7 +103,13 @@ export default function UpdateYourRepl({ code, index }) {
         >
           <h1>
             Did you carefully follow the instructions in the{' '}
-            <b style={{ color: Color.brownOrange() }}>tutorial?</b>
+            <b style={{ color: Color.brownOrange() }}>tutorial</b>
+            <br />
+            after pressing the{' '}
+            <b
+              style={{ color: Color.logoBlue() }}
+            >{`Replacing the Repl Code`}</b>{' '}
+            button?
           </h1>
         </div>
       </div>
