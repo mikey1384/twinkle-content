@@ -234,107 +234,109 @@ export default function ContentEditor({
       `}
     >
       <form onSubmit={handleSubmit}>
-        {(contentType === 'video' || contentType === 'url') && (
-          <div
-            className={css`
-              margin-bottom: 1rem;
-            `}
-          >
-            <Input
-              hasError={urlError}
-              onChange={(text) =>
-                handleSetInputState({
-                  ...editForm,
-                  editedUrl: text
-                })
-              }
-              placeholder={edit[contentType]}
-              value={editedUrl}
-              style={urlExceedsCharLimit?.style}
-            />
-            {(urlExceedsCharLimit || urlError) && (
-              <small style={{ color: 'red', lineHeight: 0.5 }}>
-                {urlExceedsCharLimit?.message || 'Please check the url'}
-              </small>
-            )}
-          </div>
-        )}
-        {contentType !== 'comment' && (
-          <>
-            <Input
-              onChange={(text) =>
-                handleSetInputState({
-                  ...editForm,
-                  editedTitle: text
-                })
-              }
-              onKeyUp={(event) =>
-                handleSetInputState({
-                  ...editForm,
-                  editedTitle: addEmoji(event.target.value)
-                })
-              }
-              placeholder={edit.title}
-              value={editedTitle}
-              style={titleExceedsCharLimit?.style}
-            />
-            <small style={titleExceedsCharLimit?.style}>
-              {titleExceedsCharLimit?.message}
-            </small>
-          </>
-        )}
-        <div style={{ position: 'relative', marginTop: '1rem' }}>
-          <Textarea
-            minRows={4}
-            onChange={(event) => {
-              const { value } = event.target;
-              handleSetInputState({
-                ...editForm,
-                [contentType === 'comment'
-                  ? 'editedComment'
-                  : 'editedDescription']: value
-              });
-            }}
-            placeholder={
-              edit[contentType === 'comment' ? 'comment' : 'description']
-            }
-            value={
-              contentType === 'comment' ? editedComment : editedDescription
-            }
-            style={descriptionExceedsCharLimit?.style}
-          />
-          {descriptionExceedsCharLimit && (
-            <small style={{ color: 'red' }}>
-              {descriptionExceedsCharLimit?.message}
-            </small>
+        <>
+          {(contentType === 'video' || contentType === 'url') && (
+            <div
+              className={css`
+                margin-bottom: 1rem;
+              `}
+            >
+              <Input
+                hasError={urlError}
+                onChange={(text) =>
+                  handleSetInputState({
+                    ...editForm,
+                    editedUrl: text
+                  })
+                }
+                placeholder={edit[contentType]}
+                value={editedUrl}
+                style={urlExceedsCharLimit?.style}
+              />
+              {(urlExceedsCharLimit || urlError) && (
+                <small style={{ color: 'red', lineHeight: 0.5 }}>
+                  {urlExceedsCharLimit?.message || 'Please check the url'}
+                </small>
+              )}
+            </div>
           )}
-        </div>
-        {contentType === 'subject' && (
+          {contentType !== 'comment' && (
+            <>
+              <Input
+                onChange={(text) =>
+                  handleSetInputState({
+                    ...editForm,
+                    editedTitle: text
+                  })
+                }
+                onKeyUp={(event) =>
+                  handleSetInputState({
+                    ...editForm,
+                    editedTitle: addEmoji(event.target.value)
+                  })
+                }
+                placeholder={edit.title}
+                value={editedTitle}
+                style={titleExceedsCharLimit?.style}
+              />
+              <small style={titleExceedsCharLimit?.style}>
+                {titleExceedsCharLimit?.message}
+              </small>
+            </>
+          )}
           <div style={{ position: 'relative', marginTop: '1rem' }}>
-            <span style={{ fontWeight: 'bold' }}>Secret Message</span>
             <Textarea
               minRows={4}
               onChange={(event) => {
                 const { value } = event.target;
                 handleSetInputState({
                   ...editForm,
-                  editedSecretAnswer: value
+                  [contentType === 'comment'
+                    ? 'editedComment'
+                    : 'editedDescription']: value
                 });
               }}
-              placeholder="Enter Secret Message... (Optional)"
-              value={editedSecretAnswer}
-              style={{
-                marginTop: '0.7rem',
-                ...(secretAnswerExceedsCharLimit?.style || {})
-              }}
+              placeholder={
+                edit[contentType === 'comment' ? 'comment' : 'description']
+              }
+              value={
+                contentType === 'comment' ? editedComment : editedDescription
+              }
+              style={descriptionExceedsCharLimit?.style}
             />
-            {secretAnswerExceedsCharLimit && (
+            {descriptionExceedsCharLimit && (
               <small style={{ color: 'red' }}>
-                {secretAnswerExceedsCharLimit.message}
+                {descriptionExceedsCharLimit?.message}
               </small>
             )}
           </div>
-        )}
+          {contentType === 'subject' && (
+            <div style={{ position: 'relative', marginTop: '1rem' }}>
+              <span style={{ fontWeight: 'bold' }}>Secret Message</span>
+              <Textarea
+                minRows={4}
+                onChange={(event) => {
+                  const { value } = event.target;
+                  handleSetInputState({
+                    ...editForm,
+                    editedSecretAnswer: value
+                  });
+                }}
+                placeholder="Enter Secret Message... (Optional)"
+                value={editedSecretAnswer}
+                style={{
+                  marginTop: '0.7rem',
+                  ...(secretAnswerExceedsCharLimit?.style || {})
+                }}
+              />
+              {secretAnswerExceedsCharLimit && (
+                <small style={{ color: 'red' }}>
+                  {secretAnswerExceedsCharLimit.message}
+                </small>
+              )}
+            </div>
+          )}
+        </>
         <div
           style={{
             marginTop: '1rem',
