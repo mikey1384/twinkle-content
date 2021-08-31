@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import React, { useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import FileInfo from './FileInfo';
@@ -25,7 +26,10 @@ export default function FileViewer({
   const { fileType } = useMemo(() => getFileInfoFromFileName(src), [src]);
   const filePath = useMemo(() => {
     const srcArray = src.split('/');
-    const fileName = srcArray[srcArray.length - 1];
+    const fileName = srcArray[srcArray.length - 1]
+      .replace(/\-/g, '-')
+      .replace(/(스크린샷)/g, '스크린샷')
+      .replace(/(오후)/g, '오후');
     srcArray.pop();
     const result = [...srcArray, encodeURIComponent(fileName)].join('/');
     return result;
