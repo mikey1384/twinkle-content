@@ -32,7 +32,7 @@ function MainNavs({
   defaultSearchFilter,
   totalRewardAmount
 }) {
-  const { twinkleCoins, userId } = useMyState();
+  const { twinkleCoins, userId, banned } = useMyState();
   const {
     state: { exploreCategory, contentPath, contentNav, profileNav, homeNav },
     actions: {
@@ -253,13 +253,15 @@ function MainNavs({
         className="mobile"
         imgLabel="tasks"
       />
-      <Nav
-        to="/chat"
-        pathname={pathname}
-        className="mobile"
-        imgLabel="comments"
-        alert={chatAlertShown}
-      />
+      {!banned?.chat && (
+        <Nav
+          to="/chat"
+          pathname={pathname}
+          className="mobile"
+          imgLabel="comments"
+          alert={chatAlertShown}
+        />
+      )}
       {profileNav && (
         <Nav
           to={profileNav}
@@ -321,15 +323,17 @@ function MainNavs({
           }
         `}
       >
-        <Nav
-          to="/chat"
-          pathname={pathname}
-          className="desktop"
-          imgLabel="comments"
-          alert={chatAlertShown}
-        >
-          CHAT
-        </Nav>
+        {!banned?.chat && (
+          <Nav
+            to="/chat"
+            pathname={pathname}
+            className="desktop"
+            imgLabel="comments"
+            alert={chatAlertShown}
+          >
+            CHAT
+          </Nav>
+        )}
       </div>
       {userId && typeof twinkleCoins === 'number' && (
         <div

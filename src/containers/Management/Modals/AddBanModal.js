@@ -40,7 +40,7 @@ export default function AddBanModal({ onHide }) {
         all: false,
         chat: false,
         chess: false,
-        comment: false
+        posting: false
       }
     );
   }, [selectedUser]);
@@ -131,10 +131,10 @@ export default function AddBanModal({ onHide }) {
                         {banStatus.chess && <RedTimes />}
                       </td>
                     </tr>
-                    <tr onClick={() => handleBanStatusClick('comment')}>
-                      <td style={{ fontWeight: 'bold' }}>Comment</td>
+                    <tr onClick={() => handleBanStatusClick('posting')}>
+                      <td style={{ fontWeight: 'bold' }}>Posting</td>
                       <td style={{ textAlign: 'center' }}>
-                        {banStatus.comment && <RedTimes />}
+                        {banStatus.posting && <RedTimes />}
                       </td>
                     </tr>
                   </tbody>

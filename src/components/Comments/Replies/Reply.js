@@ -288,7 +288,7 @@ function Reply({
               profilePicUrl={uploader.profilePicUrl}
             />
           </aside>
-          {dropdownButtonShown && !isEditing && (
+          {!!dropdownButtonShown && !isEditing && (
             <div className="dropdown-wrapper">
               <DropdownButton
                 skeuomorphic

@@ -9,6 +9,7 @@ import PinnedComment from './PinnedComment';
 import { scrollElementToCenter } from 'helpers';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
+import { useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useInputContext } from 'contexts';
 
 Comments.propTypes = {
@@ -84,6 +85,7 @@ function Comments({
   style,
   userId
 }) {
+  const { banned } = useMyState();
   const {
     requestHelpers: { deleteContent, loadComments, uploadComment, uploadFile }
   } = useAppContext();
@@ -301,6 +303,9 @@ function Comments({
     targetCommentId,
     isReply
   }) {
+    if (banned?.posting) {
+      return;
+    }
     const finalContentType = targetCommentId
       ? 'comment'
       : subjectId
@@ -369,6 +374,9 @@ function Comments({
     subjectId,
     targetCommentId
   }) {
+    if (banned?.posting) {
+      return;
+    }
     try {
       setCommentSubmitted(true);
       const data = await uploadComment({
@@ -415,6 +423,9 @@ function Comments({
     rootCommentId,
     targetCommentId
   }) {
+    if (banned?.posting) {
+      return;
+    }
     setCommentSubmitted(true);
     const data = await uploadComment({
       content,

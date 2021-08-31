@@ -54,7 +54,7 @@ export default function BasicInfos({
   style
 }) {
   const history = useHistory();
-  const { userId: myId, username: myUsername } = useMyState();
+  const { userId: myId, username: myUsername, banned } = useMyState();
   const {
     requestHelpers: {
       loadChat,
@@ -329,6 +329,9 @@ export default function BasicInfos({
     youtubeName,
     youtubeUrl
   }) {
+    if (banned?.posting) {
+      return;
+    }
     const data = await uploadProfileInfo({
       email,
       website,
