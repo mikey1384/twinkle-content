@@ -29,7 +29,7 @@ export default function Pictures({
   pictures,
   selectedTheme
 }) {
-  const { userId } = useMyState();
+  const { userId, banned } = useMyState();
   const [addPictureModalShown, setAddPictureModalShown] = useState(false);
   const [reorderMode, setReorderMode] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
@@ -268,6 +268,9 @@ export default function Pictures({
   );
 
   async function handleAddPictures({ selectedPictureIds }) {
+    if (banned?.posting) {
+      return;
+    }
     const pics = await updateUserPictures([
       ...selectedPictureIds,
       ...pictures.map((picture) => picture.id)
