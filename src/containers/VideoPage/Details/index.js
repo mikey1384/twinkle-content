@@ -83,6 +83,7 @@ export default function Details({
 }) {
   const {
     authLevel,
+    banned,
     canDelete,
     canEdit,
     canEditPlaylists,
@@ -531,6 +532,9 @@ export default function Details({
   }
 
   async function handleEditFinish() {
+    if (banned?.posting) {
+      return;
+    }
     const params = {
       contentId: videoId,
       contentType: 'video',
