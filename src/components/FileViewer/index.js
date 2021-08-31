@@ -102,6 +102,7 @@ export default function FileViewer({
   );
 
   function handleReady() {
+    console.log('here');
     PlayerRef.current?.getInternalPlayer()?.play();
   }
 }
