@@ -5,6 +5,7 @@ import Input from 'components/Texts/Input';
 import Button from 'components/Button';
 import { useInputContext } from 'contexts';
 import { edit } from 'constants/placeholders';
+import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
 import {
   addEmoji,
@@ -42,6 +43,7 @@ export default function ContentEditor({
   style,
   title
 }) {
+  const { banned } = useMyState();
   const defaultInputState = useMemo(
     () => ({
       editedContent: content || '',
@@ -368,6 +370,9 @@ export default function ContentEditor({
   }
 
   async function handleSubmit(event) {
+    if (banned?.posting) {
+      return;
+    }
     event.preventDefault();
     const post = {
       ...editForm,
