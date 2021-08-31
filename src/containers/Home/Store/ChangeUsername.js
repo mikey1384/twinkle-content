@@ -22,7 +22,7 @@ export default function ChangeUsername({ style }) {
   const {
     actions: { onUpdateUserCoins }
   } = useContentContext();
-  const { twinkleCoins, userId } = useMyState();
+  const { twinkleCoins, userId, banned } = useMyState();
   const [loading, setLoading] = useState(false);
   const [changing, setChanging] = useState(false);
   const [newUsername, setNewUsername] = useState('');
@@ -122,6 +122,9 @@ export default function ChangeUsername({ style }) {
   );
 
   async function handleChangeUsername() {
+    if (banned?.posting) {
+      return;
+    }
     setChanging(true);
     const { coins, alreadyExists } = await changeUsername(newUsername);
     if (alreadyExists) {
