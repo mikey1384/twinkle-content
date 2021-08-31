@@ -43,7 +43,7 @@ export default function XPRewardInterface({
   const {
     requestHelpers: { rewardUser }
   } = useAppContext();
-  const { authLevel, twinkleCoins, userId } = useMyState();
+  const { authLevel, twinkleCoins, userId, banned } = useMyState();
   const {
     state,
     actions: { onSetRewardForm }
@@ -291,7 +291,9 @@ export default function XPRewardInterface({
       setRewarding(true);
       const { alreadyRewarded, reward, netCoins } = await rewardUser({
         maxRewardAmountForOnePerson,
-        explanation: finalizeEmoji(stringIsEmpty(comment) ? '' : comment),
+        explanation: banned?.posting
+          ? ''
+          : finalizeEmoji(stringIsEmpty(comment) ? '' : comment),
         amount: selectedAmount,
         contentType,
         contentId,

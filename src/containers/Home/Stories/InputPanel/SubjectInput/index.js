@@ -40,7 +40,7 @@ function SubjectInput() {
   const {
     requestHelpers: { uploadContent }
   } = useAppContext();
-  const { canEditRewardLevel, profileTheme } = useMyState();
+  const { canEditRewardLevel, profileTheme, banned } = useMyState();
   const {
     state: {
       fileUploadComplete,
@@ -348,6 +348,9 @@ function SubjectInput() {
     secretAttachment,
     title
   }) {
+    if (banned?.posting) {
+      return;
+    }
     onSetUploadingFile(true);
     onFileUpload({
       attachment,
@@ -372,6 +375,9 @@ function SubjectInput() {
   }
 
   async function handleSubmit(event) {
+    if (banned?.posting) {
+      return;
+    }
     event.preventDefault();
     if (
       stringIsEmpty(title) ||
@@ -439,6 +445,9 @@ function SubjectInput() {
   }
 
   async function handleUploadSubject() {
+    if (banned?.posting) {
+      return;
+    }
     try {
       const data = await uploadContent({
         rootId: attachment?.id,

@@ -35,7 +35,6 @@ MessageInput.propTypes = {
   onMessageSubmit: PropTypes.func.isRequired,
   onSelectVideoButtonClick: PropTypes.func.isRequired,
   onUploadButtonClick: PropTypes.func.isRequired,
-  recepientId: PropTypes.number,
   socketConnected: PropTypes.bool
 };
 
@@ -52,7 +51,6 @@ function MessageInput({
   onMessageSubmit,
   onSelectVideoButtonClick,
   onUploadButtonClick,
-  recepientId,
   socketConnected
 }) {
   const { banned, profileTheme } = useMyState();
@@ -145,7 +143,7 @@ function MessageInput({
       setCoolingDown(false);
       inputCoolingDown.current = false;
     }, 500);
-    if (banned?.chat && recepientId !== 5) {
+    if (banned?.chat) {
       return;
     }
     innerRef.current.focus();
@@ -167,7 +165,6 @@ function MessageInput({
     innerRef,
     onEnterComment,
     onMessageSubmit,
-    recepientId,
     socketConnected,
     text
   ]);

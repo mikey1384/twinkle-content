@@ -28,7 +28,7 @@ function ContentInput() {
   const {
     requestHelpers: { checkContentUrl, uploadContent }
   } = useAppContext();
-  const { canEditRewardLevel } = useMyState();
+  const { canEditRewardLevel, banned } = useMyState();
   const {
     actions: { onLoadNewFeeds }
   } = useHomeContext();
@@ -321,6 +321,9 @@ function ContentInput() {
   );
 
   async function onSubmit(event) {
+    if (banned?.posting) {
+      return;
+    }
     let urlError;
     event.preventDefault();
     if (!isValidUrl(url)) urlError = 'That is not a valid url';

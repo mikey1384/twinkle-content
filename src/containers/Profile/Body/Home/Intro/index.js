@@ -47,7 +47,7 @@ export default function Intro({ profile, selectedTheme }) {
     state: { editedStatusMsg, editedStatusColor },
     actions: { onSetEditedStatusColor, onSetEditedStatusMsg }
   } = useInputContext();
-  const { userId } = useMyState();
+  const { userId, banned } = useMyState();
   const [bioEditModalShown, setBioEditModalShown] = useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   useEffect(() => {
@@ -354,6 +354,9 @@ export default function Intro({ profile, selectedTheme }) {
   );
 
   async function handleUploadBio(params) {
+    if (banned?.posting) {
+      return;
+    }
     const data = await uploadBio({
       ...params,
       profileId: profile.id
@@ -363,6 +366,9 @@ export default function Intro({ profile, selectedTheme }) {
   }
 
   async function handleEditGreeting(greeting) {
+    if (banned?.posting) {
+      return;
+    }
     await uploadGreeting({ greeting });
     onUpdateGreeting({ greeting, userId });
   }
@@ -374,6 +380,9 @@ export default function Intro({ profile, selectedTheme }) {
   }
 
   async function handleStatusMsgSubmit() {
+    if (banned?.posting) {
+      return;
+    }
     const statusMsg = finalizeEmoji(editedStatusMsg);
     const statusColor = editedStatusColor || profile.statusColor;
     const { data } = await request.post(
