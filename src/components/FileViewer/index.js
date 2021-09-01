@@ -102,6 +102,8 @@ export default function FileViewer({
   );
 
   function handleReady() {
-    PlayerRef.current?.getInternalPlayer()?.play();
+    if (fileType === 'video') {
+      PlayerRef.current?.getInternalPlayer()?.play();
+    }
   }
 }
