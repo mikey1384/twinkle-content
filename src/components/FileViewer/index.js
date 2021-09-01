@@ -80,7 +80,7 @@ export default function FileViewer({
                 fileType === 'audio' || fileType === 'video' ? '1rem' : 0
             }}
             width="100%"
-            height="100%"
+            height={fileType === 'video' ? '100%' : '5rem'}
             light={thumbUrl}
             onReady={handleReady}
             controls
