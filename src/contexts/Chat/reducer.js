@@ -1294,9 +1294,12 @@ export default function ChatReducer(state, action) {
       return {
         ...state,
         messagesLoadMoreButton: true,
-        messages: state.messages.filter(
-          (message, index) => index > state.messages.length - 20
-        )
+        messages:
+          state.messages.length > 20
+            ? state.messages.filter(
+                (message, index) => index > state.messages.length - 20
+              )
+            : state.messages
       };
     case 'UPDATE_UPLOAD_PROGRESS':
       return {
