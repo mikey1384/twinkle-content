@@ -1,20 +1,19 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import { css } from '@emotion/css';
-import {
-  borderRadius,
-  Color,
-  desktopMinWidth,
-  mobileMaxWidth
-} from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
+import { renderFileSize } from 'helpers/stringHelpers';
 
 FileInfo.propTypes = {
   fileType: PropTypes.string.isRequired,
+  fileName: PropTypes.string,
+  fileSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   src: PropTypes.string.isRequired
 };
 
-export default function FileInfo({ src, fileType }) {
+export default function FileInfo({ src, fileType, fileName, fileSize }) {
+  const displayedFileSize = useMemo(() => renderFileSize(fileSize), [fileSize]);
   return (
     <div
       style={{
@@ -51,44 +50,35 @@ export default function FileInfo({ src, fileType }) {
             `}
             icon={fileType === 'other' ? 'file' : `file-${fileType}`}
           />
-        </div>
-        <div
-          style={{
-            width: '100%',
-            marginLeft: '1rem',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between'
-          }}
-        >
-          <p
-            style={{
-              fontWeight: 'bold',
-              width: '100%',
-              display: 'flex',
-              justifyContent: 'flex-end'
-            }}
-            onClick={() => window.open(src)}
+          <div
+            className={css`
+              margin-top: 0.5rem;
+              width: 100%;
+              text-align: center;
+              font-size: 1.3rem;
+              font-weight: bold;
+              @media (max-width: ${mobileMaxWidth}) {
+                font-size: 1.2rem;
+              }
+            `}
           >
-            <span
+            {fileName}
+          </div>
+          {displayedFileSize && (
+            <div
               className={css`
-                cursor: pointer;
-                color: ${Color.black()};
-                &:hover {
-                  color: #000;
-                  @media (min-width: ${desktopMinWidth}) {
-                    text-decoration: underline;
-                  }
-                }
-                line-height: 1;
+                margin-top: 0.5rem;
+                text-align: center;
+                width: 100%;
+                font-size: 1.2rem;
                 @media (max-width: ${mobileMaxWidth}) {
-                  font-size: 1.3rem;
+                  font-size: 1rem;
                 }
               `}
             >
-              Download
-            </span>
-          </p>
+              {displayedFileSize}
+            </div>
+          )}
         </div>
       </div>
     </div>

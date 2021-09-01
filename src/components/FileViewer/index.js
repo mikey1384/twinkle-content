@@ -9,6 +9,7 @@ import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 
 FileViewer.propTypes = {
   small: PropTypes.bool,
+  fileSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   src: PropTypes.string.isRequired,
   style: PropTypes.object,
   onThumbnailLoad: PropTypes.func,
@@ -16,6 +17,7 @@ FileViewer.propTypes = {
 };
 
 export default function FileViewer({
+  fileSize,
   onThumbnailLoad,
   small,
   src,
@@ -24,6 +26,7 @@ export default function FileViewer({
 }) {
   const PlayerRef = useRef(null);
   const { fileType } = useMemo(() => getFileInfoFromFileName(src), [src]);
+  const fileName = useMemo(() => src.split('/').pop(), [src]);
   const filePath = useMemo(() => {
     const srcArray = src.split('/');
     const fileName = srcArray[srcArray.length - 1];
@@ -96,7 +99,12 @@ export default function FileViewer({
           )}
         </div>
       ) : (
-        <FileInfo fileType={fileType} src={src} />
+        <FileInfo
+          fileType={fileType}
+          fileName={fileName}
+          fileSize={fileSize}
+          src={`${cloudFrontURL}${src}`}
+        />
       )}
     </div>
   );
