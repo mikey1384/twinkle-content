@@ -1293,7 +1293,8 @@ export default function ChatReducer(state, action) {
     case 'TRIM_MESSAGES':
       return {
         ...state,
-        messagesLoadMoreButton: true,
+        messagesLoadMoreButton:
+          state.messages.length > 20 ? true : state.messagesLoadMoreButton,
         messages:
           state.messages.length > 20
             ? state.messages.filter(
