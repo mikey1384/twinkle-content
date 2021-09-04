@@ -1,4 +1,11 @@
-import React, { useState, useMemo, useRef, useEffect } from 'react';
+import React, {
+  memo,
+  useCallback,
+  useState,
+  useMemo,
+  useRef,
+  useEffect
+} from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Textarea from 'components/Texts/Textarea';
@@ -39,7 +46,7 @@ InputForm.propTypes = {
   targetCommentId: PropTypes.number
 };
 
-export default function InputForm({
+function InputForm({
   autoFocus,
   className = '',
   formGroupStyle = {},
@@ -87,6 +94,8 @@ export default function InputForm({
     }
   }, [prevText]);
 
+  const textIsEmpty = useMemo(() => stringIsEmpty(text), [text]);
+
   const commentExceedsCharLimit = useMemo(
     () =>
       exceedsCharLimit({
@@ -112,6 +121,105 @@ export default function InputForm({
         });
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleSubmit = useCallback(async () => {
+    setSubmitting(true);
+    try {
+      await onSubmit(finalizeEmoji(text));
+      if (mounted.current) {
+        handleSetText('');
+        setSubmitting(false);
+      }
+    } catch (error) {
+      setSubmitting(false);
+      console.error(error);
+    }
+  }, [onSubmit, text]);
+
+  const handleUpload = useCallback(
+    (event) => {
+      const fileObj = event.target.files[0];
+      if (fileObj.size / mb > maxSize) {
+        return setAlertModalShown(true);
+      }
+      const { fileType } = getFileInfoFromFileName(fileObj.name);
+      if (fileType === 'image') {
+        const reader = new FileReader();
+        reader.onload = (upload) => {
+          const payload = upload.target.result;
+          if (fileObj.name.split('.')[1] === 'gif') {
+            onSetCommentAttachment({
+              attachment: {
+                file: fileObj,
+                contentType: 'file',
+                fileType,
+                imageUrl: payload
+              },
+              contentType,
+              contentId
+            });
+          } else {
+            window.loadImage(
+              payload,
+              function (img) {
+                const imageUrl = img.toDataURL('image/jpeg');
+                const dataUri = imageUrl.replace(
+                  /^data:image\/\w+;base64,/,
+                  ''
+                );
+                const buffer = Buffer.from(dataUri, 'base64');
+                const file = new File([buffer], fileObj.name);
+                onSetCommentAttachment({
+                  attachment: {
+                    file,
+                    contentType: 'file',
+                    fileType,
+                    imageUrl
+                  },
+                  contentType,
+                  contentId
+                });
+              },
+              { orientation: true, canvas: true }
+            );
+          }
+        };
+        reader.readAsDataURL(fileObj);
+      } else {
+        onSetCommentAttachment({
+          attachment: {
+            file: fileObj,
+            contentType: 'file',
+            fileType
+          },
+          contentType,
+          contentId
+        });
+      }
+      event.target.value = null;
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [contentId, contentType, maxSize]
+  );
+
+  const handleViewAnswer = useCallback(async () => {
+    if (secretViewMessageSubmittingRef.current) {
+      return;
+    }
+    secretViewMessageSubmittingRef.current = true;
+    setSecretViewMessageSubmitting(true);
+    try {
+      await onViewSecretAnswer();
+      setSecretViewMessageSubmitting(false);
+      secretViewMessageSubmittingRef.current = false;
+    } catch (error) {
+      console.error(error);
+      setSecretViewMessageSubmitting(false);
+      secretViewMessageSubmittingRef.current = false;
+    }
+    setConfirmModalShown(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -151,32 +259,29 @@ export default function InputForm({
             </small>
           )}
         </div>
-        {!!onViewSecretAnswer &&
-          stringIsEmpty(text) &&
-          !attachment &&
-          !submitting && (
-            <div
-              className={css`
-                display: flex;
-                justify-content: flex-end;
-              `}
+        {!!onViewSecretAnswer && textIsEmpty && !attachment && !submitting && (
+          <div
+            className={css`
+              display: flex;
+              justify-content: flex-end;
+            `}
+          >
+            <Button
+              style={{ marginTop: '0.5rem', marginBottom: '0.5rem' }}
+              color="rose"
+              filled
+              disabled={secretViewMessageSubmitting}
+              onClick={
+                authLevel > 1
+                  ? handleViewAnswer
+                  : () => setConfirmModalShown(true)
+              }
             >
-              <Button
-                style={{ marginTop: '0.5rem', marginBottom: '0.5rem' }}
-                color="rose"
-                filled
-                disabled={secretViewMessageSubmitting}
-                onClick={
-                  authLevel > 1
-                    ? handleViewAnswer
-                    : () => setConfirmModalShown(true)
-                }
-              >
-                View without responding
-              </Button>
-            </div>
-          )}
-        {(!stringIsEmpty(text) || attachment) && (
+              View without responding
+            </Button>
+          </div>
+        )}
+        {(!textIsEmpty || attachment) && (
           <div
             className={css`
               display: flex;
@@ -189,7 +294,7 @@ export default function InputForm({
               color="green"
               disabled={
                 submitting ||
-                (stringIsEmpty(text) && !attachment) ||
+                (textIsEmpty && !attachment) ||
                 !!commentExceedsCharLimit
               }
               onClick={handleSubmit}
@@ -290,95 +395,6 @@ export default function InputForm({
     setText(text);
     textRef.current = text;
   }
-
-  async function handleSubmit() {
-    setSubmitting(true);
-    try {
-      await onSubmit(finalizeEmoji(text));
-      if (mounted.current) {
-        handleSetText('');
-        setSubmitting(false);
-      }
-    } catch (error) {
-      setSubmitting(false);
-      console.error(error);
-    }
-  }
-
-  function handleUpload(event) {
-    const fileObj = event.target.files[0];
-    if (fileObj.size / mb > maxSize) {
-      return setAlertModalShown(true);
-    }
-    const { fileType } = getFileInfoFromFileName(fileObj.name);
-    if (fileType === 'image') {
-      const reader = new FileReader();
-      reader.onload = (upload) => {
-        const payload = upload.target.result;
-        if (fileObj.name.split('.')[1] === 'gif') {
-          onSetCommentAttachment({
-            attachment: {
-              file: fileObj,
-              contentType: 'file',
-              fileType,
-              imageUrl: payload
-            },
-            contentType,
-            contentId
-          });
-        } else {
-          window.loadImage(
-            payload,
-            function (img) {
-              const imageUrl = img.toDataURL('image/jpeg');
-              const dataUri = imageUrl.replace(/^data:image\/\w+;base64,/, '');
-              const buffer = Buffer.from(dataUri, 'base64');
-              const file = new File([buffer], fileObj.name);
-              onSetCommentAttachment({
-                attachment: {
-                  file,
-                  contentType: 'file',
-                  fileType,
-                  imageUrl
-                },
-                contentType,
-                contentId
-              });
-            },
-            { orientation: true, canvas: true }
-          );
-        }
-      };
-      reader.readAsDataURL(fileObj);
-    } else {
-      onSetCommentAttachment({
-        attachment: {
-          file: fileObj,
-          contentType: 'file',
-          fileType
-        },
-        contentType,
-        contentId
-      });
-    }
-    event.target.value = null;
-  }
-
-  async function handleViewAnswer() {
-    if (secretViewMessageSubmittingRef.current) {
-      return;
-    }
-    secretViewMessageSubmittingRef.current = true;
-    setSecretViewMessageSubmitting(true);
-    try {
-      await onViewSecretAnswer();
-      setSecretViewMessageSubmitting(false);
-      secretViewMessageSubmittingRef.current = false;
-    } catch (error) {
-      console.error(error);
-      setSecretViewMessageSubmitting(false);
-      secretViewMessageSubmittingRef.current = false;
-    }
-    setConfirmModalShown(false);
-  }
 }
+
+export default memo(InputForm);
