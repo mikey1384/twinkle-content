@@ -84,6 +84,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
       onReceiveMessage,
       onReceiveMessageOnDifferentChannel,
       onReceiveVocabActivity,
+      onResetChat,
       onSetCall,
       onSetMembersOnCall,
       onSetMyStream,
@@ -106,7 +107,8 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
       numNewPosts,
       totalRewardedTwinkles,
       totalRewardedTwinkleCoins,
-      versionMatch
+      versionMatch,
+      prevUserId
     },
     actions: {
       onChangeSocketStatus,
@@ -148,6 +150,13 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
   const prevIncomingShown = useRef(false);
   const membersOnCall = useRef({});
   const receivedCallSignals = useRef([]);
+
+  useEffect(() => {
+    if (userId !== prevUserId) {
+      onResetChat();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prevUserId, userId]);
 
   useEffect(() => {
     socket.disconnect();
