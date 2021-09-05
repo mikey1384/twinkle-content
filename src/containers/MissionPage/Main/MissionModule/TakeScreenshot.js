@@ -116,7 +116,7 @@ export default function TakeScreenshot({
                 `}
                 style={{
                   display: 'flex',
-                  width: '60%',
+                  width: '75%',
                   flexDirection: 'column',
                   alignItems: 'center'
                 }}
