@@ -84,7 +84,7 @@ export default function TakeScreenshot({
           <div>
             <b>1.</b> Take a screenshot of{' '}
             <b style={{ color: Color.red() }}>
-              this section <Icon icon="arrow-down" />
+              this <Icon icon="arrow-down" />
             </b>
             <div
               className={css`
@@ -121,10 +121,17 @@ export default function TakeScreenshot({
                   alignItems: 'center'
                 }}
               >
-                <p style={{ fontWeight: 'bold' }}>
+                <p
+                  className={css`
+                    font-weight: bold;
+                    font-size: 3rem;
+                    @media (max-width: ${mobileMaxWidth}) {
+                      font-size: 2.5rem;
+                    }
+                  `}
+                >
                   Your screenshot{' '}
                   <b style={{ color: Color.red() }}>must include</b> this
-                  section
                 </p>
                 <p style={{ marginTop: '1.5rem' }}>
                   <b>{username}</b> captured this screenshot on {returnNow()}
