@@ -1,4 +1,5 @@
 import React, {
+  memo,
   useCallback,
   useEffect,
   useMemo,
@@ -34,7 +35,7 @@ ContentEditor.propTypes = {
   title: PropTypes.string
 };
 
-export default function ContentEditor({
+function ContentEditor({
   comment,
   content,
   contentId,
@@ -214,6 +215,16 @@ export default function ContentEditor({
     urlExceedsCharLimit
   ]);
 
+  const handleSetInputState = useCallback((newState) => {
+    setInputState(newState);
+    inputStateRef.current = newState;
+  }, []);
+
+  const handleDismiss = useCallback(() => {
+    handleSetInputState(null);
+    onDismiss();
+  }, [handleSetInputState, onDismiss]);
+
   const handleSubmit = useCallback(
     async (event) => {
       if (banned?.posting) {
@@ -229,8 +240,7 @@ export default function ContentEditor({
         editedTitle: finalizeEmoji(editedTitle)
       };
       await onEditContent({ ...post, contentId, contentType });
-      handleSetInputState(null);
-      onDismiss();
+      handleDismiss();
     },
     [
       banned?.posting,
@@ -242,7 +252,7 @@ export default function ContentEditor({
       editedDescription,
       editedSecretAnswer,
       editedTitle,
-      onDismiss,
+      handleDismiss,
       onEditContent
     ]
   );
@@ -345,14 +355,6 @@ export default function ContentEditor({
       </form>
     </div>
   );
-
-  function handleDismiss() {
-    handleSetInputState(null);
-    onDismiss();
-  }
-
-  function handleSetInputState(newState) {
-    setInputState(newState);
-    inputStateRef.current = newState;
-  }
 }
+
+export default memo(ContentEditor);
