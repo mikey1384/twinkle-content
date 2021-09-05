@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo, useState, useRef } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useRef
+} from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import TextEditSection from './TextEditSection';
@@ -84,6 +90,15 @@ export default function ContentEditor({
     editedTitle = '',
     editedUrl = ''
   } = editForm;
+  const editedUrlIsEmpty = useMemo(() => stringIsEmpty(editedUrl), [editedUrl]);
+  const editedTitleIsEmpty = useMemo(
+    () => stringIsEmpty(editedTitle),
+    [editedTitle]
+  );
+  const editedCommentIsEmpty = useMemo(
+    () => stringIsEmpty(editedComment),
+    [editedComment]
+  );
   const descriptionExceedsCharLimit = useMemo(
     () =>
       exceedsCharLimit({
@@ -148,11 +163,7 @@ export default function ContentEditor({
     switch (contentType) {
       case 'video':
       case 'url':
-        if (
-          stringIsEmpty(editedUrl) ||
-          stringIsEmpty(editedTitle) ||
-          !isValid
-        ) {
+        if (editedUrlIsEmpty || editedTitleIsEmpty || !isValid) {
           return true;
         }
         if (
@@ -164,16 +175,13 @@ export default function ContentEditor({
         }
         return false;
       case 'comment':
-        if (
-          (stringIsEmpty(editedComment) || editedComment === comment) &&
-          !filePath
-        ) {
+        if ((editedCommentIsEmpty || editedComment === comment) && !filePath) {
           return true;
         }
         return false;
       case 'subject':
         if (
-          stringIsEmpty(editedTitle) ||
+          editedTitleIsEmpty ||
           (editedTitle === title &&
             editedDescription === description &&
             editedSecretAnswer === secretAnswer)
@@ -191,10 +199,13 @@ export default function ContentEditor({
     description,
     descriptionExceedsCharLimit,
     editedComment,
+    editedCommentIsEmpty,
     editedDescription,
     editedSecretAnswer,
     editedTitle,
+    editedTitleIsEmpty,
     editedUrl,
+    editedUrlIsEmpty,
     filePath,
     secretAnswer,
     secretAnswerExceedsCharLimit,
@@ -202,6 +213,39 @@ export default function ContentEditor({
     titleExceedsCharLimit,
     urlExceedsCharLimit
   ]);
+
+  const handleSubmit = useCallback(
+    async (event) => {
+      if (banned?.posting) {
+        return;
+      }
+      event.preventDefault();
+      const post = {
+        ...editForm,
+        editedComment: finalizeEmoji(editedComment),
+        editedContent: finalizeEmoji(editedContent),
+        editedDescription: finalizeEmoji(editedDescription),
+        editedSecretAnswer: finalizeEmoji(editedSecretAnswer),
+        editedTitle: finalizeEmoji(editedTitle)
+      };
+      await onEditContent({ ...post, contentId, contentType });
+      handleSetInputState(null);
+      onDismiss();
+    },
+    [
+      banned?.posting,
+      contentId,
+      contentType,
+      editForm,
+      editedComment,
+      editedContent,
+      editedDescription,
+      editedSecretAnswer,
+      editedTitle,
+      onDismiss,
+      onEditContent
+    ]
+  );
 
   useEffect(() => {
     return function saveInputStateBeforeUnmount() {
@@ -310,22 +354,5 @@ export default function ContentEditor({
   function handleSetInputState(newState) {
     setInputState(newState);
     inputStateRef.current = newState;
-  }
-
-  async function handleSubmit(event) {
-    if (banned?.posting) {
-      return;
-    }
-    event.preventDefault();
-    const post = {
-      ...editForm,
-      editedComment: finalizeEmoji(editedComment),
-      editedContent: finalizeEmoji(editedContent),
-      editedDescription: finalizeEmoji(editedDescription),
-      editedSecretAnswer: finalizeEmoji(editedSecretAnswer),
-      editedTitle: finalizeEmoji(editedTitle)
-    };
-    await onEditContent({ ...post, contentId, contentType });
-    handleDismiss();
   }
 }
