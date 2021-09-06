@@ -286,6 +286,10 @@ function Comment({
       parent.contentType !== 'comment',
     [parent.contentType, parent.uploader?.id, userId]
   );
+  const userIsRootUploader = useMemo(
+    () => userId && rootContent.uploader?.id === userId,
+    [rootContent.uploader?.id, userId]
+  );
   const userIsHigherAuth = useMemo(
     () => authLevel > uploader.authLevel,
     [authLevel, uploader.authLevel]
@@ -311,7 +315,7 @@ function Comment({
     return (
       ((userIsUploader && !(isForSecretSubject || isNotification)) ||
         userCanEditThis ||
-        (userIsParentUploader && !isNotification)) &&
+        ((userIsParentUploader || userIsRootUploader) && !isNotification)) &&
       !isPreview
     );
   }, [
@@ -332,6 +336,7 @@ function Comment({
     userId,
     userIsHigherAuth,
     userIsParentUploader,
+    userIsRootUploader,
     userIsUploader
   ]);
 
@@ -353,7 +358,10 @@ function Comment({
           })
       });
     }
-    if ((userIsParentUploader || isCreator) && !isNotification) {
+    if (
+      (userIsParentUploader || userIsRootUploader || isCreator) &&
+      !isNotification
+    ) {
       items.push({
         label: (
           <>
@@ -865,14 +873,18 @@ function Comment({
   }
 
   async function handlePinComment(commentId) {
+    let target = parent;
+    if (parent.contentType === 'comment') {
+      target = { ...rootContent, contentId: rootContent.id };
+    }
     await updateCommentPinStatus({
       commentId,
-      contentId: parent.contentId,
-      contentType: parent.contentType
+      contentId: target.contentId,
+      contentType: target.contentType
     });
     onUpdateCommentPinStatus({
-      contentId: parent.contentId,
-      contentType: parent.contentType,
+      contentId: target.contentId,
+      contentType: target.contentType,
       commentId
     });
   }

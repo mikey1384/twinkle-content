@@ -129,6 +129,10 @@ function Reply({
       parent.uploader?.id === userId,
     [parent.contentType, parent.uploader?.id, userId]
   );
+  const userIsRootUploader = useMemo(
+    () => userId && rootContent?.uploader?.id === userId,
+    [rootContent?.uploader?.id, userId]
+  );
   const userIsHigherAuth = authLevel > uploader.authLevel;
 
   const isRecommendedByUser = useMemo(() => {
@@ -145,12 +149,18 @@ function Reply({
 
   const dropdownButtonShown = useMemo(() => {
     const userCanEditThis = (canEdit || canDelete) && userIsHigherAuth;
-    return userIsUploader || userIsParentUploader || userCanEditThis;
+    return (
+      userIsUploader ||
+      userIsParentUploader ||
+      userIsRootUploader ||
+      userCanEditThis
+    );
   }, [
     canDelete,
     canEdit,
     userIsHigherAuth,
     userIsParentUploader,
+    userIsRootUploader,
     userIsUploader
   ]);
 
@@ -227,7 +237,7 @@ function Reply({
           })
       });
     }
-    if (userIsParentUploader || isCreator) {
+    if (userIsParentUploader || userIsRootUploader || isCreator) {
       items.push({
         label: (
           <>

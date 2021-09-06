@@ -9,7 +9,7 @@ import PinnedComment from './PinnedComment';
 import { scrollElementToCenter } from 'helpers';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useContentState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useInputContext } from 'contexts';
 
 Comments.propTypes = {
@@ -92,6 +92,10 @@ function Comments({
   const {
     actions: { onEnterComment }
   } = useInputContext();
+  const rootContentState = useContentState({
+    contentType: rootContent.contentType,
+    contentId: rootContent.id
+  });
   const {
     actions: {
       onClearCommentFileUploadProgress,
@@ -106,6 +110,16 @@ function Comments({
   const ContainerRef = useRef(null);
   const CommentInputAreaRef = useRef(null);
   const CommentRefs = {};
+  const pinnedCommentId = useMemo(() => {
+    if (parent.contentType === 'comment') {
+      return rootContentState?.pinnedCommentId;
+    }
+    return parent.pinnedCommentId;
+  }, [
+    parent.contentType,
+    parent.pinnedCommentId,
+    rootContentState?.pinnedCommentId
+  ]);
 
   useEffect(() => {
     if (comments.length < prevComments.length && deleting) {
@@ -205,15 +219,18 @@ function Comments({
             }}
           >
             {isLoading && <Loading />}
-            {!isLoading && parent.pinnedCommentId && !isPreview && (
-              <PinnedComment
-                parent={parent}
-                rootContent={rootContent}
-                subject={subject}
-                commentId={parent.pinnedCommentId}
-                userId={userId}
-              />
-            )}
+            {!isLoading &&
+              parent.contentType !== 'comment' &&
+              pinnedCommentId &&
+              !isPreview && (
+                <PinnedComment
+                  parent={parent}
+                  rootContent={rootContent}
+                  subject={subject}
+                  commentId={pinnedCommentId}
+                  userId={userId}
+                />
+              )}
             {inputAtBottom && loadMoreButton && renderLoadMoreButton()}
             {!isLoading &&
               (isPreview ? previewComments : comments).map((comment) => (
@@ -224,7 +241,7 @@ function Comments({
                   rootContent={rootContent}
                   subject={subject}
                   comment={comment}
-                  pinnedCommentId={parent.pinnedCommentId}
+                  pinnedCommentId={pinnedCommentId}
                   key={comment.id}
                   userId={userId}
                 />
