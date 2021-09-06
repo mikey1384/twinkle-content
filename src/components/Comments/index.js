@@ -93,8 +93,8 @@ function Comments({
     actions: { onEnterComment }
   } = useInputContext();
   const rootContentState = useContentState({
-    contentType: rootContent.contentType,
-    contentId: rootContent.id
+    contentType: rootContent?.contentType,
+    contentId: rootContent?.id
   });
   const {
     actions: {
