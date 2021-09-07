@@ -122,7 +122,7 @@ export default function VideoPage({
     commentsLoaded,
     commentsLoadMoreButton,
     content,
-    deleted,
+    isDeleted,
     description,
     rewardLevel,
     likes,
@@ -142,13 +142,13 @@ export default function VideoPage({
   } = useContentState({ contentType: 'video', contentId: videoId });
 
   useEffect(() => {
-    if (!prevDeleted.current && deleted) {
+    if (!prevDeleted.current && isDeleted) {
       onSetContentNav('');
       history.push('/videos');
     }
-    prevDeleted.current = deleted;
+    prevDeleted.current = isDeleted;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deleted, loaded]);
+  }, [isDeleted, loaded]);
 
   useEffect(() => {
     setChangingPage(true);
@@ -219,9 +219,8 @@ export default function VideoPage({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [videoId]);
-  const { playlist: playlistId, continue: isContinuing } = queryString.parse(
-    search
-  );
+  const { playlist: playlistId, continue: isContinuing } =
+    queryString.parse(search);
   const userIsUploader = uploader?.id === userId;
   const userCanEditThis = canEdit && authLevel >= uploader?.authLevel;
 

@@ -42,7 +42,7 @@ export default function LinkItem({
   const {
     actions: { onDeleteContent, onInitContent }
   } = useContentContext();
-  const { loaded, deleted } = useContentState({
+  const { loaded, isDeleted } = useContentState({
     contentType: 'url',
     contentId: id
   });
@@ -90,7 +90,7 @@ export default function LinkItem({
     return items;
   }, [canDelete, canEdit, userIsUploader]);
 
-  return !deleted ? (
+  return !isDeleted ? (
     <nav
       className={css`
         display: flex;

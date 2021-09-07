@@ -194,7 +194,7 @@ export default function ContentPanel({
           onUploadTargetComment
         }}
       >
-        {!contentState.deleted ? (
+        {!contentState.isDeleted ? (
           <div style={style} className={className} ref={ComponentRef}>
             <div
               style={{

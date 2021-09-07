@@ -238,18 +238,18 @@ export default function ContentReducer(state, action) {
         const prevContentState = newState[contentKey];
         newState[contentKey] = {
           ...prevContentState,
-          deleted:
-            prevContentState.deleted ||
+          isDeleted:
+            prevContentState.isDeleted ||
             (prevContentState.contentId === action.commentId &&
               prevContentState.contentType === 'comment'),
           comments: prevContentState.comments?.map((comment) =>
             comment.id === action.commentId
-              ? { ...comment, deleted: true }
+              ? { ...comment, isDeleted: true }
               : {
                   ...comment,
                   replies: (comment.replies || []).map((reply) =>
                     reply.id === action.commentId
-                      ? { ...reply, deleted: true }
+                      ? { ...reply, isDeleted: true }
                       : reply
                   )
                 }
@@ -258,12 +258,12 @@ export default function ContentReducer(state, action) {
             ...subject,
             comments: subject.comments?.map((comment) =>
               comment.id === action.commentId
-                ? { ...comment, deleted: true }
+                ? { ...comment, isDeleted: true }
                 : {
                     ...comment,
                     replies: (comment.replies || []).map((reply) =>
                       reply.id === action.commentId
-                        ? { ...reply, deleted: true }
+                        ? { ...reply, isDeleted: true }
                         : reply
                     )
                   }
@@ -275,14 +275,14 @@ export default function ContentReducer(state, action) {
                 comment: prevContentState.targetObj.comment
                   ? {
                       ...prevContentState.targetObj.comment,
-                      deleted:
+                      isDeleted:
                         prevContentState.targetObj.comment.id ===
                         action.commentId,
                       comments:
                         prevContentState.targetObj.comment.comments?.map(
                           (comment) =>
                             comment.id === action.commentId
-                              ? { ...comment, deleted: true }
+                              ? { ...comment, isDeleted: true }
                               : comment
                         )
                     }
@@ -298,7 +298,7 @@ export default function ContentReducer(state, action) {
         ...state,
         [contentKey]: {
           ...prevContentState,
-          deleted: true
+          isDeleted: true
         }
       };
     case 'DELETE_STATUS_MSG': {

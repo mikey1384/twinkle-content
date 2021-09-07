@@ -48,7 +48,7 @@ Comment.propTypes = {
   comment: PropTypes.shape({
     commentId: PropTypes.number,
     content: PropTypes.string.isRequired,
-    deleted: PropTypes.bool,
+    isDeleted: PropTypes.bool,
     id: PropTypes.number.isRequired,
     likes: PropTypes.array,
     numReplies: PropTypes.number,
@@ -142,7 +142,7 @@ function Comment({
   const {
     commentPlaceholderHeight: previousPlaceholderHeight,
     commentVisible: previousVisible,
-    deleted,
+    isDeleted,
     isEditing,
     thumbUrl: thumbUrlFromContext,
     xpRewardInterfaceShown
@@ -506,7 +506,7 @@ function Comment({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return !deleted && !comment.deleted ? (
+  return !isDeleted && !comment.isDeleted ? (
     <div ref={ComponentRef}>
       <div
         style={{

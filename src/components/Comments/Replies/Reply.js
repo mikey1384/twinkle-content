@@ -43,7 +43,7 @@ Reply.propTypes = {
   reply: PropTypes.shape({
     commentId: PropTypes.number.isRequired,
     content: PropTypes.string.isRequired,
-    deleted: PropTypes.bool,
+    isDeleted: PropTypes.bool,
     filePath: PropTypes.string,
     fileName: PropTypes.string,
     fileSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -106,7 +106,7 @@ function Reply({
   const {
     actions: { onSetIsEditing, onSetXpRewardInterfaceShown }
   } = useContentContext();
-  const { deleted, isEditing, thumbUrl, xpRewardInterfaceShown } =
+  const { isDeleted, isEditing, thumbUrl, xpRewardInterfaceShown } =
     useContentState({
       contentType: 'comment',
       contentId: reply.id
@@ -283,7 +283,7 @@ function Reply({
     userIsUploader
   ]);
 
-  return !deleted && !reply.deleted ? (
+  return !isDeleted && !reply.isDeleted ? (
     <ErrorBoundary>
       <div className={commentContainer} ref={innerRef}>
         {pinnedCommentId === reply.id && (

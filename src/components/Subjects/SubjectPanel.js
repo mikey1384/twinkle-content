@@ -100,7 +100,7 @@ export default function SubjectPanel({
   const {
     byUser,
     comments,
-    deleted,
+    isDeleted,
     secretShown,
     fileName,
     filePath,
@@ -122,10 +122,8 @@ export default function SubjectPanel({
     secretAnswer || ''
   );
   const [editDoneButtonDisabled, setEditDoneButtonDisabled] = useState(true);
-  const [
-    recommendationInterfaceShown,
-    setRecommendationInterfaceShown
-  ] = useState(false);
+  const [recommendationInterfaceShown, setRecommendationInterfaceShown] =
+    useState(false);
   const userIsUploader = useMemo(() => myId === userId, [myId, userId]);
   const editButtonShown = useMemo(() => {
     const userHasHigherAuthLevel = authLevel > uploaderAuthLevel;
@@ -174,7 +172,7 @@ export default function SubjectPanel({
   const CommentsRef = useRef(null);
   const RewardInterfaceRef = useRef(null);
 
-  return !deleted ? (
+  return !isDeleted ? (
     <div
       className={css`
         background: #fff;

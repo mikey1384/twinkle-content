@@ -35,6 +35,7 @@ function ContentListItem({
   const {
     content,
     description,
+    isDeleted,
     fileName,
     filePath,
     fileSize,
@@ -64,7 +65,7 @@ function ContentListItem({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loaded]);
 
-  return notFound ? null : (
+  return !!notFound || !!isDeleted ? null : (
     <div
       onClick={onClick}
       style={{

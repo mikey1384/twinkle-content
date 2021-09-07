@@ -28,7 +28,7 @@ export default function ContentPage({
     actions: { onSetContentNav }
   } = useViewContext();
   const contentType = url.split('/')[1].slice(0, -1);
-  const { loaded, deleted } = useContentState({ contentType, contentId });
+  const { loaded, isDeleted } = useContentState({ contentType, contentId });
   const [exists, setExists] = useState(true);
   const mounted = useRef(true);
   const prevDeleted = useRef(false);
@@ -41,13 +41,13 @@ export default function ContentPage({
   }, []);
 
   useEffect(() => {
-    if (!prevDeleted.current && deleted) {
+    if (!prevDeleted.current && isDeleted) {
       onSetContentNav('');
       history.push('/');
     }
-    prevDeleted.current = deleted;
+    prevDeleted.current = isDeleted;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deleted, loaded]);
+  }, [isDeleted, loaded]);
 
   useEffect(() => {
     if (!loaded) {

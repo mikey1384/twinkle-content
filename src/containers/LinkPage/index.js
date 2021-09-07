@@ -99,7 +99,7 @@ export default function LinkPage({
     commentsLoaded,
     commentsLoadMoreButton,
     content,
-    deleted,
+    isDeleted,
     description,
     likes,
     loaded,
@@ -122,10 +122,8 @@ export default function LinkPage({
   const [notFound, setNotFound] = useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   const [likesModalShown, setLikesModalShown] = useState(false);
-  const [
-    recommendationInterfaceShown,
-    setRecommendationInterfaceShown
-  ] = useState(false);
+  const [recommendationInterfaceShown, setRecommendationInterfaceShown] =
+    useState(false);
   const mounted = useRef(true);
   const prevDeleted = useRef(false);
   const RewardInterfaceRef = useRef(null);
@@ -138,13 +136,13 @@ export default function LinkPage({
   }, []);
 
   useEffect(() => {
-    if (!prevDeleted.current && deleted) {
+    if (!prevDeleted.current && isDeleted) {
       onSetContentNav('');
       history.push('/links');
     }
-    prevDeleted.current = deleted;
+    prevDeleted.current = isDeleted;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deleted]);
+  }, [isDeleted]);
 
   useEffect(() => {
     if (!loaded) {
@@ -211,10 +209,10 @@ export default function LinkPage({
     return rewards.filter((reward) => reward.rewarderId === userId).length > 0;
   }, [rewards, userId]);
 
-  const userIsUploader = useMemo(() => uploader?.id === userId, [
-    uploader,
-    userId
-  ]);
+  const userIsUploader = useMemo(
+    () => uploader?.id === userId,
+    [uploader, userId]
+  );
 
   const userCanEditThis = useMemo(
     () => (canEdit || canDelete) && authLevel > uploader?.authLevel,

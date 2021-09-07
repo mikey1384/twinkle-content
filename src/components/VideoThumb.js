@@ -29,22 +29,23 @@ VideoThumb.propTypes = {
 
 function VideoThumb({ className, clickSafe, style, to, user, video }) {
   const { profileTheme } = useMyState();
-  const { deleted } = useContentState({
+  const { isDeleted } = useContentState({
     contentType: 'video',
     contentId: video.id
   });
   const [onTitleHover, setOnTitleHover] = useState(false);
   const ThumbLabelRef = useRef(null);
-  const onLinkClick = useCallback(() => Promise.resolve(clickSafe), [
-    clickSafe
-  ]);
+  const onLinkClick = useCallback(
+    () => Promise.resolve(clickSafe),
+    [clickSafe]
+  );
   const onMouseOver = useCallback(() => {
     if (textIsOverflown(ThumbLabelRef.current)) {
       setOnTitleHover(true);
     }
   }, []);
 
-  return !deleted ? (
+  return !isDeleted ? (
     <ErrorBoundary style={style}>
       <div
         className={`${className} ${css`

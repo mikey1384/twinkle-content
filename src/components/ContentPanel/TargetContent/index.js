@@ -249,7 +249,7 @@ export default function TargetContent({
     >
       <div>
         {comment &&
-          (comment.notFound || comment.deleted ? (
+          (comment.notFound || comment.isDeleted ? (
             <div style={{ textAlign: 'center', padding: '2rem 0' }}>
               <span>Comment removed / no longer available</span>
             </div>
@@ -498,7 +498,7 @@ export default function TargetContent({
               {comments.length > 0 && (
                 <div>
                   {comments
-                    .filter((comment) => !comment.deleted)
+                    .filter((comment) => !comment.isDeleted)
                     .map((comment) => (
                       <Comment
                         key={comment.id}
