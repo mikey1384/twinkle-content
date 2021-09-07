@@ -449,6 +449,16 @@ function Comment({
       : 10;
   }, [filePath, isPreview, fileType]);
 
+  const commentIsEmpty = useMemo(
+    () => stringIsEmpty(comment.content),
+    [comment.content]
+  );
+
+  const timeSincePost = useMemo(
+    () => timeSince(comment.timeStamp),
+    [comment.timeStamp]
+  );
+
   useEffect(() => {
     if (mounted.current) {
       if (
@@ -561,7 +571,7 @@ function Comment({
                           : history.push(`/comments/${comment.id}`)
                       }
                     >
-                      {timeSince(comment.timeStamp)}
+                      {timeSincePost}
                     </a>
                   </small>
                 </div>
@@ -593,7 +603,7 @@ function Comment({
                           style={{
                             display: 'flex',
                             justifyContent: 'center',
-                            marginBottom: stringIsEmpty(comment.content)
+                            marginBottom: commentIsEmpty
                               ? fileType === 'audio'
                                 ? '2rem'
                                 : '1rem'
@@ -643,13 +653,14 @@ function Comment({
                           {uploader.username} viewed the secret message
                         </div>
                       ) : (
-                        !stringIsEmpty(comment.content) && (
+                        !commentIsEmpty && (
                           <LongText
                             contentId={commentId}
                             contentType="comment"
                             section="comment"
                             maxLines={maxLines}
                             className="comment__content"
+                            isPreview={isPreview}
                           >
                             {comment.content}
                           </LongText>

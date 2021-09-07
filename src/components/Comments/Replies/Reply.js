@@ -219,6 +219,16 @@ function Reply({
     [userId, rewardLevel, xpRewardInterfaceShown, rewards]
   );
 
+  const replyIsEmpty = useMemo(
+    () => stringIsEmpty(reply.content),
+    [reply.content]
+  );
+
+  const timeSincePost = useMemo(
+    () => timeSince(reply.timeStamp),
+    [reply.timeStamp]
+  );
+
   const dropdownMenuItems = useMemo(() => {
     const items = [];
     if (userIsUploader || canEdit) {
@@ -314,9 +324,7 @@ function Reply({
             <div>
               <UsernameText className="username" user={uploader} />{' '}
               <small className="timestamp">
-                <Link to={`/comments/${reply.id}`}>
-                  {timeSince(reply.timeStamp)}
-                </Link>
+                <Link to={`/comments/${reply.id}`}>{timeSincePost}</Link>
               </small>
             </div>
             <div>
@@ -344,7 +352,7 @@ function Reply({
                       style={{
                         display: 'flex',
                         justifyContent: 'center',
-                        marginBottom: stringIsEmpty(reply.content)
+                        marginBottom: replyIsEmpty
                           ? fileType === 'audio'
                             ? '2rem'
                             : '1rem'

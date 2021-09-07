@@ -1,4 +1,11 @@
-import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import PropTypes from 'prop-types';
 import Context from './Context';
 import CommentInputArea from './CommentInputArea';
@@ -120,6 +127,270 @@ function Comments({
     parent.pinnedCommentId,
     rootContentState?.pinnedCommentId
   ]);
+  const renderLoadMoreButton = useCallback(() => {
+    return (autoExpand || commentsShown) && !isLoading ? (
+      <LoadMoreButton
+        filled
+        color="lightBlue"
+        loading={isLoadingMore}
+        onClick={handleLoadMoreComments}
+        style={{
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          marginTop: inputAtBottom ? 0 : '1rem'
+        }}
+      />
+    ) : null;
+
+    async function handleLoadMoreComments() {
+      if (!isLoadingMore) {
+        setIsLoadingMore(true);
+        const lastCommentLocation = inputAtBottom ? 0 : comments.length - 1;
+        const lastCommentId = comments[lastCommentLocation]
+          ? comments[lastCommentLocation].id
+          : 'undefined';
+        try {
+          const data = await loadComments({
+            contentId: parent.contentId,
+            contentType: parent.contentType,
+            lastCommentId,
+            limit: commentsLoadLimit
+          });
+          onLoadMoreComments({
+            ...data,
+            contentId: parent.contentId,
+            contentType: parent.contentType
+          });
+          setIsLoadingMore(false);
+        } catch (error) {
+          console.error(error.response || error);
+        }
+      }
+    }
+  }, [
+    autoExpand,
+    comments,
+    commentsLoadLimit,
+    commentsShown,
+    inputAtBottom,
+    isLoading,
+    isLoadingMore,
+    loadComments,
+    onLoadMoreComments,
+    parent.contentId,
+    parent.contentType
+  ]);
+
+  const handleFileUpload = useCallback(
+    async ({
+      attachment,
+      commentContent,
+      contentType,
+      contentId,
+      filePath,
+      file,
+      rootCommentId,
+      subjectId,
+      targetCommentId,
+      isReply
+    }) => {
+      if (banned?.posting) {
+        return;
+      }
+      const finalContentType = targetCommentId
+        ? 'comment'
+        : subjectId
+        ? 'subject'
+        : contentType;
+      const finalContentId = targetCommentId || subjectId || contentId;
+      try {
+        setCommentSubmitted(true);
+        await uploadFile({
+          filePath,
+          file,
+          onUploadProgress: handleUploadProgress
+        });
+        onSetCommentFileUploadComplete({
+          contentType: finalContentType,
+          contentId: finalContentId
+        });
+        const data = await uploadComment({
+          content: commentContent,
+          parent,
+          rootCommentId,
+          subjectId,
+          targetCommentId,
+          attachment,
+          filePath,
+          fileName: file.name,
+          fileSize: file.size
+        });
+        if (isReply) {
+          onReplySubmit({
+            ...data,
+            contentId: parent.contentId,
+            contentType: parent.contentType
+          });
+        } else {
+          onCommentSubmit({
+            ...data,
+            contentId: targetCommentId || parent.contentId,
+            contentType: targetCommentId ? 'comment' : parent.contentType
+          });
+        }
+        onClearCommentFileUploadProgress({
+          contentType: finalContentType,
+          contentId: finalContentId
+        });
+        onEnterComment({
+          contentType: finalContentType,
+          contentId: finalContentId,
+          text: ''
+        });
+      } catch (error) {
+        console.error(error);
+      }
+      function handleUploadProgress({ loaded, total }) {
+        onUpdateCommentFileUploadProgress({
+          contentType: finalContentType,
+          contentId: finalContentId,
+          progress: loaded / total
+        });
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [banned?.posting, onCommentSubmit, onReplySubmit, parent]
+  );
+
+  const renderInputArea = useCallback(
+    (style) => {
+      return (
+        <CommentInputArea
+          autoFocus={autoFocus}
+          InputFormRef={CommentInputAreaRef}
+          innerRef={inputAreaInnerRef}
+          inputTypeLabel={inputTypeLabel}
+          numInputRows={numInputRows}
+          onSubmit={handleSubmitComment}
+          onViewSecretAnswer={
+            showSecretButtonAvailable ? handleViewSecretAnswer : null
+          }
+          parent={parent}
+          rootCommentId={
+            parent.contentType === 'comment' ? parent.commentId : null
+          }
+          subjectId={subject?.id}
+          subjectRewardLevel={
+            parent?.contentType === 'subject'
+              ? parent?.rewardLevel
+              : parent?.contentType !== 'comment'
+              ? subject?.rewardLevel || 0
+              : 0
+          }
+          style={style}
+          targetCommentId={
+            parent.contentType === 'comment' ? parent.contentId : null
+          }
+        />
+      );
+
+      async function handleSubmitComment({
+        content,
+        rootCommentId,
+        subjectId,
+        targetCommentId
+      }) {
+        if (banned?.posting) {
+          return;
+        }
+        try {
+          setCommentSubmitted(true);
+          const data = await uploadComment({
+            content,
+            parent,
+            rootCommentId,
+            subjectId,
+            targetCommentId
+          });
+          await onCommentSubmit({
+            ...data,
+            contentId: parent.contentId,
+            contentType: parent.contentType
+          });
+          return Promise.resolve();
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      async function handleViewSecretAnswer() {
+        try {
+          setCommentSubmitted(true);
+          const data = await uploadComment({
+            content: 'viewed the secret message',
+            parent,
+            subjectId:
+              parent.contentType === 'subject' ? parent.contentId : subject.id,
+            isNotification: true
+          });
+          await onCommentSubmit({
+            ...data,
+            contentId: parent.contentId,
+            contentType: parent.contentType
+          });
+          return Promise.resolve();
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      autoFocus,
+      banned?.posting,
+      inputAreaInnerRef,
+      inputTypeLabel,
+      numInputRows,
+      onCommentSubmit,
+      parent,
+      showSecretButtonAvailable,
+      subject?.id,
+      subject?.rewardLevel
+    ]
+  );
+
+  const handleSubmitReply = useCallback(
+    async ({ content, rootCommentId, targetCommentId }) => {
+      if (banned?.posting) {
+        return;
+      }
+      setCommentSubmitted(true);
+      const data = await uploadComment({
+        content,
+        parent,
+        rootCommentId,
+        targetCommentId
+      });
+      onReplySubmit({
+        ...data,
+        contentId: parent.contentId,
+        contentType: parent.contentType
+      });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [banned?.posting, onReplySubmit, parent]
+  );
+
+  const handleDeleteComment = useCallback(
+    async (commentId) => {
+      setDeleting(true);
+      await deleteContent({ id: commentId, contentType: 'comment' });
+      onDelete(commentId);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [onDelete]
+  );
 
   useEffect(() => {
     if (comments.length < prevComments.length && deleting) {
@@ -258,236 +529,6 @@ function Comments({
       </div>
     </Context.Provider>
   );
-
-  function renderInputArea(style) {
-    return (
-      <CommentInputArea
-        autoFocus={autoFocus}
-        InputFormRef={CommentInputAreaRef}
-        innerRef={inputAreaInnerRef}
-        inputTypeLabel={inputTypeLabel}
-        numInputRows={numInputRows}
-        onSubmit={handleSubmitComment}
-        onViewSecretAnswer={
-          showSecretButtonAvailable ? handleViewSecretAnswer : null
-        }
-        parent={parent}
-        rootCommentId={
-          parent.contentType === 'comment' ? parent.commentId : null
-        }
-        subjectId={subject?.id}
-        subjectRewardLevel={
-          parent?.contentType === 'subject'
-            ? parent?.rewardLevel
-            : parent?.contentType !== 'comment'
-            ? subject?.rewardLevel || 0
-            : 0
-        }
-        style={style}
-        targetCommentId={
-          parent.contentType === 'comment' ? parent.contentId : null
-        }
-      />
-    );
-  }
-
-  function renderLoadMoreButton() {
-    return (autoExpand || commentsShown) && !isLoading ? (
-      <LoadMoreButton
-        filled
-        color="lightBlue"
-        loading={isLoadingMore}
-        onClick={handleLoadMoreComments}
-        style={{
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'center',
-          marginTop: inputAtBottom ? 0 : '1rem'
-        }}
-      />
-    ) : null;
-  }
-
-  async function handleFileUpload({
-    attachment,
-    commentContent,
-    contentType,
-    contentId,
-    filePath,
-    file,
-    rootCommentId,
-    subjectId,
-    targetCommentId,
-    isReply
-  }) {
-    if (banned?.posting) {
-      return;
-    }
-    const finalContentType = targetCommentId
-      ? 'comment'
-      : subjectId
-      ? 'subject'
-      : contentType;
-    const finalContentId = targetCommentId || subjectId || contentId;
-    try {
-      setCommentSubmitted(true);
-      await uploadFile({
-        filePath,
-        file,
-        onUploadProgress: handleUploadProgress
-      });
-      onSetCommentFileUploadComplete({
-        contentType: finalContentType,
-        contentId: finalContentId
-      });
-      const data = await uploadComment({
-        content: commentContent,
-        parent,
-        rootCommentId,
-        subjectId,
-        targetCommentId,
-        attachment,
-        filePath,
-        fileName: file.name,
-        fileSize: file.size
-      });
-      if (isReply) {
-        onReplySubmit({
-          ...data,
-          contentId: parent.contentId,
-          contentType: parent.contentType
-        });
-      } else {
-        onCommentSubmit({
-          ...data,
-          contentId: targetCommentId || parent.contentId,
-          contentType: targetCommentId ? 'comment' : parent.contentType
-        });
-      }
-      onClearCommentFileUploadProgress({
-        contentType: finalContentType,
-        contentId: finalContentId
-      });
-      onEnterComment({
-        contentType: finalContentType,
-        contentId: finalContentId,
-        text: ''
-      });
-    } catch (error) {
-      console.error(error);
-    }
-    function handleUploadProgress({ loaded, total }) {
-      onUpdateCommentFileUploadProgress({
-        contentType: finalContentType,
-        contentId: finalContentId,
-        progress: loaded / total
-      });
-    }
-  }
-
-  async function handleSubmitComment({
-    content,
-    rootCommentId,
-    subjectId,
-    targetCommentId
-  }) {
-    if (banned?.posting) {
-      return;
-    }
-    try {
-      setCommentSubmitted(true);
-      const data = await uploadComment({
-        content,
-        parent,
-        rootCommentId,
-        subjectId,
-        targetCommentId
-      });
-      await onCommentSubmit({
-        ...data,
-        contentId: parent.contentId,
-        contentType: parent.contentType
-      });
-      return Promise.resolve();
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  async function handleViewSecretAnswer() {
-    try {
-      setCommentSubmitted(true);
-      const data = await uploadComment({
-        content: 'viewed the secret message',
-        parent,
-        subjectId:
-          parent.contentType === 'subject' ? parent.contentId : subject.id,
-        isNotification: true
-      });
-      await onCommentSubmit({
-        ...data,
-        contentId: parent.contentId,
-        contentType: parent.contentType
-      });
-      return Promise.resolve();
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  async function handleSubmitReply({
-    content,
-    rootCommentId,
-    targetCommentId
-  }) {
-    if (banned?.posting) {
-      return;
-    }
-    setCommentSubmitted(true);
-    const data = await uploadComment({
-      content,
-      parent,
-      rootCommentId,
-      targetCommentId
-    });
-    onReplySubmit({
-      ...data,
-      contentId: parent.contentId,
-      contentType: parent.contentType
-    });
-  }
-
-  async function handleLoadMoreComments() {
-    if (!isLoadingMore) {
-      setIsLoadingMore(true);
-      const lastCommentLocation = inputAtBottom ? 0 : comments.length - 1;
-      const lastCommentId = comments[lastCommentLocation]
-        ? comments[lastCommentLocation].id
-        : 'undefined';
-      try {
-        const data = await loadComments({
-          contentId: parent.contentId,
-          contentType: parent.contentType,
-          lastCommentId,
-          limit: commentsLoadLimit
-        });
-        onLoadMoreComments({
-          ...data,
-          contentId: parent.contentId,
-          contentType: parent.contentType
-        });
-        setIsLoadingMore(false);
-      } catch (error) {
-        console.error(error.response || error);
-      }
-    }
-  }
-
-  async function handleDeleteComment(commentId) {
-    setDeleting(true);
-    await deleteContent({ id: commentId, contentType: 'comment' });
-    onDelete(commentId);
-  }
 }
 
 export default memo(Comments);

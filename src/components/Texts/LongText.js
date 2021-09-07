@@ -11,6 +11,7 @@ LongText.propTypes = {
   cleanString: PropTypes.bool,
   contentId: PropTypes.number,
   contentType: PropTypes.string,
+  isPreview: PropTypes.bool,
   maxLines: PropTypes.number,
   section: PropTypes.string,
   style: PropTypes.object,
@@ -24,6 +25,7 @@ export default function LongText({
   children: text,
   contentId,
   contentType,
+  isPreview,
   section,
   maxLines = 10,
   readMoreColor = Color.blue()
@@ -36,7 +38,9 @@ export default function LongText({
     contentType && section ? useContentState({ contentType, contentId }) : {};
   const { fullTextState = {} } = contentState;
   const fullTextRef = useRef(fullTextState[section]);
-  const [fullText, setFullText] = useState(fullTextState[section]);
+  const [fullText, setFullText] = useState(
+    isPreview ? false : fullTextState[section]
+  );
   const [isOverflown, setIsOverflown] = useState(false);
 
   useEffect(() => {
@@ -48,7 +52,7 @@ export default function LongText({
   }, []);
 
   useEffect(() => {
-    if (fullTextState[section]) {
+    if (fullTextState[section] && !isPreview) {
       fullTextRef.current = true;
       setFullText(true);
     }
