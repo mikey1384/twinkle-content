@@ -136,7 +136,7 @@ export default function Cover({ missionIds, missionObj, myAttempts }) {
                 }
               }
             `}
-            onClick={() => history.push('/missions/4')}
+            onClick={() => history.push('/missions/grammar')}
             style={{ color: myGrammarRank === 1 ? Color.gold() : '#fff' }}
           >
             Grammar Rank #{myGrammarRank}

@@ -474,7 +474,7 @@ function App({ location, history }) {
           <Route path="/subjects" component={Explore} />
           <Route path="/playlists" component={PlaylistPage} />
           <Route
-            path="/missions/:missionType/:subMissionId"
+            path="/missions/:missionType/:taskType"
             component={MissionPage}
           />
           <Route path="/missions/:missionType" component={MissionPage} />
