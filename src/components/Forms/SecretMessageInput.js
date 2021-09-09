@@ -36,13 +36,8 @@ export default function SecretMessageInput({
   const [onHover, setOnHover] = useState(false);
   const [alertModalShown, setAlertModalShown] = useState(false);
   const FileInputRef = useRef(null);
-  const {
-    authLevel,
-    fileUploadLvl,
-    profileTheme,
-    twinkleXP,
-    userId
-  } = useMyState();
+  const { authLevel, fileUploadLvl, profileTheme, twinkleXP, userId } =
+    useMyState();
   const secretAnswerExceedsCharLimit = useMemo(
     () =>
       exceedsCharLimit({
@@ -52,9 +47,10 @@ export default function SecretMessageInput({
       }),
     [secretAnswer]
   );
-  const maxSize = useMemo(() => returnMaxUploadSize(fileUploadLvl), [
-    fileUploadLvl
-  ]);
+  const maxSize = useMemo(
+    () => returnMaxUploadSize(fileUploadLvl),
+    [fileUploadLvl]
+  );
   const disabled = useMemo(
     () =>
       !userId || (authLevel === 0 && twinkleXP < FILE_UPLOAD_XP_REQUIREMENT),
@@ -166,7 +162,8 @@ export default function SecretMessageInput({
       const reader = new FileReader();
       reader.onload = (upload) => {
         const payload = upload.target.result;
-        if (fileObj.name.split('.')[1] === 'gif') {
+        const extension = fileObj.name.split('.').pop();
+        if (extension === 'gif') {
           onSetSecretAttachment({
             file: fileObj,
             fileType,
@@ -176,7 +173,9 @@ export default function SecretMessageInput({
           window.loadImage(
             payload,
             function (img) {
-              const imageUrl = img.toDataURL('image/jpeg');
+              const imageUrl = img.toDataURL(
+                `image/${extension === 'png' ? 'png' : 'jpeg'}`
+              );
               const dataUri = imageUrl.replace(/^data:image\/\w+;base64,/, '');
               const buffer = Buffer.from(dataUri, 'base64');
               const file = new File([buffer], fileObj.name);

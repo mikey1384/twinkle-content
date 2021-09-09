@@ -38,23 +38,27 @@ export default function UploadModal({
   const [caption, setCaption] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
-  const { fileType } = useMemo(() => getFileInfoFromFileName(fileObj.name), [
-    fileObj.name
-  ]);
+  const { fileType } = useMemo(
+    () => getFileInfoFromFileName(fileObj.name),
+    [fileObj.name]
+  );
 
   useEffect(() => {
     if (fileType === 'image') {
       const reader = new FileReader();
       reader.onload = (upload) => {
+        const extension = fileObj.name.split('.').pop();
         const payload = upload.target.result;
-        if (fileObj.name.split('.')[1] === 'gif') {
+        if (extension === 'gif') {
           setImageUrl(payload);
           setSelectedFile(fileObj);
         } else {
           window.loadImage(
             payload,
             function (img) {
-              const image = img.toDataURL('image/jpeg');
+              const image = img.toDataURL(
+                `image/${extension === 'png' ? 'png' : 'jpeg'}`
+              );
               setImageUrl(image);
               const dataUri = image.replace(/^data:image\/\w+;base64,/, '');
               const buffer = Buffer.from(dataUri, 'base64');

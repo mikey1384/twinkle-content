@@ -149,7 +149,8 @@ function InputForm({
         const reader = new FileReader();
         reader.onload = (upload) => {
           const payload = upload.target.result;
-          if (fileObj.name.split('.')[1] === 'gif') {
+          const extension = fileObj.name.split('.').pop();
+          if (extension === 'gif') {
             onSetCommentAttachment({
               attachment: {
                 file: fileObj,
@@ -164,7 +165,9 @@ function InputForm({
             window.loadImage(
               payload,
               function (img) {
-                const imageUrl = img.toDataURL('image/jpeg');
+                const imageUrl = img.toDataURL(
+                  `image/${extension === 'png' ? 'png' : 'jpeg'}`
+                );
                 const dataUri = imageUrl.replace(
                   /^data:image\/\w+;base64,/,
                   ''

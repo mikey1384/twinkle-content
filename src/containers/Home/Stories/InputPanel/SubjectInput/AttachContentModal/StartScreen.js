@@ -161,9 +161,10 @@ export default function StartScreen({ navigateTo, onHide }) {
     const { fileType } = getFileInfoFromFileName(fileObj.name);
     if (fileType === 'image') {
       const reader = new FileReader();
+      const extension = fileObj.name.split('.').pop();
       reader.onload = (upload) => {
         const payload = upload.target.result;
-        if (fileObj.name.split('.')[1] === 'gif') {
+        if (extension === 'gif') {
           onSetSubjectAttachment({
             file: fileObj,
             contentType: 'file',
@@ -175,7 +176,9 @@ export default function StartScreen({ navigateTo, onHide }) {
           window.loadImage(
             payload,
             function (img) {
-              const imageUrl = img.toDataURL('image/jpeg');
+              const imageUrl = img.toDataURL(
+                `image/${extension === 'png' ? 'png' : 'jpeg'}`
+              );
               const dataUri = imageUrl.replace(/^data:image\/\w+;base64,/, '');
               const buffer = Buffer.from(dataUri, 'base64');
               const file = new File([buffer], fileObj.name);

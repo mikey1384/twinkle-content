@@ -147,7 +147,8 @@ export default function FileField({
       const reader = new FileReader();
       reader.onload = (upload) => {
         const payload = upload.target.result;
-        if (fileObj.name.split('.')[1] === 'gif') {
+        const extension = fileObj.name.split('.').pop();
+        if (extension === 'gif') {
           onSetAttachmentState({
             newAttachment: {
               fileType,
@@ -159,7 +160,9 @@ export default function FileField({
           window.loadImage(
             payload,
             function (img) {
-              const imageUri = img.toDataURL('image/jpeg');
+              const imageUri = img.toDataURL(
+                `image/${extension === 'png' ? 'png' : 'jpeg'}`
+              );
               const dataUri = imageUri.replace(/^data:image\/\w+;base64,/, '');
               const buffer = Buffer.from(dataUri, 'base64');
               const file = new File([buffer], fileObj.name);
