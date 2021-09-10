@@ -78,10 +78,10 @@ export default function LongText({
       return limitBrs(text);
     }
     let finalText = processedStringWithURL(text);
-    if (!fullText) {
-      const splitText = finalText.split('</');
+    if (!fullText && finalText) {
+      const splitText = finalText?.split('</');
       if (splitText[splitText.length - 1] === 'a>') {
-        let finalTextArray = finalText.split('<a');
+        let finalTextArray = finalText?.split('<a');
         finalTextArray = finalTextArray.filter(
           (word, index) => index !== finalTextArray.length - 1
         );
