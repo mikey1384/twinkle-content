@@ -78,7 +78,7 @@ export default function LongText({
       return limitBrs(text);
     }
     let finalText = processedStringWithURL(text);
-    if (!fullText && finalText) {
+    if (!fullText && finalText && isOverflown) {
       const splitText = finalText?.split('</');
       if (splitText[splitText.length - 1] === 'a>') {
         let finalTextArray = finalText?.split('<a');
@@ -89,7 +89,7 @@ export default function LongText({
       }
     }
     return limitBrs(finalText);
-  }, [cleanString, fullText, text]);
+  }, [cleanString, fullText, text, isOverflown]);
 
   return (
     <div style={style} className={className}>
