@@ -24,10 +24,10 @@ TextEditSection.propTypes = {
   onTitleChange: PropTypes.func.isRequired,
   onTitleKeyUp: PropTypes.func.isRequired,
   onUrlChange: PropTypes.func.isRequired,
-  urlExceedsCharLimit: PropTypes.object.isRequired,
-  descriptionExceedsCharLimit: PropTypes.object.isRequired,
-  secretAnswerExceedsCharLimit: PropTypes.object.isRequired,
-  titleExceedsCharLimit: PropTypes.object.isRequired
+  urlExceedsCharLimit: PropTypes.object,
+  descriptionExceedsCharLimit: PropTypes.object,
+  secretAnswerExceedsCharLimit: PropTypes.object,
+  titleExceedsCharLimit: PropTypes.object
 };
 
 export default function TextEditSection({

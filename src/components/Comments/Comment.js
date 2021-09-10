@@ -48,7 +48,7 @@ Comment.propTypes = {
   comment: PropTypes.shape({
     commentId: PropTypes.number,
     content: PropTypes.string.isRequired,
-    isDeleted: PropTypes.bool,
+    isDeleted: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
     id: PropTypes.number.isRequired,
     likes: PropTypes.array,
     numReplies: PropTypes.number,

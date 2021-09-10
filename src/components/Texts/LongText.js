@@ -73,10 +73,23 @@ export default function LongText({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const innerHTML = useMemo(
-    () => limitBrs(cleanString ? text : processedStringWithURL(text)),
-    [cleanString, text]
-  );
+  const innerHTML = useMemo(() => {
+    if (cleanString) {
+      return limitBrs(text);
+    }
+    let finalText = processedStringWithURL(text);
+    if (!fullText) {
+      const splitText = finalText.split('</');
+      if (splitText[splitText.length - 1] === 'a>') {
+        let finalTextArray = finalText.split('<a');
+        finalTextArray = finalTextArray.filter(
+          (word, index) => index !== finalTextArray.length - 1
+        );
+        finalText = finalTextArray.join('<a') + 'Read More';
+      }
+    }
+    return limitBrs(finalText);
+  }, [cleanString, fullText, text]);
 
   return (
     <div style={style} className={className}>

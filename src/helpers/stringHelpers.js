@@ -267,7 +267,7 @@ export function exceedsCharLimit({ inputType, contentType, text }) {
         },
         message: `${targetText.length}/${limit} Characters`
       }
-    : undefined;
+    : null;
 }
 
 export function fetchURLFromText(text) {
