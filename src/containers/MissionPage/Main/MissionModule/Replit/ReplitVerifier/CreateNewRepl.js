@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import StepSlide from '../../components/StepSlide';
 import { css } from '@emotion/css';
+import { Color } from 'constants/css';
 
 CreateNewRepl.propTypes = {
   index: PropTypes.number,
@@ -14,7 +15,17 @@ export default function CreateNewRepl({ index, innerRef, okayPressed }) {
     <StepSlide
       innerRef={innerRef}
       index={index}
-      title={<>Create a Next.js Repl</>}
+      title={
+        <>
+          Create a <span style={{ color: Color.orange() }}>Next.js Repl</span>{' '}
+          after reading the{' '}
+          <span style={{ color: Color.orange() }}>tutorial</span>
+          <p style={{ color: Color.cranberry() }}>
+            Make sure you read the tutorial for this step. Otherwise, you will
+            get stuck later
+          </p>
+        </>
+      }
     >
       {okayPressed && (
         <h1
@@ -23,7 +34,8 @@ export default function CreateNewRepl({ index, innerRef, okayPressed }) {
             margin-bottom: 3.5rem;
           `}
         >
-          Did you create a Next.js Repl?
+          Did you create a{' '}
+          <span style={{ color: Color.orange() }}>Next.js</span> Repl?
         </h1>
       )}
     </StepSlide>
