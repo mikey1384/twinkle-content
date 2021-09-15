@@ -70,6 +70,7 @@ export default function ChannelHeader({
   const favorited = useMemo(() => {
     return allFavoriteChannelIds[selectedChannelId];
   }, [allFavoriteChannelIds, selectedChannelId]);
+  const reloadingChatSubject = useRef(false);
   const menuLabel = deviceIsMobile ? '' : 'Menu';
 
   const {
@@ -385,21 +386,25 @@ export default function ChannelHeader({
   }
 
   async function handleReloadChatSubject(subjectId) {
-    const { message, subject } = await reloadChatSubject({
-      channelId: selectedChannelId,
-      subjectId
-    });
-    onReloadChatSubject({ channelId: selectedChannelId, message, subject });
-    socket.emit('new_subject', {
-      subject,
-      message,
-      channelName: currentChannel.channelName,
-      channelId: selectedChannelId
-    });
-    setOnEdit(false);
-    onClearSubjectSearchResults();
-    if (!deviceIsMobile) {
-      onInputFocus();
+    if (!reloadingChatSubject.current) {
+      reloadingChatSubject.current = true;
+      const { message, subject } = await reloadChatSubject({
+        channelId: selectedChannelId,
+        subjectId
+      });
+      onReloadChatSubject({ channelId: selectedChannelId, message, subject });
+      socket.emit('new_subject', {
+        subject,
+        message,
+        channelName: currentChannel.channelName,
+        channelId: selectedChannelId
+      });
+      setOnEdit(false);
+      onClearSubjectSearchResults();
+      if (!deviceIsMobile) {
+        onInputFocus();
+      }
+      reloadingChatSubject.current = false;
     }
   }
 

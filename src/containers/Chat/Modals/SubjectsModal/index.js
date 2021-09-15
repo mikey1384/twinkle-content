@@ -13,7 +13,7 @@ SubjectsModal.propTypes = {
   channelId: PropTypes.number.isRequired,
   currentSubjectId: PropTypes.number,
   onHide: PropTypes.func,
-  selectSubject: PropTypes.func,
+  onSelectSubject: PropTypes.func,
   userIsOwner: PropTypes.bool
 };
 
@@ -21,7 +21,7 @@ export default function SubjectsModal({
   channelId,
   currentSubjectId,
   onHide,
-  selectSubject,
+  onSelectSubject,
   userIsOwner
 }) {
   const {
@@ -88,7 +88,7 @@ export default function SubjectsModal({
                 key={subject.id}
                 currentSubjectId={currentSubjectId}
                 onDeleteSubject={() => setDeleteTarget(subject.id)}
-                onSelectSubject={() => selectSubject(subject.id)}
+                onSelectSubject={() => onSelectSubject(subject.id)}
                 {...subject}
               />
             ))}
@@ -127,7 +127,7 @@ export default function SubjectsModal({
             key={subject.id}
             currentSubjectId={currentSubjectId}
             onDeleteSubject={() => setDeleteTarget(subject.id)}
-            onSelectSubject={() => selectSubject(subject.id)}
+            onSelectSubject={() => onSelectSubject(subject.id)}
             userIsOwner={userIsOwner}
             {...subject}
           />

@@ -87,7 +87,7 @@ export default function EditSubjectForm({
           currentSubjectId={currentSubjectId}
           onHide={() => setSubjectsModalShown(false)}
           userIsOwner={userIsOwner}
-          selectSubject={(subjectId) => {
+          onSelectSubject={(subjectId) => {
             onReloadChatSubject(subjectId);
             setSubjectsModalShown(false);
           }}

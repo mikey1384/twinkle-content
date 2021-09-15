@@ -33,6 +33,7 @@ export default function SubjectItem({
   userIsOwner
 }) {
   const [marginBottom, setMarginBottom] = useState(`${marginHeight}rem`);
+  const [selectButtonDisabled, setSelectButtonDisabled] = useState(false);
   const SubjectTitleRef = useRef(null);
   const { authLevel, canDelete } = useMyState();
 
@@ -58,11 +59,17 @@ export default function SubjectItem({
       result.push({
         color: 'green',
         opacity: 0.5,
-        onClick: onSelectSubject,
+        onClick: handleSelectSubject,
+        disabled: selectButtonDisabled,
         label: 'Select'
       });
     }
     return result;
+
+    function handleSelectSubject() {
+      setSelectButtonDisabled(true);
+      onSelectSubject();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authLevel, canDelete, currentSubjectId, id]);
 
