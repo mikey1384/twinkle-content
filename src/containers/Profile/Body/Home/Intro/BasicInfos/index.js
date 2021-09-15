@@ -92,11 +92,11 @@ export default function BasicInfos({
     };
   }, []);
 
+  const displayedTime = useMemo(() => unix(joinDate).format('LL'), [joinDate]);
+
   return (
     <div className={className} style={style}>
-      <div style={{ marginBottom: '0.5rem' }}>
-        Member since {unix(joinDate).format('LL')}
-      </div>
+      <div style={{ marginBottom: '0.5rem' }}>Member since {displayedTime}</div>
       {userInfoOnEdit && userId === myId && (
         <InfoEditForm
           email={email}

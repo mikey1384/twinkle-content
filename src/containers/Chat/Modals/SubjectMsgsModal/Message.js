@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ProfilePic from 'components/ProfilePic';
 import UsernameText from 'components/Texts/UsernameText';
@@ -36,6 +36,10 @@ export default function Message({
   timeStamp,
   isReloadedSubject
 }) {
+  const displayedTime = useMemo(
+    () => unix(timeStamp).format('LLL'),
+    [timeStamp]
+  );
   return (
     <div className={MessageStyle.container}>
       <ProfilePic
@@ -75,9 +79,7 @@ export default function Message({
               username: username
             }}
           />{' '}
-          <span className={MessageStyle.timeStamp}>
-            {unix(timeStamp).format('LLL')}
-          </span>
+          <span className={MessageStyle.timeStamp}>{displayedTime}</span>
         </div>
         {filePath && (
           <ContentFileViewer

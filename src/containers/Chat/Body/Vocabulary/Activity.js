@@ -68,6 +68,11 @@ export default function Activity({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const displayedTime = useMemo(
+    () => unix(timeStamp).format('LLL'),
+    [timeStamp]
+  );
+
   const wordLevel = useMemo(
     () =>
       returnWordLevel({
@@ -122,9 +127,7 @@ export default function Activity({
               username: username
             }}
           />{' '}
-          <span className={MessageStyle.timeStamp}>
-            {unix(timeStamp).format('LLL')}
-          </span>
+          <span className={MessageStyle.timeStamp}>{displayedTime}</span>
         </div>
         <div>
           collected {wordLevel === 1 ? 'a' : 'an'}{' '}

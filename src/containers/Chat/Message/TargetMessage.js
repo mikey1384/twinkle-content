@@ -73,6 +73,11 @@ export default function TargetMessage({ message, onSetScrollToBottom }) {
     );
   }, [fileType, message.attachmentHidden, message.content, message.thumbUrl]);
 
+  const displayedTime = useMemo(
+    () => unix(message?.timeStamp).format('LLL'),
+    [message?.timeStamp]
+  );
+
   return (
     <div
       style={{
@@ -104,7 +109,7 @@ export default function TargetMessage({ message, onSetScrollToBottom }) {
               color: Color.darkGray()
             }}
           >
-            {unix(message.timeStamp).format('LLL')}
+            {displayedTime}
           </small>
         </section>
         {isValidSpoiler(message.content) ? (

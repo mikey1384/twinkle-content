@@ -42,6 +42,11 @@ export default function SubjectItem({
     setMarginBottom(`${numLines * marginHeight}rem`);
   }, []);
 
+  const displayedTime = useMemo(
+    () => unix(timeStamp).format('LLL'),
+    [timeStamp]
+  );
+
   const buttons = useMemo(() => {
     const result = [];
     if (
@@ -114,7 +119,7 @@ export default function SubjectItem({
                 username: username
               }}
             />{' '}
-            <small>{unix(timeStamp).format('LLL')}</small>
+            <small>{displayedTime}</small>
           </div>
         </div>
       </div>
