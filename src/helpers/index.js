@@ -15,7 +15,7 @@ export function determineUserCanRewardThis({
   let studentsCanReward = false;
   if (authLevel <= 1) {
     for (let recommendation of recommendations) {
-      if (recommendation.authLevel > 1) {
+      if (recommendation.authLevel > 1 && !recommendation.rewardDisabled) {
         studentsCanReward = true;
         break;
       }

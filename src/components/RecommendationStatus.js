@@ -24,23 +24,53 @@ export default function RecommendationStatus({
     return result;
   }, [recommendations]);
 
-  const me = recommendationsByUsertype.filter(
-    (recommendation) => recommendation.userId === userId
-  )[0];
-
-  const recommendationsByUsertypeExceptMe = recommendationsByUsertype.filter(
-    (recommendation) => recommendation.userId !== userId
+  const myRecommendation = useMemo(
+    () =>
+      recommendationsByUsertype.filter(
+        (recommendation) => recommendation.userId === userId
+      )[0],
+    [recommendationsByUsertype, userId]
   );
 
-  const mostRecentRecommenderOtherThanMe = recommendationsByUsertypeExceptMe[0];
-  const isRecommendedByTeacher =
-    me?.authLevel > 1 || mostRecentRecommenderOtherThanMe?.authLevel > 1;
+  const recommendationsByUsertypeExceptMe = useMemo(
+    () =>
+      recommendationsByUsertype.filter(
+        (recommendation) => recommendation.userId !== userId
+      ),
+    [recommendationsByUsertype, userId]
+  );
+
+  const mostRecentRecommenderOtherThanMe = useMemo(
+    () => recommendationsByUsertypeExceptMe?.[0],
+    [recommendationsByUsertypeExceptMe]
+  );
+
+  const mostRecentRewardEnabledRecommenderOtherThanMe = useMemo(
+    () =>
+      recommendationsByUsertypeExceptMe.filter(
+        (recommendation) => !recommendation.rewardDisabled
+      )?.[0],
+    [recommendationsByUsertypeExceptMe]
+  );
+
+  const isRewardable = useMemo(
+    () =>
+      (myRecommendation?.authLevel > 1 && !myRecommendation?.rewardDisabled) ||
+      (mostRecentRewardEnabledRecommenderOtherThanMe?.authLevel > 1 &&
+        !mostRecentRewardEnabledRecommenderOtherThanMe?.rewardDisabled),
+    [
+      mostRecentRewardEnabledRecommenderOtherThanMe?.authLevel,
+      mostRecentRewardEnabledRecommenderOtherThanMe?.rewardDisabled,
+      myRecommendation?.authLevel,
+      myRecommendation?.rewardDisabled
+    ]
+  );
 
   return recommendations.length > 0 ? (
     <div
       style={{
         padding: '0.5rem',
-        background: isRecommendedByTeacher && Color[profileTheme](0.1),
+        background: isRewardable && Color[profileTheme](0.1),
         borderTop: `1px solid ${Color.borderGray()}`,
         borderBottom: `1px solid ${Color.borderGray()}`,
         marginBottom: '1rem',
@@ -53,10 +83,10 @@ export default function RecommendationStatus({
     >
       <div>
         Recommended by{' '}
-        {me && (
+        {myRecommendation && (
           <b
             style={{
-              color: isRecommendedByTeacher ? '#000' : Color.black()
+              color: isRewardable ? '#000' : Color.black()
             }}
           >
             you
@@ -64,10 +94,10 @@ export default function RecommendationStatus({
         )}
         {mostRecentRecommenderOtherThanMe && (
           <>
-            {me &&
+            {myRecommendation &&
               (recommendationsByUsertypeExceptMe.length > 1 ? ', ' : ' and ')}
             <UsernameText
-              color={isRecommendedByTeacher ? '#000' : Color.black()}
+              color={isRewardable ? '#000' : Color.black()}
               user={{
                 username: mostRecentRecommenderOtherThanMe.username,
                 id: mostRecentRecommenderOtherThanMe.userId
@@ -80,7 +110,7 @@ export default function RecommendationStatus({
             {' '}
             and{' '}
             <UsernameText
-              color={isRecommendedByTeacher ? '#000' : Color.black()}
+              color={isRewardable ? '#000' : Color.black()}
               user={{
                 username: recommendationsByUsertypeExceptMe[1].username,
                 id: recommendationsByUsertypeExceptMe[1].userId

@@ -4,10 +4,12 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import Loading from 'components/Loading';
-import { Color } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
 import { priceTable } from 'constants/defaultValues';
 import { useAppContext, useContentContext } from 'contexts';
+import { css } from '@emotion/css';
+import SwitchButton from './Buttons/SwitchButton';
 
 RecommendationInterface.propTypes = {
   contentId: PropTypes.number.isRequired,
@@ -26,8 +28,9 @@ export default function RecommendationInterface({
   style,
   uploaderId
 }) {
-  const { userId, twinkleCoins } = useMyState();
+  const { userId, twinkleCoins, authLevel } = useMyState();
   const [recommending, setRecommending] = useState(false);
+  const [rewardDisabled, setRewardDisabled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const mounted = useRef(true);
 
@@ -104,20 +107,51 @@ export default function RecommendationInterface({
           justifyContent: 'space-between'
         }}
       >
-        <div style={{ fontWeight: 'bold', opacity: recommending ? 0 : 1 }}>
-          <span style={{ marginRight: '0.7rem' }}>
-            {isRecommendedByUser ? (
-              <>
-                <span style={{ color: Color.rose(), fontWeight: 'bold' }}>
-                  Cancel
-                </span>{' '}
-                your recommendation?
-              </>
-            ) : (
-              `Recommend?`
+        <div
+          className={css`
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: 1.5rem;
+            }
+          `}
+          style={{
+            fontWeight: 'bold',
+            opacity: recommending ? 0 : 1,
+            display: 'flex',
+            alignItems: 'center'
+          }}
+        >
+          <div>
+            <span style={{ marginRight: '0.7rem' }}>
+              {isRecommendedByUser ? (
+                <>
+                  <span style={{ color: Color.rose(), fontWeight: 'bold' }}>
+                    Cancel
+                  </span>{' '}
+                  your recommendation?
+                </>
+              ) : (
+                `Recommend?`
+              )}
+              {priceText}
+            </span>
+          </div>
+          <div
+            className={css`
+              margin-left: 3rem;
+              @media (max-width: ${mobileMaxWidth}) {
+                margin-left: 0.5rem;
+              }
+            `}
+          >
+            {!isRecommendedByUser && authLevel > 1 && (
+              <SwitchButton
+                checked={!rewardDisabled}
+                label="Rewardable"
+                onChange={() => setRewardDisabled((disabled) => !disabled)}
+                labelStyle={{ fontSize: '1.3rem' }}
+              />
             )}
-            {priceText}
-          </span>
+          </div>
         </div>
         {!recommending && (
           <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -154,7 +188,8 @@ export default function RecommendationInterface({
         contentId,
         contentType,
         uploaderId,
-        currentRecommendations
+        currentRecommendations,
+        rewardDisabled
       });
       if (mounted.current) {
         setHidden(true);

@@ -570,6 +570,7 @@ export default function contentRequestHelpers({ auth, handleError }) {
       contentId,
       contentType,
       currentRecommendations,
+      rewardDisabled,
       uploaderId
     }) {
       try {
@@ -577,7 +578,13 @@ export default function contentRequestHelpers({ auth, handleError }) {
           data: { coins, recommendations }
         } = await request.post(
           `${URL}/content/recommend`,
-          { contentId, contentType, currentRecommendations, uploaderId },
+          {
+            contentId,
+            contentType,
+            currentRecommendations,
+            uploaderId,
+            rewardDisabled
+          },
           auth()
         );
         return Promise.resolve({ coins, recommendations });
