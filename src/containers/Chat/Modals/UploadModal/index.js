@@ -1,4 +1,11 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, {
+  memo,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
@@ -15,17 +22,21 @@ import { useChatContext } from 'contexts';
 import LocalContext from '../../Context';
 
 UploadModal.propTypes = {
+  initialCaption: PropTypes.string,
   channelId: PropTypes.number,
   fileObj: PropTypes.object,
   onHide: PropTypes.func.isRequired,
+  onUpload: PropTypes.func.isRequired,
   recepientId: PropTypes.number,
   subjectId: PropTypes.number
 };
 
-export default function UploadModal({
+function UploadModal({
+  initialCaption = '',
   channelId,
   fileObj,
   onHide,
+  onUpload,
   recepientId,
   subjectId
 }) {
@@ -35,7 +46,7 @@ export default function UploadModal({
     state: { isRespondingToSubject, replyTarget },
     actions: { onSubmitMessage }
   } = useChatContext();
-  const [caption, setCaption] = useState('');
+  const [caption, setCaption] = useState(initialCaption);
   const [imageUrl, setImageUrl] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const { fileType } = useMemo(
@@ -87,6 +98,50 @@ export default function UploadModal({
     [caption]
   );
 
+  const handleSubmit = useCallback(() => {
+    if (selectedFile) {
+      const filePath = uuidv1();
+      onFileUpload({
+        channelId,
+        content: finalizeEmoji(caption),
+        filePath,
+        fileToUpload: selectedFile,
+        userId,
+        recepientId,
+        targetMessageId: replyTarget?.id,
+        subjectId: isRespondingToSubject ? subjectId : null
+      });
+      onSubmitMessage({
+        message: {
+          content: finalizeEmoji(caption),
+          channelId,
+          fileToUpload: selectedFile,
+          filePath,
+          fileName: selectedFile.name,
+          profilePicUrl,
+          userId,
+          username
+        },
+        isRespondingToSubject,
+        replyTarget
+      });
+      onUpload();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    caption,
+    channelId,
+    isRespondingToSubject,
+    onUpload,
+    profilePicUrl,
+    recepientId,
+    replyTarget,
+    selectedFile,
+    subjectId,
+    userId,
+    username
+  ]);
+
   return (
     <Modal onHide={onHide}>
       <header>Upload a file</header>
@@ -118,35 +173,6 @@ export default function UploadModal({
       </footer>
     </Modal>
   );
-
-  function handleSubmit() {
-    if (selectedFile) {
-      const filePath = uuidv1();
-      onFileUpload({
-        channelId,
-        content: finalizeEmoji(caption),
-        filePath,
-        fileToUpload: selectedFile,
-        userId,
-        recepientId,
-        targetMessageId: replyTarget?.id,
-        subjectId: isRespondingToSubject ? subjectId : null
-      });
-      onSubmitMessage({
-        message: {
-          content: finalizeEmoji(caption),
-          channelId,
-          fileToUpload: selectedFile,
-          filePath,
-          fileName: selectedFile.name,
-          profilePicUrl,
-          userId,
-          username
-        },
-        isRespondingToSubject,
-        replyTarget
-      });
-      onHide();
-    }
-  }
 }
+
+export default memo(UploadModal);

@@ -17,9 +17,7 @@ import Message from '../../Message';
 import ChannelHeader from './ChannelHeader';
 import FullTextReveal from 'components/Texts/FullTextReveal';
 import SubjectMsgsModal from '../../Modals/SubjectMsgsModal';
-import UploadModal from '../../Modals/UploadModal';
 import InviteUsersModal from '../../Modals/InviteUsers';
-import AlertModal from 'components/Modals/AlertModal';
 import ChessModal from '../../Modals/ChessModal';
 import SelectVideoModal from '../../Modals/SelectVideoModal';
 import SelectNewOwnerModal from '../../Modals/SelectNewOwnerModal';
@@ -28,12 +26,7 @@ import CallScreen from './CallScreen';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Icon from 'components/Icon';
 import { v1 as uuidv1 } from 'uuid';
-import {
-  GENERAL_CHAT_ID,
-  rewardReasons,
-  mb,
-  returnMaxUploadSize
-} from 'constants/defaultValues';
+import { GENERAL_CHAT_ID, rewardReasons } from 'constants/defaultValues';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 import { css } from '@emotion/css';
 import { Color } from 'constants/css';
@@ -112,16 +105,12 @@ function MessagesContainer({
       onUpdateLastMessages
     }
   } = useChatContext();
-  const { fileUploadLvl, banned, profilePicUrl, userId, username } =
-    useMyState();
+  const { banned, profilePicUrl, userId, username } = useMyState();
   const [chessCountdownObj, setChessCountdownObj] = useState({});
   const [textAreaHeight, setTextAreaHeight] = useState(0);
-  const [fileObj, setFileObj] = useState(null);
   const [inviteUsersModalShown, setInviteUsersModalShown] = useState(false);
   const [loadMoreButtonLock, setLoadMoreButtonLock] = useState(false);
   const [newUnseenMessage, setNewUnseenMessage] = useState(false);
-  const [uploadModalShown, setUploadModalShown] = useState(false);
-  const [alertModalShown, setAlertModalShown] = useState(false);
   const [selectVideoModalShown, setSelectVideoModalShown] = useState(false);
   const [leaving, setLeaving] = useState(false);
   const [deleteModal, setDeleteModal] = useState({
@@ -148,7 +137,6 @@ function MessagesContainer({
   const MessagesRef = useRef(null);
   const mounted = useRef(true);
   const MessagesContainerRef = useRef({});
-  const FileInputRef = useRef(null);
   const ChatInputRef = useRef(null);
   const favoritingRef = useRef(false);
   const timerRef = useRef(null);
@@ -205,11 +193,6 @@ function MessagesContainer({
   const loading = useMemo(
     () => channelLoading || creatingNewDMChannel || reconnecting,
     [channelLoading, creatingNewDMChannel, reconnecting]
-  );
-
-  const maxSize = useMemo(
-    () => returnMaxUploadSize(fileUploadLvl),
-    [fileUploadLvl]
   );
 
   const menuProps = useMemo(() => {
@@ -380,30 +363,6 @@ function MessagesContainer({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [banned?.chess, chessCountdownObj, currentChannel?.id]);
-
-  const handleImagePaste = useCallback(
-    (file) => {
-      if (file.size / mb > maxSize) {
-        return setAlertModalShown(true);
-      }
-      setFileObj(file);
-      setUploadModalShown(true);
-    },
-    [maxSize]
-  );
-
-  const handleUpload = useCallback(
-    (event) => {
-      const file = event.target.files[0];
-      if (file.size / mb > maxSize) {
-        return setAlertModalShown(true);
-      }
-      setFileObj(file);
-      setUploadModalShown(true);
-      event.target.value = null;
-    },
-    [maxSize]
-  );
 
   const handleHideChat = useCallback(async () => {
     await hideChat(selectedChannelId);
@@ -870,12 +829,6 @@ function MessagesContainer({
           </div>
         </div>
       )}
-      <input
-        ref={FileInputRef}
-        style={{ display: 'none' }}
-        type="file"
-        onChange={handleUpload}
-      />
       {selectedChannelIsOnCall && (
         <CallScreen style={{ height: CALL_SCREEN_HEIGHT }} />
       )}
@@ -1061,7 +1014,6 @@ function MessagesContainer({
           isTwoPeopleChannel={currentChannel.twoPeople}
           currentChannelId={selectedChannelId}
           currentChannel={currentChannel}
-          onImagePaste={handleImagePaste}
           onChessButtonClick={handleChessModalShown}
           onMessageSubmit={(content) =>
             handleMessageSubmit({ content, target: replyTarget })
@@ -1071,19 +1023,11 @@ function MessagesContainer({
               setTextAreaHeight(height > 46 ? height : 0);
             }
           }}
-          onUploadButtonClick={() => FileInputRef.current.click()}
           onSelectVideoButtonClick={() => setSelectVideoModalShown(true)}
+          recepientId={recepientId}
+          subjectId={subjectId}
         />
       </div>
-      {alertModalShown && (
-        <AlertModal
-          title="File is too large"
-          content={`The file size is larger than your limit of ${
-            maxSize / mb
-          } MB`}
-          onHide={() => setAlertModalShown(false)}
-        />
-      )}
       {chessModalShown && (
         <ChessModal
           currentChannel={currentChannel}
@@ -1097,15 +1041,6 @@ function MessagesContainer({
           opponentId={chessOpponent?.id}
           opponentName={chessOpponent?.username}
           socketConnected={socketConnected}
-        />
-      )}
-      {uploadModalShown && (
-        <UploadModal
-          recepientId={recepientId}
-          subjectId={subjectId}
-          channelId={selectedChannelId}
-          fileObj={fileObj}
-          onHide={() => setUploadModalShown(false)}
         />
       )}
       {inviteUsersModalShown && (

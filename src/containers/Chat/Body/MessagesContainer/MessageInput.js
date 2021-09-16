@@ -10,6 +10,12 @@ import PropTypes from 'prop-types';
 import Textarea from 'components/Texts/Textarea';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
+import TargetMessagePreview from './TargetMessagePreview';
+import TargetSubjectPreview from './TargetSubjectPreview';
+import UploadModal from '../../Modals/UploadModal';
+import AddButtons from './AddButtons';
+import AlertModal from 'components/Modals/AlertModal';
+import Loading from 'components/Loading';
 import { isMobile } from 'helpers';
 import {
   stringIsEmpty,
@@ -18,11 +24,8 @@ import {
   exceedsCharLimit
 } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
+import { mb, returnMaxUploadSize } from 'constants/defaultValues';
 import { useChatContext, useInputContext } from 'contexts';
-import TargetMessagePreview from './TargetMessagePreview';
-import TargetSubjectPreview from './TargetSubjectPreview';
-import AddButtons from './AddButtons';
-import Loading from 'components/Loading';
 
 MessageInput.propTypes = {
   currentChannelId: PropTypes.number,
@@ -31,11 +34,11 @@ MessageInput.propTypes = {
   loading: PropTypes.bool,
   onChessButtonClick: PropTypes.func.isRequired,
   onHeightChange: PropTypes.func.isRequired,
-  onImagePaste: PropTypes.func.isRequired,
   onMessageSubmit: PropTypes.func.isRequired,
   onSelectVideoButtonClick: PropTypes.func.isRequired,
-  onUploadButtonClick: PropTypes.func.isRequired,
-  socketConnected: PropTypes.bool
+  recepientId: PropTypes.number,
+  socketConnected: PropTypes.bool,
+  subjectId: PropTypes.number
 };
 
 const deviceIsMobile = isMobile(navigator);
@@ -46,14 +49,15 @@ function MessageInput({
   isTwoPeopleChannel,
   loading,
   onChessButtonClick,
-  onImagePaste,
   onHeightChange,
   onMessageSubmit,
   onSelectVideoButtonClick,
-  onUploadButtonClick,
-  socketConnected
+  recepientId,
+  socketConnected,
+  subjectId
 }) {
-  const { banned, profileTheme } = useMyState();
+  const FileInputRef = useRef(null);
+  const { banned, profileTheme, fileUploadLvl } = useMyState();
   const {
     state: { isRespondingToSubject, replyTarget },
     actions: { onSetIsRespondingToSubject, onSetReplyTarget }
@@ -67,9 +71,16 @@ function MessageInput({
     () => state['chat' + currentChannelId]?.text || '',
     [currentChannelId, state]
   );
+  const maxSize = useMemo(
+    () => returnMaxUploadSize(fileUploadLvl),
+    [fileUploadLvl]
+  );
   const textRef = useRef(textForThisChannel);
   const inputCoolingDown = useRef(false);
   const timerRef = useRef(null);
+  const [alertModalShown, setAlertModalShown] = useState(false);
+  const [fileObj, setFileObj] = useState(null);
+  const [uploadModalShown, setUploadModalShown] = useState(false);
   const [coolingDown, setCoolingDown] = useState(false);
   const [text, setText] = useState(textForThisChannel);
   const textIsEmpty = useMemo(() => stringIsEmpty(text), [text]);
@@ -195,6 +206,30 @@ function MessageInput({
     [handleSendMsg, innerRef, loading, messageExceedsCharLimit, onHeightChange]
   );
 
+  const handleImagePaste = useCallback(
+    (file) => {
+      if (file.size / mb > maxSize) {
+        return setAlertModalShown(true);
+      }
+      setFileObj(file);
+      setUploadModalShown(true);
+    },
+    [maxSize]
+  );
+
+  const handleUpload = useCallback(
+    (event) => {
+      const file = event.target.files[0];
+      if (file.size / mb > maxSize) {
+        return setAlertModalShown(true);
+      }
+      setFileObj(file);
+      setUploadModalShown(true);
+      event.target.value = null;
+    },
+    [maxSize]
+  );
+
   const handleChange = useCallback(
     (event) => {
       setTimeout(() => {
@@ -210,10 +245,10 @@ function MessageInput({
       const { items } = event.clipboardData;
       for (let i = 0; i < items.length; i++) {
         if (!items[i].type.includes('image')) continue;
-        onImagePaste(items[i].getAsFile());
+        handleImagePaste(items[i].getAsFile());
       }
     },
-    [onImagePaste]
+    [handleImagePaste]
   );
 
   return (
@@ -288,7 +323,7 @@ function MessageInput({
         )}
         <AddButtons
           disabled={loading || !!banned?.chat || !socketConnected}
-          onUploadButtonClick={onUploadButtonClick}
+          onUploadButtonClick={() => FileInputRef.current.click()}
           onSelectVideoButtonClick={onSelectVideoButtonClick}
         />
         {!socketConnected && (
@@ -302,7 +337,36 @@ function MessageInput({
             }}
           />
         )}
+        <input
+          ref={FileInputRef}
+          style={{ display: 'none' }}
+          type="file"
+          onChange={handleUpload}
+        />
       </div>
+      {alertModalShown && (
+        <AlertModal
+          title="File is too large"
+          content={`The file size is larger than your limit of ${
+            maxSize / mb
+          } MB`}
+          onHide={() => setAlertModalShown(false)}
+        />
+      )}
+      {uploadModalShown && (
+        <UploadModal
+          initialCaption={text}
+          recepientId={recepientId}
+          subjectId={subjectId}
+          channelId={currentChannelId}
+          fileObj={fileObj}
+          onUpload={() => {
+            setText('');
+            setUploadModalShown(false);
+          }}
+          onHide={() => setUploadModalShown(false)}
+        />
+      )}
     </div>
   );
 }
