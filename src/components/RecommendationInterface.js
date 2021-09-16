@@ -114,9 +114,7 @@ export default function RecommendationInterface({
                 your recommendation?
               </>
             ) : (
-              `Recommend this ${
-                contentType === 'pass' ? 'accomplishment' : contentType
-              }?`
+              `Recommend?`
             )}
             {priceText}
           </span>

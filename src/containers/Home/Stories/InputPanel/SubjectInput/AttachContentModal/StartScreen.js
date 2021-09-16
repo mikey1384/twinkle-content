@@ -13,7 +13,7 @@ import {
 } from 'helpers/stringHelpers';
 import { useInputContext } from 'contexts';
 import {
-  FILE_UPLOAD_XP_REQUIREMENT,
+  FILE_UPLOAD_XP_REQUIREMENT_FOR_SUBJECT,
   mb,
   returnMaxUploadSize
 } from 'constants/defaultValues';
@@ -38,7 +38,7 @@ export default function StartScreen({ navigateTo, onHide }) {
   );
   const disabled = useMemo(() => {
     if (authLevel > 1) return false;
-    if (twinkleXP >= FILE_UPLOAD_XP_REQUIREMENT) return false;
+    if (twinkleXP >= FILE_UPLOAD_XP_REQUIREMENT_FOR_SUBJECT) return false;
     return true;
   }, [authLevel, twinkleXP]);
 
@@ -86,7 +86,7 @@ export default function StartScreen({ navigateTo, onHide }) {
                 fontWeight: 'bold'
               }}
             >{`Requires ${addCommasToNumber(
-              FILE_UPLOAD_XP_REQUIREMENT
+              FILE_UPLOAD_XP_REQUIREMENT_FOR_SUBJECT
             )} XP`}</div>
           )}
         </div>
