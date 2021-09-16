@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useMemo, useRef } from 'react';
+import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Nav from './Nav';
 import Icon from 'components/Icon';
@@ -32,6 +32,7 @@ function MainNavs({
   defaultSearchFilter,
   totalRewardAmount
 }) {
+  const [twinkleCoinsHovered, setTwinkleCoinsHovered] = useState(false);
   const { twinkleCoins, userId, banned } = useMyState();
   const {
     state: { exploreCategory, contentPath, contentNav, profileNav, homeNav },
@@ -47,6 +48,21 @@ function MainNavs({
     state: { feedsOutdated }
   } = useHomeContext();
   const loaded = useRef(false);
+  const timerRef = useRef(null);
+
+  const displayedTwinkleCoins = useMemo(() => {
+    if (twinkleCoins > 999) {
+      if (twinkleCoinsHovered) {
+        clearTimeout(timerRef.current);
+        timerRef.current = setTimeout(() => {
+          setTwinkleCoinsHovered(false);
+        }, 1500);
+        return addCommasToNumber(twinkleCoins);
+      }
+      return '999+';
+    }
+    return twinkleCoins;
+  }, [twinkleCoins, twinkleCoinsHovered]);
 
   const chatMatch = useMemo(
     () =>
@@ -347,12 +363,13 @@ function MainNavs({
             alignItems: 'center',
             paddingRight: '1rem'
           }}
+          onClick={() => setTwinkleCoinsHovered(true)}
         >
           <Icon
             style={{ marginRight: '0.5rem' }}
             icon={['far', 'badge-dollar']}
           />
-          {addCommasToNumber(twinkleCoins)}
+          {displayedTwinkleCoins}
         </div>
       )}
     </div>

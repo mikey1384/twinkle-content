@@ -15,7 +15,7 @@ SortableThumb.propTypes = {
 };
 
 export default function SortableThumb({ id, onMove, video }) {
-  const [onTitleHover, setOnTitleHover] = useState(false);
+  const [titleHovered, setTitleHovered] = useState(false);
   const Draggable = useRef(null);
   const ThumbLabelRef = useRef(null);
   const [{ isDragging }, drag] = useDrag({
@@ -80,7 +80,7 @@ export default function SortableThumb({ id, onMove, video }) {
         >
           <div
             onMouseOver={onMouseOver}
-            onMouseLeave={() => setOnTitleHover(false)}
+            onMouseLeave={() => setTitleHovered(false)}
           >
             <p
               ref={ThumbLabelRef}
@@ -95,7 +95,7 @@ export default function SortableThumb({ id, onMove, video }) {
             >
               {video.title}
             </p>
-            <FullTextReveal show={onTitleHover} text={video.title} />
+            <FullTextReveal show={titleHovered} text={video.title} />
           </div>
           <p
             style={{
@@ -115,7 +115,7 @@ export default function SortableThumb({ id, onMove, video }) {
 
   function onMouseOver() {
     if (textIsOverflown(ThumbLabelRef.current)) {
-      setOnTitleHover(true);
+      setTitleHovered(true);
     }
   }
 }
