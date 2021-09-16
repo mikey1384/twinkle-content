@@ -26,7 +26,7 @@ function ChatInfo({
   currentChannelOnlineMembers,
   channelName
 }) {
-  const { userId: myId, username, profilePicUrl } = useMyState();
+  const { userId: myId, username, profilePicUrl, banned } = useMyState();
   const {
     actions: { onSetCall, onHangUp, onSubmitMessage }
   } = useChatContext();
@@ -170,7 +170,7 @@ function ChatInfo({
           }}
           className="unselectable"
         >
-          {voiceChatButtonShown && (
+          {voiceChatButtonShown && !banned?.chat && (
             <CallButton callOngoing={callOngoing} onCall={handleCall} />
           )}
           <ChannelDetails
