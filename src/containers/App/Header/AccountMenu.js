@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import DropdownButton from 'components/Buttons/DropdownButton';
@@ -6,6 +6,7 @@ import Icon from 'components/Icon';
 import { useAppContext, useChatContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { socket } from 'constants/io';
+import FullTextReveal from 'components/Texts/FullTextReveal';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 
 AccountMenu.propTypes = {
@@ -14,6 +15,7 @@ AccountMenu.propTypes = {
 };
 
 function AccountMenu({ className, history }) {
+  const [twinkleCoinsHovered, setTwinkleCoinsHovered] = useState(false);
   const {
     user: {
       actions: { onLogout, onOpenSigninModal }
@@ -22,13 +24,8 @@ function AccountMenu({ className, history }) {
   const {
     actions: { onResetChat }
   } = useChatContext();
-  const {
-    loggedIn,
-    username,
-    userId,
-    managementLevel,
-    twinkleCoins
-  } = useMyState();
+  const { loggedIn, username, userId, managementLevel, twinkleCoins } =
+    useMyState();
   const menuProps = useMemo(() => {
     const result = [
       {
@@ -50,12 +47,41 @@ function AccountMenu({ className, history }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [managementLevel, username]);
 
+  const displayedTwinkleCoins = useMemo(() => {
+    if (twinkleCoins > 999) {
+      return '999+';
+    }
+    return twinkleCoins;
+  }, [twinkleCoins]);
+
+  const fullTwinkleCoins = useMemo(
+    () => addCommasToNumber(twinkleCoins),
+    [twinkleCoins]
+  );
+
   return (
     <div className="desktop" style={{ display: 'flex', alignItems: 'center' }}>
       {loggedIn && (
-        <div style={{ marginRight: '1rem' }}>
-          <Icon icon={['far', 'badge-dollar']} />{' '}
-          {addCommasToNumber(twinkleCoins)}
+        <div
+          onMouseEnter={() => setTwinkleCoinsHovered(twinkleCoins > 999)}
+          onMouseLeave={() => setTwinkleCoinsHovered(false)}
+          onClick={() => setTwinkleCoinsHovered((hovered) => !hovered)}
+          style={{ marginRight: '1rem', cursor: 'pointer' }}
+        >
+          <Icon icon={['far', 'badge-dollar']} /> {displayedTwinkleCoins}
+          <FullTextReveal
+            direction="left"
+            className="desktop"
+            show={twinkleCoinsHovered}
+            text={fullTwinkleCoins}
+            style={{
+              fontSize: '1.3rem',
+              width: 'auto',
+              minWidth: null,
+              maxWidth: null,
+              padding: '1rem'
+            }}
+          />
         </div>
       )}
       {loggedIn ? (
