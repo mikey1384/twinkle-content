@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import DropdownButton from 'components/Buttons/DropdownButton';
 import Icon from 'components/Icon';
+import FullTextReveal from 'components/Texts/FullTextReveal';
 import { useAppContext, useChatContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { socket } from 'constants/io';
-import FullTextReveal from 'components/Texts/FullTextReveal';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 
 AccountMenu.propTypes = {
