@@ -23,6 +23,8 @@ export default function LetsLaunch({ index, innerRef, taskId }) {
   } = useMissionContext();
   const [url, setUrl] = useState('');
   const [urlError, setUrlError] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const submittingRef = useRef(false);
   const timerRef = useRef(null);
   const urlErrorRef = useRef('');
   const urlIsNotEmpty = useMemo(() => !stringIsEmpty(url), [url]);
@@ -122,6 +124,7 @@ export default function LetsLaunch({ index, innerRef, taskId }) {
             style={{ marginTop: '3rem' }}
             skeuomorphic
             color="green"
+            disabled={submitting}
             onClick={handleSubmit}
           >
             Submit
@@ -132,18 +135,26 @@ export default function LetsLaunch({ index, innerRef, taskId }) {
   );
 
   async function handleSubmit() {
-    const { success } = await uploadMissionAttempt({
-      missionId: taskId,
-      attempt: {
-        content: url
+    if (!submittingRef.current) {
+      submittingRef.current = true;
+      setSubmitting(true);
+      const { success } = await uploadMissionAttempt({
+        missionId: taskId,
+        attempt: {
+          content: url
+        }
+      });
+      if (success) {
+        if (mounted.current) {
+          onUpdateMissionAttempt({
+            missionId: taskId,
+            newState: { status: 'pending', tryingAgain: false }
+          });
+        }
       }
-    });
-    if (success) {
+      submittingRef.current = false;
       if (mounted.current) {
-        onUpdateMissionAttempt({
-          missionId: taskId,
-          newState: { status: 'pending', tryingAgain: false }
-        });
+        setSubmitting(false);
       }
     }
   }
