@@ -1,4 +1,5 @@
 import React, {
+  memo,
   useCallback,
   useEffect,
   useMemo,
@@ -23,7 +24,7 @@ import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
 
-export default function Vocabulary() {
+function Vocabulary() {
   const {
     user: {
       actions: { onUpdateNumWordsCollected }
@@ -323,3 +324,5 @@ export default function Vocabulary() {
     </div>
   );
 }
+
+export default memo(Vocabulary);
