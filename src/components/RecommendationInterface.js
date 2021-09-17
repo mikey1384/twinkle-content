@@ -78,7 +78,7 @@ export default function RecommendationInterface({
   const priceText = useMemo(() => {
     return !isRecommendedByUser ? (
       <>
-        <span style={{ marginLeft: '1rem', color: Color.darkBlue() }}>
+        <span style={{ marginLeft: '0.7rem', color: Color.darkBlue() }}>
           (<Icon icon={['far', 'badge-dollar']} /> {priceTable.recommendation})
         </span>
       </>
@@ -111,11 +111,6 @@ export default function RecommendationInterface({
         }}
       >
         <div
-          className={css`
-            @media (max-width: ${mobileMaxWidth}) {
-              font-size: 1.3rem;
-            }
-          `}
           style={{
             fontWeight: 'bold',
             opacity: recommending ? 0 : 1,
@@ -135,7 +130,6 @@ export default function RecommendationInterface({
               ) : (
                 `Recommend?`
               )}
-              {priceText}
             </span>
           </div>
           <div
@@ -165,7 +159,7 @@ export default function RecommendationInterface({
               color="darkBlue"
               skeuomorphic
             >
-              Yes
+              Yes{priceText}
             </Button>
             <Button
               onClick={onHide}
