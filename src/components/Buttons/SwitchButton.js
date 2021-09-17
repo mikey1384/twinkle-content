@@ -12,6 +12,7 @@ SwitchButton.propTypes = {
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   labelStyle: PropTypes.object,
   onChange: PropTypes.func.isRequired,
+  small: PropTypes.bool,
   style: PropTypes.object
 };
 
@@ -20,8 +21,9 @@ export default function SwitchButton({
   disabled,
   checked,
   label,
-  labelStyle = { fontSize: '1.3rem' },
   onChange,
+  small,
+  labelStyle = { fontSize: small ? '1.1rem' : '1.3rem' },
   style
 }) {
   const { profileTheme } = useMyState();
@@ -41,8 +43,8 @@ export default function SwitchButton({
         className={css`
           position: relative;
           display: inline-block;
-          width: 60px;
-          height: 34px;
+          width: ${small ? '35px' : '60px'};
+          height: ${small ? '19px' : '34px'};
           input {
             display: none;
           }
@@ -54,7 +56,7 @@ export default function SwitchButton({
               background-color: ${color || Color[profileTheme]()};
             }
             &:checked + span:before {
-              transform: translateX(26px);
+              transform: translateX(${small ? 16 : 26}px);
             }
           `}
           checked={checked}
@@ -71,14 +73,14 @@ export default function SwitchButton({
             bottom: 0;
             background-color: #ccc;
             transition: 0.4s;
-            border-radius: 34px;
+            border-radius: ${small ? '30px' : '34px'};
             &:before {
               position: absolute;
               content: '';
-              height: 26px;
-              width: 26px;
-              left: 4px;
-              bottom: 4px;
+              height: ${small ? '15px' : '26px'};
+              width: ${small ? '15px' : '26px'};
+              left: ${small ? '2px' : '4px'};
+              bottom: ${small ? '2px' : '4px'};
               background-color: white;
               transition: 0.4s;
               border-radius: 50%;

@@ -5,6 +5,7 @@ import Button from 'components/Button';
 import Icon from 'components/Icon';
 import Loading from 'components/Loading';
 import { Color, mobileMaxWidth } from 'constants/css';
+import { isMobile } from 'helpers';
 import { useMyState } from 'helpers/hooks';
 import { priceTable } from 'constants/defaultValues';
 import { useAppContext, useContentContext } from 'contexts';
@@ -19,6 +20,8 @@ RecommendationInterface.propTypes = {
   style: PropTypes.object,
   uploaderId: PropTypes.number
 };
+
+const deviceIsMobile = isMobile(navigator);
 
 export default function RecommendationInterface({
   contentId,
@@ -110,7 +113,7 @@ export default function RecommendationInterface({
         <div
           className={css`
             @media (max-width: ${mobileMaxWidth}) {
-              font-size: 1.5rem;
+              font-size: 1.3rem;
             }
           `}
           style={{
@@ -139,16 +142,17 @@ export default function RecommendationInterface({
             className={css`
               margin-left: 3rem;
               @media (max-width: ${mobileMaxWidth}) {
-                margin-left: 0.5rem;
+                margin-left: 1rem;
+                margin-right: 1rem;
               }
             `}
           >
             {!isRecommendedByUser && authLevel > 1 && (
               <SwitchButton
+                small={deviceIsMobile}
                 checked={!rewardDisabled}
                 label="Rewardable"
                 onChange={() => setRewardDisabled((disabled) => !disabled)}
-                labelStyle={{ fontSize: '1.3rem' }}
               />
             )}
           </div>
