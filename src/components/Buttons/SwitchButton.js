@@ -31,13 +31,16 @@ export default function SwitchButton({
     <ErrorBoundary
       style={{
         display: 'flex',
+        flexDirection: small ? 'column' : 'row',
         alignItems: 'center',
         ...style,
         ...(disabled ? { opacity: 0.2 } : {})
       }}
     >
       {label && (
-        <div style={{ marginRight: '1rem', ...labelStyle }}>{label}</div>
+        <div style={{ marginRight: small ? 0 : '1rem', ...labelStyle }}>
+          {label}
+        </div>
       )}
       <label
         className={css`

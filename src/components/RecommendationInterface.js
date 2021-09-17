@@ -78,12 +78,18 @@ export default function RecommendationInterface({
   const priceText = useMemo(() => {
     return !isRecommendedByUser ? (
       <>
-        <span style={{ marginLeft: '0.7rem', color: Color.darkBlue() }}>
+        <span
+          style={{
+            marginLeft: authLevel > 1 ? 0 : '0.7rem',
+            color: Color.darkBlue(),
+            fontSize: '1.3rem'
+          }}
+        >
           (<Icon icon={['far', 'badge-dollar']} /> {priceTable.recommendation})
         </span>
       </>
     ) : null;
-  }, [isRecommendedByUser]);
+  }, [authLevel, isRecommendedByUser]);
 
   return hidden ? null : (
     <ErrorBoundary
@@ -111,6 +117,11 @@ export default function RecommendationInterface({
         }}
       >
         <div
+          className={css`
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: 1.3rem;
+            }
+          `}
           style={{
             fontWeight: 'bold',
             opacity: recommending ? 0 : 1,
@@ -118,25 +129,35 @@ export default function RecommendationInterface({
             alignItems: 'center'
           }}
         >
-          <div>
-            <span style={{ marginRight: '0.7rem' }}>
-              {isRecommendedByUser ? (
-                <>
-                  <span style={{ color: Color.rose(), fontWeight: 'bold' }}>
-                    Cancel
-                  </span>{' '}
-                  your recommendation?
-                </>
-              ) : (
-                `Recommend?`
-              )}
-            </span>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: authLevel ? 'column' : 'row',
+              alignItems: 'center',
+              lineHeight: 1.3
+            }}
+          >
+            <div>
+              <span>
+                {isRecommendedByUser ? (
+                  <>
+                    <span style={{ color: Color.rose(), fontWeight: 'bold' }}>
+                      Cancel
+                    </span>{' '}
+                    your recommendation?
+                  </>
+                ) : (
+                  `Recommend?`
+                )}
+              </span>
+            </div>
+            <div>{priceText}</div>
           </div>
           <div
             className={css`
               margin-left: 3rem;
               @media (max-width: ${mobileMaxWidth}) {
-                margin-left: 1rem;
+                margin-left: 2rem;
                 margin-right: 1rem;
               }
             `}
@@ -159,7 +180,7 @@ export default function RecommendationInterface({
               color="darkBlue"
               skeuomorphic
             >
-              Yes{priceText}
+              Yes
             </Button>
             <Button
               onClick={onHide}
