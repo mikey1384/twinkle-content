@@ -52,8 +52,7 @@ export default function WordRegisterStatus() {
         `}
       >
         <div style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
-          <span style={{ color: '#fff' }}>You collected</span>
-          <span> </span>
+          <span style={{ color: '#fff' }}>You collected</span>{' '}
           <span
             style={{
               color: Color[vocabRewardHash[wordLevel].color](),

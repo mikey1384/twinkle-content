@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import Input from './Input';
 import Loading from 'components/Loading';
 import ActivitiesContainer from './ActivitiesContainer';
@@ -56,9 +62,11 @@ export default function Vocabulary() {
   const inputRef = useRef(null);
   const timerRef = useRef(null);
 
+  const inputTextIsEmpty = useMemo(() => stringIsEmpty(inputText), [inputText]);
+
   useEffect(() => {
     text.current = inputText;
-    if (!stringIsEmpty(inputText)) {
+    if (!inputTextIsEmpty) {
       clearTimeout(timerRef.current);
       if (socketConnected) {
         setLoading(true);
@@ -79,36 +87,67 @@ export default function Vocabulary() {
   }, [inputText, socketConnected]);
 
   const widgetHeight = useMemo(() => {
-    return stringIsEmpty(inputText) || loading || !socketConnected
+    return inputTextIsEmpty || loading || !socketConnected
       ? wordRegisterStatus
         ? '16rem'
         : '10rem'
-      : `20rem`;
-  }, [inputText, loading, wordRegisterStatus, socketConnected]);
+      : wordObj.content
+      ? '20rem'
+      : `10rem`;
+  }, [
+    inputTextIsEmpty,
+    loading,
+    socketConnected,
+    wordRegisterStatus,
+    wordObj.content
+  ]);
 
   const containerHeight = useMemo(() => {
     return `CALC(100% - ${widgetHeight} - 6.5rem)`;
   }, [widgetHeight]);
 
   const notRegistered = useMemo(
-    () =>
-      wordObj.isNew && !stringIsEmpty(inputText) && !loading && socketConnected,
-    [wordObj.isNew, inputText, loading, socketConnected]
+    () => wordObj.isNew && !inputTextIsEmpty && !loading && socketConnected,
+    [wordObj.isNew, inputTextIsEmpty, loading, socketConnected]
   );
 
   const alreadyRegistered = useMemo(
-    () =>
-      !!wordObj.content &&
-      !wordObj.isNew &&
-      !stringIsEmpty(inputText) &&
-      !loading,
-    [wordObj.content, wordObj.isNew, inputText, loading]
+    () => !!wordObj.content && !wordObj.isNew && !inputTextIsEmpty && !loading,
+    [wordObj.content, wordObj.isNew, inputTextIsEmpty, loading]
   );
 
   const wordLabel = useMemo(
     () => (/\s/.test(wordObj.content) ? 'term' : 'word'),
     [wordObj.content]
   );
+
+  const handleSubmit = useCallback(async () => {
+    const { isNew, ...definitions } = wordObj;
+    delete definitions.deletedDefIds;
+    if (isNew && !isSubmitting) {
+      setIsSubmitting(true);
+      try {
+        const { coins, xp, rank, word, rankings } = await registerWord(
+          definitions
+        );
+        onChangeUserXP({ xp, rank, userId });
+        onUpdateUserCoins({ coins, userId });
+        onUpdateNumWordsCollected(word.numWordsCollected);
+        onRegisterWord(word);
+        onUpdateCollectorsRankings({ rankings });
+        onSetWordRegisterStatus(wordObj);
+        onEnterComment({
+          contentType: 'vocabulary',
+          text: ''
+        });
+        setIsSubmitting(false);
+      } catch (error) {
+        console.error(error);
+        setIsSubmitting(false);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSubmitting, registerWord, userId, wordObj]);
 
   return (
     <div
@@ -133,17 +172,15 @@ export default function Vocabulary() {
           height: widgetHeight,
           boxShadow:
             !wordRegisterStatus &&
-            stringIsEmpty(inputText) &&
+            inputTextIsEmpty &&
             `0 -5px 6px -3px ${Color.gray()}`,
           borderTop:
-            (!!wordRegisterStatus || !stringIsEmpty(inputText)) &&
+            (!!wordRegisterStatus || !inputTextIsEmpty) &&
             `1px solid ${Color.borderGray()}`
         }}
       >
-        {stringIsEmpty(inputText) && !!wordRegisterStatus && (
-          <WordRegisterStatus />
-        )}
-        {!wordRegisterStatus && stringIsEmpty(inputText) && (
+        {inputTextIsEmpty && !!wordRegisterStatus && <WordRegisterStatus />}
+        {!wordRegisterStatus && inputTextIsEmpty && (
           <div
             className={css`
               padding: 1rem;
@@ -166,7 +203,7 @@ export default function Vocabulary() {
             </div>
           </div>
         )}
-        {!stringIsEmpty(inputText) &&
+        {!inputTextIsEmpty &&
           (loading || !socketConnected ? (
             <Loading
               style={{ height: '100%' }}
@@ -184,24 +221,48 @@ export default function Vocabulary() {
                 overflow: 'scroll'
               }}
             >
-              <div
-                className={css`
-                  font-weight: bold;
-                  font-size: 3rem;
-                  @media (max-width: ${mobileMaxWidth}) {
-                    font-size: 2rem;
-                  }
-                `}
-                style={{
-                  display: 'flex',
-                  width: '100%',
-                  alignItems: 'center',
-                  padding: '1rem'
-                }}
-              >
-                {wordObj.content}
-              </div>
-              <Definition wordObj={wordObj} />
+              {wordObj.content && (
+                <>
+                  <div
+                    className={css`
+                      font-weight: bold;
+                      font-size: 3rem;
+                      @media (max-width: ${mobileMaxWidth}) {
+                        font-size: 2rem;
+                      }
+                    `}
+                    style={{
+                      display: 'flex',
+                      width: '100%',
+                      alignItems: 'center',
+                      padding: '1rem'
+                    }}
+                  >
+                    {wordObj.content}
+                  </div>
+                  <Definition wordObj={wordObj} />
+                </>
+              )}
+              {!wordObj.content && (
+                <div
+                  className={css`
+                    font-size: 2.5rem;
+                    @media (max-width: ${mobileMaxWidth}) {
+                      font-size: 1.7rem;
+                    }
+                  `}
+                  style={{
+                    display: 'flex',
+                    width: '100%',
+                    height: '100%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    fontWeight: 'bold'
+                  }}
+                >
+                  {`"${inputText}"`} was not found
+                </div>
+              )}
             </div>
           ))}
       </div>
@@ -261,31 +322,4 @@ export default function Vocabulary() {
       </div>
     </div>
   );
-
-  async function handleSubmit() {
-    const { isNew, ...definitions } = wordObj;
-    delete definitions.deletedDefIds;
-    if (isNew && !isSubmitting) {
-      setIsSubmitting(true);
-      try {
-        const { coins, xp, rank, word, rankings } = await registerWord(
-          definitions
-        );
-        onChangeUserXP({ xp, rank, userId });
-        onUpdateUserCoins({ coins, userId });
-        onUpdateNumWordsCollected(word.numWordsCollected);
-        onRegisterWord(word);
-        onUpdateCollectorsRankings({ rankings });
-        onSetWordRegisterStatus(wordObj);
-        onEnterComment({
-          contentType: 'vocabulary',
-          text: ''
-        });
-        setIsSubmitting(false);
-      } catch (error) {
-        console.error(error);
-        setIsSubmitting(false);
-      }
-    }
-  }
 }
