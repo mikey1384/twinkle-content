@@ -9,6 +9,7 @@ export default function PleaseLogIn() {
       actions: { onOpenSigninModal }
     }
   } = useAppContext();
+
   return (
     <div
       style={{
