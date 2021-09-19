@@ -487,6 +487,16 @@ export default function SubjectPanel({
               rootContent={{
                 contentType: rootType
               }}
+              subject={{
+                id: subjectId,
+                rewardLevel,
+                secretAnswer,
+                secretAttachment,
+                uploader: {
+                  id: userId,
+                  authLevel: uploaderAuthLevel
+                }
+              }}
               showSecretButtonAvailable={subjectId && secretHidden}
             />
           </div>

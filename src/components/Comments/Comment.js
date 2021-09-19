@@ -497,7 +497,7 @@ function Comment({
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [subjectId, subjectState.prevSecretViewerId, userId]);
+  }, [subjectId, subjectState?.prevSecretViewerId, userId]);
 
   useEffect(() => {
     mounted.current = true;

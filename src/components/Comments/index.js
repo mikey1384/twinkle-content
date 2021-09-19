@@ -339,7 +339,7 @@ function Comments({
             content: 'viewed the secret message',
             parent,
             subjectId:
-              parent.contentType === 'subject' ? parent.contentId : subject.id,
+              parent.contentType === 'subject' ? parent.contentId : subject?.id,
             isNotification: true
           });
           await onCommentSubmit({
