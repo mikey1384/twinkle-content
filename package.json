@@ -81,7 +81,7 @@
     "react-dnd-html5-backend": "^14.0.0",
     "react-dnd-touch-backend": "^14.0.0",
     "react-dom": "^17.0.2",
-    "react-image-crop": "^8.6.6",
+    "react-image-crop": "^9.0.4",
     "react-intersection-observer": "^8.31.0",
     "react-move": "^6.4.0",
     "react-player": "^2.8.2",
