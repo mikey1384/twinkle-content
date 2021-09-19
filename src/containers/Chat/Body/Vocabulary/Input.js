@@ -91,14 +91,14 @@ export default function Input({
   );
 
   function handleChange(event) {
-    const regex = /[^a-zA-Z\-\s]/gi;
+    const regex = /[^a-zA-Z\-'\s]/gi;
     const isInvalid = regex.test(event.target.value.trim());
     if (isInvalid) {
       return onSetVocabErrorMessage(
         `"${truncateText({
           text: event.target.value,
           limit: 20
-        })}" is not allowed for vocabulary section. Please enter english letters only.`
+        })}" is not allowed for vocabulary section.`
       );
     }
     onInput();
