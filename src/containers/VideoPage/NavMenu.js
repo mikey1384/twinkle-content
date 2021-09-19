@@ -51,10 +51,8 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
   const [playlistTitle, setPlaylistTitle] = useState();
   const [filtering, setFiltering] = useState(false);
   const [playlistVideosLoading, setPlaylistVideosLoading] = useState(false);
-  const [
-    playlistVideosLoadMoreShown,
-    setPlaylistVideosLoadMoreShown
-  ] = useState(false);
+  const [playlistVideosLoadMoreShown, setPlaylistVideosLoadMoreShown] =
+    useState(false);
   const [videoTabActive, setVideoTabActive] = useState(true);
   const [loading, setLoading] = useState(false);
   const mounted = useRef(true);
@@ -235,7 +233,8 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
             <section key={videoId + 'continue watching'}>
               <p>Continue Watching</p>
               {renderVideos({
-                videos: continueWatchingVideos
+                videos: continueWatchingVideos,
+                areContinueWatchingVideos: true
               })}
             </section>
           )}
@@ -334,7 +333,11 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
     }
   }
 
-  function renderVideos({ videos, arePlaylistVideos }) {
+  function renderVideos({
+    videos,
+    areContinueWatchingVideos,
+    arePlaylistVideos
+  }) {
     return videos.map((video, index) => (
       <div
         key={video.id}
@@ -348,7 +351,11 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
         <div style={{ width: '50%' }}>
           <Link
             to={`/videos/${video.videoId}${
-              arePlaylistVideos ? `?playlist=${playlistId}` : ''
+              arePlaylistVideos
+                ? `?playlist=${playlistId}`
+                : areContinueWatchingVideos
+                ? '?continue=true'
+                : ''
             }`}
           >
             <VideoThumbImage
