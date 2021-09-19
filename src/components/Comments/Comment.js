@@ -212,8 +212,17 @@ function Comment({
     [subject?.id, subjectState?.id]
   );
   const subjectHasSecretMessage = useMemo(
-    () => !!subjectState?.secretAnswer || !!subject?.secretAnswer,
-    [subject?.secretAnswer, subjectState?.secretAnswer]
+    () =>
+      !!subjectState?.secretAnswer ||
+      !!subjectState?.secretAttachment ||
+      !!subject?.secretAnswer ||
+      !!subject?.secretAttachment,
+    [
+      subject?.secretAnswer,
+      subject?.secretAttachment,
+      subjectState?.secretAnswer,
+      subjectState?.secretAttachment
+    ]
   );
   const isRecommendedByUser = useMemo(() => {
     return (

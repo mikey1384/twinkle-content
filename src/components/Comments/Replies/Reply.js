@@ -43,7 +43,7 @@ Reply.propTypes = {
   reply: PropTypes.shape({
     commentId: PropTypes.number.isRequired,
     content: PropTypes.string.isRequired,
-    isDeleted: PropTypes.bool,
+    isDeleted: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
     filePath: PropTypes.string,
     fileName: PropTypes.string,
     fileSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

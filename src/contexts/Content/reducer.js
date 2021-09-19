@@ -927,67 +927,62 @@ export default function ContentReducer(state, action) {
         ...state,
         [contentKey]: {
           ...prevContentState,
-          subjects: prevContentState.subjects?.map((subject) => {
-            return {
-              ...subject,
-              comments: subject.comments.map((comment) => {
-                if (comment.id === action.commentId) {
-                  return {
-                    ...comment,
-                    replies: [
-                      ...(comment.replies || [])
-                        .filter((reply) => reply.id <= action.replyId)
-                        .map((reply) =>
-                          reply.id === action.replyId
-                            ? {
-                                ...reply,
-                                numReplies: 0
-                              }
-                            : reply
-                        ),
-                      ...action.replies,
-                      ...(comment.replies || []).filter(
-                        (reply) => reply.id > action.replyId
-                      )
-                    ]
-                  };
-                }
-                let containsRootReply = false;
-                for (let reply of comment.replies || []) {
-                  if (reply.id === action.replyId) {
-                    containsRootReply = true;
-                    break;
-                  }
-                }
-                if (containsRootReply) {
-                  const replies = (comment.replies || []).filter(
-                    (reply) => reply.id <= action.replyId
-                  );
-                  replies[replies.length - 1] = {
-                    ...replies[replies.length - 1],
-                    numReplies: 0
-                  };
-                  return {
-                    ...comment,
-                    replies: [
-                      ...replies.map((reply) =>
-                        reply.id === action.replyId
-                          ? {
-                              ...reply,
-                              numReplies: 0
-                            }
-                          : reply
-                      ),
-                      ...action.replies,
-                      ...(comment.replies || []).filter(
-                        (reply) => reply.id > action.replyId
-                      )
-                    ]
-                  };
-                }
-                return comment;
-              })
-            };
+          comments: prevContentState.comments.map((comment) => {
+            if (comment.id === action.commentId) {
+              return {
+                ...comment,
+                replies: [
+                  ...(comment.replies || [])
+                    .filter((reply) => reply.id <= action.replyId)
+                    .map((reply) =>
+                      reply.id === action.replyId
+                        ? {
+                            ...reply,
+                            numReplies: 0
+                          }
+                        : reply
+                    ),
+                  ...action.replies,
+                  ...(comment.replies || []).filter(
+                    (reply) => reply.id > action.replyId
+                  )
+                ]
+              };
+            }
+            let containsRootReply = false;
+            for (let reply of comment.replies || []) {
+              if (reply.id === action.replyId) {
+                containsRootReply = true;
+                break;
+              }
+            }
+            if (containsRootReply) {
+              const replies = (comment.replies || []).filter(
+                (reply) => reply.id <= action.replyId
+              );
+              replies[replies.length - 1] = {
+                ...replies[replies.length - 1],
+                numReplies: 0
+              };
+              return {
+                ...comment,
+                replies: [
+                  ...replies.map((reply) =>
+                    reply.id === action.replyId
+                      ? {
+                          ...reply,
+                          numReplies: 0
+                        }
+                      : reply
+                  ),
+                  ...action.replies,
+                  ...(comment.replies || []).filter(
+                    (reply) => reply.id > action.replyId
+                  )
+                ]
+              };
+            }
+            return comment;
           })
         }
       };

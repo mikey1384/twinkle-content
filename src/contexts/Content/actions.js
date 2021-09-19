@@ -264,20 +264,14 @@ export default function ContentActions(dispatch) {
         contentId
       });
     },
-    onLoadSubjectRepliesOfReply({
-      replies,
-      commentId,
-      replyId,
-      contentType,
-      contentId
-    }) {
+    onLoadSubjectRepliesOfReply({ replies, commentId, replyId, subjectId }) {
       return dispatch({
         type: 'LOAD_SUBJECT_REPLIES_OF_REPLY',
         replies,
         commentId,
         replyId,
-        contentType,
-        contentId
+        contentId: subjectId,
+        contentType: 'subject'
       });
     },
     onLoadSubjects({ contentId, contentType, subjects, loadMoreButton }) {

@@ -50,7 +50,9 @@ Comments.propTypes = {
     contentId: PropTypes.number.isRequired,
     contentType: PropTypes.string.isRequired,
     pinnedCommentId: PropTypes.number,
-    rewardLevel: PropTypes.number
+    rewardLevel: PropTypes.number,
+    secretAnswer: PropTypes.string,
+    secretAttachment: PropTypes.object
   }).isRequired,
   rootContent: PropTypes.object,
   showSecretButtonAvailable: PropTypes.bool,
@@ -127,6 +129,10 @@ function Comments({
     parent.pinnedCommentId,
     rootContentState?.pinnedCommentId
   ]);
+  const parentHasSecretMessage = useMemo(
+    () => !!parent.secretAnswer || !!parent.secretAttachment,
+    [parent.secretAnswer, parent.secretAttachment]
+  );
   const renderLoadMoreButton = useCallback(() => {
     return (autoExpand || commentsShown) && !isLoading ? (
       <LoadMoreButton
@@ -155,7 +161,8 @@ function Comments({
             contentId: parent.contentId,
             contentType: parent.contentType,
             lastCommentId,
-            limit: commentsLoadLimit
+            limit: commentsLoadLimit,
+            parentHasSecretMessage
           });
           onLoadMoreComments({
             ...data,
@@ -179,7 +186,8 @@ function Comments({
     loadComments,
     onLoadMoreComments,
     parent.contentId,
-    parent.contentType
+    parent.contentType,
+    parentHasSecretMessage
   ]);
 
   const handleFileUpload = useCallback(

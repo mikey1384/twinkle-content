@@ -461,7 +461,14 @@ export default function SubjectPanel({
               onLoadMoreReplies={(data) =>
                 onLoadMoreReplies({ ...data, subjectId })
               }
-              onLoadRepliesOfReply={onLoadRepliesOfReply}
+              onLoadRepliesOfReply={({ replies, commentId, replyId }) =>
+                onLoadRepliesOfReply({
+                  replies,
+                  commentId,
+                  replyId,
+                  subjectId
+                })
+              }
               onReplySubmit={onUploadReply}
               onRewardCommentEdit={editRewardComment}
               parent={{
@@ -470,6 +477,7 @@ export default function SubjectPanel({
                 pinnedCommentId,
                 rewardLevel: rootRewardLevel,
                 secretAnswer,
+                secretAttachment,
                 uploader: {
                   id: userId,
                   username,
@@ -478,15 +486,6 @@ export default function SubjectPanel({
               }}
               rootContent={{
                 contentType: rootType
-              }}
-              subject={{
-                id: subjectId,
-                rewardLevel,
-                secretAnswer,
-                uploader: {
-                  id: userId,
-                  authLevel: uploaderAuthLevel
-                }
               }}
               showSecretButtonAvailable={subjectId && secretHidden}
             />
