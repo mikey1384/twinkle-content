@@ -68,6 +68,10 @@ Comment.propTypes = {
     fileName: PropTypes.string,
     fileSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     thumbUrl: PropTypes.string,
+    isDeleteNotification: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.bool
+    ]),
     isNotification: PropTypes.oneOfType([PropTypes.number, PropTypes.bool])
   }).isRequired,
   innerRef: PropTypes.func,
@@ -100,6 +104,7 @@ function Comment({
     fileName,
     fileSize,
     isNotification,
+    isDeleteNotification,
     thumbUrl: originalThumbUrl
   }
 }) {
@@ -300,10 +305,34 @@ function Comment({
     [rootContent.uploader?.id, userId]
   );
   const userIsHigherAuth = useMemo(
-    () => authLevel > uploader.authLevel,
-    [authLevel, uploader.authLevel]
+    () => authLevel > uploader?.authLevel,
+    [authLevel, uploader?.authLevel]
   );
   const dropdownButtonShown = useMemo(() => {
+    if (isDeleteNotification) {
+      return false;
+    }
+    const userCanEditThis = (canEdit || canDelete) && userIsHigherAuth;
+    return (
+      ((userIsUploader && !isNotification) ||
+        userCanEditThis ||
+        ((userIsParentUploader || userIsRootUploader) && !isNotification)) &&
+      !isPreview
+    );
+  }, [
+    canDelete,
+    canEdit,
+    isDeleteNotification,
+    isNotification,
+    isPreview,
+    userIsHigherAuth,
+    userIsParentUploader,
+    userIsRootUploader,
+    userIsUploader
+  ]);
+
+  const dropdownMenuItems = useMemo(() => {
+    const items = [];
     const isForSecretSubject =
       (rootContent?.secretAnswer &&
         !(
@@ -320,38 +349,7 @@ function Comment({
           subject?.uploader?.id === userId ||
           authLevel > subject?.uploader?.authLevel
         ));
-    const userCanEditThis = (canEdit || canDelete) && userIsHigherAuth;
-    return (
-      ((userIsUploader && !(isForSecretSubject || isNotification)) ||
-        userCanEditThis ||
-        ((userIsParentUploader || userIsRootUploader) && !isNotification)) &&
-      !isPreview
-    );
-  }, [
-    authLevel,
-    canDelete,
-    canEdit,
-    isNotification,
-    isPreview,
-    parent?.secretAnswer,
-    parent?.uploader?.authLevel,
-    parent?.uploader?.id,
-    rootContent?.secretAnswer,
-    rootContent?.uploader?.authLevel,
-    rootContent?.uploader?.id,
-    subject?.secretAnswer,
-    subject?.uploader?.authLevel,
-    subject?.uploader?.id,
-    userId,
-    userIsHigherAuth,
-    userIsParentUploader,
-    userIsRootUploader,
-    userIsUploader
-  ]);
-
-  const dropdownMenuItems = useMemo(() => {
-    const items = [];
-    if ((userIsUploader || canEdit) && !isNotification) {
+    if ((userIsUploader || canEdit) && !isNotification && !isForSecretSubject) {
       items.push({
         label: (
           <>
@@ -546,7 +544,7 @@ function Comment({
                 <ProfilePic
                   style={{ height: '5rem', width: '5rem' }}
                   userId={uploader?.id}
-                  profilePicUrl={uploader.profilePicUrl}
+                  profilePicUrl={uploader?.profilePicUrl}
                 />
               </aside>
               {dropdownButtonShown && !isEditing && (
@@ -568,14 +566,20 @@ function Comment({
                     <a
                       className={css`
                         &:hover {
-                          text-decoration: ${isNotification
+                          text-decoration: ${isNotification ||
+                          isDeleteNotification
                             ? 'none'
                             : 'underline'};
                         }
                       `}
-                      style={{ cursor: isNotification ? 'default' : 'pointer' }}
+                      style={{
+                        cursor:
+                          isNotification || isDeleteNotification
+                            ? 'default'
+                            : 'pointer'
+                      }}
                       onClick={() =>
-                        isNotification
+                        isNotification || isDeleteNotification
                           ? null
                           : history.push(`/comments/${comment.id}`)
                       }
@@ -650,7 +654,7 @@ function Comment({
                             history.push(`/subjects/${subject?.id}`)
                           }
                         />
-                      ) : isNotification ? (
+                      ) : isNotification || isDeleteNotification ? (
                         <div
                           style={{
                             color: Color.gray(),
@@ -659,7 +663,9 @@ function Comment({
                             borderRadius
                           }}
                         >
-                          {uploader.username} viewed the secret message
+                          {isNotification
+                            ? `${uploader?.username} viewed the secret message`
+                            : 'this comment was deleted'}
                         </div>
                       ) : (
                         !commentIsEmpty && (
@@ -675,88 +681,91 @@ function Comment({
                           </LongText>
                         )
                       )}
-                      {!isPreview && !isHidden && !isNotification && (
-                        <div
-                          style={{
-                            display: 'flex',
-                            justifyContent: 'space-between'
-                          }}
-                        >
-                          <div>
-                            <div className="comment__buttons">
-                              <LikeButton
-                                contentType="comment"
-                                contentId={comment.id}
-                                onClick={handleLikeClick}
-                                likes={likes}
-                              />
-                              <Button
-                                disabled={loadingReplies}
-                                transparent
-                                style={{ marginLeft: '1rem' }}
-                                onClick={handleReplyButtonClick}
-                              >
-                                <Icon icon="comment-alt" />
-                                <span style={{ marginLeft: '1rem' }}>
-                                  {numReplies > 1 &&
-                                  parent.contentType === 'comment'
-                                    ? 'Replies'
-                                    : 'Reply'}
-                                  {loadingReplies ? (
-                                    <Icon
-                                      style={{ marginLeft: '0.7rem' }}
-                                      icon="spinner"
-                                      pulse
-                                    />
-                                  ) : numReplies > 0 &&
-                                    parent.contentType === 'comment' ? (
-                                    ` (${numReplies})`
-                                  ) : (
-                                    ''
-                                  )}
-                                </span>
-                              </Button>
-                              {userCanRewardThis && (
+                      {!isPreview &&
+                        !isHidden &&
+                        !isNotification &&
+                        !isDeleteNotification && (
+                          <div
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'space-between'
+                            }}
+                          >
+                            <div>
+                              <div className="comment__buttons">
+                                <LikeButton
+                                  contentType="comment"
+                                  contentId={comment.id}
+                                  onClick={handleLikeClick}
+                                  likes={likes}
+                                />
                                 <Button
-                                  color="pink"
-                                  style={{ marginLeft: '0.7rem' }}
-                                  onClick={() =>
-                                    onSetXpRewardInterfaceShown({
-                                      contentId: commentId,
-                                      contentType: 'comment',
-                                      shown: true
-                                    })
-                                  }
-                                  disabled={!!xpButtonDisabled}
+                                  disabled={loadingReplies}
+                                  transparent
+                                  style={{ marginLeft: '1rem' }}
+                                  onClick={handleReplyButtonClick}
                                 >
-                                  <Icon icon="certificate" />
-                                  <span style={{ marginLeft: '0.7rem' }}>
-                                    {xpButtonDisabled || 'Reward'}
+                                  <Icon icon="comment-alt" />
+                                  <span style={{ marginLeft: '1rem' }}>
+                                    {numReplies > 1 &&
+                                    parent.contentType === 'comment'
+                                      ? 'Replies'
+                                      : 'Reply'}
+                                    {loadingReplies ? (
+                                      <Icon
+                                        style={{ marginLeft: '0.7rem' }}
+                                        icon="spinner"
+                                        pulse
+                                      />
+                                    ) : numReplies > 0 &&
+                                      parent.contentType === 'comment' ? (
+                                      ` (${numReplies})`
+                                    ) : (
+                                      ''
+                                    )}
                                   </span>
                                 </Button>
-                              )}
+                                {userCanRewardThis && (
+                                  <Button
+                                    color="pink"
+                                    style={{ marginLeft: '0.7rem' }}
+                                    onClick={() =>
+                                      onSetXpRewardInterfaceShown({
+                                        contentId: commentId,
+                                        contentType: 'comment',
+                                        shown: true
+                                      })
+                                    }
+                                    disabled={!!xpButtonDisabled}
+                                  >
+                                    <Icon icon="certificate" />
+                                    <span style={{ marginLeft: '0.7rem' }}>
+                                      {xpButtonDisabled || 'Reward'}
+                                    </span>
+                                  </Button>
+                                )}
+                              </div>
+                              <Likers
+                                className="comment__likes"
+                                userId={userId}
+                                likes={likes}
+                                onLinkClick={() => setUserListModalShown(true)}
+                              />
                             </div>
-                            <Likers
-                              className="comment__likes"
-                              userId={userId}
-                              likes={likes}
-                              onLinkClick={() => setUserListModalShown(true)}
-                            />
+                            <div>
+                              <Button
+                                color="brownOrange"
+                                filled={isRecommendedByUser}
+                                disabled={recommendationInterfaceShown}
+                                onClick={() =>
+                                  setRecommendationInterfaceShown(true)
+                                }
+                              >
+                                <Icon icon="star" />
+                              </Button>
+                            </div>
                           </div>
-                          <div>
-                            <Button
-                              color="brownOrange"
-                              filled={isRecommendedByUser}
-                              disabled={recommendationInterfaceShown}
-                              onClick={() =>
-                                setRecommendationInterfaceShown(true)
-                              }
-                            >
-                              <Icon icon="star" />
-                            </Button>
-                          </div>
-                        </div>
-                      )}
+                        )}
                     </div>
                   )}
                 </div>
@@ -774,7 +783,7 @@ function Comment({
                     contentType="comment"
                     onHide={() => setRecommendationInterfaceShown(false)}
                     recommendations={recommendations}
-                    uploaderId={uploader.id}
+                    uploaderId={uploader?.id}
                   />
                 )}
                 {!isPreview && xpRewardInterfaceShown && (
@@ -789,8 +798,8 @@ function Comment({
                         !isRecommendedByUser && twinkleCoins > 0
                       )
                     }
-                    uploaderAuthLevel={uploader.authLevel}
-                    uploaderId={uploader.id}
+                    uploaderAuthLevel={uploader?.authLevel}
+                    uploaderId={uploader?.id}
                   />
                 )}
                 {!isPreview && (
@@ -805,38 +814,41 @@ function Comment({
                       marginTop: likes?.length > 0 ? '0.5rem' : '1rem'
                     }}
                     rewards={rewards}
-                    uploaderName={uploader.username}
+                    uploaderName={uploader?.username}
                   />
                 )}
-                {!isPreview && !isNotification && !isHidden && (
-                  <>
-                    <ReplyInputArea
-                      innerRef={ReplyInputAreaRef}
-                      numReplies={numReplies}
-                      onSubmit={submitReply}
-                      onSubmitWithAttachment={handleSubmitWithAttachment}
-                      parent={parent}
-                      rootCommentId={comment.commentId}
-                      style={{
-                        marginTop: '0.5rem'
-                      }}
-                      targetCommentId={comment.id}
-                    />
-                    <Replies
-                      pinnedCommentId={pinnedCommentId}
-                      subject={subject || {}}
-                      userId={userId}
-                      replies={replies}
-                      comment={comment}
-                      parent={parent}
-                      rootContent={rootContent}
-                      onLoadMoreReplies={onLoadMoreReplies}
-                      onPinReply={handlePinComment}
-                      onReplySubmit={onReplySubmit}
-                      ReplyRefs={ReplyRefs}
-                    />
-                  </>
-                )}
+                {!isPreview &&
+                  !isNotification &&
+                  !isDeleteNotification &&
+                  !isHidden && (
+                    <>
+                      <ReplyInputArea
+                        innerRef={ReplyInputAreaRef}
+                        numReplies={numReplies}
+                        onSubmit={submitReply}
+                        onSubmitWithAttachment={handleSubmitWithAttachment}
+                        parent={parent}
+                        rootCommentId={comment.commentId}
+                        style={{
+                          marginTop: '0.5rem'
+                        }}
+                        targetCommentId={comment.id}
+                      />
+                      <Replies
+                        pinnedCommentId={pinnedCommentId}
+                        subject={subject || {}}
+                        userId={userId}
+                        replies={replies}
+                        comment={comment}
+                        parent={parent}
+                        rootContent={rootContent}
+                        onLoadMoreReplies={onLoadMoreReplies}
+                        onPinReply={handlePinComment}
+                        onReplySubmit={onReplySubmit}
+                        ReplyRefs={ReplyRefs}
+                      />
+                    </>
+                  )}
               </section>
             </div>
           </div>
@@ -853,7 +865,12 @@ function Comment({
         <ConfirmModal
           onHide={() => setConfirmModalShown(false)}
           title="Remove Comment"
-          onConfirm={() => onDelete(comment.id)}
+          onConfirm={async () => {
+            await onDelete(comment.id);
+            if (mounted.current) {
+              setConfirmModalShown(false);
+            }
+          }}
         />
       )}
     </div>

@@ -236,24 +236,48 @@ export default function ContentReducer(state, action) {
       const contentKeys = Object.keys(newState);
       for (let contentKey of contentKeys) {
         const prevContentState = newState[contentKey];
+        const contentDeleteStatus = { isDeleted: prevContentState.isDeleted };
+        if (
+          prevContentState.contentId === action.commentId &&
+          prevContentState.contentType === 'comment'
+        ) {
+          if (
+            !!prevContentState?.rootObj?.secretAnswer ||
+            !!prevContentState?.rootObj?.secretAttachment
+          ) {
+            contentDeleteStatus.isDeleted = false;
+            contentDeleteStatus.isDeleteNotification = true;
+          } else {
+            contentDeleteStatus.isDeleted = true;
+          }
+        }
         newState[contentKey] = {
           ...prevContentState,
-          isDeleted:
-            prevContentState.isDeleted ||
-            (prevContentState.contentId === action.commentId &&
-              prevContentState.contentType === 'comment'),
-          comments: prevContentState.comments?.map((comment) =>
-            comment.id === action.commentId
-              ? { ...comment, isDeleted: true }
+          ...contentDeleteStatus,
+          comments: prevContentState.comments?.map((comment) => {
+            const deleteStatus = { isDeleted: true };
+            if (comment.id === action.commentId) {
+              if (
+                !comment.commentId &&
+                !comment.replyId &&
+                (!!prevContentState.secretAnswer ||
+                  !!prevContentState.secretAttachment)
+              ) {
+                deleteStatus.isDeleted = false;
+                deleteStatus.isDeleteNotification = true;
+              }
+            }
+            return comment.id === action.commentId
+              ? { ...comment, ...deleteStatus }
               : {
                   ...comment,
                   replies: (comment.replies || []).map((reply) =>
                     reply.id === action.commentId
-                      ? { ...reply, isDeleted: true }
+                      ? { ...reply, ...deleteStatus }
                       : reply
                   )
-                }
-          ),
+                };
+          }),
           subjects: prevContentState.subjects?.map((subject) => ({
             ...subject,
             comments: subject.comments?.map((comment) =>

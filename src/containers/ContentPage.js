@@ -28,7 +28,10 @@ export default function ContentPage({
     actions: { onSetContentNav }
   } = useViewContext();
   const contentType = url.split('/')[1].slice(0, -1);
-  const { loaded, isDeleted } = useContentState({ contentType, contentId });
+  const { loaded, isDeleted, isDeleteNotification } = useContentState({
+    contentType,
+    contentId
+  });
   const [exists, setExists] = useState(true);
   const mounted = useRef(true);
   const prevDeleted = useRef(false);
@@ -41,13 +44,13 @@ export default function ContentPage({
   }, []);
 
   useEffect(() => {
-    if (!prevDeleted.current && isDeleted) {
+    if (!prevDeleted.current && (isDeleted || isDeleteNotification)) {
       onSetContentNav('');
       history.push('/');
     }
-    prevDeleted.current = isDeleted;
+    prevDeleted.current = isDeleted || isDeleteNotification;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDeleted, loaded]);
+  }, [isDeleted, isDeleteNotification, loaded]);
 
   useEffect(() => {
     if (!loaded) {

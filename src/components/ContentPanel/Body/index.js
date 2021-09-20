@@ -200,7 +200,15 @@ export default function Body({
 
   const editMenuItems = useMemo(() => {
     const items = [];
-    if (userId === uploader.id || canEdit) {
+    const secretAnswerExists =
+      targetObj?.contentType === 'subject' && rootObj?.secretAnswer;
+    const isSecretAnswerPoster = rootObj?.uploader?.id === userId;
+    const isHigherAuthThanSecretAnswerPoster =
+      authLevel > rootObj?.uploader?.authLevel;
+    const isForSecretSubject =
+      secretAnswerExists &&
+      !(isSecretAnswerPoster || isHigherAuthThanSecretAnswerPoster);
+    if ((userId === uploader.id || canEdit) && !isForSecretSubject) {
       items.push({
         label: 'Edit',
         onClick: () =>
@@ -231,7 +239,8 @@ export default function Body({
         contentType,
         contentId,
         limit: numPreviewComments || commentsLoadLimit,
-        isPreview
+        isPreview,
+        parentHasSecretMessage: !!secretAnswer || !!secretAttachment
       });
       if (mounted.current) {
         onLoadComments({
@@ -249,33 +258,10 @@ export default function Body({
   }, []);
 
   const editButtonShown = useMemo(() => {
-    const secretAnswerExists =
-      targetObj?.subject?.secretAnswer || rootObj?.secretAnswer;
-    const isSecretAnswerPoster = rootObj?.secretAnswer
-      ? rootObj?.uploader?.id === userId
-      : targetObj?.subject?.uploader?.id === userId;
-    const isHigherAuthThanSecretAnswerPoster = rootObj?.secretAnswer
-      ? authLevel > rootObj?.uploader?.authLevel
-      : authLevel > targetObj?.subject?.uploader?.authLevel;
-    const isForSecretSubject =
-      secretAnswerExists &&
-      !(isSecretAnswerPoster || isHigherAuthThanSecretAnswerPoster);
     const userCanEditThis =
       (canEdit || canDelete) && authLevel > uploader.authLevel;
-    return (
-      (userId === uploader.id && !(isForSecretSubject || isNotification)) ||
-      userCanEditThis
-    );
-  }, [
-    authLevel,
-    canDelete,
-    canEdit,
-    isNotification,
-    rootObj,
-    targetObj,
-    uploader,
-    userId
-  ]);
+    return (userId === uploader.id && !isNotification) || userCanEditThis;
+  }, [authLevel, canDelete, canEdit, isNotification, uploader, userId]);
 
   const userCanRewardThis = useMemo(
     () =>
@@ -693,7 +679,8 @@ export default function Body({
     const data = await loadComments({
       contentType,
       contentId,
-      limit: commentsLoadLimit
+      limit: commentsLoadLimit,
+      parentHasSecretMessage: !!secretAnswer || !!secretAttachment
     });
     if (mounted.current) {
       onLoadComments({ ...data, contentId, contentType });

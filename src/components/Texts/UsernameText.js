@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import DropdownList from 'components/DropdownList';
 import { Color } from 'constants/css';
@@ -25,6 +25,7 @@ export default function UsernameText({
   user = {},
   wordBreakEnabled
 }) {
+  const mounted = useRef(true);
   const history = useHistory();
   const timerRef = useRef(null);
   const mouseEntered = useRef(false);
@@ -53,6 +54,14 @@ export default function UsernameText({
   const userRank = useMemo(() => {
     return rank || user.rank;
   }, [rank, user.rank]);
+
+  useEffect(() => {
+    mounted.current = true;
+
+    return function cleanup() {
+      mounted.current = false;
+    };
+  }, []);
 
   return (
     <div
@@ -156,8 +165,16 @@ export default function UsernameText({
         timerRef.current = setTimeout(async () => {
           const data = await loadProfile(user.id);
           if (mouseEntered.current) {
-            onInitContent({ contentId: user.id, contentType: 'user', ...data });
-            setMenuShown(true);
+            if (mounted.current) {
+              onInitContent({
+                contentId: user.id,
+                contentType: 'user',
+                ...data
+              });
+            }
+            if (mounted.current) {
+              setMenuShown(true);
+            }
           }
         }, 200);
       } else {
@@ -171,14 +188,18 @@ export default function UsernameText({
     if (user.id !== userId) {
       if (!loaded) {
         const initialData = await loadChat();
-        onInitChat(initialData);
+        if (mounted.current) {
+          onInitChat(initialData);
+        }
       }
       const data = await loadDMChannel({ recepient: user });
-      onOpenDirectMessageChannel({
-        user: { id: userId, username },
-        recepient: data.partner,
-        channelData: data
-      });
+      if (mounted.current) {
+        onOpenDirectMessageChannel({
+          user: { id: userId, username },
+          recepient: data.partner,
+          channelData: data
+        });
+      }
       history.push('/chat');
     }
   }
@@ -187,8 +208,12 @@ export default function UsernameText({
     if (user.username) {
       if (!twinkleXP && !user.twinkleXP && !menuShown) {
         const data = await loadProfile(user.id);
-        onInitContent({ contentId: user.id, contentType: 'user', ...data });
-        setMenuShown(true);
+        if (mounted.current) {
+          onInitContent({ contentId: user.id, contentType: 'user', ...data });
+        }
+        if (mounted.current) {
+          setMenuShown(true);
+        }
       } else {
         setMenuShown(!menuShown);
       }
