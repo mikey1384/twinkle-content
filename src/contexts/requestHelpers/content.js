@@ -158,23 +158,6 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async editSubject({
-      subjectId,
-      editedTitle,
-      editedDescription,
-      editedSecretAnswer
-    }) {
-      try {
-        const { data } = await request.put(
-          `${URL}/content/subjects`,
-          { subjectId, editedTitle, editedDescription, editedSecretAnswer },
-          auth()
-        );
-        return Promise.resolve(data);
-      } catch (error) {
-        return handleError(error);
-      }
-    },
     async fetchPlaylistsContaining({ videoId }) {
       try {
         const { data: playlists } = await request.get(

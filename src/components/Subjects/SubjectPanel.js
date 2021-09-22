@@ -63,7 +63,7 @@ export default function SubjectPanel({
   subjectId
 }) {
   const {
-    requestHelpers: { deleteSubject, editSubject, loadComments }
+    requestHelpers: { deleteSubject, editContent, loadComments }
   } = useAppContext();
   const {
     actions: {
@@ -591,8 +591,9 @@ export default function SubjectPanel({
   }
 
   async function handleEditDone() {
-    const editedSubject = await editSubject({
-      subjectId,
+    const editedSubject = await editContent({
+      contentId: subjectId,
+      contentType: 'subject',
       editedTitle: finalizeEmoji(editedTitle),
       editedDescription: finalizeEmoji(editedDescription),
       editedSecretAnswer: finalizeEmoji(editedSecretAnswer)

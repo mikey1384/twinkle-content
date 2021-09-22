@@ -564,18 +564,13 @@ export default function LinkPage({
   }
 
   async function handleEditLinkPage(params) {
-    await editContent(params);
-    const {
-      contentId,
-      editedTitle: title,
-      editedDescription: description,
-      editedUrl: content
-    } = params;
+    const data = await editContent(params);
+    const { contentId, editedTitle: title, editedUrl: content } = params;
     onEditContent({
       data: {
         content: processedURL(content),
         title,
-        description
+        description: data.description
       },
       contentType: 'url',
       contentId

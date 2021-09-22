@@ -532,12 +532,12 @@ export default function VideoPage({
   }
 
   async function handleEditVideoPage(params) {
-    await editContent(params);
+    const data = await editContent(params);
     const url = fetchedVideoCodeFromURL(params.editedUrl);
     onEditContent({
       data: {
         title: params.editedTitle,
-        description: params.editedDescription,
+        description: data.description,
         content: url
       },
       contentType: 'video',
