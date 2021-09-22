@@ -24,7 +24,8 @@ import {
   exceedsCharLimit,
   stringIsEmpty,
   finalizeEmoji,
-  isValidYoutubeUrl
+  isValidYoutubeUrl,
+  replaceFakeAtSymbol
 } from 'helpers/stringHelpers';
 import { useContentState, useMyState } from 'helpers/hooks';
 import {
@@ -120,7 +121,7 @@ export default function Details({
         contentId: videoId,
         contentType: 'video',
         form: {
-          editedDescription: description || '',
+          editedDescription: replaceFakeAtSymbol(description || ''),
           editedTitle: title || '',
           editedUrl: `https://www.youtube.com/watch?v=${content}`
         }

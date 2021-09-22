@@ -12,7 +12,8 @@ import {
   isValidUrl,
   stringIsEmpty,
   addEmoji,
-  finalizeEmoji
+  finalizeEmoji,
+  replaceFakeAtSymbol
 } from 'helpers/stringHelpers';
 import { css } from '@emotion/css';
 import { useContentState, useMyState } from 'helpers/hooks';
@@ -57,10 +58,10 @@ export default function Description({
     contentId: linkId
   });
 
-  const editState = useMemo(() => inputState['edit' + 'url' + linkId], [
-    inputState,
-    linkId
-  ]);
+  const editState = useMemo(
+    () => inputState['edit' + 'url' + linkId],
+    [inputState, linkId]
+  );
 
   useEffect(() => {
     if (!editState) {
@@ -68,7 +69,7 @@ export default function Description({
         contentId: linkId,
         contentType: 'url',
         form: {
-          editedDescription: description || '',
+          editedDescription: replaceFakeAtSymbol(description || ''),
           editedTitle: title || '',
           editedUrl: url
         }

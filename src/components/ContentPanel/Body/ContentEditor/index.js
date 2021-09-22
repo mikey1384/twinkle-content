@@ -18,7 +18,8 @@ import {
   finalizeEmoji,
   stringIsEmpty,
   isValidUrl,
-  isValidYoutubeUrl
+  isValidYoutubeUrl,
+  replaceFakeAtSymbol
 } from 'helpers/stringHelpers';
 
 ContentEditor.propTypes = {
@@ -51,10 +52,10 @@ function ContentEditor({
   const { banned } = useMyState();
   const defaultInputState = useMemo(
     () => ({
-      editedContent: content || '',
-      editedComment: comment || '',
-      editedDescription: description || '',
-      editedSecretAnswer: secretAnswer || '',
+      editedContent: replaceFakeAtSymbol(content || ''),
+      editedComment: replaceFakeAtSymbol(comment || ''),
+      editedDescription: replaceFakeAtSymbol(description || ''),
+      editedSecretAnswer: replaceFakeAtSymbol(secretAnswer || ''),
       editedTitle: title || '',
       editedUrl:
         contentType === 'video'

@@ -536,7 +536,8 @@ export function processedStringWithURL(string) {
     const linethroughWordRegex = /(--[^\s-]+--)/gi;
     const lineThroughSentenceRegex =
       /(--[^\s-]){1}((?!(-))[^\n])+([^\s-]--){1}/gi;
-    const mentionRegex = /((?![^\s]).{1}|^.?)(@[^\s]+)/gi;
+    const fakeAtSymbolRegex = /＠/gi;
+    const mentionRegex = /((?![^\s])[\S\s]{1}|^.?)(@[^\s]+)/g;
 
     return string
       .replace(/(<br>)/gi, '\n')
@@ -823,12 +824,10 @@ export function processedStringWithURL(string) {
       .replace(mentionRegex, (string) => {
         const path = string.split('@')?.[1];
         const firstChar = string.split('@')?.[0];
-        const firstCharIsSpace = firstChar === ' ';
-        return `${
-          firstCharIsSpace ? ' ' : ''
-        }<a class="mention" href="/users/${path}">@${path}</a>`;
+        return `${firstChar}<a class="mention" href="/users/${path}">@${path}</a>`;
       })
-      .replace(/\n/g, '<br>');
+      .replace(/\n/g, '<br>')
+      .replace(fakeAtSymbolRegex, '@');
   }
 }
 
@@ -878,6 +877,11 @@ export function renderText(text) {
     }
   }
   return newText;
+}
+
+export function replaceFakeAtSymbol(string) {
+  if (stringIsEmpty(string)) return string;
+  return string.replace(/＠/g, '@');
 }
 
 export function stringIsEmpty(string) {
