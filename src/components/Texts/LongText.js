@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import parse from 'html-react-parser';
+import Link from 'components/Link';
 import { limitBrs, processedStringWithURL } from 'helpers/stringHelpers';
 import { Color } from 'constants/css';
 import { useContentState } from 'helpers/hooks';
@@ -77,29 +79,33 @@ export default function LongText({
     if (cleanString) {
       return limitBrs(text);
     }
-    let finalText = processedStringWithURL(text);
-    if (!fullText && finalText && isOverflown) {
-      const splitText = finalText?.split('</');
+    let processedText = processedStringWithURL(text);
+    if (!fullText && processedText && isOverflown) {
+      const splitText = processedText?.split('</');
       if (splitText[splitText.length - 1] === 'a>') {
-        let finalTextArray = finalText?.split('<a');
+        let finalTextArray = processedText?.split('<a');
         finalTextArray = finalTextArray.filter(
           (word, index) => index !== finalTextArray.length - 1
         );
-        finalText = finalTextArray.join('<a') + 'Read More';
+        processedText = finalTextArray.join('<a') + 'Read More';
       }
     }
-    return limitBrs(finalText);
+    const finalText = parse(limitBrs(processedText), {
+      replace: (domNode) => {
+        if (domNode.name === 'a' && domNode.attribs.class === 'mention') {
+          const node = domNode.children[0];
+          return <Link to={domNode.attribs.href}>{node.data}</Link>;
+        }
+      }
+    });
+    return finalText;
   }, [cleanString, fullText, text, isOverflown]);
 
   return (
     <div style={style} className={className}>
       <p>
         {fullText ? (
-          <span
-            dangerouslySetInnerHTML={{
-              __html: innerHTML
-            }}
-          />
+          <span>{innerHTML}</span>
         ) : (
           <>
             <span
@@ -110,10 +116,9 @@ export default function LongText({
                 WebkitLineClamp: maxLines,
                 WebkitBoxOrient: 'vertical'
               }}
-              dangerouslySetInnerHTML={{
-                __html: innerHTML
-              }}
-            />
+            >
+              {innerHTML}
+            </span>
             <>
               {isOverflown && (
                 <>

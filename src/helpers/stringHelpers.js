@@ -536,6 +536,7 @@ export function processedStringWithURL(string) {
     const linethroughWordRegex = /(--[^\s-]+--)/gi;
     const lineThroughSentenceRegex =
       /(--[^\s-]){1}((?!(-))[^\n])+([^\s-]--){1}/gi;
+    const mentionRegex = /((?![^\s]).{1}|^.?)(@[^\s]+)/gi;
 
     return string
       .replace(/(<br>)/gi, '\n')
@@ -819,6 +820,14 @@ export function processedStringWithURL(string) {
         lineThroughSentenceRegex,
         (string) => `<s>${string.substring(2, string.length - 2)}</s>`
       )
+      .replace(mentionRegex, (string) => {
+        const path = string.split('@')?.[1];
+        const firstChar = string.split('@')?.[0];
+        const firstCharIsSpace = firstChar === ' ';
+        return `${
+          firstCharIsSpace ? ' ' : ''
+        }<a class="mention" href="/users/${path}">@${path}</a>`;
+      })
       .replace(/\n/g, '<br>');
   }
 }
