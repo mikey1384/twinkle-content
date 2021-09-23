@@ -65,6 +65,34 @@ export default function NotiItem({
           </>
         );
         break;
+      case 'mention':
+        notificationMessage = (
+          <>
+            <span style={{ color: Color.passionFruit(), fontWeight: 'bold' }}>
+              mentioned you
+            </span>{' '}
+            in a{' '}
+            <ContentLink
+              contentType={targetObj.contentType}
+              content={{
+                id: targetObj.id,
+                title: `${
+                  targetObj.contentType === 'url'
+                    ? 'link'
+                    : targetObj.contentType
+                } ${
+                  !stringIsEmpty(targetObj.content)
+                    ? `(${truncateText({
+                        text: targetObj.content,
+                        limit: 100
+                      })})`
+                    : ''
+                }`
+              }}
+            />
+          </>
+        );
+        break;
       case 'recommendation':
         notificationMessage = (
           <>
