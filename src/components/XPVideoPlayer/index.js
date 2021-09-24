@@ -196,9 +196,6 @@ function XPVideoPlayer({
     ) {
       setReachedMaxWatchDuration(true);
     }
-    if (deviceIsMobile) {
-      PlayerRef.current?.getInternalPlayer()?.playVideo();
-    }
   }, [myViewDuration]);
 
   const handleIncreaseMeter = useCallback(
