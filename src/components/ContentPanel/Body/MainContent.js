@@ -15,6 +15,7 @@ import Link from 'components/Link';
 import SecretComment from 'components/SecretComment';
 import MissionContent from './MissionContent';
 import { strongColors } from 'constants/defaultValues';
+import { isMobile } from 'helpers';
 import { stringIsEmpty, getFileInfoFromFileName } from 'helpers/stringHelpers';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
@@ -29,6 +30,8 @@ MainContent.propTypes = {
   secretHidden: PropTypes.bool,
   userId: PropTypes.number
 };
+
+const displayIsMobile = isMobile(navigator);
 
 export default function MainContent({
   contentId,
@@ -101,7 +104,7 @@ export default function MainContent({
         )}
         {(contentType === 'video' || subjectIsAttachedToVideo) && (
           <XPVideoPlayer
-            stretch
+            isLink={displayIsMobile}
             rewardLevel={
               contentType === 'subject' ? rootObj.rewardLevel : rewardLevel
             }
