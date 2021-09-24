@@ -7,7 +7,7 @@ import React, {
   useState
 } from 'react';
 import PropTypes from 'prop-types';
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/youtube';
 import ErrorBoundary from 'components/ErrorBoundary';
 import XPBar from './XPBar';
 import { videoRewardHash, strongColors } from 'constants/defaultValues';
