@@ -13,10 +13,12 @@ import XPBar from './XPBar';
 import { videoRewardHash, strongColors } from 'constants/defaultValues';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import { isMobile } from 'helpers';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useViewContext } from 'contexts';
 
 const intervalLength = 2000;
+const deviceIsMobile = isMobile(navigator);
 
 XPVideoPlayer.propTypes = {
   isChat: PropTypes.bool,
@@ -193,6 +195,9 @@ function XPVideoPlayer({
       myViewDuration > totalDurationRef.current * 1.5
     ) {
       setReachedMaxWatchDuration(true);
+    }
+    if (deviceIsMobile) {
+      PlayerRef.current?.getInternalPlayer()?.playVideo();
     }
   }, [myViewDuration]);
 
@@ -404,6 +409,11 @@ function XPVideoPlayer({
       >
         <ReactPlayer
           ref={PlayerRef}
+          light={
+            deviceIsMobile
+              ? `https://img.youtube.com/vi/${videoCode}/mqdefault.jpg`
+              : false
+          }
           className={css`
             position: absolute;
             top: 0;
