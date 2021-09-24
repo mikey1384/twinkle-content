@@ -410,7 +410,7 @@ function XPVideoPlayer({
         <ReactPlayer
           ref={PlayerRef}
           light={
-            deviceIsMobile
+            deviceIsMobile && !started
               ? `https://img.youtube.com/vi/${videoCode}/mqdefault.jpg`
               : false
           }
