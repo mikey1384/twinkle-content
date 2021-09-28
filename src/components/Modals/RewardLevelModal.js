@@ -4,6 +4,7 @@ import Modal from 'components/Modal';
 import Button from 'components/Button';
 import ErrorBoundary from 'components/ErrorBoundary';
 import RewardLevelForm from 'components/Forms/RewardLevelForm';
+import AlertModal from 'components/Modals/AlertModal';
 import { useAppContext } from 'contexts';
 
 RewardLevelModal.propTypes = {
@@ -24,6 +25,8 @@ export default function RewardLevelModal({
   const {
     requestHelpers: { updateRewardLevel }
   } = useAppContext();
+  const [moderatorName, setModeratorName] = useState('');
+  const [cannotChangeModalShown, setCannotChangeModalShown] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [rewardLevel, setRewardLevel] = useState(initialRewardLevel);
   return (
@@ -52,12 +55,34 @@ export default function RewardLevelModal({
           </Button>
         </footer>
       </ErrorBoundary>
+      {cannotChangeModalShown && (
+        <AlertModal
+          title="This setting cannot be changed"
+          content={
+            <span>
+              <b>{moderatorName}</b> has disabled users from changing this
+              setting for this post
+            </span>
+          }
+          onHide={() => setCannotChangeModalShown(false)}
+        />
+      )}
     </Modal>
   );
 
   async function submit() {
     setDisabled(true);
-    await updateRewardLevel({ contentId, contentType, rewardLevel });
-    onSubmit({ contentId, rewardLevel, contentType });
+    const { cannotChange, success, moderatorName } = await updateRewardLevel({
+      contentId,
+      contentType,
+      rewardLevel
+    });
+    if (cannotChange) {
+      setModeratorName(moderatorName);
+      return setCannotChangeModalShown(true);
+    }
+    if (success) {
+      onSubmit({ contentId, rewardLevel, contentType });
+    }
   }
 }

@@ -638,12 +638,14 @@ export default function contentRequestHelpers({ auth, handleError }) {
     },
     async updateRewardLevel({ rewardLevel, contentId, contentType }) {
       try {
-        await request.put(
+        const {
+          data: { cannotChange, success, moderatorName }
+        } = await request.put(
           `${URL}/content/rewardLevel`,
           { rewardLevel, contentId, contentType },
           auth()
         );
-        return Promise.resolve();
+        return Promise.resolve({ cannotChange, success, moderatorName });
       } catch (error) {
         return handleError(error);
       }
