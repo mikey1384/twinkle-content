@@ -662,7 +662,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
         className={`unselectable ${css`
           z-index: 30000;
           position: relative;
-          font-family: sans-serif, Arial, Helvetica;
+          font-family: 'Ubuntu', sans-serif, Arial, Helvetica;
           font-size: 1.7rem;
           background: #fff;
           display: flex;

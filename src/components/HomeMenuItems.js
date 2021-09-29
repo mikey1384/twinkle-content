@@ -36,7 +36,6 @@ export default function HomeMenuItems({ history, style = {} }) {
           background: #fff;
           display: flex;
           font-size: 1.7rem;
-          font-family: sans-serif, Arial, Helvetica;
           flex-direction: column;
           border: 1px solid ${Color.borderGray()};
           border-radius: ${borderRadius};

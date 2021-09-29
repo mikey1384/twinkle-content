@@ -66,7 +66,6 @@ export default function Store() {
           className={css`
             font-size: 2rem;
             font-weight: bold;
-            font-family: sans-serif, Arial, Helvetica;
             line-height: 1.5;
             color: ${Color.darkerGray()};
             > .logo {
