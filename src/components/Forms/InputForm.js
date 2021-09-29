@@ -224,7 +224,7 @@ function InputForm({
     }
     setConfirmModalShown(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [onViewSecretAnswer]);
 
   return (
     <div
