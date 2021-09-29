@@ -135,6 +135,9 @@ export default function HomeMenuItems({ history, style = {} }) {
               }
             }
           }
+          @media (min-width: 2304px) {
+            border-left: 1px solid ${Color.borderGray()};
+          }
         `}`}
         style={style}
       >
