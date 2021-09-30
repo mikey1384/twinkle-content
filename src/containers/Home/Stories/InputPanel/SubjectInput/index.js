@@ -143,7 +143,7 @@ function SubjectInput() {
     <ErrorBoundary className={PanelStyle}>
       {!uploadingFile && (
         <>
-          <p>Post a subject Twinkle users can talk about</p>
+          <p>Post a subject users can talk about</p>
           <div
             style={{
               display: 'flex',
