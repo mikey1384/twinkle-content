@@ -194,7 +194,7 @@ function Vocabulary() {
               background: ${Color.black()};
               color: #fff;
               @media (max-width: ${mobileMaxWidth}) {
-                font-size: 2rem;
+                font-size: 1.7rem;
               }
             `}
           >
