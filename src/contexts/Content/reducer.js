@@ -900,6 +900,7 @@ export default function ContentReducer(state, action) {
                       reply.id === action.replyId
                         ? {
                             ...reply,
+                            isExpanded: true,
                             numReplies: 0
                           }
                         : reply
@@ -922,6 +923,7 @@ export default function ContentReducer(state, action) {
               );
               replies[replies.length - 1] = {
                 ...replies[replies.length - 1],
+                isExpanded: true,
                 numReplies: 0
               };
               return {
@@ -931,6 +933,7 @@ export default function ContentReducer(state, action) {
                     reply.id === action.replyId
                       ? {
                           ...reply,
+                          isExpanded: true,
                           numReplies: 0
                         }
                       : reply

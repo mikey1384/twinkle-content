@@ -43,6 +43,7 @@ Reply.propTypes = {
   reply: PropTypes.shape({
     commentId: PropTypes.number.isRequired,
     content: PropTypes.string.isRequired,
+    isExpanded: PropTypes.bool,
     isDeleted: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
     filePath: PropTypes.string,
     fileName: PropTypes.string,
@@ -79,6 +80,7 @@ function Reply({
   pinnedCommentId,
   reply,
   reply: {
+    isExpanded,
     likes = [],
     recommendations = [],
     rewards = [],
@@ -413,14 +415,16 @@ function Reply({
                         >
                           <Icon icon="comment-alt" />
                           <span style={{ marginLeft: '0.7rem' }}>
-                            {reply.numReplies > 1 ? 'Replies' : 'Reply'}
+                            {!isExpanded && reply.numReplies > 1
+                              ? 'Replies'
+                              : 'Reply'}
                             {loadingReplies ? (
                               <Icon
                                 style={{ marginLeft: '0.7rem' }}
                                 icon="spinner"
                                 pulse
                               />
-                            ) : reply.numReplies > 0 ? (
+                            ) : !isExpanded && reply.numReplies > 0 ? (
                               ` (${reply.numReplies})`
                             ) : (
                               ''
@@ -575,6 +579,9 @@ function Reply({
   }
 
   async function handleReplyClick() {
+    if (isExpanded) {
+      return;
+    }
     ReplyInputAreaRef.current.focus();
     setLoadingReplies(true);
     if (reply.numReplies > 0) {
