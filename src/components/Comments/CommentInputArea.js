@@ -128,7 +128,7 @@ export default function CommentInputArea({
         subjectId,
         targetCommentId
       });
-      return Promise.resolve();
     }
+    return Promise.resolve();
   }
 }

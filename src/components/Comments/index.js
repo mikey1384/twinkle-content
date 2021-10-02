@@ -256,6 +256,7 @@ function Comments({
           contentId: finalContentId,
           text: ''
         });
+        return Promise.resolve();
       } catch (error) {
         console.error(error);
       }
