@@ -537,7 +537,7 @@ export function processedStringWithURL(string) {
     const lineThroughSentenceRegex =
       /(--[^\s-]){1}((?!(-))[^\n])+([^\s-]--){1}/gi;
     const fakeAtSymbolRegex = /＠/gi;
-    const mentionRegex = /@[a-zA-Z0-9_]+/gi;
+    const mentionRegex = /@[a-zA-Z0-9_]{3,}/gi;
 
     return string
       .replace(/(<br>)/gi, '\n')
