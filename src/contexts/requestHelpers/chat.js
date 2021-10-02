@@ -258,12 +258,12 @@ export default function chatRequestHelpers({ auth, handleError }) {
     async loadMoreChatMessages({ userId, messageId, channelId }) {
       try {
         const {
-          data: { messages, loadedChannelId }
+          data: { messageIds, messagesObj, loadedChannelId }
         } = await request.get(
           `${URL}/chat/more/messages?userId=${userId}&messageId=${messageId}&channelId=${channelId}`,
           auth()
         );
-        return Promise.resolve({ messages, loadedChannelId });
+        return Promise.resolve({ messageIds, messagesObj, loadedChannelId });
       } catch (error) {
         return handleError(error);
       }

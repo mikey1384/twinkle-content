@@ -249,10 +249,11 @@ export default function ChatActions(dispatch) {
         channels
       });
     },
-    onLoadMoreMessages({ messages, loadedChannelId }) {
+    onLoadMoreMessages({ messageIds, messagesObj, loadedChannelId }) {
       return dispatch({
         type: 'LOAD_MORE_MESSAGES',
-        messages,
+        messageIds,
+        messagesObj,
         loadedChannelId
       });
     },

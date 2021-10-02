@@ -609,12 +609,13 @@ function MessagesContainer({
       if (!loadMoreButtonLock) {
         setLoadMoreButtonLock(true);
         try {
-          const { messages, loadedChannelId } = await loadMoreChatMessages({
-            userId,
-            messageId,
-            channelId: selectedChannelId
-          });
-          onLoadMoreMessages({ messages, loadedChannelId });
+          const { messageIds, messagesObj, loadedChannelId } =
+            await loadMoreChatMessages({
+              userId,
+              messageId,
+              channelId: selectedChannelId
+            });
+          onLoadMoreMessages({ messageIds, messagesObj, loadedChannelId });
           if (MessagesContainerRef.current) {
             MessagesContainerRef.current.scrollTop = Math.max(
               MessagesContainerRef.current.scrollTop,

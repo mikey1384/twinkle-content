@@ -601,15 +601,19 @@ export default function ChatReducer(state, action) {
     case 'LOAD_MORE_MESSAGES': {
       if (state.selectedChannelId !== action.loadedChannelId) return state;
       let messagesLoadMoreButton = false;
-      if (action.messages.length === 21) {
-        action.messages.pop();
+      if (action.messageIds.length === 21) {
+        action.messageIds.pop();
         messagesLoadMoreButton = true;
       }
-      action.messages.reverse();
+      action.messageIds.reverse();
       return {
         ...state,
         messagesLoadMoreButton,
-        messages: action.messages.concat(state.messages)
+        messageIds: action.messageIds.concat(state.messageIds),
+        messagesObj: {
+          ...state.messagesObj,
+          ...action.messagesObj
+        }
       };
     }
     case 'LOAD_SUBJECT':
