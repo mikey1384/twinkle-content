@@ -506,6 +506,10 @@ export default function ChatReducer(state, action) {
           : uploadStatusMessages
           ? [...action.data.messages, ...uploadStatusMessages]
           : action.data.messages,
+        messagesObj: {
+          ...state.messagesObj,
+          ...action.data.messagesObj
+        },
         messagesLoaded: true,
         numUnreads: Math.max(state.numUnreads - originalNumUnreads, 0),
         recentChessMessage: undefined,
