@@ -444,7 +444,7 @@ export default function ChatReducer(state, action) {
         action.data.messages.pop();
         messagesLoadMoreButton = true;
       }
-      action.data.messages?.reverse();
+      action.data.messageIds?.reverse();
       if (action.data.homeChannelIds?.length > 20) {
         action.data.homeChannelIds.pop();
         homeLoadMoreButton = true;
@@ -462,6 +462,7 @@ export default function ChatReducer(state, action) {
         vocabActivitiesLoadMoreButton = true;
       }
       action.data.vocabActivities?.reverse();
+
       return {
         ...state,
         ...initialChatState,
@@ -506,6 +507,9 @@ export default function ChatReducer(state, action) {
           : uploadStatusMessages
           ? [...action.data.messages, ...uploadStatusMessages]
           : action.data.messages,
+        messageIds: alreadyUsingChat
+          ? state.messageIds
+          : action.data.messageIds,
         messagesObj: {
           ...state.messagesObj,
           ...action.data.messagesObj

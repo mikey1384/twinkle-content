@@ -28,6 +28,7 @@ export const initialChatState = {
   loadingVocabulary: false,
   loaded: false,
   messages: [],
+  messageIds: [],
   messagesObj: {},
   messagesLoadMoreButton: false,
   msgsWhileInvisible: 0,
