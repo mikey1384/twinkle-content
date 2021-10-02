@@ -603,6 +603,7 @@ function Comment({
                       </span>
                     )}
                   {filePath &&
+                    !isDeleteNotification &&
                     (userId ? (
                       <div style={{ width: '100%', paddingTop: '3rem' }}>
                         <ContentFileViewer
