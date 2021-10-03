@@ -7,10 +7,16 @@ export default function ChatReducer(state, action) {
     case 'ADD_ID_TO_NEW_MESSAGE':
       return {
         ...state,
-        messages: state.messages.map((message, index) => ({
-          ...message,
-          id: index === action.messageIndex ? action.messageId : message.id
-        }))
+        messageIds: state.messageIds.map((messageId, index) =>
+          index === action.messageIndex ? action.messageId : messageId
+        ),
+        messagesObj: {
+          ...state.messagesObj,
+          [action.messageId]: {
+            ...state.messagesObj.temp,
+            id: action.messageId
+          }
+        }
       };
     case 'EDIT_CHANNEL_SETTINGS':
       return {
@@ -844,7 +850,11 @@ export default function ChatReducer(state, action) {
         msgsWhileInvisible: action.pageVisible
           ? 0
           : state.msgsWhileInvisible + 1,
-        messages: state.messages.concat([action.message]),
+        messageIds: state.messageIds.concat([action.message.id]),
+        messagesObj: {
+          ...state.messagesObj,
+          [action.message.id]: action.message
+        },
         channelsObj: {
           ...state.channelsObj,
           [action.message.channelId]: {
@@ -1261,14 +1271,16 @@ export default function ChatReducer(state, action) {
             numUnreads: 0
           }
         },
-        messages: state.messages.concat([
-          {
+        messageIds: state.messageIds.concat('temp'),
+        messagesObj: {
+          ...state.messagesObj,
+          temp: {
             ...action.message,
             content: action.message.content,
             targetMessage: action.replyTarget,
             targetSubject
           }
-        ])
+        }
       };
     }
     case 'UPDATE_LAST_MESSAGE': {
