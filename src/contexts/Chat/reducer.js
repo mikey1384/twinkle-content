@@ -244,8 +244,8 @@ export default function ChatReducer(state, action) {
     case 'DELETE_MESSAGE':
       return {
         ...state,
-        messages: state.messages.filter(
-          (message) => message.id !== action.messageId
+        messageIds: state.messageIds.filter(
+          (messageId) => messageId !== action.messageId
         )
       };
     case 'DISPLAY_ATTACHED_FILE':
@@ -1309,13 +1309,13 @@ export default function ChatReducer(state, action) {
       return {
         ...state,
         messagesLoadMoreButton:
-          state.messages.length > 20 ? true : state.messagesLoadMoreButton,
-        messages:
-          state.messages.length > 20
-            ? state.messages.filter(
-                (message, index) => index > state.messages.length - 20
+          state.messageIds.length > 20 ? true : state.messagesLoadMoreButton,
+        messageIds:
+          state.messageIds.length > 20
+            ? state.messageIds.filter(
+                (messageId, index) => index > state.messageIds.length - 20
               )
-            : state.messages
+            : state.messageIds
       };
     case 'UPDATE_UPLOAD_PROGRESS':
       return {
