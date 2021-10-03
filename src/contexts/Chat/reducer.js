@@ -332,11 +332,11 @@ export default function ChatReducer(state, action) {
       const uploadStatusMessages = state.filesBeingUploaded[
         selectedChannel.id
       ]?.filter((message) => !message.uploadComplete);
-      if (action.data.messages.length === 21) {
-        action.data.messages.pop();
+      if (action.data.messageIds.length === 21) {
+        action.data.messageIds.pop();
         messagesLoadMoreButton = true;
       }
-      action.data.messages.reverse();
+      action.data.messageIds.reverse();
 
       return {
         ...state,
@@ -359,6 +359,8 @@ export default function ChatReducer(state, action) {
         messages: uploadStatusMessages
           ? [...action.data.messages, ...uploadStatusMessages]
           : action.data.messages,
+        messageIds: action.data.messageIds,
+        messagesObj: action.data.messagesObj,
         messagesLoaded: true,
         numUnreads: Math.max(state.numUnreads - originalNumUnreads, 0),
         selectedChannelId: selectedChannel.id,
@@ -373,6 +375,7 @@ export default function ChatReducer(state, action) {
         subject: {},
         selectedChannelId: 0,
         messages: [],
+        messageIds: [],
         messagesLoadMoreButton: false
       };
     case 'GET_NUM_UNREAD_MSGS':
