@@ -273,13 +273,13 @@ export default function ChatReducer(state, action) {
     case 'EDIT_MESSAGE':
       return {
         ...state,
-        messages: state.messages.map((message) => ({
-          ...message,
-          content:
-            message.id === action.data.messageId
-              ? action.data.editedMessage
-              : message.content
-        })),
+        messagesObj: {
+          ...state.messagesObj,
+          [action.data.messageId]: {
+            ...state.messagesObj[action.data.messageId],
+            content: action.data.editedMessage
+          }
+        },
         subjectObj:
           action.isSubject && action.subjectChanged
             ? {
