@@ -585,7 +585,7 @@ export default function TargetContent({
             contentId: comment.id
           });
           setUploadingFile(false);
-          onUploadTargetComment({ ...data, contentId, contentType });
+          onUploadTargetComment({ ...data.comment, contentId, contentType });
           onClearCommentFileUploadProgress({
             contentType: 'comment',
             contentId: comment.id
@@ -611,7 +611,7 @@ export default function TargetContent({
           },
           targetCommentId: comment.id
         });
-        onUploadTargetComment({ ...data, contentId, contentType });
+        onUploadTargetComment({ ...data.comment, contentId, contentType });
       }
     } catch (error) {
       console.error(error);

@@ -223,7 +223,7 @@ function Comments({
           contentType: finalContentType,
           contentId: finalContentId
         });
-        const data = await uploadComment({
+        const { comment } = await uploadComment({
           content: commentContent,
           parent,
           rootCommentId,
@@ -236,13 +236,13 @@ function Comments({
         });
         if (isReply) {
           onReplySubmit({
-            ...data,
+            ...comment,
             contentId: parent.contentId,
             contentType: parent.contentType
           });
         } else {
           onCommentSubmit({
-            ...data,
+            ...comment,
             contentId: targetCommentId || parent.contentId,
             contentType: targetCommentId ? 'comment' : parent.contentType
           });
@@ -315,7 +315,7 @@ function Comments({
         }
         try {
           setCommentSubmitted(true);
-          const data = await uploadComment({
+          const { comment } = await uploadComment({
             content,
             parent,
             rootCommentId,
@@ -323,7 +323,7 @@ function Comments({
             targetCommentId
           });
           await onCommentSubmit({
-            ...data,
+            ...comment,
             contentId: parent.contentId,
             contentType: parent.contentType
           });
@@ -336,7 +336,7 @@ function Comments({
       async function handleViewSecretAnswer() {
         try {
           setCommentSubmitted(true);
-          const data = await uploadComment({
+          const { comment } = await uploadComment({
             content: 'viewed the secret message',
             parent,
             subjectId:
@@ -344,7 +344,7 @@ function Comments({
             isNotification: true
           });
           await onCommentSubmit({
-            ...data,
+            ...comment,
             contentId: parent.contentId,
             contentType: parent.contentType
           });
@@ -375,14 +375,14 @@ function Comments({
         return;
       }
       setCommentSubmitted(true);
-      const data = await uploadComment({
+      const { comment } = await uploadComment({
         content,
         parent,
         rootCommentId,
         targetCommentId
       });
       onReplySubmit({
-        ...data,
+        ...comment,
         contentId: parent.contentId,
         contentType: parent.contentType
       });
