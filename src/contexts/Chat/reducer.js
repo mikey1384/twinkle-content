@@ -188,6 +188,7 @@ export default function ChatReducer(state, action) {
       };
     case 'CREATE_NEW_CHANNEL': {
       const { channelId } = action.data.message;
+      const startMessageId = uuidv1();
       return {
         ...state,
         chatType: 'default',
@@ -223,7 +224,11 @@ export default function ChatReducer(state, action) {
           }
         },
         selectedChannelId: channelId,
-        messages: [action.data.message],
+        messageIds: [startMessageId],
+        messagesObj: {
+          ...state.messagesObj,
+          [startMessageId]: action.data.message
+        },
         messagesLoadMoreButton: false
       };
     }
