@@ -821,7 +821,7 @@ export default function ChatReducer(state, action) {
             twoPeople: true
           }
         },
-        messages: [],
+        messageIds: [],
         messagesLoadMoreButton: false,
         recepientId: action.recepient.id
       };
