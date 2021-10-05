@@ -1,6 +1,7 @@
 import { initialChatState } from '.';
 import { defaultChatSubject } from 'constants/defaultValues';
 import { determineSelectedChatTab } from './helpers';
+import { v1 as uuidv1 } from 'uuid';
 
 export default function ChatReducer(state, action) {
   switch (action.type) {
@@ -93,6 +94,7 @@ export default function ChatReducer(state, action) {
       };
     }
     case 'CHANGE_CHANNEL_OWNER': {
+      const notificationId = uuidv1();
       return {
         ...state,
         channelsObj: {
@@ -110,10 +112,14 @@ export default function ChatReducer(state, action) {
             }
           }
         },
-        messages:
+        messageIds:
           state.selectedChannelId === action.channelId
-            ? state.messages.concat(action.message)
-            : state.messages
+            ? state.messageIds.concat(notificationId)
+            : state.messages,
+        messagesObj: {
+          ...state.messagesObj,
+          [notificationId]: action.message
+        }
       };
     }
     case 'CHANGE_CHANNEL_SETTINGS': {
