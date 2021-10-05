@@ -1356,15 +1356,22 @@ export default function ChatReducer(state, action) {
           )
         }
       };
-    case 'UPDATE_CHESS_MOVE_VIEW_STAMP':
+    case 'UPDATE_CHESS_MOVE_VIEW_STAMP': {
+      const newMessagesObj = { ...state.messagesObj };
+      for (let messageId of state.messageIds) {
+        const message = state.messagesObj[messageId];
+        if (message.moveViewTimeStamp) {
+          continue;
+        }
+        newMessagesObj[messageId].moveViewTimeStamp = Math.floor(
+          Date.now() / 1000
+        );
+      }
       return {
         ...state,
-        messages: state.messages.map((message) =>
-          !message.moveViewTimeStamp
-            ? { ...message, moveViewTimeStamp: Math.floor(Date.now() / 1000) }
-            : message
-        )
+        messagesObj: newMessagesObj
       };
+    }
     case 'UPDATE_CLIENT_TO_API_SERVER_PROGRESS':
       return {
         ...state,
