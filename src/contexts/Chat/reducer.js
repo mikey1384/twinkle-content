@@ -232,7 +232,7 @@ export default function ChatReducer(state, action) {
         messagesLoadMoreButton: false
       };
     }
-    case 'CREATE_NEW_DM_CHANNEL':
+    case 'CREATE_NEW_DM_CHANNEL': {
       return {
         ...state,
         subject: {},
@@ -258,6 +258,7 @@ export default function ChatReducer(state, action) {
         selectedChannelId: action.channel.id,
         messages: [action.message]
       };
+    }
     case 'DELETE_MESSAGE':
       return {
         ...state,
@@ -1408,7 +1409,7 @@ export default function ChatReducer(state, action) {
         ...state,
         chatType: 'default',
         channelLoading: true,
-        messages: [],
+        messageIds: [],
         messagesLoaded: false,
         messagesLoadMoreButton: false,
         selectedChannelId: action.channelId
