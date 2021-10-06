@@ -425,7 +425,11 @@ function MessagesContainer({
             recepientId
           });
           socket.emit('join_chat_group', message.channelId);
-          socket.emit('send_bi_chat_invitation', recepientId, message);
+          socket.emit('send_bi_chat_invitation', {
+            userId: recepientId,
+            members: currentChannel.members,
+            message
+          });
           onSendFirstDirectMessage({ channel, message });
           return;
         }
@@ -687,7 +691,11 @@ function MessagesContainer({
             recepientId
           });
           socket.emit('join_chat_group', message.channelId);
-          socket.emit('send_bi_chat_invitation', recepientId, message);
+          socket.emit('send_bi_chat_invitation', {
+            userId: recepientId,
+            members: currentChannel.members,
+            message
+          });
           onSendFirstDirectMessage({ channel, message });
           onSetCreatingNewDMChannel(false);
           return Promise.resolve();

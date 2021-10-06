@@ -276,7 +276,11 @@ function App({ location, history }) {
       if (channel) {
         onSendFirstDirectMessage({ channel, message });
         socket.emit('join_chat_group', message.channelId);
-        socket.emit('send_bi_chat_invitation', recepientId, message);
+        socket.emit('send_bi_chat_invitation', {
+          userId: recepientId,
+          members: currentChannel.members,
+          message
+        });
       }
       function handleUploadProgress({ loaded, total }) {
         onUpdateChatUploadProgress({

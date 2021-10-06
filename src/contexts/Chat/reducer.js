@@ -925,7 +925,8 @@ export default function ChatReducer(state, action) {
           }
         }
       };
-    case 'RECEIVE_FIRST_MSG':
+    case 'RECEIVE_FIRST_MSG': {
+      const messageId = uuidv1();
       return {
         ...state,
         numUnreads:
@@ -956,25 +957,30 @@ export default function ChatReducer(state, action) {
             numUnreads: 1
           }
         },
-        messages: action.duplicate
-          ? [
-              {
-                id: null,
-                channelId: action.message.channelId,
-                content: action.message.content,
-                timeStamp: action.message.timeStamp,
-                username: action.message.username,
-                userId: action.message.userId,
-                profilePicUrl: action.message.profilePicUrl
+        messagesObj: {
+          ...state.messagesObj,
+          ...(action.duplicate
+            ? {
+                [messageId]: {
+                  id: messageId,
+                  channelId: action.message.channelId,
+                  content: action.message.content,
+                  timeStamp: action.message.timeStamp,
+                  username: action.message.username,
+                  userId: action.message.userId,
+                  profilePicUrl: action.message.profilePicUrl
+                }
               }
-            ]
-          : state.messages,
+            : {})
+        },
+        messageIds: action.duplicate ? [messageId] : state.messageIds,
         homeChannelIds: [action.message.channelId].concat(
           state.homeChannelIds.filter((channelId, index) =>
             action.duplicate ? index !== 0 : true
           )
         )
       };
+    }
     case 'RECEIVE_MSG_ON_DIFF_CHANNEL':
       return {
         ...state,
