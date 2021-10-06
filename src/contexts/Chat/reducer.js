@@ -271,22 +271,27 @@ export default function ChatReducer(state, action) {
           (messageId) => messageId !== action.messageId
         )
       };
-    case 'DISPLAY_ATTACHED_FILE':
+    case 'DISPLAY_ATTACHED_FILE': {
+      const newMessagesObj = { ...state.messagesObj };
+      for (let messageId of state.messageIds) {
+        const message = state.messagesObj[messageId];
+        if (message.filePath !== action.filePath) {
+          continue;
+        }
+        newMessagesObj[messageId] = {
+          ...message,
+          ...action.fileInfo,
+          id: state.filesBeingUploaded[action.channelId]?.filter(
+            (file) => file.filePath === action.filePath
+          )?.[0]?.id,
+          fileToUpload: undefined
+        };
+      }
       return {
         ...state,
-        messages: state.messages.map((message) => {
-          return message.filePath === action.filePath
-            ? {
-                ...message,
-                ...action.fileInfo,
-                id: state.filesBeingUploaded[action.channelId]?.filter(
-                  (file) => file.filePath === action.filePath
-                )?.[0]?.id,
-                fileToUpload: undefined
-              }
-            : message;
-        })
+        messagesObj: newMessagesObj
       };
+    }
     case 'EDIT_MESSAGE':
       return {
         ...state,
