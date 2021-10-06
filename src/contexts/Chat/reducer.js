@@ -395,9 +395,6 @@ export default function ChatReducer(state, action) {
           ...state.channelsObj,
           [selectedChannel.id]: selectedChannel
         },
-        messages: uploadStatusMessages
-          ? [...action.data.messages, ...uploadStatusMessages]
-          : action.data.messages,
         messageIds: newMessageIds,
         messagesObj: newMessagesObj,
         messagesLoaded: true,
