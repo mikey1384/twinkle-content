@@ -357,14 +357,25 @@ export default function ChatReducer(state, action) {
       let messagesLoadMoreButton = false;
       let originalNumUnreads = 0;
       const selectedChannel = action.data.channel;
-      const uploadStatusMessages = state.filesBeingUploaded[
-        selectedChannel.id
-      ]?.filter((message) => !message.uploadComplete);
       if (action.data.messageIds.length === 21) {
         action.data.messageIds.pop();
         messagesLoadMoreButton = true;
       }
       action.data.messageIds.reverse();
+      const newMessageIds = [...action.data.messageIds];
+      const newMessagesObj = {
+        ...action.data.messagesObj
+      };
+      const uploadStatusMessages = state.filesBeingUploaded[
+        selectedChannel.id
+      ]?.filter((message) => !message.uploadComplete);
+      if (uploadStatusMessages) {
+        for (let message of uploadStatusMessages) {
+          const messageId = uuidv1();
+          newMessageIds.push(messageId);
+          newMessagesObj[messageId] = message;
+        }
+      }
 
       return {
         ...state,
@@ -387,8 +398,8 @@ export default function ChatReducer(state, action) {
         messages: uploadStatusMessages
           ? [...action.data.messages, ...uploadStatusMessages]
           : action.data.messages,
-        messageIds: action.data.messageIds,
-        messagesObj: action.data.messagesObj,
+        messageIds: newMessageIds,
+        messagesObj: newMessagesObj,
         messagesLoaded: true,
         numUnreads: Math.max(state.numUnreads - originalNumUnreads, 0),
         selectedChannelId: selectedChannel.id,
