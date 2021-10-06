@@ -410,7 +410,6 @@ export default function ChatReducer(state, action) {
         recentChessMessage: undefined,
         subject: {},
         selectedChannelId: 0,
-        messages: [],
         messageIds: [],
         messagesLoadMoreButton: false
       };
