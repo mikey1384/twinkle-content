@@ -140,7 +140,6 @@ function ProfilePanel({ expandable, profileId, style }) {
   const {
     requestHelpers: {
       checkIfUserOnline,
-      loadChat,
       loadDMChannel,
       loadComments,
       loadProfile,
@@ -150,8 +149,7 @@ function ProfilePanel({ expandable, profileId, style }) {
   const { isCreator, userId, username } = useMyState();
 
   const {
-    state: { loaded: chatLoaded },
-    actions: { onInitChat, onOpenDirectMessageChannel }
+    actions: { onOpenDirectMessageChannel }
   } = useChatContext();
   const {
     actions: { onResetProfile }
@@ -540,12 +538,6 @@ function ProfilePanel({ expandable, profileId, style }) {
   }
 
   async function handleTalkClick() {
-    if (!chatLoaded) {
-      const initialData = await loadChat();
-      if (mounted.current) {
-        onInitChat(initialData);
-      }
-    }
     const data = await loadDMChannel({ recepient: profile });
     if (mounted.current) {
       onOpenDirectMessageChannel({

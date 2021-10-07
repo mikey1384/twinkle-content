@@ -469,7 +469,7 @@ export default function ChatReducer(state, action) {
       };
     case 'INIT_CHAT': {
       const alreadyUsingChat =
-        !!state.selectedChannelId &&
+        (!!state.selectedChannelId || state.selectedChannelId === 0) &&
         state.selectedChannelId !== action.data.currentChannelId;
       let messagesLoadMoreButton = false;
       let originalNumUnreads = 0;
@@ -480,11 +480,13 @@ export default function ChatReducer(state, action) {
       const uploadStatusMessages = state.filesBeingUploaded[
         action.data.currentChannelId
       ]?.filter((message) => !message.uploadComplete);
-      if (action.data.messages && action.data.messages.length === 21) {
-        action.data.messages.pop();
-        messagesLoadMoreButton = true;
+      if (!alreadyUsingChat) {
+        if (action.data.messages && action.data.messages.length === 21) {
+          action.data.messages.pop();
+          messagesLoadMoreButton = true;
+        }
+        action.data.messageIds?.reverse();
       }
-      action.data.messageIds?.reverse();
       if (action.data.homeChannelIds?.length > 20) {
         action.data.homeChannelIds.pop();
         homeLoadMoreButton = true;
@@ -559,7 +561,9 @@ export default function ChatReducer(state, action) {
         recentChessMessage: undefined,
         reconnecting: false,
         selectedChannelId:
-          state.selectedChannelId || action.data.currentChannelId
+          state.selectedChannelId || state.selectedChannelId === 0
+            ? state.selectedChannelId
+            : action.data.currentChannelId
       };
     }
     case 'INVITE_USERS_TO_CHANNEL':
@@ -809,7 +813,7 @@ export default function ChatReducer(state, action) {
             numUnreads: 0
           }
         },
-        selectedChannelId: action.channelId,
+        selectedChannelId: action.channelId || 0,
         messageIds: action.messageIds.reverse(),
         messagesObj: {
           ...state.messagesObj,
