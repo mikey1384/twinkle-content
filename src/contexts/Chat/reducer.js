@@ -393,14 +393,20 @@ export default function ChatReducer(state, action) {
         recentChessMessage: undefined,
         channelsObj: {
           ...state.channelsObj,
-          [selectedChannel.id]: selectedChannel
+          [selectedChannel.id]: {
+            ...selectedChannel,
+            messagesLoadMoreButton,
+            messageIds: newMessageIds,
+            messagesObj: newMessagesObj,
+            messagesLoaded: true,
+            numUnreads: Math.max(
+              state.channelsObj[selectedChannel.id].numUnreads -
+                originalNumUnreads,
+              0
+            )
+          }
         },
-        messageIds: newMessageIds,
-        messagesObj: newMessagesObj,
-        messagesLoaded: true,
-        numUnreads: Math.max(state.numUnreads - originalNumUnreads, 0),
-        selectedChannelId: selectedChannel.id,
-        messagesLoadMoreButton
+        selectedChannelId: selectedChannel.id
       };
     }
     case 'ENTER_EMPTY_CHAT':
@@ -478,10 +484,10 @@ export default function ChatReducer(state, action) {
       let favoriteLoadMoreButton = false;
       let vocabActivitiesLoadMoreButton = false;
       const newMessageIds = alreadyUsingChat
-        ? state.messageIds
+        ? state.channelsObj[action.data.currentChannelId]?.messageIds
         : action.data.messageIds;
       const newMessagesObj = {
-        ...state.messagesObj,
+        ...state.channelsObj[action.data.currentChannelId]?.messagesObj,
         ...action.data.messagesObj
       };
       const uploadStatusMessages = state.filesBeingUploaded[
@@ -548,6 +554,10 @@ export default function ChatReducer(state, action) {
           ...action.data.channelsObj,
           [action.data.currentChannelId]: {
             ...action.data.channelsObj[action.data.currentChannelId],
+            messagesLoadMoreButton,
+            messageIds: newMessageIds,
+            messagesObj: newMessagesObj,
+            messagesLoaded: true,
             numUnreads: 0
           }
         },
@@ -557,10 +567,6 @@ export default function ChatReducer(state, action) {
           ? state.homeLoadMoreButton
           : homeLoadMoreButton,
         customChannelNames: action.data.customChannelNames,
-        messagesLoadMoreButton,
-        messageIds: newMessageIds,
-        messagesObj: newMessagesObj,
-        messagesLoaded: true,
         numUnreads: Math.max(state.numUnreads - originalNumUnreads, 0),
         recentChessMessage: undefined,
         reconnecting: false,

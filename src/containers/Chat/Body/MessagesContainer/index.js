@@ -73,15 +73,9 @@ function MessagesContainer({
   const {
     state: {
       channelOnCall,
-      channelLoading,
       chessModalShown,
       creatingNewDMChannel,
       allFavoriteChannelIds,
-      isRespondingToSubject,
-      messagesLoadMoreButton,
-      messageIds,
-      messagesObj,
-      messagesLoaded,
       recepientId,
       reconnecting,
       replyTarget,
@@ -95,7 +89,6 @@ function MessagesContainer({
       onHideChat,
       onLeaveChannel,
       onLoadMoreMessages,
-      onChannelLoadingDone,
       onSendFirstDirectMessage,
       onSetChessModalShown,
       onSetCreatingNewDMChannel,
@@ -106,6 +99,12 @@ function MessagesContainer({
       onUpdateLastMessages
     }
   } = useChatContext();
+  const {
+    isRespondingToSubject = false,
+    messageIds = [],
+    messagesObj = {},
+    messagesLoadMoreButton = false
+  } = currentChannel;
   const { banned, profilePicUrl, userId, username } = useMyState();
   const [chessCountdownObj, setChessCountdownObj] = useState({});
   const [textAreaHeight, setTextAreaHeight] = useState(0);
@@ -193,8 +192,8 @@ function MessagesContainer({
   ]);
 
   const loading = useMemo(
-    () => channelLoading || creatingNewDMChannel || reconnecting,
-    [channelLoading, creatingNewDMChannel, reconnecting]
+    () => creatingNewDMChannel || reconnecting,
+    [creatingNewDMChannel, reconnecting]
   );
 
   const menuProps = useMemo(() => {
@@ -334,20 +333,6 @@ function MessagesContainer({
       }, 200);
     }
   });
-
-  useEffect(() => {
-    if (messagesLoaded && mounted.current) {
-      setTimeout(() => {
-        if (mounted.current && MessagesContainerRef.current) {
-          MessagesContainerRef.current.scrollTop =
-            ContentRef.current?.offsetHeight || 0;
-        }
-        onChannelLoadingDone();
-      }, 0);
-      setScrollAtBottom(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [messagesLoaded, reconnecting]);
 
   useEffect(() => {
     favoritingRef.current = false;
