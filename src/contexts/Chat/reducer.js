@@ -753,13 +753,15 @@ export default function ChatReducer(state, action) {
             }
           }
         },
-        messages: state.messages.concat([
-          {
+        messageIds: state.messageIds.concat(action.subject.id),
+        messagesObj: {
+          ...state.messagesObj,
+          [action.subject.id]: {
             id: action.subject.id,
             channelId: action.channelId,
             ...action.subject
           }
-        ])
+        }
       };
     case 'NOTIFY_MEMBER_LEFT': {
       const leaveMessage = 'left the chat group';
