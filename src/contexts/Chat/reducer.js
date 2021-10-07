@@ -764,8 +764,9 @@ export default function ChatReducer(state, action) {
         }
       };
     case 'NOTIFY_MEMBER_LEFT': {
+      const messageId = uuidv1();
       const leaveMessage = 'left the chat group';
-      let timeStamp = Math.floor(Date.now() / 1000);
+      const timeStamp = Math.floor(Date.now() / 1000);
       return {
         ...state,
         channelsObj: {
@@ -785,9 +786,11 @@ export default function ChatReducer(state, action) {
             )
           }
         },
-        messages: state.messages.concat([
-          {
-            id: null,
+        messageIds: state.messageIds.concat(messageId),
+        messagesObj: {
+          ...state.messagesObj,
+          [messageId]: {
+            id: messageId,
             channelId: action.data.channelId,
             content: leaveMessage,
             timeStamp: timeStamp,
@@ -796,7 +799,7 @@ export default function ChatReducer(state, action) {
             userId: action.data.userId,
             profilePicUrl: action.data.profilePicUrl
           }
-        ])
+        }
       };
     }
     case 'OPEN_DM': {
