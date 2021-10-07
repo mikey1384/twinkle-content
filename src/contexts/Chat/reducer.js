@@ -477,9 +477,23 @@ export default function ChatReducer(state, action) {
       let homeLoadMoreButton = false;
       let favoriteLoadMoreButton = false;
       let vocabActivitiesLoadMoreButton = false;
+      const newMessageIds = alreadyUsingChat
+        ? state.messageIds
+        : action.data.messageIds;
+      const newMessagesObj = {
+        ...state.messagesObj,
+        ...action.data.messagesObj
+      };
       const uploadStatusMessages = state.filesBeingUploaded[
         action.data.currentChannelId
       ]?.filter((message) => !message.uploadComplete);
+      if (uploadStatusMessages) {
+        for (let message of uploadStatusMessages) {
+          const messageId = uuidv1();
+          newMessageIds.push(messageId);
+          newMessagesObj[messageId] = message;
+        }
+      }
       if (!alreadyUsingChat) {
         if (action.data.messages && action.data.messages.length === 21) {
           action.data.messages.pop();
@@ -544,18 +558,8 @@ export default function ChatReducer(state, action) {
           : homeLoadMoreButton,
         customChannelNames: action.data.customChannelNames,
         messagesLoadMoreButton,
-        messages: alreadyUsingChat
-          ? state.messages
-          : uploadStatusMessages
-          ? [...action.data.messages, ...uploadStatusMessages]
-          : action.data.messages,
-        messageIds: alreadyUsingChat
-          ? state.messageIds
-          : action.data.messageIds,
-        messagesObj: {
-          ...state.messagesObj,
-          ...action.data.messagesObj
-        },
+        messageIds: newMessageIds,
+        messagesObj: newMessagesObj,
         messagesLoaded: true,
         numUnreads: Math.max(state.numUnreads - originalNumUnreads, 0),
         recentChessMessage: undefined,
