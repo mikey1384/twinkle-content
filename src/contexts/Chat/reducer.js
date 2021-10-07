@@ -115,7 +115,7 @@ export default function ChatReducer(state, action) {
         messageIds:
           state.selectedChannelId === action.channelId
             ? state.messageIds.concat(notificationId)
-            : state.messages,
+            : state.messageIds,
         messagesObj: {
           ...state.messagesObj,
           [notificationId]: action.message
@@ -495,8 +495,8 @@ export default function ChatReducer(state, action) {
         }
       }
       if (!alreadyUsingChat) {
-        if (action.data.messages && action.data.messages.length === 21) {
-          action.data.messages.pop();
+        if (action.data.messageIds && action.data.messageIds.length === 21) {
+          action.data.messageIds.pop();
           messagesLoadMoreButton = true;
         }
         action.data.messageIds?.reverse();
