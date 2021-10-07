@@ -448,11 +448,13 @@ export default function ChatReducer(state, action) {
     case 'HIDE_ATTACHMENT':
       return {
         ...state,
-        messages: state.messages.map((message) =>
-          message.id === action.messageId
-            ? { ...message, attachmentHidden: true }
-            : message
-        )
+        messagesObj: {
+          ...state.messagesObj,
+          [action.messageId]: {
+            ...state.messagesObj[action.messageId],
+            attachmentHidden: true
+          }
+        }
       };
     case 'HIDE_CHAT':
       return {
