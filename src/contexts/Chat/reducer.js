@@ -586,7 +586,11 @@ export default function ChatReducer(state, action) {
             )
           }
         },
-        messages: state.messages.concat([action.data.message])
+        messageIds: state.messageIds.concat(action.data.message.id),
+        messagesObj: {
+          ...state.messagesObj,
+          [action.data.message.id]: action.data.message
+        }
       };
     case 'LEAVE_CHANNEL':
       return {
