@@ -787,8 +787,8 @@ export default function ChatReducer(state, action) {
     }
     case 'OPEN_DM': {
       let messagesLoadMoreButton = false;
-      if (action.messages.length > 20) {
-        action.messages.pop();
+      if (action.messageIds.length > 20) {
+        action.messageIds.pop();
         messagesLoadMoreButton = true;
       }
       return {
@@ -810,7 +810,11 @@ export default function ChatReducer(state, action) {
           }
         },
         selectedChannelId: action.channelId,
-        messages: action.messages.reverse(),
+        messageIds: action.messageIds.reverse(),
+        messagesObj: {
+          ...state.messagesObj,
+          ...action.messagesObj
+        },
         messagesLoadMoreButton,
         recepientId: action.recepient.id
       };
