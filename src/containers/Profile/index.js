@@ -43,7 +43,10 @@ export default function Profile({ history, location, match }) {
         const { pageNotExists, user } = await loadProfileViaUsername(
           match.params.username
         );
-        if (pageNotExists) return onUserNotExist(match.params.username);
+        if (pageNotExists) {
+          setLoading(false);
+          return onUserNotExist(match.params.username);
+        }
         onSetProfileId({ username: match.params.username, profileId: user.id });
         onInitContent({
           contentType: 'user',
