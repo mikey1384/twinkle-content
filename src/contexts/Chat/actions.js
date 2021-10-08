@@ -539,9 +539,10 @@ export default function ChatActions(dispatch) {
         replyTarget
       });
     },
-    onTrimMessages() {
+    onTrimMessages(channelId) {
       return dispatch({
-        type: 'TRIM_MESSAGES'
+        type: 'TRIM_MESSAGES',
+        channelId
       });
     },
     onUpdateChessMoveViewTimeStamp() {

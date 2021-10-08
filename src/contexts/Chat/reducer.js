@@ -785,6 +785,23 @@ export default function ChatReducer(state, action) {
           ...state.channelsObj,
           [action.data.channelId]: {
             ...state.channelsObj[action.data.channelId],
+            messageIds:
+              state.channelsObj[action.data.channelId].messageIds.concat(
+                messageId
+              ),
+            messagesObj: {
+              ...state.channelsObj[action.data.channelId].messagesObj,
+              [messageId]: {
+                id: messageId,
+                channelId: action.data.channelId,
+                content: leaveMessage,
+                timeStamp: timeStamp,
+                isNotification: true,
+                username: action.data.username,
+                userId: action.data.userId,
+                profilePicUrl: action.data.profilePicUrl
+              }
+            },
             lastMessage: {
               content: leaveMessage,
               sender: {
@@ -796,20 +813,6 @@ export default function ChatReducer(state, action) {
             members: state.channelsObj[action.data.channelId].members.filter(
               (member) => member.id !== action.data.userId
             )
-          }
-        },
-        messageIds: state.messageIds.concat(messageId),
-        messagesObj: {
-          ...state.messagesObj,
-          [messageId]: {
-            id: messageId,
-            channelId: action.data.channelId,
-            content: leaveMessage,
-            timeStamp: timeStamp,
-            isNotification: true,
-            username: action.data.username,
-            userId: action.data.userId,
-            profilePicUrl: action.data.profilePicUrl
           }
         }
       };
@@ -835,16 +838,13 @@ export default function ChatReducer(state, action) {
             members: [action.user, action.recepient],
             channelName: action.recepient.username,
             lastMessage: action.lastMessage,
+            messageIds: action.messageIds.reverse(),
+            messagesObj: action.messagesObj,
+            messagesLoadMoreButton,
             numUnreads: 0
           }
         },
         selectedChannelId: action.channelId || 0,
-        messageIds: action.messageIds.reverse(),
-        messagesObj: {
-          ...state.messagesObj,
-          ...action.messagesObj
-        },
-        messagesLoadMoreButton,
         recepientId: action.recepient.id
       };
     }
@@ -1394,14 +1394,24 @@ export default function ChatReducer(state, action) {
     case 'TRIM_MESSAGES':
       return {
         ...state,
-        messagesLoadMoreButton:
-          state.messageIds.length > 20 ? true : state.messagesLoadMoreButton,
-        messageIds:
-          state.messageIds.length > 20
-            ? state.messageIds.filter(
-                (messageId, index) => index > state.messageIds.length - 20
-              )
-            : state.messageIds
+        channelsObj: {
+          ...state.channelsObj,
+          [action.channelId]: {
+            ...state.channelsObj[action.channelId],
+            messagesLoadMoreButton:
+              state.channelsObj[action.channelId].messageIds.length > 20
+                ? true
+                : state.channelsObj[action.channelId].messagesLoadMoreButton,
+            messageIds:
+              state.channelsObj[action.channelId].messageIds.length > 20
+                ? state.channelsObj[action.channelId].messageIds.filter(
+                    (messageId, index) =>
+                      index >
+                      state.channelsObj[action.channelId].messageIds.length - 20
+                  )
+                : state.channelsObj[action.channelId].messageIds
+          }
+        }
       };
     case 'UPDATE_UPLOAD_PROGRESS':
       return {

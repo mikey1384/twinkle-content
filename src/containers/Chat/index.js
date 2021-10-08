@@ -147,11 +147,13 @@ function Chat({ onFileUpload }) {
     mounted.current = true;
     return function cleanUp() {
       onClearNumUnreads();
-      onTrimMessages();
+      if (selectedChannelId) {
+        onTrimMessages(selectedChannelId);
+      }
       mounted.current = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [selectedChannelId]);
 
   const currentChannelOnlineMembers = useMemo(() => {
     if (currentChannel.id === GENERAL_CHAT_ID) {
