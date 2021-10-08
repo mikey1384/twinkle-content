@@ -46,12 +46,11 @@ export default function LongText({
   const [isOverflown, setIsOverflown] = useState(false);
 
   useEffect(() => {
-    if (
+    setFullText(false);
+    setIsOverflown(
       ContainerRef.current?.scrollHeight > ContainerRef.current?.clientHeight
-    ) {
-      setIsOverflown(true);
-    }
-  }, []);
+    );
+  }, [text]);
 
   useEffect(() => {
     if (fullTextState[section] && !isPreview) {
