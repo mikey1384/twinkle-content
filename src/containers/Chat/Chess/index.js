@@ -75,7 +75,7 @@ function Chess({
 }) {
   const { userId, banned } = useMyState();
   const {
-    state: { channelLoading, creatingNewDMChannel, selectedChannelId }
+    state: { creatingNewDMChannel, selectedChannelId }
   } = useChatContext();
   const playerColors = useRef({
     [myId]: 'white',
@@ -91,17 +91,12 @@ function Chess({
     white: [],
     black: []
   });
-  const loadingRef = useRef(channelLoading);
   const enPassantTarget = useRef(null);
   const capturedPiece = useRef(null);
   const parsedState = useMemo(
     () => (initialState ? JSON.parse(initialState) : undefined),
     [initialState]
   );
-
-  useEffect(() => {
-    loadingRef.current = channelLoading;
-  }, [channelLoading]);
 
   const move = useMemo(() => {
     if (parsedState) {
@@ -443,7 +438,6 @@ function Chess({
   const handleSpoilerClick = useCallback(() => {
     if (
       banned?.chess ||
-      loadingRef.current ||
       selectedChannelId !== channelId ||
       senderId === userId ||
       creatingNewDMChannel

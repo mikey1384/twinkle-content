@@ -252,7 +252,7 @@ function Message({
         targetMessageId: targetMessage?.id,
         targetSubject
       });
-      onSaveMessage({ messageId, index });
+      onSaveMessage({ messageId, index, channelId });
       socket.emit('new_chat_message', {
         message: {
           ...message,

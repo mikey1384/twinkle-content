@@ -70,11 +70,6 @@ export default function ChatActions(dispatch) {
         channelId
       });
     },
-    onChannelLoadingDone() {
-      return dispatch({
-        type: 'CHANNEL_LOADING_DONE'
-      });
-    },
     onClearNumUnreads() {
       return dispatch({
         type: 'CLEAR_NUM_UNREADS'
@@ -382,9 +377,10 @@ export default function ChatActions(dispatch) {
         type: 'RESET_CHAT'
       });
     },
-    onSaveMessage({ index, messageId }) {
+    onSaveMessage({ index, messageId, channelId }) {
       return dispatch({
         type: 'ADD_ID_TO_NEW_MESSAGE',
+        channelId,
         messageIndex: index,
         messageId
       });
