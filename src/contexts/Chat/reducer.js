@@ -666,11 +666,19 @@ export default function ChatReducer(state, action) {
       action.messageIds.reverse();
       return {
         ...state,
-        messagesLoadMoreButton,
-        messageIds: action.messageIds.concat(state.messageIds),
-        messagesObj: {
-          ...state.messagesObj,
-          ...action.messagesObj
+        channelsObj: {
+          ...state.channelsObj,
+          [action.loadedChannelId]: {
+            ...state.channelsObj[action.loadedChannelId],
+            messageIds: action.messageIds.concat(
+              state.channelsObj[action.loadedChannelId].messageIds
+            ),
+            messagesObj: {
+              ...state.channelsObj[action.loadedChannelId].messagesObj,
+              ...action.messagesObj
+            },
+            messagesLoadMoreButton
+          }
         }
       };
     }
