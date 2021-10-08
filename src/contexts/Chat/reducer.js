@@ -488,7 +488,6 @@ export default function ChatReducer(state, action) {
         (!!state.selectedChannelId || state.selectedChannelId === 0) &&
         state.selectedChannelId !== action.data.currentChannelId;
       let messagesLoadMoreButton = false;
-      let originalNumUnreads = 0;
       let classLoadMoreButton = false;
       let homeLoadMoreButton = false;
       let favoriteLoadMoreButton = false;
@@ -578,7 +577,6 @@ export default function ChatReducer(state, action) {
           ? state.homeLoadMoreButton
           : homeLoadMoreButton,
         customChannelNames: action.data.customChannelNames,
-        numUnreads: Math.max(state.numUnreads - originalNumUnreads, 0),
         reconnecting: false,
         selectedChannelId:
           state.selectedChannelId || state.selectedChannelId === 0
