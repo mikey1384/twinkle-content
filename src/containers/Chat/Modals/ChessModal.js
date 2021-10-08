@@ -40,7 +40,6 @@ export default function ChessModal({
     requestHelpers: { fetchCurrentChessState, setChessMoveViewTimeStamp }
   } = useAppContext();
   const {
-    state: { recentChessMessage },
     actions: { onSubmitMessage, onUpdateChessMoveViewTimeStamp }
   } = useChatContext();
   const [initialState, setInitialState] = useState();
@@ -61,7 +60,7 @@ export default function ChessModal({
       loading.current = true;
       const chessMessage = await fetchCurrentChessState({
         channelId,
-        recentChessMessage
+        recentChessMessage: currentChannel.recentChessMessage
       });
       setUserMadeLastMove(chessMessage?.userId === myId);
       setMessage(chessMessage);
@@ -263,7 +262,7 @@ export default function ChessModal({
     try {
       await setChessMoveViewTimeStamp({ channelId, message });
       setSpoilerOff(true);
-      onUpdateChessMoveViewTimeStamp();
+      onUpdateChessMoveViewTimeStamp(channelId);
       onSpoilerClick(message.userId);
     } catch (error) {
       console.error(error);

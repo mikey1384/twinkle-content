@@ -130,7 +130,7 @@ function Chat({ onFileUpload }) {
 
     function onNotifyMoveViewed(channelId) {
       if (channelId === selectedChannelId) {
-        onUpdateChessMoveViewTimeStamp();
+        onUpdateChessMoveViewTimeStamp(selectedChannelId);
       }
     }
 

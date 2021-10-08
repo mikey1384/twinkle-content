@@ -235,7 +235,7 @@ function Message({
   }
   useEffect(() => {
     if (!message.id && message.isChessMsg) {
-      onUpdateRecentChessMessage(message);
+      onUpdateRecentChessMessage({ channelId, message });
     }
     if (
       userIsUploader &&
@@ -456,7 +456,7 @@ function Message({
     onSetReplyTarget(null);
     try {
       await setChessMoveViewTimeStamp({ channelId, message });
-      onUpdateChessMoveViewTimeStamp();
+      onUpdateChessMoveViewTimeStamp(channelId);
       onChessSpoilerClick(userId);
     } catch (error) {
       console.error(error);

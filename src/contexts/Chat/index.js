@@ -30,7 +30,6 @@ export const initialChatState = {
   msgsWhileInvisible: 0,
   numUnreads: 0,
   peerStreams: {},
-  recentChessMessage: undefined,
   recepientId: null,
   replyTarget: null,
   channelLoading: true,

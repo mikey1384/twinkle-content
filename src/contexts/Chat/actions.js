@@ -80,9 +80,10 @@ export default function ChatActions(dispatch) {
         type: 'CLEAR_NUM_UNREADS'
       });
     },
-    onClearRecentChessMessage() {
+    onClearRecentChessMessage(channelId) {
       return dispatch({
-        type: 'CLEAR_RECENT_CHESS_MESSAGE'
+        type: 'CLEAR_RECENT_CHESS_MESSAGE',
+        channelId
       });
     },
     onClearChatSearchResults() {
@@ -545,9 +546,10 @@ export default function ChatActions(dispatch) {
         channelId
       });
     },
-    onUpdateChessMoveViewTimeStamp() {
+    onUpdateChessMoveViewTimeStamp(channelId) {
       return dispatch({
-        type: 'UPDATE_CHESS_MOVE_VIEW_STAMP'
+        type: 'UPDATE_CHESS_MOVE_VIEW_STAMP',
+        channelId
       });
     },
     onUpdateCollectorsRankings(data) {
@@ -572,9 +574,10 @@ export default function ChatActions(dispatch) {
         sender
       });
     },
-    onUpdateRecentChessMessage(message) {
+    onUpdateRecentChessMessage({ channelId, message }) {
       return dispatch({
         type: 'UPDATE_RECENT_CHESS_MESSAGE',
+        channelId,
         message
       });
     },

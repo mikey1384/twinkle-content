@@ -165,7 +165,13 @@ export default function ChatReducer(state, action) {
     case 'CLEAR_RECENT_CHESS_MESSAGE': {
       return {
         ...state,
-        recentChessMessage: undefined
+        channelsObj: {
+          ...state.channelsObj,
+          [action.channelId]: {
+            ...state.channelsObj[action.channelId],
+            recentChessMessage: undefined
+          }
+        }
       };
     }
     case 'CLEAR_SUBJECT_SEARCH_RESULTS':
@@ -390,9 +396,9 @@ export default function ChatReducer(state, action) {
           currentSelectedChatTab: state.selectedChatTab,
           selectedChannel
         }),
-        recentChessMessage: undefined,
         channelsObj: {
           ...state.channelsObj,
+          recentChessMessage: undefined,
           [selectedChannel.id]: {
             ...selectedChannel,
             messagesLoadMoreButton,
@@ -413,11 +419,17 @@ export default function ChatReducer(state, action) {
       return {
         ...state,
         chatType: 'default',
-        recentChessMessage: undefined,
         subject: {},
         selectedChannelId: 0,
-        messageIds: [],
-        messagesLoadMoreButton: false
+        channelsObj: {
+          ...state.channelsObj,
+          0: {
+            ...state.channelsObj[0],
+            recentChessMessage: undefined,
+            messageIds: [],
+            messagesLoadMoreButton: false
+          }
+        }
       };
     case 'GET_NUM_UNREAD_MSGS':
       return {
@@ -558,7 +570,8 @@ export default function ChatReducer(state, action) {
             messageIds: newMessageIds,
             messagesObj: newMessagesObj,
             messagesLoaded: true,
-            numUnreads: 0
+            numUnreads: 0,
+            recentChessMessage: undefined
           }
         },
         classLoadMoreButton,
@@ -568,7 +581,6 @@ export default function ChatReducer(state, action) {
           : homeLoadMoreButton,
         customChannelNames: action.data.customChannelNames,
         numUnreads: Math.max(state.numUnreads - originalNumUnreads, 0),
-        recentChessMessage: undefined,
         reconnecting: false,
         selectedChannelId:
           state.selectedChannelId || state.selectedChannelId === 0
@@ -828,7 +840,6 @@ export default function ChatReducer(state, action) {
         selectedChatTab: 'home',
         chatType: 'default',
         loaded: true,
-        recentChessMessage: undefined,
         subject: {},
         channelsObj: {
           ...state.channelsObj,
@@ -841,7 +852,8 @@ export default function ChatReducer(state, action) {
             messageIds: action.messageIds.reverse(),
             messagesObj: action.messagesObj,
             messagesLoadMoreButton,
-            numUnreads: 0
+            numUnreads: 0,
+            recentChessMessage: undefined
           }
         },
         selectedChannelId: action.channelId || 0,
@@ -852,7 +864,6 @@ export default function ChatReducer(state, action) {
       return {
         ...state,
         chatType: 'default',
-        recentChessMessage: undefined,
         subject: {},
         homeChannelIds: [
           0,
@@ -861,6 +872,9 @@ export default function ChatReducer(state, action) {
         selectedChannelId: 0,
         channelsObj: {
           ...state.channelsObj,
+          messagesLoadMoreButton: false,
+          messageIds: [],
+          recentChessMessage: undefined,
           0: {
             id: 0,
             channelName: action.recepient.username,
@@ -873,8 +887,6 @@ export default function ChatReducer(state, action) {
             twoPeople: true
           }
         },
-        messageIds: [],
-        messagesLoadMoreButton: false,
         recepientId: action.recepient.id
       };
     case 'POST_FILE_UPLOAD_STATUS':
@@ -1430,9 +1442,11 @@ export default function ChatReducer(state, action) {
         }
       };
     case 'UPDATE_CHESS_MOVE_VIEW_STAMP': {
-      const newMessagesObj = { ...state.messagesObj };
-      for (let messageId of state.messageIds) {
-        const message = state.messagesObj[messageId];
+      const newMessagesObj = {
+        ...state.channelsObj[action.channelId].messagesObj
+      };
+      for (let messageId of state.channelsObj[action.channelId].messageIds) {
+        const message = newMessagesObj[messageId];
         if (message.moveViewTimeStamp) {
           continue;
         }
@@ -1442,7 +1456,13 @@ export default function ChatReducer(state, action) {
       }
       return {
         ...state,
-        messagesObj: newMessagesObj
+        channelsObj: {
+          ...state.channelsObj,
+          [action.channelId]: {
+            ...state.channelsObj[action.channelId],
+            messagesObj: newMessagesObj
+          }
+        }
       };
     }
     case 'UPDATE_CLIENT_TO_API_SERVER_PROGRESS':
@@ -1474,7 +1494,13 @@ export default function ChatReducer(state, action) {
     case 'UPDATE_RECENT_CHESS_MESSAGE':
       return {
         ...state,
-        recentChessMessage: action.message
+        channelsObj: {
+          ...state.channelsObj,
+          [action.channelId]: {
+            ...state.channelsObj[action.channelId],
+            recentChessMessage: action.message
+          }
+        }
       };
     case 'UPDATE_SELECTED_CHANNEL_ID':
       return {

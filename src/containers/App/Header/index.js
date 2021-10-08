@@ -250,7 +250,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
 
     async function handleConnect() {
       console.log('connected to socket');
-      onClearRecentChessMessage();
+      onClearRecentChessMessage(selectedChannelId);
       onChangeSocketStatus(true);
       handleCheckVersion();
       handleCheckOutdated();
