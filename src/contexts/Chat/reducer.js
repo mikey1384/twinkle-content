@@ -704,8 +704,6 @@ export default function ChatReducer(state, action) {
         ...state,
         selectedChannelId: null,
         chatType: 'vocabulary',
-        messageIds: [],
-        messagesLoadMoreButton: false,
         vocabActivities: action.vocabActivities,
         vocabActivitiesLoadMoreButton,
         wordsObj: action.wordsObj,
@@ -723,8 +721,6 @@ export default function ChatReducer(state, action) {
         ...state,
         selectedChannelId: null,
         chatType: 'vocabulary',
-        messageIds: [],
-        messagesLoadMoreButton: false,
         vocabActivities: action.vocabActivities.concat(state.vocabActivities),
         vocabActivitiesLoadMoreButton,
         wordsObj: {
@@ -758,6 +754,17 @@ export default function ChatReducer(state, action) {
           ...state.channelsObj,
           [action.channelId]: {
             ...state.channelsObj[action.channelId],
+            messageIds: state.channelsObj[action.channelId].messageIds.concat(
+              action.subject.id
+            ),
+            messagesObj: {
+              ...state.channelsObj[action.channelId].messagesObj,
+              [action.subject.id]: {
+                id: action.subject.id,
+                channelId: action.channelId,
+                ...action.subject
+              }
+            },
             lastMessage: {
               content: action.subject.content,
               sender: {
@@ -765,15 +772,6 @@ export default function ChatReducer(state, action) {
                 username: action.subject.username
               }
             }
-          }
-        },
-        messageIds: state.messageIds.concat(action.subject.id),
-        messagesObj: {
-          ...state.messagesObj,
-          [action.subject.id]: {
-            id: action.subject.id,
-            channelId: action.channelId,
-            ...action.subject
           }
         }
       };
