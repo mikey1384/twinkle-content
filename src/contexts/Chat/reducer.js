@@ -364,7 +364,6 @@ export default function ChatReducer(state, action) {
     }
     case 'ENTER_CHANNEL': {
       let messagesLoadMoreButton = false;
-      let originalNumUnreads = 0;
       const selectedChannel = action.data.channel;
       if (action.data.messageIds.length === 21) {
         action.data.messageIds.pop();
@@ -408,11 +407,7 @@ export default function ChatReducer(state, action) {
             messageIds: newMessageIds,
             messagesObj: newMessagesObj,
             messagesLoaded: true,
-            numUnreads: Math.max(
-              state.channelsObj[selectedChannel.id].numUnreads -
-                originalNumUnreads,
-              0
-            )
+            numUnreads: 0
           }
         },
         selectedChannelId: selectedChannel.id
