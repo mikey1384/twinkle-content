@@ -285,9 +285,12 @@ export default function ChatReducer(state, action) {
         }
       };
     case 'DISPLAY_ATTACHED_FILE': {
-      const newMessagesObj = { ...state.messagesObj };
-      for (let messageId of state.messageIds) {
-        const message = state.messagesObj[messageId];
+      const newMessagesObj = {
+        ...state.channelsObj[action.channelId].messagesObj
+      };
+      for (let messageId of state.channelsObj[action.channelId].messageIds) {
+        const message =
+          state.channelsObj[action.channelId].messagesObj[messageId];
         if (message.filePath !== action.filePath) {
           continue;
         }
@@ -302,7 +305,13 @@ export default function ChatReducer(state, action) {
       }
       return {
         ...state,
-        messagesObj: newMessagesObj
+        channelsObj: {
+          ...state.channelsObj,
+          [action.channelId]: {
+            ...state.channelsObj[action.channelId],
+            messagesObj: newMessagesObj
+          }
+        }
       };
     }
     case 'EDIT_MESSAGE':
