@@ -102,9 +102,10 @@ export default function ChatActions(dispatch) {
         data
       });
     },
-    onDeleteMessage(messageId) {
+    onDeleteMessage({ messageId, channelId }) {
       return dispatch({
         type: 'DELETE_MESSAGE',
+        channelId,
         messageId
       });
     },

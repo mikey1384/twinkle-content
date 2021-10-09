@@ -274,9 +274,15 @@ export default function ChatReducer(state, action) {
     case 'DELETE_MESSAGE':
       return {
         ...state,
-        messageIds: state.messageIds.filter(
-          (messageId) => messageId !== action.messageId
-        )
+        channelsObj: {
+          ...state.channelsObj,
+          [action.channelId]: {
+            ...state.channelsObj[action.channelId],
+            messageIds: state.channelsObj[action.channelId].messageIds.filter(
+              (messageId) => messageId !== action.messageId
+            )
+          }
+        }
       };
     case 'DISPLAY_ATTACHED_FILE': {
       const newMessagesObj = { ...state.messagesObj };
