@@ -253,6 +253,10 @@ export default function ChatReducer(state, action) {
           ...state.channelsObj,
           [action.channel.id]: {
             ...action.channel,
+            messageIds: [messageId],
+            messagesObj: {
+              [messageId]: action.message
+            },
             numUnreads: 0,
             lastMessage: {
               fileName: action.message.fileName || '',
@@ -264,12 +268,7 @@ export default function ChatReducer(state, action) {
             }
           }
         },
-        selectedChannelId: action.channel.id,
-        messageIds: [messageId],
-        messagesObj: {
-          ...state.messagesObj,
-          [messageId]: action.message
-        }
+        selectedChannelId: action.channel.id
       };
     }
     case 'DELETE_MESSAGE':
