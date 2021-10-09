@@ -147,10 +147,18 @@ export default function ChatActions(dispatch) {
         theme
       });
     },
-    onEditMessage({ editedMessage, messageId, isSubject, subjectChanged }) {
+    onEditMessage({
+      editedMessage,
+      channelId,
+      messageId,
+      isSubject,
+      subjectChanged
+    }) {
       return dispatch({
         type: 'EDIT_MESSAGE',
-        data: { editedMessage, messageId },
+        channelId,
+        editedMessage,
+        messageId,
         isSubject,
         subjectChanged
       });

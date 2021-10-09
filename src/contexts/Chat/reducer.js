@@ -317,11 +317,19 @@ export default function ChatReducer(state, action) {
     case 'EDIT_MESSAGE':
       return {
         ...state,
-        messagesObj: {
-          ...state.messagesObj,
-          [action.data.messageId]: {
-            ...state.messagesObj[action.data.messageId],
-            content: action.data.editedMessage
+        channelsObj: {
+          ...state.channelsObj,
+          [action.channelId]: {
+            ...state.channelsObj[action.channelId],
+            messagesObj: {
+              ...state.channelsObj[action.channelId].messagesObj,
+              [action.messageId]: {
+                ...state.channelsObj[action.channelId].messagesObj[
+                  action.messageId
+                ],
+                content: action.editedMessage
+              }
+            }
           }
         },
         subjectObj:
@@ -330,7 +338,7 @@ export default function ChatReducer(state, action) {
                 ...state.subjectObj,
                 [state.selectedChannelId]: {
                   ...state.subjectObj[state.selectedChannelId],
-                  content: action.data.editedMessage
+                  content: action.editedMessage
                 }
               }
             : state.subjectObj

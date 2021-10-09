@@ -173,7 +173,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
     socket.on('call_terminated', handleCallTerminated);
     socket.on('call_reception_confirmed', handleCallReceptionConfirm);
     socket.on('chat_invitation_received', handleChatInvitation);
-    socket.on('chat_message_deleted', handleDeleteMessage);
+    socket.on('chat_message_deleted', onDeleteMessage);
     socket.on('chat_message_edited', onEditMessage);
     socket.on('chat_subject_purchased', onEnableChatSubject);
     socket.on('channel_owner_changed', onChangeChannelOwner);
@@ -208,7 +208,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
         handleCallReceptionConfirm
       );
       socket.removeListener('chat_invitation_received', handleChatInvitation);
-      socket.removeListener('chat_message_deleted', handleDeleteMessage);
+      socket.removeListener('chat_message_deleted', onDeleteMessage);
       socket.removeListener('chat_message_edited', onEditMessage);
       socket.removeListener('chat_subject_purchased', onEnableChatSubject);
       socket.removeListener('channel_owner_changed', onChangeChannelOwner);
@@ -362,10 +362,6 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
       }
       socket.emit('join_chat_group', message.channelId);
       onReceiveFirstMsg({ message, duplicate, isClass, pageVisible });
-    }
-
-    function handleDeleteMessage(messageId) {
-      onDeleteMessage({ messageId, channelId: selectedChannelId });
     }
 
     function handleDisconnect(reason) {

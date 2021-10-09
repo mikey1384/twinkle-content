@@ -499,6 +499,7 @@ function Message({
       });
       onEditMessage({
         editedMessage,
+        channelId,
         messageId,
         isSubject: messageIsSubject,
         subjectChanged
