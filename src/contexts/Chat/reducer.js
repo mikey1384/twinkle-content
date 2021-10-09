@@ -595,6 +595,13 @@ export default function ChatReducer(state, action) {
           ...state.channelsObj,
           [state.selectedChannelId]: {
             ...state.channelsObj[state.selectedChannelId],
+            messageIds: state.channelsObj[
+              state.selectedChannelId
+            ].messageIds.concat(action.data.message.id),
+            messagesObj: {
+              ...state.channelsObj[state.selectedChannelId].messagesObj,
+              [action.data.message.id]: action.data.message
+            },
             members: state.channelsObj[state.selectedChannelId].members.concat(
               action.data.selectedUsers.map((user) => ({
                 id: user.id,
@@ -603,11 +610,6 @@ export default function ChatReducer(state, action) {
               }))
             )
           }
-        },
-        messageIds: state.messageIds.concat(action.data.message.id),
-        messagesObj: {
-          ...state.messagesObj,
-          [action.data.message.id]: action.data.message
         }
       };
     case 'LEAVE_CHANNEL':
@@ -923,15 +925,17 @@ export default function ChatReducer(state, action) {
           action.pageVisible && action.usingChat
             ? state.numUnreads
             : state.numUnreads + 1,
-        messageIds: state.messageIds.concat([action.message.id]),
-        messagesObj: {
-          ...state.messagesObj,
-          [action.message.id]: action.message
-        },
         channelsObj: {
           ...state.channelsObj,
           [action.message.channelId]: {
             ...state.channelsObj[action.message.channelId],
+            messageIds: state.channelsObj[
+              action.message.channelId
+            ].messageIds.concat([action.message.id]),
+            messagesObj: {
+              ...state.channelsObj[action.message.channelId].messagesObj,
+              [action.message.id]: action.message
+            },
             lastMessage: {
               isDraw: action.message.isDraw,
               fileName: action.message.fileName || '',
@@ -977,6 +981,7 @@ export default function ChatReducer(state, action) {
         }
       };
     case 'RECEIVE_FIRST_MSG': {
+      console.log('got here');
       const messageId = uuidv1();
       return {
         ...state,
@@ -991,6 +996,18 @@ export default function ChatReducer(state, action) {
           ...state.channelsObj,
           [action.message.channelId]: {
             id: action.message.channelId,
+            messagesObj: {
+              [messageId]: {
+                id: messageId,
+                channelId: action.message.channelId,
+                content: action.message.content,
+                timeStamp: action.message.timeStamp,
+                username: action.message.username,
+                userId: action.message.userId,
+                profilePicUrl: action.message.profilePicUrl
+              }
+            },
+            messageIds: [messageId],
             isClass: action.isClass,
             members: action.message.members,
             channelName: action.message.channelName || action.message.username,
@@ -1002,26 +1019,9 @@ export default function ChatReducer(state, action) {
                 username: action.message.username
               }
             },
-            numUnreads: 1
+            numUnreads: action.duplicate ? 0 : 1
           }
         },
-        messagesObj: {
-          ...state.messagesObj,
-          ...(action.duplicate
-            ? {
-                [messageId]: {
-                  id: messageId,
-                  channelId: action.message.channelId,
-                  content: action.message.content,
-                  timeStamp: action.message.timeStamp,
-                  username: action.message.username,
-                  userId: action.message.userId,
-                  profilePicUrl: action.message.profilePicUrl
-                }
-              }
-            : {})
-        },
-        messageIds: action.duplicate ? [messageId] : state.messageIds,
         homeChannelIds: [action.message.channelId].concat(
           state.homeChannelIds.filter((channelId, index) =>
             action.duplicate ? index !== 0 : true
