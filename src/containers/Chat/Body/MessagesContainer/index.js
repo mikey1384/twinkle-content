@@ -1,6 +1,7 @@
 import React, {
   memo,
   useCallback,
+  useLayoutEffect,
   useEffect,
   useMemo,
   useRef,
@@ -267,20 +268,28 @@ function MessagesContainer({
     );
   }, [currentChannel.canChangeSubject, selectedChannelId]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      if (mounted.current) {
-        setPlaceholderHeight(
-          `CALC(100vh - 10rem - ${MessagesRef.current?.offsetHeight || 0}px)`
-        );
-        if (
-          MessagesRef.current?.offsetHeight <
-          MessagesContainerRef.current?.offsetHeight + 30
-        ) {
-          handleSetScrollToBottom();
+  useLayoutEffect(() => {
+    if (deviceIsMobile) {
+      setTimeout(() => {
+        if (mounted.current) {
+          scrollToBottom();
         }
+      }, 0);
+    } else {
+      scrollToBottom();
+    }
+
+    function scrollToBottom() {
+      setPlaceholderHeight(
+        `CALC(100vh - 10rem - ${MessagesRef.current?.offsetHeight || 0}px)`
+      );
+      if (
+        MessagesRef.current?.offsetHeight <
+        MessagesContainerRef.current?.offsetHeight + 30
+      ) {
+        handleSetScrollToBottom();
       }
-    }, 0);
+    }
   }, [loading, messages]);
 
   useEffect(() => {
@@ -1111,12 +1120,19 @@ function MessagesContainer({
     if (mounted.current && MessagesContainerRef.current) {
       MessagesContainerRef.current.scrollTop =
         ContentRef.current?.offsetHeight || 0;
-      setTimeout(() => {
+      if (deviceIsMobile) {
+        setTimeout(() => {
+          if (mounted.current && MessagesContainerRef.current) {
+            MessagesContainerRef.current.scrollTop =
+              ContentRef.current?.offsetHeight || 0;
+          }
+        }, 10);
+      } else {
         if (mounted.current && MessagesContainerRef.current) {
           MessagesContainerRef.current.scrollTop =
             ContentRef.current?.offsetHeight || 0;
         }
-      }, 10);
+      }
       if (ContentRef.current?.offsetHeight) {
         setScrollAtBottom(true);
       }
