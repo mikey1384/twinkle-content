@@ -485,11 +485,19 @@ export default function ChatReducer(state, action) {
     case 'HIDE_ATTACHMENT':
       return {
         ...state,
-        messagesObj: {
-          ...state.messagesObj,
-          [action.messageId]: {
-            ...state.messagesObj[action.messageId],
-            attachmentHidden: true
+        channelsObj: {
+          ...state.channelsObj,
+          [action.channelId]: {
+            ...state.channelsObj[action.channelId],
+            messagesObj: {
+              ...state.channelsObj[action.channelId].messagesObj,
+              [action.messageId]: {
+                ...state.channelsObj[action.channelId].messagesObj[
+                  action.messageId
+                ],
+                attachmentHidden: true
+              }
+            }
           }
         }
       };

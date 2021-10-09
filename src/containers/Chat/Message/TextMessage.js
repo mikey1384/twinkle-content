@@ -82,7 +82,7 @@ function TextMessage({
 
   const handleHideAttachment = useCallback(async () => {
     await hideChatAttachment(messageId);
-    onHideAttachment(messageId);
+    onHideAttachment({ messageId, channelId });
     socket.emit('hide_message_attachment', { channelId, messageId });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [channelId, messageId]);
