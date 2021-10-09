@@ -216,6 +216,11 @@ export default function ChatReducer(state, action) {
           [channelId]: {
             id: channelId,
             channelName: action.data.message.channelName,
+            messageIds: [startMessageId],
+            messagesObj: {
+              [startMessageId]: action.data.message
+            },
+            messagesLoadMoreButton: false,
             lastMessage: {
               content: action.data.message.content,
               sender: {
@@ -232,13 +237,7 @@ export default function ChatReducer(state, action) {
             unlockedThemes: []
           }
         },
-        selectedChannelId: channelId,
-        messageIds: [startMessageId],
-        messagesObj: {
-          ...state.messagesObj,
-          [startMessageId]: action.data.message
-        },
-        messagesLoadMoreButton: false
+        selectedChannelId: channelId
       };
     }
     case 'CREATE_NEW_DM_CHANNEL': {
