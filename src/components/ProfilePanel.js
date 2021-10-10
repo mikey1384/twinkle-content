@@ -102,6 +102,7 @@ function ProfilePanel({ expandable, profileId, style }) {
   const PanelRef = useRef(null);
   const ContainerRef = useRef(null);
   const visibleRef = useRef(previousVisible);
+  const { banned } = useMyState();
   const [visible, setVisible] = useState(previousVisible);
   const [placeholderHeight, setPlaceholderHeight] = useState(
     previousPlaceholderHeight
@@ -377,7 +378,12 @@ function ProfilePanel({ expandable, profileId, style }) {
                     <UserDetails
                       profile={profile}
                       removeStatusMsg={onRemoveStatusMsg}
-                      updateStatusMsg={onUpdateStatusMsg}
+                      updateStatusMsg={(data) => {
+                        if (banned?.posting) {
+                          return;
+                        }
+                        onUpdateStatusMsg(data);
+                      }}
                       onUpdateBio={onUpdateBio}
                       userId={userId}
                     />
@@ -398,7 +404,12 @@ function ProfilePanel({ expandable, profileId, style }) {
                           </Button>
                           <Button
                             transparent
-                            onClick={() => setBioEditModalShown(true)}
+                            onClick={() => {
+                              if (banned?.posting) {
+                                return;
+                              }
+                              setBioEditModalShown(true);
+                            }}
                             style={{ marginLeft: '0.5rem' }}
                           >
                             Edit Bio
