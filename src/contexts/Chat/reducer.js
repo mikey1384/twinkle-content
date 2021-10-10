@@ -234,7 +234,8 @@ export default function ChatReducer(state, action) {
             twoPeople: false,
             creatorId: action.data.message.userId,
             members: action.data.members,
-            unlockedThemes: []
+            unlockedThemes: [],
+            loaded: true
           }
         },
         selectedChannelId: channelId
@@ -265,7 +266,8 @@ export default function ChatReducer(state, action) {
                 id: action.message.userId,
                 username: action.message.username
               }
-            }
+            },
+            loaded: true
           }
         },
         selectedChannelId: action.channel.id
@@ -428,10 +430,10 @@ export default function ChatReducer(state, action) {
             messageIds: newMessageIds,
             messagesObj: newMessagesObj,
             messagesLoaded: true,
-            numUnreads: 0
+            numUnreads: 0,
+            loaded: true
           }
         },
-        channelLoading: false,
         selectedChannelId: selectedChannel.id
       };
     }
@@ -447,7 +449,8 @@ export default function ChatReducer(state, action) {
             ...state.channelsObj[0],
             recentChessMessage: undefined,
             messageIds: [],
-            messagesLoadMoreButton: false
+            messagesLoadMoreButton: false,
+            loaded: true
           }
         }
       };
@@ -599,7 +602,8 @@ export default function ChatReducer(state, action) {
             messagesObj: newMessagesObj,
             messagesLoaded: true,
             numUnreads: 0,
-            recentChessMessage: undefined
+            recentChessMessage: undefined,
+            loaded: true
           }
         },
         classLoadMoreButton,
@@ -882,7 +886,8 @@ export default function ChatReducer(state, action) {
             messagesObj: action.messagesObj,
             messagesLoadMoreButton,
             numUnreads: 0,
-            recentChessMessage: undefined
+            recentChessMessage: undefined,
+            loaded: true
           }
         },
         selectedChannelId: action.channelId || 0,
@@ -913,7 +918,8 @@ export default function ChatReducer(state, action) {
             },
             members: [action.user, action.recepient],
             numUnreads: 0,
-            twoPeople: true
+            twoPeople: true,
+            loaded: true
           }
         },
         recepientId: action.recepient.id
@@ -1045,7 +1051,8 @@ export default function ChatReducer(state, action) {
                 username: action.message.username
               }
             },
-            numUnreads: action.duplicate ? 0 : 1
+            numUnreads: action.duplicate ? 0 : 1,
+            loaded: true
           }
         },
         homeChannelIds: [action.message.channelId].concat(
@@ -1529,8 +1536,7 @@ export default function ChatReducer(state, action) {
       return {
         ...state,
         chatType: 'default',
-        selectedChannelId: action.channelId,
-        channelLoading: true
+        selectedChannelId: action.channelId
       };
     default:
       return state;

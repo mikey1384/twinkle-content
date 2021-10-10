@@ -73,7 +73,6 @@ function MessagesContainer({
   } = useNotiContext();
   const {
     state: {
-      channelLoading,
       channelOnCall,
       chessModalShown,
       creatingNewDMChannel,
@@ -105,7 +104,8 @@ function MessagesContainer({
     isRespondingToSubject = false,
     messageIds = [],
     messagesObj = {},
-    messagesLoadMoreButton = false
+    messagesLoadMoreButton = false,
+    loaded
   } = currentChannel;
   const { banned, profilePicUrl, userId, username } = useMyState();
   const [chessCountdownObj, setChessCountdownObj] = useState({});
@@ -194,8 +194,8 @@ function MessagesContainer({
   ]);
 
   const loading = useMemo(
-    () => channelLoading || creatingNewDMChannel || reconnecting,
-    [channelLoading, creatingNewDMChannel, reconnecting]
+    () => !loaded || creatingNewDMChannel || reconnecting,
+    [loaded, creatingNewDMChannel, reconnecting]
   );
 
   const menuProps = useMemo(() => {
