@@ -143,7 +143,10 @@ function MessagesContainer({
   const favoritingRef = useRef(false);
   const timerRef = useRef(null);
   const menuLabel = deviceIsMobile ? '' : 'Menu';
-  const messages = messageIds.map((messageId) => messagesObj[messageId] || {});
+  const messages = useMemo(
+    () => messageIds.map((messageId) => messagesObj[messageId] || {}),
+    [messageIds, messagesObj]
+  );
 
   const favorited = useMemo(() => {
     return allFavoriteChannelIds[selectedChannelId];
