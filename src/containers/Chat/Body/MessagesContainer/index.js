@@ -45,6 +45,7 @@ MessagesContainer.propTypes = {
 
 const CALL_SCREEN_HEIGHT = '30%';
 const deviceIsMobile = isMobile(navigator);
+const menuLabel = deviceIsMobile ? '' : 'Menu';
 
 function MessagesContainer({
   channelName,
@@ -142,7 +143,6 @@ function MessagesContainer({
   const ChatInputRef = useRef(null);
   const favoritingRef = useRef(false);
   const timerRef = useRef(null);
-  const menuLabel = deviceIsMobile ? '' : 'Menu';
   const messages = useMemo(
     () => messageIds.map((messageId) => messagesObj[messageId] || {}),
     [messageIds, messagesObj]
