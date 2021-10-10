@@ -431,6 +431,7 @@ export default function ChatReducer(state, action) {
             numUnreads: 0
           }
         },
+        channelLoading: false,
         selectedChannelId: selectedChannel.id
       };
     }
@@ -1528,7 +1529,8 @@ export default function ChatReducer(state, action) {
       return {
         ...state,
         chatType: 'default',
-        selectedChannelId: action.channelId
+        selectedChannelId: action.channelId,
+        channelLoading: true
       };
     default:
       return state;

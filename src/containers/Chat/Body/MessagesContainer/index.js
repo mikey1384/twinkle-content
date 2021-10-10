@@ -73,6 +73,7 @@ function MessagesContainer({
   } = useNotiContext();
   const {
     state: {
+      channelLoading,
       channelOnCall,
       chessModalShown,
       creatingNewDMChannel,
@@ -193,8 +194,8 @@ function MessagesContainer({
   ]);
 
   const loading = useMemo(
-    () => creatingNewDMChannel || reconnecting,
-    [creatingNewDMChannel, reconnecting]
+    () => channelLoading || creatingNewDMChannel || reconnecting,
+    [channelLoading, creatingNewDMChannel, reconnecting]
   );
 
   const menuProps = useMemo(() => {

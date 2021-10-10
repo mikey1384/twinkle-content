@@ -15,6 +15,7 @@ export const initialChatState = {
   classChannelIds: [],
   favoriteChannelIds: [],
   homeChannelIds: [],
+  channelLoading: false,
   channelsObj: {},
   channelOnCall: {},
   chatSearchResults: [],
