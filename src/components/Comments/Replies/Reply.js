@@ -98,6 +98,7 @@ function Reply({
   } = useAppContext();
   const {
     authLevel,
+    banned,
     canDelete,
     canEdit,
     canReward,
@@ -249,7 +250,10 @@ function Reply({
           })
       });
     }
-    if (userIsParentUploader || userIsRootUploader || isCreator) {
+    if (
+      (userIsParentUploader || userIsRootUploader || isCreator) &&
+      !banned?.posting
+    ) {
       items.push({
         label: (
           <>

@@ -126,6 +126,7 @@ function Comment({
   } = useAppContext();
   const {
     authLevel,
+    banned,
     canDelete,
     canEdit,
     canReward,
@@ -367,7 +368,8 @@ function Comment({
     }
     if (
       (userIsParentUploader || userIsRootUploader || isCreator) &&
-      !isNotification
+      !isNotification &&
+      !banned?.posting
     ) {
       items.push({
         label: (
