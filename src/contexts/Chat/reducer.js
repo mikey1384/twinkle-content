@@ -566,6 +566,7 @@ export default function ChatReducer(state, action) {
       return {
         ...state,
         ...initialChatState,
+        numUnreads: state.numUnreads,
         chatStatus: state.chatStatus,
         allFavoriteChannelIds: action.data.allFavoriteChannelIds,
         chatType:
@@ -1006,7 +1007,6 @@ export default function ChatReducer(state, action) {
         }
       };
     case 'RECEIVE_FIRST_MSG': {
-      console.log('got here');
       const messageId = uuidv1();
       return {
         ...state,
