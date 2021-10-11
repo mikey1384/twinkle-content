@@ -143,7 +143,7 @@ function UploadModal({
   ]);
 
   return (
-    <Modal onHide={onHide}>
+    <Modal closeWhenClickedOutside={false} onHide={onHide}>
       <header>Upload a file</header>
       <main>
         {fileObj ? (
