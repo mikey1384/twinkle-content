@@ -101,6 +101,7 @@ function UploadModal({
   const handleSubmit = useCallback(() => {
     if (selectedFile) {
       const filePath = uuidv1();
+      const messageId = uuidv1();
       onFileUpload({
         channelId,
         content: finalizeEmoji(caption),
@@ -108,10 +109,12 @@ function UploadModal({
         fileToUpload: selectedFile,
         userId,
         recepientId,
+        messageId,
         targetMessageId: replyTarget?.id,
         subjectId: isRespondingToSubject ? subjectId : null
       });
       onSubmitMessage({
+        messageId,
         message: {
           content: finalizeEmoji(caption),
           channelId,

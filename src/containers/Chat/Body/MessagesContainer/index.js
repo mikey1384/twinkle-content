@@ -402,7 +402,9 @@ function MessagesContainer({
       const content = 'Made a chess move';
       try {
         if (selectedChannelId) {
+          const messageId = uuidv1();
           onSubmitMessage({
+            messageId,
             message: {
               ...params,
               profilePicUrl,
@@ -534,7 +536,9 @@ function MessagesContainer({
       }
       setInviteUsersModalShown(false);
       if (!isClass) {
+        const messageId = uuidv1();
         onSubmitMessage({
+          messageId,
           message: {
             channelId: selectedChannelId,
             userId,
@@ -709,7 +713,9 @@ function MessagesContainer({
         channelId: selectedChannelId,
         subjectId: isRespondingToSubject ? subjectId : null
       };
+      const messageId = uuidv1();
       onSubmitMessage({
+        messageId,
         message,
         replyTarget: target,
         rewardReason,

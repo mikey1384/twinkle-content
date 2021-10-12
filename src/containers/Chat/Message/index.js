@@ -222,6 +222,7 @@ function Message({
     targetMessage,
     targetSubject,
     isCallNotification,
+    tempMessageId,
     ...post
   } = message;
   const [messageRewardModalShown, setMessageRewardModalShown] = useState(false);
@@ -252,14 +253,21 @@ function Message({
         targetMessageId: targetMessage?.id,
         targetSubject
       });
-      onSaveMessage({ messageId, index, channelId });
+      onSaveMessage({
+        messageId,
+        index,
+        channelId,
+        tempMessageId
+      });
+      const messageToSendOverSocket = {
+        ...message,
+        uploaderAuthLevel: authLevel,
+        isNewMessage: true,
+        id: messageId
+      };
+      delete messageToSendOverSocket.tempMessageId;
       socket.emit('new_chat_message', {
-        message: {
-          ...message,
-          uploaderAuthLevel: authLevel,
-          isNewMessage: true,
-          id: messageId
-        },
+        message: messageToSendOverSocket,
         channel: {
           ...currentChannel,
           numUnreads: 1,

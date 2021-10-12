@@ -317,9 +317,16 @@ export default function ChatActions(dispatch) {
         }
       });
     },
-    onPostUploadComplete({ channelId, messageId, path, result }) {
+    onPostUploadComplete({
+      channelId,
+      tempMessageId,
+      messageId,
+      path,
+      result
+    }) {
       return dispatch({
         type: 'POST_UPLOAD_COMPLETE',
+        tempMessageId,
         channelId,
         messageId,
         path,
@@ -387,12 +394,13 @@ export default function ChatActions(dispatch) {
         type: 'RESET_CHAT'
       });
     },
-    onSaveMessage({ index, messageId, channelId }) {
+    onSaveMessage({ index, messageId, channelId, tempMessageId }) {
       return dispatch({
         type: 'ADD_ID_TO_NEW_MESSAGE',
         channelId,
         messageIndex: index,
-        messageId
+        messageId,
+        tempMessageId
       });
     },
     onSearchChat(data) {
@@ -530,6 +538,7 @@ export default function ChatActions(dispatch) {
     onSubmitMessage({
       isRespondingToSubject,
       message,
+      messageId,
       replyTarget,
       rewardReason,
       rewardAmount
@@ -537,6 +546,7 @@ export default function ChatActions(dispatch) {
       return dispatch({
         type: 'SUBMIT_MESSAGE',
         isRespondingToSubject,
+        messageId,
         message: {
           ...message,
           rewardReason,

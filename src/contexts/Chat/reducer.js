@@ -14,12 +14,16 @@ export default function ChatReducer(state, action) {
             ...state.channelsObj[action.channelId],
             messageIds: state.channelsObj[action.channelId].messageIds.map(
               (messageId) =>
-                messageId === 'temp' ? action.messageId : messageId
+                messageId === action.tempMessageId
+                  ? action.messageId
+                  : messageId
             ),
             messagesObj: {
               ...state.channelsObj[action.channelId].messagesObj,
               [action.messageId]: {
-                ...state.channelsObj[action.channelId].messagesObj.temp,
+                ...state.channelsObj[action.channelId].messagesObj[
+                  action.tempMessageId
+                ],
                 id: action.messageId
               }
             }
@@ -929,12 +933,16 @@ export default function ChatReducer(state, action) {
             ...state.channelsObj[action.channelId],
             messageIds: state.channelsObj[action.channelId].messageIds.map(
               (messageId) =>
-                messageId === 'temp' ? action.messageId : messageId
+                messageId === action.tempMessageId
+                  ? action.messageId
+                  : messageId
             ),
             messagesObj: {
               ...state.channelsObj[action.channelId].messagesObj,
               [action.messageId]:
-                state.channelsObj[action.channelId].messagesObj.temp
+                state.channelsObj[action.channelId].messagesObj[
+                  action.tempMessageId
+                ]
             }
           }
         },
@@ -1372,14 +1380,14 @@ export default function ChatReducer(state, action) {
                   }
                 : {})
             },
-            messageIds:
-              state.channelsObj[action.message.channelId].messageIds.concat(
-                'temp'
-              ),
+            messageIds: state.channelsObj[
+              action.message.channelId
+            ].messageIds.concat(action.messageId),
             messagesObj: {
               ...state.channelsObj[action.message.channelId].messagesObj,
-              temp: {
+              [action.messageId]: {
                 ...action.message,
+                tempMessageId: action.messageId,
                 content: action.message.content,
                 targetMessage: action.replyTarget,
                 targetSubject

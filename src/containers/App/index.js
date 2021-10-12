@@ -217,6 +217,7 @@ function App({ location, history }) {
       filePath,
       fileToUpload,
       recepientId,
+      messageId: tempMessageId,
       targetMessageId,
       subjectId
     }) => {
@@ -241,6 +242,7 @@ function App({ location, history }) {
       onPostUploadComplete({
         path: filePath,
         channelId,
+        tempMessageId,
         messageId: messageId,
         result: !!messageId
       });

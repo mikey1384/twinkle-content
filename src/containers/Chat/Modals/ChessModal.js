@@ -9,6 +9,7 @@ import { Color } from 'constants/css';
 import { socket } from 'constants/io';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useChatContext } from 'contexts';
+import { v1 as uuidv1 } from 'uuid';
 
 ChessModal.propTypes = {
   channelId: PropTypes.number,
@@ -245,7 +246,9 @@ export default function ChessModal({
   );
 
   async function handleOfferDraw() {
+    const messageId = uuidv1();
     onSubmitMessage({
+      messageId,
       message: {
         channelId,
         isDrawOffer: true,
