@@ -297,7 +297,7 @@ function Message({
       handleScrollToBottomBasedComponentHeight();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isEditing, reconnecting]);
+  }, [isLastMsg, isEditing, reconnecting]);
 
   useEffect(() => {
     const url = fetchURLFromText(content);
