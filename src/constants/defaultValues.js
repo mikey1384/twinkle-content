@@ -1,4 +1,4 @@
-export const clientVersion = '1.5.43';
+export const clientVersion = '1.5.44';
 export const defaultChatSubject = 'Welcome!';
 export const defaultContentState = {
   isEditing: false,

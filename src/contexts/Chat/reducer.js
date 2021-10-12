@@ -13,8 +13,8 @@ export default function ChatReducer(state, action) {
           [action.channelId]: {
             ...state.channelsObj[action.channelId],
             messageIds: state.channelsObj[action.channelId].messageIds.map(
-              (messageId, index) =>
-                index === action.messageIndex ? action.messageId : messageId
+              (messageId) =>
+                messageId === 'temp' ? action.messageId : messageId
             ),
             messagesObj: {
               ...state.channelsObj[action.channelId].messagesObj,
@@ -937,6 +937,21 @@ export default function ChatReducer(state, action) {
     case 'POST_UPLOAD_COMPLETE':
       return {
         ...state,
+        channelsObj: {
+          ...state.channelsObj,
+          [action.channelId]: {
+            ...state.channelsObj[action.channelId],
+            messageIds: state.channelsObj[action.channelId].messageIds.map(
+              (messageId) =>
+                messageId === 'temp' ? action.messageId : messageId
+            ),
+            messagesObj: {
+              ...state.channelsObj[action.channelId].messagesObj,
+              [action.messageId]:
+                state.channelsObj[action.channelId].messagesObj.temp
+            }
+          }
+        },
         filesBeingUploaded: {
           ...state.filesBeingUploaded,
           [action.channelId]: state.filesBeingUploaded[action.channelId]?.map(
