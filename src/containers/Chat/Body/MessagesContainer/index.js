@@ -273,11 +273,15 @@ function MessagesContainer({
   }, [currentChannel.canChangeSubject, selectedChannelId]);
 
   useLayoutEffect(() => {
-    setTimeout(() => {
-      if (mounted.current) {
-        scrollToBottom();
-      }
-    }, 0);
+    if (deviceIsMobile) {
+      setTimeout(() => {
+        if (mounted.current) {
+          scrollToBottom();
+        }
+      }, 0);
+    } else {
+      scrollToBottom();
+    }
 
     function scrollToBottom() {
       setPlaceholderHeight(
