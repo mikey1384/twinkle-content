@@ -443,6 +443,14 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async updateLastChannelId(channelId) {
+      try {
+        await request.put(`${URL}/chat/lastChannelId`, { channelId }, auth());
+        return Promise.resolve();
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async updateChatLastRead(channelId) {
       try {
         await request.post(`${URL}/chat/lastRead`, { channelId }, auth());

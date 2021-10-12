@@ -33,7 +33,12 @@ Chat.propTypes = {
 
 function Chat({ onFileUpload }) {
   const {
-    requestHelpers: { createNewChat, loadChatChannel, updateChatLastRead }
+    requestHelpers: {
+      createNewChat,
+      loadChatChannel,
+      updateChatLastRead,
+      updateLastChannelId
+    }
   } = useAppContext();
   const { userId } = useMyState();
   const {
@@ -182,7 +187,7 @@ function Chat({ onFileUpload }) {
       }
       onUpdateSelectedChannelId(id);
       if (channelsObj[id]?.loaded) {
-        return;
+        return updateLastChannelId(id);
       }
       const data = await loadChatChannel({ channelId: id });
       if (mounted.current) {
