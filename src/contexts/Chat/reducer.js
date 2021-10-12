@@ -397,16 +397,6 @@ export default function ChatReducer(state, action) {
       const newMessagesObj = {
         ...action.data.messagesObj
       };
-      const uploadStatusMessages = state.filesBeingUploaded[
-        selectedChannel.id
-      ]?.filter((message) => !message.uploadComplete);
-      if (uploadStatusMessages) {
-        for (let message of uploadStatusMessages) {
-          const messageId = uuidv1();
-          newMessageIds.push(messageId);
-          newMessagesObj[messageId] = message;
-        }
-      }
 
       return {
         ...state,
