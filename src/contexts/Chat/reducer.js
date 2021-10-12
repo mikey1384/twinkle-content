@@ -1440,7 +1440,7 @@ export default function ChatReducer(state, action) {
           [action.channelId]: {
             ...state.channelsObj[action.channelId],
             messagesLoadMoreButton:
-              state.channelsObj[action.channelId]?.messageIds.length > 20
+              state.channelsObj[action.channelId]?.messageIds?.length > 20
                 ? true
                 : state.channelsObj[action.channelId]?.messagesLoadMoreButton,
             messageIds:
