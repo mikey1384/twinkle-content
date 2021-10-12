@@ -532,6 +532,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
       }
       if (!messageIsForCurrentChannel) {
         onReceiveMessageOnDifferentChannel({
+          message,
           channel,
           pageVisible,
           usingChat
