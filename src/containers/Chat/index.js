@@ -181,6 +181,9 @@ function Chat({ onFileUpload }) {
         return onEnterEmptyChat();
       }
       onUpdateSelectedChannelId(id);
+      if (channelsObj[id]?.loaded) {
+        return;
+      }
       const data = await loadChatChannel({ channelId: id });
       if (mounted.current) {
         onEnterChannelWithId({ data });
