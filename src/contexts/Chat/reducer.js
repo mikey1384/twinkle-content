@@ -1537,7 +1537,14 @@ export default function ChatReducer(state, action) {
       return {
         ...state,
         chatType: 'default',
-        selectedChannelId: action.channelId
+        selectedChannelId: action.channelId,
+        channelsObj: {
+          ...state.channelsObj,
+          [action.channelId]: {
+            ...state.channelsObj[action.channelId],
+            numUnreads: 0
+          }
+        }
       };
     default:
       return state;
