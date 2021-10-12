@@ -497,20 +497,23 @@ function MessagesContainer({
   const handleInviteUsersDone = useCallback(
     async ({ users, message, isClass }) => {
       if (isClass) {
+        const channelData = {
+          ...currentChannel,
+          numUnreads: 1,
+          lastMessage: {
+            content: message.content,
+            sender: { id: userId, username }
+          },
+          channelName
+        };
+        delete channelData.messageIds;
+        delete channelData.messagesObj;
         socket.emit('new_chat_message', {
           message: {
             ...message,
             channelId: message.channelId
           },
-          channel: {
-            ...currentChannel,
-            numUnreads: 1,
-            lastMessage: {
-              content: message.content,
-              sender: { id: userId, username }
-            },
-            channelName
-          },
+          channel: channelData,
           newMembers: users
         });
         socket.emit(
@@ -653,9 +656,14 @@ function MessagesContainer({
       if (channel.id === invitationChannelId) {
         socket.emit('join_chat_group', channel.id);
         onEnterChannelWithId({ data: { channel, messages }, showOnTop: true });
+        const channelData = {
+          ...channel
+        };
+        delete channelData.messageIds;
+        delete channelData.messagesObj;
         socket.emit('new_chat_message', {
           message: joinMessage,
-          channel,
+          channel: channelData,
           newMembers: [{ id: userId, username, profilePicUrl }]
         });
       }

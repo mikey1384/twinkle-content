@@ -266,16 +266,19 @@ function Message({
         id: messageId
       };
       delete messageToSendOverSocket.tempMessageId;
+      const channelData = {
+        ...currentChannel,
+        numUnreads: 1,
+        lastMessage: {
+          content,
+          sender: { id: myId, username: myUsername }
+        }
+      };
+      delete channelData.messageIds;
+      delete channelData.messagesObj;
       socket.emit('new_chat_message', {
         message: messageToSendOverSocket,
-        channel: {
-          ...currentChannel,
-          numUnreads: 1,
-          lastMessage: {
-            content,
-            sender: { id: myId, username: myUsername }
-          }
-        }
+        channel: channelData
       });
     }
 
