@@ -393,10 +393,6 @@ export default function ChatReducer(state, action) {
         messagesLoadMoreButton = true;
       }
       action.data.messageIds.reverse();
-      const newMessageIds = [...action.data.messageIds];
-      const newMessagesObj = {
-        ...action.data.messagesObj
-      };
 
       return {
         ...state,
@@ -417,8 +413,8 @@ export default function ChatReducer(state, action) {
           [selectedChannel.id]: {
             ...selectedChannel,
             messagesLoadMoreButton,
-            messageIds: newMessageIds,
-            messagesObj: newMessagesObj,
+            messageIds: action.data.messageIds,
+            messagesObj: action.data.messagesObj,
             messagesLoaded: true,
             numUnreads: 0,
             loaded: true
