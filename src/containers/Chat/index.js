@@ -175,20 +175,23 @@ function Chat({ onFileUpload }) {
     return result;
   }, [chatStatus, currentChannel.id, currentChannel?.members]);
 
-  const handleChannelEnter = useCallback(async (id) => {
-    if (id === 0) {
-      return onEnterEmptyChat();
-    }
-    onUpdateSelectedChannelId(id);
-    if (channelsObj[id]?.loaded) {
-      return;
-    }
-    const data = await loadChatChannel({ channelId: id });
-    if (mounted.current) {
-      onEnterChannelWithId({ data });
-    }
+  const handleChannelEnter = useCallback(
+    async (id) => {
+      if (id === 0) {
+        return onEnterEmptyChat();
+      }
+      onUpdateSelectedChannelId(id);
+      if (channelsObj[id]?.loaded) {
+        return;
+      }
+      const data = await loadChatChannel({ channelId: id });
+      if (mounted.current) {
+        onEnterChannelWithId({ data });
+      }
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    [channelsObj]
+  );
 
   const handleCreateNewChannel = useCallback(
     async ({ userId, channelName, isClosed }) => {
