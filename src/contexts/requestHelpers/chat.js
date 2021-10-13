@@ -408,13 +408,13 @@ export default function chatRequestHelpers({ auth, handleError }) {
     async sendInvitationMessage({ origin, recepients }) {
       try {
         const {
-          data: { invitationMessage, channels }
+          data: { invitationMessage, channels, messages }
         } = await request.post(
           `${URL}/chat/invitation`,
           { origin, recepients },
           auth()
         );
-        return Promise.resolve({ invitationMessage, channels });
+        return Promise.resolve({ invitationMessage, channels, messages });
       } catch (error) {
         return handleError(error);
       }

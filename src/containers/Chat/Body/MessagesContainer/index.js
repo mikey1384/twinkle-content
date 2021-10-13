@@ -524,11 +524,17 @@ function MessagesContainer({
         );
       } else {
         const recepientIds = users.map((user) => user.id);
-        const { invitationMessage, channels } = await sendInvitationMessage({
-          recepients: recepientIds,
-          origin: currentChannel.id
-        });
-
+        const { invitationMessage, channels, messages } =
+          await sendInvitationMessage({
+            recepients: recepientIds,
+            origin: currentChannel.id
+          });
+        for (let i = 0; i < channels.length; i++) {
+          onSubmitMessage({
+            messageId: messages[i].id,
+            message: messages[i]
+          });
+        }
         onUpdateLastMessages({
           channels,
           message: invitationMessage,
