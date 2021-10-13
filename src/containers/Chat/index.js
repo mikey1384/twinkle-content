@@ -134,9 +134,7 @@ function Chat({ onFileUpload }) {
     }
 
     function onNotifyMoveViewed(channelId) {
-      if (channelId === selectedChannelId) {
-        onUpdateChessMoveViewTimeStamp(selectedChannelId);
-      }
+      onUpdateChessMoveViewTimeStamp(channelId);
     }
 
     return function cleanUp() {
