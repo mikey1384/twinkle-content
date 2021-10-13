@@ -162,7 +162,7 @@ function Channels({ onChannelEnter }) {
         .map((channel) => (
           <Channel
             key={selectedChatTab + channel.id}
-            channel={channel}
+            channelId={channel.id}
             customChannelNames={customChannelNames}
             chatType={chatType}
             onChannelEnter={onChannelEnter}

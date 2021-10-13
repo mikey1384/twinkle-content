@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { Color, desktopMinWidth, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
+import { useChatContext } from 'contexts';
 
 Channel.propTypes = {
   chatType: PropTypes.string,
-  channel: PropTypes.object.isRequired,
+  channelId: PropTypes.number.isRequired,
   customChannelNames: PropTypes.object.isRequired,
   onChannelEnter: PropTypes.func.isRequired,
   selectedChannelId: PropTypes.number
@@ -15,18 +16,25 @@ Channel.propTypes = {
 function Channel({
   chatType,
   customChannelNames,
-  channel: {
-    lastMessage,
-    id,
-    channelName,
-    members,
-    numUnreads = 0,
-    twoPeople
-  } = {},
+  channelId,
   onChannelEnter,
   selectedChannelId
 }) {
   const { profileTheme, userId } = useMyState();
+  const {
+    state: { channelsObj }
+  } = useChatContext();
+  const {
+    id,
+    channelName,
+    messageIds = [],
+    messagesObj = {},
+    twoPeople,
+    members,
+    numUnreads
+  } = useMemo(() => {
+    return channelsObj[channelId];
+  }, [channelId, channelsObj]);
   const effectiveChannelName = useMemo(
     () => customChannelNames[id] || channelName,
     [channelName, customChannelNames, id]
@@ -35,19 +43,24 @@ function Channel({
     () => (!chatType || chatType === 'default') && id === selectedChannelId,
     [chatType, id, selectedChannelId]
   );
+  const lastMessage = useMemo(() => {
+    const lastMessageId = messageIds[messageIds.length - 1];
+    return messagesObj[lastMessageId];
+  }, [messageIds, messagesObj]);
   const PreviewMessage = useMemo(() => {
     return renderPreviewMessage(lastMessage || {});
     function renderPreviewMessage({
       content,
       fileName,
       gameWinnerId,
-      sender,
+      userId: senderId,
+      username: senderName,
       isDraw
     }) {
-      const messageSender = sender?.id
-        ? sender.id === userId
+      const messageSender = senderId
+        ? senderId === userId
           ? 'You'
-          : sender.username
+          : senderName
         : '';
       if (fileName) {
         return (
