@@ -202,6 +202,11 @@ function MessagesContainer({
     [loaded, creatingNewDMChannel, reconnecting]
   );
 
+  const chessCountdownNumber = useMemo(
+    () => chessCountdownObj[selectedChannelId],
+    [chessCountdownObj, selectedChannelId]
+  );
+
   const menuProps = useMemo(() => {
     if (currentChannel.twoPeople) {
       return [
@@ -929,7 +934,7 @@ function MessagesContainer({
                   zIndex={messages.length - index}
                   channelId={selectedChannelId}
                   channelName={channelName}
-                  chessCountdownNumber={chessCountdownObj[selectedChannelId]}
+                  chessCountdownNumber={chessCountdownNumber}
                   chessOpponent={chessOpponent}
                   checkScrollIsAtTheBottom={() =>
                     checkScrollIsAtTheBottom({

@@ -111,7 +111,7 @@ function Chess({
     [myId, parsedState]
   );
 
-  const userMadeLastMove = move.by === myId;
+  const userMadeLastMove = useMemo(() => move.by === myId, [move.by, myId]);
   const isCheck = parsedState?.isCheck;
   const isCheckmate = parsedState?.isCheckmate;
   const isStalemate = parsedState?.isStalemate;
@@ -125,6 +125,20 @@ function Chess({
     : isCheck
     ? 'Check!'
     : '';
+  const statusMsgShown = useMemo(() => {
+    return (
+      !(isCheckmate || isStalemate || isDraw) &&
+      ((loaded && userMadeLastMove && !moveViewed) || !!countdownNumber)
+    );
+  }, [
+    countdownNumber,
+    isCheckmate,
+    isDraw,
+    isStalemate,
+    loaded,
+    moveViewed,
+    userMadeLastMove
+  ]);
 
   useEffect(() => {
     if (newChessState) return;
@@ -880,44 +894,43 @@ function Chess({
           </div>
         </div>
       )}
-      {!(isCheckmate || isStalemate || isDraw) &&
-        ((loaded && userMadeLastMove && !moveViewed) || !!countdownNumber) && (
-          <div
-            className={css`
-              padding: 0.5rem 1rem;
-              background: ${Color.white(0.9)};
-              border: 1px solid ${Color.darkGray()};
-              bottom: 1rem;
-              right: 1rem;
-              position: absolute;
+      {statusMsgShown && (
+        <div
+          className={css`
+            padding: 0.5rem 1rem;
+            background: ${Color.white(0.9)};
+            border: 1px solid ${Color.darkGray()};
+            bottom: 1rem;
+            right: 1rem;
+            position: absolute;
+            font-size: ${countdownNumber && countdownNumber < 110
+              ? '3.5rem'
+              : '2.5rem'};
+            font-weight: bold;
+            color: ${countdownNumber && countdownNumber < 110 ? 'red' : ''};
+            @media (max-width: ${mobileMaxWidth}) {
               font-size: ${countdownNumber && countdownNumber < 110
-                ? '3.5rem'
-                : '2.5rem'};
-              font-weight: bold;
-              color: ${countdownNumber && countdownNumber < 110 ? 'red' : ''};
-              @media (max-width: ${mobileMaxWidth}) {
-                font-size: ${countdownNumber && countdownNumber < 110
-                  ? '2.5rem'
-                  : '1.5rem'};
-              }
-            `}
-          >
-            {countdownNumber ? (
-              countdownNumber >= 110 ? (
-                `${Math.floor(countdownNumber / 600)}:${String(
-                  Math.floor((countdownNumber % 600) / 10)
-                ).padStart(2, '0')}`
-              ) : (
-                Number((countdownNumber % 600) / 10).toFixed(1)
-              )
+                ? '2.5rem'
+                : '1.5rem'};
+            }
+          `}
+        >
+          {countdownNumber ? (
+            countdownNumber >= 110 ? (
+              `${Math.floor(countdownNumber / 600)}:${String(
+                Math.floor((countdownNumber % 600) / 10)
+              ).padStart(2, '0')}`
             ) : (
-              <>
-                <p>Awaiting</p>
-                <p>{`${opponentName}'s move`}</p>
-              </>
-            )}
-          </div>
-        )}
+              Number((countdownNumber % 600) / 10).toFixed(1)
+            )
+          ) : (
+            <>
+              <p>Awaiting</p>
+              <p>{`${opponentName}'s move`}</p>
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 }
