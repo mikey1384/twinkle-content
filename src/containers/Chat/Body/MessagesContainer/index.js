@@ -932,6 +932,7 @@ function MessagesContainer({
                 <Message
                   key={selectedChannelId + (message.id || 'newMessage' + index)}
                   zIndex={messages.length - index}
+                  channelLoaded={loaded}
                   channelId={selectedChannelId}
                   channelName={channelName}
                   chessCountdownNumber={chessCountdownNumber}

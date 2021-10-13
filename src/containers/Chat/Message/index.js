@@ -45,6 +45,7 @@ Message.propTypes = {
   chessCountdownNumber: PropTypes.number,
   chessOpponent: PropTypes.object,
   channelId: PropTypes.number,
+  channelLoaded: PropTypes.bool,
   channelName: PropTypes.string,
   currentChannel: PropTypes.object,
   message: PropTypes.object,
@@ -71,6 +72,7 @@ Message.propTypes = {
 
 function Message({
   channelId,
+  channelLoaded,
   channelName,
   chessCountdownNumber,
   chessOpponent,
@@ -486,6 +488,13 @@ function Message({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLastMsg]);
+
+  useEffect(() => {
+    if (channelLoaded) {
+      handleSetScrollToBottom();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [channelLoaded]);
 
   const handleEditCancel = useCallback(() => {
     onSetIsEditing({
