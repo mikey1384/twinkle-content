@@ -354,9 +354,15 @@ export default function ChatActions(dispatch) {
         pageVisible
       });
     },
-    onReceiveMessageOnDifferentChannel({ channel, pageVisible, usingChat }) {
+    onReceiveMessageOnDifferentChannel({
+      message,
+      channel,
+      pageVisible,
+      usingChat
+    }) {
       return dispatch({
         type: 'RECEIVE_MSG_ON_DIFF_CHANNEL',
+        message,
         channel,
         pageVisible,
         usingChat

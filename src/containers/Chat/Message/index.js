@@ -75,7 +75,6 @@ function Message({
   chessCountdownNumber,
   chessOpponent,
   currentChannel,
-  currentChannel: { theme },
   index,
   isLastMsg,
   isNotification,
@@ -266,16 +265,17 @@ function Message({
         id: messageId
       };
       delete messageToSendOverSocket.tempMessageId;
+      const channelData = {
+        id: currentChannel.id,
+        numUnreads: 1,
+        lastMessage: {
+          content,
+          sender: { id: myId, username: myUsername }
+        }
+      };
       socket.emit('new_chat_message', {
         message: messageToSendOverSocket,
-        channel: {
-          ...currentChannel,
-          numUnreads: 1,
-          lastMessage: {
-            content,
-            sender: { id: myId, username: myUsername }
-          }
-        }
+        channel: channelData
       });
     }
 
@@ -694,7 +694,7 @@ function Message({
                       socketConnected={socketConnected}
                       subjectId={subjectId}
                       targetMessage={targetMessage}
-                      theme={theme}
+                      theme={currentChannel.theme}
                       userCanEditThis={userCanEditThis}
                     />
                   )}

@@ -261,17 +261,18 @@ function App({ location, history }) {
       };
       onDisplayAttachedFile(params);
       if (channelId) {
+        const channelData = {
+          id: channelId,
+          numUnreads: 1,
+          lastMessage: {
+            fileName: params.fileName,
+            sender: { id: userId, username }
+          },
+          channelName: currentChannelName
+        };
         socket.emit('new_chat_message', {
           message: { ...params, isNewMessage: true },
-          channel: {
-            ...currentChannel,
-            numUnreads: 1,
-            lastMessage: {
-              fileName: params.fileName,
-              sender: { id: userId, username }
-            },
-            channelName: currentChannelName
-          }
+          channel: channelData
         });
       }
       onSetReplyTarget(null);

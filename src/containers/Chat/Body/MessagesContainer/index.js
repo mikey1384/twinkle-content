@@ -90,6 +90,7 @@ function MessagesContainer({
       onHideChat,
       onLeaveChannel,
       onLoadMoreMessages,
+      onReceiveMessageOnDifferentChannel,
       onSendFirstDirectMessage,
       onSetChessModalShown,
       onSetCreatingNewDMChannel,
@@ -199,6 +200,11 @@ function MessagesContainer({
   const loading = useMemo(
     () => !loaded || creatingNewDMChannel || reconnecting,
     [loaded, creatingNewDMChannel, reconnecting]
+  );
+
+  const chessCountdownNumber = useMemo(
+    () => chessCountdownObj[selectedChannelId],
+    [chessCountdownObj, selectedChannelId]
   );
 
   const menuProps = useMemo(() => {
@@ -497,20 +503,21 @@ function MessagesContainer({
   const handleInviteUsersDone = useCallback(
     async ({ users, message, isClass }) => {
       if (isClass) {
+        const channelData = {
+          id: selectedChannelId,
+          numUnreads: 1,
+          lastMessage: {
+            content: message.content,
+            sender: { id: userId, username }
+          },
+          channelName
+        };
         socket.emit('new_chat_message', {
           message: {
             ...message,
             channelId: message.channelId
           },
-          channel: {
-            ...currentChannel,
-            numUnreads: 1,
-            lastMessage: {
-              content: message.content,
-              sender: { id: userId, username }
-            },
-            channelName
-          },
+          channel: channelData,
           newMembers: users
         });
         socket.emit(
@@ -523,11 +530,19 @@ function MessagesContainer({
         );
       } else {
         const recepientIds = users.map((user) => user.id);
-        const { invitationMessage, channels } = await sendInvitationMessage({
-          recepients: recepientIds,
-          origin: currentChannel.id
-        });
-
+        const { invitationMessage, channels, messages } =
+          await sendInvitationMessage({
+            recepients: recepientIds,
+            origin: currentChannel.id
+          });
+        for (let i = 0; i < channels.length; i++) {
+          onReceiveMessageOnDifferentChannel({
+            message: messages[i],
+            channel: channels[i],
+            pageVisible: true,
+            usingChat: true
+          });
+        }
         onUpdateLastMessages({
           channels,
           message: invitationMessage,
@@ -647,15 +662,17 @@ function MessagesContainer({
   const handleAcceptGroupInvitation = useCallback(
     async (invitationChannelId) => {
       onUpdateSelectedChannelId(invitationChannelId);
-      const { channel, messages, joinMessage } = await acceptInvitation(
-        invitationChannelId
-      );
+      const { channel, messageIds, messagesObj, joinMessage } =
+        await acceptInvitation(invitationChannelId);
       if (channel.id === invitationChannelId) {
         socket.emit('join_chat_group', channel.id);
-        onEnterChannelWithId({ data: { channel, messages }, showOnTop: true });
+        onEnterChannelWithId({
+          data: { channel, messageIds, messagesObj },
+          showOnTop: true
+        });
         socket.emit('new_chat_message', {
           message: joinMessage,
-          channel,
+          channel: { id: channel.id },
           newMembers: [{ id: userId, username, profilePicUrl }]
         });
       }
@@ -917,7 +934,7 @@ function MessagesContainer({
                   zIndex={messages.length - index}
                   channelId={selectedChannelId}
                   channelName={channelName}
-                  chessCountdownNumber={chessCountdownObj[selectedChannelId]}
+                  chessCountdownNumber={chessCountdownNumber}
                   chessOpponent={chessOpponent}
                   checkScrollIsAtTheBottom={() =>
                     checkScrollIsAtTheBottom({

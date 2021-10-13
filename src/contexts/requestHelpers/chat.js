@@ -408,13 +408,13 @@ export default function chatRequestHelpers({ auth, handleError }) {
     async sendInvitationMessage({ origin, recepients }) {
       try {
         const {
-          data: { invitationMessage, channels }
+          data: { invitationMessage, channels, messages }
         } = await request.post(
           `${URL}/chat/invitation`,
           { origin, recepients },
           auth()
         );
-        return Promise.resolve({ invitationMessage, channels });
+        return Promise.resolve({ invitationMessage, channels, messages });
       } catch (error) {
         return handleError(error);
       }
@@ -439,6 +439,14 @@ export default function chatRequestHelpers({ auth, handleError }) {
           auth()
         );
         return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
+    async updateLastChannelId(channelId) {
+      try {
+        await request.put(`${URL}/chat/lastChannelId`, { channelId }, auth());
+        return Promise.resolve();
       } catch (error) {
         return handleError(error);
       }
