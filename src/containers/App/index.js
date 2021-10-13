@@ -262,7 +262,7 @@ function App({ location, history }) {
       onDisplayAttachedFile(params);
       if (channelId) {
         const channelData = {
-          ...currentChannel,
+          id: channelId,
           numUnreads: 1,
           lastMessage: {
             fileName: params.fileName,
@@ -270,8 +270,6 @@ function App({ location, history }) {
           },
           channelName: currentChannelName
         };
-        delete channelData.messageIds;
-        delete channelData.messagesObj;
         socket.emit('new_chat_message', {
           message: { ...params, isNewMessage: true },
           channel: channelData

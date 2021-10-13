@@ -498,7 +498,7 @@ function MessagesContainer({
     async ({ users, message, isClass }) => {
       if (isClass) {
         const channelData = {
-          ...currentChannel,
+          id: selectedChannelId,
           numUnreads: 1,
           lastMessage: {
             content: message.content,
@@ -506,8 +506,6 @@ function MessagesContainer({
           },
           channelName
         };
-        delete channelData.messageIds;
-        delete channelData.messagesObj;
         socket.emit('new_chat_message', {
           message: {
             ...message,
@@ -650,20 +648,17 @@ function MessagesContainer({
   const handleAcceptGroupInvitation = useCallback(
     async (invitationChannelId) => {
       onUpdateSelectedChannelId(invitationChannelId);
-      const { channel, messages, joinMessage } = await acceptInvitation(
-        invitationChannelId
-      );
+      const { channel, messageIds, messagesObj, joinMessage } =
+        await acceptInvitation(invitationChannelId);
       if (channel.id === invitationChannelId) {
         socket.emit('join_chat_group', channel.id);
-        onEnterChannelWithId({ data: { channel, messages }, showOnTop: true });
-        const channelData = {
-          ...channel
-        };
-        delete channelData.messageIds;
-        delete channelData.messagesObj;
+        onEnterChannelWithId({
+          data: { channel, messageIds, messagesObj },
+          showOnTop: true
+        });
         socket.emit('new_chat_message', {
           message: joinMessage,
-          channel: channelData,
+          channel: { id: channel.id },
           newMembers: [{ id: userId, username, profilePicUrl }]
         });
       }

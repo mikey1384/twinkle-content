@@ -1060,8 +1060,7 @@ export default function ChatReducer(state, action) {
                 username: action.message.username
               }
             },
-            numUnreads: action.duplicate ? 0 : 1,
-            loaded: true
+            numUnreads: action.duplicate ? 0 : 1
           }
         },
         homeChannelIds: [action.message.channelId].concat(
@@ -1079,11 +1078,11 @@ export default function ChatReducer(state, action) {
           [action.channel.id]: {
             ...state.channelsObj[action.channel.id],
             ...action.channel,
-            messageIds: state.channelsObj[action.channel.id].messageIds.concat(
-              action.message.id
-            ),
+            messageIds: state.channelsObj[
+              action.channel.id
+            ]?.messageIds?.concat(action.message.id),
             messagesObj: {
-              ...state.channelsObj[action.channel.id].messagesObj,
+              ...state.channelsObj[action.channel.id]?.messagesObj,
               [action.message.id]: action.message
             },
             numUnreads:
