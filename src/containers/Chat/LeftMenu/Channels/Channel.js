@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { Color, desktopMinWidth, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
-import { useChatContext } from 'contexts';
 
 Channel.propTypes = {
   chatType: PropTypes.string,
-  channelId: PropTypes.number.isRequired,
+  channel: PropTypes.object.isRequired,
   customChannelNames: PropTypes.object.isRequired,
   onChannelEnter: PropTypes.func.isRequired,
   selectedChannelId: PropTypes.number
@@ -16,32 +15,27 @@ Channel.propTypes = {
 function Channel({
   chatType,
   customChannelNames,
-  channelId,
-  onChannelEnter,
-  selectedChannelId
-}) {
-  const { profileTheme, userId } = useMyState();
-  const {
-    state: { channelsObj }
-  } = useChatContext();
-  const {
-    id,
+  channel: {
+    id: channelId,
     channelName,
     messageIds = [],
     messagesObj = {},
     twoPeople,
     members,
     numUnreads
-  } = useMemo(() => {
-    return channelsObj[channelId];
-  }, [channelId, channelsObj]);
+  },
+  onChannelEnter,
+  selectedChannelId
+}) {
+  const { profileTheme, userId } = useMyState();
   const effectiveChannelName = useMemo(
-    () => customChannelNames[id] || channelName,
-    [channelName, customChannelNames, id]
+    () => customChannelNames[channelId] || channelName,
+    [channelName, customChannelNames, channelId]
   );
   const selected = useMemo(
-    () => (!chatType || chatType === 'default') && id === selectedChannelId,
-    [chatType, id, selectedChannelId]
+    () =>
+      (!chatType || chatType === 'default') && channelId === selectedChannelId,
+    [chatType, channelId, selectedChannelId]
   );
   const lastMessage = useMemo(() => {
     const lastMessageId = messageIds[messageIds.length - 1];
@@ -110,7 +104,7 @@ function Channel({
 
   return (
     <div
-      key={id}
+      key={channelId}
       className={css`
         @media (min-width: ${desktopMinWidth}) {
           &:hover {
@@ -127,7 +121,7 @@ function Channel({
       }}
       onClick={() => {
         if (!selected) {
-          onChannelEnter(id);
+          onChannelEnter(channelId);
         }
       }}
     >
@@ -154,7 +148,7 @@ function Channel({
             <p
               style={{
                 color:
-                  id === 2
+                  channelId === 2
                     ? Color[
                         profileTheme === 'black'
                           ? 'logoBlue'
@@ -194,7 +188,7 @@ function Channel({
             {PreviewMessage}
           </div>
         </div>
-        {id !== selectedChannelId &&
+        {channelId !== selectedChannelId &&
           numUnreads > 0 &&
           lastMessage?.sender?.id !== userId && (
             <div
