@@ -419,7 +419,6 @@ export default function ChatReducer(state, action) {
             messagesLoadMoreButton,
             messageIds: action.data.messageIds,
             messagesObj: action.data.messagesObj,
-            messagesLoaded: true,
             numUnreads: 0,
             loaded: true
           }
@@ -590,7 +589,6 @@ export default function ChatReducer(state, action) {
             messagesLoadMoreButton,
             messageIds: newMessageIds,
             messagesObj: newMessagesObj,
-            messagesLoaded: true,
             numUnreads: 0,
             recentChessMessage: undefined,
             loaded: true
