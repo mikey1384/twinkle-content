@@ -90,6 +90,7 @@ function MessagesContainer({
       onHideChat,
       onLeaveChannel,
       onLoadMoreMessages,
+      onReceiveMessageOnDifferentChannel,
       onSendFirstDirectMessage,
       onSetChessModalShown,
       onSetCreatingNewDMChannel,
@@ -530,9 +531,11 @@ function MessagesContainer({
             origin: currentChannel.id
           });
         for (let i = 0; i < channels.length; i++) {
-          onSubmitMessage({
-            messageId: messages[i].id,
-            message: messages[i]
+          onReceiveMessageOnDifferentChannel({
+            message: messages[i],
+            channel: channels[i],
+            pageVisible: true,
+            usingChat: true
           });
         }
         onUpdateLastMessages({
