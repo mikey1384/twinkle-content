@@ -1083,8 +1083,10 @@ export default function ChatReducer(state, action) {
               ...state.channelsObj[action.channel.id]?.messagesObj,
               [action.message.id]: action.message
             },
-            numUnreads:
-              Number(state.channelsObj[action.channel.id]?.numUnreads || 0) + 1
+            numUnreads: action.isMyMessage
+              ? Number(state.channelsObj[action.channel.id]?.numUnreads || 0)
+              : Number(state.channelsObj[action.channel.id]?.numUnreads || 0) +
+                1
           }
         },
         numUnreads:

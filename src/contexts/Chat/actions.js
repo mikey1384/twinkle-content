@@ -358,14 +358,16 @@ export default function ChatActions(dispatch) {
       message,
       channel,
       pageVisible,
-      usingChat
+      usingChat,
+      isMyMessage
     }) {
       return dispatch({
         type: 'RECEIVE_MSG_ON_DIFF_CHANNEL',
         message,
         channel,
         pageVisible,
-        usingChat
+        usingChat,
+        isMyMessage
       });
     },
     onReceiveVocabActivity({ activity, usingVocabSection }) {

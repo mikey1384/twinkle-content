@@ -538,7 +538,8 @@ function MessagesContainer({
             message: messages[i],
             channel: channels[i].channel,
             pageVisible: true,
-            usingChat: true
+            usingChat: true,
+            isMyMessage: true
           });
         }
       }
