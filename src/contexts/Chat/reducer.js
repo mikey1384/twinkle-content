@@ -651,9 +651,12 @@ export default function ChatReducer(state, action) {
           loadMoreButton = true;
         }
       }
-      const channels = {};
+      const newChannels = { ...state.channelsObj };
       for (let channel of action.channels) {
-        channels[channel.id] = channel;
+        newChannels[channel.id] = {
+          ...state.channelsObj[channel.id],
+          ...(state.channelsObj[channel.id]?.loaded ? {} : channel)
+        };
       }
       return {
         ...state,
@@ -663,7 +666,7 @@ export default function ChatReducer(state, action) {
         ].concat(action.channels.map((channel) => channel.id)),
         channelsObj: {
           ...state.channelsObj,
-          ...channels
+          ...newChannels
         }
       };
     }

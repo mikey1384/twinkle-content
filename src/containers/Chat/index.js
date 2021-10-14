@@ -26,6 +26,7 @@ import {
   useChatContext
 } from 'contexts';
 import { GENERAL_CHAT_ID } from 'constants/defaultValues';
+import ErrorBoundary from 'components/ErrorBoundary';
 
 Chat.propTypes = {
   onFileUpload: PropTypes.func
@@ -244,64 +245,69 @@ function Chat({ onFileUpload }) {
         onFileUpload
       }}
     >
-      {userId ? (
-        loaded ? (
-          <div
-            className={css`
-              width: 100%;
-              height: 100%;
-              display: flex;
-              font-size: 1.6rem;
-              position: relative;
-              @media (max-width: ${phoneMaxWidth}) {
-                width: 152vw;
+      <ErrorBoundary>
+        {userId ? (
+          loaded ? (
+            <div
+              className={css`
+                width: 100%;
                 height: 100%;
-              }
-            `}
-          >
-            {createNewChatModalShown && (
-              <CreateNewChatModal
-                creatingChat={creatingChat}
-                onHide={() => setCreateNewChatModalShown(false)}
-                onDone={handleCreateNewChannel}
-              />
-            )}
-            {userListModalShown && (
-              <UserListModal
-                onHide={() => setUserListModalShown(false)}
-                users={returnUsers(currentChannel, currentChannelOnlineMembers)}
-                descriptionShown={(user) =>
-                  !!currentChannelOnlineMembers[user.id]
+                display: flex;
+                font-size: 1.6rem;
+                position: relative;
+                @media (max-width: ${phoneMaxWidth}) {
+                  width: 152vw;
+                  height: 100%;
                 }
-                description="(online)"
-                title="Online Status"
+              `}
+            >
+              {createNewChatModalShown && (
+                <CreateNewChatModal
+                  creatingChat={creatingChat}
+                  onHide={() => setCreateNewChatModalShown(false)}
+                  onDone={handleCreateNewChannel}
+                />
+              )}
+              {userListModalShown && (
+                <UserListModal
+                  onHide={() => setUserListModalShown(false)}
+                  users={returnUsers(
+                    currentChannel,
+                    currentChannelOnlineMembers
+                  )}
+                  descriptionShown={(user) =>
+                    !!currentChannelOnlineMembers[user.id]
+                  }
+                  description="(online)"
+                  title="Online Status"
+                />
+              )}
+              <LeftMenu
+                onChannelEnter={handleChannelEnter}
+                onNewButtonClick={() => setCreateNewChatModalShown(true)}
+                showUserListModal={() => setUserListModalShown(true)}
               />
-            )}
-            <LeftMenu
-              onChannelEnter={handleChannelEnter}
-              onNewButtonClick={() => setCreateNewChatModalShown(true)}
-              showUserListModal={() => setUserListModalShown(true)}
-            />
-            <Body
-              channelName={currentChannelName}
-              chessOpponent={partner}
-              currentChannel={currentChannel}
-              onChannelEnter={handleChannelEnter}
-            />
-            <RightMenu
-              channelOnCall={channelOnCall}
-              channelName={currentChannelName}
-              currentChannel={currentChannel}
-              currentChannelOnlineMembers={currentChannelOnlineMembers}
-              selectedChannelId={selectedChannelId}
-            />
-          </div>
+              <Body
+                channelName={currentChannelName}
+                chessOpponent={partner}
+                currentChannel={currentChannel}
+                onChannelEnter={handleChannelEnter}
+              />
+              <RightMenu
+                channelOnCall={channelOnCall}
+                channelName={currentChannelName}
+                currentChannel={currentChannel}
+                currentChannelOnlineMembers={currentChannelOnlineMembers}
+                selectedChannelId={selectedChannelId}
+              />
+            </div>
+          ) : (
+            <Loading text="Loading Twinkle Chat" />
+          )
         ) : (
-          <Loading text="Loading Twinkle Chat" />
-        )
-      ) : (
-        <PleaseLogIn />
-      )}
+          <PleaseLogIn />
+        )}
+      </ErrorBoundary>
     </LocalContext.Provider>
   );
 

@@ -39,6 +39,7 @@ import {
   useNotiContext,
   useChatContext
 } from 'contexts';
+import ErrorBoundary from 'components/ErrorBoundary';
 
 Message.propTypes = {
   checkScrollIsAtTheBottom: PropTypes.func.isRequired,
@@ -563,193 +564,195 @@ function Message({
   }
 
   return (
-    <div
-      ref={ComponentRef}
-      className={MessageStyle.container}
-      style={{
-        width: '100%',
-        zIndex
-      }}
-    >
-      {contentShown ? (
-        <div ref={PanelRef} className={MessageStyle.container}>
-          <div className={MessageStyle.profilePic}>
-            <ProfilePic
-              style={{ width: '100%', height: '100%' }}
-              userId={userId}
-              profilePicUrl={profilePicUrl}
-            />
-          </div>
-          <div
-            className={css`
-              width: CALC(100% - 5vw - 3rem);
-              display: flex;
-              flex-direction: column;
-              margin-left: 2rem;
-              margin-right: 1rem;
-              position: relative;
-              white-space: pre-wrap;
-              overflow-wrap: break-word;
-              word-break: break-word;
-              @media (max-width: ${mobileMaxWidth}) {
-                margin-left: 1rem;
-              }
-            `}
-          >
-            <div>
-              <UsernameText
-                className={css`
-                  font-size: 1.8rem;
-                  line-height: 1;
-                  @media (max-width: ${mobileMaxWidth}) {
-                    font-size: 1.6rem;
-                  }
-                `}
-                user={{
-                  id: userId,
-                  username
-                }}
-              />{' '}
-              <span className={MessageStyle.timeStamp}>
-                {displayedTimeStamp}
-              </span>
+    <ErrorBoundary>
+      <div
+        ref={ComponentRef}
+        className={MessageStyle.container}
+        style={{
+          width: '100%',
+          zIndex
+        }}
+      >
+        {contentShown ? (
+          <div ref={PanelRef} className={MessageStyle.container}>
+            <div className={MessageStyle.profilePic}>
+              <ProfilePic
+                style={{ width: '100%', height: '100%' }}
+                userId={userId}
+                profilePicUrl={profilePicUrl}
+              />
             </div>
-            <div style={{ width: '100%' }}>
-              {inviteFrom ? (
-                <Invitation
-                  sender={{ id: userId, username }}
-                  inviteFrom={inviteFrom}
-                  messageId={messageId}
-                  onChannelEnter={onChannelEnter}
-                  onAcceptGroupInvitation={onAcceptGroupInvitation}
+            <div
+              className={css`
+                width: CALC(100% - 5vw - 3rem);
+                display: flex;
+                flex-direction: column;
+                margin-left: 2rem;
+                margin-right: 1rem;
+                position: relative;
+                white-space: pre-wrap;
+                overflow-wrap: break-word;
+                word-break: break-word;
+                @media (max-width: ${mobileMaxWidth}) {
+                  margin-left: 1rem;
+                }
+              `}
+            >
+              <div>
+                <UsernameText
+                  className={css`
+                    font-size: 1.8rem;
+                    line-height: 1;
+                    @media (max-width: ${mobileMaxWidth}) {
+                      font-size: 1.6rem;
+                    }
+                  `}
+                  user={{
+                    id: userId,
+                    username
+                  }}
+                />{' '}
+                <span className={MessageStyle.timeStamp}>
+                  {displayedTimeStamp}
+                </span>
+              </div>
+              <div style={{ width: '100%' }}>
+                {inviteFrom ? (
+                  <Invitation
+                    sender={{ id: userId, username }}
+                    inviteFrom={inviteFrom}
+                    messageId={messageId}
+                    onChannelEnter={onChannelEnter}
+                    onAcceptGroupInvitation={onAcceptGroupInvitation}
+                  />
+                ) : isDrawOffer ? (
+                  <DrawOffer
+                    userId={userId}
+                    username={username}
+                    onClick={onChessBoardClick}
+                  />
+                ) : isChessMsg ? (
+                  <Chess
+                    channelId={channelId}
+                    countdownNumber={chessCountdownNumber}
+                    gameWinnerId={gameWinnerId}
+                    loaded
+                    spoilerOff={spoilerOff}
+                    myId={myId}
+                    initialState={chessState}
+                    moveViewed={!!moveViewTimeStamp}
+                    onBoardClick={onChessBoardClick}
+                    onSpoilerClick={handleChessSpoilerClick}
+                    opponentId={chessOpponent?.id}
+                    opponentName={chessOpponent?.username}
+                    senderId={userId}
+                    style={{ marginTop: '1rem', width: '100%' }}
+                  />
+                ) : fileToUpload && !loading ? (
+                  <FileUploadStatusIndicator
+                    key={channelId}
+                    fileName={fileToUpload.name}
+                    uploadComplete={!!uploadStatus.uploadComplete}
+                    uploadProgress={uploadStatus.uploadProgress}
+                  />
+                ) : (
+                  <>
+                    {targetSubject && <TargetSubject subject={targetSubject} />}
+                    {targetMessage && (
+                      <TargetMessage
+                        message={targetMessage}
+                        onSetScrollToBottom={handleSetScrollToBottom}
+                      />
+                    )}
+                    {filePath && (
+                      <ContentFileViewer
+                        contentId={messageId}
+                        contentType="chat"
+                        content={content}
+                        filePath={filePath}
+                        fileName={fileName}
+                        fileSize={fileSize}
+                        onMediaPlay={() =>
+                          onSetMediaStarted({
+                            contentType: 'chat',
+                            contentId: messageId,
+                            started: true
+                          })
+                        }
+                        thumbUrl={thumbUrl || recentThumbUrl}
+                        style={{
+                          marginTop: '1rem',
+                          marginBottom: fileViewerMarginBottom
+                        }}
+                      />
+                    )}
+                    {rewardAmount ? (
+                      <RewardMessage
+                        rewardAmount={rewardAmount}
+                        rewardReason={rewardReason}
+                      />
+                    ) : (
+                      <TextMessage
+                        attachmentHidden={!!attachmentHidden}
+                        channelId={channelId}
+                        content={content}
+                        extractedUrl={extractedUrl}
+                        myId={myId}
+                        messageId={messageId}
+                        numMsgs={numMsgs}
+                        isNotification={isNotification}
+                        isSubject={!!isSubject}
+                        isReloadedSubject={!!isReloadedSubject}
+                        MessageStyle={MessageStyle}
+                        isEditing={isEditing}
+                        onEditCancel={handleEditCancel}
+                        onEditDone={handleEditDone}
+                        onSetScrollToBottom={handleSetScrollToBottom}
+                        onShowSubjectMsgsModal={onShowSubjectMsgsModal}
+                        socketConnected={socketConnected}
+                        subjectId={subjectId}
+                        targetMessage={targetMessage}
+                        theme={currentChannel.theme}
+                        userCanEditThis={userCanEditThis}
+                      />
+                    )}
+                  </>
+                )}
+              </div>
+              {dropdownButtonShown && (
+                <DropdownButton
+                  skeuomorphic
+                  color="darkerGray"
+                  icon="chevron-down"
+                  style={{ position: 'absolute', top: 0, right: '5px' }}
+                  direction="left"
+                  opacity={0.8}
+                  onButtonClick={handleScrollToBottomBasedComponentHeight}
+                  menuProps={messageMenuItems}
                 />
-              ) : isDrawOffer ? (
-                <DrawOffer
-                  userId={userId}
-                  username={username}
-                  onClick={onChessBoardClick}
-                />
-              ) : isChessMsg ? (
-                <Chess
-                  channelId={channelId}
-                  countdownNumber={chessCountdownNumber}
-                  gameWinnerId={gameWinnerId}
-                  loaded
-                  spoilerOff={spoilerOff}
-                  myId={myId}
-                  initialState={chessState}
-                  moveViewed={!!moveViewTimeStamp}
-                  onBoardClick={onChessBoardClick}
-                  onSpoilerClick={handleChessSpoilerClick}
-                  opponentId={chessOpponent?.id}
-                  opponentName={chessOpponent?.username}
-                  senderId={userId}
-                  style={{ marginTop: '1rem', width: '100%' }}
-                />
-              ) : fileToUpload && !loading ? (
-                <FileUploadStatusIndicator
-                  key={channelId}
-                  fileName={fileToUpload.name}
-                  uploadComplete={!!uploadStatus.uploadComplete}
-                  uploadProgress={uploadStatus.uploadProgress}
-                />
-              ) : (
-                <>
-                  {targetSubject && <TargetSubject subject={targetSubject} />}
-                  {targetMessage && (
-                    <TargetMessage
-                      message={targetMessage}
-                      onSetScrollToBottom={handleSetScrollToBottom}
-                    />
-                  )}
-                  {filePath && (
-                    <ContentFileViewer
-                      contentId={messageId}
-                      contentType="chat"
-                      content={content}
-                      filePath={filePath}
-                      fileName={fileName}
-                      fileSize={fileSize}
-                      onMediaPlay={() =>
-                        onSetMediaStarted({
-                          contentType: 'chat',
-                          contentId: messageId,
-                          started: true
-                        })
-                      }
-                      thumbUrl={thumbUrl || recentThumbUrl}
-                      style={{
-                        marginTop: '1rem',
-                        marginBottom: fileViewerMarginBottom
-                      }}
-                    />
-                  )}
-                  {rewardAmount ? (
-                    <RewardMessage
-                      rewardAmount={rewardAmount}
-                      rewardReason={rewardReason}
-                    />
-                  ) : (
-                    <TextMessage
-                      attachmentHidden={!!attachmentHidden}
-                      channelId={channelId}
-                      content={content}
-                      extractedUrl={extractedUrl}
-                      myId={myId}
-                      messageId={messageId}
-                      numMsgs={numMsgs}
-                      isNotification={isNotification}
-                      isSubject={!!isSubject}
-                      isReloadedSubject={!!isReloadedSubject}
-                      MessageStyle={MessageStyle}
-                      isEditing={isEditing}
-                      onEditCancel={handleEditCancel}
-                      onEditDone={handleEditDone}
-                      onSetScrollToBottom={handleSetScrollToBottom}
-                      onShowSubjectMsgsModal={onShowSubjectMsgsModal}
-                      socketConnected={socketConnected}
-                      subjectId={subjectId}
-                      targetMessage={targetMessage}
-                      theme={currentChannel.theme}
-                      userCanEditThis={userCanEditThis}
-                    />
-                  )}
-                </>
               )}
             </div>
-            {dropdownButtonShown && (
-              <DropdownButton
-                skeuomorphic
-                color="darkerGray"
-                icon="chevron-down"
-                style={{ position: 'absolute', top: 0, right: '5px' }}
-                direction="left"
-                opacity={0.8}
-                onButtonClick={handleScrollToBottomBasedComponentHeight}
-                menuProps={messageMenuItems}
+            {messageRewardModalShown && (
+              <MessageRewardModal
+                userToReward={{
+                  username,
+                  id: userId
+                }}
+                onSubmit={handleRewardMessageSubmit}
+                onHide={() => setMessageRewardModalShown(false)}
               />
             )}
           </div>
-          {messageRewardModalShown && (
-            <MessageRewardModal
-              userToReward={{
-                username,
-                id: userId
-              }}
-              onSubmit={handleRewardMessageSubmit}
-              onHide={() => setMessageRewardModalShown(false)}
-            />
-          )}
-        </div>
-      ) : (
-        <div
-          style={{
-            width: '100%',
-            height: placeholderHeight
-          }}
-        />
-      )}
-    </div>
+        ) : (
+          <div
+            style={{
+              width: '100%',
+              height: placeholderHeight
+            }}
+          />
+        )}
+      </div>
+    </ErrorBoundary>
   );
 }
 

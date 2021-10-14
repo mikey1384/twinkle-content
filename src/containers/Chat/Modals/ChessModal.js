@@ -10,6 +10,7 @@ import { socket } from 'constants/io';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useChatContext } from 'contexts';
 import { v1 as uuidv1 } from 'uuid';
+import ErrorBoundary from 'components/ErrorBoundary';
 
 ChessModal.propTypes = {
   channelId: PropTypes.number,
@@ -145,104 +146,106 @@ export default function ChessModal({
   }, [drawOffererId, myId]);
 
   return (
-    <Modal large onHide={onHide}>
-      <header>Chess</header>
-      <main style={{ padding: 0 }}>
-        <div
-          style={{
-            backgroundColor: Color.lightGray(),
-            position: 'relative',
-            width: '100%'
-          }}
-        >
-          <Chess
-            isFromModal
-            channelId={channelId}
-            countdownNumber={countdownNumber}
-            interactable={!parsedState?.isDraw}
-            initialState={initialState}
-            loaded={loaded}
-            myId={myId}
-            newChessState={newChessState}
-            onChessMove={setNewChessState}
-            opponentId={opponentId}
-            opponentName={opponentName}
-            senderId={uploaderId}
-            spoilerOff={
-              spoilerOff ||
-              (!loading.current && !initialState) ||
-              !!userMadeLastMove ||
-              !!viewTimeStamp
-            }
-            onSpoilerClick={handleSpoilerClick}
-          />
-        </div>
-      </main>
-      <footer style={{ border: 0 }}>
-        {gameEndButtonShown && (
-          <Button
-            style={{ marginRight: '1rem' }}
-            color={drawOfferPending ? 'orange' : 'red'}
-            onClick={() => setConfirmModalShown(true)}
-          >
-            {drawOfferPending ? 'Accept Draw' : 'Resign'}
-          </Button>
-        )}
-        {drawButtonShown && (
-          <Button
-            style={{ marginRight: '1rem' }}
-            color="orange"
-            onClick={handleOfferDraw}
-          >
-            Offer Draw
-          </Button>
-        )}
-        <Button transparent onClick={onHide}>
-          Close
-        </Button>
-        {!!newChessState && (
-          <Button
-            style={{ marginLeft: '1rem' }}
-            color="pink"
-            onClick={() => setNewChessState(undefined)}
-          >
-            Cancel Move
-          </Button>
-        )}
-        {gameFinished ? (
-          <Button
-            style={{ marginLeft: '1rem' }}
-            color="orange"
-            onClick={() => {
-              setUserMadeLastMove(false);
-              setInitialState(undefined);
+    <ErrorBoundary>
+      <Modal large onHide={onHide}>
+        <header>Chess</header>
+        <main style={{ padding: 0 }}>
+          <div
+            style={{
+              backgroundColor: Color.lightGray(),
+              position: 'relative',
+              width: '100%'
             }}
           >
-            Start a new game
+            <Chess
+              isFromModal
+              channelId={channelId}
+              countdownNumber={countdownNumber}
+              interactable={!parsedState?.isDraw}
+              initialState={initialState}
+              loaded={loaded}
+              myId={myId}
+              newChessState={newChessState}
+              onChessMove={setNewChessState}
+              opponentId={opponentId}
+              opponentName={opponentName}
+              senderId={uploaderId}
+              spoilerOff={
+                spoilerOff ||
+                (!loading.current && !initialState) ||
+                !!userMadeLastMove ||
+                !!viewTimeStamp
+              }
+              onSpoilerClick={handleSpoilerClick}
+            />
+          </div>
+        </main>
+        <footer style={{ border: 0 }}>
+          {gameEndButtonShown && (
+            <Button
+              style={{ marginRight: '1rem' }}
+              color={drawOfferPending ? 'orange' : 'red'}
+              onClick={() => setConfirmModalShown(true)}
+            >
+              {drawOfferPending ? 'Accept Draw' : 'Resign'}
+            </Button>
+          )}
+          {drawButtonShown && (
+            <Button
+              style={{ marginRight: '1rem' }}
+              color="orange"
+              onClick={handleOfferDraw}
+            >
+              Offer Draw
+            </Button>
+          )}
+          <Button transparent onClick={onHide}>
+            Close
           </Button>
-        ) : !userMadeLastMove ? (
-          <Button
-            color="blue"
-            style={{ marginLeft: '1rem' }}
-            onClick={submitChessMove}
-            disabled={!newChessState || !socketConnected || banned?.chess}
-          >
-            Done
-            {!socketConnected && (
-              <Icon style={{ marginLeft: '0.7rem' }} icon="spinner" pulse />
-            )}
-          </Button>
-        ) : null}
-      </footer>
-      {confirmModalShown && (
-        <ConfirmModal
-          modalOverModal
-          title={drawOfferPending ? 'Accept Draw' : 'Resign Chess Match'}
-          onConfirm={handleGameOver}
-          onHide={() => setConfirmModalShown(false)}
-        />
-      )}
-    </Modal>
+          {!!newChessState && (
+            <Button
+              style={{ marginLeft: '1rem' }}
+              color="pink"
+              onClick={() => setNewChessState(undefined)}
+            >
+              Cancel Move
+            </Button>
+          )}
+          {gameFinished ? (
+            <Button
+              style={{ marginLeft: '1rem' }}
+              color="orange"
+              onClick={() => {
+                setUserMadeLastMove(false);
+                setInitialState(undefined);
+              }}
+            >
+              Start a new game
+            </Button>
+          ) : !userMadeLastMove ? (
+            <Button
+              color="blue"
+              style={{ marginLeft: '1rem' }}
+              onClick={submitChessMove}
+              disabled={!newChessState || !socketConnected || banned?.chess}
+            >
+              Done
+              {!socketConnected && (
+                <Icon style={{ marginLeft: '0.7rem' }} icon="spinner" pulse />
+              )}
+            </Button>
+          ) : null}
+        </footer>
+        {confirmModalShown && (
+          <ConfirmModal
+            modalOverModal
+            title={drawOfferPending ? 'Accept Draw' : 'Resign Chess Match'}
+            onConfirm={handleGameOver}
+            onHide={() => setConfirmModalShown(false)}
+          />
+        )}
+      </Modal>
+    </ErrorBoundary>
   );
 
   async function handleOfferDraw() {
