@@ -289,7 +289,10 @@ export default function ChannelHeader({
                   color={theme || 'green'}
                   filled
                   onClick={() => {
-                    onSetIsRespondingToSubject(true);
+                    onSetIsRespondingToSubject({
+                      channelId: selectedChannelId,
+                      isResponding: true
+                    });
                     onInputFocus();
                   }}
                 >

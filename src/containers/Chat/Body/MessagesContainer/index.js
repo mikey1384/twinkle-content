@@ -79,7 +79,6 @@ function MessagesContainer({
       allFavoriteChannelIds,
       recepientId,
       reconnecting,
-      replyTarget,
       selectedChannelId,
       subjectObj
     },
@@ -183,14 +182,14 @@ function MessagesContainer({
     }${
       socketConnected && isRespondingToSubject
         ? ' - 8rem - 2px'
-        : replyTarget
+        : currentChannel.replyTarget
         ? ' - 12rem - 2px'
         : ''
     }
     ${selectedChannelIsOnCall ? ` - ${CALL_SCREEN_HEIGHT}` : ''})`;
   }, [
     isRespondingToSubject,
-    replyTarget,
+    currentChannel.replyTarget,
     selectedChannelIsOnCall,
     socketConnected,
     textAreaHeight
@@ -363,7 +362,7 @@ function MessagesContainer({
     }
     const channelId = currentChannel?.id;
     if (chessCountdownObj[channelId] !== 0) {
-      onSetReplyTarget(null);
+      onSetReplyTarget({ channelId, target: null });
       onSetChessModalShown(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -418,7 +417,7 @@ function MessagesContainer({
               channelId: selectedChannelId
             }
           });
-          onSetReplyTarget(null);
+          onSetReplyTarget({ channelId: selectedChannelId, target: null });
           socket.emit('user_made_a_move', {
             userId,
             channelId: selectedChannelId
@@ -729,7 +728,7 @@ function MessagesContainer({
         rewardAmount,
         isRespondingToSubject
       });
-      onSetReplyTarget(null);
+      onSetReplyTarget({ channelId: selectedChannelId, target: null });
       return Promise.resolve();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1034,12 +1033,13 @@ function MessagesContainer({
           loading={loading}
           socketConnected={socketConnected}
           myId={userId}
+          isRespondingToSubject={currentChannel.isRespondingToSubject}
           isTwoPeopleChannel={currentChannel.twoPeople}
           currentChannelId={selectedChannelId}
           currentChannel={currentChannel}
           onChessButtonClick={handleChessModalShown}
           onMessageSubmit={(content) =>
-            handleMessageSubmit({ content, target: replyTarget })
+            handleMessageSubmit({ content, target: currentChannel.replyTarget })
           }
           onHeightChange={(height) => {
             if (height !== textAreaHeight) {
@@ -1048,6 +1048,7 @@ function MessagesContainer({
           }}
           onSelectVideoButtonClick={() => setSelectVideoModalShown(true)}
           recepientId={recepientId}
+          replyTarget={currentChannel.replyTarget}
           subjectId={subjectId}
         />
       </div>
@@ -1108,7 +1109,7 @@ function MessagesContainer({
           onSend={(videoId) => {
             handleMessageSubmit({
               content: `https://www.twin-kle.com/videos/${videoId}`,
-              target: replyTarget
+              target: currentChannel.replyTarget
             });
             setSelectVideoModalShown(false);
           }}

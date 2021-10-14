@@ -467,9 +467,10 @@ export default function ChatActions(dispatch) {
         favorited
       });
     },
-    onSetIsRespondingToSubject(isResponding) {
+    onSetIsRespondingToSubject({ channelId, isResponding }) {
       return dispatch({
         type: 'SET_IS_RESPONDING_TO_SUBJECT',
+        channelId,
         isResponding
       });
     },
@@ -503,9 +504,10 @@ export default function ChatActions(dispatch) {
         type: 'SET_RECONNECTING'
       });
     },
-    onSetReplyTarget(target) {
+    onSetReplyTarget({ channelId, target }) {
       return dispatch({
         type: 'SET_REPLY_TARGET',
+        channelId,
         target
       });
     },

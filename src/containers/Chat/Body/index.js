@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import MessagesContainer from './MessagesContainer';
 import Vocabulary from './Vocabulary';
@@ -17,15 +17,8 @@ Body.propTypes = {
 
 function Body({ channelName, chessOpponent, currentChannel, onChannelEnter }) {
   const {
-    state: { chatType, loadingVocabulary, selectedChannelId },
-    actions: { onSetReplyTarget, onSetIsRespondingToSubject }
+    state: { chatType, loadingVocabulary }
   } = useChatContext();
-
-  useEffect(() => {
-    onSetReplyTarget(null);
-    onSetIsRespondingToSubject(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedChannelId]);
 
   return (
     <ErrorBoundary>

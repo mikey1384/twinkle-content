@@ -30,12 +30,14 @@ import { useChatContext, useInputContext } from 'contexts';
 MessageInput.propTypes = {
   currentChannelId: PropTypes.number,
   innerRef: PropTypes.object,
+  isRespondingToSubject: PropTypes.bool,
   isTwoPeopleChannel: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   loading: PropTypes.bool,
   onChessButtonClick: PropTypes.func.isRequired,
   onHeightChange: PropTypes.func.isRequired,
   onMessageSubmit: PropTypes.func.isRequired,
   onSelectVideoButtonClick: PropTypes.func.isRequired,
+  replyTarget: PropTypes.object,
   recepientId: PropTypes.number,
   socketConnected: PropTypes.bool,
   subjectId: PropTypes.number
@@ -46,12 +48,14 @@ const deviceIsMobile = isMobile(navigator);
 function MessageInput({
   currentChannelId = 0,
   innerRef,
+  isRespondingToSubject,
   isTwoPeopleChannel,
   loading,
   onChessButtonClick,
   onHeightChange,
   onMessageSubmit,
   onSelectVideoButtonClick,
+  replyTarget,
   recepientId,
   socketConnected,
   subjectId
@@ -59,7 +63,6 @@ function MessageInput({
   const FileInputRef = useRef(null);
   const { banned, profileTheme, fileUploadLvl } = useMyState();
   const {
-    state: { isRespondingToSubject, replyTarget },
     actions: { onSetIsRespondingToSubject, onSetReplyTarget }
   } = useChatContext();
   const {
@@ -261,10 +264,20 @@ function MessageInput({
       {isRespondingToSubject ? (
         <TargetSubjectPreview
           channelId={currentChannelId}
-          onClose={() => onSetIsRespondingToSubject(false)}
+          onClose={() =>
+            onSetIsRespondingToSubject({
+              channelId: currentChannelId,
+              isResponding: false
+            })
+          }
         />
       ) : replyTarget ? (
-        <TargetMessagePreview onClose={() => onSetReplyTarget(null)} />
+        <TargetMessagePreview
+          replyTarget={replyTarget}
+          onClose={() =>
+            onSetReplyTarget({ channelId: currentChannelId, target: null })
+          }
+        />
       ) : null}
       <div style={{ display: 'flex' }}>
         {!!isTwoPeopleChannel && (
@@ -364,6 +377,7 @@ function MessageInput({
             setText('');
             setUploadModalShown(false);
           }}
+          replyTarget={replyTarget}
           onHide={() => setUploadModalShown(false)}
         />
       )}

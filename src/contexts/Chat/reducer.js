@@ -1177,8 +1177,13 @@ export default function ChatReducer(state, action) {
     case 'SET_IS_RESPONDING_TO_SUBJECT':
       return {
         ...state,
-        isRespondingToSubject: action.isResponding,
-        replyTarget: null
+        channelsObj: {
+          ...state.channelsObj,
+          [action.channelId]: {
+            ...state.channelsObj[action.channelId],
+            isRespondingToSubject: action.isResponding
+          }
+        }
       };
     case 'SET_LOADING_VOCABULARY':
       return {
@@ -1231,8 +1236,14 @@ export default function ChatReducer(state, action) {
     case 'SET_REPLY_TARGET': {
       return {
         ...state,
-        replyTarget: action.target,
-        isRespondingToSubject: false
+        channelsObj: {
+          ...state.channelsObj,
+          [action.channelId]: {
+            ...state.channelsObj[action.channelId],
+            replyTarget: action.target,
+            isRespondingToSubject: false
+          }
+        }
       };
     }
     case 'SET_VOCAB_ERROR_MESSAGE': {
@@ -1289,7 +1300,6 @@ export default function ChatReducer(state, action) {
       const prevChannelObj = state.channelsObj[action.message.channelId] || {};
       return {
         ...state,
-        isRespondingToSubject: false,
         homeChannelIds: action.message.isNotification
           ? state.homeChannelIds
           : [action.message.channelId].concat(
@@ -1301,6 +1311,7 @@ export default function ChatReducer(state, action) {
           ...state.channelsObj,
           [action.message.channelId]: {
             ...prevChannelObj,
+            isRespondingToSubject: false,
             gameState: {
               ...prevChannelObj?.gameState,
               ...(action.message.isChessMsg

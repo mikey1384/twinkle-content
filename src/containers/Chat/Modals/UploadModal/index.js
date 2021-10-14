@@ -28,6 +28,7 @@ UploadModal.propTypes = {
   onHide: PropTypes.func.isRequired,
   onUpload: PropTypes.func.isRequired,
   recepientId: PropTypes.number,
+  replyTarget: PropTypes.object,
   subjectId: PropTypes.number
 };
 
@@ -37,13 +38,14 @@ function UploadModal({
   fileObj,
   onHide,
   onUpload,
+  replyTarget,
   recepientId,
   subjectId
 }) {
   const { profilePicUrl, userId, username } = useMyState();
   const { onFileUpload } = useContext(LocalContext);
   const {
-    state: { isRespondingToSubject, replyTarget },
+    state: { isRespondingToSubject },
     actions: { onSubmitMessage }
   } = useChatContext();
   const [caption, setCaption] = useState(initialCaption);

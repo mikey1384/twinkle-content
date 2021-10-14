@@ -76,7 +76,6 @@ function App({ location, history }) {
       channelOnCall,
       channelsObj,
       currentChannelName,
-      replyTarget,
       selectedChannelId
     },
     actions: {
@@ -257,7 +256,7 @@ function App({ location, history }) {
         userId,
         username,
         profilePicUrl,
-        targetMessage: replyTarget
+        targetMessage: currentChannel.replyTarget
       };
       onDisplayAttachedFile(params);
       if (channelId) {
@@ -271,7 +270,7 @@ function App({ location, history }) {
           channel: channelData
         });
       }
-      onSetReplyTarget(null);
+      onSetReplyTarget({ channelId, target: null });
       if (channel) {
         onSendFirstDirectMessage({ channel, message });
         socket.emit('join_chat_group', message.channelId);
@@ -295,7 +294,7 @@ function App({ location, history }) {
       currentChannel,
       currentChannelName,
       profilePicUrl,
-      replyTarget,
+      currentChannel.replyTarget,
       userId,
       username
     ]

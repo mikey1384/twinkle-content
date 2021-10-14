@@ -364,11 +364,12 @@ function Message({
           </>
         ),
         onClick: () => {
-          onSetReplyTarget(
-            rewardAmount
+          onSetReplyTarget({
+            channelId: currentChannel.id,
+            target: rewardAmount
               ? targetMessage
               : { ...message, thumbUrl: thumbUrl || recentThumbUrl }
-          );
+          });
           onReplyClick();
         }
       }
@@ -459,7 +460,7 @@ function Message({
   );
 
   const handleChessSpoilerClick = useCallback(async () => {
-    onSetReplyTarget(null);
+    onSetReplyTarget({ channelId: currentChannel.id, target: null });
     try {
       await setChessMoveViewTimeStamp({ channelId, message });
       onUpdateChessMoveViewTimeStamp(channelId);
