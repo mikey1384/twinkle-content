@@ -505,10 +505,6 @@ function MessagesContainer({
         const channelData = {
           id: selectedChannelId,
           numUnreads: 1,
-          lastMessage: {
-            content: message.content,
-            sender: { id: userId, username }
-          },
           channelName
         };
         socket.emit('new_chat_message', {

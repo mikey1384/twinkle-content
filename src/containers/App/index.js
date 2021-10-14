@@ -264,10 +264,6 @@ function App({ location, history }) {
         const channelData = {
           id: channelId,
           numUnreads: 1,
-          lastMessage: {
-            fileName: params.fileName,
-            sender: { id: userId, username }
-          },
           channelName: currentChannelName
         };
         socket.emit('new_chat_message', {

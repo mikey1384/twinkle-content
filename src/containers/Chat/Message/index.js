@@ -269,11 +269,7 @@ function Message({
       delete messageToSendOverSocket.tempMessageId;
       const channelData = {
         id: currentChannel.id,
-        numUnreads: 1,
-        lastMessage: {
-          content,
-          sender: { id: myId, username: myUsername }
-        }
+        numUnreads: 1
       };
       socket.emit('new_chat_message', {
         message: messageToSendOverSocket,

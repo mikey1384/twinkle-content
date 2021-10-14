@@ -123,14 +123,7 @@ export default function ChatReducer(state, action) {
               [notificationId]: action.message
             },
             creatorId: action.newOwner.id,
-            numUnreads: state.selectedChannelId === action.channelId ? 0 : 1,
-            lastMessage: {
-              content: action.message.content,
-              sender: {
-                id: action.message.userId,
-                username: action.message.username
-              }
-            }
+            numUnreads: state.selectedChannelId === action.channelId ? 0 : 1
           }
         }
       };
@@ -225,13 +218,6 @@ export default function ChatReducer(state, action) {
               [startMessageId]: action.data.message
             },
             messagesLoadMoreButton: false,
-            lastMessage: {
-              content: action.data.message.content,
-              sender: {
-                id: action.data.message.userId,
-                username: action.data.message.username
-              }
-            },
             isClass: action.data.isClass,
             isClosed: action.data.isClosed,
             numUnreads: 0,
@@ -263,14 +249,6 @@ export default function ChatReducer(state, action) {
               [messageId]: action.message
             },
             numUnreads: 0,
-            lastMessage: {
-              fileName: action.message.fileName || '',
-              content: action.message.content,
-              sender: {
-                id: action.message.userId,
-                username: action.message.username
-              }
-            },
             loaded: true
           }
         },
@@ -797,13 +775,6 @@ export default function ChatReducer(state, action) {
                 channelId: action.channelId,
                 ...action.subject
               }
-            },
-            lastMessage: {
-              content: action.subject.content,
-              sender: {
-                id: action.subject.userId,
-                username: action.subject.username
-              }
             }
           }
         }
@@ -835,13 +806,6 @@ export default function ChatReducer(state, action) {
                 profilePicUrl: action.data.profilePicUrl
               }
             },
-            lastMessage: {
-              content: leaveMessage,
-              sender: {
-                id: action.data.userId,
-                username: action.data.username
-              }
-            },
             numUnreads: 0,
             members: state.channelsObj[action.data.channelId].members.filter(
               (member) => member.id !== action.data.userId
@@ -869,7 +833,6 @@ export default function ChatReducer(state, action) {
             twoPeople: true,
             members: [action.user, action.recepient],
             channelName: action.recepient.username,
-            lastMessage: action.lastMessage,
             messageIds: action.messageIds.reverse(),
             messagesObj: action.messagesObj,
             messagesLoadMoreButton,
@@ -900,10 +863,6 @@ export default function ChatReducer(state, action) {
           0: {
             id: 0,
             channelName: action.recepient.username,
-            lastMessage: {
-              content: null,
-              sender: null
-            },
             members: [action.user, action.recepient],
             numUnreads: 0,
             twoPeople: true,
@@ -976,16 +935,6 @@ export default function ChatReducer(state, action) {
               ...state.channelsObj[action.message.channelId].messagesObj,
               [action.message.id]: action.message
             },
-            lastMessage: {
-              isDraw: action.message.isDraw,
-              fileName: action.message.fileName || '',
-              gameWinnerId: action.message.gameWinnerId,
-              content: action.message.content,
-              sender: {
-                id: action.message.userId,
-                username: action.message.username
-              }
-            },
             members: [
               ...state.channelsObj[action.message.channelId].members,
               ...action.newMembers.filter(
@@ -1050,14 +999,6 @@ export default function ChatReducer(state, action) {
             isClass: action.isClass,
             members: action.message.members,
             channelName: action.message.channelName || action.message.username,
-            lastMessage: {
-              fileName: action.message.fileName || '',
-              content: action.message.content,
-              sender: {
-                id: action.message.userId,
-                username: action.message.username
-              }
-            },
             numUnreads: action.duplicate ? 0 : 1
           }
         },

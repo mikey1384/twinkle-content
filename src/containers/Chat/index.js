@@ -228,13 +228,6 @@ function Chat({ onFileUpload }) {
             id: channelId,
             channelName,
             isHidden: false,
-            lastMessage: {
-              content: message.content,
-              sender: {
-                id: message.userId,
-                username: message.username
-              }
-            },
             numUnreads: 1
           }
         });
