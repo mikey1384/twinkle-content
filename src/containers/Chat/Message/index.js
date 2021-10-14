@@ -276,6 +276,8 @@ function Message({
         id: currentChannel.id,
         channelName: currentChannel.channelName,
         channelId: currentChannel.id,
+        members: currentChannel.members,
+        twoPeople: currentChannel.twoPeople,
         numUnreads: 1
       };
       socket.emit('new_chat_message', {
