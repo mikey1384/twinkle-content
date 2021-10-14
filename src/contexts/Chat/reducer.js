@@ -1151,13 +1151,6 @@ export default function ChatReducer(state, action) {
             messagesObj: {
               ...state.channelsObj[action.channelId].messagesObj,
               [action.message.id]: action.message
-            },
-            lastMessage: {
-              content: action.subject.content,
-              sender: {
-                id: action.message.userId,
-                username: action.message.username
-              }
             }
           }
         }
@@ -1394,15 +1387,6 @@ export default function ChatReducer(state, action) {
                 content: action.message.content,
                 targetMessage: action.replyTarget,
                 targetSubject
-              }
-            },
-            lastMessage: {
-              fileName: action.message.fileName || '',
-              gameWinnerId: action.message.gameWinnerId,
-              content: action.message.content,
-              sender: {
-                id: action.message.userId,
-                username: action.message.username
               }
             },
             numUnreads: 0
