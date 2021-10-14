@@ -56,6 +56,8 @@ Message.propTypes = {
   isLastMsg: PropTypes.bool,
   isNotification: PropTypes.bool,
   loading: PropTypes.bool,
+  loadScrollComplete: PropTypes.bool,
+  onSetLoadScrollComplete: PropTypes.func.isRequired,
   onAcceptGroupInvitation: PropTypes.func.isRequired,
   onChannelEnter: PropTypes.func,
   onChessBoardClick: PropTypes.func,
@@ -67,6 +69,7 @@ Message.propTypes = {
   onSetScrollToBottom: PropTypes.func,
   onShowSubjectMsgsModal: PropTypes.func,
   recepientId: PropTypes.number,
+  scrollAtBottom: PropTypes.bool,
   zIndex: PropTypes.number
 };
 
@@ -81,6 +84,8 @@ function Message({
   isLastMsg,
   isNotification,
   loading,
+  loadScrollComplete,
+  onSetLoadScrollComplete,
   message,
   message: {
     id: messageId,
@@ -481,19 +486,22 @@ function Message({
     [message]
   );
 
-  const handleSetScrollToBottom = useCallback(() => {
-    if (isLastMsg) {
-      onSetScrollToBottom();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLastMsg]);
+  const handleSetScrollToBottom = useCallback(
+    (loadScrollComplete) => {
+      if (isLastMsg && !loadScrollComplete) {
+        onSetScrollToBottom();
+        onSetLoadScrollComplete(true);
+      }
+    },
+    [isLastMsg, onSetScrollToBottom, onSetLoadScrollComplete]
+  );
 
   useEffect(() => {
     if (channelLoaded) {
-      handleSetScrollToBottom();
+      handleSetScrollToBottom(loadScrollComplete);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [channelLoaded]);
+  }, [channelLoaded, loadScrollComplete]);
 
   const handleEditCancel = useCallback(() => {
     onSetIsEditing({

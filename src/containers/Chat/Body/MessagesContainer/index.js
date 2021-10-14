@@ -125,6 +125,7 @@ function MessagesContainer({
     subjectId: null,
     content: ''
   });
+  const [loadScrollComplete, setLoadScrollComplete] = useState(false);
   const [settingsModalShown, setSettingsModalShown] = useState(false);
   const [leaveConfirmModalShown, setLeaveConfirmModalShown] = useState(false);
   const [scrollAtBottom, setScrollAtBottom] = useState(true);
@@ -160,6 +161,10 @@ function MessagesContainer({
     () => subjectObj[selectedChannelId]?.id,
     [selectedChannelId, subjectObj]
   );
+
+  useEffect(() => {
+    setLoadScrollComplete(false);
+  }, [selectedChannelId]);
 
   useEffect(() => {
     mounted.current = true;
@@ -947,6 +952,8 @@ function MessagesContainer({
                   onReplyClick={() => ChatInputRef.current.focus()}
                   onRewardMessageSubmit={handleRewardMessageSubmit}
                   onSetScrollToBottom={handleSetScrollToBottom}
+                  loadScrollComplete={loadScrollComplete}
+                  onSetLoadScrollComplete={setLoadScrollComplete}
                   recepientId={recepientId}
                   onShowSubjectMsgsModal={({ subjectId, content }) =>
                     setSubjectMsgsModal({ shown: true, subjectId, content })
