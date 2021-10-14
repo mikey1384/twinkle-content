@@ -275,10 +275,8 @@ function Message({
       const channelData = {
         id: currentChannel.id,
         channelName: currentChannel.channelName,
-        channelId: currentChannel.id,
         members: currentChannel.members,
-        twoPeople: currentChannel.twoPeople,
-        numUnreads: 1
+        twoPeople: currentChannel.twoPeople
       };
       socket.emit('new_chat_message', {
         message: messageToSendOverSocket,

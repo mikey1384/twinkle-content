@@ -279,7 +279,12 @@ export default function ChessModal({
 
   function handleGameOver() {
     socket.emit('end_chess_game', {
-      channel: currentChannel,
+      channel: {
+        id: currentChannel.id,
+        channelName: currentChannel.channelName,
+        members: currentChannel.members,
+        twoPeople: currentChannel.twoPeople
+      },
       channelId,
       targetUserId: myId,
       ...(drawOfferPending

@@ -508,7 +508,6 @@ function MessagesContainer({
       if (isClass) {
         const channelData = {
           id: selectedChannelId,
-          numUnreads: 1,
           channelName
         };
         socket.emit('new_chat_message', {

@@ -262,8 +262,9 @@ function App({ location, history }) {
       if (channelId) {
         const channelData = {
           id: channelId,
-          numUnreads: 1,
-          channelName: currentChannelName
+          channelName: currentChannelName,
+          members: currentChannel.members,
+          twoPeople: currentChannel.twoPeople
         };
         socket.emit('new_chat_message', {
           message: { ...params, isNewMessage: true },
