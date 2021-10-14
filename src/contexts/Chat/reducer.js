@@ -1076,9 +1076,9 @@ export default function ChatReducer(state, action) {
           [action.channel.id]: {
             ...state.channelsObj[action.channel.id],
             ...action.channel,
-            messageIds: state.channelsObj[
-              action.channel.id
-            ]?.messageIds?.concat(action.message.id),
+            messageIds: (
+              state.channelsObj[action.channel.id]?.messageIds || []
+            ).concat(action.message.id),
             messagesObj: {
               ...state.channelsObj[action.channel.id]?.messagesObj,
               [action.message.id]: action.message
@@ -1406,40 +1406,6 @@ export default function ChatReducer(state, action) {
             numUnreads: 0
           }
         }
-      };
-    }
-    case 'UPDATE_LAST_MESSAGE': {
-      const newChannelsObj = { ...state.channelsObj };
-      let newHomeChannelIds = [...state.homeChannelIds];
-      const newTab = newChannelsObj[0];
-      const newTabIsOpen = state.homeChannelIds.includes(0);
-      for (let { id: channelId, isNew, channel } of action.channels) {
-        if (isNew && newTabIsOpen) {
-          const newTabMembers = newTab.members.map((member) => member.id);
-          if (
-            newTabMembers.includes(channel.members[0].id) &&
-            newTabMembers.includes(channel.members[1].id)
-          ) {
-            newHomeChannelIds = [channelId, ...state.homeChannelIds].filter(
-              (id) => id !== 0
-            );
-          }
-        }
-        if (newHomeChannelIds.includes(channelId)) {
-          newChannelsObj[channelId] = {
-            ...(isNew ? channel : newChannelsObj[channelId]),
-            lastMessage: {
-              ...(isNew ? {} : newChannelsObj[channelId].lastMessage),
-              sender: action.sender,
-              content: action.message
-            }
-          };
-        }
-      }
-      return {
-        ...state,
-        homeChannelIds: newHomeChannelIds,
-        channelsObj: newChannelsObj
       };
     }
     case 'TRIM_MESSAGES':

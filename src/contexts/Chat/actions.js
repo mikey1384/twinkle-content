@@ -588,14 +588,6 @@ export default function ChatActions(dispatch) {
         path
       });
     },
-    onUpdateLastMessages({ channels, message, sender }) {
-      return dispatch({
-        type: 'UPDATE_LAST_MESSAGE',
-        channels,
-        message,
-        sender
-      });
-    },
     onUpdateRecentChessMessage({ channelId, message }) {
       return dispatch({
         type: 'UPDATE_RECENT_CHESS_MESSAGE',

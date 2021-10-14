@@ -97,8 +97,7 @@ function MessagesContainer({
       onSetFavoriteChannel,
       onSetReplyTarget,
       onSubmitMessage,
-      onUpdateSelectedChannelId,
-      onUpdateLastMessages
+      onUpdateSelectedChannelId
     }
   } = useChatContext();
   const {
@@ -530,24 +529,18 @@ function MessagesContainer({
         );
       } else {
         const recepientIds = users.map((user) => user.id);
-        const { invitationMessage, channels, messages } =
-          await sendInvitationMessage({
-            recepients: recepientIds,
-            origin: currentChannel.id
-          });
+        const { channels, messages } = await sendInvitationMessage({
+          recepients: recepientIds,
+          origin: currentChannel.id
+        });
         for (let i = 0; i < channels.length; i++) {
           onReceiveMessageOnDifferentChannel({
             message: messages[i],
-            channel: channels[i],
+            channel: channels[i].channel,
             pageVisible: true,
             usingChat: true
           });
         }
-        onUpdateLastMessages({
-          channels,
-          message: invitationMessage,
-          sender: { id: userId, username }
-        });
       }
       setInviteUsersModalShown(false);
       if (!isClass) {
