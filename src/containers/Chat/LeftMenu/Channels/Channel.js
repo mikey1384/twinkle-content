@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Color, desktopMinWidth, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
+import { useHistory } from 'react-router-dom';
 
 Channel.propTypes = {
   chatType: PropTypes.string,
@@ -27,6 +28,7 @@ function Channel({
   onChannelEnter,
   selectedChannelId
 }) {
+  const history = useHistory();
   const { profileTheme, userId } = useMyState();
   const effectiveChannelName = useMemo(
     () => customChannelNames[channelId] || channelName,
@@ -120,6 +122,7 @@ function Channel({
         height: '6.5rem'
       }}
       onClick={() => {
+        history.push(`/chat/${channelId}`);
         if (!selected) {
           onChannelEnter(channelId);
         }
