@@ -507,13 +507,11 @@ export default function ChatReducer(state, action) {
           newMessagesObj[messageId] = message;
         }
       }
-      if (!alreadyUsingChat) {
-        if (newMessageIds && newMessageIds.length === 21) {
-          newMessageIds.pop();
-          messagesLoadMoreButton = true;
-        }
-        newMessageIds?.reverse();
+      if (newMessageIds && newMessageIds.length === 21) {
+        newMessageIds.pop();
+        messagesLoadMoreButton = true;
       }
+      newMessageIds?.reverse();
       if (action.data.homeChannelIds?.length > 20) {
         action.data.homeChannelIds.pop();
         homeLoadMoreButton = true;
