@@ -493,7 +493,7 @@ export default function ChatReducer(state, action) {
       let favoriteLoadMoreButton = false;
       let vocabActivitiesLoadMoreButton = false;
       const newMessageIds =
-        alreadyUsingChat ||
+        alreadyUsingChat &&
         state.channelsObj[action.data.currentChannelId]?.loaded
           ? state.channelsObj[action.data.currentChannelId]?.messageIds
           : action.data.messageIds;
