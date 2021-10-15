@@ -534,6 +534,29 @@ export default function ChatReducer(state, action) {
       }
       action.data.vocabActivities?.reverse();
 
+      let newChannelsObj = {
+        ...state.channelsObj,
+        ...action.data.channelsObj
+      };
+
+      for (let channelId in action.data.channelsObj) {
+        if (state.channelsObj[channelId]?.loaded) {
+          newChannelsObj[channelId] = state.channelsObj[channelId];
+          continue;
+        }
+        if (channelId === action.data.currentChannelId) {
+          newChannelsObj[channelId] = {
+            ...action.data.channelsObj[action.data.currentChannelId],
+            messagesLoadMoreButton,
+            messageIds: newMessageIds,
+            messagesObj: newMessagesObj,
+            numUnreads: 0,
+            recentChessMessage: undefined,
+            loaded: true
+          };
+        }
+      }
+
       return {
         ...state,
         ...initialChatState,
@@ -559,19 +582,7 @@ export default function ChatReducer(state, action) {
         classChannelIds: action.data.classChannelIds,
         favoriteChannelIds: action.data.favoriteChannelIds,
         homeChannelIds: action.data.homeChannelIds,
-        channelsObj: {
-          ...state.channelsObj,
-          ...action.data.channelsObj,
-          [action.data.currentChannelId]: {
-            ...action.data.channelsObj[action.data.currentChannelId],
-            messagesLoadMoreButton,
-            messageIds: newMessageIds,
-            messagesObj: newMessagesObj,
-            numUnreads: 0,
-            recentChessMessage: undefined,
-            loaded: true
-          }
-        },
+        channelsObj: newChannelsObj,
         classLoadMoreButton,
         favoriteLoadMoreButton,
         homeLoadMoreButton: alreadyUsingChat
