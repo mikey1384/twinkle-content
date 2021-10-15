@@ -544,7 +544,11 @@ export default function ChatReducer(state, action) {
         messagesLoadMoreButton,
         messageIds: newMessageIds,
         messagesObj: newMessagesObj,
-        numUnreads: 0,
+        numUnreads:
+          Number(action.data.currentChannelId) ===
+          Number(state.selectedChannelId)
+            ? 0
+            : action.data.channelsObj[action.data.currentChannelId].numUnreads,
         recentChessMessage: undefined,
         loaded: true
       };
