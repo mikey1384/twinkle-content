@@ -537,21 +537,19 @@ export default function ChatReducer(state, action) {
         ...state.channelsObj,
         ...action.data.channelsObj
       };
+      newChannelsObj[action.data.currentChannelId] = {
+        ...action.data.channelsObj[action.data.currentChannelId],
+        messagesLoadMoreButton,
+        messageIds: newMessageIds,
+        messagesObj: newMessagesObj,
+        numUnreads: 0,
+        recentChessMessage: undefined,
+        loaded: true
+      };
       for (let channelId in action.data.channelsObj) {
         if (state.channelsObj[channelId]?.loaded) {
           newChannelsObj[channelId] = state.channelsObj[channelId];
           continue;
-        }
-        if (channelId === action.data.currentChannelId) {
-          newChannelsObj[channelId] = {
-            ...action.data.channelsObj[action.data.currentChannelId],
-            messagesLoadMoreButton,
-            messageIds: newMessageIds,
-            messagesObj: newMessagesObj,
-            numUnreads: 0,
-            recentChessMessage: undefined,
-            loaded: true
-          };
         }
       }
 
