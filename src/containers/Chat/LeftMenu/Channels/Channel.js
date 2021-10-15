@@ -23,7 +23,8 @@ function Channel({
     messagesObj = {},
     twoPeople,
     members,
-    numUnreads
+    numUnreads,
+    pathNumber
   },
   onChannelEnter,
   selectedChannelId
@@ -122,7 +123,7 @@ function Channel({
         height: '6.5rem'
       }}
       onClick={() => {
-        history.push(`/chat/${channelId}`);
+        history.push(`/chat/${pathNumber}`);
         if (!selected) {
           onChannelEnter(channelId);
         }
