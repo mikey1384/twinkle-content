@@ -558,6 +558,9 @@ export default function ChatReducer(state, action) {
             newChannelsObj[channelId].loaded = false;
           }
         }
+        if (Number(channelId) === Number(state.selectedChannelId)) {
+          newChannelsObj[channelId].numUnreads = 0;
+        }
       }
 
       return {
