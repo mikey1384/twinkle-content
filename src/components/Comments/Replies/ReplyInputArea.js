@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import InputForm from 'components/Forms/InputForm';
@@ -37,22 +37,15 @@ export default function ReplyInputArea({
     contentType: 'comment'
   });
   const [uploadingFile, setUploadingFile] = useState(false);
-  const attachment = state['comment' + targetCommentId]?.attachment;
+  const attachment = useMemo(
+    () => state['comment' + targetCommentId]?.attachment,
+    [state, targetCommentId]
+  );
 
   return (
     <ErrorBoundary>
       <div style={style}>
-        {!uploadingFile && (
-          <InputForm
-            innerRef={innerRef}
-            onSubmit={handleSubmit}
-            parent={parent}
-            placeholder="Enter your reply..."
-            rows={rows}
-            targetCommentId={targetCommentId}
-          />
-        )}
-        {uploadingFile && (
+        {uploadingFile ? (
           <FileUploadStatusIndicator
             style={{
               fontSize: '1.7rem',
@@ -63,6 +56,15 @@ export default function ReplyInputArea({
             fileName={attachment?.file?.name}
             uploadComplete={fileUploadComplete}
             uploadProgress={fileUploadProgress}
+          />
+        ) : (
+          <InputForm
+            innerRef={innerRef}
+            onSubmit={handleSubmit}
+            parent={parent}
+            placeholder="Enter your reply..."
+            rows={rows}
+            targetCommentId={targetCommentId}
           />
         )}
       </div>

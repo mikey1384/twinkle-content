@@ -72,20 +72,7 @@ export default function CommentInputArea({
       {!!subjectRewardLevel && (
         <RewardLevelExpectation rewardLevel={subjectRewardLevel} />
       )}
-      {!uploadingFile && (
-        <InputForm
-          innerRef={innerRef}
-          clickListenerState={clickListenerState}
-          autoFocus={autoFocus}
-          onSubmit={handleSubmit}
-          onViewSecretAnswer={onViewSecretAnswer}
-          parent={{ contentId, contentType }}
-          rows={numInputRows}
-          placeholder={`Enter your ${inputTypeLabel} here...`}
-          targetCommentId={targetCommentId}
-        />
-      )}
-      {uploadingFile && (
+      {uploadingFile ? (
         <FileUploadStatusIndicator
           style={{
             fontSize: '1.7rem',
@@ -96,6 +83,18 @@ export default function CommentInputArea({
           fileName={attachment?.file?.name}
           uploadComplete={fileUploadComplete}
           uploadProgress={fileUploadProgress}
+        />
+      ) : (
+        <InputForm
+          innerRef={innerRef}
+          clickListenerState={clickListenerState}
+          autoFocus={autoFocus}
+          onSubmit={handleSubmit}
+          onViewSecretAnswer={onViewSecretAnswer}
+          parent={{ contentId, contentType }}
+          rows={numInputRows}
+          placeholder={`Enter your ${inputTypeLabel} here...`}
+          targetCommentId={targetCommentId}
         />
       )}
     </div>
