@@ -508,11 +508,11 @@ export default function ChatReducer(state, action) {
         }
       }
       if (!alreadyUsingChat) {
-        if (action.data.messageIds && action.data.messageIds.length === 21) {
-          action.data.messageIds.pop();
+        if (newMessageIds && newMessageIds.length === 21) {
+          newMessageIds.pop();
           messagesLoadMoreButton = true;
         }
-        action.data.messageIds?.reverse();
+        newMessageIds?.reverse();
       }
       if (action.data.homeChannelIds?.length > 20) {
         action.data.homeChannelIds.pop();
