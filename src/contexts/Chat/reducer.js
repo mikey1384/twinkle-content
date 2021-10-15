@@ -552,8 +552,8 @@ export default function ChatReducer(state, action) {
         if (state.channelsObj[channelId]?.loaded) {
           newChannelsObj[channelId] = state.channelsObj[channelId];
           if (
-            channelId !== state.selectedChannelId &&
-            channelId !== action.data.currentChannelId
+            Number(channelId) !== Number(state.selectedChannelId) &&
+            Number(channelId) !== Number(action.data.currentChannelId)
           ) {
             newChannelsObj[channelId].loaded = false;
           }
