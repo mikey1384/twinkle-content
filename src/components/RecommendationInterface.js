@@ -31,9 +31,11 @@ export default function RecommendationInterface({
   style,
   uploaderId
 }) {
-  const { userId, twinkleCoins, authLevel } = useMyState();
+  const { userId, twinkleCoins, authLevel, userType } = useMyState();
   const [recommending, setRecommending] = useState(false);
-  const [rewardDisabled, setRewardDisabled] = useState(false);
+  const [rewardDisabled, setRewardDisabled] = useState(
+    userType?.toLowerCase() === 'staff'
+  );
   const [hidden, setHidden] = useState(false);
   const mounted = useRef(true);
 
