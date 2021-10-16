@@ -539,8 +539,9 @@ export default function ChatReducer(state, action) {
         messageIds: newMessageIds,
         messagesObj: newMessagesObj,
         numUnreads:
+          !state.selectedChannelId ||
           Number(action.data.currentChannelId) ===
-          Number(state.selectedChannelId)
+            Number(state.selectedChannelId)
             ? 0
             : action.data.channelsObj[action.data.currentChannelId].numUnreads,
         recentChessMessage: undefined,
