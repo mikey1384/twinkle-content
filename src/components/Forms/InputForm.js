@@ -78,24 +78,27 @@ function InputForm({
   } = useInputContext();
   const contentType = targetCommentId ? 'comment' : parent.contentType;
   const contentId = targetCommentId || parent.contentId;
-  const attachment = state[contentType + contentId]?.attachment;
-  const prevText = useMemo(
-    () => state[contentType + contentId]?.text || '',
+  const attachment = useMemo(
+    () => state[contentType + contentId]?.attachment,
     [contentId, contentType, state]
   );
+  const inputState = useMemo(
+    () => state[contentType + contentId],
+    [contentId, contentType, state]
+  );
+  const prevText = useMemo(() => {
+    inputState?.text || '';
+  }, [inputState]);
   const textRef = useRef(prevText);
   const mounted = useRef(true);
   const [text, setText] = useState(prevText);
   const [onHover, setOnHover] = useState(false);
-
   useEffect(() => {
     if (mounted.current) {
       handleSetText(prevText);
     }
   }, [prevText]);
-
   const textIsEmpty = useMemo(() => stringIsEmpty(text), [text]);
-
   const commentExceedsCharLimit = useMemo(
     () =>
       exceedsCharLimit({
@@ -104,8 +107,12 @@ function InputForm({
       }),
     [text]
   );
-
-  const disabled = useMemo(
+  const submitDisabled = useMemo(
+    () =>
+      submitting || (textIsEmpty && !attachment) || !!commentExceedsCharLimit,
+    [attachment, commentExceedsCharLimit, submitting, textIsEmpty]
+  );
+  const uploadDisabled = useMemo(
     () => authLevel === 0 && twinkleXP < FILE_UPLOAD_XP_REQUIREMENT,
     [authLevel, twinkleXP]
   );
@@ -126,17 +133,18 @@ function InputForm({
 
   const handleSubmit = useCallback(async () => {
     setSubmitting(true);
+    setText('');
     try {
       await onSubmit(finalizeEmoji(text));
       if (mounted.current) {
         handleSetText('');
-        setSubmitting(false);
       }
     } catch (error) {
       setSubmitting(false);
       console.error(error);
     }
-  }, [onSubmit, text]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [contentId, contentType, onSubmit, text]);
 
   const handleUpload = useCallback(
     (event) => {
@@ -295,11 +303,7 @@ function InputForm({
               style={{ marginTop: '0.5rem', marginBottom: '0.5rem' }}
               filled
               color="green"
-              disabled={
-                submitting ||
-                (textIsEmpty && !attachment) ||
-                !!commentExceedsCharLimit
-              }
+              disabled={submitDisabled}
               onClick={handleSubmit}
             >
               Tap This Button to Submit!
@@ -325,23 +329,25 @@ function InputForm({
             <Button
               skeuomorphic
               color={profileTheme}
-              onClick={() => (disabled ? null : FileInputRef.current.click())}
+              onClick={() =>
+                uploadDisabled ? null : FileInputRef.current.click()
+              }
               onMouseEnter={() => setOnHover(true)}
               onMouseLeave={() => setOnHover(false)}
               style={{
                 height: '4rem',
                 width: '4rem',
                 marginLeft: '1rem',
-                opacity: disabled ? 0.2 : 1,
-                cursor: disabled ? 'default' : 'pointer',
-                boxShadow: disabled ? 'none' : '',
-                borderColor: disabled ? Color[profileTheme](0.2) : ''
+                opacity: uploadDisabled ? 0.2 : 1,
+                cursor: uploadDisabled ? 'default' : 'pointer',
+                boxShadow: uploadDisabled ? 'none' : '',
+                borderColor: uploadDisabled ? Color[profileTheme](0.2) : ''
               }}
             >
               <Icon size="lg" icon="upload" />
             </Button>
           )}
-          {userId && disabled && (
+          {userId && uploadDisabled && (
             <FullTextReveal
               style={{
                 fontSize: '1.3rem',

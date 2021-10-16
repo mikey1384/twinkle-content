@@ -86,7 +86,6 @@ export default function ReplyInputArea({
         targetCommentId,
         isReply: true
       });
-      setUploadingFile(false);
       onSetCommentAttachment({
         attachment: undefined,
         contentType: 'comment',
@@ -100,5 +99,7 @@ export default function ReplyInputArea({
         targetCommentId
       });
     }
+    setTimeout(() => setUploadingFile(false), 50);
+    return Promise.resolve();
   }
 }

@@ -119,7 +119,6 @@ export default function CommentInputArea({
         contentType,
         contentId
       });
-      setUploadingFile(false);
     } else {
       await onSubmit({
         content: text,
@@ -128,6 +127,7 @@ export default function CommentInputArea({
         targetCommentId
       });
     }
+    setUploadingFile(false);
     return Promise.resolve();
   }
 }
