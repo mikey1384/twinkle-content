@@ -37,13 +37,9 @@ export default function ReplyInputArea({
     contentType: 'comment'
   });
   const [uploadingFile, setUploadingFile] = useState(false);
-  const inputState = useMemo(
-    () => state['comment' + targetCommentId],
-    [state, targetCommentId]
-  );
   const attachment = useMemo(
-    () => inputState?.attachment,
-    [inputState?.attachment]
+    () => state['comment' + targetCommentId]?.attachment,
+    [state, targetCommentId]
   );
 
   return (
@@ -103,7 +99,7 @@ export default function ReplyInputArea({
         targetCommentId
       });
     }
-    setTimeout(() => setUploadingFile(false), 50);
+    setUploadingFile(false);
     return Promise.resolve();
   }
 }
