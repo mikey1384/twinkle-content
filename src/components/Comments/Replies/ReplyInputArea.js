@@ -37,9 +37,13 @@ export default function ReplyInputArea({
     contentType: 'comment'
   });
   const [uploadingFile, setUploadingFile] = useState(false);
-  const attachment = useMemo(
-    () => state['comment' + targetCommentId]?.attachment,
+  const inputState = useMemo(
+    () => state['comment' + targetCommentId],
     [state, targetCommentId]
+  );
+  const attachment = useMemo(
+    () => inputState?.attachment,
+    [inputState?.attachment]
   );
 
   return (

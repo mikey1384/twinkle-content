@@ -87,7 +87,7 @@ function InputForm({
     [contentId, contentType, state]
   );
   const prevText = useMemo(() => {
-    inputState?.text || '';
+    return inputState?.text || '';
   }, [inputState]);
   const textRef = useRef(prevText);
   const mounted = useRef(true);
@@ -138,6 +138,7 @@ function InputForm({
       await onSubmit(finalizeEmoji(text));
       if (mounted.current) {
         handleSetText('');
+        setSubmitting(false);
       }
     } catch (error) {
       setSubmitting(false);

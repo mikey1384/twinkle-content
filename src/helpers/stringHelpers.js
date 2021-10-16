@@ -19,6 +19,9 @@ export function addCommasToNumber(number) {
 }
 
 export function addEmoji(string) {
+  if (!string) {
+    return '';
+  }
   let firstPart = string.substring(0, string.length - 3);
   let lastPart = addTwoLetterEmoji(string.slice(-3));
   let firstResult = `${firstPart}${lastPart}`;
@@ -312,7 +315,7 @@ export function finalizeEmoji(string) {
   if (finalizedString[finalizedString.length - 1] === ' ') {
     finalizedString = finalizedString.slice(0, -1);
   }
-  return finalizedString;
+  return finalizedString || '';
 }
 
 export function getFileInfoFromFileName(fileName) {
