@@ -11,13 +11,20 @@ import { timeSince } from 'helpers/timeStampHelpers';
 import { unix } from 'moment';
 import { useHistory } from 'react-router-dom';
 import { useMyState } from 'helpers/hooks';
-import { useAppContext, useContentContext, useInputContext } from 'contexts';
+import {
+  useAppContext,
+  useChatContext,
+  useContentContext,
+  useInputContext
+} from 'contexts';
 
 BasicInfos.propTypes = {
+  authLevel: PropTypes.number,
   className: PropTypes.string,
   email: PropTypes.string,
   verifiedEmail: PropTypes.string,
   online: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+  profilePicUrl: PropTypes.string,
   profileTheme: PropTypes.string,
   joinDate: PropTypes.string,
   lastActive: PropTypes.string,
@@ -31,12 +38,14 @@ BasicInfos.propTypes = {
 };
 
 export default function BasicInfos({
+  authLevel,
   className,
   email,
   verifiedEmail,
   online,
   joinDate,
   lastActive,
+  profilePicUrl,
   profileTheme,
   selectedTheme,
   userId,
@@ -47,13 +56,21 @@ export default function BasicInfos({
   style
 }) {
   const history = useHistory();
-  const { userId: myId, banned } = useMyState();
+  const {
+    userId: myId,
+    username: myUsername,
+    authLevel: myAuthLevel,
+    banned
+  } = useMyState();
   const {
     requestHelpers: { loadDMChannel, uploadProfileInfo, sendVerificationEmail }
   } = useAppContext();
   const {
     actions: { onUpdateProfileInfo }
   } = useContentContext();
+  const {
+    actions: { onOpenNewChatTab }
+  } = useChatContext();
   const {
     state: {
       userInfo: { userInfoOnEdit }
@@ -291,6 +308,22 @@ export default function BasicInfos({
       recepient: { id: userId, username }
     });
     if (mounted.current) {
+      if (!pathNumber) {
+        onOpenNewChatTab({
+          user: {
+            username: myUsername,
+            id: myId,
+            profilePicUrl,
+            authLevel: myAuthLevel
+          },
+          recepient: {
+            username: username,
+            id: userId,
+            profilePicUrl: profilePicUrl,
+            authLevel
+          }
+        });
+      }
       history.push(pathNumber ? `/chat/${pathNumber}` : `/chat`);
     }
   }

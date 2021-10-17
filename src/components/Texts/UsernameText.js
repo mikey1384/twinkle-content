@@ -39,10 +39,10 @@ export default function UsernameText({
     contentType: 'user',
     contentId: user.id
   });
-  const { userId } = useMyState();
+  const { userId, username, profilePicUrl, authLevel } = useMyState();
   const {
     state: { loaded },
-    actions: { onInitChat }
+    actions: { onInitChat, onOpenNewChatTab }
   } = useChatContext();
   const [menuShown, setMenuShown] = useState(false);
   const userXP = useMemo(() => {
@@ -194,6 +194,17 @@ export default function UsernameText({
       }
       const { pathNumber } = await loadDMChannel({ recepient: user });
       if (mounted.current) {
+        if (!pathNumber) {
+          onOpenNewChatTab({
+            user: { username, id: userId, profilePicUrl, authLevel },
+            recepient: {
+              username: user.username,
+              id: user.id,
+              profilePicUrl: user.profilePicUrl,
+              authLevel: user.authLevel
+            }
+          });
+        }
         history.push(pathNumber ? `/chat/${pathNumber}` : `/chat`);
       }
     }

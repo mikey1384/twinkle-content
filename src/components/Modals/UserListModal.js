@@ -8,7 +8,7 @@ import ProfilePic from 'components/ProfilePic';
 import { Color } from 'constants/css';
 import { useHistory } from 'react-router-dom';
 import { useMyState } from 'helpers/hooks';
-import { useAppContext } from 'contexts';
+import { useAppContext, useChatContext } from 'contexts';
 
 UserListModal.propTypes = {
   description: PropTypes.string,
@@ -32,7 +32,10 @@ export default function UserListModal({
   const {
     requestHelpers: { loadDMChannel }
   } = useAppContext();
-  const { userId } = useMyState();
+  const {
+    actions: { onOpenNewChatTab }
+  } = useChatContext();
+  const { userId, username, profilePicUrl, authLevel } = useMyState();
   const allUsers = useMemo(() => {
     const otherUsers = users.filter((user) => user.id !== userId);
     let userArray = [];
@@ -122,9 +125,19 @@ export default function UserListModal({
 
   async function handleTalkClick(user) {
     if (user.id !== userId) {
-      onHide();
       const { pathNumber } = await loadDMChannel({ recepient: user });
       if (mounted.current) {
+        if (!pathNumber) {
+          onOpenNewChatTab({
+            user: { username, id: userId, profilePicUrl, authLevel },
+            recepient: {
+              username: user.username,
+              id: user.id,
+              profilePicUrl: user.profilePicUrl,
+              authLevel: user.authLevel
+            }
+          });
+        }
         history.push(pathNumber ? `/chat/${pathNumber}` : `/chat`);
       }
     }

@@ -18,7 +18,12 @@ import { css } from '@emotion/css';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { useContentState, useLazyLoad, useMyState } from 'helpers/hooks';
 import { useInView } from 'react-intersection-observer';
-import { useAppContext, useContentContext, useProfileContext } from 'contexts';
+import {
+  useAppContext,
+  useChatContext,
+  useContentContext,
+  useProfileContext
+} from 'contexts';
 
 ProfilePanel.propTypes = {
   expandable: PropTypes.bool,
@@ -66,6 +71,10 @@ function ProfilePanel({ expandable, profileId, style }) {
   } = profile;
 
   const {
+    actions: { onOpenNewChatTab }
+  } = useChatContext();
+
+  const {
     actions: {
       onDeleteComment,
       onEditComment,
@@ -97,7 +106,6 @@ function ProfilePanel({ expandable, profileId, style }) {
   const PanelRef = useRef(null);
   const ContainerRef = useRef(null);
   const visibleRef = useRef(previousVisible);
-  const { banned } = useMyState();
   const [visible, setVisible] = useState(previousVisible);
   const [placeholderHeight, setPlaceholderHeight] = useState(
     previousPlaceholderHeight
@@ -142,7 +150,7 @@ function ProfilePanel({ expandable, profileId, style }) {
       uploadBio
     }
   } = useAppContext();
-  const { isCreator, userId, username } = useMyState();
+  const { isCreator, userId, username, banned, authLevel } = useMyState();
   const {
     actions: { onResetProfile }
   } = useProfileContext();
@@ -542,6 +550,17 @@ function ProfilePanel({ expandable, profileId, style }) {
   async function handleTalkClick() {
     const { pathNumber } = await loadDMChannel({ recepient: profile });
     if (mounted.current) {
+      if (!pathNumber) {
+        onOpenNewChatTab({
+          user: { username, id: userId, profilePicUrl, authLevel },
+          recepient: {
+            username: profile.username,
+            id: profile.id,
+            profilePicUrl: profile.profilePicUrl,
+            authLevel: profile.authLevel
+          }
+        });
+      }
       history.push(pathNumber ? `/chat/${pathNumber}` : `/chat`);
     }
   }
