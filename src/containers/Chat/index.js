@@ -91,16 +91,19 @@ function Chat({ onFileUpload }) {
   useEffect(() => {
     const currentChannelPath = pathname.split('chat/')[1];
     handleChannelEnter(currentChannelPath);
+
     async function handleChannelEnter(channelPath) {
       const channelId =
         channelPathIdHash[channelPath] || (await parseChannelPath(channelPath));
-      if (!channelPathIdHash[channelPath]) {
+      if (!channelPathIdHash[channelPath] && mounted.current) {
         onUpdateChannelPathIdHash({ channelId, channelPath });
       }
-      if (channelId === 0) {
+      if (channelId === 0 && mounted.current) {
         return onEnterEmptyChat();
       }
-      onUpdateSelectedChannelId(channelId);
+      if (mounted.current) {
+        onUpdateSelectedChannelId(channelId);
+      }
       if (channelsObj[channelId]?.loaded) {
         return updateLastChannelId(channelId);
       }
