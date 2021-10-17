@@ -19,6 +19,7 @@ import { phoneMaxWidth } from 'constants/css';
 import { socket } from 'constants/io';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
+import { useLocation, useHistory } from 'react-router-dom';
 import {
   useAppContext,
   useNotiContext,
@@ -33,10 +34,13 @@ Chat.propTypes = {
 };
 
 function Chat({ onFileUpload }) {
+  const { pathname } = useLocation();
+  const history = useHistory();
   const {
     requestHelpers: {
       createNewChat,
       loadChatChannel,
+      parseChannelPath,
       updateChatLastRead,
       updateLastChannelId
     }
@@ -81,6 +85,13 @@ function Chat({ onFileUpload }) {
     () => channelsObj[selectedChannelId] || {},
     [channelsObj, selectedChannelId]
   );
+
+  useEffect(() => {
+    const currentChannelPath = pathname.split('chat/')[1];
+    if (!currentChannelPath && currentChannel.pathNumber) {
+      history.replace(`/chat/${currentChannel.pathNumber}`);
+    }
+  }, [currentChannel.pathNumber, history, pathname]);
 
   useEffect(() => {
     if (userId && loaded && selectedChannelId) {
@@ -180,15 +191,16 @@ function Chat({ onFileUpload }) {
   }, [chatStatus, currentChannel.id, currentChannel?.members]);
 
   const handleChannelEnter = useCallback(
-    async (id) => {
-      if (id === 0) {
+    async (channelPath) => {
+      const channelId = await parseChannelPath(channelPath);
+      if (channelId === 0) {
         return onEnterEmptyChat();
       }
-      onUpdateSelectedChannelId(id);
-      if (channelsObj[id]?.loaded) {
-        return updateLastChannelId(id);
+      onUpdateSelectedChannelId(channelId);
+      if (channelsObj[channelId]?.loaded) {
+        return updateLastChannelId(channelId);
       }
-      const data = await loadChatChannel({ channelId: id });
+      const data = await loadChatChannel({ channelId });
       if (mounted.current) {
         onEnterChannelWithId({ data });
       }

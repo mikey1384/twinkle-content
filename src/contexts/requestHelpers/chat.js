@@ -334,6 +334,19 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async parseChannelPath(channelPath) {
+      try {
+        const {
+          data: { channelId }
+        } = await request.get(
+          `${URL}/chat/parse?channelPath=${channelPath}`,
+          auth()
+        );
+        return Promise.resolve(channelId);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async putFavoriteChannel(channelId) {
       try {
         const {

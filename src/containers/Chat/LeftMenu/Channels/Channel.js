@@ -9,7 +9,6 @@ Channel.propTypes = {
   chatType: PropTypes.string,
   channel: PropTypes.object.isRequired,
   customChannelNames: PropTypes.object.isRequired,
-  onChannelEnter: PropTypes.func.isRequired,
   selectedChannelId: PropTypes.number
 };
 
@@ -26,7 +25,6 @@ function Channel({
     numUnreads,
     pathNumber
   },
-  onChannelEnter,
   selectedChannelId
 }) {
   const history = useHistory();
@@ -124,9 +122,6 @@ function Channel({
       }}
       onClick={() => {
         history.push(`/chat/${pathNumber}`);
-        if (!selected) {
-          onChannelEnter(channelId);
-        }
       }}
     >
       <div

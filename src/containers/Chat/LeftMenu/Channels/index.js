@@ -12,12 +12,14 @@ import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { useAppContext, useChatContext } from 'contexts';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
+import { useLocation } from 'react-router-dom';
 
 Channels.propTypes = {
   onChannelEnter: PropTypes.func.isRequired
 };
 
 function Channels({ onChannelEnter }) {
+  const { pathname } = useLocation();
   const {
     requestHelpers: { loadMoreChannels }
   } = useAppContext();
@@ -40,6 +42,7 @@ function Channels({ onChannelEnter }) {
   const [channelsLoading, setChannelsLoading] = useState(false);
   const [prevChannelIds, setPrevChannelIds] = useState(homeChannelIds);
   const ChannelListRef = useRef(null);
+  const prevChannelPath = useRef(null);
   const timeoutRef = useRef(null);
   const selectedChatTabRef = useRef('home');
   const loading = useRef(false);
@@ -146,6 +149,18 @@ function Channels({ onChannelEnter }) {
     setPrevChannelIds(homeChannelIds);
   }, [homeChannelIds, selectedChannelId, prevChannelIds]);
 
+  useEffect(() => {
+    const currentChannelPath = pathname.split('chat/')[1];
+    if (!prevChannelPath.current) {
+      prevChannelPath.current = currentChannelPath;
+      return;
+    }
+    if (currentChannelPath !== prevChannelPath.current) {
+      onChannelEnter(currentChannelPath);
+      prevChannelPath.current = currentChannelPath;
+    }
+  }, [onChannelEnter, pathname]);
+
   return (
     <ErrorBoundary
       innerRef={ChannelListRef}
@@ -165,7 +180,6 @@ function Channels({ onChannelEnter }) {
             channel={channel}
             customChannelNames={customChannelNames}
             chatType={chatType}
-            onChannelEnter={onChannelEnter}
             selectedChannelId={selectedChannelId}
           />
         ))}
