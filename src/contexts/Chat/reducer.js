@@ -412,6 +412,14 @@ export default function ChatReducer(state, action) {
         selectedChannelId: 0,
         channelsObj: {
           ...state.channelsObj,
+          ...(state.selectedChannelId
+            ? {
+                [state.selectedChannelId]: {
+                  ...state.channelsObj[state.selectedChannelId],
+                  numUnreads: 0
+                }
+              }
+            : {}),
           0: {
             ...state.channelsObj[0],
             recentChessMessage: undefined,
@@ -538,7 +546,6 @@ export default function ChatReducer(state, action) {
         messagesLoadMoreButton,
         messageIds: newMessageIds,
         messagesObj: newMessagesObj,
-        numUnreads: 0,
         recentChessMessage: undefined,
         loaded: true
       };
@@ -1462,6 +1469,14 @@ export default function ChatReducer(state, action) {
         selectedChannelId: action.channelId,
         channelsObj: {
           ...state.channelsObj,
+          ...(state.selectedChannelId
+            ? {
+                [state.selectedChannelId]: {
+                  ...state.channelsObj[state.selectedChannelId],
+                  numUnreads: 0
+                }
+              }
+            : {}),
           [action.channelId]: {
             ...state.channelsObj[action.channelId],
             numUnreads: 0
