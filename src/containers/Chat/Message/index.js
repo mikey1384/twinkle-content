@@ -60,7 +60,6 @@ Message.propTypes = {
   loadScrollComplete: PropTypes.bool,
   onSetLoadScrollComplete: PropTypes.func.isRequired,
   onAcceptGroupInvitation: PropTypes.func.isRequired,
-  onChannelEnter: PropTypes.func,
   onChessBoardClick: PropTypes.func,
   onChessSpoilerClick: PropTypes.func,
   onReceiveNewMessage: PropTypes.func,
@@ -98,7 +97,7 @@ function Message({
     filePath,
     fileSize,
     gameWinnerId,
-    inviteFrom,
+    invitePath,
     isChessMsg,
     isDraw,
     isDrawOffer,
@@ -120,7 +119,6 @@ function Message({
     isResign
   },
   onAcceptGroupInvitation,
-  onChannelEnter,
   onChessBoardClick,
   onDelete,
   onChessSpoilerClick,
@@ -157,7 +155,7 @@ function Message({
   const userIsUploader = myId === userId;
   const userCanEditThis = useMemo(
     () =>
-      !inviteFrom &&
+      !invitePath &&
       !isDrawOffer &&
       (((canEdit || canDelete) && authLevel > uploaderAuthLevel) ||
         userIsUploader),
@@ -165,7 +163,7 @@ function Message({
       authLevel,
       canDelete,
       canEdit,
-      inviteFrom,
+      invitePath,
       isDrawOffer,
       uploaderAuthLevel,
       userIsUploader
@@ -617,12 +615,11 @@ function Message({
                 </span>
               </div>
               <div style={{ width: '100%' }}>
-                {inviteFrom ? (
+                {invitePath ? (
                   <Invitation
                     sender={{ id: userId, username }}
-                    inviteFrom={inviteFrom}
+                    invitePath={invitePath}
                     messageId={messageId}
-                    onChannelEnter={onChannelEnter}
                     onAcceptGroupInvitation={onAcceptGroupInvitation}
                   />
                 ) : isDrawOffer ? (

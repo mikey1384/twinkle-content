@@ -16,11 +16,10 @@ import { useMyState } from 'helpers/hooks';
 import { useAppContext, useChatContext } from 'contexts';
 
 LeftMenu.propTypes = {
-  onChannelEnter: PropTypes.func.isRequired,
   onNewButtonClick: PropTypes.func.isRequired
 };
 
-function LeftMenu({ onChannelEnter, onNewButtonClick }) {
+function LeftMenu({ onNewButtonClick }) {
   const {
     requestHelpers: { loadVocabulary }
   } = useAppContext();
@@ -107,7 +106,7 @@ function LeftMenu({ onChannelEnter, onNewButtonClick }) {
         >
           <div style={{ width: '100%', height: '100%', display: 'flex' }}>
             <Tabs />
-            <Channels onChannelEnter={onChannelEnter} />
+            <Channels />
           </div>
         </div>
       </div>

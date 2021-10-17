@@ -8,18 +8,16 @@ import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
 
 Invitation.propTypes = {
-  inviteFrom: PropTypes.number.isRequired,
+  invitePath: PropTypes.number.isRequired,
   messageId: PropTypes.number.isRequired,
   onAcceptGroupInvitation: PropTypes.func.isRequired,
-  onChannelEnter: PropTypes.func,
   sender: PropTypes.object.isRequired
 };
 
 export default function Invitation({
-  inviteFrom,
+  invitePath,
   messageId,
   onAcceptGroupInvitation,
-  onChannelEnter,
   sender
 }) {
   const { userId, profileTheme } = useMyState();
@@ -28,7 +26,7 @@ export default function Invitation({
     contentId: messageId
   });
   const {
-    requestHelpers: { loadChatChannel }
+    requestHelpers: { loadChatChannel, parseChannelPath }
   } = useAppContext();
   const {
     actions: { onSetChatInvitationDetail }
@@ -38,8 +36,9 @@ export default function Invitation({
       init();
     }
     async function init() {
+      const channelId = await parseChannelPath(invitePath);
       const { channel } = await loadChatChannel({
-        channelId: inviteFrom,
+        channelId,
         skipUpdateChannelId: true
       });
       onSetChatInvitationDetail({ messageId, detail: channel });
@@ -88,9 +87,9 @@ export default function Invitation({
   }, [invitationDetail, sender.id, userId]);
 
   const handleAcceptGroupInvitation = useCallback(() => {
-    onAcceptGroupInvitation(inviteFrom);
+    onAcceptGroupInvitation(invitePath);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inviteFrom]);
+  }, [invitePath]);
 
   return (
     <div
@@ -103,10 +102,9 @@ export default function Invitation({
     >
       {invitationDetail && (
         <ChannelDetail
-          inviteFrom={inviteFrom}
+          invitePath={invitePath}
           alreadyJoined={alreadyJoined}
           channelName={invitationDetail.channelName}
-          onChannelEnter={onChannelEnter}
           members={invitationDetail.members}
         />
       )}

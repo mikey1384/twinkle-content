@@ -3,23 +3,23 @@ import PropTypes from 'prop-types';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
+import { useHistory } from 'react-router-dom';
 import UserListModal from 'components/Modals/UserListModal';
 
 ChannelDetail.propTypes = {
-  inviteFrom: PropTypes.number.isRequired,
+  invitePath: PropTypes.number.isRequired,
   alreadyJoined: PropTypes.bool.isRequired,
   channelName: PropTypes.string.isRequired,
-  members: PropTypes.array.isRequired,
-  onChannelEnter: PropTypes.func.isRequired
+  members: PropTypes.array.isRequired
 };
 
 export default function ChannelDetail({
   alreadyJoined,
   channelName,
-  inviteFrom,
-  members,
-  onChannelEnter
+  invitePath,
+  members
 }) {
+  const history = useHistory();
   const { profileTheme } = useMyState();
   const [shownMembers, setShownMembers] = useState([]);
   const [userListModalShown, setUserListModalShown] = useState(false);
@@ -34,10 +34,10 @@ export default function ChannelDetail({
   }, [members]);
   const handleChannelEnter = useCallback(() => {
     if (alreadyJoined) {
-      onChannelEnter(inviteFrom);
+      history.push(`/chat/${invitePath}`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [alreadyJoined, inviteFrom]);
+  }, [alreadyJoined, invitePath]);
 
   return (
     <div

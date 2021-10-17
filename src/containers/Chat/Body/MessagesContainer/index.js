@@ -35,23 +35,19 @@ import { socket } from 'constants/io';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useChatContext, useNotiContext } from 'contexts';
 import { checkScrollIsAtTheBottom, isMobile } from 'helpers';
+import { useHistory } from 'react-router-dom';
 
 MessagesContainer.propTypes = {
   channelName: PropTypes.string,
   chessOpponent: PropTypes.object,
-  currentChannel: PropTypes.object.isRequired,
-  onChannelEnter: PropTypes.func
+  currentChannel: PropTypes.object.isRequired
 };
 
 const CALL_SCREEN_HEIGHT = '30%';
 const deviceIsMobile = isMobile(navigator);
 
-function MessagesContainer({
-  channelName,
-  chessOpponent,
-  currentChannel,
-  onChannelEnter
-}) {
+function MessagesContainer({ channelName, chessOpponent, currentChannel }) {
+  const history = useHistory();
   const {
     requestHelpers: {
       acceptInvitation,
@@ -62,6 +58,7 @@ function MessagesContainer({
       leaveChannel,
       loadChatChannel,
       loadMoreChatMessages,
+      parseChannelPath,
       putFavoriteChannel,
       sendInvitationMessage,
       startNewDMChannel,
@@ -95,8 +92,7 @@ function MessagesContainer({
       onSetCreatingNewDMChannel,
       onSetFavoriteChannel,
       onSetReplyTarget,
-      onSubmitMessage,
-      onUpdateSelectedChannelId
+      onSubmitMessage
     }
   } = useChatContext();
   const {
@@ -653,21 +649,19 @@ function MessagesContainer({
   ]);
 
   const handleAcceptGroupInvitation = useCallback(
-    async (invitationChannelId) => {
-      onUpdateSelectedChannelId(invitationChannelId);
-      const { channel, messageIds, messagesObj, joinMessage } =
-        await acceptInvitation(invitationChannelId);
+    async (invitationChannelPath) => {
+      const invitationChannelId = await parseChannelPath(invitationChannelPath);
+      const { channel, joinMessage } = await acceptInvitation(
+        invitationChannelId
+      );
       if (channel.id === invitationChannelId) {
         socket.emit('join_chat_group', channel.id);
-        onEnterChannelWithId({
-          data: { channel, messageIds, messagesObj },
-          showOnTop: true
-        });
         socket.emit('new_chat_message', {
           message: joinMessage,
           channel: { id: channel.id },
           newMembers: [{ id: userId, username, profilePicUrl }]
         });
+        history.push(`/chat/${invitationChannelPath}`);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -943,7 +937,6 @@ function MessagesContainer({
                   loading={loading}
                   message={message}
                   onAcceptGroupInvitation={handleAcceptGroupInvitation}
-                  onChannelEnter={onChannelEnter}
                   onChessBoardClick={handleChessModalShown}
                   onChessSpoilerClick={handleChessSpoilerClick}
                   onDelete={handleShowDeleteModal}

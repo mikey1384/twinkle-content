@@ -88,6 +88,26 @@ function Chat({ onFileUpload }) {
 
   useEffect(() => {
     const currentChannelPath = pathname.split('chat/')[1];
+    handleChannelEnter(currentChannelPath);
+    async function handleChannelEnter(channelPath) {
+      const channelId = await parseChannelPath(channelPath);
+      if (channelId === 0) {
+        return onEnterEmptyChat();
+      }
+      onUpdateSelectedChannelId(channelId);
+      if (channelsObj[channelId]?.loaded) {
+        return updateLastChannelId(channelId);
+      }
+      const data = await loadChatChannel({ channelId });
+      if (mounted.current) {
+        onEnterChannelWithId({ data });
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
+
+  useEffect(() => {
+    const currentChannelPath = pathname.split('chat/')[1];
     if (!currentChannelPath && currentChannel.pathNumber) {
       history.replace(`/chat/${currentChannel.pathNumber}`);
     }
@@ -190,25 +210,6 @@ function Chat({ onFileUpload }) {
     return result;
   }, [chatStatus, currentChannel.id, currentChannel?.members]);
 
-  const handleChannelEnter = useCallback(
-    async (channelPath) => {
-      const channelId = await parseChannelPath(channelPath);
-      if (channelId === 0) {
-        return onEnterEmptyChat();
-      }
-      onUpdateSelectedChannelId(channelId);
-      if (channelsObj[channelId]?.loaded) {
-        return updateLastChannelId(channelId);
-      }
-      const data = await loadChatChannel({ channelId });
-      if (mounted.current) {
-        onEnterChannelWithId({ data });
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [channelsObj]
-  );
-
   const handleCreateNewChannel = useCallback(
     async ({ userId, channelName, isClosed }) => {
       setCreatingChat(true);
@@ -295,7 +296,6 @@ function Chat({ onFileUpload }) {
                 />
               )}
               <LeftMenu
-                onChannelEnter={handleChannelEnter}
                 onNewButtonClick={() => setCreateNewChatModalShown(true)}
                 showUserListModal={() => setUserListModalShown(true)}
               />
@@ -303,7 +303,6 @@ function Chat({ onFileUpload }) {
                 channelName={currentChannelName}
                 chessOpponent={partner}
                 currentChannel={currentChannel}
-                onChannelEnter={handleChannelEnter}
               />
               <RightMenu
                 channelOnCall={channelOnCall}
