@@ -19,7 +19,7 @@ import { phoneMaxWidth } from 'constants/css';
 import { socket } from 'constants/io';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import {
   useAppContext,
   useNotiContext,
@@ -35,7 +35,6 @@ Chat.propTypes = {
 
 function Chat({ onFileUpload }) {
   const { pathname } = useLocation();
-  const history = useHistory();
   const {
     requestHelpers: {
       createNewChat,
@@ -60,7 +59,6 @@ function Chat({ onFileUpload }) {
       onClearNumUnreads,
       onCreateNewChannel,
       onEnterChannelWithId,
-      onEnterEmptyChat,
       onNotifyThatMemberLeftChannel,
       onReceiveMessage,
       onReceiveMessageOnDifferentChannel,
@@ -88,18 +86,21 @@ function Chat({ onFileUpload }) {
     [channelsObj, selectedChannelId]
   );
 
+  const currentChannelPath = useMemo(
+    () => pathname.split('chat/')[1],
+    [pathname]
+  );
+
   useEffect(() => {
-    const currentChannelPath = pathname.split('chat/')[1];
-    handleChannelEnter(currentChannelPath);
+    if (currentChannelPath) {
+      handleChannelEnter(currentChannelPath);
+    }
 
     async function handleChannelEnter(channelPath) {
       const channelId =
         channelPathIdHash[channelPath] || (await parseChannelPath(channelPath));
       if (!channelPathIdHash[channelPath] && mounted.current) {
         onUpdateChannelPathIdHash({ channelId, channelPath });
-      }
-      if (channelId === 0 && mounted.current) {
-        return onEnterEmptyChat();
       }
       if (mounted.current) {
         onUpdateSelectedChannelId(channelId);
@@ -113,14 +114,7 @@ function Chat({ onFileUpload }) {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname]);
-
-  useEffect(() => {
-    const currentChannelPath = pathname.split('chat/')[1];
-    if (!currentChannelPath && currentChannel.pathNumber) {
-      history.replace(`/chat/${currentChannel.pathNumber}`);
-    }
-  }, [currentChannel.pathNumber, history, pathname]);
+  }, [currentChannelPath]);
 
   useEffect(() => {
     if (userId && loaded && selectedChannelId) {
