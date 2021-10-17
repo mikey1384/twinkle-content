@@ -18,12 +18,7 @@ import { css } from '@emotion/css';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { useContentState, useLazyLoad, useMyState } from 'helpers/hooks';
 import { useInView } from 'react-intersection-observer';
-import {
-  useAppContext,
-  useContentContext,
-  useChatContext,
-  useProfileContext
-} from 'contexts';
+import { useAppContext, useContentContext, useProfileContext } from 'contexts';
 
 ProfilePanel.propTypes = {
   expandable: PropTypes.bool,
@@ -148,10 +143,6 @@ function ProfilePanel({ expandable, profileId, style }) {
     }
   } = useAppContext();
   const { isCreator, userId, username } = useMyState();
-
-  const {
-    actions: { onOpenDirectMessageChannel }
-  } = useChatContext();
   const {
     actions: { onResetProfile }
   } = useProfileContext();
@@ -549,14 +540,9 @@ function ProfilePanel({ expandable, profileId, style }) {
   }
 
   async function handleTalkClick() {
-    const data = await loadDMChannel({ recepient: profile });
+    const { pathNumber } = await loadDMChannel({ recepient: profile });
     if (mounted.current) {
-      onOpenDirectMessageChannel({
-        user: { id: userId, username },
-        recepient: profile,
-        channelData: data
-      });
-      history.push('/chat');
+      history.push(pathNumber ? `/chat/${pathNumber}` : `/chat`);
     }
   }
 

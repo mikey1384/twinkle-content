@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
@@ -8,7 +8,7 @@ import ProfilePic from 'components/ProfilePic';
 import { Color } from 'constants/css';
 import { useHistory } from 'react-router-dom';
 import { useMyState } from 'helpers/hooks';
-import { useAppContext, useChatContext } from 'contexts';
+import { useAppContext } from 'contexts';
 
 UserListModal.propTypes = {
   description: PropTypes.string,
@@ -30,13 +30,9 @@ export default function UserListModal({
 }) {
   const history = useHistory();
   const {
-    requestHelpers: { loadChat, loadDMChannel }
+    requestHelpers: { loadDMChannel }
   } = useAppContext();
-  const { userId, username } = useMyState();
-  const {
-    state: { loaded },
-    actions: { onInitChat, onOpenDirectMessageChannel }
-  } = useChatContext();
+  const { userId } = useMyState();
   const allUsers = useMemo(() => {
     const otherUsers = users.filter((user) => user.id !== userId);
     let userArray = [];
@@ -45,6 +41,14 @@ export default function UserListModal({
     }
     return userArray.concat(otherUsers);
   }, [userId, users]);
+  const mounted = useRef(true);
+
+  useEffect(() => {
+    mounted.current = true;
+    return function cleanUp() {
+      mounted.current = false;
+    };
+  }, []);
 
   return (
     <Modal small onHide={onHide}>
@@ -119,17 +123,10 @@ export default function UserListModal({
   async function handleTalkClick(user) {
     if (user.id !== userId) {
       onHide();
-      if (!loaded) {
-        const initialData = await loadChat();
-        onInitChat(initialData);
+      const { pathNumber } = await loadDMChannel({ recepient: user });
+      if (mounted.current) {
+        history.push(pathNumber ? `/chat/${pathNumber}` : `/chat`);
       }
-      const data = await loadDMChannel({ recepient: user });
-      onOpenDirectMessageChannel({
-        user: { id: userId, username },
-        recepient: user,
-        channelData: data
-      });
-      history.push('/chat');
     }
   }
 }

@@ -284,14 +284,6 @@ export default function ChatActions(dispatch) {
         data
       });
     },
-    onOpenDirectMessageChannel({ user, recepient, channelData }) {
-      return dispatch({
-        type: 'OPEN_DM',
-        user,
-        recepient,
-        ...channelData
-      });
-    },
     onOpenNewChatTab({ user, recepient }) {
       return dispatch({
         type: 'OPEN_NEW_TAB',

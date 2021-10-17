@@ -11,19 +11,13 @@ import { timeSince } from 'helpers/timeStampHelpers';
 import { unix } from 'moment';
 import { useHistory } from 'react-router-dom';
 import { useMyState } from 'helpers/hooks';
-import {
-  useAppContext,
-  useChatContext,
-  useContentContext,
-  useInputContext
-} from 'contexts';
+import { useAppContext, useContentContext, useInputContext } from 'contexts';
 
 BasicInfos.propTypes = {
   className: PropTypes.string,
   email: PropTypes.string,
   verifiedEmail: PropTypes.string,
   online: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
-  profilePicUrl: PropTypes.string,
   profileTheme: PropTypes.string,
   joinDate: PropTypes.string,
   lastActive: PropTypes.string,
@@ -43,7 +37,6 @@ export default function BasicInfos({
   online,
   joinDate,
   lastActive,
-  profilePicUrl,
   profileTheme,
   selectedTheme,
   userId,
@@ -54,22 +47,13 @@ export default function BasicInfos({
   style
 }) {
   const history = useHistory();
-  const { userId: myId, username: myUsername, banned } = useMyState();
+  const { userId: myId, banned } = useMyState();
   const {
-    requestHelpers: {
-      loadChat,
-      loadDMChannel,
-      uploadProfileInfo,
-      sendVerificationEmail
-    }
+    requestHelpers: { loadDMChannel, uploadProfileInfo, sendVerificationEmail }
   } = useAppContext();
   const {
     actions: { onUpdateProfileInfo }
   } = useContentContext();
-  const {
-    state: { loaded },
-    actions: { onInitChat, onOpenDirectMessageChannel }
-  } = useChatContext();
   const {
     state: {
       userInfo: { userInfoOnEdit }
@@ -303,19 +287,12 @@ export default function BasicInfos({
   );
 
   async function handleTalkButtonClick() {
-    if (!loaded) {
-      const initialData = await loadChat();
-      onInitChat(initialData);
-    }
-    const data = await loadDMChannel({
+    const { pathNumber } = await loadDMChannel({
       recepient: { id: userId, username }
     });
-    onOpenDirectMessageChannel({
-      user: { id: myId, username: myUsername },
-      recepient: { id: userId, username, profilePicUrl },
-      channelData: data
-    });
-    history.push('/chat');
+    if (mounted.current) {
+      history.push(pathNumber ? `/chat/${pathNumber}` : `/chat`);
+    }
   }
 
   function goToEmail() {

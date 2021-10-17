@@ -830,38 +830,6 @@ export default function ChatReducer(state, action) {
         }
       };
     }
-    case 'OPEN_DM': {
-      let messagesLoadMoreButton = false;
-      if (action.messageIds.length > 20) {
-        action.messageIds.pop();
-        messagesLoadMoreButton = true;
-      }
-      return {
-        ...state,
-        selectedChatTab: 'home',
-        chatType: 'default',
-        loaded: true,
-        subject: {},
-        channelsObj: {
-          ...state.channelsObj,
-          [action.channelId]: {
-            id: action.channelId,
-            twoPeople: true,
-            members: [action.user, action.recepient],
-            channelName: action.recepient.username,
-            pathNumber: action.pathNumber,
-            messageIds: action.messageIds.reverse(),
-            messagesObj: action.messagesObj,
-            messagesLoadMoreButton,
-            numUnreads: 0,
-            recentChessMessage: undefined,
-            loaded: true
-          }
-        },
-        selectedChannelId: action.channelId || 0,
-        recepientId: action.recepient.id
-      };
-    }
     case 'OPEN_NEW_TAB':
       return {
         ...state,

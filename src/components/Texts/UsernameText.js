@@ -39,10 +39,10 @@ export default function UsernameText({
     contentType: 'user',
     contentId: user.id
   });
-  const { userId, username } = useMyState();
+  const { userId } = useMyState();
   const {
     state: { loaded },
-    actions: { onInitChat, onOpenDirectMessageChannel }
+    actions: { onInitChat }
   } = useChatContext();
   const [menuShown, setMenuShown] = useState(false);
   const userXP = useMemo(() => {
@@ -192,15 +192,10 @@ export default function UsernameText({
           onInitChat(initialData);
         }
       }
-      const data = await loadDMChannel({ recepient: user });
+      const { pathNumber } = await loadDMChannel({ recepient: user });
       if (mounted.current) {
-        onOpenDirectMessageChannel({
-          user: { id: userId, username },
-          recepient: data.partner,
-          channelData: data
-        });
+        history.push(pathNumber ? `/chat/${pathNumber}` : `/chat`);
       }
-      history.push('/chat');
     }
   }
 
