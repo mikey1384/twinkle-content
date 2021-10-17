@@ -71,6 +71,7 @@ function MessagesContainer({ channelName, chessOpponent, currentChannel }) {
   const {
     state: {
       channelOnCall,
+      channelPathIdHash,
       chessModalShown,
       creatingNewDMChannel,
       allFavoriteChannelIds,
@@ -92,7 +93,8 @@ function MessagesContainer({ channelName, chessOpponent, currentChannel }) {
       onSetCreatingNewDMChannel,
       onSetFavoriteChannel,
       onSetReplyTarget,
-      onSubmitMessage
+      onSubmitMessage,
+      onUpdateChannelPathIdHash
     }
   } = useChatContext();
   const {
@@ -650,7 +652,15 @@ function MessagesContainer({ channelName, chessOpponent, currentChannel }) {
 
   const handleAcceptGroupInvitation = useCallback(
     async (invitationChannelPath) => {
-      const invitationChannelId = await parseChannelPath(invitationChannelPath);
+      const invitationChannelId =
+        channelPathIdHash[invitationChannelPath] ||
+        (await parseChannelPath(invitationChannelPath));
+      if (!channelPathIdHash[invitationChannelPath]) {
+        onUpdateChannelPathIdHash({
+          channelId: invitationChannelId,
+          channelPath: invitationChannelPath
+        });
+      }
       const { channel, joinMessage } = await acceptInvitation(
         invitationChannelId
       );

@@ -51,6 +51,7 @@ function Chat({ onFileUpload }) {
       loaded,
       selectedChannelId,
       channelsObj,
+      channelPathIdHash,
       channelOnCall,
       currentChannelName,
       chatStatus
@@ -66,6 +67,7 @@ function Chat({ onFileUpload }) {
       onSetChessModalShown,
       onSetCurrentChannelName,
       onTrimMessages,
+      onUpdateChannelPathIdHash,
       onUpdateChessMoveViewTimeStamp,
       onUpdateSelectedChannelId
     }
@@ -90,7 +92,11 @@ function Chat({ onFileUpload }) {
     const currentChannelPath = pathname.split('chat/')[1];
     handleChannelEnter(currentChannelPath);
     async function handleChannelEnter(channelPath) {
-      const channelId = await parseChannelPath(channelPath);
+      const channelId =
+        channelPathIdHash[channelPath] || (await parseChannelPath(channelPath));
+      if (!channelPathIdHash[channelPath]) {
+        onUpdateChannelPathIdHash({ channelId, channelPath });
+      }
       if (channelId === 0) {
         return onEnterEmptyChat();
       }

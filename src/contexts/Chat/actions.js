@@ -572,6 +572,13 @@ export default function ChatActions(dispatch) {
         channelId
       });
     },
+    onUpdateChannelPathIdHash({ channelPath, channelId }) {
+      return dispatch({
+        type: 'UPDATE_CHANNEL_PATH_ID_HASH',
+        channelPath,
+        channelId
+      });
+    },
     onUpdateChessMoveViewTimeStamp(channelId) {
       return dispatch({
         type: 'UPDATE_CHESS_MOVE_VIEW_STAMP',

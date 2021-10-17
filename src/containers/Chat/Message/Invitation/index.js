@@ -5,7 +5,7 @@ import Button from 'components/Button';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useContentState, useMyState } from 'helpers/hooks';
-import { useAppContext, useContentContext } from 'contexts';
+import { useAppContext, useChatContext, useContentContext } from 'contexts';
 
 Invitation.propTypes = {
   invitePath: PropTypes.number.isRequired,
@@ -31,12 +31,23 @@ export default function Invitation({
   const {
     actions: { onSetChatInvitationDetail }
   } = useContentContext();
+  const {
+    state: { channelPathIdHash },
+    actions: { onUpdateChannelPathIdHash }
+  } = useChatContext();
   useEffect(() => {
     if (!invitationDetail) {
       init();
     }
     async function init() {
-      const channelId = await parseChannelPath(invitePath);
+      const channelId =
+        channelPathIdHash[invitePath] || (await parseChannelPath(invitePath));
+      if (!channelPathIdHash[invitePath]) {
+        onUpdateChannelPathIdHash({
+          channelId,
+          channelPath: invitePath
+        });
+      }
       const { channel } = await loadChatChannel({
         channelId,
         skipUpdateChannelId: true
