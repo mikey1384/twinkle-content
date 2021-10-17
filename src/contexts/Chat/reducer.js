@@ -842,6 +842,7 @@ export default function ChatReducer(state, action) {
             twoPeople: true,
             members: [action.user, action.recepient],
             channelName: action.recepient.username,
+            pathNumber: action.pathNumber,
             messageIds: action.messageIds.reverse(),
             messagesObj: action.messagesObj,
             messagesLoadMoreButton,
