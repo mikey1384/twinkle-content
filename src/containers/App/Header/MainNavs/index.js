@@ -33,7 +33,7 @@ function MainNavs({
   totalRewardAmount
 }) {
   const [twinkleCoinsHovered, setTwinkleCoinsHovered] = useState(false);
-  const { twinkleCoins, userId, banned } = useMyState();
+  const { twinkleCoins, userId, banned, lastChatPath } = useMyState();
   const {
     state: { exploreCategory, contentPath, contentNav, profileNav, homeNav },
     actions: {
@@ -271,7 +271,7 @@ function MainNavs({
       />
       {!banned?.chat && (
         <Nav
-          to="/chat"
+          to={`/chat${lastChatPath}`}
           pathname={pathname}
           className="mobile"
           imgLabel="comments"
@@ -341,7 +341,7 @@ function MainNavs({
       >
         {!banned?.chat && (
           <Nav
-            to="/chat"
+            to={`/chat${lastChatPath}`}
             pathname={pathname}
             className="desktop"
             imgLabel="comments"
