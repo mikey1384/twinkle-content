@@ -23,7 +23,7 @@ function Channel({
     twoPeople,
     members,
     numUnreads,
-    pathNumber
+    pathId
   },
   selectedChannelId
 }) {
@@ -121,7 +121,7 @@ function Channel({
         height: '6.5rem'
       }}
       onClick={() => {
-        history.push(`/chat/${pathNumber}`);
+        history.push(`/chat/${pathId}`);
       }}
     >
       <div

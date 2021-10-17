@@ -192,9 +192,9 @@ export default function UsernameText({
           onInitChat(initialData);
         }
       }
-      const { pathNumber } = await loadDMChannel({ recepient: user });
+      const { pathId } = await loadDMChannel({ recepient: user });
       if (mounted.current) {
-        if (!pathNumber) {
+        if (!pathId) {
           onOpenNewChatTab({
             user: { username, id: userId, profilePicUrl, authLevel },
             recepient: {
@@ -205,7 +205,7 @@ export default function UsernameText({
             }
           });
         }
-        history.push(pathNumber ? `/chat/${pathNumber}` : `/chat`);
+        history.push(pathId ? `/chat/${pathId}` : `/chat`);
       }
     }
   }

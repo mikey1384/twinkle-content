@@ -304,11 +304,11 @@ export default function BasicInfos({
   );
 
   async function handleTalkButtonClick() {
-    const { pathNumber } = await loadDMChannel({
+    const { pathId } = await loadDMChannel({
       recepient: { id: userId, username }
     });
     if (mounted.current) {
-      if (!pathNumber) {
+      if (!pathId) {
         onOpenNewChatTab({
           user: {
             username: myUsername,
@@ -324,7 +324,7 @@ export default function BasicInfos({
           }
         });
       }
-      history.push(pathNumber ? `/chat/${pathNumber}` : `/chat`);
+      history.push(pathId ? `/chat/${pathId}` : `/chat`);
     }
   }
 

@@ -846,7 +846,7 @@ export default function ChatReducer(state, action) {
           recentChessMessage: undefined,
           0: {
             id: 0,
-            pathNumber: 'new',
+            pathId: 'new',
             channelName: action.recepient.username,
             members: [action.user, action.recepient],
             numUnreads: 0,

@@ -548,9 +548,9 @@ function ProfilePanel({ expandable, profileId, style }) {
   }
 
   async function handleTalkClick() {
-    const { pathNumber } = await loadDMChannel({ recepient: profile });
+    const { pathId } = await loadDMChannel({ recepient: profile });
     if (mounted.current) {
-      if (!pathNumber) {
+      if (!pathId) {
         onOpenNewChatTab({
           user: { username, id: userId, profilePicUrl, authLevel },
           recepient: {
@@ -561,7 +561,7 @@ function ProfilePanel({ expandable, profileId, style }) {
           }
         });
       }
-      history.push(pathNumber ? `/chat/${pathNumber}` : `/chat`);
+      history.push(pathId ? `/chat/${pathId}` : `/chat`);
     }
   }
 
