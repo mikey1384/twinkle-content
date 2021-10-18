@@ -19,7 +19,7 @@ import { phoneMaxWidth } from 'constants/css';
 import { socket } from 'constants/io';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import {
   useAppContext,
   useNotiContext,
@@ -35,6 +35,7 @@ Chat.propTypes = {
 
 function Chat({ onFileUpload }) {
   const { pathname } = useLocation();
+  const history = useHistory();
   const {
     requestHelpers: {
       createNewChat,
@@ -92,8 +93,10 @@ function Chat({ onFileUpload }) {
   );
 
   useEffect(() => {
-    if (currentChannelPath) {
+    if (currentChannelPath && history.action === 'PUSH') {
       handleChannelEnter(currentChannelPath);
+    } else if (currentChannel.pathId) {
+      history.replace(`/chat/${currentChannel.pathId}`);
     }
 
     async function handleChannelEnter(channelPath) {
@@ -114,7 +117,7 @@ function Chat({ onFileUpload }) {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentChannelPath]);
+  }, [currentChannelPath, currentChannel?.pathId]);
 
   useEffect(() => {
     if (userId && loaded && selectedChannelId) {
