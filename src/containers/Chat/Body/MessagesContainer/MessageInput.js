@@ -374,7 +374,7 @@ function MessageInput({
           channelId={currentChannelId}
           fileObj={fileObj}
           onUpload={() => {
-            setText('');
+            handleSetText('');
             setUploadModalShown(false);
           }}
           replyTarget={replyTarget}
