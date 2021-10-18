@@ -225,6 +225,7 @@ export default function ChatReducer(state, action) {
             creatorId: action.data.message.userId,
             members: action.data.members,
             unlockedThemes: [],
+            pathId: action.data.pathId,
             loaded: true
           }
         },

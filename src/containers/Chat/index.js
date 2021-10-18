@@ -219,13 +219,14 @@ function Chat({ onFileUpload }) {
   const handleCreateNewChannel = useCallback(
     async ({ userId, channelName, isClosed }) => {
       setCreatingChat(true);
-      const { message, members } = await createNewChat({
+      const { message, members, pathId } = await createNewChat({
         userId,
         channelName,
         isClosed
       });
-      onCreateNewChannel({ message, isClosed, members });
+      onCreateNewChannel({ message, isClosed, members, pathId });
       socket.emit('join_chat_group', message.channelId);
+      history.push(`/chat/${pathId}`);
       setCreateNewChatModalShown(false);
       setCreatingChat(false);
     },

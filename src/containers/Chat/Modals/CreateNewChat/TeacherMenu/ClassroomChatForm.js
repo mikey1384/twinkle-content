@@ -10,6 +10,7 @@ import { css } from '@emotion/css';
 import { socket } from 'constants/io';
 import { mobileMaxWidth } from 'constants/css';
 import { stringIsEmpty } from 'helpers/stringHelpers';
+import { useHistory } from 'react-router-dom';
 
 ClassroomChat.propTypes = {
   onBackClick: PropTypes.func,
@@ -17,6 +18,7 @@ ClassroomChat.propTypes = {
 };
 
 export default function ClassroomChat({ onBackClick, onHide }) {
+  const history = useHistory();
   const {
     requestHelpers: { createNewChat, searchUserToInvite }
   } = useAppContext();
@@ -124,7 +126,13 @@ export default function ClassroomChat({ onBackClick, onHide }) {
       isClosed: true,
       selectedUsers
     });
-    onCreateNewChannel({ message, isClass: true, isClosed: true, members });
+    onCreateNewChannel({
+      message,
+      isClass: true,
+      isClosed: true,
+      members,
+      pathId
+    });
     const users = selectedUsers.map((user) => user.id);
     socket.emit('join_chat_group', message.channelId);
     socket.emit('send_group_chat_invitation', users, {
@@ -134,6 +142,7 @@ export default function ClassroomChat({ onBackClick, onHide }) {
       members,
       pathId
     });
+    history.push(`/chat/${pathId}`);
     onHide();
   }
 }
