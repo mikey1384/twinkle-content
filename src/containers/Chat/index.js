@@ -93,9 +93,9 @@ function Chat({ onFileUpload }) {
   );
 
   useEffect(() => {
-    if (currentChannelPath && history.action === 'PUSH') {
+    if (currentChannelPath) {
       handleChannelEnter(currentChannelPath);
-    } else if (currentChannel.pathId) {
+    } else if (history.action === 'POP' && currentChannel.pathId) {
       history.replace(`/chat/${currentChannel.pathId}`);
     }
 
@@ -117,7 +117,7 @@ function Chat({ onFileUpload }) {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentChannelPath, currentChannel?.pathId]);
+  }, [currentChannelPath, currentChannel.pathId]);
 
   useEffect(() => {
     if (userId && loaded && selectedChannelId) {
