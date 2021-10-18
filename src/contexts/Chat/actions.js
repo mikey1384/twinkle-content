@@ -337,13 +337,14 @@ export default function ChatActions(dispatch) {
         newMembers
       });
     },
-    onReceiveFirstMsg({ message, isClass, duplicate, pageVisible }) {
+    onReceiveFirstMsg({ message, isClass, duplicate, pageVisible, pathId }) {
       return dispatch({
         type: 'RECEIVE_FIRST_MSG',
         message,
         duplicate,
         isClass,
-        pageVisible
+        pageVisible,
+        pathId
       });
     },
     onReceiveMessageOnDifferentChannel({

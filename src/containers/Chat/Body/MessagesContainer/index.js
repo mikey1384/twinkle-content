@@ -435,6 +435,7 @@ function MessagesContainer({ channelName, chessOpponent, currentChannel }) {
           socket.emit('send_bi_chat_invitation', {
             userId: recepientId,
             members: currentChannel.members,
+            pathId,
             message
           });
           onUpdateChannelPathIdHash({ channelId: channel.id, pathId });
@@ -523,7 +524,8 @@ function MessagesContainer({ channelName, chessOpponent, currentChannel }) {
           users.map((user) => user.id),
           {
             message: { ...message, messageId: message.id },
-            isClass
+            isClass,
+            pathId: currentChannel.pathId
           }
         );
       } else {
@@ -712,6 +714,7 @@ function MessagesContainer({ channelName, chessOpponent, currentChannel }) {
           socket.emit('send_bi_chat_invitation', {
             userId: recepientId,
             members: currentChannel.members,
+            pathId,
             message
           });
           onUpdateChannelPathIdHash({ channelId: channel.id, pathId });

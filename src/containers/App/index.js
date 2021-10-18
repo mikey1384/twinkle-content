@@ -278,6 +278,7 @@ function App({ location, history }) {
         socket.emit('send_bi_chat_invitation', {
           userId: recepientId,
           members: currentChannel.members,
+          pathId: channel.pathId,
           message
         });
       }

@@ -348,7 +348,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
       }
     }
 
-    function handleChatInvitation({ message, members, isClass }) {
+    function handleChatInvitation({ message, members, isClass, pathId }) {
       let duplicate = false;
       if (selectedChannelId === 0) {
         if (
@@ -361,7 +361,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
         }
       }
       socket.emit('join_chat_group', message.channelId);
-      onReceiveFirstMsg({ message, duplicate, isClass, pageVisible });
+      onReceiveFirstMsg({ message, duplicate, isClass, pageVisible, pathId });
     }
 
     function handleDisconnect(reason) {

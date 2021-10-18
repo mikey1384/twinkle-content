@@ -117,7 +117,7 @@ export default function ClassroomChat({ onBackClick, onHide }) {
 
   async function handleDone() {
     setCreatingChat(true);
-    const { message, members } = await createNewChat({
+    const { message, members, pathId } = await createNewChat({
       userId,
       channelName,
       isClass: true,
@@ -131,7 +131,8 @@ export default function ClassroomChat({ onBackClick, onHide }) {
       message,
       isClass: true,
       isClosed: true,
-      members
+      members,
+      pathId
     });
     onHide();
   }

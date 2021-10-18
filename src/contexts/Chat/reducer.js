@@ -980,6 +980,7 @@ export default function ChatReducer(state, action) {
                 profilePicUrl: action.message.profilePicUrl
               }
             },
+            pathId: action.pathId,
             messageIds: [messageId],
             isClass: action.isClass,
             members: action.message.members,
