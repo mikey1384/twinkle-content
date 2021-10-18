@@ -7,7 +7,7 @@ import React, {
   useState
 } from 'react';
 import PropTypes from 'prop-types';
-import CreateNewChatModal from './Modals/CreateNewChat';
+import CreateNewChat from './Modals/CreateNewChat';
 import UserListModal from 'components/Modals/UserListModal';
 import LeftMenu from './LeftMenu';
 import RightMenu from './RightMenu';
@@ -81,6 +81,7 @@ function Chat({ onFileUpload }) {
   const [createNewChatModalShown, setCreateNewChatModalShown] = useState(false);
   const [userListModalShown, setUserListModalShown] = useState(false);
   const [partner, setPartner] = useState(null);
+  const prevChannelPath = useRef('');
   const mounted = useRef(true);
   const currentChannel = useMemo(
     () => channelsObj[selectedChannelId] || {},
@@ -93,8 +94,9 @@ function Chat({ onFileUpload }) {
   );
 
   useEffect(() => {
-    if (currentChannelPath) {
+    if (currentChannelPath && currentChannelPath !== prevChannelPath.current) {
       handleChannelEnter(currentChannelPath);
+      prevChannelPath.current = currentChannelPath;
     } else if (history.action === 'POP' && currentChannel.pathId) {
       history.replace(`/chat/${currentChannel.pathId}`);
     }
@@ -282,7 +284,7 @@ function Chat({ onFileUpload }) {
               `}
             >
               {createNewChatModalShown && (
-                <CreateNewChatModal
+                <CreateNewChat
                   creatingChat={creatingChat}
                   onHide={() => setCreateNewChatModalShown(false)}
                   onDone={handleCreateNewChannel}
