@@ -1,8 +1,9 @@
-import React, { memo, useMemo } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Color, desktopMinWidth, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
+import { useChatContext } from 'contexts';
 import { useHistory } from 'react-router-dom';
 
 Channel.propTypes = {
@@ -29,6 +30,9 @@ function Channel({
 }) {
   const history = useHistory();
   const { profileTheme, userId } = useMyState();
+  const {
+    actions: { onEnterEmptyChat }
+  } = useChatContext();
   const effectiveChannelName = useMemo(
     () => customChannelNames[channelId] || channelName,
     [channelName, customChannelNames, channelId]
@@ -103,6 +107,15 @@ function Channel({
     [effectiveChannelName, otherMember]
   );
 
+  const handleChannelClick = useCallback(() => {
+    if (pathId) {
+      return history.push(`/chat/${pathId}`);
+    }
+    onEnterEmptyChat();
+    history.push('/chat');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [history, pathId]);
+
   return (
     <div
       key={channelId}
@@ -120,9 +133,7 @@ function Channel({
         padding: '1rem',
         height: '6.5rem'
       }}
-      onClick={() => {
-        history.push(`/chat/${pathId}`);
-      }}
+      onClick={handleChannelClick}
     >
       <div
         style={{
