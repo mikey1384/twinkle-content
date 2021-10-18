@@ -426,7 +426,7 @@ function MessagesContainer({ channelName, chessOpponent, currentChannel }) {
             channelId: selectedChannelId
           });
         } else {
-          const { channel, message } = await startNewDMChannel({
+          const { channel, message, pathId } = await startNewDMChannel({
             ...params,
             content,
             recepientId
@@ -437,7 +437,9 @@ function MessagesContainer({ channelName, chessOpponent, currentChannel }) {
             members: currentChannel.members,
             message
           });
+          onUpdateChannelPathIdHash({ channelId: channel.id, pathId });
           onSendFirstDirectMessage({ channel, message });
+          history.replace(`/chat/${pathId}`);
           return;
         }
       } catch (error) {
@@ -658,7 +660,7 @@ function MessagesContainer({ channelName, chessOpponent, currentChannel }) {
       if (!channelPathIdHash[invitationChannelPath]) {
         onUpdateChannelPathIdHash({
           channelId: invitationChannelId,
-          channelPath: invitationChannelPath
+          pathId: invitationChannelPath
         });
       }
       const { channel, joinMessage } = await acceptInvitation(
@@ -701,7 +703,7 @@ function MessagesContainer({ channelName, chessOpponent, currentChannel }) {
         if (creatingNewDMChannel) return;
         onSetCreatingNewDMChannel(true);
         try {
-          const { channel, message } = await startNewDMChannel({
+          const { channel, message, pathId } = await startNewDMChannel({
             content,
             userId,
             recepientId
@@ -712,8 +714,10 @@ function MessagesContainer({ channelName, chessOpponent, currentChannel }) {
             members: currentChannel.members,
             message
           });
+          onUpdateChannelPathIdHash({ channelId: channel.id, pathId });
           onSendFirstDirectMessage({ channel, message });
           onSetCreatingNewDMChannel(false);
+          history.replace(`/chat/${pathId}`);
           return Promise.resolve();
         } catch (error) {
           return Promise.reject(error);

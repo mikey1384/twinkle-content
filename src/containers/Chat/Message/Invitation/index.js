@@ -45,7 +45,7 @@ export default function Invitation({
       if (!channelPathIdHash[invitePath]) {
         onUpdateChannelPathIdHash({
           channelId,
-          channelPath: invitePath
+          pathId: invitePath
         });
       }
       const { channel } = await loadChatChannel({

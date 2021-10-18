@@ -1359,7 +1359,7 @@ export default function ChatReducer(state, action) {
         ...state,
         channelPathIdHash: {
           ...state.channelPathIdHash,
-          [action.channelPath]: action.channelId
+          [action.pathId]: action.channelId
         }
       };
     case 'UPDATE_UPLOAD_PROGRESS':

@@ -99,11 +99,11 @@ function Chat({ onFileUpload }) {
       history.replace(`/chat/${currentChannel.pathId}`);
     }
 
-    async function handleChannelEnter(channelPath) {
+    async function handleChannelEnter(pathId) {
       const channelId =
-        channelPathIdHash[channelPath] || (await parseChannelPath(channelPath));
-      if (!channelPathIdHash[channelPath] && mounted.current) {
-        onUpdateChannelPathIdHash({ channelId, channelPath });
+        channelPathIdHash[pathId] || (await parseChannelPath(pathId));
+      if (!channelPathIdHash[pathId] && mounted.current) {
+        onUpdateChannelPathIdHash({ channelId, pathId });
       }
       if (mounted.current) {
         onUpdateSelectedChannelId(channelId);

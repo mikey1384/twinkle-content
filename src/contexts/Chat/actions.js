@@ -564,11 +564,11 @@ export default function ChatActions(dispatch) {
         channelId
       });
     },
-    onUpdateChannelPathIdHash({ channelPath, channelId }) {
+    onUpdateChannelPathIdHash({ channelPath, pathId }) {
       return dispatch({
         type: 'UPDATE_CHANNEL_PATH_ID_HASH',
         channelPath,
-        channelId
+        pathId
       });
     },
     onUpdateChessMoveViewTimeStamp(channelId) {
