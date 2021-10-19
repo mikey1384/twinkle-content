@@ -81,23 +81,20 @@ function Chat({ onFileUpload }) {
   const [createNewChatModalShown, setCreateNewChatModalShown] = useState(false);
   const [userListModalShown, setUserListModalShown] = useState(false);
   const [partner, setPartner] = useState(null);
-  const prevChannelPath = useRef('');
+  const prevPathId = useRef('');
   const mounted = useRef(true);
   const currentChannel = useMemo(
     () => channelsObj[selectedChannelId] || {},
     [channelsObj, selectedChannelId]
   );
 
-  const currentChannelPath = useMemo(
-    () => pathname.split('chat/')[1],
-    [pathname]
-  );
+  const currentPathId = useMemo(() => pathname.split('chat/')[1], [pathname]);
 
   useEffect(() => {
-    if (currentChannelPath && currentChannelPath !== prevChannelPath.current) {
-      handleChannelEnter(currentChannelPath);
-      prevChannelPath.current = currentChannelPath;
-    } else if (currentChannel.pathId) {
+    if (currentPathId && currentPathId !== prevPathId.current) {
+      handleChannelEnter(currentPathId);
+      prevPathId.current = currentPathId;
+    } else if (history.action === 'POP' && currentChannel.pathId) {
       history.replace(`/chat/${currentChannel.pathId}`);
     }
 
@@ -119,7 +116,7 @@ function Chat({ onFileUpload }) {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentChannelPath, currentChannel.pathId]);
+  }, [currentPathId, currentChannel.pathId]);
 
   useEffect(() => {
     if (userId && loaded && selectedChannelId) {
