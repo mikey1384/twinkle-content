@@ -55,6 +55,7 @@ function MessagesContainer({ channelName, chessOpponent, currentChannel }) {
       deleteChatMessage,
       editChannelSettings,
       hideChat,
+      loadGeneralChatPathId,
       leaveChannel,
       loadChatChannel,
       loadMoreChatMessages,
@@ -588,8 +589,8 @@ function MessagesContainer({ channelName, chessOpponent, currentChannel }) {
           username,
           profilePicUrl
         });
-        const data = await loadChatChannel({ channelId: GENERAL_CHAT_ID });
-        onEnterChannelWithId({ data });
+        const pathId = await loadGeneralChatPathId();
+        history.push(`/chat/${pathId}`);
         setLeaveConfirmModalShown(false);
         setLeaving(false);
       } catch (error) {

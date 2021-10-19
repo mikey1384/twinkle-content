@@ -41,7 +41,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
       checkVersion,
       fetchNotifications,
       getNumberOfUnreadMessages,
-      loadChatChannel,
+      loadGeneralChatPathId,
       loadChat,
       loadRankings,
       loadCoins,
@@ -74,7 +74,6 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
       onHideAttachment,
       onCallReceptionConfirm,
       onDeleteMessage,
-      onEnterChannelWithId,
       onEditMessage,
       onLeaveChannel,
       onGetNumberOfUnreadMessages,
@@ -372,8 +371,8 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
     async function handleLeftChatFromAnotherTab(channelId) {
       if (selectedChannelId === channelId) {
         onLeaveChannel(channelId);
-        const data = await loadChatChannel({ channelId: GENERAL_CHAT_ID });
-        onEnterChannelWithId({ data });
+        const pathId = await loadGeneralChatPathId();
+        history.push(`/chat/${pathId}`);
       } else {
         onLeaveChannel(channelId);
       }

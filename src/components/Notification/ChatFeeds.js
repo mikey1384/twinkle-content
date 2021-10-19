@@ -9,8 +9,7 @@ import { timeSince } from 'helpers/timeStampHelpers';
 import { Color } from 'constants/css';
 import { css } from '@emotion/css';
 import { useHistory } from 'react-router-dom';
-import { useAppContext, useChatContext } from 'contexts';
-import { GENERAL_CHAT_ID } from 'constants/defaultValues';
+import { useAppContext } from 'contexts';
 
 ChatFeeds.propTypes = {
   content: PropTypes.string,
@@ -39,11 +38,8 @@ function ChatFeeds({
   const [loadingChat, setLoadingChat] = useState(false);
   const history = useHistory();
   const {
-    requestHelpers: { loadChatChannel }
+    requestHelpers: { loadGeneralChatPathId }
   } = useAppContext();
-  const {
-    actions: { onEnterChannelWithId }
-  } = useChatContext();
   const [timeSincePost, setTimeSincePost] = useState(timeSince(timeStamp));
   const [timeSinceReload, setTimeSinceReload] = useState(
     timeSince(reloadTimeStamp)
@@ -145,10 +141,8 @@ function ChatFeeds({
   async function initChatFromThis() {
     if (myId) {
       setLoadingChat(true);
-      const data = await loadChatChannel({ channelId: GENERAL_CHAT_ID });
-      if (mounted.current) {
-        onEnterChannelWithId({ data });
-      }
+      const pathId = await loadGeneralChatPathId();
+      return history.push(`/chat/${pathId}`);
     }
     history.push('/chat');
   }

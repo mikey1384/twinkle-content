@@ -210,6 +210,16 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async loadGeneralChatPathId() {
+      try {
+        const {
+          data: { pathId }
+        } = await request.get(`${URL}/chat/pathId/general`, auth());
+        return Promise.resolve(pathId);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async loadChatChannel({ channelId, skipUpdateChannelId }) {
       try {
         const { data } = await request.get(
