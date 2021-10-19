@@ -30,7 +30,7 @@ export default function UsernameText({
   const timerRef = useRef(null);
   const mouseEntered = useRef(false);
   const {
-    requestHelpers: { loadChat, loadDMChannel, loadProfile }
+    requestHelpers: { loadDMChannel, loadProfile }
   } = useAppContext();
   const {
     actions: { onInitContent }
@@ -41,8 +41,7 @@ export default function UsernameText({
   });
   const { userId, username, profilePicUrl, authLevel } = useMyState();
   const {
-    state: { loaded },
-    actions: { onInitChat, onOpenNewChatTab }
+    actions: { onOpenNewChatTab }
   } = useChatContext();
   const [menuShown, setMenuShown] = useState(false);
   const userXP = useMemo(() => {
@@ -186,12 +185,6 @@ export default function UsernameText({
   async function onLinkClick() {
     setMenuShown(false);
     if (user.id !== userId) {
-      if (!loaded) {
-        const initialData = await loadChat();
-        if (mounted.current) {
-          onInitChat(initialData);
-        }
-      }
       const { pathId } = await loadDMChannel({ recepient: user });
       if (mounted.current) {
         if (!pathId) {
