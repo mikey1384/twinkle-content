@@ -8,7 +8,7 @@ import { css } from '@emotion/css';
 import { getSectionFromPathname } from 'helpers';
 import { addCommasToNumber, truncateText } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
-import { useContentContext, useHomeContext, useViewContext } from 'contexts';
+import { useAppContext, useHomeContext, useViewContext } from 'contexts';
 import { socket } from 'constants/io';
 
 MainNavs.propTypes = {
@@ -45,8 +45,10 @@ function MainNavs({
     }
   } = useViewContext();
   const {
-    actions: { onUpdateProfileInfo }
-  } = useContentContext();
+    user: {
+      actions: { onSetLastChatPath }
+    }
+  } = useAppContext();
   const {
     state: { feedsOutdated }
   } = useHomeContext();
@@ -163,8 +165,8 @@ function MainNavs({
     }
 
     if (chatMatch) {
-      const pathId = pathname.split('chat/')[1];
-      onUpdateProfileInfo({ lastChatPath: `/${pathId}`, userId });
+      const lastChatPath = pathname.split('chat')[1];
+      onSetLastChatPath(lastChatPath);
     }
 
     if (contentPageMatch) {
