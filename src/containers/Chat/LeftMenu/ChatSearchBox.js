@@ -34,8 +34,8 @@ function ChatSearchBox({ style }) {
   });
   const handleSelect = useCallback(
     async (item) => {
-      if (item.primary || !!item.channelPath) {
-        history.push(`/chat/${item.channelPath}`);
+      if (item.primary || !!item.pathId) {
+        history.push(`/chat/${item.pathId}`);
       } else {
         onOpenNewChatTab({
           user: { username, id: userId, profilePicUrl, authLevel },

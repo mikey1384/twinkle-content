@@ -334,14 +334,11 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async parseChannelPath(channelPath) {
+    async parseChannelPath(pathId) {
       try {
         const {
           data: { channelId }
-        } = await request.get(
-          `${URL}/chat/parse?channelPath=${channelPath}`,
-          auth()
-        );
+        } = await request.get(`${URL}/chat/parse?pathId=${pathId}`, auth());
         return Promise.resolve(channelId);
       } catch (error) {
         return handleError(error);

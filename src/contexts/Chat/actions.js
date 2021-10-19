@@ -565,10 +565,10 @@ export default function ChatActions(dispatch) {
         channelId
       });
     },
-    onUpdateChannelPathIdHash({ channelPath, pathId }) {
+    onUpdateChannelPathIdHash({ channelId, pathId }) {
       return dispatch({
         type: 'UPDATE_CHANNEL_PATH_ID_HASH',
-        channelPath,
+        channelId,
         pathId
       });
     },
