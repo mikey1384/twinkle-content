@@ -616,7 +616,8 @@ export default function ChatReducer(state, action) {
               action.data.selectedUsers.map((user) => ({
                 id: user.id,
                 username: user.username,
-                profilePicUrl: user.profilePicUrl
+                profilePicUrl: user.profilePicUrl,
+                authLevel: user.authLevel
               }))
             )
           }
