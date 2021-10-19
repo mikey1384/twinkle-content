@@ -91,7 +91,10 @@ function Chat({ onFileUpload }) {
   const currentPathId = useMemo(() => pathname.split('chat/')[1], [pathname]);
 
   useEffect(() => {
-    if (currentPathId && currentPathId !== prevPathId.current) {
+    if (
+      (currentPathId && currentPathId !== prevPathId.current) ||
+      !currentChannel.loaded
+    ) {
       handleChannelEnter(currentPathId);
       prevPathId.current = currentPathId;
     } else if (history.action === 'POP' && currentChannel.pathId) {

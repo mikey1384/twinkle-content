@@ -36,6 +36,9 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
   const history = useHistory();
   const usingChat = getSectionFromPathname(pathname)?.section === 'chat';
   const {
+    user: {
+      actions: { onSetLastChatPath }
+    },
     requestHelpers: {
       checkIfHomeOutdated,
       checkVersion,
@@ -91,6 +94,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
       onSetPeerStreams,
       onShowIncoming,
       onShowOutgoing,
+      onUpdateSelectedChannelId,
       onUpdateCollectorsRankings
     }
   } = useChatContext();
@@ -372,7 +376,12 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
       if (selectedChannelId === channelId) {
         onLeaveChannel(channelId);
         const pathId = await loadGeneralChatPathId();
-        history.push(`/chat/${pathId}`);
+        if (usingChat) {
+          history.push(`/chat/${pathId}`);
+        } else {
+          onUpdateSelectedChannelId(GENERAL_CHAT_ID);
+          onSetLastChatPath(`/${pathId}`);
+        }
       } else {
         onLeaveChannel(channelId);
       }
