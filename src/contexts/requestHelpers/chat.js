@@ -58,6 +58,19 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async checkChatAccessible(pathId) {
+      try {
+        const {
+          data: { isAccessible, generalChatPathId }
+        } = await request.get(
+          `${URL}/chat/check/accessible?pathId=${pathId}`,
+          auth()
+        );
+        return Promise.resolve({ isAccessible, generalChatPathId });
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async createNewChat({
       channelName,
       isClass,

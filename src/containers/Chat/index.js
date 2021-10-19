@@ -38,6 +38,7 @@ function Chat({ onFileUpload }) {
   const history = useHistory();
   const {
     requestHelpers: {
+      checkChatAccessible,
       createNewChat,
       loadChatChannel,
       parseChannelPath,
@@ -102,6 +103,12 @@ function Chat({ onFileUpload }) {
     }
 
     async function handleChannelEnter(pathId) {
+      const { isAccessible, generalChatPathId } = await checkChatAccessible(
+        pathId
+      );
+      if (!isAccessible) {
+        return history.replace(`/chat/${generalChatPathId}`);
+      }
       const channelId =
         channelPathIdHash[pathId] || (await parseChannelPath(pathId));
       if (!channelPathIdHash[pathId] && mounted.current) {
