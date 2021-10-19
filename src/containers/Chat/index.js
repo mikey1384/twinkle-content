@@ -46,7 +46,7 @@ function Chat({ onFileUpload }) {
       updateLastChannelId
     }
   } = useAppContext();
-  const { userId } = useMyState();
+  const { userId, lastChatPath } = useMyState();
   const {
     state: {
       loaded,
@@ -92,13 +92,10 @@ function Chat({ onFileUpload }) {
   const currentPathId = useMemo(() => pathname.split('chat/')[1], [pathname]);
 
   useEffect(() => {
-    if (
-      (currentPathId && currentPathId !== prevPathId.current) ||
-      !currentChannel.loaded
-    ) {
+    if (currentPathId && currentPathId !== prevPathId.current && userId) {
       handleChannelEnter(currentPathId);
       prevPathId.current = currentPathId;
-    } else if (history.action === 'POP' && currentChannel.pathId) {
+    } else if (currentChannel.pathId) {
       history.replace(`/chat/${currentChannel.pathId}`);
     }
 
@@ -118,7 +115,10 @@ function Chat({ onFileUpload }) {
         onUpdateSelectedChannelId(channelId);
       }
       if (channelsObj[channelId]?.loaded) {
-        return updateLastChannelId(channelId);
+        if (lastChatPath !== `/${pathId}`) {
+          updateLastChannelId(channelId);
+        }
+        return;
       }
       const data = await loadChatChannel({ channelId });
       if (mounted.current) {
