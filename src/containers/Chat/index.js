@@ -97,7 +97,7 @@ function Chat({ onFileUpload }) {
     if (currentChannelPath && currentChannelPath !== prevChannelPath.current) {
       handleChannelEnter(currentChannelPath);
       prevChannelPath.current = currentChannelPath;
-    } else if (history.action === 'POP' && currentChannel.pathId) {
+    } else if (currentChannel.pathId) {
       history.replace(`/chat/${currentChannel.pathId}`);
     }
 
