@@ -324,7 +324,7 @@ export default function BasicInfos({
           }
         });
       }
-      history.push(pathId ? `/chat/${pathId}` : `/chat`);
+      history.push(pathId ? `/chat/${pathId}` : `/chat/new`);
     }
   }
 

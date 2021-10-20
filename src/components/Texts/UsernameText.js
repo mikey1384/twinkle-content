@@ -198,7 +198,7 @@ export default function UsernameText({
             }
           });
         }
-        history.push(pathId ? `/chat/${pathId}` : `/chat`);
+        history.push(pathId ? `/chat/${pathId}` : `/chat/new`);
       }
     }
   }

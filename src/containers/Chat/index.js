@@ -61,6 +61,7 @@ function Chat({ onFileUpload }) {
       onClearNumUnreads,
       onCreateNewChannel,
       onEnterChannelWithId,
+      onEnterEmptyChat,
       onNotifyThatMemberLeftChannel,
       onReceiveMessage,
       onReceiveMessageOnDifferentChannel,
@@ -93,7 +94,11 @@ function Chat({ onFileUpload }) {
 
   useEffect(() => {
     if (currentPathId && currentPathId !== prevPathId.current && userId) {
-      handleChannelEnter(currentPathId);
+      if (currentPathId === 'new') {
+        onEnterEmptyChat();
+      } else {
+        handleChannelEnter(currentPathId);
+      }
     } else if (currentChannel.pathId) {
       history.replace(`/chat/${currentChannel.pathId}`);
     }

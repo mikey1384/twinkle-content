@@ -138,7 +138,7 @@ export default function UserListModal({
             }
           });
         }
-        history.push(pathId ? `/chat/${pathId}` : `/chat`);
+        history.push(pathId ? `/chat/${pathId}` : `/chat/new`);
       }
     }
   }

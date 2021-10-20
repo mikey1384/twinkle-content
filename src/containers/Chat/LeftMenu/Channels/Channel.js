@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Color, desktopMinWidth, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
-import { useChatContext } from 'contexts';
 import { useHistory } from 'react-router-dom';
 
 Channel.propTypes = {
@@ -30,9 +29,6 @@ function Channel({
 }) {
   const history = useHistory();
   const { profileTheme, userId } = useMyState();
-  const {
-    actions: { onEnterEmptyChat }
-  } = useChatContext();
   const effectiveChannelName = useMemo(
     () => customChannelNames[channelId] || channelName,
     [channelName, customChannelNames, channelId]
@@ -111,8 +107,7 @@ function Channel({
     if (pathId) {
       return history.push(`/chat/${pathId}`);
     }
-    onEnterEmptyChat();
-    history.push('/chat');
+    history.push('/chat/new');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [history, pathId]);
 

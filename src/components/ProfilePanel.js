@@ -561,7 +561,7 @@ function ProfilePanel({ expandable, profileId, style }) {
           }
         });
       }
-      history.push(pathId ? `/chat/${pathId}` : `/chat`);
+      history.push(pathId ? `/chat/${pathId}` : `/chat/new`);
     }
   }
 

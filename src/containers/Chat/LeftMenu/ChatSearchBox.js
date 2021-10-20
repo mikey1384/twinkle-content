@@ -46,7 +46,7 @@ function ChatSearchBox({ style }) {
             authLevel: item.authLevel
           }
         });
-        history.push(`/chat`);
+        history.push(`/chat/new`);
       }
       setSearchText('');
       onClearChatSearchResults();
