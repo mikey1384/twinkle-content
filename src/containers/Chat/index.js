@@ -94,10 +94,10 @@ function Chat({ onFileUpload }) {
   useEffect(() => {
     if (currentPathId && currentPathId !== prevPathId.current && userId) {
       handleChannelEnter(currentPathId);
-      prevPathId.current = currentPathId;
     } else if (currentChannel.pathId) {
       history.replace(`/chat/${currentChannel.pathId}`);
     }
+    prevPathId.current = currentPathId;
 
     async function handleChannelEnter(pathId) {
       const { isAccessible, generalChatPathId } = await checkChatAccessible(
