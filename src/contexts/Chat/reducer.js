@@ -156,6 +156,14 @@ export default function ChatReducer(state, action) {
         ...state,
         chatSearchResults: []
       };
+    case 'CLEAR_EMPTY_CHANNEL':
+      return {
+        ...state,
+        channelsObj: {
+          ...state.channelsObj,
+          0: {}
+        }
+      };
     case 'CLEAR_NUM_UNREADS': {
       return {
         ...state,

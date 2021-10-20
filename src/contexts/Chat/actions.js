@@ -70,6 +70,11 @@ export default function ChatActions(dispatch) {
         channelId
       });
     },
+    onClearEmptyChannel() {
+      return dispatch({
+        type: 'CLEAR_EMPTY_CHANNEL'
+      });
+    },
     onClearNumUnreads() {
       return dispatch({
         type: 'CLEAR_NUM_UNREADS'

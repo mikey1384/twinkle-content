@@ -95,7 +95,7 @@ function Chat({ onFileUpload }) {
 
   useEffect(() => {
     if (currentPathId && currentPathId !== prevPathId.current && userId) {
-      if (currentPathId === 'new') {
+      if (currentPathId === 'new' && channelsObj[0]?.twoPeople) {
         onEnterEmptyChat();
       } else {
         handleChannelEnter(currentPathId);
