@@ -233,12 +233,12 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async loadChatChannel({ channelId, skipUpdateChannelId }) {
+    async loadChatChannel({ channelId, isForInvitation, skipUpdateChannelId }) {
       try {
         const { data } = await request.get(
           `${URL}/chat/channel?channelId=${channelId}${
             skipUpdateChannelId ? '&skipUpdateChannelId=1' : ''
-          }`,
+          }${isForInvitation ? '&isForInvitation=1' : ''}`,
           auth()
         );
         return Promise.resolve(data);

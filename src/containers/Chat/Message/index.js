@@ -98,6 +98,7 @@ function Message({
     fileSize,
     gameWinnerId,
     invitePath,
+    invitationChannelId,
     isChessMsg,
     isDraw,
     isDrawOffer,
@@ -618,6 +619,8 @@ function Message({
                 {invitePath ? (
                   <Invitation
                     sender={{ id: userId, username }}
+                    channelId={channelId}
+                    invitationChannelId={invitationChannelId}
                     invitePath={invitePath}
                     messageId={messageId}
                     onAcceptGroupInvitation={onAcceptGroupInvitation}

@@ -4,39 +4,36 @@ import ChannelDetail from './ChannelDetail';
 import Button from 'components/Button';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useContentState, useMyState } from 'helpers/hooks';
-import { useAppContext, useChatContext, useContentContext } from 'contexts';
+import { useMyState } from 'helpers/hooks';
+import { useAppContext, useChatContext } from 'contexts';
 
 Invitation.propTypes = {
+  invitationChannelId: PropTypes.number,
   invitePath: PropTypes.number.isRequired,
+  channelId: PropTypes.number.isRequired,
   messageId: PropTypes.number.isRequired,
   onAcceptGroupInvitation: PropTypes.func.isRequired,
   sender: PropTypes.object.isRequired
 };
 
 export default function Invitation({
+  invitationChannelId,
   invitePath,
+  channelId: currentChannelId,
   messageId,
   onAcceptGroupInvitation,
   sender
 }) {
   const { userId, profileTheme } = useMyState();
-  const { invitationDetail } = useContentState({
-    contentType: 'chat',
-    contentId: messageId
-  });
   const {
     requestHelpers: { loadChatChannel, parseChannelPath }
   } = useAppContext();
   const {
-    actions: { onSetChatInvitationDetail }
-  } = useContentContext();
-  const {
-    state: { channelPathIdHash },
-    actions: { onUpdateChannelPathIdHash }
+    state: { channelPathIdHash, channelsObj },
+    actions: { onSetChatInvitationDetail, onUpdateChannelPathIdHash }
   } = useChatContext();
   useEffect(() => {
-    if (!invitationDetail) {
+    if (!invitationChannelId) {
       init();
     }
     async function init() {
@@ -50,52 +47,60 @@ export default function Invitation({
       }
       const { channel } = await loadChatChannel({
         channelId,
+        isForInvitation: true,
         skipUpdateChannelId: true
       });
-      onSetChatInvitationDetail({ messageId, detail: channel });
+      onSetChatInvitationDetail({
+        channel,
+        messageId,
+        channelId: currentChannelId
+      });
     }
-    return function cleanUp() {
-      onSetChatInvitationDetail({ messageId, detail: null });
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const invitationChannel = useMemo(
+    () => channelsObj[invitationChannelId],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [invitationChannelId]
+  );
+
   const alreadyJoined = useMemo(() => {
-    const memberIds = invitationDetail?.members.map((member) => member.id);
+    const memberIds = invitationChannel?.members.map((member) => member.id);
     return memberIds?.includes(userId);
-  }, [invitationDetail, userId]);
+  }, [invitationChannel, userId]);
 
   const desktopHeight = useMemo(() => {
     if (userId === sender.id) {
-      if (!invitationDetail || invitationDetail.members?.length > 3) {
+      if (!invitationChannel || invitationChannel.members?.length > 3) {
         return '9rem';
       } else {
         return '7rem';
       }
     } else {
-      if (!invitationDetail || invitationDetail.members?.length > 3) {
+      if (!invitationChannel || invitationChannel.members?.length > 3) {
         return '14rem';
       } else {
         return '12rem';
       }
     }
-  }, [invitationDetail, sender.id, userId]);
+  }, [invitationChannel, sender.id, userId]);
 
   const mobileHeight = useMemo(() => {
     if (userId === sender.id) {
-      if (!invitationDetail || invitationDetail.members?.length > 3) {
+      if (!invitationChannel || invitationChannel.members?.length > 3) {
         return '7rem';
       } else {
         return '5rem';
       }
     } else {
-      if (!invitationDetail || invitationDetail.members?.length > 3) {
+      if (!invitationChannel || invitationChannel.members?.length > 3) {
         return '12rem';
       } else {
         return '10rem';
       }
     }
-  }, [invitationDetail, sender.id, userId]);
+  }, [invitationChannel, sender.id, userId]);
 
   const handleAcceptGroupInvitation = useCallback(() => {
     onAcceptGroupInvitation(invitePath);
@@ -111,12 +116,12 @@ export default function Invitation({
         }
       `}
     >
-      {invitationDetail && (
+      {invitationChannel && (
         <ChannelDetail
           invitePath={invitePath}
           alreadyJoined={alreadyJoined}
-          channelName={invitationDetail.channelName}
-          members={invitationDetail.members}
+          channelName={invitationChannel.channelName}
+          members={invitationChannel.members}
         />
       )}
       {userId !== sender.id && (

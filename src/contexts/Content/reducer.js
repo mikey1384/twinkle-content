@@ -1285,14 +1285,6 @@ export default function ContentReducer(state, action) {
             action.title
         }
       };
-    case 'SET_CHAT_INVITATION_DETAIL':
-      return {
-        ...state,
-        [contentKey]: {
-          ...prevContentState,
-          invitationDetail: action.detail
-        }
-      };
     case 'SET_BY_USER_STATUS':
       return {
         ...state,

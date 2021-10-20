@@ -1133,6 +1133,30 @@ export default function ChatReducer(state, action) {
           : {}
       };
     }
+    case 'SET_CHAT_INVITATION_DETAIL':
+      return {
+        ...state,
+        channelsObj: {
+          ...state.channelsObj,
+          [action.channelId]: {
+            ...state.channelsObj[action.channelId],
+            messagesObj: {
+              ...state.channelsObj[action.channelId].messagesObj,
+              [action.messageId]: {
+                ...state.channelsObj[action.channelId].messagesObj[
+                  action.messageId
+                ],
+                invitationChannelId: action.channel.id
+              }
+            }
+          },
+          [action.channel.id]: {
+            ...state.channelsObj[action.channel.id],
+            ...action.channel,
+            loaded: state.channelsObj[action.channel.id]?.loaded || false
+          }
+        }
+      };
     case 'SET_CHESS_MODAL_SHOWN':
       return {
         ...state,

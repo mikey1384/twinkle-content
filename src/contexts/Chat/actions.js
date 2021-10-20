@@ -435,6 +435,14 @@ export default function ChatActions(dispatch) {
         message
       });
     },
+    onSetChatInvitationDetail({ messageId, channelId, channel }) {
+      return dispatch({
+        type: 'SET_CHAT_INVITATION_DETAIL',
+        messageId,
+        channelId,
+        channel
+      });
+    },
     onSetChessModalShown(shown) {
       return dispatch({
         type: 'SET_CHESS_MODAL_SHOWN',
