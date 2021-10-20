@@ -83,6 +83,7 @@ function Chat({ onFileUpload }) {
   const [createNewChatModalShown, setCreateNewChatModalShown] = useState(false);
   const [userListModalShown, setUserListModalShown] = useState(false);
   const [partner, setPartner] = useState(null);
+  const [loading, setLoading] = useState(false);
   const prevPathId = useRef('');
   const mounted = useRef(true);
   const currentChannel = useMemo(
@@ -105,11 +106,13 @@ function Chat({ onFileUpload }) {
     prevPathId.current = currentPathId;
 
     async function handleChannelEnter(pathId) {
+      setLoading(true);
       const { isAccessible, generalChatPathId } = await checkChatAccessible(
         pathId
       );
       if (!isAccessible) {
-        return history.replace(`/chat/${generalChatPathId}`);
+        history.replace(`/chat/${generalChatPathId}`);
+        return setLoading(false);
       }
       const channelId =
         channelPathIdHash[pathId] || (await parseChannelPath(pathId));
@@ -123,11 +126,14 @@ function Chat({ onFileUpload }) {
         if (lastChatPath !== `/${pathId}`) {
           updateLastChannelId(channelId);
         }
-        return;
+        return setLoading(false);
       }
       const data = await loadChatChannel({ channelId });
       if (mounted.current) {
         onEnterChannelWithId({ data });
+      }
+      if (mounted.current) {
+        setLoading(false);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -321,6 +327,7 @@ function Chat({ onFileUpload }) {
                 showUserListModal={() => setUserListModalShown(true)}
               />
               <Body
+                loading={loading}
                 channelName={currentChannelName}
                 chessOpponent={partner}
                 currentChannel={currentChannel}

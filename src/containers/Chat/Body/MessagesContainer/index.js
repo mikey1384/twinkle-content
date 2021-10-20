@@ -40,13 +40,19 @@ import { useHistory } from 'react-router-dom';
 MessagesContainer.propTypes = {
   channelName: PropTypes.string,
   chessOpponent: PropTypes.object,
-  currentChannel: PropTypes.object.isRequired
+  currentChannel: PropTypes.object.isRequired,
+  loading: PropTypes.bool
 };
 
 const CALL_SCREEN_HEIGHT = '30%';
 const deviceIsMobile = isMobile(navigator);
 
-function MessagesContainer({ channelName, chessOpponent, currentChannel }) {
+function MessagesContainer({
+  channelName,
+  chessOpponent,
+  currentChannel,
+  loading: channelLoading
+}) {
   const history = useHistory();
   const {
     requestHelpers: {
@@ -200,8 +206,8 @@ function MessagesContainer({ channelName, chessOpponent, currentChannel }) {
   ]);
 
   const loading = useMemo(
-    () => !loaded || creatingNewDMChannel || reconnecting,
-    [loaded, creatingNewDMChannel, reconnecting]
+    () => !loaded || channelLoading || creatingNewDMChannel || reconnecting,
+    [loaded, channelLoading, creatingNewDMChannel, reconnecting]
   );
 
   const chessCountdownNumber = useMemo(
