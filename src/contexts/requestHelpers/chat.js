@@ -525,7 +525,7 @@ export default function chatRequestHelpers({ auth, handleError }) {
           onUploadProgress
         });
         const {
-          data: { channel, message, messageId }
+          data: { channel, message, messageId, alreadyExists }
         } = await request.post(
           `${URL}/chat/file`,
           {
@@ -540,7 +540,7 @@ export default function chatRequestHelpers({ auth, handleError }) {
           },
           auth()
         );
-        return Promise.resolve({ channel, message, messageId });
+        return Promise.resolve({ channel, message, messageId, alreadyExists });
       } catch (error) {
         return handleError(error);
       }

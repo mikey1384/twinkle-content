@@ -228,16 +228,20 @@ function App({ location, history }) {
         fileToUpload,
         recepientId
       });
-      const { channel, message, messageId } = await uploadFileOnChat({
-        channelId,
-        content,
-        selectedFile: fileToUpload,
-        onUploadProgress: handleUploadProgress,
-        recepientId,
-        path: filePath,
-        targetMessageId,
-        subjectId
-      });
+      const { channel, message, messageId, alreadyExists } =
+        await uploadFileOnChat({
+          channelId,
+          content,
+          selectedFile: fileToUpload,
+          onUploadProgress: handleUploadProgress,
+          recepientId,
+          path: filePath,
+          targetMessageId,
+          subjectId
+        });
+      if (alreadyExists) {
+        return window.location.reload();
+      }
       onPostUploadComplete({
         path: filePath,
         channelId,
