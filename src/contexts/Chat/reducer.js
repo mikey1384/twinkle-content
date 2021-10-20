@@ -272,7 +272,8 @@ export default function ChatReducer(state, action) {
       const newMessagesObj = {
         ...state.channelsObj[action.channelId].messagesObj
       };
-      for (let messageId of state.channelsObj[action.channelId].messageIds) {
+      for (let messageId of state.channelsObj[action.channelId]?.messageIds ||
+        []) {
         const message =
           state.channelsObj[action.channelId].messagesObj[messageId];
         if (message.filePath !== action.filePath) {
@@ -1405,7 +1406,8 @@ export default function ChatReducer(state, action) {
       const newMessagesObj = {
         ...state.channelsObj[action.channelId]?.messagesObj
       };
-      for (let messageId of state.channelsObj[action.channelId]?.messageIds) {
+      for (let messageId of state.channelsObj[action.channelId]?.messageIds ||
+        []) {
         const message = newMessagesObj[messageId];
         if (message?.moveViewTimeStamp) {
           continue;
