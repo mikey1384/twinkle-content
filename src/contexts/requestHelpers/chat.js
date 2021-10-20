@@ -466,12 +466,10 @@ export default function chatRequestHelpers({ auth, handleError }) {
     },
     async startNewDMChannel(params) {
       try {
-        const { data } = await request.post(
-          `${URL}/chat/channel/twoPeople`,
-          params,
-          auth()
-        );
-        return Promise.resolve(data);
+        const {
+          data: { alreadyExists, channel, message, pathId }
+        } = await request.post(`${URL}/chat/channel/twoPeople`, params, auth());
+        return Promise.resolve({ alreadyExists, channel, message, pathId });
       } catch (error) {
         return handleError(error);
       }

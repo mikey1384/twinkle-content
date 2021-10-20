@@ -434,11 +434,15 @@ function MessagesContainer({
             channelId: selectedChannelId
           });
         } else {
-          const { channel, message, pathId } = await startNewDMChannel({
-            ...params,
-            content,
-            recepientId
-          });
+          const { alreadyExists, channel, message, pathId } =
+            await startNewDMChannel({
+              ...params,
+              content,
+              recepientId
+            });
+          if (alreadyExists) {
+            return window.location.reload();
+          }
           socket.emit('join_chat_group', message.channelId);
           socket.emit('send_bi_chat_invitation', {
             userId: recepientId,
@@ -713,11 +717,15 @@ function MessagesContainer({
         if (creatingNewDMChannel) return;
         onSetCreatingNewDMChannel(true);
         try {
-          const { channel, message, pathId } = await startNewDMChannel({
-            content,
-            userId,
-            recepientId
-          });
+          const { alreadyExists, channel, message, pathId } =
+            await startNewDMChannel({
+              content,
+              userId,
+              recepientId
+            });
+          if (alreadyExists) {
+            return window.location.reload();
+          }
           socket.emit('join_chat_group', message.channelId);
           socket.emit('send_bi_chat_invitation', {
             userId: recepientId,
