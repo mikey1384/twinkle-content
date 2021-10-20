@@ -665,7 +665,7 @@ function MessagesContainer({
         });
         socket.emit('new_chat_message', {
           message: joinMessage,
-          channel: { id: channel.id },
+          channel: { id: channel.id, channelName: channel.channelName },
           newMembers: [{ id: userId, username, profilePicUrl }]
         });
       }
