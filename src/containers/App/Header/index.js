@@ -526,7 +526,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
       const messageIsForCurrentChannel =
         message.channelId === selectedChannelId;
       const senderIsUser = message.userId === userId;
-      if (senderIsUser) return;
+      if (senderIsUser && pageVisible) return;
       if (messageIsForCurrentChannel) {
         if (usingChat) {
           await updateChatLastRead(message.channelId);
