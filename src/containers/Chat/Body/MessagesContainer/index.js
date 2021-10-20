@@ -673,7 +673,7 @@ function MessagesContainer({ channelName, chessOpponent, currentChannel }) {
         socket.emit('join_chat_group', channel.id);
         socket.emit('new_chat_message', {
           message: joinMessage,
-          channel: { id: channel.id },
+          channel: { id: channel.id, channelName: channel.channelName },
           newMembers: [{ id: userId, username, profilePicUrl }]
         });
         history.push(`/chat/${invitationChannelPath}`);
