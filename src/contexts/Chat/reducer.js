@@ -384,7 +384,6 @@ export default function ChatReducer(state, action) {
         action.data.messageIds.pop();
         messagesLoadMoreButton = true;
       }
-      action.data.messageIds.reverse();
 
       return {
         ...state,
@@ -529,7 +528,6 @@ export default function ChatReducer(state, action) {
         newMessageIds.pop();
         messagesLoadMoreButton = true;
       }
-      newMessageIds?.reverse();
       if (action.data.homeChannelIds?.length > 20) {
         action.data.homeChannelIds.pop();
         homeLoadMoreButton = true;
@@ -546,7 +544,6 @@ export default function ChatReducer(state, action) {
         action.data.vocabActivities.pop();
         vocabActivitiesLoadMoreButton = true;
       }
-      action.data.vocabActivities?.reverse();
       let newChannelsObj = {
         ...state.channelsObj,
         ...action.data.channelsObj
@@ -700,7 +697,6 @@ export default function ChatReducer(state, action) {
         action.messageIds.pop();
         messagesLoadMoreButton = true;
       }
-      action.messageIds.reverse();
       return {
         ...state,
         channelsObj: {

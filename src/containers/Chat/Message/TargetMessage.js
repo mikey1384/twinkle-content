@@ -22,11 +22,10 @@ import { cloudFrontURL } from 'constants/defaultValues';
 import { useAppContext, useContentContext } from 'contexts';
 
 TargetMessage.propTypes = {
-  message: PropTypes.object.isRequired,
-  onSetScrollToBottom: PropTypes.func.isRequired
+  message: PropTypes.object.isRequired
 };
 
-export default function TargetMessage({ message, onSetScrollToBottom }) {
+export default function TargetMessage({ message }) {
   const {
     requestHelpers: { uploadThumb }
   } = useAppContext();
@@ -113,10 +112,7 @@ export default function TargetMessage({ message, onSetScrollToBottom }) {
           </small>
         </section>
         {isValidSpoiler(message.content) ? (
-          <Spoiler
-            content={message.content}
-            onSpoilerClick={onSetScrollToBottom}
-          />
+          <Spoiler content={message.content} />
         ) : (
           <LongText
             style={{ marginTop: '0.5rem' }}

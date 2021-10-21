@@ -25,7 +25,6 @@ TextMessage.propTypes = {
   isEditing: PropTypes.bool,
   onEditCancel: PropTypes.func.isRequired,
   onEditDone: PropTypes.func.isRequired,
-  onSetScrollToBottom: PropTypes.func.isRequired,
   onShowSubjectMsgsModal: PropTypes.func.isRequired,
   socketConnected: PropTypes.bool,
   subjectId: PropTypes.number,
@@ -47,7 +46,6 @@ function TextMessage({
   isEditing,
   onEditCancel,
   onEditDone,
-  onSetScrollToBottom,
   subjectId,
   onShowSubjectMsgsModal,
   socketConnected,
@@ -107,10 +105,7 @@ function TextMessage({
             <div className={MessageStyle.messageWrapper}>
               {Prefix}
               {isValidSpoiler(content) ? (
-                <Spoiler
-                  content={content}
-                  onSpoilerClick={onSetScrollToBottom}
-                />
+                <Spoiler content={content} />
               ) : (
                 <LongText
                   style={{

@@ -42,7 +42,6 @@ import {
 import ErrorBoundary from 'components/ErrorBoundary';
 
 Message.propTypes = {
-  checkScrollIsAtTheBottom: PropTypes.func.isRequired,
   chessCountdownNumber: PropTypes.number,
   chessOpponent: PropTypes.object,
   channelId: PropTypes.number,
@@ -58,7 +57,6 @@ Message.propTypes = {
   isNotification: PropTypes.bool,
   loading: PropTypes.bool,
   loadScrollComplete: PropTypes.bool,
-  onSetLoadScrollComplete: PropTypes.func.isRequired,
   onAcceptGroupInvitation: PropTypes.func.isRequired,
   onChessBoardClick: PropTypes.func,
   onChessSpoilerClick: PropTypes.func,
@@ -66,7 +64,6 @@ Message.propTypes = {
   onReplyClick: PropTypes.func,
   onRewardClick: PropTypes.func,
   onRewardMessageSubmit: PropTypes.func.isRequired,
-  onSetScrollToBottom: PropTypes.func,
   onShowSubjectMsgsModal: PropTypes.func,
   recepientId: PropTypes.number,
   scrollAtBottom: PropTypes.bool,
@@ -75,7 +72,6 @@ Message.propTypes = {
 
 function Message({
   channelId,
-  channelLoaded,
   channelName,
   chessCountdownNumber,
   chessOpponent,
@@ -84,8 +80,6 @@ function Message({
   isLastMsg,
   isNotification,
   loading,
-  loadScrollComplete,
-  onSetLoadScrollComplete,
   message,
   message: {
     id: messageId,
@@ -126,7 +120,6 @@ function Message({
   onReceiveNewMessage,
   onReplyClick,
   onRewardMessageSubmit,
-  onSetScrollToBottom,
   onShowSubjectMsgsModal,
   zIndex
 }) {
@@ -202,7 +195,7 @@ function Message({
   });
 
   const {
-    state: { filesBeingUploaded, reconnecting },
+    state: { filesBeingUploaded },
     actions: {
       onEditMessage,
       onSaveMessage,
@@ -304,13 +297,6 @@ function Message({
       setSpoilerOff(true);
     }
   }, [chessState, moveViewTimeStamp, myId]);
-
-  useEffect(() => {
-    if (isLastMsg && (!isNewMessage || userIsUploader)) {
-      handleScrollToBottomBasedComponentHeight();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLastMsg, isEditing, reconnecting]);
 
   useEffect(() => {
     const url = fetchURLFromText(content);
@@ -486,23 +472,6 @@ function Message({
     [message]
   );
 
-  const handleSetScrollToBottom = useCallback(
-    (loadScrollComplete) => {
-      if (isLastMsg && !loadScrollComplete) {
-        onSetScrollToBottom();
-        onSetLoadScrollComplete(true);
-      }
-    },
-    [isLastMsg, onSetScrollToBottom, onSetLoadScrollComplete]
-  );
-
-  useEffect(() => {
-    if (channelLoaded) {
-      handleSetScrollToBottom(loadScrollComplete);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [channelLoaded, loadScrollComplete]);
-
   const handleEditCancel = useCallback(() => {
     onSetIsEditing({
       contentId: messageId,
@@ -543,12 +512,6 @@ function Message({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [channelId, isReloadedSubject, isSubject, messageId, subjectId]
   );
-
-  const handleScrollToBottomBasedComponentHeight = useCallback(() => {
-    if (placeholderHeight < 200) {
-      handleSetScrollToBottom();
-    }
-  }, [handleSetScrollToBottom, placeholderHeight]);
 
   if (!chessState && (gameWinnerId || isDraw)) {
     return (
@@ -658,12 +621,7 @@ function Message({
                 ) : (
                   <>
                     {targetSubject && <TargetSubject subject={targetSubject} />}
-                    {targetMessage && (
-                      <TargetMessage
-                        message={targetMessage}
-                        onSetScrollToBottom={handleSetScrollToBottom}
-                      />
-                    )}
+                    {targetMessage && <TargetMessage message={targetMessage} />}
                     {filePath && (
                       <ContentFileViewer
                         contentId={messageId}
@@ -707,7 +665,6 @@ function Message({
                         isEditing={isEditing}
                         onEditCancel={handleEditCancel}
                         onEditDone={handleEditDone}
-                        onSetScrollToBottom={handleSetScrollToBottom}
                         onShowSubjectMsgsModal={onShowSubjectMsgsModal}
                         socketConnected={socketConnected}
                         subjectId={subjectId}
@@ -727,7 +684,6 @@ function Message({
                   style={{ position: 'absolute', top: 0, right: '5px' }}
                   direction="left"
                   opacity={0.8}
-                  onButtonClick={handleScrollToBottomBasedComponentHeight}
                   menuProps={messageMenuItems}
                 />
               )}
