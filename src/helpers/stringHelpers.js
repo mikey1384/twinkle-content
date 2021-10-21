@@ -283,6 +283,7 @@ export function exceedsCharLimit({ inputType, contentType, text }) {
 }
 
 export function fetchURLFromText(text) {
+  if (!text) return '';
   let url = text.match(urlRegex)?.[0] || '';
   const processedURL =
     (url.split('.')[0] || '').toLowerCase() + (url.split('.')[1] || '');
