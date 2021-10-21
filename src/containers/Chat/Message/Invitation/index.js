@@ -57,7 +57,7 @@ export default function Invitation({
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [invitationChannelId]);
 
   const invitationChannel = useMemo(
     () => channelsObj[invitationChannelId],
