@@ -106,13 +106,12 @@ function Chat({ onFileUpload }) {
     prevPathId.current = currentPathId;
 
     async function handleChannelEnter(pathId) {
-      setLoading(true);
       const { isAccessible, generalChatPathId } = await checkChatAccessible(
         pathId
       );
       if (!isAccessible) {
         history.replace(`/chat/${generalChatPathId}`);
-        return setLoading(false);
+        return;
       }
       const channelId =
         channelPathIdHash[pathId] || (await parseChannelPath(pathId));
@@ -121,6 +120,9 @@ function Chat({ onFileUpload }) {
       }
       if (mounted.current) {
         onUpdateSelectedChannelId(channelId);
+      }
+      if (mounted.current) {
+        setLoading(true);
       }
       if (channelsObj[channelId]?.loaded) {
         if (lastChatPath !== `/${pathId}`) {
