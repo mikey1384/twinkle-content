@@ -910,6 +910,30 @@ function MessagesContainer({
           `}
           ref={MessagesRef}
         >
+          <div
+            style={{
+              position: 'absolute',
+              bottom: '1rem',
+              display: 'flex',
+              justifyContent: 'center',
+              width: '100%',
+              zIndex: 1000
+            }}
+          >
+            {newUnseenMessage && (
+              <Button
+                filled
+                color="orange"
+                style={{ opacity: 0.9 }}
+                onClick={() => {
+                  setNewUnseenMessage(false);
+                  handleScrollToBottom();
+                }}
+              >
+                New Message
+              </Button>
+            )}
+          </div>
           {messages.map((message, index) => (
             <Message
               key={selectedChannelId + (message.id || 'newMessage' + index)}
@@ -958,30 +982,6 @@ function MessagesContainer({
             </div>
           )}
         </div>
-      </div>
-      <div
-        style={{
-          position: 'absolute',
-          bottom: '1rem',
-          display: 'flex',
-          justifyContent: 'center',
-          width: '100%',
-          zIndex: 1000
-        }}
-      >
-        {newUnseenMessage && (
-          <Button
-            filled
-            color="orange"
-            style={{ opacity: 0.9 }}
-            onClick={() => {
-              setNewUnseenMessage(false);
-              handleScrollToBottom();
-            }}
-          >
-            New Message
-          </Button>
-        )}
       </div>
       {hideModalShown && (
         <ConfirmModal
@@ -1119,7 +1119,9 @@ function MessagesContainer({
   );
 
   function handleReceiveNewMessage() {
-    setNewUnseenMessage(true);
+    if (MessagesRef.current.scrollTop < 0) {
+      setNewUnseenMessage(true);
+    }
   }
 
   function handleScrollToBottom() {
