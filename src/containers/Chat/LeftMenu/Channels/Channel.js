@@ -40,7 +40,7 @@ function Channel({
     [chatType, channelId, selectedChannelId]
   );
   const lastMessage = useMemo(() => {
-    const lastMessageId = messageIds[messageIds.length - 1];
+    const lastMessageId = messageIds[0];
     return messagesObj[lastMessageId];
   }, [messageIds, messagesObj]);
   const PreviewMessage = useMemo(() => {

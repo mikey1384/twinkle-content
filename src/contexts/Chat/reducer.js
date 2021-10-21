@@ -1377,10 +1377,7 @@ export default function ChatReducer(state, action) {
             messageIds:
               state.channelsObj[action.channelId]?.messageIds?.length > 20
                 ? state.channelsObj[action.channelId]?.messageIds.filter(
-                    (messageId, index) =>
-                      index >
-                      state.channelsObj[action.channelId]?.messageIds.length -
-                        20
+                    (messageId, index) => index <= 20
                   )
                 : state.channelsObj[action.channelId]?.messageIds
           }
