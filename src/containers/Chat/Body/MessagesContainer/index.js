@@ -1,7 +1,6 @@
 import React, {
   memo,
   useCallback,
-  useLayoutEffect,
   useEffect,
   useMemo,
   useRef,
@@ -277,21 +276,9 @@ function MessagesContainer({
     );
   }, [currentChannel.canChangeSubject, selectedChannelId]);
 
-  useLayoutEffect(() => {
-    if (deviceIsMobile) {
-      setTimeout(() => {
-        if (mounted.current) {
-          scrollToBottom();
-        }
-      }, 0);
-    } else {
-      scrollToBottom();
-    }
-
-    function scrollToBottom() {
-      handleSetScrollToBottom();
-    }
-  }, [loading, messages]);
+  useEffect(() => {
+    handleSetScrollToBottom();
+  }, [selectedChannelId]);
 
   useEffect(() => {
     socket.on('chess_countdown_number_received', onReceiveCountdownNumber);
