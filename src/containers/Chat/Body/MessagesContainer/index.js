@@ -135,7 +135,6 @@ function MessagesContainer({
   const [leaveConfirmModalShown, setLeaveConfirmModalShown] = useState(false);
   const [selectNewOwnerModalShown, setSelectNewOwnerModalShown] =
     useState(false);
-  const [placeholderHeight, setPlaceholderHeight] = useState(0);
   const [hideModalShown, setHideModalShown] = useState(false);
   const [addToFavoritesShown, setAddToFavoritesShown] = useState(false);
 
@@ -293,9 +292,6 @@ function MessagesContainer({
     }
 
     function scrollToBottom() {
-      setPlaceholderHeight(
-        `CALC(100vh - 10rem - ${MessagesRef.current?.offsetHeight || 0}px)`
-      );
       handleSetScrollToBottom();
     }
   }, [loading, messages]);
@@ -881,15 +877,63 @@ function MessagesContainer({
           width: 100%;
           height: 100%;
           position: relative;
-          -webkit-overflow-scrolling: touch;
         `}
         style={{
           height: containerHeight
         }}
       >
+        {!loading && channelHeaderShown && (
+          <ChannelHeader
+            currentChannel={currentChannel}
+            onInputFocus={() => ChatInputRef.current.focus()}
+            onSetInviteUsersModalShown={setInviteUsersModalShown}
+            onSetLeaveConfirmModalShown={setLeaveConfirmModalShown}
+            onSetSettingsModalShown={setSettingsModalShown}
+            selectedChannelId={selectedChannelId}
+            onFavoriteClick={handleFavoriteClick}
+          />
+        )}
         {loading && <Loading />}
-        <div ref={ContentRef} style={{ width: '100%', height: '100%' }}>
-          {!loading && messagesLoadMoreButton ? (
+        <div
+          className={css`
+            height: 100%;
+            display: flex;
+            flex-direction: column-reverse;
+            overflow-y: scroll;
+            -webkit-overflow-scrolling: touch;
+          `}
+          ref={MessagesRef}
+        >
+          {messages.map((message, index) => (
+            <Message
+              key={selectedChannelId + (message.id || 'newMessage' + index)}
+              zIndex={messages.length - index}
+              channelLoaded={loaded}
+              channelId={selectedChannelId}
+              channelName={channelName}
+              chessCountdownNumber={chessCountdownNumber}
+              chessOpponent={chessOpponent}
+              currentChannel={currentChannel}
+              index={index}
+              isLastMsg={index === messages.length - 1}
+              isNotification={!!message.isNotification}
+              loading={loading}
+              message={message}
+              style={{ border: '1px solid red' }}
+              onAcceptGroupInvitation={handleAcceptGroupInvitation}
+              onChessBoardClick={handleChessModalShown}
+              onChessSpoilerClick={handleChessSpoilerClick}
+              onDelete={handleShowDeleteModal}
+              onReceiveNewMessage={handleReceiveNewMessage}
+              onReplyClick={() => ChatInputRef.current.focus()}
+              onRewardMessageSubmit={handleRewardMessageSubmit}
+              recepientId={recepientId}
+              onShowSubjectMsgsModal={({ subjectId, content }) =>
+                setSubjectMsgsModal({ shown: true, subjectId, content })
+              }
+            />
+          ))}
+          {!loading && messagesLoadMoreButton && (
             <div
               style={{
                 marginTop: '1rem',
@@ -906,64 +950,9 @@ function MessagesContainer({
                 onClick={handleLoadMore}
               />
             </div>
-          ) : (
-            <div
-              style={{
-                minHeight: placeholderHeight
-              }}
-            />
           )}
-          <div
-            style={{
-              height: '100%',
-              display: 'flex',
-              flexDirection: 'column-reverse',
-              overflowY: 'scroll'
-            }}
-            ref={MessagesRef}
-          >
-            {messages.map((message, index) => (
-              <Message
-                key={selectedChannelId + (message.id || 'newMessage' + index)}
-                zIndex={messages.length - index}
-                channelLoaded={loaded}
-                channelId={selectedChannelId}
-                channelName={channelName}
-                chessCountdownNumber={chessCountdownNumber}
-                chessOpponent={chessOpponent}
-                currentChannel={currentChannel}
-                index={index}
-                isLastMsg={index === messages.length - 1}
-                isNotification={!!message.isNotification}
-                loading={loading}
-                message={message}
-                onAcceptGroupInvitation={handleAcceptGroupInvitation}
-                onChessBoardClick={handleChessModalShown}
-                onChessSpoilerClick={handleChessSpoilerClick}
-                onDelete={handleShowDeleteModal}
-                onReceiveNewMessage={handleReceiveNewMessage}
-                onReplyClick={() => ChatInputRef.current.focus()}
-                onRewardMessageSubmit={handleRewardMessageSubmit}
-                recepientId={recepientId}
-                onShowSubjectMsgsModal={({ subjectId, content }) =>
-                  setSubjectMsgsModal({ shown: true, subjectId, content })
-                }
-              />
-            ))}
-          </div>
         </div>
       </div>
-      {!loading && channelHeaderShown && (
-        <ChannelHeader
-          currentChannel={currentChannel}
-          onInputFocus={() => ChatInputRef.current.focus()}
-          onSetInviteUsersModalShown={setInviteUsersModalShown}
-          onSetLeaveConfirmModalShown={setLeaveConfirmModalShown}
-          onSetSettingsModalShown={setSettingsModalShown}
-          selectedChannelId={selectedChannelId}
-          onFavoriteClick={handleFavoriteClick}
-        />
-      )}
       <div
         style={{
           position: 'absolute',

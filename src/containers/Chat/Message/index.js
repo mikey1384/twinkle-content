@@ -49,7 +49,6 @@ Message.propTypes = {
   channelName: PropTypes.string,
   currentChannel: PropTypes.object,
   message: PropTypes.object,
-  style: PropTypes.object,
   onDelete: PropTypes.func,
   index: PropTypes.number,
   innerRef: PropTypes.func,
