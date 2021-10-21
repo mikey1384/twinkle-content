@@ -908,7 +908,6 @@ function MessagesContainer({
           {messages.map((message, index) => (
             <Message
               key={selectedChannelId + (message.id || 'newMessage' + index)}
-              zIndex={messages.length - index}
               channelLoaded={loaded}
               channelId={selectedChannelId}
               channelName={channelName}

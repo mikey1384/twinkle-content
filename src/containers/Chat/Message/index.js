@@ -65,8 +65,7 @@ Message.propTypes = {
   onRewardMessageSubmit: PropTypes.func.isRequired,
   onShowSubjectMsgsModal: PropTypes.func,
   recepientId: PropTypes.number,
-  scrollAtBottom: PropTypes.bool,
-  zIndex: PropTypes.number
+  scrollAtBottom: PropTypes.bool
 };
 
 function Message({
@@ -119,8 +118,7 @@ function Message({
   onReceiveNewMessage,
   onReplyClick,
   onRewardMessageSubmit,
-  onShowSubjectMsgsModal,
-  zIndex
+  onShowSubjectMsgsModal
 }) {
   const [ComponentRef, inView] = useInView({
     threshold: 0
@@ -530,8 +528,7 @@ function Message({
         ref={ComponentRef}
         className={MessageStyle.container}
         style={{
-          width: '100%',
-          zIndex
+          width: '100%'
         }}
       >
         {contentShown ? (
@@ -545,11 +542,11 @@ function Message({
             </div>
             <div
               className={css`
-                width: CALC(100% - 5vw - 3rem);
+                width: CALC(100% - 5vw - 2rem);
                 display: flex;
                 flex-direction: column;
-                margin-left: 2rem;
-                margin-right: 1rem;
+                margin-left: 1rem;
+                margin-right: 0;
                 position: relative;
                 white-space: pre-wrap;
                 overflow-wrap: break-word;
@@ -680,7 +677,7 @@ function Message({
                   skeuomorphic
                   color="darkerGray"
                   icon="chevron-down"
-                  style={{ position: 'absolute', top: 0, right: '5px' }}
+                  style={{ position: 'absolute', top: 0, right: 0 }}
                   direction="left"
                   opacity={0.8}
                   menuProps={messageMenuItems}

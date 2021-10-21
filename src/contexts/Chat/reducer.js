@@ -1347,7 +1347,7 @@ export default function ChatReducer(state, action) {
                   }
                 : {})
             },
-            messageIds: prevChannelObj?.messageIds?.concat(action.messageId),
+            messageIds: [action.messageId].concat(prevChannelObj?.messageIds),
             messagesObj: {
               ...prevChannelObj?.messagesObj,
               [action.messageId]: {
