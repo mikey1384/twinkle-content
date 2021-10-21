@@ -141,6 +141,9 @@ function MessagesContainer({
   const ChatInputRef = useRef(null);
   const favoritingRef = useRef(false);
   const timerRef = useRef(null);
+  const prevChannelId = useRef(null);
+  const prevTopMessageId = useRef(null);
+  const prevScrollPosition = useRef(null);
   const menuLabel = deviceIsMobile ? '' : 'Menu';
   const messages = useMemo(
     () => messageIds.map((messageId) => messagesObj[messageId] || {}),
@@ -278,7 +281,24 @@ function MessagesContainer({
 
   useEffect(() => {
     handleSetScrollToBottom();
+    prevChannelId.current = selectedChannelId;
+    prevTopMessageId.current = null;
   }, [selectedChannelId]);
+
+  useEffect(() => {
+    const topMessageId = messageIds[messageIds.length - 1];
+    if (
+      prevChannelId.current === selectedChannelId &&
+      prevTopMessageId.current &&
+      topMessageId !== prevTopMessageId.current
+    ) {
+      MessagesRef.current.scrollTop = prevScrollPosition.current;
+    }
+    if (messageIds.length > 1) {
+      // prevent scroll event from being triggered by a preview message
+      prevTopMessageId.current = topMessageId;
+    }
+  }, [messageIds, selectedChannelId]);
 
   useEffect(() => {
     socket.on('chess_countdown_number_received', onReceiveCountdownNumber);
@@ -608,6 +628,10 @@ function MessagesContainer({
       const messageId = messages[messages.length - 1].id;
       if (!loadMoreButtonLock) {
         setLoadMoreButtonLock(true);
+        prevScrollPosition.current =
+          (MessagesRef.current.scrollHeight -
+            MessagesRef.current.offsetHeight) *
+          -1;
         try {
           const { messageIds, messagesObj, loadedChannelId } =
             await loadMoreChatMessages({
