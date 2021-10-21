@@ -137,11 +137,8 @@ function MessagesContainer({
     useState(false);
   const [hideModalShown, setHideModalShown] = useState(false);
   const [addToFavoritesShown, setAddToFavoritesShown] = useState(false);
-
-  const ContentRef = useRef(null);
   const MessagesRef = useRef(null);
   const mounted = useRef(true);
-  const MessagesContainerRef = useRef({});
   const ChatInputRef = useRef(null);
   const favoritingRef = useRef(false);
   const timerRef = useRef(null);
@@ -330,7 +327,7 @@ function MessagesContainer({
   });
 
   useEffect(() => {
-    const MessagesContainer = MessagesContainerRef.current;
+    const MessagesContainer = MessagesRef.current;
     addEvent(MessagesContainer, 'scroll', handleScroll);
 
     return function cleanUp() {
@@ -340,7 +337,11 @@ function MessagesContainer({
     function handleScroll() {
       clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => {
-        if (mounted.current && MessagesContainerRef.current?.scrollTop === 0) {
+        const scrollThreshold =
+          MessagesRef.current.scrollHeight - MessagesRef.current.offsetHeight;
+        const scrollTop = MessagesRef.current.scrollTop;
+        const distanceFromTop = scrollThreshold + scrollTop;
+        if (mounted.current && distanceFromTop < 3) {
           handleLoadMore();
         }
       }, 200);
@@ -617,8 +618,7 @@ function MessagesContainer({
 
   const handleLoadMore = useCallback(async () => {
     if (messagesLoadMoreButton) {
-      const messageId = messages[0].id;
-      const prevContentHeight = ContentRef.current?.offsetHeight || 0;
+      const messageId = messages[messages.length - 1].id;
       if (!loadMoreButtonLock) {
         setLoadMoreButtonLock(true);
         try {
@@ -629,12 +629,6 @@ function MessagesContainer({
               channelId: selectedChannelId
             });
           onLoadMoreMessages({ messageIds, messagesObj, loadedChannelId });
-          if (MessagesContainerRef.current) {
-            MessagesContainerRef.current.scrollTop = Math.max(
-              MessagesContainerRef.current.scrollTop,
-              (ContentRef.current?.offsetHeight || 0) - prevContentHeight
-            );
-          }
           setLoadMoreButtonLock(false);
         } catch (error) {
           console.error(error);
