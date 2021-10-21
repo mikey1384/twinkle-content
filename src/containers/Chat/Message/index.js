@@ -63,6 +63,7 @@ Message.propTypes = {
   onReplyClick: PropTypes.func,
   onRewardClick: PropTypes.func,
   onRewardMessageSubmit: PropTypes.func.isRequired,
+  onScrollToBottom: PropTypes.func.isRequired,
   onShowSubjectMsgsModal: PropTypes.func,
   recepientId: PropTypes.number,
   scrollAtBottom: PropTypes.bool
@@ -118,6 +119,7 @@ function Message({
   onReceiveNewMessage,
   onReplyClick,
   onRewardMessageSubmit,
+  onScrollToBottom,
   onShowSubjectMsgsModal
 }) {
   const [ComponentRef, inView] = useInView({
@@ -230,6 +232,12 @@ function Message({
     username = myUsername;
     profilePicUrl = myProfilePicUrl;
   }
+  useEffect(() => {
+    if (isLastMsg && (!isNewMessage || userIsUploader)) {
+      onScrollToBottom();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLastMsg, isEditing]);
   useEffect(() => {
     if (!message.id && message.isChessMsg) {
       onUpdateRecentChessMessage({ channelId, message });

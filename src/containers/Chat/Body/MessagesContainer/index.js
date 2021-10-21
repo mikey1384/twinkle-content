@@ -173,7 +173,7 @@ function MessagesContainer({
 
   useEffect(() => {
     if (selectedChannelId === channelOnCall.id) {
-      handleSetScrollToBottom();
+      handleScrollToBottom();
     }
   }, [channelOnCall, selectedChannelId]);
 
@@ -280,7 +280,7 @@ function MessagesContainer({
   }, [currentChannel.canChangeSubject, selectedChannelId]);
 
   useEffect(() => {
-    handleSetScrollToBottom();
+    handleScrollToBottom();
     prevChannelId.current = selectedChannelId;
     prevTopMessageId.current = null;
   }, [selectedChannelId]);
@@ -920,7 +920,7 @@ function MessagesContainer({
               chessOpponent={chessOpponent}
               currentChannel={currentChannel}
               index={index}
-              isLastMsg={index === messages.length - 1}
+              isLastMsg={index === 0}
               isNotification={!!message.isNotification}
               loading={loading}
               message={message}
@@ -932,6 +932,7 @@ function MessagesContainer({
               onReceiveNewMessage={handleReceiveNewMessage}
               onReplyClick={() => ChatInputRef.current.focus()}
               onRewardMessageSubmit={handleRewardMessageSubmit}
+              onScrollToBottom={handleScrollToBottom}
               recepientId={recepientId}
               onShowSubjectMsgsModal={({ subjectId, content }) =>
                 setSubjectMsgsModal({ shown: true, subjectId, content })
@@ -975,7 +976,7 @@ function MessagesContainer({
             style={{ opacity: 0.9 }}
             onClick={() => {
               setNewUnseenMessage(false);
-              handleSetScrollToBottom();
+              handleScrollToBottom();
             }}
           >
             New Message
@@ -1079,7 +1080,7 @@ function MessagesContainer({
             socket.emit('purchased_chat_subject', selectedChannelId)
           }
           onSelectNewOwner={handleSelectNewOwner}
-          onSetScrollToBottom={handleSetScrollToBottom}
+          onScrollToBottom={handleScrollToBottom}
           theme={currentChannel.theme}
           unlockedThemes={currentChannel.unlockedThemes}
           userIsChannelOwner={currentChannel.creatorId === userId}
@@ -1121,7 +1122,7 @@ function MessagesContainer({
     setNewUnseenMessage(true);
   }
 
-  function handleSetScrollToBottom() {
+  function handleScrollToBottom() {
     if (mounted.current && MessagesRef.current) {
       MessagesRef.current.scrollTop = 0;
     }

@@ -27,7 +27,7 @@ SettingsModal.propTypes = {
   isClosed: PropTypes.bool,
   userIsChannelOwner: PropTypes.bool,
   onSelectNewOwner: PropTypes.func,
-  onSetScrollToBottom: PropTypes.func,
+  onScrollToBottom: PropTypes.func,
   onPurchaseSubject: PropTypes.func,
   theme: PropTypes.string,
   unlockedThemes: PropTypes.array
@@ -44,7 +44,7 @@ export default function SettingsModal({
   onHide,
   onPurchaseSubject,
   onSelectNewOwner,
-  onSetScrollToBottom,
+  onScrollToBottom,
   theme,
   unlockedThemes,
   userIsChannelOwner
@@ -358,7 +358,7 @@ export default function SettingsModal({
       onUpdateUserCoins({ coins, userId });
       onPurchaseSubject();
       setEditedCanChangeSubject('owner');
-      onSetScrollToBottom();
+      onScrollToBottom();
       setConfirmModalShown(false);
     } catch (error) {
       console.error(error);
