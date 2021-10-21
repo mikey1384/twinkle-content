@@ -896,6 +896,7 @@ function MessagesContainer({
         {loading && <Loading />}
         <div
           className={css`
+            padding: 0 1rem;
             height: 100%;
             display: flex;
             flex-direction: column-reverse;
