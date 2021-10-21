@@ -2,6 +2,7 @@ import React, { memo, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Color, desktopMinWidth, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
 import { useHistory } from 'react-router-dom';
 
@@ -57,7 +58,7 @@ function Channel({
           ? 'You'
           : senderName
         : '';
-      if (fileName) {
+      if (fileName && stringIsEmpty(content)) {
         return (
           <span>
             {`${messageSender}:`} {`"${fileName}"`}
