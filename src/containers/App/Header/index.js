@@ -267,6 +267,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
       async function handleLoadChat() {
         onSetReconnecting(true);
         const data = await loadChat(selectedChannelId);
+        history.replace(`/chat/${data.currentPathId}`);
         onInitChat(data);
         socket.emit(
           'check_online_members',
