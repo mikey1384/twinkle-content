@@ -111,9 +111,16 @@ function Chat({ onFileUpload }) {
       } else {
         handleChannelEnter(currentPathId);
       }
-    } else if (currentChannel.pathId && !loadingRef.current) {
+    } else if (
+      (chatType === 'vocabulary' || currentChannel.pathId) &&
+      !loadingRef.current
+    ) {
       prevPathId.current = currentChannel.pathId;
-      history.replace(`/chat/${currentChannel.pathId}`);
+      history.replace(
+        `/chat/${
+          chatType === 'vocabulary' ? 'vocabulary' : currentChannel.pathId
+        }`
+      );
     }
 
     async function handleChannelEnter(pathId) {
@@ -159,7 +166,7 @@ function Chat({ onFileUpload }) {
       loadingRef.current = false;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPathId, currentChannel.pathId]);
+  }, [currentPathId, currentChannel.pathId, chatType]);
 
   const handleEnterVocabulary = useCallback(async () => {
     if (chatType === 'vocabulary') return;
