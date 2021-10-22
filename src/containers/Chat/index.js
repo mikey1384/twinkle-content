@@ -90,6 +90,7 @@ function Chat({ onFileUpload }) {
   const [loading, setLoading] = useState(false);
   const loadingRef = useRef(false);
   const prevPathId = useRef('');
+  const prevUserId = useRef(null);
   const mounted = useRef(true);
   const currentChannel = useMemo(
     () => channelsObj[selectedChannelId] || {},
@@ -104,7 +105,11 @@ function Chat({ onFileUpload }) {
       prevPathId.current = currentPathId;
       return;
     }
-    if (currentPathId && currentPathId !== prevPathId.current && userId) {
+    if (
+      currentPathId &&
+      Number(currentPathId) !== Number(prevPathId.current) &&
+      userId
+    ) {
       prevPathId.current = currentPathId;
       if (currentPathId === 'new' && channelsObj[0]?.twoPeople) {
         onEnterEmptyChat();
@@ -139,14 +144,14 @@ function Chat({ onFileUpload }) {
       if (mounted.current) {
         onUpdateSelectedChannelId(channelId);
       }
-      if (mounted.current) {
-        setLoading(true);
-      }
       if (channelsObj[channelId]?.loaded) {
         if (lastChatPath !== `/${pathId}`) {
           updateLastChannelId(channelId);
         }
-        return setLoading(false);
+        return;
+      }
+      if (mounted.current) {
+        setLoading(true);
       }
       const data = await loadChatChannel({ channelId });
       if (
@@ -167,6 +172,22 @@ function Chat({ onFileUpload }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPathId, currentChannel.pathId, chatType]);
+
+  useEffect(() => {
+    if (!isNaN(currentChannel.pathId) && !currentPathId) {
+      prevPathId.current = currentChannel.pathId;
+      history.replace(`/chat/${currentChannel.pathId}`);
+    }
+  }, [currentChannel.pathId, currentPathId, history, loading]);
+
+  useEffect(() => {
+    if (!prevUserId.current) {
+      prevUserId.current = userId;
+      return;
+    }
+    history.replace(`/chat`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
 
   const handleEnterVocabulary = useCallback(async () => {
     if (chatType === 'vocabulary') return;
