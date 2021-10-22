@@ -157,14 +157,6 @@ export default function ChatReducer(state, action) {
         ...state,
         chatSearchResults: []
       };
-    case 'CLEAR_EMPTY_CHANNEL':
-      return {
-        ...state,
-        channelsObj: {
-          ...state.channelsObj,
-          0: {}
-        }
-      };
     case 'CLEAR_NUM_UNREADS': {
       return {
         ...state,
@@ -252,6 +244,7 @@ export default function ChatReducer(state, action) {
         ],
         channelsObj: {
           ...state.channelsObj,
+          0: {},
           [action.channel.id]: {
             ...action.channel,
             messageIds: [messageId],
@@ -980,12 +973,7 @@ export default function ChatReducer(state, action) {
             messagesObj: {
               [messageId]: {
                 id: messageId,
-                channelId: action.message.channelId,
-                content: action.message.content,
-                timeStamp: action.message.timeStamp,
-                username: action.message.username,
-                userId: action.message.userId,
-                profilePicUrl: action.message.profilePicUrl
+                ...action.message
               }
             },
             pathId: action.pathId,

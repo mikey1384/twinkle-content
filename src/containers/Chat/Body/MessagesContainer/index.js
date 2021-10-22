@@ -87,7 +87,6 @@ function MessagesContainer({
       subjectObj
     },
     actions: {
-      onClearEmptyChannel,
       onDeleteMessage,
       onEditChannelSettings,
       onEnterChannelWithId,
@@ -730,7 +729,6 @@ function MessagesContainer({
           });
           onUpdateChannelPathIdHash({ channelId: channel.id, pathId });
           onSendFirstDirectMessage({ channel, message });
-          onClearEmptyChannel();
           onSetCreatingNewDMChannel(false);
           history.replace(`/chat/${pathId}`);
           return Promise.resolve();

@@ -85,6 +85,7 @@ function App({ location, history }) {
       onPostUploadComplete,
       onResetChat,
       onSendFirstDirectMessage,
+      onUpdateChannelPathIdHash,
       onUpdateChatUploadProgress
     }
   } = useChatContext();
@@ -278,7 +279,12 @@ function App({ location, history }) {
       }
       onSetReplyTarget({ channelId, target: null });
       if (channel) {
+        onUpdateChannelPathIdHash({
+          channelId: channel.id,
+          pathId: channel.pathId
+        });
         onSendFirstDirectMessage({ channel, message });
+        history.replace(`/chat/${channel.pathId}`);
         socket.emit('join_chat_group', message.channelId);
         socket.emit('send_bi_chat_invitation', {
           userId: recepientId,
