@@ -139,6 +139,12 @@ function Chat({ onFileUpload }) {
         return setLoading(false);
       }
       const data = await loadChatChannel({ channelId });
+      if (
+        !isNaN(Number(prevPathId.current)) &&
+        data.channel.pathId !== Number(prevPathId.current)
+      ) {
+        return;
+      }
       if (mounted.current) {
         onEnterChannelWithId({ data });
       }
