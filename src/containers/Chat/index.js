@@ -140,8 +140,8 @@ function Chat({ onFileUpload }) {
       }
       const data = await loadChatChannel({ channelId });
       if (
-        !isNaN(Number(currentPathId)) &&
-        data.channel.pathId !== Number(currentPathId)
+        !isNaN(Number(prevPathId.current)) &&
+        data.channel.pathId !== Number(prevPathId.current)
       ) {
         return;
       }
