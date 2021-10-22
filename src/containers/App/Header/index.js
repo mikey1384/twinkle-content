@@ -179,7 +179,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
     socket.on('chat_message_deleted', onDeleteMessage);
     socket.on('chat_message_edited', onEditMessage);
     socket.on('chat_subject_purchased', onEnableChatSubject);
-    socket.on('channel_owner_changed', onChangeChannelOwner);
+    socket.on('channel_owner_changed', handleChangeChannelOwner);
     socket.on('channel_settings_changed', onChangeChannelSettings);
     socket.on('connect', handleConnect);
     socket.on('disconnect', handleDisconnect);
@@ -214,7 +214,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
       socket.removeListener('chat_message_deleted', onDeleteMessage);
       socket.removeListener('chat_message_edited', onEditMessage);
       socket.removeListener('chat_subject_purchased', onEnableChatSubject);
-      socket.removeListener('channel_owner_changed', onChangeChannelOwner);
+      socket.removeListener('channel_owner_changed', handleChangeChannelOwner);
       socket.removeListener(
         'channel_settings_changed',
         onChangeChannelSettings
@@ -249,6 +249,11 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
 
     function handleBanStatusUpdate(banStatus) {
       onUpdateProfileInfo({ userId, banned: banStatus });
+    }
+
+    function handleChangeChannelOwner({ channelId, message, newOwner }) {
+      updateChatLastRead(channelId);
+      onChangeChannelOwner({ channelId, message, newOwner });
     }
 
     async function handleConnect() {
@@ -529,7 +534,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
       if (senderIsUser && pageVisible) return;
       if (messageIsForCurrentChannel) {
         if (usingChat) {
-          await updateChatLastRead(message.channelId);
+          updateChatLastRead(message.channelId);
         }
         onReceiveMessage({
           message,

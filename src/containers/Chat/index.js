@@ -231,9 +231,10 @@ function Chat({ onFileUpload }) {
     socket.on('subject_changed', handleTopicChange);
     socket.on('member_left', handleMemberLeft);
 
-    function handleMemberLeft({ channelId, leaver }) {
+    async function handleMemberLeft({ channelId, leaver }) {
       const forCurrentChannel = channelId === selectedChannelId;
       if (forCurrentChannel) {
+        updateChatLastRead(channelId);
         const { userId, username, profilePicUrl } = leaver;
         onNotifyThatMemberLeftChannel({
           channelId,
