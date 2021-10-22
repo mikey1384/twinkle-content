@@ -1208,6 +1208,25 @@ export default function ChatReducer(state, action) {
         ...state,
         loadingVocabulary: action.loading
       };
+    case 'SET_MESSAGE_STATE':
+      return {
+        ...state,
+        channelsObj: {
+          ...state.channelsObj,
+          [action.channelId]: {
+            ...state.channelsObj[action.channelId],
+            messagesObj: {
+              ...state.channelsObj[action.channelId].messagesObj,
+              [action.messageId]: {
+                ...state.channelsObj[action.channelId].messagesObj[
+                  action.messageId
+                ],
+                ...action.newState
+              }
+            }
+          }
+        }
+      };
     case 'SET_MEMBERS_ON_CALL':
       return {
         ...state,

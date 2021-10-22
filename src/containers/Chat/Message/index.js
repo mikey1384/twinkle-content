@@ -30,10 +30,15 @@ import {
   fetchURLFromText,
   getFileInfoFromFileName
 } from 'helpers/stringHelpers';
-import { useMyState, useLazyLoad } from 'helpers/hooks';
+import { useMyState, useContentState, useLazyLoad } from 'helpers/hooks';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useAppContext, useNotiContext, useChatContext } from 'contexts';
+import {
+  useAppContext,
+  useContentContext,
+  useNotiContext,
+  useChatContext
+} from 'contexts';
 import ErrorBoundary from 'components/ErrorBoundary';
 
 Message.propTypes = {
@@ -59,9 +64,11 @@ Message.propTypes = {
   onRewardClick: PropTypes.func,
   onRewardMessageSubmit: PropTypes.func.isRequired,
   onScrollToBottom: PropTypes.func.isRequired,
+  onSetScrollToBottom: PropTypes.func,
   onShowSubjectMsgsModal: PropTypes.func,
   recepientId: PropTypes.number,
-  scrollAtBottom: PropTypes.bool
+  scrollAtBottom: PropTypes.bool,
+  zIndex: PropTypes.number
 };
 
 function Message({
@@ -115,7 +122,8 @@ function Message({
   onReplyClick,
   onRewardMessageSubmit,
   onScrollToBottom,
-  onShowSubjectMsgsModal
+  onShowSubjectMsgsModal,
+  zIndex
 }) {
   const [ComponentRef, inView] = useInView({
     threshold: 0
@@ -169,6 +177,26 @@ function Message({
     }
   } = useAppContext();
   const {
+    actions: {
+      onSetEmbeddedUrl,
+      onSetActualDescription,
+      onSetActualTitle,
+      onSetIsEditing,
+      onSetSiteUrl,
+      onSetThumbUrl,
+      onSetMediaStarted
+    }
+  } = useContentContext();
+  const {
+    thumbUrl: recentThumbUrl,
+    isEditing,
+    started
+  } = useContentState({
+    contentType: 'chat',
+    contentId: messageId
+  });
+
+  const {
     state: { filesBeingUploaded },
     actions: {
       onEditMessage,
@@ -207,12 +235,6 @@ function Message({
     username = myUsername;
     profilePicUrl = myProfilePicUrl;
   }
-  useEffect(() => {
-    if (isLastMsg && (!isNewMessage || userIsUploader)) {
-      onScrollToBottom();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLastMsg, isEditing]);
   useEffect(() => {
     if (!message.id && message.isChessMsg) {
       onUpdateRecentChessMessage({ channelId, message });
@@ -278,6 +300,13 @@ function Message({
       setSpoilerOff(true);
     }
   }, [chessState, moveViewTimeStamp, myId]);
+
+  useEffect(() => {
+    if (isLastMsg && userIsUploader) {
+      onScrollToBottom();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLastMsg]);
 
   useEffect(() => {
     const url = fetchURLFromText(content);
@@ -512,7 +541,8 @@ function Message({
         ref={ComponentRef}
         className={MessageStyle.container}
         style={{
-          width: '100%'
+          width: '100%',
+          zIndex
         }}
       >
         {contentShown ? (
@@ -526,11 +556,11 @@ function Message({
             </div>
             <div
               className={css`
-                width: CALC(100% - 5vw - 2rem);
+                width: CALC(100% - 5vw - 3rem);
                 display: flex;
                 flex-direction: column;
-                margin-left: 1rem;
-                margin-right: 0;
+                margin-left: 2rem;
+                margin-right: 1rem;
                 position: relative;
                 white-space: pre-wrap;
                 overflow-wrap: break-word;
@@ -661,7 +691,7 @@ function Message({
                   skeuomorphic
                   color="darkerGray"
                   icon="chevron-down"
-                  style={{ position: 'absolute', top: 0, right: 0 }}
+                  style={{ position: 'absolute', top: 0, right: '5px' }}
                   direction="left"
                   opacity={0.8}
                   menuProps={messageMenuItems}

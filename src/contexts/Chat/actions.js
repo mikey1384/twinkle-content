@@ -492,6 +492,14 @@ export default function ChatActions(dispatch) {
         members
       });
     },
+    onSetMessageState({ channelId, messageId, newState }) {
+      return dispatch({
+        type: 'SET_MESSAGE_STATE',
+        channelId,
+        messageId,
+        newState
+      });
+    },
     onSetMyStream(stream) {
       return dispatch({
         type: 'SET_MY_STREAM',
