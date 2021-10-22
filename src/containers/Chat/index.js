@@ -111,21 +111,15 @@ function Chat({ onFileUpload }) {
       userId
     ) {
       prevPathId.current = currentPathId;
-      if (currentPathId === 'new' && channelsObj[0]?.twoPeople) {
-        onEnterEmptyChat();
+      if (currentPathId === 'new') {
+        if (channelsObj[0]?.twoPeople) {
+          onEnterEmptyChat();
+        } else {
+          history.replace(`/chat`);
+        }
       } else {
         handleChannelEnter(currentPathId);
       }
-    } else if (
-      (chatType === 'vocabulary' || currentChannel.pathId) &&
-      !loadingRef.current
-    ) {
-      prevPathId.current = currentChannel.pathId;
-      history.replace(
-        `/chat/${
-          chatType === 'vocabulary' ? 'vocabulary' : currentChannel.pathId
-        }`
-      );
     }
 
     async function handleChannelEnter(pathId) {
