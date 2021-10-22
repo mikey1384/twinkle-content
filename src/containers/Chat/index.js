@@ -88,6 +88,7 @@ function Chat({ onFileUpload }) {
   const [userListModalShown, setUserListModalShown] = useState(false);
   const [partner, setPartner] = useState(null);
   const [loading, setLoading] = useState(false);
+  const loadingRef = useRef(false);
   const prevPathId = useRef('');
   const mounted = useRef(true);
   const currentChannel = useMemo(
@@ -109,13 +110,13 @@ function Chat({ onFileUpload }) {
       } else {
         handleChannelEnter(currentPathId);
       }
-    } else if (currentChannel.pathId && !loading) {
+    } else if (currentChannel.pathId && !loadingRef.current) {
       history.replace(`/chat/${currentChannel.pathId}`);
     }
     prevPathId.current = currentPathId;
 
     async function handleChannelEnter(pathId) {
-      setLoading(true);
+      loadingRef.current = true;
       const { isAccessible, generalChatPathId } = await checkChatAccessible(
         pathId
       );
@@ -129,6 +130,9 @@ function Chat({ onFileUpload }) {
       }
       if (mounted.current) {
         onUpdateSelectedChannelId(channelId);
+      }
+      if (mounted.current) {
+        setLoading(true);
       }
       if (channelsObj[channelId]?.loaded) {
         if (lastChatPath !== `/${pathId}`) {
@@ -149,6 +153,7 @@ function Chat({ onFileUpload }) {
       if (mounted.current) {
         setLoading(false);
       }
+      loadingRef.current = false;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPathId, currentChannel.pathId]);
