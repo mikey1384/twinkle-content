@@ -145,6 +145,8 @@ function Chat({ onFileUpload }) {
         !isNaN(Number(prevPathId.current)) &&
         data.channel.pathId !== Number(prevPathId.current)
       ) {
+        setLoading(false);
+        loadingRef.current = false;
         return;
       }
       if (mounted.current) {
