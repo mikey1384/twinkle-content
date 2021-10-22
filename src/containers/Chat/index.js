@@ -41,6 +41,7 @@ function Chat({ onFileUpload }) {
       checkChatAccessible,
       createNewChat,
       loadChatChannel,
+      loadVocabulary,
       parseChannelPath,
       updateChatLastRead,
       updateLastChannelId
@@ -51,6 +52,7 @@ function Chat({ onFileUpload }) {
     state: {
       loaded,
       selectedChannelId,
+      chatType,
       channelsObj,
       channelPathIdHash,
       channelOnCall,
@@ -62,11 +64,13 @@ function Chat({ onFileUpload }) {
       onCreateNewChannel,
       onEnterChannelWithId,
       onEnterEmptyChat,
+      onLoadVocabulary,
       onNotifyThatMemberLeftChannel,
       onReceiveMessage,
       onReceiveMessageOnDifferentChannel,
       onSetChessModalShown,
       onSetCurrentChannelName,
+      onSetLoadingVocabulary,
       onTrimMessages,
       onUpdateChannelPathIdHash,
       onUpdateChessMoveViewTimeStamp,
@@ -94,6 +98,11 @@ function Chat({ onFileUpload }) {
   const currentPathId = useMemo(() => pathname.split('chat/')[1], [pathname]);
 
   useEffect(() => {
+    if (currentPathId === 'vocabulary') {
+      handleEnterVocabulary();
+      prevPathId.current = currentPathId;
+      return;
+    }
     if (currentPathId && currentPathId !== prevPathId.current && userId) {
       if (currentPathId === 'new' && channelsObj[0]?.twoPeople) {
         onEnterEmptyChat();
@@ -110,8 +119,7 @@ function Chat({ onFileUpload }) {
         pathId
       );
       if (!isAccessible) {
-        history.replace(`/chat/${generalChatPathId}`);
-        return;
+        return history.replace(`/chat/${generalChatPathId}`);
       }
       const channelId =
         channelPathIdHash[pathId] || (await parseChannelPath(pathId));
@@ -140,6 +148,16 @@ function Chat({ onFileUpload }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPathId, currentChannel.pathId]);
+
+  const handleEnterVocabulary = useCallback(async () => {
+    if (chatType === 'vocabulary') return;
+    onSetLoadingVocabulary(true);
+    const { vocabActivities, wordsObj, wordCollectors } =
+      await loadVocabulary();
+    onLoadVocabulary({ vocabActivities, wordsObj, wordCollectors });
+    onSetLoadingVocabulary(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chatType]);
 
   useEffect(() => {
     if (userId && loaded && selectedChannelId) {
