@@ -8,7 +8,12 @@ import { css } from '@emotion/css';
 import { getSectionFromPathname } from 'helpers';
 import { addCommasToNumber, truncateText } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
-import { useAppContext, useHomeContext, useViewContext } from 'contexts';
+import {
+  useAppContext,
+  useChatContext,
+  useHomeContext,
+  useViewContext
+} from 'contexts';
 import { socket } from 'constants/io';
 
 MainNavs.propTypes = {
@@ -52,6 +57,9 @@ function MainNavs({
   const {
     state: { feedsOutdated }
   } = useHomeContext();
+  const {
+    state: { chatType }
+  } = useChatContext();
   const loaded = useRef(false);
   const timerRef = useRef(null);
 
@@ -280,7 +288,9 @@ function MainNavs({
       />
       {!banned?.chat && (
         <Nav
-          to={`/chat${lastChatPath}`}
+          to={`/chat${
+            chatType === 'vocabulary' ? '/vocabulary' : lastChatPath
+          }`}
           pathname={pathname}
           className="mobile"
           imgLabel="comments"
@@ -350,7 +360,9 @@ function MainNavs({
       >
         {!banned?.chat && (
           <Nav
-            to={`/chat${lastChatPath}`}
+            to={`/chat${
+              chatType === 'vocabulary' ? '/vocabulary' : lastChatPath
+            }`}
             pathname={pathname}
             className="desktop"
             imgLabel="comments"
