@@ -560,7 +560,6 @@ function Message({
                 display: flex;
                 flex-direction: column;
                 margin-left: 2rem;
-                margin-right: 1rem;
                 position: relative;
                 white-space: pre-wrap;
                 overflow-wrap: break-word;
@@ -691,7 +690,7 @@ function Message({
                   skeuomorphic
                   color="darkerGray"
                   icon="chevron-down"
-                  style={{ position: 'absolute', top: 0, right: '5px' }}
+                  style={{ position: 'absolute', top: 0, right: 0 }}
                   direction="left"
                   opacity={0.8}
                   menuProps={messageMenuItems}
