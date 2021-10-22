@@ -12,6 +12,7 @@ DropdownButton.propTypes = {
   icon: PropTypes.string,
   iconSize: PropTypes.string,
   direction: PropTypes.string,
+  innerRef: PropTypes.object,
   onButtonClick: PropTypes.func,
   onOutsideClick: PropTypes.func,
   listStyle: PropTypes.object,
@@ -42,6 +43,7 @@ export default function DropdownButton({
   onOutsideClick,
   text = '',
   stretch,
+  innerRef,
   ...props
 }) {
   const [menuDisplayed, setMenuDisplayed] = useState(false);
@@ -54,7 +56,10 @@ export default function DropdownButton({
   });
 
   return (
-    <ErrorBoundary style={{ position: 'relative', ...style }}>
+    <ErrorBoundary
+      innerRef={innerRef}
+      style={{ position: 'relative', ...style }}
+    >
       <div ref={ButtonRef}>
         <Button
           {...props}
@@ -95,7 +100,7 @@ export default function DropdownButton({
 
   function onClick() {
     if (typeof onButtonClick === 'function') {
-      onButtonClick(menuDisplayed);
+      onButtonClick(!menuDisplayed);
     }
     setMenuDisplayed(!menuDisplayed);
   }

@@ -135,6 +135,7 @@ function MessagesContainer({
     useState(false);
   const [hideModalShown, setHideModalShown] = useState(false);
   const [addToFavoritesShown, setAddToFavoritesShown] = useState(false);
+  const [bottomPaddingHeight, setBottomPaddingHeight] = useState(0);
   const MessagesRef = useRef(null);
   const mounted = useRef(true);
   const ChatInputRef = useRef(null);
@@ -937,6 +938,14 @@ function MessagesContainer({
               </Button>
             )}
           </div>
+          <div
+            style={{
+              display: 'block',
+              position: 'relative',
+              width: '100%',
+              padding: bottomPaddingHeight
+            }}
+          />
           {messages.map((message, index) => (
             <Message
               key={selectedChannelId + (message.id || 'newMessage' + index)}
@@ -961,6 +970,7 @@ function MessagesContainer({
               onRewardMessageSubmit={handleRewardMessageSubmit}
               onScrollToBottom={handleScrollToBottom}
               recepientId={recepientId}
+              onSetBottomPadding={(height) => setBottomPaddingHeight(height)}
               onShowSubjectMsgsModal={({ subjectId, content }) =>
                 setSubjectMsgsModal({ shown: true, subjectId, content })
               }
