@@ -906,7 +906,7 @@ function MessagesContainer({
         ) : (
           <div
             className={css`
-              padding: 1rem 1rem 0 1rem;
+              padding: 0 1rem;
               height: 100%;
               display: flex;
               flex-direction: column-reverse;
@@ -953,7 +953,6 @@ function MessagesContainer({
                 isNotification={!!message.isNotification}
                 loading={loading}
                 message={message}
-                style={{ border: '1px solid red' }}
                 onAcceptGroupInvitation={handleAcceptGroupInvitation}
                 onChessBoardClick={handleChessModalShown}
                 onChessSpoilerClick={handleChessSpoilerClick}
@@ -969,20 +968,23 @@ function MessagesContainer({
               />
             ))}
             {!loading && messagesLoadMoreButton && (
-              <div
-                style={{
-                  marginBottom: '1rem',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  width: '100%'
-                }}
-              >
-                <LoadMoreButton
-                  filled
-                  color="lightBlue"
-                  loading={loadMoreButtonLock}
-                  onClick={handleLoadMore}
-                />
+              <div>
+                <div style={{ width: '100%', height: '1rem' }} />
+                <div
+                  style={{
+                    marginBottom: '1rem',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    width: '100%'
+                  }}
+                >
+                  <LoadMoreButton
+                    filled
+                    color="lightBlue"
+                    loading={loadMoreButtonLock}
+                    onClick={handleLoadMore}
+                  />
+                </div>
               </div>
             )}
           </div>
