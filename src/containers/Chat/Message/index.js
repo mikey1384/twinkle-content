@@ -249,7 +249,8 @@ function Message({
         id: currentChannel.id,
         channelName: currentChannel.channelName,
         members: currentChannel.members,
-        twoPeople: currentChannel.twoPeople
+        twoPeople: currentChannel.twoPeople,
+        pathId: currentChannel.pathId
       };
       socket.emit('new_chat_message', {
         message: messageToSendOverSocket,

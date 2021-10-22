@@ -106,6 +106,7 @@ export default function ChatReducer(state, action) {
     }
     case 'CHANGE_CHANNEL_OWNER': {
       const notificationId = uuidv1();
+      if (!state.channelsObj[action.channelId]) return state;
       return {
         ...state,
         channelsObj: {

@@ -514,7 +514,8 @@ function MessagesContainer({
       if (isClass) {
         const channelData = {
           id: selectedChannelId,
-          channelName
+          channelName,
+          pathId: currentChannel.pathId
         };
         socket.emit('new_chat_message', {
           message: {
@@ -674,7 +675,11 @@ function MessagesContainer({
         socket.emit('join_chat_group', channel.id);
         socket.emit('new_chat_message', {
           message: joinMessage,
-          channel: { id: channel.id, channelName: channel.channelName },
+          channel: {
+            id: channel.id,
+            channelName: channel.channelName,
+            pathId: channel.pathId
+          },
           newMembers: [{ id: userId, username, profilePicUrl }]
         });
         history.push(`/chat/${invitationChannelPath}`);

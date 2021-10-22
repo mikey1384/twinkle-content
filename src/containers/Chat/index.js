@@ -41,6 +41,7 @@ function Chat({ onFileUpload }) {
       checkChatAccessible,
       createNewChat,
       loadChatChannel,
+      loadVocabulary,
       parseChannelPath,
       updateChatLastRead,
       updateLastChannelId
@@ -51,6 +52,7 @@ function Chat({ onFileUpload }) {
     state: {
       loaded,
       selectedChannelId,
+      chatType,
       channelsObj,
       channelPathIdHash,
       channelOnCall,
@@ -62,11 +64,13 @@ function Chat({ onFileUpload }) {
       onCreateNewChannel,
       onEnterChannelWithId,
       onEnterEmptyChat,
+      onLoadVocabulary,
       onNotifyThatMemberLeftChannel,
       onReceiveMessage,
       onReceiveMessageOnDifferentChannel,
       onSetChessModalShown,
       onSetCurrentChannelName,
+      onSetLoadingVocabulary,
       onTrimMessages,
       onUpdateChannelPathIdHash,
       onUpdateChessMoveViewTimeStamp,
@@ -84,7 +88,9 @@ function Chat({ onFileUpload }) {
   const [userListModalShown, setUserListModalShown] = useState(false);
   const [partner, setPartner] = useState(null);
   const [loading, setLoading] = useState(false);
+  const loadingRef = useRef(false);
   const prevPathId = useRef('');
+  const prevUserId = useRef(null);
   const mounted = useRef(true);
   const currentChannel = useMemo(
     () => channelsObj[selectedChannelId] || {},
@@ -94,24 +100,35 @@ function Chat({ onFileUpload }) {
   const currentPathId = useMemo(() => pathname.split('chat/')[1], [pathname]);
 
   useEffect(() => {
-    if (currentPathId && currentPathId !== prevPathId.current && userId) {
-      if (currentPathId === 'new' && channelsObj[0]?.twoPeople) {
-        onEnterEmptyChat();
+    if (currentPathId === 'vocabulary') {
+      handleEnterVocabulary();
+      prevPathId.current = currentPathId;
+      return;
+    }
+    if (
+      currentPathId &&
+      Number(currentPathId) !== Number(prevPathId.current) &&
+      userId
+    ) {
+      prevPathId.current = currentPathId;
+      if (currentPathId === 'new') {
+        if (channelsObj[0]?.twoPeople) {
+          onEnterEmptyChat();
+        } else {
+          history.replace(`/chat`);
+        }
       } else {
         handleChannelEnter(currentPathId);
       }
-    } else if (currentChannel.pathId) {
-      history.replace(`/chat/${currentChannel.pathId}`);
     }
-    prevPathId.current = currentPathId;
 
     async function handleChannelEnter(pathId) {
+      loadingRef.current = true;
       const { isAccessible, generalChatPathId } = await checkChatAccessible(
         pathId
       );
       if (!isAccessible) {
-        history.replace(`/chat/${generalChatPathId}`);
-        return;
+        return history.replace(`/chat/${generalChatPathId}`);
       }
       const channelId =
         channelPathIdHash[pathId] || (await parseChannelPath(pathId));
@@ -121,25 +138,65 @@ function Chat({ onFileUpload }) {
       if (mounted.current) {
         onUpdateSelectedChannelId(channelId);
       }
-      if (mounted.current) {
-        setLoading(true);
-      }
       if (channelsObj[channelId]?.loaded) {
         if (lastChatPath !== `/${pathId}`) {
           updateLastChannelId(channelId);
         }
-        return setLoading(false);
+        return;
+      }
+      if (mounted.current) {
+        setLoading(true);
       }
       const data = await loadChatChannel({ channelId });
+      if (
+        !isNaN(Number(prevPathId.current)) &&
+        data.channel.pathId !== Number(prevPathId.current)
+      ) {
+        setLoading(false);
+        loadingRef.current = false;
+        return;
+      }
       if (mounted.current) {
         onEnterChannelWithId({ data });
       }
       if (mounted.current) {
         setLoading(false);
       }
+      loadingRef.current = false;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPathId, currentChannel.pathId]);
+  }, [currentPathId, currentChannel.pathId, chatType]);
+
+  useEffect(() => {
+    if (!currentPathId) {
+      if (chatType === 'vocabulary') {
+        prevPathId.current = 'vocabulary';
+        history.replace(`/chat/vocabulary`);
+      } else if (!isNaN(currentChannel.pathId)) {
+        prevPathId.current = currentChannel.pathId;
+        history.replace(`/chat/${currentChannel.pathId}`);
+      }
+    }
+  }, [chatType, currentChannel.pathId, currentPathId, history]);
+
+  useEffect(() => {
+    if (!prevUserId.current) {
+      prevUserId.current = userId;
+      return;
+    }
+    history.replace(`/chat`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
+
+  const handleEnterVocabulary = useCallback(async () => {
+    if (chatType === 'vocabulary') return;
+    onSetLoadingVocabulary(true);
+    const { vocabActivities, wordsObj, wordCollectors } =
+      await loadVocabulary();
+    onLoadVocabulary({ vocabActivities, wordsObj, wordCollectors });
+    onSetLoadingVocabulary(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chatType]);
 
   useEffect(() => {
     if (userId && loaded && selectedChannelId) {
@@ -174,9 +231,10 @@ function Chat({ onFileUpload }) {
     socket.on('subject_changed', handleTopicChange);
     socket.on('member_left', handleMemberLeft);
 
-    function handleMemberLeft({ channelId, leaver }) {
+    async function handleMemberLeft({ channelId, leaver }) {
       const forCurrentChannel = channelId === selectedChannelId;
       if (forCurrentChannel) {
+        updateChatLastRead(channelId);
         const { userId, username, profilePicUrl } = leaver;
         onNotifyThatMemberLeftChannel({
           channelId,
