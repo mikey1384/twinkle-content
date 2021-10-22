@@ -8,16 +8,18 @@ DropdownList.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
-  direction: PropTypes.string,
-  style: PropTypes.object
+  style: PropTypes.object,
+  isReversed: PropTypes.bool,
+  direction: PropTypes.string
 };
 
 export default function DropdownList({
   children,
   className,
   innerRef,
-  direction = 'right',
-  style = {}
+  style = {},
+  isReversed,
+  direction
 }) {
   return (
     <ErrorBoundary>
@@ -31,8 +33,12 @@ export default function DropdownList({
           z-index: 10;
           padding: 0;
           top: 100%;
-          right: ${direction === 'right' ? 'auto' : 0};
-          left: ${direction === 'left' ? 'auto' : 0};
+          transform: translate(
+            ${direction === 'left' ? '-100%' : 0},
+            ${isReversed ? '-100%' : direction !== 'left' ? '0' : '-4rem'}
+          );
+          right: 0;
+          left: 0;
           min-width: 10rem;
           border: none;
           list-style: none;

@@ -163,7 +163,11 @@ export default function StarButton({
   }
 
   async function toggleByUser() {
-    const { byUser, cannotChange, moderatorName: modName } = await setByUser({
+    const {
+      byUser,
+      cannotChange,
+      moderatorName: modName
+    } = await setByUser({
       contentType,
       contentId
     });

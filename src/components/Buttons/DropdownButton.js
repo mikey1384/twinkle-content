@@ -11,6 +11,7 @@ DropdownButton.propTypes = {
   buttonStyle: PropTypes.object,
   icon: PropTypes.string,
   iconSize: PropTypes.string,
+  isReversed: PropTypes.bool,
   direction: PropTypes.string,
   innerRef: PropTypes.object,
   onButtonClick: PropTypes.func,
@@ -36,6 +37,7 @@ export default function DropdownButton({
   style,
   icon = 'pencil-alt',
   iconSize = '1x',
+  isReversed,
   listStyle = {},
   menuProps,
   noBorderRadius,
@@ -89,6 +91,7 @@ export default function DropdownButton({
               minWidth: '12rem',
               ...listStyle
             }}
+            isReversed={isReversed}
             direction={direction}
           >
             {renderMenu()}

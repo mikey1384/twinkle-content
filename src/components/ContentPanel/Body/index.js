@@ -405,7 +405,6 @@ export default function Body({
                   {editButtonShown && (
                     <DropdownButton
                       transparent
-                      direction="right"
                       style={{
                         marginLeft: secretHidden ? 0 : '0.5rem',
                         display: 'inline-block'

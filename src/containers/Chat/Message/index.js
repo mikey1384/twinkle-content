@@ -689,6 +689,7 @@ function Message({
                   direction="left"
                   opacity={0.8}
                   menuProps={messageMenuItems}
+                  isReversed={isLastMsg}
                 />
               )}
             </div>
