@@ -30,15 +30,10 @@ import {
   fetchURLFromText,
   getFileInfoFromFileName
 } from 'helpers/stringHelpers';
-import { useMyState, useContentState, useLazyLoad } from 'helpers/hooks';
+import { useMyState, useLazyLoad } from 'helpers/hooks';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import {
-  useAppContext,
-  useContentContext,
-  useNotiContext,
-  useChatContext
-} from 'contexts';
+import { useAppContext, useNotiContext, useChatContext } from 'contexts';
 import ErrorBoundary from 'components/ErrorBoundary';
 
 Message.propTypes = {
@@ -173,26 +168,6 @@ function Message({
       setChessMoveViewTimeStamp
     }
   } = useAppContext();
-  const {
-    actions: {
-      onSetEmbeddedUrl,
-      onSetActualDescription,
-      onSetActualTitle,
-      onSetIsEditing,
-      onSetSiteUrl,
-      onSetThumbUrl,
-      onSetMediaStarted
-    }
-  } = useContentContext();
-  const {
-    thumbUrl: recentThumbUrl,
-    isEditing,
-    started
-  } = useContentState({
-    contentType: 'chat',
-    contentId: messageId
-  });
-
   const {
     state: { filesBeingUploaded },
     actions: {
