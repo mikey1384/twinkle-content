@@ -105,15 +105,16 @@ function Chat({ onFileUpload }) {
       return;
     }
     if (currentPathId && currentPathId !== prevPathId.current && userId) {
+      prevPathId.current = currentPathId;
       if (currentPathId === 'new' && channelsObj[0]?.twoPeople) {
         onEnterEmptyChat();
       } else {
         handleChannelEnter(currentPathId);
       }
     } else if (currentChannel.pathId && !loadingRef.current) {
+      prevPathId.current = currentPathId;
       history.replace(`/chat/${currentChannel.pathId}`);
     }
-    prevPathId.current = currentPathId;
 
     async function handleChannelEnter(pathId) {
       loadingRef.current = true;
