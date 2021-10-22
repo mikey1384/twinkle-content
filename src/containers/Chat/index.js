@@ -112,7 +112,7 @@ function Chat({ onFileUpload }) {
         handleChannelEnter(currentPathId);
       }
     } else if (currentChannel.pathId && !loadingRef.current) {
-      prevPathId.current = currentPathId;
+      prevPathId.current = currentChannel.pathId;
       history.replace(`/chat/${currentChannel.pathId}`);
     }
 
