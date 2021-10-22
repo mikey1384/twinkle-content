@@ -177,7 +177,7 @@ function Chat({ onFileUpload }) {
         history.replace(`/chat/${currentChannel.pathId}`);
       }
     }
-  }, [chatType, currentChannel.pathId, currentPathId, history, loading]);
+  }, [chatType, currentChannel.pathId, currentPathId, history]);
 
   useEffect(() => {
     if (!prevUserId.current) {
