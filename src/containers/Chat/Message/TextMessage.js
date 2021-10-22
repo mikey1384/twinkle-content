@@ -60,7 +60,7 @@ function TextMessage({
   } = useAppContext();
 
   const Prefix = useMemo(() => {
-    let prefix = '';
+    let prefix = null;
     if (isSubject) {
       prefix = (
         <span style={{ fontWeight: 'bold', color: Color[theme || 'green']() }}>
@@ -87,62 +87,60 @@ function TextMessage({
 
   return (
     <ErrorBoundary>
-      <div>
-        {isEditing ? (
-          <EditTextArea
-            allowEmptyText
-            contentId={messageId}
-            contentType="chat"
-            autoFocus
-            disabled={!socketConnected}
-            rows={2}
-            text={content}
-            onCancel={onEditCancel}
-            onEditDone={onEditDone}
-          />
-        ) : (
-          <div>
-            <div className={MessageStyle.messageWrapper}>
-              {Prefix}
-              {isValidSpoiler(content) ? (
-                <Spoiler content={content} />
-              ) : (
-                <LongText
-                  style={{
-                    marginTop: isSubject ? '0.5rem' : 0,
-                    marginBottom: isSubject ? '0.5rem' : 0,
-                    color: isNotification ? Color.gray() : undefined
-                  }}
-                >
-                  {content}
-                </LongText>
-              )}
-            </div>
-            {!!isReloadedSubject && !!numMsgs && numMsgs > 0 && (
-              <div className={MessageStyle.relatedConversationsButton}>
-                <Button
-                  filled
-                  color="logoBlue"
-                  onClick={() => onShowSubjectMsgsModal({ subjectId, content })}
-                >
-                  Show related conversations
-                </Button>
-              </div>
+      {isEditing ? (
+        <EditTextArea
+          allowEmptyText
+          contentId={messageId}
+          contentType="chat"
+          autoFocus
+          disabled={!socketConnected}
+          rows={2}
+          text={content}
+          onCancel={onEditCancel}
+          onEditDone={onEditDone}
+        />
+      ) : (
+        <>
+          <div className={MessageStyle.messageWrapper}>
+            {Prefix}
+            {isValidSpoiler(content) ? (
+              <Spoiler content={content} />
+            ) : (
+              <LongText
+                style={{
+                  marginTop: isSubject ? '0.5rem' : 0,
+                  marginBottom: isSubject ? '0.5rem' : 0,
+                  color: isNotification ? Color.gray() : undefined
+                }}
+              >
+                {content}
+              </LongText>
             )}
           </div>
-        )}
-        {extractedUrl && messageId && !attachmentHidden && (
-          <Embedly
-            style={{ marginTop: '1rem' }}
-            contentId={messageId}
-            contentType="chat"
-            loadingHeight="30vw"
-            mobileLoadingHeight="70vw"
-            onHideAttachment={handleHideAttachment}
-            userCanEditThis={userCanEditThis}
-          />
-        )}
-      </div>
+          {!!isReloadedSubject && !!numMsgs && numMsgs > 0 && (
+            <div className={MessageStyle.relatedConversationsButton}>
+              <Button
+                filled
+                color="logoBlue"
+                onClick={() => onShowSubjectMsgsModal({ subjectId, content })}
+              >
+                Show related conversations
+              </Button>
+            </div>
+          )}
+        </>
+      )}
+      {extractedUrl && messageId && !attachmentHidden && (
+        <Embedly
+          style={{ marginTop: '1rem' }}
+          contentId={messageId}
+          contentType="chat"
+          loadingHeight="30vw"
+          mobileLoadingHeight="70vw"
+          onHideAttachment={handleHideAttachment}
+          userCanEditThis={userCanEditThis}
+        />
+      )}
     </ErrorBoundary>
   );
 }

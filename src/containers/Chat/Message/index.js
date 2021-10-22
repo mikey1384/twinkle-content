@@ -131,6 +131,7 @@ function Message({
     threshold: 0
   });
   const PanelRef = useRef(null);
+  const DropdownButtonRef = useRef(null);
   const [placeholderHeight, setPlaceholderHeight] = useState(0);
   const [visible, setVisible] = useState(true);
   useLazyLoad({
@@ -528,9 +529,11 @@ function Message({
   const handleDropdownButtonClick = useCallback(
     (menuDisplayed) => {
       if (isLastMsg) {
-        onSetBottomPadding(
-          menuDisplayed ? `${messageMenuItems.length * 1.5}rem` : 0
-        );
+        if (PanelRef.current.clientHeight < messageMenuItems.length * 25) {
+          onSetBottomPadding(
+            menuDisplayed ? `${messageMenuItems.length * 25}px` : 0
+          );
+        }
       }
     },
     [isLastMsg, messageMenuItems.length, onSetBottomPadding]
@@ -600,7 +603,7 @@ function Message({
                   {displayedTimeStamp}
                 </span>
               </div>
-              <div style={{ width: '100%' }}>
+              <>
                 {invitePath ? (
                   <Invitation
                     sender={{ id: userId, username }}
@@ -697,10 +700,11 @@ function Message({
                     )}
                   </>
                 )}
-              </div>
+              </>
               {dropdownButtonShown && (
                 <DropdownButton
                   skeuomorphic
+                  innerRef={DropdownButtonRef}
                   color="darkerGray"
                   icon="chevron-down"
                   style={{ position: 'absolute', top: 0, right: 0 }}

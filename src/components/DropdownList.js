@@ -7,6 +7,7 @@ import { css } from '@emotion/css';
 DropdownList.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
+  innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   direction: PropTypes.string,
   style: PropTypes.object
 };
@@ -14,12 +15,14 @@ DropdownList.propTypes = {
 export default function DropdownList({
   children,
   className,
+  innerRef,
   direction = 'right',
   style = {}
 }) {
   return (
     <ErrorBoundary>
       <ul
+        ref={innerRef}
         style={style}
         className={`${css`
           float: left;
