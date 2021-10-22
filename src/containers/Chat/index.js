@@ -109,7 +109,7 @@ function Chat({ onFileUpload }) {
       } else {
         handleChannelEnter(currentPathId);
       }
-    } else if (currentChannel.pathId) {
+    } else if (history.action === 'POP' && currentChannel.pathId) {
       history.replace(`/chat/${currentChannel.pathId}`);
     }
     prevPathId.current = currentPathId;
@@ -139,12 +139,6 @@ function Chat({ onFileUpload }) {
         return setLoading(false);
       }
       const data = await loadChatChannel({ channelId });
-      if (
-        !isNaN(Number(prevPathId.current)) &&
-        data.channel.pathId !== Number(prevPathId.current)
-      ) {
-        return;
-      }
       if (mounted.current) {
         onEnterChannelWithId({ data });
       }
