@@ -58,7 +58,7 @@ function MainNavs({
     state: { feedsOutdated }
   } = useHomeContext();
   const {
-    state: { chatType }
+    state: { chatType, loaded: chatLoaded }
   } = useChatContext();
   const loaded = useRef(false);
   const timerRef = useRef(null);
@@ -227,6 +227,16 @@ function MainNavs({
     [chatMatch, loggedIn, numChatUnreads]
   );
 
+  const chatButtonPath = useMemo(() => {
+    return `/chat${
+      chatLoaded
+        ? chatType === 'vocabulary'
+          ? '/vocabulary'
+          : lastChatPath
+        : ''
+    }`;
+  }, [chatLoaded, chatType, lastChatPath]);
+
   useEffect(() => {
     socket.emit('change_busy_status', !chatMatch);
   }, [chatMatch]);
@@ -288,9 +298,7 @@ function MainNavs({
       />
       {!banned?.chat && (
         <Nav
-          to={`/chat${
-            chatType === 'vocabulary' ? '/vocabulary' : lastChatPath
-          }`}
+          to={chatButtonPath}
           pathname={pathname}
           className="mobile"
           imgLabel="comments"
@@ -360,9 +368,7 @@ function MainNavs({
       >
         {!banned?.chat && (
           <Nav
-            to={`/chat${
-              chatType === 'vocabulary' ? '/vocabulary' : lastChatPath
-            }`}
+            to={chatButtonPath}
             pathname={pathname}
             className="desktop"
             imgLabel="comments"
