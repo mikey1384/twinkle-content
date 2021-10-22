@@ -122,7 +122,6 @@ function Message({
   onReceiveNewMessage,
   onReplyClick,
   onRewardMessageSubmit,
-  onSetBottomPadding,
   onScrollToBottom,
   onShowSubjectMsgsModal,
   zIndex
@@ -526,19 +525,6 @@ function Message({
     [channelId, isReloadedSubject, isSubject, messageId, subjectId]
   );
 
-  const handleDropdownButtonClick = useCallback(
-    (menuDisplayed) => {
-      if (isLastMsg) {
-        if (PanelRef.current.clientHeight < messageMenuItems.length * 25) {
-          onSetBottomPadding(
-            menuDisplayed ? `${messageMenuItems.length * 25}px` : 0
-          );
-        }
-      }
-    },
-    [isLastMsg, messageMenuItems.length, onSetBottomPadding]
-  );
-
   if (!chessState && (gameWinnerId || isDraw)) {
     return (
       <GameOverMessage
@@ -711,8 +697,6 @@ function Message({
                   direction="left"
                   opacity={0.8}
                   menuProps={messageMenuItems}
-                  onButtonClick={handleDropdownButtonClick}
-                  onOutsideClick={() => handleDropdownButtonClick(false)}
                 />
               )}
             </div>
