@@ -286,7 +286,8 @@ export default function ChessModal({
         id: currentChannel.id,
         channelName: currentChannel.channelName,
         members: currentChannel.members,
-        twoPeople: currentChannel.twoPeople
+        twoPeople: currentChannel.twoPeople,
+        pathId: currentChannel.pathId
       },
       channelId,
       targetUserId: myId,
