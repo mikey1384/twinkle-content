@@ -268,7 +268,8 @@ function App({ location, history }) {
           id: channelId,
           channelName: currentChannelName,
           members: currentChannel.members,
-          twoPeople: currentChannel.twoPeople
+          twoPeople: currentChannel.twoPeople,
+          pathId: currentChannel.pathId
         };
         socket.emit('new_chat_message', {
           message: { ...params, isNewMessage: true },
