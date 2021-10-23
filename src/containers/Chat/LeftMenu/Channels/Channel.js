@@ -7,14 +7,12 @@ import { useMyState } from 'helpers/hooks';
 import { useHistory, useLocation } from 'react-router-dom';
 
 Channel.propTypes = {
-  chatType: PropTypes.string,
   channel: PropTypes.object.isRequired,
   customChannelNames: PropTypes.object.isRequired,
   selectedChannelId: PropTypes.number
 };
 
 function Channel({
-  chatType,
   customChannelNames,
   channel: {
     id: channelId,
@@ -39,12 +37,12 @@ function Channel({
     [channelName, customChannelNames, channelId]
   );
   const selected = useMemo(() => {
-    if (chatType && chatType !== 'default') return false;
+    if (currentPathId === 'vocabulary') return false;
     if (pathId === currentPathId || channelId === selectedChannelId) {
       return true;
     }
     return false;
-  }, [chatType, pathId, currentPathId, channelId, selectedChannelId]);
+  }, [pathId, currentPathId, channelId, selectedChannelId]);
   const lastMessage = useMemo(() => {
     const lastMessageId = messageIds[0];
     return messagesObj[lastMessageId];
