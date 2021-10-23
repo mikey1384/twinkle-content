@@ -338,6 +338,7 @@ function MessageInput({
           disabled={loading || !!banned?.chat || !socketConnected}
           onUploadButtonClick={() => FileInputRef.current.click()}
           onSelectVideoButtonClick={onSelectVideoButtonClick}
+          profileTheme={profileTheme}
         />
         {!socketConnected && (
           <Loading

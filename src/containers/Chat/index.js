@@ -59,8 +59,14 @@ function Chat({ onFileUpload }) {
       updateUserXP
     }
   } = useAppContext();
-  const { userId, lastChatPath, banned, profilePicUrl, username } =
-    useMyState();
+  const {
+    userId,
+    username,
+    lastChatPath,
+    banned,
+    profilePicUrl,
+    profileTheme
+  } = useMyState();
   const {
     state: {
       allFavoriteChannelIds,
@@ -389,6 +395,7 @@ function Chat({ onFileUpload }) {
         },
         myState: {
           banned,
+          profileTheme,
           profilePicUrl,
           userId,
           username
