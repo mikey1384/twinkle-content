@@ -576,6 +576,7 @@ function Message({
                     id: userId,
                     username
                   }}
+                  dropdownMenuReversed={isLastMsg}
                 />{' '}
                 <span className={MessageStyle.timeStamp}>
                   {displayedTimeStamp}

@@ -11,6 +11,7 @@ import { addCommasToNumber } from 'helpers/stringHelpers';
 UsernameText.propTypes = {
   className: PropTypes.string,
   color: PropTypes.string,
+  dropdownMenuReversed: PropTypes.bool,
   style: PropTypes.object,
   user: PropTypes.object,
   wordBreakEnabled: PropTypes.bool
@@ -21,6 +22,7 @@ const deviceIsMobile = isMobile(navigator);
 export default function UsernameText({
   className,
   color,
+  dropdownMenuReversed,
   style = {},
   user = {},
   wordBreakEnabled
@@ -102,7 +104,10 @@ export default function UsernameText({
         </p>
       </div>
       {menuShown && (
-        <DropdownList style={{ width: '100%' }}>
+        <DropdownList
+          isReversed={dropdownMenuReversed}
+          style={{ width: '100%' }}
+        >
           <li onClick={() => history.push(`/users/${user.username}`)}>
             <a
               style={{ color: Color.darkerGray(), cursor: 'pointer' }}

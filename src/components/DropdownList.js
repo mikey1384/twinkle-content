@@ -35,7 +35,13 @@ export default function DropdownList({
           top: 100%;
           transform: translate(
             ${direction === 'left' ? '-100%' : 0},
-            ${isReversed ? '-100%' : direction !== 'left' ? '0' : '-4rem'}
+            ${isReversed
+              ? direction === 'left'
+                ? '-100%'
+                : 'CALC(-100% - 2rem)'
+              : direction !== 'left'
+              ? '0'
+              : '-4rem'}
           );
           right: 0;
           left: 0;
