@@ -32,8 +32,6 @@ import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 import { css } from '@emotion/css';
 import { Color } from 'constants/css';
 import { socket } from 'constants/io';
-import { useMyState } from 'helpers/hooks';
-import { useChatContext, useNotiContext } from 'contexts';
 import { isMobile } from 'helpers';
 import { useHistory } from 'react-router-dom';
 import LocalContext from '../../Context';
@@ -56,38 +54,6 @@ function MessagesContainer({
 }) {
   const history = useHistory();
   const {
-    requests: {
-      acceptInvitation,
-      changeChannelOwner,
-      deleteChatMessage,
-      editChannelSettings,
-      hideChat,
-      leaveChannel,
-      loadChatChannel,
-      loadGeneralChatPathId,
-      loadMoreChatMessages,
-      parseChannelPath,
-      putFavoriteChannel,
-      sendInvitationMessage,
-      startNewDMChannel,
-      updateUserXP
-    }
-  } = useContext(LocalContext);
-  const {
-    state: { socketConnected }
-  } = useNotiContext();
-  const {
-    state: {
-      channelOnCall,
-      channelPathIdHash,
-      chessModalShown,
-      creatingNewDMChannel,
-      allFavoriteChannelIds,
-      recepientId,
-      reconnecting,
-      selectedChannelId,
-      subjectObj
-    },
     actions: {
       onDeleteMessage,
       onEditChannelSettings,
@@ -103,8 +69,37 @@ function MessagesContainer({
       onSetReplyTarget,
       onSubmitMessage,
       onUpdateChannelPathIdHash
+    },
+    myState: { banned, profilePicUrl, userId, username },
+    requests: {
+      acceptInvitation,
+      changeChannelOwner,
+      deleteChatMessage,
+      editChannelSettings,
+      hideChat,
+      leaveChannel,
+      loadChatChannel,
+      loadGeneralChatPathId,
+      loadMoreChatMessages,
+      parseChannelPath,
+      putFavoriteChannel,
+      sendInvitationMessage,
+      startNewDMChannel,
+      updateUserXP
+    },
+    state: {
+      allFavoriteChannelIds,
+      channelPathIdHash,
+      channelOnCall,
+      chessModalShown,
+      creatingNewDMChannel,
+      recepientId,
+      reconnecting,
+      selectedChannelId,
+      socketConnected,
+      subjectObj
     }
-  } = useChatContext();
+  } = useContext(LocalContext);
   const {
     isRespondingToSubject = false,
     messageIds = [],
@@ -112,7 +107,6 @@ function MessagesContainer({
     messagesLoadMoreButton = false,
     loaded
   } = currentChannel;
-  const { banned, profilePicUrl, userId, username } = useMyState();
   const [chessCountdownObj, setChessCountdownObj] = useState({});
   const [textAreaHeight, setTextAreaHeight] = useState(0);
   const [inviteUsersModalShown, setInviteUsersModalShown] = useState(false);

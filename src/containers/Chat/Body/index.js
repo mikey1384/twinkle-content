@@ -16,7 +16,9 @@ Body.propTypes = {
 };
 
 function Body({ channelName, chessOpponent, currentChannel, loading }) {
-  const { chatType, loadingVocabulary } = useContext(LocalContext);
+  const {
+    state: { chatType, loadingVocabulary }
+  } = useContext(LocalContext);
 
   return (
     <ErrorBoundary>

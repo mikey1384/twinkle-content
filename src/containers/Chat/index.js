@@ -59,31 +59,48 @@ function Chat({ onFileUpload }) {
       updateUserXP
     }
   } = useAppContext();
-  const { userId, lastChatPath } = useMyState();
+  const { userId, lastChatPath, banned, profilePicUrl, username } =
+    useMyState();
   const {
     state: {
-      loadingVocabulary,
-      loaded,
-      selectedChannelId,
+      allFavoriteChannelIds,
       chatType,
+      chatStatus,
+      chessModalShown,
       channelsObj,
       channelPathIdHash,
       channelOnCall,
+      creatingNewDMChannel,
       currentChannelName,
-      chatStatus
+      loadingVocabulary,
+      loaded,
+      recepientId,
+      reconnecting,
+      selectedChannelId,
+      subjectObj
     },
     actions: {
       onClearNumUnreads,
       onCreateNewChannel,
+      onDeleteMessage,
+      onEditChannelSettings,
       onEnterChannelWithId,
       onEnterEmptyChat,
+      onHideChat,
+      onLeaveChannel,
+      onLoadMoreMessages,
       onLoadVocabulary,
       onNotifyThatMemberLeftChannel,
       onReceiveMessage,
       onReceiveMessageOnDifferentChannel,
+      onSendFirstDirectMessage,
       onSetChessModalShown,
       onSetCurrentChannelName,
       onSetLoadingVocabulary,
+      onSetCreatingNewDMChannel,
+      onSetFavoriteChannel,
+      onSetReplyTarget,
+      onSubmitMessage,
       onTrimMessages,
       onUpdateChannelPathIdHash,
       onUpdateChessMoveViewTimeStamp,
@@ -354,6 +371,28 @@ function Chat({ onFileUpload }) {
   return (
     <LocalContext.Provider
       value={{
+        actions: {
+          onDeleteMessage,
+          onEditChannelSettings,
+          onEnterChannelWithId,
+          onHideChat,
+          onLeaveChannel,
+          onLoadMoreMessages,
+          onReceiveMessageOnDifferentChannel,
+          onSendFirstDirectMessage,
+          onSetChessModalShown,
+          onSetCreatingNewDMChannel,
+          onSetFavoriteChannel,
+          onSetReplyTarget,
+          onSubmitMessage,
+          onUpdateChannelPathIdHash
+        },
+        myState: {
+          banned,
+          profilePicUrl,
+          userId,
+          username
+        },
         requests: {
           acceptInvitation,
           changeChannelOwner,
@@ -370,12 +409,21 @@ function Chat({ onFileUpload }) {
           startNewDMChannel,
           updateUserXP
         },
-        chatType,
-        currentChannelOnlineMembers,
-        loadingVocabulary,
-        onFileUpload,
-        loadChatChannel,
-        parseChannelPath
+        state: {
+          allFavoriteChannelIds,
+          channelOnCall,
+          channelPathIdHash,
+          chessModalShown,
+          creatingNewDMChannel,
+          socketConnected,
+          chatType,
+          loadingVocabulary,
+          recepientId,
+          reconnecting,
+          selectedChannelId,
+          subjectObj
+        },
+        onFileUpload
       }}
     >
       <ErrorBoundary>
