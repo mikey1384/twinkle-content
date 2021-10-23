@@ -350,6 +350,9 @@ function MessagesContainer({
         if (mounted.current && distanceFromTop < 3) {
           handleLoadMore();
         }
+        if (mounted.current && scrollTop === 0) {
+          setNewUnseenMessage(false);
+        }
       }, 200);
     }
   });
