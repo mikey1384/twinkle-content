@@ -674,7 +674,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
     <ErrorBoundary>
       <nav
         className={`unselectable ${css`
-          z-index: 30000;
+          z-index: 99999;
           position: relative;
           font-family: 'Ubuntu', sans-serif, Arial, Helvetica;
           font-size: 1.7rem;
