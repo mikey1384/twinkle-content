@@ -1,12 +1,12 @@
-import React, { memo } from 'react';
+import React, { memo, useContext } from 'react';
 import PropTypes from 'prop-types';
 import MessagesContainer from './MessagesContainer';
 import Vocabulary from './Vocabulary';
 import Loading from 'components/Loading';
 import ErrorBoundary from 'components/ErrorBoundary';
+import LocalContext from '../Context';
 import { phoneMaxWidth, Color } from 'constants/css';
 import { css } from '@emotion/css';
-import { useChatContext } from 'contexts';
 
 Body.propTypes = {
   channelName: PropTypes.string,
@@ -16,9 +16,7 @@ Body.propTypes = {
 };
 
 function Body({ channelName, chessOpponent, currentChannel, loading }) {
-  const {
-    state: { chatType, loadingVocabulary }
-  } = useChatContext();
+  const { chatType, loadingVocabulary } = useContext(LocalContext);
 
   return (
     <ErrorBoundary>

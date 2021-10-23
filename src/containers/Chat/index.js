@@ -38,18 +38,31 @@ function Chat({ onFileUpload }) {
   const history = useHistory();
   const {
     requestHelpers: {
+      acceptInvitation,
+      changeChannelOwner,
       checkChatAccessible,
       createNewChat,
+      deleteChatMessage,
+      editChannelSettings,
+      hideChat,
+      leaveChannel,
       loadChatChannel,
+      loadGeneralChatPathId,
+      loadMoreChatMessages,
       loadVocabulary,
       parseChannelPath,
+      putFavoriteChannel,
+      sendInvitationMessage,
+      startNewDMChannel,
       updateChatLastRead,
-      updateLastChannelId
+      updateLastChannelId,
+      updateUserXP
     }
   } = useAppContext();
   const { userId, lastChatPath } = useMyState();
   const {
     state: {
+      loadingVocabulary,
       loaded,
       selectedChannelId,
       chatType,
@@ -341,8 +354,28 @@ function Chat({ onFileUpload }) {
   return (
     <LocalContext.Provider
       value={{
+        requests: {
+          acceptInvitation,
+          changeChannelOwner,
+          deleteChatMessage,
+          editChannelSettings,
+          hideChat,
+          leaveChannel,
+          loadChatChannel,
+          loadGeneralChatPathId,
+          loadMoreChatMessages,
+          parseChannelPath,
+          putFavoriteChannel,
+          sendInvitationMessage,
+          startNewDMChannel,
+          updateUserXP
+        },
+        chatType,
         currentChannelOnlineMembers,
-        onFileUpload
+        loadingVocabulary,
+        onFileUpload,
+        loadChatChannel,
+        parseChannelPath
       }}
     >
       <ErrorBoundary>

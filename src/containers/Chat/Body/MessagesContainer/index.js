@@ -1,6 +1,7 @@
 import React, {
   memo,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -32,9 +33,10 @@ import { css } from '@emotion/css';
 import { Color } from 'constants/css';
 import { socket } from 'constants/io';
 import { useMyState } from 'helpers/hooks';
-import { useAppContext, useChatContext, useNotiContext } from 'contexts';
+import { useChatContext, useNotiContext } from 'contexts';
 import { isMobile } from 'helpers';
 import { useHistory } from 'react-router-dom';
+import LocalContext from '../../Context';
 
 MessagesContainer.propTypes = {
   channelName: PropTypes.string,
@@ -54,15 +56,15 @@ function MessagesContainer({
 }) {
   const history = useHistory();
   const {
-    requestHelpers: {
+    requests: {
       acceptInvitation,
       changeChannelOwner,
       deleteChatMessage,
       editChannelSettings,
       hideChat,
-      loadGeneralChatPathId,
       leaveChannel,
       loadChatChannel,
+      loadGeneralChatPathId,
       loadMoreChatMessages,
       parseChannelPath,
       putFavoriteChannel,
@@ -70,7 +72,7 @@ function MessagesContainer({
       startNewDMChannel,
       updateUserXP
     }
-  } = useAppContext();
+  } = useContext(LocalContext);
   const {
     state: { socketConnected }
   } = useNotiContext();
