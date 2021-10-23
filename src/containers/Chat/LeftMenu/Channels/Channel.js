@@ -4,7 +4,7 @@ import { Color, desktopMinWidth, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 Channel.propTypes = {
   chatType: PropTypes.string,
@@ -29,16 +29,22 @@ function Channel({
   selectedChannelId
 }) {
   const history = useHistory();
+  const location = useLocation();
+  const currentPathId = useMemo(() => {
+    return Number(location.pathname.split('chat/')[1]);
+  }, [location.pathname]);
   const { profileTheme, userId } = useMyState();
   const effectiveChannelName = useMemo(
     () => customChannelNames[channelId] || channelName,
     [channelName, customChannelNames, channelId]
   );
-  const selected = useMemo(
-    () =>
-      (!chatType || chatType === 'default') && channelId === selectedChannelId,
-    [chatType, channelId, selectedChannelId]
-  );
+  const selected = useMemo(() => {
+    if (chatType && chatType !== 'default') return false;
+    if (pathId === currentPathId || channelId === selectedChannelId) {
+      return true;
+    }
+    return false;
+  }, [chatType, pathId, currentPathId, channelId, selectedChannelId]);
   const lastMessage = useMemo(() => {
     const lastMessageId = messageIds[0];
     return messagesObj[lastMessageId];
