@@ -115,8 +115,8 @@ export default function ChatReducer(state, action) {
             ...state.channelsObj[action.channelId],
             messageIds:
               state.selectedChannelId === action.channelId
-                ? state.channelsObj[action.channelId].messageIds.concat(
-                    notificationId
+                ? [notificationId].concat(
+                    state.channelsObj[action.channelId].messageIds
                   )
                 : state.channelsObj[action.channelId].messageIds,
             messagesObj: {
@@ -605,9 +605,9 @@ export default function ChatReducer(state, action) {
           ...state.channelsObj,
           [state.selectedChannelId]: {
             ...state.channelsObj[state.selectedChannelId],
-            messageIds: state.channelsObj[
-              state.selectedChannelId
-            ].messageIds.concat(action.data.message.id),
+            messageIds: [action.data.message.id].concat(
+              state.channelsObj[state.selectedChannelId].messageIds
+            ),
             messagesObj: {
               ...state.channelsObj[state.selectedChannelId].messagesObj,
               [action.data.message.id]: action.data.message
@@ -781,8 +781,8 @@ export default function ChatReducer(state, action) {
           ...state.channelsObj,
           [action.channelId]: {
             ...state.channelsObj[action.channelId],
-            messageIds: state.channelsObj[action.channelId].messageIds.concat(
-              action.subject.id
+            messageIds: [action.subject.id].concat(
+              state.channelsObj[action.channelId].messageIds
             ),
             messagesObj: {
               ...state.channelsObj[action.channelId].messagesObj,
@@ -805,10 +805,9 @@ export default function ChatReducer(state, action) {
           ...state.channelsObj,
           [action.data.channelId]: {
             ...state.channelsObj[action.data.channelId],
-            messageIds:
-              state.channelsObj[action.data.channelId].messageIds.concat(
-                messageId
-              ),
+            messageIds: [messageId].concat(
+              state.channelsObj[action.data.channelId].messageIds
+            ),
             messagesObj: {
               ...state.channelsObj[action.data.channelId].messagesObj,
               [messageId]: {
@@ -1068,9 +1067,9 @@ export default function ChatReducer(state, action) {
           ...state.channelsObj,
           [action.channelId]: {
             ...state.channelsObj[action.channelId],
-            messageIds: state.channelsObj[action.channelId].messageIds.concat([
-              action.message.id
-            ]),
+            messageIds: [action.message.id].concat(
+              state.channelsObj[action.channelId].messageIds
+            ),
             messagesObj: {
               ...state.channelsObj[action.channelId].messagesObj,
               [action.message.id]: action.message
