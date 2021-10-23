@@ -291,7 +291,7 @@ function MessagesContainer({
       prevTopMessageId.current &&
       topMessageId !== prevTopMessageId.current
     ) {
-      MessagesRef.current.scrollTop = prevScrollPosition.current;
+      (MessagesRef.current || {}).scrollTop = prevScrollPosition.current;
     }
     if (messageIds.length > 1) {
       // prevent scroll event from being triggered by a preview message
@@ -345,7 +345,7 @@ function MessagesContainer({
       timerRef.current = setTimeout(() => {
         const scrollThreshold =
           MessagesRef.current.scrollHeight - MessagesRef.current.offsetHeight;
-        const scrollTop = MessagesRef.current.scrollTop;
+        const scrollTop = (MessagesRef.current || {}).scrollTop;
         const distanceFromTop = scrollThreshold + scrollTop;
         if (mounted.current && distanceFromTop < 3) {
           handleLoadMore();
@@ -1126,14 +1126,14 @@ function MessagesContainer({
   );
 
   function handleReceiveNewMessage() {
-    if (MessagesRef.current.scrollTop < 0) {
+    if ((MessagesRef.current || {}).scrollTop < 0) {
       setNewUnseenMessage(true);
     }
   }
 
   function handleScrollToBottom() {
     if (mounted.current && MessagesRef.current) {
-      MessagesRef.current.scrollTop = 0;
+      (MessagesRef.current || {}).scrollTop = 0;
     }
   }
 
