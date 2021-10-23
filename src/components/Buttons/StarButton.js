@@ -87,7 +87,7 @@ export default function StarButton({
 
   return buttonShown ? (
     <ErrorBoundary>
-      <div ref={StarButtonRef}>
+      <div style={{ position: 'relative' }} ref={StarButtonRef}>
         <Button
           style={style}
           skeuomorphic={!(!!rewardLevel || byUser || filled) && skeuomorphic}
