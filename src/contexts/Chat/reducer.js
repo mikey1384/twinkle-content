@@ -999,9 +999,9 @@ export default function ChatReducer(state, action) {
           [action.channel.id]: {
             ...state.channelsObj[action.channel.id],
             ...action.channel,
-            messageIds: (
+            messageIds: [action.message.id].concat(
               state.channelsObj[action.channel.id]?.messageIds || []
-            ).concat(action.message.id),
+            ),
             messagesObj: {
               ...state.channelsObj[action.channel.id]?.messagesObj,
               [action.message.id]: action.message
