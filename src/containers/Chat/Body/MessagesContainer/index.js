@@ -1141,7 +1141,7 @@ function MessagesContainer({
       (MessagesRef.current || {}).scrollTop = 0;
       setTimeout(() => {
         (MessagesRef.current || {}).scrollTop = 0;
-      }, 10);
+      }, 100);
     }
   }
 
