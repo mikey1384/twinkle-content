@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Loading from 'components/Loading';
@@ -18,8 +18,8 @@ import {
 } from 'constants/defaultValues';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useInterval, useMyState } from 'helpers/hooks';
-import { useAppContext, useChatContext } from 'contexts';
+import { useInterval } from 'helpers/hooks';
+import LocalContext from '../../../Context';
 
 ChannelHeader.propTypes = {
   currentChannel: PropTypes.object.isRequired,
@@ -44,16 +44,6 @@ export default function ChannelHeader({
   selectedChannelId
 }) {
   const {
-    requestHelpers: {
-      loadChatSubject,
-      reloadChatSubject,
-      searchChatSubject,
-      uploadChatSubject
-    }
-  } = useAppContext();
-  const { authLevel, banned, profilePicUrl, userId, username } = useMyState();
-  const {
-    state: { allFavoriteChannelIds, subjectObj, subjectSearchResults },
     actions: {
       onClearSubjectSearchResults,
       onLoadChatSubject,
@@ -61,8 +51,16 @@ export default function ChannelHeader({
       onSearchChatSubject,
       onSetIsRespondingToSubject,
       onUploadChatSubject
-    }
-  } = useChatContext();
+    },
+    requests: {
+      loadChatSubject,
+      reloadChatSubject,
+      searchChatSubject,
+      uploadChatSubject
+    },
+    state: { allFavoriteChannelIds, subjectObj, subjectSearchResults },
+    myState: { authLevel, banned, profilePicUrl, userId, username }
+  } = useContext(LocalContext);
   const [onEdit, setOnEdit] = useState(false);
   const [onHover, setOnHover] = useState(false);
   const [submitting, setSubmitting] = useState(false);

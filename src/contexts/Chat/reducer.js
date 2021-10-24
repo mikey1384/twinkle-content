@@ -1186,6 +1186,7 @@ export default function ChatReducer(state, action) {
           ...state.channelsObj,
           [action.channelId]: {
             ...state.channelsObj[action.channelId],
+            replyTarget: null,
             isRespondingToSubject: action.isResponding
           }
         }

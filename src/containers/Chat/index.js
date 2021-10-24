@@ -22,6 +22,7 @@ import { useMyState } from 'helpers/hooks';
 import { useLocation, useHistory } from 'react-router-dom';
 import {
   useAppContext,
+  useInputContext,
   useNotiContext,
   useViewContext,
   useChatContext
@@ -47,26 +48,36 @@ function Chat({ onFileUpload }) {
       hideChat,
       leaveChannel,
       loadChatChannel,
+      loadChatSubject,
       loadGeneralChatPathId,
       loadMoreChatMessages,
       loadVocabulary,
       parseChannelPath,
       putFavoriteChannel,
+      reloadChatSubject,
+      searchChatSubject,
       sendInvitationMessage,
       startNewDMChannel,
       updateChatLastRead,
       updateLastChannelId,
-      updateUserXP
+      updateUserXP,
+      uploadChatSubject
     }
   } = useAppContext();
   const {
+    authLevel,
+    banned,
     userId,
     username,
     lastChatPath,
-    banned,
+    fileUploadLvl,
     profilePicUrl,
     profileTheme
   } = useMyState();
+  const {
+    state,
+    actions: { onEnterComment }
+  } = useInputContext();
   const {
     state: {
       allFavoriteChannelIds,
@@ -83,10 +94,12 @@ function Chat({ onFileUpload }) {
       recepientId,
       reconnecting,
       selectedChannelId,
-      subjectObj
+      subjectObj,
+      subjectSearchResults
     },
     actions: {
       onClearNumUnreads,
+      onClearSubjectSearchResults,
       onCreateNewChannel,
       onDeleteMessage,
       onEditChannelSettings,
@@ -94,23 +107,29 @@ function Chat({ onFileUpload }) {
       onEnterEmptyChat,
       onHideChat,
       onLeaveChannel,
+      onLoadChatSubject,
       onLoadMoreMessages,
       onLoadVocabulary,
       onNotifyThatMemberLeftChannel,
       onReceiveMessage,
       onReceiveMessageOnDifferentChannel,
+      onReloadChatSubject,
       onSendFirstDirectMessage,
       onSetChessModalShown,
       onSetCurrentChannelName,
+      onSetIsRespondingToSubject,
       onSetLoadingVocabulary,
       onSetCreatingNewDMChannel,
       onSetFavoriteChannel,
       onSetReplyTarget,
+      onShowIncoming,
       onSubmitMessage,
+      onSearchChatSubject,
       onTrimMessages,
       onUpdateChannelPathIdHash,
       onUpdateChessMoveViewTimeStamp,
-      onUpdateSelectedChannelId
+      onUpdateSelectedChannelId,
+      onUploadChatSubject
     }
   } = useChatContext();
   const {
@@ -378,23 +397,34 @@ function Chat({ onFileUpload }) {
     <LocalContext.Provider
       value={{
         actions: {
+          onClearSubjectSearchResults,
           onDeleteMessage,
           onEditChannelSettings,
           onEnterChannelWithId,
+          onEnterComment,
           onHideChat,
           onLeaveChannel,
+          onLoadChatSubject,
           onLoadMoreMessages,
           onReceiveMessageOnDifferentChannel,
+          onReloadChatSubject,
+          onSearchChatSubject,
           onSendFirstDirectMessage,
           onSetChessModalShown,
           onSetCreatingNewDMChannel,
+          onSetIsRespondingToSubject,
           onSetFavoriteChannel,
           onSetReplyTarget,
+          onShowIncoming,
           onSubmitMessage,
+          onUploadChatSubject,
           onUpdateChannelPathIdHash
         },
+        inputState: state,
         myState: {
+          authLevel,
           banned,
+          fileUploadLvl,
           profileTheme,
           profilePicUrl,
           userId,
@@ -410,16 +440,21 @@ function Chat({ onFileUpload }) {
           loadChatChannel,
           loadGeneralChatPathId,
           loadMoreChatMessages,
+          loadChatSubject,
           parseChannelPath,
           putFavoriteChannel,
+          reloadChatSubject,
+          searchChatSubject,
           sendInvitationMessage,
           startNewDMChannel,
-          updateUserXP
+          updateUserXP,
+          uploadChatSubject
         },
         state: {
           allFavoriteChannelIds,
           channelOnCall,
           channelPathIdHash,
+          chatStatus,
           chessModalShown,
           creatingNewDMChannel,
           socketConnected,
@@ -428,7 +463,8 @@ function Chat({ onFileUpload }) {
           recepientId,
           reconnecting,
           selectedChannelId,
-          subjectObj
+          subjectObj,
+          subjectSearchResults
         },
         onFileUpload
       }}

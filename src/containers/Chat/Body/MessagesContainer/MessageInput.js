@@ -1,6 +1,7 @@
 import React, {
   memo,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -23,9 +24,8 @@ import {
   finalizeEmoji,
   exceedsCharLimit
 } from 'helpers/stringHelpers';
-import { useMyState } from 'helpers/hooks';
 import { mb, returnMaxUploadSize } from 'constants/defaultValues';
-import { useChatContext, useInputContext } from 'contexts';
+import LocalContext from '../../Context';
 
 MessageInput.propTypes = {
   currentChannelId: PropTypes.number,
@@ -60,19 +60,16 @@ function MessageInput({
   socketConnected,
   subjectId
 }) {
+  const {
+    actions: { onEnterComment, onSetIsRespondingToSubject, onSetReplyTarget },
+    inputState,
+    myState: { banned, profileTheme, fileUploadLvl }
+  } = useContext(LocalContext);
   const FileInputRef = useRef(null);
-  const { banned, profileTheme, fileUploadLvl } = useMyState();
-  const {
-    actions: { onSetIsRespondingToSubject, onSetReplyTarget }
-  } = useChatContext();
-  const {
-    state,
-    actions: { onEnterComment }
-  } = useInputContext();
   const prevChannelId = useRef(currentChannelId);
   const textForThisChannel = useMemo(
-    () => state['chat' + currentChannelId]?.text || '',
-    [currentChannelId, state]
+    () => inputState['chat' + currentChannelId]?.text || '',
+    [currentChannelId, inputState]
   );
   const maxSize = useMemo(
     () => returnMaxUploadSize(fileUploadLvl),
