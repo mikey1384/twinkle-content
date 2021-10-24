@@ -1139,9 +1139,6 @@ function MessagesContainer({
   function handleScrollToBottom() {
     if (mounted.current && MessagesRef.current) {
       (MessagesRef.current || {}).scrollTop = 0;
-      setTimeout(() => {
-        (MessagesRef.current || {}).scrollTop = 0;
-      }, 100);
     }
   }
 

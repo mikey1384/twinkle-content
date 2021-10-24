@@ -26,6 +26,7 @@ export default function MobileMenu({ location, history, onClose }) {
   });
 
   const mounted = useRef(true);
+  const displayedRef = useRef(false);
   const {
     user: {
       actions: { onLogout }
@@ -44,6 +45,14 @@ export default function MobileMenu({ location, history, onClose }) {
     imageUri: null
   });
   const { imageEditModalShown, imageUri } = imageEditStatus;
+
+  useEffect(() => {
+    if (displayedRef.current) {
+      onClose();
+    }
+    displayedRef.current = true;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
 
   useEffect(() => {
     mounted.current = true;
