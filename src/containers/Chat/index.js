@@ -47,6 +47,7 @@ function Chat({ onFileUpload }) {
       deleteChatMessage,
       editChannelSettings,
       editChatMessage,
+      hideChatAttachment,
       hideChat,
       leaveChannel,
       loadChatChannel,
@@ -65,7 +66,8 @@ function Chat({ onFileUpload }) {
       updateChatLastRead,
       updateLastChannelId,
       updateUserXP,
-      uploadChatSubject
+      uploadChatSubject,
+      uploadThumb
     }
   } = useAppContext();
   const {
@@ -115,6 +117,7 @@ function Chat({ onFileUpload }) {
       onEditMessage,
       onEnterChannelWithId,
       onEnterEmptyChat,
+      onHideAttachment,
       onHideChat,
       onLeaveChannel,
       onLoadChatSubject,
@@ -426,6 +429,7 @@ function Chat({ onFileUpload }) {
           onEditMessage,
           onEnterChannelWithId,
           onEnterComment,
+          onHideAttachment,
           onHideChat,
           onLeaveChannel,
           onLoadChatSubject,
@@ -475,6 +479,7 @@ function Chat({ onFileUpload }) {
           editChatMessage,
           editChannelSettings,
           hideChat,
+          hideChatAttachment,
           leaveChannel,
           loadChatChannel,
           loadGeneralChatPathId,
@@ -489,7 +494,8 @@ function Chat({ onFileUpload }) {
           setChessMoveViewTimeStamp,
           startNewDMChannel,
           updateUserXP,
-          uploadChatSubject
+          uploadChatSubject,
+          uploadThumb
         },
         state: {
           allFavoriteChannelIds,

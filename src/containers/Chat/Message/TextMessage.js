@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useMemo } from 'react';
+import React, { memo, useContext, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import EditTextArea from 'components/Texts/EditTextArea';
@@ -7,9 +7,9 @@ import Embedly from 'components/Embedly';
 import LongText from 'components/Texts/LongText';
 import { Color } from 'constants/css';
 import { isValidSpoiler } from 'helpers/stringHelpers';
-import { useAppContext, useChatContext } from 'contexts';
 import { socket } from 'constants/io';
 import Spoiler from './Spoiler';
+import LocalContext from '../Context';
 
 TextMessage.propTypes = {
   attachmentHidden: PropTypes.bool,
@@ -53,11 +53,9 @@ function TextMessage({
   theme
 }) {
   const {
+    requests: { hideChatAttachment },
     actions: { onHideAttachment }
-  } = useChatContext();
-  const {
-    requestHelpers: { hideChatAttachment }
-  } = useAppContext();
+  } = useContext(LocalContext);
 
   const Prefix = useMemo(() => {
     let prefix = null;
