@@ -1,6 +1,7 @@
 import React, {
   memo,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -30,16 +31,11 @@ import {
   fetchURLFromText,
   getFileInfoFromFileName
 } from 'helpers/stringHelpers';
-import { useMyState, useContentState, useLazyLoad } from 'helpers/hooks';
+import { useContentState, useLazyLoad } from 'helpers/hooks';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import {
-  useAppContext,
-  useContentContext,
-  useNotiContext,
-  useChatContext
-} from 'contexts';
 import ErrorBoundary from 'components/ErrorBoundary';
+import LocalContext from '../Context';
 
 Message.propTypes = {
   chessCountdownNumber: PropTypes.number,
@@ -118,6 +114,42 @@ function Message({
   onShowSubjectMsgsModal,
   zIndex
 }) {
+  const {
+    actions: {
+      onEditMessage,
+      onSaveMessage,
+      onSetEmbeddedUrl,
+      onSetActualDescription,
+      onSetActualTitle,
+      onSetIsEditing,
+      onSetSiteUrl,
+      onSetThumbUrl,
+      onSetMediaStarted,
+      onSetReplyTarget,
+      onUpdateChessMoveViewTimeStamp,
+      onUpdateRecentChessMessage
+    },
+    myState: {
+      authLevel,
+      canDelete,
+      canEdit,
+      canReward,
+      isCreator,
+      userId: myId,
+      username: myUsername,
+      profilePicUrl: myProfilePicUrl
+    },
+    requests: { editChatMessage, saveChatMessage, setChessMoveViewTimeStamp },
+    state: { filesBeingUploaded, socketConnected }
+  } = useContext(LocalContext);
+  const {
+    thumbUrl: recentThumbUrl,
+    isEditing,
+    started
+  } = useContentState({
+    contentType: 'chat',
+    contentId: messageId
+  });
   const [ComponentRef, inView] = useInView({
     threshold: 0
   });
@@ -132,16 +164,6 @@ function Message({
     onSetVisible: setVisible,
     delay: 1000
   });
-  const {
-    authLevel,
-    canDelete,
-    canEdit,
-    canReward,
-    isCreator,
-    userId: myId,
-    username: myUsername,
-    profilePicUrl: myProfilePicUrl
-  } = useMyState();
   const userIsUploader = myId === userId;
   const userCanEditThis = useMemo(
     () =>
@@ -163,43 +185,6 @@ function Message({
     () => canReward && authLevel > uploaderAuthLevel && myId !== userId,
     [authLevel, canReward, uploaderAuthLevel, userId, myId]
   );
-  const {
-    requestHelpers: {
-      editChatMessage,
-      saveChatMessage,
-      setChessMoveViewTimeStamp
-    }
-  } = useAppContext();
-  const {
-    actions: {
-      onSetEmbeddedUrl,
-      onSetActualDescription,
-      onSetActualTitle,
-      onSetIsEditing,
-      onSetSiteUrl,
-      onSetThumbUrl,
-      onSetMediaStarted
-    }
-  } = useContentContext();
-  const {
-    thumbUrl: recentThumbUrl,
-    isEditing,
-    started
-  } = useContentState({
-    contentType: 'chat',
-    contentId: messageId
-  });
-
-  const {
-    state: { filesBeingUploaded },
-    actions: {
-      onEditMessage,
-      onSaveMessage,
-      onSetReplyTarget,
-      onUpdateChessMoveViewTimeStamp,
-      onUpdateRecentChessMessage
-    }
-  } = useChatContext();
 
   const [uploadStatus = {}] = useMemo(
     () =>
@@ -208,9 +193,6 @@ function Message({
       ) || [],
     [channelId, filePath, filesBeingUploaded]
   );
-  const {
-    state: { socketConnected }
-  } = useNotiContext();
   let {
     username,
     profilePicUrl,
@@ -594,6 +576,7 @@ function Message({
                   />
                 ) : isDrawOffer ? (
                   <DrawOffer
+                    myId={myId}
                     userId={userId}
                     username={username}
                     onClick={onChessBoardClick}

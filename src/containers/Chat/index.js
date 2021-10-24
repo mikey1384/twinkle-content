@@ -22,6 +22,7 @@ import { useMyState } from 'helpers/hooks';
 import { useLocation, useHistory } from 'react-router-dom';
 import {
   useAppContext,
+  useContentContext,
   useInputContext,
   useNotiContext,
   useViewContext,
@@ -45,6 +46,7 @@ function Chat({ onFileUpload }) {
       createNewChat,
       deleteChatMessage,
       editChannelSettings,
+      editChatMessage,
       hideChat,
       leaveChannel,
       loadChatChannel,
@@ -55,8 +57,10 @@ function Chat({ onFileUpload }) {
       parseChannelPath,
       putFavoriteChannel,
       reloadChatSubject,
+      saveChatMessage,
       searchChatSubject,
       sendInvitationMessage,
+      setChessMoveViewTimeStamp,
       startNewDMChannel,
       updateChatLastRead,
       updateLastChannelId,
@@ -67,10 +71,14 @@ function Chat({ onFileUpload }) {
   const {
     authLevel,
     banned,
+    canDelete,
+    canEdit,
+    canReward,
+    fileUploadLvl,
+    lastChatPath,
+    isCreator,
     userId,
     username,
-    lastChatPath,
-    fileUploadLvl,
     profilePicUrl,
     profileTheme
   } = useMyState();
@@ -89,6 +97,7 @@ function Chat({ onFileUpload }) {
       channelOnCall,
       creatingNewDMChannel,
       currentChannelName,
+      filesBeingUploaded,
       loadingVocabulary,
       loaded,
       recepientId,
@@ -103,6 +112,7 @@ function Chat({ onFileUpload }) {
       onCreateNewChannel,
       onDeleteMessage,
       onEditChannelSettings,
+      onEditMessage,
       onEnterChannelWithId,
       onEnterEmptyChat,
       onHideChat,
@@ -114,6 +124,7 @@ function Chat({ onFileUpload }) {
       onReceiveMessage,
       onReceiveMessageOnDifferentChannel,
       onReloadChatSubject,
+      onSaveMessage,
       onSendFirstDirectMessage,
       onSetChessModalShown,
       onSetCurrentChannelName,
@@ -128,10 +139,22 @@ function Chat({ onFileUpload }) {
       onTrimMessages,
       onUpdateChannelPathIdHash,
       onUpdateChessMoveViewTimeStamp,
+      onUpdateRecentChessMessage,
       onUpdateSelectedChannelId,
       onUploadChatSubject
     }
   } = useChatContext();
+  const {
+    actions: {
+      onSetEmbeddedUrl,
+      onSetActualDescription,
+      onSetActualTitle,
+      onSetIsEditing,
+      onSetSiteUrl,
+      onSetThumbUrl,
+      onSetMediaStarted
+    }
+  } = useContentContext();
   const {
     state: { pageVisible }
   } = useViewContext();
@@ -400,6 +423,7 @@ function Chat({ onFileUpload }) {
           onClearSubjectSearchResults,
           onDeleteMessage,
           onEditChannelSettings,
+          onEditMessage,
           onEnterChannelWithId,
           onEnterComment,
           onHideChat,
@@ -408,15 +432,25 @@ function Chat({ onFileUpload }) {
           onLoadMoreMessages,
           onReceiveMessageOnDifferentChannel,
           onReloadChatSubject,
+          onSaveMessage,
           onSearchChatSubject,
           onSendFirstDirectMessage,
+          onSetActualDescription,
+          onSetActualTitle,
           onSetChessModalShown,
           onSetCreatingNewDMChannel,
+          onSetEmbeddedUrl,
+          onSetIsEditing,
           onSetIsRespondingToSubject,
           onSetFavoriteChannel,
+          onSetMediaStarted,
           onSetReplyTarget,
+          onSetSiteUrl,
+          onSetThumbUrl,
           onShowIncoming,
           onSubmitMessage,
+          onUpdateChessMoveViewTimeStamp,
+          onUpdateRecentChessMessage,
           onUploadChatSubject,
           onUpdateChannelPathIdHash
         },
@@ -424,7 +458,11 @@ function Chat({ onFileUpload }) {
         myState: {
           authLevel,
           banned,
+          canDelete,
+          canEdit,
+          canReward,
           fileUploadLvl,
+          isCreator,
           profileTheme,
           profilePicUrl,
           userId,
@@ -434,6 +472,7 @@ function Chat({ onFileUpload }) {
           acceptInvitation,
           changeChannelOwner,
           deleteChatMessage,
+          editChatMessage,
           editChannelSettings,
           hideChat,
           leaveChannel,
@@ -444,8 +483,10 @@ function Chat({ onFileUpload }) {
           parseChannelPath,
           putFavoriteChannel,
           reloadChatSubject,
+          saveChatMessage,
           searchChatSubject,
           sendInvitationMessage,
+          setChessMoveViewTimeStamp,
           startNewDMChannel,
           updateUserXP,
           uploadChatSubject
@@ -457,12 +498,13 @@ function Chat({ onFileUpload }) {
           chatStatus,
           chessModalShown,
           creatingNewDMChannel,
-          socketConnected,
           chatType,
+          filesBeingUploaded,
           loadingVocabulary,
           recepientId,
           reconnecting,
           selectedChannelId,
+          socketConnected,
           subjectObj,
           subjectSearchResults
         },

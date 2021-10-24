@@ -1,17 +1,16 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
 import { Color } from 'constants/css';
 
 DrawOffer.propTypes = {
+  myId: PropTypes.number,
   onClick: PropTypes.func.isRequired,
   userId: PropTypes.number,
   username: PropTypes.string
 };
 
-export default function DrawOffer({ onClick, username, userId }) {
-  const { userId: myId } = useMyState();
+export default function DrawOffer({ onClick, username, userId, myId }) {
   const displayedUserLabel = useMemo(() => {
     if (userId === myId) {
       return 'You';
