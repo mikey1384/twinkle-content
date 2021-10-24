@@ -54,6 +54,7 @@ function Chat({ onFileUpload }) {
       loadChatSubject,
       loadGeneralChatPathId,
       loadMoreChatMessages,
+      loadRankings,
       loadVocabulary,
       parseChannelPath,
       putFavoriteChannel,
@@ -82,7 +83,8 @@ function Chat({ onFileUpload }) {
     userId,
     username,
     profilePicUrl,
-    profileTheme
+    profileTheme,
+    twinkleXP
   } = useMyState();
   const {
     state,
@@ -163,7 +165,8 @@ function Chat({ onFileUpload }) {
     state: { pageVisible }
   } = useViewContext();
   const {
-    state: { socketConnected }
+    state: { socketConnected },
+    actions: { onGetRanks }
   } = useNotiContext();
   const [creatingChat, setCreatingChat] = useState(false);
   const [createNewChatModalShown, setCreateNewChatModalShown] = useState(false);
@@ -430,6 +433,7 @@ function Chat({ onFileUpload }) {
           onEditMessage,
           onEnterChannelWithId,
           onEnterComment,
+          onGetRanks,
           onHideAttachment,
           onHideChat,
           onLeaveChannel,
@@ -470,6 +474,7 @@ function Chat({ onFileUpload }) {
           isCreator,
           profileTheme,
           profilePicUrl,
+          twinkleXP,
           userId,
           username
         },
@@ -486,6 +491,7 @@ function Chat({ onFileUpload }) {
           loadGeneralChatPathId,
           loadMoreChatMessages,
           loadChatSubject,
+          loadRankings,
           parseChannelPath,
           putFavoriteChannel,
           reloadChatSubject,
@@ -502,10 +508,10 @@ function Chat({ onFileUpload }) {
           allFavoriteChannelIds,
           channelOnCall,
           channelPathIdHash,
+          chatType,
           chatStatus,
           chessModalShown,
           creatingNewDMChannel,
-          chatType,
           filesBeingUploaded,
           isRespondingToSubject,
           loadingVocabulary,
