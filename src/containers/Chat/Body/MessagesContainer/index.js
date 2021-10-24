@@ -901,94 +901,96 @@ function MessagesContainer({
             onFavoriteClick={handleFavoriteClick}
           />
         )}
-        {loading ? (
-          <Loading />
-        ) : (
-          <div
-            className={css`
-              padding: 0 1rem;
-              height: 100%;
-              display: flex;
-              flex-direction: column-reverse;
-              overflow-y: scroll;
-              -webkit-overflow-scrolling: touch;
-            `}
-            ref={MessagesRef}
-          >
-            <div
-              style={{
-                position: 'absolute',
-                bottom: '1rem',
-                display: 'flex',
-                justifyContent: 'center',
-                width: '100%',
-                zIndex: 1000
-              }}
-            >
-              {newUnseenMessage && (
-                <Button
-                  filled
-                  color="orange"
-                  style={{ opacity: 0.9 }}
-                  onClick={() => {
-                    setNewUnseenMessage(false);
-                    handleScrollToBottom();
-                  }}
-                >
-                  New Message
-                </Button>
-              )}
-            </div>
-            {messages.map((message, index) => (
-              <Message
-                key={selectedChannelId + (message.id || 'newMessage' + index)}
-                channelLoaded={loaded}
-                channelId={selectedChannelId}
-                channelName={channelName}
-                chessCountdownNumber={chessCountdownNumber}
-                chessOpponent={chessOpponent}
-                currentChannel={currentChannel}
-                index={index}
-                isLastMsg={index === 0}
-                isNotification={!!message.isNotification}
-                loading={loading}
-                message={message}
-                onAcceptGroupInvitation={handleAcceptGroupInvitation}
-                onChessBoardClick={handleChessModalShown}
-                onChessSpoilerClick={handleChessSpoilerClick}
-                onDelete={handleShowDeleteModal}
-                onReceiveNewMessage={handleReceiveNewMessage}
-                onReplyClick={() => ChatInputRef.current.focus()}
-                onRewardMessageSubmit={handleRewardMessageSubmit}
-                onScrollToBottom={handleScrollToBottom}
-                recepientId={recepientId}
-                onShowSubjectMsgsModal={({ subjectId, content }) =>
-                  setSubjectMsgsModal({ shown: true, subjectId, content })
-                }
-              />
-            ))}
-            {!loading && messagesLoadMoreButton && (
-              <div>
-                <div style={{ width: '100%', height: '1rem' }} />
-                <div
-                  style={{
-                    marginBottom: '1rem',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    width: '100%'
-                  }}
-                >
-                  <LoadMoreButton
+        <div
+          className={css`
+            padding: 0 1rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column-reverse;
+            overflow-y: scroll;
+            -webkit-overflow-scrolling: touch;
+          `}
+          ref={MessagesRef}
+        >
+          {loading ? (
+            <Loading style={{ position: 'absolute', top: '5rem' }} />
+          ) : (
+            <>
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: '1rem',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  width: '100%',
+                  zIndex: 1000
+                }}
+              >
+                {newUnseenMessage && (
+                  <Button
                     filled
-                    color="lightBlue"
-                    loading={loadMoreButtonLock}
-                    onClick={handleLoadMore}
-                  />
-                </div>
+                    color="orange"
+                    style={{ opacity: 0.9 }}
+                    onClick={() => {
+                      setNewUnseenMessage(false);
+                      handleScrollToBottom();
+                    }}
+                  >
+                    New Message
+                  </Button>
+                )}
               </div>
-            )}
-          </div>
-        )}
+              {messages.map((message, index) => (
+                <Message
+                  key={selectedChannelId + (message.id || 'newMessage' + index)}
+                  channelLoaded={loaded}
+                  channelId={selectedChannelId}
+                  channelName={channelName}
+                  chessCountdownNumber={chessCountdownNumber}
+                  chessOpponent={chessOpponent}
+                  currentChannel={currentChannel}
+                  index={index}
+                  isLastMsg={index === 0}
+                  isNotification={!!message.isNotification}
+                  loading={loading}
+                  message={message}
+                  onAcceptGroupInvitation={handleAcceptGroupInvitation}
+                  onChessBoardClick={handleChessModalShown}
+                  onChessSpoilerClick={handleChessSpoilerClick}
+                  onDelete={handleShowDeleteModal}
+                  onReceiveNewMessage={handleReceiveNewMessage}
+                  onReplyClick={() => ChatInputRef.current.focus()}
+                  onRewardMessageSubmit={handleRewardMessageSubmit}
+                  onScrollToBottom={handleScrollToBottom}
+                  recepientId={recepientId}
+                  onShowSubjectMsgsModal={({ subjectId, content }) =>
+                    setSubjectMsgsModal({ shown: true, subjectId, content })
+                  }
+                />
+              ))}
+              {!loading && messagesLoadMoreButton && (
+                <div>
+                  <div style={{ width: '100%', height: '1rem' }} />
+                  <div
+                    style={{
+                      marginBottom: '1rem',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      width: '100%'
+                    }}
+                  >
+                    <LoadMoreButton
+                      filled
+                      color="lightBlue"
+                      loading={loadMoreButtonLock}
+                      onClick={handleLoadMore}
+                    />
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+        </div>
       </div>
       {hideModalShown && (
         <ConfirmModal
@@ -1136,7 +1138,6 @@ function MessagesContainer({
 
   function handleScrollToBottom() {
     if (mounted.current && MessagesRef.current) {
-      MessagesRef.current;
       (MessagesRef.current || {}).scrollTop = 0;
     }
   }
