@@ -42,7 +42,7 @@ export default function MobileMenu({ location, history, onClose }) {
   }, [location]);
 
   useEffect(() => {
-    setMarginLeft(0);
+    setTimeout(() => setMarginLeft(0), 10);
   }, []);
 
   useEffect(() => {
@@ -78,8 +78,8 @@ export default function MobileMenu({ location, history, onClose }) {
           width: 70%;
           position: relative;
           background: ${Color.whiteGray()};
-          margin-left: ${marginLeft};
           transition: margin-left 0.5s;
+          margin-left: ${marginLeft};
           overflow-y: scroll;
         `}`}
       >
