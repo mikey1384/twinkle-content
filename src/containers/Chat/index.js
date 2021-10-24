@@ -84,6 +84,7 @@ function Chat({ onFileUpload }) {
     username,
     profilePicUrl,
     profileTheme,
+    rank,
     twinkleXP
   } = useMyState();
   const {
@@ -165,7 +166,7 @@ function Chat({ onFileUpload }) {
     state: { pageVisible }
   } = useViewContext();
   const {
-    state: { socketConnected },
+    state: { allRanks, socketConnected },
     actions: { onGetRanks }
   } = useNotiContext();
   const [creatingChat, setCreatingChat] = useState(false);
@@ -474,6 +475,7 @@ function Chat({ onFileUpload }) {
           isCreator,
           profileTheme,
           profilePicUrl,
+          rank,
           twinkleXP,
           userId,
           username
@@ -506,6 +508,7 @@ function Chat({ onFileUpload }) {
         },
         state: {
           allFavoriteChannelIds,
+          allRanks,
           channelOnCall,
           channelPathIdHash,
           chatType,
