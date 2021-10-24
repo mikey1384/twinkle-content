@@ -44,6 +44,7 @@ MessagesContainer.propTypes = {
 };
 
 const CALL_SCREEN_HEIGHT = '30%';
+const unseenButtonThreshold = -2000;
 const deviceIsMobile = isMobile(navigator);
 
 function MessagesContainer({
@@ -346,7 +347,7 @@ function MessagesContainer({
         if (mounted.current && distanceFromTop < 3) {
           handleLoadMore();
         }
-        if (mounted.current && scrollTop === 0) {
+        if (mounted.current && scrollTop >= unseenButtonThreshold) {
           setNewUnseenMessage(false);
         }
       }, 200);
@@ -1125,7 +1126,10 @@ function MessagesContainer({
   );
 
   function handleReceiveNewMessage() {
-    if ((MessagesRef.current || {}).scrollTop < 0) {
+    if (
+      MessagesRef.current &&
+      (MessagesRef.current || {}).scrollTop < unseenButtonThreshold
+    ) {
       setNewUnseenMessage(true);
     }
   }
