@@ -1,4 +1,5 @@
 import React, {
+  memo,
   useCallback,
   useContext,
   useEffect,
@@ -46,7 +47,7 @@ const CALL_SCREEN_HEIGHT = '30%';
 const unseenButtonThreshold = -2000;
 const deviceIsMobile = isMobile(navigator);
 
-export default function MessagesContainer({
+function MessagesContainer({
   channelName,
   chessOpponent,
   currentChannel,
@@ -1150,3 +1151,5 @@ export default function MessagesContainer({
     });
   }
 }
+
+export default memo(MessagesContainer);

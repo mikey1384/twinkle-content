@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { memo, useContext } from 'react';
 import PropTypes from 'prop-types';
 import MessagesContainer from './MessagesContainer';
 import Vocabulary from './Vocabulary';
@@ -15,12 +15,7 @@ Body.propTypes = {
   loading: PropTypes.bool
 };
 
-export default function Body({
-  channelName,
-  chessOpponent,
-  currentChannel,
-  loading
-}) {
+function Body({ channelName, chessOpponent, currentChannel, loading }) {
   const {
     state: { chatType, loadingVocabulary }
   } = useContext(LocalContext);
@@ -60,3 +55,5 @@ export default function Body({
     </ErrorBoundary>
   );
 }
+
+export default memo(Body);

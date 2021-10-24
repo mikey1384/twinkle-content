@@ -1,4 +1,5 @@
 import React, {
+  memo,
   useCallback,
   useEffect,
   useMemo,
@@ -34,7 +35,7 @@ Chat.propTypes = {
   onFileUpload: PropTypes.func
 };
 
-export default function Chat({ onFileUpload }) {
+function Chat({ onFileUpload }) {
   const { pathname } = useLocation();
   const history = useHistory();
   const {
@@ -587,3 +588,5 @@ export default function Chat({ onFileUpload }) {
       : Object.entries(currentChannelOnlineMembers).map(([, member]) => member);
   }
 }
+
+export default memo(Chat);
