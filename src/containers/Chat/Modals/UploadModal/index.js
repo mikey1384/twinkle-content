@@ -17,8 +17,6 @@ import {
   finalizeEmoji,
   getFileInfoFromFileName
 } from 'helpers/stringHelpers';
-import { useMyState } from 'helpers/hooks';
-import { useChatContext } from 'contexts';
 import LocalContext from '../../Context';
 
 UploadModal.propTypes = {
@@ -42,12 +40,12 @@ function UploadModal({
   recepientId,
   subjectId
 }) {
-  const { profilePicUrl, userId, username } = useMyState();
-  const { onFileUpload } = useContext(LocalContext);
   const {
+    onFileUpload,
     state: { isRespondingToSubject },
-    actions: { onSubmitMessage }
-  } = useChatContext();
+    actions: { onSubmitMessage },
+    myState: { profilePicUrl, userId, username }
+  } = useContext(LocalContext);
   const [caption, setCaption] = useState(initialCaption);
   const [imageUrl, setImageUrl] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
