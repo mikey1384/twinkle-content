@@ -164,7 +164,7 @@ function Message({
     onSetVisible: setVisible,
     delay: 1000
   });
-  const userIsUploader = myId === userId;
+  const userIsUploader = useMemo(() => myId === userId, [myId, userId]);
   const userCanEditThis = useMemo(
     () =>
       !invitePath &&
@@ -278,13 +278,6 @@ function Message({
   }, [chessState, moveViewTimeStamp, myId]);
 
   useEffect(() => {
-    if (isLastMsg && userIsUploader) {
-      onScrollToBottom();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLastMsg]);
-
-  useEffect(() => {
     const url = fetchURLFromText(content);
     if (url) {
       setExtractedUrl(url);
@@ -322,11 +315,18 @@ function Message({
   }, [content]);
 
   useEffect(() => {
+    if (isLastMsg && userIsUploader) {
+      onScrollToBottom();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLastMsg, userIsUploader]);
+
+  useEffect(() => {
     if (isLastMsg && isNewMessage && !userIsUploader) {
       onReceiveNewMessage();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isLastMsg, isNewMessage, userIsUploader]);
 
   const contentShown = useMemo(
     () => inView || isLastMsg || started || visible || !placeholderHeight,
