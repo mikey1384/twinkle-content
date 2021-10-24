@@ -1,5 +1,4 @@
 import React, {
-  memo,
   useCallback,
   useContext,
   useEffect,
@@ -60,7 +59,7 @@ Message.propTypes = {
   zIndex: PropTypes.number
 };
 
-function Message({
+export default function Message({
   channelId,
   channelName,
   chessCountdownNumber,
@@ -700,5 +699,3 @@ function Message({
     </ErrorBoundary>
   );
 }
-
-export default memo(Message);
