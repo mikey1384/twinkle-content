@@ -564,7 +564,7 @@ function Message({
                   {displayedTimeStamp}
                 </span>
               </div>
-              <>
+              <div>
                 {invitePath ? (
                   <Invitation
                     sender={{ id: userId, username }}
@@ -662,7 +662,7 @@ function Message({
                     )}
                   </>
                 )}
-              </>
+              </div>
               {dropdownButtonShown && (
                 <DropdownButton
                   skeuomorphic
