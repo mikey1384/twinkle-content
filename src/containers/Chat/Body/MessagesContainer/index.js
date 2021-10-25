@@ -105,8 +105,7 @@ function MessagesContainer({
     isRespondingToSubject = false,
     messageIds = [],
     messagesObj = {},
-    messagesLoadMoreButton = false,
-    loaded
+    messagesLoadMoreButton = false
   } = currentChannel;
   const [chessCountdownObj, setChessCountdownObj] = useState({});
   const [textAreaHeight, setTextAreaHeight] = useState(0);
@@ -945,7 +944,6 @@ function MessagesContainer({
               {messages.map((message, index) => (
                 <Message
                   key={selectedChannelId + (message.id || 'newMessage' + index)}
-                  channelLoaded={loaded}
                   channelId={selectedChannelId}
                   channelName={channelName}
                   chessCountdownNumber={chessCountdownNumber}
