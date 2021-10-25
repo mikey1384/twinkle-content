@@ -121,9 +121,10 @@ function TextMessage({
                 <Button
                   filled
                   color="logoBlue"
+                  skeuomorphic
                   onClick={() => onShowSubjectMsgsModal({ subjectId, content })}
                 >
-                  Show related conversations
+                  Show responses
                 </Button>
               </div>
             )}
