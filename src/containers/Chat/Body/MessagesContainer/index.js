@@ -195,8 +195,8 @@ function MessagesContainer({
   ]);
 
   const loading = useMemo(
-    () => !loaded || channelLoading || creatingNewDMChannel || reconnecting,
-    [loaded, channelLoading, creatingNewDMChannel, reconnecting]
+    () => channelLoading || creatingNewDMChannel || reconnecting,
+    [channelLoading, creatingNewDMChannel, reconnecting]
   );
 
   const chessCountdownNumber = useMemo(
