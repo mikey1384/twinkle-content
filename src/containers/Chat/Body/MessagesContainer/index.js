@@ -289,6 +289,8 @@ function MessagesContainer({
       topMessageId !== prevTopMessageId.current
     ) {
       (MessagesRef.current || {}).scrollTop = prevScrollPosition.current;
+      (MessagesRef.current || {}).scrollTop = prevScrollPosition.current + 1000;
+      (MessagesRef.current || {}).scrollTop = prevScrollPosition.current;
     }
     if (messageIds.length > 1) {
       // prevent scroll event from being triggered by a preview message
@@ -1133,12 +1135,16 @@ function MessagesContainer({
       (MessagesRef.current || {}).scrollTop < unseenButtonThreshold
     ) {
       setNewUnseenMessage(true);
+    } else {
+      handleScrollToBottom();
     }
   }
 
   function handleScrollToBottom() {
     if (mounted.current && MessagesRef.current) {
-      (MessagesRef.current || {}).scrollTop = 0;
+      (MessagesRef.current || {}).scrollTop = 1000;
+      (MessagesRef.current || {}).scrollTop = -1000;
+      (MessagesRef.current || {}).scrollTop = 1000;
     }
   }
 
