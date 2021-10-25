@@ -415,7 +415,6 @@ export default function Details({
                   skeuomorphic
                   color="darkerGray"
                   style={{ marginRight: '1rem' }}
-                  direction="left"
                   text="Edit or Delete"
                   menuProps={editMenuItems}
                 />
