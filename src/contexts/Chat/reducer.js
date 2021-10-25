@@ -1253,8 +1253,13 @@ export default function ChatReducer(state, action) {
           : {}
       };
     case 'SET_RECONNECTING': {
+      const newChannelsObj = { ...state.channelsObj };
+      for (let key in newChannelsObj) {
+        (newChannelsObj[key] || {}).loaded = false;
+      }
       return {
         ...state,
+        channelsObj: newChannelsObj,
         reconnecting: true
       };
     }
