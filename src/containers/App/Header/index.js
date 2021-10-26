@@ -691,7 +691,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
           @media (max-width: ${mobileMaxWidth}) {
             bottom: 0;
             box-shadow: none;
-            height: 5rem;
+            height: 7rem;
             border-top: 1px solid ${Color.borderGray()};
           }
         `}`}

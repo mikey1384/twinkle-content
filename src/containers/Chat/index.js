@@ -540,7 +540,7 @@ function Chat({ onFileUpload }) {
                 position: relative;
                 @media (max-width: ${phoneMaxWidth}) {
                   width: 152vw;
-                  height: 100%;
+                  height: CALC(100% - 7rem);
                 }
               `}
             >
