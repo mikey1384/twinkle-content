@@ -45,7 +45,7 @@ export default function Modal({
       <div
         className={`${css`
           position: fixed;
-          z-index: 999999;
+          z-index: 9999999;
           top: 0;
           right: 0;
           left: 0;
