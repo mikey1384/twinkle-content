@@ -54,6 +54,7 @@ App.propTypes = {
 };
 
 const deviceIsMobile = isMobile(navigator);
+const userIsUsingIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
 function App({ location, history }) {
   const {
@@ -463,14 +464,14 @@ function App({ location, history }) {
       />
       <div
         id="App"
-        className={css`
+        className={`${userIsUsingIOS ? 'ios ' : ''}${css`
           margin-top: 4.5rem;
           height: 100%;
           @media (max-width: ${mobileMaxWidth}) {
             margin-top: 0;
             padding-top: 0;
           }
-        `}
+        `}`}
       >
         <Switch>
           <Route

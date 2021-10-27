@@ -128,7 +128,7 @@ hr {
   body {
     font-size: 8px;
   }
-  #App {
+  #App.ios {
     overflow-y: visible;
   }
   .header.chat {
