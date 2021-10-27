@@ -180,7 +180,7 @@ function People() {
         <div
           className={css`
             display: ${loadMoreButton ? 'none' : 'block'};
-            height: 5rem;
+            height: 7rem;
             @media (max-width: ${mobileMaxWidth}) {
               display: block;
             }
