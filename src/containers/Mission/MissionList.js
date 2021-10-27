@@ -44,11 +44,7 @@ export default function MissionList({
     if (selectedMissionListTab) {
       return;
     }
-    if (ongoingMissions.length === 0) {
-      onSetSelectedMissionListTab('complete');
-    } else {
-      onSetSelectedMissionListTab('ongoing');
-    }
+    onSetSelectedMissionListTab('ongoing');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ongoingMissions.length, selectedMissionListTab]);
   let displayedMissions = useMemo(() => {
