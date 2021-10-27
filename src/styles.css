@@ -73,9 +73,7 @@ hr {
 
 #App {
   height: 100%;
-  position: fixed;
   overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
 }
 
 @keyframes spin {
@@ -129,6 +127,9 @@ hr {
   html,
   body {
     font-size: 8px;
+  }
+  #App {
+    overflow-y: visible;
   }
   .header.chat {
     top: 0 !important;

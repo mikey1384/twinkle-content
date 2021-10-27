@@ -230,8 +230,9 @@ export default function Stories() {
               <div
                 className={css`
                   display: ${loadMoreButton ? 'none' : 'block'};
-                  height: 7rem;
+                  height: 5rem;
                   @media (max-width: ${mobileMaxWidth}) {
+                    height: 7rem;
                     display: block;
                   }
                 `}
