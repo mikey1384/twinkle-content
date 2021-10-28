@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import AccountMenu from './AccountMenu';
 import MainNavs from './MainNavs';
@@ -34,7 +34,10 @@ Header.propTypes = {
 export default function Header({ onMobileMenuOpen, style = {} }) {
   const { pathname } = useLocation();
   const history = useHistory();
-  const usingChat = getSectionFromPathname(pathname)?.section === 'chat';
+  const usingChat = useMemo(
+    () => getSectionFromPathname(pathname)?.section === 'chat',
+    [pathname]
+  );
   const {
     user: {
       actions: { onSetLastChatPath }

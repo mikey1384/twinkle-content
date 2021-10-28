@@ -36,7 +36,7 @@ import { socket } from 'constants/io';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 import { finalizeEmoji } from 'helpers/stringHelpers';
 import { useMyState, useScrollPosition } from 'helpers/hooks';
-import { isMobile } from 'helpers';
+import { isMobile, getSectionFromPathname } from 'helpers';
 import { v1 as uuidv1 } from 'uuid';
 import {
   useAppContext,
@@ -124,6 +124,10 @@ function App({ location, history }) {
   const hiddenRef = useRef(null);
   const authRef = useRef(null);
   const mounted = useRef(true);
+  const usingChat = useMemo(
+    () => getSectionFromPathname(location?.pathname)?.section === 'chat',
+    [location?.pathname]
+  );
 
   useScrollPosition({
     onRecordScrollPosition,
@@ -464,7 +468,7 @@ function App({ location, history }) {
       />
       <div
         id="App"
-        className={`${userIsUsingIOS ? 'ios ' : ''}${css`
+        className={`${userIsUsingIOS && !usingChat ? 'ios ' : ''}${css`
           margin-top: 4.5rem;
           height: 100%;
           @media (max-width: ${mobileMaxWidth}) {

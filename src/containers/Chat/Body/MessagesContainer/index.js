@@ -342,7 +342,8 @@ function MessagesContainer({
       clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => {
         const scrollThreshold =
-          MessagesRef.current.scrollHeight - MessagesRef.current.offsetHeight;
+          (MessagesRef.current || {}).scrollHeight -
+          (MessagesRef.current || {}).offsetHeight;
         const scrollTop = (MessagesRef.current || {}).scrollTop;
         const distanceFromTop = scrollThreshold + scrollTop;
         if (mounted.current && distanceFromTop < 3) {
@@ -630,8 +631,8 @@ function MessagesContainer({
       if (!loadMoreButtonLock) {
         setLoadMoreButtonLock(true);
         prevScrollPosition.current =
-          (MessagesRef.current.scrollHeight -
-            MessagesRef.current.offsetHeight) *
+          ((MessagesRef.current || {}).scrollHeight -
+            (MessagesRef.current || {}).offsetHeight) *
           -1;
         try {
           const { messageIds, messagesObj, loadedChannelId } =
