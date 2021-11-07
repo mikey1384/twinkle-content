@@ -9,6 +9,7 @@ import { css } from '@emotion/css';
 import { isMobile } from 'helpers';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
+import localize from 'constants/localize';
 
 const categoryObj = {
   uploads: {
@@ -23,6 +24,8 @@ const categoryObj = {
     label: 'XP Videos'
   }
 };
+const allPostsLabel = localize('allPosts');
+const subjectsLabel = localize('subjects');
 
 HomeFilter.propTypes = {
   applyFilter: PropTypes.func.isRequired,
@@ -132,7 +135,7 @@ export default function HomeFilter({
               >
                 {['all', 'subject'].map((type) => {
                   const displayLabel =
-                    type === 'all' ? 'All Posts' : 'Subjects';
+                    type === 'all' ? allPostsLabel : subjectsLabel;
                   return (
                     <nav
                       key={type}

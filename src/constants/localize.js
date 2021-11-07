@@ -35,6 +35,14 @@ const languageObj = {
   youtubeVideo: {
     en: 'YouTube Video',
     kr: '유튜브 동영상'
+  },
+  allPosts: {
+    en: 'All Posts',
+    kr: '모든 게시물'
+  },
+  subjects: {
+    en: 'Subjects',
+    kr: '주제'
   }
 };
 export default function localize(section) {
