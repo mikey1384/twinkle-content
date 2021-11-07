@@ -29,6 +29,9 @@ MainNavs.propTypes = {
 };
 
 const homeLabel = localize('home');
+const exploreLabel = localize('explore');
+const missionsLabel = localize('missions');
+const chatLabel = localize('chat');
 
 function MainNavs({
   loggedIn,
@@ -276,7 +279,7 @@ function MainNavs({
         to={homeNav}
         isHome
         className="mobile"
-        imgLabel={homeLabel}
+        imgLabel="home"
         alert={pathname === '/' && (numNewPosts > 0 || feedsOutdated)}
       />
       <Nav
@@ -339,7 +342,7 @@ function MainNavs({
         style={{ marginLeft: '2rem' }}
         imgLabel="search"
       >
-        EXPLORE
+        {exploreLabel}
       </Nav>
       {contentNav && (
         <Nav
@@ -359,7 +362,7 @@ function MainNavs({
         style={{ marginLeft: '2rem' }}
         imgLabel="tasks"
       >
-        MISSIONS
+        {missionsLabel}
       </Nav>
       <div
         className={css`
@@ -377,7 +380,7 @@ function MainNavs({
             imgLabel="comments"
             alert={chatAlertShown}
           >
-            CHAT
+            {chatLabel}
           </Nav>
         )}
       </div>
