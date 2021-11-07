@@ -15,6 +15,7 @@ import {
   useViewContext
 } from 'contexts';
 import { socket } from 'constants/io';
+import localize from 'constants/localize';
 
 MainNavs.propTypes = {
   loggedIn: PropTypes.bool,
@@ -26,6 +27,8 @@ MainNavs.propTypes = {
   defaultSearchFilter: PropTypes.string,
   totalRewardAmount: PropTypes.number
 };
+
+const homeLabel = localize('home');
 
 function MainNavs({
   loggedIn,
@@ -273,7 +276,7 @@ function MainNavs({
         to={homeNav}
         isHome
         className="mobile"
-        imgLabel="home"
+        imgLabel={homeLabel}
         alert={pathname === '/' && (numNewPosts > 0 || feedsOutdated)}
       />
       <Nav
@@ -324,7 +327,7 @@ function MainNavs({
         imgLabel="home"
         alert={pathname === '/' && !usersMatch && numNewPosts > 0}
       >
-        HOME
+        {homeLabel}
         {pathname === '/' && !usersMatch && numNewPosts > 0
           ? ` (${numNewPosts})`
           : ''}
