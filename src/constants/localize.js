@@ -31,6 +31,10 @@ const languageObj = {
   copyAndPasteUrl: {
     en: 'Copy and paste a URL address here',
     kr: 'URL 주소를 복사한 후 여기에 붙여넣으세요'
+  },
+  youtubeVideo: {
+    en: 'YouTube Video',
+    kr: '유튜브 동영상'
   }
 };
 export default function localize(section) {

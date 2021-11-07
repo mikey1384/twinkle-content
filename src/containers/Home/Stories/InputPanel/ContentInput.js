@@ -26,6 +26,7 @@ import localize from 'constants/localize';
 
 const postContentLabel = localize('postContent');
 const copyAndPasteUrlLabel = localize('copyAndPasteUrl');
+const youtubeVideoLabel = localize('youtubeVideo');
 
 function ContentInput() {
   const BodyRef = useRef(document.scrollingElement || document.documentElement);
@@ -191,7 +192,7 @@ function ContentInput() {
         </div>
       )}
       <Checkbox
-        label={'YouTube Video:'}
+        label={`${youtubeVideoLabel}:`}
         onClick={() => {
           onSetContentIsVideo(!form.isVideo);
           onSetContentUrlError(urlError);
