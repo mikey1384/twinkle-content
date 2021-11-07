@@ -22,6 +22,10 @@ import {
 } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useHomeContext, useInputContext } from 'contexts';
+import localize from 'constants/localize';
+
+const postContentLabel = localize('postContent');
+const copyAndPasteUrlLabel = localize('copyAndPasteUrl');
 
 function ContentInput() {
   const BodyRef = useRef(document.scrollingElement || document.documentElement);
@@ -160,7 +164,7 @@ function ContentInput() {
 
   return (
     <ErrorBoundary className={PanelStyle}>
-      <p>Share interesting videos or webpages</p>
+      <p>{postContentLabel}</p>
       {urlError && (
         <Banner color="pink" style={{ marginBottom: '1rem' }}>
           {urlError}
@@ -171,7 +175,7 @@ function ContentInput() {
         style={errorInUrlField}
         value={url}
         onChange={onUrlFieldChange}
-        placeholder="Copy and paste a URL address here"
+        placeholder={copyAndPasteUrlLabel}
       />
       {alreadyPosted && (
         <div style={{ fontSize: '1.6rem', marginTop: '0.5rem' }}>
