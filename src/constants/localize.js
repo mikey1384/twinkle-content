@@ -16,6 +16,10 @@ const languageObj = {
     en: 'Explore',
     kr: '탐색'
   },
+  hideWatched: {
+    en: 'Hide Watched',
+    kr: '시청한 영상 숨기기'
+  },
   home: {
     en: 'Home',
     kr: '홈'

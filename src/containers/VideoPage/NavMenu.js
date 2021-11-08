@@ -17,12 +17,15 @@ import { socket } from 'constants/io';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useNotiContext } from 'contexts';
+import localize from 'constants/localize';
 
 NavMenu.propTypes = {
   playlistId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   videoId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   isContinuing: PropTypes.bool
 };
+
+const hideWatchedLabel = localize('hideWatched');
 
 export default function NavMenu({ playlistId, videoId, isContinuing }) {
   const {
@@ -211,7 +214,7 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
           )}
           <SwitchButton
             checked={!!hideWatched}
-            label="Hide Watched"
+            label={hideWatchedLabel}
             onChange={handleToggleHideWatched}
             labelStyle={{ fontSize: '1.6rem' }}
           />

@@ -19,6 +19,7 @@ const oldToNewLabel = localize('oldToNew');
 const recommendedLabel = localize('recommended');
 const recommendedPostsLabel = localize('recommendedPosts');
 const xpVideosLabel = localize('xpVideos');
+const hideWatchedLabel = localize('hideWatched');
 const categoryObj = {
   uploads: {
     label: postsLabel,
@@ -177,7 +178,7 @@ export default function HomeFilter({
                 {userId && (
                   <SwitchButton
                     checked={!!hideWatched}
-                    label="Hide Watched"
+                    label={hideWatchedLabel}
                     onChange={handleToggleHideWatched}
                     labelStyle={{ fontSize: '1.6rem' }}
                   />
