@@ -1,20 +1,40 @@
 const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const languageObj = {
-  home: {
-    en: 'Home',
-    kr: '홈'
+  allPosts: {
+    en: 'All Posts',
+    kr: '모든 게시물'
+  },
+  chat: {
+    en: 'Chat',
+    kr: '채팅'
+  },
+  copyAndPasteUrl: {
+    en: 'Copy and paste a URL address here',
+    kr: 'URL 주소를 복사한 후 여기에 붙여넣으세요'
   },
   explore: {
     en: 'Explore',
     kr: '탐색'
   },
+  home: {
+    en: 'Home',
+    kr: '홈'
+  },
   missions: {
     en: 'Missions',
     kr: '미션'
   },
-  chat: {
-    en: 'Chat',
-    kr: '채팅'
+  newToOld: {
+    en: 'New to Old',
+    kr: '최신순'
+  },
+  oldToNew: {
+    en: 'Old to New',
+    kr: '오래된순'
+  },
+  posts: {
+    en: 'Posts',
+    kr: '게시물'
   },
   postSubject: {
     en: 'Post a subject users can talk about',
@@ -28,21 +48,25 @@ const languageObj = {
     en: 'Share interesting videos or webpages',
     kr: '흥미로운 동영상이나 웹페이지를 공유하세요'
   },
-  copyAndPasteUrl: {
-    en: 'Copy and paste a URL address here',
-    kr: 'URL 주소를 복사한 후 여기에 붙여넣으세요'
+  recommended: {
+    en: 'Recommended',
+    kr: '추천'
   },
-  youtubeVideo: {
-    en: 'YouTube Video',
-    kr: '유튜브 동영상'
-  },
-  allPosts: {
-    en: 'All Posts',
-    kr: '모든 게시물'
+  recommendedPosts: {
+    en: 'Recommended Posts',
+    kr: '추천 게시물'
   },
   subjects: {
     en: 'Subjects',
     kr: '주제'
+  },
+  xpVideos: {
+    en: 'XP Videos',
+    kr: 'XP 동영상'
+  },
+  youtubeVideo: {
+    en: 'YouTube Video',
+    kr: '유튜브 동영상'
   }
 };
 export default function localize(section) {

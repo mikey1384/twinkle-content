@@ -11,21 +11,27 @@ import { useMyState } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
 import localize from 'constants/localize';
 
-const categoryObj = {
-  uploads: {
-    label: 'Posts',
-    desc: 'New to Old',
-    asc: 'Old to New'
-  },
-  recommended: {
-    label: isMobile(navigator) ? 'Recommended' : 'Recommended Posts'
-  },
-  videos: {
-    label: 'XP Videos'
-  }
-};
 const allPostsLabel = localize('allPosts');
 const subjectsLabel = localize('subjects');
+const postsLabel = localize('posts');
+const newToOldLabel = localize('newToOld');
+const oldToNewLabel = localize('oldToNew');
+const recommendedLabel = localize('recommended');
+const recommendedPostsLabel = localize('recommendedPosts');
+const xpVideosLabel = localize('xpVideos');
+const categoryObj = {
+  uploads: {
+    label: postsLabel,
+    desc: newToOldLabel,
+    asc: oldToNewLabel
+  },
+  recommended: {
+    label: isMobile(navigator) ? recommendedLabel : recommendedPostsLabel
+  },
+  videos: {
+    label: xpVideosLabel
+  }
+};
 
 HomeFilter.propTypes = {
   applyFilter: PropTypes.func.isRequired,
