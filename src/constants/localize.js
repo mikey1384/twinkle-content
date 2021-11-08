@@ -18,7 +18,7 @@ const languageObj = {
   },
   postSubject: {
     en: 'Post a subject users can talk about',
-    kr: '사용자들이 대화할 수 있는 주제를 게시하세요'
+    kr: '대화 나누고 싶은 주제를 게시하세요'
   },
   postSubjectPlaceholder: {
     en: 'A subject users can talk about',
