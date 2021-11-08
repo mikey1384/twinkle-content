@@ -34,7 +34,7 @@ const languageObj = {
   },
   missions: {
     en: 'Missions',
-    kr: '미션 리스트'
+    kr: '미션 목록'
   },
   newToOld: {
     en: 'New to Old',
