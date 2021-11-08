@@ -69,6 +69,11 @@ function MainNavs({
   const loaded = useRef(false);
   const timerRef = useRef(null);
 
+  const contentLabel = useMemo(() => {
+    if (!contentNav) return null;
+    return localize(contentNav.substring(0, contentNav.length - 1));
+  }, [contentNav]);
+
   const displayedTwinkleCoins = useMemo(() => {
     if (twinkleCoins > 999) {
       if (twinkleCoinsHovered) {
@@ -352,7 +357,7 @@ function MainNavs({
           style={{ marginLeft: '2rem' }}
           imgLabel={contentIconType}
         >
-          {contentNav.substring(0, contentNav.length - 1).toUpperCase()}
+          {contentLabel}
         </Nav>
       )}
       <Nav

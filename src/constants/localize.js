@@ -24,9 +24,17 @@ const languageObj = {
     en: 'Home',
     kr: '홈'
   },
+  link: {
+    en: 'Link',
+    kr: '링크'
+  },
+  mission: {
+    en: 'Mission',
+    kr: '미션'
+  },
   missions: {
     en: 'Missions',
-    kr: '미션'
+    kr: '미션 리스트'
   },
   newToOld: {
     en: 'New to Old',
@@ -60,9 +68,17 @@ const languageObj = {
     en: 'Recommended Posts',
     kr: '추천 게시물'
   },
+  subject: {
+    en: 'Subject',
+    kr: '주제'
+  },
   subjects: {
     en: 'Subjects',
     kr: '주제'
+  },
+  video: {
+    en: 'Video',
+    kr: '동영상'
   },
   xpVideos: {
     en: 'XP Videos',
