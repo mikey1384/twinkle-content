@@ -52,9 +52,21 @@ const languageObj = {
     en: 'Copy and paste a URL address here',
     kr: 'URL 주소를 복사한 후 여기에 붙여넣으세요'
   },
+  delete: {
+    en: 'Delete',
+    kr: '삭제'
+  },
   done: {
     en: 'Done',
     kr: '완료'
+  },
+  edit: {
+    en: 'Edit',
+    kr: '수정'
+  },
+  editOrDelete: {
+    en: 'Edit or Delete',
+    kr: '수정/삭제'
   },
   editQuestion: {
     en: 'Edit Question',
@@ -123,6 +135,10 @@ const languageObj = {
   newToOld: {
     en: 'New to Old',
     kr: '최신순'
+  },
+  noDescription: {
+    en: 'No Description',
+    kr: '소개글 없음'
   },
   oldToNew: {
     en: 'Old to New',

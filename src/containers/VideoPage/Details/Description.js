@@ -9,6 +9,7 @@ import localize from 'constants/localize';
 
 const cancelLabel = localize('cancel');
 const doneLabel = localize('done');
+const noDescriptionLabel = localize('noDescription');
 
 Description.propTypes = {
   description: PropTypes.string.isRequired,
@@ -89,7 +90,7 @@ export default function Description({
             lineHeight: '2.3rem'
           }}
         >
-          {stringIsEmpty(description) ? 'No Description' : description}
+          {stringIsEmpty(description) ? noDescriptionLabel : description}
         </LongText>
       )}
     </div>

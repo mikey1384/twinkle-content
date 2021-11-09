@@ -34,6 +34,12 @@ import {
   useInputContext
 } from 'contexts';
 import { css } from '@emotion/css';
+import localize from 'constants/localize';
+
+const deleteLabel = localize('delete');
+const editLabel = localize('edit');
+const editOrDeleteLabel = localize('editOrDelete');
+const deviceIsMobile = isMobile(navigator);
 
 Details.propTypes = {
   addTags: PropTypes.func.isRequired,
@@ -57,8 +63,6 @@ Details.propTypes = {
   videoId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   videoViews: PropTypes.number.isRequired
 };
-
-const deviceIsMobile = isMobile(navigator);
 
 export default function Details({
   addTags,
@@ -235,13 +239,13 @@ export default function Details({
     const items = [];
     if (userIsUploader || canEdit) {
       items.push({
-        label: 'Edit',
+        label: editLabel,
         onClick: handleEditStart
       });
     }
     if (userIsUploader || canDelete) {
       items.push({
-        label: 'Delete',
+        label: deleteLabel,
         onClick: onDelete
       });
     }
@@ -415,7 +419,7 @@ export default function Details({
                   skeuomorphic
                   color="darkerGray"
                   style={{ marginRight: '1rem' }}
-                  text="Edit or Delete"
+                  text={editOrDeleteLabel}
                   menuProps={editMenuItems}
                 />
               )}
