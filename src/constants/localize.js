@@ -16,13 +16,49 @@ const languageObj = {
     en: 'All Posts',
     kr: '모든 게시물'
   },
+  cancel: {
+    en: 'Cancel',
+    kr: '취소'
+  },
   chat: {
     en: 'Chat',
     kr: '채팅'
   },
+  choiceA: {
+    en: 'Choice A',
+    kr: '선택지 A'
+  },
+  choiceB: {
+    en: 'Choice B',
+    kr: '선택지 B'
+  },
+  choiceC: {
+    en: 'Choice C (Optional)',
+    kr: '선택지 C (선택사항)'
+  },
+  choiceD: {
+    en: 'Choice D (Optional)',
+    kr: '선택지 D (선택사항)'
+  },
+  choiceE: {
+    en: 'Choice E (Optional)',
+    kr: '선택지 E (선택사항)'
+  },
   copyAndPasteUrl: {
     en: 'Copy and paste a URL address here',
     kr: 'URL 주소를 복사한 후 여기에 붙여넣으세요'
+  },
+  done: {
+    en: 'Done',
+    kr: '완료'
+  },
+  editQuestion: {
+    en: 'Edit Question',
+    kr: '문제 수정하기'
+  },
+  enterQuestion: {
+    en: 'Enter Question',
+    kr: '문제를 입력하세요'
   },
   explore: {
     en: 'Explore',
@@ -88,6 +124,10 @@ const languageObj = {
     en: 'Questions',
     kr: '문제'
   },
+  questionTitle: {
+    en: 'Question Title',
+    kr: '문제'
+  },
   recommended: {
     en: 'Recommended',
     kr: '추천'
@@ -95,6 +135,10 @@ const languageObj = {
   recommendedPosts: {
     en: 'Recommended Posts',
     kr: '추천 게시물'
+  },
+  remove: {
+    en: 'Remove',
+    kr: '삭제'
   },
   reorder: {
     en: 'Reorder',
@@ -127,6 +171,10 @@ const languageObj = {
   thereMustBeAtLeastTwoChoices: {
     en: 'There must be at least two choices',
     kr: '최소 두 개의 선택지를 입력해주세요'
+  },
+  undoDelete: {
+    en: 'Undo',
+    kr: '삭제취소'
   },
   video: {
     en: 'Video',
