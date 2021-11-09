@@ -124,6 +124,14 @@ const languageObj = {
     en: 'Home',
     kr: '홈'
   },
+  like: {
+    en: 'Like',
+    kr: '좋아요'
+  },
+  liked: {
+    en: 'Liked',
+    kr: '좋아요'
+  },
   link: {
     en: 'Link',
     kr: '링크'
