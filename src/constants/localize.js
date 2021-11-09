@@ -144,6 +144,10 @@ const languageObj = {
     en: 'Reorder',
     kr: '순서 변경'
   },
+  reorderQuestions: {
+    en: 'Reorder Questions',
+    kr: '문제 순서 변경하기'
+  },
   reset: {
     en: 'Reset',
     kr: '초기화'
@@ -175,6 +179,10 @@ const languageObj = {
   undoDelete: {
     en: 'Undo',
     kr: '삭제취소'
+  },
+  untitledQuestion: {
+    en: 'Untitled Question',
+    kr: '문제'
   },
   video: {
     en: 'Video',
