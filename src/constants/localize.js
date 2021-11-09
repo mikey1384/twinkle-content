@@ -60,9 +60,41 @@ const languageObj = {
     en: 'Edit Question',
     kr: '문제 수정하기'
   },
+  enterComment: {
+    en: 'Enter Comment',
+    kr: '댓글을 입력하세요'
+  },
+  enterDescription: {
+    en: 'Enter Description',
+    kr: '소개글을 입력하세요'
+  },
+  enterHeading: {
+    en: 'Enter Heading',
+    kr: '제목을 입력하세요'
+  },
   enterQuestion: {
     en: 'Enter Question',
     kr: '문제를 입력하세요'
+  },
+  enterSecretMessage: {
+    en: 'Enter Secret Message',
+    kr: '비밀 메시지를 입력하세요'
+  },
+  enterSubject: {
+    en: 'Enter Subject',
+    kr: '주제를 입력하세요'
+  },
+  enterTitle: {
+    en: 'Enter Title',
+    kr: '제목을 입력하세요'
+  },
+  enterUrl: {
+    en: 'Enter URL',
+    kr: 'URL을 입력하세요'
+  },
+  enterYoutubeUrl: {
+    en: 'Enter YouTube URL',
+    kr: '유튜브 영상의 URL 주소를 입력하세요'
   },
   explore: {
     en: 'Explore',
@@ -95,6 +127,10 @@ const languageObj = {
   oldToNew: {
     en: 'Old to New',
     kr: '오래된순'
+  },
+  optional: {
+    en: '(Optional)',
+    kr: '(선택사항)'
   },
   pleaseClickDoneButtonBelow: {
     en: 'Please click the "Done" button below',
