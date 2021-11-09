@@ -6,6 +6,9 @@ import LikeButton from 'components/Buttons/LikeButton';
 import StarButton from 'components/Buttons/StarButton';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
+import localize from 'constants/localize';
+
+const beFirstToLikeThisVideoLabel = localize('beFirstToLikeThisVideo');
 
 SideButtons.propTypes = {
   byUser: PropTypes.bool.isRequired,
@@ -96,7 +99,7 @@ export default function SideButtons({
             likes={likes}
             onLinkClick={() => setUserListModalShown(true)}
             target="video"
-            defaultText="Be the first to like this video"
+            defaultText={beFirstToLikeThisVideoLabel}
             wordBreakEnabled
           />
         </div>

@@ -16,6 +16,10 @@ const languageObj = {
     en: 'All Posts',
     kr: '모든 게시물'
   },
+  beFirstToLikeThisVideo: {
+    en: 'Be the first to like this video',
+    kr: ''
+  },
   cancel: {
     en: 'Cancel',
     kr: '취소'
