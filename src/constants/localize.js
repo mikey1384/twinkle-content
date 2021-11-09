@@ -44,6 +44,10 @@ const languageObj = {
     en: 'Choice E (Optional)',
     kr: '선택지 E (선택사항)'
   },
+  continue2: {
+    en: 'Continue',
+    kr: '이어서'
+  },
   copyAndPasteUrl: {
     en: 'Copy and paste a URL address here',
     kr: 'URL 주소를 복사한 후 여기에 붙여넣으세요'
@@ -187,6 +191,10 @@ const languageObj = {
   video: {
     en: 'Video',
     kr: '동영상'
+  },
+  watching: {
+    en: 'watching',
+    kr: '시청하기'
   },
   xpVideos: {
     en: 'XP Videos',
