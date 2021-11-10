@@ -7,6 +7,7 @@ import { useMyState } from 'helpers/hooks';
 import localize from 'constants/localize';
 
 const recommendedByLabel = localize('recommendedBy');
+const youLabel = localize('you');
 
 RecommendationStatus.propTypes = {
   contentType: PropTypes.string.isRequired,
@@ -92,7 +93,7 @@ export default function RecommendationStatus({
               color: isRewardable ? '#000' : Color.black()
             }}
           >
-            you
+            {youLabel}
           </b>
         )}
         {mostRecentRecommenderOtherThanMe && (

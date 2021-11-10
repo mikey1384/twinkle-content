@@ -8,6 +8,8 @@ import { useContentState } from 'helpers/hooks';
 import { v1 as uuidv1 } from 'uuid';
 import RewardLevelExpectation from './RewardLevelExpectation';
 
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+
 CommentInputArea.propTypes = {
   autoFocus: PropTypes.bool,
   clickListenerState: PropTypes.bool,
@@ -41,6 +43,12 @@ export default function CommentInputArea({
   subjectRewardLevel,
   targetCommentId
 }) {
+  const placeholderLabel = useMemo(() => {
+    if (selectedLanguage === 'kr') {
+      return '댓글을 입력하세요...';
+    }
+    return `Enter your ${inputTypeLabel} here...`;
+  }, [inputTypeLabel]);
   const contentType = useMemo(
     () =>
       targetCommentId ? 'comment' : subjectId ? 'subject' : parent.contentType,
@@ -93,7 +101,7 @@ export default function CommentInputArea({
           onViewSecretAnswer={onViewSecretAnswer}
           parent={{ contentId, contentType }}
           rows={numInputRows}
-          placeholder={`Enter your ${inputTypeLabel} here...`}
+          placeholder={placeholderLabel}
           targetCommentId={targetCommentId}
         />
       )}

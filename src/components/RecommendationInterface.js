@@ -11,6 +11,12 @@ import { priceTable } from 'constants/defaultValues';
 import { useAppContext, useContentContext } from 'contexts';
 import { css } from '@emotion/css';
 import SwitchButton from './Buttons/SwitchButton';
+import localize from 'constants/localize';
+
+const recommendLabel = localize('recommendQ');
+const yesLabel = localize('yes');
+const noLabel = localize('no');
+const deviceIsMobile = isMobile(navigator);
 
 RecommendationInterface.propTypes = {
   contentId: PropTypes.number.isRequired,
@@ -20,8 +26,6 @@ RecommendationInterface.propTypes = {
   style: PropTypes.object,
   uploaderId: PropTypes.number
 };
-
-const deviceIsMobile = isMobile(navigator);
 
 export default function RecommendationInterface({
   contentId,
@@ -149,7 +153,7 @@ export default function RecommendationInterface({
                     your recommendation?
                   </>
                 ) : (
-                  `Recommend?`
+                  recommendLabel
                 )}
               </span>
             </div>
@@ -182,7 +186,7 @@ export default function RecommendationInterface({
               color="darkBlue"
               skeuomorphic
             >
-              Yes
+              {yesLabel}
             </Button>
             <Button
               onClick={onHide}
@@ -190,7 +194,7 @@ export default function RecommendationInterface({
               color="rose"
               skeuomorphic
             >
-              No
+              {noLabel}
             </Button>
           </div>
         )}

@@ -49,7 +49,7 @@ export default function Likers({
           if (selectedLanguage === 'kr') {
             return (
               <div>
-                당신과{' '}
+                회원님과{' '}
                 <UsernameText
                   wordBreakEnabled={wordBreakEnabled}
                   color={Color.blue()}
@@ -80,14 +80,14 @@ export default function Likers({
           if (selectedLanguage === 'kr') {
             return (
               <div>
-                당신과{' '}
+                회원님과{' '}
                 <a
                   style={{ cursor: 'pointer', fontWeight: 'bold' }}
                   onClick={() => onLinkClick()}
                 >
                   {totalLikes}
                 </a>
-                명의 회원분들이 이 게시물을 좋아합니다
+                명의 회원님들이 이 게시물을 좋아합니다
               </div>
             );
           }
@@ -106,7 +106,7 @@ export default function Likers({
         }
       }
       if (selectedLanguage === 'kr') {
-        return <div>당신이 이 게시물을 좋아합니다.</div>;
+        return <div>회원님이 이 게시물을 좋아합니다.</div>;
       }
       return <div>You like {`this${target ? ' ' + target : ''}.`}</div>;
     } else if (totalLikes > 0) {

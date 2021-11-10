@@ -52,6 +52,10 @@ const languageObj = {
     en: 'Choice E (Optional)',
     kr: '선택지 E (선택사항)'
   },
+  commentOnThisVideo: {
+    en: 'Comment on this video',
+    kr: '댓글 달기'
+  },
   continue2: {
     en: 'Continue',
     kr: '이어서'
@@ -156,6 +160,10 @@ const languageObj = {
     en: 'New to Old',
     kr: '최신순'
   },
+  no: {
+    en: 'No',
+    kr: '아니오'
+  },
   noDescription: {
     en: 'No Description',
     kr: '소개글 없음'
@@ -224,6 +232,10 @@ const languageObj = {
     en: 'Recommended Posts',
     kr: '추천 게시물'
   },
+  recommendQ: {
+    en: 'Recommend?',
+    kr: '추천하시겠습니까?'
+  },
   remove: {
     en: 'Remove',
     kr: '삭제'
@@ -272,6 +284,10 @@ const languageObj = {
     en: 'Submit',
     kr: '게시'
   },
+  tapThisButtonToSubmit: {
+    en: 'Tap this button to submit',
+    kr: '이 버튼을 누르면 게시됩니다'
+  },
   thereAreNoQuestions: {
     en: 'There are no questions, yet',
     kr: '등록된 문제가 없습니다'
@@ -299,6 +315,14 @@ const languageObj = {
   xpVideos: {
     en: 'XP Videos',
     kr: 'XP 동영상'
+  },
+  yes: {
+    en: 'Yes',
+    kr: '예'
+  },
+  you: {
+    en: 'you',
+    kr: '회원님'
   },
   youtubeVideo: {
     en: 'YouTube Video',

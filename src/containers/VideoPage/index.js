@@ -33,6 +33,7 @@ import localize from 'constants/localize';
 
 const addEditQuestionsLabel = localize('addEditQuestions');
 const addQuestionsLabel = localize('addQuestions');
+const commentOnThisVideoLabel = localize('commentOnThisVideo');
 const thereAreNoQuestionsLabel = localize('thereAreNoQuestions');
 
 VideoPage.propTypes = {
@@ -458,7 +459,7 @@ export default function VideoPage({
                   color: Color.darkerGray()
                 }}
               >
-                Comment on this video
+                {commentOnThisVideoLabel}
               </p>
               <Comments
                 autoExpand

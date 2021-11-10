@@ -31,6 +31,9 @@ import {
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 import { useInputContext } from 'contexts';
+import localize from 'constants/localize';
+
+const tapThisButtonToSubmitLabel = localize('tapThisButtonToSubmit');
 
 InputForm.propTypes = {
   autoFocus: PropTypes.bool,
@@ -307,7 +310,7 @@ function InputForm({
               disabled={submitDisabled}
               onClick={handleSubmit}
             >
-              Tap This Button to Submit!
+              {tapThisButtonToSubmitLabel}!
             </Button>
           </div>
         )}
