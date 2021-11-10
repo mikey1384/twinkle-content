@@ -232,6 +232,10 @@ const languageObj = {
     en: 'Reset',
     kr: '초기화'
   },
+  reward: {
+    en: 'Reward',
+    kr: '포상'
+  },
   subject: {
     en: 'Subject',
     kr: '주제'

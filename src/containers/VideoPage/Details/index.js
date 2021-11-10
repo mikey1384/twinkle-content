@@ -39,6 +39,7 @@ import localize from 'constants/localize';
 const deleteLabel = localize('delete');
 const editLabel = localize('edit');
 const editOrDeleteLabel = localize('editOrDelete');
+const rewardLabel = localize('reward');
 const deviceIsMobile = isMobile(navigator);
 
 Details.propTypes = {
@@ -442,7 +443,7 @@ export default function Details({
                 >
                   <Icon icon="certificate" />
                   <span style={{ marginLeft: '0.7rem' }}>
-                    {xpButtonDisabled || 'Reward'}
+                    {xpButtonDisabled || rewardLabel}
                   </span>
                 </Button>
               )}
