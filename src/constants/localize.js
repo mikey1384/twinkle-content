@@ -142,7 +142,7 @@ const languageObj = {
   },
   leaderboard: {
     en: 'Leaderboard',
-    kr: '랭킹'
+    kr: '리더보드'
   },
   like: {
     en: 'Like',
