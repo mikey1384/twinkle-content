@@ -26,6 +26,8 @@ NavMenu.propTypes = {
 };
 
 const hideWatchedLabel = localize('hideWatched');
+const videosLabel = localize('videos');
+const newsLabel = localize('news');
 
 export default function NavMenu({ playlistId, videoId, isContinuing }) {
   const {
@@ -186,7 +188,7 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
           className={videoTabActive ? 'active' : ''}
           onClick={() => setVideoTabActive(true)}
         >
-          Videos
+          {videosLabel}
         </nav>
         <nav
           className={`${!videoTabActive ? 'active' : ''} ${
@@ -194,7 +196,7 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
           }`}
           onClick={() => setVideoTabActive(false)}
         >
-          {rewardsExist ? 'Rewards' : userId ? 'News' : 'Leaderboard'}
+          {rewardsExist ? 'Rewards' : userId ? newsLabel : 'Leaderboard'}
         </nav>
       </FilterBar>
       {userId && videoTabActive && playlistId && (

@@ -164,6 +164,10 @@ const languageObj = {
     en: 'New to Old',
     kr: '최신순'
   },
+  news: {
+    en: 'News',
+    kr: '새소식'
+  },
   no: {
     en: 'No',
     kr: '아니오'
@@ -311,6 +315,10 @@ const languageObj = {
   video: {
     en: 'Video',
     kr: '동영상'
+  },
+  videos: {
+    en: 'Videos',
+    kr: '동영상 목록'
   },
   watching: {
     en: 'watching',
