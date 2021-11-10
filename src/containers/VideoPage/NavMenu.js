@@ -30,6 +30,10 @@ const videosLabel = localize('videos');
 const newsLabel = localize('news');
 const leaderboardLabel = localize('leaderboard');
 const rewardsLabel = localize('rewards');
+const newVideosLabel = localize('newVideos');
+const relatedVideosLabel = localize('relatedVideos');
+const upNextLabel = localize('upNext');
+const continueWatchingLabel = localize('continueWatching');
 
 export default function NavMenu({ playlistId, videoId, isContinuing }) {
   const {
@@ -229,7 +233,7 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
         <>
           {nextVideos.length > 0 && (
             <section key={videoId + 'up next'}>
-              <p>Up Next</p>
+              <p>{upNextLabel}</p>
               {renderVideos({
                 videos: nextVideos,
                 arePlaylistVideos: playlistId && playlistVideos.length > 0
@@ -238,7 +242,7 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
           )}
           {continueWatchingVideos.length > 0 && (
             <section key={videoId + 'continue watching'}>
-              <p>Continue Watching</p>
+              <p>{continueWatchingLabel}</p>
               {renderVideos({
                 videos: continueWatchingVideos,
                 areContinueWatchingVideos: true
@@ -282,13 +286,13 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
           )}
           {relatedVideos.length > 0 && (
             <section key={videoId + 'related videos'}>
-              <p>Related Videos</p>
+              <p>{relatedVideosLabel}</p>
               {renderVideos({ videos: relatedVideos })}
             </section>
           )}
           {otherVideos.length > 0 && (
             <section key={videoId + 'new videos'}>
-              <p>New Videos</p>
+              <p>{newVideosLabel}</p>
               {renderVideos({ videos: otherVideos })}
             </section>
           )}

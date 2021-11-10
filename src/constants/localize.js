@@ -60,6 +60,10 @@ const languageObj = {
     en: 'Continue',
     kr: '이어서'
   },
+  continueWatching: {
+    en: 'Continue Watching',
+    kr: '이어서 시청하기'
+  },
   copyAndPasteUrl: {
     en: 'Copy and paste a URL address here',
     kr: 'URL 주소를 복사한 후 여기에 붙여넣으세요'
@@ -172,6 +176,10 @@ const languageObj = {
     en: 'News',
     kr: '새소식'
   },
+  newVideos: {
+    en: 'New Videos',
+    kr: '새로운 영상'
+  },
   no: {
     en: 'No',
     kr: '아니오'
@@ -248,6 +256,10 @@ const languageObj = {
     en: 'Recommend?',
     kr: '추천하시겠습니까?'
   },
+  relatedVideos: {
+    en: 'Related Videos',
+    kr: '연관된 영상'
+  },
   remove: {
     en: 'Remove',
     kr: '삭제'
@@ -319,6 +331,10 @@ const languageObj = {
   untitledQuestion: {
     en: 'Untitled Question',
     kr: '문제'
+  },
+  upNext: {
+    en: 'Up Next',
+    kr: '다음 영상'
   },
   video: {
     en: 'Video',
