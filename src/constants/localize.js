@@ -88,6 +88,10 @@ const languageObj = {
     en: 'Enter Description',
     kr: '소개글을 입력하세요'
   },
+  enterDetails: {
+    en: 'Enter Details',
+    kr: '상세정보를 입력하세요'
+  },
   enterHeading: {
     en: 'Enter Heading',
     kr: '제목을 입력하세요'
@@ -240,6 +244,10 @@ const languageObj = {
     en: 'Reward',
     kr: '포상'
   },
+  secretMessage: {
+    en: 'Secret Message',
+    kr: '비밀 메시지'
+  },
   startNewSubject: {
     en: 'Start a new subject',
     kr: '새로운 주제 게시하기'
@@ -259,6 +267,10 @@ const languageObj = {
   submit2: {
     en: 'Submit',
     kr: '등록'
+  },
+  submit3: {
+    en: 'Submit',
+    kr: '게시'
   },
   thereAreNoQuestions: {
     en: 'There are no questions, yet',
