@@ -140,6 +140,10 @@ const languageObj = {
     en: 'Home',
     kr: '홈'
   },
+  leaderboard: {
+    en: 'Leaderboard',
+    kr: '랭킹'
+  },
   like: {
     en: 'Like',
     kr: '좋아요'
@@ -263,6 +267,10 @@ const languageObj = {
   reward: {
     en: 'Reward',
     kr: '포상'
+  },
+  rewards: {
+    en: 'Rewards',
+    kr: '선물'
   },
   secretMessage: {
     en: 'Secret Message',
