@@ -24,6 +24,10 @@ const languageObj = {
     en: 'Be the first to like this video',
     kr: ''
   },
+  by: {
+    en: 'By',
+    kr: '게시자:'
+  },
   cancel: {
     en: 'Cancel',
     kr: '취소'
@@ -51,6 +55,10 @@ const languageObj = {
   choiceE: {
     en: 'Choice E (Optional)',
     kr: '선택지 E (선택사항)'
+  },
+  comment: {
+    en: 'Comment',
+    kr: '댓글'
   },
   commentOnThisVideo: {
     en: 'Comment on this video',
@@ -215,6 +223,10 @@ const languageObj = {
   pleaseMarkTheCorrectChoice: {
     en: 'Please mark the correct choice',
     kr: '정답을 선택해주세요'
+  },
+  posted: {
+    en: 'Posted',
+    kr: ''
   },
   posts: {
     en: 'Posts',
