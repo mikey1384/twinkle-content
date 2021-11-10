@@ -4,6 +4,9 @@ import UsernameText from 'components/Texts/UsernameText';
 import UserListModal from 'components/Modals/UserListModal';
 import { Color } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
+import localize from 'constants/localize';
+
+const recommendedByLabel = localize('recommendedBy');
 
 RecommendationStatus.propTypes = {
   contentType: PropTypes.string.isRequired,
@@ -82,7 +85,7 @@ export default function RecommendationStatus({
       }}
     >
       <div>
-        Recommended by{' '}
+        {recommendedByLabel}{' '}
         {myRecommendation && (
           <b
             style={{

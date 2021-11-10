@@ -212,6 +212,10 @@ const languageObj = {
     en: 'Recommended',
     kr: '추천'
   },
+  recommendedBy: {
+    en: 'Recommended by',
+    kr: '추천자:'
+  },
   recommendedPosts: {
     en: 'Recommended Posts',
     kr: '추천 게시물'
@@ -235,6 +239,10 @@ const languageObj = {
   reward: {
     en: 'Reward',
     kr: '포상'
+  },
+  startNewSubject: {
+    en: 'Start a new subject',
+    kr: '새로운 주제 게시하기'
   },
   subject: {
     en: 'Subject',
