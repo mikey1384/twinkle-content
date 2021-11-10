@@ -104,6 +104,10 @@ const languageObj = {
     en: 'Enter Question',
     kr: '문제를 입력하세요'
   },
+  enterReply: {
+    en: 'Enter Reply',
+    kr: '답글을 입력하세요'
+  },
   enterSecretMessage: {
     en: 'Enter Secret Message',
     kr: '비밀 메시지를 입력하세요'
