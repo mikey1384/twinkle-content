@@ -4,6 +4,10 @@ const languageObj = {
     en: 'Add',
     kr: '추가'
   },
+  addedBy: {
+    en: 'Added by',
+    kr: '게시자:'
+  },
   addQuestions: {
     en: 'Add Questions',
     kr: '문제 등록하기'
@@ -159,6 +163,10 @@ const languageObj = {
   optional: {
     en: '(Optional)',
     kr: '(선택사항)'
+  },
+  peopleWhoLikeThisVideo: {
+    en: 'People who like this video',
+    kr: '이 영상을 좋아하는 사람들'
   },
   pleaseClickDoneButtonBelow: {
     en: 'Please click the "Done" button below',

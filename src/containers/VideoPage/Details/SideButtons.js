@@ -9,6 +9,7 @@ import { mobileMaxWidth } from 'constants/css';
 import localize from 'constants/localize';
 
 const beFirstToLikeThisVideoLabel = localize('beFirstToLikeThisVideo');
+const peopleWhoLikeThisVideoLabel = localize('peopleWhoLikeThisVideo');
 
 SideButtons.propTypes = {
   byUser: PropTypes.bool.isRequired,
@@ -107,7 +108,7 @@ export default function SideButtons({
       {userListModalShown && (
         <UserListModal
           onHide={() => setUserListModalShown(false)}
-          title="People who liked this video"
+          title={peopleWhoLikeThisVideoLabel}
           users={likes}
         />
       )}
