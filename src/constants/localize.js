@@ -168,6 +168,10 @@ const languageObj = {
     en: 'People who like this video',
     kr: '이 영상을 좋아하는 사람들'
   },
+  perMinute: {
+    en: 'per minute',
+    kr: '를 1분마다 획득'
+  },
   pleaseClickDoneButtonBelow: {
     en: 'Please click the "Done" button below',
     kr: '아래의 "완료" 버튼을 눌러주세요'
