@@ -84,6 +84,10 @@ const languageObj = {
     en: 'Done',
     kr: '완료'
   },
+  earnXP: {
+    en: 'Earn XP',
+    kr: 'XP 쌓기'
+  },
   edit: {
     en: 'Edit',
     kr: '수정'
@@ -204,6 +208,10 @@ const languageObj = {
     en: '(Optional)',
     kr: '(선택사항)'
   },
+  people: {
+    en: 'People',
+    kr: '사람들'
+  },
   peopleWhoLikeThisVideo: {
     en: 'People who like this video',
     kr: '이 영상을 좋아하는 사람들'
@@ -303,6 +311,14 @@ const languageObj = {
   startNewSubject: {
     en: 'Start a new subject',
     kr: '새로운 주제 게시하기'
+  },
+  store: {
+    en: 'Store',
+    kr: '스토어'
+  },
+  stories: {
+    en: 'Stories',
+    kr: '스토리'
   },
   subject: {
     en: 'Subject',
