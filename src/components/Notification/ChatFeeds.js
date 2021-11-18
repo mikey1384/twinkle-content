@@ -10,6 +10,9 @@ import { Color } from 'constants/css';
 import { css } from '@emotion/css';
 import { useHistory } from 'react-router-dom';
 import { useAppContext } from 'contexts';
+import localize from 'constants/localize';
+
+const joinConversationLabel = localize('joinConversation');
 
 ChatFeeds.propTypes = {
   content: PropTypes.string,
@@ -129,7 +132,7 @@ function ChatFeeds({
           onClick={initChatFromThis}
         >
           <Icon icon="comments" />
-          <span style={{ marginLeft: '1rem' }}>Join Conversation</span>
+          <span style={{ marginLeft: '1rem' }}>{joinConversationLabel}</span>
           {loadingChat && (
             <Icon style={{ marginLeft: '0.7rem' }} icon="spinner" pulse />
           )}

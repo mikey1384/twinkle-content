@@ -160,6 +160,10 @@ const languageObj = {
     en: 'Home',
     kr: '홈'
   },
+  joinConversation: {
+    en: 'Join Conversation',
+    kr: '대화 참여하기'
+  },
   leaderboard: {
     en: 'Leaderboard',
     kr: '리더보드'
@@ -263,6 +267,10 @@ const languageObj = {
   questionTitle: {
     en: 'Question Title',
     kr: '문제'
+  },
+  rankings: {
+    en: 'Rankings',
+    kr: '랭킹'
   },
   recommended: {
     en: 'Recommended',
