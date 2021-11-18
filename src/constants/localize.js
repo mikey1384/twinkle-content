@@ -188,6 +188,10 @@ const languageObj = {
     en: 'Missions',
     kr: '미션 목록'
   },
+  myRanking: {
+    en: 'My Ranking',
+    kr: '내 순위'
+  },
   newToOld: {
     en: 'New to Old',
     kr: '최신순'
@@ -363,6 +367,10 @@ const languageObj = {
   thereMustBeAtLeastTwoChoices: {
     en: 'There must be at least two choices',
     kr: '최소 두 개의 선택지를 입력해주세요'
+  },
+  top30: {
+    en: 'Top 30',
+    kr: '톱 30'
   },
   undoDelete: {
     en: 'Undo',
