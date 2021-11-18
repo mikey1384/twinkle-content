@@ -24,6 +24,9 @@ import {
   useContentContext,
   useProfileContext
 } from 'contexts';
+import localize from 'constants/localize';
+
+const viewProfileLabel = localize('viewProfile');
 
 ProfilePanel.propTypes = {
   expandable: PropTypes.bool,
@@ -340,7 +343,7 @@ function ProfilePanel({ expandable, profileId, style }) {
                         }}
                         onClick={() => history.push(`/users/${profileName}`)}
                       >
-                        View Profile
+                        {viewProfileLabel}
                       </Button>
                     </div>
                     {youtubeUrl && (
