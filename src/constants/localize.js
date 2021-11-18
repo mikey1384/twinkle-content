@@ -32,6 +32,10 @@ const languageObj = {
     en: 'Cancel',
     kr: '취소'
   },
+  changePicture: {
+    en: 'Change Picture',
+    kr: '사진 변경'
+  },
   chat: {
     en: 'Chat',
     kr: '채팅'
@@ -371,6 +375,10 @@ const languageObj = {
   videos: {
     en: 'Videos',
     kr: '동영상 목록'
+  },
+  viewProfile: {
+    en: 'View Profile',
+    kr: '프로필 보기'
   },
   watching: {
     en: 'watching',
