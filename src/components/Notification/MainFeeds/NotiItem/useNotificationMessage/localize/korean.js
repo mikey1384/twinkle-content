@@ -146,15 +146,15 @@ export default function renderEnglishMessage({
     case 'comment':
       return isNotification ? (
         <>
-          viewed your{' '}
+          <span>님이</span> 회원님이 올리신{' '}
           <ContentLink
             contentType="subject"
             content={{
               id: targetSubject.id,
-              title: `subject`
+              title: localize('subject')
             }}
           />
-          {`'s secret message`}
+          {`의 비밀 메시지를 조회하셨습니다.`}
         </>
       ) : (
         <>
