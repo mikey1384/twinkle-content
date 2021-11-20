@@ -20,17 +20,17 @@ export default function renderEnglishMessage({
   targetSubject
 }) {
   const contentPreview = `${
+    !stringIsEmpty(targetObj.content)
+      ? `${truncateText({
+          text: targetObj.content,
+          limit: 100
+        })} `
+      : ''
+  }(${
     targetObj.contentType === 'url'
       ? localize('link')
       : localize(targetObj.contentType)
-  } ${
-    !stringIsEmpty(targetObj.content)
-      ? `(${truncateText({
-          text: targetObj.content,
-          limit: 100
-        })})`
-      : ''
-  }`;
+  })`;
   switch (actionObj.contentType) {
     case 'like':
       return (
@@ -158,25 +158,14 @@ export default function renderEnglishMessage({
         </>
       ) : (
         <>
-          <ContentLink
-            contentType="comment"
-            content={{
-              id: actionObj.id,
-              title: isReply
-                ? 'replied to'
-                : targetObj.contentType === 'user'
-                ? 'left a message on'
-                : 'commented on'
-            }}
-            style={{ color: Color.green() }}
-          />{' '}
-          your{' '}
+          <span>님이</span> 회원님
+          {targetObj.contentType === 'user' ? '의' : '이 올리신'}{' '}
           <ContentLink
             contentType={
               isReply
-                ? 'comment'
+                ? localize('comment')
                 : isSubjectResponse
-                ? 'subject'
+                ? localize('subject')
                 : targetObj.contentType
             }
             content={{
@@ -188,18 +177,18 @@ export default function renderEnglishMessage({
               username: targetObj.content,
               title: `${
                 isReply
-                  ? 'comment'
+                  ? localize('comment')
                   : isSubjectResponse
-                  ? 'subject'
+                  ? localize('subject')
                   : targetObj.contentType === 'user'
-                  ? 'profile'
+                  ? localize('profile')
                   : targetObj.contentType === 'url'
-                  ? 'link'
-                  : targetObj.contentType
+                  ? localize('link')
+                  : localize(targetObj.contentType)
               }${
                 !isReply && targetObj.contentType === 'user'
                   ? ''
-                  : ` (${truncateText({
+                  : `(${truncateText({
                       text: isReply
                         ? targetComment.content
                         : isSubjectResponse
@@ -210,9 +199,22 @@ export default function renderEnglishMessage({
               }`
             }}
           />
+          에{' '}
+          <ContentLink
+            contentType="comment"
+            content={{
+              id: actionObj.id,
+              title: isReply
+                ? '답글'
+                : targetObj.contentType === 'user'
+                ? '메시지'
+                : '댓글'
+            }}
+            style={{ color: Color.green() }}
+          />
+          {targetObj.contentType === 'user' ? '를' : '을'} 남기셨습니다:{' '}
           {!stringIsEmpty(actionObj.content) && (
             <>
-              :{' '}
               <ContentLink
                 contentType="comment"
                 content={{

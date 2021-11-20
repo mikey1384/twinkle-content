@@ -280,6 +280,10 @@ const languageObj = {
     en: 'Share interesting videos or webpages',
     kr: '흥미로운 동영상이나 웹페이지를 공유하세요'
   },
+  profile: {
+    en: 'profile',
+    kr: '프로필'
+  },
   questions: {
     en: 'Questions',
     kr: '문제'
