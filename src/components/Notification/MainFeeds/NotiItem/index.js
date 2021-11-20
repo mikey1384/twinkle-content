@@ -29,7 +29,7 @@ export default function NotiItem({
     rootMissionType
   }
 }) {
-  const EnglishNotificationMessage = useNotificationMessage({
+  const NotificationMessage = useNotificationMessage({
     actionObj,
     isNotification,
     isTask,
@@ -54,7 +54,7 @@ export default function NotiItem({
                 &nbsp;
               </>
             )}
-          {EnglishNotificationMessage}
+          {NotificationMessage}
         </div>
         <small style={{ color: Color.gray() }}>{timeSince(timeStamp)}</small>
       </nav>
