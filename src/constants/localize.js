@@ -160,6 +160,10 @@ const languageObj = {
     en: 'Explore',
     kr: '탐색'
   },
+  fail: {
+    en: 'Fail',
+    kr: '실패'
+  },
   hideWatched: {
     en: 'Hide Watched',
     kr: '시청한 영상 숨기기'
@@ -228,6 +232,10 @@ const languageObj = {
     en: '(Optional)',
     kr: '(선택사항)'
   },
+  pass: {
+    en: 'Pass',
+    kr: '통과'
+  },
   people: {
     en: 'People',
     kr: '사람들'
@@ -283,6 +291,10 @@ const languageObj = {
   rankings: {
     en: 'Rankings',
     kr: '랭킹'
+  },
+  recommendation: {
+    en: 'recommendation',
+    kr: '추천'
   },
   recommended: {
     en: 'Recommended',
@@ -434,5 +446,5 @@ const languageObj = {
   }
 };
 export default function localize(section) {
-  return languageObj[section][selectedLanguage];
+  return languageObj?.[section]?.[selectedLanguage] || '';
 }
