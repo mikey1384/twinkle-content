@@ -32,6 +32,18 @@ export default function NotiItem({
   }
 }) {
   const { userId } = useMyState();
+  const contentPreview = useMemo(() => {
+    return `${
+      targetObj.contentType === 'url' ? 'link' : targetObj.contentType
+    } ${
+      !stringIsEmpty(targetObj.content)
+        ? `(${truncateText({
+            text: targetObj.content,
+            limit: 100
+          })})`
+        : ''
+    }`;
+  }, [targetObj.content, targetObj.contentType]);
   const NotificationMessage = useMemo(() => {
     let notificationMessage;
     const isReply = targetComment?.userId === userId;
@@ -48,18 +60,7 @@ export default function NotiItem({
               contentType={targetObj.contentType}
               content={{
                 id: targetObj.id,
-                title: `${
-                  targetObj.contentType === 'url'
-                    ? 'link'
-                    : targetObj.contentType
-                } ${
-                  !stringIsEmpty(targetObj.content)
-                    ? `(${truncateText({
-                        text: targetObj.content,
-                        limit: 100
-                      })})`
-                    : ''
-                }`
+                title: contentPreview
               }}
             />
           </>
@@ -76,18 +77,7 @@ export default function NotiItem({
               contentType={targetObj.contentType}
               content={{
                 id: targetObj.id,
-                title: `${
-                  targetObj.contentType === 'url'
-                    ? 'link'
-                    : targetObj.contentType
-                } ${
-                  !stringIsEmpty(targetObj.content)
-                    ? `(${truncateText({
-                        text: targetObj.content,
-                        limit: 100
-                      })})`
-                    : ''
-                }`
+                title: contentPreview
               }}
             />
           </>
@@ -104,18 +94,7 @@ export default function NotiItem({
               contentType={targetObj.contentType}
               content={{
                 id: targetObj.id,
-                title: `${
-                  targetObj.contentType === 'url'
-                    ? 'link'
-                    : targetObj.contentType
-                } ${
-                  stringIsEmpty(targetObj.content)
-                    ? ''
-                    : `(${truncateText({
-                        text: targetObj.content,
-                        limit: 100
-                      })})`
-                }`
+                title: contentPreview
               }}
             />
           </>
@@ -147,18 +126,7 @@ export default function NotiItem({
                 contentType={targetObj.contentType}
                 content={{
                   id: targetObj.id,
-                  title: `${
-                    targetObj.contentType === 'url'
-                      ? 'link'
-                      : targetObj.contentType
-                  } ${
-                    stringIsEmpty(targetObj.content)
-                      ? ''
-                      : `(${truncateText({
-                          text: targetObj.content,
-                          limit: 100
-                        })})`
-                  }`
+                  title: contentPreview
                 }}
               />
             </>
