@@ -16,7 +16,8 @@ export default function useNotificationMessage({
   rewardType,
   rewardRootMissionType,
   rewardRootType,
-  rootMissionType
+  rootMissionType,
+  user
 }) {
   const { userId } = useMyState();
   const NotificationMessage = useMemo(() => {
@@ -35,7 +36,8 @@ export default function useNotificationMessage({
       rootMissionType,
       targetComment,
       targetObj,
-      targetSubject
+      targetSubject,
+      user
     };
     return selectedLanguage === 'en'
       ? renderEnglishMessage(params)
@@ -52,6 +54,7 @@ export default function useNotificationMessage({
     targetComment,
     targetObj,
     targetSubject,
+    user,
     userId
   ]);
 

@@ -35,10 +35,11 @@ export default function renderEnglishMessage({
     case 'like':
       return (
         <>
+          <span>님이</span>{' '}
           <span style={{ color: Color.lightBlue(), fontWeight: 'bold' }}>
-            likes
+            좋아요
           </span>{' '}
-          <span>your</span>{' '}
+          버튼을 누르셨습니다:{' '}
           <ContentLink
             contentType={targetObj.contentType}
             content={{
@@ -51,10 +52,11 @@ export default function renderEnglishMessage({
     case 'mention':
       return (
         <>
+          <span>님이</span> 회원님을{' '}
           <span style={{ color: Color.passionFruit(), fontWeight: 'bold' }}>
-            mentioned you
-          </span>{' '}
-          in a{' '}
+            언급
+          </span>
+          하셨습니다:{' '}
           <ContentLink
             contentType={targetObj.contentType}
             content={{

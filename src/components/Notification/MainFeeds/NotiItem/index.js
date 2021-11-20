@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import UsernameText from 'components/Texts/UsernameText';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { Color } from 'constants/css';
 import { notiFeedListItem } from '../../Styles';
 import useNotificationMessage from './useNotificationMessage';
+import UsernameText from 'components/Texts/UsernameText';
+
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 
 NotiItem.propTypes = {
   notification: PropTypes.object.isRequired
@@ -40,20 +42,26 @@ export default function NotiItem({
     rootMissionType,
     targetObj,
     targetComment,
-    targetSubject
+    targetSubject,
+    user
   });
+  const userLabel = useMemo(() => {
+    if (actionObj.contentType !== 'pass' && actionObj.contentType !== 'fail') {
+      return (
+        <>
+          <UsernameText user={user} color={Color.blue()} />
+          {selectedLanguage === 'en' ? ' ' : ''}
+        </>
+      );
+    }
+    return '';
+  }, [actionObj.contentType, user]);
 
   return (
     <ErrorBoundary>
       <nav style={{ background: '#fff' }} className={notiFeedListItem} key={id}>
         <div>
-          {actionObj.contentType !== 'pass' &&
-            actionObj.contentType !== 'fail' && (
-              <>
-                <UsernameText user={user} color={Color.blue()} />
-                &nbsp;
-              </>
-            )}
+          {userLabel}
           {NotificationMessage}
         </div>
         <small style={{ color: Color.gray() }}>{timeSince(timeStamp)}</small>

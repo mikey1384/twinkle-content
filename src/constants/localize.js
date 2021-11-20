@@ -392,6 +392,10 @@ const languageObj = {
     en: 'Up Next',
     kr: '다음 영상'
   },
+  user: {
+    en: 'user',
+    kr: ''
+  },
   video: {
     en: 'Video',
     kr: '동영상'
