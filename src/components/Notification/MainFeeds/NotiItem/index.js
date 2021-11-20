@@ -5,7 +5,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { Color } from 'constants/css';
 import { notiFeedListItem } from '../../Styles';
-import { useEnglish } from './hooks';
+import useNotificationMessage from './useNotificationMessage';
 
 NotiItem.propTypes = {
   notification: PropTypes.object.isRequired
@@ -29,7 +29,7 @@ export default function NotiItem({
     rootMissionType
   }
 }) {
-  const EnglishNotificationMessage = useEnglish({
+  const EnglishNotificationMessage = useNotificationMessage({
     actionObj,
     isNotification,
     isTask,

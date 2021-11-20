@@ -4,7 +4,7 @@ import { useMyState } from 'helpers/hooks';
 import { stringIsEmpty, truncateText } from 'helpers/stringHelpers';
 import { Color } from 'constants/css';
 
-export function useEnglish({
+export default function useNotificationMessage({
   actionObj,
   isNotification,
   isTask,
