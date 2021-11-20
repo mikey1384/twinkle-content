@@ -111,6 +111,18 @@ export default function Likers({
       return <div>You like {`this${target ? ' ' + target : ''}.`}</div>;
     } else if (totalLikes > 0) {
       if (totalLikes === 1) {
+        if (selectedLanguage === 'kr') {
+          return (
+            <div>
+              <UsernameText
+                wordBreakEnabled={wordBreakEnabled}
+                color={Color.blue()}
+                user={likes[0]}
+              />
+              님이 이 게시물을 좋아합니다.
+            </div>
+          );
+        }
         return (
           <div>
             <UsernameText
@@ -122,6 +134,19 @@ export default function Likers({
           </div>
         );
       } else {
+        if (selectedLanguage === 'kr') {
+          return (
+            <div>
+              <a
+                style={{ cursor: 'pointer', fontWeight: 'bold' }}
+                onClick={() => onLinkClick()}
+              >
+                {totalLikes}
+              </a>
+              명의 회원님들이 이 게시물을 좋아합니다.
+            </div>
+          );
+        }
         return (
           <div>
             <a

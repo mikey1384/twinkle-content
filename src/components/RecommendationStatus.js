@@ -6,6 +6,7 @@ import { Color } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
 import localize from 'constants/localize';
 
+const andLabel = localize('and');
 const recommendedByLabel = localize('recommendedBy');
 const youLabel = localize('you');
 
@@ -99,7 +100,9 @@ export default function RecommendationStatus({
         {mostRecentRecommenderOtherThanMe && (
           <>
             {myRecommendation &&
-              (recommendationsByUsertypeExceptMe.length > 1 ? ', ' : ' and ')}
+              (recommendationsByUsertypeExceptMe.length > 1
+                ? ', '
+                : `${andLabel} `)}
             <UsernameText
               color={isRewardable ? '#000' : Color.black()}
               user={{
@@ -111,8 +114,7 @@ export default function RecommendationStatus({
         )}
         {recommendationsByUsertypeExceptMe.length === 2 && (
           <>
-            {' '}
-            and{' '}
+            {andLabel}{' '}
             <UsernameText
               color={isRewardable ? '#000' : Color.black()}
               user={{
@@ -124,8 +126,7 @@ export default function RecommendationStatus({
         )}
         {recommendationsByUsertypeExceptMe.length > 2 && (
           <>
-            {' '}
-            and{' '}
+            {andLabel}{' '}
             <a
               style={{ cursor: 'pointer', fontWeight: 'bold', color: '#000' }}
               onClick={() => setUserListModalShown(true)}
