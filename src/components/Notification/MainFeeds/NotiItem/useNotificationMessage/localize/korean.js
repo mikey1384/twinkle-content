@@ -69,10 +69,11 @@ export default function renderEnglishMessage({
     case 'recommendation':
       return (
         <>
+          <span>님이</span>{' '}
           <span style={{ color: Color.brownOrange(), fontWeight: 'bold' }}>
-            recommended
-          </span>{' '}
-          <span>your</span>{' '}
+            추천
+          </span>
+          하셨습니다:{' '}
           <ContentLink
             contentType={targetObj.contentType}
             content={{
@@ -86,6 +87,7 @@ export default function renderEnglishMessage({
       if (rewardType === 'Twinkle') {
         return (
           <>
+            <span>님이</span>{' '}
             <span
               style={{
                 color:
@@ -99,11 +101,9 @@ export default function renderEnglishMessage({
                 fontWeight: 'bold'
               }}
             >
-              rewarded you {actionObj.amount === 1 ? 'a' : actionObj.amount}{' '}
-              Twinkle
-              {actionObj.amount > 1 ? 's' : ''}
-            </span>{' '}
-            for your{' '}
+              트윈클 {actionObj.amount}개를 선물하셨습니다
+            </span>
+            :{' '}
             <ContentLink
               contentType={targetObj.contentType}
               content={{
