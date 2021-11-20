@@ -24,6 +24,10 @@ const languageObj = {
     en: 'Be the first to like this video',
     kr: ''
   },
+  broughtBackBy: {
+    en: 'Brought back by',
+    kr: '재개자:'
+  },
   by: {
     en: 'By',
     kr: '게시자:'
@@ -323,6 +327,10 @@ const languageObj = {
   secretMessage: {
     en: 'Secret Message',
     kr: '비밀 메시지'
+  },
+  startedBy: {
+    en: 'Started by',
+    kr: '개설자:'
   },
   startNewSubject: {
     en: 'Start a new subject',

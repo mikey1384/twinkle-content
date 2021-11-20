@@ -20,6 +20,11 @@ import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useInterval } from 'helpers/hooks';
 import LocalContext from '../../../Context';
+import localize from 'constants/localize';
+
+const broughtBackByLabel = localize('broughtBackBy');
+const startedByLabel = localize('startedBy');
+const deviceIsMobile = isMobile(navigator);
 
 ChannelHeader.propTypes = {
   currentChannel: PropTypes.object.isRequired,
@@ -30,8 +35,6 @@ ChannelHeader.propTypes = {
   onSetSettingsModalShown: PropTypes.func,
   selectedChannelId: PropTypes.number
 };
-
-const deviceIsMobile = isMobile(navigator);
 
 export default function ChannelHeader({
   currentChannel,
@@ -114,7 +117,7 @@ export default function ChannelHeader({
     if (uploader.id && timeSincePost) {
       posterString = (
         <span>
-          Started by <UsernameText user={uploader} />{' '}
+          {startedByLabel} <UsernameText user={uploader} />{' '}
           <span className="desktop">{timeSincePost}</span>
         </span>
       );
@@ -122,10 +125,10 @@ export default function ChannelHeader({
     if (isReloaded && timeSinceReload) {
       posterString = (
         <span>
-          Brought back by <UsernameText user={reloader} />{' '}
+          {broughtBackByLabel} <UsernameText user={reloader} />{' '}
           <span className="desktop">{timeSinceReload}</span>{' '}
           <span className="desktop">
-            (started by {<UsernameText user={uploader} />})
+            ({startedByLabel} {<UsernameText user={uploader} />})
           </span>
         </span>
       );

@@ -13,6 +13,8 @@ import { useAppContext } from 'contexts';
 import localize from 'constants/localize';
 
 const joinConversationLabel = localize('joinConversation');
+const broughtBackByLabel = localize('broughtBackBy');
+const startedByLabel = localize('startedBy');
 
 ChatFeeds.propTypes = {
   content: PropTypes.string,
@@ -54,13 +56,13 @@ function ChatFeeds({
   const Details = useMemo(() => {
     const posterString = (
       <>
-        Started by <UsernameText user={{ id: userId, username }} />
+        {startedByLabel} <UsernameText user={{ id: userId, username }} />
         {timeStamp ? ` ${timeSincePost}` : ''}
       </>
     );
     const reloaderString = (
       <div style={{ marginTop: '0.5rem' }}>
-        Brought back by{' '}
+        {broughtBackByLabel}{' '}
         <UsernameText user={{ id: reloadedBy, username: reloaderName }} />
         {reloadTimeStamp ? ` ${timeSinceReload}` : ''}
       </div>
