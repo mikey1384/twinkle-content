@@ -116,27 +116,28 @@ export default function renderEnglishMessage({
       } else {
         return (
           <>
-            <b style={{ color: Color.pink() }}>also recommended</b>{' '}
+            <span>님이</span>{' '}
             <ContentLink
               style={{ color: Color.green() }}
               content={{
                 id: rewardRootId,
-                title: `this ${
+                title: `이 ${
                   rewardRootType === 'pass'
                     ? isTask
-                      ? 'task'
-                      : 'mission'
-                    : rewardRootType
+                      ? localize('task')
+                      : localize('mission')?.toLowerCase()
+                    : localize(rewardRootType)
                 }`,
                 missionType: rewardRootMissionType
               }}
               contentType={
                 rewardRootType === 'pass' ? 'mission' : rewardRootType
               }
-            />{' '}
+            />
+            에 대한 회원님의 추천을{' '}
+            <b style={{ color: Color.pink() }}>승인하셨습니다</b>:{' '}
             <p style={{ fontWeight: 'bold', color: Color.brownOrange() }}>
-              You earn {actionObj.amount} Twinkle Coin
-              {actionObj.amount > 1 ? 's' : ''}!
+              트윈클 코인 {actionObj.amount}개가 지급되었습니다
             </p>
           </>
         );

@@ -380,6 +380,10 @@ const languageObj = {
     en: 'Submit',
     kr: '게시'
   },
+  task: {
+    en: 'task',
+    kr: '과제'
+  },
   tapThisButtonToSubmit: {
     en: 'Tap this button to submit',
     kr: '이 버튼을 누르면 게시됩니다'
