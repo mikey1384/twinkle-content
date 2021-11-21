@@ -23,8 +23,9 @@ export default function renderKoreanMessage({
     case 'video':
       return (
         <>
-          <UsernameText user={uploader} color={Color.blue()} /> uploaded a
-          video: <ContentLink content={contentObj} contentType={contentType} />{' '}
+          <UsernameText user={uploader} color={Color.blue()} />
+          님이 동영상을 게시하셨습니다:{' '}
+          <ContentLink content={contentObj} contentType={contentType} />{' '}
         </>
       );
     case 'comment':

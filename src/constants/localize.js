@@ -72,6 +72,10 @@ const languageObj = {
     en: 'Comment',
     kr: '댓글'
   },
+  commentedOn: {
+    en: 'commented on',
+    kr: '댓글을 남겼습니다'
+  },
   commentOnThisVideo: {
     en: 'Comment on this video',
     kr: '댓글 달기'
@@ -339,6 +343,14 @@ const languageObj = {
   reorderQuestions: {
     en: 'Reorder Questions',
     kr: '문제 순서 변경하기'
+  },
+  repliedOn: {
+    en: 'replied on',
+    kr: '답글을 남겼습니다.'
+  },
+  repliedTo: {
+    en: 'replied to',
+    kr: '답글을 남겼습니다.'
   },
   reset: {
     en: 'Reset',

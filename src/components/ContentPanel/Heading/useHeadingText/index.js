@@ -7,9 +7,9 @@ const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 
 export default function useHeadingText({ action, contentObj }) {
   const {
+    id,
     byUser,
     commentId,
-    id,
     targetObj = {},
     replyId,
     rootType,
@@ -20,12 +20,12 @@ export default function useHeadingText({ action, contentObj }) {
   const { profileTheme } = useMyState();
   const HeadingText = useMemo(() => {
     const params = {
+      id,
       action,
       byUser,
       commentId,
       contentObj,
       contentType,
-      id,
       profileTheme,
       replyId,
       rootObj,
