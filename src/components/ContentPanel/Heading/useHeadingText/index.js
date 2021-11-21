@@ -1,6 +1,9 @@
 import { useMemo } from 'react';
 import { useMyState } from 'helpers/hooks';
 import renderEnglishMessage from './localize/english';
+import renderKoreanMessage from './localize/korean';
+
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 
 export default function useHeadingText({ action, contentObj }) {
   const {
@@ -16,7 +19,7 @@ export default function useHeadingText({ action, contentObj }) {
   } = contentObj;
   const { profileTheme } = useMyState();
   const HeadingText = useMemo(() => {
-    return renderEnglishMessage({
+    const params = {
       action,
       byUser,
       commentId,
@@ -29,7 +32,10 @@ export default function useHeadingText({ action, contentObj }) {
       rootType,
       targetObj,
       uploader
-    });
+    };
+    return selectedLanguage === 'en'
+      ? renderEnglishMessage(params)
+      : renderKoreanMessage(params);
   }, [
     action,
     byUser,
