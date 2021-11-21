@@ -47,7 +47,7 @@ export default function renderEnglishMessage({
           <span style={{ color: Color.lightBlue(), fontWeight: 'bold' }}>
             좋아요
           </span>{' '}
-          버튼을 누르셨습니다
+          버튼을 눌렀습니다
         </>
       );
     case 'mention':
@@ -57,7 +57,7 @@ export default function renderEnglishMessage({
           <span style={{ color: Color.passionFruit(), fontWeight: 'bold' }}>
             언급
           </span>
-          하셨습니다:{' '}
+          했습니다:{' '}
           <ContentLink
             contentType={targetObj.contentType}
             content={{
@@ -85,7 +85,7 @@ export default function renderEnglishMessage({
           <span style={{ color: Color.brownOrange(), fontWeight: 'bold' }}>
             추천
           </span>
-          하셨습니다
+          했습니다
         </>
       );
     case 'reward': {
@@ -106,7 +106,7 @@ export default function renderEnglishMessage({
                 fontWeight: 'bold'
               }}
             >
-              트윈클 {actionObj.amount}개를 선물하셨습니다
+              트윈클 {actionObj.amount}개를 선물했습니다
             </span>
             :{' '}
             <ContentLink
@@ -140,7 +140,7 @@ export default function renderEnglishMessage({
               }
             />
             에 대한 회원님의 추천을{' '}
-            <b style={{ color: Color.pink() }}>승인하셨습니다</b>:{' '}
+            <b style={{ color: Color.pink() }}>승인했습니다</b>:{' '}
             <p style={{ fontWeight: 'bold', color: Color.brownOrange() }}>
               트윈클 코인 {actionObj.amount}개가 지급되었습니다
             </p>
@@ -159,7 +159,7 @@ export default function renderEnglishMessage({
               title: localize('subject')
             }}
           />
-          {`의 비밀 메시지를 조회하셨습니다.`}
+          {`의 비밀 메시지를 조회했습니다.`}
         </>
       ) : (
         <>
@@ -217,7 +217,7 @@ export default function renderEnglishMessage({
             }}
             style={{ color: Color.green() }}
           />
-          {targetObj.contentType === 'user' ? '를' : '을'} 남기셨습니다:{' '}
+          {targetObj.contentType === 'user' ? '를' : '을'} 남겼습니다:{' '}
           {!stringIsEmpty(actionObj.content) && (
             <>
               <ContentLink
@@ -262,7 +262,7 @@ export default function renderEnglishMessage({
             }}
             style={{ color: Color.green() }}
           />
-          <span>를 개설하셨습니다.</span>
+          <span>를 개설했습니다.</span>
         </>
       );
     case 'pass':

@@ -24,7 +24,7 @@ export default function renderKoreanMessage({
       return (
         <>
           <UsernameText user={uploader} color={Color.blue()} />
-          님이 동영상을 게시하셨습니다:{' '}
+          님이 동영상을 게시했습니다:{' '}
           <ContentLink content={contentObj} contentType={contentType} />{' '}
         </>
       );
