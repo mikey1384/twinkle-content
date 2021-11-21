@@ -3,7 +3,7 @@ import { Color } from 'constants/css';
 import UsernameText from 'components/Texts/UsernameText';
 import ContentLink from 'components/ContentLink';
 
-export default function renderEnglishMessage({
+export default function renderKoreanMessage({
   action,
   byUser,
   commentId,
