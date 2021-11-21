@@ -20,26 +20,22 @@ export default function renderEnglishMessage({
   targetSubject
 }) {
   const contentPreview = `${
-    !stringIsEmpty(targetObj.content)
-      ? `${truncateText({
-          text: targetObj.content,
-          limit: 100
-        })} `
-      : ''
-  }(${
     targetObj.contentType === 'url'
       ? localize('link')
       : localize(targetObj.contentType)
-  })`;
+  } ${
+    !stringIsEmpty(targetObj.content)
+      ? `(${truncateText({
+          text: targetObj.content,
+          limit: 100
+        })})`
+      : ''
+  }`;
   switch (actionObj.contentType) {
     case 'like':
       return (
         <>
-          <span>님이</span>{' '}
-          <span style={{ color: Color.lightBlue(), fontWeight: 'bold' }}>
-            좋아요
-          </span>{' '}
-          버튼을 누르셨습니다:{' '}
+          <span>님이</span> 회원님이 올리신{' '}
           <ContentLink
             contentType={targetObj.contentType}
             content={{
@@ -47,6 +43,11 @@ export default function renderEnglishMessage({
               title: contentPreview
             }}
           />
+          에{' '}
+          <span style={{ color: Color.lightBlue(), fontWeight: 'bold' }}>
+            좋아요
+          </span>{' '}
+          버튼을 누르셨습니다
         </>
       );
     case 'mention':
