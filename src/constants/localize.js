@@ -184,6 +184,10 @@ const languageObj = {
     en: 'Leaderboard',
     kr: '리더보드'
   },
+  leftMessageTo: {
+    en: 'left a message to',
+    kr: '메시지를 남겼습니다'
+  },
   like: {
     en: 'Like',
     kr: '좋아요'
@@ -355,6 +359,10 @@ const languageObj = {
   reset: {
     en: 'Reset',
     kr: '초기화'
+  },
+  respondedTo: {
+    en: 'responded to',
+    kr: '댓글을 남겼습니다.'
   },
   reward: {
     en: 'Reward',

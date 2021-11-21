@@ -238,9 +238,9 @@ export default function ContentPanel({
                               ? localize('repliedOn')
                               : localize('repliedTo')
                             : rootType === 'subject'
-                            ? 'responded to'
+                            ? localize('respondedTo')
                             : rootType === 'user'
-                            ? 'left a message to'
+                            ? localize('leftMessageTo')
                             : localize('commentedOn')
                         }
                       />
