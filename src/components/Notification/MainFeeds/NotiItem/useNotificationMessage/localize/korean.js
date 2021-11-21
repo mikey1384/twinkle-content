@@ -23,7 +23,7 @@ export default function renderEnglishMessage({
     targetObj.contentType === 'url'
       ? localize('link')
       : localize(targetObj.contentType)
-  } ${
+  }${
     !stringIsEmpty(targetObj.content)
       ? `(${truncateText({
           text: targetObj.content,
@@ -70,11 +70,7 @@ export default function renderEnglishMessage({
     case 'recommendation':
       return (
         <>
-          <span>님이</span>{' '}
-          <span style={{ color: Color.brownOrange(), fontWeight: 'bold' }}>
-            추천
-          </span>
-          하셨습니다:{' '}
+          <span>님이</span> 회원님이 올리신{' '}
           <ContentLink
             contentType={targetObj.contentType}
             content={{
@@ -82,6 +78,14 @@ export default function renderEnglishMessage({
               title: contentPreview
             }}
           />
+          {targetObj.contentType === 'url' ||
+          targetObj.contentType === 'subject'
+            ? '를'
+            : '을'}{' '}
+          <span style={{ color: Color.brownOrange(), fontWeight: 'bold' }}>
+            추천
+          </span>
+          하셨습니다
         </>
       );
     case 'reward': {
