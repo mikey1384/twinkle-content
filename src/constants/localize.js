@@ -352,6 +352,10 @@ const languageObj = {
     en: 'Reorder Questions',
     kr: '문제 순서 변경하기'
   },
+  reply: {
+    en: 'Reply',
+    kr: '답글'
+  },
   repliedOn: {
     en: 'replied on',
     kr: '답글을 남겼습니다'
@@ -363,6 +367,10 @@ const languageObj = {
   reset: {
     en: 'Reset',
     kr: '초기화'
+  },
+  respond: {
+    en: 'Respond',
+    kr: '댓글'
   },
   respondedTo: {
     en: 'responded to',

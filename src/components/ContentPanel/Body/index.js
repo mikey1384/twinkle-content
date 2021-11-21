@@ -27,6 +27,13 @@ import {
 } from 'helpers';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
+import localize from 'constants/localize';
+
+const commentLabel = localize('comment');
+const replyLabel = localize('reply');
+const respondLabel = localize('respond');
+const rewardLabel = localize('reward');
+const deviceIsMobile = isMobile(navigator);
 
 Body.propTypes = {
   autoExpand: PropTypes.bool,
@@ -36,8 +43,6 @@ Body.propTypes = {
   numPreviewComments: PropTypes.number,
   onChangeSpoilerStatus: PropTypes.func.isRequired
 };
-
-const deviceIsMobile = isMobile(navigator);
 
 export default function Body({
   autoExpand,
@@ -370,10 +375,10 @@ export default function Body({
                       <Icon icon="comment-alt" />
                       <span style={{ marginLeft: '0.7rem' }}>
                         {contentType === 'video' || contentType === 'url'
-                          ? 'Comment'
+                          ? commentLabel
                           : contentType === 'subject'
-                          ? 'Respond'
-                          : 'Reply'}
+                          ? respondLabel
+                          : replyLabel}
                       </span>
                       {(numComments > 0 || numReplies > 0) &&
                         !commentsShown &&
@@ -398,7 +403,7 @@ export default function Body({
                     >
                       <Icon icon="certificate" />
                       <span style={{ marginLeft: '0.7rem' }}>
-                        {xpButtonDisabled || 'Reward'}
+                        {xpButtonDisabled || rewardLabel}
                       </span>
                     </Button>
                   )}
