@@ -92,7 +92,7 @@ export default function renderEnglishMessage({
       if (rewardType === 'Twinkle') {
         return (
           <>
-            <span>님이</span>{' '}
+            <span>님이</span> 회원님께{' '}
             <span
               style={{
                 color:
