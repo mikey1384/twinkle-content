@@ -45,26 +45,29 @@ export default function renderKoreanMessage({
     case 'url':
       return (
         <>
-          <UsernameText user={uploader} color={Color.blue()} /> shared a
-          link:&nbsp;
+          <UsernameText user={uploader} color={Color.blue()} /> 님이 링크를
+          공유했습니다:{' '}
           <ContentLink content={contentObj} contentType={contentType} />{' '}
         </>
       );
     case 'subject':
       return (
         <>
-          <UsernameText user={uploader} color={Color.blue()} /> started a{' '}
-          <ContentLink
-            content={{ id, title: 'subject ' }}
-            contentType={contentType}
-            style={{ color: byUser ? Color[profileTheme]() : Color.green() }}
-          />
+          <UsernameText user={uploader} color={Color.blue()} />
+          님이{' '}
           {rootObj.id && (
             <>
-              on {contentLabel}:{' '}
-              <ContentLink content={rootObj} contentType={rootType} />{' '}
+              {localize(contentLabel)}(
+              <ContentLink content={rootObj} contentType={rootType} />
+              )에{' '}
             </>
           )}
+          <ContentLink
+            content={{ id, title: '주제를' }}
+            contentType={contentType}
+            style={{ color: byUser ? Color[profileTheme]() : Color.green() }}
+          />{' '}
+          개설했습니다.
         </>
       );
     case 'pass':
