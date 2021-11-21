@@ -350,11 +350,11 @@ const languageObj = {
   },
   repliedOn: {
     en: 'replied on',
-    kr: '답글을 남겼습니다.'
+    kr: '답글을 남겼습니다'
   },
   repliedTo: {
     en: 'replied to',
-    kr: '답글을 남겼습니다.'
+    kr: '답글을 남겼습니다'
   },
   reset: {
     en: 'Reset',
@@ -362,7 +362,7 @@ const languageObj = {
   },
   respondedTo: {
     en: 'responded to',
-    kr: '댓글을 남겼습니다.'
+    kr: '댓글을 남겼습니다'
   },
   reward: {
     en: 'Reward',

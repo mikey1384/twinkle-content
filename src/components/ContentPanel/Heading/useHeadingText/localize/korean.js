@@ -2,6 +2,7 @@ import React from 'react';
 import { Color } from 'constants/css';
 import UsernameText from 'components/Texts/UsernameText';
 import ContentLink from 'components/ContentLink';
+import localize from 'constants/localize';
 
 export default function renderKoreanMessage({
   id,
@@ -31,14 +32,14 @@ export default function renderKoreanMessage({
     case 'comment':
       return (
         <>
-          <UsernameText user={uploader} color={Color.blue()} />{' '}
+          <UsernameText user={uploader} color={Color.blue()} />
+          님이 <ContentLink content={rootObj} contentType={rootType} />(
+          {localize(contentLabel)})에 {renderTargetAction()}
           <ContentLink
             content={{ id, title: action }}
             contentType={contentType}
             style={{ color: Color.green() }}
-          />
-          {renderTargetAction()} {contentLabel}:{' '}
-          <ContentLink content={rootObj} contentType={rootType} />{' '}
+          />{' '}
         </>
       );
     case 'url':
@@ -90,25 +91,24 @@ export default function renderKoreanMessage({
     if (targetObj?.comment && !targetObj?.comment.notFound) {
       return (
         <span>
-          {' '}
           <UsernameText
             user={targetObj.comment.uploader}
             color={Color.blue()}
           />
-          {"'s "}
+          님이 남기신{' '}
           <ContentLink
             content={{
               id: replyId || commentId,
               title: replyId
-                ? 'reply '
+                ? localize('reply')
                 : rootType === 'user'
-                ? 'message '
-                : 'comment '
+                ? localize('message')
+                : localize('comment')
             }}
             contentType="comment"
             style={{ color: Color.green() }}
           />
-          {!replyId && rootType === 'user' ? 'to' : 'on'}
+          에{' '}
         </span>
       );
     }
