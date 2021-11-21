@@ -354,7 +354,7 @@ const languageObj = {
   },
   startNewSubject: {
     en: 'Start a new subject',
-    kr: '새로운 주제 게시하기'
+    kr: '새로운 주제 개설하기'
   },
   store: {
     en: 'Store',

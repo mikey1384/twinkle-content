@@ -238,28 +238,31 @@ export default function renderEnglishMessage({
     case 'subject':
       return (
         <>
-          <span>added a </span>
-          <ContentLink
-            contentType="subject"
-            content={{
-              id: actionObj.id,
-              title: `subject (${truncateText({
-                text: actionObj.content,
-                limit: 100
-              })})`
-            }}
-            style={{ color: Color.green() }}
-          />{' '}
-          <span>to your </span>
+          <span>님이</span> 회원님이 올리신{' '}
           <ContentLink
             contentType={targetObj.contentType}
             content={{
               id: targetObj.id,
               title: `${
-                targetObj.contentType === 'url' ? 'link' : targetObj.contentType
-              } (${truncateText({ text: targetObj.content, limit: 100 })})`
+                targetObj.contentType === 'url'
+                  ? localize('link')
+                  : localize(targetObj.contentType)
+              }(${truncateText({ text: targetObj.content, limit: 100 })})`
             }}
           />
+          에{' '}
+          <ContentLink
+            contentType="subject"
+            content={{
+              id: actionObj.id,
+              title: `주제(${truncateText({
+                text: actionObj.content,
+                limit: 100
+              })})`
+            }}
+            style={{ color: Color.green() }}
+          />
+          <span>를 개설하셨습니다.</span>
         </>
       );
     case 'pass':
