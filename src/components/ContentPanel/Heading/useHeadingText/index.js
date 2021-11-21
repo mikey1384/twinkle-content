@@ -1,62 +1,140 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
+import { Color } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
-import renderEnglishMessage from './localize/english';
-import renderKoreanMessage from './localize/korean';
+import UsernameText from 'components/Texts/UsernameText';
+import ContentLink from 'components/ContentLink';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+export default function useHeadingText({ action, contentObj }) {
+  const {
+    byUser,
+    commentId,
+    id,
+    targetObj = {},
+    replyId,
+    rootType,
+    contentType,
+    uploader,
+    rootObj
+  } = contentObj;
+  const { profileTheme } = useMyState();
+  const HeadingText = useMemo(() => {
+    const contentLabel =
+      rootType === 'url'
+        ? 'link'
+        : rootType === 'subject'
+        ? 'subject'
+        : rootType;
+    switch (contentType) {
+      case 'video':
+        return (
+          <>
+            <UsernameText user={uploader} color={Color.blue()} /> uploaded a
+            video:{' '}
+            <ContentLink content={contentObj} contentType={contentType} />{' '}
+          </>
+        );
+      case 'comment':
+        return (
+          <>
+            <UsernameText user={uploader} color={Color.blue()} />{' '}
+            <ContentLink
+              content={{ id, title: action }}
+              contentType={contentType}
+              style={{ color: Color.green() }}
+            />
+            {renderTargetAction()} {contentLabel}:{' '}
+            <ContentLink content={rootObj} contentType={rootType} />{' '}
+          </>
+        );
+      case 'url':
+        return (
+          <>
+            <UsernameText user={uploader} color={Color.blue()} /> shared a
+            link:&nbsp;
+            <ContentLink content={contentObj} contentType={contentType} />{' '}
+          </>
+        );
+      case 'subject':
+        return (
+          <>
+            <UsernameText user={uploader} color={Color.blue()} /> started a{' '}
+            <ContentLink
+              content={{ id, title: 'subject ' }}
+              contentType={contentType}
+              style={{ color: byUser ? Color[profileTheme]() : Color.green() }}
+            />
+            {rootObj.id && (
+              <>
+                on {contentLabel}:{' '}
+                <ContentLink content={rootObj} contentType={rootType} />{' '}
+              </>
+            )}
+          </>
+        );
+      case 'pass':
+        return (
+          <>
+            <UsernameText user={uploader} color={Color.blue()} /> completed a{' '}
+            <ContentLink
+              content={{
+                id: rootObj.id,
+                title: `${rootObj.isTask ? 'task' : 'mission'}: ${
+                  rootObj.title
+                }`,
+                missionType: rootObj.missionType,
+                rootMissionType: rootObj.rootMission?.missionType
+              }}
+              contentType="mission"
+              style={{ color: Color.orange() }}
+            />{' '}
+          </>
+        );
+      default:
+        return <span>Error</span>;
+    }
 
-export default function useHeadingText({
-  actionObj,
-  targetObj,
-  targetComment,
-  targetSubject,
-  isNotification,
-  isTask,
-  rewardRootId,
-  rewardType,
-  rewardRootMissionType,
-  rewardRootType,
-  rootMissionType,
-  user
-}) {
-  const { userId } = useMyState();
-  const NotificationMessage = useMemo(() => {
-    const isReply = targetComment?.userId === userId;
-    const isSubjectResponse = targetSubject?.userId === userId;
-    const params = {
-      actionObj,
-      isNotification,
-      isReply,
-      isSubjectResponse,
-      isTask,
-      rewardRootId,
-      rewardType,
-      rewardRootMissionType,
-      rewardRootType,
-      rootMissionType,
-      targetComment,
-      targetObj,
-      targetSubject,
-      user
-    };
-    return selectedLanguage === 'en'
-      ? renderEnglishMessage(params)
-      : renderKoreanMessage(params);
+    function renderTargetAction() {
+      if (targetObj?.comment && !targetObj?.comment.notFound) {
+        return (
+          <span>
+            {' '}
+            <UsernameText
+              user={targetObj.comment.uploader}
+              color={Color.blue()}
+            />
+            {"'s "}
+            <ContentLink
+              content={{
+                id: replyId || commentId,
+                title: replyId
+                  ? 'reply '
+                  : rootType === 'user'
+                  ? 'message '
+                  : 'comment '
+              }}
+              contentType="comment"
+              style={{ color: Color.green() }}
+            />
+            {!replyId && rootType === 'user' ? 'to' : 'on'}
+          </span>
+        );
+      }
+      return null;
+    }
   }, [
-    actionObj,
-    isNotification,
-    isTask,
-    rewardRootId,
-    rewardRootMissionType,
-    rewardRootType,
-    rewardType,
-    rootMissionType,
-    targetComment,
-    targetObj,
-    targetSubject,
-    user,
-    userId
+    action,
+    byUser,
+    commentId,
+    contentObj,
+    contentType,
+    id,
+    profileTheme,
+    replyId,
+    rootObj,
+    rootType,
+    targetObj.comment,
+    uploader
   ]);
 
-  return NotificationMessage;
+  return HeadingText;
 }
