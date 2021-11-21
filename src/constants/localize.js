@@ -200,6 +200,10 @@ const languageObj = {
     en: 'Link',
     kr: '링크'
   },
+  links: {
+    en: 'Links',
+    kr: '링크'
+  },
   mission: {
     en: 'Mission',
     kr: '미션'
@@ -455,6 +459,10 @@ const languageObj = {
   videos: {
     en: 'Videos',
     kr: '동영상 목록'
+  },
+  videos2: {
+    en: 'Videos',
+    kr: '동영상'
   },
   viewProfile: {
     en: 'View Profile',
