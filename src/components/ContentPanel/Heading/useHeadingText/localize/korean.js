@@ -67,23 +67,25 @@ export default function renderKoreanMessage({
             contentType={contentType}
             style={{ color: byUser ? Color[profileTheme]() : Color.green() }}
           />{' '}
-          개설했습니다.
+          개설했습니다
         </>
       );
     case 'pass':
       return (
         <>
-          <UsernameText user={uploader} color={Color.blue()} /> completed a{' '}
+          <UsernameText user={uploader} color={Color.blue()} />
+          님이{' '}
           <ContentLink
             content={{
               id: rootObj.id,
-              title: `${rootObj.isTask ? 'task' : 'mission'}: ${rootObj.title}`,
+              title: `${rootObj.isTask ? '과제' : '임무'}(${rootObj.title})`,
               missionType: rootObj.missionType,
               rootMissionType: rootObj.rootMission?.missionType
             }}
             contentType="mission"
             style={{ color: Color.orange() }}
-          />{' '}
+          />
+          를 완료했습니다
         </>
       );
     default:
