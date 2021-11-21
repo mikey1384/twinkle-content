@@ -85,7 +85,7 @@ export default function renderKoreanMessage({
             contentType="mission"
             style={{ color: Color.orange() }}
           />
-          를 완료했습니다
+          를 완료했습니다{' '}
         </>
       );
     default:
