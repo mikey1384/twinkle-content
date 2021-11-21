@@ -5,6 +5,10 @@ import UsernameText from 'components/Texts/UsernameText';
 import ContentLink from 'components/ContentLink';
 import { borderRadius, Color } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
+import localize from 'constants/localize';
+
+const taskCompleteLabel = localize('taskComplete');
+const missionAccomplishedLabel = localize('missionAccomplished');
 
 MissionContent.propTypes = {
   uploader: PropTypes.object.isRequired,
@@ -86,7 +90,7 @@ export default function MissionContent({ uploader, rootObj: mission }) {
           color: '#fff'
         }}
       >
-        {mission.isTask ? 'Task Complete' : 'Mission Accomplished'}
+        {mission.isTask ? taskCompleteLabel : missionAccomplishedLabel}
       </div>
       {rewardDetails}
     </div>

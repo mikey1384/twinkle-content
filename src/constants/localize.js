@@ -428,6 +428,10 @@ const languageObj = {
     en: 'task',
     kr: '과제'
   },
+  taskComplete: {
+    en: 'Task Complete',
+    kr: '과제 완료'
+  },
   tapThisButtonToSubmit: {
     en: 'Tap this button to submit',
     kr: '이 버튼을 누르면 게시됩니다'
