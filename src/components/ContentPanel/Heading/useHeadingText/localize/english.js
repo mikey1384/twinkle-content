@@ -4,12 +4,12 @@ import UsernameText from 'components/Texts/UsernameText';
 import ContentLink from 'components/ContentLink';
 
 export default function renderEnglishMessage({
+  id,
   action,
   byUser,
   commentId,
   contentObj,
   contentType,
-  id,
   profileTheme,
   replyId,
   rootObj,
