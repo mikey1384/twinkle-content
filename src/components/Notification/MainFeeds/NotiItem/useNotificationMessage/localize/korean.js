@@ -268,7 +268,9 @@ export default function renderEnglishMessage({
     case 'pass':
       return (
         <>
-          <b style={{ color: Color.brownOrange() }}>Mission accomplished!</b>{' '}
+          <b style={{ color: Color.brownOrange() }}>
+            {localize('missionAccomplished')}
+          </b>{' '}
           <ContentLink
             contentType="mission"
             content={{
@@ -286,7 +288,9 @@ export default function renderEnglishMessage({
     case 'fail':
       return (
         <>
-          <b style={{ color: Color.darkerGray() }}>Mission failed...</b>{' '}
+          <b style={{ color: Color.darkerGray() }}>
+            {localize('missionFailed')}...
+          </b>{' '}
           <ContentLink
             contentType="mission"
             content={{

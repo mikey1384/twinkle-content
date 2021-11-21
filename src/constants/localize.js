@@ -196,6 +196,14 @@ const languageObj = {
     en: 'Mission',
     kr: '미션'
   },
+  missionAccomplished: {
+    en: 'Mission Accomplished',
+    kr: '미션 완료'
+  },
+  missionFailed: {
+    en: 'Mission Failed',
+    kr: '미션 실패'
+  },
   missions: {
     en: 'Missions',
     kr: '미션 목록'
