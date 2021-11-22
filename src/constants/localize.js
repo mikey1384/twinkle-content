@@ -486,7 +486,15 @@ const languageObj = {
   },
   viewProfile: {
     en: 'View Profile',
-    kr: '프로필 보기'
+    kr: '프로필'
+  },
+  visitWebsite: {
+    en: 'Visit Website',
+    kr: '웹사이트'
+  },
+  visitYoutube: {
+    en: 'Visit YouTube',
+    kr: '유튜브'
   },
   watching: {
     en: 'watching',

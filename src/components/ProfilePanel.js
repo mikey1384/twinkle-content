@@ -27,6 +27,8 @@ import {
 import localize from 'constants/localize';
 
 const viewProfileLabel = localize('viewProfile');
+const visitWebsiteLabel = localize('visitWebsite');
+const visitYoutubeLabel = localize('visitYoutube');
 
 ProfilePanel.propTypes = {
   expandable: PropTypes.bool,
@@ -353,7 +355,7 @@ function ProfilePanel({ expandable, profileId, style }) {
                         style={{ padding: '0.5rem' }}
                         onClick={() => window.open(youtubeUrl)}
                       >
-                        Visit YouTube
+                        {visitYoutubeLabel}
                       </Button>
                     )}
                     {website && (
@@ -363,7 +365,7 @@ function ProfilePanel({ expandable, profileId, style }) {
                         style={{ padding: '0.5rem' }}
                         onClick={() => window.open(website)}
                       >
-                        Visit Website
+                        {visitWebsiteLabel}
                       </Button>
                     )}
                   </div>
