@@ -7,6 +7,7 @@ import { borderRadius, Color } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import localize from 'constants/localize';
 
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const taskCompleteLabel = localize('taskComplete');
 const missionAccomplishedLabel = localize('missionAccomplished');
 
@@ -24,31 +25,70 @@ export default function MissionContent({ uploader, rootObj: mission }) {
           color: Color.black()
         }}
       >
-        <UsernameText user={uploader} color={Color.blue()} /> was rewarded{' '}
-        {mission.xpReward ? (
-          <span style={{ color: Color.logoGreen(), fontWeight: 'bold' }}>
-            {addCommasToNumber(mission.xpReward)}{' '}
-          </span>
-        ) : null}
-        {mission.xpReward && mission.coinReward ? (
-          <>
-            <span style={{ color: Color.gold(), fontWeight: 'bold' }}>XP</span>{' '}
-            and{' '}
-          </>
-        ) : null}
-        {mission.coinReward ? (
-          <>
-            <Icon
-              style={{ color: Color.brownOrange(), fontWeight: 'bold' }}
-              icon={['far', 'badge-dollar']}
-            />{' '}
-            <span style={{ color: Color.brownOrange(), fontWeight: 'bold' }}>
-              {mission.coinReward}
-            </span>
-          </>
-        ) : null}
+        {selectedLanguage === 'en' ? renderEnglish() : renderKorean()}
       </div>
     ) : null;
+
+    function renderEnglish() {
+      return (
+        <>
+          <UsernameText user={uploader} color={Color.blue()} /> was rewarded{' '}
+          {mission.xpReward ? (
+            <>
+              <span style={{ color: Color.logoGreen(), fontWeight: 'bold' }}>
+                {addCommasToNumber(mission.xpReward)}{' '}
+              </span>
+              <span style={{ color: Color.gold(), fontWeight: 'bold' }}>
+                XP
+              </span>
+            </>
+          ) : null}
+          {mission.xpReward && mission.coinReward ? ' and ' : null}
+          {mission.coinReward ? (
+            <>
+              <Icon
+                style={{ color: Color.brownOrange(), fontWeight: 'bold' }}
+                icon={['far', 'badge-dollar']}
+              />{' '}
+              <span style={{ color: Color.brownOrange(), fontWeight: 'bold' }}>
+                {mission.coinReward}
+              </span>
+            </>
+          ) : null}
+        </>
+      );
+    }
+    function renderKorean() {
+      return (
+        <>
+          <UsernameText user={uploader} color={Color.blue()} />
+          님에게{' '}
+          {mission.xpReward ? (
+            <>
+              <span style={{ color: Color.logoGreen(), fontWeight: 'bold' }}>
+                {addCommasToNumber(mission.xpReward)}{' '}
+              </span>{' '}
+              <span style={{ color: Color.gold(), fontWeight: 'bold' }}>
+                XP
+              </span>
+            </>
+          ) : null}
+          {mission.xpReward && mission.coinReward ? <>와 </> : null}
+          {mission.coinReward ? (
+            <>
+              <Icon
+                style={{ color: Color.brownOrange(), fontWeight: 'bold' }}
+                icon={['far', 'badge-dollar']}
+              />{' '}
+              <span style={{ color: Color.brownOrange(), fontWeight: 'bold' }}>
+                {mission.coinReward}
+              </span>
+            </>
+          ) : null}
+          {mission.coinReward ? '이' : '가'} 지급됐습니다
+        </>
+      );
+    }
   }, [mission.coinReward, mission.xpReward, uploader]);
 
   return (
