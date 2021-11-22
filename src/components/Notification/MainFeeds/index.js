@@ -13,6 +13,10 @@ import { REWARD_VALUE } from 'constants/defaultValues';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useNotiContext } from 'contexts';
+import localize from 'constants/localize';
+
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+const tapToCollectRewardsLabel = localize('tapToCollectRewards');
 
 MainFeeds.propTypes = {
   loadingNotifications: PropTypes.bool.isRequired,
@@ -79,6 +83,12 @@ function MainFeeds({
     };
   }, []);
 
+  const twinkleLabel = useMemo(() => {
+    return selectedLanguage === 'en'
+      ? `${totalTwinkles} Twinkle${totalTwinkles > 0 ? 's' : ''}`
+      : `트윈클 ${totalTwinkles}개`;
+  }, [totalTwinkles]);
+
   const totalRewardAmount = useMemo(
     () => totalRewardedTwinkles + totalRewardedTwinkleCoins,
     [totalRewardedTwinkleCoins, totalRewardedTwinkles]
@@ -119,11 +129,10 @@ function MainFeeds({
         >
           {totalRewardAmount > 0 && (
             <>
-              <p>Tap to collect all your rewards</p>
+              <p>{tapToCollectRewardsLabel}</p>
               {totalTwinkles > 0 && (
                 <p style={{ fontSize: '1.5rem' }}>
-                  * {totalTwinkles} Twinkle{totalTwinkles > 0 ? 's' : ''} (
-                  {totalTwinkles} * {REWARD_VALUE} ={' '}
+                  {twinkleLabel} ({totalTwinkles} * {REWARD_VALUE} ={' '}
                   {addCommasToNumber(totalTwinkles * REWARD_VALUE)} XP)
                 </p>
               )}

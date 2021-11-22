@@ -428,6 +428,10 @@ const languageObj = {
     en: 'Submit',
     kr: '게시'
   },
+  tapToCollectRewards: {
+    en: 'Tap to collect all your rewards',
+    kr: '모든 선물을 받으시려면 탭하세요'
+  },
   task: {
     en: 'task',
     kr: '과제'
