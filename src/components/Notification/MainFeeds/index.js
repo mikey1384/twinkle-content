@@ -17,6 +17,8 @@ import localize from 'constants/localize';
 
 const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const tapToCollectRewardsLabel = localize('tapToCollectRewards');
+const yourXPLabel = localize('yourXP');
+const yourTwinkleCoinsLabel = localize('yourTwinkleCoins');
 
 MainFeeds.propTypes = {
   loadingNotifications: PropTypes.bool.isRequired,
@@ -147,7 +149,7 @@ function MainFeeds({
           {totalRewardAmount === 0 && totalTwinkles > 0 && (
             <div style={{ fontSize: '1.7rem' }}>
               <p>
-                Your XP: {addCommasToNumber(originalTwinkleXP)} XP {'=>'}{' '}
+                {yourXPLabel}: {addCommasToNumber(originalTwinkleXP)} XP {'=>'}{' '}
                 {addCommasToNumber(
                   originalTwinkleXP + totalTwinkles * REWARD_VALUE
                 )}{' '}
@@ -166,8 +168,9 @@ function MainFeeds({
               }}
             >
               <p>
-                Your Twinkle Coins: {addCommasToNumber(originalTwinkleCoins)}{' '}
-                {'=>'} {addCommasToNumber(originalTwinkleCoins + totalCoins)}
+                {yourTwinkleCoinsLabel}:{' '}
+                {addCommasToNumber(originalTwinkleCoins)} {'=>'}{' '}
+                {addCommasToNumber(originalTwinkleCoins + totalCoins)}
               </p>
               <p style={{ fontSize: '1.5rem' }}>
                 (+ {addCommasToNumber(totalCoins)})

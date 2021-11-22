@@ -83,9 +83,8 @@ export default function renderEnglishMessage({
             ? '를'
             : '을'}{' '}
           <span style={{ color: Color.brownOrange(), fontWeight: 'bold' }}>
-            추천
+            추천했습니다
           </span>
-          했습니다
         </>
       );
     case 'reward': {

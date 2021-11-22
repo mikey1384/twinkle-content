@@ -23,7 +23,8 @@ export default function renderEnglishText({
         <UsernameText
           user={{ id: rewarderId, username: rewarderUsername }}
           color={Color.blue()}
-        />{' '}
+        />
+        <span>님이</span> 회원님께{' '}
         <span
           style={{
             color:
@@ -37,10 +38,9 @@ export default function renderEnglishText({
             fontWeight: 'bold'
           }}
         >
-          rewarded you {rewardAmount === 1 ? 'a' : rewardAmount} {rewardType}
-          {rewardAmount > 1 ? 's' : ''}
-        </span>{' '}
-        for your{' '}
+          트윈클 {rewardAmount}개를 선물했습니다
+        </span>
+        :{' '}
         <ContentLink
           style={{ color: Color.green() }}
           content={{
@@ -71,8 +71,8 @@ export default function renderEnglishText({
       <UsernameText
         user={{ id: rewarderId, username: rewarderUsername }}
         color={Color.blue()}
-      />{' '}
-      <b style={{ color: Color.pink() }}>also recommended</b>{' '}
+      />
+      <span>님이</span>{' '}
       <ContentLink
         style={{ color: Color.green() }}
         content={{
@@ -84,9 +84,10 @@ export default function renderEnglishText({
         }}
         contentType={rootType === 'pass' ? 'mission' : rootType}
       />{' '}
+      에 대한 회원님의 추천을{' '}
+      <b style={{ color: Color.pink() }}>승인했습니다</b>:{' '}
       <p style={{ fontWeight: 'bold', color: Color.brownOrange() }}>
-        You earn {rewardAmount} Twinkle Coin
-        {rewardAmount > 1 ? 's' : ''}!
+        트윈클 코인 {rewardAmount}개가 지급되었습니다
       </p>
     </div>
   );

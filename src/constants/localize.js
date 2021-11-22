@@ -504,6 +504,14 @@ const languageObj = {
     en: 'you',
     kr: '회원님'
   },
+  yourTwinkleCoins: {
+    en: 'Your Twinkle Coins',
+    kr: '코인'
+  },
+  yourXP: {
+    en: 'Your XP',
+    kr: 'XP'
+  },
   youtubeVideo: {
     en: 'YouTube Video',
     kr: '유튜브 동영상'
