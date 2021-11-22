@@ -4,7 +4,7 @@ import ContentLink from 'components/ContentLink';
 import UsernameText from 'components/Texts/UsernameText';
 import { Color } from 'constants/css';
 import { timeSince } from 'helpers/timeStampHelpers';
-import { notiFeedListItem } from '../Styles';
+import { notiFeedListItem } from '../../Styles';
 import { truncateText } from 'helpers/stringHelpers';
 
 RewardItem.propTypes = {
