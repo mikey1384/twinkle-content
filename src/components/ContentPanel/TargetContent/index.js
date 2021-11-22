@@ -33,6 +33,10 @@ import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useInputContext } from 'contexts';
 import { useHistory } from 'react-router-dom';
 import { v1 as uuidv1 } from 'uuid';
+import localize from 'constants/localize';
+
+const commentRemovedLabel = localize('commentRemoved');
+const deviceIsMobile = isMobile(navigator);
 
 TargetContent.propTypes = {
   className: PropTypes.string,
@@ -44,8 +48,6 @@ TargetContent.propTypes = {
   style: PropTypes.object,
   targetObj: PropTypes.object
 };
-
-const deviceIsMobile = isMobile(navigator);
 
 export default function TargetContent({
   className,
@@ -251,7 +253,7 @@ export default function TargetContent({
         {comment &&
           (!!comment.notFound || !!comment.isDeleted ? (
             <div style={{ textAlign: 'center', padding: '2rem 0' }}>
-              <span>Comment removed / no longer available</span>
+              <span>{commentRemovedLabel}</span>
             </div>
           ) : (
             <div style={{ marginTop: 0 }}>

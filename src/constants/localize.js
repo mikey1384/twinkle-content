@@ -80,6 +80,10 @@ const languageObj = {
     en: 'Comment on this video',
     kr: '댓글 달기'
   },
+  commentRemoved: {
+    en: 'Comment removed / no longer available',
+    kr: '댓글이 존재하지 않거나 삭제되었습니다'
+  },
   continue2: {
     en: 'Continue',
     kr: '이어서'
