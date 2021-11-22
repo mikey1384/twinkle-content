@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useMyState } from 'helpers/hooks';
-import renderEnglishMessage from './localize/english';
-import renderKoreanMessage from './localize/korean';
+import renderEnglishMessage from './localization/english';
+import renderKoreanMessage from './localization/korean';
 
 const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 
