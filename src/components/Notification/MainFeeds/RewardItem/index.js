@@ -1,8 +1,11 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import renderEnglishText from './localization/english';
+import renderKoreanText from './localization/korean';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { notiFeedListItem } from '../../Styles';
+
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 
 RewardItem.propTypes = {
   reward: PropTypes.object.isRequired
@@ -26,7 +29,7 @@ export default function RewardItem({
   }
 }) {
   const NotiText = useMemo(() => {
-    return renderEnglishText({
+    const params = {
       contentId,
       contentType,
       isTask,
@@ -38,7 +41,10 @@ export default function RewardItem({
       rootMissionType,
       rootType,
       targetObj
-    });
+    };
+    return selectedLanguage === 'en'
+      ? renderEnglishText(params)
+      : renderKoreanText(params);
   }, [
     contentId,
     contentType,
