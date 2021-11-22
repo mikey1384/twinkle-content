@@ -192,6 +192,14 @@ const languageObj = {
     en: 'Join Conversation',
     kr: '대화 참여하기'
   },
+  lastOnline: {
+    en: 'Last online',
+    kr: '최근 접속:'
+  },
+  lastOnline2: {
+    en: 'Last Online',
+    kr: '최근 접속순'
+  },
   leaderboard: {
     en: 'Leaderboard',
     kr: '리더보드'
@@ -323,6 +331,10 @@ const languageObj = {
   questionTitle: {
     en: 'Question Title',
     kr: '문제'
+  },
+  ranking: {
+    en: 'Ranking',
+    kr: '랭킹순'
   },
   rankings: {
     en: 'Rankings',

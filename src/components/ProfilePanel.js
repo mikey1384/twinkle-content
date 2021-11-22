@@ -28,6 +28,7 @@ import localize from 'constants/localize';
 
 const changePicLabel = localize('changePic');
 const editBioLabel = localize('editBio');
+const lastOnlineLabel = localize('lastOnline');
 const viewProfileLabel = localize('viewProfile');
 const visitWebsiteLabel = localize('visitWebsite');
 const visitYoutubeLabel = localize('visitYoutube');
@@ -450,7 +451,9 @@ function ProfilePanel({ expandable, profileId, style }) {
                           color: Color.gray()
                         }}
                       >
-                        <p>last online {timeSince(lastActive)}</p>
+                        <p>
+                          {lastOnlineLabel} {timeSince(lastActive)}
+                        </p>
                       </div>
                     )}
                   </div>
