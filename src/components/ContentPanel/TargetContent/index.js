@@ -35,6 +35,7 @@ import { useHistory } from 'react-router-dom';
 import { v1 as uuidv1 } from 'uuid';
 import localize from 'constants/localize';
 
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const commentRemovedLabel = localize('commentRemoved');
 const replyLabel = localize('reply');
 const rewardLabel = localize('reward');
@@ -182,6 +183,63 @@ export default function TargetContent({
     [comment, finalRewardLevel, userId, xpRewardInterfaceShown]
   );
 
+  const DetailText = useMemo(() => {
+    return (
+      <div>
+        {selectedLanguage === 'en' ? renderEnglishText() : renderKoreanText()}
+      </div>
+    );
+
+    function renderEnglishText() {
+      return (
+        <>
+          <UsernameText user={comment.uploader} color={Color.blue()} />{' '}
+          <ContentLink
+            content={{
+              id: comment.id,
+              title: `${
+                type === 'reply'
+                  ? 'replied'
+                  : type === 'comment'
+                  ? rootType === 'user'
+                    ? 'left a message'
+                    : 'commented'
+                  : 'responded'
+              }:`
+            }}
+            contentType="comment"
+            style={{ color: Color.green() }}
+          />
+        </>
+      );
+    }
+    function renderKoreanText() {
+      return (
+        <>
+          <UsernameText user={comment.uploader} color={Color.blue()} />
+          님이{' '}
+          <ContentLink
+            content={{
+              id: comment.id,
+              title: `${
+                type === 'reply'
+                  ? '답글을 남겼습니다'
+                  : type === 'comment'
+                  ? rootType === 'user'
+                    ? '메시지를 남겼습니다'
+                    : '댓글을 남겼습니다'
+                  : '댓글을 남겼습니다'
+              }`
+            }}
+            contentType="comment"
+            style={{ color: Color.green() }}
+          />
+          :
+        </>
+      );
+    }
+  }, [comment.id, comment.uploader, rootType, type]);
+
   useEffect(() => {
     onSetXpRewardInterfaceShown({
       contentType: 'comment',
@@ -267,28 +325,7 @@ export default function TargetContent({
                   }}
                 >
                   <div className="detail-block">
-                    <div>
-                      <UsernameText
-                        user={comment.uploader}
-                        color={Color.blue()}
-                      />{' '}
-                      <ContentLink
-                        content={{
-                          id: comment.id,
-                          title: `${
-                            type === 'reply'
-                              ? 'replied'
-                              : type === 'comment'
-                              ? rootType === 'user'
-                                ? 'left a message'
-                                : 'commented'
-                              : 'responded'
-                          }:`
-                        }}
-                        contentType="comment"
-                        style={{ color: Color.green() }}
-                      />
-                    </div>
+                    {DetailText}
                     <div>
                       <span
                         className={`timestamp ${css`
