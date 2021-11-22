@@ -36,6 +36,8 @@ import { v1 as uuidv1 } from 'uuid';
 import localize from 'constants/localize';
 
 const commentRemovedLabel = localize('commentRemoved');
+const replyLabel = localize('reply');
+const rewardLabel = localize('reward');
 const deviceIsMobile = isMobile(navigator);
 
 TargetContent.propTypes = {
@@ -370,7 +372,9 @@ export default function TargetContent({
                           onClick={handleReplyClick}
                         >
                           <Icon icon="comment-alt" />
-                          <span style={{ marginLeft: '0.7rem' }}>Reply</span>
+                          <span style={{ marginLeft: '0.7rem' }}>
+                            {replyLabel}
+                          </span>
                         </Button>
                         {userCanRewardThis && (
                           <Button
@@ -381,7 +385,7 @@ export default function TargetContent({
                           >
                             <Icon icon="certificate" />
                             <span style={{ marginLeft: '0.7rem' }}>
-                              {xpButtonDisabled || 'Reward'}
+                              {xpButtonDisabled || rewardLabel}
                             </span>
                           </Button>
                         )}
