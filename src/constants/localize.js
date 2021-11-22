@@ -40,6 +40,10 @@ const languageObj = {
     en: 'Cancel',
     kr: '취소'
   },
+  changePic: {
+    en: 'Change Pic',
+    kr: '사진 변경'
+  },
   changePicture: {
     en: 'Change Picture',
     kr: '사진 변경'
@@ -111,6 +115,10 @@ const languageObj = {
   edit: {
     en: 'Edit',
     kr: '수정'
+  },
+  editBio: {
+    en: 'Edit Bio',
+    kr: '소개글 변경'
   },
   editOrDelete: {
     en: 'Edit or Delete',

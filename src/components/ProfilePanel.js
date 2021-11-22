@@ -26,6 +26,8 @@ import {
 } from 'contexts';
 import localize from 'constants/localize';
 
+const changePicLabel = localize('changePic');
+const editBioLabel = localize('editBio');
 const viewProfileLabel = localize('viewProfile');
 const visitWebsiteLabel = localize('visitWebsite');
 const visitYoutubeLabel = localize('visitYoutube');
@@ -404,7 +406,7 @@ function ProfilePanel({ expandable, profileId, style }) {
                             transparent
                             onClick={onChangeProfilePictureClick}
                           >
-                            Change Pic
+                            {changePicLabel}
                           </Button>
                           <Button
                             transparent
@@ -416,7 +418,7 @@ function ProfilePanel({ expandable, profileId, style }) {
                             }}
                             style={{ marginLeft: '0.5rem' }}
                           >
-                            Edit Bio
+                            {editBioLabel}
                           </Button>
                           {profileId === userId &&
                             comments.length > 0 &&
