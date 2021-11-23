@@ -420,6 +420,10 @@ const languageObj = {
     en: 'Secret Message',
     kr: '비밀 메시지'
   },
+  showMeAnotherSubject: {
+    en: 'Show me another subject',
+    kr: '다른 주제를 보여주세요'
+  },
   startedBy: {
     en: 'Started by',
     kr: '개설자:'

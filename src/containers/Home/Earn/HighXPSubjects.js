@@ -9,6 +9,7 @@ import Loading from 'components/Loading';
 import localize from 'constants/localize';
 
 const randomHighXPSubjectLabel = localize('randomHighXPSubject');
+const showMeAnotherSubjectLabel = localize('showMeAnotherSubject');
 
 HighXPSubjects.propTypes = {
   style: PropTypes.object
@@ -49,7 +50,7 @@ export default function HighXPSubjects({ style }) {
           <Button skeuomorphic color="green" onClick={handleLoadHighXPSubjects}>
             <Icon icon="redo" />
             <span style={{ marginLeft: '0.7rem' }}>
-              Show me another subject
+              {showMeAnotherSubjectLabel}
             </span>
           </Button>
         </div>
