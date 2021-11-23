@@ -7,6 +7,8 @@ import { useAppContext, useContentContext } from 'contexts';
 import { karmaMultiplier } from 'constants/defaultValues';
 import Loading from 'components/Loading';
 
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+
 export default function KarmaStatus() {
   const {
     requestHelpers: { loadKarmaPoints }
@@ -18,9 +20,8 @@ export default function KarmaStatus() {
   const { authLevel, userType, userId, karmaPoints } = useMyState();
   const [loadingKarma, setLoadingKarma] = useState(false);
   const [numTwinklesRewarded, setNumTwinklesRewarded] = useState(0);
-  const [numApprovedRecommendations, setNumApprovedRecommendations] = useState(
-    0
-  );
+  const [numApprovedRecommendations, setNumApprovedRecommendations] =
+    useState(0);
   const [numPostsRewarded, setNumPostsRewarded] = useState(0);
   useEffect(() => {
     mounted.current = true;
@@ -131,6 +132,12 @@ export default function KarmaStatus() {
     numTwinklesRewarded
   ]);
 
+  const youHaveKarmaPointsText = useMemo(() => {
+    return selectedLanguage === 'en'
+      ? `You have ${addCommasToNumber(karmaPoints)} Karma Points`
+      : `회원님의 카마포인트는 ${addCommasToNumber(karmaPoints)}점입니다`;
+  }, [karmaPoints]);
+
   if (!userId) return null;
 
   return (
@@ -158,7 +165,7 @@ export default function KarmaStatus() {
               color: ${Color.darkerGray()};
             `}
           >
-            You have {addCommasToNumber(karmaPoints)} Karma Points
+            {youHaveKarmaPointsText}
           </p>
           <div
             className={css`
