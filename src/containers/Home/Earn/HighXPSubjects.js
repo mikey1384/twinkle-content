@@ -6,6 +6,9 @@ import Icon from 'components/Icon';
 import ContentListItem from 'components/ContentListItem';
 import Button from 'components/Button';
 import Loading from 'components/Loading';
+import localize from 'constants/localize';
+
+const randomHighXPSubjectLabel = localize('randomHighXPSubject');
 
 HighXPSubjects.propTypes = {
   style: PropTypes.object
@@ -24,7 +27,7 @@ export default function HighXPSubjects({ style }) {
 
   return (
     <div style={style} className={panel}>
-      <p>{`Random High XP Subject`}</p>
+      <p>{randomHighXPSubjectLabel}</p>
       <div style={{ marginTop: '1.5rem' }}>
         {loading ? (
           <Loading />
