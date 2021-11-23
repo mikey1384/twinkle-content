@@ -8,6 +8,8 @@ import { css } from '@emotion/css';
 import { Color } from 'constants/css';
 import { exceedsCharLimit } from 'helpers/stringHelpers';
 
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+
 StatusInput.propTypes = {
   autoFocus: PropTypes.bool,
   profile: PropTypes.object.isRequired,
@@ -39,6 +41,11 @@ export default function StatusInput({
       }),
     [editedStatusMsg]
   );
+  const statusMsgPlaceholder = useMemo(() => {
+    return selectedLanguage === 'en'
+      ? `Enter a ${profile.statusMsg ? 'new ' : ''}status message...`
+      : '상태 메시지를 입력하세요...';
+  }, [profile.statusMsg]);
 
   return (
     <ErrorBoundary>
@@ -54,7 +61,7 @@ export default function StatusInput({
         minRows={1}
         value={editedStatusMsg}
         onChange={onTextChange}
-        placeholder={`Enter a ${profile.statusMsg ? 'new ' : ''}status message`}
+        placeholder={statusMsgPlaceholder}
         style={statusExceedsCharLimit?.style}
       />
       <p
