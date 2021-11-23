@@ -408,6 +408,10 @@ const languageObj = {
     en: 'Rewards',
     kr: '선물'
   },
+  searchUsers: {
+    en: 'Search Users',
+    kr: '사용자 검색'
+  },
   secretMessage: {
     en: 'Secret Message',
     kr: '비밀 메시지'
