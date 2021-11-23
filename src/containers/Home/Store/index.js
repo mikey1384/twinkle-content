@@ -11,6 +11,21 @@ import { priceTable, karmaPointTable } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import RewardBoostItem from './RewardBoostItem';
 
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+
+const welcomeMessageLabel =
+  selectedLanguage === 'en' ? (
+    <>
+      Welcome to <span className="logo logo-twin">Twin</span>
+      <span className="logo logo-kle">kle</span> Store
+    </>
+  ) : (
+    <>
+      <span className="logo logo-twin">트윈</span>
+      <span className="logo logo-kle">클</span> 스토어에 오신걸 환영합니다
+    </>
+  );
+
 export default function Store() {
   const {
     requestHelpers: { loadMyData, unlockUsernameChange }
@@ -80,8 +95,7 @@ export default function Store() {
           `}
           style={{ fontWeight: 'bold', fontSize: '2.5rem' }}
         >
-          Welcome to <span className="logo logo-twin">Twin</span>
-          <span className="logo logo-kle">kle</span> Store
+          {welcomeMessageLabel}
         </p>
       </div>
       <KarmaStatus />
