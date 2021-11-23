@@ -158,7 +158,7 @@ export default function renderEnglishMessage({
               title: localize('subject')
             }}
           />
-          {`의 비밀 메시지를 조회했습니다.`}
+          {`의 비밀 메시지를 조회했습니다`}
         </>
       ) : (
         <>
@@ -261,7 +261,7 @@ export default function renderEnglishMessage({
             }}
             style={{ color: Color.green() }}
           />
-          <span>를 개설했습니다.</span>
+          <span>를 개설했습니다</span>
         </>
       );
     case 'pass':

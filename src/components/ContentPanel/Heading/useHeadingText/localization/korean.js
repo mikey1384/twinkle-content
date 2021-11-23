@@ -67,7 +67,7 @@ export default function renderKoreanMessage({
             contentType={contentType}
             style={{ color: byUser ? Color[profileTheme]() : Color.green() }}
           />{' '}
-          개설했습니다
+          개설했습니다{' '}
         </>
       );
     case 'pass':
