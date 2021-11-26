@@ -40,6 +40,10 @@ const languageObj = {
     en: 'Cancel',
     kr: '취소'
   },
+  change: {
+    en: 'Change',
+    kr: '변경'
+  },
   changePic: {
     en: 'Change Pic',
     kr: '사진 변경'
@@ -196,6 +200,10 @@ const languageObj = {
     en: 'Home',
     kr: '홈'
   },
+  isNotValidUsername: {
+    en: ' is not a valid username',
+    kr: '는 사용 가능한 유저명이 아닙니다'
+  },
   joinConversation: {
     en: 'Join Conversation',
     kr: '대화 참여하기'
@@ -236,6 +244,10 @@ const languageObj = {
     en: 'Links',
     kr: '링크'
   },
+  makeSure3CharLong: {
+    en: `Make sure it is at least 3 characters long`,
+    kr: '3글자 이상이어야 합니다'
+  },
   mission: {
     en: 'Mission',
     kr: '미션'
@@ -275,6 +287,10 @@ const languageObj = {
   noDescription: {
     en: 'No Description',
     kr: '소개글 없음'
+  },
+  notEnoughTwinkleCoins: {
+    en: `You don't have enough Twinkle Coins`,
+    kr: '트윈클 코인이 부족합니다'
   },
   oldToNew: {
     en: 'Old to New',
@@ -515,6 +531,14 @@ const languageObj = {
   user: {
     en: 'user',
     kr: ''
+  },
+  usernameAlreadyTaken: {
+    en: `That username is already taken`,
+    kr: '이미 사용중인 아이디입니다'
+  },
+  usernameAvailable: {
+    en: `This username is available. Tap "Change"`,
+    kr: '사용 가능한 아이디입니다'
   },
   video: {
     en: 'Video',

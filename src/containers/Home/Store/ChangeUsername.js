@@ -12,7 +12,13 @@ import { useMyState } from 'helpers/hooks';
 import { isValidUsername, stringIsEmpty } from 'helpers/stringHelpers';
 import localize from 'constants/localize';
 
+const changeLabel = localize('change');
+const isNotValidUsernameLabel = localize('isNotValidUsername');
+const makeSure3CharLongLabel = localize('makeSure3CharLong');
+const notEnoughTwinkleCoinsLabel = localize('notEnoughTwinkleCoins');
 const enterNewUsernameLabel = localize('enterNewUsername');
+const usernameAvailableLabel = localize('usernameAvailable');
+const usernameAlreadyTakenLabel = localize('usernameAlreadyTaken');
 
 ChangeUsername.propTypes = {
   style: PropTypes.object
@@ -51,20 +57,18 @@ export default function ChangeUsername({ style }) {
     async function handleUsernameInput(username) {
       if (!isValidUsername(username)) {
         setErrorMessage(
-          `${username} is not a valid username.${
-            username.length < 3
-              ? ' Make sure it is at least 3 characters long.'
-              : ''
+          `${username}${isNotValidUsernameLabel}.${
+            username.length < 3 ? ` ${makeSure3CharLongLabel}.` : ''
           }`
         );
         setLoading(false);
       } else {
         const exists = await checkIfUsernameExists(username);
         if (exists) {
-          setErrorMessage(`That username is already taken`);
+          setErrorMessage(usernameAlreadyTakenLabel);
         } else {
           if (twinkleCoins < priceTable.username) {
-            setErrorMessage(`You don't have enough Twinkle Coins`);
+            setErrorMessage(notEnoughTwinkleCoinsLabel);
           } else {
             setErrorMessage('');
             setUsernameAvailable(true);
@@ -103,9 +107,7 @@ export default function ChangeUsername({ style }) {
             fontWeight: usernameAvailable ? 'bold' : 'normal'
           }}
         >
-          {usernameAvailable
-            ? `This username is available. Tap "Change"`
-            : errorMessage}
+          {usernameAvailable ? usernameAvailableLabel : errorMessage}
         </div>
         <Button
           style={{ position: 'absolute', top: '0.5rem', right: 0 }}
@@ -114,7 +116,7 @@ export default function ChangeUsername({ style }) {
           disabled={disabled || changing}
           onClick={handleChangeUsername}
         >
-          Change
+          {changeLabel}
           <div style={{ marginLeft: '0.7rem' }}>
             (<Icon icon={['far', 'badge-dollar']} />
             <span style={{ marginLeft: '0.3rem' }}>{priceTable.username}</span>)
@@ -132,7 +134,7 @@ export default function ChangeUsername({ style }) {
     const { coins, alreadyExists } = await changeUsername(newUsername);
     if (alreadyExists) {
       setUsernameAvailable(false);
-      setErrorMessage(`That username is already taken`);
+      setErrorMessage(usernameAlreadyTakenLabel);
     } else {
       socket.emit('change_username', newUsername);
       onUpdateUserCoins({ coins, userId });
