@@ -216,6 +216,10 @@ const languageObj = {
     en: 'Home',
     kr: '홈'
   },
+  imageTooLarge10MB: {
+    en: 'Image is too large (limit: 10mb)',
+    kr: '이미지 크기가 너무 큽니다 (최대 10mb)'
+  },
   isNotValidUsername: {
     en: ' is not a valid username',
     kr: '는 사용 가능한 유저명이 아닙니다'
@@ -343,6 +347,10 @@ const languageObj = {
   pleaseMarkTheCorrectChoice: {
     en: 'Please mark the correct choice',
     kr: '정답을 선택해주세요'
+  },
+  pleaseSelectSmallerImage: {
+    en: 'Please select a smaller image',
+    kr: '더 작은 이미지를 선택해주세요'
   },
   posted: {
     en: 'Posted',

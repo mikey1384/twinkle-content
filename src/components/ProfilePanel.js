@@ -30,7 +30,9 @@ const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const chatLabel = localize('chat2');
 const changePicLabel = localize('changePic');
 const editBioLabel = localize('editBio');
+const imageTooLarge10MBLabel = localize('imageTooLarge10MB');
 const lastOnlineLabel = localize('lastOnline');
+const pleaseSelectSmallerImageLabel = localize('pleaseSelectSmallerImage');
 const viewProfileLabel = localize('viewProfile');
 const visitWebsiteLabel = localize('visitWebsite');
 const visitYoutubeLabel = localize('visitYoutube');
@@ -548,8 +550,8 @@ function ProfilePanel({ expandable, profileId, style }) {
             {!!twinkleXP && <RankBar profile={profile} />}
             {alertModalShown && (
               <AlertModal
-                title="Image is too large (limit: 10mb)"
-                content="Please select a smaller image"
+                title={imageTooLarge10MBLabel}
+                content={pleaseSelectSmallerImageLabel}
                 onHide={() => setAlertModalShown(false)}
               />
             )}
