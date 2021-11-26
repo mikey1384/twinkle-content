@@ -116,6 +116,10 @@ const languageObj = {
     en: 'Delete',
     kr: '삭제'
   },
+  doesNotHaveBio: {
+    en: ' does not have a bio, yet',
+    kr: '님은 아직 자기소개글이 없습니다'
+  },
   done: {
     en: 'Done',
     kr: '완료'
