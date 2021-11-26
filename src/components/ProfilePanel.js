@@ -26,6 +26,7 @@ import {
 } from 'contexts';
 import localize from 'constants/localize';
 
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const changePicLabel = localize('changePic');
 const editBioLabel = localize('editBio');
 const lastOnlineLabel = localize('lastOnline');
@@ -221,13 +222,38 @@ function ProfilePanel({ expandable, profileId, style }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profileId, userId, profile.loaded, commentsLoaded, previewLoaded]);
 
-  const canEdit = userId === profileId || isCreator;
-  const noBio = !profileFirstRow && !profileSecondRow && !profileThirdRow;
-  const heightNotSet = !placeholderHeight && !previousPlaceholderHeight;
+  const canEdit = useMemo(
+    () => userId === profileId || isCreator,
+    [isCreator, profileId, userId]
+  );
+  const noBio = useMemo(
+    () => !profileFirstRow && !profileSecondRow && !profileThirdRow,
+    [profileFirstRow, profileSecondRow, profileThirdRow]
+  );
+  const heightNotSet = useMemo(
+    () => !placeholderHeight && !previousPlaceholderHeight,
+    [placeholderHeight, previousPlaceholderHeight]
+  );
   const contentShown = useMemo(
     () => !loaded || heightNotSet || visible || inView,
     [heightNotSet, inView, loaded, visible]
   );
+  const leaveMessageLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      return (
+        <>
+          {profileId === userId ? '' : 'Leave '}
+          Message
+        </>
+      );
+    }
+    return (
+      <>
+        메시지
+        {profileId === userId ? '' : ' 남기기'}
+      </>
+    );
+  }, [profileId, userId]);
 
   return (
     <div style={style} ref={ComponentRef} key={profileId}>
@@ -617,8 +643,7 @@ function ProfilePanel({ expandable, profileId, style }) {
       >
         <Icon icon="comment-alt" />
         <span style={{ marginLeft: '0.7rem' }}>
-          {profileId === userId ? '' : 'Leave '}
-          Message
+          {leaveMessageLabel}
           {profileId === userId && Number(numMessages) > 0 && !commentsShown
             ? `${numMessages > 1 ? 's' : ''}`
             : ''}
