@@ -8,31 +8,47 @@ import { Color, mobileMaxWidth } from 'constants/css';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { karmaPointTable, videoRewardHash } from 'constants/defaultValues';
+import localize from 'constants/localize';
+
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+const boostRewardsFromWatchingXPVideosLabel = localize(
+  'boostRewardsFromWatchingXPVideos'
+);
 
 const item = {
   maxLvl: 10,
   name: [
-    'Boost rewards from watching XP Videos',
-    'Boost rewards from watching XP Videos (level 2)',
-    'Boost rewards from watching XP Videos (level 3)',
-    'Boost rewards from watching XP Videos (level 4)',
-    'Boost rewards from watching XP Videos (level 5)',
-    'Boost rewards from watching XP Videos (level 6)',
-    'Boost rewards from watching XP Videos (level 7)',
-    'Boost rewards from watching XP Videos (level 8)',
-    'Boost rewards from watching XP Videos (level 9)',
-    'Boost rewards from watching XP Videos (level 10)'
+    boostRewardsFromWatchingXPVideosLabel,
+    `${boostRewardsFromWatchingXPVideosLabel} (level 2)`,
+    `${boostRewardsFromWatchingXPVideosLabel} (level 3)`,
+    `${boostRewardsFromWatchingXPVideosLabel} (level 4)`,
+    `${boostRewardsFromWatchingXPVideosLabel} (level 5)`,
+    `${boostRewardsFromWatchingXPVideosLabel} (level 6)`,
+    `${boostRewardsFromWatchingXPVideosLabel} (level 7)`,
+    `${boostRewardsFromWatchingXPVideosLabel} (level 8)`,
+    `${boostRewardsFromWatchingXPVideosLabel} (level 9)`,
+    `${boostRewardsFromWatchingXPVideosLabel} (level 10)`
   ],
   description: [...Array(10).keys()].map((key) => {
     const rewardLevels = [1, 2, 3, 4, 5];
     const colorKey = ['logoBlue', 'pink', 'orange', 'cranberry', 'gold'];
     const keyNumber = Number(key);
-    return (
-      <div style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem' }} key={key}>
-        <p>
+    const descriptionLabel =
+      selectedLanguage === 'en' ? (
+        <>
           {keyNumber === 0 ? 'Unlock' : 'Upgrade'} this item to earn the
           following rewards <b>per minute</b> while watching XP Videos
-        </p>
+        </>
+      ) : (
+        <>
+          본 아이템을 {keyNumber === 0 ? '잠금해제' : '업그레이드'} 하시면 XP
+          동영상을 보실때 <b>매분마다</b> 아래의 보상을 획득하실 수 있게 됩니다
+        </>
+      );
+
+    return (
+      <div style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem' }} key={key}>
+        <p>{descriptionLabel}</p>
         <div
           style={{
             width: '100%',

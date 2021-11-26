@@ -28,6 +28,10 @@ const languageObj = {
     en: 'Be the first to like this video',
     kr: ''
   },
+  boostRewardsFromWatchingXPVideos: {
+    en: 'Boost rewards from watching XP Videos',
+    kr: 'XP 동영상을 볼때 얻는 XP량 증가'
+  },
   broughtBackBy: {
     en: 'Brought back by',
     kr: '재개자:'
