@@ -7,17 +7,20 @@ import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { translateMBToGB } from 'helpers/stringHelpers';
 import { karmaPointTable, maxSizes } from 'constants/defaultValues';
+import localize from 'constants/localize';
+
+const expandMaximumUploadSizeLabel = localize('expandMaximumUploadSize');
 
 const item = {
   maxLvl: 7,
   name: [
-    'Expand maximum upload file size',
-    'Expand maximum upload file size (level 2)',
-    'Expand maximum upload file size (level 3)',
-    'Expand maximum upload file size (level 4)',
-    'Expand maximum upload file size (level 5)',
-    'Expand maximum upload file size (level 6)',
-    'Expand maximum upload file size (level 7)'
+    expandMaximumUploadSizeLabel,
+    `${expandMaximumUploadSizeLabel} (level 2)`,
+    `${expandMaximumUploadSizeLabel} (level 3)`,
+    `${expandMaximumUploadSizeLabel} (level 4)`,
+    `${expandMaximumUploadSizeLabel} (level 5)`,
+    `${expandMaximumUploadSizeLabel} (level 6)`,
+    `${expandMaximumUploadSizeLabel} (level 7)`
   ],
   description: maxSizes.map((currentSize, index) => {
     if (index === 0) {

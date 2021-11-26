@@ -188,6 +188,10 @@ const languageObj = {
     en: 'Enter YouTube URL',
     kr: '유튜브 영상의 URL 주소를 입력하세요'
   },
+  expandMaximumUploadSize: {
+    en: 'Expand maximum upload file size',
+    kr: '파일 업로드 용량 최대치 확장'
+  },
   explore: {
     en: 'Explore',
     kr: '탐색'
