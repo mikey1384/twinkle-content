@@ -64,6 +64,10 @@ const languageObj = {
     en: 'Chat',
     kr: '채팅'
   },
+  chat2: {
+    en: 'Chat',
+    kr: '채팅하기'
+  },
   choiceA: {
     en: 'Choice A',
     kr: '선택지 A'

@@ -27,6 +27,7 @@ import {
 import localize from 'constants/localize';
 
 const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+const chatLabel = localize('chat2');
 const changePicLabel = localize('changePic');
 const editBioLabel = localize('editBio');
 const lastOnlineLabel = localize('lastOnline');
@@ -464,7 +465,9 @@ function ProfilePanel({ expandable, profileId, style }) {
                       >
                         <Button color="green" onClick={handleTalkClick}>
                           <Icon icon="comments" />
-                          <span style={{ marginLeft: '0.7rem' }}>Chat</span>
+                          <span style={{ marginLeft: '0.7rem' }}>
+                            {chatLabel}
+                          </span>
                         </Button>
                         {renderMessagesButton()}
                       </div>
