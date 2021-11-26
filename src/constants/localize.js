@@ -48,6 +48,10 @@ const languageObj = {
     en: 'Change Picture',
     kr: '사진 변경'
   },
+  changeUsername: {
+    en: 'Change your username',
+    kr: '유저명 변경하기'
+  },
   chat: {
     en: 'Chat',
     kr: '채팅'
@@ -143,6 +147,10 @@ const languageObj = {
   enterHeading: {
     en: 'Enter Heading',
     kr: '제목을 입력하세요'
+  },
+  enterNewUsername: {
+    en: 'Enter New Username',
+    kr: '새로운 유저명을 입력하세요'
   },
   enterQuestion: {
     en: 'Enter Question',

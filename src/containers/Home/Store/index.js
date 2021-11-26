@@ -10,8 +10,10 @@ import { useAppContext, useContentContext, useViewContext } from 'contexts';
 import { priceTable, karmaPointTable } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import RewardBoostItem from './RewardBoostItem';
+import localize from 'constants/localize';
 
 const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+const changeUsernameLabel = localize('changeUsername');
 
 const welcomeMessageLabel =
   selectedLanguage === 'en' ? (
@@ -103,7 +105,7 @@ export default function Store() {
         karmaPoints={karmaPoints}
         requiredKarmaPoints={karmaPointTable.username}
         locked={!canChangeUsername}
-        itemName="Change your username"
+        itemName={changeUsernameLabel}
         itemDescription={`Unlock this item to change your username anytime you want for ${priceTable.username} Twinkle Coins`}
         onUnlock={handleUnlockUsernameChange}
         style={{ marginTop: userId ? '4rem' : 0 }}

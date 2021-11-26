@@ -10,6 +10,9 @@ import { useAppContext, useContentContext } from 'contexts';
 import { priceTable } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { isValidUsername, stringIsEmpty } from 'helpers/stringHelpers';
+import localize from 'constants/localize';
+
+const enterNewUsernameLabel = localize('enterNewUsername');
 
 ChangeUsername.propTypes = {
   style: PropTypes.object
@@ -78,7 +81,7 @@ export default function ChangeUsername({ style }) {
       <div>
         <Input
           maxLength={20}
-          placeholder="Enter new username"
+          placeholder={`${enterNewUsernameLabel}...`}
           onChange={setNewUsername}
           value={newUsername}
         />
