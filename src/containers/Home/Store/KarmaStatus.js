@@ -8,6 +8,23 @@ import { karmaMultiplier } from 'constants/defaultValues';
 import Loading from 'components/Loading';
 
 const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+const karmaCalculationLabel =
+  selectedLanguage === 'en' ? (
+    <>
+      Your Karma Points = Total number of Twinkles you{' '}
+      <b style={{ color: Color.pink() }}>rewarded</b> + (
+      {karmaMultiplier.recommendation} × total number of your{' '}
+      <b style={{ color: Color.brownOrange() }}>recommendations</b> that were
+      approved by teachers)
+    </>
+  ) : (
+    <>
+      회원님의 카마포인트 = 회원님이 포상한{' '}
+      <b style={{ color: Color.pink() }}>트윈클 개수</b> + (
+      {karmaMultiplier.recommendation} × 선생님 유저들이 승인한 회원님의{' '}
+      <b style={{ color: Color.brownOrange() }}>추천</b> 개수)
+    </>
+  );
 
 export default function KarmaStatus() {
   const {
@@ -69,15 +86,7 @@ export default function KarmaStatus() {
 
   const instructionText = useMemo(() => {
     if (authLevel < 2) {
-      return (
-        <span>
-          Your Karma Points = Total number of Twinkles you{' '}
-          <b style={{ color: Color.pink() }}>rewarded</b> + (
-          {karmaMultiplier.recommendation} × total number of your{' '}
-          <b style={{ color: Color.brownOrange() }}>recommendations</b> that
-          were approved by teachers)
-        </span>
-      );
+      return <span>{karmaCalculationLabel}</span>;
     }
     return (
       <span>
