@@ -910,6 +910,13 @@ export function translateMBToGB(size) {
   return `${size} MB`;
 }
 
+export function translateMBToGBWithoutSpace(size) {
+  if (size >= 1000) {
+    return `${size / 1000}GB`;
+  }
+  return `${size}MB`;
+}
+
 export function trimUrl(url) {
   const trimHttp = url?.split('//')[1] || url?.split('//')[0];
   const trimWWW = trimHttp?.split('www.')[1] || trimHttp?.split('www.')[0];
