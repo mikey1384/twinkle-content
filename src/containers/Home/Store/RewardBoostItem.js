@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ItemPanel from './ItemPanel';
 import Icon from 'components/Icon';
@@ -177,6 +177,13 @@ export default function RewardBoostItem({ style }) {
   const {
     requestHelpers: { upgradeRewardBoost }
   } = useAppContext();
+  const maxLevelItemDescriptionLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      return `You can now earn (reward level × ${videoRewardHash[rewardBoostLvl].xp}) XP and ${videoRewardHash[rewardBoostLvl].coin} Twinkle Coins per minute while watching XP Videos`;
+    }
+    return `회원님은 이제 XP동영상을 시청하실 때 매분 (보상레벨 × ${videoRewardHash[rewardBoostLvl].xp})XP와 트윈클 코인 ${videoRewardHash[rewardBoostLvl].coin}개를 획득하실 수 있으십니다`;
+  }, [rewardBoostLvl]);
+
   return (
     <ItemPanel
       isLeveled
@@ -193,8 +200,12 @@ export default function RewardBoostItem({ style }) {
     >
       <MaxLevelItemInfo
         icon="bolt"
-        title="XP Video Reward Boost - Level 10"
-        description={`You can now earn (reward level × ${videoRewardHash[rewardBoostLvl].xp}) XP and ${videoRewardHash[rewardBoostLvl].coin} Twinkle Coins per minute while watching XP Videos`}
+        title={
+          selectedLanguage === 'en'
+            ? 'XP Video Reward Boost - Level 10'
+            : 'XP동영상 보상 증가 - Level 10'
+        }
+        description={maxLevelItemDescriptionLabel}
       />
     </ItemPanel>
   );
