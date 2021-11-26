@@ -6,6 +6,7 @@ import { useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
 import { karmaMultiplier } from 'constants/defaultValues';
 import Loading from 'components/Loading';
+import localize from 'constants/localize';
 
 const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const karmaCalculationLabel =
@@ -22,9 +23,36 @@ const karmaCalculationLabel =
       회원님의 카마포인트 = 회원님이 포상한{' '}
       <b style={{ color: Color.pink() }}>트윈클 개수</b> + (
       {karmaMultiplier.recommendation} × 선생님 유저들이 승인한 회원님의{' '}
-      <b style={{ color: Color.brownOrange() }}>추천</b> 개수)
+      <b style={{ color: Color.brownOrange() }}>추천 개수</b>)
     </>
   );
+const rewardedTwinklesLabel =
+  selectedLanguage === 'en' ? (
+    <>
+      Total number of Twinkles you{' '}
+      <b style={{ color: Color.pink() }}>rewarded</b>
+    </>
+  ) : (
+    <>
+      회원님이 포상한 <b style={{ color: Color.pink() }}>트윈클 개수</b>
+    </>
+  );
+
+const approvedRecommendationsLabel =
+  selectedLanguage === 'en' ? (
+    <>
+      Total number of{' '}
+      <b style={{ color: Color.brownOrange() }}>recommendations</b> approved by
+      teachers
+    </>
+  ) : (
+    <>
+      선생님 유저들이 승인한 회원님의{' '}
+      <b style={{ color: Color.brownOrange() }}>추천 개수</b>
+    </>
+  );
+
+const karmaPointsLabel = localize('karmaPoints');
 
 export default function KarmaStatus() {
   const {
@@ -101,21 +129,17 @@ export default function KarmaStatus() {
       return (
         <div style={{ fontSize: '1.5rem', marginTop: '3rem' }}>
           <p>
-            Total number of Twinkles you{' '}
-            <b style={{ color: Color.pink() }}>rewarded</b>:{' '}
-            {addCommasToNumber(numTwinklesRewarded)}
+            {rewardedTwinklesLabel}: {addCommasToNumber(numTwinklesRewarded)}
           </p>
           <p>
-            Total number of{' '}
-            <b style={{ color: Color.brownOrange() }}>recommendations</b>{' '}
-            approved by teachers:{' '}
+            {approvedRecommendationsLabel}:{' '}
             {addCommasToNumber(numApprovedRecommendations)}
           </p>
           <p style={{ marginTop: '1rem', fontSize: '1.7rem' }}>
             {numTwinklesRewarded} + ({karmaMultiplier.recommendation} ×{' '}
             {numApprovedRecommendations}) ={' '}
             <b style={{ color: Color.darkerGray() }}>
-              {addCommasToNumber(karmaPoints)} Karma Points
+              {addCommasToNumber(karmaPoints)} {karmaPointsLabel}
             </b>
           </p>
         </div>
@@ -129,7 +153,9 @@ export default function KarmaStatus() {
         </p>
         <p style={{ marginTop: '1rem', fontSize: '1.7rem' }}>
           {numPostsRewarded} × {karmaMultiplier.post} ={' '}
-          <b>{addCommasToNumber(karmaPoints)} Karma Points</b>
+          <b>
+            {addCommasToNumber(karmaPoints)} {karmaPointsLabel}
+          </b>
         </p>
       </div>
     );

@@ -192,6 +192,10 @@ const languageObj = {
     en: 'Join Conversation',
     kr: '대화 참여하기'
   },
+  karmaPoints: {
+    en: 'Karma Points',
+    kr: '카마포인트'
+  },
   lastOnline: {
     en: 'Last online',
     kr: '최근 접속:'
