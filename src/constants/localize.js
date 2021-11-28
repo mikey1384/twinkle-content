@@ -148,6 +148,10 @@ const languageObj = {
     en: 'Edit Question',
     kr: '문제 수정하기'
   },
+  eitherRemovedOrNeverExisted: {
+    en: 'It is either removed or never existed in the first place',
+    kr: '존재하지 않거나 삭제되었습니다'
+  },
   enterComment: {
     en: 'Enter Comment',
     kr: '댓글을 입력하세요'
@@ -355,6 +359,10 @@ const languageObj = {
   perMinute: {
     en: 'per minute',
     kr: '를 1분마다 획득'
+  },
+  playlistNotExist: {
+    en: 'Playlist does not exist',
+    kr: '존재하지 않는 재생목록입니다'
   },
   pleaseClickDoneButtonBelow: {
     en: 'Please click the "Done" button below',
@@ -583,6 +591,10 @@ const languageObj = {
   untitledQuestion: {
     en: 'Untitled Question',
     kr: '문제'
+  },
+  uploadedBy: {
+    en: 'Uploaded by',
+    kr: '게시자:'
   },
   upNext: {
     en: 'Up Next',
