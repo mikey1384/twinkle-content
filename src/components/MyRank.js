@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import localize from 'constants/localize';
+
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+const unrankedLabel = localize('unranked');
 
 MyRank.propTypes = {
   myId: PropTypes.number,
@@ -30,6 +34,10 @@ export default function MyRank({
         : undefined,
     [rank]
   );
+  const rankLabel = useMemo(() => {
+    return selectedLanguage === 'en' ? `Rank #${rank}` : `랭킹 ${rank}위`;
+  }, [rank]);
+
   return (
     <div
       style={{
@@ -106,7 +114,7 @@ export default function MyRank({
               (rank > 0 && rank <= 10 ? Color.pink() : Color.darkGray())
           }}
         >
-          {rank ? `Rank #${rank}` : 'Unranked'}
+          {rank ? rankLabel : unrankedLabel}
         </p>
       </div>
     </div>
