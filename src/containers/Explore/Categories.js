@@ -75,8 +75,8 @@ export default function Categories({
           }
         `}
       >
-        {['subjects', 'videos', 'links'].map((contentType) =>
-          filter === contentType ? (
+        {['subjects', 'videos', 'links'].map((contentType) => {
+          return filter === contentType ? (
             <nav key={contentType}>
               <p style={{ display: 'flex', alignItems: 'center' }}>
                 {returnIcon(contentType)}Explore {contentType}
@@ -127,8 +127,8 @@ export default function Categories({
             >
               {returnIcon(contentType)}Explore {contentType}
             </Link>
-          )
-        )}
+          );
+        })}
       </div>
     </div>
   );
