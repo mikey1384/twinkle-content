@@ -52,6 +52,12 @@ export default function ItemPanel({
   }, [currentLvl, isLeveled, maxLvl, notUnlocked]);
   const requirementLabel = useMemo(() => {
     if (selectedLanguage === 'en') {
+      return `Requires ${addCommasToNumber(requiredKarmaPoints)} KP`;
+    }
+    return `${addCommasToNumber(requiredKarmaPoints)}KP 필요`;
+  }, [requiredKarmaPoints]);
+  const requirementDescriptionLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
       return (
         <>
           You need <b>{addCommasToNumber(requiredKarmaPoints)} karma points</b>{' '}
@@ -98,7 +104,7 @@ export default function ItemPanel({
       {locked && (
         <>
           <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
-            Requires {addCommasToNumber(requiredKarmaPoints)} KP
+            {requirementLabel}
           </p>
           {itemDescription && (
             <div style={{ fontSize: '1.5rem', marginTop: '1rem' }}>
@@ -181,7 +187,7 @@ export default function ItemPanel({
                 textAlign: 'center'
               }}
             >
-              {requirementLabel}
+              {requirementDescriptionLabel}
             </p>
           </>
         ) : (
