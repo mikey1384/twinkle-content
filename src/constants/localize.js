@@ -264,6 +264,10 @@ const languageObj = {
     en: 'Links',
     kr: '링크'
   },
+  loadMore: {
+    en: 'Load More',
+    kr: '더 불러오기'
+  },
   loading: {
     en: 'Loading',
     kr: '로딩중'
