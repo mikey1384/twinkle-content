@@ -12,6 +12,7 @@ import localize from 'constants/localize';
 
 const myRankingLabel = localize('myRanking');
 const top30Label = localize('top30');
+const notRankedDescriptionLabel = localize('notRankedDescription');
 
 export default function Rankings() {
   const { rank, twinkleXP, userId } = useMyState();
@@ -83,8 +84,7 @@ export default function Rankings() {
             border: `1px solid ${Color.borderGray()}`
           }}
         >
-          You are not ranked. To get ranked, earn XP by watching a starred video
-          or leaving comments
+          {notRankedDescriptionLabel}
         </div>
       )}
       {rankingsLoaded && users.length > 0 && (

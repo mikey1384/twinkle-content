@@ -312,6 +312,10 @@ const languageObj = {
     en: `You don't have enough Twinkle Coins`,
     kr: '트윈클 코인이 부족합니다'
   },
+  notRankedDescription: {
+    en: 'You are not ranked. To get ranked, earn XP by completing missions, watching XP videos, or leaving comments',
+    kr: '현재 XP가 없습니다. 미션을 완료하거나, XP 동영상을 시청하거나, 댓글을 남기시면 XP를 보상받으실 수 있습니다'
+  },
   oldToNew: {
     en: 'Old to New',
     kr: '오래된순'
