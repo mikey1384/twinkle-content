@@ -60,6 +60,10 @@ const languageObj = {
     en: 'Change your username',
     kr: '유저명 변경하기'
   },
+  changeVideos: {
+    en: 'Change Videos',
+    kr: '동영상 변경'
+  },
   chat: {
     en: 'Chat',
     kr: '채팅'
@@ -147,6 +151,10 @@ const languageObj = {
   editQuestion: {
     en: 'Edit Question',
     kr: '문제 수정하기'
+  },
+  editTitle: {
+    en: 'Edit Title',
+    kr: '제목 변경'
   },
   eitherRemovedOrNeverExisted: {
     en: 'It is either removed or never existed in the first place',
@@ -460,6 +468,10 @@ const languageObj = {
     en: 'Remove',
     kr: '삭제'
   },
+  removePlaylist: {
+    en: 'Remove Playlist',
+    kr: '재생목록 삭제'
+  },
   reorder: {
     en: 'Reorder',
     kr: '순서 변경'
@@ -467,6 +479,10 @@ const languageObj = {
   reorderQuestions: {
     en: 'Reorder Questions',
     kr: '문제 순서 변경하기'
+  },
+  reorderVideos: {
+    en: 'Reorder Videos',
+    kr: '동영상 순서 변경'
   },
   reply: {
     en: 'Reply',
