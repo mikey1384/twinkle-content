@@ -181,7 +181,7 @@ export default function PlaylistCarousel({
       )}
       {deleteConfirmModalShown && (
         <ConfirmModal
-          title="Remove Playlist"
+          title={removePlaylistLabel}
           onConfirm={handleDeleteConfirm}
           onHide={() => setDeleteConfirmModalShown(false)}
         />
