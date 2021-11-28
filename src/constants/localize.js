@@ -16,6 +16,14 @@ const languageObj = {
     en: 'Add/Edit Questions',
     kr: '문제 등록/수정하기'
   },
+  AddPlaylist: {
+    en: 'Add Playlist',
+    kr: '재생목록 등록'
+  },
+  allPlaylists: {
+    en: 'All Playlists',
+    kr: '모든 재생목록'
+  },
   allPosts: {
     en: 'All Posts',
     kr: '모든 게시물'
@@ -332,6 +340,10 @@ const languageObj = {
     en: 'No Description',
     kr: '소개글 없음'
   },
+  noPlaylists: {
+    en: 'No Playlists',
+    kr: '재생목록 없음'
+  },
   notEnoughTwinkleCoins: {
     en: `You don't have enough Twinkle Coins`,
     kr: '트윈클 코인이 부족합니다'
@@ -515,6 +527,10 @@ const languageObj = {
   rewards: {
     en: 'Rewards',
     kr: '선물'
+  },
+  searchPlaylists: {
+    en: 'Search Playlists',
+    kr: '재생목록 검색'
   },
   searchUsers: {
     en: 'Search Users',
