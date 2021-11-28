@@ -110,7 +110,7 @@ function People() {
         style={{ zIndex: 0 }}
         addonColor={profileTheme}
         borderColor={profileTheme}
-        placeholder={searchUsersLabel}
+        placeholder={`${searchUsersLabel}...`}
         onChange={handleSearch}
         value={userSearchText}
       />
