@@ -33,7 +33,7 @@ const item = {
           maxSizes[1]
         )} (from ${translateMBToGB(currentSize)})`;
       }
-      return `본 아이템을 잠금해제 하시면 파일 업로드 용량 최대치를 ${translateMBToGBWithoutSpace(
+      return `본 아이템을 잠금 해제 하시면 파일 업로드 용량 최대치를 ${translateMBToGBWithoutSpace(
         maxSizes[1]
       )}까지 확장하실 수 있습니다 (현재 ${translateMBToGBWithoutSpace(
         currentSize

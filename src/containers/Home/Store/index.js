@@ -17,7 +17,7 @@ const changeUsernameLabel = localize('changeUsername');
 const changeUsernameDescriptionLabel =
   selectedLanguage === 'en'
     ? `Unlock this item to change your username anytime you want for ${priceTable.username} Twinkle Coins`
-    : `본 아이템을 잠금해제 하시면 ${priceTable.username} 트윈클 코인 가격에 언제든 유저명을 바꾸실 수 있게 됩니다`;
+    : `본 아이템을 잠금 해제 하시면 ${priceTable.username} 트윈클 코인 가격에 언제든 유저명을 바꾸실 수 있게 됩니다`;
 
 const welcomeMessageLabel =
   selectedLanguage === 'en' ? (

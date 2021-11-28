@@ -52,7 +52,7 @@ export default function ProfilePictureItem({ style }) {
     if (selectedLanguage === 'en') {
       return 'Unlock this item to post pictures on your profile page';
     }
-    return '본 아이템을 잠금해제 하시면 프로필 페이지에 사진을 게시하실 수 있게 됩니다';
+    return '본 아이템을 잠금 해제 하시면 프로필 페이지에 사진을 게시하실 수 있게 됩니다';
   }, [numPics]);
 
   return (
