@@ -8,6 +8,7 @@ import localize from 'constants/localize';
 
 const noPlaylistsLabel = localize('noPlaylists');
 const searchPlaylistsLabel = localize('searchPlaylists');
+const allPlaylistsLabel = localize('allPlaylists');
 
 PlaylistsPanel.propTypes = {
   buttonGroup: PropTypes.func,
@@ -35,7 +36,7 @@ export default function PlaylistsPanel({
   playlists,
   searchQuery,
   style,
-  title = 'All Playlists',
+  title = allPlaylistsLabel,
   userId
 }) {
   const {
