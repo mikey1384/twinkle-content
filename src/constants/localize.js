@@ -316,6 +316,10 @@ const languageObj = {
     en: 'You are not ranked. To get ranked, earn XP by completing missions, watching XP videos, or leaving comments',
     kr: '현재 XP가 없습니다. 미션을 완료하거나, XP 동영상을 시청하거나, 댓글을 남기시면 XP를 보상받으실 수 있습니다'
   },
+  noVideosToRecommend: {
+    en: "We don't have any videos to recommend to you at the moment",
+    kr: '지금은 추천드릴 영상이 없습니다'
+  },
   oldToNew: {
     en: 'Old to New',
     kr: '오래된순'
@@ -411,6 +415,10 @@ const languageObj = {
   recommended: {
     en: 'Recommended',
     kr: '추천'
+  },
+  recommendedVideos: {
+    en: 'Recommended',
+    kr: '추천 동영상'
   },
   recommendedBy: {
     en: 'Recommended by',
