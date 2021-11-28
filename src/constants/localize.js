@@ -528,6 +528,10 @@ const languageObj = {
     en: 'Select',
     kr: '선택'
   },
+  showAll: {
+    en: 'Show All',
+    kr: '전부 보기'
+  },
   showMeAnotherSubject: {
     en: 'Show me another subject',
     kr: '다른 주제를 보여주세요'
