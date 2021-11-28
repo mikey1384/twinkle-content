@@ -6,17 +6,22 @@ import MaxLevelItemInfo from './MaxLevelItemInfo';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { karmaPointTable } from 'constants/defaultValues';
+import localize from 'constants/localize';
+
+const postPicturesOnYourProfilePageLabel = localize(
+  'postPicturesOnYourProfilePage'
+);
 
 const item = {
   maxLvl: 7,
   name: [
-    'Post pictures on your profile page',
-    'Post pictures on your profile page (level 2)',
-    'Post pictures on your profile page (level 3)',
-    'Post pictures on your profile page (level 4)',
-    'Post pictures on your profile page (level 5)',
-    'Post pictures on your profile page (level 6)',
-    'Post pictures on your profile page (level 7)'
+    postPicturesOnYourProfilePageLabel,
+    `${postPicturesOnYourProfilePageLabel} (level 2)'`,
+    `${postPicturesOnYourProfilePageLabel} (level 3)'`,
+    `${postPicturesOnYourProfilePageLabel} (level 4)'`,
+    `${postPicturesOnYourProfilePageLabel} (level 5)'`,
+    `${postPicturesOnYourProfilePageLabel} (level 6)'`,
+    `${postPicturesOnYourProfilePageLabel} (level 7)'`
   ]
 };
 

@@ -356,6 +356,10 @@ const languageObj = {
     en: 'Posted',
     kr: ''
   },
+  postPicturesOnYourProfilePage: {
+    en: 'Post pictures on your profile page',
+    kr: '프로필 페이지에 사진 게시'
+  },
   posts: {
     en: 'Posts',
     kr: '게시물'
