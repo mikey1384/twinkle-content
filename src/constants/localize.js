@@ -208,6 +208,10 @@ const languageObj = {
     en: 'Fail',
     kr: '실패'
   },
+  featuredPlaylists: {
+    en: 'Featured Playlists',
+    kr: '추천 재생목록'
+  },
   hideWatched: {
     en: 'Hide Watched',
     kr: '시청한 영상 숨기기'
@@ -495,6 +499,10 @@ const languageObj = {
   secretMessage: {
     en: 'Secret Message',
     kr: '비밀 메시지'
+  },
+  select: {
+    en: 'Select',
+    kr: '선택'
   },
   showMeAnotherSubject: {
     en: 'Show me another subject',
