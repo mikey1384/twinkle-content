@@ -548,6 +548,10 @@ const languageObj = {
     en: 'Undo',
     kr: '삭제취소'
   },
+  unranked: {
+    en: 'Unranked',
+    kr: '랭킹없음'
+  },
   untitledQuestion: {
     en: 'Untitled Question',
     kr: '문제'
