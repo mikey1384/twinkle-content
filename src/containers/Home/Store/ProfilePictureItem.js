@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ItemPanel from './ItemPanel';
 import Icon from 'components/Icon';
@@ -37,6 +37,15 @@ export default function ProfilePictureItem({ style }) {
   const {
     actions: { onUpdateProfileInfo }
   } = useContentContext();
+  const descriptionLabel = useMemo(() => {
+    if (numPics > 0) {
+      return `Upgrade this item to post up to ${
+        numPics + 1
+      } pictures on you profile page`;
+    }
+    return 'Unlock this item to post pictures on your profile page';
+  }, [numPics]);
+
   return (
     <ItemPanel
       isLeveled
@@ -47,13 +56,7 @@ export default function ProfilePictureItem({ style }) {
       locked={!numPics}
       onUnlock={handleUpgrade}
       itemName={item.name[numPics]}
-      itemDescription={
-        numPics > 0
-          ? `Upgrade this item to post up to ${
-              numPics + 1
-            } pictures on you profile page`
-          : 'Unlock this item to post pictures on your profile page'
-      }
+      itemDescription={descriptionLabel}
       style={style}
       upgradeIcon={<Icon size="3x" icon="image" />}
     >
