@@ -8,6 +8,7 @@ import { useMyState } from 'helpers/hooks';
 import { karmaPointTable } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const postPicturesOnYourProfilePageLabel = localize(
   'postPicturesOnYourProfilePage'
 );
@@ -39,11 +40,19 @@ export default function ProfilePictureItem({ style }) {
   } = useContentContext();
   const descriptionLabel = useMemo(() => {
     if (numPics > 0) {
-      return `Upgrade this item to post up to ${
+      if (selectedLanguage === 'en') {
+        return `Upgrade this item to post up to ${
+          numPics + 1
+        } pictures on you profile page`;
+      }
+      return `본 아이템을 업그레이드 하시면 프로필 페이지에 사진을 ${
         numPics + 1
-      } pictures on you profile page`;
+      }장까지 게시하실 수 있게 됩니다`;
     }
-    return 'Unlock this item to post pictures on your profile page';
+    if (selectedLanguage === 'en') {
+      return 'Unlock this item to post pictures on your profile page';
+    }
+    return '본 아이템을 잠금해제 하시면 프로필 페이지에 사진을 게시하실 수 있게 됩니다';
   }, [numPics]);
 
   return (
