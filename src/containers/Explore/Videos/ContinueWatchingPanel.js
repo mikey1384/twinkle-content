@@ -7,7 +7,9 @@ import Icon from 'components/Icon';
 import { useMyState } from 'helpers/hooks';
 import localize from 'constants/localize';
 
+const continueWatchingLabel = localize('continueWatching');
 const emptyMessageLabel = localize('noVideosToRecommend');
+const loadingLabel = localize('loading');
 const recommendedLabel = localize('recommendedVideos');
 
 export default function ContinueWatchingPanel() {
@@ -81,7 +83,7 @@ export default function ContinueWatchingPanel() {
             showingRecommendedVideos ? (
               recommendedLabel
             ) : (
-              'Continue Watching'
+              continueWatchingLabel
             )
           ) : (
             <div
@@ -91,7 +93,7 @@ export default function ContinueWatchingPanel() {
                 verticalAlign: 0
               }}
             >
-              <span>Loading</span>
+              <span>{loadingLabel}</span>
               <Icon style={{ marginLeft: '1rem' }} icon="spinner" pulse />
             </div>
           )

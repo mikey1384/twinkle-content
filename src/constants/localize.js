@@ -264,6 +264,10 @@ const languageObj = {
     en: 'Links',
     kr: '링크'
   },
+  loading: {
+    en: 'Loading',
+    kr: '로딩중'
+  },
   makeSure3CharLong: {
     en: `Make sure it is at least 3 characters long`,
     kr: '3글자 이상이어야 합니다'
