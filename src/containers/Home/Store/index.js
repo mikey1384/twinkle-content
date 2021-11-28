@@ -14,6 +14,10 @@ import localize from 'constants/localize';
 
 const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const changeUsernameLabel = localize('changeUsername');
+const changeUsernameDescriptionLabel =
+  selectedLanguage === 'en'
+    ? `Unlock this item to change your username anytime you want for ${priceTable.username} Twinkle Coins`
+    : `본 아이템을 잠금해제 하시면 ${priceTable.username} 트윈클 코인 가격에 언제든 유저명을 바꾸실 수 있게 됩니다`;
 
 const welcomeMessageLabel =
   selectedLanguage === 'en' ? (
@@ -106,7 +110,7 @@ export default function Store() {
         requiredKarmaPoints={karmaPointTable.username}
         locked={!canChangeUsername}
         itemName={changeUsernameLabel}
-        itemDescription={`Unlock this item to change your username anytime you want for ${priceTable.username} Twinkle Coins`}
+        itemDescription={changeUsernameDescriptionLabel}
         onUnlock={handleUnlockUsernameChange}
         style={{ marginTop: userId ? '4rem' : 0 }}
       >

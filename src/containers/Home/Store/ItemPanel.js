@@ -48,6 +48,18 @@ export default function ItemPanel({
   const notUpgraded = useMemo(() => {
     return !notUnlocked && isLeveled && currentLvl < maxLvl;
   }, [currentLvl, isLeveled, maxLvl, notUnlocked]);
+  const requirementLabel = useMemo(() => {
+    return (
+      <>
+        You need <b>{addCommasToNumber(requiredKarmaPoints)} karma points</b> to{' '}
+        {notUpgraded ? 'upgrade' : 'unlock'} this item. You have{' '}
+        <b>
+          {addCommasToNumber(karmaPoints)} karma point
+          {karmaPoints === 1 ? '' : 's'}
+        </b>
+      </>
+    );
+  }, [karmaPoints, notUpgraded, requiredKarmaPoints]);
 
   return (
     <div
@@ -157,13 +169,7 @@ export default function ItemPanel({
                 textAlign: 'center'
               }}
             >
-              You need{' '}
-              <b>{addCommasToNumber(requiredKarmaPoints)} karma points</b> to{' '}
-              {notUpgraded ? 'upgrade' : 'unlock'} this item. You have{' '}
-              <b>
-                {addCommasToNumber(karmaPoints)} karma point
-                {karmaPoints === 1 ? '' : 's'}
-              </b>
+              {requirementLabel}
             </p>
           </>
         ) : (
