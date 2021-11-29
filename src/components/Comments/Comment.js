@@ -43,6 +43,10 @@ import { getFileInfoFromFileName, stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext } from 'contexts';
 import { useInView } from 'react-intersection-observer';
 import LocalContext from './Context';
+import localize from 'constants/localize';
+
+const peopleWhoLikeThisCommentLabel = localize('peopleWhoLikeThisComment');
+const removeCommentLabel = localize('removeComment');
 
 Comment.propTypes = {
   comment: PropTypes.shape({
@@ -859,7 +863,7 @@ function Comment({
         {userListModalShown && (
           <UserListModal
             onHide={() => setUserListModalShown(false)}
-            title="People who liked this comment"
+            title={peopleWhoLikeThisCommentLabel}
             users={likes}
           />
         )}
@@ -867,7 +871,7 @@ function Comment({
       {confirmModalShown && (
         <ConfirmModal
           onHide={() => setConfirmModalShown(false)}
-          title="Remove Comment"
+          title={removeCommentLabel}
           onConfirm={async () => {
             await onDelete(comment.id);
             if (mounted.current) {

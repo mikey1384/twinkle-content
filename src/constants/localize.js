@@ -384,6 +384,10 @@ const languageObj = {
     en: 'People',
     kr: '사람들'
   },
+  peopleWhoLikeThisComment: {
+    en: 'People who like this comment',
+    kr: '이 댓글을 좋아하는 사람들'
+  },
   peopleWhoLikeThisVideo: {
     en: 'People who like this video',
     kr: '이 영상을 좋아하는 사람들'
@@ -495,6 +499,10 @@ const languageObj = {
   remove: {
     en: 'Remove',
     kr: '삭제'
+  },
+  removeComment: {
+    en: 'Remove Comment',
+    kr: '댓글 삭제'
   },
   removePlaylist: {
     en: 'Remove Playlist',
