@@ -116,6 +116,10 @@ const languageObj = {
     en: 'Comment removed / no longer available',
     kr: '댓글이 존재하지 않거나 삭제되었습니다'
   },
+  commentWasDeleted: {
+    en: 'this comment was deleted',
+    kr: '댓글이 삭제되었습니다'
+  },
   continue2: {
     en: 'Continue',
     kr: '이어서'
@@ -527,6 +531,10 @@ const languageObj = {
   reorderVideos: {
     en: 'Reorder Videos',
     kr: '동영상 순서 변경'
+  },
+  replies: {
+    en: 'Replies',
+    kr: '답글'
   },
   reply: {
     en: 'Reply',

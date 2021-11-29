@@ -45,12 +45,17 @@ import { useInView } from 'react-intersection-observer';
 import LocalContext from './Context';
 import localize from 'constants/localize';
 
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+const commentWasDeletedLabel = localize('commentWasDeleted');
 const editLabel = localize('edit');
 const pinLabel = localize('pin');
 const pinnedLabel = localize('pinned');
 const peopleWhoLikeThisCommentLabel = localize('peopleWhoLikeThisComment');
 const unpinLabel = localize('unpin');
 const removeCommentLabel = localize('removeComment');
+const repliesLabel = localize('replies');
+const replyLabel = localize('reply');
+const rewardLabel = localize('reward');
 
 Comment.propTypes = {
   comment: PropTypes.shape({
@@ -523,6 +528,13 @@ function Comment({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const viewedTheSecretMessageLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      return `${uploader?.username} viewed the secret message`;
+    }
+    return `${uploader?.username}님이 비밀 메시지를 조회했습니다`;
+  }, [uploader?.username]);
+
   return !isDeleted && !comment.isDeleted ? (
     <div ref={ComponentRef}>
       <div
@@ -675,8 +687,8 @@ function Comment({
                           }}
                         >
                           {isNotification
-                            ? `${uploader?.username} viewed the secret message`
-                            : 'this comment was deleted'}
+                            ? viewedTheSecretMessageLabel
+                            : commentWasDeletedLabel}
                         </div>
                       ) : (
                         !commentIsEmpty && (
@@ -720,8 +732,8 @@ function Comment({
                                   <span style={{ marginLeft: '1rem' }}>
                                     {numReplies > 1 &&
                                     parent.contentType === 'comment'
-                                      ? 'Replies'
-                                      : 'Reply'}
+                                      ? repliesLabel
+                                      : replyLabel}
                                     {loadingReplies ? (
                                       <Icon
                                         style={{ marginLeft: '0.7rem' }}
@@ -751,7 +763,7 @@ function Comment({
                                   >
                                     <Icon icon="certificate" />
                                     <span style={{ marginLeft: '0.7rem' }}>
-                                      {xpButtonDisabled || 'Reward'}
+                                      {xpButtonDisabled || rewardLabel}
                                     </span>
                                   </Button>
                                 )}
