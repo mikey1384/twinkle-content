@@ -396,6 +396,14 @@ const languageObj = {
     en: 'per minute',
     kr: '를 1분마다 획득'
   },
+  pin: {
+    en: 'Pin',
+    kr: '고정'
+  },
+  pinned: {
+    en: 'Pinned',
+    kr: '고정됨'
+  },
   playlistNotExist: {
     en: 'Playlist does not exist',
     kr: '존재하지 않는 재생목록입니다'
@@ -643,6 +651,10 @@ const languageObj = {
   undoDelete: {
     en: 'Undo',
     kr: '삭제취소'
+  },
+  unpin: {
+    en: 'Unpin',
+    kr: '고정해제'
   },
   unranked: {
     en: 'Unranked',

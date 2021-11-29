@@ -45,7 +45,11 @@ import { useInView } from 'react-intersection-observer';
 import LocalContext from './Context';
 import localize from 'constants/localize';
 
+const editLabel = localize('edit');
+const pinLabel = localize('pin');
+const pinnedLabel = localize('pinned');
 const peopleWhoLikeThisCommentLabel = localize('peopleWhoLikeThisComment');
+const unpinLabel = localize('unpin');
 const removeCommentLabel = localize('removeComment');
 
 Comment.propTypes = {
@@ -359,7 +363,7 @@ function Comment({
         label: (
           <>
             <Icon icon="pencil-alt" />
-            <span style={{ marginLeft: '1rem' }}>Edit</span>
+            <span style={{ marginLeft: '1rem' }}>{editLabel}</span>
           </>
         ),
         onClick: () =>
@@ -380,7 +384,7 @@ function Comment({
           <>
             <Icon icon={['fas', 'thumbtack']} />
             <span style={{ marginLeft: '1rem' }}>
-              {pinnedCommentId === comment.id ? 'Unpin' : 'Pin'}
+              {pinnedCommentId === comment.id ? unpinLabel : pinLabel}
             </span>
           </>
         ),
@@ -393,7 +397,7 @@ function Comment({
         label: (
           <>
             <Icon icon="trash-alt" />
-            <span style={{ marginLeft: '1rem' }}>Remove</span>
+            <span style={{ marginLeft: '1rem' }}>{removeCommentLabel}</span>
           </>
         ),
         onClick: () => setConfirmModalShown(true)
@@ -542,7 +546,7 @@ function Comment({
                 }}
               >
                 <Icon icon={['fas', 'thumbtack']} />
-                <span style={{ marginLeft: '0.7rem' }}>Pinned</span>
+                <span style={{ marginLeft: '0.7rem' }}>{pinnedLabel}</span>
               </div>
             )}
             <div className="content-wrapper">
