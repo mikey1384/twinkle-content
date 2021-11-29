@@ -16,6 +16,7 @@ import localize from 'constants/localize';
 const recommendLabel = localize('recommendQ');
 const yesLabel = localize('yes');
 const noLabel = localize('no');
+const rewardableLabel = localize('rewardable');
 const deviceIsMobile = isMobile(navigator);
 
 RecommendationInterface.propTypes = {
@@ -172,7 +173,7 @@ export default function RecommendationInterface({
               <SwitchButton
                 small={deviceIsMobile}
                 checked={!rewardDisabled}
-                label="Rewardable"
+                label={rewardableLabel}
                 onChange={() => setRewardDisabled((disabled) => !disabled)}
               />
             )}

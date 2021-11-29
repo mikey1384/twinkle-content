@@ -506,7 +506,7 @@ const languageObj = {
   },
   recommendQ: {
     en: 'Recommend?',
-    kr: '추천하시겠습니까?'
+    kr: '추천할까요?'
   },
   relatedVideos: {
     en: 'Related Videos',
@@ -571,6 +571,10 @@ const languageObj = {
   reward: {
     en: 'Reward',
     kr: '포상'
+  },
+  rewardable: {
+    en: 'Rewardable',
+    kr: '포상 허용'
   },
   rewards: {
     en: 'Rewards',
