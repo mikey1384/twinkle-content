@@ -608,6 +608,10 @@ const languageObj = {
     en: 'Show me another subject',
     kr: '다른 주제를 보여주세요'
   },
+  showMoreRewardRecords: {
+    en: 'Show More Reward Records',
+    kr: '더 많은 포상 기록 보기'
+  },
   startedBy: {
     en: 'Started by',
     kr: '개설자:'

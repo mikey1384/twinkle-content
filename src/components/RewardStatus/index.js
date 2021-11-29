@@ -9,6 +9,10 @@ import Comment from './Comment';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Starmarks from './Starmarks';
 import { useMyState } from 'helpers/hooks';
+import localize from 'constants/localize';
+
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+const showMoreRewardRecordsLabel = localize('showMoreRewardRecords');
 
 RewardStatus.propTypes = {
   className: PropTypes.string,
@@ -45,9 +49,10 @@ function RewardStatus({
     );
     return rewardsWithoutComment.concat(rewardsWithComment);
   }, [rewards]);
-  const maxRewards = useMemo(() => returnMaxRewards({ rewardLevel }), [
-    rewardLevel
-  ]);
+  const maxRewards = useMemo(
+    () => returnMaxRewards({ rewardLevel }),
+    [rewardLevel]
+  );
   const amountRewarded = useMemo(() => {
     let result = rewards.reduce(
       (prev, reward) => prev + reward.rewardAmount,
@@ -56,6 +61,25 @@ function RewardStatus({
     result = Math.min(result, maxRewards);
     return result;
   }, [maxRewards, rewards]);
+
+  const rewardStatusLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      return (
+        <>
+          {amountRewarded} Twinkle
+          {amountRewarded > 1 ? 's' : ''} (
+          {addCommasToNumber(amountRewarded * 200)} XP) rewarded out of max{' '}
+          {maxRewards}
+        </>
+      );
+    }
+    return (
+      <>
+        총 {amountRewarded}개의 트윈클({addCommasToNumber(amountRewarded * 200)}{' '}
+        XP)이 지급되었습니다 (최대 {maxRewards}개)
+      </>
+    );
+  }, [amountRewarded, maxRewards]);
 
   return rewards && rewards.length > 0 ? (
     <ErrorBoundary>
@@ -84,10 +108,7 @@ function RewardStatus({
             }
           `}
         >
-          {amountRewarded} Twinkle
-          {amountRewarded > 1 ? 's' : ''} (
-          {addCommasToNumber(amountRewarded * 200)} XP) rewarded out of max{' '}
-          {maxRewards}
+          {rewardStatusLabel}
         </div>
       </div>
       {numLoaded < rewards.length && (
@@ -97,7 +118,7 @@ function RewardStatus({
               ? 'orange'
               : 'lightBlue'
           }
-          label="Show More Reward Records"
+          label={showMoreRewardRecordsLabel}
           filled
           style={{
             fontSize: '1.3rem',
