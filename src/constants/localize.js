@@ -228,6 +228,10 @@ const languageObj = {
     en: 'Fail',
     kr: '실패'
   },
+  featuredSubjects: {
+    en: 'Featured',
+    kr: '추천 주제'
+  },
   featuredPlaylists: {
     en: 'Featured Playlists',
     kr: '추천 재생목록'
