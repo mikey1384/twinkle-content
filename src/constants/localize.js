@@ -100,6 +100,10 @@ const languageObj = {
     en: 'Choice E (Optional)',
     kr: '선택지 E (선택사항)'
   },
+  clear: {
+    en: 'clear',
+    kr: '지우기'
+  },
   comment: {
     en: 'Comment',
     kr: '댓글'
@@ -757,6 +761,7 @@ const languageObj = {
     kr: '유튜브 동영상'
   }
 };
+
 export default function localize(section) {
   return languageObj?.[section]?.[selectedLanguage] || '';
 }
