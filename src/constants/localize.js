@@ -230,7 +230,7 @@ const languageObj = {
   },
   featuredSubjects: {
     en: 'Featured',
-    kr: '추천 주제'
+    kr: '고정 주제'
   },
   featuredPlaylists: {
     en: 'Featured Playlists',
@@ -300,6 +300,10 @@ const languageObj = {
     en: 'Loading',
     kr: '로딩중'
   },
+  madeByUsers: {
+    en: 'Made By Twinkle Users',
+    kr: '사용자 제작 콘텐츠'
+  },
   makeSure3CharLong: {
     en: `Make sure it is at least 3 characters long`,
     kr: '3글자 이상이어야 합니다'
@@ -341,12 +345,12 @@ const languageObj = {
     kr: '아니오'
   },
   noDescription: {
-    en: 'No Description',
-    kr: '소개글 없음'
+    en: 'No description',
+    kr: '소개글이 없습니다'
   },
   noPlaylists: {
-    en: 'No Playlists',
-    kr: '재생목록 없음'
+    en: 'No playlists',
+    kr: '재생목록이 존재하지 않습니다'
   },
   notEnoughTwinkleCoins: {
     en: `You don't have enough Twinkle Coins`,
@@ -355,6 +359,10 @@ const languageObj = {
   notRankedDescription: {
     en: 'You are not ranked. To get ranked, earn XP by completing missions, watching XP videos, or leaving comments',
     kr: '현재 XP가 없습니다. 미션을 완료하거나, XP 동영상을 시청하거나, 댓글을 남기시면 XP를 보상받으실 수 있습니다'
+  },
+  noUserMadeContent: {
+    en: 'No user made content',
+    kr: '사용자 제작 콘텐츠가 존재하지 않습니다'
   },
   noVideosToRecommend: {
     en: "We don't have any videos to recommend to you at the moment",
@@ -459,6 +467,10 @@ const languageObj = {
   recommended: {
     en: 'Recommended',
     kr: '추천'
+  },
+  recommendedSubjects: {
+    en: 'Recommended',
+    kr: '추천 주제'
   },
   recommendedVideos: {
     en: 'Recommended',
