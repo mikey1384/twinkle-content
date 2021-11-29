@@ -572,6 +572,14 @@ const languageObj = {
     en: 'responded to',
     kr: '댓글을 남겼습니다'
   },
+  revoke: {
+    en: 'Revoke',
+    kr: '취소'
+  },
+  revokeReward: {
+    en: 'Revoke Reward',
+    kr: '포상 취소'
+  },
   reward: {
     en: 'Reward',
     kr: '포상'
