@@ -29,6 +29,8 @@ import {
   useExploreContext
 } from 'contexts';
 
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+
 LinkPage.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
@@ -250,6 +252,13 @@ export default function LinkPage({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
+  const madeByLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      return <>This was made by {uploader.username}</>;
+    }
+    return <>{uploader.username}님이 직접 제작했습니다</>;
+  }, [uploader.username]);
+
   return loaded ? (
     <div
       className={css`
@@ -319,7 +328,7 @@ export default function LinkPage({
               }
             `}
           >
-            This was made by {uploader.username}
+            {madeByLabel}
           </div>
         )}
         <Embedly
