@@ -16,6 +16,10 @@ const languageObj = {
     en: 'Add/Edit Questions',
     kr: '문제 등록/수정하기'
   },
+  allLinks: {
+    en: 'All Links',
+    kr: '모든 링크'
+  },
   AddPlaylist: {
     en: 'Add Playlist',
     kr: '재생목록 등록'
@@ -527,6 +531,10 @@ const languageObj = {
   recommended: {
     en: 'Recommended',
     kr: '추천'
+  },
+  recommendedLinks: {
+    en: 'Recommended',
+    kr: '추천 링크'
   },
   recommendedSubjects: {
     en: 'Recommended',

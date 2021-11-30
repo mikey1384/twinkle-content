@@ -5,6 +5,11 @@ import SectionPanel from 'components/SectionPanel';
 import LinkGroup from './LinkGroup';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useExploreContext } from 'contexts';
+import localize from 'constants/localize';
+
+const allLinksLabel = localize('allLinks');
+const madeByUsersLabel = localize('madeByUsers');
+const recommendedLabel = localize('recommendedLinks');
 
 export default function Links() {
   const { userId } = useMyState();
@@ -121,7 +126,7 @@ export default function Links() {
   return (
     <div>
       <SectionPanel
-        title="Made by Twinkle Users"
+        title={madeByUsersLabel}
         emptyMessage="No User Made Content"
         isEmpty={byUserLinks.length === 0}
         loaded={byUserLoaded}
@@ -131,7 +136,7 @@ export default function Links() {
         <LinkGroup links={byUserLinks} />
       </SectionPanel>
       <SectionPanel
-        title="Recommended"
+        title={recommendedLabel}
         style={{ marginTop: '2.5rem' }}
         emptyMessage="No Recommended Links"
         isEmpty={recommendeds.length === 0}
@@ -142,7 +147,7 @@ export default function Links() {
         <LinkGroup links={recommendeds} />
       </SectionPanel>
       <SectionPanel
-        title="All Links"
+        title={allLinksLabel}
         style={{ marginTop: '2.5rem' }}
         button={
           <Button
