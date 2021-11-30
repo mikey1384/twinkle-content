@@ -10,6 +10,8 @@ import AlertModal from 'components/Modals/AlertModal';
 import { useAppContext } from 'contexts';
 import { DESCRIPTION_LENGTH_FOR_EXTRA_REWARD_LEVEL } from 'constants/defaultValues';
 
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+
 StarButton.propTypes = {
   byUser: PropTypes.bool,
   contentId: PropTypes.number,
@@ -69,9 +71,33 @@ export default function StarButton({
   }, [contentType, filePath, uploader, writtenByButtonShown]);
   const StarButtonRef = useRef(null);
   useOutsideClick(StarButtonRef, () => setMenuShown(false));
-  const makerLabel = useMemo(() => {
-    return uploader?.id === userId ? 'me' : uploader?.username;
-  }, [uploader?.id, uploader?.username, userId]);
+  const byUserLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      const makerLabel = uploader?.id === userId ? 'me' : uploader?.username;
+      return (
+        <>
+          {byUser
+            ? `This wasn't ${
+                writtenByButtonShown ? 'written' : 'made'
+              } by ${makerLabel}`
+            : `This was ${
+                writtenByButtonShown ? 'written' : 'made'
+              } by ${makerLabel}`}
+        </>
+      );
+    }
+    const makerLabel =
+      uploader?.id === userId ? '내가' : `${uploader?.username}님이`;
+    return (
+      <>
+        {byUser
+          ? `${makerLabel} ${
+              writtenByButtonShown ? '작성하지' : '제작하지'
+            } 않았음`
+          : `${makerLabel} ${writtenByButtonShown ? '작성했음' : '제작함'}`}
+      </>
+    );
+  }, [byUser, uploader?.id, uploader?.username, userId, writtenByButtonShown]);
   const buttonShown = useMemo(() => {
     return (
       canEditRewardLevel ||
@@ -111,15 +137,7 @@ export default function StarButton({
               canEditRewardLevel && (
                 <li onClick={handleShowRewardLevelModal}>Set Reward Level</li>
               )}
-            <li onClick={toggleByUser}>
-              {byUser
-                ? `This wasn't ${
-                    writtenByButtonShown ? 'written' : 'made'
-                  } by ${makerLabel}`
-                : `This was ${
-                    writtenByButtonShown ? 'written' : 'made'
-                  } by ${makerLabel}`}
-            </li>
+            <li onClick={toggleByUser}>{byUserLabel}</li>
           </DropdownList>
         )}
       </div>
