@@ -26,6 +26,7 @@ import localize from 'constants/localize';
 
 const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const enterDescriptionOptionalLabel = localize('enterDescriptionOptional');
+const forEveryStarYouAddLabel = localize('forEveryStarYouAdd');
 const enterTitleHereLabel = localize('enterTitleHere');
 const postContentLabel = localize('postContent');
 const copyAndPasteUrlLabel = localize('copyAndPasteUrl');
@@ -348,8 +349,7 @@ function ContentInput() {
                   </div>
                 )}
                 <div style={{ fontSize: '1.5rem' }}>
-                  For every star you add, the amount of XP viewers earn per
-                  minute rises.
+                  {forEveryStarYouAddLabel}
                 </div>
                 <RewardLevelForm
                   themed
