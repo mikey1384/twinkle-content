@@ -320,6 +320,10 @@ const languageObj = {
     en: 'Loading',
     kr: '로딩중'
   },
+  logOut: {
+    en: 'Log out',
+    kr: '로그아웃'
+  },
   madeByUsers: {
     en: 'Made By Twinkle Users',
     kr: '사용자 제작 콘텐츠'
@@ -327,6 +331,10 @@ const languageObj = {
   makeSure3CharLong: {
     en: `Make sure it is at least 3 characters long`,
     kr: '3글자 이상이어야 합니다'
+  },
+  management: {
+    en: 'Management',
+    kr: '관리'
   },
   maximumUploadSize: {
     en: 'Maximum Upload File Size',
@@ -482,6 +490,10 @@ const languageObj = {
   },
   profile: {
     en: 'profile',
+    kr: '프로필'
+  },
+  profile2: {
+    en: 'Profile',
     kr: '프로필'
   },
   profilePictures: {

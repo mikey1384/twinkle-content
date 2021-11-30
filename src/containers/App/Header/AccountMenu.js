@@ -8,6 +8,11 @@ import { useAppContext, useChatContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { socket } from 'constants/io';
 import { addCommasToNumber } from 'helpers/stringHelpers';
+import localize from 'constants/localize';
+
+const profileLabel = localize('profile2');
+const managementLabel = localize('management');
+const logOutLabel = localize('logOut');
 
 AccountMenu.propTypes = {
   className: PropTypes.string,
@@ -29,18 +34,18 @@ function AccountMenu({ className, history }) {
   const menuProps = useMemo(() => {
     const result = [
       {
-        label: 'Profile',
+        label: profileLabel,
         onClick: () => history.push(`/users/${username}`)
       }
     ];
     if (managementLevel > 0) {
       result.push({
-        label: 'Management',
+        label: managementLabel,
         onClick: () => history.push('/management')
       });
     }
     result.push({
-      label: 'Log out',
+      label: logOutLabel,
       onClick: handleLogout
     });
     return result;
