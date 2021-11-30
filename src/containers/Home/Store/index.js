@@ -18,6 +18,7 @@ const changeUsernameDescriptionLabel =
   selectedLanguage === 'en'
     ? `Unlock this item to change your username anytime you want for ${priceTable.username} Twinkle Coins`
     : `본 아이템을 잠금 해제 하시면 ${priceTable.username} 트윈클 코인 가격에 언제든 유저명을 바꾸실 수 있게 됩니다`;
+const moreToComeLabel = localize('moreToCome');
 
 const welcomeMessageLabel =
   selectedLanguage === 'en' ? (
@@ -123,14 +124,14 @@ export default function Store() {
         karmaPoints={karmaPoints}
         requiredKarmaPoints={10000}
         locked
-        itemName="More to come..."
+        itemName={`${moreToComeLabel}...`}
         style={{ marginTop: '3rem' }}
       />
       <ItemPanel
         karmaPoints={karmaPoints}
         requiredKarmaPoints={30000}
         locked
-        itemName="More to come..."
+        itemName={`${moreToComeLabel}...`}
         style={{ marginTop: '3rem' }}
       />
     </div>

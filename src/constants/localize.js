@@ -344,6 +344,10 @@ const languageObj = {
     en: 'Missions',
     kr: '미션 목록'
   },
+  moreToCome: {
+    en: 'More to come',
+    kr: '출시 준비중'
+  },
   myRanking: {
     en: 'My Ranking',
     kr: '내 순위'

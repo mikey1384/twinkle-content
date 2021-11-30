@@ -116,9 +116,15 @@ export default function KarmaStatus() {
     if (authLevel < 2) {
       return <span>{karmaCalculationLabel}</span>;
     }
-    return (
+    if (selectedLanguage === 'en') {
       <span>
         Your Karma Points = Total number of <b>posts</b> you rewarded ×{' '}
+        {karmaMultiplier.post}
+      </span>;
+    }
+    return (
+      <span>
+        회원님의 카마포인트 = 회원님이 포상한 <b>게시물</b>의 총 개수 ×{' '}
         {karmaMultiplier.post}
       </span>
     );
@@ -145,10 +151,26 @@ export default function KarmaStatus() {
         </div>
       );
     }
+    if (selectedLanguage === 'en') {
+      return (
+        <div style={{ fontSize: '1.5rem', marginTop: '3rem' }}>
+          <p>
+            Total number of posts you rewarded:{' '}
+            {addCommasToNumber(numPostsRewarded)}
+          </p>
+          <p style={{ marginTop: '1rem', fontSize: '1.7rem' }}>
+            {numPostsRewarded} × {karmaMultiplier.post} ={' '}
+            <b>
+              {addCommasToNumber(karmaPoints)} {karmaPointsLabel}
+            </b>
+          </p>
+        </div>
+      );
+    }
     return (
       <div style={{ fontSize: '1.5rem', marginTop: '3rem' }}>
         <p>
-          Total number of posts you rewarded:{' '}
+          회원님이 포상한 게시물의 총 개수:{' '}
           {addCommasToNumber(numPostsRewarded)}
         </p>
         <p style={{ marginTop: '1rem', fontSize: '1.7rem' }}>
