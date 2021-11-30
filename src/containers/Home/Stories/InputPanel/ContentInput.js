@@ -24,6 +24,8 @@ import { useMyState } from 'helpers/hooks';
 import { useAppContext, useHomeContext, useInputContext } from 'contexts';
 import localize from 'constants/localize';
 
+const enterDescriptionOptionalLabel = localize('enterDescriptionOptional');
+const enterTitleHereLabel = localize('enterTitleHere');
 const postContentLabel = localize('postContent');
 const copyAndPasteUrlLabel = localize('copyAndPasteUrl');
 const youtubeVideoLabel = localize('youtubeVideo');
@@ -267,7 +269,7 @@ function ContentInput() {
                 <Input
                   value={title}
                   onChange={handleSetTitle}
-                  placeholder="Enter Title Here"
+                  placeholder={`${enterTitleHereLabel}...`}
                   onKeyUp={(event) => {
                     if (event.key === ' ') {
                       handleSetTitle(addEmoji(event.target.value));
@@ -289,7 +291,7 @@ function ContentInput() {
                 <Textarea
                   value={description}
                   minRows={4}
-                  placeholder="Enter Description (Optional, you don't need to write this)"
+                  placeholder={enterDescriptionOptionalLabel}
                   onChange={(event) => handleSetDescription(event.target.value)}
                   onKeyUp={(event) => {
                     if (event.key === ' ') {

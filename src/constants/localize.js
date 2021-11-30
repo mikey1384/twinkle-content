@@ -184,6 +184,10 @@ const languageObj = {
     en: 'Enter Description',
     kr: '소개글을 입력하세요'
   },
+  enterDescriptionOptional: {
+    en: "Enter Description (Optional, you don't need to write this)",
+    kr: '소개글을 입력하세요 (선택사항, 입력하지 않으셔도 됩니다)'
+  },
   enterDetails: {
     en: 'Enter Details',
     kr: '상세정보를 입력하세요'
@@ -214,6 +218,10 @@ const languageObj = {
   },
   enterTitle: {
     en: 'Enter Title',
+    kr: '제목을 입력하세요'
+  },
+  enterTitleHere: {
+    en: 'Enter Title Here',
     kr: '제목을 입력하세요'
   },
   enterUrl: {
