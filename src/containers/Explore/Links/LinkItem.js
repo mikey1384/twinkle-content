@@ -12,6 +12,11 @@ import { css } from '@emotion/css';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useExploreContext } from 'contexts';
+import localize from 'constants/localize';
+
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+const editLabel = localize('edit');
+const removeLabel = localize('remove');
 
 LinkItem.propTypes = {
   link: PropTypes.shape({
@@ -77,18 +82,74 @@ export default function LinkItem({
     const items = [];
     if (userIsUploader || canEdit) {
       items.push({
-        label: 'Edit',
+        label: editLabel,
         onClick: () => setOnEdit(true)
       });
     }
     if (userIsUploader || canDelete) {
       items.push({
-        label: 'Remove',
+        label: removeLabel,
         onClick: () => setConfirmModalShown(true)
       });
     }
     return items;
   }, [canDelete, canEdit, userIsUploader]);
+
+  const uploadedLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      return (
+        <>
+          Uploaded {`${timeSince(timeStamp)} `}
+          by <UsernameText user={uploader} />
+        </>
+      );
+    }
+    return (
+      <>
+        게시자: <UsernameText user={uploader} /> {`${timeSince(timeStamp)}`}
+      </>
+    );
+  }, [timeStamp, uploader]);
+
+  const likesLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      return (
+        <>
+          <span
+            style={{ cursor: 'pointer' }}
+            onClick={() => setUserListModalShown(true)}
+          >
+            {`${likes.length}`} like
+            {likes.length > 1 ? 's' : ''}
+          </span>
+          &nbsp;&nbsp;
+        </>
+      );
+    }
+    return (
+      <>
+        <span
+          style={{ cursor: 'pointer' }}
+          onClick={() => setUserListModalShown(true)}
+        >
+          좋아요 ({`${likes.length}`})
+        </span>
+        &nbsp;&nbsp;
+      </>
+    );
+  }, [likes.length]);
+
+  const commentsLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      return (
+        <span>
+          {numComments} comment
+          {numComments > 1 ? 's' : ''}
+        </span>
+      );
+    }
+    return <span>댓글 ({numComments})</span>;
+  }, [numComments]);
 
   return !isDeleted ? (
     <nav
@@ -199,8 +260,7 @@ export default function LinkItem({
                 lineHeight: '2rem'
               }}
             >
-              Uploaded {`${timeSince(timeStamp)} `}
-              by <UsernameText user={uploader} />
+              {uploadedLabel}
             </div>
           </div>
           <div
@@ -211,24 +271,8 @@ export default function LinkItem({
               margin-bottom: 0.5rem;
             `}
           >
-            {likes.length > 0 && (
-              <>
-                <span
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => setUserListModalShown(true)}
-                >
-                  {`${likes.length}`} like
-                  {likes.length > 1 ? 's' : ''}
-                </span>
-                &nbsp;&nbsp;
-              </>
-            )}
-            {numComments > 0 && (
-              <span>
-                {numComments} comment
-                {numComments > 1 ? 's' : ''}
-              </span>
-            )}
+            {likes.length > 0 ? likesLabel : null}
+            {numComments > 0 ? commentsLabel : null}
           </div>
         </div>
       </section>
