@@ -328,6 +328,10 @@ const languageObj = {
     en: `Make sure it is at least 3 characters long`,
     kr: '3글자 이상이어야 합니다'
   },
+  maximumUploadSize: {
+    en: 'Maximum Upload File Size',
+    kr: '파일 업로드 용량 최대치'
+  },
   mission: {
     en: 'Mission',
     kr: '미션'

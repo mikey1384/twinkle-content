@@ -14,6 +14,7 @@ import localize from 'constants/localize';
 
 const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const expandMaximumUploadSizeLabel = localize('expandMaximumUploadSize');
+const maximumUploadSizeLabel = localize('maximumUploadSize');
 
 const item = {
   maxLvl: 7,
@@ -52,6 +53,15 @@ const item = {
   })
 };
 
+const youCanNowUploadLabel =
+  selectedLanguage === 'en'
+    ? `You can now upload files up to ${translateMBToGB(
+        maxSizes[maxSizes.length - 1]
+      )} in size`
+    : `이제 최대 ${translateMBToGBWithoutSpace(
+        maxSizes[maxSizes.length - 1]
+      )}까지 업로드 가능합니다`;
+
 FileSizeItem.propTypes = {
   style: PropTypes.object
 };
@@ -80,10 +90,8 @@ export default function FileSizeItem({ style }) {
     >
       <MaxLevelItemInfo
         icon="upload"
-        title="Maximum upload file size - Level 7"
-        description={`You can now upload files up to ${translateMBToGB(
-          maxSizes[maxSizes.length - 1]
-        )} in size`}
+        title={`${maximumUploadSizeLabel} - Level 7`}
+        description={youCanNowUploadLabel}
       />
     </ItemPanel>
   );
