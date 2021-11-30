@@ -148,6 +148,10 @@ const languageObj = {
     en: 'Delete',
     kr: '삭제'
   },
+  deleted: {
+    en: 'Deleted',
+    kr: '삭제됨'
+  },
   doesNotHaveBio: {
     en: ' does not have a bio, yet',
     kr: '님은 아직 자기소개글이 없습니다'
