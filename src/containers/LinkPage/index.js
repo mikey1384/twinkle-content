@@ -28,8 +28,10 @@ import {
   useViewContext,
   useExploreContext
 } from 'contexts';
+import localize from 'constants/localize';
 
 const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+const rewardLabel = localize('reward');
 
 LinkPage.propTypes = {
   history: PropTypes.object.isRequired,
@@ -371,7 +373,7 @@ export default function LinkPage({
                 >
                   <Icon icon="certificate" />
                   <span style={{ marginLeft: '0.7rem' }}>
-                    {xpButtonDisabled || 'Reward'}
+                    {xpButtonDisabled || rewardLabel}
                   </span>
                 </Button>
               )}
