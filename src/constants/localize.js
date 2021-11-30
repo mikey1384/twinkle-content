@@ -4,6 +4,10 @@ const languageObj = {
     en: 'Add',
     kr: '추가'
   },
+  addLink: {
+    en: 'Add Link',
+    kr: '링크 추가'
+  },
   addedBy: {
     en: 'Added by',
     kr: '게시자:'

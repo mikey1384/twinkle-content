@@ -7,6 +7,7 @@ import { useMyState } from 'helpers/hooks';
 import { useAppContext, useExploreContext } from 'contexts';
 import localize from 'constants/localize';
 
+const addLinkLabel = localize('addLink');
 const allLinksLabel = localize('allLinks');
 const madeByUsersLabel = localize('madeByUsers');
 const recommendedLabel = localize('recommendedLinks');
@@ -155,7 +156,7 @@ export default function Links() {
             color="darkerGray"
             onClick={() => setAddLinkModalShown(true)}
           >
-            + Add Link
+            + {addLinkLabel}
           </Button>
         }
         emptyMessage="No Uploaded Links"
