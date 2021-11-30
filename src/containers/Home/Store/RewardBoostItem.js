@@ -181,7 +181,7 @@ export default function RewardBoostItem({ style }) {
     if (selectedLanguage === 'en') {
       return `You can now earn (reward level × ${videoRewardHash[rewardBoostLvl].xp}) XP and ${videoRewardHash[rewardBoostLvl].coin} Twinkle Coins per minute while watching XP Videos`;
     }
-    return `회원님은 이제 XP동영상을 시청하실 때 매분 (보상레벨 × ${videoRewardHash[rewardBoostLvl].xp})XP와 트윈클 코인 ${videoRewardHash[rewardBoostLvl].coin}개를 획득하실 수 있으십니다`;
+    return `이제 XP동영상을 시청하실 때 매분 (보상레벨 × ${videoRewardHash[rewardBoostLvl].xp})XP와 트윈클 코인 ${videoRewardHash[rewardBoostLvl].coin}개를 획득하실 수 있습니다`;
   }, [rewardBoostLvl]);
 
   return (

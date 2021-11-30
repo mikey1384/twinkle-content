@@ -9,6 +9,7 @@ import { karmaPointTable } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
 const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+const profilePicturesLabel = localize('profilePictures');
 const postPicturesOnYourProfilePageLabel = localize(
   'postPicturesOnYourProfilePage'
 );
@@ -54,6 +55,12 @@ export default function ProfilePictureItem({ style }) {
     }
     return '본 아이템을 잠금 해제 하시면 프로필 페이지에 사진을 게시하실 수 있게 됩니다';
   }, [numPics]);
+  const youCanNowPostUpToLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      return `You can now post up to ${numPics} pictures on your profile page`;
+    }
+    return `이제 프로필 페이지에 사진을 최대 ${numPics}장까지 게시할 수 있습니다`;
+  }, [numPics]);
 
   return (
     <ItemPanel
@@ -71,8 +78,8 @@ export default function ProfilePictureItem({ style }) {
     >
       <MaxLevelItemInfo
         icon="image"
-        title="Profile Pictures - Level 7"
-        description={`You can now post up to ${numPics} pictures on your profile page`}
+        title={`${profilePicturesLabel} - Level 7`}
+        description={youCanNowPostUpToLabel}
       />
     </ItemPanel>
   );
