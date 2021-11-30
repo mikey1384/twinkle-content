@@ -101,7 +101,7 @@ const languageObj = {
     kr: '선택지 E (선택사항)'
   },
   clear: {
-    en: 'clear',
+    en: 'Clear',
     kr: '지우기'
   },
   comment: {
