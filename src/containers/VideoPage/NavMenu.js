@@ -19,12 +19,6 @@ import { useMyState } from 'helpers/hooks';
 import { useAppContext, useNotiContext } from 'contexts';
 import localize from 'constants/localize';
 
-NavMenu.propTypes = {
-  playlistId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  videoId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  isContinuing: PropTypes.bool
-};
-
 const hideWatchedLabel = localize('hideWatched');
 const videosLabel = localize('videos');
 const newsLabel = localize('news');
@@ -33,7 +27,14 @@ const rewardsLabel = localize('rewards');
 const newVideosLabel = localize('newVideos');
 const relatedVideosLabel = localize('relatedVideos');
 const upNextLabel = localize('upNext');
+const uploadedByLabel = localize('uploadedBy');
 const continueWatchingLabel = localize('continueWatching');
+
+NavMenu.propTypes = {
+  playlistId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  videoId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  isContinuing: PropTypes.bool
+};
 
 export default function NavMenu({ playlistId, videoId, isContinuing }) {
   const {
@@ -405,7 +406,7 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
               marginTop: '1rem'
             }}
           >
-            Uploaded by {video.username}
+            {uploadedByLabel} {video.username}
           </small>
         </div>
       </div>
