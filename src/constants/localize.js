@@ -44,6 +44,10 @@ const languageObj = {
     en: ' and',
     kr: ','
   },
+  attachContentToSubject: {
+    en: 'Attach a content to your subject',
+    kr: '주제에 콘텐츠 첨부'
+  },
   beFirstToLikeThisVideo: {
     en: 'Be the first to like this video',
     kr: ''
@@ -663,6 +667,14 @@ const languageObj = {
   select: {
     en: 'Select',
     kr: '선택'
+  },
+  selectVideo: {
+    en: 'Select a video',
+    kr: '동영상 선택'
+  },
+  selectWebpage: {
+    en: 'Select a webpage',
+    kr: '웹페이지 선택'
   },
   showAll: {
     en: 'Show All',

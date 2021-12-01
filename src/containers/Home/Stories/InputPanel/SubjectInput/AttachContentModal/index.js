@@ -4,16 +4,21 @@ import Modal from 'components/Modal';
 import Button from 'components/Button';
 import StartScreen from './StartScreen';
 import SelectAttachmentScreen from './SelectAttachmentScreen';
+import localize from 'constants/localize';
+
+const attachContentToSubjectLabel = localize('attachContentToSubject');
+const selectVideoLabel = localize('selectVideo');
+const selectWebpageLabel = localize('selectWebpage');
 
 const sectionObj = {
   start: {
-    title: 'Attach a content to your subject'
+    title: attachContentToSubjectLabel
   },
   selectVideo: {
-    title: 'Select a video'
+    title: selectVideoLabel
   },
   selectLink: {
-    title: 'Select a webpage'
+    title: selectWebpageLabel
   }
 };
 

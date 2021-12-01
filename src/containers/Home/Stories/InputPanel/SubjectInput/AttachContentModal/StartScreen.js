@@ -18,12 +18,13 @@ import {
   returnMaxUploadSize
 } from 'constants/defaultValues';
 
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+const deviceIsMobile = isMobile(navigator);
+
 StartScreen.propTypes = {
   navigateTo: PropTypes.func.isRequired,
   onHide: PropTypes.func.isRequired
 };
-
-const deviceIsMobile = isMobile(navigator);
 
 export default function StartScreen({ navigateTo, onHide }) {
   const {
@@ -41,6 +42,12 @@ export default function StartScreen({ navigateTo, onHide }) {
     if (twinkleXP >= FILE_UPLOAD_XP_REQUIREMENT_FOR_SUBJECT) return false;
     return true;
   }, [authLevel, twinkleXP]);
+  const fromYourLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      return <>from Your {deviceIsMobile ? 'Device' : 'Computer'}</>;
+    }
+    return <>{deviceIsMobile ? '기기' : '컴퓨터'}에서 가져오기</>;
+  }, []);
 
   return (
     <ErrorBoundary style={{ display: 'flex', width: '100%' }}>
@@ -59,7 +66,7 @@ export default function StartScreen({ navigateTo, onHide }) {
             color: Color.black()
           }}
         >
-          from Your {deviceIsMobile ? 'Device' : 'Computer'}
+          {fromYourLabel}
         </div>
         <div
           style={{
