@@ -36,6 +36,7 @@ import {
 import { css } from '@emotion/css';
 import localize from 'constants/localize';
 
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const deleteLabel = localize('delete');
 const editLabel = localize('edit');
 const editOrDeleteLabel = localize('editOrDelete');
@@ -277,6 +278,18 @@ export default function Details({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const viewsLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      return (
+        <>
+          {addCommasToNumber(videoViews)} view
+          {`${videoViews > 1 ? 's' : ''}`}
+        </>
+      );
+    }
+    return <>조회수 {addCommasToNumber(videoViews)}회</>;
+  }, [videoViews]);
+
   return (
     <div style={{ width: '100%' }}>
       <AlreadyPosted
@@ -410,8 +423,7 @@ export default function Details({
                   color: Color.darkerGray()
                 }}
               >
-                {addCommasToNumber(videoViews)} view
-                {`${videoViews > 1 ? 's' : ''}`}
+                {viewsLabel}
               </div>
             )}
             <div style={{ display: 'flex', marginTop: '1rem' }}>

@@ -29,6 +29,7 @@ import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
 import localize from 'constants/localize';
 
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const commentLabel = localize('comment');
 const editLabel = localize('edit');
 const removeLabel = localize('remove');
@@ -291,6 +292,18 @@ export default function Body({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
+  const viewsLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      return (
+        <>
+          {addCommasToNumber(views)} view
+          {`${views > 1 ? 's' : ''}`}
+        </>
+      );
+    }
+    return <>조회수 {addCommasToNumber(views)}회</>;
+  }, [views]);
+
   return (
     <ErrorBoundary>
       <div
@@ -511,8 +524,7 @@ export default function Body({
                     fontSize: '1.7rem'
                   }}
                 >
-                  {addCommasToNumber(views)} view
-                  {`${views > 1 ? 's' : ''}`}
+                  {viewsLabel}
                 </div>
               )}
             </div>
