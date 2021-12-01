@@ -10,6 +10,7 @@ import { socket } from 'constants/io';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import localize from 'constants/localize';
 
+const logInLabel = localize('logIn');
 const profileLabel = localize('profile2');
 const managementLabel = localize('management');
 const logOutLabel = localize('logOut');
@@ -131,7 +132,7 @@ function AccountMenu({ className, history }) {
               textOverflow: 'ellipsis'
             }}
           >
-            Log In
+            {logInLabel}
           </div>
         </Button>
       )}

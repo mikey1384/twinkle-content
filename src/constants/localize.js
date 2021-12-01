@@ -368,6 +368,10 @@ const languageObj = {
     en: 'Loading',
     kr: '로딩중'
   },
+  logIn: {
+    en: 'Log In',
+    kr: '로그인'
+  },
   logOut: {
     en: 'Log out',
     kr: '로그아웃'
