@@ -308,6 +308,10 @@ const languageObj = {
     en: 'Home',
     kr: '홈'
   },
+  iForgotMyPassword: {
+    en: 'I forgot my password',
+    kr: '비밀번호를 잊어버렸습니다'
+  },
   imageTooLarge10MB: {
     en: 'Image is too large (limit: 10mb)',
     kr: '이미지 크기가 너무 큽니다 (최대 10mb)'
@@ -431,6 +435,10 @@ const languageObj = {
   noDescription: {
     en: 'No description',
     kr: '소개글이 없습니다'
+  },
+  noIDontHaveAnAccount: {
+    en: "No, I don't have an account",
+    kr: '아니오, 계정이 없습니다'
   },
   noPlaylists: {
     en: 'No playlists',
@@ -860,6 +868,10 @@ const languageObj = {
     en: 'watching',
     kr: '시청하기'
   },
+  welcomeToTwinkle: {
+    en: `Welcome to Twinkle. Do you have a Twinkle account?`,
+    kr: '트윈클에 오신 것을 환영합니다. 계정이 있으신가요?'
+  },
   xpVideos: {
     en: 'XP Videos',
     kr: 'XP 동영상'
@@ -867,6 +879,10 @@ const languageObj = {
   yes: {
     en: 'Yes',
     kr: '예'
+  },
+  yesIHaveAnAccount: {
+    en: 'Yes, I have an account',
+    kr: '예, 계정이 있습니다'
   },
   you: {
     en: 'you',
