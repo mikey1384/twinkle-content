@@ -7,6 +7,10 @@ import { css } from '@emotion/css';
 import { Color } from 'constants/css';
 import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
+import localize from 'constants/localize';
+
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+const addVideoToPlaylistsLabel = localize('addVideoToPlaylists');
 
 TagStatus.propTypes = {
   onAddTags: PropTypes.func.isRequired,
@@ -75,6 +79,18 @@ function TagStatus({
     [tags]
   );
 
+  const addLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      return (
+        <>
+          +Add
+          {tags.length === 0 ? ' to Playlists' : ''}
+        </>
+      );
+    }
+    return <>+{tags.length === 0 ? ' 재생목록에' : ''} 추가</>;
+  }, [tags.length]);
+
   return (
     <div
       style={style}
@@ -98,8 +114,7 @@ function TagStatus({
               }}
               onClick={() => setTagModalShown(true)}
             >
-              +Add
-              {tags.length === 0 ? ' to Playlists' : ''}
+              {addLabel}
             </a>
           )}
         </div>
@@ -107,7 +122,7 @@ function TagStatus({
       {tagModalShown && (
         <TagModal
           currentPlaylists={tagIds}
-          title="Add Video to Playlists"
+          title={addVideoToPlaylistsLabel}
           onHide={() => setTagModalShown(false)}
           onAddPlaylist={({ videoIds, playlistId, playlistTitle }) =>
             onAddTagToContents?.({

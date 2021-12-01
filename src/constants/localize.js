@@ -14,11 +14,15 @@ const languageObj = {
   },
   addQuestions: {
     en: 'Add Questions',
-    kr: '문제 등록하기'
+    kr: '문제 등록'
   },
   addEditQuestions: {
     en: 'Add/Edit Questions',
-    kr: '문제 등록/수정하기'
+    kr: '문제 등록/수정'
+  },
+  addVideoToPlaylists: {
+    en: 'Add Video to Playlists',
+    kr: '재생목록에 추가'
   },
   allLinks: {
     en: 'All Links',
@@ -74,7 +78,7 @@ const languageObj = {
   },
   changeUsername: {
     en: 'Change your username',
-    kr: '유저명 변경하기'
+    kr: '유저명 변경'
   },
   changeVideos: {
     en: 'Change Videos',
@@ -178,7 +182,7 @@ const languageObj = {
   },
   editQuestion: {
     en: 'Edit Question',
-    kr: '문제 수정하기'
+    kr: '문제 수정'
   },
   editTitle: {
     en: 'Edit Title',
@@ -590,7 +594,7 @@ const languageObj = {
   },
   reorderQuestions: {
     en: 'Reorder Questions',
-    kr: '문제 순서 변경하기'
+    kr: '문제 순서 변경'
   },
   reorderVideos: {
     en: 'Reorder Videos',

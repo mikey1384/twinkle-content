@@ -30,6 +30,8 @@ import { useAppContext, useContentContext } from 'contexts';
 import localize from 'constants/localize';
 
 const commentLabel = localize('comment');
+const editLabel = localize('edit');
+const removeLabel = localize('remove');
 const replyLabel = localize('reply');
 const respondLabel = localize('respond');
 const rewardLabel = localize('reward');
@@ -215,14 +217,14 @@ export default function Body({
       !(isSecretAnswerPoster || isHigherAuthThanSecretAnswerPoster);
     if ((userId === uploader.id || canEdit) && !isForSecretSubject) {
       items.push({
-        label: 'Edit',
+        label: editLabel,
         onClick: () =>
           onSetIsEditing({ contentId, contentType, isEditing: true })
       });
     }
     if (userId === uploader.id || canDelete) {
       items.push({
-        label: 'Remove',
+        label: removeLabel,
         onClick: () => setConfirmModalShown(true)
       });
     }
