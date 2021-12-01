@@ -280,6 +280,10 @@ const languageObj = {
     en: 'Featured Playlists',
     kr: '추천 재생목록'
   },
+  finish: {
+    en: 'Finish',
+    kr: '완료'
+  },
   forEveryStarYouAdd: {
     en: 'For every star you add,the amount of XP viewers earn per minute rises.',
     kr: '별 한개를 추가할 때마다, 시청자들이 분당 얻는 XP량이 증가합니다.'
@@ -408,6 +412,10 @@ const languageObj = {
     en: 'New Videos',
     kr: '새로운 영상'
   },
+  next: {
+    en: 'Next',
+    kr: '다음'
+  },
   no: {
     en: 'No',
     kr: '아니오'
@@ -519,6 +527,10 @@ const languageObj = {
   postContent: {
     en: 'Share interesting videos or webpages',
     kr: '흥미로운 동영상이나 웹페이지를 공유하세요'
+  },
+  prev: {
+    en: 'Prev',
+    kr: '뒤로'
   },
   profile: {
     en: 'profile',
