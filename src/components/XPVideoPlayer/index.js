@@ -18,6 +18,7 @@ import { css } from '@emotion/css';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useViewContext } from 'contexts';
 
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const intervalLength = 2000;
 
 XPVideoPlayer.propTypes = {
@@ -349,6 +350,13 @@ function XPVideoPlayer({
     [handleIncreaseMeter, playing, videoId]
   );
 
+  const thisVideoWasMadeByLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      return <>This video was made by {uploader?.username}</>;
+    }
+    return <>{uploader?.username}님이 직접 제작한 동영상입니다</>;
+  }, [uploader?.username]);
+
   return (
     <ErrorBoundary style={style}>
       {byUser && !isChat && (
@@ -385,7 +393,7 @@ function XPVideoPlayer({
                 {`Visit ${uploader.username}'s`} YouTube Channel
               </a>
             ) : (
-              <span>This video was made by {uploader.username}</span>
+              <span>{thisVideoWasMadeByLabel}</span>
             )}
           </div>
         </div>

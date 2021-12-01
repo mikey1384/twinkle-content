@@ -258,7 +258,7 @@ export default function LinkPage({
     if (selectedLanguage === 'en') {
       return <>This was made by {uploader?.username}</>;
     }
-    return <>{uploader?.username}님이 직접 제작했습니다</>;
+    return <>{uploader?.username}님이 직접 제작한 콘텐츠입니다</>;
   }, [uploader?.username]);
 
   return loaded ? (
