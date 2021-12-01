@@ -44,6 +44,10 @@ const languageObj = {
     en: ' and',
     kr: ','
   },
+  areYouSure: {
+    en: 'Are you sure?',
+    kr: '확실하신가요?'
+  },
   attachContentToSubject: {
     en: 'Attach a content to your subject',
     kr: '주제에 콘텐츠 첨부'
@@ -139,6 +143,10 @@ const languageObj = {
   commentRemoved: {
     en: 'Comment removed / no longer available',
     kr: '댓글이 존재하지 않거나 삭제되었습니다'
+  },
+  commentsMightNotBeRewarded: {
+    en: 'The comments you post on this subject might not be rewarded',
+    kr: '비밀 메시지를 조회한 다음 남기는 댓글엔 포상이 주어지지 않을 수 있습니다'
   },
   commentWasDeleted: {
     en: 'this comment was deleted',
@@ -831,6 +839,14 @@ const languageObj = {
   viewProfile: {
     en: 'View Profile',
     kr: '프로필'
+  },
+  viewSecretMessageWithoutResponding: {
+    en: 'View secret message without responding',
+    kr: '비밀 메시지 보기'
+  },
+  viewWithoutResponding: {
+    en: 'View without responding',
+    kr: '비밀 메시지 보기'
   },
   visitWebsite: {
     en: 'Visit Website',
