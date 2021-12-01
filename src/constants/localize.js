@@ -276,6 +276,10 @@ const languageObj = {
     en: 'For every star you add,the amount of XP viewers earn per minute rises.',
     kr: '별 한개를 추가할 때마다, 시청자들이 분당 얻는 XP량이 증가합니다.'
   },
+  fromTwinkleWebsite: {
+    en: 'from Twinkle Website',
+    kr: '트윈클 웹사이트에서 가져오기'
+  },
   hideWatched: {
     en: 'Hide Watched',
     kr: '시청한 영상 숨기기'

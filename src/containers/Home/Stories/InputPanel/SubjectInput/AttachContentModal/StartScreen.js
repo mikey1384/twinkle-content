@@ -17,8 +17,12 @@ import {
   mb,
   returnMaxUploadSize
 } from 'constants/defaultValues';
+import localize from 'constants/localize';
 
 const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+const fromTwinkleWebsiteLabel = localize('fromTwinkleWebsite');
+const videoLabel = localize('video');
+const linkLabel = localize('link');
 const deviceIsMobile = isMobile(navigator);
 
 StartScreen.propTypes = {
@@ -114,7 +118,7 @@ export default function StartScreen({ navigateTo, onHide }) {
             color: Color.black()
           }}
         >
-          from Twinkle Website
+          {fromTwinkleWebsiteLabel}
         </div>
         <div
           style={{
@@ -129,7 +133,7 @@ export default function StartScreen({ navigateTo, onHide }) {
             onClick={() => navigateTo('selectVideo')}
           >
             <Icon icon="film" />
-            <span style={{ marginLeft: '1rem' }}>Video</span>
+            <span style={{ marginLeft: '1rem' }}>{videoLabel}</span>
           </Button>
           <Button
             skeuomorphic
@@ -138,7 +142,7 @@ export default function StartScreen({ navigateTo, onHide }) {
             onClick={() => navigateTo('selectLink')}
           >
             <Icon icon="link" />
-            <span style={{ marginLeft: '1rem' }}>Link</span>
+            <span style={{ marginLeft: '1rem' }}>{linkLabel}</span>
           </Button>
         </div>
       </div>
