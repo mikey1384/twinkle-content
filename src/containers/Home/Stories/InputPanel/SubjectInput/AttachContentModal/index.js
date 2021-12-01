@@ -7,6 +7,9 @@ import SelectAttachmentScreen from './SelectAttachmentScreen';
 import localize from 'constants/localize';
 
 const attachContentToSubjectLabel = localize('attachContentToSubject');
+const backLabel = localize('back');
+const cancelLabel = localize('cancel');
+const confirmLabel = localize('confirm');
 const selectVideoLabel = localize('selectVideo');
 const selectWebpageLabel = localize('selectWebpage');
 
@@ -79,7 +82,7 @@ export default function AttachContentModal({ onConfirm, onHide }) {
                 }
           }
         >
-          {section === 'start' ? 'Cancel' : 'Back'}
+          {section === 'start' ? cancelLabel : backLabel}
         </Button>
         {section !== 'start' && (
           <Button
@@ -88,7 +91,7 @@ export default function AttachContentModal({ onConfirm, onHide }) {
             style={{ marginLeft: '0.7rem' }}
             onClick={() => onConfirm(selected)}
           >
-            Confirm
+            {confirmLabel}
           </Button>
         )}
       </footer>

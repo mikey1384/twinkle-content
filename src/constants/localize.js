@@ -48,6 +48,10 @@ const languageObj = {
     en: 'Attach a content to your subject',
     kr: '주제에 콘텐츠 첨부'
   },
+  back: {
+    en: 'Back',
+    kr: '뒤로가기'
+  },
   beFirstToLikeThisVideo: {
     en: 'Be the first to like this video',
     kr: ''
@@ -139,6 +143,10 @@ const languageObj = {
   commentWasDeleted: {
     en: 'this comment was deleted',
     kr: '댓글이 삭제되었습니다'
+  },
+  confirm: {
+    en: 'Confirm',
+    kr: '확정'
   },
   continue2: {
     en: 'Continue',
@@ -655,6 +663,10 @@ const languageObj = {
   rewards: {
     en: 'Rewards',
     kr: '선물'
+  },
+  search: {
+    en: 'Search',
+    kr: '검색'
   },
   searchPlaylists: {
     en: 'Search Playlists',
