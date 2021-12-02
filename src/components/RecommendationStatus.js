@@ -6,7 +6,7 @@ import { Color } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
 import localize from 'constants/localize';
 
-const andLabel = localize('and');
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const recommendedByLabel = localize('recommendedBy');
 const youLabel = localize('you');
 const othersLabel = localize('others');
@@ -71,6 +71,16 @@ export default function RecommendationStatus({
       myRecommendation?.rewardDisabled
     ]
   );
+
+  const andLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      return ' and';
+    }
+    if (recommendationsByUsertypeExceptMe.length > 2) {
+      return '님 외';
+    }
+    return ',';
+  }, [recommendationsByUsertypeExceptMe.length]);
 
   return recommendations.length > 0 ? (
     <div

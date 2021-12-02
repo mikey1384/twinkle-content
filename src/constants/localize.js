@@ -40,10 +40,6 @@ const languageObj = {
     en: 'All Posts',
     kr: '모든 게시물'
   },
-  and: {
-    en: ' and',
-    kr: '님 외'
-  },
   areYouSure: {
     en: 'Are you sure?',
     kr: '확실하신가요?'
