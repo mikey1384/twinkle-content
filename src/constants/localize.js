@@ -804,6 +804,10 @@ const languageObj = {
     en: 'Set Reward Level',
     kr: '보상 레벨 설정'
   },
+  settingCannotBeChanged: {
+    en: 'This setting cannot be changed',
+    kr: '이 설정은 변경할 수 없습니다'
+  },
   setUpPassword: {
     en: 'Password (You MUST remember your password. Write it down somewhere!)',
     kr: '비밀번호 (비밀번호는 반드시 기억해야 합니다. 어딘가에 적어두세요!)'

@@ -13,6 +13,7 @@ import localize from 'constants/localize';
 
 const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const setRewardLevelLabel = localize('setRewardLevel');
+const settingCannotBeChangedLabel = localize('settingCannotBeChanged');
 
 StarButton.propTypes = {
   byUser: PropTypes.bool,
@@ -100,6 +101,21 @@ export default function StarButton({
       </>
     );
   }, [byUser, uploader?.id, uploader?.username, userId, writtenByButtonShown]);
+  const moderatorHasDisabledChangeLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      return (
+        <>
+          <b>{moderatorName}</b> has disabled users from changing this setting
+          for this post
+        </>
+      );
+    }
+    return (
+      <>
+        <b>{moderatorName}</b>님이 이 설정을 변경하지 못하도록 설정하였습니다
+      </>
+    );
+  }, [moderatorName]);
   const buttonShown = useMemo(() => {
     return (
       canEditRewardLevel ||
@@ -159,13 +175,8 @@ export default function StarButton({
       )}
       {cannotChangeModalShown && (
         <AlertModal
-          title="This setting cannot be changed"
-          content={
-            <span>
-              <b>{moderatorName}</b> has disabled users from changing this
-              setting for this post
-            </span>
-          }
+          title={settingCannotBeChangedLabel}
+          content={<span>{moderatorHasDisabledChangeLabel}</span>}
           onHide={() => setCannotChangeModalShown(false)}
         />
       )}
