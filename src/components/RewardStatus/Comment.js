@@ -135,7 +135,7 @@ function Comment({
                 : Color.logoBlue()
           }}
         >
-          트윈클 {reward.rewardAmount}개를 포상했습니다
+          트윈클 {reward.rewardAmount}개를 보상했습니다
         </span>
       </>
     );

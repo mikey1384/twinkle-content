@@ -146,7 +146,7 @@ const languageObj = {
   },
   commentsMightNotBeRewarded: {
     en: 'The comments you post on this subject might not be rewarded',
-    kr: '비밀 메시지를 조회한 다음 남기는 댓글엔 포상이 주어지지 않을 수 있습니다'
+    kr: '비밀 메시지를 조회한 다음 남기는 댓글엔 보상이 주어지지 않을 수 있습니다'
   },
   commentWasDeleted: {
     en: 'this comment was deleted',
@@ -694,15 +694,19 @@ const languageObj = {
   },
   revokeReward: {
     en: 'Revoke Reward',
-    kr: '포상 취소'
+    kr: '보상 취소'
   },
   reward: {
     en: 'Reward',
-    kr: '포상'
+    kr: '보상'
   },
   rewardable: {
     en: 'Rewardable',
-    kr: '포상 허용'
+    kr: '보상 허용'
+  },
+  rewardLevel: {
+    en: 'Reward Level',
+    kr: '보상 레벨'
   },
   rewards: {
     en: 'Rewards',
@@ -746,7 +750,7 @@ const languageObj = {
   },
   showMoreRewardRecords: {
     en: 'Show More Reward Records',
-    kr: '더 많은 포상 기록 보기'
+    kr: '더 많은 보상 기록 보기'
   },
   startedBy: {
     en: 'Started by',

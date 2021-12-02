@@ -156,7 +156,7 @@ export default function XPRewardInterface({
     if (selectedLanguage === 'en') {
       return 'Select reward amount';
     }
-    return '포상 금액을 선택하세요';
+    return '보상 금액을 선택하세요';
   }, [selectedAmount]);
 
   const rewardReasonLabel = useMemo(() => {
@@ -165,7 +165,7 @@ export default function XPRewardInterface({
         contentType === 'url' ? 'link' : contentType
       } (optional)`;
     }
-    return `이 활동을 포상하는 이유를 적어주세요 (선택사항)`;
+    return `이 활동을 보상하는 이유를 적어주세요 (선택사항)`;
   }, [contentType]);
 
   const confirmText = useMemo(() => {

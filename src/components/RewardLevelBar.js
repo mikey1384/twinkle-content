@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import { Color } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
+import localize from 'constants/localize';
+
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+const rewardLevelLabel = localize('rewardLevel');
 
 RewardLevelBar.propTypes = {
   className: PropTypes.string,
@@ -19,6 +23,13 @@ export default function RewardLevelBar({ className, rewardLevel, style }) {
       );
     }
     return result;
+  }, [rewardLevel]);
+
+  const earnUpToLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      return `Earn up to ${addCommasToNumber(rewardLevel * 2000)} XP`;
+    }
+    return `최대 ${addCommasToNumber(rewardLevel * 2000)}XP 까지 획득가능`;
   }, [rewardLevel]);
 
   const barColor = useMemo(
@@ -48,8 +59,10 @@ export default function RewardLevelBar({ className, rewardLevel, style }) {
         ...style
       }}
     >
-      <div>Reward Level: {stars}</div>
-      <div>Earn up to {addCommasToNumber(rewardLevel * 2000)} XP</div>
+      <div>
+        {rewardLevelLabel}: {stars}
+      </div>
+      <div>{earnUpToLabel}</div>
     </div>
   );
 }

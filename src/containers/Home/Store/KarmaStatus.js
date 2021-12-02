@@ -20,7 +20,7 @@ const karmaCalculationLabel =
     </>
   ) : (
     <>
-      회원님의 카마포인트 = 회원님이 포상한{' '}
+      회원님의 카마포인트 = 회원님이 보상한{' '}
       <b style={{ color: Color.pink() }}>트윈클 개수</b> + (
       {karmaMultiplier.recommendation} × 선생님 유저들이 승인한 회원님의{' '}
       <b style={{ color: Color.brownOrange() }}>추천 개수</b>)
@@ -34,7 +34,7 @@ const rewardedTwinklesLabel =
     </>
   ) : (
     <>
-      회원님이 포상한 <b style={{ color: Color.pink() }}>트윈클 개수</b>
+      회원님이 보상한 <b style={{ color: Color.pink() }}>트윈클 개수</b>
     </>
   );
 
@@ -124,7 +124,7 @@ export default function KarmaStatus() {
     }
     return (
       <span>
-        회원님의 카마포인트 = 회원님이 포상한 <b>게시물</b>의 총 개수 ×{' '}
+        회원님의 카마포인트 = 회원님이 보상한 <b>게시물</b>의 총 개수 ×{' '}
         {karmaMultiplier.post}
       </span>
     );
@@ -170,7 +170,7 @@ export default function KarmaStatus() {
     return (
       <div style={{ fontSize: '1.5rem', marginTop: '3rem' }}>
         <p>
-          회원님이 포상한 게시물의 총 개수:{' '}
+          회원님이 보상한 게시물의 총 개수:{' '}
           {addCommasToNumber(numPostsRewarded)}
         </p>
         <p style={{ marginTop: '1rem', fontSize: '1.7rem' }}>
