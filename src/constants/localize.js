@@ -90,7 +90,7 @@ const languageObj = {
   },
   changeUsername: {
     en: 'Change your username',
-    kr: '유저명 변경'
+    kr: '아이디 변경'
   },
   changeVideos: {
     en: 'Change Videos',
@@ -238,7 +238,7 @@ const languageObj = {
   },
   enterNewUsername: {
     en: 'Enter New Username',
-    kr: '새로운 유저명을 입력하세요'
+    kr: '새로운 아이디를 입력하세요'
   },
   enterQuestion: {
     en: 'Enter Question',
@@ -267,6 +267,14 @@ const languageObj = {
   enterUrl: {
     en: 'Enter URL',
     kr: 'URL을 입력하세요'
+  },
+  enterYourPassword: {
+    en: 'Enter your password',
+    kr: '비밀번호를 입력하세요'
+  },
+  enterYourUsername: {
+    en: 'Enter your username',
+    kr: '아이디를 입력하세요'
   },
   enterYoutubeUrl: {
     en: 'Enter YouTube URL',
@@ -312,9 +320,17 @@ const languageObj = {
     en: 'Home',
     kr: '홈'
   },
+  iDontHaveAnAccount: {
+    en: "I don't have an account",
+    kr: '계정이 없으신가요?'
+  },
   iForgotMyPassword: {
     en: 'I forgot my password',
     kr: '비밀번호를 잊어버렸습니다'
+  },
+  iForgotMyPassword2: {
+    en: 'I forgot my password',
+    kr: '비밀번호를 잊어버리셨나요?'
   },
   imageTooLarge10MB: {
     en: 'Image is too large (limit: 10mb)',
@@ -322,7 +338,7 @@ const languageObj = {
   },
   isNotValidUsername: {
     en: ' is not a valid username',
-    kr: '는 사용 가능한 유저명이 아닙니다'
+    kr: '는 사용 가능한 아이디가 아닙니다'
   },
   joinConversation: {
     en: 'Join Conversation',
@@ -379,6 +395,10 @@ const languageObj = {
   logIn2: {
     en: 'Log in',
     kr: '로그인하시고'
+  },
+  logMeIn: {
+    en: 'Log me in!',
+    kr: '로그인'
   },
   logOut: {
     en: 'Log out',
@@ -526,7 +546,7 @@ const languageObj = {
   },
   pleaseEnterTitle: {
     en: 'Please enter a title',
-    kr: '제목을 입력해주세요'
+    kr: '제목을 입력하세요'
   },
   pleaseMarkTheCorrectChoice: {
     en: 'Please mark the correct choice',
@@ -923,6 +943,10 @@ const languageObj = {
   you: {
     en: 'you',
     kr: '회원님'
+  },
+  yourUsernameAndPassword: {
+    en: `What's your username and password?`,
+    kr: '아이디와 비밀번호를 입력하세요'
   },
   yourTwinkleCoins: {
     en: 'Your Twinkle Coins',
