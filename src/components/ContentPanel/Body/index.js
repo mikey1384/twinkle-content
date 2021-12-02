@@ -31,6 +31,7 @@ import localize from 'constants/localize';
 
 const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const commentLabel = localize('comment');
+const copiedLabel = localize('copied');
 const editLabel = localize('edit');
 const removeLabel = localize('remove');
 const replyLabel = localize('reply');
@@ -462,10 +463,11 @@ export default function Body({
                           background: '#fff',
                           fontSize: '1.2rem',
                           padding: '1rem',
+                          wordBreak: 'keep-all',
                           border: `1px solid ${Color.borderGray()}`
                         }}
                       >
-                        Copied!
+                        {copiedLabel}
                       </div>
                     </div>
                   )}

@@ -164,6 +164,10 @@ const languageObj = {
     en: 'Continue Watching',
     kr: '이어서 시청하기'
   },
+  copied: {
+    en: 'Copied!',
+    kr: '복사되었습니다'
+  },
   copyAndPasteUrl: {
     en: 'Copy and paste a URL address here',
     kr: 'URL 주소를 복사한 후 여기에 붙여넣으세요'
