@@ -9,6 +9,7 @@ import localize from 'constants/localize';
 const andLabel = localize('and');
 const recommendedByLabel = localize('recommendedBy');
 const youLabel = localize('you');
+const othersLabel = localize('others');
 
 RecommendationStatus.propTypes = {
   contentType: PropTypes.string.isRequired,
@@ -131,7 +132,8 @@ export default function RecommendationStatus({
               style={{ cursor: 'pointer', fontWeight: 'bold', color: '#000' }}
               onClick={() => setUserListModalShown(true)}
             >
-              {recommendationsByUsertypeExceptMe.length - 1} others
+              {recommendationsByUsertypeExceptMe.length - 1}
+              {othersLabel}
             </a>
           </>
         )}

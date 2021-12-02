@@ -42,7 +42,7 @@ const languageObj = {
   },
   and: {
     en: ' and',
-    kr: ','
+    kr: '님 외'
   },
   areYouSure: {
     en: 'Are you sure?',
@@ -475,6 +475,10 @@ const languageObj = {
   optional: {
     en: '(Optional)',
     kr: '(선택사항)'
+  },
+  others: {
+    en: ' others',
+    kr: '명'
   },
   pass: {
     en: 'Pass',
