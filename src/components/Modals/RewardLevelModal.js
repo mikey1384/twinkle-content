@@ -9,7 +9,10 @@ import { useAppContext } from 'contexts';
 import localize from 'constants/localize';
 
 const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+const cancelLabel = localize('cancel');
+const setLabel = localize('set');
 const settingCannotBeChangedLabel = localize('settingCannotBeChanged');
+const setVideoRewardLevelLabel = localize('setVideoRewardLevel');
 
 RewardLevelModal.propTypes = {
   contentId: PropTypes.number.isRequired,
@@ -53,9 +56,7 @@ export default function RewardLevelModal({
   return (
     <Modal onHide={onHide}>
       <ErrorBoundary>
-        <header>
-          Set Reward Level (consider both difficulty and importance)
-        </header>
+        <header>{setVideoRewardLevelLabel}</header>
         <main style={{ fontSize: '3rem', paddingTop: 0 }}>
           <RewardLevelForm
             rewardLevel={rewardLevel}
@@ -69,10 +70,10 @@ export default function RewardLevelModal({
             style={{ marginRight: '0.7rem' }}
             onClick={onHide}
           >
-            Cancel
+            {cancelLabel}
           </Button>
           <Button disabled={disabled} color="blue" onClick={submit}>
-            Set
+            {setLabel}
           </Button>
         </footer>
       </ErrorBoundary>

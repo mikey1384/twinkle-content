@@ -800,9 +800,17 @@ const languageObj = {
     en: 'Select a webpage',
     kr: '웹페이지 선택'
   },
+  set: {
+    en: 'Set',
+    kr: '설정'
+  },
   setRewardLevel: {
     en: 'Set Reward Level',
     kr: '보상 레벨 설정'
+  },
+  setVideoRewardLevel: {
+    en: 'Set Reward Level (consider both difficulty and importance)',
+    kr: '보상 레벨 설정 (난이도와 중요도 모두 고려)'
   },
   settingCannotBeChanged: {
     en: 'This setting cannot be changed',
