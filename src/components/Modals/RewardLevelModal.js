@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
@@ -6,6 +6,10 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import RewardLevelForm from 'components/Forms/RewardLevelForm';
 import AlertModal from 'components/Modals/AlertModal';
 import { useAppContext } from 'contexts';
+import localize from 'constants/localize';
+
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+const settingCannotBeChangedLabel = localize('settingCannotBeChanged');
 
 RewardLevelModal.propTypes = {
   contentId: PropTypes.number.isRequired,
@@ -29,6 +33,23 @@ export default function RewardLevelModal({
   const [cannotChangeModalShown, setCannotChangeModalShown] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [rewardLevel, setRewardLevel] = useState(initialRewardLevel);
+
+  const moderatorHasDisabledChangeLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      return (
+        <span>
+          <b>{moderatorName}</b> has disabled users from changing this setting
+          for this post
+        </span>
+      );
+    }
+    return (
+      <span>
+        <b>{moderatorName}</b>님이 이 설정을 변경하지 못하도록 설정하였습니다
+      </span>
+    );
+  }, [moderatorName]);
+
   return (
     <Modal onHide={onHide}>
       <ErrorBoundary>
@@ -57,13 +78,8 @@ export default function RewardLevelModal({
       </ErrorBoundary>
       {cannotChangeModalShown && (
         <AlertModal
-          title="This setting cannot be changed"
-          content={
-            <span>
-              <b>{moderatorName}</b> has disabled users from changing this
-              setting for this post
-            </span>
-          }
+          title={settingCannotBeChangedLabel}
+          content={moderatorHasDisabledChangeLabel}
           onHide={() => setCannotChangeModalShown(false)}
         />
       )}

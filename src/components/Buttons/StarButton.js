@@ -104,16 +104,16 @@ export default function StarButton({
   const moderatorHasDisabledChangeLabel = useMemo(() => {
     if (selectedLanguage === 'en') {
       return (
-        <>
+        <span>
           <b>{moderatorName}</b> has disabled users from changing this setting
           for this post
-        </>
+        </span>
       );
     }
     return (
-      <>
+      <span>
         <b>{moderatorName}</b>님이 이 설정을 변경하지 못하도록 설정하였습니다
-      </>
+      </span>
     );
   }, [moderatorName]);
   const buttonShown = useMemo(() => {
@@ -176,7 +176,7 @@ export default function StarButton({
       {cannotChangeModalShown && (
         <AlertModal
           title={settingCannotBeChangedLabel}
-          content={<span>{moderatorHasDisabledChangeLabel}</span>}
+          content={moderatorHasDisabledChangeLabel}
           onHide={() => setCannotChangeModalShown(false)}
         />
       )}
