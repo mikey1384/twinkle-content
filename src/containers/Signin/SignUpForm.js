@@ -9,6 +9,7 @@ import { isValidUsername, stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext } from 'contexts';
 import localize from 'constants/localize';
 
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const createMyAccountLabel = localize('createMyAccount');
 const emailIsNeededInCaseLabel = localize('emailIsNeededInCase');
 const emailYoursOrYourParentsLabel = localize('emailYoursOrYourParents');
@@ -16,6 +17,7 @@ const iAlreadyHaveAnAccountLabel = localize('iAlreadyHaveAnAccount');
 const firstNameLabel = localize('firstName');
 const letsSetUpYourAccountLabel = localize('letsSetUpYourAccount');
 const passwordLabel = localize('password');
+const passwordsNeedToBeAtLeastLabel = localize('passwordsNeedToBeAtLeast');
 const usernameLabel = localize('username');
 const enterTheUsernameYouWishToUseLabel = localize(
   'enterTheUsernameYouWishToUse'
@@ -62,6 +64,36 @@ export default function SignUpForm({
       errorMessage,
     [errorMessage, firstname, keyphrase, lastname, password, username]
   );
+  const usernameErrorMsgLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      return `${username} is not a valid username.${
+        username.length < 3
+          ? ' Make sure it is at least 3 characters long.'
+          : ''
+      }`;
+    }
+    return `"${username}" - 유효하지 않은 아이디입니다.${
+      username.length < 3 ? ' 아이디는 3글자 이상이어야 합니다.' : ''
+    }`;
+  }, [username]);
+  const notValidFirstNameLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      return `${firstname} is not a valid first name. Your first name should consist of english letters only`;
+    }
+    return `${firstname}는 유효한 이름이 아닙니다. 영문자로 입력해 주세요`;
+  }, [firstname]);
+  const notValidLastNameLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      return `${lastname} is not a valid last name. Your last name should consist of english letters only`;
+    }
+    return `${lastname}는 유효한 성이 아닙니다. 영문자로 입력해 주세요`;
+  }, [lastname]);
+  const notValidEmailLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      return `${email} is not a valid email address`;
+    }
+    return `${email}는 유효한 이메일 주소가 아닙니다`;
+  }, [email]);
 
   return (
     <ErrorBoundary>
@@ -214,29 +246,19 @@ export default function SignUpForm({
 
   async function onSubmit() {
     if (!isValidUsername(username)) {
-      return setErrorMessage(
-        `${username} is not a valid username.${
-          username.length < 3
-            ? ' Make sure it is at least 3 characters long.'
-            : ''
-        }`
-      );
+      return setErrorMessage(usernameErrorMsgLabel);
     }
     if (!isValidPassword(password)) {
-      return setErrorMessage('Passwords need to be at least 5 characters long');
+      return setErrorMessage(passwordsNeedToBeAtLeastLabel);
     }
     if (!isValidRealname(firstname)) {
-      return setErrorMessage(
-        `${firstname} is not a valid first name. Your first name should consist of english letters only`
-      );
+      return setErrorMessage(notValidFirstNameLabel);
     }
     if (!isValidRealname(lastname)) {
-      return setErrorMessage(
-        `${lastname} is not a valid last name. Your last name should consist of english letters only`
-      );
+      return setErrorMessage(notValidLastNameLabel);
     }
     if (email && !isValidEmailAddress(email)) {
-      return setErrorMessage(`${email} is not a valid email address`);
+      return setErrorMessage(notValidEmailLabel);
     }
 
     try {

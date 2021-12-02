@@ -548,6 +548,10 @@ const languageObj = {
     en: 'Password',
     kr: '비밀번호'
   },
+  passwordsNeedToBeAtLeast: {
+    en: 'Passwords need to be at least 5 characters long',
+    kr: '비밀번호는 5글자 이상이어야 합니다'
+  },
   people: {
     en: 'People',
     kr: '사람들'
