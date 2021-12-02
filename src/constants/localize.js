@@ -376,6 +376,10 @@ const languageObj = {
     en: 'Log In',
     kr: '로그인'
   },
+  logIn2: {
+    en: 'Log in',
+    kr: '로그인하시고'
+  },
   logOut: {
     en: 'Log out',
     kr: '로그아웃'
@@ -788,6 +792,10 @@ const languageObj = {
     en: 'Submit your response to view this comment',
     kr: '댓글을 보려면 주제에 답하세요'
   },
+  tapHere: {
+    en: 'Tap Here',
+    kr: '여길 누르세요'
+  },
   tapToCollectRewards: {
     en: 'Tap to collect all your rewards',
     kr: '모든 선물을 받으시려면 탭하세요'
@@ -811,6 +819,10 @@ const languageObj = {
   thereMustBeAtLeastTwoChoices: {
     en: 'There must be at least two choices',
     kr: '최소 두 개의 선택지를 입력해주세요'
+  },
+  toAccessAllFeatures: {
+    en: 'to access all features',
+    kr: '모든 기능에 액세스하세요'
   },
   top30: {
     en: 'Top 30',
