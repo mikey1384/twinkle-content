@@ -668,6 +668,10 @@ const languageObj = {
     en: 'Rankings',
     kr: '랭킹'
   },
+  readMore: {
+    en: 'Read More',
+    kr: '더 읽기'
+  },
   recommendation: {
     en: 'recommendation',
     kr: '추천'
