@@ -800,6 +800,10 @@ const languageObj = {
     en: 'Select a webpage',
     kr: '웹페이지 선택'
   },
+  setRewardLevel: {
+    en: 'Set Reward Level',
+    kr: '보상 레벨 설정'
+  },
   setUpPassword: {
     en: 'Password (You MUST remember your password. Write it down somewhere!)',
     kr: '비밀번호 (비밀번호는 반드시 기억해야 합니다. 어딘가에 적어두세요!)'

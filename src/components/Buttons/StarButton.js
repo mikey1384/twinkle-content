@@ -9,8 +9,10 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import AlertModal from 'components/Modals/AlertModal';
 import { useAppContext } from 'contexts';
 import { DESCRIPTION_LENGTH_FOR_EXTRA_REWARD_LEVEL } from 'constants/defaultValues';
+import localize from 'constants/localize';
 
 const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+const setRewardLevelLabel = localize('setRewardLevel');
 
 StarButton.propTypes = {
   byUser: PropTypes.bool,
@@ -135,7 +137,9 @@ export default function StarButton({
           >
             {(contentType === 'video' || contentType === 'subject') &&
               canEditRewardLevel && (
-                <li onClick={handleShowRewardLevelModal}>Set Reward Level</li>
+                <li onClick={handleShowRewardLevelModal}>
+                  {setRewardLevelLabel}
+                </li>
               )}
             <li onClick={toggleByUser}>{byUserLabel}</li>
           </DropdownList>
