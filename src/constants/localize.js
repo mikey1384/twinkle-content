@@ -256,6 +256,10 @@ const languageObj = {
     en: 'Enter Subject',
     kr: '주제를 입력하세요'
   },
+  enterTheUsernameYouWishToUse: {
+    en: 'Enter the username you wish to use. It has to be at least 3 characters long',
+    kr: '사용하고 싶은 아이디를 입력하세요. 최소 3글자 이상이어야 합니다'
+  },
   enterTitle: {
     en: 'Enter Title',
     kr: '제목을 입력하세요'
@@ -304,6 +308,10 @@ const languageObj = {
     en: 'Finish',
     kr: '완료'
   },
+  firstName: {
+    en: 'First Name',
+    kr: '이름'
+  },
   forEveryStarYouAdd: {
     en: 'For every star you add,the amount of XP viewers earn per minute rises.',
     kr: '별 한개를 추가할 때마다, 시청자들이 분당 얻는 XP량이 증가합니다.'
@@ -347,6 +355,10 @@ const languageObj = {
   karmaPoints: {
     en: 'Karma Points',
     kr: '카마포인트'
+  },
+  lastName: {
+    en: 'Last Name',
+    kr: '성'
   },
   lastOnline: {
     en: 'Last online',
@@ -511,6 +523,10 @@ const languageObj = {
   pass: {
     en: 'Pass',
     kr: '통과'
+  },
+  password: {
+    en: 'Password',
+    kr: '비밀번호'
   },
   people: {
     en: 'People',
@@ -764,6 +780,10 @@ const languageObj = {
     en: 'Select a webpage',
     kr: '웹페이지 선택'
   },
+  setUpPassword: {
+    en: 'Password (You MUST remember your password. Write it down somewhere!)',
+    kr: '비밀번호 (비밀번호는 반드시 기억해야 합니다. 어딘가에 적어두세요!)'
+  },
   showAll: {
     en: 'Show All',
     kr: '전부 보기'
@@ -935,6 +955,14 @@ const languageObj = {
   welcomeToTwinkle: {
     en: `Welcome to Twinkle. Do you have a Twinkle account?`,
     kr: '트윈클에 오신 것을 환영합니다. 계정이 있으신가요?'
+  },
+  whatIsYourFirstName: {
+    en: 'What is your first name?',
+    kr: '이름을 입력하세요'
+  },
+  whatIsYourLastName: {
+    en: 'What is your last name?',
+    kr: '성을 입력하세요'
   },
   xpVideos: {
     en: 'XP Videos',

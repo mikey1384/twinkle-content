@@ -9,8 +9,17 @@ import { isValidUsername, stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext } from 'contexts';
 import localize from 'constants/localize';
 
+const firstNameLabel = localize('firstName');
 const letsSetUpYourAccountLabel = localize('letsSetUpYourAccount');
+const passwordLabel = localize('password');
 const usernameLabel = localize('username');
+const enterTheUsernameYouWishToUseLabel = localize(
+  'enterTheUsernameYouWishToUse'
+);
+const lastNameLabel = localize('lastName');
+const setUpPasswordLabel = localize('setUpPassword');
+const whatIsYourFirstNameLabel = localize('whatIsYourFirstName');
+const whatIsYourLastNameLabel = localize('whatIsYourLastName');
 
 SignUpForm.propTypes = {
   username: PropTypes.string,
@@ -76,7 +85,7 @@ export default function SignUpForm({
             <label>{usernameLabel}</label>
             <Input
               value={username}
-              placeholder="Enter the username you wish to use. It has to be at least 3 characters long"
+              placeholder={enterTheUsernameYouWishToUseLabel}
               onChange={(text) => {
                 setErrorMessage('');
                 onSetUsername(text.trim());
@@ -89,10 +98,10 @@ export default function SignUpForm({
             />
           </section>
           <section>
-            <label>Password</label>
+            <label>{passwordLabel}</label>
             <Input
               value={password}
-              placeholder="Password (You MUST remember your password. Write it down somewhere!)"
+              placeholder={setUpPasswordLabel}
               onChange={(text) => {
                 setErrorMessage('');
                 setPassword(text.trim());
@@ -106,11 +115,11 @@ export default function SignUpForm({
             />
           </section>
           <section>
-            <label>First Name</label>
+            <label>{firstNameLabel}</label>
             <Input
               maxLength={30}
               value={firstname}
-              placeholder="What is your first name?"
+              placeholder={whatIsYourFirstNameLabel}
               onChange={(text) => {
                 setErrorMessage('');
                 setFirstname(text.trim());
@@ -123,11 +132,11 @@ export default function SignUpForm({
             />
           </section>
           <section>
-            <label>Last Name</label>
+            <label>{lastNameLabel}</label>
             <Input
               maxLength={30}
               value={lastname}
-              placeholder="What is your last name?"
+              placeholder={whatIsYourLastNameLabel}
               onChange={(text) => {
                 setErrorMessage('');
                 setLastname(text.trim());
