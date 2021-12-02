@@ -7,6 +7,10 @@ import Banner from 'components/Banner';
 import { css } from '@emotion/css';
 import { isValidUsername, stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext } from 'contexts';
+import localize from 'constants/localize';
+
+const letsSetUpYourAccountLabel = localize('letsSetUpYourAccount');
+const usernameLabel = localize('username');
 
 SignUpForm.propTypes = {
   username: PropTypes.string,
@@ -47,7 +51,7 @@ export default function SignUpForm({
 
   return (
     <ErrorBoundary>
-      <header>{`Welcome to Twinkle! Let's set up your account`}</header>
+      <header>{letsSetUpYourAccountLabel}</header>
       {errorMessage && <Banner>{errorMessage}</Banner>}
       <main>
         <div
@@ -69,7 +73,7 @@ export default function SignUpForm({
           `}
         >
           <section>
-            <label>Username</label>
+            <label>{usernameLabel}</label>
             <Input
               value={username}
               placeholder="Enter the username you wish to use. It has to be at least 3 characters long"

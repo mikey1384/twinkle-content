@@ -364,6 +364,10 @@ const languageObj = {
     en: 'left a message to',
     kr: '메시지를 남겼습니다'
   },
+  letsSetUpYourAccount: {
+    en: `Welcome to Twinkle! Let's set up your account`,
+    kr: '트윈클에 오신 것을 환영합니다! 계정을 만들어 볼까요?'
+  },
   like: {
     en: 'Like',
     kr: '좋아요'
@@ -879,6 +883,10 @@ const languageObj = {
   user: {
     en: 'user',
     kr: ''
+  },
+  username: {
+    en: 'Username',
+    kr: '아이디'
   },
   usernameAlreadyTaken: {
     en: `That username is already taken`,
