@@ -28,6 +28,10 @@ const languageObj = {
     en: 'All Links',
     kr: '모든 링크'
   },
+  aLotOfEffort: {
+    en: 'A Lot of Effort',
+    kr: '많은 노력'
+  },
   AddPlaylist: {
     en: 'Add Playlist',
     kr: '재생목록 등록'
@@ -336,6 +340,10 @@ const languageObj = {
     en: 'Home',
     kr: '홈'
   },
+  hugeEffort: {
+    en: 'Huge Effort',
+    kr: '상당한 노력'
+  },
   iAlreadyHaveAnAccount: {
     en: 'I already have an account',
     kr: '계정이 있으세요?'
@@ -463,6 +471,10 @@ const languageObj = {
   missions: {
     en: 'Missions',
     kr: '미션 목록'
+  },
+  moderateEffort: {
+    en: 'Moderate Effort',
+    kr: '적당한 노력'
   },
   moreToCome: {
     en: 'More to come',
