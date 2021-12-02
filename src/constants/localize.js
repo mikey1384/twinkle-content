@@ -780,6 +780,14 @@ const languageObj = {
     en: 'Submit',
     kr: '게시'
   },
+  submitYourResponse: {
+    en: 'Submit your response to view the secret message',
+    kr: '비밀 메시지를 보려면 답글을 제출하세요'
+  },
+  submitYourResponse2: {
+    en: 'Submit your response to view this comment',
+    kr: '댓글을 보려면 답글을 제출하세요'
+  },
   tapToCollectRewards: {
     en: 'Tap to collect all your rewards',
     kr: '모든 선물을 받으시려면 탭하세요'
