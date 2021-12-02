@@ -172,6 +172,10 @@ const languageObj = {
     en: 'Copy and paste a URL address here',
     kr: 'URL 주소를 복사한 후 여기에 붙여넣으세요'
   },
+  createMyAccount: {
+    en: 'Create my account!',
+    kr: '계정 생성하기'
+  },
   delete: {
     en: 'Delete',
     kr: '삭제'
@@ -215,6 +219,14 @@ const languageObj = {
   eitherRemovedOrNeverExisted: {
     en: 'It is either removed or never existed in the first place',
     kr: '존재하지 않거나 삭제되었습니다'
+  },
+  emailYoursOrYourParents: {
+    en: "Email (yours or your parent's)",
+    kr: '이메일 (본인 혹은 부모님의 이메일 주소를 입력하세요)'
+  },
+  emailIsNeededInCase: {
+    en: 'Email is needed in case you forget your password',
+    kr: '이메일 주소를 등록하면 비밀번호를 잊어버렸을때 계정을 되찾기 편해집니다'
   },
   enterComment: {
     en: 'Enter Comment',
@@ -327,6 +339,10 @@ const languageObj = {
   home: {
     en: 'Home',
     kr: '홈'
+  },
+  iAlreadyHaveAnAccount: {
+    en: 'I already have an account',
+    kr: '계정이 있으세요?'
   },
   iDontHaveAnAccount: {
     en: "I don't have an account",
@@ -523,6 +539,10 @@ const languageObj = {
   pass: {
     en: 'Pass',
     kr: '통과'
+  },
+  passphrase: {
+    en: "Who is the Big Bad Wolf's brother?",
+    kr: 'Big Bad Wolf의 형의 이름은 무엇인가요?'
   },
   password: {
     en: 'Password',

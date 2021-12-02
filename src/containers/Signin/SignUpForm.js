@@ -9,6 +9,10 @@ import { isValidUsername, stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext } from 'contexts';
 import localize from 'constants/localize';
 
+const createMyAccountLabel = localize('createMyAccount');
+const emailIsNeededInCaseLabel = localize('emailIsNeededInCase');
+const emailYoursOrYourParentsLabel = localize('emailYoursOrYourParents');
+const iAlreadyHaveAnAccountLabel = localize('iAlreadyHaveAnAccount');
 const firstNameLabel = localize('firstName');
 const letsSetUpYourAccountLabel = localize('letsSetUpYourAccount');
 const passwordLabel = localize('password');
@@ -17,6 +21,7 @@ const enterTheUsernameYouWishToUseLabel = localize(
   'enterTheUsernameYouWishToUse'
 );
 const lastNameLabel = localize('lastName');
+const passphraseLabel = localize('passphrase');
 const setUpPasswordLabel = localize('setUpPassword');
 const whatIsYourFirstNameLabel = localize('whatIsYourFirstName');
 const whatIsYourLastNameLabel = localize('whatIsYourLastName');
@@ -149,10 +154,10 @@ export default function SignUpForm({
             />
           </section>
           <section>
-            <label>{`Who is the Big Bad Wolf's brother?`}</label>
+            <label>{passphraseLabel}</label>
             <Input
               value={keyphrase}
-              placeholder="Who is the Big Bad Wolf's brother?"
+              placeholder={passphraseLabel}
               onChange={(text) => {
                 setErrorMessage('');
                 setKeyphrase(text);
@@ -165,10 +170,10 @@ export default function SignUpForm({
             />
           </section>
           <section style={{ marginTop: '2rem' }}>
-            <label>{"Email (yours or your parent's)"}</label>
+            <label>{emailYoursOrYourParentsLabel}</label>
             <Input
               value={email}
-              placeholder="Email is needed in case you forget your password"
+              placeholder={emailIsNeededInCaseLabel}
               onChange={(text) => {
                 setErrorMessage('');
                 setEmail(text);
@@ -193,7 +198,7 @@ export default function SignUpForm({
           }}
           onClick={onShowLoginForm}
         >
-          I already have an account
+          {iAlreadyHaveAnAccountLabel}
         </Button>
         <Button
           color="blue"
@@ -201,7 +206,7 @@ export default function SignUpForm({
           onClick={onSubmit}
           style={{ fontSize: '2.5rem' }}
         >
-          Create my account!
+          {createMyAccountLabel}
         </Button>
       </footer>
     </ErrorBoundary>
