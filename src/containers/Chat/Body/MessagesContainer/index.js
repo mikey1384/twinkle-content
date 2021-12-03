@@ -107,6 +107,7 @@ function MessagesContainer({
     messagesObj = {},
     messagesLoadMoreButton = false
   } = currentChannel;
+  const scrolledToBottomRef = useRef(true);
   const [chessCountdownObj, setChessCountdownObj] = useState({});
   const [textAreaHeight, setTextAreaHeight] = useState(0);
   const [inviteUsersModalShown, setInviteUsersModalShown] = useState(false);
@@ -341,6 +342,8 @@ function MessagesContainer({
     function handleScroll() {
       clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => {
+        scrolledToBottomRef.current =
+          (MessagesRef.current || {}).scrollTop >= unseenButtonThreshold;
         const scrollThreshold =
           (MessagesRef.current || {}).scrollHeight -
           (MessagesRef.current || {}).offsetHeight;
@@ -352,7 +355,7 @@ function MessagesContainer({
         if (mounted.current && scrollTop >= unseenButtonThreshold) {
           setNewUnseenMessage(false);
         }
-      }, 200);
+      }, 100);
     }
   });
 
@@ -1129,10 +1132,7 @@ function MessagesContainer({
   );
 
   function handleReceiveNewMessage() {
-    if (
-      MessagesRef.current &&
-      (MessagesRef.current || {}).scrollTop < unseenButtonThreshold
-    ) {
+    if (MessagesRef.current && !scrolledToBottomRef.current) {
       setNewUnseenMessage(true);
     } else {
       handleScrollToBottom();
