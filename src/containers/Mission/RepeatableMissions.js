@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import MissionItem from 'components/MissionItem';
 import { css } from '@emotion/css';
 
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+
 RepeatableMissions.propTypes = {
   missions: PropTypes.array.isRequired,
   missionObj: PropTypes.object.isRequired,
@@ -28,6 +30,13 @@ export default function RepeatableMissions({
     }, []);
   }, [missionObj, missions, myAttempts]);
 
+  const repeatableMissionsLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      return `Repeatable Mission${repeatableMissions.length > 1 ? 's' : ''}`;
+    }
+    return '반복 가능한 미션';
+  }, [repeatableMissions.length]);
+
   return repeatableMissions.length > 0 ? (
     <div className={className} style={style}>
       <p
@@ -36,7 +45,7 @@ export default function RepeatableMissions({
           font-weight: bold;
         `}
       >
-        Repeatable Mission{repeatableMissions.length > 1 ? 's' : ''}
+        {repeatableMissionsLabel}
       </p>
       <div>
         {repeatableMissions.map((mission) => (
