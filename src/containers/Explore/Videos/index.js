@@ -11,7 +11,7 @@ import { useMyState, useSearch } from 'helpers/hooks';
 import { useAppContext, useExploreContext, useInputContext } from 'contexts';
 import localize from 'constants/localize';
 
-const addPlaylistLabel = localize('AddPlaylist');
+const addPlaylistLabel = localize('addPlaylist');
 const allPlaylistsLabel = localize('allPlaylists');
 
 Videos.propTypes = {

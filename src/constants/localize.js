@@ -28,11 +28,15 @@ const languageObj = {
     en: 'All Links',
     kr: '모든 링크'
   },
+  allMissions: {
+    en: 'All Missions',
+    kr: '모든 미션'
+  },
   aLotOfEffort: {
     en: 'A Lot of Effort',
     kr: '많은 노력'
   },
-  AddPlaylist: {
+  addPlaylist: {
     en: 'Add Playlist',
     kr: '재생목록 등록'
   },
@@ -152,6 +156,10 @@ const languageObj = {
     en: 'this comment was deleted',
     kr: '댓글이 삭제되었습니다'
   },
+  complete: {
+    en: 'Complete',
+    kr: '완료'
+  },
   confirm: {
     en: 'Confirm',
     kr: '확정'
@@ -175,6 +183,10 @@ const languageObj = {
   createMyAccount: {
     en: 'Create my account!',
     kr: '계정 생성하기'
+  },
+  currentMission: {
+    en: 'Current Mission',
+    kr: '현재 미션'
   },
   delete: {
     en: 'Delete',
@@ -363,6 +375,10 @@ const languageObj = {
   imageTooLarge10MB: {
     en: 'Image is too large (limit: 10mb)',
     kr: '이미지 크기가 너무 큽니다 (최대 10mb)'
+  },
+  inProgress: {
+    en: 'In Progress',
+    kr: '진행 중'
   },
   isNotValidUsername: {
     en: ' is not a valid username',
