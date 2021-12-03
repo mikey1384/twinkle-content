@@ -142,7 +142,11 @@ function MessagesContainer({
   const prevScrollPosition = useRef(null);
   const menuLabel = deviceIsMobile ? '' : 'Menu';
   const messages = useMemo(
-    () => messageIds.map((messageId) => messagesObj[messageId] || {}),
+    () =>
+      messageIds.map(
+        (messageId) =>
+          ({ ...messagesObj[messageId], key: messageId } || { key: messageId })
+      ),
     [messageIds, messagesObj]
   );
 
@@ -947,7 +951,7 @@ function MessagesContainer({
               </div>
               {messages.map((message, index) => (
                 <Message
-                  key={selectedChannelId + (message.id || 'newMessage' + index)}
+                  key={message.key}
                   channelId={selectedChannelId}
                   channelName={channelName}
                   chessCountdownNumber={chessCountdownNumber}
