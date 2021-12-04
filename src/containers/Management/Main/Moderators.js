@@ -22,7 +22,7 @@ const nowLabel = localize('now');
 const noModeratorsLabel = localize('noModerators');
 const onlineLabel = localize('online');
 const searchModeratorsLabel = localize('searchModerators');
-const userLabel = localize('user2');
+const userLabel = localize('user');
 const deviceIsMobile = isMobile(navigator);
 
 Moderators.propTypes = {

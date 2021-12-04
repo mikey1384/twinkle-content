@@ -76,7 +76,7 @@ const languageObj = {
     en: 'Attach a content to your subject',
     kr: '주제에 콘텐츠 첨부'
   },
-  authLevelLabel: {
+  authLevel: {
     en: 'Auth Level',
     kr: '권한 레벨'
   },
@@ -135,6 +135,10 @@ const languageObj = {
   chat2: {
     en: 'Chat',
     kr: '채팅하기'
+  },
+  chess: {
+    en: 'Chess',
+    kr: '체스'
   },
   choiceA: {
     en: 'Choice A',
@@ -744,6 +748,10 @@ const languageObj = {
     en: 'Share interesting videos or webpages',
     kr: '흥미로운 동영상이나 웹페이지를 공유하세요'
   },
+  posting: {
+    en: 'Posting',
+    kr: '포스팅'
+  },
   prev: {
     en: 'Prev',
     kr: '뒤로'
@@ -879,6 +887,14 @@ const languageObj = {
   respondedTo: {
     en: 'responded to',
     kr: '댓글을 남겼습니다'
+  },
+  restrictAccount: {
+    en: 'Restrict Account',
+    kr: '계정 제한하기'
+  },
+  restrictedAccounts: {
+    en: 'Restricted Accounts',
+    kr: '제한된 계정'
   },
   revoke: {
     en: 'Revoke',
@@ -1073,10 +1089,6 @@ const languageObj = {
     kr: '다음 영상'
   },
   user: {
-    en: 'user',
-    kr: ''
-  },
-  user2: {
     en: 'User',
     kr: '사용자'
   },
@@ -1091,6 +1103,10 @@ const languageObj = {
   usernameAvailable: {
     en: `This username is available. Tap "Change"`,
     kr: '사용 가능한 아이디입니다'
+  },
+  users: {
+    en: 'Users',
+    kr: '사용자'
   },
   video: {
     en: 'Video',
