@@ -6,6 +6,7 @@ import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import localize from 'constants/localize';
 
+const deletedPostsLabel = localize('deletedPosts');
 const noNewlyDeletedPostsLabel = localize('noNewlyDeletedPosts');
 
 export default function ModActivities() {
@@ -43,7 +44,7 @@ export default function ModActivities() {
           }
         `}
       >
-        Deleted Posts
+        {deletedPostsLabel}
       </h2>
       <div style={{ marginTop: '2rem' }}>
         {!loaded && <Loading />}

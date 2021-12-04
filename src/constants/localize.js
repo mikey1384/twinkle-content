@@ -1,5 +1,9 @@
 const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const languageObj = {
+  accountMgmt: {
+    en: 'Account Mgmt',
+    kr: '계정관리'
+  },
   add: {
     en: 'Add',
     kr: '추가'
@@ -199,6 +203,18 @@ const languageObj = {
   deleted: {
     en: 'Deleted',
     kr: '삭제됨'
+  },
+  deletedBy: {
+    en: 'Deleted by',
+    kr: '삭제자:'
+  },
+  deletePermanently: {
+    en: 'Delete Content Permanently',
+    kr: '게시물 영구 삭제'
+  },
+  deletedPosts: {
+    en: 'Deleted Posts',
+    kr: '삭제된 게시물'
   },
   doesNotHaveBio: {
     en: ' does not have a bio, yet',
@@ -499,6 +515,10 @@ const languageObj = {
   missions2: {
     en: 'Missions',
     kr: '미션'
+  },
+  modActivities: {
+    en: 'Mod Activities',
+    kr: '관리자 활동내역'
   },
   moderateEffort: {
     en: 'Moderate Effort',
@@ -968,9 +988,9 @@ const languageObj = {
     en: 'Top 30',
     kr: '톱 30'
   },
-  undoDelete: {
+  undo: {
     en: 'Undo',
-    kr: '삭제취소'
+    kr: '실행취소'
   },
   unpin: {
     en: 'Unpin',

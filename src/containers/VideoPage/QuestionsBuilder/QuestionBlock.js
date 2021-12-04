@@ -76,7 +76,7 @@ const doneLabel = localize('done');
 const enterQuestionLabel = localize('enterQuestion');
 const editQuestionLabel = localize('editQuestion');
 const removeLabel = localize('remove');
-const undoLabel = localize('undoDelete');
+const undoLabel = localize('undo');
 
 QuestionBlock.propTypes = {
   choiceIds: PropTypes.array.isRequired,
