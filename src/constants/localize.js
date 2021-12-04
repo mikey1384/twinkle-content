@@ -4,6 +4,10 @@ const languageObj = {
     en: 'Account Mgmt',
     kr: '계정관리'
   },
+  accountType: {
+    en: 'Account Type',
+    kr: '계정유형'
+  },
   add: {
     en: 'Add',
     kr: '추가'
@@ -91,6 +95,10 @@ const languageObj = {
   change: {
     en: 'Change',
     kr: '변경'
+  },
+  changeAccountType: {
+    en: 'Change Account Type',
+    kr: '계정유형 변경'
   },
   changePic: {
     en: 'Change Pic',
@@ -592,9 +600,17 @@ const languageObj = {
     en: "We don't have any videos to recommend to you at the moment",
     kr: '지금은 추천드릴 영상이 없습니다'
   },
+  now: {
+    en: 'now',
+    kr: '지금'
+  },
   oldToNew: {
     en: 'Old to New',
     kr: '오래된순'
+  },
+  online: {
+    en: 'Online',
+    kr: '온라인'
   },
   optional: {
     en: '(Optional)',
@@ -1027,6 +1043,10 @@ const languageObj = {
   user: {
     en: 'user',
     kr: ''
+  },
+  user2: {
+    en: 'User',
+    kr: '사용자'
   },
   username: {
     en: 'Username',
