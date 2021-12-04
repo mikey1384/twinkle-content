@@ -192,6 +192,10 @@ const languageObj = {
     en: 'Complete',
     kr: '완료'
   },
+  completed: {
+    en: 'Completed',
+    kr: '완료'
+  },
   confirm: {
     en: 'Confirm',
     kr: '확정'
@@ -399,6 +403,10 @@ const languageObj = {
   fromTwinkleWebsite: {
     en: 'from Twinkle Website',
     kr: '트윈클 웹사이트에서 가져오기'
+  },
+  grammarRank: {
+    en: 'Grammar Rank',
+    kr: '문법게임 랭킹:'
   },
   hideWatched: {
     en: 'Hide Watched',
