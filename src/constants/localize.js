@@ -8,9 +8,17 @@ const languageObj = {
     en: 'Account Type',
     kr: '계정유형'
   },
+  accountTypes: {
+    en: 'Account Types',
+    kr: '계정유형'
+  },
   add: {
     en: 'Add',
     kr: '추가'
+  },
+  addAccountType: {
+    en: 'Add Account Type',
+    kr: '계정유형 추가'
   },
   addLink: {
     en: 'Add Link',
@@ -67,6 +75,10 @@ const languageObj = {
   attachContentToSubject: {
     en: 'Attach a content to your subject',
     kr: '주제에 콘텐츠 첨부'
+  },
+  authLevelLabel: {
+    en: 'Auth Level',
+    kr: '권한 레벨'
   },
   back: {
     en: 'Back',
@@ -248,9 +260,17 @@ const languageObj = {
     en: 'Edit or Delete',
     kr: '수정/삭제'
   },
+  editPlaylists: {
+    en: 'Edit Playlists',
+    kr: '재생목록 수정'
+  },
   editQuestion: {
     en: 'Edit Question',
     kr: '문제 수정'
+  },
+  editRewardLevel: {
+    en: 'Edit Reward Level',
+    kr: '보상 레벨 수정'
   },
   editTitle: {
     en: 'Edit Title',
@@ -348,6 +368,10 @@ const languageObj = {
     en: 'Fail',
     kr: '실패'
   },
+  featureContents: {
+    en: 'Feature Contents',
+    kr: '컨텐츠 피처링'
+  },
   featuredSubjects: {
     en: 'Featured',
     kr: '고정 주제'
@@ -419,6 +443,10 @@ const languageObj = {
   karmaPoints: {
     en: 'Karma Points',
     kr: '카마포인트'
+  },
+  label: {
+    en: 'Label',
+    kr: '명칭'
   },
   lastName: {
     en: 'Last Name',
@@ -563,6 +591,10 @@ const languageObj = {
   no: {
     en: 'No',
     kr: '아니오'
+  },
+  noAccountTypes: {
+    en: 'No Account Types',
+    kr: '계정유형 없음'
   },
   noDescription: {
     en: 'No description',
