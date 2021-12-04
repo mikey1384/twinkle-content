@@ -520,6 +520,10 @@ const languageObj = {
     en: 'Mod Activities',
     kr: '관리자 활동내역'
   },
+  moderators: {
+    en: 'Moderators',
+    kr: '관리자 목록'
+  },
   moderateEffort: {
     en: 'Moderate Effort',
     kr: '적당한 노력'
@@ -559,6 +563,10 @@ const languageObj = {
   noIDontHaveAnAccount: {
     en: "No, I don't have an account",
     kr: '아니오, 계정이 없습니다'
+  },
+  noModerators: {
+    en: 'No Moderators',
+    kr: '관리자가 없습니다'
   },
   noPlaylists: {
     en: 'No playlists',
@@ -851,6 +859,10 @@ const languageObj = {
   search: {
     en: 'Search',
     kr: '검색'
+  },
+  searchModerators: {
+    en: 'Search Moderators',
+    kr: '관리자 검색'
   },
   searchPlaylists: {
     en: 'Search Playlists',

@@ -12,6 +12,11 @@ import { useMyState } from 'helpers/hooks';
 import { isMobile } from 'helpers';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import Icon from 'components/Icon';
+import localize from 'constants/localize';
+
+const moderatorsLabel = localize('moderators');
+const noModeratorsLabel = localize('noModerators');
+const searchModeratorsLabel = localize('searchModerators');
 
 Moderators.propTypes = {
   canManage: PropTypes.bool.isRequired
@@ -39,10 +44,10 @@ export default function Moderators({ canManage }) {
   return (
     <ErrorBoundary>
       <SectionPanel
-        title="Moderators"
+        title={moderatorsLabel}
         isEmpty={moderators.length === 0}
-        emptyMessage="No Moderators"
-        searchPlaceholder="Search Moderators"
+        emptyMessage={noModeratorsLabel}
+        searchPlaceholder={searchModeratorsLabel}
         onSearch={setSearchQuery}
         searchQuery={searchQuery}
         loaded={moderatorsLoaded}
