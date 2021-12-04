@@ -48,6 +48,10 @@ const languageObj = {
     en: 'All Posts',
     kr: '모든 게시물'
   },
+  approved: {
+    en: 'Approved',
+    kr: '승인됨'
+  },
   areYouSure: {
     en: 'Are you sure?',
     kr: '확실하신가요?'
@@ -464,6 +468,10 @@ const languageObj = {
     en: `Make sure it is at least 3 characters long`,
     kr: '3글자 이상이어야 합니다'
   },
+  manage: {
+    en: 'Manage',
+    kr: '관리'
+  },
   management: {
     en: 'Management',
     kr: '관리'
@@ -487,6 +495,10 @@ const languageObj = {
   missions: {
     en: 'Missions',
     kr: '미션 목록'
+  },
+  missions2: {
+    en: 'Missions',
+    kr: '미션'
   },
   moderateEffort: {
     en: 'Moderate Effort',
@@ -575,6 +587,10 @@ const languageObj = {
   passwordsNeedToBeAtLeast: {
     en: 'Passwords need to be at least 5 characters long',
     kr: '비밀번호는 5글자 이상이어야 합니다'
+  },
+  pending: {
+    en: 'Pending',
+    kr: '대기중'
   },
   people: {
     en: 'People',
@@ -723,6 +739,10 @@ const languageObj = {
   relatedVideos: {
     en: 'Related Videos',
     kr: '연관된 영상'
+  },
+  rejected: {
+    en: 'Rejected',
+    kr: '거절됨'
   },
   remove: {
     en: 'Remove',
