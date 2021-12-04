@@ -4,6 +4,9 @@ import DeletedContent from './DeletedContent';
 import Loading from 'components/Loading';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import localize from 'constants/localize';
+
+const noNewlyDeletedPostsLabel = localize('noNewlyDeletedPosts');
 
 export default function ModActivities() {
   const [loaded, setLoaded] = useState(false);
@@ -56,7 +59,7 @@ export default function ModActivities() {
               fontSize: '2rem'
             }}
           >
-            There are no newly deleted posts
+            {noNewlyDeletedPostsLabel}
           </div>
         )}
         {deletedPosts.map((post, index) => (
