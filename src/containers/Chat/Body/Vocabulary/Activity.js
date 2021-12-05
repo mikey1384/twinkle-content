@@ -69,7 +69,7 @@ export default function Activity({
   }, []);
 
   const displayedTime = useMemo(
-    () => unix(timeStamp).format('LLL'),
+    () => unix(timeStamp).format('lll'),
     [timeStamp]
   );
 
