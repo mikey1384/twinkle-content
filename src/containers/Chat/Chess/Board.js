@@ -6,6 +6,8 @@ import Loading from 'components/Loading';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+
 Board.propTypes = {
   interactable: PropTypes.bool,
   loading: PropTypes.bool,
@@ -31,6 +33,33 @@ function Board({
   opponentName,
   spoilerOff
 }) {
+  const madeNewMoveLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      return (
+        <>
+          <p>{opponentName} made a new chess move.</p>
+          <p>Tap here to view it.</p>
+          <p>
+            {`After viewing ${opponentName}'s move, you `}
+            <b>must</b> make your own move in <b>5 minutes</b>. Otherwise, you
+            will lose.
+          </p>
+        </>
+      );
+    }
+    return (
+      <>
+        <p>{opponentName}님이 체스 메시지를 보냈습니다.</p>
+        <p>조회하시려면 여기를 탭 하세요.</p>
+        <p>
+          {`${opponentName}님의 체스 메시지를 열어보신 다음에는`}
+          반드시 <b>5분</b>안에 회답하셔야 하며, 그렇지 못할 경우 패배
+          처리됩니다.
+        </p>
+      </>
+    );
+  }, [opponentName]);
+
   const renderCastlingButtons = useCallback(() => {
     const top = 'CALC(100% - 6rem)';
     const mobileTop = 'CALC(50vw + 0.5rem)';
@@ -437,13 +466,7 @@ function Board({
               `}
               onClick={onSpoilerClick}
             >
-              <p>{opponentName} made a new chess move.</p>
-              <p>Tap here to view it.</p>
-              <p>
-                {`After viewing ${opponentName}'s move, you `}
-                <b>must</b> make your own move in <b>5 minutes</b>. Otherwise,
-                you will lose.
-              </p>
+              {madeNewMoveLabel}
             </div>
           </div>
         </div>
