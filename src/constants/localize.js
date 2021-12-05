@@ -100,6 +100,14 @@ const languageObj = {
     en: 'By',
     kr: '게시자:'
   },
+  call: {
+    en: 'Call',
+    kr: '전화하기'
+  },
+  calling: {
+    en: 'Calling',
+    kr: '전화중'
+  },
   cancel: {
     en: 'Cancel',
     kr: '취소'
@@ -408,6 +416,10 @@ const languageObj = {
     en: 'Grammar Rank',
     kr: '문법게임 랭킹:'
   },
+  hangUp: {
+    en: 'Hang Up',
+    kr: '끊기'
+  },
   hideWatched: {
     en: 'Hide Watched',
     kr: '시청한 영상 숨기기'
@@ -599,6 +611,10 @@ const languageObj = {
   next: {
     en: 'Next',
     kr: '다음'
+  },
+  newChat: {
+    en: 'New Chat',
+    kr: '새로운 대화방'
   },
   no: {
     en: 'No',
