@@ -168,6 +168,10 @@ const languageObj = {
     en: 'Choice E (Optional)',
     kr: '선택지 E (선택사항)'
   },
+  classroomChat: {
+    en: 'Classroom',
+    kr: '교실 대화방'
+  },
   clear: {
     en: 'Clear',
     kr: '지우기'
@@ -848,6 +852,10 @@ const languageObj = {
     en: 'Recommend?',
     kr: '추천할까요?'
   },
+  regularChat: {
+    en: 'Regular Chat',
+    kr: '일반 대화방'
+  },
   relatedVideos: {
     en: 'Related Videos',
     kr: '연관된 영상'
@@ -1011,6 +1019,10 @@ const languageObj = {
   startedBy: {
     en: 'Started by',
     kr: '개설자:'
+  },
+  startNewChat: {
+    en: 'Start a New Chat',
+    kr: '새로운 채팅방 만들기'
   },
   startNewSubject: {
     en: 'Start a new subject',
