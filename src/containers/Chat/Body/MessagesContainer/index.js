@@ -40,7 +40,12 @@ import localize from 'constants/localize';
 const CALL_SCREEN_HEIGHT = '30%';
 const unseenButtonThreshold = -1;
 const deviceIsMobile = isMobile(navigator);
+const editGroupNameLabel = localize('editGroupName');
+const hideLabel = localize('hide');
+const invitePeopleLabel = localize('invitePeople');
+const leaveLabel = localize('leave');
 const menuLabel = deviceIsMobile ? '' : localize('menu');
+const settingsLabel = localize('settings');
 
 MessagesContainer.propTypes = {
   channelName: PropTypes.string,
@@ -212,7 +217,7 @@ function MessagesContainer({
           label: (
             <>
               <Icon icon="minus" />
-              <span style={{ marginLeft: '1rem' }}>Hide</span>
+              <span style={{ marginLeft: '1rem' }}>{hideLabel}</span>
             </>
           ),
           onClick: () => setHideModalShown(true)
@@ -225,7 +230,7 @@ function MessagesContainer({
         label: (
           <>
             <Icon icon="users" />
-            <span style={{ marginLeft: '1rem' }}>Invite People</span>
+            <span style={{ marginLeft: '1rem' }}>{invitePeopleLabel}</span>
           </>
         ),
         onClick: () => setInviteUsersModalShown(true)
@@ -237,12 +242,12 @@ function MessagesContainer({
           currentChannel.creatorId === userId ? (
             <>
               <Icon icon="sliders-h" />
-              <span style={{ marginLeft: '1rem' }}>Settings</span>
+              <span style={{ marginLeft: '1rem' }}>{settingsLabel}</span>
             </>
           ) : (
             <>
               <Icon icon="pencil-alt" />
-              <span style={{ marginLeft: '1rem' }}>Edit Group Name</span>
+              <span style={{ marginLeft: '1rem' }}>{editGroupNameLabel}</span>
             </>
           ),
         onClick: () => setSettingsModalShown(true)
@@ -254,7 +259,7 @@ function MessagesContainer({
         label: (
           <>
             <Icon icon="sign-out-alt" />
-            <span style={{ marginLeft: '1rem' }}>Leave</span>
+            <span style={{ marginLeft: '1rem' }}>{leaveLabel}</span>
           </>
         ),
         onClick: () => setLeaveConfirmModalShown(true)

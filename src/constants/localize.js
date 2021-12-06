@@ -26,7 +26,7 @@ const languageObj = {
   },
   addMembersOfClass: {
     en: 'Add members of your class',
-    kr: '교실 구성원을 추가하세요'
+    kr: '멤버를 추가하세요'
   },
   addedBy: {
     en: 'Added by',
@@ -284,6 +284,10 @@ const languageObj = {
     en: 'Edit Bio',
     kr: '소개글 변경'
   },
+  editGroupName: {
+    en: 'Edit Group Name',
+    kr: '그룹 이름 변경'
+  },
   editOrDelete: {
     en: 'Edit or Delete',
     kr: '수정/삭제'
@@ -444,6 +448,10 @@ const languageObj = {
     en: 'Hang Up',
     kr: '끊기'
   },
+  hide: {
+    en: 'Hide',
+    kr: '숨기기'
+  },
   hideWatched: {
     en: 'Hide Watched',
     kr: '시청한 영상 숨기기'
@@ -484,6 +492,10 @@ const languageObj = {
     en: ' is not a valid username',
     kr: '는 사용 가능한 아이디가 아닙니다'
   },
+  invitePeople: {
+    en: 'Invite People',
+    kr: '멤버 초대'
+  },
   joinConversation: {
     en: 'Join Conversation',
     kr: '대화 참여하기'
@@ -511,6 +523,10 @@ const languageObj = {
   leaderboard: {
     en: 'Leaderboard',
     kr: '리더보드'
+  },
+  leave: {
+    en: 'Leave',
+    kr: '나가기'
   },
   leftMessageTo: {
     en: 'left a message to',
@@ -586,7 +602,7 @@ const languageObj = {
   },
   members: {
     en: 'Members',
-    kr: '구성원'
+    kr: '멤버'
   },
   menu: {
     en: 'Menu',
@@ -1039,6 +1055,10 @@ const languageObj = {
   setVideoRewardLevel: {
     en: 'Set Reward Level (consider both difficulty and importance)',
     kr: '보상 레벨 설정 (난이도와 중요도 모두 고려)'
+  },
+  settings: {
+    en: 'Settings',
+    kr: '설정'
   },
   settingCannotBeChanged: {
     en: 'This setting cannot be changed',
