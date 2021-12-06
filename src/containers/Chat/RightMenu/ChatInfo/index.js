@@ -13,6 +13,7 @@ import CallButton from './CallButton';
 import localize from 'constants/localize';
 
 const madeCallLabel = localize('madeCall');
+const onlineLabel = localize('online');
 
 ChatInfo.propTypes = {
   channelName: PropTypes.string,
@@ -200,7 +201,7 @@ function ChatInfo({
               {numOnline}
               {currentChannel.id !== GENERAL_CHAT_ID &&
                 '/' + displayedChannelMembers.length}{' '}
-              online
+              {onlineLabel}
             </div>
           )}
         </div>

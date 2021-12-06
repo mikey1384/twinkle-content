@@ -754,7 +754,7 @@ const languageObj = {
   },
   online: {
     en: 'Online',
-    kr: '온라인'
+    kr: '접속중'
   },
   optional: {
     en: '(Optional)',
