@@ -140,6 +140,10 @@ const languageObj = {
     en: 'Change your username',
     kr: '아이디 변경'
   },
+  changeTopic: {
+    en: 'Change Topic',
+    kr: '주제 변경'
+  },
   changeVideos: {
     en: 'Change Videos',
     kr: '동영상 변경'
