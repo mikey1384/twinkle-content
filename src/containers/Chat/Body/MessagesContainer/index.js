@@ -43,6 +43,7 @@ const deviceIsMobile = isMobile(navigator);
 const editGroupNameLabel = localize('editGroupName');
 const hideLabel = localize('hide');
 const invitePeopleLabel = localize('invitePeople');
+const leaveChatGroupLabel = localize('leaveChatGroup');
 const leaveLabel = localize('leave');
 const menuLabel = deviceIsMobile ? '' : localize('menu');
 const settingsLabel = localize('settings');
@@ -1107,7 +1108,7 @@ function MessagesContainer({
       )}
       {leaveConfirmModalShown && (
         <ConfirmModal
-          title="Leave Channel"
+          title={leaveChatGroupLabel}
           onHide={() => setLeaveConfirmModalShown(false)}
           onConfirm={handleLeaveConfirm}
           disabled={leaving}

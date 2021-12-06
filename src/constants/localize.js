@@ -528,6 +528,10 @@ const languageObj = {
     en: 'Leave',
     kr: '나가기'
   },
+  leaveChatGroup: {
+    en: 'Leave Chat Group',
+    kr: '대화 그룹 나가기'
+  },
   leftMessageTo: {
     en: 'left a message to',
     kr: '메시지를 남겼습니다'
