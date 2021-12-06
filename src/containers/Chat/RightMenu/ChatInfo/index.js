@@ -10,6 +10,9 @@ import { socket } from 'constants/io';
 import { v1 as uuidv1 } from 'uuid';
 import { GENERAL_CHAT_ID } from 'constants/defaultValues';
 import CallButton from './CallButton';
+import localize from 'constants/localize';
+
+const madeCallLabel = localize('madeCall');
 
 ChatInfo.propTypes = {
   channelName: PropTypes.string,
@@ -104,7 +107,7 @@ function ChatInfo({
       onSubmitMessage({
         messageId,
         message: {
-          content: 'made a call',
+          content: madeCallLabel,
           channelId: selectedChannelId,
           profilePicUrl,
           userId: myId,
@@ -129,7 +132,7 @@ function ChatInfo({
           onSubmitMessage({
             messageId,
             message: {
-              content: 'made a call',
+              content: madeCallLabel,
               channelId: selectedChannelId,
               profilePicUrl,
               userId: myId,

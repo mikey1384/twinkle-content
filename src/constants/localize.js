@@ -564,6 +564,10 @@ const languageObj = {
     en: 'Made By Twinkle Users',
     kr: '사용자 제작 콘텐츠'
   },
+  madeCall: {
+    en: 'made a call',
+    kr: '전화를 걸었습니다'
+  },
   makeSure3CharLong: {
     en: `Make sure it is at least 3 characters long`,
     kr: '3글자 이상이어야 합니다'
