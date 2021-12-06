@@ -22,9 +22,11 @@ import { useInterval } from 'helpers/hooks';
 import LocalContext from '../../../Context';
 import localize from 'constants/localize';
 
-const broughtBackByLabel = localize('broughtBackBy');
-const startedByLabel = localize('startedBy');
+const addToFavoritesLabel = localize('addToFavorites');
 const deviceIsMobile = isMobile(navigator);
+const broughtBackByLabel = localize('broughtBackBy');
+const menuLabel = deviceIsMobile ? '' : localize('menu');
+const startedByLabel = localize('startedBy');
 
 ChannelHeader.propTypes = {
   currentChannel: PropTypes.object.isRequired,
@@ -72,7 +74,6 @@ export default function ChannelHeader({
     return allFavoriteChannelIds[selectedChannelId];
   }, [allFavoriteChannelIds, selectedChannelId]);
   const reloadingChatSubject = useRef(false);
-  const menuLabel = deviceIsMobile ? '' : 'Menu';
 
   const {
     content = defaultChatSubject,
@@ -339,7 +340,7 @@ export default function ChannelHeader({
                     direction="left"
                     className="desktop"
                     show={addToFavoritesShown && !favorited}
-                    text="Add to favorites"
+                    text={addToFavoritesLabel}
                     style={{
                       marginTop: '0.7rem',
                       width: 'auto',

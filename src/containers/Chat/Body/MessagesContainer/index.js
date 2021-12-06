@@ -40,6 +40,7 @@ import localize from 'constants/localize';
 const CALL_SCREEN_HEIGHT = '30%';
 const unseenButtonThreshold = -1;
 const deviceIsMobile = isMobile(navigator);
+const addToFavoritesLabel = localize('addToFavorites');
 const editGroupNameLabel = localize('editGroupName');
 const hideLabel = localize('hide');
 const invitePeopleLabel = localize('invitePeople');
@@ -874,7 +875,7 @@ function MessagesContainer({
               direction="left"
               className="desktop"
               show={addToFavoritesShown && !favorited}
-              text="Add to favorites"
+              text={addToFavoritesLabel}
               style={{
                 marginTop: '0.5rem',
                 fontSize: '1.3rem',

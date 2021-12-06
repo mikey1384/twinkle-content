@@ -40,6 +40,10 @@ const languageObj = {
     en: 'Add/Edit Questions',
     kr: '문제 등록/수정'
   },
+  addToFavorites: {
+    en: 'Add to favorites',
+    kr: '즐겨찾기에 추가'
+  },
   addVideoToPlaylists: {
     en: 'Add Video to Playlists',
     kr: '재생목록에 추가'
