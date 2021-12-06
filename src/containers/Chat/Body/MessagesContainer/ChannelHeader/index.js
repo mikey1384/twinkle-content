@@ -25,6 +25,7 @@ import localize from 'constants/localize';
 const addToFavoritesLabel = localize('addToFavorites');
 const deviceIsMobile = isMobile(navigator);
 const broughtBackByLabel = localize('broughtBackBy');
+const loadingSubjectLabel = localize('loadingSubject');
 const menuLabel = deviceIsMobile ? '' : localize('menu');
 const startedByLabel = localize('startedBy');
 
@@ -378,7 +379,7 @@ export default function ChannelHeader({
           style={{
             color: Color[theme || 'green']()
           }}
-          text="Loading Subject..."
+          text={`${loadingSubjectLabel}...`}
         />
       )}
     </ErrorBoundary>

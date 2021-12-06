@@ -560,6 +560,10 @@ const languageObj = {
     en: 'Links',
     kr: '링크'
   },
+  loadingSubject: {
+    en: 'Loading Subject',
+    kr: '주제 불러오는 중'
+  },
   loadMore: {
     en: 'Load More',
     kr: '더 불러오기'
