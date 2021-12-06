@@ -24,6 +24,10 @@ const languageObj = {
     en: 'Add Link',
     kr: '링크 추가'
   },
+  addMembersOfClass: {
+    en: 'Add members of your class',
+    kr: '교실 구성원을 추가하세요'
+  },
   addedBy: {
     en: 'Added by',
     kr: '게시자:'
@@ -312,6 +316,10 @@ const languageObj = {
     en: 'Email is needed in case you forget your password',
     kr: '이메일 주소를 등록하면 비밀번호를 잊어버렸을때 계정을 되찾기 편해집니다'
   },
+  enterClassName: {
+    en: 'Enter the name of your class',
+    kr: '교실 이름을 입력하세요'
+  },
   enterComment: {
     en: 'Enter Comment',
     kr: '댓글을 입력하세요'
@@ -572,6 +580,10 @@ const languageObj = {
     en: 'Maximum Upload File Size',
     kr: '파일 업로드 용량 최대치'
   },
+  members: {
+    en: 'Members',
+    kr: '구성원'
+  },
   mission: {
     en: 'Mission',
     kr: '미션'
@@ -612,6 +624,22 @@ const languageObj = {
     en: 'My Ranking',
     kr: '내 순위'
   },
+  name: {
+    en: 'Name',
+    kr: '이름'
+  },
+  newChat: {
+    en: 'New Chat',
+    kr: '새로운 대화방'
+  },
+  newClassroomChat: {
+    en: 'New Classroom',
+    kr: '새로운 교실 대화방'
+  },
+  newGroup: {
+    en: 'New Group',
+    kr: '새로운 그룹'
+  },
   newToOld: {
     en: 'New to Old',
     kr: '최신순'
@@ -627,14 +655,6 @@ const languageObj = {
   next: {
     en: 'Next',
     kr: '다음'
-  },
-  newChat: {
-    en: 'New Chat',
-    kr: '새로운 대화방'
-  },
-  newGroup: {
-    en: 'New Group',
-    kr: '새로운 그룹'
   },
   no: {
     en: 'No',
