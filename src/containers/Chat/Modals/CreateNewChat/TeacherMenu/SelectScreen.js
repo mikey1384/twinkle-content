@@ -6,6 +6,7 @@ import Icon from 'components/Icon';
 import { Color } from 'constants/css';
 import localize from 'constants/localize';
 
+const cancelLabel = localize('cancel');
 const classroomChatLabel = localize('classroomChat');
 const regularChatLabel = localize('regularChat');
 const startNewChatLabel = localize('startNewChat');
@@ -104,7 +105,7 @@ export default function SelectScreen({ onHide, onSetSection }) {
       </main>
       <footer>
         <Button transparent onClick={onHide}>
-          Cancel
+          {cancelLabel}
         </Button>
       </footer>
     </ErrorBoundary>
