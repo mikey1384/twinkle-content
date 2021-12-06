@@ -60,6 +60,10 @@ const languageObj = {
     en: 'A Lot of Effort',
     kr: '많은 노력'
   },
+  alreadyJoined: {
+    en: 'Already Joined',
+    kr: '이미 가입됨'
+  },
   addPlaylist: {
     en: 'Add Playlist',
     kr: '재생목록 등록'
