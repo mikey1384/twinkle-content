@@ -228,6 +228,10 @@ const languageObj = {
     en: 'Copy and paste a URL address here',
     kr: 'URL 주소를 복사한 후 여기에 붙여넣으세요'
   },
+  create: {
+    en: 'Create',
+    kr: '만들기'
+  },
   createMyAccount: {
     en: 'Create my account!',
     kr: '계정 생성하기'
@@ -324,6 +328,10 @@ const languageObj = {
     en: 'Enter Details',
     kr: '상세정보를 입력하세요'
   },
+  enterGroupName: {
+    en: 'Enter Group Name',
+    kr: '그룹명을 입력하세요'
+  },
   enterHeading: {
     en: 'Enter Heading',
     kr: '제목을 입력하세요'
@@ -419,6 +427,10 @@ const languageObj = {
   grammarRank: {
     en: 'Grammar Rank',
     kr: '문법게임 랭킹:'
+  },
+  groupName: {
+    en: 'Group name',
+    kr: '그룹명'
   },
   hangUp: {
     en: 'Hang Up',
@@ -619,6 +631,10 @@ const languageObj = {
   newChat: {
     en: 'New Chat',
     kr: '새로운 대화방'
+  },
+  newGroup: {
+    en: 'New Group',
+    kr: '새로운 그룹'
   },
   no: {
     en: 'No',
@@ -1207,6 +1223,10 @@ const languageObj = {
   you: {
     en: 'you',
     kr: '회원님'
+  },
+  youCanChangeThisSettingLater: {
+    en: 'You can change this setting later',
+    kr: '나중에 언제든지 이 설정을 변경하실 수 있습니다'
   },
   yourUsernameAndPassword: {
     en: `What's your username and password?`,
