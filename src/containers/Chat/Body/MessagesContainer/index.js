@@ -35,6 +35,12 @@ import { socket } from 'constants/io';
 import { isMobile } from 'helpers';
 import { useHistory } from 'react-router-dom';
 import LocalContext from '../../Context';
+import localize from 'constants/localize';
+
+const CALL_SCREEN_HEIGHT = '30%';
+const unseenButtonThreshold = -1;
+const deviceIsMobile = isMobile(navigator);
+const menuLabel = deviceIsMobile ? '' : localize('menu');
 
 MessagesContainer.propTypes = {
   channelName: PropTypes.string,
@@ -42,10 +48,6 @@ MessagesContainer.propTypes = {
   currentChannel: PropTypes.object.isRequired,
   loading: PropTypes.bool
 };
-
-const CALL_SCREEN_HEIGHT = '30%';
-const unseenButtonThreshold = -1;
-const deviceIsMobile = isMobile(navigator);
 
 function MessagesContainer({
   channelName,
@@ -140,7 +142,6 @@ function MessagesContainer({
   const prevChannelId = useRef(null);
   const prevTopMessageId = useRef(null);
   const prevScrollPosition = useRef(null);
-  const menuLabel = deviceIsMobile ? '' : 'Menu';
   const messages = useMemo(
     () => messageIds.map((messageId) => messagesObj[messageId] || {}),
     [messageIds, messagesObj]

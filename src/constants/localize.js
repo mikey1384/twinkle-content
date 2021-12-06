@@ -588,6 +588,10 @@ const languageObj = {
     en: 'Members',
     kr: '구성원'
   },
+  menu: {
+    en: 'Menu',
+    kr: '메뉴'
+  },
   mission: {
     en: 'Mission',
     kr: '미션'
