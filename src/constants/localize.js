@@ -354,7 +354,7 @@ const languageObj = {
   },
   elementary: {
     en: 'elementary',
-    kr: '초등'
+    kr: '초급'
   },
   emailYoursOrYourParents: {
     en: "Email (yours or your parent's)",
