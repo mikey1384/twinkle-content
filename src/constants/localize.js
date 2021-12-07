@@ -208,6 +208,10 @@ const languageObj = {
     en: 'Close',
     kr: '닫기'
   },
+  collecting: {
+    en: 'Collecting...',
+    kr: '수집중...'
+  },
   comment: {
     en: 'Comment',
     kr: '댓글'
@@ -611,6 +615,10 @@ const languageObj = {
   logOut: {
     en: 'Log out',
     kr: '로그아웃'
+  },
+  lookingUp: {
+    en: 'Looking up...',
+    kr: '찾는 중...'
   },
   madeByUsers: {
     en: 'Made By Twinkle Users',
