@@ -13,7 +13,7 @@ import { addCommasToNumber } from 'helpers/stringHelpers';
 import localize from 'constants/localize';
 
 const deviceIsMobile = isMobile(navigator);
-const continueLabel = localize('continue2');
+const continueLabel = localize('continue');
 const watchingLabel = localize('watching');
 const perMinuteLabel = localize('perMinute');
 

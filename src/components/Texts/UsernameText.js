@@ -11,7 +11,7 @@ import localize from 'constants/localize';
 
 const chatLabel = localize('chat2');
 const deletedLabel = localize('deleted');
-const profileLabel = localize('profile2');
+const profileLabel = localize('Profile');
 const deviceIsMobile = isMobile(navigator);
 
 UsernameText.propTypes = {

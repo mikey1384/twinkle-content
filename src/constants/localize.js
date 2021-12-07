@@ -256,7 +256,7 @@ const languageObj = {
     en: 'Confirm',
     kr: '확정'
   },
-  continue2: {
+  continue: {
     en: 'Continue',
     kr: '이어서'
   },
@@ -920,7 +920,7 @@ const languageObj = {
     en: 'profile',
     kr: '프로필'
   },
-  profile2: {
+  Profile: {
     en: 'Profile',
     kr: '프로필'
   },
@@ -1362,6 +1362,10 @@ const languageObj = {
   },
   you: {
     en: 'you',
+    kr: '회원님'
+  },
+  You: {
+    en: 'You',
     kr: '회원님'
   },
   youCanChangeThisSettingLater: {

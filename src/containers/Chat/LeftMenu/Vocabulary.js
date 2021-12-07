@@ -7,6 +7,7 @@ import { useChatContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { returnWordLevel, vocabRewardHash } from 'constants/defaultValues';
 import { addCommasToNumber } from 'helpers/stringHelpers';
+import localize from 'constants/localize';
 
 Vocabulary.propTypes = {
   selected: PropTypes.bool.isRequired,
@@ -68,7 +69,10 @@ function Vocabulary({ selected, onClick }) {
                 width: '100%'
               }}
             >
-              {lastActivity.userId === myId ? 'You' : lastActivity.username}:{' '}
+              {lastActivity.userId === myId
+                ? localize('You')
+                : lastActivity.username}
+              :{' '}
               <b>
                 {lastActivity.content} (+{lastRewardedXp} XP)
               </b>
