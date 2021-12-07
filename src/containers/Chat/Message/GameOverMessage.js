@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
+import localize from 'constants/localize';
+
+const chessEndedInDrawLabel = localize('chessEndedInDraw');
 
 GameOverMessage.propTypes = {
   opponentName: PropTypes.string,
@@ -40,9 +43,7 @@ function GameOverMessage({ myId, opponentName, winnerId, isDraw, isResign }) {
           `}
         >
           {isDraw ? (
-            <div style={{ textAlign: 'center' }}>
-              The chess match ended in a draw
-            </div>
+            <div style={{ textAlign: 'center' }}>{chessEndedInDrawLabel}</div>
           ) : isResign ? (
             myId === winnerId ? (
               <div style={{ textAlign: 'center' }}>

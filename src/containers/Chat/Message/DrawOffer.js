@@ -15,7 +15,10 @@ DrawOffer.propTypes = {
 export default function DrawOffer({ onClick, username, userId, myId }) {
   const displayedUserLabel = useMemo(() => {
     if (userId === myId) {
-      return 'You';
+      if (selectedLanguage === 'en') {
+        return 'You';
+      }
+      return '회원';
     }
     return username;
   }, [myId, userId, username]);

@@ -164,6 +164,10 @@ const languageObj = {
     en: 'Chess',
     kr: '체스'
   },
+  chessEndedInDraw: {
+    en: 'The chess match ended in a draw',
+    kr: '체스 게임이 무승부로 종료되었습니다'
+  },
   choiceA: {
     en: 'Choice A',
     kr: '선택지 A'
