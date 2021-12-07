@@ -1,10 +1,11 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import localize from 'constants/localize';
 
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const chessEndedInDrawLabel = localize('chessEndedInDraw');
 
 GameOverMessage.propTypes = {
@@ -16,6 +17,33 @@ GameOverMessage.propTypes = {
 };
 
 function GameOverMessage({ myId, opponentName, winnerId, isDraw, isResign }) {
+  const failedToMakeMoveInTimeLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      return myId === winnerId ? (
+        <div style={{ textAlign: 'center' }}>
+          <p>{opponentName} failed to make a move in time...</p>
+          <p style={{ fontWeight: 'bold' }}>You win!</p>
+        </div>
+      ) : (
+        <div style={{ textAlign: 'center' }}>
+          <p>You failed to make a move in time...</p>
+          <p>{opponentName} wins</p>
+        </div>
+      );
+    }
+    return myId === winnerId ? (
+      <div style={{ textAlign: 'center' }}>
+        <p>{opponentName}님이 제한시간 안에 회신하지 못했습니다...</p>
+        <p style={{ fontWeight: 'bold' }}>회원님이 승리했습니다!</p>
+      </div>
+    ) : (
+      <div style={{ textAlign: 'center' }}>
+        <p>회원님은 제한시간 안에 회신하지 못했습니다...</p>
+        <p>{opponentName}님이 승리했습니다</p>
+      </div>
+    );
+  }, [myId, opponentName, winnerId]);
+
   return (
     <ErrorBoundary>
       <div
@@ -56,16 +84,8 @@ function GameOverMessage({ myId, opponentName, winnerId, isDraw, isResign }) {
                 <p>{opponentName} wins</p>
               </div>
             )
-          ) : myId === winnerId ? (
-            <div style={{ textAlign: 'center' }}>
-              <p>{opponentName} failed to make a move in time...</p>
-              <p style={{ fontWeight: 'bold' }}>You win!</p>
-            </div>
           ) : (
-            <div style={{ textAlign: 'center' }}>
-              <p>You failed to make a move in time...</p>
-              <p>{opponentName} wins</p>
-            </div>
+            failedToMakeMoveInTimeLabel
           )}
         </div>
       </div>
