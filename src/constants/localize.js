@@ -216,9 +216,17 @@ const languageObj = {
     en: 'Close',
     kr: '닫기'
   },
+  collected: {
+    en: ' collected',
+    kr: '개 수집'
+  },
   collecting: {
     en: 'Collecting...',
     kr: '수집중...'
+  },
+  collectorsOfHighLevelWords: {
+    en: 'Collectors of High Level Words',
+    kr: '상급 단어 수집자들'
   },
   comment: {
     en: 'Comment',

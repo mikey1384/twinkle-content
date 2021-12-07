@@ -6,6 +6,7 @@ import Collector from './Collector';
 import FilterBar from 'components/FilterBar';
 import localize from 'constants/localize';
 
+const collectorsOfHighLevelWordsLabel = localize('collectorsOfHighLevelWords');
 const rankingsLabel = localize('rankings');
 const top30Label = localize('top30');
 
@@ -48,7 +49,7 @@ export default function TopMenu() {
           color: '#fff'
         }}
       >
-        Collectors of High Level Words
+        {collectorsOfHighLevelWordsLabel}
       </div>
       {numWordsCollected > 0 && (
         <FilterBar style={{ fontSize: '1.5rem', height: '4rem' }}>
