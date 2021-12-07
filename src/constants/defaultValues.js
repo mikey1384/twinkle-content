@@ -1,6 +1,6 @@
 import localize from 'constants/localize';
 
-export const clientVersion = '1.5.66';
+export const clientVersion = '1.5.67';
 export const defaultChatSubject = 'Welcome!';
 export const defaultContentState = {
   isEditing: false,
@@ -23,8 +23,7 @@ export const defaultContentState = {
 export const cloudFrontURL = `https://${process.env.REACT_APP_CLOUDFRONT_KEY}.cloudfront.net`;
 export const DEFAULT_PROFILE_THEME = 'logoBlue';
 export const DESCRIPTION_LENGTH_FOR_EXTRA_REWARD_LEVEL = 1000;
-export const FILE_UPLOAD_XP_REQUIREMENT = 5000;
-export const FILE_UPLOAD_XP_REQUIREMENT_FOR_SUBJECT = 100000;
+export const FILE_UPLOAD_XP_REQUIREMENT = 0;
 export const GENERAL_CHAT_ID = 2;
 export const GITHUB_APP_ID = process.env.REACT_APP_GITHUB_CLIENT_ID;
 export const LAST_ONLINE_FILTER_LABEL = localize('lastOnline2');
