@@ -23,6 +23,9 @@ import {
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
+import localize from 'constants/localize';
+
+const typeWordInBoxBelowLabel = localize('typeWordInBoxBelow');
 
 function Vocabulary() {
   const {
@@ -199,7 +202,7 @@ function Vocabulary() {
             `}
           >
             <div>
-              <span>Type a word in the text box below</span>
+              <span>{typeWordInBoxBelowLabel}</span>
               <Icon style={{ marginLeft: '1rem' }} icon="arrow-down" />
             </div>
           </div>
