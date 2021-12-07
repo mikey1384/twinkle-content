@@ -34,11 +34,38 @@ function GameOverMessage({ myId, opponentName, winnerId, isDraw, isResign }) {
     return myId === winnerId ? (
       <div style={{ textAlign: 'center' }}>
         <p>{opponentName}님이 제한시간 안에 회신하지 못했습니다...</p>
-        <p style={{ fontWeight: 'bold' }}>회원님이 승리했습니다!</p>
+        <p style={{ fontWeight: 'bold' }}>축하합니다. 회원님이 승리했습니다</p>
       </div>
     ) : (
       <div style={{ textAlign: 'center' }}>
         <p>회원님은 제한시간 안에 회신하지 못했습니다...</p>
+        <p>{opponentName}님이 승리했습니다</p>
+      </div>
+    );
+  }, [myId, opponentName, winnerId]);
+
+  const resignLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      return myId === winnerId ? (
+        <div style={{ textAlign: 'center' }}>
+          <p>{opponentName} resigned!</p>
+          <p style={{ fontWeight: 'bold' }}>You win!</p>
+        </div>
+      ) : (
+        <div style={{ textAlign: 'center' }}>
+          <p>You resigned...</p>
+          <p>{opponentName} wins</p>
+        </div>
+      );
+    }
+    return myId === winnerId ? (
+      <div style={{ textAlign: 'center' }}>
+        <p>{opponentName}님이 기권했습니다</p>
+        <p style={{ fontWeight: 'bold' }}>축하합니다. 회원님이 승리했습니다</p>
+      </div>
+    ) : (
+      <div style={{ textAlign: 'center' }}>
+        <p>회원님은 기권하셨습니다...</p>
         <p>{opponentName}님이 승리했습니다</p>
       </div>
     );
@@ -73,17 +100,7 @@ function GameOverMessage({ myId, opponentName, winnerId, isDraw, isResign }) {
           {isDraw ? (
             <div style={{ textAlign: 'center' }}>{chessEndedInDrawLabel}</div>
           ) : isResign ? (
-            myId === winnerId ? (
-              <div style={{ textAlign: 'center' }}>
-                <p>{opponentName} resigned!</p>
-                <p style={{ fontWeight: 'bold' }}>You win!</p>
-              </div>
-            ) : (
-              <div style={{ textAlign: 'center' }}>
-                <p>You resigned...</p>
-                <p>{opponentName} wins</p>
-              </div>
-            )
+            resignLabel
           ) : (
             failedToMakeMoveInTimeLabel
           )}
