@@ -1,5 +1,9 @@
 const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const languageObj = {
+  acceptDraw: {
+    en: 'Accept Draw',
+    kr: '무승부 수락'
+  },
   accountMgmt: {
     en: 'Account Mgmt',
     kr: '계정관리'
@@ -124,6 +128,10 @@ const languageObj = {
     en: 'Cancel',
     kr: '취소'
   },
+  cancelMove: {
+    en: 'Cancel Move',
+    kr: '되돌리기'
+  },
   change: {
     en: 'Change',
     kr: '변경'
@@ -195,6 +203,10 @@ const languageObj = {
   clear: {
     en: 'Clear',
     kr: '지우기'
+  },
+  close: {
+    en: 'Close',
+    kr: '닫기'
   },
   comment: {
     en: 'Comment',
@@ -752,6 +764,10 @@ const languageObj = {
     en: 'now',
     kr: '지금'
   },
+  offerDraw: {
+    en: 'Offer Draw',
+    kr: '무승부 제안'
+  },
   offeredDraw: {
     en: 'offered a draw',
     kr: '무승부를 제안했습니다'
@@ -1000,6 +1016,10 @@ const languageObj = {
     en: 'Reset',
     kr: '초기화'
   },
+  resign: {
+    en: 'Resign',
+    kr: '기권하기'
+  },
   respond: {
     en: 'Respond',
     kr: '댓글'
@@ -1115,6 +1135,10 @@ const languageObj = {
   startNewChat: {
     en: 'Start a New Chat',
     kr: '새로운 채팅방 만들기'
+  },
+  startNewGame: {
+    en: 'Start a New Game',
+    kr: '새로운 게임 시작하기'
   },
   startNewSubject: {
     en: 'Start a new subject',
