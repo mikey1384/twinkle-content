@@ -52,6 +52,10 @@ const languageObj = {
     en: 'Add Video to Playlists',
     kr: '재생목록에 추가'
   },
+  advanced: {
+    en: 'advanced',
+    kr: '고급'
+  },
   allLinks: {
     en: 'All Links',
     kr: '모든 링크'
@@ -99,6 +103,10 @@ const languageObj = {
   back: {
     en: 'Back',
     kr: '뒤로가기'
+  },
+  basic: {
+    en: 'basic',
+    kr: '기본'
   },
   beFirstToLikeThisVideo: {
     en: 'Be the first to like this video',
@@ -344,6 +352,10 @@ const languageObj = {
     en: 'It is either removed or never existed in the first place',
     kr: '존재하지 않거나 삭제되었습니다'
   },
+  elementary: {
+    en: 'elementary',
+    kr: '초등'
+  },
   emailYoursOrYourParents: {
     en: "Email (yours or your parent's)",
     kr: '이메일 (본인 혹은 부모님의 이메일 주소를 입력하세요)'
@@ -427,6 +439,10 @@ const languageObj = {
   enterYoutubeUrl: {
     en: 'Enter YouTube URL',
     kr: '유튜브 영상의 URL 주소를 입력하세요'
+  },
+  epic: {
+    en: 'epic',
+    kr: '특급'
   },
   expandMaximumUploadSize: {
     en: 'Expand maximum upload file size',
@@ -523,6 +539,10 @@ const languageObj = {
   isNotValidUsername: {
     en: ' is not a valid username',
     kr: '는 사용 가능한 아이디가 아닙니다'
+  },
+  intermediate: {
+    en: 'intermediate',
+    kr: '중급'
   },
   invitePeople: {
     en: 'Invite People',
