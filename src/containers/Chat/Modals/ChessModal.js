@@ -15,11 +15,13 @@ import localize from 'constants/localize';
 
 const acceptDrawLabel = localize('acceptDraw');
 const cancelMoveLabel = localize('cancelMove');
+const chessLabel = localize('chess');
 const closeLabel = localize('close');
 const doneLabel = localize('done');
 const offerDrawLabel = localize('offerDraw');
 const offeredDrawLabel = localize('offeredDraw');
 const resignLabel = localize('resign');
+const resignChessMatchLabel = localize('resignChessMatch');
 const startNewGameLabel = localize('startNewGame');
 
 ChessModal.propTypes = {
@@ -158,7 +160,7 @@ export default function ChessModal({
   return (
     <ErrorBoundary>
       <Modal large onHide={onHide}>
-        <header>Chess</header>
+        <header>{chessLabel}</header>
         <main style={{ padding: 0 }}>
           <div
             style={{
@@ -249,7 +251,7 @@ export default function ChessModal({
         {confirmModalShown && (
           <ConfirmModal
             modalOverModal
-            title={drawOfferPending ? 'Accept Draw' : 'Resign Chess Match'}
+            title={drawOfferPending ? acceptDrawLabel : resignChessMatchLabel}
             onConfirm={handleGameOver}
             onHide={() => setConfirmModalShown(false)}
           />

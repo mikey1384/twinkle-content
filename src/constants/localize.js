@@ -1020,6 +1020,10 @@ const languageObj = {
     en: 'Resign',
     kr: '기권하기'
   },
+  resignChessMatch: {
+    en: 'Resign Chess Match',
+    kr: '기권하기'
+  },
   respond: {
     en: 'Respond',
     kr: '댓글'
