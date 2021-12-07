@@ -1332,6 +1332,10 @@ const languageObj = {
     en: 'Visit YouTube',
     kr: '유튜브'
   },
+  vocabulary: {
+    en: 'Vocabulary',
+    kr: '단어수집 게임'
+  },
   watching: {
     en: 'watching',
     kr: '시청하기'

@@ -9,6 +9,9 @@ import { returnWordLevel, vocabRewardHash } from 'constants/defaultValues';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import localize from 'constants/localize';
 
+const vocabularyLabel = localize('vocabulary');
+const youLabel = localize('You');
+
 Vocabulary.propTypes = {
   selected: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired
@@ -56,7 +59,7 @@ function Vocabulary({ selected, onClick }) {
         <div style={{ fontSize: '1.7rem' }}>
           <Icon icon="book" />
           <span style={{ fontWeight: 'bold', marginLeft: '0.7rem' }}>
-            Vocabulary
+            {vocabularyLabel}
           </span>
         </div>
         {lastActivity && (
@@ -69,10 +72,7 @@ function Vocabulary({ selected, onClick }) {
                 width: '100%'
               }}
             >
-              {lastActivity.userId === myId
-                ? localize('You')
-                : lastActivity.username}
-              :{' '}
+              {lastActivity.userId === myId ? youLabel : lastActivity.username}:{' '}
               <b>
                 {lastActivity.content} (+{lastRewardedXp} XP)
               </b>
