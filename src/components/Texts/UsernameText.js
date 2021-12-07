@@ -9,10 +9,10 @@ import { isMobile } from 'helpers';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import localize from 'constants/localize';
 
+const deviceIsMobile = isMobile(navigator);
 const chatLabel = localize('chat2');
 const deletedLabel = localize('deleted');
 const profileLabel = localize('Profile');
-const deviceIsMobile = isMobile(navigator);
 
 UsernameText.propTypes = {
   className: PropTypes.string,
