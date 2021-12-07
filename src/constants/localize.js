@@ -1220,6 +1220,10 @@ const languageObj = {
     en: 'Top 30',
     kr: '톱 30'
   },
+  typeWord: {
+    en: 'Type a word...',
+    kr: '단어를 입력하세요...'
+  },
   typeWordInBoxBelow: {
     en: 'Type a word in the text box below',
     kr: '아래의 입력란에 단어를 입력하세요'
