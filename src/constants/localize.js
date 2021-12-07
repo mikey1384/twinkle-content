@@ -748,6 +748,10 @@ const languageObj = {
     en: 'now',
     kr: '지금'
   },
+  offeredDraw: {
+    en: 'offered a draw',
+    kr: '무승부를 제안했습니다'
+  },
   oldToNew: {
     en: 'Old to New',
     kr: '오래된순'

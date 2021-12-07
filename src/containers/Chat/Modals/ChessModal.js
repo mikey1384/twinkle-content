@@ -11,6 +11,9 @@ import { useMyState } from 'helpers/hooks';
 import { useAppContext, useChatContext } from 'contexts';
 import { v1 as uuidv1 } from 'uuid';
 import ErrorBoundary from 'components/ErrorBoundary';
+import localize from 'constants/localize';
+
+const offeredDrawLabel = localize('offeredDraw');
 
 ChessModal.propTypes = {
   channelId: PropTypes.number,
@@ -255,7 +258,7 @@ export default function ChessModal({
       message: {
         channelId,
         isDrawOffer: true,
-        content: 'offered a draw',
+        content: offeredDrawLabel,
         userId,
         username,
         profilePicUrl

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { css } from '@emotion/css';
 import { Color } from 'constants/css';
 
+const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+
 DrawOffer.propTypes = {
   myId: PropTypes.number,
   onClick: PropTypes.func.isRequired,
@@ -17,6 +19,13 @@ export default function DrawOffer({ onClick, username, userId, myId }) {
     }
     return username;
   }, [myId, userId, username]);
+
+  const offeredDrawLabel = useMemo(() => {
+    if (selectedLanguage === 'en') {
+      return `${displayedUserLabel} offered a draw`;
+    }
+    return `${displayedUserLabel}님이 무승부를 제안했습니다`;
+  }, [displayedUserLabel]);
 
   return (
     <div
@@ -38,7 +47,7 @@ export default function DrawOffer({ onClick, username, userId, myId }) {
         }}
         onClick={onClick}
       >
-        {displayedUserLabel} offered a draw
+        {offeredDrawLabel}
       </span>
     </div>
   );
