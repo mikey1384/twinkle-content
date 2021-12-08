@@ -11,7 +11,7 @@ import { addCommasToNumber } from 'helpers/stringHelpers';
 import localize from 'constants/localize';
 
 const logInLabel = localize('logIn');
-const profileLabel = localize('profile2');
+const profileLabel = localize('Profile');
 const managementLabel = localize('management');
 const logOutLabel = localize('logOut');
 
