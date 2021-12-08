@@ -117,10 +117,12 @@ export default function KarmaStatus() {
       return <span>{karmaCalculationLabel}</span>;
     }
     if (selectedLanguage === 'en') {
-      <span>
-        Your Karma Points = Total number of <b>posts</b> you rewarded ×{' '}
-        {karmaMultiplier.post}
-      </span>;
+      return (
+        <span>
+          Your Karma Points = Total number of <b>posts</b> you rewarded ×{' '}
+          {karmaMultiplier.post}
+        </span>
+      );
     }
     return (
       <span>
