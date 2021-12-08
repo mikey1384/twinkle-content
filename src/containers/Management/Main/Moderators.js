@@ -46,10 +46,10 @@ export default function Moderators({ canManage }) {
     );
   }, [moderators, searchQuery]);
   const addLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
-      return <>Add{deviceIsMobile ? '' : ' Moderators'}</>;
+    if (SELECTED_LANGUAGE === 'kr') {
+      return <>{deviceIsMobile ? '' : '관리자 '}등록</>;
     }
-    return <>{deviceIsMobile ? '' : '관리자 '}등록</>;
+    return <>Add{deviceIsMobile ? '' : ' Moderators'}</>;
   }, []);
 
   return (

@@ -25,7 +25,7 @@ export default function MissionContent({ uploader, rootObj: mission }) {
           color: Color.black()
         }}
       >
-        {SELECTED_LANGUAGE === 'en' ? renderEnglish() : renderKorean()}
+        {SELECTED_LANGUAGE === 'kr' ? renderKorean() : renderEnglish()}
       </div>
     ) : null;
 

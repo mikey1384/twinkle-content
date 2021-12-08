@@ -56,17 +56,17 @@ export default function Cover({ missionIds, missionObj, myAttempts }) {
   }, [missionObj, missionIds]);
 
   const completedStatusLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
+    if (SELECTED_LANGUAGE === 'kr') {
       return (
         <>
-          Completed {numComplete} out of {missionIds.length} mission
-          {missionIds.length > 1 ? 's' : ''}
+          {missionIds.length} 미션 중 {numComplete} 완료
         </>
       );
     }
     return (
       <>
-        {missionIds.length} 미션 중 {numComplete} 완료
+        Completed {numComplete} out of {missionIds.length} mission
+        {missionIds.length > 1 ? 's' : ''}
       </>
     );
   }, [missionIds?.length, numComplete]);

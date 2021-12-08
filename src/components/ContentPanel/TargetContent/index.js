@@ -186,7 +186,7 @@ export default function TargetContent({
   const DetailText = useMemo(() => {
     return (
       <div>
-        {SELECTED_LANGUAGE === 'en' ? renderEnglishText() : renderKoreanText()}
+        {SELECTED_LANGUAGE === 'kr' ? renderKoreanText() : renderEnglishText()}
       </div>
     );
 

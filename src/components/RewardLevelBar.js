@@ -26,10 +26,10 @@ export default function RewardLevelBar({ className, rewardLevel, style }) {
   }, [rewardLevel]);
 
   const earnUpToLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
-      return `Earn up to ${addCommasToNumber(rewardLevel * 2000)} XP`;
+    if (SELECTED_LANGUAGE === 'kr') {
+      return `최대 ${addCommasToNumber(rewardLevel * 2000)}XP 까지 획득가능`;
     }
-    return `최대 ${addCommasToNumber(rewardLevel * 2000)}XP 까지 획득가능`;
+    return `Earn up to ${addCommasToNumber(rewardLevel * 2000)} XP`;
   }, [rewardLevel]);
 
   const barColor = useMemo(

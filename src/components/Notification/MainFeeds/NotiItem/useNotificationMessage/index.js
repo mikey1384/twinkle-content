@@ -38,9 +38,9 @@ export default function useNotificationMessage({
       targetSubject,
       user
     };
-    return SELECTED_LANGUAGE === 'en'
-      ? renderEnglishMessage(params)
-      : renderKoreanMessage(params);
+    return SELECTED_LANGUAGE === 'kr'
+      ? renderKoreanMessage(params)
+      : renderEnglishMessage(params);
   }, [
     actionObj,
     isNotification,

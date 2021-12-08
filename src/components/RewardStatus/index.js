@@ -62,20 +62,21 @@ function RewardStatus({
   }, [maxRewards, rewards]);
 
   const rewardStatusLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
+    if (SELECTED_LANGUAGE === 'kr') {
       return (
         <>
-          {amountRewarded} Twinkle
-          {amountRewarded > 1 ? 's' : ''} (
-          {addCommasToNumber(amountRewarded * 200)} XP) rewarded out of max{' '}
-          {maxRewards}
+          총 {amountRewarded}개의 트윈클(
+          {addCommasToNumber(amountRewarded * 200)} XP)이 지급되었습니다 (최대{' '}
+          {maxRewards}개)
         </>
       );
     }
     return (
       <>
-        총 {amountRewarded}개의 트윈클({addCommasToNumber(amountRewarded * 200)}{' '}
-        XP)이 지급되었습니다 (최대 {maxRewards}개)
+        {amountRewarded} Twinkle
+        {amountRewarded > 1 ? 's' : ''} (
+        {addCommasToNumber(amountRewarded * 200)} XP) rewarded out of max{' '}
+        {maxRewards}
       </>
     );
   }, [amountRewarded, maxRewards]);

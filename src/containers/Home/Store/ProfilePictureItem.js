@@ -40,25 +40,25 @@ export default function ProfilePictureItem({ style }) {
   } = useContentContext();
   const descriptionLabel = useMemo(() => {
     if (numPics > 0) {
-      if (SELECTED_LANGUAGE === 'en') {
-        return `Upgrade this item to post up to ${
+      if (SELECTED_LANGUAGE === 'kr') {
+        return `본 아이템을 업그레이드 하시면 프로필 페이지에 사진을 ${
           numPics + 1
-        } pictures on you profile page`;
+        }장까지 게시하실 수 있게 됩니다`;
       }
-      return `본 아이템을 업그레이드 하시면 프로필 페이지에 사진을 ${
+      return `Upgrade this item to post up to ${
         numPics + 1
-      }장까지 게시하실 수 있게 됩니다`;
+      } pictures on you profile page`;
     }
-    if (SELECTED_LANGUAGE === 'en') {
-      return 'Unlock this item to post pictures on your profile page';
+    if (SELECTED_LANGUAGE === 'kr') {
+      return '본 아이템을 잠금 해제 하시면 프로필 페이지에 사진을 게시하실 수 있게 됩니다';
     }
-    return '본 아이템을 잠금 해제 하시면 프로필 페이지에 사진을 게시하실 수 있게 됩니다';
+    return 'Unlock this item to post pictures on your profile page';
   }, [numPics]);
   const youCanNowPostUpToLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
-      return `You can now post up to ${numPics} pictures on your profile page`;
+    if (SELECTED_LANGUAGE === 'kr') {
+      return `이제 프로필 페이지에 사진을 최대 ${numPics}장까지 게시할 수 있습니다`;
     }
-    return `이제 프로필 페이지에 사진을 최대 ${numPics}장까지 게시할 수 있습니다`;
+    return `You can now post up to ${numPics} pictures on your profile page`;
   }, [numPics]);
 
   return (

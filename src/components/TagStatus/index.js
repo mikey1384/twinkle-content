@@ -80,15 +80,15 @@ function TagStatus({
   );
 
   const addLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
-      return (
-        <>
-          +Add
-          {tags.length === 0 ? ' to Playlists' : ''}
-        </>
-      );
+    if (SELECTED_LANGUAGE === 'kr') {
+      return <>+{tags.length === 0 ? ' 재생목록에' : ''} 추가</>;
     }
-    return <>+{tags.length === 0 ? ' 재생목록에' : ''} 추가</>;
+    return (
+      <>
+        +Add
+        {tags.length === 0 ? ' to Playlists' : ''}
+      </>
+    );
   }, [tags.length]);
 
   return (

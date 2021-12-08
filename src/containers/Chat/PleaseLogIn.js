@@ -15,39 +15,39 @@ export default function PleaseLogIn() {
   } = useAppContext();
 
   const doYouWantToChatAndPlayChessLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
+    if (SELECTED_LANGUAGE === 'kr') {
       return (
         <p>
-          Do you want to{' '}
+          다른 유저들과{' '}
           <span style={{ color: Color.vantaBlack(), fontWeight: 'bold' }}>
-            chat
-          </span>{' '}
-          and play{' '}
-          <span style={{ color: Color.vantaBlack(), fontWeight: 'bold' }}>
-            vocabulary games & chess
-          </span>{' '}
-          with{' '}
-          <span style={{ color: Color.logoBlue(), fontWeight: 'bold' }}>
-            Twin
+            채팅
           </span>
-          <span style={{ color: Color.logoGreen(), fontWeight: 'bold' }}>
-            kle
-          </span>{' '}
-          students and teachers?
+          하고{' '}
+          <span style={{ color: Color.vantaBlack(), fontWeight: 'bold' }}>
+            단어게임과 체스
+          </span>
+          를 즐기고 싶으신가요?
         </p>
       );
     }
     return (
       <p>
-        다른 유저들과{' '}
+        Do you want to{' '}
         <span style={{ color: Color.vantaBlack(), fontWeight: 'bold' }}>
-          채팅
-        </span>
-        하고{' '}
+          chat
+        </span>{' '}
+        and play{' '}
         <span style={{ color: Color.vantaBlack(), fontWeight: 'bold' }}>
-          단어게임과 체스
+          vocabulary games & chess
+        </span>{' '}
+        with{' '}
+        <span style={{ color: Color.logoBlue(), fontWeight: 'bold' }}>
+          Twin
         </span>
-        를 즐기고 싶으신가요?
+        <span style={{ color: Color.logoGreen(), fontWeight: 'bold' }}>
+          kle
+        </span>{' '}
+        students and teachers?
       </p>
     );
   }, []);

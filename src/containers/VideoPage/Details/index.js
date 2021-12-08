@@ -279,15 +279,15 @@ export default function Details({
   }, []);
 
   const viewsLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
-      return (
-        <>
-          {addCommasToNumber(videoViews)} view
-          {`${videoViews > 1 ? 's' : ''}`}
-        </>
-      );
+    if (SELECTED_LANGUAGE === 'kr') {
+      return <>조회수 {addCommasToNumber(videoViews)}회</>;
     }
-    return <>조회수 {addCommasToNumber(videoViews)}회</>;
+    return (
+      <>
+        {addCommasToNumber(videoViews)} view
+        {`${videoViews > 1 ? 's' : ''}`}
+      </>
+    );
   }, [videoViews]);
 
   return (

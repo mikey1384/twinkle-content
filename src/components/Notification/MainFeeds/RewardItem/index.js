@@ -41,9 +41,9 @@ export default function RewardItem({
       rootType,
       targetObj
     };
-    return SELECTED_LANGUAGE === 'en'
-      ? renderEnglishText(params)
-      : renderKoreanText(params);
+    return SELECTED_LANGUAGE === 'kr'
+      ? renderKoreanText(params)
+      : renderEnglishText(params);
   }, [
     contentId,
     contentType,

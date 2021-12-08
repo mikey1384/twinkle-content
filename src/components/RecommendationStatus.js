@@ -73,13 +73,13 @@ export default function RecommendationStatus({
   );
 
   const andLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
-      return ' and';
+    if (SELECTED_LANGUAGE === 'kr') {
+      if (recommendationsByUsertypeExceptMe.length > 2) {
+        return '님 외';
+      }
+      return ',';
     }
-    if (recommendationsByUsertypeExceptMe.length > 2) {
-      return '님 외';
-    }
-    return ',';
+    return ' and';
   }, [recommendationsByUsertypeExceptMe.length]);
 
   return recommendations.length > 0 ? (

@@ -255,10 +255,10 @@ export default function LinkPage({
   }, [userId]);
 
   const madeByLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
-      return <>This was made by {uploader?.username}</>;
+    if (SELECTED_LANGUAGE === 'kr') {
+      return <>{uploader?.username}님이 직접 제작한 콘텐츠입니다</>;
     }
-    return <>{uploader?.username}님이 직접 제작한 콘텐츠입니다</>;
+    return <>This was made by {uploader?.username}</>;
   }, [uploader?.username]);
 
   return loaded ? (

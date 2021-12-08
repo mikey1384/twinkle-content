@@ -33,27 +33,27 @@ function Board({
   spoilerOff
 }) {
   const madeNewMoveLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
+    if (SELECTED_LANGUAGE === 'kr') {
       return (
         <>
-          <p>{opponentName} made a new chess move.</p>
-          <p>Tap here to view it.</p>
+          <p>{opponentName}님이 체스 메시지를 보냈습니다.</p>
+          <p>조회하시려면 여기를 탭 하세요.</p>
           <p>
-            {`After viewing ${opponentName}'s move, you `}
-            <b>must</b> make your own move in <b>5 minutes</b>. Otherwise, you
-            will lose.
+            {`${opponentName}님의 체스 메시지를 열어보신 다음에는`}
+            반드시 <b>5분</b>안에 회답하셔야 하며, 그렇지 못할 경우 패배
+            처리됩니다.
           </p>
         </>
       );
     }
     return (
       <>
-        <p>{opponentName}님이 체스 메시지를 보냈습니다.</p>
-        <p>조회하시려면 여기를 탭 하세요.</p>
+        <p>{opponentName} made a new chess move.</p>
+        <p>Tap here to view it.</p>
         <p>
-          {`${opponentName}님의 체스 메시지를 열어보신 다음에는`}
-          반드시 <b>5분</b>안에 회답하셔야 하며, 그렇지 못할 경우 패배
-          처리됩니다.
+          {`After viewing ${opponentName}'s move, you `}
+          <b>must</b> make your own move in <b>5 minutes</b>. Otherwise, you
+          will lose.
         </p>
       </>
     );

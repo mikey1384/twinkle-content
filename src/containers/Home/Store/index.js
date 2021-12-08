@@ -18,21 +18,21 @@ import localize from 'constants/localize';
 
 const changeUsernameLabel = localize('changeUsername');
 const changeUsernameDescriptionLabel =
-  SELECTED_LANGUAGE === 'en'
-    ? `Unlock this item to change your username anytime you want for ${priceTable.username} Twinkle Coins`
-    : `본 아이템을 잠금 해제 하시면 ${priceTable.username} 트윈클 코인 가격에 언제든 유저명을 바꾸실 수 있게 됩니다`;
+  SELECTED_LANGUAGE === 'kr'
+    ? `본 아이템을 잠금 해제 하시면 ${priceTable.username} 트윈클 코인 가격에 언제든 유저명을 바꾸실 수 있게 됩니다`
+    : `Unlock this item to change your username anytime you want for ${priceTable.username} Twinkle Coins`;
 const moreToComeLabel = localize('moreToCome');
 
 const welcomeMessageLabel =
-  SELECTED_LANGUAGE === 'en' ? (
-    <>
-      Welcome to <span className="logo logo-twin">Twin</span>
-      <span className="logo logo-kle">kle</span> Store
-    </>
-  ) : (
+  SELECTED_LANGUAGE === 'kr' ? (
     <>
       <span className="logo logo-twin">트윈</span>
       <span className="logo logo-kle">클</span> 스토어에 오신걸 환영합니다
+    </>
+  ) : (
+    <>
+      Welcome to <span className="logo logo-twin">Twin</span>
+      <span className="logo logo-kle">kle</span> Store
     </>
   );
 

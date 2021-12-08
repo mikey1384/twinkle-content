@@ -112,10 +112,10 @@ export default function Invitation({
   }, [invitePath]);
 
   const acceptGroupInvitationLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
-      return `Accept ${sender.username}'s Invitation`;
+    if (SELECTED_LANGUAGE === 'kr') {
+      return `${sender.username}님의 초대 수락`;
     }
-    return `${sender.username}님의 초대 수락`;
+    return `Accept ${sender.username}'s Invitation`;
   }, [sender?.username]);
 
   return (

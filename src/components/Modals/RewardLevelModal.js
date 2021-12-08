@@ -38,17 +38,17 @@ export default function RewardLevelModal({
   const [rewardLevel, setRewardLevel] = useState(initialRewardLevel);
 
   const moderatorHasDisabledChangeLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
+    if (SELECTED_LANGUAGE === 'kr') {
       return (
         <span>
-          <b>{moderatorName}</b> has disabled users from changing this setting
-          for this post
+          <b>{moderatorName}</b>님이 이 설정을 변경하지 못하도록 설정하였습니다
         </span>
       );
     }
     return (
       <span>
-        <b>{moderatorName}</b>님이 이 설정을 변경하지 못하도록 설정하였습니다
+        <b>{moderatorName}</b> has disabled users from changing this setting for
+        this post
       </span>
     );
   }, [moderatorName]);

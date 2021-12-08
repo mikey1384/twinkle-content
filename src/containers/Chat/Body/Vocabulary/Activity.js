@@ -88,17 +88,16 @@ export default function Activity({
   );
 
   const wordLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
-      return /\s/.test(content) ? 'term' : 'word';
+    if (SELECTED_LANGUAGE === 'kr') {
+      return /\s/.test(content) ? '숙어' : '단어';
     }
-    return /\s/.test(content) ? '숙어' : '단어';
+    return /\s/.test(content) ? 'term' : 'word';
   }, [content]);
 
   const activityLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
+    if (SELECTED_LANGUAGE === 'kr') {
       return (
         <div>
-          collected {wordLevel === 1 ? 'a' : 'an'}{' '}
           <b
             style={{
               color: Color[vocabRewardHash[wordLevel].color]()
@@ -110,26 +109,10 @@ export default function Activity({
               }
             `}
           >
-            {vocabRewardHash[wordLevel].label}
-          </b>{' '}
-          {wordLabel},{' '}
-          <span
-            className={css`
-              font-size: 3rem;
-              @media (max-width: ${mobileMaxWidth}) {
-                font-size: 1.7rem;
-              }
-            `}
-            style={{
-              fontWeight: 'bold',
-              color: Color.blue(),
-              cursor: 'pointer'
-            }}
-            onClick={() => setWordModalShown(true)}
-          >
-            {content}
-          </span>{' '}
-          and earned{' '}
+            {localize(vocabRewardHash[wordLevel].label)}
+            {wordLabel}
+          </b>
+          를 수집하고{' '}
           <b
             className={css`
               font-size: ${wordLevel === 5
@@ -153,8 +136,7 @@ export default function Activity({
           </b>
           {wordLevel > 3 && (
             <>
-              {' '}
-              <span>and</span>{' '}
+              <span>와</span>{' '}
               <b
                 className={css`
                   margin-left: 0.3rem;
@@ -178,11 +160,29 @@ export default function Activity({
               </b>
             </>
           )}
+          를 지급 받았습니다:{' '}
+          <span
+            className={css`
+              font-size: 2.5rem;
+              @media (max-width: ${mobileMaxWidth}) {
+                font-size: 1.5rem;
+              }
+            `}
+            style={{
+              fontWeight: 'bold',
+              color: Color.blue(),
+              cursor: 'pointer'
+            }}
+            onClick={() => setWordModalShown(true)}
+          >
+            {content}
+          </span>
         </div>
       );
     }
     return (
       <div>
+        collected {wordLevel === 1 ? 'a' : 'an'}{' '}
         <b
           style={{
             color: Color[vocabRewardHash[wordLevel].color]()
@@ -194,10 +194,26 @@ export default function Activity({
             }
           `}
         >
-          {localize(vocabRewardHash[wordLevel].label)}
-          {wordLabel}
-        </b>
-        를 수집하고{' '}
+          {vocabRewardHash[wordLevel].label}
+        </b>{' '}
+        {wordLabel},{' '}
+        <span
+          className={css`
+            font-size: 3rem;
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: 1.7rem;
+            }
+          `}
+          style={{
+            fontWeight: 'bold',
+            color: Color.blue(),
+            cursor: 'pointer'
+          }}
+          onClick={() => setWordModalShown(true)}
+        >
+          {content}
+        </span>{' '}
+        and earned{' '}
         <b
           className={css`
             font-size: ${wordLevel === 5
@@ -221,7 +237,8 @@ export default function Activity({
         </b>
         {wordLevel > 3 && (
           <>
-            <span>와</span>{' '}
+            {' '}
+            <span>and</span>{' '}
             <b
               className={css`
                 margin-left: 0.3rem;
@@ -245,23 +262,6 @@ export default function Activity({
             </b>
           </>
         )}
-        를 지급 받았습니다:{' '}
-        <span
-          className={css`
-            font-size: 2.5rem;
-            @media (max-width: ${mobileMaxWidth}) {
-              font-size: 1.5rem;
-            }
-          `}
-          style={{
-            fontWeight: 'bold',
-            color: Color.blue(),
-            cursor: 'pointer'
-          }}
-          onClick={() => setWordModalShown(true)}
-        >
-          {content}
-        </span>
       </div>
     );
   }, [content, wordLabel, wordLevel]);

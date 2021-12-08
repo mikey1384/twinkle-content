@@ -37,15 +37,15 @@ const item = {
     const colorKey = ['logoBlue', 'pink', 'orange', 'cranberry', 'gold'];
     const keyNumber = Number(key);
     const descriptionLabel =
-      SELECTED_LANGUAGE === 'en' ? (
-        <>
-          {keyNumber === 0 ? 'Unlock' : 'Upgrade'} this item to earn the
-          following rewards <b>per minute</b> while watching XP Videos
-        </>
-      ) : (
+      SELECTED_LANGUAGE === 'kr' ? (
         <>
           본 아이템을 {keyNumber === 0 ? '잠금 해제' : '업그레이드'} 하시면 XP
           동영상을 보실때 <b>매분마다</b> 아래의 보상을 획득하실 수 있게 됩니다
+        </>
+      ) : (
+        <>
+          {keyNumber === 0 ? 'Unlock' : 'Upgrade'} this item to earn the
+          following rewards <b>per minute</b> while watching XP Videos
         </>
       );
 
@@ -181,10 +181,10 @@ export default function RewardBoostItem({ style }) {
     requestHelpers: { upgradeRewardBoost }
   } = useAppContext();
   const maxLevelItemDescriptionLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
-      return `You can now earn (reward level × ${videoRewardHash[rewardBoostLvl].xp}) XP and ${videoRewardHash[rewardBoostLvl].coin} Twinkle Coins per minute while watching XP Videos`;
+    if (SELECTED_LANGUAGE === 'kr') {
+      return `이제 XP동영상을 시청하실 때 매분 (보상레벨 × ${videoRewardHash[rewardBoostLvl].xp})XP와 트윈클 코인 ${videoRewardHash[rewardBoostLvl].coin}개를 획득하실 수 있습니다`;
     }
-    return `이제 XP동영상을 시청하실 때 매분 (보상레벨 × ${videoRewardHash[rewardBoostLvl].xp})XP와 트윈클 코인 ${videoRewardHash[rewardBoostLvl].coin}개를 획득하실 수 있습니다`;
+    return `You can now earn (reward level × ${videoRewardHash[rewardBoostLvl].xp}) XP and ${videoRewardHash[rewardBoostLvl].coin} Twinkle Coins per minute while watching XP Videos`;
   }, [rewardBoostLvl]);
 
   return (
@@ -204,9 +204,9 @@ export default function RewardBoostItem({ style }) {
       <MaxLevelItemInfo
         icon="bolt"
         title={
-          SELECTED_LANGUAGE === 'en'
-            ? 'XP Video Reward Boost - Level 10'
-            : 'XP동영상 보상 증가 - Level 10'
+          SELECTED_LANGUAGE === 'kr'
+            ? 'XP동영상 보상 증가 - Level 10'
+            : 'XP Video Reward Boost - Level 10'
         }
         description={maxLevelItemDescriptionLabel}
       />

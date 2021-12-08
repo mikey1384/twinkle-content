@@ -22,11 +22,11 @@ export default function SearchBox({ category, className, innerRef, style }) {
     actions: { onChangeSearchInput }
   } = useExploreContext();
   const placeholderLabel = useMemo(() => {
-    return SELECTED_LANGUAGE === 'en'
-      ? `Search ${category}...`
-      : `${localize(category.slice(0, -1))}${
+    return SELECTED_LANGUAGE === 'kr'
+      ? `${localize(category.slice(0, -1))}${
           category === 'videos' ? '을' : '를'
-        } 검색하세요...`;
+        } 검색하세요...`
+      : `Search ${category}...`;
   }, [category]);
 
   return (

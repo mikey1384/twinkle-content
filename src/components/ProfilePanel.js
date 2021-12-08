@@ -244,18 +244,18 @@ function ProfilePanel({ expandable, profileId, style }) {
     [heightNotSet, inView, loaded, visible]
   );
   const leaveMessageLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
+    if (SELECTED_LANGUAGE === 'kr') {
       return (
         <>
-          {profileId === userId ? '' : 'Leave '}
-          Message
+          메시지
+          {profileId === userId ? '' : ' 남기기'}
         </>
       );
     }
     return (
       <>
-        메시지
-        {profileId === userId ? '' : ' 남기기'}
+        {profileId === userId ? '' : 'Leave '}
+        Message
       </>
     );
   }, [profileId, userId]);

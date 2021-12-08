@@ -26,17 +26,17 @@ export default function RewardLevelExpectation({ rewardLevel }) {
     }
   }, [rewardLevel]);
   const rewardLevelExpectationLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
+    if (SELECTED_LANGUAGE === 'kr') {
       return (
         <>
-          Put {rewardLevelExpectation} Into Your Response to Get Recommendations
+          선생님 유저분들의 추천을 받으려면 {rewardLevelExpectation}을 기울여야
+          합니다
         </>
       );
     }
     return (
       <>
-        선생님 유저분들의 추천을 받으려면 {rewardLevelExpectation}을 기울여야
-        합니다
+        Put {rewardLevelExpectation} Into Your Response to Get Recommendations
       </>
     );
   }, [rewardLevelExpectation]);

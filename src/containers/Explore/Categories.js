@@ -79,15 +79,15 @@ export default function Categories({
       >
         {['subjects', 'videos', 'links'].map((contentType) => {
           const exploreLabel =
-            SELECTED_LANGUAGE === 'en' ? (
-              <>Explore {contentType}</>
-            ) : (
+            SELECTED_LANGUAGE === 'kr' ? (
               <>{localize(contentType.slice(0, -1))} 탐색</>
+            ) : (
+              <>Explore {contentType}</>
             );
           const alwaysExploreFirstLabel =
-            SELECTED_LANGUAGE === 'en'
-              ? `Always explore ${contentType} first:`
-              : `항상 ${localize(contentType.slice(0, -1))} 먼저 탐색하기:`;
+            SELECTED_LANGUAGE === 'kr'
+              ? `항상 ${localize(contentType.slice(0, -1))} 먼저 탐색하기:`
+              : `Always explore ${contentType} first:`;
 
           return filter === contentType ? (
             <nav key={contentType}>

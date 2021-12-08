@@ -41,9 +41,9 @@ export default function StatusInput({
     [editedStatusMsg]
   );
   const statusMsgPlaceholder = useMemo(() => {
-    return SELECTED_LANGUAGE === 'en'
-      ? `Enter a ${profile.statusMsg ? 'new ' : ''}status message...`
-      : '상태 메시지를 입력하세요...';
+    return SELECTED_LANGUAGE === 'kr'
+      ? '상태 메시지를 입력하세요...'
+      : `Enter a ${profile.statusMsg ? 'new ' : ''}status message...`;
   }, [profile.statusMsg]);
 
   return (

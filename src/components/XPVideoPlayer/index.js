@@ -354,10 +354,10 @@ function XPVideoPlayer({
   );
 
   const thisVideoWasMadeByLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
-      return <>This video was made by {uploader?.username}</>;
+    if (SELECTED_LANGUAGE === 'kr') {
+      return <>{uploader?.username}님이 직접 제작한 동영상입니다</>;
     }
-    return <>{uploader?.username}님이 직접 제작한 동영상입니다</>;
+    return <>This video was made by {uploader?.username}</>;
   }, [uploader?.username]);
 
   return (

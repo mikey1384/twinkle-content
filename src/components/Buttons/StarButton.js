@@ -77,44 +77,44 @@ export default function StarButton({
   const StarButtonRef = useRef(null);
   useOutsideClick(StarButtonRef, () => setMenuShown(false));
   const byUserLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
-      const makerLabel = uploader?.id === userId ? 'me' : uploader?.username;
+    if (SELECTED_LANGUAGE === 'kr') {
+      const makerLabel =
+        uploader?.id === userId ? '내가' : `${uploader?.username}님이`;
       return (
         <>
           {byUser
-            ? `This wasn't ${
-                writtenByButtonShown ? 'written' : 'made'
-              } by ${makerLabel}`
-            : `This was ${
-                writtenByButtonShown ? 'written' : 'made'
-              } by ${makerLabel}`}
+            ? `${makerLabel} ${
+                writtenByButtonShown ? '작성하지' : '제작하지'
+              } 않았음`
+            : `${makerLabel} ${writtenByButtonShown ? '작성했음' : '제작함'}`}
         </>
       );
     }
-    const makerLabel =
-      uploader?.id === userId ? '내가' : `${uploader?.username}님이`;
+    const makerLabel = uploader?.id === userId ? 'me' : uploader?.username;
     return (
       <>
         {byUser
-          ? `${makerLabel} ${
-              writtenByButtonShown ? '작성하지' : '제작하지'
-            } 않았음`
-          : `${makerLabel} ${writtenByButtonShown ? '작성했음' : '제작함'}`}
+          ? `This wasn't ${
+              writtenByButtonShown ? 'written' : 'made'
+            } by ${makerLabel}`
+          : `This was ${
+              writtenByButtonShown ? 'written' : 'made'
+            } by ${makerLabel}`}
       </>
     );
   }, [byUser, uploader?.id, uploader?.username, userId, writtenByButtonShown]);
   const moderatorHasDisabledChangeLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
+    if (SELECTED_LANGUAGE === 'kr') {
       return (
         <span>
-          <b>{moderatorName}</b> has disabled users from changing this setting
-          for this post
+          <b>{moderatorName}</b>님이 이 설정을 변경하지 못하도록 설정하였습니다
         </span>
       );
     }
     return (
       <span>
-        <b>{moderatorName}</b>님이 이 설정을 변경하지 못하도록 설정하였습니다
+        <b>{moderatorName}</b> has disabled users from changing this setting for
+        this post
       </span>
     );
   }, [moderatorName]);

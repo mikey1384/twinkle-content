@@ -125,31 +125,31 @@ function Vocabulary() {
   );
 
   const wordLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
-      return /\s/.test(wordObj.content) ? 'term' : 'word';
+    if (SELECTED_LANGUAGE === 'kr') {
+      return /\s/.test(wordObj.content) ? '숙어' : '단어';
     }
-    return /\s/.test(wordObj.content) ? '숙어' : '단어';
+    return /\s/.test(wordObj.content) ? 'term' : 'word';
   }, [wordObj.content]);
 
   const notCollectedYetLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
-      return `This ${wordLabel} has not been collected yet. Collect it and earn XP!`;
+    if (SELECTED_LANGUAGE === 'kr') {
+      return `이 ${wordLabel}는 아직 수집되지 않은 상태입니다. 수집하시면 XP가 올라갑니다!`;
     }
-    return `이 ${wordLabel}는 아직 수집되지 않은 상태입니다. 수집하시면 XP가 올라갑니다!`;
+    return `This ${wordLabel} has not been collected yet. Collect it and earn XP!`;
   }, [wordLabel]);
 
   const alreadyCollectedLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
-      `This ${wordLabel} has already been collected`;
+    if (SELECTED_LANGUAGE === 'kr') {
+      return `이 ${wordLabel}는 이미 수집된 상태입니다`;
     }
-    return `이 ${wordLabel}는 이미 수집된 상태입니다`;
+    return `This ${wordLabel} has already been collected`;
   }, [wordLabel]);
 
   const notFoundLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
-      return `${`"${inputText}"`} was not found`;
+    if (SELECTED_LANGUAGE === 'kr') {
+      return `찾을 수 없었습니다: ${`"${inputText}"`}`;
     }
-    return `찾을 수 없었습니다: ${`"${inputText}"`}`;
+    return `${`"${inputText}"`} was not found`;
   }, [inputText]);
 
   const handleSubmit = useCallback(async () => {

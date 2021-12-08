@@ -294,15 +294,15 @@ export default function Body({
   }, [userId]);
 
   const viewsLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
-      return (
-        <>
-          {addCommasToNumber(views)} view
-          {`${views > 1 ? 's' : ''}`}
-        </>
-      );
+    if (SELECTED_LANGUAGE === 'kr') {
+      return <>조회수 {addCommasToNumber(views)}회</>;
     }
-    return <>조회수 {addCommasToNumber(views)}회</>;
+    return (
+      <>
+        {addCommasToNumber(views)} view
+        {`${views > 1 ? 's' : ''}`}
+      </>
+    );
   }, [views]);
 
   return (

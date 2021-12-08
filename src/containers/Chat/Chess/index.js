@@ -100,18 +100,18 @@ function Chess({
   );
 
   const awaitingMoveLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
+    if (SELECTED_LANGUAGE === 'kr') {
       return (
         <>
-          <p>Awaiting</p>
-          {opponentName ? <p>{`${opponentName}'s move`}</p> : null}
+          {opponentName ? <p>{`${opponentName}님의`}</p> : null}
+          <p>회신 대기중</p>
         </>
       );
     }
     return (
       <>
-        {opponentName ? <p>{`${opponentName}님의`}</p> : null}
-        <p>회신 대기중</p>
+        <p>Awaiting</p>
+        {opponentName ? <p>{`${opponentName}'s move`}</p> : null}
       </>
     );
   }, [opponentName]);

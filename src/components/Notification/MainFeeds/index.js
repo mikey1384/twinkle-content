@@ -85,9 +85,9 @@ function MainFeeds({
   }, []);
 
   const twinkleLabel = useMemo(() => {
-    return SELECTED_LANGUAGE === 'en'
-      ? `${totalTwinkles} Twinkle${totalTwinkles > 0 ? 's' : ''}`
-      : `트윈클 ${totalTwinkles}개`;
+    return SELECTED_LANGUAGE === 'kr'
+      ? `트윈클 ${totalTwinkles}개`
+      : `${totalTwinkles} Twinkle${totalTwinkles > 0 ? 's' : ''}`;
   }, [totalTwinkles]);
 
   const totalRewardAmount = useMemo(

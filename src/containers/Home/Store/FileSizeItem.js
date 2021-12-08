@@ -32,38 +32,38 @@ const item = {
   ],
   description: maxSizes.map((currentSize, index) => {
     if (index === 0) {
-      if (SELECTED_LANGUAGE === 'en') {
-        return `Unlock this item to expand your maximum upload file size to ${translateMBToGB(
+      if (SELECTED_LANGUAGE === 'kr') {
+        return `본 아이템을 잠금 해제 하시면 파일 업로드 용량 최대치를 ${translateMBToGBWithoutSpace(
           maxSizes[1]
-        )} (from ${translateMBToGB(currentSize)})`;
+        )}까지 확장하실 수 있습니다 (현재 ${translateMBToGBWithoutSpace(
+          currentSize
+        )})`;
       }
-      return `본 아이템을 잠금 해제 하시면 파일 업로드 용량 최대치를 ${translateMBToGBWithoutSpace(
+      return `Unlock this item to expand your maximum upload file size to ${translateMBToGB(
         maxSizes[1]
+      )} (from ${translateMBToGB(currentSize)})`;
+    }
+    if (SELECTED_LANGUAGE === 'kr') {
+      return `본 아이템을 업그레이드 하시면 파일 업로드 용량 최대치를 ${translateMBToGBWithoutSpace(
+        maxSizes[index + 1]
       )}까지 확장하실 수 있습니다 (현재 ${translateMBToGBWithoutSpace(
         currentSize
       )})`;
     }
-    if (SELECTED_LANGUAGE === 'en') {
-      return `Upgrade this item to expand your maximum upload file size to ${translateMBToGB(
-        maxSizes[index + 1]
-      )} (from ${translateMBToGB(currentSize)})`;
-    }
-    return `본 아이템을 업그레이드 하시면 파일 업로드 용량 최대치를 ${translateMBToGBWithoutSpace(
+    return `Upgrade this item to expand your maximum upload file size to ${translateMBToGB(
       maxSizes[index + 1]
-    )}까지 확장하실 수 있습니다 (현재 ${translateMBToGBWithoutSpace(
-      currentSize
-    )})`;
+    )} (from ${translateMBToGB(currentSize)})`;
   })
 };
 
 const youCanNowUploadLabel =
-  SELECTED_LANGUAGE === 'en'
-    ? `You can now upload files up to ${translateMBToGB(
+  SELECTED_LANGUAGE === 'kr'
+    ? `이제 최대 ${translateMBToGBWithoutSpace(
         maxSizes[maxSizes.length - 1]
-      )} in size`
-    : `이제 최대 ${translateMBToGBWithoutSpace(
+      )}까지 업로드 가능합니다`
+    : `You can now upload files up to ${translateMBToGB(
         maxSizes[maxSizes.length - 1]
-      )}까지 업로드 가능합니다`;
+      )} in size`;
 
 FileSizeItem.propTypes = {
   style: PropTypes.object

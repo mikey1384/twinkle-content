@@ -97,19 +97,19 @@ export default function Input({
     const regex = /[^a-zA-Z\-'\s]/gi;
     const isInvalid = regex.test(event.target.value.trim());
     if (isInvalid) {
-      if (SELECTED_LANGUAGE === 'en') {
+      if (SELECTED_LANGUAGE === 'kr') {
         return onSetVocabErrorMessage(
-          `"${truncateText({
+          `허용되지 않는 문자가 포함되어 있습니다: "${truncateText({
             text: event.target.value,
             limit: 20
-          })}" is not allowed for vocabulary section.`
+          })}"`
         );
       }
       return onSetVocabErrorMessage(
-        `허용되지 않는 문자가 포함되어 있습니다: "${truncateText({
+        `"${truncateText({
           text: event.target.value,
           limit: 20
-        })}"`
+        })}" is not allowed for vocabulary section.`
       );
     }
     onInput();

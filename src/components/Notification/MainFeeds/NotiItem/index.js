@@ -49,7 +49,7 @@ export default function NotiItem({
       return (
         <>
           <UsernameText user={user} color={Color.blue()} />
-          {SELECTED_LANGUAGE === 'en' ? ' ' : ''}
+          {SELECTED_LANGUAGE === 'kr' ? '' : ' '}
         </>
       );
     }

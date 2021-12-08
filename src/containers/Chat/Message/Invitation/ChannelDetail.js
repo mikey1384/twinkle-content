@@ -43,16 +43,16 @@ export default function ChannelDetail({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [alreadyJoined, invitePath]);
   const invitationLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
-      return `Invitation to ${channelName}`;
+    if (SELECTED_LANGUAGE === 'kr') {
+      return `${channelName} 대화방에 초대합니다`;
     }
-    return `${channelName} 대화방에 초대합니다`;
+    return `Invitation to ${channelName}`;
   }, [channelName]);
   const andMoreLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
-      return `and ${more} more`;
+    if (SELECTED_LANGUAGE === 'kr') {
+      return `외 ${more}명`;
     }
-    return `외 ${more}명`;
+    return `and ${more} more`;
   }, [more]);
 
   return (

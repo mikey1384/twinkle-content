@@ -98,10 +98,10 @@ function Comment({
   }, [canEdit, onSetIsEditing, reward.id, userIsUploader]);
 
   const rewardStatusLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
+    if (SELECTED_LANGUAGE === 'kr') {
       return (
         <>
-          {' '}
+          님이{' '}
           <span
             style={{
               fontWeight: 'bold',
@@ -114,16 +114,14 @@ function Comment({
                   : Color.logoBlue()
             }}
           >
-            rewarded {reward.rewardAmount === 1 ? 'a' : reward.rewardAmount}{' '}
-            Twinkle
-            {reward.rewardAmount > 1 ? 's' : ''}
+            트윈클 {reward.rewardAmount}개를 보상했습니다
           </span>
         </>
       );
     }
     return (
       <>
-        님이{' '}
+        {' '}
         <span
           style={{
             fontWeight: 'bold',
@@ -135,7 +133,9 @@ function Comment({
                 : Color.logoBlue()
           }}
         >
-          트윈클 {reward.rewardAmount}개를 보상했습니다
+          rewarded {reward.rewardAmount === 1 ? 'a' : reward.rewardAmount}{' '}
+          Twinkle
+          {reward.rewardAmount > 1 ? 's' : ''}
         </span>
       </>
     );

@@ -96,31 +96,30 @@ export default function LinkItem({
   }, [canDelete, canEdit, userIsUploader]);
 
   const uploadedLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
+    if (SELECTED_LANGUAGE === 'kr') {
       return (
         <>
-          Uploaded {`${timeSince(timeStamp)} `}
-          by <UsernameText user={uploader} />
+          게시자: <UsernameText user={uploader} /> {`${timeSince(timeStamp)}`}
         </>
       );
     }
     return (
       <>
-        게시자: <UsernameText user={uploader} /> {`${timeSince(timeStamp)}`}
+        Uploaded {`${timeSince(timeStamp)} `}
+        by <UsernameText user={uploader} />
       </>
     );
   }, [timeStamp, uploader]);
 
   const likesLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
+    if (SELECTED_LANGUAGE === 'kr') {
       return (
         <>
           <span
             style={{ cursor: 'pointer' }}
             onClick={() => setUserListModalShown(true)}
           >
-            {`${likes.length}`} like
-            {likes.length > 1 ? 's' : ''}
+            좋아요 ({`${likes.length}`})
           </span>
           &nbsp;&nbsp;
         </>
@@ -132,7 +131,8 @@ export default function LinkItem({
           style={{ cursor: 'pointer' }}
           onClick={() => setUserListModalShown(true)}
         >
-          좋아요 ({`${likes.length}`})
+          {`${likes.length}`} like
+          {likes.length > 1 ? 's' : ''}
         </span>
         &nbsp;&nbsp;
       </>
@@ -140,15 +140,15 @@ export default function LinkItem({
   }, [likes.length]);
 
   const commentsLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
-      return (
-        <span>
-          {numComments} comment
-          {numComments > 1 ? 's' : ''}
-        </span>
-      );
+    if (SELECTED_LANGUAGE === 'kr') {
+      return <span>댓글 ({numComments})</span>;
     }
-    return <span>댓글 ({numComments})</span>;
+    return (
+      <span>
+        {numComments} comment
+        {numComments > 1 ? 's' : ''}
+      </span>
+    );
   }, [numComments]);
 
   return !isDeleted ? (

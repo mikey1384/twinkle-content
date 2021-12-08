@@ -35,7 +35,7 @@ export default function MyRank({
     [rank]
   );
   const rankLabel = useMemo(() => {
-    return SELECTED_LANGUAGE === 'en' ? `Rank #${rank}` : `랭킹 ${rank}위`;
+    return SELECTED_LANGUAGE === 'kr' ? `랭킹 ${rank}위` : `Rank #${rank}`;
   }, [rank]);
 
   return (

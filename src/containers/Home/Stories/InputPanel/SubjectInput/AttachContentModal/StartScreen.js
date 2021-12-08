@@ -47,10 +47,10 @@ export default function StartScreen({ navigateTo, onHide }) {
     return true;
   }, [authLevel, twinkleXP]);
   const fromYourLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
-      return <>from Your {deviceIsMobile ? 'Device' : 'Computer'}</>;
+    if (SELECTED_LANGUAGE === 'kr') {
+      return <>{deviceIsMobile ? '기기' : '컴퓨터'}에서 가져오기</>;
     }
-    return <>{deviceIsMobile ? '기기' : '컴퓨터'}에서 가져오기</>;
+    return <>from Your {deviceIsMobile ? 'Device' : 'Computer'}</>;
   }, []);
 
   return (

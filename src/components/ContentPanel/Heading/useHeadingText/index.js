@@ -32,9 +32,9 @@ export default function useHeadingText({ action, contentObj }) {
       targetObj,
       uploader
     };
-    return SELECTED_LANGUAGE === 'en'
-      ? renderEnglishMessage(params)
-      : renderKoreanMessage(params);
+    return SELECTED_LANGUAGE === 'kr'
+      ? renderKoreanMessage(params)
+      : renderEnglishMessage(params);
   }, [
     action,
     byUser,

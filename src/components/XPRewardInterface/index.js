@@ -147,28 +147,28 @@ export default function XPRewardInterface({
 
   const rewardStatusText = useMemo(() => {
     if (selectedAmount > 0) {
-      if (SELECTED_LANGUAGE === 'en') {
-        return `Reward ${selectedAmount} Twinkle${
-          selectedAmount > 1 ? 's' : ''
-        } (${addCommasToNumber(selectedAmount * 200)} XP)`;
+      if (SELECTED_LANGUAGE === 'kr') {
+        return `트윈클 ${selectedAmount}개 (${addCommasToNumber(
+          selectedAmount * 200
+        )} XP)`;
       }
-      return `트윈클 ${selectedAmount}개 (${addCommasToNumber(
-        selectedAmount * 200
-      )} XP)`;
+      return `Reward ${selectedAmount} Twinkle${
+        selectedAmount > 1 ? 's' : ''
+      } (${addCommasToNumber(selectedAmount * 200)} XP)`;
     }
-    if (SELECTED_LANGUAGE === 'en') {
-      return 'Select reward amount';
+    if (SELECTED_LANGUAGE === 'kr') {
+      return '보상 금액을 선택하세요';
     }
-    return '보상 금액을 선택하세요';
+    return 'Select reward amount';
   }, [selectedAmount]);
 
   const rewardReasonLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
-      return `Let the recipient know why you are rewarding XP for this ${
-        contentType === 'url' ? 'link' : contentType
-      } (optional)`;
+    if (SELECTED_LANGUAGE === 'kr') {
+      return `이 활동을 보상하는 이유를 적어주세요 (선택사항)`;
     }
-    return `이 활동을 보상하는 이유를 적어주세요 (선택사항)`;
+    return `Let the recipient know why you are rewarding XP for this ${
+      contentType === 'url' ? 'link' : contentType
+    } (optional)`;
   }, [contentType]);
 
   const confirmText = useMemo(() => {

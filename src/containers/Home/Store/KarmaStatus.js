@@ -9,7 +9,14 @@ import Loading from 'components/Loading';
 import localize from 'constants/localize';
 
 const karmaCalculationLabel =
-  SELECTED_LANGUAGE === 'en' ? (
+  SELECTED_LANGUAGE === 'kr' ? (
+    <>
+      회원님의 카마포인트 = 회원님이 보상한{' '}
+      <b style={{ color: Color.pink() }}>트윈클 개수</b> + (
+      {karmaMultiplier.recommendation} × 선생님 유저들이 승인한 회원님의{' '}
+      <b style={{ color: Color.brownOrange() }}>추천 개수</b>)
+    </>
+  ) : (
     <>
       Your Karma Points = Total number of Twinkles you{' '}
       <b style={{ color: Color.pink() }}>rewarded</b> + (
@@ -17,37 +24,30 @@ const karmaCalculationLabel =
       <b style={{ color: Color.brownOrange() }}>recommendations</b> that were
       approved by teachers)
     </>
-  ) : (
-    <>
-      회원님의 카마포인트 = 회원님이 보상한{' '}
-      <b style={{ color: Color.pink() }}>트윈클 개수</b> + (
-      {karmaMultiplier.recommendation} × 선생님 유저들이 승인한 회원님의{' '}
-      <b style={{ color: Color.brownOrange() }}>추천 개수</b>)
-    </>
   );
 const rewardedTwinklesLabel =
-  SELECTED_LANGUAGE === 'en' ? (
+  SELECTED_LANGUAGE === 'kr' ? (
+    <>
+      회원님이 보상한 <b style={{ color: Color.pink() }}>트윈클 개수</b>
+    </>
+  ) : (
     <>
       Total number of Twinkles you{' '}
       <b style={{ color: Color.pink() }}>rewarded</b>
     </>
-  ) : (
-    <>
-      회원님이 보상한 <b style={{ color: Color.pink() }}>트윈클 개수</b>
-    </>
   );
 
 const approvedRecommendationsLabel =
-  SELECTED_LANGUAGE === 'en' ? (
+  SELECTED_LANGUAGE === 'kr' ? (
+    <>
+      선생님 유저들이 승인한 회원님의{' '}
+      <b style={{ color: Color.brownOrange() }}>추천 개수</b>
+    </>
+  ) : (
     <>
       Total number of{' '}
       <b style={{ color: Color.brownOrange() }}>recommendations</b> approved by
       teachers
-    </>
-  ) : (
-    <>
-      선생님 유저들이 승인한 회원님의{' '}
-      <b style={{ color: Color.brownOrange() }}>추천 개수</b>
     </>
   );
 
@@ -78,7 +78,6 @@ export default function KarmaStatus() {
     if (userId) {
       handleLoadKarmaPoints();
     }
-
     async function handleLoadKarmaPoints() {
       if (mounted.current) {
         setLoadingKarma(true);
@@ -115,17 +114,17 @@ export default function KarmaStatus() {
     if (authLevel < 2) {
       return <span>{karmaCalculationLabel}</span>;
     }
-    if (SELECTED_LANGUAGE === 'en') {
+    if (SELECTED_LANGUAGE === 'kr') {
       return (
         <span>
-          Your Karma Points = Total number of <b>posts</b> you rewarded ×{' '}
+          회원님의 카마포인트 = 회원님이 보상한 <b>게시물</b>의 총 개수 ×{' '}
           {karmaMultiplier.post}
         </span>
       );
     }
     return (
       <span>
-        회원님의 카마포인트 = 회원님이 보상한 <b>게시물</b>의 총 개수 ×{' '}
+        Your Karma Points = Total number of <b>posts</b> you rewarded ×{' '}
         {karmaMultiplier.post}
       </span>
     );
@@ -152,11 +151,11 @@ export default function KarmaStatus() {
         </div>
       );
     }
-    if (SELECTED_LANGUAGE === 'en') {
+    if (SELECTED_LANGUAGE === 'kr') {
       return (
         <div style={{ fontSize: '1.5rem', marginTop: '3rem' }}>
           <p>
-            Total number of posts you rewarded:{' '}
+            회원님이 보상한 게시물의 총 개수:{' '}
             {addCommasToNumber(numPostsRewarded)}
           </p>
           <p style={{ marginTop: '1rem', fontSize: '1.7rem' }}>
@@ -171,7 +170,7 @@ export default function KarmaStatus() {
     return (
       <div style={{ fontSize: '1.5rem', marginTop: '3rem' }}>
         <p>
-          회원님이 보상한 게시물의 총 개수:{' '}
+          Total number of posts you rewarded:{' '}
           {addCommasToNumber(numPostsRewarded)}
         </p>
         <p style={{ marginTop: '1rem', fontSize: '1.7rem' }}>
@@ -191,9 +190,9 @@ export default function KarmaStatus() {
   ]);
 
   const youHaveKarmaPointsText = useMemo(() => {
-    return SELECTED_LANGUAGE === 'en'
-      ? `You have ${addCommasToNumber(karmaPoints)} Karma Points`
-      : `회원님의 카마포인트는 ${addCommasToNumber(karmaPoints)}점입니다`;
+    return SELECTED_LANGUAGE === 'kr'
+      ? `회원님의 카마포인트는 ${addCommasToNumber(karmaPoints)}점입니다`
+      : `You have ${addCommasToNumber(karmaPoints)} Karma Points`;
   }, [karmaPoints]);
 
   if (!userId) return null;

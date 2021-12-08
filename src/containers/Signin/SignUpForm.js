@@ -65,34 +65,32 @@ export default function SignUpForm({
     [errorMessage, firstname, keyphrase, lastname, password, username]
   );
   const usernameErrorMsgLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
-      return `${username} is not a valid username.${
-        username.length < 3
-          ? ' Make sure it is at least 3 characters long.'
-          : ''
+    if (SELECTED_LANGUAGE === 'kr') {
+      return `"${username}" - 유효하지 않은 아이디입니다.${
+        username.length < 3 ? ' 아이디는 3글자 이상이어야 합니다.' : ''
       }`;
     }
-    return `"${username}" - 유효하지 않은 아이디입니다.${
-      username.length < 3 ? ' 아이디는 3글자 이상이어야 합니다.' : ''
+    return `${username} is not a valid username.${
+      username.length < 3 ? ' Make sure it is at least 3 characters long.' : ''
     }`;
   }, [username]);
   const notValidFirstNameLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
-      return `${firstname} is not a valid first name. Your first name should consist of english letters only`;
+    if (SELECTED_LANGUAGE === 'kr') {
+      return `${firstname}는 유효한 이름이 아닙니다. 영문자로 입력해 주세요`;
     }
-    return `${firstname}는 유효한 이름이 아닙니다. 영문자로 입력해 주세요`;
+    return `${firstname} is not a valid first name. Your first name should consist of english letters only`;
   }, [firstname]);
   const notValidLastNameLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
-      return `${lastname} is not a valid last name. Your last name should consist of english letters only`;
+    if (SELECTED_LANGUAGE === 'kr') {
+      return `${lastname}는 유효한 성이 아닙니다. 영문자로 입력해 주세요`;
     }
-    return `${lastname}는 유효한 성이 아닙니다. 영문자로 입력해 주세요`;
+    return `${lastname} is not a valid last name. Your last name should consist of english letters only`;
   }, [lastname]);
   const notValidEmailLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
-      return `${email} is not a valid email address`;
+    if (SELECTED_LANGUAGE === 'kr') {
+      return `${email}는 유효한 이메일 주소가 아닙니다`;
     }
-    return `${email}는 유효한 이메일 주소가 아닙니다`;
+    return `${email} is not a valid email address`;
   }, [email]);
 
   return (

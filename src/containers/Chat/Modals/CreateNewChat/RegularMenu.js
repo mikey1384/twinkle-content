@@ -37,18 +37,18 @@ export default function RegularMenu({
   const [isClosed, setIsClosed] = useState(false);
 
   const anyoneCanInviteLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
+    if (SELECTED_LANGUAGE === 'kr') {
       return (
         <>
-          <span style={{ color: Color.logoBlue() }}>Anyone</span> can invite new
-          members:
+          <span style={{ color: Color.logoBlue() }}>누구나</span> 새로운 멤버
+          초대 가능:
         </>
       );
     }
     return (
       <>
-        <span style={{ color: Color.logoBlue() }}>누구나</span> 새로운 멤버 초대
-        가능:
+        <span style={{ color: Color.logoBlue() }}>Anyone</span> can invite new
+        members:
       </>
     );
   }, []);

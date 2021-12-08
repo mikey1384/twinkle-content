@@ -529,10 +529,10 @@ function Comment({
   }, []);
 
   const viewedTheSecretMessageLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'en') {
-      return `${uploader?.username} viewed the secret message`;
+    if (SELECTED_LANGUAGE === 'kr') {
+      return `${uploader?.username}님이 비밀 메시지를 조회했습니다`;
     }
-    return `${uploader?.username}님이 비밀 메시지를 조회했습니다`;
+    return `${uploader?.username} viewed the secret message`;
   }, [uploader?.username]);
 
   return !isDeleted && !comment.isDeleted ? (
