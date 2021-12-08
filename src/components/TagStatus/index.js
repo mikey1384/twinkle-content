@@ -7,9 +7,9 @@ import { css } from '@emotion/css';
 import { Color } from 'constants/css';
 import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const addVideoToPlaylistsLabel = localize('addVideoToPlaylists');
 
 TagStatus.propTypes = {
@@ -80,7 +80,7 @@ function TagStatus({
   );
 
   const addLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return (
         <>
           +Add

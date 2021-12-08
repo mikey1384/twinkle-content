@@ -6,10 +6,10 @@ import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { useAppContext } from 'contexts';
 import { checkMultiMissionPassStatus } from 'helpers/userDataHelpers';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import ProfilePic from 'components/ProfilePic';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const completedLabel = localize('completed');
 const grammarRankLabel = localize('grammarRank');
 
@@ -56,7 +56,7 @@ export default function Cover({ missionIds, missionObj, myAttempts }) {
   }, [missionObj, missionIds]);
 
   const completedStatusLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return (
         <>
           Completed {numComplete} out of {missionIds.length} mission

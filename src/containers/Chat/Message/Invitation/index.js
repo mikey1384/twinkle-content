@@ -5,10 +5,10 @@ import Button from 'components/Button';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import { useAppContext, useChatContext } from 'contexts';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const alreadyJoinedLabel = localize('alreadyJoined');
 
 Invitation.propTypes = {
@@ -112,7 +112,7 @@ export default function Invitation({
   }, [invitePath]);
 
   const acceptGroupInvitationLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return `Accept ${sender.username}'s Invitation`;
     }
     return `${sender.username}님의 초대 수락`;

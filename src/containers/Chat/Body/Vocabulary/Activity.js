@@ -4,7 +4,11 @@ import ProfilePic from 'components/ProfilePic';
 import UsernameText from 'components/Texts/UsernameText';
 import WordModal from './WordModal';
 import { addCommasToNumber } from 'helpers/stringHelpers';
-import { vocabRewardHash, returnWordLevel } from 'constants/defaultValues';
+import {
+  vocabRewardHash,
+  returnWordLevel,
+  SELECTED_LANGUAGE
+} from 'constants/defaultValues';
 import { MessageStyle } from '../../Styles';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { unix } from 'moment';
@@ -13,8 +17,6 @@ import { useChatContext } from 'contexts';
 import { css } from '@emotion/css';
 import Icon from 'components/Icon';
 import localize from 'constants/localize';
-
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 
 Activity.propTypes = {
   activity: PropTypes.object.isRequired,
@@ -86,14 +88,14 @@ export default function Activity({
   );
 
   const wordLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return /\s/.test(content) ? 'term' : 'word';
     }
     return /\s/.test(content) ? '숙어' : '단어';
   }, [content]);
 
   const activityLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return (
         <div>
           collected {wordLevel === 1 ? 'a' : 'an'}{' '}

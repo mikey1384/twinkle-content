@@ -15,11 +15,11 @@ import { useInputContext } from 'contexts';
 import {
   FILE_UPLOAD_XP_REQUIREMENT,
   mb,
-  returnMaxUploadSize
+  returnMaxUploadSize,
+  SELECTED_LANGUAGE
 } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const fromTwinkleWebsiteLabel = localize('fromTwinkleWebsite');
 const videoLabel = localize('video');
 const linkLabel = localize('link');
@@ -47,7 +47,7 @@ export default function StartScreen({ navigateTo, onHide }) {
     return true;
   }, [authLevel, twinkleXP]);
   const fromYourLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return <>from Your {deviceIsMobile ? 'Device' : 'Computer'}</>;
     }
     return <>{deviceIsMobile ? '기기' : '컴퓨터'}에서 가져오기</>;

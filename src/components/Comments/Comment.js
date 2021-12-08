@@ -43,9 +43,9 @@ import { getFileInfoFromFileName, stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext } from 'contexts';
 import { useInView } from 'react-intersection-observer';
 import LocalContext from './Context';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const commentWasDeletedLabel = localize('commentWasDeleted');
 const editLabel = localize('edit');
 const pinLabel = localize('pin');
@@ -529,7 +529,7 @@ function Comment({
   }, []);
 
   const viewedTheSecretMessageLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return `${uploader?.username} viewed the secret message`;
     }
     return `${uploader?.username}님이 비밀 메시지를 조회했습니다`;

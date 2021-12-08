@@ -21,10 +21,10 @@ import {
   finalizeEmoji
 } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import { useAppContext, useHomeContext, useInputContext } from 'contexts';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const enterDescriptionOptionalLabel = localize('enterDescriptionOptional');
 const forEveryStarYouAddLabel = localize('forEveryStarYouAdd');
 const enterTitleHereLabel = localize('enterTitleHere');
@@ -152,7 +152,7 @@ function ContentInput() {
   const rewardLevelDescription = useMemo(() => {
     switch (form.rewardLevel) {
       case 3:
-        if (selectedLanguage === 'en') {
+        if (SELECTED_LANGUAGE === 'en') {
           return (
             <>
               This video is{' '}
@@ -171,7 +171,7 @@ function ContentInput() {
           </>
         );
       case 4:
-        if (selectedLanguage === 'en') {
+        if (SELECTED_LANGUAGE === 'en') {
           return (
             <>
               This video is{' '}
@@ -187,7 +187,7 @@ function ContentInput() {
           </>
         );
       case 5:
-        if (selectedLanguage === 'en') {
+        if (SELECTED_LANGUAGE === 'en') {
           return (
             <>
               This video is{' '}

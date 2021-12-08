@@ -4,10 +4,9 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { Color } from 'constants/css';
 import { notiFeedListItem } from '../../Styles';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import useNotificationMessage from './useNotificationMessage';
 import UsernameText from 'components/Texts/UsernameText';
-
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 
 NotiItem.propTypes = {
   notification: PropTypes.object.isRequired
@@ -50,7 +49,7 @@ export default function NotiItem({
       return (
         <>
           <UsernameText user={user} color={Color.blue()} />
-          {selectedLanguage === 'en' ? ' ' : ''}
+          {SELECTED_LANGUAGE === 'en' ? ' ' : ''}
         </>
       );
     }

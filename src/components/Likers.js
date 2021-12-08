@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import UsernameText from 'components/Texts/UsernameText';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { Color } from 'constants/css';
-
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 
 Likers.propTypes = {
   className: PropTypes.string,
@@ -46,7 +45,7 @@ export default function Likers({
       if (totalLikes > 0) {
         if (totalLikes === 1) {
           let otherLikes = likes.filter((like) => like?.id !== userId);
-          if (selectedLanguage === 'kr') {
+          if (SELECTED_LANGUAGE === 'kr') {
             return (
               <div>
                 회원님과{' '}
@@ -77,7 +76,7 @@ export default function Likers({
             </div>
           );
         } else {
-          if (selectedLanguage === 'kr') {
+          if (SELECTED_LANGUAGE === 'kr') {
             return (
               <div>
                 회원님과{' '}
@@ -105,13 +104,13 @@ export default function Likers({
           );
         }
       }
-      if (selectedLanguage === 'kr') {
+      if (SELECTED_LANGUAGE === 'kr') {
         return <div>회원님이 이 게시물을 좋아합니다.</div>;
       }
       return <div>You like {`this${target ? ' ' + target : ''}.`}</div>;
     } else if (totalLikes > 0) {
       if (totalLikes === 1) {
-        if (selectedLanguage === 'kr') {
+        if (SELECTED_LANGUAGE === 'kr') {
           return (
             <div>
               <UsernameText
@@ -134,7 +133,7 @@ export default function Likers({
           </div>
         );
       } else {
-        if (selectedLanguage === 'kr') {
+        if (SELECTED_LANGUAGE === 'kr') {
           return (
             <div>
               <a

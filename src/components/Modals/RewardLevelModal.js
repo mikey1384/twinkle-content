@@ -6,9 +6,9 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import RewardLevelForm from 'components/Forms/RewardLevelForm';
 import AlertModal from 'components/Modals/AlertModal';
 import { useAppContext } from 'contexts';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const cancelLabel = localize('cancel');
 const setLabel = localize('set');
 const settingCannotBeChangedLabel = localize('settingCannotBeChanged');
@@ -38,7 +38,7 @@ export default function RewardLevelModal({
   const [rewardLevel, setRewardLevel] = useState(initialRewardLevel);
 
   const moderatorHasDisabledChangeLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return (
         <span>
           <b>{moderatorName}</b> has disabled users from changing this setting

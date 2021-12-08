@@ -6,9 +6,8 @@ import ProgressBar from 'components/ProgressBar';
 import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
-
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 
 ItemPanel.propTypes = {
   children: PropTypes.node,
@@ -51,13 +50,13 @@ export default function ItemPanel({
     return !notUnlocked && isLeveled && currentLvl < maxLvl;
   }, [currentLvl, isLeveled, maxLvl, notUnlocked]);
   const requirementLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return `Requires ${addCommasToNumber(requiredKarmaPoints)} KP`;
     }
     return `${addCommasToNumber(requiredKarmaPoints)}KP 필요`;
   }, [requiredKarmaPoints]);
   const requirementDescriptionLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return (
         <>
           You need <b>{addCommasToNumber(requiredKarmaPoints)} karma points</b>{' '}

@@ -9,10 +9,13 @@ import {
   translateMBToGB,
   translateMBToGBWithoutSpace
 } from 'helpers/stringHelpers';
-import { karmaPointTable, maxSizes } from 'constants/defaultValues';
+import {
+  karmaPointTable,
+  maxSizes,
+  SELECTED_LANGUAGE
+} from 'constants/defaultValues';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const expandMaximumUploadSizeLabel = localize('expandMaximumUploadSize');
 const maximumUploadSizeLabel = localize('maximumUploadSize');
 
@@ -29,7 +32,7 @@ const item = {
   ],
   description: maxSizes.map((currentSize, index) => {
     if (index === 0) {
-      if (selectedLanguage === 'en') {
+      if (SELECTED_LANGUAGE === 'en') {
         return `Unlock this item to expand your maximum upload file size to ${translateMBToGB(
           maxSizes[1]
         )} (from ${translateMBToGB(currentSize)})`;
@@ -40,7 +43,7 @@ const item = {
         currentSize
       )})`;
     }
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return `Upgrade this item to expand your maximum upload file size to ${translateMBToGB(
         maxSizes[index + 1]
       )} (from ${translateMBToGB(currentSize)})`;
@@ -54,7 +57,7 @@ const item = {
 };
 
 const youCanNowUploadLabel =
-  selectedLanguage === 'en'
+  SELECTED_LANGUAGE === 'en'
     ? `You can now upload files up to ${translateMBToGB(
         maxSizes[maxSizes.length - 1]
       )} in size`

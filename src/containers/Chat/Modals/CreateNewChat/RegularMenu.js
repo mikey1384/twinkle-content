@@ -6,9 +6,9 @@ import Input from 'components/Texts/Input';
 import SwitchButton from 'components/Buttons/SwitchButton';
 import { Color } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const backLabel = localize('back');
 const cancelLabel = localize('cancel');
 const createLabel = localize('create');
@@ -37,7 +37,7 @@ export default function RegularMenu({
   const [isClosed, setIsClosed] = useState(false);
 
   const anyoneCanInviteLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return (
         <>
           <span style={{ color: Color.logoBlue() }}>Anyone</span> can invite new

@@ -4,10 +4,10 @@ import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 import { useHistory } from 'react-router-dom';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import UserListModal from 'components/Modals/UserListModal';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const membersLabel = localize('members');
 
 ChannelDetail.propTypes = {
@@ -43,13 +43,13 @@ export default function ChannelDetail({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [alreadyJoined, invitePath]);
   const invitationLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return `Invitation to ${channelName}`;
     }
     return `${channelName} 대화방에 초대합니다`;
   }, [channelName]);
   const andMoreLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return `and ${more} more`;
     }
     return `외 ${more}명`;

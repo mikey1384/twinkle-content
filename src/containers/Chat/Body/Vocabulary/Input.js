@@ -10,9 +10,9 @@ import {
   truncateText
 } from 'helpers/stringHelpers';
 import { useChatContext, useInputContext } from 'contexts';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const deviceIsMobile = isMobile(navigator);
 const typeWordLabel = localize('typeWord');
 
@@ -97,7 +97,7 @@ export default function Input({
     const regex = /[^a-zA-Z\-'\s]/gi;
     const isInvalid = regex.test(event.target.value.trim());
     if (isInvalid) {
-      if (selectedLanguage === 'en') {
+      if (SELECTED_LANGUAGE === 'en') {
         return onSetVocabErrorMessage(
           `"${truncateText({
             text: event.target.value,

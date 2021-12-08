@@ -4,8 +4,8 @@ import { addCommasToNumber } from 'helpers/stringHelpers';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import localize from 'constants/localize';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const unrankedLabel = localize('unranked');
 
 MyRank.propTypes = {
@@ -35,7 +35,7 @@ export default function MyRank({
     [rank]
   );
   const rankLabel = useMemo(() => {
-    return selectedLanguage === 'en' ? `Rank #${rank}` : `랭킹 ${rank}위`;
+    return SELECTED_LANGUAGE === 'en' ? `Rank #${rank}` : `랭킹 ${rank}위`;
   }, [rank]);
 
   return (

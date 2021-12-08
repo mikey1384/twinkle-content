@@ -10,11 +10,11 @@ import { timeSince } from 'helpers/timeStampHelpers';
 import { useManagementContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { isMobile } from 'helpers';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import Icon from 'components/Icon';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const accountTypeLabel = localize('accountType');
 const changeAccountTypeLabel = localize('changeAccountType');
 const moderatorsLabel = localize('moderators');
@@ -46,7 +46,7 @@ export default function Moderators({ canManage }) {
     );
   }, [moderators, searchQuery]);
   const addLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return <>Add{deviceIsMobile ? '' : ' Moderators'}</>;
     }
     return <>{deviceIsMobile ? '' : '관리자 '}등록</>;

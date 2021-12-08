@@ -13,12 +13,15 @@ import {
   stringIsEmpty
 } from 'helpers/stringHelpers';
 import Button from 'components/Button';
-import { returnMaxRewards, priceTable } from 'constants/defaultValues';
+import {
+  returnMaxRewards,
+  priceTable,
+  SELECTED_LANGUAGE
+} from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useInputContext } from 'contexts';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const clearLabel = localize('clear');
 const rewardLabel = localize('reward');
 
@@ -144,7 +147,7 @@ export default function XPRewardInterface({
 
   const rewardStatusText = useMemo(() => {
     if (selectedAmount > 0) {
-      if (selectedLanguage === 'en') {
+      if (SELECTED_LANGUAGE === 'en') {
         return `Reward ${selectedAmount} Twinkle${
           selectedAmount > 1 ? 's' : ''
         } (${addCommasToNumber(selectedAmount * 200)} XP)`;
@@ -153,14 +156,14 @@ export default function XPRewardInterface({
         selectedAmount * 200
       )} XP)`;
     }
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return 'Select reward amount';
     }
     return '보상 금액을 선택하세요';
   }, [selectedAmount]);
 
   const rewardReasonLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return `Let the recipient know why you are rewarding XP for this ${
         contentType === 'url' ? 'link' : contentType
       } (optional)`;

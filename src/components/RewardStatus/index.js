@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { addCommasToNumber, stringIsEmpty } from 'helpers/stringHelpers';
-import { returnMaxRewards } from 'constants/defaultValues';
+import { returnMaxRewards, SELECTED_LANGUAGE } from 'constants/defaultValues';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import Comment from './Comment';
 import ErrorBoundary from 'components/ErrorBoundary';
@@ -11,7 +11,6 @@ import Starmarks from './Starmarks';
 import { useMyState } from 'helpers/hooks';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const showMoreRewardRecordsLabel = localize('showMoreRewardRecords');
 
 RewardStatus.propTypes = {
@@ -63,7 +62,7 @@ function RewardStatus({
   }, [maxRewards, rewards]);
 
   const rewardStatusLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return (
         <>
           {amountRewarded} Twinkle

@@ -4,11 +4,10 @@ import Button from 'components/Button';
 import Textarea from 'components/Texts/Textarea';
 import ColorSelector from 'components/ColorSelector';
 import ErrorBoundary from 'components/ErrorBoundary';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import { css } from '@emotion/css';
 import { Color } from 'constants/css';
 import { exceedsCharLimit } from 'helpers/stringHelpers';
-
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 
 StatusInput.propTypes = {
   autoFocus: PropTypes.bool,
@@ -42,7 +41,7 @@ export default function StatusInput({
     [editedStatusMsg]
   );
   const statusMsgPlaceholder = useMemo(() => {
-    return selectedLanguage === 'en'
+    return SELECTED_LANGUAGE === 'en'
       ? `Enter a ${profile.statusMsg ? 'new ' : ''}status message...`
       : '상태 메시지를 입력하세요...';
   }, [profile.statusMsg]);

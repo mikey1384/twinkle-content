@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import Square from './Square';
 import getPiece from './helpers/piece';
 import Loading from 'components/Loading';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
-
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 
 Board.propTypes = {
   interactable: PropTypes.bool,
@@ -34,7 +33,7 @@ function Board({
   spoilerOff
 }) {
   const madeNewMoveLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return (
         <>
           <p>{opponentName} made a new chess move.</p>

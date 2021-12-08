@@ -2,9 +2,8 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
-
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 
 RewardLevelExpectation.propTypes = {
   rewardLevel: PropTypes.number.isRequired
@@ -27,7 +26,7 @@ export default function RewardLevelExpectation({ rewardLevel }) {
     }
   }, [rewardLevel]);
   const rewardLevelExpectationLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return (
         <>
           Put {rewardLevelExpectation} Into Your Response to Get Recommendations

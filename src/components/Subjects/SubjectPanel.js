@@ -25,9 +25,9 @@ import { determineXpButtonDisabled } from 'helpers';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const commentLabel = localize('comment');
 const byLabel = localize('by');
 const secretMessageLabel = localize('secretMessage');
@@ -345,7 +345,7 @@ export default function SubjectPanel({
                   <Icon icon="comment-alt" />
                   <span style={{ marginLeft: '1rem' }}>
                     {commentLabel}
-                    {!expanded && selectedLanguage === 'en' && numComments > 1
+                    {!expanded && SELECTED_LANGUAGE === 'en' && numComments > 1
                       ? 's'
                       : ''}
                     {!expanded &&

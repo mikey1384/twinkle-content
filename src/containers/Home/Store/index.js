@@ -7,21 +7,24 @@ import ProfilePictureItem from './ProfilePictureItem';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useAppContext, useContentContext, useViewContext } from 'contexts';
-import { priceTable, karmaPointTable } from 'constants/defaultValues';
+import {
+  priceTable,
+  karmaPointTable,
+  SELECTED_LANGUAGE
+} from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import RewardBoostItem from './RewardBoostItem';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const changeUsernameLabel = localize('changeUsername');
 const changeUsernameDescriptionLabel =
-  selectedLanguage === 'en'
+  SELECTED_LANGUAGE === 'en'
     ? `Unlock this item to change your username anytime you want for ${priceTable.username} Twinkle Coins`
     : `본 아이템을 잠금 해제 하시면 ${priceTable.username} 트윈클 코인 가격에 언제든 유저명을 바꾸실 수 있게 됩니다`;
 const moreToComeLabel = localize('moreToCome');
 
 const welcomeMessageLabel =
-  selectedLanguage === 'en' ? (
+  SELECTED_LANGUAGE === 'en' ? (
     <>
       Welcome to <span className="logo logo-twin">Twin</span>
       <span className="logo logo-kle">kle</span> Store

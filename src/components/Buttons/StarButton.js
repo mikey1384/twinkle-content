@@ -8,10 +8,12 @@ import RewardLevelModal from 'components/Modals/RewardLevelModal';
 import ErrorBoundary from 'components/ErrorBoundary';
 import AlertModal from 'components/Modals/AlertModal';
 import { useAppContext } from 'contexts';
-import { DESCRIPTION_LENGTH_FOR_EXTRA_REWARD_LEVEL } from 'constants/defaultValues';
+import {
+  DESCRIPTION_LENGTH_FOR_EXTRA_REWARD_LEVEL,
+  SELECTED_LANGUAGE
+} from 'constants/defaultValues';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const setRewardLevelLabel = localize('setRewardLevel');
 const settingCannotBeChangedLabel = localize('settingCannotBeChanged');
 
@@ -75,7 +77,7 @@ export default function StarButton({
   const StarButtonRef = useRef(null);
   useOutsideClick(StarButtonRef, () => setMenuShown(false));
   const byUserLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       const makerLabel = uploader?.id === userId ? 'me' : uploader?.username;
       return (
         <>
@@ -102,7 +104,7 @@ export default function StarButton({
     );
   }, [byUser, uploader?.id, uploader?.username, userId, writtenByButtonShown]);
   const moderatorHasDisabledChangeLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return (
         <span>
           <b>{moderatorName}</b> has disabled users from changing this setting

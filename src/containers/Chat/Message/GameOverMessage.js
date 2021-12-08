@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const chessEndedInDrawLabel = localize('chessEndedInDraw');
 
 GameOverMessage.propTypes = {
@@ -18,7 +18,7 @@ GameOverMessage.propTypes = {
 
 function GameOverMessage({ myId, opponentName, winnerId, isDraw, isResign }) {
   const failedToMakeMoveInTimeLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return myId === winnerId ? (
         <div style={{ textAlign: 'center' }}>
           <p>{opponentName} failed to make a move in time...</p>
@@ -45,7 +45,7 @@ function GameOverMessage({ myId, opponentName, winnerId, isDraw, isResign }) {
   }, [myId, opponentName, winnerId]);
 
   const resignLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return myId === winnerId ? (
         <div style={{ textAlign: 'center' }}>
           <p>{opponentName} resigned!</p>

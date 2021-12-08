@@ -12,9 +12,9 @@ import { css } from '@emotion/css';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useExploreContext } from 'contexts';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const editLabel = localize('edit');
 const removeLabel = localize('remove');
 
@@ -96,7 +96,7 @@ export default function LinkItem({
   }, [canDelete, canEdit, userIsUploader]);
 
   const uploadedLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return (
         <>
           Uploaded {`${timeSince(timeStamp)} `}
@@ -112,7 +112,7 @@ export default function LinkItem({
   }, [timeStamp, uploader]);
 
   const likesLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return (
         <>
           <span
@@ -140,7 +140,7 @@ export default function LinkItem({
   }, [likes.length]);
 
   const commentsLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return (
         <span>
           {numComments} comment

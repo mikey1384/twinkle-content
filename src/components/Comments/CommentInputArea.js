@@ -6,9 +6,8 @@ import LocalContext from './Context';
 import { useInputContext } from 'contexts';
 import { useContentState } from 'helpers/hooks';
 import { v1 as uuidv1 } from 'uuid';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import RewardLevelExpectation from './RewardLevelExpectation';
-
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 
 CommentInputArea.propTypes = {
   autoFocus: PropTypes.bool,
@@ -44,7 +43,7 @@ export default function CommentInputArea({
   targetCommentId
 }) {
   const placeholderLabel = useMemo(() => {
-    if (selectedLanguage === 'kr') {
+    if (SELECTED_LANGUAGE === 'kr') {
       return '댓글을 입력하세요...';
     }
     return `Enter your ${inputTypeLabel} here...`;

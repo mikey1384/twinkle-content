@@ -2,9 +2,9 @@ import React, { useMemo } from 'react';
 import Button from 'components/Button';
 import { Color } from 'constants/css';
 import { useAppContext } from 'contexts';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const logInLabel = localize('logIn');
 
 export default function PleaseLogIn() {
@@ -15,7 +15,7 @@ export default function PleaseLogIn() {
   } = useAppContext();
 
   const doYouWantToChatAndPlayChessLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return (
         <p>
           Do you want to{' '}

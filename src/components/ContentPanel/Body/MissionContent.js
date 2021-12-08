@@ -5,9 +5,9 @@ import UsernameText from 'components/Texts/UsernameText';
 import ContentLink from 'components/ContentLink';
 import { borderRadius, Color } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const taskCompleteLabel = localize('taskComplete');
 const missionAccomplishedLabel = localize('missionAccomplished');
 
@@ -25,7 +25,7 @@ export default function MissionContent({ uploader, rootObj: mission }) {
           color: Color.black()
         }}
       >
-        {selectedLanguage === 'en' ? renderEnglish() : renderKorean()}
+        {SELECTED_LANGUAGE === 'en' ? renderEnglish() : renderKorean()}
       </div>
     ) : null;
 

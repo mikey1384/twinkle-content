@@ -2,8 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { css } from '@emotion/css';
 import { Color } from 'constants/css';
-
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 
 DrawOffer.propTypes = {
   myId: PropTypes.number,
@@ -15,7 +14,7 @@ DrawOffer.propTypes = {
 export default function DrawOffer({ onClick, username, userId, myId }) {
   const displayedUserLabel = useMemo(() => {
     if (userId === myId) {
-      if (selectedLanguage === 'en') {
+      if (SELECTED_LANGUAGE === 'en') {
         return 'You';
       }
       return '회원';
@@ -24,7 +23,7 @@ export default function DrawOffer({ onClick, username, userId, myId }) {
   }, [myId, userId, username]);
 
   const offeredDrawLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return `${displayedUserLabel} offered a draw`;
     }
     return `${displayedUserLabel}님이 무승부를 제안했습니다`;

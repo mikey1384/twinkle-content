@@ -32,10 +32,10 @@ import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useInputContext } from 'contexts';
 import { useHistory } from 'react-router-dom';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import { v1 as uuidv1 } from 'uuid';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const commentRemovedLabel = localize('commentRemoved');
 const replyLabel = localize('reply');
 const rewardLabel = localize('reward');
@@ -186,7 +186,7 @@ export default function TargetContent({
   const DetailText = useMemo(() => {
     return (
       <div>
-        {selectedLanguage === 'en' ? renderEnglishText() : renderKoreanText()}
+        {SELECTED_LANGUAGE === 'en' ? renderEnglishText() : renderKoreanText()}
       </div>
     );
 

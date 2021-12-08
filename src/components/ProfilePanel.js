@@ -12,7 +12,10 @@ import Link from 'components/Link';
 import UserDetails from 'components/UserDetails';
 import Loading from 'components/Loading';
 import { useHistory } from 'react-router-dom';
-import { MAX_PROFILE_PIC_SIZE } from 'constants/defaultValues';
+import {
+  MAX_PROFILE_PIC_SIZE,
+  SELECTED_LANGUAGE
+} from 'constants/defaultValues';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { timeSince } from 'helpers/timeStampHelpers';
@@ -26,7 +29,6 @@ import {
 } from 'contexts';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const chatLabel = localize('chat2');
 const changePicLabel = localize('changePic');
 const editBioLabel = localize('editBio');
@@ -242,7 +244,7 @@ function ProfilePanel({ expandable, profileId, style }) {
     [heightNotSet, inView, loaded, visible]
   );
   const leaveMessageLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return (
         <>
           {profileId === userId ? '' : 'Leave '}

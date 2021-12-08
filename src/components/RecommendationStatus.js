@@ -4,9 +4,9 @@ import UsernameText from 'components/Texts/UsernameText';
 import UserListModal from 'components/Modals/UserListModal';
 import { Color } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const recommendedByLabel = localize('recommendedBy');
 const youLabel = localize('you');
 const othersLabel = localize('others');
@@ -73,7 +73,7 @@ export default function RecommendationStatus({
   );
 
   const andLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return ' and';
     }
     if (recommendationsByUsertypeExceptMe.length > 2) {

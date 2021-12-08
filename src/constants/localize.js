@@ -1,4 +1,4 @@
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+const SELECTED_LANGUAGE = process.env.REACT_APP_SELECTED_LANGUAGE || 'en';
 const languageObj = {
   acceptDraw: {
     en: 'Accept Draw',
@@ -1403,5 +1403,5 @@ const languageObj = {
 };
 
 export default function localize(section) {
-  return languageObj?.[section]?.[selectedLanguage] || '';
+  return languageObj?.[section]?.[SELECTED_LANGUAGE] || '';
 }

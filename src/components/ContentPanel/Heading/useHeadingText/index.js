@@ -1,9 +1,8 @@
 import { useMemo } from 'react';
 import { useMyState } from 'helpers/hooks';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import renderEnglishMessage from './localization/english';
 import renderKoreanMessage from './localization/korean';
-
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 
 export default function useHeadingText({ action, contentObj }) {
   const {
@@ -33,7 +32,7 @@ export default function useHeadingText({ action, contentObj }) {
       targetObj,
       uploader
     };
-    return selectedLanguage === 'en'
+    return SELECTED_LANGUAGE === 'en'
       ? renderEnglishMessage(params)
       : renderKoreanMessage(params);
   }, [

@@ -12,13 +12,16 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import XPBar from './XPBar';
 import Link from 'components/Link';
 import playButtonImg from './play-button-image.png';
-import { videoRewardHash, strongColors } from 'constants/defaultValues';
+import {
+  videoRewardHash,
+  strongColors,
+  SELECTED_LANGUAGE
+} from 'constants/defaultValues';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useViewContext } from 'contexts';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const intervalLength = 2000;
 
 XPVideoPlayer.propTypes = {
@@ -351,7 +354,7 @@ function XPVideoPlayer({
   );
 
   const thisVideoWasMadeByLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return <>This video was made by {uploader?.username}</>;
     }
     return <>{uploader?.username}님이 직접 제작한 동영상입니다</>;

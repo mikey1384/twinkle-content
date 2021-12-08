@@ -7,10 +7,13 @@ import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
-import { karmaPointTable, videoRewardHash } from 'constants/defaultValues';
+import {
+  karmaPointTable,
+  videoRewardHash,
+  SELECTED_LANGUAGE
+} from 'constants/defaultValues';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const boostRewardsFromWatchingXPVideosLabel = localize(
   'boostRewardsFromWatchingXPVideos'
 );
@@ -34,7 +37,7 @@ const item = {
     const colorKey = ['logoBlue', 'pink', 'orange', 'cranberry', 'gold'];
     const keyNumber = Number(key);
     const descriptionLabel =
-      selectedLanguage === 'en' ? (
+      SELECTED_LANGUAGE === 'en' ? (
         <>
           {keyNumber === 0 ? 'Unlock' : 'Upgrade'} this item to earn the
           following rewards <b>per minute</b> while watching XP Videos
@@ -178,7 +181,7 @@ export default function RewardBoostItem({ style }) {
     requestHelpers: { upgradeRewardBoost }
   } = useAppContext();
   const maxLevelItemDescriptionLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return `You can now earn (reward level × ${videoRewardHash[rewardBoostLvl].xp}) XP and ${videoRewardHash[rewardBoostLvl].coin} Twinkle Coins per minute while watching XP Videos`;
     }
     return `이제 XP동영상을 시청하실 때 매분 (보상레벨 × ${videoRewardHash[rewardBoostLvl].xp})XP와 트윈클 코인 ${videoRewardHash[rewardBoostLvl].coin}개를 획득하실 수 있습니다`;
@@ -201,7 +204,7 @@ export default function RewardBoostItem({ style }) {
       <MaxLevelItemInfo
         icon="bolt"
         title={
-          selectedLanguage === 'en'
+          SELECTED_LANGUAGE === 'en'
             ? 'XP Video Reward Boost - Level 10'
             : 'XP동영상 보상 증가 - Level 10'
         }

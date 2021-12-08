@@ -2,8 +2,7 @@ import { useMemo } from 'react';
 import { useMyState } from 'helpers/hooks';
 import renderEnglishMessage from './localization/english';
 import renderKoreanMessage from './localization/korean';
-
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 
 export default function useNotificationMessage({
   actionObj,
@@ -39,7 +38,7 @@ export default function useNotificationMessage({
       targetSubject,
       user
     };
-    return selectedLanguage === 'en'
+    return SELECTED_LANGUAGE === 'en'
       ? renderEnglishMessage(params)
       : renderKoreanMessage(params);
   }, [

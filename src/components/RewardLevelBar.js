@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import { Color } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const rewardLevelLabel = localize('rewardLevel');
 
 RewardLevelBar.propTypes = {
@@ -26,7 +26,7 @@ export default function RewardLevelBar({ className, rewardLevel, style }) {
   }, [rewardLevel]);
 
   const earnUpToLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return `Earn up to ${addCommasToNumber(rewardLevel * 2000)} XP`;
     }
     return `최대 ${addCommasToNumber(rewardLevel * 2000)}XP 까지 획득가능`;

@@ -9,13 +9,12 @@ import RewardItem from './RewardItem';
 import MyRank from 'components/MyRank';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Loading from 'components/Loading';
-import { REWARD_VALUE } from 'constants/defaultValues';
+import { REWARD_VALUE, SELECTED_LANGUAGE } from 'constants/defaultValues';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useNotiContext } from 'contexts';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const tapToCollectRewardsLabel = localize('tapToCollectRewards');
 const yourXPLabel = localize('yourXP');
 const yourTwinkleCoinsLabel = localize('yourTwinkleCoins');
@@ -86,7 +85,7 @@ function MainFeeds({
   }, []);
 
   const twinkleLabel = useMemo(() => {
-    return selectedLanguage === 'en'
+    return SELECTED_LANGUAGE === 'en'
       ? `${totalTwinkles} Twinkle${totalTwinkles > 0 ? 's' : ''}`
       : `트윈클 ${totalTwinkles}개`;
   }, [totalTwinkles]);

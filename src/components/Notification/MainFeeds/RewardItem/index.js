@@ -4,8 +4,7 @@ import renderEnglishText from './localization/english';
 import renderKoreanText from './localization/korean';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { notiFeedListItem } from '../../Styles';
-
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 
 RewardItem.propTypes = {
   reward: PropTypes.object.isRequired
@@ -42,7 +41,7 @@ export default function RewardItem({
       rootType,
       targetObj
     };
-    return selectedLanguage === 'en'
+    return SELECTED_LANGUAGE === 'en'
       ? renderEnglishText(params)
       : renderKoreanText(params);
   }, [

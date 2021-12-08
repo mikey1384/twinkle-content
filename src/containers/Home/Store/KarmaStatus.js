@@ -4,13 +4,12 @@ import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
-import { karmaMultiplier } from 'constants/defaultValues';
+import { karmaMultiplier, SELECTED_LANGUAGE } from 'constants/defaultValues';
 import Loading from 'components/Loading';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const karmaCalculationLabel =
-  selectedLanguage === 'en' ? (
+  SELECTED_LANGUAGE === 'en' ? (
     <>
       Your Karma Points = Total number of Twinkles you{' '}
       <b style={{ color: Color.pink() }}>rewarded</b> + (
@@ -27,7 +26,7 @@ const karmaCalculationLabel =
     </>
   );
 const rewardedTwinklesLabel =
-  selectedLanguage === 'en' ? (
+  SELECTED_LANGUAGE === 'en' ? (
     <>
       Total number of Twinkles you{' '}
       <b style={{ color: Color.pink() }}>rewarded</b>
@@ -39,7 +38,7 @@ const rewardedTwinklesLabel =
   );
 
 const approvedRecommendationsLabel =
-  selectedLanguage === 'en' ? (
+  SELECTED_LANGUAGE === 'en' ? (
     <>
       Total number of{' '}
       <b style={{ color: Color.brownOrange() }}>recommendations</b> approved by
@@ -116,7 +115,7 @@ export default function KarmaStatus() {
     if (authLevel < 2) {
       return <span>{karmaCalculationLabel}</span>;
     }
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return (
         <span>
           Your Karma Points = Total number of <b>posts</b> you rewarded ×{' '}
@@ -153,7 +152,7 @@ export default function KarmaStatus() {
         </div>
       );
     }
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return (
         <div style={{ fontSize: '1.5rem', marginTop: '3rem' }}>
           <p>
@@ -192,7 +191,7 @@ export default function KarmaStatus() {
   ]);
 
   const youHaveKarmaPointsText = useMemo(() => {
-    return selectedLanguage === 'en'
+    return SELECTED_LANGUAGE === 'en'
       ? `You have ${addCommasToNumber(karmaPoints)} Karma Points`
       : `회원님의 카마포인트는 ${addCommasToNumber(karmaPoints)}점입니다`;
   }, [karmaPoints]);

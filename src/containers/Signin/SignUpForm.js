@@ -7,9 +7,9 @@ import Banner from 'components/Banner';
 import { css } from '@emotion/css';
 import { isValidUsername, stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext } from 'contexts';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const createMyAccountLabel = localize('createMyAccount');
 const emailIsNeededInCaseLabel = localize('emailIsNeededInCase');
 const emailYoursOrYourParentsLabel = localize('emailYoursOrYourParents');
@@ -65,7 +65,7 @@ export default function SignUpForm({
     [errorMessage, firstname, keyphrase, lastname, password, username]
   );
   const usernameErrorMsgLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return `${username} is not a valid username.${
         username.length < 3
           ? ' Make sure it is at least 3 characters long.'
@@ -77,19 +77,19 @@ export default function SignUpForm({
     }`;
   }, [username]);
   const notValidFirstNameLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return `${firstname} is not a valid first name. Your first name should consist of english letters only`;
     }
     return `${firstname}는 유효한 이름이 아닙니다. 영문자로 입력해 주세요`;
   }, [firstname]);
   const notValidLastNameLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return `${lastname} is not a valid last name. Your last name should consist of english letters only`;
     }
     return `${lastname}는 유효한 성이 아닙니다. 영문자로 입력해 주세요`;
   }, [lastname]);
   const notValidEmailLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return `${email} is not a valid email address`;
     }
     return `${email}는 유효한 이메일 주소가 아닙니다`;

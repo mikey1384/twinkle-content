@@ -27,9 +27,9 @@ import {
 } from 'helpers';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const commentLabel = localize('comment');
 const copiedLabel = localize('copied');
 const editLabel = localize('edit');
@@ -294,7 +294,7 @@ export default function Body({
   }, [userId]);
 
   const viewsLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return (
         <>
           {addCommasToNumber(views)} view

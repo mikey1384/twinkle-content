@@ -34,9 +34,9 @@ import {
   useInputContext
 } from 'contexts';
 import { css } from '@emotion/css';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const deleteLabel = localize('delete');
 const editLabel = localize('edit');
 const editOrDeleteLabel = localize('editOrDelete');
@@ -279,7 +279,7 @@ export default function Details({
   }, []);
 
   const viewsLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return (
         <>
           {addCommasToNumber(videoViews)} view

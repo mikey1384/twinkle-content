@@ -27,8 +27,8 @@ import {
 import { isMobile } from 'helpers';
 import { useChatContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const deviceIsMobile = isMobile(navigator);
 
 Chess.propTypes = {
@@ -100,7 +100,7 @@ function Chess({
   );
 
   const awaitingMoveLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return (
         <>
           <p>Awaiting</p>

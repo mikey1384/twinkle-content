@@ -5,10 +5,9 @@ import Icon from 'components/Icon';
 import MaxLevelItemInfo from './MaxLevelItemInfo';
 import { useAppContext, useContentContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
-import { karmaPointTable } from 'constants/defaultValues';
+import { karmaPointTable, SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const profilePicturesLabel = localize('profilePictures');
 const postPicturesOnYourProfilePageLabel = localize(
   'postPicturesOnYourProfilePage'
@@ -41,7 +40,7 @@ export default function ProfilePictureItem({ style }) {
   } = useContentContext();
   const descriptionLabel = useMemo(() => {
     if (numPics > 0) {
-      if (selectedLanguage === 'en') {
+      if (SELECTED_LANGUAGE === 'en') {
         return `Upgrade this item to post up to ${
           numPics + 1
         } pictures on you profile page`;
@@ -50,13 +49,13 @@ export default function ProfilePictureItem({ style }) {
         numPics + 1
       }장까지 게시하실 수 있게 됩니다`;
     }
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return 'Unlock this item to post pictures on your profile page';
     }
     return '본 아이템을 잠금 해제 하시면 프로필 페이지에 사진을 게시하실 수 있게 됩니다';
   }, [numPics]);
   const youCanNowPostUpToLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return `You can now post up to ${numPics} pictures on your profile page`;
     }
     return `이제 프로필 페이지에 사진을 최대 ${numPics}장까지 게시할 수 있습니다`;

@@ -14,9 +14,9 @@ import { timeSince } from 'helpers/timeStampHelpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const editLabel = localize('edit');
 const revokeLabel = localize('revoke');
 const revokeRewardLabel = localize('revokeReward');
@@ -98,7 +98,7 @@ function Comment({
   }, [canEdit, onSetIsEditing, reward.id, userIsUploader]);
 
   const rewardStatusLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return (
         <>
           {' '}

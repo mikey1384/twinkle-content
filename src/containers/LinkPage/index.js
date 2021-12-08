@@ -28,9 +28,9 @@ import {
   useViewContext,
   useExploreContext
 } from 'contexts';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
-const selectedLanguage = process.env.REACT_APP_SELECTED_LANGUAGE;
 const rewardLabel = localize('reward');
 
 LinkPage.propTypes = {
@@ -255,7 +255,7 @@ export default function LinkPage({
   }, [userId]);
 
   const madeByLabel = useMemo(() => {
-    if (selectedLanguage === 'en') {
+    if (SELECTED_LANGUAGE === 'en') {
       return <>This was made by {uploader?.username}</>;
     }
     return <>{uploader?.username}님이 직접 제작한 콘텐츠입니다</>;
