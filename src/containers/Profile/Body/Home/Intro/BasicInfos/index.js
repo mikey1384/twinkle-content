@@ -17,6 +17,13 @@ import {
   useContentContext,
   useInputContext
 } from 'contexts';
+import { SELECTED_LANGUAGE } from 'constants/defaultValues';
+import localize from 'constants/localize';
+
+const editLabel = localize('edit');
+const memberSinceLabel = localize('memberSince');
+const websiteLabel = localize('Website');
+const youtubeLabel = localize('youtube');
 
 BasicInfos.propTypes = {
   authLevel: PropTypes.number,
@@ -93,11 +100,18 @@ export default function BasicInfos({
     };
   }, []);
 
-  const displayedTime = useMemo(() => unix(joinDate).format('LL'), [joinDate]);
+  const displayedTime = useMemo(() => {
+    if (SELECTED_LANGUAGE === 'kr') {
+      return unix(joinDate).format('MM/DD/YYYY');
+    }
+    return unix(joinDate).format('LL');
+  }, [joinDate]);
 
   return (
     <div className={className} style={style}>
-      <div style={{ marginBottom: '0.5rem' }}>Member since {displayedTime}</div>
+      <div style={{ marginBottom: '0.5rem' }}>
+        {memberSinceLabel} {displayedTime}
+      </div>
       {userInfoOnEdit && userId === myId && (
         <InfoEditForm
           email={email}
@@ -209,7 +223,7 @@ export default function BasicInfos({
                   marginTop: '0.5rem'
                 }}
               >
-                <span>YouTube: </span>
+                <span>{youtubeLabel}: </span>
                 <a href={youtubeUrl} target="_blank" rel="noopener noreferrer">
                   {youtubeName || trimUrl(youtubeUrl)}
                 </a>
@@ -217,7 +231,7 @@ export default function BasicInfos({
             )}
             {website && (
               <div style={{ marginTop: '0.5rem' }}>
-                <span>Website: </span>
+                <span>{websiteLabel}: </span>
                 <a href={website} target="_blank" rel="noopener noreferrer">
                   {trimUrl(website)}
                 </a>
@@ -251,7 +265,7 @@ export default function BasicInfos({
             onClick={() => setPasswordInputModalShown(true)}
           >
             <Icon icon="pencil-alt" />
-            <span style={{ marginLeft: '0.7rem' }}>Edit</span>
+            <span style={{ marginLeft: '0.7rem' }}>{editLabel}</span>
           </Button>
         ) : null
       ) : lastActive ? (
@@ -362,11 +376,18 @@ export default function BasicInfos({
 
   function renderEditMessage({ email, youtubeUrl, website }) {
     const unfilledItems = [
-      { label: 'email', value: email },
-      { label: 'YouTube', value: youtubeUrl },
-      { label: 'website', value: website }
+      { label: localize('email'), value: email },
+      { label: localize('youtube'), value: youtubeUrl },
+      { label: localize('website'), value: website }
     ].filter((item) => !item.value);
     const emptyItemsArray = unfilledItems.map((item) => item.label);
+    if (SELECTED_LANGUAGE === 'kr') {
+      const emptyItemsString =
+        emptyItemsArray.length === 3
+          ? `${emptyItemsArray[0]}, ${emptyItemsArray[1]}, ${emptyItemsArray[2]}`
+          : emptyItemsArray.join(', ');
+      return `아래 '수정' 버튼을 누르신 후 다음 정보를 등록하세요: ${emptyItemsString}`;
+    }
     const emptyItemsString =
       emptyItemsArray.length === 3
         ? `${emptyItemsArray[0]}, ${emptyItemsArray[1]}, and ${emptyItemsArray[2]}`

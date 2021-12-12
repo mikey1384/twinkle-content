@@ -372,6 +372,10 @@ const languageObj = {
     en: 'elementary',
     kr: '초급'
   },
+  email: {
+    en: 'email',
+    kr: '이메일'
+  },
   emailYoursOrYourParents: {
     en: "Email (yours or your parent's)",
     kr: '이메일 (본인 혹은 부모님의 이메일 주소를 입력하세요)'
@@ -695,6 +699,10 @@ const languageObj = {
   members: {
     en: 'Members',
     kr: '멤버'
+  },
+  memberSince: {
+    en: 'Member since',
+    kr: '가입일:'
   },
   menu: {
     en: 'Menu',
@@ -1376,6 +1384,14 @@ const languageObj = {
     en: 'watching',
     kr: '시청하기'
   },
+  website: {
+    en: 'website',
+    kr: '웹사이트'
+  },
+  Website: {
+    en: 'Website',
+    kr: '웹사이트'
+  },
   welcomeToTwinkle: {
     en: `Welcome to Twinkle. Do you have a Twinkle account?`,
     kr: '트윈클에 오신 것을 환영합니다. 계정이 있으신가요?'
@@ -1423,6 +1439,10 @@ const languageObj = {
   yourXP: {
     en: 'Your XP',
     kr: 'XP'
+  },
+  youtube: {
+    en: 'YouTube',
+    kr: '유튜브'
   },
   youtubeVideo: {
     en: 'YouTube Video',
