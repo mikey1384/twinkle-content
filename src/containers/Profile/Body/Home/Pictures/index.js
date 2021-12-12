@@ -15,6 +15,11 @@ import { useMyState } from 'helpers/hooks';
 import ErrorBoundary from 'components/ErrorBoundary';
 import ReorderInterface from './ReorderInterface';
 import NoPictures from './NoPictures';
+import localize from 'constants/localize';
+
+const deletePicturesLabel = localize('deletePictures');
+const picturesLabel = localize('pictures');
+const reorderPicturesByDraggingLabel = localize('reorderPicturesByDragging');
 
 Pictures.propTypes = {
   numPics: PropTypes.number,
@@ -182,10 +187,10 @@ export default function Pictures({
           loaded
           title={
             deleteMode
-              ? 'Delete Pictures'
+              ? deletePicturesLabel
               : reorderMode
-              ? 'Reorder Pictures by Dragging Them'
-              : 'Pictures'
+              ? reorderPicturesByDraggingLabel
+              : picturesLabel
           }
         >
           <div

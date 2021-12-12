@@ -316,6 +316,10 @@ const languageObj = {
     en: 'Delete Content Permanently',
     kr: '게시물 영구 삭제'
   },
+  deletePictures: {
+    en: 'Delete Pictures',
+    kr: '사진 삭제'
+  },
   deletedPosts: {
     en: 'Deleted Posts',
     kr: '삭제된 게시물'
@@ -900,6 +904,10 @@ const languageObj = {
     en: 'per minute',
     kr: '를 1분마다 획득'
   },
+  pictures: {
+    en: 'Pictures',
+    kr: '사진'
+  },
   pin: {
     en: 'Pin',
     kr: '고정'
@@ -1071,6 +1079,10 @@ const languageObj = {
   reorder: {
     en: 'Reorder',
     kr: '순서 변경'
+  },
+  reorderPicturesByDragging: {
+    en: 'Reorder Pictures by Dragging Them',
+    kr: '사진을 드래그하여 순서를 변경하세요'
   },
   reorderQuestions: {
     en: 'Reorder Questions',
