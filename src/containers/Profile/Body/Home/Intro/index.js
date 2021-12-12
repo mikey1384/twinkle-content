@@ -301,11 +301,11 @@ export default function Intro({ profile, selectedTheme }) {
                 color="darkerGray"
                 menuProps={[
                   {
-                    label: 'Edit',
+                    label: editLabel,
                     onClick: () => setBioEditModalShown(true)
                   },
                   {
-                    label: 'Remove',
+                    label: removeLabel,
                     onClick: () =>
                       uploadBio({
                         firstLine: '',

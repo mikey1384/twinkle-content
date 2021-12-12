@@ -992,6 +992,10 @@ const languageObj = {
     en: 'Random High XP Subject',
     kr: '무작위 고XP 주제'
   },
+  rank: {
+    en: 'Rank',
+    kr: '랭킹'
+  },
   ranking: {
     en: 'Ranking',
     kr: '랭킹순'
