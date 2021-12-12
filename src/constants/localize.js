@@ -754,7 +754,7 @@ const languageObj = {
   },
   monthlyXpGrowth: {
     en: 'Monthly XP Growth',
-    kr: '월간 경험치 증가량'
+    kr: '월간 XP 증가량'
   },
   moreToCome: {
     en: 'More to come',
