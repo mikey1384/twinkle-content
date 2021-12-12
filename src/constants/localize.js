@@ -24,6 +24,10 @@ const languageObj = {
     en: 'Add Account Type',
     kr: '계정유형 추가'
   },
+  addedBy: {
+    en: 'Added by',
+    kr: '게시자:'
+  },
   addLink: {
     en: 'Add Link',
     kr: '링크 추가'
@@ -32,9 +36,9 @@ const languageObj = {
     en: 'Add members of your class',
     kr: '멤버를 추가하세요'
   },
-  addedBy: {
-    en: 'Added by',
-    kr: '게시자:'
+  addPicture: {
+    en: 'Add Picture',
+    kr: '사진 추가'
   },
   addQuestions: {
     en: 'Add Questions',
