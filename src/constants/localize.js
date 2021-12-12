@@ -752,6 +752,10 @@ const languageObj = {
     en: 'Moderate Effort',
     kr: '적당한 노력'
   },
+  monthlyXpGrowth: {
+    en: 'Monthly XP Growth',
+    kr: '월간 경험치 증가량'
+  },
   moreToCome: {
     en: 'More to come',
     kr: '출시 준비중'
@@ -831,6 +835,10 @@ const languageObj = {
   notRankedDescription: {
     en: 'You are not ranked. To get ranked, earn XP by completing missions, watching XP videos, or leaving comments',
     kr: '현재 XP가 없습니다. 미션을 완료하거나, XP 동영상을 시청하거나, 댓글을 남기시면 XP를 보상받으실 수 있습니다'
+  },
+  notableActivities: {
+    en: 'Notable Activities',
+    kr: '주요 활동'
   },
   noUserMadeContent: {
     en: 'No user made content',
@@ -1227,6 +1235,10 @@ const languageObj = {
   showMeAnotherSubject: {
     en: 'Show me another subject',
     kr: '다른 주제를 보여주세요'
+  },
+  showMore: {
+    en: 'Show More',
+    kr: '더 보기'
   },
   showMoreRewardRecords: {
     en: 'Show More Reward Records',
