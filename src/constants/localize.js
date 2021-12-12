@@ -752,6 +752,10 @@ const languageObj = {
     en: 'My Ranking',
     kr: '내 순위'
   },
+  mustLogInToViewContent: {
+    en: 'You must log in to view this content',
+    kr: '로그인이 필요합니다'
+  },
   name: {
     en: 'Name',
     kr: '이름'
