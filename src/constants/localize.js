@@ -156,6 +156,14 @@ const languageObj = {
     en: 'Change Picture',
     kr: '사진 변경'
   },
+  changeTheme: {
+    en: 'Change theme',
+    kr: '테마 변경'
+  },
+  changeTheme2: {
+    en: 'Change Theme',
+    kr: '테마 변경'
+  },
   changeUsername: {
     en: 'Change your username',
     kr: '아이디 변경'
@@ -610,6 +618,10 @@ const languageObj = {
   },
   liked: {
     en: 'Liked',
+    kr: '좋아요'
+  },
+  likes: {
+    en: 'Likes',
     kr: '좋아요'
   },
   link: {
@@ -1351,6 +1363,10 @@ const languageObj = {
   vocabulary: {
     en: 'Vocabulary',
     kr: '단어수집 게임'
+  },
+  watched: {
+    en: 'Watched',
+    kr: '시청한 영상'
   },
   watching: {
     en: 'watching',
