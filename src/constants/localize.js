@@ -408,6 +408,10 @@ const languageObj = {
     en: 'Enter Heading',
     kr: '제목을 입력하세요'
   },
+  enterMessageForVisitors: {
+    en: 'Enter a message for your visitors',
+    kr: '방문자에게 전할 메시지를 입력하세요'
+  },
   enterNewUsername: {
     en: 'Enter New Username',
     kr: '새로운 아이디를 입력하세요'
