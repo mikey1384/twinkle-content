@@ -376,6 +376,10 @@ const languageObj = {
     en: 'email',
     kr: '이메일'
   },
+  emailHasBeenSent: {
+    en: 'An email has been sent. Tap here to check your inbox',
+    kr: '이메일이 발송되었습니다. 이메일을 확인하려면 여기를 클릭하세요'
+  },
   emailYoursOrYourParents: {
     en: "Email (yours or your parent's)",
     kr: '이메일 (본인 혹은 부모님의 이메일 주소를 입력하세요)'
@@ -920,6 +924,10 @@ const languageObj = {
     en: 'Please select a smaller image',
     kr: '더 작은 이미지를 선택해주세요'
   },
+  pleaseVerifyEmail: {
+    en: 'Please verify your email',
+    kr: '이메일 주소를 인증해주세요'
+  },
   post: {
     en: 'Post!',
     kr: '게시하기'
@@ -1324,6 +1332,10 @@ const languageObj = {
     en: 'User',
     kr: '사용자'
   },
+  userEmailNotVerified: {
+    en: `This user's email has not been verified, yet`,
+    kr: '이 사용자의 이메일 주소는 아직 인증되지 않았습니다'
+  },
   username: {
     en: 'Username',
     kr: '아이디'
@@ -1383,6 +1395,10 @@ const languageObj = {
   watching: {
     en: 'watching',
     kr: '시청하기'
+  },
+  wasLastActive: {
+    en: 'Was last active',
+    kr: '최근 접속:'
   },
   website: {
     en: 'website',

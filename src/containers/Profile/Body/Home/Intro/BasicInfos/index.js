@@ -21,7 +21,11 @@ import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
 const editLabel = localize('edit');
+const emailHasBeenSentLabel = localize('emailHasBeenSent');
 const memberSinceLabel = localize('memberSince');
+const pleaseVerifyEmailLabel = localize('pleaseVerifyEmail');
+const userEmailNotVerifiedLabel = localize('userEmailNotVerified');
+const wasLastActiveLabel = localize('wasLastActive');
 const websiteLabel = localize('Website');
 const youtubeLabel = localize('youtube');
 
@@ -106,6 +110,20 @@ export default function BasicInfos({
     }
     return unix(joinDate).format('LL');
   }, [joinDate]);
+
+  const messageUserLabel = useMemo(() => {
+    if (SELECTED_LANGUAGE === 'kr') {
+      return <span style={{ marginLeft: '0.7rem' }}>채팅하기</span>;
+    }
+    return (
+      <span style={{ marginLeft: '0.7rem' }}>
+        {online ? 'Chat' : 'Message'}
+        <span className="desktop">
+          {online ? ' with' : ''} {username}
+        </span>
+      </span>
+    );
+  }, [online, username]);
 
   return (
     <div className={className} style={style}>
@@ -205,14 +223,14 @@ export default function BasicInfos({
                       }
                     >
                       {verificationEmailSent
-                        ? 'Email has been sent. Tap here to check your inbox'
-                        : 'Please verify your email'}
+                        ? emailHasBeenSentLabel
+                        : pleaseVerifyEmailLabel}
                     </a>
                   </div>
                 )}
                 {myId !== userId && !emailVerified && (
                   <div style={{ color: Color.gray(), fontSize: '1.2rem' }}>
-                    {`This user's email has not been verified, yet`}
+                    {userEmailNotVerifiedLabel}
                   </div>
                 )}
               </>
@@ -281,7 +299,7 @@ export default function BasicInfos({
                 style={{ fontWeight: 'bold', color: Color.green() }}
               >{`${username} is online`}</span>
             ) : (
-              `Was last active ${timeSince(lastActive)}`
+              `${wasLastActiveLabel} ${timeSince(lastActive)}`
             )}
             {myId !== userId && (
               <Button
@@ -294,12 +312,7 @@ export default function BasicInfos({
                 onClick={handleTalkButtonClick}
               >
                 <Icon icon="comments" />
-                <span style={{ marginLeft: '0.7rem' }}>
-                  {online ? 'Chat' : 'Message'}
-                  <span className="desktop">
-                    {online ? ' with' : ''} {username}
-                  </span>
-                </span>
+                {messageUserLabel}
               </Button>
             )}
           </div>
