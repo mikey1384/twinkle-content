@@ -7,6 +7,8 @@ import { useMyState } from 'helpers/hooks';
 import { useHistory, useLocation } from 'react-router-dom';
 import localize from 'constants/localize';
 
+const deletedLabel = localize('deleted');
+
 Channel.propTypes = {
   channel: PropTypes.object.isRequired,
   chatType: PropTypes.string,
@@ -109,7 +111,7 @@ function Channel({
     : undefined;
 
   const ChannelName = useMemo(
-    () => otherMember || effectiveChannelName || '(Deleted)',
+    () => otherMember || effectiveChannelName || `(${deletedLabel})`,
     [effectiveChannelName, otherMember]
   );
 
