@@ -9,6 +9,7 @@ import localize from 'constants/localize';
 
 Channel.propTypes = {
   channel: PropTypes.object.isRequired,
+  chatType: PropTypes.string,
   customChannelNames: PropTypes.object.isRequired,
   selectedChannelId: PropTypes.number
 };
@@ -25,6 +26,7 @@ function Channel({
     numUnreads,
     pathId
   },
+  chatType,
   selectedChannelId
 }) {
   const history = useHistory();
@@ -38,12 +40,14 @@ function Channel({
     [channelName, customChannelNames, channelId]
   );
   const selected = useMemo(() => {
-    if (currentPathId === 'vocabulary') return false;
+    if (currentPathId === 'vocabulary' || chatType === 'vocabulary') {
+      return false;
+    }
     if (pathId === currentPathId || channelId === selectedChannelId) {
       return true;
     }
     return false;
-  }, [pathId, currentPathId, channelId, selectedChannelId]);
+  }, [currentPathId, chatType, pathId, channelId, selectedChannelId]);
   const lastMessage = useMemo(() => {
     const lastMessageId = messageIds[0];
     return messagesObj[lastMessageId];
