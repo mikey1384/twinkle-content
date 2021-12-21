@@ -184,6 +184,11 @@ function Chat({ onFileUpload }) {
   );
 
   const currentPathId = useMemo(() => pathname.split('chat/')[1], [pathname]);
+  const currentPathIdRef = useRef(currentPathId);
+
+  useEffect(() => {
+    currentPathIdRef.current = currentPathId;
+  }, [currentPathId]);
 
   useEffect(() => {
     if (currentPathId === 'vocabulary') {
@@ -279,8 +284,14 @@ function Chat({ onFileUpload }) {
     onSetLoadingVocabulary(true);
     const { vocabActivities, wordsObj, wordCollectors } =
       await loadVocabulary();
-    onLoadVocabulary({ vocabActivities, wordsObj, wordCollectors });
-    onSetLoadingVocabulary(false);
+    if (currentPathIdRef.current === 'vocabulary') {
+      if (mounted.current) {
+        onLoadVocabulary({ vocabActivities, wordsObj, wordCollectors });
+      }
+      if (mounted.current) {
+        onSetLoadingVocabulary(false);
+      }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatType]);
 
