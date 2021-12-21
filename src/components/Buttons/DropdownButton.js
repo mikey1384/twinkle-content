@@ -103,7 +103,7 @@ export default function DropdownButton({
     const coordinate = ButtonRef.current.getBoundingClientRect();
     setCoordinates({
       x: coordinate.left - 10,
-      y: isReversed ? coordinate.top + 25 : coordinate.top - 15
+      y: isReversed ? coordinate.top + 25 : coordinate.top - 10
     });
     if (typeof onButtonClick === 'function') {
       onButtonClick(!menuDisplayed);
