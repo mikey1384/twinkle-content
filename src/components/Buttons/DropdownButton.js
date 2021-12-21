@@ -4,7 +4,6 @@ import Button from 'components/Button';
 import DropdownList from 'components/DropdownList';
 import Icon from 'components/Icon';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { useOutsideClick } from 'helpers/hooks';
 import { css } from '@emotion/css';
 
 DropdownButton.propTypes = {
@@ -42,20 +41,15 @@ export default function DropdownButton({
   menuProps,
   noBorderRadius,
   onButtonClick,
-  onOutsideClick,
   text = '',
   stretch,
   innerRef,
   ...props
 }) {
   const [menuDisplayed, setMenuDisplayed] = useState(false);
+  const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
+  const coolDownRef = useRef(null);
   const ButtonRef = useRef(null);
-  useOutsideClick(ButtonRef, () => {
-    if (menuDisplayed && typeof onOutsideClick === 'function') {
-      onOutsideClick();
-    }
-    setMenuDisplayed(false);
-  });
 
   return (
     <ErrorBoundary
@@ -93,6 +87,9 @@ export default function DropdownButton({
             }}
             isReversed={isReversed}
             direction={direction}
+            x={coordinates.x}
+            y={coordinates.y}
+            onHideMenu={handleHideMenuWithCoolDown}
           >
             {renderMenu()}
           </DropdownList>
@@ -102,10 +99,24 @@ export default function DropdownButton({
   );
 
   function onClick() {
+    if (coolDownRef.current) return;
+    const coordinate = ButtonRef.current.getBoundingClientRect();
+    setCoordinates({
+      x: coordinate.left - 10,
+      y: isReversed ? coordinate.top + 25 : coordinate.top - 15
+    });
     if (typeof onButtonClick === 'function') {
       onButtonClick(!menuDisplayed);
     }
     setMenuDisplayed(!menuDisplayed);
+  }
+
+  function handleHideMenuWithCoolDown() {
+    setMenuDisplayed(false);
+    coolDownRef.current = true;
+    setTimeout(() => {
+      coolDownRef.current = false;
+    }, 10);
   }
 
   function renderMenu() {

@@ -115,7 +115,7 @@ export function useMyState() {
 export function useOutsideClick(ref, callback) {
   const [insideClicked, setInsideClicked] = useState(false);
   useEffect(() => {
-    function uPlistener(event) {
+    function upListener(event) {
       if (insideClicked) return setInsideClicked(false);
       if (!ref.current || ref.current.contains(event.target)) {
         return;
@@ -128,12 +128,12 @@ export function useOutsideClick(ref, callback) {
       }
     }
     addEvent(document, 'mousedown', downListener);
-    addEvent(document, 'mouseup', uPlistener);
-    addEvent(document, 'touchend', uPlistener);
+    addEvent(document, 'mouseup', upListener);
+    addEvent(document, 'touchend', upListener);
     return function cleanUp() {
       removeEvent(document, 'mousedown', downListener);
-      removeEvent(document, 'mouseup', uPlistener);
-      removeEvent(document, 'touchend', uPlistener);
+      removeEvent(document, 'mouseup', upListener);
+      removeEvent(document, 'touchend', upListener);
     };
   });
 }
