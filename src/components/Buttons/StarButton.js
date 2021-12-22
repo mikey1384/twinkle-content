@@ -21,7 +21,6 @@ StarButton.propTypes = {
   byUser: PropTypes.bool,
   contentId: PropTypes.number,
   rewardLevel: PropTypes.number,
-  direction: PropTypes.string,
   defaultDescription: PropTypes.string,
   filePath: PropTypes.string,
   filled: PropTypes.bool,
@@ -40,7 +39,6 @@ export default function StarButton({
   defaultDescription,
   filePath,
   rewardLevel,
-  direction = 'left',
   filled,
   onSetRewardLevel,
   onToggleByUser,
@@ -53,6 +51,7 @@ export default function StarButton({
     requestHelpers: { setByUser }
   } = useAppContext();
   const { description } = useContentState({ contentId, contentType });
+  const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
   const [cannotChangeModalShown, setCannotChangeModalShown] = useState(false);
   const [moderatorName, setModeratorName] = useState('');
   const [rewardLevelModalShown, setRewardLevelModalShown] = useState(false);
@@ -145,13 +144,13 @@ export default function StarButton({
         </Button>
         {menuShown && (
           <DropdownList
-            direction={direction}
             style={{
-              marginTop: '0.5rem',
               position: 'absolute',
               right: 0,
               width: '25rem'
             }}
+            x={coordinates.x}
+            y={coordinates.y}
           >
             {(contentType === 'video' || contentType === 'subject') &&
               canEditRewardLevel && (
@@ -187,6 +186,11 @@ export default function StarButton({
 
   function onClick() {
     if (showsDropdownWhenClicked) {
+      const coordinate = StarButtonRef.current.getBoundingClientRect();
+      setCoordinates({
+        x: coordinate.left,
+        y: coordinate.top
+      });
       return setMenuShown(!menuShown);
     }
     return setRewardLevelModalShown(true);

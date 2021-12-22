@@ -383,7 +383,6 @@ export default function LinkPage({
                     fontSize: '2rem',
                     marginLeft: '1rem'
                   }}
-                  direction="left"
                   byUser={!!byUser}
                   contentId={linkId}
                   onToggleByUser={handleSetByUserStatus}

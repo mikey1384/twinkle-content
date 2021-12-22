@@ -563,7 +563,6 @@ function Message({
                     id: userId,
                     username
                   }}
-                  dropdownMenuReversed={isLastMsg}
                 />{' '}
                 <span className={MessageStyle.timeStamp}>
                   {displayedTimeStamp}
@@ -677,7 +676,6 @@ function Message({
                   style={{ position: 'absolute', top: 0, right: 0 }}
                   opacity={0.8}
                   menuProps={messageMenuItems}
-                  isReversed={isLastMsg}
                 />
               )}
             </div>

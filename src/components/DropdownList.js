@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { Color } from 'constants/css';
@@ -9,30 +9,41 @@ import { useOutsideClick } from 'helpers/hooks';
 DropdownList.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
+  dropdownContext: PropTypes.object,
   innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   style: PropTypes.object,
-  isReversed: PropTypes.bool,
   direction: PropTypes.string
 };
 
 export default function DropdownList({
   children,
   className,
+  dropdownContext,
   innerRef,
   style = {},
-  isReversed,
   onOutsideClick,
-  onHideMenu,
-  x,
-  y
+  onHideMenu = () => {}
 }) {
   const MenuRef = useRef(null);
+  const { x, y } = useMemo(() => {
+    return {
+      x: dropdownContext.x,
+      y: dropdownContext.y
+    };
+  }, [dropdownContext]);
   useOutsideClick(MenuRef, () => {
     if (typeof onOutsideClick === 'function') {
       onOutsideClick();
     }
     onHideMenu();
   });
+  const displaysToTheRight = useMemo(() => {
+    return window.innerWidth / 2 - x > 0;
+  }, [x]);
+  const isReversed = useMemo(() => {
+    return window.innerHeight / 2 - y < 0;
+  }, [y]);
+
   return createPortal(
     <ErrorBoundary
       style={{
@@ -48,30 +59,37 @@ export default function DropdownList({
           style={style}
           className={`${css`
             position: absolute;
-            left: ${x}px;
-            top: ${y}px;
+            left: ${`${
+              displaysToTheRight
+                ? `CALC(${x}px + ${dropdownContext.width}px + 1rem)`
+                : `CALC(${x}px - 1rem)`
+            }`};
+            top: ${isReversed
+              ? `CALC(${y}px + ${dropdownContext.height}px)`
+              : `${y}px`};
             z-index: 10;
             padding: 0;
-            transform: translate(-100%, ${isReversed ? '-100%' : 0});
+            transform: translate(
+              ${displaysToTheRight ? 0 : '-100%'},
+              ${isReversed ? '-100%' : 0}
+            );
             border: none;
             list-style: none;
             position: absolute;
             background: #fff;
             box-shadow: 1px 1px 2px ${Color.black(0.6)};
-            font-weight: normal !important;
+            font-weight: normal;
             line-height: 1.5;
             li {
               display: inline-block;
-              clear: both;
-              float: left;
-              border-radius: 0 !important;
-              border: none !important;
+              border-radius: 0;
+              border: none;
               padding: 1rem;
               text-align: center;
               font-size: 1.5rem;
               color: ${Color.darkerGray()};
               cursor: pointer;
-              border-bottom: none !important;
+              border-bottom: none;
               width: 100%;
               &:hover {
                 background: ${Color.highlightGray()};

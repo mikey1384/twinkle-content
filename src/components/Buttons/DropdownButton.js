@@ -10,7 +10,6 @@ DropdownButton.propTypes = {
   buttonStyle: PropTypes.object,
   icon: PropTypes.string,
   iconSize: PropTypes.string,
-  isReversed: PropTypes.bool,
   direction: PropTypes.string,
   innerRef: PropTypes.object,
   onButtonClick: PropTypes.func,
@@ -35,7 +34,6 @@ export default function DropdownButton({
   style,
   icon = 'pencil-alt',
   iconSize = '1x',
-  isReversed,
   listStyle = {},
   menuProps,
   noBorderRadius,
@@ -45,8 +43,7 @@ export default function DropdownButton({
   innerRef,
   ...props
 }) {
-  const [menuDisplayed, setMenuDisplayed] = useState(false);
-  const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
+  const [dropdownContext, setDropdownContext] = useState(null);
   const coolDownRef = useRef(null);
   const ButtonRef = useRef(null);
 
@@ -59,7 +56,7 @@ export default function DropdownButton({
         <Button
           {...props}
           className={css`
-            opacity: ${menuDisplayed ? 1 : opacity};
+            opacity: ${dropdownContext ? 1 : opacity};
             &:hover {
               opacity: 1;
             }
@@ -77,16 +74,14 @@ export default function DropdownButton({
           {text && <span>&nbsp;&nbsp;</span>}
           {text}
         </Button>
-        {menuDisplayed && (
+        {dropdownContext && (
           <DropdownList
             style={{
               textTransform: 'none',
               minWidth: '12rem',
               ...listStyle
             }}
-            isReversed={isReversed}
-            x={coordinates.x}
-            y={coordinates.y}
+            dropdownContext={dropdownContext}
             onHideMenu={handleHideMenuWithCoolDown}
           >
             {renderMenu()}
@@ -98,19 +93,24 @@ export default function DropdownButton({
 
   function onClick() {
     if (coolDownRef.current) return;
-    const coordinate = ButtonRef.current.getBoundingClientRect();
-    setCoordinates({
-      x: coordinate.left - 10,
-      y: isReversed ? coordinate.top + 25 : coordinate.top - 10
-    });
+    const menuDisplayed = !!dropdownContext;
     if (typeof onButtonClick === 'function') {
       onButtonClick(!menuDisplayed);
     }
-    setMenuDisplayed(!menuDisplayed);
+    setDropdownContext(
+      menuDisplayed
+        ? null
+        : {
+            x: ButtonRef.current.getBoundingClientRect().left,
+            y: ButtonRef.current.getBoundingClientRect().top,
+            width: ButtonRef.current.getBoundingClientRect().width,
+            height: ButtonRef.current.getBoundingClientRect().height
+          }
+    );
   }
 
   function handleHideMenuWithCoolDown() {
-    setMenuDisplayed(false);
+    setDropdownContext(null);
     coolDownRef.current = true;
     setTimeout(() => {
       coolDownRef.current = false;
@@ -146,6 +146,6 @@ export default function DropdownButton({
 
   function handleMenuClick(action) {
     action();
-    setMenuDisplayed(false);
+    setDropdownContext(null);
   }
 }

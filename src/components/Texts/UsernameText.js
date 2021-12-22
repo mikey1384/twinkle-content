@@ -17,7 +17,6 @@ const profileLabel = localize('Profile');
 UsernameText.propTypes = {
   className: PropTypes.string,
   color: PropTypes.string,
-  dropdownMenuReversed: PropTypes.bool,
   style: PropTypes.object,
   user: PropTypes.object,
   wordBreakEnabled: PropTypes.bool
@@ -26,7 +25,6 @@ UsernameText.propTypes = {
 export default function UsernameText({
   className,
   color,
-  dropdownMenuReversed,
   style = {},
   user = {},
   wordBreakEnabled
@@ -108,10 +106,7 @@ export default function UsernameText({
         </p>
       </div>
       {menuShown && (
-        <DropdownList
-          isReversed={dropdownMenuReversed}
-          style={{ width: '100%' }}
-        >
+        <DropdownList style={{ width: '100%' }}>
           <li onClick={() => history.push(`/users/${user.username}`)}>
             <a
               style={{ color: Color.darkerGray(), cursor: 'pointer' }}
