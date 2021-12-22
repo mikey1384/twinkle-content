@@ -89,7 +89,6 @@ export default function DropdownList({
             line-height: 1.5;
             display: flex;
             flex-direction: column;
-            flex: auto;
             li {
               width: 100%;
               border-radius: 0;
