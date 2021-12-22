@@ -31,7 +31,6 @@ DropdownButton.propTypes = {
 
 export default function DropdownButton({
   buttonStyle = {},
-  direction,
   opacity = 1,
   style,
   icon = 'pencil-alt',
@@ -86,7 +85,6 @@ export default function DropdownButton({
               ...listStyle
             }}
             isReversed={isReversed}
-            direction={direction}
             x={coordinates.x}
             y={coordinates.y}
             onHideMenu={handleHideMenuWithCoolDown}

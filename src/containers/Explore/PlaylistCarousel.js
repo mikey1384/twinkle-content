@@ -120,7 +120,6 @@ export default function PlaylistCarousel({
             skeuomorphic
             color="darkerGray"
             style={{ position: 'absolute', right: 0 }}
-            direction="left"
             menuProps={[
               {
                 label: editTitleLabel,

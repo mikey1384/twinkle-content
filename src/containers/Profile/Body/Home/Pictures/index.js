@@ -93,7 +93,6 @@ export default function Pictures({
           skeuomorphic
           icon="ellipsis-h"
           color="darkerGray"
-          direction="left"
           style={{ marginLeft: '1rem' }}
           menuProps={[
             ...(pictures.length > 1

@@ -846,7 +846,6 @@ function MessagesContainer({
             listStyle={{
               width: '15rem'
             }}
-            direction="left"
             icon="bars"
             text={menuLabel}
             menuProps={menuProps}

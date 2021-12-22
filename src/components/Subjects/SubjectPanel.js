@@ -232,7 +232,6 @@ export default function SubjectPanel({
                   skeuomorphic
                   style={{ marginLeft: '1rem' }}
                   color="darkerGray"
-                  direction="left"
                   menuProps={renderMenuProps()}
                 />
               )}

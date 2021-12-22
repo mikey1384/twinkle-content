@@ -125,7 +125,6 @@ export default function HomeFilter({
                   <DropdownButton
                     skeuomorphic
                     color="darkerGray"
-                    direction="left"
                     icon="caret-down"
                     text={categoryObj.uploads[displayOrder]}
                     menuProps={[

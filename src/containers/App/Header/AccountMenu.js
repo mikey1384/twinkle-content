@@ -99,7 +99,6 @@ function AccountMenu({ className, history }) {
             width: '13rem',
             marginRight: '1rem'
           }}
-          direction="left"
           text={
             <div
               style={{

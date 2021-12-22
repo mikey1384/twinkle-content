@@ -575,7 +575,6 @@ function Comment({
                     skeuomorphic
                     icon="chevron-down"
                     color="darkerGray"
-                    direction="left"
                     opacity={0.8}
                     menuProps={dropdownMenuItems}
                   />

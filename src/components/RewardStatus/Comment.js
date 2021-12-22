@@ -236,7 +236,6 @@ function Comment({
               skeuomorphic
               icon="chevron-down"
               color="darkerGray"
-              direction="left"
               menuProps={editMenuItems}
             />
           )}

@@ -217,7 +217,6 @@ export default function Description({
           color="darkerGray"
           opacity={0.8}
           style={{ position: 'absolute', top: '1rem', right: '1rem' }}
-          direction="left"
           menuProps={editMenuItems}
         />
       )}

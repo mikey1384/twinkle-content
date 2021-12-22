@@ -238,7 +238,6 @@ export default function Slide({
             <DropdownButton
               skeuomorphic
               color="darkerGray"
-              direction="left"
               listStyle={{ width: '25ch' }}
               style={{
                 position: 'absolute',

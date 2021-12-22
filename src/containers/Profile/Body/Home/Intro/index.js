@@ -314,7 +314,6 @@ export default function Intro({ profile, selectedTheme }) {
           >
             {userId === profile.id && (
               <DropDownButton
-                direction="left"
                 opacity={0.7}
                 style={{ right: 0, top: '1rem', position: 'absolute' }}
                 skeuomorphic

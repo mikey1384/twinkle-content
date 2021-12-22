@@ -675,7 +675,6 @@ function Message({
                   color="darkerGray"
                   icon="chevron-down"
                   style={{ position: 'absolute', top: 0, right: 0 }}
-                  direction="left"
                   opacity={0.8}
                   menuProps={messageMenuItems}
                   isReversed={isLastMsg}

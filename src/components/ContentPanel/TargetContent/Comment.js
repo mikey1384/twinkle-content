@@ -78,7 +78,6 @@ function Comment({
           <DropdownButton
             skeuomorphic
             color="darkerGray"
-            direction="left"
             style={{ position: 'absolute' }}
             opacity={0.8}
             menuProps={[
