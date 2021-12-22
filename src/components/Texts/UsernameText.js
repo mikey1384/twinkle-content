@@ -87,7 +87,7 @@ export default function UsernameText({
           if (mounted.current) {
             setDropdownContext(null);
           }
-        }, 1000);
+        }, 500);
       }}
     >
       <div
