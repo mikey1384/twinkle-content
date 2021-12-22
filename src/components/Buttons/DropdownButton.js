@@ -13,7 +13,6 @@ DropdownButton.propTypes = {
   direction: PropTypes.string,
   innerRef: PropTypes.object,
   onButtonClick: PropTypes.func,
-  onOutsideClick: PropTypes.func,
   listStyle: PropTypes.object,
   menuProps: PropTypes.arrayOf(
     PropTypes.shape({

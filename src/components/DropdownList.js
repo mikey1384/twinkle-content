@@ -21,7 +21,6 @@ export default function DropdownList({
   dropdownContext,
   innerRef,
   style = {},
-  onOutsideClick,
   onHideMenu = () => {}
 }) {
   const MenuRef = useRef(null);
@@ -32,9 +31,6 @@ export default function DropdownList({
     };
   }, [dropdownContext]);
   useOutsideClick(MenuRef, () => {
-    if (typeof onOutsideClick === 'function') {
-      onOutsideClick();
-    }
     onHideMenu();
   });
   const displaysToTheRight = useMemo(() => {
