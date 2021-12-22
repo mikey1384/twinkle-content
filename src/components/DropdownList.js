@@ -80,8 +80,9 @@ export default function DropdownList({
             box-shadow: 1px 1px 2px ${Color.black(0.6)};
             font-weight: normal;
             line-height: 1.5;
+            display: flex;
+            flex-direction: column;
             li {
-              display: inline-block;
               border-radius: 0;
               border: none;
               padding: 1rem;
@@ -90,7 +91,6 @@ export default function DropdownList({
               color: ${Color.darkerGray()};
               cursor: pointer;
               border-bottom: none;
-              width: 100%;
               &:hover {
                 background: ${Color.highlightGray()};
               }
