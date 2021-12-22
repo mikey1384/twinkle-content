@@ -12,7 +12,9 @@ DropdownList.propTypes = {
   dropdownContext: PropTypes.object,
   innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   style: PropTypes.object,
-  direction: PropTypes.string
+  direction: PropTypes.string,
+  onMouseEnter: PropTypes.func,
+  onMouseLeave: PropTypes.func
 };
 
 export default function DropdownList({
@@ -21,7 +23,9 @@ export default function DropdownList({
   dropdownContext,
   innerRef,
   style = {},
-  onHideMenu = () => {}
+  onHideMenu = () => {},
+  onMouseEnter = () => {},
+  onMouseLeave = () => {}
 }) {
   const MenuRef = useRef(null);
   const { x, y } = useMemo(() => {
@@ -53,6 +57,8 @@ export default function DropdownList({
         <ul
           ref={innerRef}
           style={style}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
           className={`${css`
             position: absolute;
             left: ${`${

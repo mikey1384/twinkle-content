@@ -31,7 +31,11 @@ export default function UsernameText({
 }) {
   const mounted = useRef(true);
   const history = useHistory();
-  const timerRef = useRef(null);
+  const coolDownRef = useRef(null);
+  const showTimerRef = useRef(null);
+  const hideTimerRef = useRef(null);
+  const hideTimerRef2 = useRef(null);
+  const UsernameTextRef = useRef(null);
   const mouseEntered = useRef(false);
   const {
     requestHelpers: { loadDMChannel, loadProfile }
@@ -47,7 +51,7 @@ export default function UsernameText({
   const {
     actions: { onOpenNewChatTab }
   } = useChatContext();
-  const [menuShown, setMenuShown] = useState(false);
+  const [dropdownContext, setDropdownContext] = useState(null);
   const userXP = useMemo(() => {
     if (!twinkleXP && !user.twinkleXP) {
       return null;
@@ -68,17 +72,22 @@ export default function UsernameText({
 
   return (
     <div
+      ref={UsernameTextRef}
       style={{
         display: 'inline',
-        ...(menuShown ? {} : { overflowX: 'hidden', textOverflow: 'ellipsis' }),
+        ...(dropdownContext
+          ? {}
+          : { overflowX: 'hidden', textOverflow: 'ellipsis' }),
         position: 'relative',
         ...style
       }}
       className={className}
       onMouseLeave={() => {
-        mouseEntered.current = false;
-        clearTimeout(timerRef.current);
-        setMenuShown(false);
+        hideTimerRef.current = setTimeout(() => {
+          if (mounted.current) {
+            setDropdownContext(null);
+          }
+        }, 1000);
       }}
     >
       <div
@@ -105,8 +114,22 @@ export default function UsernameText({
           {user.username || `(${deletedLabel})`}
         </p>
       </div>
-      {menuShown && (
-        <DropdownList style={{ width: '100%' }}>
+      {dropdownContext && (
+        <DropdownList
+          dropdownContext={dropdownContext}
+          onHideMenu={handleHideMenuWithCoolDown}
+          onMouseEnter={() => {
+            clearTimeout(hideTimerRef.current);
+            clearTimeout(hideTimerRef2.current);
+          }}
+          onMouseLeave={() => {
+            hideTimerRef2.current = setTimeout(() => {
+              if (mounted.current) {
+                setDropdownContext(null);
+              }
+            }, 500);
+          }}
+        >
           <li onClick={() => history.push(`/users/${user.username}`)}>
             <a
               style={{ color: Color.darkerGray(), cursor: 'pointer' }}
@@ -160,12 +183,29 @@ export default function UsernameText({
     </div>
   );
 
+  function handleHideMenuWithCoolDown() {
+    setDropdownContext(null);
+    coolDownRef.current = true;
+    setTimeout(() => {
+      coolDownRef.current = false;
+    }, 10);
+  }
+
   async function onMouseEnter() {
     mouseEntered.current = true;
-    clearTimeout(timerRef.current);
+    clearTimeout(hideTimerRef.current);
+    clearTimeout(hideTimerRef2.current);
+    clearTimeout(showTimerRef.current);
+    hideTimerRef.current = null;
+    const elementContext = {
+      x: UsernameTextRef.current.getBoundingClientRect().left,
+      y: UsernameTextRef.current.getBoundingClientRect().top,
+      width: UsernameTextRef.current.getBoundingClientRect().width,
+      height: UsernameTextRef.current.getBoundingClientRect().height
+    };
     if (user.username && !deviceIsMobile) {
       if (!twinkleXP && !user.twinkleXP) {
-        timerRef.current = setTimeout(async () => {
+        showTimerRef.current = setTimeout(async () => {
           const data = await loadProfile(user.id);
           if (mouseEntered.current) {
             if (mounted.current) {
@@ -176,18 +216,22 @@ export default function UsernameText({
               });
             }
             if (mounted.current) {
-              setMenuShown(true);
+              setDropdownContext(elementContext);
             }
           }
         }, 200);
       } else {
-        timerRef.current = setTimeout(() => setMenuShown(true), 300);
+        showTimerRef.current = setTimeout(
+          () => setDropdownContext(elementContext),
+          300
+        );
       }
     }
   }
 
   async function onLinkClick() {
-    setMenuShown(false);
+    if (coolDownRef.current) return;
+    setDropdownContext(null);
     if (user.id !== userId) {
       const { pathId } = await loadDMChannel({ recepient: user });
       if (mounted.current) {
@@ -208,17 +252,24 @@ export default function UsernameText({
   }
 
   async function onUsernameClick() {
+    const menuDisplayed = !!dropdownContext;
+    const elementContext = {
+      x: UsernameTextRef.current.getBoundingClientRect().left,
+      y: UsernameTextRef.current.getBoundingClientRect().top,
+      width: UsernameTextRef.current.getBoundingClientRect().width,
+      height: UsernameTextRef.current.getBoundingClientRect().height
+    };
     if (user.username) {
-      if (!twinkleXP && !user.twinkleXP && !menuShown) {
+      if (!twinkleXP && !user.twinkleXP && !menuDisplayed) {
         const data = await loadProfile(user.id);
         if (mounted.current) {
           onInitContent({ contentId: user.id, contentType: 'user', ...data });
         }
         if (mounted.current) {
-          setMenuShown(true);
+          setDropdownContext(elementContext);
         }
       } else {
-        setMenuShown(!menuShown);
+        setDropdownContext(menuDisplayed ? null : elementContext);
       }
     }
   }
