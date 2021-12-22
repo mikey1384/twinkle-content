@@ -139,17 +139,17 @@ export function useOutsideClick(ref, callback) {
 }
 
 export function useOutsideMouseDown(ref, callback) {
-  const [insideClicked, setInsideClicked] = useState(false);
   useEffect(() => {
     function downListener(event) {
-      if (insideClicked) return setInsideClicked(false);
       if (!ref.current || ref.current.contains(event.target)) {
         return;
       }
       callback();
     }
+    addEvent(document, 'scroll', downListener);
     addEvent(document, 'mousedown', downListener);
     return function cleanUp() {
+      removeEvent(document, 'scroll', downListener);
       removeEvent(document, 'mousedown', downListener);
     };
   });
