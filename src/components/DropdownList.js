@@ -86,6 +86,6 @@ export default function DropdownList({
         </ul>
       </div>
     </ErrorBoundary>,
-    document.getElementById('menu-layer')
+    document.getElementById('outer-layer')
   );
 }
