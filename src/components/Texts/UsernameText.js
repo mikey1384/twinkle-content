@@ -193,10 +193,6 @@ export default function UsernameText({
 
   async function onMouseEnter() {
     mouseEntered.current = true;
-    clearTimeout(hideTimerRef.current);
-    clearTimeout(hideTimerRef2.current);
-    clearTimeout(showTimerRef.current);
-    hideTimerRef.current = null;
     const elementContext = {
       x: UsernameTextRef.current.getBoundingClientRect().left,
       y: UsernameTextRef.current.getBoundingClientRect().top,
@@ -204,6 +200,9 @@ export default function UsernameText({
       height: UsernameTextRef.current.getBoundingClientRect().height
     };
     if (user.username && !deviceIsMobile) {
+      clearTimeout(hideTimerRef.current);
+      clearTimeout(hideTimerRef2.current);
+      clearTimeout(showTimerRef.current);
       if (!twinkleXP && !user.twinkleXP) {
         showTimerRef.current = setTimeout(async () => {
           const data = await loadProfile(user.id);
