@@ -37,7 +37,7 @@ export default function DropdownList({
     <ErrorBoundary
       style={{
         width: '100%',
-        zIndex: 9999999,
+        zIndex: 9000000,
         top: 0,
         position: 'absolute'
       }}
