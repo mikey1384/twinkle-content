@@ -53,7 +53,6 @@ export default function DropdownList({
   return createPortal(
     <ErrorBoundary
       style={{
-        width: '100%',
         zIndex: 9000000,
         top: 0,
         position: 'fixed'

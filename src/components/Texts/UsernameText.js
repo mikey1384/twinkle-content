@@ -127,6 +127,7 @@ export default function UsernameText({
             clearTimeout(hideTimerRef.current);
             clearTimeout(hideTimerRef2.current);
           }}
+          style={{ minWidth: '10rem' }}
           onMouseLeave={() => {
             hideTimerRef2.current = setTimeout(() => {
               if (mounted.current) {
