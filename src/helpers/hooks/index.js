@@ -138,6 +138,23 @@ export function useOutsideClick(ref, callback) {
   });
 }
 
+export function useOutsideMouseDown(ref, callback) {
+  const [insideClicked, setInsideClicked] = useState(false);
+  useEffect(() => {
+    function downListener(event) {
+      if (insideClicked) return setInsideClicked(false);
+      if (!ref.current || ref.current.contains(event.target)) {
+        return;
+      }
+      callback();
+    }
+    addEvent(document, 'mousedown', downListener);
+    return function cleanUp() {
+      removeEvent(document, 'mousedown', downListener);
+    };
+  });
+}
+
 export function useProfileState(username) {
   const { state = {} } = useProfileContext();
   const { [username]: userState = {} } = state;

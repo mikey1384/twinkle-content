@@ -4,7 +4,13 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import { Color } from 'constants/css';
 import { css } from '@emotion/css';
 import { createPortal } from 'react-dom';
-import { useOutsideClick } from 'helpers/hooks';
+import { useOutsideMouseDown, useOutsideClick } from 'helpers/hooks';
+import { isMobile } from 'helpers';
+
+const deviceIsMobile = isMobile(navigator);
+const outsideClickMethod = deviceIsMobile
+  ? useOutsideMouseDown
+  : useOutsideClick;
 
 DropdownList.propTypes = {
   children: PropTypes.node,
@@ -34,7 +40,7 @@ export default function DropdownList({
       y: dropdownContext.y
     };
   }, [dropdownContext]);
-  useOutsideClick(MenuRef, () => {
+  outsideClickMethod(MenuRef, () => {
     onHideMenu();
   });
   const displaysToTheRight = useMemo(() => {

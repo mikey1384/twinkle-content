@@ -190,6 +190,7 @@ export default function UsernameText({
 
   function handleHideMenuWithCoolDown() {
     coolDownRef.current = true;
+    setDropdownContext(null);
     setTimeout(() => {
       coolDownRef.current = false;
     }, 10);

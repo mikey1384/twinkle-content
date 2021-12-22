@@ -109,8 +109,8 @@ export default function DropdownButton({
   }
 
   function handleHideMenuWithCoolDown() {
-    setDropdownContext(null);
     coolDownRef.current = true;
+    setDropdownContext(null);
     setTimeout(() => {
       coolDownRef.current = false;
     }, 10);
