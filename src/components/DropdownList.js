@@ -50,7 +50,7 @@ export default function DropdownList({
         width: '100%',
         zIndex: 9000000,
         top: 0,
-        position: 'absolute'
+        position: 'fixed'
       }}
     >
       <div ref={MenuRef}>
