@@ -52,6 +52,7 @@ export default function UsernameText({
     actions: { onOpenNewChatTab }
   } = useChatContext();
   const [dropdownContext, setDropdownContext] = useState(null);
+  const menuShownRef = useRef(false);
   const userXP = useMemo(() => {
     if (!twinkleXP && !user.twinkleXP) {
       return null;
@@ -69,6 +70,10 @@ export default function UsernameText({
       mounted.current = false;
     };
   }, []);
+
+  useEffect(() => {
+    menuShownRef.current = !!dropdownContext;
+  }, [dropdownContext]);
 
   return (
     <div
@@ -184,7 +189,6 @@ export default function UsernameText({
   );
 
   function handleHideMenuWithCoolDown() {
-    setDropdownContext(null);
     coolDownRef.current = true;
     setTimeout(() => {
       coolDownRef.current = false;
@@ -229,7 +233,6 @@ export default function UsernameText({
   }
 
   async function onLinkClick() {
-    if (coolDownRef.current) return;
     setDropdownContext(null);
     if (user.id !== userId) {
       const { pathId } = await loadDMChannel({ recepient: user });
@@ -251,7 +254,6 @@ export default function UsernameText({
   }
 
   async function onUsernameClick() {
-    const menuDisplayed = !!dropdownContext;
     const elementContext = {
       x: UsernameTextRef.current.getBoundingClientRect().left,
       y: UsernameTextRef.current.getBoundingClientRect().top,
@@ -259,7 +261,7 @@ export default function UsernameText({
       height: UsernameTextRef.current.getBoundingClientRect().height
     };
     if (user.username) {
-      if (!twinkleXP && !user.twinkleXP && !menuDisplayed) {
+      if (!twinkleXP && !user.twinkleXP && !menuShownRef.current) {
         const data = await loadProfile(user.id);
         if (mounted.current) {
           onInitContent({ contentId: user.id, contentType: 'user', ...data });
@@ -268,7 +270,7 @@ export default function UsernameText({
           setDropdownContext(elementContext);
         }
       } else {
-        setDropdownContext(menuDisplayed ? null : elementContext);
+        setDropdownContext(menuShownRef.current ? null : elementContext);
       }
     }
   }

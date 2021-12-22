@@ -150,6 +150,7 @@ export default function StarButton({
           <DropdownList
             dropdownContext={dropdownContext}
             onHideMenu={handleHideMenuWithCoolDown}
+            style={{ minWidth: '20rem' }}
           >
             {(contentType === 'video' || contentType === 'subject') &&
               canEditRewardLevel && (
