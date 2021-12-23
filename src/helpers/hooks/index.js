@@ -119,7 +119,7 @@ export function useOutsideClick(ref, callback) {
       if (!ref.current || ref.current.contains(event.target)) {
         return;
       }
-      callback();
+      callback?.();
     }
     function downListener(event) {
       if (ref.current?.contains(event.target)) {
@@ -137,7 +137,7 @@ export function useOutsideClick(ref, callback) {
   });
 }
 
-export function useOutsideMouseDown(ref, callback) {
+export function useOutsideTap(ref, callback) {
   useEffect(() => {
     function downListener(event) {
       if (!ref.current || ref.current.contains(event.target)) {
