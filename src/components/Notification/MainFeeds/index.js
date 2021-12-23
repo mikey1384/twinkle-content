@@ -53,15 +53,21 @@ function MainFeeds({
   );
 
   const { userId, rank, twinkleXP, twinkleCoins } = useMyState();
-  const {
-    state: { numNewNotis, totalRewardedTwinkles, totalRewardedTwinkleCoins },
-    actions: {
-      onClearRewards,
-      onFetchNotifications,
-      onLoadMoreNotifications,
-      onLoadMoreRewards
-    }
-  } = useNotiContext();
+  const numNewNotis = useNotiContext((v) => v.state.numNewNotis);
+  const totalRewardedTwinkles = useNotiContext(
+    (v) => v.state.totalRewardedTwinkles
+  );
+  const totalRewardedTwinkleCoins = useNotiContext(
+    (v) => v.state.totalRewardedTwinkleCoins
+  );
+  const onClearRewards = useNotiContext((v) => v.actions.onClearRewards);
+  const onFetchNotifications = useNotiContext(
+    (v) => v.actions.onFetchNotifications
+  );
+  const onLoadMoreNotifications = useNotiContext(
+    (v) => v.actions.onLoadMoreNotifications
+  );
+  const onLoadMoreRewards = useNotiContext((v) => v.actions.onLoadMoreRewards);
   const onUpdateUserCoins = useContentContext(
     (v) => v.actions.onUpdateUserCoins
   );

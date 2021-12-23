@@ -116,29 +116,37 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
     (v) => v.actions.onSetFeedsOutdated
   );
 
-  const {
-    state: {
-      numNewNotis,
-      numNewPosts,
-      totalRewardedTwinkles,
-      totalRewardedTwinkleCoins,
-      versionMatch,
-      prevUserId
-    },
-    actions: {
-      onChangeSocketStatus,
-      onCheckVersion,
-      onFetchNotifications,
-      onGetRanks,
-      onIncreaseNumNewPosts,
-      onIncreaseNumNewNotis,
-      onNotifyChatSubjectChange,
-      onShowUpdateNotice
-    }
-  } = useNotiContext();
-
+  const numNewNotis = useNotiContext((v) => v.state.numNewNotis);
+  const numNewPosts = useNotiContext((v) => v.state.numNewPosts);
+  const totalRewardedTwinkles = useNotiContext(
+    (v) => v.state.totalRewardedTwinkles
+  );
+  const totalRewardedTwinkleCoins = useNotiContext(
+    (v) => v.state.totalRewardedTwinkleCoins
+  );
+  const versionMatch = useNotiContext((v) => v.state.versionMatch);
+  const prevUserId = useNotiContext((v) => v.state.prevUserId);
+  const onChangeSocketStatus = useNotiContext(
+    (v) => v.actions.onChangeSocketStatus
+  );
+  const onCheckVersion = useNotiContext((v) => v.actions.onCheckVersion);
+  const onFetchNotifications = useNotiContext(
+    (v) => v.actions.onFetchNotifications
+  );
+  const onGetRanks = useNotiContext((v) => v.actions.onGetRanks);
+  const onIncreaseNumNewPosts = useNotiContext(
+    (v) => v.actions.onIncreaseNumNewPosts
+  );
+  const onIncreaseNumNewNotis = useNotiContext(
+    (v) => v.actions.onIncreaseNumNewNotis
+  );
+  const onNotifyChatSubjectChange = useNotiContext(
+    (v) => v.actions.onNotifyChatSubjectChange
+  );
+  const onShowUpdateNotice = useNotiContext(
+    (v) => v.actions.onShowUpdateNotice
+  );
   const pageVisible = useViewContext((v) => v.state.pageVisible);
-
   const onAttachReward = useContentContext((v) => v.actions.onAttachReward);
   const onUpdateProfileInfo = useContentContext(
     (v) => v.actions.onUpdateProfileInfo

@@ -40,10 +40,10 @@ export default function Stories() {
   const loadFeeds = useAppContext((v) => v.requestHelpers.loadFeeds);
   const loadNewFeeds = useAppContext((v) => v.requestHelpers.loadNewFeeds);
   const { hideWatched, userId, username } = useMyState();
-  const {
-    state: { numNewPosts },
-    actions: { onResetNumNewPosts }
-  } = useNotiContext();
+  const numNewPosts = useNotiContext((v) => v.state.numNewPosts);
+  const onResetNumNewPosts = useNotiContext(
+    (v) => v.actions.onResetNumNewPosts
+  );
   const category = useHomeContext((v) => v.state.category);
   const displayOrder = useHomeContext((v) => v.state.displayOrder);
   const feeds = useHomeContext((v) => v.state.feeds);

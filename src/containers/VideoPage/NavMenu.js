@@ -51,10 +51,16 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
     (v) => v.requestHelpers.toggleHideWatched
   );
   const { hideWatched, profileTheme, userId } = useMyState();
-  const {
-    state: { numNewNotis, totalRewardedTwinkles, totalRewardedTwinkleCoins },
-    actions: { onFetchNotifications }
-  } = useNotiContext();
+  const numNewNotis = useNotiContext((v) => v.state.numNewNotis);
+  const totalRewardedTwinkles = useNotiContext(
+    (v) => v.state.totalRewardedTwinkles
+  );
+  const totalRewardedTwinkleCoins = useNotiContext(
+    (v) => v.state.totalRewardedTwinkleCoins
+  );
+  const onFetchNotifications = useNotiContext(
+    (v) => v.actions.onFetchNotifications
+  );
 
   const [continueWatchingVideos, setContinueWatchingVideos] = useState([]);
   const [nextVideos, setNextVideos] = useState([]);

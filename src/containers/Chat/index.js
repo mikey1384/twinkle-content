@@ -204,10 +204,9 @@ function Chat({ onFileUpload }) {
   );
 
   const pageVisible = useViewContext((v) => v.state.pageVisible);
-  const {
-    state: { allRanks, socketConnected },
-    actions: { onGetRanks }
-  } = useNotiContext();
+  const allRanks = useNotiContext((v) => v.state.allRanks);
+  const socketConnected = useNotiContext((v) => v.state.socketConnected);
+  const onGetRanks = useNotiContext((v) => v.actions.onGetRanks);
   const [creatingChat, setCreatingChat] = useState(false);
   const [createNewChatModalShown, setCreateNewChatModalShown] = useState(false);
   const [userListModalShown, setUserListModalShown] = useState(false);

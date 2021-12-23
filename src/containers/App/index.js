@@ -118,10 +118,8 @@ function App({ location, history }) {
   const onSetUploadingFile = useHomeContext(
     (v) => v.actions.onSetUploadingFile
   );
-
-  const {
-    state: { updateDetail, updateNoticeShown }
-  } = useNotiContext();
+  const updateDetail = useNotiContext((v) => v.state.updateDetail);
+  const updateNoticeShown = useNotiContext((v) => v.state.updateNoticeShown);
   const pageVisible = useViewContext((v) => v.state.pageVisible);
   const scrollPositions = useViewContext((v) => v.state.scrollPositions);
   const onChangePageVisibility = useViewContext(

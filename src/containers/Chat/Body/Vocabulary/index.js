@@ -52,9 +52,7 @@ function Vocabulary() {
   const onChangeUserXP = useContentContext((v) => v.actions.onChangeUserXP);
   const state = useInputContext((v) => v.state);
   const onEnterComment = useInputContext((v) => v.actions.onEnterComment);
-  const {
-    state: { socketConnected }
-  } = useNotiContext();
+  const socketConnected = useNotiContext((v) => v.state.socketConnected);
   const { userId } = useMyState();
   const inputText = state['vocabulary']?.text || '';
   const wordObj = useMemo(

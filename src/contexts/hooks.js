@@ -36,8 +36,8 @@ export function useInteractiveContext(fn) {
 export function useManagementContext(fn) {
   return useContextSelector(ManagementContext, fn);
 }
-export function useNotiContext() {
-  return useContextSelector(NotiContext, (v) => v);
+export function useNotiContext(fn) {
+  return useContextSelector(NotiContext, fn);
 }
 export function useProfileContext() {
   return useContextSelector(ProfileContext, (v) => v);
