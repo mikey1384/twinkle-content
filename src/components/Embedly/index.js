@@ -77,17 +77,20 @@ function Embedly({
     siteUrl: contentType === 'url' ? 'siteUrl' : 'linkUrl',
     url: contentType === 'url' ? 'content' : 'embeddedUrl'
   };
-  const {
-    actions: {
-      onSetActualDescription,
-      onSetActualTitle,
-      onSetPrevUrl,
-      onSetSiteUrl,
-      onSetThumbUrl,
-      onSetVideoCurrentTime,
-      onSetMediaStarted
-    }
-  } = useContentContext();
+  const onSetActualDescription = useContentContext(
+    (v) => v.actions.onSetActualDescription
+  );
+  const onSetActualTitle = useContentContext((v) => v.actions.onSetActualTitle);
+  const onSetPrevUrl = useContentContext((v) => v.actions.onSetPrevUrl);
+  const onSetSiteUrl = useContentContext((v) => v.actions.onSetSiteUrl);
+  const onSetThumbUrl = useContentContext((v) => v.actions.onSetThumbUrl);
+  const onSetVideoCurrentTime = useContentContext(
+    (v) => v.actions.onSetVideoCurrentTime
+  );
+  const onSetMediaStarted = useContentContext(
+    (v) => v.actions.onSetMediaStarted
+  );
+
   const {
     currentTime = 0,
     description,

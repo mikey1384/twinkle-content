@@ -33,9 +33,10 @@ export default function MediaPlayer({
   videoHeight
 }) {
   const uploadThumb = useAppContext((v) => v.requestHelpers.uploadThumb);
-  const {
-    actions: { onSetThumbUrl, onSetVideoCurrentTime }
-  } = useContentContext();
+  const onSetThumbUrl = useContentContext((v) => v.actions.onSetThumbUrl);
+  const onSetVideoCurrentTime = useContentContext(
+    (v) => v.actions.onSetVideoCurrentTime
+  );
   const {
     [isSecretAttachment ? 'secretAttachmentCurrentTime' : 'currentTime']:
       currentTime = 0

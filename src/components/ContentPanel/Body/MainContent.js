@@ -65,15 +65,14 @@ export default function MainContent({
     tags,
     title
   } = useContentState({ contentId, contentType });
-  const {
-    actions: {
-      onAddTags,
-      onAddTagToContents,
-      onEditContent,
-      onLoadTags,
-      onSetIsEditing
-    }
-  } = useContentContext();
+  const onAddTags = useContentContext((v) => v.actions.onAddTags);
+  const onAddTagToContents = useContentContext(
+    (v) => v.actions.onAddTagToContents
+  );
+  const onEditContent = useContentContext((v) => v.actions.onEditContent);
+  const onLoadTags = useContentContext((v) => v.actions.onLoadTags);
+  const onSetIsEditing = useContentContext((v) => v.actions.onSetIsEditing);
+
   const { fileType } = useMemo(
     () => (fileName ? getFileInfoFromFileName(fileName) : ''),
     [fileName]

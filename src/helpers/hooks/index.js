@@ -7,10 +7,12 @@ export { default as useInfiniteScroll } from './useInfiniteScroll';
 import { defaultContentState } from 'constants/defaultValues';
 
 export function useContentState({ contentType, contentId }) {
-  const { state } = useContentContext();
-  return state[contentType + contentId]
-    ? { ...defaultContentState, ...state[contentType + contentId] }
-    : defaultContentState;
+  const result = {};
+  result[contentType + contentId] = useContentContext(
+    (v) => v.state[contentType + contentId]
+  );
+  const state = result[contentType + contentId];
+  return state ? { ...defaultContentState, ...state } : defaultContentState;
 }
 
 export function useInterval(callback, interval) {

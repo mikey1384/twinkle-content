@@ -42,9 +42,10 @@ export default function Cover({
     username,
     userType
   } = profile;
-  const {
-    actions: { onSetOnline, onUploadProfilePic }
-  } = useContentContext();
+  const onSetOnline = useContentContext((v) => v.actions.onSetOnline);
+  const onUploadProfilePic = useContentContext(
+    (v) => v.actions.onUploadProfilePic
+  );
   const [alertModalShown, setAlertModalShown] = useState(false);
   const [colorSelectorShown, setColorSelectorShown] = useState(false);
   const [imageEditModalShown, setImageEditModalShown] = useState(false);

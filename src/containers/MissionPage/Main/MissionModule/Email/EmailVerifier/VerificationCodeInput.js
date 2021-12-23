@@ -19,9 +19,9 @@ export default function VerificationCodeInput({ onRetry, email }) {
   const verifyEmailViaOTP = useAppContext(
     (v) => v.requestHelpers.verifyEmailViaOTP
   );
-  const {
-    actions: { onUpdateProfileInfo }
-  } = useContentContext();
+  const onUpdateProfileInfo = useContentContext(
+    (v) => v.actions.onUpdateProfileInfo
+  );
   const { userId } = useMyState();
 
   return (

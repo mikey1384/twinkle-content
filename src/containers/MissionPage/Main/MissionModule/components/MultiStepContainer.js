@@ -25,9 +25,9 @@ export default function MultiStepContainer({
   const updateMissionStatus = useAppContext(
     (v) => v.requestHelpers.updateMissionStatus
   );
-  const {
-    actions: { onUpdateUserMissionState }
-  } = useContentContext();
+  const onUpdateUserMissionState = useContentContext(
+    (v) => v.actions.onUpdateUserMissionState
+  );
   const selectedIndex = useMemo(
     () => state?.missions?.[taskType]?.selectedIndex || 0,
     [state?.missions, taskType]

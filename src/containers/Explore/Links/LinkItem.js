@@ -43,9 +43,8 @@ export default function LinkItem({
   const {
     actions: { onEditLinkTitle }
   } = useExploreContext();
-  const {
-    actions: { onDeleteContent, onInitContent }
-  } = useContentContext();
+  const onDeleteContent = useContentContext((v) => v.actions.onDeleteContent);
+  const onInitContent = useContentContext((v) => v.actions.onInitContent);
   const { loaded, isDeleted } = useContentState({
     contentType: 'url',
     contentId: id

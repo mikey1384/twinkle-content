@@ -139,19 +139,21 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
     state: { pageVisible }
   } = useViewContext();
 
-  const {
-    state,
-    actions: {
-      onAttachReward,
-      onUpdateProfileInfo,
-      onUpdateUserCoins,
-      onChangeUserXP,
-      onLikeContent,
-      onRecommendContent,
-      onUploadComment,
-      onUploadReply
-    }
-  } = useContentContext();
+  const onAttachReward = useContentContext((v) => v.actions.onAttachReward);
+  const onUpdateProfileInfo = useContentContext(
+    (v) => v.actions.onUpdateProfileInfo
+  );
+  const onUpdateUserCoins = useContentContext(
+    (v) => v.actions.onUpdateUserCoins
+  );
+  const onChangeUserXP = useContentContext((v) => v.actions.onChangeUserXP);
+  const onLikeContent = useContentContext((v) => v.actions.onLikeContent);
+  const onRecommendContent = useContentContext(
+    (v) => v.actions.onRecommendContent
+  );
+  const onUploadComment = useContentContext((v) => v.actions.onUploadComment);
+  const onUploadReply = useContentContext((v) => v.actions.onUploadReply);
+  const state = useContentContext((v) => v.state);
 
   const {
     actions: { onUpdateMissionAttempt }

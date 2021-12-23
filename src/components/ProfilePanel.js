@@ -88,30 +88,46 @@ function ProfilePanel({ expandable, profileId, style }) {
     actions: { onOpenNewChatTab }
   } = useChatContext();
 
-  const {
-    actions: {
-      onDeleteComment,
-      onEditComment,
-      onEditRewardComment,
-      onInitContent,
-      onLikeComment,
-      onLoadComments,
-      onLoadMoreComments,
-      onLoadMoreReplies,
-      onLoadRepliesOfReply,
-      onReloadContent,
-      onSetCommentsShown,
-      onSetOnline,
-      onUploadComment,
-      onUploadReply,
-      onRemoveStatusMsg,
-      onSetPlaceholderHeight,
-      onSetVisible,
-      onUpdateStatusMsg,
-      onUpdateBio,
-      onUploadProfilePic
-    }
-  } = useContentContext();
+  const onDeleteComment = useContentContext((v) => v.actions.onDeleteComment);
+  const onEditComment = useContentContext((v) => v.actions.onEditComment);
+  const onEditRewardComment = useContentContext(
+    (v) => v.actions.onEditRewardComment
+  );
+  const onInitContent = useContentContext((v) => v.actions.onInitContent);
+  const onLikeComment = useContentContext(
+    (v) => v.actions.onDeleteComment.onLikeComment
+  );
+  const onLoadComments = useContentContext((v) => v.actions.onLoadComments);
+  const onLoadMoreComments = useContentContext(
+    (v) => v.actions.onLoadMoreComments
+  );
+  const onLoadMoreReplies = useContentContext(
+    (v) => v.actions.onLoadMoreReplies
+  );
+  const onLoadRepliesOfReply = useContentContext(
+    (v) => v.actions.onLoadRepliesOfReply
+  );
+  const onReloadContent = useContentContext((v) => v.actions.onReloadContent);
+  const onSetCommentsShown = useContentContext(
+    (v) => v.actions.onSetCommentsShown
+  );
+  const onSetOnline = useContentContext((v) => v.actions.onSetOnline);
+  const onUploadComment = useContentContext((v) => v.actions.onUploadComment);
+  const onUploadReply = useContentContext((v) => v.actions.onUploadReply);
+  const onRemoveStatusMsg = useContentContext(
+    (v) => v.actions.onRemoveStatusMsg
+  );
+  const onSetPlaceholderHeight = useContentContext(
+    (v) => v.actions.onSetPlaceholderHeight
+  );
+  const onSetVisible = useContentContext((v) => v.actions.onSetVisible);
+  const onUpdateStatusMsg = useContentContext(
+    (v) => v.actions.onUpdateStatusMsg
+  );
+  const onUpdateBio = useContentContext((v) => v.actions.onUpdateBio);
+  const onUploadProfilePic = useContentContext(
+    (v) => v.actions.onUploadProfilePic
+  );
 
   const [ComponentRef, inView] = useInView({
     rootMargin: '50px 0px 0px 0px',

@@ -174,9 +174,9 @@ RewardBoostItem.propTypes = {
 
 export default function RewardBoostItem({ style }) {
   const { rewardBoostLvl, karmaPoints, userId } = useMyState();
-  const {
-    actions: { onUpdateProfileInfo }
-  } = useContentContext();
+  const onUpdateProfileInfo = useContentContext(
+    (v) => v.actions.onUpdateProfileInfo
+  );
   const upgradeRewardBoost = useAppContext(
     (v) => v.requestHelpers.upgradeRewardBoost
   );

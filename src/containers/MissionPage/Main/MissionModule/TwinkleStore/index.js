@@ -21,9 +21,10 @@ export default function TwinkleStore({ mission }) {
   const {
     state: { pageVisible }
   } = useViewContext();
-  const {
-    actions: { onInitContent, onUpdateProfileInfo }
-  } = useContentContext();
+  const onInitContent = useContentContext((v) => v.actions.onInitContent);
+  const onUpdateProfileInfo = useContentContext(
+    (v) => v.actions.onUpdateProfileInfo
+  );
   const [loadingKarma, setLoadingKarma] = useState(false);
   const mounted = useRef(true);
   const requiredKarmaPoints = karmaPointTable.username;

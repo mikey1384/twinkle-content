@@ -45,9 +45,7 @@ function Nav({
     state: profileState = {},
     actions: { onResetProfile }
   } = useProfileContext();
-  const {
-    actions: { onReloadContent }
-  } = useContentContext();
+  const onReloadContent = useContentContext((v) => v.actions.onReloadContent);
   const {
     actions: { onClearLinksLoaded, onClearVideosLoaded, onSetSubjectsLoaded }
   } = useExploreContext();

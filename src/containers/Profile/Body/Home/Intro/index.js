@@ -41,14 +41,15 @@ export default function Intro({ profile, selectedTheme }) {
   const auth = useAppContext((v) => v.requestHelpers.auth);
   const uploadGreeting = useAppContext((v) => v.requestHelpers.uploadGreeting);
   const uploadBio = useAppContext((v) => v.requestHelpers.uploadBio);
-  const {
-    actions: {
-      onRemoveStatusMsg,
-      onUpdateStatusMsg,
-      onUpdateGreeting,
-      onUpdateBio
-    }
-  } = useContentContext();
+  const onRemoveStatusMsg = useContentContext(
+    (v) => v.actions.onRemoveStatusMsg
+  );
+  const onUpdateStatusMsg = useContentContext(
+    (v) => v.actions.onUpdateStatusMsg
+  );
+  const onUpdateGreeting = useContentContext((v) => v.actions.onUpdateGreeting);
+  const onUpdateBio = useContentContext((v) => v.actions.onUpdateBio);
+
   const {
     state: { editedStatusMsg, editedStatusColor },
     actions: { onSetEditedStatusColor, onSetEditedStatusMsg }

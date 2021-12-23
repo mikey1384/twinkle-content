@@ -35,9 +35,9 @@ export default function LongText({
   maxLines = 10,
   readMoreColor = Color.blue()
 }) {
-  const {
-    actions: { onSetFullTextState }
-  } = useContentContext();
+  const onSetFullTextState = useContentContext(
+    (v) => v.actions.onSetFullTextState
+  );
   const ContainerRef = useRef(null);
   const contentState =
     contentType && section ? useContentState({ contentType, contentId }) : {};

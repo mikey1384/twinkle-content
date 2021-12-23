@@ -88,36 +88,55 @@ export default function VideoPage({
       onSetThumbRewardLevel
     }
   } = useExploreContext();
-  const {
-    actions: {
-      onAddTags,
-      onDeleteComment,
-      onDeleteContent,
-      onEditComment,
-      onEditContent,
-      onEditRewardComment,
-      onEditSubject,
-      onInitContent,
-      onLikeComment,
-      onLoadComments,
-      onLoadMoreComments,
-      onLoadMoreReplies,
-      onLoadMoreSubjectComments,
-      onLoadMoreSubjectReplies,
-      onLoadMoreSubjects,
-      onLoadRepliesOfReply,
-      onLoadSubjectRepliesOfReply,
-      onLoadSubjects,
-      onLoadSubjectComments,
-      onLoadTags,
-      onSetByUserStatus,
-      onSetRewardLevel,
-      onSetVideoQuestions,
-      onUploadComment,
-      onUploadReply,
-      onUploadSubject
-    }
-  } = useContentContext();
+  const onAddTags = useContentContext((v) => v.actions.onAddTags);
+  const onDeleteComment = useContentContext((v) => v.actions.onDeleteComment);
+  const onDeleteContent = useContentContext((v) => v.actions.onDeleteContent);
+  const onEditComment = useContentContext((v) => v.actions.onEditComment);
+  const onEditContent = useContentContext((v) => v.actions.onEditContent);
+  const onEditRewardComment = useContentContext(
+    (v) => v.actions.onEditRewardComment
+  );
+  const onEditSubject = useContentContext((v) => v.actions.onEditSubject);
+  const onInitContent = useContentContext((v) => v.actions.onInitContent);
+  const onLikeComment = useContentContext((v) => v.actions.onLikeComment);
+  const onLoadComments = useContentContext((v) => v.actions.onLoadComments);
+  const onLoadMoreComments = useContentContext(
+    (v) => v.actions.onLoadMoreComments
+  );
+  const onLoadMoreReplies = useContentContext(
+    (v) => v.actions.onLoadMoreReplies
+  );
+  const onLoadMoreSubjectComments = useContentContext(
+    (v) => v.actions.onLoadMoreSubjectComments
+  );
+  const onLoadMoreSubjectReplies = useContentContext(
+    (v) => v.actions.onLoadMoreSubjectReplies
+  );
+  const onLoadMoreSubjects = useContentContext(
+    (v) => v.actions.onLoadMoreSubjects
+  );
+  const onLoadRepliesOfReply = useContentContext(
+    (v) => v.actions.onLoadRepliesOfReply
+  );
+  const onLoadSubjectRepliesOfReply = useContentContext(
+    (v) => v.actions.onLoadSubjectRepliesOfReply
+  );
+  const onLoadSubjects = useContentContext((v) => v.actions.onLoadSubjects);
+  const onLoadSubjectComments = useContentContext(
+    (v) => v.actions.onLoadSubjectComments
+  );
+  const onLoadTags = useContentContext((v) => v.actions.onLoadTags);
+  const onSetByUserStatus = useContentContext(
+    (v) => v.actions.onSetByUserStatus
+  );
+  const onSetRewardLevel = useContentContext((v) => v.actions.onSetRewardLevel);
+  const onSetVideoQuestions = useContentContext(
+    (v) => v.actions.onSetVideoQuestions
+  );
+  const onUploadComment = useContentContext((v) => v.actions.onUploadComment);
+  const onUploadReply = useContentContext((v) => v.actions.onUploadReply);
+  const onUploadSubject = useContentContext((v) => v.actions.onUploadSubject);
+
   const {
     actions: { onSetContentNav }
   } = useViewContext();

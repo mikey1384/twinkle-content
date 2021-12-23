@@ -41,9 +41,10 @@ export default function Store() {
   const unlockUsernameChange = useAppContext(
     (v) => v.requestHelpers.unlockUsernameChange
   );
-  const {
-    actions: { onInitContent, onUpdateProfileInfo }
-  } = useContentContext();
+  const onInitContent = useContentContext((v) => v.actions.onInitContent);
+  const onUpdateProfileInfo = useContentContext(
+    (v) => v.actions.onUpdateProfileInfo
+  );
   const {
     state: { pageVisible }
   } = useViewContext();

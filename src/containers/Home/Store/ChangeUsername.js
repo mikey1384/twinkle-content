@@ -29,9 +29,9 @@ export default function ChangeUsername({ style }) {
   const checkIfUsernameExists = useAppContext(
     (v) => v.requestHelpers.checkIfUsernameExists
   );
-  const {
-    actions: { onUpdateUserCoins }
-  } = useContentContext();
+  const onUpdateUserCoins = useContentContext(
+    (v) => v.actions.onUpdateUserCoins
+  );
   const { twinkleCoins, userId, banned } = useMyState();
   const [loading, setLoading] = useState(false);
   const [changing, setChanging] = useState(false);

@@ -31,9 +31,10 @@ export default function TaskComplete({
     actions: { onUpdateMissionAttempt }
   } = useMissionContext();
   const myAttempt = useMemo(() => myAttempts[taskId], [myAttempts, taskId]);
-  const {
-    actions: { onChangeUserXP, onUpdateUserCoins }
-  } = useContentContext();
+  const onChangeUserXP = useContentContext((v) => v.actions.onChangeUserXP);
+  const onUpdateUserCoins = useContentContext(
+    (v) => v.actions.onUpdateUserCoins
+  );
   const [submitDisabled, setSubmitDisabled] = useState(false);
   const mounted = useRef(true);
   useEffect(() => {

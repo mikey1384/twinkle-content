@@ -30,9 +30,10 @@ export default function Questions({ isRepeating, mission, onFail }) {
   const {
     actions: { onUpdateMissionAttempt, onSetMissionState }
   } = useMissionContext();
-  const {
-    actions: { onChangeUserXP, onUpdateUserCoins }
-  } = useContentContext();
+  const onChangeUserXP = useContentContext((v) => v.actions.onChangeUserXP);
+  const onUpdateUserCoins = useContentContext(
+    (v) => v.actions.onUpdateUserCoins
+  );
   const [questionIds, setQuestionIds] = useState([]);
   const [questionObj, setQuestionObj] = useState({});
   useEffect(() => {

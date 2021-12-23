@@ -52,9 +52,9 @@ export default function Pictures({
   const updateUserPictures = useAppContext(
     (v) => v.requestHelpers.updateUserPictures
   );
-  const {
-    actions: { onUpdateProfileInfo }
-  } = useContentContext();
+  const onUpdateProfileInfo = useContentContext(
+    (v) => v.actions.onUpdateProfileInfo
+  );
   const addPictureButtonDisabled = useMemo(() => {
     return pictures.length >= numPics;
   }, [numPics, pictures]);

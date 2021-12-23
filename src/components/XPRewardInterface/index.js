@@ -54,9 +54,14 @@ export default function XPRewardInterface({
     state,
     actions: { onSetRewardForm }
   } = useInputContext();
-  const {
-    actions: { onAttachReward, onUpdateUserCoins, onSetXpRewardInterfaceShown }
-  } = useContentContext();
+  const onAttachReward = useContentContext((v) => v.actions.onAttachReward);
+  const onUpdateUserCoins = useContentContext(
+    (v) => v.actions.onUpdateUserCoins
+  );
+  const onSetXpRewardInterfaceShown = useContentContext(
+    (v) => v.actions.onSetXpRewardInterfaceShown
+  );
+
   const rewardForm = state['reward' + contentType + contentId] || {};
   const {
     comment: prevComment = '',

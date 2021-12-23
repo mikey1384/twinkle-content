@@ -35,9 +35,9 @@ export default function AlreadyPosted({
   const checkContentUrl = useAppContext(
     (v) => v.requestHelpers.checkContentUrl
   );
-  const {
-    actions: { onSetExistingContent }
-  } = useContentContext();
+  const onSetExistingContent = useContentContext(
+    (v) => v.actions.onSetExistingContent
+  );
   const { existingContent, byUser } = useContentState({
     contentType,
     contentId

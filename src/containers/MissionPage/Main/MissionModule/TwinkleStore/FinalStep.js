@@ -19,9 +19,10 @@ export default function FinalStep({ mission, style, userId }) {
   const {
     actions: { onUpdateMissionAttempt }
   } = useMissionContext();
-  const {
-    actions: { onChangeUserXP, onUpdateUserCoins }
-  } = useContentContext();
+  const onChangeUserXP = useContentContext((v) => v.actions.onChangeUserXP);
+  const onUpdateUserCoins = useContentContext(
+    (v) => v.actions.onUpdateUserCoins
+  );
   const [submitDisabled, setSubmitDisabled] = useState(false);
   const mounted = useRef(true);
 

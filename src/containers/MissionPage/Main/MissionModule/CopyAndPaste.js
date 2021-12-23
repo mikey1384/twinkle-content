@@ -39,9 +39,10 @@ export default function CopyAndPaste({ mission, onSetMissionState, style }) {
   const {
     actions: { onUpdateMissionAttempt }
   } = useMissionContext();
-  const {
-    actions: { onChangeUserXP, onUpdateUserCoins }
-  } = useContentContext();
+  const onChangeUserXP = useContentContext((v) => v.actions.onChangeUserXP);
+  const onUpdateUserCoins = useContentContext(
+    (v) => v.actions.onUpdateUserCoins
+  );
 
   const { content = '' } = mission;
   const [status, setStatus] = useState('');

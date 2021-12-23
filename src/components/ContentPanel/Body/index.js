@@ -93,9 +93,10 @@ export default function Body({
   const { authLevel, canDelete, canEdit, canReward, twinkleCoins, userId } =
     useMyState();
 
-  const {
-    actions: { onSetIsEditing, onSetXpRewardInterfaceShown }
-  } = useContentContext();
+  const onSetIsEditing = useContentContext((v) => v.actions.onSetIsEditing);
+  const onSetXpRewardInterfaceShown = useContentContext(
+    (v) => v.actions.onSetXpRewardInterfaceShown
+  );
 
   const {
     isEditing,

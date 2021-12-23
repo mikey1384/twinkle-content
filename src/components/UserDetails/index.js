@@ -49,9 +49,7 @@ export default function UserDetails({
 }) {
   const auth = useAppContext((v) => v.requestHelpers.auth);
   const uploadBio = useAppContext((v) => v.requestHelpers.uploadBio);
-  const {
-    actions: { onReloadContent }
-  } = useContentContext();
+  const onReloadContent = useContentContext((v) => v.actions.onReloadContent);
   const {
     state: { editedStatusColor, editedStatusMsg },
     actions: { onSetEditedStatusColor, onSetEditedStatusMsg }

@@ -40,9 +40,9 @@ export default function ExerciseContainer({
   const updateMissionStatus = useAppContext(
     (v) => v.requestHelpers.updateMissionStatus
   );
-  const {
-    actions: { onUpdateUserMissionState }
-  } = useContentContext();
+  const onUpdateUserMissionState = useContentContext(
+    (v) => v.actions.onUpdateUserMissionState
+  );
   const { userId, username, state = {} } = useMyState();
   const { passed, prevPassed, errorMsg, setErrorMsg, success, exercise } =
     useExercises({

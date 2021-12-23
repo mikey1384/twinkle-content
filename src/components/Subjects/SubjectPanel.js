@@ -72,14 +72,18 @@ export default function SubjectPanel({
   const deleteSubject = useAppContext((v) => v.requestHelpers.deleteSubject);
   const editContent = useAppContext((v) => v.requestHelpers.editContent);
   const loadComments = useAppContext((v) => v.requestHelpers.loadComments);
-  const {
-    actions: {
-      onChangeSpoilerStatus,
-      onEditRewardComment,
-      onSetXpRewardInterfaceShown,
-      onSetByUserStatus
-    }
-  } = useContentContext();
+  const onChangeSpoilerStatus = useContentContext(
+    (v) => v.actions.onChangeSpoilerStatus
+  );
+  const onEditRewardComment = useContentContext(
+    (v) => v.actions.onEditRewardComment
+  );
+  const onSetXpRewardInterfaceShown = useContentContext(
+    (v) => v.actions.onSetXpRewardInterfaceShown
+  );
+  const onSetByUserStatus = useContentContext(
+    (v) => v.actions.onSetByUserStatus
+  );
   const {
     authLevel,
     canDelete,

@@ -99,17 +99,24 @@ function XPVideoPlayer({
   useEffect(() => {
     xpRewardAmountRef.current = xpRewardAmount;
   }, [xpRewardAmount]);
-  const {
-    actions: {
-      onChangeUserXP,
-      onUpdateUserCoins,
-      onIncreaseNumCoinsEarned,
-      onIncreaseNumXpEarned,
-      onSetVideoProgress,
-      onSetMediaStarted,
-      onSetTimeWatched
-    }
-  } = useContentContext();
+  const onChangeUserXP = useContentContext((v) => v.actions.onChangeUserXP);
+  const onUpdateUserCoins = useContentContext(
+    (v) => v.actions.onUpdateUserCoins
+  );
+  const onIncreaseNumCoinsEarned = useContentContext(
+    (v) => v.actions.onIncreaseNumCoinsEarned
+  );
+  const onIncreaseNumXpEarned = useContentContext(
+    (v) => v.actions.onIncreaseNumXpEarned
+  );
+  const onSetVideoProgress = useContentContext(
+    (v) => v.actions.onSetVideoProgress
+  );
+  const onSetMediaStarted = useContentContext(
+    (v) => v.actions.onSetMediaStarted
+  );
+  const onSetTimeWatched = useContentContext((v) => v.actions.onSetTimeWatched);
+
   const {
     started,
     timeWatched: prevTimeWatched = 0,

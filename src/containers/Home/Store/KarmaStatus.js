@@ -57,9 +57,9 @@ export default function KarmaStatus() {
   const loadKarmaPoints = useAppContext(
     (v) => v.requestHelpers.loadKarmaPoints
   );
-  const {
-    actions: { onUpdateProfileInfo }
-  } = useContentContext();
+  const onUpdateProfileInfo = useContentContext(
+    (v) => v.actions.onUpdateProfileInfo
+  );
   const mounted = useRef(true);
   const { authLevel, userType, userId, karmaPoints } = useMyState();
   const [loadingKarma, setLoadingKarma] = useState(false);

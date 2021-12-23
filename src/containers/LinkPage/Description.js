@@ -54,9 +54,7 @@ export default function Description({
   userIsUploader
 }) {
   const { canDelete, canEdit } = useMyState();
-  const {
-    actions: { onSetIsEditing }
-  } = useContentContext();
+  const onSetIsEditing = useContentContext((v) => v.actions.onSetIsEditing);
   const {
     state: inputState,
     actions: { onSetEditForm }

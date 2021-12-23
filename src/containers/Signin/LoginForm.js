@@ -32,9 +32,7 @@ export default function LoginForm({
 }) {
   const onLogin = useAppContext((v) => v.user.actions.onLogin);
   const login = useAppContext((v) => v.requestHelpers.login);
-  const {
-    actions: { onInitContent }
-  } = useContentContext();
+  const onInitContent = useContentContext((v) => v.actions.onInitContent);
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 

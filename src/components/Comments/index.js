@@ -106,13 +106,15 @@ function Comments({
     contentType: rootContent?.contentType,
     contentId: rootContent?.id
   });
-  const {
-    actions: {
-      onClearCommentFileUploadProgress,
-      onUpdateCommentFileUploadProgress,
-      onSetCommentFileUploadComplete
-    }
-  } = useContentContext();
+  const onClearCommentFileUploadProgress = useContentContext(
+    (v) => v.actions.onClearCommentFileUploadProgress
+  );
+  const onUpdateCommentFileUploadProgress = useContentContext(
+    (v) => v.actions.onUpdateCommentFileUploadProgress
+  );
+  const onSetCommentFileUploadComplete = useContentContext(
+    (v) => v.actions.onSetCommentFileUploadComplete
+  );
   const [deleting, setDeleting] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [commentSubmitted, setCommentSubmitted] = useState(false);

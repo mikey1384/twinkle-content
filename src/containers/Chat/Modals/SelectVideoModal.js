@@ -17,9 +17,7 @@ SelectVideoModal.propTypes = {
 export default function SelectVideoModal({ onSend, onHide }) {
   const loadUploads = useAppContext((v) => v.requestHelpers.loadUploads);
   const searchContent = useAppContext((v) => v.requestHelpers.searchContent);
-  const {
-    actions: { onInitContent }
-  } = useContentContext();
+  const onInitContent = useContentContext((v) => v.actions.onInitContent);
   const [searchedUploads, setSearchedUploads] = useState([]);
   const [selectedUpload, setSelectedUpload] = useState([]);
   const [allUploads, setAllUploads] = useState([]);

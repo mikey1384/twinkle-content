@@ -125,14 +125,16 @@ function Comment({
     twinkleCoins,
     userId
   } = useMyState();
-  const {
-    actions: {
-      onChangeSpoilerStatus,
-      onSetIsEditing,
-      onSetXpRewardInterfaceShown,
-      onUpdateCommentPinStatus
-    }
-  } = useContentContext();
+  const onChangeSpoilerStatus = useContentContext(
+    (v) => v.actions.onChangeSpoilerStatus
+  );
+  const onSetIsEditing = useContentContext((v) => v.actions.onSetIsEditing);
+  const onSetXpRewardInterfaceShown = useContentContext(
+    (v) => v.actions.onSetXpRewardInterfaceShown
+  );
+  const onUpdateCommentPinStatus = useContentContext(
+    (v) => v.actions.onUpdateCommentPinStatus
+  );
   const {
     isEditing,
     thumbUrl: thumbUrlFromContext,

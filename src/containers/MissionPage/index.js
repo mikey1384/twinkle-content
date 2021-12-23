@@ -34,9 +34,9 @@ export default function MissionPage({
   const updateCurrentMission = useAppContext(
     (v) => v.requestHelpers.updateCurrentMission
   );
-  const {
-    actions: { onUpdateCurrentMission }
-  } = useContentContext();
+  const onUpdateCurrentMission = useContentContext(
+    (v) => v.actions.onUpdateCurrentMission
+  );
   const {
     actions: {
       onLoadMission,

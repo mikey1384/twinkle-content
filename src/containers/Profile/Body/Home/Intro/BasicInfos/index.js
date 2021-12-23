@@ -80,9 +80,9 @@ export default function BasicInfos({
   const sendVerificationEmail = useAppContext(
     (v) => v.requestHelpers.sendVerificationEmail
   );
-  const {
-    actions: { onUpdateProfileInfo }
-  } = useContentContext();
+  const onUpdateProfileInfo = useContentContext(
+    (v) => v.actions.onUpdateProfileInfo
+  );
   const {
     actions: { onOpenNewChatTab }
   } = useChatContext();

@@ -25,9 +25,9 @@ export default function LaunchTheWebsite({ style, task }) {
   const updateMissionStatus = useAppContext(
     (v) => v.requestHelpers.updateMissionStatus
   );
-  const {
-    actions: { onUpdateUserMissionState }
-  } = useContentContext();
+  const onUpdateUserMissionState = useContentContext(
+    (v) => v.actions.onUpdateUserMissionState
+  );
   const taskState = useMemo(
     () => state?.missions?.[task?.missionType] || {},
     [state?.missions, task?.missionType]

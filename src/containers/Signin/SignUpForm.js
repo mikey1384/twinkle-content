@@ -41,9 +41,7 @@ export default function SignUpForm({
 }) {
   const onSignup = useAppContext((v) => v.user.actions.onSignup);
   const signup = useAppContext((v) => v.requestHelpers.signup);
-  const {
-    actions: { onInitContent }
-  } = useContentContext();
+  const onInitContent = useContentContext((v) => v.actions.onInitContent);
   const [password, setPassword] = useState('');
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');

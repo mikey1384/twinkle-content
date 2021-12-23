@@ -192,17 +192,19 @@ function Chat({ onFileUpload }) {
       onUploadChatSubject
     }
   } = useChatContext();
-  const {
-    actions: {
-      onSetEmbeddedUrl,
-      onSetActualDescription,
-      onSetActualTitle,
-      onSetIsEditing,
-      onSetSiteUrl,
-      onSetThumbUrl,
-      onSetMediaStarted
-    }
-  } = useContentContext();
+
+  const onSetEmbeddedUrl = useContentContext((v) => v.actions.onSetEmbeddedUrl);
+  const onSetActualDescription = useContentContext(
+    (v) => v.actions.onSetActualDescription
+  );
+  const onSetActualTitle = useContentContext((v) => v.actions.onSetActualTitle);
+  const onSetIsEditing = useContentContext((v) => v.actions.onSetIsEditing);
+  const onSetSiteUrl = useContentContext((v) => v.actions.onSetSiteUrl);
+  const onSetThumbUrl = useContentContext((v) => v.actions.onSetThumbUrl);
+  const onSetMediaStarted = useContentContext(
+    (v) => v.actions.onSetMediaStarted
+  );
+
   const {
     state: { pageVisible }
   } = useViewContext();

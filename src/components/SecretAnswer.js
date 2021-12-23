@@ -42,9 +42,9 @@ function SecretAnswer({
     (v) => v.requestHelpers.checkIfUserResponded
   );
   const { userId } = useMyState();
-  const {
-    actions: { onChangeSpoilerStatus }
-  } = useContentContext();
+  const onChangeSpoilerStatus = useContentContext(
+    (v) => v.actions.onChangeSpoilerStatus
+  );
   const { secretShown, prevSecretViewerId } = useContentState({
     contentType: 'subject',
     contentId: subjectId

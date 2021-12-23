@@ -46,9 +46,10 @@ function Vocabulary() {
       onUpdateCollectorsRankings
     }
   } = useChatContext();
-  const {
-    actions: { onUpdateUserCoins, onChangeUserXP }
-  } = useContentContext();
+  const onUpdateUserCoins = useContentContext(
+    (v) => v.actions.onUpdateUserCoins
+  );
+  const onChangeUserXP = useContentContext((v) => v.actions.onChangeUserXP);
   const {
     state,
     actions: { onEnterComment }

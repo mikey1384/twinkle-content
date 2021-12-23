@@ -62,9 +62,10 @@ function MainFeeds({
       onLoadMoreRewards
     }
   } = useNotiContext();
-  const {
-    actions: { onUpdateUserCoins, onChangeUserXP }
-  } = useContentContext();
+  const onUpdateUserCoins = useContentContext(
+    (v) => v.actions.onUpdateUserCoins
+  );
+  const onChangeUserXP = useContentContext((v) => v.actions.onChangeUserXP);
   const [loading, setLoading] = useState(false);
   const [loadingNewFeeds, setLoadingNewFeeds] = useState(false);
   const [collectingReward, setCollectingReward] = useState(false);

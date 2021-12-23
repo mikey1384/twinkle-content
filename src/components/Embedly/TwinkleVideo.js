@@ -20,9 +20,7 @@ TwinkleVideo.propTypes = {
 export default function TwinkleVideo({ imageOnly, onPlay, style, videoId }) {
   const history = useHistory();
   const loadContent = useAppContext((v) => v.requestHelpers.loadContent);
-  const {
-    actions: { onInitContent }
-  } = useContentContext();
+  const onInitContent = useContentContext((v) => v.actions.onInitContent);
   const { loaded, notFound, byUser, content, rewardLevel, uploader } =
     useContentState({
       contentId: videoId,

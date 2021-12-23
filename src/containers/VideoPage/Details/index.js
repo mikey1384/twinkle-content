@@ -97,9 +97,10 @@ export default function Details({
     canReward,
     twinkleCoins
   } = useMyState();
-  const {
-    actions: { onSetIsEditing, onSetXpRewardInterfaceShown }
-  } = useContentContext();
+  const onSetIsEditing = useContentContext((v) => v.actions.onSetIsEditing);
+  const onSetXpRewardInterfaceShown = useContentContext(
+    (v) => v.actions.onSetXpRewardInterfaceShown
+  );
   const {
     state: inputState,
     actions: { onSetEditForm }

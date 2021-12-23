@@ -42,9 +42,8 @@ function Comment({
     (v) => v.requestHelpers.editRewardComment
   );
   const revokeReward = useAppContext((v) => v.requestHelpers.revokeReward);
-  const {
-    actions: { onRevokeReward, onSetIsEditing }
-  } = useContentContext();
+  const onRevokeReward = useContentContext((v) => v.actions.onRevokeReward);
+  const onSetIsEditing = useContentContext((v) => v.actions.onSetIsEditing);
   const { authLevel, canEdit, userId } = useMyState();
   const { isEditing } = useContentState({
     contentType: 'reward',

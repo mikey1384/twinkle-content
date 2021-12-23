@@ -87,14 +87,19 @@ export default function TargetContent({
     twinkleCoins,
     username
   } = useMyState();
-  const {
-    actions: {
-      onSetXpRewardInterfaceShown,
-      onClearCommentFileUploadProgress,
-      onUpdateCommentFileUploadProgress,
-      onSetCommentFileUploadComplete
-    }
-  } = useContentContext();
+  const onSetXpRewardInterfaceShown = useContentContext(
+    (v) => v.actions.onSetXpRewardInterfaceShown
+  );
+  const onClearCommentFileUploadProgress = useContentContext(
+    (v) => v.actions.onClearCommentFileUploadProgress
+  );
+  const onUpdateCommentFileUploadProgress = useContentContext(
+    (v) => v.actions.onUpdateCommentFileUploadProgress
+  );
+  const onSetCommentFileUploadComplete = useContentContext(
+    (v) => v.actions.onSetCommentFileUploadComplete
+  );
+
   const {
     onDeleteComment,
     onEditComment,

@@ -58,9 +58,9 @@ export default function SettingsModal({
     state: { customChannelNames },
     actions: { onEnableChatSubject, onEnableTheme }
   } = useChatContext();
-  const {
-    actions: { onUpdateUserCoins }
-  } = useContentContext();
+  const onUpdateUserCoins = useContentContext(
+    (v) => v.actions.onUpdateUserCoins
+  );
   const { twinkleCoins, userId } = useMyState();
   const [hovered, setHovered] = useState(false);
   const [selectNewOwnerModalShown, setSelectNewOwnerModalShown] =

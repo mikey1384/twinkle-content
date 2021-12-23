@@ -31,9 +31,10 @@ export default function MobileMenu({ location, history, onClose }) {
   const {
     actions: { onResetChat }
   } = useChatContext();
-  const {
-    actions: { onUploadProfilePic, onSetOnline }
-  } = useContentContext();
+  const onUploadProfilePic = useContentContext(
+    (v) => v.actions.onUploadProfilePic
+  );
+  const onSetOnline = useContentContext((v) => v.actions.onSetOnline);
   const { username, userId } = useMyState();
   const [alertModalShown, setAlertModalShown] = useState(false);
   const [imageEditStatus, setImageEditStatus] = useState({

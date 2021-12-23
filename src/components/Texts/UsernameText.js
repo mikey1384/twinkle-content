@@ -39,9 +39,7 @@ export default function UsernameText({
   const mouseEntered = useRef(false);
   const loadDMChannel = useAppContext((v) => v.requestHelpers.loadDMChannel);
   const loadProfile = useAppContext((v) => v.requestHelpers.loadProfile);
-  const {
-    actions: { onInitContent }
-  } = useContentContext();
+  const onInitContent = useContentContext((v) => v.actions.onInitContent);
   const { rank, twinkleXP } = useContentState({
     contentType: 'user',
     contentId: user.id

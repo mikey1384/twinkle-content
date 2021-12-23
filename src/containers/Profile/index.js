@@ -21,9 +21,10 @@ export default function Profile({ history, location, match }) {
   );
   const setTheme = useAppContext((v) => v.requestHelpers.setTheme);
   const { userId, username } = useMyState();
-  const {
-    actions: { onChangeProfileTheme, onInitContent }
-  } = useContentContext();
+  const onChangeProfileTheme = useContentContext(
+    (v) => v.actions.onChangeProfileTheme
+  );
+  const onInitContent = useContentContext((v) => v.actions.onInitContent);
   const {
     actions: { onSetProfileId, onUserNotExist }
   } = useProfileContext();

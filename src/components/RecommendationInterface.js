@@ -56,9 +56,12 @@ export default function RecommendationInterface({
     (v) => v.requestHelpers.recommendContent
   );
 
-  const {
-    actions: { onUpdateUserCoins, onRecommendContent }
-  } = useContentContext();
+  const onUpdateUserCoins = useContentContext(
+    (v) => v.actions.onUpdateUserCoins
+  );
+  const onRecommendContent = useContentContext(
+    (v) => v.actions.onRecommendContent
+  );
 
   const isOnlyRecommendedByStudents = useMemo(() => {
     let result = recommendations.length > 0;

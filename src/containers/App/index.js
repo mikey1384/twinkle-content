@@ -95,9 +95,7 @@ function App({ location, history }) {
       onUpdateChatUploadProgress
     }
   } = useChatContext();
-  const {
-    actions: { onInitContent }
-  } = useContentContext();
+  const onInitContent = useContentContext((v) => v.actions.onInitContent);
   const {
     actions: {
       onLoadNewFeeds,
