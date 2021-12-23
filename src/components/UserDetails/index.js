@@ -58,10 +58,7 @@ export default function UserDetails({
   const onSetEditedStatusMsg = useInputContext(
     (v) => v.actions.onSetEditedStatusMsg
   );
-
-  const {
-    actions: { onResetProfile }
-  } = useProfileContext();
+  const onResetProfile = useProfileContext((v) => v.actions.onResetProfile);
   const [bioEditModalShown, setBioEditModalShown] = useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   useEffect(() => {

@@ -37,9 +37,8 @@ export default function Posts({
   selectedTheme
 }) {
   const loadFeeds = useAppContext((v) => v.requestHelpers.loadFeeds);
-  const {
-    actions: { onLoadPosts, onLoadMorePosts }
-  } = useProfileContext();
+  const onLoadPosts = useProfileContext((v) => v.actions.onLoadPosts);
+  const onLoadMorePosts = useProfileContext((v) => v.actions.onLoadMorePosts);
   const {
     posts: {
       [section]: profileFeeds,

@@ -155,7 +155,7 @@ export function useOutsideTap(ref, callback) {
 }
 
 export function useProfileState(username) {
-  const { state = {} } = useProfileContext();
+  const state = useProfileContext((v) => v.state) || {};
   const { [username]: userState = {} } = state;
   const {
     notExist = false,

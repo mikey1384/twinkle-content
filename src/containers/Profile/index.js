@@ -25,9 +25,8 @@ export default function Profile({ history, location, match }) {
     (v) => v.actions.onChangeProfileTheme
   );
   const onInitContent = useContentContext((v) => v.actions.onInitContent);
-  const {
-    actions: { onSetProfileId, onUserNotExist }
-  } = useProfileContext();
+  const onSetProfileId = useProfileContext((v) => v.actions.onSetProfileId);
+  const onUserNotExist = useProfileContext((v) => v.actions.onUserNotExist);
   const [selectedTheme, setSelectedTheme] = useState('logoBlue');
   const [loading, setLoading] = useState(false);
   const { notExist, profileId } = useProfileState(match.params.username);

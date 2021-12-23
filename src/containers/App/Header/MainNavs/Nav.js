@@ -41,10 +41,8 @@ function Nav({
   style
 }) {
   const history = useHistory();
-  const {
-    state: profileState = {},
-    actions: { onResetProfile }
-  } = useProfileContext();
+  const onResetProfile = useProfileContext((v) => v.actions.onResetProfile);
+  const profileState = useProfileContext((v) => v.state) || {};
   const onReloadContent = useContentContext((v) => v.actions.onReloadContent);
   const onClearLinksLoaded = useExploreContext(
     (v) => v.actions.onClearLinksLoaded

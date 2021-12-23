@@ -178,11 +178,9 @@ function ProfilePanel({ expandable, profileId, style }) {
   const loadComments = useAppContext((v) => v.requestHelpers.loadComments);
   const loadProfile = useAppContext((v) => v.requestHelpers.loadProfile);
   const uploadBio = useAppContext((v) => v.requestHelpers.uploadBio);
+  const onResetProfile = useProfileContext((v) => v.actions.onResetProfile);
 
   const { isCreator, userId, username, banned, authLevel } = useMyState();
-  const {
-    actions: { onResetProfile }
-  } = useProfileContext();
 
   const [bioEditModalShown, setBioEditModalShown] = useState(false);
   const [loadingComments, setLoadingComments] = useState(false);

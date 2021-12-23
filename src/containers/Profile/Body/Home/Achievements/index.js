@@ -29,9 +29,10 @@ export default function Achievements({
   const loadNotableContent = useAppContext(
     (v) => v.requestHelpers.loadNotableContent
   );
-  const {
-    actions: { onLoadNotables, onLoadMoreNotables }
-  } = useProfileContext();
+  const onLoadNotables = useProfileContext((v) => v.actions.onLoadNotables);
+  const onLoadMoreNotables = useProfileContext(
+    (v) => v.actions.onLoadMoreNotables
+  );
   const {
     notables: { feeds, loaded, loadMoreButton }
   } = useProfileState(username);
