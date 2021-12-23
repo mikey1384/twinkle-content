@@ -96,18 +96,29 @@ function App({ location, history }) {
     }
   } = useChatContext();
   const onInitContent = useContentContext((v) => v.actions.onInitContent);
-  const {
-    actions: {
-      onLoadNewFeeds,
-      onSetFileUploadComplete,
-      onSetSecretAttachmentUploadComplete,
-      onSetSubmittingSubject,
-      onUpdateFileUploadProgress,
-      onUpdateSecretAttachmentUploadProgress,
-      onClearFileUploadProgress,
-      onSetUploadingFile
-    }
-  } = useHomeContext();
+  const onLoadNewFeeds = useHomeContext((v) => v.actions.onLoadNewFeeds);
+  const onSetFileUploadComplete = useHomeContext(
+    (v) => v.actions.onSetFileUploadComplete
+  );
+  const onSetSecretAttachmentUploadComplete = useHomeContext(
+    (v) => v.actions.onSetSecretAttachmentUploadComplete
+  );
+  const onSetSubmittingSubject = useHomeContext(
+    (v) => v.actions.onSetSubmittingSubject
+  );
+  const onUpdateFileUploadProgress = useHomeContext(
+    (v) => v.actions.onUpdateFileUploadProgress
+  );
+  const onUpdateSecretAttachmentUploadProgress = useHomeContext(
+    (v) => v.actions.onUpdateSecretAttachmentUploadProgress
+  );
+  const onClearFileUploadProgress = useHomeContext(
+    (v) => v.actions.onClearFileUploadProgress
+  );
+  const onSetUploadingFile = useHomeContext(
+    (v) => v.actions.onSetUploadingFile
+  );
+
   const {
     state: { updateDetail, updateNoticeShown }
   } = useNotiContext();

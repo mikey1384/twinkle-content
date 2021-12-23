@@ -39,9 +39,7 @@ function ContentInput() {
   );
   const uploadContent = useAppContext((v) => v.requestHelpers.uploadContent);
   const { canEditRewardLevel, banned } = useMyState();
-  const {
-    actions: { onLoadNewFeeds }
-  } = useHomeContext();
+  const onLoadNewFeeds = useHomeContext((v) => v.actions.onLoadNewFeeds);
   const content = useInputContext((v) => v.state.content);
   const onResetContentInput = useInputContext(
     (v) => v.actions.onResetContentInput

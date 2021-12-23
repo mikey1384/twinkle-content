@@ -109,10 +109,12 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
     }
   } = useChatContext();
 
-  const {
-    state: { category, feeds, subFilter },
-    actions: { onSetFeedsOutdated }
-  } = useHomeContext();
+  const category = useHomeContext((v) => v.state.category);
+  const feeds = useHomeContext((v) => v.state.feeds);
+  const subFilter = useHomeContext((v) => v.state.subFilter);
+  const onSetFeedsOutdated = useHomeContext(
+    (v) => v.actions.onSetFeedsOutdated
+  );
 
   const {
     state: {

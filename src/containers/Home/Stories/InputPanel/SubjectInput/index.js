@@ -47,17 +47,23 @@ function SubjectInput() {
   const { onFileUpload } = useContext(LocalContext);
   const uploadContent = useAppContext((v) => v.requestHelpers.uploadContent);
   const { canEditRewardLevel, profileTheme, banned } = useMyState();
-  const {
-    state: {
-      fileUploadComplete,
-      fileUploadProgress,
-      secretAttachmentUploadComplete,
-      secretAttachmentUploadProgress,
-      submittingSubject,
-      uploadingFile
-    },
-    actions: { onLoadNewFeeds, onSetSubmittingSubject, onSetUploadingFile }
-  } = useHomeContext();
+  const fileUploadComplete = useHomeContext((v) => v.state.fileUploadComplete);
+  const fileUploadProgress = useHomeContext((v) => v.state.fileUploadProgress);
+  const secretAttachmentUploadComplete = useHomeContext(
+    (v) => v.state.secretAttachmentUploadComplete
+  );
+  const secretAttachmentUploadProgress = useHomeContext(
+    (v) => v.state.secretAttachmentUploadProgress
+  );
+  const submittingSubject = useHomeContext((v) => v.state.submittingSubject);
+  const uploadingFile = useHomeContext((v) => v.state.uploadingFile);
+  const onLoadNewFeeds = useHomeContext((v) => v.actions.onLoadNewFeeds);
+  const onSetSubmittingSubject = useHomeContext(
+    (v) => v.actions.onSetSubmittingSubject
+  );
+  const onSetUploadingFile = useHomeContext(
+    (v) => v.actions.onSetUploadingFile
+  );
   const subject = useInputContext((v) => v.state.subject);
   const onSetHasSecretAnswer = useInputContext(
     (v) => v.actions.onSetHasSecretAnswer

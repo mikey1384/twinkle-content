@@ -24,8 +24,8 @@ export function useContentContext(fn) {
 export function useExploreContext(fn) {
   return useContextSelector(ExploreContext, fn);
 }
-export function useHomeContext() {
-  return useContextSelector(HomeContext, (v) => v);
+export function useHomeContext(fn) {
+  return useContextSelector(HomeContext, fn);
 }
 export function useInputContext(fn) {
   return useContextSelector(InputContext, fn);
