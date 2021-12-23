@@ -62,9 +62,11 @@ export default function LinkPage({
     twinkleCoins,
     userId
   } = useMyState();
-  const {
-    actions: { onEditLinkPage, onLikeLink, onUpdateNumLinkComments }
-  } = useExploreContext();
+  const onEditLinkPage = useExploreContext((v) => v.actions.onEditLinkPage);
+  const onLikeLink = useExploreContext((v) => v.actions.onLikeLink);
+  const onUpdateNumLinkComments = useExploreContext(
+    (v) => v.actions.onUpdateNumLinkComments
+  );
   const onDeleteComment = useContentContext((v) => v.actions.onDeleteComment);
   const onDeleteContent = useContentContext((v) => v.actions.onDeleteContent);
   const onEditComment = useContentContext((v) => v.actions.onEditComment);

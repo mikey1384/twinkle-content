@@ -22,26 +22,35 @@ export default function Videos({ history }) {
   const loadPlaylists = useAppContext((v) => v.requestHelpers.loadPlaylists);
   const searchContent = useAppContext((v) => v.requestHelpers.searchContent);
   const { authLevel, userId } = useMyState();
-  const {
-    state: {
-      videos: {
-        addPlaylistModalShown,
-        loadMorePlaylistsButton,
-        loadMoreSearchedPlaylistsButton,
-        allPlaylistsLoaded,
-        allPlaylists,
-        searchedPlaylists
-      },
-      prevUserId
-    },
-    actions: {
-      onCloseAddPlaylistModal,
-      onLoadPlaylists,
-      onOpenAddPlaylistModal,
-      onSetSearchedPlaylists,
-      onUploadPlaylist
-    }
-  } = useExploreContext();
+  const addPlaylistModalShown = useExploreContext(
+    (v) => v.state.videos.addPlaylistModalShown
+  );
+  const loadMorePlaylistsButton = useExploreContext(
+    (v) => v.state.videos.loadMorePlaylistsButton
+  );
+  const loadMoreSearchedPlaylistsButton = useExploreContext(
+    (v) => v.state.videos.loadMoreSearchedPlaylistsButton
+  );
+  const allPlaylistsLoaded = useExploreContext(
+    (v) => v.state.videos.allPlaylistsLoaded
+  );
+  const allPlaylists = useExploreContext((v) => v.state.videos.allPlaylists);
+  const searchedPlaylists = useExploreContext(
+    (v) => v.state.videos.searchedPlaylists
+  );
+  const prevUserId = useExploreContext((v) => v.state.prevUserId);
+  const onCloseAddPlaylistModal = useExploreContext(
+    (v) => v.actions.onCloseAddPlaylistModal
+  );
+  const onLoadPlaylists = useExploreContext((v) => v.actions.onLoadPlaylists);
+  const onOpenAddPlaylistModal = useExploreContext(
+    (v) => v.actions.onOpenAddPlaylistModal
+  );
+  const onSetSearchedPlaylists = useExploreContext(
+    (v) => v.actions.onSetSearchedPlaylists
+  );
+  const onUploadPlaylist = useExploreContext((v) => v.actions.onUploadPlaylist);
+
   const {
     state: { playlistSearchText },
     actions: { onSetSearchText }

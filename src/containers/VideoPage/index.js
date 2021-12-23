@@ -81,13 +81,15 @@ export default function VideoPage({
     (v) => v.requestHelpers.uploadQuestions
   );
   const { authLevel, canEdit, userId } = useMyState();
-  const {
-    actions: {
-      onChangeVideoByUserStatus,
-      onEditVideoThumbs,
-      onSetThumbRewardLevel
-    }
-  } = useExploreContext();
+  const onChangeVideoByUserStatus = useExploreContext(
+    (v) => v.actions.onChangeVideoByUserStatus
+  );
+  const onEditVideoThumbs = useExploreContext(
+    (v) => v.actions.onEditVideoThumbs
+  );
+  const onSetThumbRewardLevel = useExploreContext(
+    (v) => v.actions.onSetThumbRewardLevel
+  );
   const onAddTags = useContentContext((v) => v.actions.onAddTags);
   const onDeleteComment = useContentContext((v) => v.actions.onDeleteComment);
   const onDeleteContent = useContentContext((v) => v.actions.onDeleteContent);

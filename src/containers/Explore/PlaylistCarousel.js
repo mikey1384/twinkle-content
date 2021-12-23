@@ -46,12 +46,11 @@ export default function PlaylistCarousel({
     (v) => v.requestHelpers.editPlaylistTitle
   );
   const { canEditPlaylists, profileTheme } = useMyState();
-  const {
-    state: {
-      videos: { clickSafe }
-    },
-    actions: { onDeletePlaylist, onEditPlaylistTitle }
-  } = useExploreContext();
+  const clickSafe = useExploreContext((v) => v.state.videos.clickSafe);
+  const onDeletePlaylist = useExploreContext((v) => v.actions.onDeletePlaylist);
+  const onEditPlaylistTitle = useExploreContext(
+    (v) => v.actions.onEditPlaylistTitle
+  );
   const [onEdit, setOnEdit] = useState(false);
   const [changePLVideosModalShown, setChangePLVideosModalShown] =
     useState(false);

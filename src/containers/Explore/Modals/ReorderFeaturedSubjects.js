@@ -19,12 +19,10 @@ export default function ReorderFeaturedSubjects({
   const uploadFeaturedSubjects = useAppContext(
     (v) => v.requestHelpers.uploadFeaturedSubjects
   );
-  const {
-    state: {
-      subjects: { featureds: featuredSubjects }
-    },
-    actions: { onLoadFeaturedSubjects }
-  } = useExploreContext();
+  const featuredSubjects = useExploreContext((v) => v.state.subjects.featureds);
+  const onLoadFeaturedSubjects = useExploreContext(
+    (v) => v.actions.onLoadFeaturedSubjects
+  );
   const [subjectIds, setSubjectIds] = useState(initialSubjectIds);
   const [disabled, setDisabled] = useState(false);
   const listItemObj = objectify(featuredSubjects);

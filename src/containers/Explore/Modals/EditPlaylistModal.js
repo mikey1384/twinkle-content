@@ -50,9 +50,9 @@ export default function EditPlaylistModal({
     (v) => v.requestHelpers.reorderPlaylistVideos
   );
   const searchContent = useAppContext((v) => v.requestHelpers.searchContent);
-  const {
-    actions: { onChangePlaylistVideos }
-  } = useExploreContext();
+  const onChangePlaylistVideos = useExploreContext(
+    (v) => v.actions.onChangePlaylistVideos
+  );
   const [addedVideos, setAddedVideos] = useState([]);
   const [loadingMore, setLoadingMore] = useState(false);
   const [modalVideos, setModalVideos] = useState([]);

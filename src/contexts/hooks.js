@@ -21,8 +21,8 @@ export function useChatContext() {
 export function useContentContext(fn) {
   return useContextSelector(ContentContext, fn);
 }
-export function useExploreContext() {
-  return useContextSelector(ExploreContext, (v) => v);
+export function useExploreContext(fn) {
+  return useContextSelector(ExploreContext, fn);
 }
 export function useHomeContext() {
   return useContextSelector(HomeContext, (v) => v);

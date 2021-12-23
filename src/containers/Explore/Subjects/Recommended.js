@@ -28,9 +28,9 @@ export default function Recommended({
   const loadRecommendedUploads = useAppContext(
     (v) => v.requestHelpers.loadRecommendedUploads
   );
-  const {
-    actions: { onLoadMoreRecommendedSubjects }
-  } = useExploreContext();
+  const onLoadMoreRecommendedSubjects = useExploreContext(
+    (v) => v.actions.onLoadMoreRecommendedSubjects
+  );
   const shownSubjects = useMemo(() => {
     if (expanded) {
       return subjects;

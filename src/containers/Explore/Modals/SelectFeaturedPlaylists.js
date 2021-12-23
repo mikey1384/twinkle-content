@@ -29,16 +29,22 @@ export default function SelectFeaturedPlaylists({
   const uploadFeaturedPlaylists = useAppContext(
     (v) => v.requestHelpers.uploadFeaturedPlaylists
   );
-  const {
-    state: {
-      videos: {
-        featuredPlaylists,
-        loadMoreFeaturedPlaylistsButton: loadMoreButton,
-        playlistsToPin
-      }
-    },
-    actions: { onChangeFeaturedPlaylists, onLoadMorePlaylistsToPin }
-  } = useExploreContext();
+  const featuredPlaylists = useExploreContext(
+    (v) => v.state.videos.featuredPlaylists
+  );
+  const loadMoreButton = useExploreContext(
+    (v) => v.state.videos.loadMoreFeaturedPlaylistsButton
+  );
+  const playlistsToPin = useExploreContext(
+    (v) => v.state.videos.playlistsToPin
+  );
+  const onChangeFeaturedPlaylists = useExploreContext(
+    (v) => v.actions.onChangeFeaturedPlaylists
+  );
+  const onLoadMorePlaylistsToPin = useExploreContext(
+    (v) => v.actions.onLoadMorePlaylistsToPin
+  );
+
   const [selectTabActive, setSelectTabActive] = useState(true);
   const [selectedPlaylists, setSelectedPlaylists] = useState([]);
   const [searchedPlaylists, setSearchedPlaylists] = useState([]);

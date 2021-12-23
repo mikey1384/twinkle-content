@@ -29,9 +29,9 @@ export default function MadeByUsers({
   const loadByUserUploads = useAppContext(
     (v) => v.requestHelpers.loadByUserUploads
   );
-  const {
-    actions: { onLoadMoreByUserSubjects }
-  } = useExploreContext();
+  const onLoadMoreByUserSubjects = useExploreContext(
+    (v) => v.actions.onLoadMoreByUserSubjects
+  );
   const shownSubjects = useMemo(() => {
     if (expanded) {
       return subjects;

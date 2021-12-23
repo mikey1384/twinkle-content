@@ -40,9 +40,7 @@ export default function LinkItem({
   const deleteContent = useAppContext((v) => v.requestHelpers.deleteContent);
   const editContent = useAppContext((v) => v.requestHelpers.editContent);
   const { authLevel, canDelete, canEdit, userId } = useMyState();
-  const {
-    actions: { onEditLinkTitle }
-  } = useExploreContext();
+  const onEditLinkTitle = useExploreContext((v) => v.actions.onEditLinkTitle);
   const onDeleteContent = useContentContext((v) => v.actions.onDeleteContent);
   const onInitContent = useContentContext((v) => v.actions.onInitContent);
   const { loaded, isDeleted } = useContentState({

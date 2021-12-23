@@ -105,9 +105,7 @@ export default function Details({
     state: inputState,
     actions: { onSetEditForm }
   } = useInputContext();
-  const {
-    actions: { onLikeVideo }
-  } = useExploreContext();
+  const onLikeVideo = useExploreContext((v) => v.actions.onLikeVideo);
   const { isEditing, xpRewardInterfaceShown } = useContentState({
     contentType: 'video',
     contentId: videoId

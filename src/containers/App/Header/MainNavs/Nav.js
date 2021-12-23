@@ -46,9 +46,15 @@ function Nav({
     actions: { onResetProfile }
   } = useProfileContext();
   const onReloadContent = useContentContext((v) => v.actions.onReloadContent);
-  const {
-    actions: { onClearLinksLoaded, onClearVideosLoaded, onSetSubjectsLoaded }
-  } = useExploreContext();
+  const onClearLinksLoaded = useExploreContext(
+    (v) => v.actions.onClearLinksLoaded
+  );
+  const onClearVideosLoaded = useExploreContext(
+    (v) => v.actions.onClearVideosLoaded
+  );
+  const onSetSubjectsLoaded = useExploreContext(
+    (v) => v.actions.onSetSubjectsLoaded
+  );
   const BodyRef = useRef(document.scrollingElement || document.documentElement);
   const highlighted = useMemo(
     () =>

@@ -20,24 +20,35 @@ export default function FeaturedPlaylistsPanel() {
     (v) => v.requestHelpers.loadPlaylistList
   );
   const { canPinPlaylists, userId } = useMyState();
-  const {
-    state: {
-      videos: {
-        featuredPlaylists,
-        featuredPlaylistsLoaded,
-        reorderFeaturedPlaylistsShown,
-        selectFeaturedPlaylistsModalShown
-      },
-      prevUserId
-    },
-    actions: {
-      onCloseReorderFeaturedPlaylists,
-      onCloseSelectFeaturedPlaylists,
-      onLoadFeaturedPlaylists,
-      onOpenReorderFeaturedPlaylists,
-      onOpenSelectFeaturedPlaylists
-    }
-  } = useExploreContext();
+  const featuredPlaylists = useExploreContext(
+    (v) => v.state.videos.featuredPlaylists
+  );
+  const featuredPlaylistsLoaded = useExploreContext(
+    (v) => v.state.videos.featuredPlaylistsLoaded
+  );
+  const reorderFeaturedPlaylistsShown = useExploreContext(
+    (v) => v.state.videos.reorderFeaturedPlaylistsShown
+  );
+  const selectFeaturedPlaylistsModalShown = useExploreContext(
+    (v) => v.state.videos.selectFeaturedPlaylistsModalShown
+  );
+  const prevUserId = useExploreContext((v) => v.state.prevUserId);
+  const onCloseReorderFeaturedPlaylists = useExploreContext(
+    (v) => v.actions.onCloseReorderFeaturedPlaylists
+  );
+  const onCloseSelectFeaturedPlaylists = useExploreContext(
+    (v) => v.actions.onCloseSelectFeaturedPlaylists
+  );
+  const onLoadFeaturedPlaylists = useExploreContext(
+    (v) => v.actions.onLoadFeaturedPlaylists
+  );
+  const onOpenReorderFeaturedPlaylists = useExploreContext(
+    (v) => v.actions.onOpenReorderFeaturedPlaylists
+  );
+  const onOpenSelectFeaturedPlaylists = useExploreContext(
+    (v) => v.actions.onOpenSelectFeaturedPlaylists
+  );
+
   const loadedRef = useRef(false);
   useEffect(() => {
     if (
