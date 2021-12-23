@@ -29,7 +29,7 @@ export default function UserListModal({
   users
 }) {
   const history = useHistory();
-  const { loadDMChannel } = useAppContext((v) => v.requestHelpers);
+  const loadDMChannel = useAppContext((v) => v.requestHelpers.loadDMChannel);
   const {
     actions: { onOpenNewChatTab }
   } = useChatContext();

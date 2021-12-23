@@ -24,7 +24,9 @@ export default function GrammarReview({
   onSetMissionState,
   style
 }) {
-  const { loadMoreGrammarAttempts } = useAppContext((v) => v.requestHelpers);
+  const loadMoreGrammarAttempts = useAppContext(
+    (v) => v.requestHelpers.loadMoreGrammarAttempts
+  );
   const [loadingMore, setLoadingMore] = useState(false);
   const mounted = useRef(true);
   const { [`${activeTab}LoadMoreButtonShown`]: loadMoreButtonShown } = mission;

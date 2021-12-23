@@ -25,7 +25,9 @@ export default function Attempts({ mission, missionId, onSetMissionState }) {
   const [loadingMore, setLoadingMore] = useState(false);
   const { isCreator } = useMyState();
   const { managementTab: activeTab = 'pending' } = mission;
-  const { loadMissionAttemptsForPage } = useAppContext((v) => v.requestHelpers);
+  const loadMissionAttemptsForPage = useAppContext(
+    (v) => v.requestHelpers.loadMissionAttemptsForPage
+  );
   useEffect(() => {
     if (isCreator) {
       init();

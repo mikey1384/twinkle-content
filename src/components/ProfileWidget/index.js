@@ -22,7 +22,9 @@ ProfileWidget.propTypes = {
 };
 
 export default function ProfileWidget({ history, onLoadImage, onShowAlert }) {
-  const { onOpenSigninModal } = useAppContext((v) => v.user.actions);
+  const onOpenSigninModal = useAppContext(
+    (v) => v.user.actions.onOpenSigninModal
+  );
   const { profilePicUrl, realName, userId, username } = useMyState();
   const FileInputRef = useRef(null);
 

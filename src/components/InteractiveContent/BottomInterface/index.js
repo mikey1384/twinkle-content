@@ -26,7 +26,9 @@ export default function BottomInterface({
   onPublishInteractive,
   style
 }) {
-  const { publishInteractive } = useAppContext((v) => v.requestHelpers);
+  const publishInteractive = useAppContext(
+    (v) => v.requestHelpers.publishInteractive
+  );
   return (
     <div className={className} style={{ width: '100%', ...style }}>
       <AddSlide

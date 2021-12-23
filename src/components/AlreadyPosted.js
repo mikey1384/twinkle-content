@@ -32,7 +32,9 @@ export default function AlreadyPosted({
       mounted.current = false;
     };
   }, []);
-  const { checkContentUrl } = useAppContext((v) => v.requestHelpers);
+  const checkContentUrl = useAppContext(
+    (v) => v.requestHelpers.checkContentUrl
+  );
   const {
     actions: { onSetExistingContent }
   } = useContentContext();

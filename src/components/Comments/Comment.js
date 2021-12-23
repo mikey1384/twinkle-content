@@ -129,12 +129,15 @@ function Comment({
   subject = subject || comment.targetObj?.subject || {};
   const { fileType } = getFileInfoFromFileName(fileName);
   const history = useHistory();
-  const {
-    checkIfUserResponded,
-    editContent,
-    loadReplies,
-    updateCommentPinStatus
-  } = useAppContext((v) => v.requestHelpers);
+  const checkIfUserResponded = useAppContext(
+    (v) => v.requestHelpers.checkIfUserResponded
+  );
+  const editContent = useAppContext((v) => v.requestHelpers.editContent);
+  const loadReplies = useAppContext((v) => v.requestHelpers.loadReplies);
+  const updateCommentPinStatus = useAppContext(
+    (v) => v.requestHelpers.updateCommentPinStatus
+  );
+
   const {
     authLevel,
     banned,

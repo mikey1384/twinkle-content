@@ -22,7 +22,10 @@ AccountMenu.propTypes = {
 
 function AccountMenu({ className, history }) {
   const [twinkleCoinsHovered, setTwinkleCoinsHovered] = useState(false);
-  const { onLogout, onOpenSigninModal } = useAppContext((v) => v.user.actions);
+  const onLogout = useAppContext((v) => v.user.actions.onLogout);
+  const onOpenSigninModal = useAppContext(
+    (v) => v.user.actions.onOpenSigninModal
+  );
   const {
     actions: { onResetChat }
   } = useChatContext();

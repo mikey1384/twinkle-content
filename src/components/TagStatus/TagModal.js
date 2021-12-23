@@ -24,9 +24,10 @@ function TagModal({
   onSubmit,
   videoId
 }) {
-  const { addVideoToPlaylists, searchContent } = useAppContext(
-    (v) => v.requestHelpers
+  const addVideoToPlaylists = useAppContext(
+    (v) => v.requestHelpers.addVideoToPlaylists
   );
+  const searchContent = useAppContext((v) => v.requestHelpers.searchContent);
   const [addPlaylistModalShown, setAddPlaylistModalShown] = useState(false);
   const [notFoundMessageShown, setNotFoundMessageShown] = useState(false);
   const [searchText, setSearchText] = useState('');

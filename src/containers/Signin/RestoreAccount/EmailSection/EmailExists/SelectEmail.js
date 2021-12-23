@@ -19,7 +19,9 @@ export default function SelectEmail({
   hiddenVerifiedEmail,
   userId
 }) {
-  const { sendVerificationEmail } = useAppContext((v) => v.requestHelpers);
+  const sendVerificationEmail = useAppContext(
+    (v) => v.requestHelpers.sendVerificationEmail
+  );
   const [emailSent, setEmailSent] = useState({});
 
   return (

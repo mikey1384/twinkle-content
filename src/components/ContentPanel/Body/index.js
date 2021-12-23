@@ -87,9 +87,8 @@ export default function Body({
     };
   }, []);
 
-  const { deleteContent, loadComments } = useAppContext(
-    (v) => v.requestHelpers
-  );
+  const deleteContent = useAppContext((v) => v.requestHelpers.deleteContent);
+  const loadComments = useAppContext((v) => v.requestHelpers.loadComments);
 
   const { authLevel, canDelete, canEdit, canReward, twinkleCoins, userId } =
     useMyState();

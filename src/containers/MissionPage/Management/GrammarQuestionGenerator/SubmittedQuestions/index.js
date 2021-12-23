@@ -24,7 +24,9 @@ export default function SubmittedQuestions({
     managementTab: activeTab = 'pending',
     loadMoreGrammarQuestionsButton: loadMoreButton
   } = mission;
-  const { loadGrammarQuestions } = useAppContext((v) => v.requestHelpers);
+  const loadGrammarQuestions = useAppContext(
+    (v) => v.requestHelpers.loadGrammarQuestions
+  );
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   useEffect(() => {

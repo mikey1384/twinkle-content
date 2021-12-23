@@ -26,7 +26,9 @@ export default function MadeByUsers({
   subjects,
   style
 }) {
-  const { loadByUserUploads } = useAppContext((v) => v.requestHelpers);
+  const loadByUserUploads = useAppContext(
+    (v) => v.requestHelpers.loadByUserUploads
+  );
   const {
     actions: { onLoadMoreByUserSubjects }
   } = useExploreContext();

@@ -8,8 +8,15 @@ import { useMyState } from 'helpers/hooks';
 
 export default function Subjects() {
   const { canPinPlaylists, userId } = useMyState();
-  const { loadByUserUploads, loadFeaturedSubjects, loadRecommendedUploads } =
-    useAppContext((v) => v.requestHelpers);
+  const loadByUserUploads = useAppContext(
+    (v) => v.requestHelpers.loadByUserUploads
+  );
+  const loadFeaturedSubjects = useAppContext(
+    (v) => v.requestHelpers.loadFeaturedSubjects
+  );
+  const loadRecommendedUploads = useAppContext(
+    (v) => v.requestHelpers.loadRecommendedUploads
+  );
   const {
     state: {
       subjects: {

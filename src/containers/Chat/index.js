@@ -38,37 +38,80 @@ Chat.propTypes = {
 function Chat({ onFileUpload }) {
   const { pathname } = useLocation();
   const history = useHistory();
-  const {
-    acceptInvitation,
-    changeChannelOwner,
-    checkChatAccessible,
-    createNewChat,
-    deleteChatMessage,
-    editChannelSettings,
-    editChatMessage,
-    hideChatAttachment,
-    hideChat,
-    leaveChannel,
-    loadChatChannel,
-    loadChatSubject,
-    loadGeneralChatPathId,
-    loadMoreChatMessages,
-    loadRankings,
-    loadVocabulary,
-    parseChannelPath,
-    putFavoriteChannel,
-    reloadChatSubject,
-    saveChatMessage,
-    searchChatSubject,
-    sendInvitationMessage,
-    setChessMoveViewTimeStamp,
-    startNewDMChannel,
-    updateChatLastRead,
-    updateLastChannelId,
-    updateUserXP,
-    uploadChatSubject,
-    uploadThumb
-  } = useAppContext((v) => v.requestHelpers);
+  const acceptInvitation = useAppContext(
+    (v) => v.requestHelpers.acceptInvitation
+  );
+  const changeChannelOwner = useAppContext(
+    (v) => v.requestHelpers.changeChannelOwner
+  );
+  const checkChatAccessible = useAppContext(
+    (v) => v.requestHelpers.checkChatAccessible
+  );
+  const createNewChat = useAppContext((v) => v.requestHelpers.createNewChat);
+  const deleteChatMessage = useAppContext(
+    (v) => v.requestHelpers.deleteChatMessage
+  );
+  const editChannelSettings = useAppContext(
+    (v) => v.requestHelpers.editChannelSettings
+  );
+  const editChatMessage = useAppContext(
+    (v) => v.requestHelpers.editChatMessage
+  );
+  const hideChatAttachment = useAppContext(
+    (v) => v.requestHelpers.hideChatAttachment
+  );
+  const hideChat = useAppContext((v) => v.requestHelpers.hideChat);
+  const leaveChannel = useAppContext((v) => v.requestHelpers.leaveChannel);
+  const loadChatChannel = useAppContext(
+    (v) => v.requestHelpers.loadChatChannel
+  );
+  const loadChatSubject = useAppContext(
+    (v) => v.requestHelpers.loadChatSubject
+  );
+  const loadGeneralChatPathId = useAppContext(
+    (v) => v.requestHelpers.loadGeneralChatPathId
+  );
+  const loadMoreChatMessages = useAppContext(
+    (v) => v.requestHelpers.loadMoreChatMessages
+  );
+  const loadRankings = useAppContext((v) => v.requestHelpers.loadRankings);
+  const loadVocabulary = useAppContext((v) => v.requestHelpers.loadVocabulary);
+  const parseChannelPath = useAppContext(
+    (v) => v.requestHelpers.parseChannelPath
+  );
+  const putFavoriteChannel = useAppContext(
+    (v) => v.requestHelpers.putFavoriteChannel
+  );
+  const reloadChatSubject = useAppContext(
+    (v) => v.requestHelpers.reloadChatSubject
+  );
+  const saveChatMessage = useAppContext(
+    (v) => v.requestHelpers.saveChatMessage
+  );
+  const searchChatSubject = useAppContext(
+    (v) => v.requestHelpers.searchChatSubject
+  );
+  const sendInvitationMessage = useAppContext(
+    (v) => v.requestHelpers.sendInvitationMessage
+  );
+  const setChessMoveViewTimeStamp = useAppContext(
+    (v) => v.requestHelpers.setChessMoveViewTimeStamp
+  );
+  const startNewDMChannel = useAppContext(
+    (v) => v.requestHelpers.startNewDMChannel
+  );
+  const updateChatLastRead = useAppContext(
+    (v) => v.requestHelpers.updateChatLastRead
+  );
+  const updateLastChannelId = useAppContext(
+    (v) => v.requestHelpers.updateLastChannelId
+  );
+  const updateUserXP = useAppContext((v) => v.requestHelpers.updateUserXP);
+  const uploadChatSubject = useAppContext(
+    (v) => v.requestHelpers.uploadChatSubject
+  );
+  const uploadThumb = useAppContext((v) => v.requestHelpers.uploadThumb);
+
   const {
     authLevel,
     banned,

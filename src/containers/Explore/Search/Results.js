@@ -14,7 +14,7 @@ Results.propTypes = {
 };
 
 export default function Results({ filter, searchText }) {
-  const { searchContent } = useAppContext((v) => v.requestHelpers);
+  const searchContent = useAppContext((v) => v.requestHelpers.searchContent);
   const {
     state: {
       search: { results, loadMoreButton }

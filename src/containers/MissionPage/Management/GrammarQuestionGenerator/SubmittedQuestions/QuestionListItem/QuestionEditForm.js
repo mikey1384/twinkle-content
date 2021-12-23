@@ -31,7 +31,9 @@ export default function QuestionEditForm({
   onCancel
 }) {
   const mounted = useRef(true);
-  const { editGrammarQuestion } = useAppContext((v) => v.requestHelpers);
+  const editGrammarQuestion = useAppContext(
+    (v) => v.requestHelpers.editGrammarQuestion
+  );
   const [editedLeftSideText, setEditedLeftSideText] = useState(
     leftSideText.trim()
   );

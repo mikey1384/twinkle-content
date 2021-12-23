@@ -44,7 +44,7 @@ export default function SubjectInputForm({
   descriptionPlaceholder,
   onSubmit
 }) {
-  const { uploadFile } = useAppContext((v) => v.requestHelpers);
+  const uploadFile = useAppContext((v) => v.requestHelpers.uploadFile);
   const {
     state,
     actions: { onSetSubjectInputForm }

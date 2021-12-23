@@ -25,8 +25,9 @@ ChangeUsername.propTypes = {
 };
 
 export default function ChangeUsername({ style }) {
-  const { changeUsername, checkIfUsernameExists } = useAppContext(
-    (v) => v.requestHelpers
+  const changeUsername = useAppContext((v) => v.requestHelpers.changeUsername);
+  const checkIfUsernameExists = useAppContext(
+    (v) => v.requestHelpers.checkIfUsernameExists
   );
   const {
     actions: { onUpdateUserCoins }

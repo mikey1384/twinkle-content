@@ -29,8 +29,9 @@ export default function TakeScreenshot({
   onSetMissionState,
   style
 }) {
-  const { uploadFile, uploadMissionAttempt } = useAppContext(
-    (v) => v.requestHelpers
+  const uploadFile = useAppContext((v) => v.requestHelpers.uploadFile);
+  const uploadMissionAttempt = useAppContext(
+    (v) => v.requestHelpers.uploadMissionAttempt
   );
   const {
     actions: { onUpdateMissionAttempt }

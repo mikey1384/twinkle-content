@@ -19,9 +19,8 @@ Videos.propTypes = {
 };
 
 export default function Videos({ history }) {
-  const { loadPlaylists, searchContent } = useAppContext(
-    (v) => v.requestHelpers
-  );
+  const loadPlaylists = useAppContext((v) => v.requestHelpers.loadPlaylists);
+  const searchContent = useAppContext((v) => v.requestHelpers.searchContent);
   const { authLevel, userId } = useMyState();
   const {
     state: {

@@ -21,7 +21,9 @@ export default function Frame({
   style,
   userIsUploader
 }) {
-  const { updateUserPictureCaption } = useAppContext((v) => v.requestHelpers);
+  const updateUserPictureCaption = useAppContext(
+    (v) => v.requestHelpers.updateUserPictureCaption
+  );
   const imageUrl = useMemo(() => {
     return picture?.src ? `${cloudFrontURL}${picture?.src}` : '';
   }, [picture]);

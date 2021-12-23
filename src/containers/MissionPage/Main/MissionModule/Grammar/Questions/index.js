@@ -17,12 +17,16 @@ export default function Questions({ isRepeating, mission, onFail }) {
   const [submitDisabled, setSubmitDisabled] = useState(true);
   const { userId } = useMyState();
   const [repeatMissionComplete, setRepeatMissionComplete] = useState(false);
-  const {
-    updateUserCoins,
-    updateUserXP,
-    uploadMissionAttempt,
-    uploadGrammarAttempt
-  } = useAppContext((v) => v.requestHelpers);
+  const updateUserCoins = useAppContext(
+    (v) => v.requestHelpers.updateUserCoins
+  );
+  const updateUserXP = useAppContext((v) => v.requestHelpers.updateUserXP);
+  const uploadMissionAttempt = useAppContext(
+    (v) => v.requestHelpers.uploadMissionAttempt
+  );
+  const uploadGrammarAttempt = useAppContext(
+    (v) => v.requestHelpers.uploadGrammarAttempt
+  );
   const {
     actions: { onUpdateMissionAttempt, onSetMissionState }
   } = useMissionContext();

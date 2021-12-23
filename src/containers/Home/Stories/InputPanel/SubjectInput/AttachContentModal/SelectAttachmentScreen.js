@@ -22,7 +22,8 @@ export default function SelectAttachmentScreen({
   onDeselect,
   contentType
 }) {
-  const { loadUploads, searchContent } = useAppContext((v) => v.requestHelpers);
+  const loadUploads = useAppContext((v) => v.requestHelpers.loadUploads);
+  const searchContent = useAppContext((v) => v.requestHelpers.searchContent);
   const {
     actions: { onInitContent }
   } = useContentContext();

@@ -23,8 +23,11 @@ export default function Achievements({
   profile: { id, username },
   selectedTheme
 }) {
-  const { loadMoreNotableContents, loadNotableContent } = useAppContext(
-    (v) => v.requestHelpers
+  const loadMoreNotableContents = useAppContext(
+    (v) => v.requestHelpers.loadMoreNotableContents
+  );
+  const loadNotableContent = useAppContext(
+    (v) => v.requestHelpers.loadNotableContent
   );
   const {
     actions: { onLoadNotables, onLoadMoreNotables }

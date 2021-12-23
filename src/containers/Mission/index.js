@@ -13,7 +13,9 @@ import FilterBar from 'components/FilterBar';
 export default function Mission() {
   const [loading, setLoading] = useState(false);
   const { currentMissionId, userId, isCreator } = useMyState();
-  const { loadMissionList } = useAppContext((v) => v.requestHelpers);
+  const loadMissionList = useAppContext(
+    (v) => v.requestHelpers.loadMissionList
+  );
   const {
     state: {
       attemptObj,

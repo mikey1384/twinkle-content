@@ -30,8 +30,11 @@ function SlideEmbedly({
   siteUrl,
   slideId
 }) {
-  const { fetchUrlEmbedData, updateEmbedData } = useAppContext(
-    (v) => v.requestHelpers
+  const fetchUrlEmbedData = useAppContext(
+    (v) => v.requestHelpers.fetchUrlEmbedData
+  );
+  const updateEmbedData = useAppContext(
+    (v) => v.requestHelpers.updateEmbedData
   );
   const {
     actions: { onChangeNumUpdates }

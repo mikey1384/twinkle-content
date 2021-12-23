@@ -57,16 +57,24 @@ const deviceIsMobile = isMobile(navigator);
 const userIsUsingIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
 function App({ location, history }) {
-  const { onCloseSigninModal, onInitUser, onLogout, onSetSessionLoaded } =
-    useAppContext((v) => v.user.actions);
-  const {
-    auth,
-    loadMyData,
-    recordUserTraffic,
-    uploadFile,
-    uploadContent,
-    uploadFileOnChat
-  } = useAppContext((v) => v.requestHelpers);
+  const onCloseSigninModal = useAppContext(
+    (v) => v.user.actions.onCloseSigninModal
+  );
+  const onInitUser = useAppContext((v) => v.user.actions.onInitUser);
+  const onLogout = useAppContext((v) => v.user.actions.onLogout);
+  const onSetSessionLoaded = useAppContext(
+    (v) => v.user.actions.onSetSessionLoaded
+  );
+  const auth = useAppContext((v) => v.requestHelpers.auth);
+  const loadMyData = useAppContext((v) => v.requestHelpers.loadMyData);
+  const recordUserTraffic = useAppContext(
+    (v) => v.requestHelpers.recordUserTraffic
+  );
+  const uploadFile = useAppContext((v) => v.requestHelpers.uploadFile);
+  const uploadContent = useAppContext((v) => v.requestHelpers.uploadContent);
+  const uploadFileOnChat = useAppContext(
+    (v) => v.requestHelpers.uploadFileOnChat
+  );
   const { authLevel, profilePicUrl, signinModalShown, userId, username } =
     useMyState();
   const {

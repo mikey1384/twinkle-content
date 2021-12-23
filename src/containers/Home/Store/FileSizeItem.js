@@ -74,7 +74,9 @@ export default function FileSizeItem({ style }) {
   const {
     actions: { onUpdateProfileInfo }
   } = useContentContext();
-  const { upgradeFileUploadSize } = useAppContext((v) => v.requestHelpers);
+  const upgradeFileUploadSize = useAppContext(
+    (v) => v.requestHelpers.upgradeFileUploadSize
+  );
   return (
     <ItemPanel
       isLeveled

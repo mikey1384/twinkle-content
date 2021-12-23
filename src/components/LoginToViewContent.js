@@ -7,7 +7,9 @@ import localize from 'constants/localize';
 const mustLogInToViewContentLabel = localize('mustLogInToViewContent');
 
 export default function LoginToViewContent() {
-  const { onOpenSigninModal } = useAppContext((v) => v.user.actions);
+  const onOpenSigninModal = useAppContext(
+    (v) => v.user.actions.onOpenSigninModal
+  );
 
   return (
     <div

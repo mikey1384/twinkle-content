@@ -155,13 +155,14 @@ function ProfilePanel({ expandable, profileId, style }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const {
-    checkIfUserOnline,
-    loadDMChannel,
-    loadComments,
-    loadProfile,
-    uploadBio
-  } = useAppContext((v) => v.requestHelpers);
+  const checkIfUserOnline = useAppContext(
+    (v) => v.requestHelpers.checkIfUserOnline
+  );
+  const loadDMChannel = useAppContext((v) => v.requestHelpers.loadDMChannel);
+  const loadComments = useAppContext((v) => v.requestHelpers.loadComments);
+  const loadProfile = useAppContext((v) => v.requestHelpers.loadProfile);
+  const uploadBio = useAppContext((v) => v.requestHelpers.uploadBio);
+
   const { isCreator, userId, username, banned, authLevel } = useMyState();
   const {
     actions: { onResetProfile }

@@ -33,7 +33,9 @@ export default function CopyAndPaste({ mission, onSetMissionState, style }) {
   const mounted = useRef(true);
   const [submitDisabled, setSubmitDisabled] = useState(false);
   const { userId } = useMyState();
-  const { uploadMissionAttempt } = useAppContext((v) => v.requestHelpers);
+  const uploadMissionAttempt = useAppContext(
+    (v) => v.requestHelpers.uploadMissionAttempt
+  );
   const {
     actions: { onUpdateMissionAttempt }
   } = useMissionContext();

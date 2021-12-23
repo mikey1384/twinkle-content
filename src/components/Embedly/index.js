@@ -67,7 +67,9 @@ function Embedly({
   videoHeight
 }) {
   const history = useHistory();
-  const { makeThumbnailSecure } = useAppContext((v) => v.requestHelpers);
+  const makeThumbnailSecure = useAppContext(
+    (v) => v.requestHelpers.makeThumbnailSecure
+  );
   const translator = {
     actualDescription:
       contentType === 'url' ? 'actualDescription' : 'linkDescription',

@@ -15,8 +15,13 @@ const recommendedLabel = localize('recommendedLinks');
 
 export default function Links() {
   const { userId } = useMyState();
-  const { loadByUserUploads, loadRecommendedUploads, loadUploads } =
-    useAppContext((v) => v.requestHelpers);
+  const loadByUserUploads = useAppContext(
+    (v) => v.requestHelpers.loadByUserUploads
+  );
+  const loadRecommendedUploads = useAppContext(
+    (v) => v.requestHelpers.loadRecommendedUploads
+  );
+  const loadUploads = useAppContext((v) => v.requestHelpers.loadUploads);
   const {
     state: {
       links: {

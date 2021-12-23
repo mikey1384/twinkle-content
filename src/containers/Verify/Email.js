@@ -9,7 +9,7 @@ Email.propTypes = {
 };
 
 export default function Email({ match }) {
-  const { verifyEmail } = useAppContext((v) => v.requestHelpers);
+  const verifyEmail = useAppContext((v) => v.requestHelpers.verifyEmail);
   const [loaded, setLoaded] = useState(false);
   const [verified, setVerified] = useState(false);
   const [expired, setExpired] = useState(false);

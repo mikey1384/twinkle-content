@@ -25,8 +25,11 @@ export default function InsertSlide({
   className,
   style
 }) {
-  const { insertArchivedSlide, insertInteractiveSlide } = useAppContext(
-    (v) => v.requestHelpers
+  const insertArchivedSlide = useAppContext(
+    (v) => v.requestHelpers.insertArchivedSlide
+  );
+  const insertInteractiveSlide = useAppContext(
+    (v) => v.requestHelpers.insertInteractiveSlide
   );
   const {
     actions: {

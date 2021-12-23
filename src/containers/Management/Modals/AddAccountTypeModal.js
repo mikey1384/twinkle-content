@@ -14,7 +14,7 @@ AddAccountTypeModal.propTypes = {
 };
 
 export default function AddAccountTypeModal({ onHide }) {
-  const { addAccountType } = useAppContext((v) => v.requestHelpers);
+  const addAccountType = useAppContext((v) => v.requestHelpers.addAccountType);
   const {
     actions: { onAddAccountType }
   } = useManagementContext();

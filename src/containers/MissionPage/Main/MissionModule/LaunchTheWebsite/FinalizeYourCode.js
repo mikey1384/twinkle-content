@@ -25,7 +25,9 @@ export default function FinalizeYourCode({
   username,
   onSetCode
 }) {
-  const { updateMissionStatus } = useAppContext((v) => v.requestHelpers);
+  const updateMissionStatus = useAppContext(
+    (v) => v.requestHelpers.updateMissionStatus
+  );
   const [errorMsg, setErrorMsg] = useState('');
   const ComponentRef = useRef(null);
   const initialCode = useMemo(() => defaultCode({ username }), [username]);

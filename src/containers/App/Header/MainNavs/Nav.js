@@ -66,7 +66,9 @@ function Nav({
     () => (alert ? alertColor : Color.darkGray()),
     [alert, alertColor]
   );
-  const { onSetProfilesLoaded } = useAppContext((v) => v.user.actions);
+  const onSetProfilesLoaded = useAppContext(
+    (v) => v.user.actions.onSetProfilesLoaded
+  );
 
   return (
     <Route

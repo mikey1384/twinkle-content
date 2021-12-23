@@ -80,12 +80,18 @@ export default function Slide({
   slideObj,
   style
 }) {
-  const {
-    deleteInteractiveSlide,
-    publishInteractiveSlide,
-    undeleteInteractiveSlide,
-    unPublishInteractiveSlide
-  } = useAppContext((v) => v.requestHelpers);
+  const deleteInteractiveSlide = useAppContext(
+    (v) => v.requestHelpers.deleteInteractiveSlide
+  );
+  const publishInteractiveSlide = useAppContext(
+    (v) => v.requestHelpers.publishInteractiveSlide
+  );
+  const undeleteInteractiveSlide = useAppContext(
+    (v) => v.requestHelpers.undeleteInteractiveSlide
+  );
+  const unPublishInteractiveSlide = useAppContext(
+    (v) => v.requestHelpers.unPublishInteractiveSlide
+  );
   const {
     actions: {
       onArchiveSlide,

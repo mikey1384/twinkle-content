@@ -37,7 +37,8 @@ const categoryObj = {
 };
 
 export default function Stories() {
-  const { loadFeeds, loadNewFeeds } = useAppContext((v) => v.requestHelpers);
+  const loadFeeds = useAppContext((v) => v.requestHelpers.loadFeeds);
+  const loadNewFeeds = useAppContext((v) => v.requestHelpers.loadNewFeeds);
   const { hideWatched, userId, username } = useMyState();
   const {
     state: { numNewPosts },

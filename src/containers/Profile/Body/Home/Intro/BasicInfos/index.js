@@ -73,8 +73,13 @@ export default function BasicInfos({
     authLevel: myAuthLevel,
     banned
   } = useMyState();
-  const { loadDMChannel, uploadProfileInfo, sendVerificationEmail } =
-    useAppContext((v) => v.requestHelpers);
+  const loadDMChannel = useAppContext((v) => v.requestHelpers.loadDMChannel);
+  const uploadProfileInfo = useAppContext(
+    (v) => v.requestHelpers.uploadProfileInfo
+  );
+  const sendVerificationEmail = useAppContext(
+    (v) => v.requestHelpers.sendVerificationEmail
+  );
   const {
     actions: { onUpdateProfileInfo }
   } = useContentContext();

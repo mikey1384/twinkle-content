@@ -21,8 +21,12 @@ export default function Categories({
   onSetDefaultSearchFilter,
   style
 }) {
-  const { setDefaultSearchFilter } = useAppContext((v) => v.requestHelpers);
-  const { onChangeDefaultSearchFilter } = useAppContext((v) => v.user.actions);
+  const setDefaultSearchFilter = useAppContext(
+    (v) => v.requestHelpers.setDefaultSearchFilter
+  );
+  const onChangeDefaultSearchFilter = useAppContext(
+    (v) => v.user.actions.onChangeDefaultSearchFilter
+  );
   const { defaultSearchFilter, profileTheme } = useMyState();
   const [changingDefaultFilter, setChangingDefaultFilter] = useState(false);
 

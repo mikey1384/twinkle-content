@@ -27,8 +27,13 @@ export default function MissionPage({
   const history = useHistory();
   const location = useLocation();
   const { loaded, userId, isCreator } = useMyState();
-  const { loadMission, loadMissionTypeIdHash, updateCurrentMission } =
-    useAppContext((v) => v.requestHelpers);
+  const loadMission = useAppContext((v) => v.requestHelpers.loadMission);
+  const loadMissionTypeIdHash = useAppContext(
+    (v) => v.requestHelpers.loadMissionTypeIdHash
+  );
+  const updateCurrentMission = useAppContext(
+    (v) => v.requestHelpers.updateCurrentMission
+  );
   const {
     actions: { onUpdateCurrentMission }
   } = useContentContext();

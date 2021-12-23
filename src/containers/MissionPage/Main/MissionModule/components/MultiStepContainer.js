@@ -22,7 +22,9 @@ export default function MultiStepContainer({
   taskType
 }) {
   const { userId, state } = useMyState();
-  const { updateMissionStatus } = useAppContext((v) => v.requestHelpers);
+  const updateMissionStatus = useAppContext(
+    (v) => v.requestHelpers.updateMissionStatus
+  );
   const {
     actions: { onUpdateUserMissionState }
   } = useContentContext();

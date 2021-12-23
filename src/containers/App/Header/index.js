@@ -38,19 +38,30 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
     () => getSectionFromPathname(pathname)?.section === 'chat',
     [pathname]
   );
-  const { onSetLastChatPath } = useAppContext((v) => v.user.actions);
-  const {
-    checkIfHomeOutdated,
-    checkVersion,
-    fetchNotifications,
-    getNumberOfUnreadMessages,
-    loadGeneralChatPathId,
-    loadChat,
-    loadRankings,
-    loadCoins,
-    loadXP,
-    updateChatLastRead
-  } = useAppContext((v) => v.requestHelpers);
+  const onSetLastChatPath = useAppContext(
+    (v) => v.user.actions.onSetLastChatPath
+  );
+  const checkIfHomeOutdated = useAppContext(
+    (v) => v.requestHelpers.checkIfHomeOutdated
+  );
+  const checkVersion = useAppContext((v) => v.requestHelpers.checkVersion);
+  const fetchNotifications = useAppContext(
+    (v) => v.requestHelpers.fetchNotifications
+  );
+  const getNumberOfUnreadMessages = useAppContext(
+    (v) => v.requestHelpers.getNumberOfUnreadMessages
+  );
+  const loadGeneralChatPathId = useAppContext(
+    (v) => v.requestHelpers.loadGeneralChatPathId
+  );
+  const loadChat = useAppContext((v) => v.requestHelpers.loadChat);
+  const loadRankings = useAppContext((v) => v.requestHelpers.loadRankings);
+  const loadCoins = useAppContext((v) => v.requestHelpers.loadCoins);
+  const loadXP = useAppContext((v) => v.requestHelpers.loadXP);
+  const updateChatLastRead = useAppContext(
+    (v) => v.requestHelpers.updateChatLastRead
+  );
+
   const { defaultSearchFilter, userId, username, loggedIn, profilePicUrl } =
     useMyState();
   const {

@@ -45,7 +45,7 @@ const secretMessageLabel = localize('secretMessage');
 function SubjectInput() {
   const BodyRef = useRef(document.scrollingElement || document.documentElement);
   const { onFileUpload } = useContext(LocalContext);
-  const { uploadContent } = useAppContext((v) => v.requestHelpers);
+  const uploadContent = useAppContext((v) => v.requestHelpers.uploadContent);
   const { canEditRewardLevel, profileTheme, banned } = useMyState();
   const {
     state: {

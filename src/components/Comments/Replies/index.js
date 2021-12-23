@@ -44,7 +44,7 @@ function Replies({
     onReplySubmit,
     onSubmitWithAttachment
   } = useContext(LocalContext);
-  const { loadReplies } = useAppContext((v) => v.requestHelpers);
+  const loadReplies = useAppContext((v) => v.requestHelpers.loadReplies);
   const [deleting, setDeleting] = useState(false);
   const [replying, setReplying] = useState(false);
   const [loadingMoreReplies, setLoadingMoreReplies] = useState(false);

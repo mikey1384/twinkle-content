@@ -21,7 +21,8 @@ AddModeratorModal.propTypes = {
 };
 
 export default function AddModeratorModal({ accountTypes, onHide }) {
-  const { addModerators, searchUsers } = useAppContext((v) => v.requestHelpers);
+  const addModerators = useAppContext((v) => v.requestHelpers.addModerators);
+  const searchUsers = useAppContext((v) => v.requestHelpers.searchUsers);
   const {
     actions: { onEditModerators }
   } = useManagementContext();

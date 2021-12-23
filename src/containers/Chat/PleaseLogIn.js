@@ -8,7 +8,9 @@ import localize from 'constants/localize';
 const logInLabel = localize('logIn');
 
 export default function PleaseLogIn() {
-  const { onOpenSigninModal } = useAppContext((v) => v.user.actions);
+  const onOpenSigninModal = useAppContext(
+    (v) => v.user.actions.onOpenSigninModal
+  );
 
   const doYouWantToChatAndPlayChessLabel = useMemo(() => {
     if (SELECTED_LANGUAGE === 'kr') {

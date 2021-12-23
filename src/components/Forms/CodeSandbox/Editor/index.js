@@ -31,7 +31,7 @@ export default function Editor({
   onSetErrorMsg,
   style
 }) {
-  const { lintCode } = useAppContext((v) => v.requestHelpers);
+  const lintCode = useAppContext((v) => v.requestHelpers.lintCode);
   const [error, setError] = useState('');
   const [errorLineNumber, setErrorLineNumber] = useState(null);
 

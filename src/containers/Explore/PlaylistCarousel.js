@@ -41,8 +41,9 @@ export default function PlaylistCarousel({
   uploader,
   userIsUploader
 }) {
-  const { deletePlaylist, editPlaylistTitle } = useAppContext(
-    (v) => v.requestHelpers
+  const deletePlaylist = useAppContext((v) => v.requestHelpers.deletePlaylist);
+  const editPlaylistTitle = useAppContext(
+    (v) => v.requestHelpers.editPlaylistTitle
   );
   const { canEditPlaylists, profileTheme } = useMyState();
   const {

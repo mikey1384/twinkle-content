@@ -60,7 +60,7 @@ export default function Subjects({
     onUploadReply
   }
 }) {
-  const { loadSubjects } = useAppContext((v) => v.requestHelpers);
+  const loadSubjects = useAppContext((v) => v.requestHelpers.loadSubjects);
   const [loadingMore, setLoadingMore] = useState(false);
   return (
     <LocalContext.Provider

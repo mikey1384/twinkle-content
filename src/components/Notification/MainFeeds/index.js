@@ -38,13 +38,20 @@ function MainFeeds({
   selectNotiTab,
   style
 }) {
-  const {
-    fetchNotifications,
-    loadMoreNotifications,
-    loadMoreRewards,
-    updateUserXP,
-    collectRewardedCoins
-  } = useAppContext((v) => v.requestHelpers);
+  const fetchNotifications = useAppContext(
+    (v) => v.requestHelpers.fetchNotifications
+  );
+  const loadMoreNotifications = useAppContext(
+    (v) => v.requestHelpers.loadMoreNotifications
+  );
+  const loadMoreRewards = useAppContext(
+    (v) => v.requestHelpers.loadMoreRewards
+  );
+  const updateUserXP = useAppContext((v) => v.requestHelpers.updateUserXP);
+  const collectRewardedCoins = useAppContext(
+    (v) => v.requestHelpers.collectRewardedCoins
+  );
+
   const { userId, rank, twinkleXP, twinkleCoins } = useMyState();
   const {
     state: { numNewNotis, totalRewardedTwinkles, totalRewardedTwinkleCoins },

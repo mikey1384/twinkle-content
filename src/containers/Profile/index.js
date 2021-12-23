@@ -16,9 +16,10 @@ Profile.propTypes = {
 };
 
 export default function Profile({ history, location, match }) {
-  const { loadProfileViaUsername, setTheme } = useAppContext(
-    (v) => v.requestHelpers
+  const loadProfileViaUsername = useAppContext(
+    (v) => v.requestHelpers.loadProfileViaUsername
   );
+  const setTheme = useAppContext((v) => v.requestHelpers.setTheme);
   const { userId, username } = useMyState();
   const {
     actions: { onChangeProfileTheme, onInitContent }

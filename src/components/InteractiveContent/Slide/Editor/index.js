@@ -92,9 +92,10 @@ export default function Editor({
           }
   };
 
-  const { editInteractiveSlide, uploadFile } = useAppContext(
-    (v) => v.requestHelpers
+  const editInteractiveSlide = useAppContext(
+    (v) => v.requestHelpers.editInteractiveSlide
   );
+  const uploadFile = useAppContext((v) => v.requestHelpers.uploadFile);
   const {
     state,
     actions: { onSetEditInteractiveForm }

@@ -52,7 +52,9 @@ export default function RecommendationInterface({
     };
   }, []);
 
-  const { recommendContent } = useAppContext((v) => v.requestHelpers);
+  const recommendContent = useAppContext(
+    (v) => v.requestHelpers.recommendContent
+  );
 
   const {
     actions: { onUpdateUserCoins, onRecommendContent }

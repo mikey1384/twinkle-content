@@ -22,8 +22,15 @@ export default function InteractiveContent({
   interactiveId,
   onGoBackToMission
 }) {
-  const { checkInteractiveNumUpdates, loadInteractive, moveInteractiveSlide } =
-    useAppContext((v) => v.requestHelpers);
+  const checkInteractiveNumUpdates = useAppContext(
+    (v) => v.requestHelpers.checkInteractiveNumUpdates
+  );
+  const loadInteractive = useAppContext(
+    (v) => v.requestHelpers.loadInteractive
+  );
+  const moveInteractiveSlide = useAppContext(
+    (v) => v.requestHelpers.moveInteractiveSlide
+  );
   const {
     state: { pageVisible }
   } = useViewContext();

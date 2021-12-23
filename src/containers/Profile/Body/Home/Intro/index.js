@@ -38,9 +38,9 @@ Intro.propTypes = {
 };
 
 export default function Intro({ profile, selectedTheme }) {
-  const { auth, uploadGreeting, uploadBio } = useAppContext(
-    (v) => v.requestHelpers
-  );
+  const auth = useAppContext((v) => v.requestHelpers.auth);
+  const uploadGreeting = useAppContext((v) => v.requestHelpers.uploadGreeting);
+  const uploadBio = useAppContext((v) => v.requestHelpers.uploadBio);
   const {
     actions: {
       onRemoveStatusMsg,

@@ -16,8 +16,8 @@ export default function PasswordForm({ profilePicUrl, userId, username }) {
   const history = useHistory();
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
-  const { onLogin } = useAppContext((v) => v.user.actions);
-  const { changePassword } = useAppContext((v) => v.requestHelpers);
+  const onLogin = useAppContext((v) => v.user.actions.onLogin);
+  const changePassword = useAppContext((v) => v.requestHelpers.changePassword);
   const {
     actions: { onInitContent }
   } = useContentContext();

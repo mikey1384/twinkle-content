@@ -56,16 +56,27 @@ function XPVideoPlayer({
       mounted.current = false;
     };
   }, []);
-  const {
-    addVideoView,
-    checkCurrentlyWatchingAnotherVideo,
-    finishWatchingVideo,
-    loadVideoCurrentTime,
-    updateCurrentlyWatching,
-    updateUserCoins,
-    updateUserXP,
-    updateTotalViewDuration
-  } = useAppContext((v) => v.requestHelpers);
+  const addVideoView = useAppContext((v) => v.requestHelpers.addVideoView);
+  const checkCurrentlyWatchingAnotherVideo = useAppContext(
+    (v) => v.requestHelpers.checkCurrentlyWatchingAnotherVideo
+  );
+  const finishWatchingVideo = useAppContext(
+    (v) => v.requestHelpers.finishWatchingVideo
+  );
+  const loadVideoCurrentTime = useAppContext(
+    (v) => v.requestHelpers.loadVideoCurrentTime
+  );
+  const updateCurrentlyWatching = useAppContext(
+    (v) => v.requestHelpers.updateCurrentlyWatching
+  );
+  const updateUserCoins = useAppContext(
+    (v) => v.requestHelpers.updateUserCoins
+  );
+  const updateUserXP = useAppContext((v) => v.requestHelpers.updateUserXP);
+  const updateTotalViewDuration = useAppContext(
+    (v) => v.requestHelpers.updateTotalViewDuration
+  );
+
   const {
     state: { pageVisible }
   } = useViewContext();

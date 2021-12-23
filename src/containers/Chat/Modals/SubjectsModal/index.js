@@ -24,8 +24,15 @@ export default function SubjectsModal({
   onSelectSubject,
   userIsOwner
 }) {
-  const { deleteChatSubject, loadChatSubjects, loadMoreChatSubjects } =
-    useAppContext((v) => v.requestHelpers);
+  const deleteChatSubject = useAppContext(
+    (v) => v.requestHelpers.deleteChatSubject
+  );
+  const loadChatSubjects = useAppContext(
+    (v) => v.requestHelpers.loadChatSubjects
+  );
+  const loadMoreChatSubjects = useAppContext(
+    (v) => v.requestHelpers.loadMoreChatSubjects
+  );
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const [mySubjects, setMySubjects] = useState({

@@ -14,9 +14,10 @@ TwinkleStore.propTypes = {
 
 export default function TwinkleStore({ mission }) {
   const { canChangeUsername, userId, karmaPoints, profileTheme } = useMyState();
-  const { loadKarmaPoints, loadMyData } = useAppContext(
-    (v) => v.requestHelpers
+  const loadKarmaPoints = useAppContext(
+    (v) => v.requestHelpers.loadKarmaPoints
   );
+  const loadMyData = useAppContext((v) => v.requestHelpers.loadMyData);
   const {
     state: { pageVisible }
   } = useViewContext();

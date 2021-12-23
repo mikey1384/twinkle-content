@@ -16,7 +16,9 @@ export default function ReorderFeaturedPlaylists({
   onHide,
   playlistIds: initialPlaylistIds
 }) {
-  const { uploadFeaturedPlaylists } = useAppContext((v) => v.requestHelpers);
+  const uploadFeaturedPlaylists = useAppContext(
+    (v) => v.requestHelpers.uploadFeaturedPlaylists
+  );
   const {
     state: {
       videos: { featuredPlaylists }

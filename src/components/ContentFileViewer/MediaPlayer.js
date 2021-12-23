@@ -32,7 +32,7 @@ export default function MediaPlayer({
   thumbUrl,
   videoHeight
 }) {
-  const { uploadThumb } = useAppContext((v) => v.requestHelpers);
+  const uploadThumb = useAppContext((v) => v.requestHelpers.uploadThumb);
   const {
     actions: { onSetThumbUrl, onSetVideoCurrentTime }
   } = useContentContext();

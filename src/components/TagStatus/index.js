@@ -29,7 +29,9 @@ function TagStatus({
   style,
   tags
 }) {
-  const { fetchPlaylistsContaining } = useAppContext((v) => v.requestHelpers);
+  const fetchPlaylistsContaining = useAppContext(
+    (v) => v.requestHelpers.fetchPlaylistsContaining
+  );
   const { canEditPlaylists } = useMyState();
   const [shownPlaylistId, setShownPlaylistId] = useState();
   const [shownPlaylistTitle, setShownPlaylistTitle] = useState('');

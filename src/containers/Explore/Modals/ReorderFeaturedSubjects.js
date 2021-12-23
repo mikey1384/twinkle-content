@@ -16,7 +16,9 @@ export default function ReorderFeaturedSubjects({
   onHide,
   subjectIds: initialSubjectIds
 }) {
-  const { uploadFeaturedSubjects } = useAppContext((v) => v.requestHelpers);
+  const uploadFeaturedSubjects = useAppContext(
+    (v) => v.requestHelpers.uploadFeaturedSubjects
+  );
   const {
     state: {
       subjects: { featureds: featuredSubjects }

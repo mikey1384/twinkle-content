@@ -39,13 +39,17 @@ export default function EditPlaylistModal({
       mounted.current = false;
     };
   }, []);
-  const {
-    editPlaylistVideos,
-    loadPlaylistVideos,
-    loadUploads,
-    reorderPlaylistVideos,
-    searchContent
-  } = useAppContext((v) => v.requestHelpers);
+  const editPlaylistVideos = useAppContext(
+    (v) => v.requestHelpers.editPlaylistVideos
+  );
+  const loadPlaylistVideos = useAppContext(
+    (v) => v.requestHelpers.loadPlaylistVideos
+  );
+  const loadUploads = useAppContext((v) => v.requestHelpers.loadUploads);
+  const reorderPlaylistVideos = useAppContext(
+    (v) => v.requestHelpers.reorderPlaylistVideos
+  );
+  const searchContent = useAppContext((v) => v.requestHelpers.searchContent);
   const {
     actions: { onChangePlaylistVideos }
   } = useExploreContext();

@@ -16,7 +16,7 @@ GitHubVerifier.propTypes = {
 };
 
 export default function GitHubVerifier({ task }) {
-  const { loadGitHubData } = useAppContext((v) => v.requestHelpers);
+  const loadGitHubData = useAppContext((v) => v.requestHelpers.loadGitHubData);
   const {
     actions: { onUpdateProfileInfo }
   } = useContentContext();

@@ -15,7 +15,9 @@ EditModeratorModal.propTypes = {
 };
 
 export default function EditModeratorModal({ accountTypes, onHide, target }) {
-  const { changeAccountType } = useAppContext((v) => v.requestHelpers);
+  const changeAccountType = useAppContext(
+    (v) => v.requestHelpers.changeAccountType
+  );
   const {
     actions: { onChangeModeratorAccountType }
   } = useManagementContext();

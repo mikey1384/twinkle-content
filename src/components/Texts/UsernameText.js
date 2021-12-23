@@ -37,7 +37,8 @@ export default function UsernameText({
   const hideTimerRef2 = useRef(null);
   const UsernameTextRef = useRef(null);
   const mouseEntered = useRef(false);
-  const { loadDMChannel, loadProfile } = useAppContext((v) => v.requestHelpers);
+  const loadDMChannel = useAppContext((v) => v.requestHelpers.loadDMChannel);
+  const loadProfile = useAppContext((v) => v.requestHelpers.loadProfile);
   const {
     actions: { onInitContent }
   } = useContentContext();

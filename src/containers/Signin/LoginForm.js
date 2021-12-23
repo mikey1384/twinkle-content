@@ -30,8 +30,8 @@ export default function LoginForm({
   onShowForgotPasswordForm,
   onShowSignupForm
 }) {
-  const { onLogin } = useAppContext((v) => v.user.actions);
-  const { login } = useAppContext((v) => v.requestHelpers);
+  const onLogin = useAppContext((v) => v.user.actions.onLogin);
+  const login = useAppContext((v) => v.requestHelpers.login);
   const {
     actions: { onInitContent }
   } = useContentContext();

@@ -14,7 +14,7 @@ MonthlyXp.propTypes = {
 };
 
 export default function MonthlyXp({ selectedTheme, userId }) {
-  const { loadMonthlyXp } = useAppContext((v) => v.requestHelpers);
+  const loadMonthlyXp = useAppContext((v) => v.requestHelpers.loadMonthlyXp);
   const [data, setData] = useState();
   const [loaded, setLoaded] = useState(false);
   const mounted = useRef(true);

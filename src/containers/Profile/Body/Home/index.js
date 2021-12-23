@@ -20,7 +20,7 @@ Home.propTypes = {
 };
 
 export default function Home({ profile, selectedTheme }) {
-  const { loadComments } = useAppContext((v) => v.requestHelpers);
+  const loadComments = useAppContext((v) => v.requestHelpers.loadComments);
   const { userId } = useMyState();
   const {
     actions: {

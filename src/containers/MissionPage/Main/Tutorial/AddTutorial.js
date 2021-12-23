@@ -11,7 +11,9 @@ AddTutorial.propTypes = {
 };
 
 export default function AddTutorial({ missionId, missionTitle }) {
-  const { attachMissionTutorial } = useAppContext((v) => v.requestHelpers);
+  const attachMissionTutorial = useAppContext(
+    (v) => v.requestHelpers.attachMissionTutorial
+  );
   const {
     actions: { onSetMissionState }
   } = useMissionContext();

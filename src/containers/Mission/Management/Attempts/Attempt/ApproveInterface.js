@@ -26,7 +26,9 @@ export default function ApproveInterface({
   onSetAttemptObj
 }) {
   const mounted = useRef(true);
-  const { uploadMissionFeedback } = useAppContext((v) => v.requestHelpers);
+  const uploadMissionFeedback = useAppContext(
+    (v) => v.requestHelpers.uploadMissionFeedback
+  );
   const {
     state,
     actions: { onSetMissionFeedbackForm }

@@ -37,7 +37,8 @@ export default function LinkItem({
   link: { id, numComments, likes, timeStamp, title, uploader, ...embedProps }
 }) {
   const history = useHistory();
-  const { deleteContent, editContent } = useAppContext((v) => v.requestHelpers);
+  const deleteContent = useAppContext((v) => v.requestHelpers.deleteContent);
+  const editContent = useAppContext((v) => v.requestHelpers.editContent);
   const { authLevel, canDelete, canEdit, userId } = useMyState();
   const {
     actions: { onEditLinkTitle }

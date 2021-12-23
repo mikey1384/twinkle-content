@@ -43,8 +43,15 @@ export default function Pictures({
   const [deleteMode, setDeleteMode] = useState(false);
   const [reorderedPictureIds, setReorderedPictureIds] = useState([]);
   const [remainingPictures, setRemainingPictures] = useState(pictures);
-  const { deleteProfilePictures, reorderProfilePictures, updateUserPictures } =
-    useAppContext((v) => v.requestHelpers);
+  const deleteProfilePictures = useAppContext(
+    (v) => v.requestHelpers.deleteProfilePictures
+  );
+  const reorderProfilePictures = useAppContext(
+    (v) => v.requestHelpers.reorderProfilePictures
+  );
+  const updateUserPictures = useAppContext(
+    (v) => v.requestHelpers.updateUserPictures
+  );
   const {
     actions: { onUpdateProfileInfo }
   } = useContentContext();

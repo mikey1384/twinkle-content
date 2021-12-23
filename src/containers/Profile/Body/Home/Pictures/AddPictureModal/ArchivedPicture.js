@@ -24,7 +24,9 @@ export default function ArchivedPicture({
   onDeleteArchivedPicture
 }) {
   const { profileTheme } = useMyState();
-  const { deleteArchivedPicture } = useAppContext((v) => v.requestHelpers);
+  const deleteArchivedPicture = useAppContext(
+    (v) => v.requestHelpers.deleteArchivedPicture
+  );
   const imageUrl = useMemo(() => {
     return picture?.src ? `${cloudFrontURL}${picture?.src}` : '';
   }, [picture]);

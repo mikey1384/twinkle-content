@@ -14,8 +14,11 @@ AddSlide.propTypes = {
 };
 
 export default function AddSlide({ archivedSlides, interactiveId, lastFork }) {
-  const { appendInteractiveSlide, recoverArchivedSlide } = useAppContext(
-    (v) => v.requestHelpers
+  const appendInteractiveSlide = useAppContext(
+    (v) => v.requestHelpers.appendInteractiveSlide
+  );
+  const recoverArchivedSlide = useAppContext(
+    (v) => v.requestHelpers.recoverArchivedSlide
   );
   const {
     actions: {

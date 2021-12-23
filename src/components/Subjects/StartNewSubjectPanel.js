@@ -27,7 +27,7 @@ export default function StartNewSubjectPanel({
   contentType,
   onUploadSubject
 }) {
-  const { uploadSubject } = useAppContext((v) => v.requestHelpers);
+  const uploadSubject = useAppContext((v) => v.requestHelpers.uploadSubject);
   const { canEditRewardLevel } = useMyState();
   const {
     actions: { onSetSubjectFormShown }

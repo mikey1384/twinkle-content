@@ -13,8 +13,11 @@ const selectLabel = localize('select');
 const reorderLabel = localize('reorder');
 
 export default function FeaturedPlaylistsPanel() {
-  const { loadFeaturedPlaylists, loadPlaylistList } = useAppContext(
-    (v) => v.requestHelpers
+  const loadFeaturedPlaylists = useAppContext(
+    (v) => v.requestHelpers.loadFeaturedPlaylists
+  );
+  const loadPlaylistList = useAppContext(
+    (v) => v.requestHelpers.loadPlaylistList
   );
   const { canPinPlaylists, userId } = useMyState();
   const {

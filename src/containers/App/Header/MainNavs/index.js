@@ -55,7 +55,9 @@ function MainNavs({
       onSetHomeNav
     }
   } = useViewContext();
-  const { onSetLastChatPath } = useAppContext((v) => v.user.actions);
+  const onSetLastChatPath = useAppContext(
+    (v) => v.user.actions.onSetLastChatPath
+  );
   const {
     state: { feedsOutdated }
   } = useHomeContext();

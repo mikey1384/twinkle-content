@@ -70,14 +70,16 @@ export default function VideoPage({
     };
   }, []);
 
-  const {
-    deleteContent,
-    editContent,
-    fetchPlaylistsContaining,
-    loadComments,
-    loadSubjects,
-    uploadQuestions
-  } = useAppContext((v) => v.requestHelpers);
+  const deleteContent = useAppContext((v) => v.requestHelpers.deleteContent);
+  const editContent = useAppContext((v) => v.requestHelpers.editContent);
+  const fetchPlaylistsContaining = useAppContext(
+    (v) => v.requestHelpers.fetchPlaylistsContaining
+  );
+  const loadComments = useAppContext((v) => v.requestHelpers.loadComments);
+  const loadSubjects = useAppContext((v) => v.requestHelpers.loadSubjects);
+  const uploadQuestions = useAppContext(
+    (v) => v.requestHelpers.uploadQuestions
+  );
   const { authLevel, canEdit, userId } = useMyState();
   const {
     actions: {

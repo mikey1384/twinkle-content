@@ -13,7 +13,9 @@ FinalStep.propTypes = {
 };
 
 export default function FinalStep({ mission, style, userId }) {
-  const { uploadMissionAttempt } = useAppContext((v) => v.requestHelpers);
+  const uploadMissionAttempt = useAppContext(
+    (v) => v.requestHelpers.uploadMissionAttempt
+  );
   const {
     actions: { onUpdateMissionAttempt }
   } = useMissionContext();

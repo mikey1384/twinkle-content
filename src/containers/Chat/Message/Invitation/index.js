@@ -29,8 +29,11 @@ export default function Invitation({
   sender
 }) {
   const { userId, profileTheme } = useMyState();
-  const { loadChatChannel, parseChannelPath } = useAppContext(
-    (v) => v.requestHelpers
+  const loadChatChannel = useAppContext(
+    (v) => v.requestHelpers.loadChatChannel
+  );
+  const parseChannelPath = useAppContext(
+    (v) => v.requestHelpers.parseChannelPath
   );
   const {
     state: { channelPathIdHash, channelsObj },

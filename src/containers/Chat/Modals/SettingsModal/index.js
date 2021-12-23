@@ -52,9 +52,8 @@ export default function SettingsModal({
   unlockedThemes,
   userIsChannelOwner
 }) {
-  const { buyChatSubject, buyChatTheme } = useAppContext(
-    (v) => v.requestHelpers
-  );
+  const buyChatSubject = useAppContext((v) => v.requestHelpers.buyChatSubject);
+  const buyChatTheme = useAppContext((v) => v.requestHelpers.buyChatTheme);
   const {
     state: { customChannelNames },
     actions: { onEnableChatSubject, onEnableTheme }

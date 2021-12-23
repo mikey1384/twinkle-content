@@ -22,7 +22,9 @@ const deviceIsMobile = isMobile(navigator);
 
 export default function LaunchTheWebsite({ style, task }) {
   const { userId, state, username } = useMyState();
-  const { updateMissionStatus } = useAppContext((v) => v.requestHelpers);
+  const updateMissionStatus = useAppContext(
+    (v) => v.requestHelpers.updateMissionStatus
+  );
   const {
     actions: { onUpdateUserMissionState }
   } = useContentContext();

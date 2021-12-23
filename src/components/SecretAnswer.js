@@ -38,7 +38,9 @@ function SecretAnswer({
     };
   }, []);
 
-  const { checkIfUserResponded } = useAppContext((v) => v.requestHelpers);
+  const checkIfUserResponded = useAppContext(
+    (v) => v.requestHelpers.checkIfUserResponded
+  );
   const { userId } = useMyState();
   const {
     actions: { onChangeSpoilerStatus }

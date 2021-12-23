@@ -47,7 +47,8 @@ export default function UserDetails({
   onUpdateBio,
   userId
 }) {
-  const { auth, uploadBio } = useAppContext((v) => v.requestHelpers);
+  const auth = useAppContext((v) => v.requestHelpers.auth);
+  const uploadBio = useAppContext((v) => v.requestHelpers.uploadBio);
   const {
     actions: { onReloadContent }
   } = useContentContext();
