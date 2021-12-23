@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContextSelector } from 'use-context-selector';
 import { AppContext } from './AppContext';
 import { ChatContext } from './Chat';
 import { ContentContext } from './Content';
@@ -13,38 +13,38 @@ import { MissionContext } from './Mission';
 import { ViewContext } from './View';
 
 export function useAppContext() {
-  return useContext(AppContext);
+  return useContextSelector(AppContext, (v) => v);
 }
 export function useChatContext() {
-  return useContext(ChatContext);
+  return useContextSelector(ChatContext, (v) => v);
 }
 export function useContentContext() {
-  return useContext(ContentContext);
+  return useContextSelector(ContentContext, (v) => v);
 }
 export function useExploreContext() {
-  return useContext(ExploreContext);
+  return useContextSelector(ExploreContext, (v) => v);
 }
 export function useHomeContext() {
-  return useContext(HomeContext);
+  return useContextSelector(HomeContext, (v) => v);
 }
 export function useInputContext() {
-  return useContext(InputContext);
+  return useContextSelector(InputContext, (v) => v);
 }
 export function useInteractiveContext() {
-  return useContext(InteractiveContext);
+  return useContextSelector(InteractiveContext, (v) => v);
 }
 export function useManagementContext() {
-  return useContext(ManagementContext);
+  return useContextSelector(ManagementContext, (v) => v);
 }
 export function useNotiContext() {
-  return useContext(NotiContext);
+  return useContextSelector(NotiContext, (v) => v);
 }
 export function useProfileContext() {
-  return useContext(ProfileContext);
+  return useContextSelector(ProfileContext, (v) => v);
 }
 export function useMissionContext() {
-  return useContext(MissionContext);
+  return useContextSelector(MissionContext, (v) => v);
 }
 export function useViewContext() {
-  return useContext(ViewContext);
+  return useContextSelector(ViewContext, (v) => v);
 }
