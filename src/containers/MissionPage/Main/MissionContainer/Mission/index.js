@@ -45,9 +45,7 @@ export default function Mission({
     state: { myAttempts },
     actions: { onUpdateMissionAttempt }
   } = useMissionContext();
-  const {
-    state: { pageVisible }
-  } = useViewContext();
+  const pageVisible = useViewContext((v) => v.state.pageVisible);
   const myAttempt = useMemo(
     () => myAttempts[missionId],
     [missionId, myAttempts]
