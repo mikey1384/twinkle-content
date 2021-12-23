@@ -205,9 +205,7 @@ function Chat({ onFileUpload }) {
     (v) => v.actions.onSetMediaStarted
   );
 
-  const {
-    state: { pageVisible }
-  } = useViewContext();
+  const pageVisible = useViewContext((v) => v.state.pageVisible);
   const {
     state: { allRanks, socketConnected },
     actions: { onGetRanks }

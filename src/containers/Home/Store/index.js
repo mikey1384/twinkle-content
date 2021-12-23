@@ -45,9 +45,7 @@ export default function Store() {
   const onUpdateProfileInfo = useContentContext(
     (v) => v.actions.onUpdateProfileInfo
   );
-  const {
-    state: { pageVisible }
-  } = useViewContext();
+  const pageVisible = useViewContext((v) => v.state.pageVisible);
   const { canChangeUsername, karmaPoints, userId } = useMyState();
   const mounted = useRef(true);
 

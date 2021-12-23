@@ -45,6 +45,6 @@ export function useProfileContext() {
 export function useMissionContext() {
   return useContextSelector(MissionContext, (v) => v);
 }
-export function useViewContext() {
-  return useContextSelector(ViewContext, (v) => v);
+export function useViewContext(fn) {
+  return useContextSelector(ViewContext, fn);
 }

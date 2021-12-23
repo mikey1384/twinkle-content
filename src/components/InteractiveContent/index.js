@@ -31,9 +31,7 @@ export default function InteractiveContent({
   const moveInteractiveSlide = useAppContext(
     (v) => v.requestHelpers.moveInteractiveSlide
   );
-  const {
-    state: { pageVisible }
-  } = useViewContext();
+  const pageVisible = useViewContext((v) => v.state.pageVisible);
   const {
     state,
     actions: {

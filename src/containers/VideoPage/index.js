@@ -136,10 +136,7 @@ export default function VideoPage({
   const onUploadComment = useContentContext((v) => v.actions.onUploadComment);
   const onUploadReply = useContentContext((v) => v.actions.onUploadReply);
   const onUploadSubject = useContentContext((v) => v.actions.onUploadSubject);
-
-  const {
-    actions: { onSetContentNav }
-  } = useViewContext();
+  const onSetContentNav = useViewContext((v) => v.actions.onSetContentNav);
 
   const {
     byUser,

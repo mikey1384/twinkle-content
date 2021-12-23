@@ -135,9 +135,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
     }
   } = useNotiContext();
 
-  const {
-    state: { pageVisible }
-  } = useViewContext();
+  const pageVisible = useViewContext((v) => v.state.pageVisible);
 
   const onAttachReward = useContentContext((v) => v.actions.onAttachReward);
   const onUpdateProfileInfo = useContentContext(

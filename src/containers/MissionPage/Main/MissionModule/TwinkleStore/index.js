@@ -18,9 +18,7 @@ export default function TwinkleStore({ mission }) {
     (v) => v.requestHelpers.loadKarmaPoints
   );
   const loadMyData = useAppContext((v) => v.requestHelpers.loadMyData);
-  const {
-    state: { pageVisible }
-  } = useViewContext();
+  const pageVisible = useViewContext((v) => v.state.pageVisible);
   const onInitContent = useContentContext((v) => v.actions.onInitContent);
   const onUpdateProfileInfo = useContentContext(
     (v) => v.actions.onUpdateProfileInfo

@@ -135,9 +135,7 @@ export default function LinkPage({
     xpRewardInterfaceShown
   } = useContentState({ contentType: 'url', contentId: linkId });
 
-  const {
-    actions: { onSetContentNav }
-  } = useViewContext();
+  const onSetContentNav = useViewContext((v) => v.actions.onSetContentNav);
   const [loadingComments, setLoadingComments] = useState(false);
   const [notFound, setNotFound] = useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);

@@ -111,10 +111,15 @@ function App({ location, history }) {
   const {
     state: { updateDetail, updateNoticeShown }
   } = useNotiContext();
-  const {
-    state: { pageVisible, scrollPositions },
-    actions: { onChangePageVisibility, onRecordScrollPosition }
-  } = useViewContext();
+  const pageVisible = useViewContext((v) => v.state.pageVisible);
+  const scrollPositions = useViewContext((v) => v.state.scrollPositions);
+  const onChangePageVisibility = useViewContext(
+    (v) => v.actions.onChangePageVisibility
+  );
+  const onRecordScrollPosition = useViewContext(
+    (v) => v.actions.onRecordScrollPosition
+  );
+
   const {
     actions: { onResetSubjectInput }
   } = useInputContext();

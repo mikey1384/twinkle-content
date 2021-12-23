@@ -77,9 +77,7 @@ function XPVideoPlayer({
     (v) => v.requestHelpers.updateTotalViewDuration
   );
 
-  const {
-    state: { pageVisible }
-  } = useViewContext();
+  const pageVisible = useViewContext((v) => v.state.pageVisible);
   const { profileTheme, rewardBoostLvl, userId, twinkleCoins } = useMyState();
   const coinRewardAmount = useMemo(
     () => videoRewardHash?.[rewardBoostLvl]?.coin || 2,
@@ -125,6 +123,7 @@ function XPVideoPlayer({
     contentType: 'video',
     contentId: videoId
   });
+
   const [playing, setPlaying] = useState(false);
   const [reachedMaxWatchDuration, setReachedMaxWatchDuration] = useState(false);
   const [startingPosition, setStartingPosition] = useState(0);
