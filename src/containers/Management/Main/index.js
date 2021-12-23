@@ -16,9 +16,15 @@ export default function Main() {
     (v) => v.requestHelpers.loadBannedUsers
   );
   const loadModerators = useAppContext((v) => v.requestHelpers.loadModerators);
-  const {
-    actions: { onLoadAccountTypes, onLoadBannedUsers, onLoadModerators }
-  } = useManagementContext();
+  const onLoadAccountTypes = useManagementContext(
+    (v) => v.actions.onLoadAccountTypes
+  );
+  const onLoadBannedUsers = useManagementContext(
+    (v) => v.actions.onLoadBannedUsers
+  );
+  const onLoadModerators = useManagementContext(
+    (v) => v.actions.onLoadModerators
+  );
 
   useEffect(() => {
     initModerators();

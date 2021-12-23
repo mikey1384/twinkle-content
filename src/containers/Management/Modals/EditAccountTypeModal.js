@@ -28,9 +28,12 @@ export default function EditAccountTypeModal({ onHide, target }) {
   const editAccountType = useAppContext(
     (v) => v.requestHelpers.editAccountType
   );
-  const {
-    actions: { onDeleteAccountType, onEditAccountType }
-  } = useManagementContext();
+  const onDeleteAccountType = useManagementContext(
+    (v) => v.actions.onDeleteAccountType
+  );
+  const onEditAccountType = useManagementContext(
+    (v) => v.actions.onEditAccountType
+  );
   const [accountLabel, setAccountLabel] = useState(accountTypeObj.label);
   const [deleteModalShown, setDeleteModalShown] = useState(false);
   const [authLevel, setAuthLevel] = useState(accountTypeObj.authLevel);

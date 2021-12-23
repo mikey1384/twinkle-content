@@ -33,8 +33,8 @@ export function useInputContext(fn) {
 export function useInteractiveContext(fn) {
   return useContextSelector(InteractiveContext, fn);
 }
-export function useManagementContext() {
-  return useContextSelector(ManagementContext, (v) => v);
+export function useManagementContext(fn) {
+  return useContextSelector(ManagementContext, fn);
 }
 export function useNotiContext() {
   return useContextSelector(NotiContext, (v) => v);

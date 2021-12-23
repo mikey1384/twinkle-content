@@ -23,9 +23,9 @@ AddModeratorModal.propTypes = {
 export default function AddModeratorModal({ accountTypes, onHide }) {
   const addModerators = useAppContext((v) => v.requestHelpers.addModerators);
   const searchUsers = useAppContext((v) => v.requestHelpers.searchUsers);
-  const {
-    actions: { onEditModerators }
-  } = useManagementContext();
+  const onEditModerators = useManagementContext(
+    (v) => v.actions.onEditModerators
+  );
   const { authLevel } = useMyState();
   const [searchText, setSearchText] = useState('');
   const [searchedUsers, setSearchedUsers] = useState([]);

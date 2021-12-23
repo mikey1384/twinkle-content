@@ -29,9 +29,9 @@ export default function AddBanModal({ onHide }) {
   const updateBanStatus = useAppContext(
     (v) => v.requestHelpers.updateBanStatus
   );
-  const {
-    actions: { onUpdateBanStatus }
-  } = useManagementContext();
+  const onUpdateBanStatus = useManagementContext(
+    (v) => v.actions.onUpdateBanStatus
+  );
   const { handleSearch, searching } = useSearch({
     onSearch: handleUserSearch,
     onClear: () => setSearchedUsers([]),
