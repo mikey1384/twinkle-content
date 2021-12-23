@@ -35,12 +35,9 @@ function People() {
   const orderUsersBy = useAppContext((v) => v.user.state.orderUsersBy);
   const profiles = useAppContext((v) => v.user.state.profiles);
   const searchedProfiles = useAppContext((v) => v.user.state.searchedProfiles);
-
   const { profileTheme } = useMyState();
-  const {
-    state: { userSearchText },
-    actions: { onSetSearchText }
-  } = useInputContext();
+  const userSearchText = useInputContext((v) => v.state.userSearchText);
+  const onSetSearchText = useInputContext((v) => v.actions.onSetSearchText);
   const [loading, setLoading] = useState(false);
   const { handleSearch, searching } = useSearch({
     onSearch: handleSearchUsers,

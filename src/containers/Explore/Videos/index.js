@@ -50,11 +50,8 @@ export default function Videos({ history }) {
     (v) => v.actions.onSetSearchedPlaylists
   );
   const onUploadPlaylist = useExploreContext((v) => v.actions.onUploadPlaylist);
-
-  const {
-    state: { playlistSearchText },
-    actions: { onSetSearchText }
-  } = useInputContext();
+  const playlistSearchText = useInputContext((v) => v.state.playlistSearchText);
+  const onSetSearchText = useInputContext((v) => v.actions.onSetSearchText);
   const { handleSearch, searching } = useSearch({
     onSearch: handleSearchPlaylist,
     onClear: () =>

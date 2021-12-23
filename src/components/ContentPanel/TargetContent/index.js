@@ -115,10 +115,11 @@ export default function TargetContent({
     contentType: 'subject',
     contentId: subject?.id
   });
-  const {
-    state,
-    actions: { onEnterComment, onSetCommentAttachment }
-  } = useInputContext();
+  const state = useInputContext((v) => v.state);
+  const onEnterComment = useInputContext((v) => v.actions.onEnterComment);
+  const onSetCommentAttachment = useInputContext(
+    (v) => v.actions.onSetCommentAttachment
+  );
   const attachment = state['comment' + comment.id]?.attachment;
   const { fileType } = comment?.fileName
     ? getFileInfoFromFileName(comment?.fileName)

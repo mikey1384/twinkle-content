@@ -49,11 +49,14 @@ export default function Intro({ profile, selectedTheme }) {
   );
   const onUpdateGreeting = useContentContext((v) => v.actions.onUpdateGreeting);
   const onUpdateBio = useContentContext((v) => v.actions.onUpdateBio);
-
-  const {
-    state: { editedStatusMsg, editedStatusColor },
-    actions: { onSetEditedStatusColor, onSetEditedStatusMsg }
-  } = useInputContext();
+  const editedStatusMsg = useInputContext((v) => v.state.editedStatusMsg);
+  const editedStatusColor = useInputContext((v) => v.state.editedStatusColor);
+  const onSetEditedStatusColor = useInputContext(
+    (v) => v.actions.onSetEditedStatusColor
+  );
+  const onSetEditedStatusMsg = useInputContext(
+    (v) => v.actions.onSetEditedStatusMsg
+  );
   const { userId, banned } = useMyState();
   const [bioEditModalShown, setBioEditModalShown] = useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);

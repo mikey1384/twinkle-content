@@ -50,10 +50,15 @@ export default function UserDetails({
   const auth = useAppContext((v) => v.requestHelpers.auth);
   const uploadBio = useAppContext((v) => v.requestHelpers.uploadBio);
   const onReloadContent = useContentContext((v) => v.actions.onReloadContent);
-  const {
-    state: { editedStatusColor, editedStatusMsg },
-    actions: { onSetEditedStatusColor, onSetEditedStatusMsg }
-  } = useInputContext();
+  const editedStatusColor = useInputContext((v) => v.state.editedStatusColor);
+  const editedStatusMsg = useInputContext((v) => v.state.editedStatusMsg);
+  const onSetEditedStatusColor = useInputContext(
+    (v) => v.actions.onSetEditedStatusColor
+  );
+  const onSetEditedStatusMsg = useInputContext(
+    (v) => v.actions.onSetEditedStatusMsg
+  );
+
   const {
     actions: { onResetProfile }
   } = useProfileContext();

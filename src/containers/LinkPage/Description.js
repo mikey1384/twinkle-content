@@ -55,10 +55,8 @@ export default function Description({
 }) {
   const { canDelete, canEdit } = useMyState();
   const onSetIsEditing = useContentContext((v) => v.actions.onSetIsEditing);
-  const {
-    state: inputState,
-    actions: { onSetEditForm }
-  } = useInputContext();
+  const inputState = useInputContext((v) => v.state);
+  const onSetEditForm = useInputContext((v) => v.actions.onSetEditForm);
   const { isEditing } = useContentState({
     contentType: 'url',
     contentId: linkId

@@ -33,10 +33,8 @@ export default function Input({
   registerButtonShown,
   isSubmitting
 }) {
-  const {
-    state,
-    actions: { onEnterComment }
-  } = useInputContext();
+  const state = useInputContext((v) => v.state);
+  const onEnterComment = useInputContext((v) => v.actions.onEnterComment);
   const {
     actions: { onSetVocabErrorMessage }
   } = useChatContext();

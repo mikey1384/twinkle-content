@@ -128,10 +128,8 @@ function Chat({ onFileUpload }) {
     rank,
     twinkleXP
   } = useMyState();
-  const {
-    state,
-    actions: { onEnterComment }
-  } = useInputContext();
+  const state = useInputContext((v) => v.state);
+  const onEnterComment = useInputContext((v) => v.actions.onEnterComment);
   const {
     state: {
       allFavoriteChannelIds,

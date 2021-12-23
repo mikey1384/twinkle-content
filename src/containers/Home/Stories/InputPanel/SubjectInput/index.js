@@ -58,21 +58,32 @@ function SubjectInput() {
     },
     actions: { onLoadNewFeeds, onSetSubmittingSubject, onSetUploadingFile }
   } = useHomeContext();
-  const {
-    state: { subject },
-    actions: {
-      onSetHasSecretAnswer,
-      onResetSubjectInput,
-      onSetIsMadeByUser,
-      onSetSecretAnswer,
-      onSetSecretAttachment,
-      onSetSubjectAttachment,
-      onSetSubjectDescription,
-      onSetSubjectDescriptionFieldShown,
-      onSetSubjectRewardLevel,
-      onSetSubjectTitle
-    }
-  } = useInputContext();
+  const subject = useInputContext((v) => v.state.subject);
+  const onSetHasSecretAnswer = useInputContext(
+    (v) => v.actions.onSetHasSecretAnswer
+  );
+  const onResetSubjectInput = useInputContext(
+    (v) => v.actions.onResetSubjectInput
+  );
+  const onSetIsMadeByUser = useInputContext((v) => v.actions.onSetIsMadeByUser);
+  const onSetSecretAnswer = useInputContext((v) => v.actions.onSetSecretAnswer);
+  const onSetSecretAttachment = useInputContext(
+    (v) => v.actions.onSetSecretAttachment
+  );
+  const onSetSubjectAttachment = useInputContext(
+    (v) => v.actions.onSetSubjectAttachment
+  );
+  const onSetSubjectDescription = useInputContext(
+    (v) => v.actions.onSetSubjectDescription
+  );
+  const onSetSubjectDescriptionFieldShown = useInputContext(
+    (v) => v.actions.onSetSubjectDescriptionFieldShown
+  );
+  const onSetSubjectRewardLevel = useInputContext(
+    (v) => v.actions.onSetSubjectRewardLevel
+  );
+  const onSetSubjectTitle = useInputContext((v) => v.actions.onSetSubjectTitle);
+
   const {
     details,
     details: { attachment, rewardLevel, secretAttachment }

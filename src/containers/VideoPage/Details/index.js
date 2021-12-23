@@ -101,10 +101,8 @@ export default function Details({
   const onSetXpRewardInterfaceShown = useContentContext(
     (v) => v.actions.onSetXpRewardInterfaceShown
   );
-  const {
-    state: inputState,
-    actions: { onSetEditForm }
-  } = useInputContext();
+  const inputState = useInputContext((v) => v.state);
+  const onSetEditForm = useInputContext((v) => v.actions.onSetEditForm);
   const onLikeVideo = useExploreContext((v) => v.actions.onLikeVideo);
   const { isEditing, xpRewardInterfaceShown } = useContentState({
     contentType: 'video',

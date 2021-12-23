@@ -29,10 +29,10 @@ export default function ApproveInterface({
   const uploadMissionFeedback = useAppContext(
     (v) => v.requestHelpers.uploadMissionFeedback
   );
-  const {
-    state,
-    actions: { onSetMissionFeedbackForm }
-  } = useInputContext();
+  const state = useInputContext((v) => v.state);
+  const onSetMissionFeedbackForm = useInputContext(
+    (v) => v.actions.onSetMissionFeedbackForm
+  );
   const inputState = useMemo(
     () =>
       state[`mission-feedback-${attempt.id}`] || {

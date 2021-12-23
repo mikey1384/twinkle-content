@@ -119,10 +119,9 @@ function App({ location, history }) {
   const onRecordScrollPosition = useViewContext(
     (v) => v.actions.onRecordScrollPosition
   );
-
-  const {
-    actions: { onResetSubjectInput }
-  } = useInputContext();
+  const onResetSubjectInput = useInputContext(
+    (v) => v.actions.onResetSubjectInput
+  );
   const [mobileMenuShown, setMobileMenuShown] = useState(false);
   const currentChannel = useMemo(
     () => channelsObj[selectedChannelId] || {},

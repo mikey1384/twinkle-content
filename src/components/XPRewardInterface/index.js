@@ -50,10 +50,8 @@ export default function XPRewardInterface({
 }) {
   const rewardUser = useAppContext((v) => v.requestHelpers.rewardUser);
   const { authLevel, twinkleCoins, userId, banned } = useMyState();
-  const {
-    state,
-    actions: { onSetRewardForm }
-  } = useInputContext();
+  const state = useInputContext((v) => v.state);
+  const onSetRewardForm = useInputContext((v) => v.actions.onSetRewardForm);
   const onAttachReward = useContentContext((v) => v.actions.onAttachReward);
   const onUpdateUserCoins = useContentContext(
     (v) => v.actions.onUpdateUserCoins

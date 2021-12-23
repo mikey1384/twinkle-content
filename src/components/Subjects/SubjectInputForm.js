@@ -45,10 +45,10 @@ export default function SubjectInputForm({
   onSubmit
 }) {
   const uploadFile = useAppContext((v) => v.requestHelpers.uploadFile);
-  const {
-    state,
-    actions: { onSetSubjectInputForm }
-  } = useInputContext();
+  const state = useInputContext((v) => v.state);
+  const onSetSubjectInputForm = useInputContext(
+    (v) => v.actions.onSetSubjectInputForm
+  );
   const subjectInputForm = state['subject' + contentType + contentId] || {};
   const {
     title: prevTitle = '',

@@ -42,23 +42,40 @@ function ContentInput() {
   const {
     actions: { onLoadNewFeeds }
   } = useHomeContext();
-  const {
-    state: { content },
-    actions: {
-      onResetContentInput,
-      onSetContentAlreadyPosted,
-      onSetContentIsVideo,
-      onSetContentDescription,
-      onSetContentDescriptionFieldShown,
-      onSetContentRewardLevel,
-      onSetContentTitle,
-      onSetContentTitleFieldShown,
-      onSetContentUrl,
-      onSetContentUrlError,
-      onSetContentUrlHelper,
-      onSetYouTubeVideoDetails
-    }
-  } = useInputContext();
+  const content = useInputContext((v) => v.state.content);
+  const onResetContentInput = useInputContext(
+    (v) => v.actions.onResetContentInput
+  );
+  const onSetContentAlreadyPosted = useInputContext(
+    (v) => v.actions.onSetContentAlreadyPosted
+  );
+  const onSetContentIsVideo = useInputContext(
+    (v) => v.actions.onSetContentIsVideo
+  );
+  const onSetContentDescription = useInputContext(
+    (v) => v.actions.onSetContentDescription
+  );
+  const onSetContentDescriptionFieldShown = useInputContext(
+    (v) => v.actions.onSetContentDescriptionFieldShown
+  );
+  const onSetContentRewardLevel = useInputContext(
+    (v) => v.actions.onSetContentRewardLevel
+  );
+  const onSetContentTitle = useInputContext((v) => v.actions.onSetContentTitle);
+  const onSetContentTitleFieldShown = useInputContext(
+    (v) => v.actions.onSetContentTitleFieldShown
+  );
+  const onSetContentUrl = useInputContext((v) => v.actions.onSetContentUrl);
+  const onSetContentUrlError = useInputContext(
+    (v) => v.actions.onSetContentUrlError
+  );
+  const onSetContentUrlHelper = useInputContext(
+    (v) => v.actions.onSetContentUrlHelper
+  );
+  const onSetYouTubeVideoDetails = useInputContext(
+    (v) => v.actions.onSetYouTubeVideoDetails
+  );
+
   const {
     alreadyPosted: prevAlreadyPosted,
     descriptionFieldShown: prevDescriptionFieldShown,

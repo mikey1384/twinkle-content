@@ -99,9 +99,7 @@ function Comments({
   const loadComments = useAppContext((v) => v.requestHelpers.loadComments);
   const uploadComment = useAppContext((v) => v.requestHelpers.uploadComment);
   const uploadFile = useAppContext((v) => v.requestHelpers.uploadFile);
-  const {
-    actions: { onEnterComment }
-  } = useInputContext();
+  const onEnterComment = useInputContext((v) => v.actions.onEnterComment);
   const rootContentState = useContentState({
     contentType: rootContent?.contentType,
     contentId: rootContent?.id

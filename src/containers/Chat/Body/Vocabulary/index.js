@@ -50,10 +50,8 @@ function Vocabulary() {
     (v) => v.actions.onUpdateUserCoins
   );
   const onChangeUserXP = useContentContext((v) => v.actions.onChangeUserXP);
-  const {
-    state,
-    actions: { onEnterComment }
-  } = useInputContext();
+  const state = useInputContext((v) => v.state);
+  const onEnterComment = useInputContext((v) => v.actions.onEnterComment);
   const {
     state: { socketConnected }
   } = useNotiContext();

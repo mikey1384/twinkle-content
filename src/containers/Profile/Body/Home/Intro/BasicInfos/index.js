@@ -86,12 +86,12 @@ export default function BasicInfos({
   const {
     actions: { onOpenNewChatTab }
   } = useChatContext();
-  const {
-    state: {
-      userInfo: { userInfoOnEdit }
-    },
-    actions: { onSetUserInfoOnEdit }
-  } = useInputContext();
+  const userInfoOnEdit = useInputContext(
+    (v) => v.state.userInfo.userInfoOnEdit
+  );
+  const onSetUserInfoOnEdit = useInputContext(
+    (v) => v.actions.onSetUserInfoOnEdit
+  );
   const [passwordInputModalShown, setPasswordInputModalShown] = useState(false);
   const [emailCheckHighlighted, setEmailCheckHighlighted] = useState(false);
   const [verificationEmailSent, setVerificationEmailSent] = useState(false);
