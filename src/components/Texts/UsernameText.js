@@ -199,12 +199,13 @@ export default function UsernameText({
 
   async function onMouseEnter() {
     mouseEntered.current = true;
-    const elementContext = {
-      x: UsernameTextRef.current.getBoundingClientRect().left,
-      y: UsernameTextRef.current.getBoundingClientRect().top,
-      width: UsernameTextRef.current.getBoundingClientRect().width,
-      height: UsernameTextRef.current.getBoundingClientRect().height
-    };
+    const parentElementDimensions =
+      UsernameTextRef.current?.getBoundingClientRect() || {
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0
+      };
     if (user.username && !deviceIsMobile) {
       clearTimeout(hideTimerRef.current);
       clearTimeout(hideTimerRef2.current);
@@ -221,13 +222,13 @@ export default function UsernameText({
               });
             }
             if (mounted.current) {
-              setDropdownContext(elementContext);
+              setDropdownContext(parentElementDimensions);
             }
           }
         }, 200);
       } else {
         showTimerRef.current = setTimeout(
-          () => setDropdownContext(elementContext),
+          () => setDropdownContext(parentElementDimensions),
           300
         );
       }

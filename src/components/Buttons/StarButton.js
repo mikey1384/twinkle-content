@@ -188,16 +188,14 @@ export default function StarButton({
     if (showsDropdownWhenClicked) {
       if (coolDownRef.current) return;
       const menuDisplayed = !!dropdownContext;
-      return setDropdownContext(
-        menuDisplayed
-          ? null
-          : {
-              x: StarButtonRef.current.getBoundingClientRect().left,
-              y: StarButtonRef.current.getBoundingClientRect().top,
-              width: StarButtonRef.current.getBoundingClientRect().width,
-              height: StarButtonRef.current.getBoundingClientRect().height
-            }
-      );
+      const parentElementDimensions =
+        StarButtonRef.current?.getBoundingClientRect() || {
+          x: 0,
+          y: 0,
+          width: 0,
+          height: 0
+        };
+      return setDropdownContext(menuDisplayed ? null : parentElementDimensions);
     }
     return setRewardLevelModalShown(true);
   }

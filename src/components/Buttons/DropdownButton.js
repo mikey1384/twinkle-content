@@ -96,16 +96,14 @@ export default function DropdownButton({
     if (typeof onButtonClick === 'function') {
       onButtonClick(!menuDisplayed);
     }
-    setDropdownContext(
-      menuDisplayed
-        ? null
-        : {
-            x: ButtonRef.current.getBoundingClientRect().left,
-            y: ButtonRef.current.getBoundingClientRect().top,
-            width: ButtonRef.current.getBoundingClientRect().width,
-            height: ButtonRef.current.getBoundingClientRect().height
-          }
-    );
+    const parentElementDimensions =
+      ButtonRef.current?.getBoundingClientRect() || {
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0
+      };
+    setDropdownContext(menuDisplayed ? null : parentElementDimensions);
   }
 
   function handleHideMenuWithCoolDown() {
