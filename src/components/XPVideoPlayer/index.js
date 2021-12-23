@@ -432,7 +432,7 @@ function XPVideoPlayer({
           cursor: !isEditing && !started && 'pointer'
         }}
       >
-        {isLink ? (
+        {isLink && (
           <Link to={`/videos/${videoId}`}>
             <div
               className={css`
@@ -457,7 +457,8 @@ function XPVideoPlayer({
               />
             </div>
           </Link>
-        ) : (
+        )}
+        {!isLink && (
           <ReactPlayer
             ref={PlayerRef}
             className={css`
