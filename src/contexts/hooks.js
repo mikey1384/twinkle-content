@@ -30,8 +30,8 @@ export function useHomeContext(fn) {
 export function useInputContext(fn) {
   return useContextSelector(InputContext, fn);
 }
-export function useInteractiveContext() {
-  return useContextSelector(InteractiveContext, (v) => v);
+export function useInteractiveContext(fn) {
+  return useContextSelector(InteractiveContext, fn);
 }
 export function useManagementContext() {
   return useContextSelector(ManagementContext, (v) => v);

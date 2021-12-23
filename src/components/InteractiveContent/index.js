@@ -32,18 +32,29 @@ export default function InteractiveContent({
     (v) => v.requestHelpers.moveInteractiveSlide
   );
   const pageVisible = useViewContext((v) => v.state.pageVisible);
-  const {
-    state,
-    actions: {
-      onLoadInteractive,
-      onChangeNumUpdates,
-      onConcatDisplayedSlides,
-      onMoveInteractiveSlide,
-      onPublishInteractive,
-      onSetDisplayedSlides,
-      onSetSlideState
-    }
-  } = useInteractiveContext();
+  const state = useInteractiveContext((v) => v.state);
+  const onLoadInteractive = useInteractiveContext(
+    (v) => v.actions.onLoadInteractive
+  );
+  const onChangeNumUpdates = useInteractiveContext(
+    (v) => v.actions.onChangeNumUpdates
+  );
+  const onConcatDisplayedSlides = useInteractiveContext(
+    (v) => v.actions.onConcatDisplayedSlides
+  );
+  const onMoveInteractiveSlide = useInteractiveContext(
+    (v) => v.actions.onMoveInteractiveSlide
+  );
+  const onPublishInteractive = useInteractiveContext(
+    (v) => v.actions.onPublishInteractive
+  );
+  const onSetDisplayedSlides = useInteractiveContext(
+    (v) => v.actions.onSetDisplayedSlides
+  );
+  const onSetSlideState = useInteractiveContext(
+    (v) => v.actions.onSetSlideState
+  );
+
   const { canEdit, userId } = useMyState();
 
   const mounted = useRef(true);

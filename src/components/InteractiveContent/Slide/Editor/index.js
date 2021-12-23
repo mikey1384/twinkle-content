@@ -100,9 +100,12 @@ export default function Editor({
   const onSetEditInteractiveForm = useInputContext(
     (v) => v.actions.onSetEditInteractiveForm
   );
-  const {
-    actions: { onChangeNumUpdates, onSetSlideState }
-  } = useInteractiveContext();
+  const onChangeNumUpdates = useInteractiveContext(
+    (v) => v.actions.onChangeNumUpdates
+  );
+  const onSetSlideState = useInteractiveContext(
+    (v) => v.actions.onSetSlideState
+  );
   const prevInputState = useMemo(
     () => state[`edit-interactive-${interactiveId}-${slideId}`],
     [interactiveId, slideId, state]

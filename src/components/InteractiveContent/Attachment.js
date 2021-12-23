@@ -47,9 +47,9 @@ export default function Attachment({
   const uploadThumbForInteractiveSlide = useAppContext(
     (v) => v.requestHelpers.uploadThumbForInteractiveSlide
   );
-  const {
-    actions: { onChangeNumUpdates }
-  } = useInteractiveContext();
+  const onChangeNumUpdates = useInteractiveContext(
+    (v) => v.actions.onChangeNumUpdates
+  );
 
   switch (type) {
     case 'file':

@@ -36,9 +36,9 @@ function SlideEmbedly({
   const updateEmbedData = useAppContext(
     (v) => v.requestHelpers.updateEmbedData
   );
-  const {
-    actions: { onChangeNumUpdates }
-  } = useInteractiveContext();
+  const onChangeNumUpdates = useInteractiveContext(
+    (v) => v.actions.onChangeNumUpdates
+  );
   const [loading, setLoading] = useState(false);
   const mounted = useRef(true);
   const fallbackImage = '/img/link.png';

@@ -92,15 +92,18 @@ export default function Slide({
   const unPublishInteractiveSlide = useAppContext(
     (v) => v.requestHelpers.unPublishInteractiveSlide
   );
-  const {
-    actions: {
-      onArchiveSlide,
-      onChangeNumUpdates,
-      onGoBack,
-      onRemoveInteractiveSlide,
-      onSetSlideState
-    }
-  } = useInteractiveContext();
+  const onArchiveSlide = useInteractiveContext((v) => v.actions.onArchiveSlide);
+  const onChangeNumUpdates = useInteractiveContext(
+    (v) => v.actions.onChangeNumUpdates
+  );
+  const onGoBack = useInteractiveContext((v) => v.actions.onGoBack);
+  const onRemoveInteractiveSlide = useInteractiveContext(
+    (v) => v.actions.onRemoveInteractiveSlide
+  );
+  const onSetSlideState = useInteractiveContext(
+    (v) => v.actions.onSetSlideState
+  );
+
   const { canEdit } = useMyState();
   const [confirmModalShown, setConfirmModalShown] = useState(false);
 
