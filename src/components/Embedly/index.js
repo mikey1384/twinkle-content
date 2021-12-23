@@ -355,7 +355,7 @@ function Embedly({
                 ${small ? '' : 'margin-top: 1rem;'}
               `,
               onClick:
-                small && !directUrl
+                small && !directUrl && !noLink
                   ? () => history.push(`/links/${contentId}`)
                   : null
             },
