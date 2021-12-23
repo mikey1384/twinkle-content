@@ -28,9 +28,7 @@ export default function Cover({
   profile,
   selectedTheme
 }) {
-  const {
-    requestHelpers: { checkIfUserOnline }
-  } = useAppContext();
+  const { checkIfUserOnline } = useAppContext((v) => v.requestHelpers);
   const { userId } = useMyState();
   const {
     id,

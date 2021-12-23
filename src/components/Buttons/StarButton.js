@@ -47,9 +47,7 @@ export default function StarButton({
   style = {}
 }) {
   const { canReward, canEditRewardLevel, userId } = useMyState();
-  const {
-    requestHelpers: { setByUser }
-  } = useAppContext();
+  const { setByUser } = useAppContext((v) => v.requestHelpers);
   const { description } = useContentState({ contentId, contentType });
   const [cannotChangeModalShown, setCannotChangeModalShown] = useState(false);
   const [moderatorName, setModeratorName] = useState('');

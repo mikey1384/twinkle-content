@@ -48,9 +48,7 @@ export default function XPRewardInterface({
   uploaderId,
   uploaderAuthLevel
 }) {
-  const {
-    requestHelpers: { rewardUser }
-  } = useAppContext();
+  const { rewardUser } = useAppContext((v) => v.requestHelpers);
   const { authLevel, twinkleCoins, userId, banned } = useMyState();
   const {
     state,

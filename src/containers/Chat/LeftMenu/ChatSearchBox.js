@@ -13,9 +13,7 @@ ChatSearchBox.propTypes = {
 
 function ChatSearchBox({ style }) {
   const history = useHistory();
-  const {
-    requestHelpers: { searchChat }
-  } = useAppContext();
+  const { searchChat } = useAppContext((v) => v.requestHelpers);
   const { profilePicUrl, userId, username, authLevel } = useMyState();
   const {
     state: { chatSearchResults, selectedChannelId },

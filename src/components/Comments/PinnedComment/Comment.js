@@ -108,13 +108,8 @@ function Comment({
   subject = subject || comment.targetObj?.subject || {};
   const { fileType } = getFileInfoFromFileName(fileName);
   const history = useHistory();
-  const {
-    requestHelpers: {
-      checkIfUserResponded,
-      editContent,
-      updateCommentPinStatus
-    }
-  } = useAppContext();
+  const { checkIfUserResponded, editContent, updateCommentPinStatus } =
+    useAppContext((v) => v.requestHelpers);
   const {
     authLevel,
     canDelete,

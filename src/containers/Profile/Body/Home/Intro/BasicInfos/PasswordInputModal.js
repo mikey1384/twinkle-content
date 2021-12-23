@@ -14,9 +14,7 @@ PasswordInputModal.propTypes = {
 export default function PasswordInputModal({ onHide, onConfirm }) {
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
-  const {
-    requestHelpers: { confirmPassword }
-  } = useAppContext();
+  const { confirmPassword } = useAppContext((v) => v.requestHelpers);
 
   return (
     <Modal small onHide={onHide}>

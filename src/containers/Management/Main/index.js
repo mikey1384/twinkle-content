@@ -9,9 +9,9 @@ import { useAppContext, useManagementContext } from 'contexts';
 export default function Main() {
   const { managementLevel } = useMyState();
   const canManage = useMemo(() => managementLevel > 1, [managementLevel]);
-  const {
-    requestHelpers: { loadAccountTypes, loadBannedUsers, loadModerators }
-  } = useAppContext();
+  const { loadAccountTypes, loadBannedUsers, loadModerators } = useAppContext(
+    (v) => v.requestHelpers
+  );
   const {
     actions: { onLoadAccountTypes, onLoadBannedUsers, onLoadModerators }
   } = useManagementContext();

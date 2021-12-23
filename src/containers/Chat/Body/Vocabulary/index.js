@@ -32,12 +32,8 @@ const lookingUpLabel = localize('lookingUp');
 const typeWordInBoxBelowLabel = localize('typeWordInBoxBelow');
 
 function Vocabulary() {
-  const {
-    user: {
-      actions: { onUpdateNumWordsCollected }
-    },
-    requestHelpers: { lookUpWord, registerWord }
-  } = useAppContext();
+  const { lookUpWord, registerWord } = useAppContext((v) => v.requestHelpers);
+  const { onUpdateNumWordsCollected } = useAppContext((v) => v.user.actions);
   const {
     state: { vocabErrorMessage, wordsObj, wordRegisterStatus },
     actions: {

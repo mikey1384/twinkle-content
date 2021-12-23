@@ -20,9 +20,7 @@ export default function ConnectReplToGitHub({
   okayPressed,
   taskType
 }) {
-  const {
-    requestHelpers: { updateMissionStatus }
-  } = useAppContext();
+  const { updateMissionStatus } = useAppContext((v) => v.requestHelpers);
   const {
     actions: { onUpdateUserMissionState }
   } = useContentContext();

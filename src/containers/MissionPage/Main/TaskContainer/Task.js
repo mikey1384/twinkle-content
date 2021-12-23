@@ -41,9 +41,7 @@ export default function Task({
   nextTaskType,
   tutorialRef
 }) {
-  const {
-    requestHelpers: { checkMissionStatus }
-  } = useAppContext();
+  const { checkMissionStatus } = useAppContext((v) => v.requestHelpers);
   const {
     state: { myAttempts },
     actions: { onUpdateMissionAttempt }

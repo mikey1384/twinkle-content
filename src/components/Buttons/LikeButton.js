@@ -29,9 +29,7 @@ function LikeButton({
   style,
   onClick = () => {}
 }) {
-  const {
-    requestHelpers: { likeContent }
-  } = useAppContext();
+  const { likeContent } = useAppContext((v) => v.requestHelpers);
   const {
     actions: { onLikeContent }
   } = useContentContext();

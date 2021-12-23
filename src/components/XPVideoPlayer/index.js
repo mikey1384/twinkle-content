@@ -57,17 +57,15 @@ function XPVideoPlayer({
     };
   }, []);
   const {
-    requestHelpers: {
-      addVideoView,
-      checkCurrentlyWatchingAnotherVideo,
-      finishWatchingVideo,
-      loadVideoCurrentTime,
-      updateCurrentlyWatching,
-      updateUserCoins,
-      updateUserXP,
-      updateTotalViewDuration
-    }
-  } = useAppContext();
+    addVideoView,
+    checkCurrentlyWatchingAnotherVideo,
+    finishWatchingVideo,
+    loadVideoCurrentTime,
+    updateCurrentlyWatching,
+    updateUserCoins,
+    updateUserXP,
+    updateTotalViewDuration
+  } = useAppContext((v) => v.requestHelpers);
   const {
     state: { pageVisible }
   } = useViewContext();

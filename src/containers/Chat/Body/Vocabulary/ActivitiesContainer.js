@@ -39,9 +39,7 @@ function ActivitiesContainer({ style }) {
       }, 200);
     }
   });
-  const {
-    requestHelpers: { loadVocabulary }
-  } = useAppContext();
+  const { loadVocabulary } = useAppContext((v) => v.requestHelpers);
   const {
     state: { vocabActivities, wordsObj, vocabActivitiesLoadMoreButton },
     actions: { onLoadMoreVocabulary }

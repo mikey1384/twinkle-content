@@ -69,9 +69,9 @@ export default function SubjectPanel({
   secretAttachment,
   subjectId
 }) {
-  const {
-    requestHelpers: { deleteSubject, editContent, loadComments }
-  } = useAppContext();
+  const { deleteSubject, editContent, loadComments } = useAppContext(
+    (v) => v.requestHelpers
+  );
   const {
     actions: {
       onChangeSpoilerStatus,

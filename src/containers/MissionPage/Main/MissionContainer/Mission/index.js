@@ -38,9 +38,7 @@ export default function Mission({
   style,
   onSetMissionState
 }) {
-  const {
-    requestHelpers: { checkMissionStatus }
-  } = useAppContext();
+  const { checkMissionStatus } = useAppContext((v) => v.requestHelpers);
   const {
     state: { myAttempts },
     actions: { onUpdateMissionAttempt }

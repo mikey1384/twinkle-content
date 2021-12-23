@@ -22,9 +22,9 @@ export default function EditAccountTypeModal({ onHide, target }) {
     return target;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const {
-    requestHelpers: { deleteAccountType, editAccountType }
-  } = useAppContext();
+  const { deleteAccountType, editAccountType } = useAppContext(
+    (v) => v.requestHelpers
+  );
   const {
     actions: { onDeleteAccountType, onEditAccountType }
   } = useManagementContext();

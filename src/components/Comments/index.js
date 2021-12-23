@@ -95,9 +95,8 @@ function Comments({
   userId
 }) {
   const { banned } = useMyState();
-  const {
-    requestHelpers: { deleteContent, loadComments, uploadComment, uploadFile }
-  } = useAppContext();
+  const { deleteContent, loadComments, uploadComment, uploadFile } =
+    useAppContext((v) => v.requestHelpers);
   const {
     actions: { onEnterComment }
   } = useInputContext();

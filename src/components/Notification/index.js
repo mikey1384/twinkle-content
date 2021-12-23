@@ -21,9 +21,9 @@ Notification.propTypes = {
 };
 
 function Notification({ className, location, style }) {
-  const {
-    requestHelpers: { loadRankings, fetchNotifications }
-  } = useAppContext();
+  const { loadRankings, fetchNotifications } = useAppContext(
+    (v) => v.requestHelpers
+  );
   const { userId, twinkleXP } = useMyState();
   const {
     state: {

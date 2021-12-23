@@ -41,9 +41,7 @@ export default function MainContent({
   userId
 }) {
   const history = useHistory();
-  const {
-    requestHelpers: { editContent }
-  } = useAppContext();
+  const { editContent } = useAppContext((v) => v.requestHelpers);
   const { profileTheme } = useMyState();
   const {
     byUser,

@@ -12,8 +12,8 @@ import { ProfileContext } from './Profile';
 import { MissionContext } from './Mission';
 import { ViewContext } from './View';
 
-export function useAppContext() {
-  return useContextSelector(AppContext, (v) => v);
+export function useAppContext(fn) {
+  return useContextSelector(AppContext, fn);
 }
 export function useChatContext() {
   return useContextSelector(ChatContext, (v) => v);

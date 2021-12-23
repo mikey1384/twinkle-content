@@ -28,9 +28,9 @@ export default function TaskContainer({
   const mounted = useRef(true);
   const TutorialRef = useRef(null);
   const { userId, isCreator } = useMyState();
-  const {
-    requestHelpers: { loadMission, loadMissionTypeIdHash }
-  } = useAppContext();
+  const { loadMission, loadMissionTypeIdHash } = useAppContext(
+    (v) => v.requestHelpers
+  );
   const {
     actions: {
       onSetMissionState,

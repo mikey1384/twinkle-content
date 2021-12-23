@@ -20,25 +20,21 @@ import localize from 'constants/localize';
 const searchUsersLabel = localize('searchUsers');
 
 function People() {
+  const { loadUsers } = useAppContext((v) => v.requestHelpers);
   const {
-    user: {
-      actions: {
-        onClearUserSearch,
-        onLoadUsers,
-        onLoadMoreUsers,
-        onSearchUsers,
-        onSetOrderUsersBy
-      },
-      state: {
-        loadMoreButton,
-        profilesLoaded,
-        orderUsersBy,
-        profiles,
-        searchedProfiles
-      }
-    },
-    requestHelpers: { loadUsers }
-  } = useAppContext();
+    onClearUserSearch,
+    onLoadUsers,
+    onLoadMoreUsers,
+    onSearchUsers,
+    onSetOrderUsersBy
+  } = useAppContext((v) => v.user.actions);
+  const {
+    loadMoreButton,
+    profilesLoaded,
+    orderUsersBy,
+    profiles,
+    searchedProfiles
+  } = useAppContext((v) => v.user.state);
   const { profileTheme } = useMyState();
   const {
     state: { userSearchText },

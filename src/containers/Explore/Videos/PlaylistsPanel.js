@@ -39,9 +39,9 @@ export default function PlaylistsPanel({
   title = allPlaylistsLabel,
   userId
 }) {
-  const {
-    requestHelpers: { loadPlaylists, searchContent }
-  } = useAppContext();
+  const { loadPlaylists, searchContent } = useAppContext(
+    (v) => v.requestHelpers
+  );
   const {
     actions: { onLoadMorePlaylists }
   } = useExploreContext();

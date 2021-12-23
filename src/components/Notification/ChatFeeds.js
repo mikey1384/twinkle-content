@@ -42,9 +42,7 @@ function ChatFeeds({
   const mounted = useRef(true);
   const [loadingChat, setLoadingChat] = useState(false);
   const history = useHistory();
-  const {
-    requestHelpers: { loadGeneralChatPathId }
-  } = useAppContext();
+  const { loadGeneralChatPathId } = useAppContext((v) => v.requestHelpers);
   const [timeSincePost, setTimeSincePost] = useState(timeSince(timeStamp));
   const [timeSinceReload, setTimeSinceReload] = useState(
     timeSince(reloadTimeStamp)

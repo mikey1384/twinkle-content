@@ -8,13 +8,8 @@ import { useMyState } from 'helpers/hooks';
 
 export default function Subjects() {
   const { canPinPlaylists, userId } = useMyState();
-  const {
-    requestHelpers: {
-      loadByUserUploads,
-      loadFeaturedSubjects,
-      loadRecommendedUploads
-    }
-  } = useAppContext();
+  const { loadByUserUploads, loadFeaturedSubjects, loadRecommendedUploads } =
+    useAppContext((v) => v.requestHelpers);
   const {
     state: {
       subjects: {
@@ -71,13 +66,11 @@ export default function Subjects() {
     }
 
     async function handleLoadRecommendedSubjects() {
-      const {
-        results,
-        loadMoreButton: loadMoreRecommendsButton
-      } = await loadRecommendedUploads({
-        contentType: 'subject',
-        limit: 5
-      });
+      const { results, loadMoreButton: loadMoreRecommendsButton } =
+        await loadRecommendedUploads({
+          contentType: 'subject',
+          limit: 5
+        });
       onLoadRecommendedSubjects({
         subjects: results,
         loadMoreButton: loadMoreRecommendsButton

@@ -39,14 +39,12 @@ function MainFeeds({
   style
 }) {
   const {
-    requestHelpers: {
-      fetchNotifications,
-      loadMoreNotifications,
-      loadMoreRewards,
-      updateUserXP,
-      collectRewardedCoins
-    }
-  } = useAppContext();
+    fetchNotifications,
+    loadMoreNotifications,
+    loadMoreRewards,
+    updateUserXP,
+    collectRewardedCoins
+  } = useAppContext((v) => v.requestHelpers);
   const { userId, rank, twinkleXP, twinkleCoins } = useMyState();
   const {
     state: { numNewNotis, totalRewardedTwinkles, totalRewardedTwinkleCoins },

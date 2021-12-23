@@ -17,9 +17,7 @@ export default function GrammarQuestionGenerator({
   mission,
   onSetMissionState
 }) {
-  const {
-    requestHelpers: { uploadGrammarQuestion }
-  } = useAppContext();
+  const { uploadGrammarQuestion } = useAppContext((v) => v.requestHelpers);
   const [questionAlreadyExists, setQuestionAlreadyExists] = useState(false);
   const [leftSideText, setLeftSideText] = useState('');
   const [rightSideText, setRightSideText] = useState('');

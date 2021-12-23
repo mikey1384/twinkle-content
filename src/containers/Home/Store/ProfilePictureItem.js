@@ -32,9 +32,7 @@ ProfilePictureItem.propTypes = {
 
 export default function ProfilePictureItem({ style }) {
   const { karmaPoints, numPics = 0, userId } = useMyState();
-  const {
-    requestHelpers: { upgradeNumPics }
-  } = useAppContext();
+  const { upgradeNumPics } = useAppContext((v) => v.requestHelpers);
   const {
     actions: { onUpdateProfileInfo }
   } = useContentContext();

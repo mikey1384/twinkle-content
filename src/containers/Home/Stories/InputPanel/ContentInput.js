@@ -34,9 +34,9 @@ const youtubeVideoLabel = localize('youtubeVideo');
 
 function ContentInput() {
   const BodyRef = useRef(document.scrollingElement || document.documentElement);
-  const {
-    requestHelpers: { checkContentUrl, uploadContent }
-  } = useAppContext();
+  const { checkContentUrl, uploadContent } = useAppContext(
+    (v) => v.requestHelpers
+  );
   const { canEditRewardLevel, banned } = useMyState();
   const {
     actions: { onLoadNewFeeds }

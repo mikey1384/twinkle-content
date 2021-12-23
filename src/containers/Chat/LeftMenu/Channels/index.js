@@ -13,9 +13,7 @@ import { useAppContext, useChatContext } from 'contexts';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 
 function Channels() {
-  const {
-    requestHelpers: { loadMoreChannels }
-  } = useAppContext();
+  const { loadMoreChannels } = useAppContext((v) => v.requestHelpers);
   const {
     state: {
       chatType,

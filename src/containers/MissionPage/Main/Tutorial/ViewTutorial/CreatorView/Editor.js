@@ -22,9 +22,7 @@ export default function Editor({
   tutorialPrompt,
   tutorialButtonLabel
 }) {
-  const {
-    requestHelpers: { updateTutorialPrompt }
-  } = useAppContext();
+  const { updateTutorialPrompt } = useAppContext((v) => v.requestHelpers);
   const [editedTutorialPrompt, setEditedTutorialPrompt] = useState(
     tutorialPrompt || 'Need Help? Read the Tutorial'
   );

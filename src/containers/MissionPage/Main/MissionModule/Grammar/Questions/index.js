@@ -18,13 +18,11 @@ export default function Questions({ isRepeating, mission, onFail }) {
   const { userId } = useMyState();
   const [repeatMissionComplete, setRepeatMissionComplete] = useState(false);
   const {
-    requestHelpers: {
-      updateUserCoins,
-      updateUserXP,
-      uploadMissionAttempt,
-      uploadGrammarAttempt
-    }
-  } = useAppContext();
+    updateUserCoins,
+    updateUserXP,
+    uploadMissionAttempt,
+    uploadGrammarAttempt
+  } = useAppContext((v) => v.requestHelpers);
   const {
     actions: { onUpdateMissionAttempt, onSetMissionState }
   } = useMissionContext();

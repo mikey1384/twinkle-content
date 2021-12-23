@@ -71,19 +71,15 @@ export function useLazyLoad({
 
 export function useMyState() {
   const {
-    user: {
-      state: {
-        hideWatched,
-        lastChatPath,
-        loaded,
-        numWordsCollected,
-        userId,
-        searchFilter,
-        signinModalShown,
-        xpThisMonth
-      }
-    }
-  } = useAppContext();
+    hideWatched,
+    lastChatPath,
+    loaded,
+    numWordsCollected,
+    userId,
+    searchFilter,
+    signinModalShown,
+    xpThisMonth
+  } = useAppContext((v) => v.user.state);
   const myState = useContentState({
     contentId: userId,
     contentType: 'user'

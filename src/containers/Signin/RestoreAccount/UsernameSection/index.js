@@ -23,11 +23,9 @@ export default function UsernameSection({
   onNextClick,
   searchText
 }) {
-  const {
-    user: {
-      actions: { onClearUserSearch, onSearchUsers }
-    }
-  } = useAppContext();
+  const { onClearUserSearch, onSearchUsers } = useAppContext(
+    (v) => v.user.actions
+  );
 
   const { handleSearch, searching } = useSearch({
     onSearch: handleSearchUsers,

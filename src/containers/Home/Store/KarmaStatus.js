@@ -54,9 +54,7 @@ const approvedRecommendationsLabel =
 const karmaPointsLabel = localize('karmaPoints');
 
 export default function KarmaStatus() {
-  const {
-    requestHelpers: { loadKarmaPoints }
-  } = useAppContext();
+  const { loadKarmaPoints } = useAppContext((v) => v.requestHelpers);
   const {
     actions: { onUpdateProfileInfo }
   } = useContentContext();

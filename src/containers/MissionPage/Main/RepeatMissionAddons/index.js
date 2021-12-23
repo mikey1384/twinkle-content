@@ -13,9 +13,7 @@ RepeatMissionAddon.propTypes = {
 };
 
 export default function RepeatMissionAddon({ mission, onSetMissionState }) {
-  const {
-    requestHelpers: { loadGrammarAttempts }
-  } = useAppContext();
+  const { loadGrammarAttempts } = useAppContext((v) => v.requestHelpers);
   const {
     state: { myAttempts }
   } = useMissionContext();

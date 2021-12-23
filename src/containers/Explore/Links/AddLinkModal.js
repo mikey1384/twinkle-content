@@ -20,9 +20,7 @@ AddLinkModal.propTypes = {
 };
 
 export default function AddLinkModal({ onHide }) {
-  const {
-    requestHelpers: { uploadContent }
-  } = useAppContext();
+  const { uploadContent } = useAppContext((v) => v.requestHelpers);
   const {
     actions: { onUploadLink }
   } = useExploreContext();

@@ -29,9 +29,7 @@ export default function RewardLevelModal({
   onSubmit,
   onHide
 }) {
-  const {
-    requestHelpers: { updateRewardLevel }
-  } = useAppContext();
+  const { updateRewardLevel } = useAppContext((v) => v.requestHelpers);
   const [moderatorName, setModeratorName] = useState('');
   const [cannotChangeModalShown, setCannotChangeModalShown] = useState(false);
   const [disabled, setDisabled] = useState(false);

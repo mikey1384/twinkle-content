@@ -25,9 +25,7 @@ export default function PinnedComment({
   subject,
   userId
 }) {
-  const {
-    requestHelpers: { loadContent }
-  } = useAppContext();
+  const { loadContent } = useAppContext((v) => v.requestHelpers);
   const {
     actions: { onInitContent }
   } = useContentContext();

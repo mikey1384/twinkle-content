@@ -44,9 +44,9 @@ export default function Attachment({
   siteUrl,
   videoHeight
 }) {
-  const {
-    requestHelpers: { uploadThumbForInteractiveSlide }
-  } = useAppContext();
+  const { uploadThumbForInteractiveSlide } = useAppContext(
+    (v) => v.requestHelpers
+  );
   const {
     actions: { onChangeNumUpdates }
   } = useInteractiveContext();

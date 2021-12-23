@@ -16,9 +16,7 @@ EditBanStatusModal.propTypes = {
 };
 
 export default function EditBanStatusModal({ onHide, target }) {
-  const {
-    requestHelpers: { updateBanStatus }
-  } = useAppContext();
+  const { updateBanStatus } = useAppContext((v) => v.requestHelpers);
   const {
     actions: { onUpdateBanStatus }
   } = useManagementContext();

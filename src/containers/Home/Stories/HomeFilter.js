@@ -51,12 +51,8 @@ export default function HomeFilter({
   selectedFilter,
   setDisplayOrder
 }) {
-  const {
-    user: {
-      actions: { onToggleHideWatched }
-    },
-    requestHelpers: { toggleHideWatched }
-  } = useAppContext();
+  const { onToggleHideWatched } = useAppContext((v) => v.user.actions);
+  const { toggleHideWatched } = useAppContext((v) => v.requestHelpers);
   const { hideWatched, userId } = useMyState();
   const [activeTab, setActiveTab] = useState();
   const mounted = useRef(true);

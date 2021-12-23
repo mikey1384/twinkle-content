@@ -26,9 +26,9 @@ ClassroomChat.propTypes = {
 
 export default function ClassroomChat({ onBackClick, onHide }) {
   const history = useHistory();
-  const {
-    requestHelpers: { createNewChat, searchUserToInvite }
-  } = useAppContext();
+  const { createNewChat, searchUserToInvite } = useAppContext(
+    (v) => v.requestHelpers
+  );
   const {
     state: { userSearchResults },
     actions: {

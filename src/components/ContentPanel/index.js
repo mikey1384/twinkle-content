@@ -44,9 +44,7 @@ export default function ContentPanel({
   });
   const PanelRef = useRef(null);
   const history = useHistory();
-  const {
-    requestHelpers: { loadContent }
-  } = useAppContext();
+  const { loadContent } = useAppContext((v) => v.requestHelpers);
   const {
     actions: {
       onAddTags,

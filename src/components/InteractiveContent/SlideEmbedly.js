@@ -30,9 +30,9 @@ function SlideEmbedly({
   siteUrl,
   slideId
 }) {
-  const {
-    requestHelpers: { fetchUrlEmbedData, updateEmbedData }
-  } = useAppContext();
+  const { fetchUrlEmbedData, updateEmbedData } = useAppContext(
+    (v) => v.requestHelpers
+  );
   const {
     actions: { onChangeNumUpdates }
   } = useInteractiveContext();

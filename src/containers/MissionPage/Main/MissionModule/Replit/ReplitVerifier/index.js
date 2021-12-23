@@ -17,9 +17,7 @@ ReplitVerifier.propTypes = {
 
 export default function ReplitVerifier({ task }) {
   const { userId, state } = useMyState();
-  const {
-    requestHelpers: { updateMissionStatus }
-  } = useAppContext();
+  const { updateMissionStatus } = useAppContext((v) => v.requestHelpers);
   const {
     actions: { onUpdateUserMissionState }
   } = useContentContext();

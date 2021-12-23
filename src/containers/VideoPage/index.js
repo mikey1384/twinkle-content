@@ -71,15 +71,13 @@ export default function VideoPage({
   }, []);
 
   const {
-    requestHelpers: {
-      deleteContent,
-      editContent,
-      fetchPlaylistsContaining,
-      loadComments,
-      loadSubjects,
-      uploadQuestions
-    }
-  } = useAppContext();
+    deleteContent,
+    editContent,
+    fetchPlaylistsContaining,
+    loadComments,
+    loadSubjects,
+    uploadQuestions
+  } = useAppContext((v) => v.requestHelpers);
   const { authLevel, canEdit, userId } = useMyState();
   const {
     actions: {

@@ -37,17 +37,9 @@ NavMenu.propTypes = {
 };
 
 export default function NavMenu({ playlistId, videoId, isContinuing }) {
-  const {
-    user: {
-      actions: { onToggleHideWatched }
-    },
-    requestHelpers: {
-      auth,
-      fetchNotifications,
-      loadRightMenuVideos,
-      toggleHideWatched
-    }
-  } = useAppContext();
+  const { onToggleHideWatched } = useAppContext((v) => v.user.actions);
+  const { auth, fetchNotifications, loadRightMenuVideos, toggleHideWatched } =
+    useAppContext((v) => v.requestHelpers);
   const { hideWatched, profileTheme, userId } = useMyState();
   const {
     state: { numNewNotis, totalRewardedTwinkles, totalRewardedTwinkleCoins },

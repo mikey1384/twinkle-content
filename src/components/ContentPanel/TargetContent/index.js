@@ -77,9 +77,7 @@ export default function TargetContent({
   }, []);
 
   const history = useHistory();
-  const {
-    requestHelpers: { uploadComment, uploadFile }
-  } = useAppContext();
+  const { uploadComment, uploadFile } = useAppContext((v) => v.requestHelpers);
   const {
     authLevel,
     canReward,

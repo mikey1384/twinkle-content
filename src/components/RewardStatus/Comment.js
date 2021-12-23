@@ -38,9 +38,9 @@ function Comment({
   onEditDone = () => {},
   reward
 }) {
-  const {
-    requestHelpers: { editRewardComment, revokeReward }
-  } = useAppContext();
+  const { editRewardComment, revokeReward } = useAppContext(
+    (v) => v.requestHelpers
+  );
   const {
     actions: { onRevokeReward, onSetIsEditing }
   } = useContentContext();

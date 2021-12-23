@@ -24,9 +24,7 @@ export default function ApproveInterface({
   onSetMissionState
 }) {
   const mounted = useRef(true);
-  const {
-    requestHelpers: { uploadMissionFeedback }
-  } = useAppContext();
+  const { uploadMissionFeedback } = useAppContext((v) => v.requestHelpers);
   const {
     state,
     actions: { onSetMissionFeedbackForm }

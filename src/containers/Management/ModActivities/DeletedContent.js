@@ -35,9 +35,8 @@ export default function DeletedContent({
   style
 }) {
   const { managementLevel } = useMyState();
-  const {
-    requestHelpers: { deleteContent, deletePermanently, loadDeletedContent }
-  } = useAppContext();
+  const { deleteContent, deletePermanently, loadDeletedContent } =
+    useAppContext((v) => v.requestHelpers);
   const [loading, setLoading] = useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   const [contentObj, setContentObj] = useState({});

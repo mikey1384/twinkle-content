@@ -81,13 +81,11 @@ export default function Slide({
   style
 }) {
   const {
-    requestHelpers: {
-      deleteInteractiveSlide,
-      publishInteractiveSlide,
-      undeleteInteractiveSlide,
-      unPublishInteractiveSlide
-    }
-  } = useAppContext();
+    deleteInteractiveSlide,
+    publishInteractiveSlide,
+    undeleteInteractiveSlide,
+    unPublishInteractiveSlide
+  } = useAppContext((v) => v.requestHelpers);
   const {
     actions: {
       onArchiveSlide,

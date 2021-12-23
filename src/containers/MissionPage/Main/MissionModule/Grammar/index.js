@@ -14,9 +14,7 @@ Grammar.propTypes = {
 export default function Grammar({ isRepeating, mission }) {
   const mounted = useRef(true);
   const { userId } = useMyState();
-  const {
-    requestHelpers: { loadMission }
-  } = useAppContext();
+  const { loadMission } = useAppContext((v) => v.requestHelpers);
   const {
     state: { myAttempts },
     actions: { onSetMissionState, onSetMyMissionAttempts }

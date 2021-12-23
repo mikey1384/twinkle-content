@@ -31,11 +31,7 @@ export default function MissionItem({
   } = useMissionContext();
   const history = useHistory();
   const { userId } = useMyState();
-  const {
-    user: {
-      actions: { onOpenSigninModal }
-    }
-  } = useAppContext();
+  const { onOpenSigninModal } = useAppContext((v) => v.user.actions);
   const statusShown = useMemo(() => {
     if (!showStatus) return false;
     if (mission.isMultiMission) {

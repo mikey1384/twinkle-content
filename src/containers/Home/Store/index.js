@@ -37,9 +37,9 @@ const welcomeMessageLabel =
   );
 
 export default function Store() {
-  const {
-    requestHelpers: { loadMyData, unlockUsernameChange }
-  } = useAppContext();
+  const { loadMyData, unlockUsernameChange } = useAppContext(
+    (v) => v.requestHelpers
+  );
   const {
     actions: { onInitContent, onUpdateProfileInfo }
   } = useContentContext();

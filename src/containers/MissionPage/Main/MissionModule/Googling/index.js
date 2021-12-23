@@ -12,9 +12,7 @@ Googling.propTypes = {
   style: PropTypes.object
 };
 export default function Googling({ mission, onSetMissionState, style }) {
-  const {
-    requestHelpers: { uploadMissionAttempt }
-  } = useAppContext();
+  const { uploadMissionAttempt } = useAppContext((v) => v.requestHelpers);
   const {
     actions: { onUpdateMissionAttempt }
   } = useMissionContext();

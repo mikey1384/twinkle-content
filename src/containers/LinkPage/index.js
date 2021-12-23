@@ -48,14 +48,12 @@ export default function LinkPage({
 }) {
   const linkId = Number(initialLinkId);
   const {
-    requestHelpers: {
-      deleteContent,
-      editContent,
-      loadComments,
-      loadContent,
-      loadSubjects
-    }
-  } = useAppContext();
+    deleteContent,
+    editContent,
+    loadComments,
+    loadContent,
+    loadSubjects
+  } = useAppContext((v) => v.requestHelpers);
   const {
     authLevel,
     canDelete,

@@ -104,9 +104,7 @@ function Reply({
   onSubmitReply,
   subject
 }) {
-  const {
-    requestHelpers: { editContent, loadReplies }
-  } = useAppContext();
+  const { editContent, loadReplies } = useAppContext((v) => v.requestHelpers);
   const {
     authLevel,
     banned,

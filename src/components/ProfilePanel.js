@@ -156,14 +156,12 @@ function ProfilePanel({ expandable, profileId, style }) {
   }, []);
 
   const {
-    requestHelpers: {
-      checkIfUserOnline,
-      loadDMChannel,
-      loadComments,
-      loadProfile,
-      uploadBio
-    }
-  } = useAppContext();
+    checkIfUserOnline,
+    loadDMChannel,
+    loadComments,
+    loadProfile,
+    uploadBio
+  } = useAppContext((v) => v.requestHelpers);
   const { isCreator, userId, username, banned, authLevel } = useMyState();
   const {
     actions: { onResetProfile }

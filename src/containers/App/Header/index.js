@@ -38,23 +38,19 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
     () => getSectionFromPathname(pathname)?.section === 'chat',
     [pathname]
   );
+  const { onSetLastChatPath } = useAppContext((v) => v.user.actions);
   const {
-    user: {
-      actions: { onSetLastChatPath }
-    },
-    requestHelpers: {
-      checkIfHomeOutdated,
-      checkVersion,
-      fetchNotifications,
-      getNumberOfUnreadMessages,
-      loadGeneralChatPathId,
-      loadChat,
-      loadRankings,
-      loadCoins,
-      loadXP,
-      updateChatLastRead
-    }
-  } = useAppContext();
+    checkIfHomeOutdated,
+    checkVersion,
+    fetchNotifications,
+    getNumberOfUnreadMessages,
+    loadGeneralChatPathId,
+    loadChat,
+    loadRankings,
+    loadCoins,
+    loadXP,
+    updateChatLastRead
+  } = useAppContext((v) => v.requestHelpers);
   const { defaultSearchFilter, userId, username, loggedIn, profilePicUrl } =
     useMyState();
   const {

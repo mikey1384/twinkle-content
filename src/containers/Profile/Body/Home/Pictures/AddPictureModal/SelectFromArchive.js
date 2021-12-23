@@ -16,9 +16,7 @@ export default function SelectFromArchive({
   selectedPictureIds,
   onSetSelectedPictureIds
 }) {
-  const {
-    requestHelpers: { loadUserPictures }
-  } = useAppContext();
+  const { loadUserPictures } = useAppContext((v) => v.requestHelpers);
   const [loadMoreButtonShown, setLoadMoreButtonShown] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [loading, setLoading] = useState(false);

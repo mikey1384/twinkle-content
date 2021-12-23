@@ -14,9 +14,7 @@ const recommendedLabel = localize('recommendedVideos');
 
 export default function ContinueWatchingPanel() {
   const { userId, loaded: profileLoaded } = useMyState();
-  const {
-    requestHelpers: { loadContinueWatching }
-  } = useAppContext();
+  const { loadContinueWatching } = useAppContext((v) => v.requestHelpers);
   const {
     state: {
       videos: {

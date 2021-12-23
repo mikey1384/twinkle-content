@@ -23,9 +23,7 @@ export default function TaskComplete({
   passMessageFontSize
 }) {
   const { userId } = useMyState();
-  const {
-    requestHelpers: { uploadMissionAttempt }
-  } = useAppContext();
+  const { uploadMissionAttempt } = useAppContext((v) => v.requestHelpers);
   const {
     state: { myAttempts },
     actions: { onUpdateMissionAttempt }

@@ -29,9 +29,7 @@ export default function Playlist({
   onLoad,
   playlistId
 }) {
-  const {
-    requestHelpers: { loadPlaylistVideos }
-  } = useAppContext();
+  const { loadPlaylistVideos } = useAppContext((v) => v.requestHelpers);
   const { profileTheme } = useMyState();
   const [videos, setVideos] = useState([]);
   const [loadMoreButton, setLoadMoreButton] = useState(false);

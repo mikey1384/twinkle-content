@@ -50,9 +50,9 @@ export default function ChessModal({
   socketConnected
 }) {
   const { banned, userId, username, profilePicUrl } = useMyState();
-  const {
-    requestHelpers: { fetchCurrentChessState, setChessMoveViewTimeStamp }
-  } = useAppContext();
+  const { fetchCurrentChessState, setChessMoveViewTimeStamp } = useAppContext(
+    (v) => v.requestHelpers
+  );
   const {
     actions: { onSubmitMessage, onUpdateChessMoveViewTimeStamp }
   } = useChatContext();

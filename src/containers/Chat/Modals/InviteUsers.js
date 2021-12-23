@@ -18,9 +18,9 @@ export default function InviteUsersModal({
   onHide,
   currentChannel
 }) {
-  const {
-    requestHelpers: { inviteUsersToChannel, searchUserToInvite }
-  } = useAppContext();
+  const { inviteUsersToChannel, searchUserToInvite } = useAppContext(
+    (v) => v.requestHelpers
+  );
   const {
     state: { userSearchResults },
     actions: {

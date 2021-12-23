@@ -130,13 +130,11 @@ function Comment({
   const { fileType } = getFileInfoFromFileName(fileName);
   const history = useHistory();
   const {
-    requestHelpers: {
-      checkIfUserResponded,
-      editContent,
-      loadReplies,
-      updateCommentPinStatus
-    }
-  } = useAppContext();
+    checkIfUserResponded,
+    editContent,
+    loadReplies,
+    updateCommentPinStatus
+  } = useAppContext((v) => v.requestHelpers);
   const {
     authLevel,
     banned,

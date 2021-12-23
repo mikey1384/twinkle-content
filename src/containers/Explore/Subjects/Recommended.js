@@ -25,9 +25,7 @@ export default function Recommended({
   onExpand,
   style
 }) {
-  const {
-    requestHelpers: { loadRecommendedUploads }
-  } = useAppContext();
+  const { loadRecommendedUploads } = useAppContext((v) => v.requestHelpers);
   const {
     actions: { onLoadMoreRecommendedSubjects }
   } = useExploreContext();

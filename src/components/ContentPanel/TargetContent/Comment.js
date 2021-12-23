@@ -44,9 +44,7 @@ function Comment({
   username
 }) {
   const history = useHistory();
-  const {
-    requestHelpers: { deleteContent, editContent }
-  } = useAppContext();
+  const { deleteContent, editContent } = useAppContext((v) => v.requestHelpers);
   const {
     actions: { onSetIsEditing }
   } = useContentContext();

@@ -7,9 +7,7 @@ import { css } from '@emotion/css';
 import { useAppContext, useMissionContext } from 'contexts';
 
 export default function DidNotPassCopyAndPaste() {
-  const {
-    requestHelpers: { loadMission }
-  } = useAppContext();
+  const { loadMission } = useAppContext((v) => v.requestHelpers);
   const {
     actions: { onLoadMission },
     state: { missionObj, missionTypeIdHash }

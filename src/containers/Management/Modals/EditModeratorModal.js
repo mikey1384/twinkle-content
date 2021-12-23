@@ -15,9 +15,7 @@ EditModeratorModal.propTypes = {
 };
 
 export default function EditModeratorModal({ accountTypes, onHide, target }) {
-  const {
-    requestHelpers: { changeAccountType }
-  } = useAppContext();
+  const { changeAccountType } = useAppContext((v) => v.requestHelpers);
   const {
     actions: { onChangeModeratorAccountType }
   } = useManagementContext();
@@ -26,8 +24,8 @@ export default function EditModeratorModal({ accountTypes, onHide, target }) {
   );
   const editMenuItems = useMemo(() => {
     const dropdownMenu = accountTypes
-      .filter(accountType => accountType.label !== selectedAccountType)
-      .map(accountType => ({
+      .filter((accountType) => accountType.label !== selectedAccountType)
+      .map((accountType) => ({
         label: capitalize(accountType.label),
         onClick: () => setSelectedAccountType(accountType.label)
       }));

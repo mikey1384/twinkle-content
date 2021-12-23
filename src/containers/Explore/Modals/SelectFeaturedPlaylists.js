@@ -22,9 +22,8 @@ export default function SelectFeaturedPlaylists({
   onHide,
   selectedPlaylists: initialSelectedPlaylists
 }) {
-  const {
-    requestHelpers: { loadPlaylistList, searchContent, uploadFeaturedPlaylists }
-  } = useAppContext();
+  const { loadPlaylistList, searchContent, uploadFeaturedPlaylists } =
+    useAppContext((v) => v.requestHelpers);
   const {
     state: {
       videos: {

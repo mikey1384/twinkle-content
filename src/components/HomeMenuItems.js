@@ -22,11 +22,7 @@ const storeLabel = localize('store');
 const deviceIsMobile = isMobile(navigator);
 
 export default function HomeMenuItems({ history, style = {} }) {
-  const {
-    user: {
-      actions: { onSetProfilesLoaded }
-    }
-  } = useAppContext();
+  const { onSetProfilesLoaded } = useAppContext((v) => v.user.actions);
   const { managementLevel, profileTheme } = useMyState();
   const year = useMemo(() => {
     const dt = new Date();
