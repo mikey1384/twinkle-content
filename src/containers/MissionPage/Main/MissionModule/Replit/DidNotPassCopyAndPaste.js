@@ -8,10 +8,9 @@ import { useAppContext, useMissionContext } from 'contexts';
 
 export default function DidNotPassCopyAndPaste() {
   const loadMission = useAppContext((v) => v.requestHelpers.loadMission);
-  const {
-    actions: { onLoadMission },
-    state: { missionObj, missionTypeIdHash }
-  } = useMissionContext();
+  const onLoadMission = useMissionContext((v) => v.actions.onLoadMission);
+  const missionObj = useMissionContext((v) => v.state.missionObj);
+  const missionTypeIdHash = useMissionContext((v) => v.state.missionTypeIdHash);
   const [loading, setLoading] = useState(false);
 
   const copyAndPasteMission = useMemo(

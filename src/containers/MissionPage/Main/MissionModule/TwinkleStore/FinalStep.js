@@ -16,9 +16,9 @@ export default function FinalStep({ mission, style, userId }) {
   const uploadMissionAttempt = useAppContext(
     (v) => v.requestHelpers.uploadMissionAttempt
   );
-  const {
-    actions: { onUpdateMissionAttempt }
-  } = useMissionContext();
+  const onUpdateMissionAttempt = useMissionContext(
+    (v) => v.actions.onUpdateMissionAttempt
+  );
   const onChangeUserXP = useContentContext((v) => v.actions.onChangeUserXP);
   const onUpdateUserCoins = useContentContext(
     (v) => v.actions.onUpdateUserCoins

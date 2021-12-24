@@ -16,24 +16,31 @@ export default function Mission() {
   const loadMissionList = useAppContext(
     (v) => v.requestHelpers.loadMissionList
   );
-  const {
-    state: {
-      attemptObj,
-      managementObj,
-      missions,
-      missionObj,
-      myAttempts,
-      selectedManagementTab,
-      selectedMissionsTab
-    },
-    actions: {
-      onLoadMissionList,
-      onSetAttemptObj,
-      onSetManagementObj,
-      onSetSelectedManagementTab,
-      onSetSelectedMissionsTab
-    }
-  } = useMissionContext();
+  const attemptObj = useMissionContext((v) => v.state.attemptObj);
+  const managementObj = useMissionContext((v) => v.state.managementObj);
+  const missions = useMissionContext((v) => v.state.missions);
+  const missionObj = useMissionContext((v) => v.state.missionObj);
+  const myAttempts = useMissionContext((v) => v.state.myAttempts);
+  const selectedManagementTab = useMissionContext(
+    (v) => v.state.selectedManagementTab
+  );
+  const selectedMissionsTab = useMissionContext(
+    (v) => v.state.selectedMissionsTab
+  );
+  const onLoadMissionList = useMissionContext(
+    (v) => v.actions.onLoadMissionList
+  );
+  const onSetAttemptObj = useMissionContext((v) => v.actions.onSetAttemptObj);
+  const onSetManagementObj = useMissionContext(
+    (v) => v.actions.onSetManagementObj
+  );
+  const onSetSelectedManagementTab = useMissionContext(
+    (v) => v.actions.onSetSelectedManagementTab
+  );
+  const onSetSelectedMissionsTab = useMissionContext(
+    (v) => v.actions.onSetSelectedMissionsTab
+  );
+
   const mounted = useRef(true);
 
   useEffect(() => {

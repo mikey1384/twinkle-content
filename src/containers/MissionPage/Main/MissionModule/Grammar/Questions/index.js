@@ -27,9 +27,12 @@ export default function Questions({ isRepeating, mission, onFail }) {
   const uploadGrammarAttempt = useAppContext(
     (v) => v.requestHelpers.uploadGrammarAttempt
   );
-  const {
-    actions: { onUpdateMissionAttempt, onSetMissionState }
-  } = useMissionContext();
+  const onUpdateMissionAttempt = useMissionContext(
+    (v) => v.actions.onUpdateMissionAttempt
+  );
+  const onSetMissionState = useMissionContext(
+    (v) => v.actions.onSetMissionState
+  );
   const onChangeUserXP = useContentContext((v) => v.actions.onChangeUserXP);
   const onUpdateUserCoins = useContentContext(
     (v) => v.actions.onUpdateUserCoins

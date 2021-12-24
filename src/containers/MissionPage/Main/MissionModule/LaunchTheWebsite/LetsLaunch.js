@@ -18,9 +18,9 @@ export default function LetsLaunch({ index, innerRef, taskId }) {
   const uploadMissionAttempt = useAppContext(
     (v) => v.requestHelpers.uploadMissionAttempt
   );
-  const {
-    actions: { onUpdateMissionAttempt }
-  } = useMissionContext();
+  const onUpdateMissionAttempt = useMissionContext(
+    (v) => v.actions.onUpdateMissionAttempt
+  );
   const [url, setUrl] = useState('');
   const [urlError, setUrlError] = useState(false);
   const [submitting, setSubmitting] = useState(false);

@@ -26,10 +26,10 @@ export default function TaskComplete({
   const uploadMissionAttempt = useAppContext(
     (v) => v.requestHelpers.uploadMissionAttempt
   );
-  const {
-    state: { myAttempts },
-    actions: { onUpdateMissionAttempt }
-  } = useMissionContext();
+  const myAttempts = useMissionContext((v) => v.state.myAttempts);
+  const onUpdateMissionAttempt = useMissionContext(
+    (v) => v.actions.onUpdateMissionAttempt
+  );
   const myAttempt = useMemo(() => myAttempts[taskId], [myAttempts, taskId]);
   const onChangeUserXP = useContentContext((v) => v.actions.onChangeUserXP);
   const onUpdateUserCoins = useContentContext(

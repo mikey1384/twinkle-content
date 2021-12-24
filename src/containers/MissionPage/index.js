@@ -37,15 +37,20 @@ export default function MissionPage({
   const onUpdateCurrentMission = useContentContext(
     (v) => v.actions.onUpdateCurrentMission
   );
-  const {
-    actions: {
-      onLoadMission,
-      onLoadMissionTypeIdHash,
-      onSetMissionState,
-      onSetMyMissionAttempts
-    },
-    state: { missionObj, prevUserId, missionTypeIdHash, myAttempts }
-  } = useMissionContext();
+  const onLoadMission = useMissionContext((v) => v.actions.onLoadMission);
+  const onLoadMissionTypeIdHash = useMissionContext(
+    (v) => v.actions.onLoadMissionTypeIdHash
+  );
+  const onSetMissionState = useMissionContext(
+    (v) => v.actions.onSetMissionState
+  );
+  const onSetMyMissionAttempts = useMissionContext(
+    (v) => v.actions.onSetMyMissionAttempts
+  );
+  const missionObj = useMissionContext((v) => v.state.missionObj);
+  const prevUserId = useMissionContext((v) => v.state.prevUserId);
+  const missionTypeIdHash = useMissionContext((v) => v.state.missionTypeIdHash);
+  const myAttempts = useMissionContext((v) => v.state.myAttempts);
 
   const missionId = useMemo(() => {
     return missionTypeIdHash?.[missionType];

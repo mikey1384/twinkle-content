@@ -16,9 +16,7 @@ export default function RepeatMissionAddon({ mission, onSetMissionState }) {
   const loadGrammarAttempts = useAppContext(
     (v) => v.requestHelpers.loadGrammarAttempts
   );
-  const {
-    state: { myAttempts }
-  } = useMissionContext();
+  const myAttempts = useMissionContext((v) => v.state.myAttempts);
   const mounted = useRef(true);
   const { userId } = useMyState();
   const [loadingReview, setLoadingReview] = useState(false);

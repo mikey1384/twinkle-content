@@ -32,15 +32,20 @@ export default function TaskContainer({
   const loadMissionTypeIdHash = useAppContext(
     (v) => v.requestHelpers.loadMissionTypeIdHash
   );
-  const {
-    actions: {
-      onSetMissionState,
-      onLoadMission,
-      onLoadMissionTypeIdHash,
-      onSetMyMissionAttempts
-    },
-    state: { missionObj, missionTypeIdHash, myAttempts, prevUserId }
-  } = useMissionContext();
+  const onSetMissionState = useMissionContext(
+    (v) => v.actions.onSetMissionState
+  );
+  const onLoadMission = useMissionContext((v) => v.actions.onLoadMission);
+  const onLoadMissionTypeIdHash = useMissionContext(
+    (v) => v.actions.onLoadMissionTypeIdHash
+  );
+  const onSetMyMissionAttempts = useMissionContext(
+    (v) => v.actions.onSetMyMissionAttempts
+  );
+  const missionObj = useMissionContext((v) => v.state.missionObj);
+  const missionTypeIdHash = useMissionContext((v) => v.state.missionTypeIdHash);
+  const myAttempts = useMissionContext((v) => v.state.myAttempts);
+  const prevUserId = useMissionContext((v) => v.state.prevUserId);
 
   const taskId = useMemo(() => {
     return missionTypeIdHash?.[taskType];

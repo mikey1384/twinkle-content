@@ -15,10 +15,13 @@ export default function Grammar({ isRepeating, mission }) {
   const mounted = useRef(true);
   const { userId } = useMyState();
   const loadMission = useAppContext((v) => v.requestHelpers.loadMission);
-  const {
-    state: { myAttempts },
-    actions: { onSetMissionState, onSetMyMissionAttempts }
-  } = useMissionContext();
+  const myAttempts = useMissionContext((v) => v.state.myAttempts);
+  const onSetMissionState = useMissionContext(
+    (v) => v.actions.onSetMissionState
+  );
+  const onSetMyMissionAttempts = useMissionContext(
+    (v) => v.actions.onSetMyMissionAttempts
+  );
   const [loading, setLoading] = useState(false);
   const loadingRef = useRef(false);
   useEffect(() => {

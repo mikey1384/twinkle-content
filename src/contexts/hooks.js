@@ -42,8 +42,8 @@ export function useNotiContext(fn) {
 export function useProfileContext(fn) {
   return useContextSelector(ProfileContext, fn);
 }
-export function useMissionContext() {
-  return useContextSelector(MissionContext, (v) => v);
+export function useMissionContext(fn) {
+  return useContextSelector(MissionContext, fn);
 }
 export function useViewContext(fn) {
   return useContextSelector(ViewContext, fn);

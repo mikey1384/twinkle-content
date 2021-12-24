@@ -14,9 +14,9 @@ export default function AddTutorial({ missionId, missionTitle }) {
   const attachMissionTutorial = useAppContext(
     (v) => v.requestHelpers.attachMissionTutorial
   );
-  const {
-    actions: { onSetMissionState }
-  } = useMissionContext();
+  const onSetMissionState = useMissionContext(
+    (v) => v.actions.onSetMissionState
+  );
   return (
     <div
       className={panel}

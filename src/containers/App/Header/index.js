@@ -163,9 +163,9 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
   const onUploadReply = useContentContext((v) => v.actions.onUploadReply);
   const state = useContentContext((v) => v.state);
 
-  const {
-    actions: { onUpdateMissionAttempt }
-  } = useMissionContext();
+  const onUpdateMissionAttempt = useMissionContext(
+    (v) => v.actions.onUpdateMissionAttempt
+  );
 
   const prevProfilePicUrl = useRef(profilePicUrl);
   const peersRef = useRef({});
