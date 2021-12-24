@@ -28,9 +28,7 @@ export default function MobileMenu({ location, history, onClose }) {
   const mounted = useRef(true);
   const displayedRef = useRef(false);
   const onLogout = useAppContext((v) => v.user.actions.onLogout);
-  const {
-    actions: { onResetChat }
-  } = useChatContext();
+  const onResetChat = useChatContext((v) => v.actions.onResetChat);
   const onUploadProfilePic = useContentContext(
     (v) => v.actions.onUploadProfilePic
   );

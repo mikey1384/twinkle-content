@@ -56,9 +56,10 @@ export default function ChessModal({
   const setChessMoveViewTimeStamp = useAppContext(
     (v) => v.requestHelpers.setChessMoveViewTimeStamp
   );
-  const {
-    actions: { onSubmitMessage, onUpdateChessMoveViewTimeStamp }
-  } = useChatContext();
+  const onSubmitMessage = useChatContext((v) => v.actions.onSubmitMessage);
+  const onUpdateChessMoveViewTimeStamp = useChatContext(
+    (v) => v.actions.onUpdateChessMoveViewTimeStamp
+  );
   const [initialState, setInitialState] = useState();
   const [viewTimeStamp, setViewTimeStamp] = useState();
   const [message, setMessage] = useState();

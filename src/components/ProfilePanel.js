@@ -84,10 +84,7 @@ function ProfilePanel({ expandable, profileId, style }) {
     youtubeUrl
   } = profile;
 
-  const {
-    actions: { onOpenNewChatTab }
-  } = useChatContext();
-
+  const onOpenNewChatTab = useChatContext((v) => v.actions.onOpenNewChatTab);
   const onDeleteComment = useContentContext((v) => v.actions.onDeleteComment);
   const onEditComment = useContentContext((v) => v.actions.onEditComment);
   const onEditRewardComment = useContentContext(

@@ -77,24 +77,30 @@ function App({ location, history }) {
   );
   const { authLevel, profilePicUrl, signinModalShown, userId, username } =
     useMyState();
-  const {
-    state: {
-      channelOnCall,
-      channelsObj,
-      currentChannelName,
-      selectedChannelId
-    },
-    actions: {
-      onDisplayAttachedFile,
-      onSetReplyTarget,
-      onPostFileUploadStatus,
-      onPostUploadComplete,
-      onResetChat,
-      onSendFirstDirectMessage,
-      onUpdateChannelPathIdHash,
-      onUpdateChatUploadProgress
-    }
-  } = useChatContext();
+  const channelOnCall = useChatContext((v) => v.state.channelOnCall);
+  const channelsObj = useChatContext((v) => v.state.channelsObj);
+  const currentChannelName = useChatContext((v) => v.state.currentChannelName);
+  const selectedChannelId = useChatContext((v) => v.state.selectedChannelId);
+  const onDisplayAttachedFile = useChatContext(
+    (v) => v.actions.onDisplayAttachedFile
+  );
+  const onSetReplyTarget = useChatContext((v) => v.actions.onSetReplyTarget);
+  const onPostFileUploadStatus = useChatContext(
+    (v) => v.actions.onPostFileUploadStatus
+  );
+  const onPostUploadComplete = useChatContext(
+    (v) => v.actions.onPostUploadComplete
+  );
+  const onResetChat = useChatContext((v) => v.actions.onResetChat);
+  const onSendFirstDirectMessage = useChatContext(
+    (v) => v.actions.onSendFirstDirectMessage
+  );
+  const onUpdateChannelPathIdHash = useChatContext(
+    (v) => v.actions.onUpdateChannelPathIdHash
+  );
+  const onUpdateChatUploadProgress = useChatContext(
+    (v) => v.actions.onUpdateChatUploadProgress
+  );
   const onInitContent = useContentContext((v) => v.actions.onInitContent);
   const onLoadNewFeeds = useHomeContext((v) => v.actions.onLoadNewFeeds);
   const onSetFileUploadComplete = useHomeContext(

@@ -15,8 +15,8 @@ import { ViewContext } from './View';
 export function useAppContext(fn) {
   return useContextSelector(AppContext, fn);
 }
-export function useChatContext() {
-  return useContextSelector(ChatContext, (v) => v);
+export function useChatContext(fn) {
+  return useContextSelector(ChatContext, fn);
 }
 export function useContentContext(fn) {
   return useContextSelector(ContentContext, fn);

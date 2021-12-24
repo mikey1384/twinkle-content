@@ -54,10 +54,11 @@ export default function SettingsModal({
 }) {
   const buyChatSubject = useAppContext((v) => v.requestHelpers.buyChatSubject);
   const buyChatTheme = useAppContext((v) => v.requestHelpers.buyChatTheme);
-  const {
-    state: { customChannelNames },
-    actions: { onEnableChatSubject, onEnableTheme }
-  } = useChatContext();
+  const customChannelNames = useChatContext((v) => v.state.customChannelNames);
+  const onEnableChatSubject = useChatContext(
+    (v) => v.actions.onEnableChatSubject
+  );
+  const onEnableTheme = useChatContext((v) => v.actions.onEnableTheme);
   const onUpdateUserCoins = useContentContext(
     (v) => v.actions.onUpdateUserCoins
   );

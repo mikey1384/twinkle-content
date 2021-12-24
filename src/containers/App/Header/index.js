@@ -64,50 +64,76 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
 
   const { defaultSearchFilter, userId, username, loggedIn, profilePicUrl } =
     useMyState();
-  const {
-    state: {
-      channelOnCall,
-      channelsObj,
-      chatType,
-      selectedChannelId,
-      myStream,
-      numUnreads,
-      chatStatus
-    },
-    actions: {
-      onChangeAwayStatus,
-      onChangeBusyStatus,
-      onChangeOnlineStatus,
-      onChangeChatSubject,
-      onEnableChatSubject,
-      onSetReconnecting,
-      onChangeChannelOwner,
-      onChangeChannelSettings,
-      onClearRecentChessMessage,
-      onHideAttachment,
-      onCallReceptionConfirm,
-      onDeleteMessage,
-      onEditMessage,
-      onLeaveChannel,
-      onGetNumberOfUnreadMessages,
-      onHangUp,
-      onInitChat,
-      onReceiveFirstMsg,
-      onReceiveMessage,
-      onReceiveMessageOnDifferentChannel,
-      onReceiveVocabActivity,
-      onResetChat,
-      onSetCall,
-      onSetMembersOnCall,
-      onSetMyStream,
-      onSetOnlineUserData,
-      onSetPeerStreams,
-      onShowIncoming,
-      onShowOutgoing,
-      onUpdateSelectedChannelId,
-      onUpdateCollectorsRankings
-    }
-  } = useChatContext();
+  const channelOnCall = useChatContext((v) => v.state.channelOnCall);
+  const channelsObj = useChatContext((v) => v.state.channelsObj);
+  const chatType = useChatContext((v) => v.state.chatType);
+  const selectedChannelId = useChatContext((v) => v.state.selectedChannelId);
+  const myStream = useChatContext((v) => v.state.myStream);
+  const numUnreads = useChatContext((v) => v.state.numUnreads);
+  const chatStatus = useChatContext((v) => v.state.chatStatus);
+  const onChangeAwayStatus = useChatContext(
+    (v) => v.actions.onChangeAwayStatus
+  );
+  const onChangeBusyStatus = useChatContext(
+    (v) => v.actions.onChangeBusyStatus
+  );
+  const onChangeOnlineStatus = useChatContext(
+    (v) => v.actions.onChangeOnlineStatus
+  );
+  const onChangeChatSubject = useChatContext(
+    (v) => v.actions.onChangeChatSubject
+  );
+  const onEnableChatSubject = useChatContext(
+    (v) => v.actions.onEnableChatSubject
+  );
+  const onSetReconnecting = useChatContext((v) => v.actions.onSetReconnecting);
+  const onChangeChannelOwner = useChatContext(
+    (v) => v.actions.onChangeChannelOwner
+  );
+  const onChangeChannelSettings = useChatContext(
+    (v) => v.actions.onChangeChannelSettings
+  );
+  const onClearRecentChessMessage = useChatContext(
+    (v) => v.actions.onClearRecentChessMessage
+  );
+  const onHideAttachment = useChatContext((v) => v.actions.onHideAttachment);
+  const onCallReceptionConfirm = useChatContext(
+    (v) => v.actions.onCallReceptionConfirm
+  );
+  const onDeleteMessage = useChatContext((v) => v.actions.onDeleteMessage);
+  const onEditMessage = useChatContext((v) => v.actions.onEditMessage);
+  const onLeaveChannel = useChatContext((v) => v.actions.onLeaveChannel);
+  const onGetNumberOfUnreadMessages = useChatContext(
+    (v) => v.actions.onGetNumberOfUnreadMessages
+  );
+  const onHangUp = useChatContext((v) => v.actions.onHangUp);
+  const onInitChat = useChatContext((v) => v.actions.onInitChat);
+  const onReceiveFirstMsg = useChatContext((v) => v.actions.onReceiveFirstMsg);
+  const onReceiveMessage = useChatContext((v) => v.actions.onReceiveMessage);
+  const onReceiveMessageOnDifferentChannel = useChatContext(
+    (v) => v.actions.onReceiveMessageOnDifferentChannel
+  );
+  const onReceiveVocabActivity = useChatContext(
+    (v) => v.actions.onReceiveVocabActivity
+  );
+  const onResetChat = useChatContext((v) => v.actions.onResetChat);
+  const onSetCall = useChatContext((v) => v.actions.onSetCall);
+  const onSetMembersOnCall = useChatContext(
+    (v) => v.actions.onSetMembersOnCall
+  );
+  const onSetMyStream = useChatContext((v) => v.actions.onSetMyStream);
+  const onSetOnlineUserData = useChatContext(
+    (v) => v.actions.onSetOnlineUserData
+  );
+  const onSetPeerStreams = useChatContext((v) => v.actions.onSetPeerStreams);
+  const onShowIncoming = useChatContext((v) => v.actions.onShowIncoming);
+  const onShowOutgoing = useChatContext((v) => v.actions.onShowOutgoing);
+  const onUpdateSelectedChannelId = useChatContext(
+    (v) => v.actions.onUpdateSelectedChannelId
+  );
+  const onUpdateCollectorsRankings = useChatContext(
+    (v) => v.actions.onUpdateCollectorsRankings
+  );
 
   const category = useHomeContext((v) => v.state.category);
   const feeds = useHomeContext((v) => v.state.feeds);

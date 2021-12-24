@@ -22,15 +22,14 @@ AccountMenu.propTypes = {
 
 function AccountMenu({ className, history }) {
   const [twinkleCoinsHovered, setTwinkleCoinsHovered] = useState(false);
+  const { loggedIn, username, userId, managementLevel, twinkleCoins } =
+    useMyState();
   const onLogout = useAppContext((v) => v.user.actions.onLogout);
   const onOpenSigninModal = useAppContext(
     (v) => v.user.actions.onOpenSigninModal
   );
-  const {
-    actions: { onResetChat }
-  } = useChatContext();
-  const { loggedIn, username, userId, managementLevel, twinkleCoins } =
-    useMyState();
+  const onResetChat = useChatContext((v) => v.actions.onResetChat);
+
   const menuProps = useMemo(() => {
     const result = [
       {

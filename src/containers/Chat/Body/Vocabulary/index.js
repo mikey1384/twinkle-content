@@ -37,15 +37,17 @@ function Vocabulary() {
   const onUpdateNumWordsCollected = useAppContext(
     (v) => v.user.actions.onUpdateNumWordsCollected
   );
-  const {
-    state: { vocabErrorMessage, wordsObj, wordRegisterStatus },
-    actions: {
-      onRegisterWord,
-      onSetWordRegisterStatus,
-      onSetWordsObj,
-      onUpdateCollectorsRankings
-    }
-  } = useChatContext();
+  const vocabErrorMessage = useChatContext((v) => v.state.vocabErrorMessage);
+  const wordsObj = useChatContext((v) => v.state.wordsObj);
+  const wordRegisterStatus = useChatContext((v) => v.state.wordRegisterStatus);
+  const onRegisterWord = useChatContext((v) => v.actions.onRegisterWord);
+  const onSetWordRegisterStatus = useChatContext(
+    (v) => v.actions.onSetWordRegisterStatus
+  );
+  const onSetWordsObj = useChatContext((v) => v.actions.onSetWordsObj);
+  const onUpdateCollectorsRankings = useChatContext(
+    (v) => v.actions.onUpdateCollectorsRankings
+  );
   const onUpdateUserCoins = useContentContext(
     (v) => v.actions.onUpdateUserCoins
   );

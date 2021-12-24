@@ -83,9 +83,7 @@ export default function BasicInfos({
   const onUpdateProfileInfo = useContentContext(
     (v) => v.actions.onUpdateProfileInfo
   );
-  const {
-    actions: { onOpenNewChatTab }
-  } = useChatContext();
+  const onOpenNewChatTab = useChatContext((v) => v.actions.onOpenNewChatTab);
   const userInfoOnEdit = useInputContext(
     (v) => v.state.userInfo.userInfoOnEdit
   );

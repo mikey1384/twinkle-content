@@ -29,11 +29,9 @@ export default function UserListModal({
   users
 }) {
   const history = useHistory();
-  const loadDMChannel = useAppContext((v) => v.requestHelpers.loadDMChannel);
-  const {
-    actions: { onOpenNewChatTab }
-  } = useChatContext();
   const { userId, username, profilePicUrl, authLevel } = useMyState();
+  const loadDMChannel = useAppContext((v) => v.requestHelpers.loadDMChannel);
+  const onOpenNewChatTab = useChatContext((v) => v.actions.onOpenNewChatTab);
   const allUsers = useMemo(() => {
     const otherUsers = users.filter((user) => user.id !== userId);
     let userArray = [];

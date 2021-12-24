@@ -62,9 +62,8 @@ function MainNavs({
     (v) => v.user.actions.onSetLastChatPath
   );
   const feedsOutdated = useHomeContext((v) => v.state.feedsOutdated);
-  const {
-    state: { chatType, loaded: chatLoaded }
-  } = useChatContext();
+  const chatType = useChatContext((v) => v.state.chatType);
+  const chatLoaded = useChatContext((v) => v.state.loaded);
   const loaded = useRef(false);
   const timerRef = useRef(null);
 

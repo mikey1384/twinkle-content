@@ -40,10 +40,14 @@ function ActivitiesContainer({ style }) {
     }
   });
   const loadVocabulary = useAppContext((v) => v.requestHelpers.loadVocabulary);
-  const {
-    state: { vocabActivities, wordsObj, vocabActivitiesLoadMoreButton },
-    actions: { onLoadMoreVocabulary }
-  } = useChatContext();
+  const vocabActivities = useChatContext((v) => v.state.vocabActivities);
+  const wordsObj = useChatContext((v) => v.state.wordsObj);
+  const vocabActivitiesLoadMoreButton = useChatContext(
+    (v) => v.state.vocabActivitiesLoadMoreButton
+  );
+  const onLoadMoreVocabulary = useChatContext(
+    (v) => v.actions.onLoadMoreVocabulary
+  );
 
   const fillerHeight =
     ActivitiesContainerRef.current?.offsetHeight >

@@ -35,9 +35,9 @@ export default function Input({
 }) {
   const state = useInputContext((v) => v.state);
   const onEnterComment = useInputContext((v) => v.actions.onEnterComment);
-  const {
-    actions: { onSetVocabErrorMessage }
-  } = useChatContext();
+  const onSetVocabErrorMessage = useChatContext(
+    (v) => v.actions.onSetVocabErrorMessage
+  );
   const text = useMemo(() => state['vocabulary']?.text || '', [state]);
 
   useEffect(() => {

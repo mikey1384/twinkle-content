@@ -75,9 +75,10 @@ function Chess({
   style
 }) {
   const { userId, banned } = useMyState();
-  const {
-    state: { creatingNewDMChannel, selectedChannelId }
-  } = useChatContext();
+  const creatingNewDMChannel = useChatContext(
+    (v) => v.state.creatingNewDMChannel
+  );
+  const selectedChannelId = useChatContext((v) => v.state.selectedChannelId);
   const playerColors = useRef({
     [myId]: 'white',
     [opponentName]: 'black'

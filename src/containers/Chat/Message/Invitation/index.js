@@ -35,10 +35,15 @@ export default function Invitation({
   const parseChannelPath = useAppContext(
     (v) => v.requestHelpers.parseChannelPath
   );
-  const {
-    state: { channelPathIdHash, channelsObj },
-    actions: { onSetChatInvitationDetail, onUpdateChannelPathIdHash }
-  } = useChatContext();
+  const channelPathIdHash = useChatContext((v) => v.state.channelPathIdHash);
+  const channelsObj = useChatContext((v) => v.state.channelsObj);
+  const onSetChatInvitationDetail = useChatContext(
+    (v) => v.actions.onSetChatInvitationDetail
+  );
+  const onUpdateChannelPathIdHash = useChatContext(
+    (v) => v.actions.onUpdateChannelPathIdHash
+  );
+
   useEffect(() => {
     if (!invitationChannelId) {
       init();

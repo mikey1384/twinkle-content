@@ -130,66 +130,110 @@ function Chat({ onFileUpload }) {
   } = useMyState();
   const state = useInputContext((v) => v.state);
   const onEnterComment = useInputContext((v) => v.actions.onEnterComment);
-  const {
-    state: {
-      allFavoriteChannelIds,
-      chatType,
-      chatStatus,
-      chessModalShown,
-      channelsObj,
-      channelPathIdHash,
-      channelOnCall,
-      creatingNewDMChannel,
-      currentChannelName,
-      filesBeingUploaded,
-      isRespondingToSubject,
-      loadingVocabulary,
-      loaded,
-      recepientId,
-      reconnecting,
-      selectedChannelId,
-      subjectObj,
-      subjectSearchResults
-    },
-    actions: {
-      onClearNumUnreads,
-      onClearSubjectSearchResults,
-      onCreateNewChannel,
-      onDeleteMessage,
-      onEditChannelSettings,
-      onEditMessage,
-      onEnterChannelWithId,
-      onEnterEmptyChat,
-      onHideAttachment,
-      onHideChat,
-      onLeaveChannel,
-      onLoadChatSubject,
-      onLoadMoreMessages,
-      onLoadVocabulary,
-      onNotifyThatMemberLeftChannel,
-      onReceiveMessage,
-      onReceiveMessageOnDifferentChannel,
-      onReloadChatSubject,
-      onSaveMessage,
-      onSendFirstDirectMessage,
-      onSetChessModalShown,
-      onSetCurrentChannelName,
-      onSetIsRespondingToSubject,
-      onSetLoadingVocabulary,
-      onSetCreatingNewDMChannel,
-      onSetFavoriteChannel,
-      onSetReplyTarget,
-      onShowIncoming,
-      onSubmitMessage,
-      onSearchChatSubject,
-      onTrimMessages,
-      onUpdateChannelPathIdHash,
-      onUpdateChessMoveViewTimeStamp,
-      onUpdateRecentChessMessage,
-      onUpdateSelectedChannelId,
-      onUploadChatSubject
-    }
-  } = useChatContext();
+  const allFavoriteChannelIds = useChatContext(
+    (v) => v.state.allFavoriteChannelIds
+  );
+  const chatType = useChatContext((v) => v.state.chatType);
+  const chatStatus = useChatContext((v) => v.state.chatStatus);
+  const chessModalShown = useChatContext((v) => v.state.chessModalShown);
+  const channelsObj = useChatContext((v) => v.state.channelsObj);
+  const channelPathIdHash = useChatContext((v) => v.state.channelPathIdHash);
+  const channelOnCall = useChatContext((v) => v.state.channelOnCall);
+  const creatingNewDMChannel = useChatContext(
+    (v) => v.state.creatingNewDMChannel
+  );
+  const currentChannelName = useChatContext((v) => v.state.currentChannelName);
+  const filesBeingUploaded = useChatContext((v) => v.state.filesBeingUploaded);
+  const isRespondingToSubject = useChatContext(
+    (v) => v.state.isRespondingToSubject
+  );
+  const loadingVocabulary = useChatContext((v) => v.state.loadingVocabulary);
+  const loaded = useChatContext((v) => v.state.loaded);
+  const recepientId = useChatContext((v) => v.state.recepientId);
+  const reconnecting = useChatContext((v) => v.state.reconnecting);
+  const selectedChannelId = useChatContext((v) => v.state.selectedChannelId);
+  const subjectObj = useChatContext((v) => v.state.subjectObj);
+  const subjectSearchResults = useChatContext(
+    (v) => v.state.subjectSearchResults
+  );
+  const onClearNumUnreads = useChatContext((v) => v.actions.onClearNumUnreads);
+  const onClearSubjectSearchResults = useChatContext(
+    (v) => v.actions.onClearSubjectSearchResults
+  );
+  const onCreateNewChannel = useChatContext(
+    (v) => v.actions.onCreateNewChannel
+  );
+  const onDeleteMessage = useChatContext((v) => v.actions.onDeleteMessage);
+  const onEditChannelSettings = useChatContext(
+    (v) => v.actions.onEditChannelSettings
+  );
+  const onEditMessage = useChatContext((v) => v.actions.onEditMessage);
+  const onEnterChannelWithId = useChatContext(
+    (v) => v.actions.onEnterChannelWithId
+  );
+  const onEnterEmptyChat = useChatContext((v) => v.actions.onEnterEmptyChat);
+  const onHideAttachment = useChatContext((v) => v.actions.onHideAttachment);
+  const onHideChat = useChatContext((v) => v.actions.onHideChat);
+  const onLeaveChannel = useChatContext((v) => v.actions.onLeaveChannel);
+  const onLoadChatSubject = useChatContext((v) => v.actions.onLoadChatSubject);
+  const onLoadMoreMessages = useChatContext(
+    (v) => v.actions.onLoadMoreMessages
+  );
+  const onLoadVocabulary = useChatContext((v) => v.actions.onLoadVocabulary);
+  const onNotifyThatMemberLeftChannel = useChatContext(
+    (v) => v.actions.onNotifyThatMemberLeftChannel
+  );
+  const onReceiveMessage = useChatContext((v) => v.actions.onReceiveMessage);
+  const onReceiveMessageOnDifferentChannel = useChatContext(
+    (v) => v.actions.onReceiveMessageOnDifferentChannel
+  );
+  const onReloadChatSubject = useChatContext(
+    (v) => v.actions.onReloadChatSubject
+  );
+  const onSaveMessage = useChatContext((v) => v.actions.onSaveMessage);
+  const onSendFirstDirectMessage = useChatContext(
+    (v) => v.actions.onSendFirstDirectMessage
+  );
+  const onSetChessModalShown = useChatContext(
+    (v) => v.actions.onSetChessModalShown
+  );
+  const onSetCurrentChannelName = useChatContext(
+    (v) => v.actions.onSetCurrentChannelName
+  );
+  const onSetIsRespondingToSubject = useChatContext(
+    (v) => v.actions.onSetIsRespondingToSubject
+  );
+  const onSetLoadingVocabulary = useChatContext(
+    (v) => v.actions.onSetLoadingVocabulary
+  );
+  const onSetCreatingNewDMChannel = useChatContext(
+    (v) => v.actions.onSetCreatingNewDMChannel
+  );
+  const onSetFavoriteChannel = useChatContext(
+    (v) => v.actions.onSetFavoriteChannel
+  );
+  const onSetReplyTarget = useChatContext((v) => v.actions.onSetReplyTarget);
+  const onShowIncoming = useChatContext((v) => v.actions.onShowIncoming);
+  const onSubmitMessage = useChatContext((v) => v.actions.onSubmitMessage);
+  const onSearchChatSubject = useChatContext(
+    (v) => v.actions.onSearchChatSubject
+  );
+  const onTrimMessages = useChatContext((v) => v.actions.onTrimMessages);
+  const onUpdateChannelPathIdHash = useChatContext(
+    (v) => v.actions.onUpdateChannelPathIdHash
+  );
+  const onUpdateChessMoveViewTimeStamp = useChatContext(
+    (v) => v.actions.onUpdateChessMoveViewTimeStamp
+  );
+  const onUpdateRecentChessMessage = useChatContext(
+    (v) => v.actions.onUpdateRecentChessMessage
+  );
+  const onUpdateSelectedChannelId = useChatContext(
+    (v) => v.actions.onUpdateSelectedChannelId
+  );
+  const onUploadChatSubject = useChatContext(
+    (v) => v.actions.onUploadChatSubject
+  );
 
   const onSetEmbeddedUrl = useContentContext((v) => v.actions.onSetEmbeddedUrl);
   const onSetActualDescription = useContentContext(

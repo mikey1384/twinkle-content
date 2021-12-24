@@ -45,9 +45,7 @@ export default function UsernameText({
     contentId: user.id
   });
   const { userId, username, profilePicUrl, authLevel } = useMyState();
-  const {
-    actions: { onOpenNewChatTab }
-  } = useChatContext();
+  const onOpenNewChatTab = useChatContext((v) => v.actions.onOpenNewChatTab);
   const [dropdownContext, setDropdownContext] = useState(null);
   const menuShownRef = useRef(false);
   const userXP = useMemo(() => {
