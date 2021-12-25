@@ -91,9 +91,7 @@ function ProfilePanel({ expandable, profileId, style }) {
     (v) => v.actions.onEditRewardComment
   );
   const onInitContent = useContentContext((v) => v.actions.onInitContent);
-  const onLikeComment = useContentContext(
-    (v) => v.actions.onDeleteComment.onLikeComment
-  );
+  const onLikeComment = useContentContext((v) => v.actions.onLikeComment);
   const onLoadComments = useContentContext((v) => v.actions.onLoadComments);
   const onLoadMoreComments = useContentContext(
     (v) => v.actions.onLoadMoreComments
