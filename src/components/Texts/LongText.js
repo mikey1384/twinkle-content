@@ -9,6 +9,7 @@ import { useContentContext } from 'contexts';
 import localize from 'constants/localize';
 
 const readMoreLabel = localize('readMore');
+const lineHeight = 1.7;
 
 LongText.propTypes = {
   children: PropTypes.string,
@@ -107,13 +108,14 @@ export default function LongText({
     <div style={style} className={className}>
       <p>
         {fullText ? (
-          <span>{innerHTML}</span>
+          <span style={{ lineHeight }}>{innerHTML}</span>
         ) : (
           <>
             <span
               ref={ContainerRef}
               style={{
                 overflow: 'hidden',
+                lineHeight,
                 display: '-webkit-box',
                 WebkitLineClamp: maxLines,
                 WebkitBoxOrient: 'vertical'
