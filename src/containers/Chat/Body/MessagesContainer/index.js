@@ -117,10 +117,11 @@ function MessagesContainer({
     messagesLoadMoreButton = false
   } = currentChannel;
   const scrolledToBottomRef = useRef(true);
+  const loadMoreButtonLock = useRef(false);
   const [chessCountdownObj, setChessCountdownObj] = useState({});
   const [textAreaHeight, setTextAreaHeight] = useState(0);
   const [inviteUsersModalShown, setInviteUsersModalShown] = useState(false);
-  const [loadMoreButtonLock, setLoadMoreButtonLock] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [newUnseenMessage, setNewUnseenMessage] = useState(false);
   const [selectVideoModalShown, setSelectVideoModalShown] = useState(false);
   const [leaving, setLeaving] = useState(false);
@@ -369,7 +370,6 @@ function MessagesContainer({
 
   useEffect(() => {
     favoritingRef.current = false;
-    setLoadMoreButtonLock(false);
   }, [selectedChannelId]);
 
   const handleChessModalShown = useCallback(() => {
@@ -639,8 +639,9 @@ function MessagesContainer({
   const handleLoadMore = useCallback(async () => {
     if (messagesLoadMoreButton) {
       const messageId = messages[messages.length - 1].id;
-      if (!loadMoreButtonLock) {
-        setLoadMoreButtonLock(true);
+      if (!loadMoreButtonLock.current) {
+        setLoadingMore(true);
+        loadMoreButtonLock.current = true;
         prevScrollPosition.current =
           ((MessagesRef.current || {}).scrollHeight -
             (MessagesRef.current || {}).offsetHeight) *
@@ -653,21 +654,17 @@ function MessagesContainer({
               channelId: selectedChannelId
             });
           onLoadMoreMessages({ messageIds, messagesObj, loadedChannelId });
-          setLoadMoreButtonLock(false);
+          setLoadingMore(false);
+          loadMoreButtonLock.current = false;
         } catch (error) {
           console.error(error);
-          setLoadMoreButtonLock(false);
+          setLoadingMore(false);
+          loadMoreButtonLock.current = false;
         }
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    loadMoreButtonLock,
-    messages,
-    messagesLoadMoreButton,
-    selectedChannelId,
-    userId
-  ]);
+  }, [messages, messagesLoadMoreButton, selectedChannelId, userId]);
 
   const handleAcceptGroupInvitation = useCallback(
     async (invitationChannelPath) => {
@@ -993,7 +990,7 @@ function MessagesContainer({
                     <LoadMoreButton
                       filled
                       color="lightBlue"
-                      loading={loadMoreButtonLock}
+                      loading={loadingMore}
                       onClick={handleLoadMore}
                     />
                   </div>
