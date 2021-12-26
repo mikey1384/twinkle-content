@@ -2,7 +2,7 @@ import React, { memo, useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import UsernameText from 'components/Texts/UsernameText';
 import Link from 'components/Link';
-import FullTextReveal from 'components/Texts/FullTextReveal';
+import FullTextReveal from 'components/Texts/FullTextRevealFromOuterLayer';
 import ErrorBoundary from 'components/ErrorBoundary';
 import VideoThumbImage from 'components/VideoThumbImage';
 import Icon from 'components/Icon';
@@ -36,15 +36,23 @@ function VideoThumb({ className, clickSafe, style, to, user, video }) {
     contentType: 'video',
     contentId: video.id
   });
-  const [onTitleHover, setOnTitleHover] = useState(false);
+  const [titleContext, setTitleContext] = useState(null);
   const ThumbLabelRef = useRef(null);
+  const ThumbLabelContainerRef = useRef(null);
   const onLinkClick = useCallback(
     () => Promise.resolve(clickSafe),
     [clickSafe]
   );
   const onMouseOver = useCallback(() => {
     if (textIsOverflown(ThumbLabelRef.current)) {
-      setOnTitleHover(true);
+      const parentElementDimensions =
+        ThumbLabelContainerRef.current?.getBoundingClientRect() || {
+          x: 0,
+          y: 0,
+          width: 0,
+          height: 0
+        };
+      setTitleContext(parentElementDimensions);
     }
   }, []);
 
@@ -88,7 +96,8 @@ function VideoThumb({ className, clickSafe, style, to, user, video }) {
         >
           <div
             onMouseOver={onMouseOver}
-            onMouseLeave={() => setOnTitleHover(false)}
+            onMouseLeave={() => setTitleContext(null)}
+            ref={ThumbLabelContainerRef}
             style={{ width: '100%' }}
           >
             <p
@@ -110,7 +119,13 @@ function VideoThumb({ className, clickSafe, style, to, user, video }) {
                 {video.title}
               </a>
             </p>
-            <FullTextReveal show={onTitleHover} text={video.title} />
+            {titleContext && (
+              <FullTextReveal
+                textContext={titleContext}
+                text={video.title}
+                style={{ fontSize: '1.3rem' }}
+              />
+            )}
           </div>
           <div
             style={{

@@ -32,12 +32,7 @@ export default function DropdownList({
   onMouseLeave = () => {}
 }) {
   const MenuRef = useRef(null);
-  const { x, y } = useMemo(() => {
-    return {
-      x: dropdownContext.x,
-      y: dropdownContext.y
-    };
-  }, [dropdownContext]);
+  const { x, y, width, height } = dropdownContext;
   outsideClickMethod(MenuRef, onHideMenu);
   const displaysToTheRight = useMemo(() => {
     return window.innerWidth / 2 - x > 0;
@@ -64,12 +59,10 @@ export default function DropdownList({
             position: absolute;
             left: ${`${
               displaysToTheRight
-                ? `CALC(${x}px + ${dropdownContext.width}px + 1rem)`
+                ? `CALC(${x}px + ${width}px + 1rem)`
                 : `CALC(${x}px - 1rem)`
             }`};
-            top: ${isReversed
-              ? `CALC(${y}px + ${dropdownContext.height}px)`
-              : `${y}px`};
+            top: ${isReversed ? `CALC(${y}px + ${height}px)` : `${y}px`};
             z-index: 10;
             padding: 0;
             transform: translate(

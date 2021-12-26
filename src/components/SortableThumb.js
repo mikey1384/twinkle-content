@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
 import ItemTypes from 'constants/itemTypes';
 import { useDrag, useDrop } from 'react-dnd';
-import FullTextReveal from 'components/Texts/FullTextReveal';
+import FullTextReveal from 'components/Texts/FullTextRevealFromOuterLayer';
 import VideoThumbImage from 'components/VideoThumbImage';
 import { textIsOverflown } from 'helpers';
 import { Color, mobileMaxWidth } from 'constants/css';
@@ -15,8 +15,9 @@ SortableThumb.propTypes = {
 };
 
 export default function SortableThumb({ id, onMove, video }) {
-  const [titleHovered, setTitleHovered] = useState(false);
+  const [titleContext, setTitleContext] = useState(null);
   const Draggable = useRef(null);
+  const ThumbLabelContainerRef = useRef(null);
   const ThumbLabelRef = useRef(null);
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypes.THUMB,
@@ -79,8 +80,9 @@ export default function SortableThumb({ id, onMove, video }) {
           }}
         >
           <div
+            ref={ThumbLabelContainerRef}
             onMouseOver={onMouseOver}
-            onMouseLeave={() => setTitleHovered(false)}
+            onMouseLeave={() => setTitleContext(null)}
           >
             <p
               ref={ThumbLabelRef}
@@ -95,7 +97,13 @@ export default function SortableThumb({ id, onMove, video }) {
             >
               {video.title}
             </p>
-            <FullTextReveal show={titleHovered} text={video.title} />
+            {titleContext && (
+              <FullTextReveal
+                style={{ fontSize: '1.3rem' }}
+                textContext={titleContext}
+                text={video.title}
+              />
+            )}
           </div>
           <p
             style={{
@@ -115,7 +123,14 @@ export default function SortableThumb({ id, onMove, video }) {
 
   function onMouseOver() {
     if (textIsOverflown(ThumbLabelRef.current)) {
-      setTitleHovered(true);
+      const parentElementDimensions =
+        ThumbLabelContainerRef.current?.getBoundingClientRect() || {
+          x: 0,
+          y: 0,
+          width: 0,
+          height: 0
+        };
+      setTitleContext(parentElementDimensions);
     }
   }
 }
