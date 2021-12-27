@@ -93,9 +93,8 @@ function AccountMenu({ className, history }) {
           className={className}
           transparent
           listStyle={{
-            top: '0.2rem',
-            width: '13rem',
-            marginRight: '1rem'
+            top: '4.5rem',
+            width: '13rem'
           }}
           text={
             <div
