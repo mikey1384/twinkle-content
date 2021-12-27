@@ -214,6 +214,7 @@ function Chess({
 
   const handleMove = useCallback(
     ({ newSquares, dest, isCheck, isDraw, isCheckmate, isStalemate }) => {
+      const moveNumber = move.number ? move.number + 1 : 1;
       const moveDetail =
         typeof dest === 'number'
           ? {
@@ -229,7 +230,7 @@ function Chess({
           : {};
       const json = JSON.stringify({
         move: {
-          number: move.number ? move.number + 1 : 1,
+          number: moveNumber,
           by: myId,
           ...moveDetail
         },
@@ -257,7 +258,7 @@ function Chess({
         isDraw,
         isStalemate
       });
-      onChessMove({ state: json, isCheckmate, isStalemate });
+      onChessMove({ state: json, isCheckmate, isStalemate, moveNumber });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [move.number, myColor, myId, opponentId, selectedIndex, squares]

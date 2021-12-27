@@ -903,7 +903,8 @@ export default function ChatReducer(state, action) {
           )
         }
       };
-    case 'RECEIVE_MESSAGE':
+    case 'RECEIVE_MESSAGE': {
+      const messageId = action.message.id || uuidv1();
       return {
         ...state,
         numUnreads:
@@ -914,12 +915,12 @@ export default function ChatReducer(state, action) {
           ...state.channelsObj,
           [action.message.channelId]: {
             ...state.channelsObj[action.message.channelId],
-            messageIds: [action.message.id].concat(
+            messageIds: [messageId].concat(
               state.channelsObj[action.message.channelId].messageIds
             ),
             messagesObj: {
               ...state.channelsObj[action.message.channelId].messagesObj,
-              [action.message.id]: action.message
+              [messageId]: action.message
             },
             members: [
               ...state.channelsObj[action.message.channelId].members,
@@ -955,6 +956,7 @@ export default function ChatReducer(state, action) {
           }
         }
       };
+    }
     case 'RECEIVE_FIRST_MSG': {
       const messageId = uuidv1();
       return {

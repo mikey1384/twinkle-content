@@ -411,7 +411,7 @@ function MessagesContainer({
   );
 
   const handleConfirmChessMove = useCallback(
-    async ({ state, isCheckmate, isStalemate }) => {
+    async ({ state, isCheckmate, isStalemate, moveNumber }) => {
       const gameWinnerId = isCheckmate ? userId : isStalemate ? 0 : undefined;
       const params = {
         userId,
@@ -422,22 +422,31 @@ function MessagesContainer({
       const content = 'Made a chess move';
       try {
         if (selectedChannelId) {
-          const messageId = uuidv1();
-          onSubmitMessage({
-            messageId,
-            message: {
-              ...params,
-              profilePicUrl,
-              username,
-              content,
-              channelId: selectedChannelId
-            }
-          });
           onSetReplyTarget({ channelId: selectedChannelId, target: null });
-          socket.emit('user_made_a_move', {
-            userId,
-            channelId: selectedChannelId
-          });
+          socket.emit(
+            'user_made_a_move',
+            {
+              userId,
+              channelId: selectedChannelId,
+              moveNumber
+            },
+            (success) => {
+              if (success) {
+                const messageId = uuidv1();
+                onSubmitMessage({
+                  messageId,
+                  message: {
+                    ...params,
+                    profilePicUrl,
+                    username,
+                    content,
+                    channelId: selectedChannelId
+                  }
+                });
+                onSetChessModalShown(false);
+              }
+            }
+          );
         } else {
           const { alreadyExists, channel, message, pathId } =
             await startNewDMChannel({
