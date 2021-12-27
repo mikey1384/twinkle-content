@@ -93,7 +93,7 @@ export default function AddModeratorModal({ accountTypes, onHide }) {
   }, [accountTypes, selectedUsers]);
 
   return (
-    <Modal onHide={onHide}>
+    <Modal closeWhenClickedOutside={false} onHide={onHide}>
       <header>Add / Edit Moderators</header>
       <main>
         <SearchInput
