@@ -1,12 +1,14 @@
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import React, { useRef, useState } from 'react';
 import ItemTypes from 'constants/itemTypes';
 import { useDrag, useDrop } from 'react-dnd';
 import FullTextReveal from 'components/Texts/FullTextRevealFromOuterLayer';
 import VideoThumbImage from 'components/VideoThumbImage';
-import { textIsOverflown } from 'helpers';
+import { textIsOverflown, isMobile } from 'helpers';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+
+const deviceIsMobile = isMobile(navigator);
 
 SortableThumb.propTypes = {
   id: PropTypes.number.isRequired,
@@ -17,6 +19,7 @@ SortableThumb.propTypes = {
 export default function SortableThumb({ id, onMove, video }) {
   const [titleContext, setTitleContext] = useState(null);
   const Draggable = useRef(null);
+  const timerRef = useRef(null);
   const ThumbLabelContainerRef = useRef(null);
   const ThumbLabelRef = useRef(null);
   const [{ isDragging }, drag] = useDrag({
@@ -37,6 +40,14 @@ export default function SortableThumb({ id, onMove, video }) {
       }
     }
   });
+
+  useEffect(() => {
+    if (titleContext && deviceIsMobile) {
+      timerRef.current = setTimeout(() => {
+        setTitleContext(null);
+      }, 1000);
+    }
+  }, [titleContext]);
 
   return (
     <div

@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useRef, useState } from 'react';
+import React, { memo, useEffect, useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import UsernameText from 'components/Texts/UsernameText';
 import Link from 'components/Link';
@@ -8,10 +8,11 @@ import VideoThumbImage from 'components/VideoThumbImage';
 import Icon from 'components/Icon';
 import { Color } from 'constants/css';
 import { css } from '@emotion/css';
-import { textIsOverflown } from 'helpers';
+import { textIsOverflown, isMobile } from 'helpers';
 import { useContentState, useMyState } from 'helpers/hooks';
 import localize from 'constants/localize';
 
+const deviceIsMobile = isMobile(navigator);
 const addedByLabel = localize('addedBy');
 
 VideoThumb.propTypes = {
@@ -31,6 +32,7 @@ VideoThumb.propTypes = {
 };
 
 function VideoThumb({ className, clickSafe, style, to, user, video }) {
+  const timerRef = useRef(null);
   const { profileTheme } = useMyState();
   const { isDeleted } = useContentState({
     contentType: 'video',
@@ -55,6 +57,14 @@ function VideoThumb({ className, clickSafe, style, to, user, video }) {
       setTitleContext(parentElementDimensions);
     }
   }, []);
+
+  useEffect(() => {
+    if (titleContext && deviceIsMobile) {
+      timerRef.current = setTimeout(() => {
+        setTitleContext(null);
+      }, 1000);
+    }
+  }, [titleContext]);
 
   return !isDeleted ? (
     <ErrorBoundary style={style}>
