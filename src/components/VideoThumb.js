@@ -60,6 +60,7 @@ function VideoThumb({ className, clickSafe, style, to, user, video }) {
 
   useEffect(() => {
     if (titleContext && deviceIsMobile) {
+      clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => {
         setTitleContext(null);
       }, 1000);
