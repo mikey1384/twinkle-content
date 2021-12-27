@@ -18,7 +18,8 @@ DropdownList.propTypes = {
   style: PropTypes.object,
   direction: PropTypes.string,
   onMouseEnter: PropTypes.func,
-  onMouseLeave: PropTypes.func
+  onMouseLeave: PropTypes.func,
+  zIndex: PropTypes.number
 };
 
 export default function DropdownList({
@@ -29,7 +30,8 @@ export default function DropdownList({
   style = {},
   onHideMenu = () => {},
   onMouseEnter = () => {},
-  onMouseLeave = () => {}
+  onMouseLeave = () => {},
+  zIndex = 100 * 1000 * 1000
 }) {
   const MenuRef = useRef(null);
   const { x, y, width, height } = dropdownContext;
@@ -44,7 +46,7 @@ export default function DropdownList({
   return createPortal(
     <ErrorBoundary
       style={{
-        zIndex: 9000000,
+        zIndex,
         top: 0,
         position: 'fixed'
       }}
