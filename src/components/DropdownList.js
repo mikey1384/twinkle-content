@@ -58,11 +58,11 @@ export default function DropdownList({
           className={`${css`
             position: absolute;
             left: ${`${
-              displaysToTheRight
-                ? `CALC(${x}px + ${width}px + 1rem)`
-                : `CALC(${x}px - 1rem)`
+              displaysToTheRight ? `${x}px` : `CALC(${x}px + ${width}px)`
             }`};
-            top: ${isReversed ? `CALC(${y}px + ${height}px)` : `${y}px`};
+            top: ${isReversed
+              ? `CALC(${y}px - 0.5rem)`
+              : `CALC(${y}px + ${height}px + 0.5rem)`};
             z-index: 10;
             padding: 0;
             transform: translate(
