@@ -137,6 +137,14 @@ function Channel({
     userId
   ]);
 
+  const badgeWidth = useMemo(() => {
+    const numDigits = numUnreads.toString().length || 1;
+    if (numDigits === 1) {
+      return '2rem';
+    }
+    return `${Math.min(numDigits, 4)}.5rem`;
+  }, [numUnreads]);
+
   return (
     <div
       key={channelId}
@@ -222,17 +230,16 @@ function Channel({
           <div
             style={{
               background: Color.rose(),
-              fontSize: '1.3rem',
               display: 'flex',
               color: '#fff',
               fontWeight: 'bold',
-              minWidth: '2rem',
+              fontSize: '1.5rem',
+              minWidth: badgeWidth,
               height: '2rem',
-              borderRadius: '50%',
+              borderRadius: '1rem',
+              lineHeight: 1,
               justifyContent: 'center',
-              alignItems: 'center',
-              position: 'relative',
-              bottom: '1.1rem'
+              alignItems: 'center'
             }}
           >
             {numUnreads}
