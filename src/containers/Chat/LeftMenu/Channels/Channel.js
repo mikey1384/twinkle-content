@@ -138,7 +138,7 @@ function Channel({
   ]);
 
   const badgeWidth = useMemo(() => {
-    const numDigits = numUnreads.toString().length || 1;
+    const numDigits = numUnreads?.toString()?.length || 1;
     if (numDigits === 1) {
       return '2rem';
     }
