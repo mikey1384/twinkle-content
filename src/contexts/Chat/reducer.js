@@ -993,7 +993,8 @@ export default function ChatReducer(state, action) {
         )
       };
     }
-    case 'RECEIVE_MSG_ON_DIFF_CHANNEL':
+    case 'RECEIVE_MSG_ON_DIFF_CHANNEL': {
+      const messageId = action.message.id || uuidv1();
       return {
         ...state,
         channelsObj: {
@@ -1001,12 +1002,12 @@ export default function ChatReducer(state, action) {
           [action.channel.id]: {
             ...state.channelsObj[action.channel.id],
             ...action.channel,
-            messageIds: [action.message.id].concat(
+            messageIds: [messageId].concat(
               state.channelsObj[action.channel.id]?.messageIds || []
             ),
             messagesObj: {
               ...state.channelsObj[action.channel.id]?.messagesObj,
-              [action.message.id]: action.message
+              [messageId]: action.message
             },
             numUnreads: action.isMyMessage
               ? Number(state.channelsObj[action.channel.id]?.numUnreads || 0)
@@ -1031,6 +1032,7 @@ export default function ChatReducer(state, action) {
           )
         )
       };
+    }
     case 'RECEIVE_VOCAB_ACTIVITY':
       return {
         ...state,

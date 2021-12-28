@@ -504,6 +504,7 @@ function Chat({ onFileUpload }) {
       if (!messageIsForCurrentChannel) {
         onReceiveMessageOnDifferentChannel({
           pageVisible,
+          message,
           channel: {
             id: channelId,
             channelName,
