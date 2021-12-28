@@ -443,8 +443,8 @@ function MessagesContainer({
                     channelId: selectedChannelId
                   }
                 });
-                onSetChessModalShown(false);
               }
+              onSetChessModalShown(false);
             }
           );
         } else {
