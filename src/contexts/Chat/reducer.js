@@ -234,7 +234,7 @@ export default function ChatReducer(state, action) {
       };
     }
     case 'CREATE_NEW_DM_CHANNEL': {
-      const messageId = uuidv1();
+      const messageId = action.message.id || uuidv1();
       return {
         ...state,
         subject: {},
