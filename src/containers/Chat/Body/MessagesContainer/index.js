@@ -985,26 +985,29 @@ function MessagesContainer({
                   }
                 />
               ))}
-              {!loading && messagesLoadMoreButton && (
-                <div>
-                  <div style={{ width: '100%', height: '1rem' }} />
-                  <div
-                    style={{
-                      marginBottom: '1rem',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      width: '100%'
-                    }}
-                  >
-                    <LoadMoreButton
-                      filled
-                      color="lightBlue"
-                      loading={loadingMore}
-                      onClick={handleLoadMore}
-                    />
+              {!loading &&
+                (messagesLoadMoreButton ? (
+                  <div>
+                    <div style={{ width: '100%', height: '1rem' }} />
+                    <div
+                      style={{
+                        marginBottom: '1rem',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        width: '100%'
+                      }}
+                    >
+                      <LoadMoreButton
+                        filled
+                        color="lightBlue"
+                        loading={loadingMore}
+                        onClick={handleLoadMore}
+                      />
+                    </div>
                   </div>
-                </div>
-              )}
+                ) : (
+                  <div style={{ paddingTop: '20rem' }} />
+                ))}
             </>
           )}
         </div>
