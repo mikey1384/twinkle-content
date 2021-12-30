@@ -1237,8 +1237,8 @@ const languageObj = {
     kr: '보상 레벨 설정'
   },
   setVideoRewardLevel: {
-    en: 'Set Reward Level (consider both difficulty and importance)',
-    kr: '보상 레벨 설정 (난이도와 중요도 모두 고려)'
+    en: 'Set Reward Level',
+    kr: '보상 레벨 설정'
   },
   settings: {
     en: 'Settings',
