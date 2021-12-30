@@ -1,4 +1,11 @@
-import React, { memo, useContext, useCallback, useMemo } from 'react';
+import React, {
+  memo,
+  useContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import EditTextArea from 'components/Texts/EditTextArea';
@@ -55,6 +62,7 @@ function TextMessage({
   userCanEditThis,
   theme
 }) {
+  const [forceRefreshMarginTop, setForceRefreshMarginTop] = useState(0);
   const {
     requests: { hideChatAttachment },
     actions: { onHideAttachment }
@@ -86,15 +94,22 @@ function TextMessage({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [channelId, messageId]);
 
+  useEffect(() => {
+    if (deviceIsMobile) {
+      setForceRefreshMarginTop(1);
+      setForceRefreshMarginTop(0);
+    }
+  }, [isEditing]);
+
   return (
     <ErrorBoundary>
-      <div>
+      <div style={{ marginTop: forceRefreshMarginTop }}>
         {isEditing ? (
           <EditTextArea
             allowEmptyText
             contentId={messageId}
             contentType="chat"
-            autoFocus={!deviceIsMobile}
+            autoFocus
             disabled={!socketConnected}
             rows={2}
             text={content}
