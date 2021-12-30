@@ -3,8 +3,7 @@ import React, {
   useContext,
   useCallback,
   useEffect,
-  useMemo,
-  useState
+  useMemo
 } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
@@ -29,6 +28,7 @@ TextMessage.propTypes = {
   isNotification: PropTypes.bool,
   isReloadedSubject: PropTypes.bool,
   isSubject: PropTypes.bool,
+  forceRefreshForMobile: PropTypes.func,
   messageId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   MessageStyle: PropTypes.object,
   numMsgs: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -50,6 +50,7 @@ function TextMessage({
   isNotification,
   isReloadedSubject,
   isSubject,
+  forceRefreshForMobile,
   messageId,
   MessageStyle,
   numMsgs,
@@ -62,7 +63,6 @@ function TextMessage({
   userCanEditThis,
   theme
 }) {
-  const [forceRefreshMarginTop, setForceRefreshMarginTop] = useState(0);
   const {
     requests: { hideChatAttachment },
     actions: { onHideAttachment }
@@ -95,15 +95,14 @@ function TextMessage({
   }, [channelId, messageId]);
 
   useEffect(() => {
-    if (deviceIsMobile) {
-      setForceRefreshMarginTop(1);
-      setForceRefreshMarginTop(0);
+    if (deviceIsMobile && isEditing) {
+      forceRefreshForMobile?.();
     }
-  }, [isEditing]);
+  }, [isEditing, forceRefreshForMobile]);
 
   return (
     <ErrorBoundary>
-      <div style={{ marginTop: forceRefreshMarginTop }}>
+      <div>
         {isEditing ? (
           <EditTextArea
             allowEmptyText

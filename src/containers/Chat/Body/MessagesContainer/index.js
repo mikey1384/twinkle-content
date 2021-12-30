@@ -967,6 +967,7 @@ function MessagesContainer({
                   chessCountdownNumber={chessCountdownNumber}
                   chessOpponent={chessOpponent}
                   currentChannel={currentChannel}
+                  forceRefreshForMobile={handleForceRefreshForMobile}
                   index={index}
                   isLastMsg={index === 0}
                   isNotification={!!message.isNotification}
@@ -1147,6 +1148,13 @@ function MessagesContainer({
       )}
     </ErrorBoundary>
   );
+
+  function handleForceRefreshForMobile() {
+    const currentScrollTop = (MessagesRef.current || {}).scrollTop;
+    (MessagesRef.current || {}).scrollTop = currentScrollTop;
+    (MessagesRef.current || {}).scrollTop = currentScrollTop - 1000;
+    (MessagesRef.current || {}).scrollTop = currentScrollTop;
+  }
 
   function handleReceiveNewMessage() {
     if (MessagesRef.current && !scrolledToBottomRef.current) {

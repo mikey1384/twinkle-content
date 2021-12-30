@@ -49,6 +49,7 @@ Message.propTypes = {
   channelId: PropTypes.number,
   channelName: PropTypes.string,
   currentChannel: PropTypes.object,
+  forceRefreshForMobile: PropTypes.func,
   message: PropTypes.object,
   onDelete: PropTypes.func,
   index: PropTypes.number,
@@ -72,6 +73,7 @@ function Message({
   chessCountdownNumber,
   chessOpponent,
   currentChannel,
+  forceRefreshForMobile,
   index,
   isLastMsg,
   isNotification,
@@ -646,6 +648,7 @@ function Message({
                         channelId={channelId}
                         content={content}
                         extractedUrl={extractedUrl}
+                        forceRefreshForMobile={forceRefreshForMobile}
                         myId={myId}
                         messageId={messageId}
                         numMsgs={numMsgs}
