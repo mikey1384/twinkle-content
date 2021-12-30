@@ -11,12 +11,15 @@ import Embedly from 'components/Embedly';
 import Profile from './Profile';
 import { css } from '@emotion/css';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
+import { isMobile } from 'helpers';
 import { container } from './Styles';
 import { useContentState, useLazyLoad } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
 import { useHistory } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import localize from 'constants/localize';
+
+const deviceIsMobile = isMobile(navigator);
 
 ContentPanel.propTypes = {
   autoExpand: PropTypes.bool,
@@ -39,6 +42,7 @@ export default function ContentPanel({
   style = {},
   zIndex = 1
 }) {
+  const BodyRef = useRef(document.scrollingElement || document.documentElement);
   const [ComponentRef, inView] = useInView({
     threshold: 0
   });
@@ -219,7 +223,12 @@ export default function ContentPanel({
           onUploadTargetComment
         }}
       >
-        <div style={style} className={className} ref={ComponentRef}>
+        <div
+          onMouseDown={handleTouch}
+          style={style}
+          className={className}
+          ref={ComponentRef}
+        >
           <div
             style={{
               width: '100%',
@@ -370,4 +379,13 @@ export default function ContentPanel({
       </Context.Provider>
     </ErrorBoundary>
   );
+
+  function handleTouch() {
+    if (deviceIsMobile) {
+      const currentScrollTop = (BodyRef.current || {}).scrollTop || 0;
+      (BodyRef.current || {}).scrollTop = currentScrollTop;
+      (BodyRef.current || {}).scrollTop = currentScrollTop - 1000;
+      (BodyRef.current || {}).scrollTop = currentScrollTop;
+    }
+  }
 }
