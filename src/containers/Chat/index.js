@@ -15,6 +15,7 @@ import Body from './Body';
 import Loading from 'components/Loading';
 import PleaseLogIn from './PleaseLogIn';
 import LocalContext from './Context';
+import { parseChannelPath } from 'helpers';
 import { phoneMaxWidth } from 'constants/css';
 import { socket } from 'constants/io';
 import { css } from '@emotion/css';
@@ -68,17 +69,11 @@ function Chat({ onFileUpload }) {
   const loadChatSubject = useAppContext(
     (v) => v.requestHelpers.loadChatSubject
   );
-  const loadGeneralChatPathId = useAppContext(
-    (v) => v.requestHelpers.loadGeneralChatPathId
-  );
   const loadMoreChatMessages = useAppContext(
     (v) => v.requestHelpers.loadMoreChatMessages
   );
   const loadRankings = useAppContext((v) => v.requestHelpers.loadRankings);
   const loadVocabulary = useAppContext((v) => v.requestHelpers.loadVocabulary);
-  const parseChannelPath = useAppContext(
-    (v) => v.requestHelpers.parseChannelPath
-  );
   const putFavoriteChannel = useAppContext(
     (v) => v.requestHelpers.putFavoriteChannel
   );
@@ -303,8 +298,7 @@ function Chat({ onFileUpload }) {
       if (!isAccessible) {
         return history.replace(`/chat/${generalChatPathId}`);
       }
-      const channelId =
-        channelPathIdHash[pathId] || (await parseChannelPath(pathId));
+      const channelId = channelPathIdHash[pathId] || parseChannelPath(pathId);
       if (!channelPathIdHash[pathId] && mounted.current) {
         onUpdateChannelPathIdHash({ channelId, pathId });
       }
@@ -584,7 +578,6 @@ function Chat({ onFileUpload }) {
           hideChatAttachment,
           leaveChannel,
           loadChatChannel,
-          loadGeneralChatPathId,
           loadMoreChatMessages,
           loadChatSubject,
           loadRankings,

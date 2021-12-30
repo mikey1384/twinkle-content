@@ -4,6 +4,7 @@ import ChannelDetail from './ChannelDetail';
 import Button from 'components/Button';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import { parseChannelPath } from 'helpers';
 import { useMyState } from 'helpers/hooks';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import { useAppContext, useChatContext } from 'contexts';
@@ -32,9 +33,6 @@ export default function Invitation({
   const loadChatChannel = useAppContext(
     (v) => v.requestHelpers.loadChatChannel
   );
-  const parseChannelPath = useAppContext(
-    (v) => v.requestHelpers.parseChannelPath
-  );
   const channelPathIdHash = useChatContext((v) => v.state.channelPathIdHash);
   const channelsObj = useChatContext((v) => v.state.channelsObj);
   const onSetChatInvitationDetail = useChatContext(
@@ -50,7 +48,7 @@ export default function Invitation({
     }
     async function init() {
       const channelId =
-        channelPathIdHash[invitePath] || (await parseChannelPath(invitePath));
+        channelPathIdHash[invitePath] || parseChannelPath(invitePath);
       if (!channelPathIdHash[invitePath]) {
         onUpdateChannelPathIdHash({
           channelId,

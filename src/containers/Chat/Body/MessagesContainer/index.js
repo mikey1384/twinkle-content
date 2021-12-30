@@ -27,12 +27,16 @@ import CallScreen from './CallScreen';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Icon from 'components/Icon';
 import { v1 as uuidv1 } from 'uuid';
-import { GENERAL_CHAT_ID, rewardReasons } from 'constants/defaultValues';
+import {
+  GENERAL_CHAT_ID,
+  GENERAL_CHAT_PATH_ID,
+  rewardReasons
+} from 'constants/defaultValues';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 import { css } from '@emotion/css';
 import { Color } from 'constants/css';
 import { socket } from 'constants/io';
-import { isMobile } from 'helpers';
+import { isMobile, parseChannelPath } from 'helpers';
 import { useHistory } from 'react-router-dom';
 import LocalContext from '../../Context';
 import localize from 'constants/localize';
@@ -89,9 +93,7 @@ function MessagesContainer({
       hideChat,
       leaveChannel,
       loadChatChannel,
-      loadGeneralChatPathId,
       loadMoreChatMessages,
-      parseChannelPath,
       putFavoriteChannel,
       sendInvitationMessage,
       startNewDMChannel,
@@ -615,8 +617,7 @@ function MessagesContainer({
           username,
           profilePicUrl
         });
-        const pathId = await loadGeneralChatPathId();
-        history.push(`/chat/${pathId}`);
+        history.push(`/chat/${GENERAL_CHAT_PATH_ID}`);
         setLeaveConfirmModalShown(false);
         setLeaving(false);
       } catch (error) {
@@ -679,7 +680,7 @@ function MessagesContainer({
     async (invitationChannelPath) => {
       const invitationChannelId =
         channelPathIdHash[invitationChannelPath] ||
-        (await parseChannelPath(invitationChannelPath));
+        parseChannelPath(invitationChannelPath);
       if (!channelPathIdHash[invitationChannelPath]) {
         onUpdateChannelPathIdHash({
           channelId: invitationChannelId,

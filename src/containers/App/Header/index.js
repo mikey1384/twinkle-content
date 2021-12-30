@@ -22,6 +22,7 @@ import {
 } from 'contexts';
 import {
   GENERAL_CHAT_ID,
+  GENERAL_CHAT_PATH_ID,
   TURN_USERNAME,
   TURN_PASSWORD
 } from 'constants/defaultValues';
@@ -50,9 +51,6 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
   );
   const getNumberOfUnreadMessages = useAppContext(
     (v) => v.requestHelpers.getNumberOfUnreadMessages
-  );
-  const loadGeneralChatPathId = useAppContext(
-    (v) => v.requestHelpers.loadGeneralChatPathId
   );
   const loadChat = useAppContext((v) => v.requestHelpers.loadChat);
   const loadRankings = useAppContext((v) => v.requestHelpers.loadRankings);
@@ -426,12 +424,11 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
     async function handleLeftChatFromAnotherTab(channelId) {
       if (selectedChannelId === channelId) {
         onLeaveChannel(channelId);
-        const pathId = await loadGeneralChatPathId();
         if (usingChat) {
-          history.push(`/chat/${pathId}`);
+          history.push(`/chat/${GENERAL_CHAT_PATH_ID}`);
         } else {
           onUpdateSelectedChannelId(GENERAL_CHAT_ID);
-          onSetLastChatPath(`/${pathId}`);
+          onSetLastChatPath(`/${GENERAL_CHAT_PATH_ID}`);
         }
       } else {
         onLeaveChannel(channelId);
