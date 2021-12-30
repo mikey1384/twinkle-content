@@ -8,8 +8,11 @@ import LongText from 'components/Texts/LongText';
 import { Color } from 'constants/css';
 import { isValidSpoiler } from 'helpers/stringHelpers';
 import { socket } from 'constants/io';
+import { isMobile } from 'helpers';
 import Spoiler from './Spoiler';
 import LocalContext from '../Context';
+
+const deviceIsMobile = isMobile(navigator);
 
 TextMessage.propTypes = {
   attachmentHidden: PropTypes.bool,
@@ -91,7 +94,7 @@ function TextMessage({
             allowEmptyText
             contentId={messageId}
             contentType="chat"
-            autoFocus
+            autoFocus={!deviceIsMobile}
             disabled={!socketConnected}
             rows={2}
             text={content}
