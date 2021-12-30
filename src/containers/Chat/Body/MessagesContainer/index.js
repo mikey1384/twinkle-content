@@ -1150,7 +1150,7 @@ function MessagesContainer({
   );
 
   function handleForceRefreshForMobile() {
-    const currentScrollTop = (MessagesRef.current || {}).scrollTop;
+    const currentScrollTop = (MessagesRef.current || {}).scrollTop || 0;
     (MessagesRef.current || {}).scrollTop = currentScrollTop;
     (MessagesRef.current || {}).scrollTop = currentScrollTop - 1000;
     (MessagesRef.current || {}).scrollTop = currentScrollTop;
