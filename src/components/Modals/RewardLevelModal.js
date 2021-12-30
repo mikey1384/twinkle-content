@@ -13,7 +13,7 @@ import localize from 'constants/localize';
 const cancelLabel = localize('cancel');
 const setLabel = localize('set');
 const settingCannotBeChangedLabel = localize('settingCannotBeChanged');
-const setVideoRewardLevelLabel = localize('setVideoRewardLevel');
+const setRewardLevelLabel = localize('setRewardLevel');
 
 RewardLevelModal.propTypes = {
   contentId: PropTypes.number.isRequired,
@@ -57,12 +57,14 @@ export default function RewardLevelModal({
   return (
     <Modal onHide={onHide}>
       <ErrorBoundary>
-        <header>{setVideoRewardLevelLabel}</header>
+        <header>{setRewardLevelLabel}</header>
         <main style={{ fontSize: '3rem', paddingTop: 0 }}>
-          <VideoRewardLevelExplainer
-            style={{ marginTop: '5rem' }}
-            rewardLevel={rewardLevel}
-          />
+          {contentType === 'video' && (
+            <VideoRewardLevelExplainer
+              style={{ marginTop: '5rem' }}
+              rewardLevel={rewardLevel}
+            />
+          )}
           <RewardLevelForm
             rewardLevel={rewardLevel}
             onSetRewardLevel={setRewardLevel}
