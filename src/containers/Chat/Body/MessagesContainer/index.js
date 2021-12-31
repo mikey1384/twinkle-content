@@ -178,6 +178,10 @@ function MessagesContainer({
     return !isNaN(pathId) && parseChannelPath(pathId) !== selectedChannelId;
   }, [currentPathId, selectedChannelId]);
 
+  const loadingAnimationShown = useMemo(() => {
+    return loading || selectedChannelIdAndPathIdNotSynced;
+  }, [loading, selectedChannelIdAndPathIdNotSynced]);
+
   useEffect(() => {
     mounted.current = true;
     return function onUnmount() {
@@ -916,7 +920,7 @@ function MessagesContainer({
           height: containerHeight
         }}
       >
-        {!loading && channelHeaderShown && (
+        {!loadingAnimationShown && channelHeaderShown && (
           <ChannelHeader
             currentChannel={currentChannel}
             onInputFocus={() => ChatInputRef.current.focus()}
@@ -938,7 +942,7 @@ function MessagesContainer({
           `}
           ref={MessagesRef}
         >
-          {loading || selectedChannelIdAndPathIdNotSynced ? (
+          {loadingAnimationShown ? (
             <Loading style={{ position: 'absolute', top: '5rem' }} />
           ) : (
             <>
