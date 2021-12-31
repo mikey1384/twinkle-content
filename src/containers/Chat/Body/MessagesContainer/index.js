@@ -178,10 +178,6 @@ function MessagesContainer({
     return !isNaN(pathId) && parseChannelPath(pathId) !== selectedChannelId;
   }, [currentPathId, selectedChannelId]);
 
-  const loadingAnimationShown = useMemo(() => {
-    return loading || selectedChannelIdAndPathIdNotSynced;
-  }, [loading, selectedChannelIdAndPathIdNotSynced]);
-
   useEffect(() => {
     mounted.current = true;
     return function onUnmount() {
@@ -216,10 +212,19 @@ function MessagesContainer({
     textAreaHeight
   ]);
 
-  const loading = useMemo(
-    () => channelLoading || creatingNewDMChannel || reconnecting,
-    [channelLoading, creatingNewDMChannel, reconnecting]
-  );
+  const loadingAnimationShown = useMemo(() => {
+    return (
+      channelLoading ||
+      creatingNewDMChannel ||
+      reconnecting ||
+      selectedChannelIdAndPathIdNotSynced
+    );
+  }, [
+    channelLoading,
+    creatingNewDMChannel,
+    reconnecting,
+    selectedChannelIdAndPathIdNotSynced
+  ]);
 
   const chessCountdownNumber = useMemo(
     () => chessCountdownObj[selectedChannelId],
@@ -982,7 +987,7 @@ function MessagesContainer({
                   index={index}
                   isLastMsg={index === 0}
                   isNotification={!!message.isNotification}
-                  loading={loading}
+                  loading={loadingAnimationShown}
                   message={message}
                   onAcceptGroupInvitation={handleAcceptGroupInvitation}
                   onChessBoardClick={handleChessModalShown}
@@ -998,7 +1003,7 @@ function MessagesContainer({
                   }
                 />
               ))}
-              {!loading &&
+              {!loadingAnimationShown &&
                 (messagesLoadMoreButton ? (
                   <div>
                     <div style={{ width: '100%', height: '1rem' }} />
@@ -1063,7 +1068,7 @@ function MessagesContainer({
       >
         <MessageInput
           innerRef={ChatInputRef}
-          loading={loading}
+          loading={loadingAnimationShown}
           socketConnected={socketConnected}
           myId={userId}
           isRespondingToSubject={currentChannel.isRespondingToSubject}
