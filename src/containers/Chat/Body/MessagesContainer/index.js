@@ -1048,6 +1048,7 @@ function MessagesContainer({
       )}
       {subjectMsgsModal.shown && (
         <SubjectMsgsModal
+          closeWhenClickedOutside={false}
           subjectId={subjectMsgsModal.subjectId}
           subjectTitle={subjectMsgsModal.content}
           onHide={() =>
