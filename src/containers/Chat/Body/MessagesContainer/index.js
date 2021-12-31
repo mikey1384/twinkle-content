@@ -37,7 +37,7 @@ import { css } from '@emotion/css';
 import { Color } from 'constants/css';
 import { socket } from 'constants/io';
 import { isMobile, parseChannelPath } from 'helpers';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import LocalContext from '../../Context';
 import localize from 'constants/localize';
 
@@ -67,6 +67,7 @@ function MessagesContainer({
   loading: channelLoading
 }) {
   const history = useHistory();
+  const { pathname } = useLocation();
   const {
     actions: {
       onDeleteMessage,
@@ -120,6 +121,7 @@ function MessagesContainer({
   } = currentChannel;
   const scrolledToBottomRef = useRef(true);
   const loadMoreButtonLock = useRef(false);
+  const currentPathId = useMemo(() => pathname.split('chat/')[1], [pathname]);
   const [chessCountdownObj, setChessCountdownObj] = useState({});
   const [textAreaHeight, setTextAreaHeight] = useState(0);
   const [inviteUsersModalShown, setInviteUsersModalShown] = useState(false);
@@ -170,6 +172,11 @@ function MessagesContainer({
     () => subjectObj[selectedChannelId]?.id,
     [selectedChannelId, subjectObj]
   );
+
+  const selectedChannelIdAndPathIdNotSynced = useMemo(() => {
+    const pathId = Number(currentPathId);
+    return !isNaN(pathId) && parseChannelPath(pathId) !== selectedChannelId;
+  }, [currentPathId, selectedChannelId]);
 
   useEffect(() => {
     mounted.current = true;
@@ -931,7 +938,7 @@ function MessagesContainer({
           `}
           ref={MessagesRef}
         >
-          {loading ? (
+          {loading || selectedChannelIdAndPathIdNotSynced ? (
             <Loading style={{ position: 'absolute', top: '5rem' }} />
           ) : (
             <>
