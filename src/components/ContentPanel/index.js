@@ -18,6 +18,8 @@ import { useHistory } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import localize from 'constants/localize';
 
+const BodyRef = document.scrollingElement || document.documentElement;
+
 ContentPanel.propTypes = {
   autoExpand: PropTypes.bool,
   className: PropTypes.string,
@@ -121,6 +123,7 @@ export default function ContentPanel({
     onSetVisible: (visible) => {
       setVisible(visible);
       visibleRef.current = visible;
+      console.log(BodyRef.scrollTop);
     },
     delay: 1000
   });
