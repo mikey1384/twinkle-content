@@ -123,7 +123,6 @@ export default function ContentPanel({
     onSetVisible: (visible) => {
       setVisible(visible);
       visibleRef.current = visible;
-      console.log(BodyRef.scrollTop);
     },
     delay: 1000
   });
