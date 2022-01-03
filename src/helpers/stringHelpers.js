@@ -122,6 +122,7 @@ export function addAdvancedEmoji(string) {
     .replace(/(\:divide\:)/gi, '÷')
     .replace(/(\:dog\:)/gi, '🐶')
     .replace(/(\:dolphin\:)/gi, '🐬')
+    .replace(/(\:duck\:)/gi, '🦆')
     .replace(/(\:elephant\:)/gi, '🐘')
     .replace(/(\:evil\:)/gi, '😈')
     .replace(/(\:exclamation\:)/gi, '❗')
