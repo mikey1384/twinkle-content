@@ -174,7 +174,7 @@ export default function QuestionsBuilder({
                           }
                         });
                       }}
-                      onEditDone={onChoiceEditDone}
+                      onEditDone={handleChoiceEditDone}
                     />
                   );
                 })}
@@ -269,7 +269,7 @@ export default function QuestionsBuilder({
     });
   }
 
-  function onChoiceEditDone({
+  function handleChoiceEditDone({
     questionId,
     choices,
     choiceIds,
