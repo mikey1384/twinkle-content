@@ -207,6 +207,8 @@ export function addAdvancedEmoji(string) {
     .replace(/(\:swan\:)/gi, '🦢')
     .replace(/(\:taco\:)/gi, '🌮')
     .replace(/(\:tasty\:)/gi, '😋')
+    .replace(/(\:tears\:)/gi, '😢')
+    .replace(/(\:thanks\:)/gi, '🙏')
     .replace(/(\:thank you\:)/gi, '🙏')
     .replace(/(\:theta\:)/gi, '⍬')
     .replace(/(\:thumb\:)/gi, '👍')
