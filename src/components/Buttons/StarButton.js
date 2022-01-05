@@ -222,6 +222,7 @@ export default function StarButton({
     });
     if (cannotChange) {
       setModeratorName(modName);
+      setDropdownContext(null);
       return setCannotChangeModalShown(true);
     }
     onToggleByUser(byUser);
