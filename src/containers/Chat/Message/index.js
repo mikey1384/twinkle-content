@@ -286,9 +286,7 @@ function Message({
   }, []);
 
   useEffect(() => {
-    const userMadeLastMove = chessState
-      ? JSON.parse(chessState)?.move?.by === myId
-      : false;
+    const userMadeLastMove = chessState?.move?.by === myId;
     if (!userMadeLastMove && !moveViewTimeStamp) {
       setSpoilerOff(false);
     } else {
