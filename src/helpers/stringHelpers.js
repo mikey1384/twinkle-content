@@ -195,6 +195,7 @@ export function addAdvancedEmoji(string) {
     .replace(/(\:shocked\:)/gi, '😱')
     .replace(/(\:sick\:)/gi, '🤒')
     .replace(/(\:shrug\:)/gi, '🤷')
+    .replace(/(\:smh\:)/gi, '🤦')
     .replace(/(\:smile\:)/gi, '😊')
     .replace(/(\:smirk\:)/gi, '😏')
     .replace(/(\:snail\:)/gi, '🐌')
