@@ -29,7 +29,7 @@ import {
   useViewContext,
   useChatContext
 } from 'contexts';
-import { GENERAL_CHAT_ID } from 'constants/defaultValues';
+import { GENERAL_CHAT_ID, GENERAL_CHAT_PATH_ID } from 'constants/defaultValues';
 import ErrorBoundary from 'components/ErrorBoundary';
 
 Chat.propTypes = {
@@ -278,11 +278,9 @@ function Chat({ onFileUpload }) {
     async function handleChannelEnter(pathId) {
       loadingRef.current = true;
       onUpdateChatType('default');
-      const { isAccessible, generalChatPathId } = await checkChatAccessible(
-        pathId
-      );
+      const { isAccessible } = await checkChatAccessible(pathId);
       if (!isAccessible) {
-        return history.replace(`/chat/${generalChatPathId}`);
+        return history.replace(`/chat/${GENERAL_CHAT_PATH_ID}`);
       }
       const channelId = channelPathIdHash[pathId] || parseChannelPath(pathId);
       if (!channelPathIdHash[pathId] && mounted.current) {
