@@ -37,6 +37,7 @@ Chat.propTypes = {
 };
 
 function Chat({ onFileUpload }) {
+  const { lastChatPath, userId } = useMyState();
   const { pathname } = useLocation();
   const history = useHistory();
   const acceptInvitation = useAppContext(
@@ -106,23 +107,6 @@ function Chat({ onFileUpload }) {
     (v) => v.requestHelpers.uploadChatSubject
   );
   const uploadThumb = useAppContext((v) => v.requestHelpers.uploadThumb);
-
-  const {
-    authLevel,
-    banned,
-    canDelete,
-    canEdit,
-    canReward,
-    fileUploadLvl,
-    lastChatPath,
-    isCreator,
-    userId,
-    username,
-    profilePicUrl,
-    profileTheme,
-    rank,
-    twinkleXP
-  } = useMyState();
   const state = useInputContext((v) => v.state);
   const onEnterComment = useInputContext((v) => v.actions.onEnterComment);
   const allFavoriteChannelIds = useChatContext(
@@ -563,21 +547,6 @@ function Chat({ onFileUpload }) {
           onUpdateChannelPathIdHash
         },
         inputState: state,
-        myState: {
-          authLevel,
-          banned,
-          canDelete,
-          canEdit,
-          canReward,
-          fileUploadLvl,
-          isCreator,
-          profileTheme,
-          profilePicUrl,
-          rank,
-          twinkleXP,
-          userId,
-          username
-        },
         requests: {
           acceptInvitation,
           changeChannelOwner,
