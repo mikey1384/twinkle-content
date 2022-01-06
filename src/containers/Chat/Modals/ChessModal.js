@@ -114,10 +114,7 @@ export default function ChessModal({
     }
   }, [channelId, countdownNumber]);
 
-  const boardState = useMemo(
-    () => ({ ...initialState }[initialState]),
-    [initialState]
-  );
+  const boardState = useMemo(() => ({ ...initialState }), [initialState]);
 
   const gameFinished = useMemo(
     () =>
@@ -206,7 +203,7 @@ export default function ChessModal({
               {drawOfferPending ? acceptDrawLabel : resignLabel}
             </Button>
           )}
-          {drawButtonShown && (
+          {drawButtonShown ? (
             <Button
               style={{ marginRight: '1rem' }}
               color="orange"
@@ -214,7 +211,7 @@ export default function ChessModal({
             >
               {offerDrawLabel}
             </Button>
-          )}
+          ) : null}
           <Button transparent onClick={onHide}>
             {closeLabel}
           </Button>
