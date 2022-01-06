@@ -114,12 +114,15 @@ export default function ChessModal({
     }
   }, [channelId, countdownNumber]);
 
-  const boardState = useMemo(() => ({ ...initialState }), [initialState]);
+  const boardState = useMemo(
+    () => (initialState ? { ...initialState } : null),
+    [initialState]
+  );
 
   const gameFinished = useMemo(
     () =>
       boardState?.isCheckmate || boardState?.isStalemate || boardState?.isDraw,
-    [boardState?.isCheckmate, boardState?.isStalemate, boardState?.isDraw]
+    [boardState]
   );
 
   const gameEndButtonShown = useMemo(
