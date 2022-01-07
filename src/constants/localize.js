@@ -1204,6 +1204,10 @@ const languageObj = {
     en: 'Retype New Password',
     kr: '새 비밀번호 재입력'
   },
+  retypePasswordDoesNotMatch: {
+    en: 'The passwords do not match',
+    kr: '재입력 비밀번호가 일치하지 않습니다'
+  },
   revoke: {
     en: 'Revoke',
     kr: '취소'
