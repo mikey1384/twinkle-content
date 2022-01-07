@@ -416,6 +416,10 @@ const languageObj = {
     en: 'Enter Comment',
     kr: '댓글을 입력하세요'
   },
+  enterCurrentPassword: {
+    en: 'Enter your current password',
+    kr: '현재 사용중인 비밀번호를 입력하세요'
+  },
   enterDescription: {
     en: 'Enter Description',
     kr: '소개글을 입력하세요'
@@ -475,6 +479,10 @@ const languageObj = {
   enterTitleHere: {
     en: 'Enter Title Here',
     kr: '제목을 입력하세요'
+  },
+  enterNewPassword: {
+    en: 'Enter a New Password',
+    kr: '새로운 비밀번호를 입력하세요'
   },
   enterUrl: {
     en: 'Enter URL',
