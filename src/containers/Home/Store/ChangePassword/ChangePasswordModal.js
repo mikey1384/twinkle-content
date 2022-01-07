@@ -220,11 +220,11 @@ export default function ChangePasswordModal({ onHide }) {
       </main>
       <footer>
         <Button onClick={onHide} transparent>
-          Cancel
+          Close
         </Button>
         <Button
           style={{ marginLeft: '1rem' }}
-          color="blue"
+          color={success ? 'green' : 'blue'}
           onClick={handleSubmit}
           disabled={submitDisabled}
         >
@@ -248,7 +248,7 @@ export default function ChangePasswordModal({ onHide }) {
       });
       if (isSuccess) {
         setSuccess(true);
-        setTimeout(() => onHide(), 1000);
+        setTimeout(() => onHide(), 1500);
       } else {
         setErrorMsgObj((obj) => ({
           ...obj,
