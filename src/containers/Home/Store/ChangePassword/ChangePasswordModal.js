@@ -21,7 +21,7 @@ export default function ChangePasswordModal({ onHide }) {
     <Modal closeWhenClickedOutside={false} small onHide={onHide}>
       <header>Change Your Password</header>
       <main>
-        <div
+        <form
           className={css`
             label {
               font-weight: bold;
@@ -32,6 +32,7 @@ export default function ChangePasswordModal({ onHide }) {
           <div>
             <label>Current</label>
             <Input
+              name="current-password"
               value={currentPassword}
               style={{ marginTop: '0.5rem' }}
               onChange={(text) => {
@@ -54,6 +55,7 @@ export default function ChangePasswordModal({ onHide }) {
           <div style={{ marginTop: '2rem' }}>
             <label>New</label>
             <Input
+              name="new-password"
               value={newPassword}
               style={{ marginTop: '0.5rem' }}
               onChange={(text) => {
@@ -73,7 +75,7 @@ export default function ChangePasswordModal({ onHide }) {
               </span>
             ) : null}
           </div>
-        </div>
+        </form>
       </main>
       <footer>
         <Button onClick={onHide} transparent>
