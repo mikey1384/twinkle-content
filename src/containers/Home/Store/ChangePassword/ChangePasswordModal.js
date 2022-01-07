@@ -7,8 +7,10 @@ import { css } from '@emotion/css';
 import { isValidPassword, stringIsEmpty } from 'helpers/stringHelpers';
 import localize from 'constants/localize';
 
+const currentPasswordLabel = localize('currentPassword');
 const enterCurrentPasswordLabel = localize('enterCurrentPassword');
 const enterNewPasswordLabel = localize('enterNewPassword');
+const newPasswordLabel = localize('newPassword');
 const newPasswordMatchesCurrentPasswordLabel = localize(
   'newPasswordMatchesCurrentPassword'
 );
@@ -107,7 +109,7 @@ export default function ChangePasswordModal({ onHide }) {
           style={{ width: '100%' }}
         >
           <div>
-            <label>Current Password</label>
+            <label>{currentPasswordLabel}</label>
             <Input
               name="current-password"
               value={currentPassword}
@@ -130,7 +132,7 @@ export default function ChangePasswordModal({ onHide }) {
             ) : null}
           </div>
           <div style={{ marginTop: '2rem' }}>
-            <label>New Password</label>
+            <label>{newPasswordLabel}</label>
             <Input
               name="new-password"
               value={newPassword}
@@ -154,7 +156,7 @@ export default function ChangePasswordModal({ onHide }) {
           </div>
           {passwordIsValid && (
             <div style={{ marginTop: '1.5rem' }}>
-              <label>Retype New Password</label>
+              <label>{retypeNewPasswordLabel}</label>
               <Input
                 name="retype-new-password"
                 value={retypeNewPassword}

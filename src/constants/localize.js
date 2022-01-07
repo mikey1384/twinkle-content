@@ -316,6 +316,10 @@ const languageObj = {
     en: 'Current Mission',
     kr: '현재 미션'
   },
+  currentPassword: {
+    en: 'Current Password',
+    kr: '현재 비밀번호'
+  },
   delete: {
     en: 'Delete',
     kr: '삭제'
@@ -819,6 +823,10 @@ const languageObj = {
   newGroup: {
     en: 'New Group',
     kr: '새로운 그룹'
+  },
+  newPassword: {
+    en: 'New Password',
+    kr: '새로운 비밀번호'
   },
   newPasswordMatchesCurrentPassword: {
     en: 'Your new password is the same as your current one',
