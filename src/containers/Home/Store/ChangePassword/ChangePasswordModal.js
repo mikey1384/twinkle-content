@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import Input from 'components/Texts/Input';
 import { css } from '@emotion/css';
+import { isValidPassword, stringIsEmpty } from 'helpers/stringHelpers';
 import localize from 'constants/localize';
 
 const enterCurrentPasswordLabel = localize('enterCurrentPassword');
 const enterNewPasswordLabel = localize('enterNewPassword');
+const passwordsNeedToBeAtLeastLabel = localize('passwordsNeedToBeAtLeast');
+const retypeNewPasswordLabel = localize('retypeNewPassword');
 
 ChangePasswordModal.propTypes = {
   onHide: PropTypes.func.isRequired
@@ -16,10 +19,27 @@ ChangePasswordModal.propTypes = {
 export default function ChangePasswordModal({ onHide }) {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [retypeNewPassword, setRetypeNewPassword] = useState('');
   const [errorMsgObj, setErrorMsgObj] = useState({
     currentPassword: '',
     newPassword: ''
   });
+  const timerRef = useRef(null);
+  const passwordIsValid = useMemo(() => {
+    return isValidPassword(newPassword);
+  }, [newPassword]);
+
+  useEffect(() => {
+    clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      if (!stringIsEmpty(newPassword) && !isValidPassword(newPassword)) {
+        setErrorMsgObj((obj) => ({
+          ...obj,
+          newPassword: passwordsNeedToBeAtLeastLabel
+        }));
+      }
+    }, 500);
+  }, [newPassword]);
 
   return (
     <Modal closeWhenClickedOutside={false} small onHide={onHide}>
@@ -29,6 +49,9 @@ export default function ChangePasswordModal({ onHide }) {
           className={css`
             label {
               font-weight: bold;
+            }
+            span {
+              font-size: 1.3rem;
             }
           `}
           style={{ width: '100%' }}
@@ -57,7 +80,7 @@ export default function ChangePasswordModal({ onHide }) {
             ) : null}
           </div>
           <div style={{ marginTop: '2rem' }}>
-            <label>New</label>
+            <label>New Password</label>
             <Input
               name="new-password"
               value={newPassword}
@@ -79,6 +102,31 @@ export default function ChangePasswordModal({ onHide }) {
               </span>
             ) : null}
           </div>
+          {passwordIsValid && (
+            <div style={{ marginTop: '1.5rem' }}>
+              <label>Retype New Password</label>
+              <Input
+                name="retype-new-password"
+                value={retypeNewPassword}
+                style={{ marginTop: '0.5rem' }}
+                onChange={(text) => {
+                  setErrorMsgObj((obj) => ({
+                    ...obj,
+                    retypeNewPassword: ''
+                  }));
+                  setRetypeNewPassword(text);
+                }}
+                placeholder={retypeNewPasswordLabel}
+                type="password"
+                hasError={!!errorMsgObj.retypeNewPassword}
+              />
+              {errorMsgObj.retypeNewPassword ? (
+                <span style={{ color: 'red', marginTop: '0.5rem' }}>
+                  {errorMsgObj.retypeNewPassword}
+                </span>
+              ) : null}
+            </div>
+          )}
         </form>
       </main>
       <footer>
