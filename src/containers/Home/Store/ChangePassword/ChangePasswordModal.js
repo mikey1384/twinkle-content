@@ -7,6 +7,7 @@ import { css } from '@emotion/css';
 import { isValidPassword, stringIsEmpty } from 'helpers/stringHelpers';
 import { Color } from 'constants/css';
 import localize from 'constants/localize';
+import VerificationEmailSendModal from './VerificationEmailSendModal';
 
 const currentPasswordLabel = localize('currentPassword');
 const enterCurrentPasswordLabel = localize('enterCurrentPassword');
@@ -28,6 +29,8 @@ export default function ChangePasswordModal({ onHide }) {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [retypeNewPassword, setRetypeNewPassword] = useState('');
+  const [verificationEmailSendModalShown, setVerificationEmailSendModalShown] =
+    useState(false);
   const [errorMsgObj, setErrorMsgObj] = useState({
     currentPassword: '',
     newPassword: ''
@@ -150,6 +153,7 @@ export default function ChangePasswordModal({ onHide }) {
                     text-decoration: underline;
                   }
                 `}
+                onClick={() => setVerificationEmailSendModalShown(true)}
               >
                 {iForgotMyPasswordLabel}...
               </span>
@@ -218,6 +222,11 @@ export default function ChangePasswordModal({ onHide }) {
           Change
         </Button>
       </footer>
+      {verificationEmailSendModalShown && (
+        <VerificationEmailSendModal
+          onHide={() => setVerificationEmailSendModalShown(false)}
+        />
+      )}
     </Modal>
   );
 
