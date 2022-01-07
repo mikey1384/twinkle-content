@@ -405,6 +405,10 @@ export function isValidYoutubeUrl(url = '') {
   );
 }
 
+export function isValidPassword(password) {
+  return password.length > 4 && !stringIsEmpty(password);
+}
+
 export function isValidUsername(username) {
   const pattern = new RegExp(/^(?!.*___.*)[a-zA-Z0-9_]+$/);
   return (
