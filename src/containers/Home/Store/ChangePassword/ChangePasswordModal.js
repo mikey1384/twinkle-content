@@ -5,11 +5,13 @@ import Button from 'components/Button';
 import Input from 'components/Texts/Input';
 import { css } from '@emotion/css';
 import { isValidPassword, stringIsEmpty } from 'helpers/stringHelpers';
+import { Color } from 'constants/css';
 import localize from 'constants/localize';
 
 const currentPasswordLabel = localize('currentPassword');
 const enterCurrentPasswordLabel = localize('enterCurrentPassword');
 const enterNewPasswordLabel = localize('enterNewPassword');
+const iForgotMyPasswordLabel = localize('iForgotMyPassword');
 const newPasswordLabel = localize('newPassword');
 const newPasswordMatchesCurrentPasswordLabel = localize(
   'newPasswordMatchesCurrentPassword'
@@ -130,6 +132,28 @@ export default function ChangePasswordModal({ onHide }) {
                 {errorMsgObj.currentPassword}
               </span>
             ) : null}
+            <div
+              style={{
+                marginTop: '0.5rem',
+                display: 'flex',
+                justifyContent: 'flex-end'
+              }}
+            >
+              <span
+                style={{
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  color: Color.blue()
+                }}
+                className={css`
+                  &:hover {
+                    text-decoration: underline;
+                  }
+                `}
+              >
+                {iForgotMyPasswordLabel}...
+              </span>
+            </div>
           </div>
           <div style={{ marginTop: '2rem' }}>
             <label>{newPasswordLabel}</label>
