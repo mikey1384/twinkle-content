@@ -102,6 +102,8 @@ export default function ChangeUsername({ style }) {
         )}
         <div
           style={{
+            position: 'absolute',
+            top: 0,
             color: usernameAvailable ? Color.green() : 'red',
             fontSize: '1.3rem',
             fontWeight: usernameAvailable ? 'bold' : 'normal'
