@@ -820,6 +820,10 @@ const languageObj = {
     en: 'New Group',
     kr: '새로운 그룹'
   },
+  newPasswordMatchesCurrentPassword: {
+    en: 'Your new password is the same as your current one',
+    kr: '새로운 비밀번호가 현재 비밀번호와 같습니다'
+  },
   newToOld: {
     en: 'New to Old',
     kr: '최신순'
