@@ -85,6 +85,7 @@ export default function ChangeUsername({ style }) {
     <div style={style}>
       <div>
         <Input
+          name="username-to-change-to"
           maxLength={20}
           placeholder={`${enterNewUsernameLabel}...`}
           onChange={setNewUsername}
