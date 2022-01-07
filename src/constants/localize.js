@@ -152,6 +152,18 @@ const languageObj = {
     en: 'Change Account Type',
     kr: '계정유형 변경'
   },
+  changeMyPassword: {
+    en: 'Change My Password',
+    kr: '비밀번호 변경'
+  },
+  changePassword: {
+    en: 'Change Password',
+    kr: '비밀번호 변경'
+  },
+  changePasswordDescription: {
+    en: 'Change your password anytime you want. This item is free',
+    kr: '비밀번호 변경은 무료로 제공됩니다'
+  },
   changePic: {
     en: 'Change Pic',
     kr: '사진 변경'
@@ -523,6 +535,10 @@ const languageObj = {
   forEveryStarYouAddSubject: {
     en: 'For every star you add, the maximum amount of XP that could be rewarded to each participant of this subject rises by 2,000 XP.',
     kr: '별 한개를 추가할 때마다, 이 주제의 참가자들에게 보상 가능한 XP량이 2,000씩 증가합니다'
+  },
+  free: {
+    en: 'Free',
+    kr: '무료'
   },
   fromTwinkleWebsite: {
     en: 'from Twinkle Website',
@@ -1409,7 +1425,7 @@ const languageObj = {
     kr: '이미 사용중인 아이디입니다'
   },
   usernameAvailable: {
-    en: `This username is available. Tap "Change"`,
+    en: `This username is available`,
     kr: '사용 가능한 아이디입니다'
   },
   users: {
