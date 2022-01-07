@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import Input from 'components/Texts/Input';
+import localize from 'constants/localize';
+import VerificationEmailSendModal from './VerificationEmailSendModal';
 import { css } from '@emotion/css';
 import { isValidPassword, stringIsEmpty } from 'helpers/stringHelpers';
 import { Color } from 'constants/css';
-import localize from 'constants/localize';
-import VerificationEmailSendModal from './VerificationEmailSendModal';
+import { useAppContext } from 'contexts';
 
 const currentPasswordLabel = localize('currentPassword');
 const enterCurrentPasswordLabel = localize('enterCurrentPassword');
@@ -18,6 +19,7 @@ const newPasswordMatchesCurrentPasswordLabel = localize(
   'newPasswordMatchesCurrentPassword'
 );
 const passwordsNeedToBeAtLeastLabel = localize('passwordsNeedToBeAtLeast');
+const incorrectPasswordLabel = localize('incorrectPassword');
 const retypeNewPasswordLabel = localize('retypeNewPassword');
 const retypePasswordDoesNotMatchLabel = localize('retypePasswordDoesNotMatch');
 
@@ -26,6 +28,11 @@ ChangePasswordModal.propTypes = {
 };
 
 export default function ChangePasswordModal({ onHide }) {
+  const changePasswordFromStore = useAppContext(
+    (v) => v.requestHelpers.changePasswordFromStore
+  );
+  const [success, setSuccess] = useState(false);
+  const [changing, setChanging] = useState(false);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [retypeNewPassword, setRetypeNewPassword] = useState('');
@@ -57,12 +64,14 @@ export default function ChangePasswordModal({ onHide }) {
     return (
       stringIsEmpty(currentPassword) ||
       !retypePasswordMatches ||
-      newPasswordIsTheSameAsTheCurrentOne
+      newPasswordIsTheSameAsTheCurrentOne ||
+      changing
     );
   }, [
     currentPassword,
     newPasswordIsTheSameAsTheCurrentOne,
-    retypePasswordMatches
+    retypePasswordMatches,
+    changing
   ]);
 
   useEffect(() => {
@@ -219,7 +228,7 @@ export default function ChangePasswordModal({ onHide }) {
           onClick={handleSubmit}
           disabled={submitDisabled}
         >
-          Change
+          {success ? 'Success!' : 'Change'}
         </Button>
       </footer>
       {verificationEmailSendModalShown && (
@@ -231,7 +240,24 @@ export default function ChangePasswordModal({ onHide }) {
   );
 
   async function handleSubmit() {
-    console.log('done');
-    onHide();
+    setChanging(true);
+    try {
+      const { isSuccess } = await changePasswordFromStore({
+        currentPassword,
+        newPassword
+      });
+      if (isSuccess) {
+        setSuccess(true);
+        setTimeout(() => onHide(), 1000);
+      } else {
+        setErrorMsgObj((obj) => ({
+          ...obj,
+          currentPassword: incorrectPasswordLabel
+        }));
+        setChanging(false);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

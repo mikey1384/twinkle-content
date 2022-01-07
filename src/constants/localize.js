@@ -608,6 +608,10 @@ const languageObj = {
     en: 'Image is too large (limit: 10mb)',
     kr: '이미지 크기가 너무 큽니다 (최대 10mb)'
   },
+  incorrectPassword: {
+    en: 'Incorrect password',
+    kr: '비밀번호가 올바르지 않습니다'
+  },
   inProgress: {
     en: 'In Progress',
     kr: '진행 중'
