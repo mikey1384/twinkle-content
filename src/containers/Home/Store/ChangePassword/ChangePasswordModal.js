@@ -248,7 +248,7 @@ export default function ChangePasswordModal({ onHide }) {
       });
       if (isSuccess) {
         setSuccess(true);
-        setTimeout(() => onHide(), 1500);
+        setTimeout(() => onHide(), 1300);
       } else {
         setErrorMsgObj((obj) => ({
           ...obj,
