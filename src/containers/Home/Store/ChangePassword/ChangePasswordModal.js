@@ -3,47 +3,77 @@ import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import Input from 'components/Texts/Input';
-import { useAppContext } from 'contexts';
-import { stringIsEmpty } from 'helpers/stringHelpers';
+import { css } from '@emotion/css';
 
 ChangePasswordModal.propTypes = {
-  onHide: PropTypes.func.isRequired,
-  onConfirm: PropTypes.func.isRequired
+  onHide: PropTypes.func.isRequired
 };
 
-export default function ChangePasswordModal({ onHide, onConfirm }) {
-  const [password, setPassword] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
-  const confirmPassword = useAppContext(
-    (v) => v.requestHelpers.confirmPassword
-  );
+export default function ChangePasswordModal({ onHide }) {
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [errorMsgObj, setErrorMsgObj] = useState({
+    currentPassword: '',
+    newPassword: ''
+  });
 
   return (
     <Modal closeWhenClickedOutside={false} small onHide={onHide}>
       <header>Change Your Password</header>
       <main>
-        <Input
-          value={password}
-          onChange={(text) => {
-            setErrorMsg('');
-            setPassword(text);
-          }}
-          placeholder="Enter your password"
-          type="password"
-          hasError={!!errorMsg}
-          onKeyPress={(event) => {
-            if (
-              !stringIsEmpty(password) &&
-              event.key === 'Enter' &&
-              !errorMsg
-            ) {
-              handleConfirmPassword();
+        <div
+          className={css`
+            label {
+              font-weight: bold;
             }
-          }}
-        />
-        {errorMsg ? (
-          <span style={{ color: 'red', marginTop: '0.5rem' }}>{errorMsg}</span>
-        ) : null}
+          `}
+          style={{ width: '100%' }}
+        >
+          <div>
+            <label>Current</label>
+            <Input
+              value={currentPassword}
+              style={{ marginTop: '0.5rem' }}
+              onChange={(text) => {
+                setErrorMsgObj((obj) => ({
+                  ...obj,
+                  currentPassword: ''
+                }));
+                setCurrentPassword(text);
+              }}
+              placeholder="Enter your current password"
+              type="password"
+              hasError={!!errorMsgObj.currentPassword}
+            />
+            {errorMsgObj.currentPassword ? (
+              <span style={{ color: 'red', marginTop: '0.5rem' }}>
+                {errorMsgObj.currentPassword}
+              </span>
+            ) : null}
+          </div>
+          <div style={{ marginTop: '2rem' }}>
+            <label>New</label>
+            <Input
+              value={newPassword}
+              style={{ marginTop: '0.5rem' }}
+              onChange={(text) => {
+                setErrorMsgObj((obj) => ({
+                  ...obj,
+                  newPassword: ''
+                }));
+                setNewPassword(text);
+              }}
+              placeholder="Enter new password"
+              type="password"
+              hasError={!!errorMsgObj.newPassword}
+            />
+            {errorMsgObj.newPassword ? (
+              <span style={{ color: 'red', marginTop: '0.5rem' }}>
+                {errorMsgObj.newPassword}
+              </span>
+            ) : null}
+          </div>
+        </div>
       </main>
       <footer>
         <Button onClick={onHide} transparent>
@@ -52,7 +82,7 @@ export default function ChangePasswordModal({ onHide, onConfirm }) {
         <Button
           style={{ marginLeft: '1rem' }}
           color="blue"
-          onClick={handleConfirmPassword}
+          onClick={handleSubmit}
         >
           Done
         </Button>
@@ -60,13 +90,8 @@ export default function ChangePasswordModal({ onHide, onConfirm }) {
     </Modal>
   );
 
-  async function handleConfirmPassword() {
-    const success = await confirmPassword(password);
-    if (success) {
-      onConfirm();
-      onHide();
-    } else {
-      setErrorMsg('wrong password');
-    }
+  async function handleSubmit() {
+    console.log('done');
+    onHide();
   }
 }
