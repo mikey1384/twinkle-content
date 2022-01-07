@@ -157,7 +157,7 @@ const languageObj = {
     kr: '비밀번호 변경'
   },
   changePassword: {
-    en: 'Change Password',
+    en: 'Change your password',
     kr: '비밀번호 변경'
   },
   changePasswordDescription: {
