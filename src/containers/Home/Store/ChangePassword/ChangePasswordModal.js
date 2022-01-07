@@ -14,6 +14,7 @@ const newPasswordMatchesCurrentPasswordLabel = localize(
 );
 const passwordsNeedToBeAtLeastLabel = localize('passwordsNeedToBeAtLeast');
 const retypeNewPasswordLabel = localize('retypeNewPassword');
+const retypePasswordDoesNotMatchLabel = localize('retypePasswordDoesNotMatch');
 
 ChangePasswordModal.propTypes = {
   onHide: PropTypes.func.isRequired
@@ -27,7 +28,8 @@ export default function ChangePasswordModal({ onHide }) {
     currentPassword: '',
     newPassword: ''
   });
-  const timerRef = useRef(null);
+  const newPasswordTimerRef = useRef(null);
+  const retypeNewPasswordTimerRef = useRef(null);
   const passwordIsValid = useMemo(() => {
     return isValidPassword(newPassword);
   }, [newPassword]);
@@ -57,8 +59,8 @@ export default function ChangePasswordModal({ onHide }) {
   ]);
 
   useEffect(() => {
-    clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => {
+    clearTimeout(newPasswordTimerRef.current);
+    newPasswordTimerRef.current = setTimeout(() => {
       if (!stringIsEmpty(newPassword) && !passwordIsValid) {
         return setErrorMsgObj((obj) => ({
           ...obj,
@@ -76,6 +78,18 @@ export default function ChangePasswordModal({ onHide }) {
       }));
     }
   }, [newPasswordIsTheSameAsTheCurrentOne]);
+
+  useEffect(() => {
+    clearTimeout(retypeNewPasswordTimerRef.current);
+    retypeNewPasswordTimerRef.current = setTimeout(() => {
+      if (!stringIsEmpty(retypeNewPassword) && !retypePasswordMatches) {
+        return setErrorMsgObj((obj) => ({
+          ...obj,
+          retypeNewPassword: retypePasswordDoesNotMatchLabel
+        }));
+      }
+    }, 500);
+  }, [retypeNewPassword, retypePasswordMatches]);
 
   return (
     <Modal closeWhenClickedOutside={false} small onHide={onHide}>
@@ -175,7 +189,7 @@ export default function ChangePasswordModal({ onHide }) {
           onClick={handleSubmit}
           disabled={submitDisabled}
         >
-          Done
+          Change
         </Button>
       </footer>
     </Modal>
