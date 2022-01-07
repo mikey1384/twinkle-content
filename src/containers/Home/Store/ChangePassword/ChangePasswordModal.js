@@ -4,6 +4,10 @@ import Modal from 'components/Modal';
 import Button from 'components/Button';
 import Input from 'components/Texts/Input';
 import { css } from '@emotion/css';
+import localize from 'constants/localize';
+
+const enterCurrentPasswordLabel = localize('enterCurrentPassword');
+const enterNewPasswordLabel = localize('enterNewPassword');
 
 ChangePasswordModal.propTypes = {
   onHide: PropTypes.func.isRequired
@@ -42,7 +46,7 @@ export default function ChangePasswordModal({ onHide }) {
                 }));
                 setCurrentPassword(text);
               }}
-              placeholder="Enter your current password"
+              placeholder={enterCurrentPasswordLabel}
               type="password"
               hasError={!!errorMsgObj.currentPassword}
             />
@@ -65,7 +69,7 @@ export default function ChangePasswordModal({ onHide }) {
                 }));
                 setNewPassword(text);
               }}
-              placeholder="Enter new password"
+              placeholder={enterNewPasswordLabel}
               type="password"
               hasError={!!errorMsgObj.newPassword}
             />
@@ -85,6 +89,7 @@ export default function ChangePasswordModal({ onHide }) {
           style={{ marginLeft: '1rem' }}
           color="blue"
           onClick={handleSubmit}
+          disabled={true}
         >
           Done
         </Button>
