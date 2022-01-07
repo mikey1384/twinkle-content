@@ -9,6 +9,9 @@ import localize from 'constants/localize';
 
 const enterCurrentPasswordLabel = localize('enterCurrentPassword');
 const enterNewPasswordLabel = localize('enterNewPassword');
+const newPasswordMatchesCurrentPasswordLabel = localize(
+  'newPasswordMatchesCurrentPassword'
+);
 const passwordsNeedToBeAtLeastLabel = localize('passwordsNeedToBeAtLeast');
 const retypeNewPasswordLabel = localize('retypeNewPassword');
 
@@ -28,18 +31,51 @@ export default function ChangePasswordModal({ onHide }) {
   const passwordIsValid = useMemo(() => {
     return isValidPassword(newPassword);
   }, [newPassword]);
+  const newPasswordIsTheSameAsTheCurrentOne = useMemo(() => {
+    if (stringIsEmpty(newPassword) || stringIsEmpty(currentPassword)) {
+      return false;
+    }
+    return newPassword === currentPassword;
+  }, [currentPassword, newPassword]);
+  const retypePasswordMatches = useMemo(() => {
+    if (stringIsEmpty(newPassword) || stringIsEmpty(retypeNewPassword)) {
+      return false;
+    }
+    return newPassword === retypeNewPassword;
+  }, [newPassword, retypeNewPassword]);
+
+  const submitDisabled = useMemo(() => {
+    return (
+      stringIsEmpty(currentPassword) ||
+      !retypePasswordMatches ||
+      newPasswordIsTheSameAsTheCurrentOne
+    );
+  }, [
+    currentPassword,
+    newPasswordIsTheSameAsTheCurrentOne,
+    retypePasswordMatches
+  ]);
 
   useEffect(() => {
     clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
-      if (!stringIsEmpty(newPassword) && !isValidPassword(newPassword)) {
-        setErrorMsgObj((obj) => ({
+      if (!stringIsEmpty(newPassword) && !passwordIsValid) {
+        return setErrorMsgObj((obj) => ({
           ...obj,
           newPassword: passwordsNeedToBeAtLeastLabel
         }));
       }
     }, 500);
-  }, [newPassword]);
+  }, [newPassword, passwordIsValid]);
+
+  useEffect(() => {
+    if (newPasswordIsTheSameAsTheCurrentOne) {
+      return setErrorMsgObj((obj) => ({
+        ...obj,
+        newPassword: newPasswordMatchesCurrentPasswordLabel
+      }));
+    }
+  }, [newPasswordIsTheSameAsTheCurrentOne]);
 
   return (
     <Modal closeWhenClickedOutside={false} small onHide={onHide}>
@@ -57,7 +93,7 @@ export default function ChangePasswordModal({ onHide }) {
           style={{ width: '100%' }}
         >
           <div>
-            <label>Current</label>
+            <label>Current Password</label>
             <Input
               name="current-password"
               value={currentPassword}
@@ -137,7 +173,7 @@ export default function ChangePasswordModal({ onHide }) {
           style={{ marginLeft: '1rem' }}
           color="blue"
           onClick={handleSubmit}
-          disabled={true}
+          disabled={submitDisabled}
         >
           Done
         </Button>
