@@ -1196,6 +1196,10 @@ const languageObj = {
     en: 'Restricted Accounts',
     kr: '제한된 계정'
   },
+  retypeNewPassword: {
+    en: 'Retype New Password',
+    kr: '새 비밀번호 재입력'
+  },
   revoke: {
     en: 'Revoke',
     kr: '취소'
