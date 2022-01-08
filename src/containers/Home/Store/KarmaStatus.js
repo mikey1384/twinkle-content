@@ -130,9 +130,11 @@ export default function KarmaStatus() {
     }
     return (
       <span>
-        Your Karma Points = (Total number of <b>posts</b> you rewarded ×{' '}
-        {karmaMultiplier.post}) + (Total number of <b>posts</b> you recommended
-        × {karmaMultiplier.recommendation.teacher})
+        Your Karma Points = (Total number of posts you{' '}
+        <b style={{ color: Color.pink() }}>rewarded</b> × {karmaMultiplier.post}
+        ) + (Total number of posts you{' '}
+        <b style={{ color: Color.brownOrange() }}>recommended</b> ×{' '}
+        {karmaMultiplier.recommendation.teacher})
       </span>
     );
   }, [authLevel]);
@@ -181,11 +183,13 @@ export default function KarmaStatus() {
     return (
       <div style={{ fontSize: '1.5rem', marginTop: '3rem' }}>
         <p>
-          Total number of posts you rewarded:{' '}
+          Total number of posts you{' '}
+          <b style={{ color: Color.pink() }}>rewarded</b>:{' '}
           {addCommasToNumber(numPostsRewarded)}
         </p>
         <p>
-          Total number of posts you recommended:{' '}
+          Total number of posts you{' '}
+          <b style={{ color: Color.brownOrange() }}>recommended</b>:{' '}
           {addCommasToNumber(numRecommended)}
         </p>
         <p style={{ marginTop: '1rem', fontSize: '1.7rem' }}>
