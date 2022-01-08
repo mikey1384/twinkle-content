@@ -1,6 +1,6 @@
 import localize from 'constants/localize';
 
-export const clientVersion = '1.5.80';
+export const clientVersion = '1.5.81';
 export const defaultChatSubject = 'Welcome!';
 export const defaultContentState = {
   isEditing: false,
@@ -80,8 +80,11 @@ export const karmaPointTable = {
   }
 };
 export const karmaMultiplier = {
-  post: 3,
-  recommendation: 10
+  post: 2,
+  recommendation: {
+    student: 10,
+    teacher: 5
+  }
 };
 export const charLimit = {
   chat: {
