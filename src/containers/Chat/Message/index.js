@@ -522,13 +522,13 @@ function Message({
       <div
         ref={ComponentRef}
         className={css`
-          ${highlighted ? `background-color: ${Color.highlightGray()};` : ''}
+          ${highlighted ? `background-color: ${Color.whiteGray()};` : ''}
           .dropdown-button {
             display: ${highlighted ? 'block' : 'none'};
           }
           &:hover {
             ${dropdownButtonShown
-              ? `background-color: ${Color.highlightGray()};`
+              ? `background-color: ${Color.whiteGray()};`
               : ''}
             .dropdown-button {
               display: block;
