@@ -121,6 +121,7 @@ function Message({
   onShowSubjectMsgsModal,
   zIndex
 }) {
+  const [highlighted, setHighlighted] = useState(false);
   const {
     actions: {
       onEditMessage,
@@ -518,7 +519,20 @@ function Message({
     <ErrorBoundary>
       <div
         ref={ComponentRef}
-        className={MessageStyle.container}
+        className={css`
+          ${highlighted ? `background-color: ${Color.highlightGray()};` : ''}
+          .dropdown-button {
+            display: ${highlighted ? 'block' : 'none'};
+          }
+          &:hover {
+            ${dropdownButtonShown
+              ? `background-color: ${Color.highlightGray()};`
+              : ''}
+            .dropdown-button {
+              display: block;
+            }
+          }
+        `}
         style={{
           width: '100%',
           display: 'block',
@@ -670,12 +684,14 @@ function Message({
               {dropdownButtonShown && (
                 <DropdownButton
                   skeuomorphic
+                  className="dropdown-button"
                   innerRef={DropdownButtonRef}
                   color="darkerGray"
-                  icon="chevron-down"
+                  icon="ellipsis-h"
                   style={{ position: 'absolute', top: 0, right: 0 }}
                   opacity={0.8}
                   menuProps={messageMenuItems}
+                  onDropdownShown={(shown) => setHighlighted(shown)}
                 />
               )}
             </div>
