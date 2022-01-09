@@ -37,7 +37,9 @@ import { css } from '@emotion/css';
 import ErrorBoundary from 'components/ErrorBoundary';
 import LocalContext from '../Context';
 import localize from 'constants/localize';
+import { isMobile } from 'helpers';
 
+const deviceIsMobile = isMobile(navigator);
 const replyLabel = localize('reply2');
 const rewardLabel = localize('reward');
 const removeLabel = localize('remove');
@@ -532,6 +534,15 @@ function Message({
               display: block;
             }
           }
+          @media (max-width: ${mobileMaxWidth}) {
+            background-color: #fff;
+            .dropdown-button {
+              display: block;
+            }
+            &:hover {
+              background-color: #fff;
+            }
+          }
         `}
         style={{
           width: '100%',
@@ -687,7 +698,7 @@ function Message({
                   className="dropdown-button"
                   innerRef={DropdownButtonRef}
                   color="darkerGray"
-                  icon="ellipsis-h"
+                  icon={deviceIsMobile ? 'chevron-down' : 'ellipsis-h'}
                   style={{ position: 'absolute', top: 0, right: 0 }}
                   opacity={0.8}
                   menuProps={messageMenuItems}
