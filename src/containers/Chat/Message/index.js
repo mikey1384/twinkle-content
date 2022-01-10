@@ -23,6 +23,10 @@ import RewardMessage from './RewardMessage';
 import Invitation from './Invitation';
 import DrawOffer from './DrawOffer';
 import MessageRewardModal from '../Modals/MessageRewardModal';
+import ErrorBoundary from 'components/ErrorBoundary';
+import LocalContext from '../Context';
+import ReactionButton from './ReactionButton';
+import localize from 'constants/localize';
 import { useInView } from 'react-intersection-observer';
 import { socket } from 'constants/io';
 import { unix } from 'moment';
@@ -34,9 +38,6 @@ import {
 import { useContentState, useMyState, useLazyLoad } from 'helpers/hooks';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import ErrorBoundary from 'components/ErrorBoundary';
-import LocalContext from '../Context';
-import localize from 'constants/localize';
 import { isMobile } from 'helpers';
 
 const deviceIsMobile = isMobile(navigator);
@@ -523,20 +524,20 @@ function Message({
         ref={ComponentRef}
         className={css`
           ${highlighted ? `background-color: ${Color.whiteGray()};` : ''}
-          .dropdown-button {
+          .menu-button {
             display: ${highlighted ? 'block' : 'none'};
           }
           &:hover {
             ${dropdownButtonShown
               ? `background-color: ${Color.whiteGray()};`
               : ''}
-            .dropdown-button {
+            .menu-button {
               display: block;
             }
           }
           @media (max-width: ${mobileMaxWidth}) {
             background-color: #fff;
-            .dropdown-button {
+            .menu-button {
               display: block;
             }
             &:hover {
@@ -693,17 +694,29 @@ function Message({
                 )}
               </div>
               {dropdownButtonShown && (
-                <DropdownButton
-                  skeuomorphic
-                  className="dropdown-button"
-                  innerRef={DropdownButtonRef}
-                  color="darkerGray"
-                  icon={deviceIsMobile ? 'chevron-down' : 'ellipsis-h'}
-                  style={{ position: 'absolute', top: 0, right: 0 }}
-                  opacity={0.8}
-                  menuProps={messageMenuItems}
-                  onDropdownShown={(shown) => setHighlighted(shown)}
-                />
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    right: 0,
+                    display: 'flex'
+                  }}
+                >
+                  <ReactionButton
+                    style={{ marginRight: '0.5rem', fontSize: '1rem' }}
+                  />
+                  <DropdownButton
+                    skeuomorphic
+                    buttonStyle={{ fontSize: '1rem' }}
+                    className="menu-button"
+                    innerRef={DropdownButtonRef}
+                    color="darkerGray"
+                    icon={deviceIsMobile ? 'chevron-down' : 'ellipsis-h'}
+                    opacity={0.8}
+                    menuProps={messageMenuItems}
+                    onDropdownShown={(shown) => setHighlighted(shown)}
+                  />
+                </div>
               )}
             </div>
             {messageRewardModalShown && (
