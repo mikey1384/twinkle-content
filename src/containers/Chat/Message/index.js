@@ -702,9 +702,7 @@ function Message({
                     display: 'flex'
                   }}
                 >
-                  <ReactionButton
-                    style={{ marginRight: '0.5rem', fontSize: '1rem' }}
-                  />
+                  <ReactionButton style={{ marginRight: '0.5rem' }} />
                   <DropdownButton
                     skeuomorphic
                     buttonStyle={{ fontSize: '1rem' }}
