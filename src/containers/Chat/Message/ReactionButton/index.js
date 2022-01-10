@@ -63,12 +63,16 @@ export default function ReactionButton({ style }) {
             {reactions.map((reaction) => (
               <div
                 key={reaction.label}
-                style={{
-                  cursor: 'pointer',
-                  width: '2rem',
-                  height: '2rem',
-                  background: `url(${Emojis}) ${reaction.position} / 5100%`
-                }}
+                className={css`
+                  cursor: pointer;
+                  width: 2rem;
+                  height: 2rem;
+                  background: url(${Emojis}) ${reaction.position} / 5100%;
+                  transition: all 0.1s ease-in-out;
+                  &:hover {
+                    transform: scale(1.5);
+                  }
+                `}
               />
             ))}
           </div>
