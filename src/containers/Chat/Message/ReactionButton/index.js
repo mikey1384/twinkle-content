@@ -79,12 +79,12 @@ export default function ReactionButton({ style }) {
         )}
         <Button
           className={`menu-button ${css`
-            padding: 0.3rem 0.5rem;
             opacity: 0.8;
             &:hover {
               opacity: 1;
             }
           `}`}
+          style={{ padding: '0.1rem 0.5rem' }}
           skeuomorphic
         >
           <div
