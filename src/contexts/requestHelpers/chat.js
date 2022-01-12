@@ -347,6 +347,18 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async postChatReaction({ messageId, reaction }) {
+      try {
+        const { data } = await request.post(
+          `${URL}/chat/reaction`,
+          { messageId, reaction },
+          auth()
+        );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async putFavoriteChannel(channelId) {
       try {
         const {
