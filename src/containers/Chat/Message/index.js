@@ -26,6 +26,7 @@ import MessageRewardModal from '../Modals/MessageRewardModal';
 import ErrorBoundary from 'components/ErrorBoundary';
 import LocalContext from '../Context';
 import ReactionButton from './ReactionButton';
+import Reactions from './Reactions';
 import localize from 'constants/localize';
 import { useInView } from 'react-intersection-observer';
 import { socket } from 'constants/io';
@@ -692,6 +693,7 @@ function Message({
                     )}
                   </>
                 )}
+                <Reactions />
               </div>
               {dropdownButtonShown && (
                 <div
