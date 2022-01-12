@@ -27,7 +27,8 @@ DropdownButton.propTypes = {
   stretch: PropTypes.bool,
   style: PropTypes.object,
   transparent: PropTypes.bool,
-  text: PropTypes.any
+  text: PropTypes.any,
+  xAdjustment: PropTypes.number
 };
 
 export default function DropdownButton({
@@ -46,6 +47,7 @@ export default function DropdownButton({
   stretch,
   innerRef,
   transparent,
+  xAdjustment,
   ...props
 }) {
   const [dropdownContext, setDropdownContext] = useState(null);
@@ -91,6 +93,7 @@ export default function DropdownButton({
               minWidth: '12rem',
               ...listStyle
             }}
+            xAdjustment={xAdjustment}
             dropdownContext={dropdownContext}
             onHideMenu={handleHideMenuWithCoolDown}
           >

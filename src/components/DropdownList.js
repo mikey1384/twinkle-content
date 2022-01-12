@@ -11,6 +11,7 @@ const deviceIsMobile = isMobile(navigator);
 const outsideClickMethod = deviceIsMobile ? useOutsideTap : useOutsideClick;
 
 DropdownList.propTypes = {
+  xAdjustment: PropTypes.number,
   children: PropTypes.node,
   className: PropTypes.string,
   dropdownContext: PropTypes.object,
@@ -23,6 +24,7 @@ DropdownList.propTypes = {
 };
 
 export default function DropdownList({
+  xAdjustment = 0,
   children,
   className,
   dropdownContext,
@@ -60,7 +62,9 @@ export default function DropdownList({
           className={`${css`
             position: absolute;
             left: ${`${
-              displaysToTheRight ? `${x}px` : `CALC(${x}px + ${width}px)`
+              displaysToTheRight
+                ? `${x}px`
+                : `CALC(${x + xAdjustment}px + ${width}px)`
             }`};
             top: ${isReversed
               ? `CALC(${y}px - 0.5rem)`
