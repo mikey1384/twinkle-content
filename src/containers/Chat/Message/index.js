@@ -442,8 +442,13 @@ function Message({
   );
 
   const dropdownButtonShown = useMemo(
-    () => !!messageId && !isNotification && !isChessMsg && !isEditing,
-    [isChessMsg, isEditing, isNotification, messageId]
+    () =>
+      !!messageId &&
+      !isNotification &&
+      !isChessMsg &&
+      !isEditing &&
+      !fileToUpload,
+    [fileToUpload, isChessMsg, isEditing, isNotification, messageId]
   );
 
   const handleChessSpoilerClick = useCallback(async () => {
@@ -691,9 +696,11 @@ function Message({
                         userCanEditThis={userCanEditThis}
                       />
                     )}
+                    {dropdownButtonShown && (
+                      <Reactions reactions={message.reactions} />
+                    )}
                   </>
                 )}
-                <Reactions reactions={message.reactions} />
               </div>
               {dropdownButtonShown && (
                 <div
@@ -704,7 +711,9 @@ function Message({
                     display: 'flex'
                   }}
                 >
-                  <ReactionButton style={{ marginRight: '0.5rem' }} />
+                  {!invitePath && !isDrawOffer && !isChessMsg && (
+                    <ReactionButton style={{ marginRight: '0.5rem' }} />
+                  )}
                   <DropdownButton
                     skeuomorphic
                     buttonStyle={{ fontSize: '1rem' }}
