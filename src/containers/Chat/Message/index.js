@@ -130,6 +130,7 @@ function Message({
     actions: {
       onAddReactionToMessage,
       onEditMessage,
+      onRemoveReactionFromMessage,
       onSaveMessage,
       onSetEmbeddedUrl,
       onSetActualDescription,
@@ -146,7 +147,8 @@ function Message({
       editChatMessage,
       saveChatMessage,
       setChessMoveViewTimeStamp,
-      postChatReaction
+      postChatReaction,
+      removeChatReaction
     },
     state: { filesBeingUploaded, socketConnected }
   } = useContext(LocalContext);
@@ -518,7 +520,7 @@ function Message({
     [channelId, isReloadedSubject, isSubject, messageId, subjectId]
   );
 
-  const handleReactionClick = useCallback(
+  const handleAddReaction = useCallback(
     async (reaction) => {
       if (message.reactions) {
         for (const reactionObj of message.reactions) {
@@ -531,7 +533,21 @@ function Message({
       postChatReaction({ messageId, reaction });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [message.reactions, messageId, myId]
+    [channelId, message?.reactions, messageId, myId]
+  );
+
+  const handleRemoveReaction = useCallback(
+    async (reaction) => {
+      onRemoveReactionFromMessage({
+        channelId,
+        messageId,
+        reaction,
+        userId: myId
+      });
+      removeChatReaction({ messageId, reaction });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [channelId, messageId, myId]
   );
 
   if (!chessState && (gameWinnerId || isDraw)) {
@@ -719,7 +735,11 @@ function Message({
                       />
                     )}
                     {dropdownButtonShown && (
-                      <Reactions reactions={message.reactions} />
+                      <Reactions
+                        reactions={message.reactions}
+                        onRemoveReaction={handleRemoveReaction}
+                        onAddReaction={handleAddReaction}
+                      />
                     )}
                   </>
                 )}
@@ -735,7 +755,7 @@ function Message({
                 >
                   {!invitePath && !isDrawOffer && !isChessMsg && (
                     <ReactionButton
-                      onReactionClick={handleReactionClick}
+                      onReactionClick={handleAddReaction}
                       style={{ marginRight: '0.5rem' }}
                     />
                   )}

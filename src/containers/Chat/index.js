@@ -81,6 +81,9 @@ function Chat({ onFileUpload }) {
   const putFavoriteChannel = useAppContext(
     (v) => v.requestHelpers.putFavoriteChannel
   );
+  const removeChatReaction = useAppContext(
+    (v) => v.requestHelpers.removeChatReaction
+  );
   const reloadChatSubject = useAppContext(
     (v) => v.requestHelpers.reloadChatSubject
   );
@@ -174,6 +177,9 @@ function Chat({ onFileUpload }) {
   );
   const onReloadChatSubject = useChatContext(
     (v) => v.actions.onReloadChatSubject
+  );
+  const onRemoveReactionFromMessage = useChatContext(
+    (v) => v.actions.onRemoveReactionFromMessage
   );
   const onSaveMessage = useChatContext((v) => v.actions.onSaveMessage);
   const onSendFirstDirectMessage = useChatContext(
@@ -529,6 +535,7 @@ function Chat({ onFileUpload }) {
           onLoadMoreMessages,
           onReceiveMessageOnDifferentChannel,
           onReloadChatSubject,
+          onRemoveReactionFromMessage,
           onSaveMessage,
           onSearchChatSubject,
           onSendFirstDirectMessage,
@@ -568,6 +575,7 @@ function Chat({ onFileUpload }) {
           parseChannelPath,
           postChatReaction,
           putFavoriteChannel,
+          removeChatReaction,
           reloadChatSubject,
           saveChatMessage,
           searchChatSubject,

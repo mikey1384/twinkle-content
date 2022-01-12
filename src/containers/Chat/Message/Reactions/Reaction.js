@@ -9,10 +9,18 @@ import { useMyState } from 'helpers/hooks';
 Reaction.propTypes = {
   reaction: PropTypes.string,
   reactionCount: PropTypes.number,
-  reactedUserIds: PropTypes.array
+  reactedUserIds: PropTypes.array,
+  onRemoveReaction: PropTypes.func,
+  onAddReaction: PropTypes.func
 };
 
-export default function Reaction({ reaction, reactionCount, reactedUserIds }) {
+export default function Reaction({
+  reaction,
+  reactionCount,
+  reactedUserIds,
+  onRemoveReaction,
+  onAddReaction
+}) {
   const { profileTheme, userId } = useMyState();
   const userReacted = useMemo(
     () => reactedUserIds.includes(userId),
@@ -31,6 +39,7 @@ export default function Reaction({ reaction, reactionCount, reactedUserIds }) {
         background: Color.targetGray(),
         marginRight: '0.5rem'
       }}
+      onClick={handleClick}
     >
       <div
         style={{
@@ -63,4 +72,11 @@ export default function Reaction({ reaction, reactionCount, reactedUserIds }) {
       </div>
     </div>
   );
+
+  function handleClick() {
+    if (userReacted) {
+      return onRemoveReaction();
+    }
+    onAddReaction();
+  }
 }

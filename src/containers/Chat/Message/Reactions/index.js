@@ -3,10 +3,16 @@ import PropTypes from 'prop-types';
 import Reaction from './Reaction';
 
 Reactions.propTypes = {
-  reactions: PropTypes.array
+  reactions: PropTypes.array,
+  onRemoveReaction: PropTypes.func,
+  onAddReaction: PropTypes.func
 };
 
-export default function Reactions({ reactions }) {
+export default function Reactions({
+  reactions,
+  onRemoveReaction,
+  onAddReaction
+}) {
   const reactionList = useMemo(() => {
     const result = [];
     if (!reactions) return result;
@@ -38,6 +44,8 @@ export default function Reactions({ reactions }) {
           reaction={reaction}
           reactionCount={reactionObj[reaction].length}
           reactedUserIds={reactionObj[reaction].map(({ userId }) => userId)}
+          onRemoveReaction={() => onRemoveReaction(reaction)}
+          onAddReaction={() => onAddReaction(reaction)}
         />
       ))}
     </div>

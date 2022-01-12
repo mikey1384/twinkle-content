@@ -386,6 +386,15 @@ export default function ChatActions(dispatch) {
         message
       });
     },
+    onRemoveReactionFromMessage({ channelId, messageId, reaction, userId }) {
+      return dispatch({
+        type: 'REMOVE_REACTION_FROM_MESSAGE',
+        channelId,
+        messageId,
+        reaction,
+        userId
+      });
+    },
     onRemoveNewActivityStatus(word) {
       return dispatch({
         type: 'REMOVE_NEW_ACTIVITY_STATUS',

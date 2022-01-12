@@ -373,6 +373,17 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async removeChatReaction({ messageId, reaction }) {
+      try {
+        const { data } = await request.delete(
+          `${URL}/chat/reaction?messageId=${messageId}&reaction=${reaction}`,
+          auth()
+        );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async registerWord(definitions) {
       try {
         const { data } = await request.post(
