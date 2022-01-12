@@ -141,7 +141,12 @@ function Message({
       onUpdateChessMoveViewTimeStamp,
       onUpdateRecentChessMessage
     },
-    requests: { editChatMessage, saveChatMessage, setChessMoveViewTimeStamp },
+    requests: {
+      editChatMessage,
+      saveChatMessage,
+      setChessMoveViewTimeStamp,
+      postChatReaction
+    },
     state: { filesBeingUploaded, socketConnected }
   } = useContext(LocalContext);
   const {
@@ -512,6 +517,14 @@ function Message({
     [channelId, isReloadedSubject, isSubject, messageId, subjectId]
   );
 
+  const handleReactionClick = useCallback(
+    async (reaction) => {
+      postChatReaction({ messageId, reaction });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [messageId]
+  );
+
   if (!chessState && (gameWinnerId || isDraw)) {
     return (
       <GameOverMessage
@@ -712,7 +725,10 @@ function Message({
                   }}
                 >
                   {!invitePath && !isDrawOffer && !isChessMsg && (
-                    <ReactionButton style={{ marginRight: '0.5rem' }} />
+                    <ReactionButton
+                      onReactionClick={handleReactionClick}
+                      style={{ marginRight: '0.5rem' }}
+                    />
                   )}
                   <DropdownButton
                     skeuomorphic
