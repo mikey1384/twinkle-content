@@ -693,7 +693,7 @@ function Message({
                     )}
                   </>
                 )}
-                <Reactions />
+                <Reactions reactions={message.reactions} />
               </div>
               {dropdownButtonShown && (
                 <div
