@@ -75,6 +75,9 @@ function Chat({ onFileUpload }) {
   );
   const loadRankings = useAppContext((v) => v.requestHelpers.loadRankings);
   const loadVocabulary = useAppContext((v) => v.requestHelpers.loadVocabulary);
+  const postChatReaction = useAppContext(
+    (v) => v.requestHelpers.postChatReaction
+  );
   const putFavoriteChannel = useAppContext(
     (v) => v.requestHelpers.putFavoriteChannel
   );
@@ -559,6 +562,7 @@ function Chat({ onFileUpload }) {
           loadChatSubject,
           loadRankings,
           parseChannelPath,
+          postChatReaction,
           putFavoriteChannel,
           reloadChatSubject,
           saveChatMessage,
