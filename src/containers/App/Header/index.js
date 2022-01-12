@@ -80,6 +80,9 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
   const myStream = useChatContext((v) => v.state.myStream);
   const numUnreads = useChatContext((v) => v.state.numUnreads);
   const chatStatus = useChatContext((v) => v.state.chatStatus);
+  const onAddReactionToMessage = useChatContext(
+    (v) => v.actions.onAddReactionToMessage
+  );
   const onChangeAwayStatus = useChatContext(
     (v) => v.actions.onChangeAwayStatus
   );
@@ -124,6 +127,9 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
   );
   const onReceiveVocabActivity = useChatContext(
     (v) => v.actions.onReceiveVocabActivity
+  );
+  const onRemoveReactionFromMessage = useChatContext(
+    (v) => v.actions.onRemoveReactionFromMessage
   );
   const onResetChat = useChatContext((v) => v.actions.onResetChat);
   const onSetCall = useChatContext((v) => v.actions.onSetCall);
@@ -233,6 +239,8 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
     socket.on('chat_invitation_received', handleChatInvitation);
     socket.on('chat_message_deleted', onDeleteMessage);
     socket.on('chat_message_edited', onEditMessage);
+    socket.on('chat_reaction_added', onAddReactionToMessage);
+    socket.on('chat_reaction_removed', onRemoveReactionFromMessage);
     socket.on('chat_subject_purchased', onEnableChatSubject);
     socket.on('channel_owner_changed', handleChangeChannelOwner);
     socket.on('channel_settings_changed', onChangeChannelSettings);
@@ -268,6 +276,11 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
       socket.removeListener('chat_invitation_received', handleChatInvitation);
       socket.removeListener('chat_message_deleted', onDeleteMessage);
       socket.removeListener('chat_message_edited', onEditMessage);
+      socket.removeListener('chat_reaction_added', onAddReactionToMessage);
+      socket.removeListener(
+        'chat_reaction_removed',
+        onRemoveReactionFromMessage
+      );
       socket.removeListener('chat_subject_purchased', onEnableChatSubject);
       socket.removeListener('channel_owner_changed', handleChangeChannelOwner);
       socket.removeListener(

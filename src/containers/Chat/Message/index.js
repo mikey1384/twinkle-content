@@ -761,12 +761,15 @@ function Message({
                   )}
                   <DropdownButton
                     skeuomorphic
-                    buttonStyle={{ fontSize: '1rem' }}
+                    buttonStyle={{
+                      fontSize: '1rem',
+                      lineHeight: 1
+                    }}
                     className="menu-button"
                     innerRef={DropdownButtonRef}
                     color="darkerGray"
                     icon={deviceIsMobile ? 'chevron-down' : 'ellipsis-h'}
-                    opacity={0.8}
+                    opacity={0.5}
                     menuProps={messageMenuItems}
                     onDropdownShown={(shown) => setHighlighted(shown)}
                   />

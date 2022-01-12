@@ -26,6 +26,7 @@ DropdownButton.propTypes = {
   opacity: PropTypes.number,
   stretch: PropTypes.bool,
   style: PropTypes.object,
+  transparent: PropTypes.bool,
   text: PropTypes.any
 };
 
@@ -44,6 +45,7 @@ export default function DropdownButton({
   text = '',
   stretch,
   innerRef,
+  transparent,
   ...props
 }) {
   const [dropdownContext, setDropdownContext] = useState(null);
@@ -61,8 +63,10 @@ export default function DropdownButton({
       <div ref={ButtonRef}>
         <Button
           {...props}
+          filled={!!dropdownContext && !transparent}
+          transparent={transparent}
+          opacity={transparent ? 0 : dropdownContext ? 1 : opacity}
           className={`${className ? `${className} ` : ''}${css`
-            opacity: ${dropdownContext ? 1 : opacity};
             &:hover {
               opacity: 1;
             }
@@ -118,7 +122,7 @@ export default function DropdownButton({
     setDropdownContext(null);
     setTimeout(() => {
       coolDownRef.current = false;
-    }, 10);
+    }, 100);
   }
 
   function renderMenu() {

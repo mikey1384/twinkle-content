@@ -62,6 +62,7 @@ export default function Reaction({
           `}
         />
         <span
+          className="unselectable"
           style={{
             marginLeft: '0.3rem',
             fontSize: '1.3rem'

@@ -43,10 +43,17 @@ export default function ChatReducer(state, action) {
               ...state.channelsObj[action.channelId].messagesObj,
               [action.messageId]: {
                 ...message,
-                reactions: (message.reactions || []).concat({
-                  userId: action.userId,
-                  type: action.reaction
-                })
+                reactions: (message.reactions || [])
+                  .filter((reaction) => {
+                    return (
+                      reaction.userId !== action.userId ||
+                      reaction.type !== action.reaction
+                    );
+                  })
+                  .concat({
+                    userId: action.userId,
+                    type: action.reaction
+                  })
               }
             }
           }

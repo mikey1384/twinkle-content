@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Emojis from './emojis.png';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { reactionsObj } from 'constants/defaultValues';
-import { Color } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import { isMobile } from 'helpers';
+import { useOutsideClick } from 'helpers/hooks';
 import Icon from 'components/Icon';
+
+const deviceIsMobile = isMobile(navigator);
 
 const reactions = [
   'angry',
@@ -24,16 +28,27 @@ ReactionButton.propTypes = {
 
 export default function ReactionButton({ style, onReactionClick }) {
   const [reactionsShown, setReactionsShown] = useState(false);
+  const BarRef = useRef(null);
+  const coolDownRef = useRef(null);
+  useOutsideClick(BarRef, () => {
+    if (!deviceIsMobile) return;
+    coolDownRef.current = true;
+    setReactionsShown(false);
+    setTimeout(() => {
+      coolDownRef.current = false;
+    }, 100);
+  });
 
   return (
     <ErrorBoundary>
       <div
         style={{ display: 'flex', ...style }}
-        onMouseEnter={() => setReactionsShown(true)}
-        onMouseLeave={() => setReactionsShown(false)}
+        onMouseEnter={() => (deviceIsMobile ? {} : setReactionsShown(true))}
+        onMouseLeave={() => (deviceIsMobile ? {} : setReactionsShown(false))}
       >
         {reactionsShown && (
           <div
+            ref={BarRef}
             style={{
               width: '20rem',
               background: 'rgb(255, 255, 255)',
@@ -58,6 +73,11 @@ export default function ReactionButton({ style, onReactionClick }) {
                   &:hover {
                     transform: scale(1.5);
                   }
+                  @media (max-width: ${mobileMaxWidth}) {
+                    &:hover {
+                      transform: none;
+                    }
+                  }
                 `}
                 onClick={() => handleReactionClick(reaction)}
               />
@@ -65,21 +85,24 @@ export default function ReactionButton({ style, onReactionClick }) {
           </div>
         )}
         <Button
-          className={`menu-button ${css`
-            opacity: 0.8;
-            &:hover {
-              opacity: 1;
-            }
-          `}`}
-          style={{ padding: '0.5rem 0.7rem' }}
+          className="menu-button"
+          style={{ padding: '0.5rem 0.7rem', lineHeight: 1 }}
+          color="darkerGray"
+          opacity={0.5}
           skeuomorphic
           filled={reactionsShown}
+          onClick={() => (deviceIsMobile ? handleReactionBarShown() : {})}
         >
           <Icon icon="thumbs-up" />
         </Button>
       </div>
     </ErrorBoundary>
   );
+
+  function handleReactionBarShown() {
+    if (coolDownRef.current) return;
+    setReactionsShown((shown) => !shown);
+  }
 
   function handleReactionClick(reaction) {
     onReactionClick(reaction);
