@@ -92,7 +92,7 @@ function AccountMenu({ className, history }) {
         <DropdownButton
           className={className}
           transparent
-          xAdjustment={-35}
+          xAdjustment={-30}
           listStyle={{
             top: '4.5rem'
           }}
