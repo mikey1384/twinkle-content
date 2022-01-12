@@ -7,9 +7,6 @@ import { reactionsObj } from 'constants/defaultValues';
 import { Color } from 'constants/css';
 import { css } from '@emotion/css';
 
-ReactionButton.propTypes = {
-  style: PropTypes.object
-};
 const reactions = [
   'thumb',
   'angry',
@@ -19,17 +16,22 @@ const reactions = [
   'heart'
 ];
 
-export default function ReactionButton({ style }) {
-  const [mouseEntered, setMouseEntered] = useState(false);
+ReactionButton.propTypes = {
+  style: PropTypes.object,
+  onReactionClick: PropTypes.func
+};
+
+export default function ReactionButton({ style, onReactionClick }) {
+  const [reactionsShown, setReactionsShown] = useState(false);
 
   return (
     <ErrorBoundary>
       <div
         style={{ display: 'flex', ...style }}
-        onMouseEnter={() => setMouseEntered(true)}
-        onMouseLeave={() => setMouseEntered(false)}
+        onMouseEnter={() => setReactionsShown(true)}
+        onMouseLeave={() => setReactionsShown(false)}
       >
-        {mouseEntered && (
+        {reactionsShown && (
           <div
             style={{
               width: '20rem',
@@ -56,6 +58,7 @@ export default function ReactionButton({ style }) {
                     transform: scale(1.5);
                   }
                 `}
+                onClick={() => handleReactionClick(reaction)}
               />
             ))}
           </div>
@@ -81,4 +84,9 @@ export default function ReactionButton({ style }) {
       </div>
     </ErrorBoundary>
   );
+
+  function handleReactionClick(reaction) {
+    onReactionClick(reaction);
+    setReactionsShown(false);
+  }
 }
