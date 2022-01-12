@@ -6,14 +6,15 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import { reactionsObj } from 'constants/defaultValues';
 import { Color } from 'constants/css';
 import { css } from '@emotion/css';
+import Icon from 'components/Icon';
 
 const reactions = [
-  'thumb',
   'angry',
   'crying',
   'surprised',
   'laughing',
-  'heart'
+  'heart',
+  'thumb'
 ];
 
 ReactionButton.propTypes = {
@@ -70,16 +71,11 @@ export default function ReactionButton({ style, onReactionClick }) {
               opacity: 1;
             }
           `}`}
-          style={{ padding: '0.1rem 0.5rem' }}
+          style={{ padding: '0.5rem 0.7rem' }}
           skeuomorphic
+          filled={reactionsShown}
         >
-          <div
-            style={{
-              width: '2rem',
-              height: '2rem',
-              background: `url(${Emojis}) ${reactionsObj.thumb.position} / 5100%`
-            }}
-          />
+          <Icon icon="thumbs-up" />
         </Button>
       </div>
     </ErrorBoundary>

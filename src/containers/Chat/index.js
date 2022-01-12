@@ -138,6 +138,9 @@ function Chat({ onFileUpload }) {
   const subjectSearchResults = useChatContext(
     (v) => v.state.subjectSearchResults
   );
+  const onAddReactionToMessage = useChatContext(
+    (v) => v.actions.onAddReactionToMessage
+  );
   const onClearNumUnreads = useChatContext((v) => v.actions.onClearNumUnreads);
   const onClearSubjectSearchResults = useChatContext(
     (v) => v.actions.onClearSubjectSearchResults
@@ -513,6 +516,7 @@ function Chat({ onFileUpload }) {
         actions: {
           onClearSubjectSearchResults,
           onDeleteMessage,
+          onAddReactionToMessage,
           onEditChannelSettings,
           onEditMessage,
           onEnterChannelWithId,

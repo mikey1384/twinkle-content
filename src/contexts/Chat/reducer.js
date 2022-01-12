@@ -30,6 +30,29 @@ export default function ChatReducer(state, action) {
           }
         }
       };
+    case 'ADD_REACTION_TO_MESSAGE': {
+      const message =
+        state.channelsObj[action.channelId].messagesObj[action.messageId];
+      return {
+        ...state,
+        channelsObj: {
+          ...state.channelsObj,
+          [action.channelId]: {
+            ...state.channelsObj[action.channelId],
+            messagesObj: {
+              ...state.channelsObj[action.channelId].messagesObj,
+              [action.messageId]: {
+                ...message,
+                reactions: (message.reactions || []).concat({
+                  userId: action.userId,
+                  type: action.reaction
+                })
+              }
+            }
+          }
+        }
+      };
+    }
     case 'EDIT_CHANNEL_SETTINGS':
       return {
         ...state,

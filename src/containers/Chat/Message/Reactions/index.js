@@ -22,10 +22,10 @@ export default function Reactions({ reactions }) {
     if (!reactions) return result;
     for (const reaction of reactions) {
       if (!result[reaction.type]) {
-        result[reaction.type] = { count: 1 };
+        result[reaction.type] = [reaction];
         continue;
       }
-      result[reaction.type].count += 1;
+      result[reaction.type].push(reaction);
     }
     return result;
   }, [reactions]);
@@ -36,7 +36,8 @@ export default function Reactions({ reactions }) {
         <Reaction
           key={reaction}
           reaction={reaction}
-          reactionCount={reactionObj[reaction].count}
+          reactionCount={reactionObj[reaction].length}
+          reactedUserIds={reactionObj[reaction].map(({ userId }) => userId)}
         />
       ))}
     </div>

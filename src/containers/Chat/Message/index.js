@@ -128,6 +128,7 @@ function Message({
   const [highlighted, setHighlighted] = useState(false);
   const {
     actions: {
+      onAddReactionToMessage,
       onEditMessage,
       onSaveMessage,
       onSetEmbeddedUrl,
@@ -519,10 +520,18 @@ function Message({
 
   const handleReactionClick = useCallback(
     async (reaction) => {
+      if (message.reactions) {
+        for (const reactionObj of message.reactions) {
+          if (reactionObj.type === reaction && reactionObj.userId === myId) {
+            return;
+          }
+        }
+      }
+      onAddReactionToMessage({ channelId, messageId, reaction, userId: myId });
       postChatReaction({ messageId, reaction });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [messageId]
+    [message.reactions, messageId, myId]
   );
 
   if (!chessState && (gameWinnerId || isDraw)) {
