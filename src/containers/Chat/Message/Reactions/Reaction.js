@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Emojis from '../emojis.png';
 import Tooltip from './Tooltip';
@@ -27,6 +27,9 @@ export default function Reaction({
 }) {
   const mouseEntered = useRef(false);
   const ReactionRef = useRef(null);
+  const hideTimerRef = useRef(null);
+  const hideTimerRef2 = useRef(null);
+  const mounted = useRef(true);
   const [tooltipContext, setTooltipContext] = useState(null);
   const { profileTheme, userId } = useMyState();
   const userReacted = useMemo(
@@ -34,13 +37,18 @@ export default function Reaction({
     [reactedUserIds, userId]
   );
 
+  useEffect(() => {
+    mounted.current = true;
+
+    return function cleanup() {
+      mounted.current = false;
+    };
+  }, []);
+
   return (
     <div
       ref={ReactionRef}
-      onMouseEnter={handleSetTooltipContext}
-      onMouseLeave={handleRemoveTooltipContext}
       style={{
-        cursor: 'pointer',
         borderRadius,
         height: '2.3rem',
         border: `1px solid ${
@@ -54,6 +62,7 @@ export default function Reaction({
         style={{
           ...(userReacted ? { background: Color[profileTheme](0.2) } : {}),
           borderRadius: innerBorderRadius,
+          cursor: 'pointer',
           width: '100%',
           height: '100%',
           padding: '0 0.5rem',
@@ -61,6 +70,8 @@ export default function Reaction({
           justifyContent: 'center',
           alignItems: 'center'
         }}
+        onMouseEnter={handleSetTooltipContext}
+        onMouseLeave={handleRemoveTooltipContext}
         onClick={handleClick}
       >
         <div
@@ -81,7 +92,22 @@ export default function Reaction({
           {reactionCount}
         </span>
       </div>
-      {tooltipContext && <Tooltip parentContext={tooltipContext} />}
+      {tooltipContext && (
+        <Tooltip
+          onMouseEnter={() => {
+            clearTimeout(hideTimerRef.current);
+            clearTimeout(hideTimerRef2.current);
+          }}
+          onMouseLeave={() => {
+            hideTimerRef2.current = setTimeout(() => {
+              if (mounted.current) {
+                setTooltipContext(null);
+              }
+            }, 300);
+          }}
+          parentContext={tooltipContext}
+        />
+      )}
     </div>
   );
 
@@ -107,7 +133,11 @@ export default function Reaction({
 
   function handleRemoveTooltipContext() {
     if (deviceIsMobile) return;
-    mouseEntered.current = false;
-    setTooltipContext(null);
+    hideTimerRef.current = setTimeout(() => {
+      if (mounted.current) {
+        mouseEntered.current = false;
+        setTooltipContext(null);
+      }
+    }, 300);
   }
 }

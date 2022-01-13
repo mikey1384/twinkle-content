@@ -6,11 +6,12 @@ import { css } from '@emotion/css';
 import { createPortal } from 'react-dom';
 
 Tooltip.propTypes = {
-  parentContext: PropTypes.object.isRequired,
-  zIndex: PropTypes.number
+  onMouseEnter: PropTypes.func.isRequired,
+  onMouseLeave: PropTypes.func.isRequired,
+  parentContext: PropTypes.object.isRequired
 };
 
-export default function Tooltip({ parentContext }) {
+export default function Tooltip({ parentContext, onMouseEnter, onMouseLeave }) {
   const { x, y, width, height } = parentContext;
   const displaysToTheRight = useMemo(() => {
     return window.innerWidth / 2 - x > 0;
@@ -28,6 +29,8 @@ export default function Tooltip({ parentContext }) {
       }}
     >
       <div
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
         className={css`
           position: absolute;
           left: ${`${
