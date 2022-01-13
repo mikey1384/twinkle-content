@@ -8,10 +8,18 @@ import { createPortal } from 'react-dom';
 Tooltip.propTypes = {
   onMouseEnter: PropTypes.func.isRequired,
   onMouseLeave: PropTypes.func.isRequired,
-  parentContext: PropTypes.object.isRequired
+  parentContext: PropTypes.object.isRequired,
+  displayedReactedUsers: PropTypes.array,
+  reactedUserIds: PropTypes.array
 };
 
-export default function Tooltip({ parentContext, onMouseEnter, onMouseLeave }) {
+export default function Tooltip({
+  parentContext,
+  onMouseEnter,
+  onMouseLeave,
+  displayedReactedUsers,
+  reactedUserIds
+}) {
   const { x, y, width, height } = parentContext;
   const displaysToTheRight = useMemo(() => {
     return window.innerWidth / 2 - x > 0;
@@ -19,6 +27,9 @@ export default function Tooltip({ parentContext, onMouseEnter, onMouseLeave }) {
   const isReversed = useMemo(() => {
     return window.innerHeight / 2 - y < 0;
   }, [y]);
+  const otherReactedUserNumber = useMemo(() => {
+    return reactedUserIds.length - displayedReactedUsers.length;
+  }, [displayedReactedUsers, reactedUserIds]);
 
   return createPortal(
     <ErrorBoundary
@@ -50,7 +61,15 @@ export default function Tooltip({ parentContext, onMouseEnter, onMouseLeave }) {
           font-weight: normal;
         `}
       >
-        Tooltip Here
+        <>
+          {displayedReactedUsers.map((user) => user.username).join(', ')}
+          {otherReactedUserNumber > 0 ? (
+            <>
+              {' '}
+              <a>and {otherReactedUserNumber}</a>
+            </>
+          ) : null}
+        </>
       </div>
     </ErrorBoundary>,
     document.getElementById('outer-layer')

@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Emojis from '../emojis.png';
 import Tooltip from './Tooltip';
+import { useAppContext } from 'contexts';
 import { reactionsObj } from 'constants/defaultValues';
 import { css } from '@emotion/css';
 import { Color, borderRadius, innerBorderRadius } from 'constants/css';
@@ -25,17 +26,43 @@ export default function Reaction({
   onRemoveReaction,
   onAddReaction
 }) {
+  const loadProfile = useAppContext((v) => v.requestHelpers.loadProfile);
   const mouseEntered = useRef(false);
   const ReactionRef = useRef(null);
   const hideTimerRef = useRef(null);
   const hideTimerRef2 = useRef(null);
   const mounted = useRef(true);
   const [tooltipContext, setTooltipContext] = useState(null);
+  const [userObj, setUserObj] = useState({});
   const { profileTheme, userId } = useMyState();
   const userReacted = useMemo(
     () => reactedUserIds.includes(userId),
     [reactedUserIds, userId]
   );
+
+  useEffect(() => {
+    const indexLimit = Math.min(reactedUserIds.length, 2);
+    for (let i = 0; i < indexLimit; i++) {
+      handleLoadProfile(reactedUserIds[i]);
+    }
+
+    async function handleLoadProfile(userId) {
+      const data = await loadProfile(userId);
+      setUserObj((prev) => ({ ...prev, [userId]: data }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const reactedUsers = useMemo(() => {
+    const users = [];
+    for (let i = 0; i < reactedUserIds.length; i++) {
+      if (userObj[reactedUserIds[i]]) {
+        users.push(userObj[reactedUserIds[i]]);
+      }
+    }
+    return users;
+  }, [userObj, reactedUserIds]);
+  console.log(reactedUsers);
 
   useEffect(() => {
     mounted.current = true;
@@ -92,7 +119,7 @@ export default function Reaction({
           {reactionCount}
         </span>
       </div>
-      {tooltipContext && (
+      {tooltipContext && reactedUsers.length > 0 && (
         <Tooltip
           onMouseEnter={() => {
             clearTimeout(hideTimerRef.current);
@@ -106,6 +133,8 @@ export default function Reaction({
             }, 300);
           }}
           parentContext={tooltipContext}
+          reactedUserIds={reactedUserIds}
+          displayedReactedUsers={reactedUsers}
         />
       )}
     </div>
