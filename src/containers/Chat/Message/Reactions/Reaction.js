@@ -49,7 +49,6 @@ export default function Reaction({
         background: Color.targetGray(),
         marginRight: '0.5rem'
       }}
-      onClick={handleClick}
     >
       <div
         style={{
@@ -62,6 +61,7 @@ export default function Reaction({
           justifyContent: 'center',
           alignItems: 'center'
         }}
+        onClick={handleClick}
       >
         <div
           className={css`
