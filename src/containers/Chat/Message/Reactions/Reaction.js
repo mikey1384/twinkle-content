@@ -62,7 +62,6 @@ export default function Reaction({
     }
     return users;
   }, [userObj, reactedUserIds]);
-  console.log(reactedUsers);
 
   useEffect(() => {
     mounted.current = true;
