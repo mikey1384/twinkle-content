@@ -1,10 +1,14 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Emojis from '../emojis.png';
+import Tooltip from './Tooltip';
 import { reactionsObj } from 'constants/defaultValues';
 import { css } from '@emotion/css';
 import { Color, borderRadius, innerBorderRadius } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
+import { isMobile } from 'helpers';
+
+const deviceIsMobile = isMobile(navigator);
 
 Reaction.propTypes = {
   reaction: PropTypes.string,
@@ -21,6 +25,9 @@ export default function Reaction({
   onRemoveReaction,
   onAddReaction
 }) {
+  const mouseEntered = useRef(false);
+  const ReactionRef = useRef(null);
+  const [tooltipContext, setTooltipContext] = useState(null);
   const { profileTheme, userId } = useMyState();
   const userReacted = useMemo(
     () => reactedUserIds.includes(userId),
@@ -29,6 +36,9 @@ export default function Reaction({
 
   return (
     <div
+      ref={ReactionRef}
+      onMouseEnter={handleSetTooltipContext}
+      onMouseLeave={handleRemoveTooltipContext}
       style={{
         cursor: 'pointer',
         borderRadius,
@@ -71,6 +81,7 @@ export default function Reaction({
           {reactionCount}
         </span>
       </div>
+      {tooltipContext && <Tooltip parentContext={tooltipContext} />}
     </div>
   );
 
@@ -79,5 +90,24 @@ export default function Reaction({
       return onRemoveReaction();
     }
     onAddReaction();
+  }
+
+  function handleSetTooltipContext() {
+    if (deviceIsMobile) return;
+    mouseEntered.current = true;
+    const parentElementDimensions =
+      ReactionRef.current?.getBoundingClientRect() || {
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0
+      };
+    setTooltipContext(parentElementDimensions);
+  }
+
+  function handleRemoveTooltipContext() {
+    if (deviceIsMobile) return;
+    mouseEntered.current = false;
+    setTooltipContext(null);
   }
 }
