@@ -217,6 +217,7 @@ export default function Reaction({
   }
 
   async function handleShowAllReactedUsers() {
+    setTooltipContext(null);
     setLoadingOtherUsers(true);
     setUserListModalShown(true);
     for (let reactedUserId of reactedUserIdsExcludingMine) {
