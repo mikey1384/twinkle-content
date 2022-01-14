@@ -48,8 +48,7 @@ export default function Reaction({
   );
 
   useEffect(() => {
-    const indexLimit = Math.min(reactedUserIdsExcludingMine.length, 2);
-    for (let i = 0; i < indexLimit; i++) {
+    for (let i = 0; i < reactedUserIdsExcludingMine.length; i++) {
       handleLoadProfile(reactedUserIdsExcludingMine[i]);
     }
 
@@ -65,12 +64,12 @@ export default function Reaction({
   const reactedUsersExcludingMe = useMemo(() => {
     const users = [];
     for (let i = 0; i < reactedUserIdsExcludingMine.length; i++) {
-      if (userObj[reactedUserIds[i]]) {
-        users.push(userObj[reactedUserIds[i]]);
+      if (userObj[reactedUserIdsExcludingMine[i]]) {
+        users.push(userObj[reactedUserIdsExcludingMine[i]]);
       }
     }
     return users;
-  }, [reactedUserIdsExcludingMine.length, userObj, reactedUserIds]);
+  }, [reactedUserIdsExcludingMine, userObj]);
 
   const reactedUsers = useMemo(() => {
     const users = [];
