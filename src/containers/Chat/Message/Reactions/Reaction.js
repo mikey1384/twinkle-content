@@ -229,6 +229,6 @@ export default function Reaction({
       if (mounted.current) {
         setTooltipContext(null);
       }
-    }, 300);
+    }, 200);
   }
 }
