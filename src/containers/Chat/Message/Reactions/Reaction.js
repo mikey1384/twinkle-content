@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Emojis from '../emojis.png';
 import Tooltip from './Tooltip';
+import UserListModal from 'components/Modals/UserListModal';
 import { useAppContext } from 'contexts';
 import { reactionsObj } from 'constants/defaultValues';
 import { css } from '@emotion/css';
@@ -31,9 +32,11 @@ export default function Reaction({
   const hideTimerRef = useRef(null);
   const hideTimerRef2 = useRef(null);
   const mounted = useRef(true);
+  const [loadingOtherUsers, setLoadingOtherUsers] = useState(false);
   const [tooltipContext, setTooltipContext] = useState(null);
+  const [userListModalShown, setUserListModalShown] = useState(false);
   const [userObj, setUserObj] = useState({});
-  const { profileTheme, userId } = useMyState();
+  const { profileTheme, userId, profilePicUrl } = useMyState();
   const userReacted = useMemo(
     () => reactedUserIds.includes(userId),
     [reactedUserIds, userId]
@@ -74,12 +77,17 @@ export default function Reaction({
     if (userReacted) {
       users.push({
         id: userId,
-        username: 'You'
+        username: 'You',
+        profilePicUrl: profilePicUrl
       });
     }
     users.push(...reactedUsersExcludingMe);
     return users;
-  }, [userReacted, reactedUsersExcludingMe, userId]);
+  }, [userReacted, reactedUsersExcludingMe, userId, profilePicUrl]);
+
+  const truncatedReactedUsers = useMemo(() => {
+    return reactedUsers.slice(0, 3);
+  }, [reactedUsers]);
 
   useEffect(() => {
     mounted.current = true;
@@ -151,7 +159,29 @@ export default function Reaction({
           }}
           parentContext={tooltipContext}
           reactedUserIds={reactedUserIds}
-          displayedReactedUsers={reactedUsers}
+          displayedReactedUsers={truncatedReactedUsers}
+          onShowAllReactedUsers={handleShowAllReactedUsers}
+        />
+      )}
+      {userListModalShown && (
+        <UserListModal
+          loading={loadingOtherUsers}
+          title={
+            <div>
+              People who reacted to this with{' '}
+              <span
+                style={{ display: 'inline-block' }}
+                className={css`
+                  width: 2rem;
+                  height: 2rem;
+                  background: url(${Emojis}) ${reactionsObj[reaction].position} /
+                    5100%;
+                `}
+              />
+            </div>
+          }
+          users={reactedUsers}
+          onHide={() => setUserListModalShown(false)}
         />
       )}
     </div>
@@ -162,6 +192,22 @@ export default function Reaction({
       return onRemoveReaction();
     }
     onAddReaction();
+  }
+
+  async function handleShowAllReactedUsers() {
+    setLoadingOtherUsers(true);
+    setUserListModalShown(true);
+    for (let i = 0; i < reactedUserIdsExcludingMine.length; i++) {
+      if (!userObj[reactedUserIds[i]]) {
+        const data = await loadProfile(reactedUserIds[i]);
+        if (mounted.current) {
+          setUserObj((prev) => ({ ...prev, [reactedUserIds[i]]: data }));
+        }
+      }
+    }
+    if (mounted.current) {
+      setLoadingOtherUsers(false);
+    }
   }
 
   function handleSetTooltipContext() {

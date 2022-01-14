@@ -10,7 +10,8 @@ Tooltip.propTypes = {
   onMouseLeave: PropTypes.func.isRequired,
   parentContext: PropTypes.object.isRequired,
   displayedReactedUsers: PropTypes.array,
-  reactedUserIds: PropTypes.array
+  reactedUserIds: PropTypes.array,
+  onShowAllReactedUsers: PropTypes.func
 };
 
 export default function Tooltip({
@@ -18,7 +19,8 @@ export default function Tooltip({
   onMouseEnter,
   onMouseLeave,
   displayedReactedUsers,
-  reactedUserIds
+  reactedUserIds,
+  onShowAllReactedUsers
 }) {
   const { x, y, width, height } = parentContext;
   const displaysToTheRight = useMemo(() => {
@@ -54,6 +56,7 @@ export default function Tooltip({
                 fontWeight: 'bold',
                 cursor: 'pointer'
               }}
+              onClick={onShowAllReactedUsers}
             >
               and {otherReactedUserNumber} other
               {otherReactedUserNumber === 1 ? '' : 's'}
@@ -62,7 +65,7 @@ export default function Tooltip({
         ) : null}
       </>
     );
-  }, [displayedReactedUsers, otherReactedUserNumber]);
+  }, [displayedReactedUsers, onShowAllReactedUsers, otherReactedUserNumber]);
 
   return createPortal(
     <ErrorBoundary
