@@ -74,16 +74,16 @@ export function useLazyLoad({
 }
 
 export function useMyState() {
-  const hideWatched = useAppContext((v) => v.user.state.hideWatched);
-  const lastChatPath = useAppContext((v) => v.user.state.lastChatPath);
-  const loaded = useAppContext((v) => v.user.state.loaded);
+  const hideWatched = useAppContext((v) => v.user.state.myState.hideWatched);
+  const lastChatPath = useAppContext((v) => v.user.state.myState.lastChatPath);
   const numWordsCollected = useAppContext(
-    (v) => v.user.state.numWordsCollected
+    (v) => v.user.state.myState.numWordsCollected
   );
-  const userId = useAppContext((v) => v.user.state.userId);
-  const searchFilter = useAppContext((v) => v.user.state.searchFilter);
+  const searchFilter = useAppContext((v) => v.user.state.myState.searchFilter);
+  const xpThisMonth = useAppContext((v) => v.user.state.myState.xpThisMonth);
+  const userId = useAppContext((v) => v.user.state.myState.userId);
+  const loaded = useAppContext((v) => v.user.state.loaded);
   const signinModalShown = useAppContext((v) => v.user.state.signinModalShown);
-  const xpThisMonth = useAppContext((v) => v.user.state.xpThisMonth);
 
   const myState = useContentState({
     contentId: userId,
@@ -96,7 +96,7 @@ export function useMyState() {
         loaded,
         numWordsCollected,
         userId,
-        defaultSearchFilter: searchFilter,
+        searchFilter,
         hideWatched,
         isCreator:
           myState.userType === 'admin' || myState.userType === 'creator',

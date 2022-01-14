@@ -19,7 +19,7 @@ export default function UserActions(dispatch) {
     onInitMyState(data) {
       return dispatch({
         type: 'INIT_MY_STATE',
-        data: { ...data, loggedIn: true }
+        data: data
       });
     },
     onLoadUsers(data) {

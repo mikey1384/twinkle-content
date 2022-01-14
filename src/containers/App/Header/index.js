@@ -71,7 +71,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
     (v) => v.requestHelpers.updateChatLastRead
   );
 
-  const { defaultSearchFilter, userId, username, loggedIn, profilePicUrl } =
+  const { searchFilter, userId, username, loggedIn, profilePicUrl } =
     useMyState();
   const channelOnCall = useChatContext((v) => v.state.channelOnCall);
   const channelsObj = useChatContext((v) => v.state.channelsObj);
@@ -796,7 +796,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
           <TwinkleLogo style={{ marginLeft: '3rem' }} />
           <MainNavs
             loggedIn={loggedIn}
-            defaultSearchFilter={defaultSearchFilter}
+            defaultSearchFilter={searchFilter}
             numChatUnreads={numUnreads}
             numNewNotis={numNewNotis}
             numNewPosts={numNewPosts}

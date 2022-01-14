@@ -5,7 +5,10 @@ export default function UserReducer(state, action) {
     case 'CHANGE_DEFAULT_FILTER':
       return {
         ...state,
-        searchFilter: action.filter
+        myState: {
+          ...state.myState,
+          searchFilter: action.filter
+        }
       };
     case 'CLEAR_USER_SEARCH':
       return {
@@ -20,7 +23,12 @@ export default function UserReducer(state, action) {
     case 'INIT_MY_STATE':
       return {
         ...state,
-        ...action.data
+        myState: {
+          ...state.myState,
+          ...action.data
+        },
+        loaded: true,
+        loggedIn: true
       };
     case 'LOAD_USERS': {
       let loadMoreButton = false;
@@ -50,7 +58,7 @@ export default function UserReducer(state, action) {
     case 'LOGIN':
       return {
         ...state,
-        ...action.data,
+        myState: action.data,
         signinModalShown: false
       };
     case 'LOGOUT':
@@ -98,13 +106,16 @@ export default function UserReducer(state, action) {
     case 'SIGNUP':
       return {
         ...state,
-        ...action.data,
+        myState: action.data,
         signinModalShown: false
       };
     case 'SET_LAST_CHAT_PATH':
       return {
         ...state,
-        lastChatPath: action.lastChatPath
+        myState: {
+          ...state.myState,
+          lastChatPath: action.lastChatPath
+        }
       };
     case 'SET_ORDER_USERS_BY':
       return {
@@ -119,12 +130,18 @@ export default function UserReducer(state, action) {
     case 'TOGGLE_HIDE_WATCHED':
       return {
         ...state,
-        hideWatched: action.hideWatched
+        myState: {
+          ...state.myState,
+          hideWatched: action.hideWatched
+        }
       };
     case 'UPDATE_NUM_WORDS_COLLECTED':
       return {
         ...state,
-        numWordsCollected: action.numWordsCollected
+        myState: {
+          ...state.myState,
+          numWordsCollected: action.numWordsCollected
+        }
       };
     default:
       return state;

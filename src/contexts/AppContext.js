@@ -18,7 +18,7 @@ import { ViewContextProvider } from './View';
 import { LAST_ONLINE_FILTER_LABEL } from 'constants/defaultValues';
 
 export const AppContext = createContext();
-export const initialUserState = {
+export const initialMyState = {
   authLevel: 0,
   canDelete: false,
   canEdit: false,
@@ -26,21 +26,25 @@ export const initialUserState = {
   canReward: false,
   canEditPlaylists: false,
   canPinPlaylists: false,
-  defaultSearchFilter: '',
   hideWatched: false,
   isCreator: false,
   lastChatPath: '',
-  loaded: false,
-  loadMoreButton: false,
-  loggedIn: false,
   numWordsCollected: 0,
-  orderUsersBy: LAST_ONLINE_FILTER_LABEL,
   profileTheme: 'logoBlue',
+  searchFilter: '',
+  userId: null,
+  xpThisMonth: null
+};
+export const initialUserState = {
+  myState: initialMyState,
+  loadMoreButton: false,
+  loaded: false,
+  loggedIn: false,
+  orderUsersBy: LAST_ONLINE_FILTER_LABEL,
   profiles: [],
   profilesLoaded: false,
   searchedProfiles: [],
-  signinModalShown: false,
-  userId: null
+  signinModalShown: false
 };
 
 AppContextProvider.propTypes = {
