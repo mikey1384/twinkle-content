@@ -77,7 +77,6 @@ export default function DropdownList({
             );
             border: none;
             list-style: none;
-            position: absolute;
             background: #fff;
             box-shadow: 1px 1px 2px ${Color.black(0.6)};
             font-weight: normal;

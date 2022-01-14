@@ -31,6 +31,23 @@ export default function Tooltip({
     return reactedUserIds.length - displayedReactedUsers.length;
   }, [displayedReactedUsers, reactedUserIds]);
 
+  const peopleWhoReactedText = useMemo(() => {
+    if (displayedReactedUsers.length === 2 && otherReactedUserNumber === 0) {
+      return `${displayedReactedUsers[0].username} and ${displayedReactedUsers[1].username}`;
+    }
+    return (
+      <>
+        {displayedReactedUsers.map((user) => user.username).join(', ')}
+        {otherReactedUserNumber > 0 ? (
+          <>
+            {' '}
+            <a>and {otherReactedUserNumber}</a>
+          </>
+        ) : null}
+      </>
+    );
+  }, [displayedReactedUsers, otherReactedUserNumber]);
+
   return createPortal(
     <ErrorBoundary
       style={{
@@ -43,6 +60,10 @@ export default function Tooltip({
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
         className={css`
+          padding: 0.5rem;
+          font-size: 1.3rem;
+          min-width: 7rem;
+          text-align: center;
           position: absolute;
           left: ${`${
             displaysToTheRight ? `${x}px` : `CALC(${x}px + ${width}px)`
@@ -55,21 +76,11 @@ export default function Tooltip({
             ${isReversed ? '-100%' : 0}
           );
           border: none;
-          position: absolute;
           background: #fff;
           box-shadow: 1px 1px 2px ${Color.black(0.6)};
-          font-weight: normal;
         `}
       >
-        <>
-          {displayedReactedUsers.map((user) => user.username).join(', ')}
-          {otherReactedUserNumber > 0 ? (
-            <>
-              {' '}
-              <a>and {otherReactedUserNumber}</a>
-            </>
-          ) : null}
-        </>
+        {peopleWhoReactedText}
       </div>
     </ErrorBoundary>,
     document.getElementById('outer-layer')
