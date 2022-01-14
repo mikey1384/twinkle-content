@@ -32,7 +32,8 @@ export default function ChatReducer(state, action) {
       };
     case 'ADD_REACTION_TO_MESSAGE': {
       const message =
-        state.channelsObj[action.channelId].messagesObj[action.messageId];
+        state.channelsObj[action.channelId]?.messagesObj?.[action.messageId] ||
+        {};
       return {
         ...state,
         channelsObj: {
@@ -40,7 +41,7 @@ export default function ChatReducer(state, action) {
           [action.channelId]: {
             ...state.channelsObj[action.channelId],
             messagesObj: {
-              ...state.channelsObj[action.channelId].messagesObj,
+              ...state.channelsObj[action.channelId]?.messagesObj,
               [action.messageId]: {
                 ...message,
                 reactions: (message.reactions || [])
@@ -62,7 +63,8 @@ export default function ChatReducer(state, action) {
     }
     case 'REMOVE_REACTION_FROM_MESSAGE': {
       const message =
-        state.channelsObj[action.channelId].messagesObj[action.messageId];
+        state.channelsObj[action.channelId]?.messagesObj[action.messageId] ||
+        {};
       return {
         ...state,
         channelsObj: {
@@ -70,7 +72,7 @@ export default function ChatReducer(state, action) {
           [action.channelId]: {
             ...state.channelsObj[action.channelId],
             messagesObj: {
-              ...state.channelsObj[action.channelId].messagesObj,
+              ...state.channelsObj[action.channelId]?.messagesObj,
               [action.messageId]: {
                 ...message,
                 reactions: (message.reactions || []).filter((reaction) => {
