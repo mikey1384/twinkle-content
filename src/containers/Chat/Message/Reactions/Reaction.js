@@ -60,13 +60,13 @@ export default function Reaction({
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reactedUserIds]);
+  }, [reactedUserIdsExcludingMine]);
 
   const reactedUsersExcludingMe = useMemo(() => {
     const users = [];
-    for (let i = 0; i < reactedUserIdsExcludingMine.length; i++) {
-      if (userObj[reactedUserIdsExcludingMine[i]]) {
-        users.push(userObj[reactedUserIdsExcludingMine[i]]);
+    for (let reactedUserId of reactedUserIdsExcludingMine) {
+      if (userObj[reactedUserId]) {
+        users.push(userObj[reactedUserId]);
       }
     }
     return users;
@@ -197,13 +197,13 @@ export default function Reaction({
   async function handleShowAllReactedUsers() {
     setLoadingOtherUsers(true);
     setUserListModalShown(true);
-    for (let i = 0; i < reactedUserIdsExcludingMine.length; i++) {
-      if (!userObj[reactedUserIdsExcludingMine[i]]) {
-        const data = await loadProfile(reactedUserIdsExcludingMine[i]);
+    for (let reactedUserId of reactedUserIdsExcludingMine) {
+      if (!userObj[reactedUserId]) {
+        const data = await loadProfile(reactedUserId);
         if (mounted.current) {
           setUserObj((prev) => ({
             ...prev,
-            [reactedUserIdsExcludingMine[i]]: data
+            [reactedUserId]: data
           }));
         }
       }
