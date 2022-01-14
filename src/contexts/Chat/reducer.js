@@ -63,7 +63,7 @@ export default function ChatReducer(state, action) {
     }
     case 'REMOVE_REACTION_FROM_MESSAGE': {
       const message =
-        state.channelsObj[action.channelId]?.messagesObj[action.messageId] ||
+        state.channelsObj[action.channelId]?.messagesObj?.[action.messageId] ||
         {};
       return {
         ...state,
