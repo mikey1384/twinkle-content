@@ -35,13 +35,29 @@ export default function Tooltip({
     if (displayedReactedUsers.length === 2 && otherReactedUserNumber === 0) {
       return `${displayedReactedUsers[0].username} and ${displayedReactedUsers[1].username}`;
     }
+    if (displayedReactedUsers.length > 2 && otherReactedUserNumber === 0) {
+      return `${displayedReactedUsers
+        .map((user) => user.username)
+        .slice(0, -1)
+        .join(', ')}, and ${
+        displayedReactedUsers[displayedReactedUsers.length - 1].username
+      }`;
+    }
     return (
       <>
         {displayedReactedUsers.map((user) => user.username).join(', ')}
         {otherReactedUserNumber > 0 ? (
           <>
-            {' '}
-            <a>and {otherReactedUserNumber}</a>
+            {', '}
+            <a
+              style={{
+                fontWeight: 'bold',
+                cursor: 'pointer'
+              }}
+            >
+              and {otherReactedUserNumber} other
+              {otherReactedUserNumber === 1 ? '' : 's'}
+            </a>
           </>
         ) : null}
       </>
@@ -61,8 +77,8 @@ export default function Tooltip({
         onMouseLeave={onMouseLeave}
         className={css`
           padding: 0.5rem;
-          font-size: 1.3rem;
-          min-width: 7rem;
+          font-size: 1.2rem;
+          min-width: ${displayedReactedUsers.length === 1 ? '7rem' : '8rem'};
           text-align: center;
           position: absolute;
           left: ${`${
