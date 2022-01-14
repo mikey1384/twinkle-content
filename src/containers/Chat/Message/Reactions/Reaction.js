@@ -39,10 +39,15 @@ export default function Reaction({
     [reactedUserIds, userId]
   );
 
+  const reactedUserIdsExcludingMine = useMemo(
+    () => reactedUserIds.filter((id) => id !== userId),
+    [reactedUserIds, userId]
+  );
+
   useEffect(() => {
-    const indexLimit = Math.min(reactedUserIds.length, 2);
+    const indexLimit = Math.min(reactedUserIdsExcludingMine.length, 2);
     for (let i = 0; i < indexLimit; i++) {
-      handleLoadProfile(reactedUserIds[i]);
+      handleLoadProfile(reactedUserIdsExcludingMine[i]);
     }
 
     async function handleLoadProfile(userId) {
@@ -54,15 +59,27 @@ export default function Reaction({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reactedUserIds]);
 
-  const reactedUsers = useMemo(() => {
+  const reactedUsersExcludingMe = useMemo(() => {
     const users = [];
-    for (let i = 0; i < reactedUserIds.length; i++) {
+    for (let i = 0; i < reactedUserIdsExcludingMine.length; i++) {
       if (userObj[reactedUserIds[i]]) {
         users.push(userObj[reactedUserIds[i]]);
       }
     }
     return users;
-  }, [userObj, reactedUserIds]);
+  }, [reactedUserIdsExcludingMine.length, userObj, reactedUserIds]);
+
+  const reactedUsers = useMemo(() => {
+    const users = [];
+    if (userReacted) {
+      users.push({
+        id: userId,
+        username: 'You'
+      });
+    }
+    users.push(...reactedUsersExcludingMe);
+    return users;
+  }, [userReacted, reactedUsersExcludingMe, userId]);
 
   useEffect(() => {
     mounted.current = true;
