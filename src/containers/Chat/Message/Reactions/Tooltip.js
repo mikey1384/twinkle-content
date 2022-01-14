@@ -78,7 +78,7 @@ export default function Tooltip({
         className={css`
           padding: 0.5rem;
           font-size: 1.2rem;
-          min-width: ${displayedReactedUsers.length === 1 ? '7rem' : '8rem'};
+          min-width: ${displayedReactedUsers.length === 1 ? '5rem' : '8rem'};
           text-align: center;
           position: absolute;
           left: ${`${
