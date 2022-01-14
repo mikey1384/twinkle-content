@@ -60,7 +60,7 @@ function App({ location, history }) {
   const onCloseSigninModal = useAppContext(
     (v) => v.user.actions.onCloseSigninModal
   );
-  const onInitUser = useAppContext((v) => v.user.actions.onInitUser);
+  const onInitMyState = useAppContext((v) => v.user.actions.onInitMyState);
   const onLogout = useAppContext((v) => v.user.actions.onLogout);
   const onSetSessionLoaded = useAppContext(
     (v) => v.user.actions.onSetSessionLoaded
@@ -191,7 +191,7 @@ function App({ location, history }) {
             contentId: data.userId,
             ...data
           });
-          if (data?.userId) onInitUser(data);
+          if (data?.userId) onInitMyState(data);
         }
       }
       onSetSessionLoaded();

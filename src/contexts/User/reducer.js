@@ -17,7 +17,7 @@ export default function UserReducer(state, action) {
         ...state,
         signinModalShown: false
       };
-    case 'INIT_USER':
+    case 'INIT_MY_STATE':
       return {
         ...state,
         ...action.data

@@ -16,9 +16,9 @@ export default function UserActions(dispatch) {
         type: 'CLOSE_SIGNIN_MODAL'
       });
     },
-    onInitUser(data) {
+    onInitMyState(data) {
       return dispatch({
-        type: 'INIT_USER',
+        type: 'INIT_MY_STATE',
         data: { ...data, loggedIn: true }
       });
     },
