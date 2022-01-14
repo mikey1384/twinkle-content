@@ -735,14 +735,16 @@ function Message({
                         userCanEditThis={userCanEditThis}
                       />
                     )}
-                    {dropdownButtonShown && (
-                      <Reactions
-                        reactions={message.reactions}
-                        reactionsMenuShown={reactionsMenuShown}
-                        onRemoveReaction={handleRemoveReaction}
-                        onAddReaction={handleAddReaction}
-                      />
-                    )}
+                    <div style={{ marginTop: '1rem' }}>
+                      {dropdownButtonShown && (
+                        <Reactions
+                          reactions={message.reactions}
+                          reactionsMenuShown={reactionsMenuShown}
+                          onRemoveReaction={handleRemoveReaction}
+                          onAddReaction={handleAddReaction}
+                        />
+                      )}
+                    </div>
                   </>
                 )}
               </div>

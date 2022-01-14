@@ -39,7 +39,7 @@ export default function Reactions({
   }, [reactions]);
 
   return (
-    <div style={{ display: 'flex', marginTop: '1rem' }}>
+    <div style={{ display: 'flex' }}>
       {reactionList.map((reaction) => (
         <Reaction
           key={reaction}
