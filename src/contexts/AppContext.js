@@ -35,24 +35,23 @@ export const initialMyState = {
   userId: null,
   xpThisMonth: null
 };
-export const initialUserState = {
-  myState: initialMyState,
-  loadMoreButton: false,
-  loaded: false,
-  loggedIn: false,
-  orderUsersBy: LAST_ONLINE_FILTER_LABEL,
-  profiles: [],
-  profilesLoaded: false,
-  searchedProfiles: [],
-  signinModalShown: false
-};
 
 AppContextProvider.propTypes = {
   children: PropTypes.node
 };
 
 export function AppContextProvider({ children }) {
-  const [userState, userDispatch] = useReducer(UserReducer, initialUserState);
+  const [userState, userDispatch] = useReducer(UserReducer, {
+    myState: initialMyState,
+    loadMoreButton: false,
+    loaded: false,
+    orderUsersBy: LAST_ONLINE_FILTER_LABEL,
+    profiles: [],
+    profilesLoaded: false,
+    searchedProfiles: [],
+    signinModalShown: false,
+    usersObj: {}
+  });
   return (
     <ManagementContextProvider>
       <ProfileContextProvider>

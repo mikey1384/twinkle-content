@@ -1,4 +1,4 @@
-import { initialUserState } from '../AppContext';
+import { initialMyState } from '../AppContext';
 
 export default function UserReducer(state, action) {
   switch (action.type) {
@@ -27,8 +27,7 @@ export default function UserReducer(state, action) {
           ...state.myState,
           ...action.data
         },
-        loaded: true,
-        loggedIn: true
+        loaded: true
       };
     case 'LOAD_USERS': {
       let loadMoreButton = false;
@@ -63,21 +62,13 @@ export default function UserReducer(state, action) {
       };
     case 'LOGOUT':
       return {
-        ...initialUserState,
-        loaded: true,
-        loadMoreButton: state.loadMoreButton,
-        profiles: state.profiles,
-        profilesLoaded: state.profilesLoaded,
-        searchedProfiles: state.searchedProfiles
+        ...state,
+        myState: initialMyState
       };
     case 'LOGOUT_AND_OPEN_SIGNIN_MODAL':
       return {
-        ...initialUserState,
-        loadMoreButton: state.loadMoreButton,
-        signinModalShown: true,
-        profiles: state.profiles,
-        profilesLoaded: state.profilesLoaded,
-        searchedProfiles: state.searchedProfiles
+        ...state,
+        myState: initialMyState
       };
     case 'OPEN_SIGNIN_MODAL':
       return {
