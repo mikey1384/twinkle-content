@@ -27,7 +27,6 @@ export default function Reaction({
   onAddReaction
 }) {
   const loadProfile = useAppContext((v) => v.requestHelpers.loadProfile);
-  const mouseEntered = useRef(false);
   const ReactionRef = useRef(null);
   const hideTimerRef = useRef(null);
   const hideTimerRef2 = useRef(null);
@@ -48,10 +47,12 @@ export default function Reaction({
 
     async function handleLoadProfile(userId) {
       const data = await loadProfile(userId);
-      setUserObj((prev) => ({ ...prev, [userId]: data }));
+      if (mounted.current) {
+        setUserObj((prev) => ({ ...prev, [userId]: data }));
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [reactedUserIds]);
 
   const reactedUsers = useMemo(() => {
     const users = [];
@@ -148,7 +149,8 @@ export default function Reaction({
 
   function handleSetTooltipContext() {
     if (deviceIsMobile) return;
-    mouseEntered.current = true;
+    clearTimeout(hideTimerRef.current);
+    clearTimeout(hideTimerRef2.current);
     const parentElementDimensions =
       ReactionRef.current?.getBoundingClientRect() || {
         x: 0,
@@ -163,7 +165,6 @@ export default function Reaction({
     if (deviceIsMobile) return;
     hideTimerRef.current = setTimeout(() => {
       if (mounted.current) {
-        mouseEntered.current = false;
         setTooltipContext(null);
       }
     }, 300);
