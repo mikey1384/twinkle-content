@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Emojis from './emojis.png';
@@ -23,17 +23,23 @@ const reactions = [
 
 ReactionButton.propTypes = {
   style: PropTypes.object,
-  onReactionClick: PropTypes.func
+  onReactionClick: PropTypes.func,
+  onSetReactionsMenuShown: PropTypes.func,
+  reactionsMenuShown: PropTypes.bool
 };
 
-export default function ReactionButton({ style, onReactionClick }) {
-  const [reactionsShown, setReactionsShown] = useState(false);
+export default function ReactionButton({
+  style,
+  onReactionClick,
+  onSetReactionsMenuShown,
+  reactionsMenuShown
+}) {
   const BarRef = useRef(null);
   const coolDownRef = useRef(null);
   useOutsideClick(BarRef, () => {
     if (!deviceIsMobile) return;
     coolDownRef.current = true;
-    setReactionsShown(false);
+    onSetReactionsMenuShown(false);
     setTimeout(() => {
       coolDownRef.current = false;
     }, 100);
@@ -43,10 +49,14 @@ export default function ReactionButton({ style, onReactionClick }) {
     <ErrorBoundary>
       <div
         style={{ display: 'flex', ...style }}
-        onMouseEnter={() => (deviceIsMobile ? {} : setReactionsShown(true))}
-        onMouseLeave={() => (deviceIsMobile ? {} : setReactionsShown(false))}
+        onMouseEnter={() =>
+          deviceIsMobile ? {} : onSetReactionsMenuShown(true)
+        }
+        onMouseLeave={() =>
+          deviceIsMobile ? {} : onSetReactionsMenuShown(false)
+        }
       >
-        {reactionsShown && (
+        {reactionsMenuShown && (
           <div
             ref={BarRef}
             style={{
@@ -90,7 +100,7 @@ export default function ReactionButton({ style, onReactionClick }) {
           color="darkerGray"
           opacity={0.5}
           skeuomorphic
-          filled={reactionsShown}
+          filled={reactionsMenuShown}
           onClick={() => (deviceIsMobile ? handleReactionBarShown() : {})}
         >
           <Icon icon="thumbs-up" />
@@ -101,11 +111,15 @@ export default function ReactionButton({ style, onReactionClick }) {
 
   function handleReactionBarShown() {
     if (coolDownRef.current) return;
-    setReactionsShown((shown) => !shown);
+    coolDownRef.current = true;
+    onSetReactionsMenuShown((shown) => !shown);
+    setTimeout(() => {
+      coolDownRef.current = false;
+    }, 100);
   }
 
   function handleReactionClick(reaction) {
     onReactionClick(reaction);
-    setReactionsShown(false);
+    onSetReactionsMenuShown(false);
   }
 }

@@ -5,13 +5,15 @@ import Reaction from './Reaction';
 Reactions.propTypes = {
   reactions: PropTypes.array,
   onRemoveReaction: PropTypes.func,
-  onAddReaction: PropTypes.func
+  onAddReaction: PropTypes.func,
+  reactionsMenuShown: PropTypes.bool
 };
 
 export default function Reactions({
   reactions,
   onRemoveReaction,
-  onAddReaction
+  onAddReaction,
+  reactionsMenuShown
 }) {
   const reactionList = useMemo(() => {
     const result = [];
@@ -37,7 +39,7 @@ export default function Reactions({
   }, [reactions]);
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div style={{ display: 'flex', marginTop: '1rem' }}>
       {reactionList.map((reaction) => (
         <Reaction
           key={reaction}
@@ -46,6 +48,7 @@ export default function Reactions({
           reactedUserIds={reactionObj[reaction].map(({ userId }) => userId)}
           onRemoveReaction={() => onRemoveReaction(reaction)}
           onAddReaction={() => onAddReaction(reaction)}
+          reactionsMenuShown={reactionsMenuShown}
         />
       ))}
     </div>

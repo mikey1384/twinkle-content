@@ -17,7 +17,8 @@ Reaction.propTypes = {
   reactionCount: PropTypes.number,
   reactedUserIds: PropTypes.array,
   onRemoveReaction: PropTypes.func,
-  onAddReaction: PropTypes.func
+  onAddReaction: PropTypes.func,
+  reactionsMenuShown: PropTypes.bool
 };
 
 export default function Reaction({
@@ -25,7 +26,8 @@ export default function Reaction({
   reactionCount,
   reactedUserIds,
   onRemoveReaction,
-  onAddReaction
+  onAddReaction,
+  reactionsMenuShown
 }) {
   const loadProfile = useAppContext((v) => v.requestHelpers.loadProfile);
   const ReactionRef = useRef(null);
@@ -88,6 +90,26 @@ export default function Reaction({
   const truncatedReactedUsers = useMemo(() => {
     return reactedUsers.slice(0, 2);
   }, [reactedUsers]);
+
+  useEffect(() => {
+    if (!deviceIsMobile) return;
+    if (reactionsMenuShown) {
+      const parentElementDimensions =
+        ReactionRef.current?.getBoundingClientRect() || {
+          x: 0,
+          y: 0,
+          width: 0,
+          height: 0
+        };
+      setTooltipContext(parentElementDimensions);
+    } else {
+      hideTimerRef.current = setTimeout(() => {
+        if (mounted.current) {
+          setTooltipContext(null);
+        }
+      }, 50);
+    }
+  }, [reactionsMenuShown]);
 
   useEffect(() => {
     mounted.current = true;

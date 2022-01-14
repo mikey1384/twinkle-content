@@ -126,6 +126,7 @@ function Message({
   zIndex
 }) {
   const [highlighted, setHighlighted] = useState(false);
+  const [reactionsMenuShown, setReactionsMenuShown] = useState(false);
   const {
     actions: {
       onAddReactionToMessage,
@@ -737,6 +738,7 @@ function Message({
                     {dropdownButtonShown && (
                       <Reactions
                         reactions={message.reactions}
+                        reactionsMenuShown={reactionsMenuShown}
                         onRemoveReaction={handleRemoveReaction}
                         onAddReaction={handleAddReaction}
                       />
@@ -756,6 +758,8 @@ function Message({
                   {!invitePath && !isDrawOffer && !isChessMsg && (
                     <ReactionButton
                       onReactionClick={handleAddReaction}
+                      reactionsMenuShown={reactionsMenuShown}
+                      onSetReactionsMenuShown={setReactionsMenuShown}
                       style={{ marginRight: '0.5rem' }}
                     />
                   )}
