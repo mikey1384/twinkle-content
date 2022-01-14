@@ -1,10 +1,13 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useLayoutEffect, useRef, useState } from 'react';
 import { addEvent, removeEvent } from '../listenerHelpers';
 import { stringIsEmpty } from '../stringHelpers';
 import { useAppContext, useContentContext, useProfileContext } from 'contexts';
 export { default as useScrollToBottom } from './useScrollToBottom';
 export { default as useInfiniteScroll } from './useInfiniteScroll';
-import { defaultContentState } from 'constants/defaultValues';
+import {
+  defaultContentState,
+  DEFAULT_PROFILE_THEME
+} from 'constants/defaultValues';
 
 const BodyRef = document.scrollingElement || document.documentElement;
 
@@ -75,6 +78,7 @@ export function useLazyLoad({
 
 export function useMyState() {
   const hideWatched = useAppContext((v) => v.user.state.myState.hideWatched);
+  const userObj = useAppContext((v) => v.user.state.userObj);
   const lastChatPath = useAppContext((v) => v.user.state.myState.lastChatPath);
   const numWordsCollected = useAppContext(
     (v) => v.user.state.myState.numWordsCollected
@@ -84,11 +88,10 @@ export function useMyState() {
   const userId = useAppContext((v) => v.user.state.myState.userId);
   const loaded = useAppContext((v) => v.user.state.loaded);
   const signinModalShown = useAppContext((v) => v.user.state.signinModalShown);
+  const myState = useMemo(() => {
+    return userObj[userId] || {};
+  }, [userId, userObj]);
 
-  const myState = useContentState({
-    contentId: userId,
-    contentType: 'user'
-  });
   return myState.loaded
     ? {
         ...myState,
@@ -101,6 +104,7 @@ export function useMyState() {
         isCreator:
           myState.userType === 'admin' || myState.userType === 'creator',
         loggedIn: true,
+        profileTheme: myState.profileTheme || DEFAULT_PROFILE_THEME,
         signinModalShown,
         xpThisMonth
       }
@@ -108,7 +112,7 @@ export function useMyState() {
         loaded,
         lastChatPath: '',
         rewardBoostLvl: 0,
-        profileTheme: 'logoBlue',
+        profileTheme: DEFAULT_PROFILE_THEME,
         signinModalShown
       };
 }

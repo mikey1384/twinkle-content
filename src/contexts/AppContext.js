@@ -50,7 +50,7 @@ export function AppContextProvider({ children }) {
     profilesLoaded: false,
     searchedProfiles: [],
     signinModalShown: false,
-    usersObj: {}
+    userObj: {}
   });
   return (
     <ManagementContextProvider>

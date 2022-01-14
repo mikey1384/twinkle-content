@@ -423,14 +423,6 @@ export default function ContentActions(dispatch) {
         isEditing
       });
     },
-    onSetOnline({ contentId, contentType, online }) {
-      return dispatch({
-        type: 'SET_USER_ONLINE',
-        contentId,
-        contentType,
-        online
-      });
-    },
     onSetCommentPlaceholderHeight({ commentId, height }) {
       return dispatch({
         type: 'SET_COMMENT_PLACEHOLDER_HEIGHT',

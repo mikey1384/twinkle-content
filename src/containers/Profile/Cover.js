@@ -31,6 +31,7 @@ export default function Cover({
   const checkIfUserOnline = useAppContext(
     (v) => v.requestHelpers.checkIfUserOnline
   );
+  const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const { userId } = useMyState();
   const {
     id,
@@ -42,7 +43,6 @@ export default function Cover({
     username,
     userType
   } = profile;
-  const onSetOnline = useContentContext((v) => v.actions.onSetOnline);
   const onUploadProfilePic = useContentContext(
     (v) => v.actions.onUploadProfilePic
   );
@@ -59,7 +59,7 @@ export default function Cover({
     }
     async function handleCheckIfUserOnline() {
       const online = await checkIfUserOnline(id);
-      onSetOnline({ contentId: id, contentType: 'user', online });
+      onSetUserState({ userId: id, online });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

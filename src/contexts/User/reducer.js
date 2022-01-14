@@ -118,6 +118,18 @@ export default function UserReducer(state, action) {
         ...state,
         profilesLoaded: action.loaded
       };
+    case 'SET_USER_STATE':
+      return {
+        ...state,
+        userObj: {
+          ...state.userObj,
+          [action.userId]: {
+            ...(state.userObj[action.userId] || {}),
+            ...action.newState,
+            loaded: true
+          }
+        }
+      };
     case 'TOGGLE_HIDE_WATCHED':
       return {
         ...state,

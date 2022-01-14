@@ -28,11 +28,11 @@ export default function MobileMenu({ location, history, onClose }) {
   const mounted = useRef(true);
   const displayedRef = useRef(false);
   const onLogout = useAppContext((v) => v.user.actions.onLogout);
+  const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const onResetChat = useChatContext((v) => v.actions.onResetChat);
   const onUploadProfilePic = useContentContext(
     (v) => v.actions.onUploadProfilePic
   );
-  const onSetOnline = useContentContext((v) => v.actions.onSetOnline);
   const { username, userId } = useMyState();
   const [alertModalShown, setAlertModalShown] = useState(false);
   const [imageEditStatus, setImageEditStatus] = useState({
@@ -164,7 +164,7 @@ export default function MobileMenu({ location, history, onClose }) {
       onLogout();
     }
     if (mounted.current) {
-      onSetOnline({ contentId: userId, contentType: 'user', online: false });
+      onSetUserState({ userId, online: false });
     }
     if (mounted.current) {
       onResetChat();

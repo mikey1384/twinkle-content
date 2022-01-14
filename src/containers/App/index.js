@@ -40,7 +40,6 @@ import { isMobile, getSectionFromPathname } from 'helpers';
 import { v1 as uuidv1 } from 'uuid';
 import {
   useAppContext,
-  useContentContext,
   useHomeContext,
   useInputContext,
   useViewContext,
@@ -101,7 +100,7 @@ function App({ location, history }) {
   const onUpdateChatUploadProgress = useChatContext(
     (v) => v.actions.onUpdateChatUploadProgress
   );
-  const onInitContent = useContentContext((v) => v.actions.onInitContent);
+  const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const onLoadNewFeeds = useHomeContext((v) => v.actions.onLoadNewFeeds);
   const onSetFileUploadComplete = useHomeContext(
     (v) => v.actions.onSetFileUploadComplete
@@ -186,11 +185,7 @@ function App({ location, history }) {
       if (authRef.current?.headers?.authorization) {
         const data = await loadMyData(location.pathname);
         if (mounted.current) {
-          onInitContent({
-            contentType: 'user',
-            contentId: data.userId,
-            ...data
-          });
+          onSetUserState({ userId: data.userId, newState: data });
           if (data?.userId) onInitMyState(data);
         }
       }

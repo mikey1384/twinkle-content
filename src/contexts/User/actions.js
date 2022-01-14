@@ -86,6 +86,13 @@ export default function UserActions(dispatch) {
         type: 'SET_SESSION_LOADED'
       });
     },
+    onSetUserState({ userId, newState }) {
+      return dispatch({
+        type: 'SET_USER_STATE',
+        userId,
+        newState
+      });
+    },
     onToggleHideWatched(hideWatched) {
       return dispatch({
         type: 'TOGGLE_HIDE_WATCHED',

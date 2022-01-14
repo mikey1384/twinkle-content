@@ -1,7 +1,4 @@
-import {
-  DEFAULT_PROFILE_THEME,
-  defaultContentState
-} from 'constants/defaultValues';
+import { defaultContentState } from 'constants/defaultValues';
 
 export default function ContentReducer(state, action) {
   const contentKey =
@@ -21,7 +18,6 @@ export default function ContentReducer(state, action) {
         [contentKey]: {
           ...prevContentState,
           ...action.data,
-          profileTheme: action.data.profileTheme || DEFAULT_PROFILE_THEME,
           loaded: true,
           contentId: action.contentId,
           contentType: action.contentType
@@ -1477,14 +1473,6 @@ export default function ContentReducer(state, action) {
                 }
               }
             : { thumbUrl: action.thumbUrl })
-        }
-      };
-    case 'SET_USER_ONLINE':
-      return {
-        ...state,
-        [contentKey]: {
-          ...prevContentState,
-          online: action.online
         }
       };
     case 'SET_VIDEO_CURRENT_TIME':
