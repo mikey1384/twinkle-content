@@ -48,7 +48,8 @@ export default function Reaction({
   );
 
   useEffect(() => {
-    for (let i = 0; i < reactedUserIdsExcludingMine.length; i++) {
+    const indexLength = Math.min(reactedUserIdsExcludingMine.length, 2);
+    for (let i = 0; i < indexLength; i++) {
       handleLoadProfile(reactedUserIdsExcludingMine[i]);
     }
 
@@ -85,7 +86,7 @@ export default function Reaction({
   }, [userReacted, reactedUsersExcludingMe, userId, profilePicUrl]);
 
   const truncatedReactedUsers = useMemo(() => {
-    return reactedUsers.slice(0, 3);
+    return reactedUsers.slice(0, 2);
   }, [reactedUsers]);
 
   useEffect(() => {
@@ -197,10 +198,13 @@ export default function Reaction({
     setLoadingOtherUsers(true);
     setUserListModalShown(true);
     for (let i = 0; i < reactedUserIdsExcludingMine.length; i++) {
-      if (!userObj[reactedUserIds[i]]) {
-        const data = await loadProfile(reactedUserIds[i]);
+      if (!userObj[reactedUserIdsExcludingMine[i]]) {
+        const data = await loadProfile(reactedUserIdsExcludingMine[i]);
         if (mounted.current) {
-          setUserObj((prev) => ({ ...prev, [reactedUserIds[i]]: data }));
+          setUserObj((prev) => ({
+            ...prev,
+            [reactedUserIdsExcludingMine[i]]: data
+          }));
         }
       }
     }

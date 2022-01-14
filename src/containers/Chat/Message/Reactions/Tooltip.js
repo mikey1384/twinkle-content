@@ -37,14 +37,6 @@ export default function Tooltip({
     if (displayedReactedUsers.length === 2 && otherReactedUserNumber === 0) {
       return `${displayedReactedUsers[0].username} and ${displayedReactedUsers[1].username}`;
     }
-    if (displayedReactedUsers.length > 2 && otherReactedUserNumber === 0) {
-      return `${displayedReactedUsers
-        .map((user) => user.username)
-        .slice(0, -1)
-        .join(', ')}, and ${
-        displayedReactedUsers[displayedReactedUsers.length - 1].username
-      }`;
-    }
     return (
       <>
         {displayedReactedUsers.map((user) => user.username).join(', ')}
