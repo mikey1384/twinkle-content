@@ -93,7 +93,10 @@ export function useMyState() {
   return myState.loaded
     ? {
         ...myState,
-        missions,
+        missions: {
+          ...(myState?.state?.missions || {}),
+          ...missions
+        },
         lastChatPath,
         loaded,
         numWordsCollected,
