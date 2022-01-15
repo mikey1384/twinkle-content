@@ -125,8 +125,7 @@ export default function UserReducer(state, action) {
           ...state.userObj,
           [action.userId]: {
             ...(state.userObj[action.userId] || {}),
-            ...action.newState,
-            loaded: true
+            ...action.newState
           }
         }
       };

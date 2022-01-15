@@ -130,7 +130,7 @@ export default function LoginForm({
     try {
       const data = await login({ username, password });
       onLogin(data);
-      onSetUserState({ userId: data.id, newState: data });
+      onSetUserState({ userId: data.id, newState: { ...data, loaded: true } });
     } catch (error) {
       setErrorMessage(error);
     }

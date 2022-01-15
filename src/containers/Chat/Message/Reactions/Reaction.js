@@ -81,7 +81,10 @@ function Reaction({
       if (!userObj[userId]) {
         const data = await loadProfile(userId);
         if (mounted.current) {
-          onSetUserState({ userId: userId, newState: data });
+          onSetUserState({
+            userId: userId,
+            newState: { ...data, loaded: true }
+          });
         }
       }
     }
@@ -151,7 +154,10 @@ function Reaction({
       if (!userObj[reactedUserId]) {
         const data = await loadProfile(reactedUserId);
         if (mounted.current) {
-          onSetUserState({ userId: reactedUserId, newState: data });
+          onSetUserState({
+            userId: reactedUserId,
+            newState: { ...data, loaded: true }
+          });
         }
       }
     }

@@ -215,7 +215,7 @@ export default function UsernameText({
             if (mounted.current) {
               onSetUserState({
                 userId: user.id,
-                newState: data
+                newState: { ...data, loaded: true }
               });
             }
             if (mounted.current) {
@@ -264,7 +264,10 @@ export default function UsernameText({
       if (!twinkleXP && !user.twinkleXP && !menuShownRef.current) {
         const data = await loadProfile(user.id);
         if (mounted.current) {
-          onSetUserState({ userId: user.id, newState: data });
+          onSetUserState({
+            userId: user.id,
+            newState: { ...data, loaded: true }
+          });
         }
         if (mounted.current) {
           setDropdownContext(elementContext);

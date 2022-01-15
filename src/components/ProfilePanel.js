@@ -207,7 +207,10 @@ function ProfilePanel({ expandable, profileId, style }) {
           contentType: 'user',
           contentId: profileId
         });
-        onSetUserState({ userId: profileId, newState: data });
+        onSetUserState({
+          userId: profileId,
+          newState: { ...data, loaded: true }
+        });
         loading.current = false;
       }
     }

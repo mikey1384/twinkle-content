@@ -185,7 +185,10 @@ function App({ location, history }) {
       if (authRef.current?.headers?.authorization) {
         const data = await loadMyData(location.pathname);
         if (mounted.current) {
-          onSetUserState({ userId: data.userId, newState: data });
+          onSetUserState({
+            userId: data.userId,
+            newState: { ...data, loaded: true }
+          });
           if (data?.userId) onInitMyState(data);
         }
       }
