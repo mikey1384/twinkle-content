@@ -190,9 +190,6 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
   );
   const pageVisible = useViewContext((v) => v.state.pageVisible);
   const onAttachReward = useContentContext((v) => v.actions.onAttachReward);
-  const onUpdateProfileInfo = useContentContext(
-    (v) => v.actions.onUpdateProfileInfo
-  );
   const onLikeContent = useContentContext((v) => v.actions.onLikeContent);
   const onRecommendContent = useContentContext(
     (v) => v.actions.onRecommendContent
@@ -313,7 +310,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
     };
 
     function handleBanStatusUpdate(banStatus) {
-      onUpdateProfileInfo({ userId, banned: banStatus });
+      onSetUserState({ userId, newState: { banned: banStatus } });
     }
 
     function handleChangeChannelOwner({ channelId, message, newOwner }) {
@@ -638,7 +635,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
     }
 
     function handleUsernameChange({ userId, newUsername }) {
-      onUpdateProfileInfo({ userId, username: newUsername });
+      onSetUserState({ userId, newState: { username: newUsername } });
     }
 
     function handleReceiveVocabActivity(activity) {

@@ -18,7 +18,7 @@ import URL from 'constants/URL';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { useAppContext, useContentContext, useInputContext } from 'contexts';
+import { useAppContext, useInputContext } from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import {
   addEmoji,
@@ -42,9 +42,6 @@ export default function Intro({ profile, selectedTheme }) {
   const auth = useAppContext((v) => v.requestHelpers.auth);
   const uploadGreeting = useAppContext((v) => v.requestHelpers.uploadGreeting);
   const uploadBio = useAppContext((v) => v.requestHelpers.uploadBio);
-  const onUpdateStatusMsg = useContentContext(
-    (v) => v.actions.onUpdateStatusMsg
-  );
   const editedStatusMsg = useInputContext((v) => v.state.editedStatusMsg);
   const editedStatusColor = useInputContext((v) => v.state.editedStatusColor);
   const onSetEditedStatusColor = useInputContext(
@@ -426,6 +423,6 @@ export default function Intro({ profile, selectedTheme }) {
     );
     onSetEditedStatusColor('');
     onSetEditedStatusMsg('');
-    onUpdateStatusMsg(data);
+    onSetUserState({ userId, newState: data });
   }
 }

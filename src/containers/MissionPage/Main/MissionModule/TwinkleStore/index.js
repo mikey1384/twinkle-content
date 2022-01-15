@@ -5,7 +5,7 @@ import NotEnoughKarmaInstructions from './NotEnoughKarmaInstructions';
 import EnoughKarmaInstructions from './EnoughKarmaInstructions';
 import FinalStep from './FinalStep';
 import { karmaPointTable } from 'constants/defaultValues';
-import { useAppContext, useContentContext, useViewContext } from 'contexts';
+import { useAppContext, useViewContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
 TwinkleStore.propTypes = {
@@ -20,9 +20,6 @@ export default function TwinkleStore({ mission }) {
   const loadMyData = useAppContext((v) => v.requestHelpers.loadMyData);
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const pageVisible = useViewContext((v) => v.state.pageVisible);
-  const onUpdateProfileInfo = useContentContext(
-    (v) => v.actions.onUpdateProfileInfo
-  );
   const [loadingKarma, setLoadingKarma] = useState(false);
   const mounted = useRef(true);
   const requiredKarmaPoints = karmaPointTable.username;
@@ -45,7 +42,7 @@ export default function TwinkleStore({ mission }) {
       }
       const { karmaPoints: kp } = await loadKarmaPoints();
       if (mounted.current) {
-        onUpdateProfileInfo({ userId, karmaPoints: kp });
+        onSetUserState({ userId, newState: { karmaPoints: kp } });
       }
       if (mounted.current) {
         setLoadingKarma(false);

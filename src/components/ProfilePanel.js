@@ -117,12 +117,6 @@ function ProfilePanel({ expandable, profileId, style }) {
     (v) => v.actions.onSetPlaceholderHeight
   );
   const onSetVisible = useContentContext((v) => v.actions.onSetVisible);
-  const onUpdateStatusMsg = useContentContext(
-    (v) => v.actions.onUpdateStatusMsg
-  );
-  const onUploadProfilePic = useContentContext(
-    (v) => v.actions.onUploadProfilePic
-  );
 
   const [ComponentRef, inView] = useInView({
     rootMargin: '50px 0px 0px 0px',
@@ -427,7 +421,7 @@ function ProfilePanel({ expandable, profileId, style }) {
                   >
                     <UserDetails
                       profile={profile}
-                      removeStatusMsg={() =>
+                      removeStatusMsg={(userId) =>
                         onSetUserState({
                           userId,
                           newState: { statusMsg: '', statusColor: '' }
@@ -437,7 +431,7 @@ function ProfilePanel({ expandable, profileId, style }) {
                         if (banned?.posting) {
                           return;
                         }
-                        onUpdateStatusMsg(data);
+                        onSetUserState({ userId: data.userId, newState: data });
                       }}
                       onUpdateBio={({ userId, bio }) =>
                         onSetUserState({ userId, newState: { bio } })
@@ -587,7 +581,10 @@ function ProfilePanel({ expandable, profileId, style }) {
   );
 
   function handleImageEditDone({ filePath }) {
-    onUploadProfilePic({ userId, imageUrl: `/profile/${filePath}` });
+    onSetUserState({
+      userId,
+      newState: { profilePicUrl: `/profile/${filePath}` }
+    });
     setImageEditModalShown(false);
   }
 

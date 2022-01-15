@@ -3,7 +3,7 @@ import { css } from '@emotion/css';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
-import { useAppContext, useContentContext } from 'contexts';
+import { useAppContext } from 'contexts';
 import { karmaMultiplier, SELECTED_LANGUAGE } from 'constants/defaultValues';
 import Loading from 'components/Loading';
 import localize from 'constants/localize';
@@ -57,9 +57,7 @@ export default function KarmaStatus() {
   const loadKarmaPoints = useAppContext(
     (v) => v.requestHelpers.loadKarmaPoints
   );
-  const onUpdateProfileInfo = useContentContext(
-    (v) => v.actions.onUpdateProfileInfo
-  );
+  const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const mounted = useRef(true);
   const { authLevel, userType, userId, karmaPoints } = useMyState();
   const [loadingKarma, setLoadingKarma] = useState(false);
@@ -91,7 +89,7 @@ export default function KarmaStatus() {
         numRecommended
       } = await loadKarmaPoints();
       if (mounted.current) {
-        onUpdateProfileInfo({ userId, karmaPoints: kp });
+        onSetUserState({ userId, newState: { karmaPoints: kp } });
       }
       if (authLevel < 2) {
         if (mounted.current) {

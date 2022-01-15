@@ -245,7 +245,7 @@ export default function UserDetails({
 
   async function onRemoveStatus() {
     await request.delete(`${URL}/user/statusMsg`, auth());
-    removeStatusMsg(userId);
+    removeStatusMsg(profile.id);
     setConfirmModalShown(false);
   }
 

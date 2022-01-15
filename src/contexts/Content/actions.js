@@ -547,45 +547,12 @@ export default function ContentActions(dispatch) {
         commentId
       });
     },
-    onUpdateProfileInfo({ userId, ...data }) {
-      return dispatch({
-        type: 'UPDATE_PROFILE_INFO',
-        data,
-        contentId: userId,
-        contentType: 'user'
-      });
-    },
-    onUpdateStatusMsg({ statusColor, statusMsg, userId }) {
-      return dispatch({
-        type: 'UPDATE_STATUS_MSG',
-        statusColor,
-        statusMsg,
-        contentType: 'user',
-        contentId: userId
-      });
-    },
-    onUpdateCurrentMission({ userId, missionId }) {
-      return dispatch({
-        type: 'UPDATE_CURRENT_MISSION',
-        contentId: userId,
-        contentType: 'user',
-        missionId
-      });
-    },
     onUploadComment({ contentId, contentType, ...data }) {
       return dispatch({
         type: 'UPLOAD_COMMENT',
         data,
         contentId,
         contentType
-      });
-    },
-    onUploadProfilePic({ userId, imageUrl }) {
-      return dispatch({
-        type: 'EDIT_PROFILE_PICTURE',
-        contentId: userId,
-        contentType: 'user',
-        imageUrl
       });
     },
     onUploadReply({ contentId, contentType, ...data }) {

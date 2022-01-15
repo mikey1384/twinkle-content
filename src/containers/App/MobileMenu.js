@@ -11,7 +11,7 @@ import { useSpring, animated } from 'react-spring';
 import { Color } from 'constants/css';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
-import { useAppContext, useChatContext, useContentContext } from 'contexts';
+import { useAppContext, useChatContext } from 'contexts';
 
 MobileMenu.propTypes = {
   location: PropTypes.object,
@@ -30,9 +30,6 @@ export default function MobileMenu({ location, history, onClose }) {
   const onLogout = useAppContext((v) => v.user.actions.onLogout);
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const onResetChat = useChatContext((v) => v.actions.onResetChat);
-  const onUploadProfilePic = useContentContext(
-    (v) => v.actions.onUploadProfilePic
-  );
   const { username, userId } = useMyState();
   const [alertModalShown, setAlertModalShown] = useState(false);
   const [imageEditStatus, setImageEditStatus] = useState({
@@ -152,7 +149,10 @@ export default function MobileMenu({ location, history, onClose }) {
   );
 
   function handleImageEditDone({ filePath }) {
-    onUploadProfilePic({ userId, imageUrl: `/profile/${filePath}` });
+    onSetUserState({
+      userId,
+      newState: { profilePicUrl: `/profile/${filePath}` }
+    });
     setImageEditStatus({
       imageUri: null,
       imageEditModalShown: false

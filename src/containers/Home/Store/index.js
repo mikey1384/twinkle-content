@@ -7,7 +7,7 @@ import FileSizeItem from './FileSizeItem';
 import ProfilePictureItem from './ProfilePictureItem';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useAppContext, useContentContext, useViewContext } from 'contexts';
+import { useAppContext, useViewContext } from 'contexts';
 import {
   priceTable,
   karmaPointTable,
@@ -45,9 +45,6 @@ export default function Store() {
     (v) => v.requestHelpers.unlockUsernameChange
   );
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
-  const onUpdateProfileInfo = useContentContext(
-    (v) => v.actions.onUpdateProfileInfo
-  );
   const pageVisible = useViewContext((v) => v.state.pageVisible);
   const { canChangeUsername, karmaPoints, userId } = useMyState();
   const mounted = useRef(true);
@@ -154,7 +151,7 @@ export default function Store() {
   async function handleUnlockUsernameChange() {
     const success = await unlockUsernameChange();
     if (success) {
-      onUpdateProfileInfo({ userId, canChangeUsername: true });
+      onSetUserState({ userId, newState: { canChangeUsername: true } });
     }
   }
 }

@@ -9,7 +9,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from '@emotion/css';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { MAX_PROFILE_PIC_SIZE } from 'constants/defaultValues';
-import { useAppContext, useContentContext } from 'contexts';
+import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import localize from 'constants/localize';
 
@@ -43,9 +43,6 @@ export default function Cover({
     username,
     userType
   } = profile;
-  const onUploadProfilePic = useContentContext(
-    (v) => v.actions.onUploadProfilePic
-  );
   const [alertModalShown, setAlertModalShown] = useState(false);
   const [colorSelectorShown, setColorSelectorShown] = useState(false);
   const [imageEditModalShown, setImageEditModalShown] = useState(false);
@@ -262,7 +259,10 @@ export default function Cover({
   }
 
   function handleImageEditDone({ filePath }) {
-    onUploadProfilePic({ userId, imageUrl: `/profile/${filePath}` });
+    onSetUserState({
+      userId,
+      newState: { profilePicUrl: `/profile/${filePath}` }
+    });
     setImageEditModalShown(false);
   }
 

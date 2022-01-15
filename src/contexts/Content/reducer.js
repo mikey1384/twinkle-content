@@ -467,15 +467,6 @@ export default function ContentReducer(state, action) {
       }
       return newState;
     }
-    case 'EDIT_PROFILE_PICTURE': {
-      return {
-        ...state,
-        [contentKey]: {
-          ...prevContentState,
-          profilePicUrl: action.imageUrl
-        }
-      };
-    }
     case 'EDIT_REWARD_COMMENT': {
       const newState = { ...state };
       const contentKeys = Object.keys(newState);
@@ -1538,31 +1529,6 @@ export default function ContentReducer(state, action) {
         [contentKey]: {
           ...prevContentState,
           pinnedCommentId: action.commentId
-        }
-      };
-    case 'UPDATE_CURRENT_MISSION':
-      return {
-        ...state,
-        [contentKey]: {
-          ...prevContentState,
-          currentMissionId: action.missionId
-        }
-      };
-    case 'UPDATE_PROFILE_INFO':
-      return {
-        ...state,
-        [contentKey]: {
-          ...prevContentState,
-          ...action.data
-        }
-      };
-    case 'UPDATE_STATUS_MSG':
-      return {
-        ...state,
-        [contentKey]: {
-          ...prevContentState,
-          statusMsg: action.statusMsg,
-          statusColor: action.statusColor
         }
       };
     case 'UPLOAD_COMMENT': {
