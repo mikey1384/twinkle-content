@@ -44,7 +44,7 @@ export default function Store() {
   const unlockUsernameChange = useAppContext(
     (v) => v.requestHelpers.unlockUsernameChange
   );
-  const onInitContent = useContentContext((v) => v.actions.onInitContent);
+  const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const onUpdateProfileInfo = useContentContext(
     (v) => v.actions.onUpdateProfileInfo
   );
@@ -60,7 +60,7 @@ export default function Store() {
     async function init() {
       const data = await loadMyData();
       if (mounted.current) {
-        onInitContent({ contentType: 'user', contentId: data.userId, ...data });
+        onSetUserState({ userId: data.userId, newState: data });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

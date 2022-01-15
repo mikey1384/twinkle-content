@@ -18,8 +18,8 @@ export default function TwinkleStore({ mission }) {
     (v) => v.requestHelpers.loadKarmaPoints
   );
   const loadMyData = useAppContext((v) => v.requestHelpers.loadMyData);
+  const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const pageVisible = useViewContext((v) => v.state.pageVisible);
-  const onInitContent = useContentContext((v) => v.actions.onInitContent);
   const onUpdateProfileInfo = useContentContext(
     (v) => v.actions.onUpdateProfileInfo
   );
@@ -41,7 +41,7 @@ export default function TwinkleStore({ mission }) {
       }
       const data = await loadMyData();
       if (mounted.current) {
-        onInitContent({ contentType: 'user', contentId: data.userId, ...data });
+        onSetUserState({ userId: data.userId, newState: data });
       }
       const { karmaPoints: kp } = await loadKarmaPoints();
       if (mounted.current) {

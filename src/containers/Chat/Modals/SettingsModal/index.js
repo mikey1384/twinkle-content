@@ -12,7 +12,7 @@ import ColorSelector from './ColorSelector';
 import { priceTable } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { useAppContext, useChatContext, useContentContext } from 'contexts';
+import { useAppContext, useChatContext } from 'contexts';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import localize from 'constants/localize';
@@ -52,6 +52,7 @@ export default function SettingsModal({
   unlockedThemes,
   userIsChannelOwner
 }) {
+  const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const buyChatSubject = useAppContext((v) => v.requestHelpers.buyChatSubject);
   const buyChatTheme = useAppContext((v) => v.requestHelpers.buyChatTheme);
   const customChannelNames = useChatContext((v) => v.state.customChannelNames);
@@ -59,9 +60,6 @@ export default function SettingsModal({
     (v) => v.actions.onEnableChatSubject
   );
   const onEnableTheme = useChatContext((v) => v.actions.onEnableTheme);
-  const onUpdateUserCoins = useContentContext(
-    (v) => v.actions.onUpdateUserCoins
-  );
   const { twinkleCoins, userId } = useMyState();
   const [hovered, setHovered] = useState(false);
   const [selectNewOwnerModalShown, setSelectNewOwnerModalShown] =
@@ -358,7 +356,7 @@ export default function SettingsModal({
     try {
       const { coins } = await buyChatSubject(channelId);
       onEnableChatSubject(channelId);
-      onUpdateUserCoins({ coins, userId });
+      onSetUserState({ userId, newState: { twinkleCoins: coins } });
       onPurchaseSubject();
       setEditedCanChangeSubject('owner');
       onScrollToBottom();
@@ -376,7 +374,7 @@ export default function SettingsModal({
         theme: themeToPurchase
       });
       onEnableTheme({ channelId, theme: themeToPurchase });
-      onUpdateUserCoins({ coins, userId });
+      onSetUserState({ userId, newState: { twinkleCoins: coins } });
       setThemeToPurchase('');
     } catch (error) {
       console.error(error);

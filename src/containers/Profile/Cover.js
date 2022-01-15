@@ -59,7 +59,7 @@ export default function Cover({
     }
     async function handleCheckIfUserOnline() {
       const online = await checkIfUserOnline(id);
-      onSetUserState({ userId: id, online });
+      onSetUserState({ userId: id, newState: { online } });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

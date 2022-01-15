@@ -114,9 +114,6 @@ function ProfilePanel({ expandable, profileId, style }) {
   );
   const onUploadComment = useContentContext((v) => v.actions.onUploadComment);
   const onUploadReply = useContentContext((v) => v.actions.onUploadReply);
-  const onRemoveStatusMsg = useContentContext(
-    (v) => v.actions.onRemoveStatusMsg
-  );
   const onSetPlaceholderHeight = useContentContext(
     (v) => v.actions.onSetPlaceholderHeight
   );
@@ -124,7 +121,6 @@ function ProfilePanel({ expandable, profileId, style }) {
   const onUpdateStatusMsg = useContentContext(
     (v) => v.actions.onUpdateStatusMsg
   );
-  const onUpdateBio = useContentContext((v) => v.actions.onUpdateBio);
   const onUploadProfilePic = useContentContext(
     (v) => v.actions.onUploadProfilePic
   );
@@ -432,14 +428,21 @@ function ProfilePanel({ expandable, profileId, style }) {
                   >
                     <UserDetails
                       profile={profile}
-                      removeStatusMsg={onRemoveStatusMsg}
+                      removeStatusMsg={() =>
+                        onSetUserState({
+                          userId,
+                          newState: { statusMsg: '', statusColor: '' }
+                        })
+                      }
                       updateStatusMsg={(data) => {
                         if (banned?.posting) {
                           return;
                         }
                         onUpdateStatusMsg(data);
                       }}
-                      onUpdateBio={onUpdateBio}
+                      onUpdateBio={({ userId, bio }) =>
+                        onSetUserState({ userId, newState: { bio } })
+                      }
                       userId={userId}
                     />
                     {canEdit && (
@@ -687,7 +690,7 @@ function ProfilePanel({ expandable, profileId, style }) {
       profileId
     });
     if (mounted.current) {
-      onUpdateBio(data);
+      onSetUserState({ userId: data.userId, newState: { bio: data.bio } });
       setBioEditModalShown(false);
     }
   }

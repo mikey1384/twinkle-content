@@ -38,17 +38,14 @@ Intro.propTypes = {
 };
 
 export default function Intro({ profile, selectedTheme }) {
+  const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const auth = useAppContext((v) => v.requestHelpers.auth);
   const uploadGreeting = useAppContext((v) => v.requestHelpers.uploadGreeting);
   const uploadBio = useAppContext((v) => v.requestHelpers.uploadBio);
-  const onRemoveStatusMsg = useContentContext(
-    (v) => v.actions.onRemoveStatusMsg
-  );
   const onUpdateStatusMsg = useContentContext(
     (v) => v.actions.onUpdateStatusMsg
   );
   const onUpdateGreeting = useContentContext((v) => v.actions.onUpdateGreeting);
-  const onUpdateBio = useContentContext((v) => v.actions.onUpdateBio);
   const editedStatusMsg = useInputContext((v) => v.state.editedStatusMsg);
   const editedStatusColor = useInputContext((v) => v.state.editedStatusColor);
   const onSetEditedStatusColor = useInputContext(
@@ -393,7 +390,7 @@ export default function Intro({ profile, selectedTheme }) {
       ...params,
       profileId: profile.id
     });
-    onUpdateBio(data);
+    onSetUserState({ userId: data.userId, newState: { bio: data.bio } });
     setBioEditModalShown(false);
   }
 
@@ -407,7 +404,10 @@ export default function Intro({ profile, selectedTheme }) {
 
   async function handleRemoveStatus() {
     await request.delete(`${URL}/user/statusMsg`, auth());
-    onRemoveStatusMsg(userId);
+    onSetUserState({
+      userId,
+      newState: { statusMsg: '', statusColor: '' }
+    });
     setConfirmModalShown(false);
   }
 

@@ -33,14 +33,6 @@ export default function ContentActions(dispatch) {
         contentType
       });
     },
-    onChangeProfileTheme({ userId, theme }) {
-      return dispatch({
-        type: 'CHANGE_PROFILE_THEME',
-        contentId: userId,
-        contentType: 'user',
-        theme
-      });
-    },
     onChangeSpoilerStatus({ prevSecretViewerId, shown, subjectId }) {
       return dispatch({
         type: 'CHANGE_SPOILER_STATUS',
@@ -48,23 +40,6 @@ export default function ContentActions(dispatch) {
         prevSecretViewerId,
         contentId: subjectId,
         contentType: 'subject'
-      });
-    },
-    onUpdateUserCoins({ coins, userId }) {
-      return dispatch({
-        type: 'UPDATE_USER_COINS',
-        contentId: userId,
-        contentType: 'user',
-        coins
-      });
-    },
-    onChangeUserXP({ xp, rank, userId }) {
-      return dispatch({
-        type: 'CHANGE_USER_XP',
-        contentId: userId,
-        contentType: 'user',
-        xp,
-        rank
       });
     },
     onDeleteComment(commentId) {
@@ -329,13 +304,6 @@ export default function ContentActions(dispatch) {
         contentType
       });
     },
-    onRemoveStatusMsg(userId) {
-      return dispatch({
-        type: 'DELETE_STATUS_MSG',
-        contentId: userId,
-        contentType: 'user'
-      });
-    },
     onRevokeReward({ contentType, contentId, rewardId }) {
       return dispatch({
         type: 'REVOKE_REWARD',
@@ -561,14 +529,6 @@ export default function ContentActions(dispatch) {
         type: 'SHOW_TC_REPLY_INPUT',
         contentId,
         contentType
-      });
-    },
-    onUpdateBio({ bio, userId }) {
-      return dispatch({
-        type: 'UPDATE_USER_BIO',
-        contentType: 'user',
-        contentId: userId,
-        bio
       });
     },
     onUpdateCommentFileUploadProgress({ contentType, contentId, progress }) {

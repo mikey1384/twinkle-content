@@ -164,7 +164,7 @@ export default function MobileMenu({ location, history, onClose }) {
       onLogout();
     }
     if (mounted.current) {
-      onSetUserState({ userId, online: false });
+      onSetUserState({ userId, newState: { online: false } });
     }
     if (mounted.current) {
       onResetChat();

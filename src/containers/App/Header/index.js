@@ -47,6 +47,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
     () => getSectionFromPathname(pathname)?.section === 'chat',
     [pathname]
   );
+  const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const onSetLastChatPath = useAppContext(
     (v) => v.user.actions.onSetLastChatPath
   );
@@ -192,10 +193,6 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
   const onUpdateProfileInfo = useContentContext(
     (v) => v.actions.onUpdateProfileInfo
   );
-  const onUpdateUserCoins = useContentContext(
-    (v) => v.actions.onUpdateUserCoins
-  );
-  const onChangeUserXP = useContentContext((v) => v.actions.onChangeUserXP);
   const onLikeContent = useContentContext((v) => v.actions.onLikeContent);
   const onRecommendContent = useContentContext(
     (v) => v.actions.onRecommendContent
@@ -868,13 +865,13 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
 
   async function handleUpdateMyCoins() {
     const coins = await loadCoins();
-    onUpdateUserCoins({ coins, userId });
+    onSetUserState({ userId, newState: { twinkleCoins: coins } });
   }
 
   async function handleUpdateMyXp() {
     const { all, top30s } = await loadRankings();
     onGetRanks({ all, top30s });
     const { xp, rank } = await loadXP();
-    onChangeUserXP({ xp, rank, userId });
+    onSetUserState({ userId, newState: { twinkleXP: xp, rank } });
   }
 }

@@ -158,14 +158,6 @@ export default function ContentReducer(state, action) {
           fileUploadComplete: false
         }
       };
-    case 'CHANGE_PROFILE_THEME':
-      return {
-        ...state,
-        [contentKey]: {
-          ...prevContentState,
-          profileTheme: action.theme
-        }
-      };
     case 'CHANGE_SPOILER_STATUS': {
       const newState = { ...state };
       const contentKeys = Object.keys(newState);
@@ -216,15 +208,6 @@ export default function ContentReducer(state, action) {
         [contentKey]: {
           ...prevContentState,
           twinkleCoins: action.coins
-        }
-      };
-    case 'CHANGE_USER_XP':
-      return {
-        ...state,
-        [contentKey]: {
-          ...prevContentState,
-          twinkleXP: action.xp,
-          rank: action.rank
         }
       };
     case 'DELETE_COMMENT': {
@@ -321,16 +304,6 @@ export default function ContentReducer(state, action) {
           isDeleted: true
         }
       };
-    case 'DELETE_STATUS_MSG': {
-      return {
-        ...state,
-        [contentKey]: {
-          ...prevContentState,
-          statusMsg: '',
-          statusColor: ''
-        }
-      };
-    }
     case 'DELETE_SUBJECT': {
       const newState = { ...state };
       const contentKeys = Object.keys(newState);
@@ -1607,14 +1580,6 @@ export default function ContentReducer(state, action) {
           ...prevContentState,
           statusMsg: action.statusMsg,
           statusColor: action.statusColor
-        }
-      };
-    case 'UPDATE_USER_BIO':
-      return {
-        ...state,
-        [contentKey]: {
-          ...prevContentState,
-          ...action.bio
         }
       };
     case 'UPDATE_USER_GREETING':

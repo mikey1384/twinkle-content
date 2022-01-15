@@ -4,7 +4,7 @@ import StatusMessage from './StatusMessage';
 import Loading from 'components/Loading';
 import QuestionCarousel from './QuestionCarousel';
 import { useMyState } from 'helpers/hooks';
-import { useAppContext, useMissionContext, useContentContext } from 'contexts';
+import { useAppContext, useMissionContext } from 'contexts';
 
 Questions.propTypes = {
   isRepeating: PropTypes.bool,
@@ -20,6 +20,7 @@ export default function Questions({ isRepeating, mission, onFail }) {
   const updateUserCoins = useAppContext(
     (v) => v.requestHelpers.updateUserCoins
   );
+  const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const updateUserXP = useAppContext((v) => v.requestHelpers.updateUserXP);
   const uploadMissionAttempt = useAppContext(
     (v) => v.requestHelpers.uploadMissionAttempt
@@ -32,10 +33,6 @@ export default function Questions({ isRepeating, mission, onFail }) {
   );
   const onSetMissionState = useMissionContext(
     (v) => v.actions.onSetMissionState
-  );
-  const onChangeUserXP = useContentContext((v) => v.actions.onChangeUserXP);
-  const onUpdateUserCoins = useContentContext(
-    (v) => v.actions.onUpdateUserCoins
   );
   const [questionIds, setQuestionIds] = useState([]);
   const [questionObj, setQuestionObj] = useState({});
@@ -193,8 +190,10 @@ export default function Questions({ isRepeating, mission, onFail }) {
           type: 'increase'
         });
         if (mounted.current) {
-          onUpdateUserCoins({ coins, userId });
-          onChangeUserXP({ xp, rank, userId });
+          onSetUserState({
+            userId,
+            newState: { twinkleXP: xp, twinkleCoins: coins, rank }
+          });
           setRepeatMissionComplete(true);
         }
       } else {
@@ -204,14 +203,16 @@ export default function Questions({ isRepeating, mission, onFail }) {
         });
         if (success && mounted.current) {
           if (newXpAndRank.xp) {
-            onChangeUserXP({
-              xp: newXpAndRank.xp,
-              rank: newXpAndRank.rank,
-              userId
+            onSetUserState({
+              userId,
+              newState: { twinkleXP: newXpAndRank.xp, rank: newXpAndRank.rank }
             });
           }
           if (newCoins.netCoins) {
-            onUpdateUserCoins({ coins: newCoins.netCoins, userId });
+            onSetUserState({
+              userId,
+              newState: { twinkleCoins: newCoins.netCoins }
+            });
           }
           onUpdateMissionAttempt({
             missionId: mission.id,
