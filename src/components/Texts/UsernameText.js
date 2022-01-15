@@ -42,10 +42,8 @@ export default function UsernameText({
   const loadDMChannel = useAppContext((v) => v.requestHelpers.loadDMChannel);
   const loadProfile = useAppContext((v) => v.requestHelpers.loadProfile);
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
-  const userObj = useAppContext((v) => v.user.state.userObj);
-  const { rank, twinkleXP } = useMemo(
-    () => userObj[user.id] || {},
-    [user.id, userObj]
+  const { rank, twinkleXP } = useAppContext(
+    (v) => v.user.state.userObj[user.id] || {}
   );
   const { userId, username, profilePicUrl, authLevel } = useMyState();
   const onOpenNewChatTab = useChatContext((v) => v.actions.onOpenNewChatTab);

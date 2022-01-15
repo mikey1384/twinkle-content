@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { addEvent, removeEvent } from '../listenerHelpers';
 import { stringIsEmpty } from '../stringHelpers';
 import { useAppContext, useContentContext, useProfileContext } from 'contexts';
@@ -78,7 +78,6 @@ export function useLazyLoad({
 
 export function useMyState() {
   const hideWatched = useAppContext((v) => v.user.state.myState.hideWatched);
-  const userObj = useAppContext((v) => v.user.state.userObj);
   const lastChatPath = useAppContext((v) => v.user.state.myState.lastChatPath);
   const numWordsCollected = useAppContext(
     (v) => v.user.state.myState.numWordsCollected
@@ -88,9 +87,7 @@ export function useMyState() {
   const userId = useAppContext((v) => v.user.state.myState.userId);
   const loaded = useAppContext((v) => v.user.state.loaded);
   const signinModalShown = useAppContext((v) => v.user.state.signinModalShown);
-  const myState = useMemo(() => {
-    return userObj[userId] || {};
-  }, [userId, userObj]);
+  const myState = useAppContext((v) => v.user.state.userObj[userId] || {});
 
   return myState.loaded
     ? {

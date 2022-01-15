@@ -40,6 +40,8 @@ function Chat({ onFileUpload }) {
   const { lastChatPath, userId } = useMyState();
   const { pathname } = useLocation();
   const history = useHistory();
+  const userObj = useAppContext((v) => v.user.state.userObj);
+  const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const acceptInvitation = useAppContext(
     (v) => v.requestHelpers.acceptInvitation
   );
@@ -551,6 +553,7 @@ function Chat({ onFileUpload }) {
           onSetReplyTarget,
           onSetSiteUrl,
           onSetThumbUrl,
+          onSetUserState,
           onShowIncoming,
           onSubmitMessage,
           onUpdateChessMoveViewTimeStamp,
@@ -603,7 +606,8 @@ function Chat({ onFileUpload }) {
           selectedChannelId,
           socketConnected,
           subjectObj,
-          subjectSearchResults
+          subjectSearchResults,
+          userObj
         },
         onFileUpload
       }}

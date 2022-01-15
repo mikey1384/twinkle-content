@@ -1,14 +1,24 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  memo,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import PropTypes from 'prop-types';
 import Emojis from '../emojis.png';
 import Tooltip from './Tooltip';
 import UserListModal from 'components/Modals/UserListModal';
+import LocalContext from '../../Context';
 import { useAppContext } from 'contexts';
 import { reactionsObj } from 'constants/defaultValues';
 import { css } from '@emotion/css';
 import { Color, borderRadius, innerBorderRadius } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
 import { isMobile } from 'helpers';
+import { isEqual } from 'lodash';
 
 const deviceIsMobile = isMobile(navigator);
 
@@ -21,7 +31,7 @@ Reaction.propTypes = {
   reactionsMenuShown: PropTypes.bool
 };
 
-export default function Reaction({
+function Reaction({
   reaction,
   reactionCount,
   reactedUserIds,
@@ -29,15 +39,19 @@ export default function Reaction({
   onAddReaction,
   reactionsMenuShown
 }) {
+  const {
+    actions: { onSetUserState },
+    state: { userObj }
+  } = useContext(LocalContext);
   const loadProfile = useAppContext((v) => v.requestHelpers.loadProfile);
   const ReactionRef = useRef(null);
   const hideTimerRef = useRef(null);
   const hideTimerRef2 = useRef(null);
   const mounted = useRef(true);
+  const prevReactedUserIdsExcludingMine = useRef([]);
   const [loadingOtherUsers, setLoadingOtherUsers] = useState(false);
   const [tooltipContext, setTooltipContext] = useState(null);
   const [userListModalShown, setUserListModalShown] = useState(false);
-  const [userObj, setUserObj] = useState({});
   const { profileTheme, userId, profilePicUrl } = useMyState();
   const userReacted = useMemo(
     () => reactedUserIds.includes(userId),
@@ -50,15 +64,25 @@ export default function Reaction({
   );
 
   useEffect(() => {
-    const indexLength = Math.min(reactedUserIdsExcludingMine.length, 2);
-    for (let i = 0; i < indexLength; i++) {
-      handleLoadProfile(reactedUserIdsExcludingMine[i]);
+    if (
+      !isEqual(
+        prevReactedUserIdsExcludingMine.current,
+        reactedUserIdsExcludingMine
+      )
+    ) {
+      const indexLength = Math.min(reactedUserIdsExcludingMine.length, 2);
+      for (let i = 0; i < indexLength; i++) {
+        handleLoadProfile(reactedUserIdsExcludingMine[i]);
+      }
+      prevReactedUserIdsExcludingMine.current = reactedUserIdsExcludingMine;
     }
 
     async function handleLoadProfile(userId) {
-      const data = await loadProfile(userId);
-      if (mounted.current) {
-        setUserObj((prev) => ({ ...prev, [userId]: data }));
+      if (!userObj[userId]) {
+        const data = await loadProfile(userId);
+        if (mounted.current) {
+          onSetUserState({ userId: userId, newState: data });
+        }
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -118,6 +142,31 @@ export default function Reaction({
       mounted.current = false;
     };
   }, []);
+
+  const handleShowAllReactedUsers = useCallback(async () => {
+    setTooltipContext(null);
+    setLoadingOtherUsers(true);
+    setUserListModalShown(true);
+    for (let reactedUserId of reactedUserIdsExcludingMine) {
+      if (!userObj[reactedUserId]) {
+        const data = await loadProfile(reactedUserId);
+        if (mounted.current) {
+          onSetUserState({ userId: reactedUserId, newState: data });
+        }
+      }
+    }
+    if (mounted.current) {
+      setLoadingOtherUsers(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reactedUserIdsExcludingMine, userObj]);
+
+  const handleClick = useCallback(() => {
+    if (userReacted) {
+      return onRemoveReaction();
+    }
+    onAddReaction();
+  }, [onAddReaction, onRemoveReaction, userReacted]);
 
   return (
     <div
@@ -209,33 +258,6 @@ export default function Reaction({
     </div>
   );
 
-  function handleClick() {
-    if (userReacted) {
-      return onRemoveReaction();
-    }
-    onAddReaction();
-  }
-
-  async function handleShowAllReactedUsers() {
-    setTooltipContext(null);
-    setLoadingOtherUsers(true);
-    setUserListModalShown(true);
-    for (let reactedUserId of reactedUserIdsExcludingMine) {
-      if (!userObj[reactedUserId]) {
-        const data = await loadProfile(reactedUserId);
-        if (mounted.current) {
-          setUserObj((prev) => ({
-            ...prev,
-            [reactedUserId]: data
-          }));
-        }
-      }
-    }
-    if (mounted.current) {
-      setLoadingOtherUsers(false);
-    }
-  }
-
   function handleSetTooltipContext() {
     if (deviceIsMobile) return;
     clearTimeout(hideTimerRef.current);
@@ -259,3 +281,5 @@ export default function Reaction({
     }, 200);
   }
 }
+
+export default memo(Reaction);

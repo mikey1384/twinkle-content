@@ -47,7 +47,6 @@ ProfilePanel.propTypes = {
 
 function ProfilePanel({ expandable, profileId, style }) {
   const mounted = useRef(true);
-  const userObj = useAppContext((v) => v.user.state.userObj);
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   useEffect(() => {
     mounted.current = true;
@@ -61,7 +60,7 @@ function ProfilePanel({ expandable, profileId, style }) {
     contentType: 'user',
     contentId: profileId
   });
-  const profile = useMemo(() => userObj[profileId] || {}, [profileId, userObj]);
+  const profile = useAppContext((v) => v.user.state.userObj[profileId] || {});
 
   const {
     comments = [],
