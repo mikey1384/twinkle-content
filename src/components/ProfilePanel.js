@@ -68,7 +68,6 @@ function ProfilePanel({ expandable, profileId, style }) {
     commentsLoadMoreButton,
     commentsShown,
     visible: previousVisible,
-    loaded: profileLoaded,
     placeholderHeight: previousPlaceholderHeight,
     previewLoaded
   } = profilePanelState;
@@ -76,6 +75,7 @@ function ProfilePanel({ expandable, profileId, style }) {
   const {
     online,
     lastActive,
+    loaded: profileLoaded,
     numMessages,
     username: profileName,
     twinkleXP,
