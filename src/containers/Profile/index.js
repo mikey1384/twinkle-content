@@ -49,7 +49,8 @@ export default function Profile({ history, location, match }) {
             userId: user.id,
             contentId: user.id,
             username: match.params.username,
-            ...user
+            ...user,
+            loaded: true
           }
         });
       } catch (error) {
