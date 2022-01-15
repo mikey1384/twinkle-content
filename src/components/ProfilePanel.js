@@ -433,9 +433,7 @@ function ProfilePanel({ expandable, profileId, style }) {
                         }
                         onSetUserState({ userId: data.userId, newState: data });
                       }}
-                      onUpdateBio={({ userId, bio }) =>
-                        onSetUserState({ userId, newState: { bio } })
-                      }
+                      onSetBioEditModalShown={setBioEditModalShown}
                       userId={userId}
                     />
                     {canEdit && (
@@ -686,7 +684,7 @@ function ProfilePanel({ expandable, profileId, style }) {
       profileId
     });
     if (mounted.current) {
-      onSetUserState({ userId: data.userId, newState: { bio: data.bio } });
+      onSetUserState({ userId: data.userId, newState: data.bio });
       setBioEditModalShown(false);
     }
   }

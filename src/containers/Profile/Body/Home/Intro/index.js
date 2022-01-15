@@ -386,7 +386,7 @@ export default function Intro({ profile, selectedTheme }) {
       ...params,
       profileId: profile.id
     });
-    onSetUserState({ userId: data.userId, newState: { bio: data.bio } });
+    onSetUserState({ userId: data.userId, newState: data.bio });
     setBioEditModalShown(false);
   }
 
