@@ -43,14 +43,14 @@ export default function ExerciseContainer({
   const onUpdateUserMissionState = useAppContext(
     (v) => v.user.actions.onUpdateUserMissionState
   );
-  const { username, state = {} } = useMyState();
+  const { username, missions } = useMyState();
   const { passed, prevPassed, errorMsg, setErrorMsg, success, exercise } =
     useExercises({
       exercises,
       exerciseKey,
       prevExerciseKey,
       codeObj,
-      state,
+      missions,
       onUpdateUserMissionState,
       onSetCode,
       updateMissionStatus,

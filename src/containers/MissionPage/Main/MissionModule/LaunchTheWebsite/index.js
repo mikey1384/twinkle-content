@@ -21,7 +21,7 @@ LaunchTheWebsite.propTypes = {
 const deviceIsMobile = isMobile(navigator);
 
 export default function LaunchTheWebsite({ style, task }) {
-  const { state, username } = useMyState();
+  const { missions, username } = useMyState();
   const updateMissionStatus = useAppContext(
     (v) => v.requestHelpers.updateMissionStatus
   );
@@ -29,8 +29,8 @@ export default function LaunchTheWebsite({ style, task }) {
     (v) => v.user.actions.onUpdateUserMissionState
   );
   const taskState = useMemo(
-    () => state?.missions?.[task?.missionType] || {},
-    [state?.missions, task?.missionType]
+    () => missions[task?.missionType] || {},
+    [missions, task?.missionType]
   );
   const { makeAccountOkayPressed, connectReplToGitHubOkayPressed } = taskState;
   const FirstButton = useMemo(() => {
