@@ -105,9 +105,9 @@ function TextMessage({
     <ErrorBoundary>
       <div
         className={css`
-          padding-bottom: ${isEditing ? 0 : '2rem'};
+          padding-bottom: ${isEditing ? 0 : '1rem'};
           @media (max-width: ${mobileMaxWidth}) {
-            padding-bottom: ${isEditing ? 0 : '1.5rem'};
+            padding-bottom: ${isEditing ? 0 : '0.5rem'};
           }
         `}
       >
