@@ -110,7 +110,6 @@ export default function Store() {
       </div>
       <KarmaStatus />
       <ItemPanel
-        karmaPoints={karmaPoints}
         itemName={changePasswordLabel}
         style={{ marginTop: userId ? '4rem' : 0 }}
         itemDescription={changePasswordDescriptionLabel}
