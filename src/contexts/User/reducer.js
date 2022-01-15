@@ -146,6 +146,17 @@ export default function UserReducer(state, action) {
           numWordsCollected: action.numWordsCollected
         }
       };
+    case 'UPDATE_MISSION_STATE':
+      return {
+        ...state,
+        missions: {
+          ...state.missions,
+          [action.missionType]: {
+            ...state.missions[action.missionType],
+            ...action.newState
+          }
+        }
+      };
     default:
       return state;
   }

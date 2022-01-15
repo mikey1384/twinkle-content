@@ -45,7 +45,6 @@ export default function Intro({ profile, selectedTheme }) {
   const onUpdateStatusMsg = useContentContext(
     (v) => v.actions.onUpdateStatusMsg
   );
-  const onUpdateGreeting = useContentContext((v) => v.actions.onUpdateGreeting);
   const editedStatusMsg = useInputContext((v) => v.state.editedStatusMsg);
   const editedStatusColor = useInputContext((v) => v.state.editedStatusColor);
   const onSetEditedStatusColor = useInputContext(
@@ -399,7 +398,7 @@ export default function Intro({ profile, selectedTheme }) {
       return;
     }
     await uploadGreeting({ greeting });
-    onUpdateGreeting({ greeting, userId });
+    onSetUserState({ userId, newState: { greeting } });
   }
 
   async function handleRemoveStatus() {

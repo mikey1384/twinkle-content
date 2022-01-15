@@ -45,6 +45,7 @@ export function AppContextProvider({ children }) {
     myState: initialMyState,
     loadMoreButton: false,
     loaded: false,
+    missions: {},
     orderUsersBy: LAST_ONLINE_FILTER_LABEL,
     profiles: [],
     profilesLoaded: false,

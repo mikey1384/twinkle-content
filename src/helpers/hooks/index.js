@@ -79,6 +79,7 @@ export function useLazyLoad({
 export function useMyState() {
   const hideWatched = useAppContext((v) => v.user.state.myState.hideWatched);
   const lastChatPath = useAppContext((v) => v.user.state.myState.lastChatPath);
+  const missions = useAppContext((v) => v.user.state.missions);
   const numWordsCollected = useAppContext(
     (v) => v.user.state.myState.numWordsCollected
   );
@@ -92,6 +93,7 @@ export function useMyState() {
   return myState.loaded
     ? {
         ...myState,
+        missions,
         lastChatPath,
         loaded,
         numWordsCollected,

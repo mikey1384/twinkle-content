@@ -104,6 +104,13 @@ export default function UserActions(dispatch) {
         type: 'UPDATE_NUM_WORDS_COLLECTED',
         numWordsCollected
       });
+    },
+    onUpdateUserMissionState({ missionType, newState }) {
+      return dispatch({
+        type: 'UPDATE_MISSION_STATE',
+        missionType,
+        newState
+      });
     }
   };
 }

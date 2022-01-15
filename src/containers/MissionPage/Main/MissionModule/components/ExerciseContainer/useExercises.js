@@ -9,7 +9,6 @@ export default function useExercises({
   onUpdateUserMissionState,
   onSetCode,
   taskType,
-  userId,
   username,
   updateMissionStatus
 } = {}) {
@@ -58,7 +57,7 @@ export default function useExercises({
         })
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [codeObj, exerciseKey, userId]);
+  }, [codeObj, exerciseKey]);
 
   return {
     passed,
@@ -71,7 +70,6 @@ export default function useExercises({
 
   function handleNextClick() {
     onUpdateUserMissionState({
-      userId,
       missionType: taskType,
       newState: { [exerciseKey]: 'pass' }
     });

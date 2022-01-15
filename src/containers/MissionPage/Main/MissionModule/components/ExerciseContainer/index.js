@@ -9,7 +9,7 @@ import useExercises from './useExercises';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
-import { useAppContext, useContentContext } from 'contexts';
+import { useAppContext } from 'contexts';
 import { scrollElementToCenter } from 'helpers';
 
 ExerciseContainer.propTypes = {
@@ -40,10 +40,10 @@ export default function ExerciseContainer({
   const updateMissionStatus = useAppContext(
     (v) => v.requestHelpers.updateMissionStatus
   );
-  const onUpdateUserMissionState = useContentContext(
-    (v) => v.actions.onUpdateUserMissionState
+  const onUpdateUserMissionState = useAppContext(
+    (v) => v.user.actions.onUpdateUserMissionState
   );
-  const { userId, username, state = {} } = useMyState();
+  const { username, state = {} } = useMyState();
   const { passed, prevPassed, errorMsg, setErrorMsg, success, exercise } =
     useExercises({
       exercises,
@@ -55,8 +55,7 @@ export default function ExerciseContainer({
       onSetCode,
       updateMissionStatus,
       taskType,
-      username,
-      userId
+      username
     });
   const ComponentRef = useRef(null);
 

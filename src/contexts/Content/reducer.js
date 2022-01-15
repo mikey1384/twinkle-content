@@ -1548,23 +1548,6 @@ export default function ContentReducer(state, action) {
           currentMissionId: action.missionId
         }
       };
-    case 'UPDATE_USER_MISSION_STATE':
-      return {
-        ...state,
-        [contentKey]: {
-          ...prevContentState,
-          state: {
-            ...prevContentState.state,
-            missions: {
-              ...prevContentState.state?.missions,
-              [action.missionType]: {
-                ...prevContentState.state?.missions?.[action.missionType],
-                ...action.newState
-              }
-            }
-          }
-        }
-      };
     case 'UPDATE_PROFILE_INFO':
       return {
         ...state,
@@ -1580,14 +1563,6 @@ export default function ContentReducer(state, action) {
           ...prevContentState,
           statusMsg: action.statusMsg,
           statusColor: action.statusColor
-        }
-      };
-    case 'UPDATE_USER_GREETING':
-      return {
-        ...state,
-        [contentKey]: {
-          ...prevContentState,
-          greeting: action.greeting
         }
       };
     case 'UPLOAD_COMMENT': {

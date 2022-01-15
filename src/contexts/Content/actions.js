@@ -547,23 +547,6 @@ export default function ContentActions(dispatch) {
         commentId
       });
     },
-    onUpdateGreeting({ greeting, userId }) {
-      return dispatch({
-        type: 'UPDATE_USER_GREETING',
-        contentId: userId,
-        contentType: 'user',
-        greeting
-      });
-    },
-    onUpdateUserMissionState({ userId, missionType, newState }) {
-      return dispatch({
-        type: 'UPDATE_USER_MISSION_STATE',
-        contentId: userId,
-        contentType: 'user',
-        missionType,
-        newState
-      });
-    },
     onUpdateProfileInfo({ userId, ...data }) {
       return dispatch({
         type: 'UPDATE_PROFILE_INFO',
