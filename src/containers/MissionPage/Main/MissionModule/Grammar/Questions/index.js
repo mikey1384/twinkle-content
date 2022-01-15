@@ -194,6 +194,8 @@ export default function Questions({ isRepeating, mission, onFail }) {
             userId,
             newState: { twinkleXP: xp, twinkleCoins: coins, rank }
           });
+        }
+        if (mounted.current) {
           setRepeatMissionComplete(true);
         }
       } else {
@@ -201,30 +203,36 @@ export default function Questions({ isRepeating, mission, onFail }) {
           missionId: mission.id,
           attempt: { status: 'pass' }
         });
-        if (success && mounted.current) {
-          if (newXpAndRank.xp) {
+        if (success) {
+          if (newXpAndRank.xp && mounted.current) {
             onSetUserState({
               userId,
               newState: { twinkleXP: newXpAndRank.xp, rank: newXpAndRank.rank }
             });
           }
-          if (newCoins.netCoins) {
+          if (newCoins.netCoins && mounted.current) {
             onSetUserState({
               userId,
               newState: { twinkleCoins: newCoins.netCoins }
             });
           }
-          onUpdateMissionAttempt({
-            missionId: mission.id,
-            newState: { status: 'pass' }
-          });
-          onSetMissionState({
-            missionId: mission.id,
-            newState: { started: false, grammarReviewLoaded: false }
-          });
+          if (mounted.current) {
+            onUpdateMissionAttempt({
+              missionId: mission.id,
+              newState: { status: 'pass' }
+            });
+          }
+          if (mounted.current) {
+            onSetMissionState({
+              missionId: mission.id,
+              newState: { started: false, grammarReviewLoaded: false }
+            });
+          }
         }
       }
-      setSubmitDisabled(false);
+      if (mounted.current) {
+        setSubmitDisabled(false);
+      }
     } catch (error) {
       setSubmitDisabled(false);
     }
