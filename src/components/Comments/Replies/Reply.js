@@ -98,7 +98,8 @@ function Reply({
     uploader,
     filePath,
     fileName,
-    fileSize
+    fileSize,
+    thumbUrl: initialThumbUrl
   },
   rootContent,
   onSubmitReply,
@@ -120,11 +121,15 @@ function Reply({
   const onSetXpRewardInterfaceShown = useContentContext(
     (v) => v.actions.onSetXpRewardInterfaceShown
   );
-  const { isDeleted, isEditing, thumbUrl, xpRewardInterfaceShown } =
-    useContentState({
-      contentType: 'comment',
-      contentId: reply.id
-    });
+  const {
+    isDeleted,
+    isEditing,
+    thumbUrl: thumbUrlFromContext,
+    xpRewardInterfaceShown
+  } = useContentState({
+    contentType: 'comment',
+    contentId: reply.id
+  });
   const { onEditDone, onLikeClick, onRewardCommentEdit } =
     useContext(LocalContext);
   const { fileType } = getFileInfoFromFileName(fileName);
@@ -363,7 +368,7 @@ function Reply({
                       fileName={fileName}
                       filePath={filePath}
                       fileSize={Number(fileSize)}
-                      thumbUrl={thumbUrl}
+                      thumbUrl={thumbUrlFromContext || initialThumbUrl}
                       videoHeight="100%"
                       style={{
                         display: 'flex',
