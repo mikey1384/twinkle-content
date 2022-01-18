@@ -4,25 +4,24 @@ import PropTypes from 'prop-types';
 import Slide from './Slide';
 import Loading from 'components/Loading';
 import BottomInterface from './BottomInterface';
-import Button from 'components/Button';
-import Icon from 'components/Icon';
 import { useAppContext, useInteractiveContext, useViewContext } from 'contexts';
-import { scrollElementToCenter, scrollElementTo } from 'helpers';
-import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
+import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-
-const BodyRef = document.scrollingElement || document.documentElement;
 
 InteractiveContent.propTypes = {
   autoFocus: PropTypes.bool,
   interactiveId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  onGoBackToMission: PropTypes.func
+  onGoBackToMission: PropTypes.func,
+  onScrollElementTo: PropTypes.func.isRequired,
+  onScrollElementToCenter: PropTypes.func.isRequired
 };
 
 export default function InteractiveContent({
   autoFocus,
   interactiveId,
-  onGoBackToMission
+  onGoBackToMission,
+  onScrollElementTo,
+  onScrollElementToCenter
 }) {
   const checkInteractiveNumUpdates = useAppContext(
     (v) => v.requestHelpers.checkInteractiveNumUpdates
@@ -117,11 +116,11 @@ export default function InteractiveContent({
 
   useEffect(() => {
     if (autoFocus && displayedSlideIds?.length === 1) {
-      scrollElementToCenter(
+      onScrollElementToCenter(
         SlideRefs.current[slideObj[displayedSlideIds[0]].id]
       );
     }
-  }, [autoFocus, displayedSlideIds, slideObj]);
+  }, [autoFocus, displayedSlideIds, slideObj, onScrollElementToCenter]);
 
   useEffect(() => {
     if (
@@ -129,7 +128,7 @@ export default function InteractiveContent({
       slideObj[displayedSlideIds[displayedSlideIds.length - 1]]?.forkedFrom
     ) {
       setTimeout(() => {
-        scrollElementTo({
+        onScrollElementTo({
           element:
             SlideRefs.current[
               slideObj[
@@ -146,7 +145,7 @@ export default function InteractiveContent({
       }, 10);
     }
     expanded.current = false;
-  }, [displayedSlideIds, slideObj]);
+  }, [displayedSlideIds, slideObj, onScrollElementTo]);
 
   useEffect(() => {
     if (displayedSlideIds?.length < prevDisplayedSlideIds?.current?.length) {
@@ -154,7 +153,7 @@ export default function InteractiveContent({
         displayedSlideIds[displayedSlideIds.length - 1] !==
         prevDisplayedSlideIds.current[prevDisplayedSlideIds.current.length - 1]
       ) {
-        scrollElementToCenter(
+        onScrollElementToCenter(
           SlideRefs.current[
             slideObj[displayedSlideIds[displayedSlideIds.length - 1]]?.id
           ]
@@ -162,7 +161,7 @@ export default function InteractiveContent({
       }
     }
     prevDisplayedSlideIds.current = displayedSlideIds;
-  }, [displayedSlideIds, slideObj]);
+  }, [displayedSlideIds, slideObj, onScrollElementToCenter]);
 
   useEffect(() => {
     mounted.current = true;
@@ -247,42 +246,6 @@ export default function InteractiveContent({
           ))}
         </>
       )}
-      {loaded &&
-        displayedSlideIds.length > 0 &&
-        !slideObj[displayedSlideIds[displayedSlideIds.length - 1].isFork] && (
-          <div
-            style={{
-              width: '100%',
-              padding: '1rem',
-              background: '#fff',
-              display: 'flex',
-              justifyContent: 'center'
-            }}
-            className={css`
-              margin-top: 5rem;
-              border: 1px solid ${Color.borderGray()};
-              border-radius: ${borderRadius};
-              @media (max-width: ${mobileMaxWidth}) {
-                margin-top: 2rem;
-                border-left: 0;
-                border-right: 0;
-                border-radius: 0;
-              }
-            `}
-          >
-            <Button
-              style={{ fontSize: '1.7rem' }}
-              skeuomorphic
-              onClick={() => {
-                document.getElementById('App').scrollTop = 0;
-                BodyRef.scrollTop = 0;
-              }}
-            >
-              <Icon icon="arrow-up" />
-              <span style={{ marginLeft: '0.7rem' }}>Back to Top</span>
-            </Button>
-          </div>
-        )}
       {loaded && canEdit && (
         <BottomInterface
           archivedSlides={archivedSlides}

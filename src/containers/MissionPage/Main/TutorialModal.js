@@ -27,6 +27,12 @@ export default function TutorialModal({ missionTitle, tutorialId, onHide }) {
         <InteractiveContent
           interactiveId={tutorialId}
           onGoBackToMission={onHide}
+          onScrollElementTo={(params) =>
+            console.log('scroll element to ', params)
+          }
+          onScrollElementToCenter={(params) =>
+            console.log('scroll element to center', params)
+          }
         />
       </main>
       <footer>

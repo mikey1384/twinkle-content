@@ -1,18 +1,17 @@
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import AddTutorial from './AddTutorial';
 import ViewTutorial from './ViewTutorial';
 import InteractiveContent from 'components/InteractiveContent';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { useMyState } from 'helpers/hooks';
-import { scrollElementToCenter } from 'helpers';
+import { scrollElementTo, scrollElementToCenter } from 'helpers';
 
 Tutorial.propTypes = {
   onSetMissionState: PropTypes.func,
   className: PropTypes.string,
   style: PropTypes.object,
   mission: PropTypes.object.isRequired,
-  myAttempts: PropTypes.object.isRequired,
   innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
 };
 
@@ -21,10 +20,13 @@ export default function Tutorial({
   onSetMissionState,
   style,
   mission,
-  myAttempts,
   innerRef
 }) {
-  const { isCreator } = useMyState();
+  const { managementLevel } = useMyState();
+  const canEditTutorial = useMemo(
+    () => managementLevel >= 2,
+    [managementLevel]
+  );
   const divToCenter = useRef(null);
   return (
     <ErrorBoundary
@@ -38,16 +40,16 @@ export default function Tutorial({
     >
       <div ref={innerRef} />
       <div ref={divToCenter} />
-      {isCreator && !mission.tutorialId && (
+      {canEditTutorial && !mission.tutorialId && (
         <AddTutorial missionId={mission.id} missionTitle={mission.title} />
       )}
       {!!mission.tutorialId &&
-        (isCreator ||
+        (canEditTutorial ||
           (mission.tutorialIsPublished && !mission.tutorialStarted)) && (
           <ViewTutorial
-            isCreator={isCreator}
+            canEditTutorial={canEditTutorial}
             missionId={mission.id}
-            style={isCreator ? { marginBottom: '5rem' } : {}}
+            style={canEditTutorial ? { marginBottom: '5rem' } : {}}
             onSetMissionState={onSetMissionState}
             tutorialPrompt={mission.tutorialPrompt}
             tutorialButtonLabel={mission.tutorialButtonLabel}
@@ -59,9 +61,10 @@ export default function Tutorial({
             }
           />
         )}
-      {!!mission.tutorialId && (mission.tutorialStarted || isCreator) && (
+      {!!mission.tutorialId && canEditTutorial && (
         <InteractiveContent
-          autoFocus={!isCreator && !myAttempts[mission.id]?.status}
+          onScrollElementTo={scrollElementTo}
+          onScrollElementToCenter={scrollElementToCenter}
           interactiveId={mission.tutorialId}
           onGoBackToMission={handleGoBackToMission}
         />
