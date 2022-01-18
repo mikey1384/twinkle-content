@@ -56,14 +56,14 @@ export default function InteractiveContent({
   const onSetSlideState = useInteractiveContext(
     (v) => v.actions.onSetSlideState
   );
-
-  const { canEdit, userId } = useMyState();
+  const { managementLevel, userId } = useMyState();
 
   const mounted = useRef(true);
   const expanded = useRef(false);
   const SlideRefs = useRef({});
   const prevDisplayedSlideIds = useRef([]);
 
+  const canEdit = useMemo(() => managementLevel >= 2, [managementLevel]);
   const {
     numUpdates,
     prevUserId,
