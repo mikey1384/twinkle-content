@@ -170,6 +170,7 @@ export function addAdvancedEmoji(string) {
     .replace(/(\:nice\:)/gi, '👍')
     .replace(/(\:ok\:)/gi, '👌')
     .replace(/(\:okay\:)/gi, '👌')
+    .replace(/(\:paint\:)/gi, '🎨')
     .replace(/(\:palette\:)/gi, '🎨')
     .replace(/(\:penguin\:)/gi, '🐧')
     .replace(/(\:perfect\:)/gi, '💯')
