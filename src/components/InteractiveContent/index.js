@@ -207,8 +207,7 @@ export default function InteractiveContent({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
-        paddingBottom: '10rem'
+        justifyContent: 'center'
       }}
     >
       {(isPublished || canEdit) && (

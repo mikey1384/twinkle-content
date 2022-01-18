@@ -15,9 +15,15 @@ TutorialModal.propTypes = {
 
 export default function TutorialModal({ missionTitle, tutorialId, onHide }) {
   return (
-    <Modal closeWhenClickedOutside={false} large onHide={onHide}>
+    <Modal modalStyle={{ height: 'CALC(100vh - 7rem)' }} large onHide={onHide}>
       <header>{missionTitle}</header>
-      <main>
+      <main
+        style={{
+          height: 'CALC(100% - 10rem)',
+          justifyContent: 'start',
+          overflow: 'scroll'
+        }}
+      >
         <InteractiveContent
           interactiveId={tutorialId}
           onGoBackToMission={onHide}
