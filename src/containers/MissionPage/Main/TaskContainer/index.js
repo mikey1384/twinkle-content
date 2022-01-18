@@ -10,6 +10,7 @@ import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import { useAppContext, useMissionContext } from 'contexts';
 import NotUnlocked from './NotUnlocked';
+import TutorialModal from '../TutorialModal';
 
 TaskContainer.propTypes = {
   match: PropTypes.object.isRequired,
@@ -175,6 +176,25 @@ export default function TaskContainer({
         `}
         onSetMissionState={onSetMissionState}
       />
+      {task.tutorialStarted && (
+        <TutorialModal
+          missionTitle={task.title}
+          tutorialId={task.tutorialId}
+          tutorialSlideId={task.tutorialSlideId}
+          onCurrentSlideIdChange={(slideId) =>
+            onSetMissionState({
+              missionId: task.id,
+              newState: { tutorialSlideId: slideId }
+            })
+          }
+          onHide={() =>
+            onSetMissionState({
+              missionId: task.id,
+              newState: { tutorialStarted: false }
+            })
+          }
+        />
+      )}
     </div>
   );
 }
