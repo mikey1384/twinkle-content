@@ -10,12 +10,19 @@ const closeLabel = localize('close');
 TutorialModal.propTypes = {
   missionTitle: PropTypes.string.isRequired,
   tutorialId: PropTypes.number,
-  onHide: PropTypes.func.isRequired
+  onCurrentSlideIdChange: PropTypes.func.isRequired,
+  onHide: PropTypes.func.isRequired,
+  tutorialSlideId: PropTypes.number
 };
 
-export default function TutorialModal({ missionTitle, tutorialId, onHide }) {
+export default function TutorialModal({
+  missionTitle,
+  tutorialId,
+  tutorialSlideId,
+  onCurrentSlideIdChange,
+  onHide
+}) {
   const ModalBodyRef = useRef(null);
-
   return (
     <Modal modalStyle={{ height: 'CALC(100vh - 7rem)' }} large onHide={onHide}>
       <header>{missionTitle}</header>
@@ -28,8 +35,11 @@ export default function TutorialModal({ missionTitle, tutorialId, onHide }) {
         }}
       >
         <InteractiveContent
+          isOnModal
+          currentTutorialSlideId={tutorialSlideId}
           interactiveId={tutorialId}
           onGoBackToMission={onHide}
+          onCurrentSlideIdChange={onCurrentSlideIdChange}
           onScrollElementTo={handleScrollElementTo}
           onScrollElementToCenter={handleScrollElementToCenter}
         />

@@ -54,6 +54,13 @@ export default function MissionContainer({
         <TutorialModal
           missionTitle={mission.title}
           tutorialId={mission.tutorialId}
+          tutorialSlideId={mission.tutorialSlideId}
+          onCurrentSlideIdChange={(slideId) =>
+            onSetMissionState({
+              missionId: mission.id,
+              newState: { tutorialSlideId: slideId }
+            })
+          }
           onHide={() =>
             onSetMissionState({
               missionId: mission.id,

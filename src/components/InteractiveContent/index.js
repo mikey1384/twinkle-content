@@ -10,19 +10,31 @@ import { css } from '@emotion/css';
 
 InteractiveContent.propTypes = {
   autoFocus: PropTypes.bool,
+  currentTutorialSlideId: PropTypes.number,
   interactiveId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onGoBackToMission: PropTypes.func,
+  onCurrentSlideIdChange: PropTypes.func,
   onScrollElementTo: PropTypes.func.isRequired,
-  onScrollElementToCenter: PropTypes.func.isRequired
+  onScrollElementToCenter: PropTypes.func.isRequired,
+  isOnModal: PropTypes.bool
 };
 
 export default function InteractiveContent({
   autoFocus,
+  currentTutorialSlideId,
   interactiveId,
+  onCurrentSlideIdChange,
   onGoBackToMission,
   onScrollElementTo,
-  onScrollElementToCenter
+  onScrollElementToCenter,
+  isOnModal
 }) {
+  useEffect(() => {
+    if (currentTutorialSlideId) {
+      onScrollElementToCenter(SlideRefs.current[currentTutorialSlideId]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const checkInteractiveNumUpdates = useAppContext(
     (v) => v.requestHelpers.checkInteractiveNumUpdates
   );
@@ -235,12 +247,14 @@ export default function InteractiveContent({
               interactiveId={interactiveId}
               onExpandPath={slideObj[slideId].isFork ? handleExpandPath : null}
               onMoveSlide={handleMoveInteractiveSlide}
+              onCurrentSlideIdChange={onCurrentSlideIdChange}
               portalButton={slideObj[slideId].portalButton}
               slideId={slideId}
               slideObj={slideObj}
               isLastSlide={
                 index === displayedSlidesThatAreNotDeleted.length - 1
               }
+              isOnModal={isOnModal}
               onGoBackToMission={onGoBackToMission}
             />
           ))}
