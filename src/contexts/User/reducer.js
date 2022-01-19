@@ -125,7 +125,8 @@ export default function UserReducer(state, action) {
           ...state.userObj,
           [action.userId]: {
             ...(state.userObj[action.userId] || {}),
-            ...action.newState
+            ...action.newState,
+            contentId: action.userId
           }
         }
       };
