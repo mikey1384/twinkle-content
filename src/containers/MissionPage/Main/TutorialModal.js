@@ -43,6 +43,7 @@ export default function TutorialModal({
           onScrollElementTo={handleScrollElementTo}
           onScrollElementToCenter={handleScrollElementToCenter}
         />
+        <div style={{ padding: '7rem 0' }} />
       </main>
       <footer>
         <Button transparent style={{ marginRight: '0.7rem' }} onClick={onHide}>
