@@ -54,8 +54,12 @@ export default function MissionModule({
         <Grammar mission={mission} isRepeating={isRepeating} />
       )}
       {mission.missionType === 'email' && <Email taskId={mission.id} />}
-      {mission.missionType === 'github' && <GitHub task={mission} />}
-      {mission.missionType === 'replit' && <Replit task={mission} />}
+      {mission.missionType === 'github' && (
+        <GitHub task={mission} onSetMissionState={onSetMissionState} />
+      )}
+      {mission.missionType === 'replit' && (
+        <Replit task={mission} onSetMissionState={onSetMissionState} />
+      )}
       {mission.missionType === 'hello-world' && (
         <HelloWorld task={mission} onSetMissionState={onSetMissionState} />
       )}
@@ -66,7 +70,10 @@ export default function MissionModule({
         <WriteItYourself task={mission} onSetMissionState={onSetMissionState} />
       )}
       {mission.missionType === 'launch-the-website' && (
-        <LaunchTheWebsite task={mission} />
+        <LaunchTheWebsite
+          task={mission}
+          onSetMissionState={onSetMissionState}
+        />
       )}
     </div>
   );

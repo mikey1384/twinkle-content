@@ -28,7 +28,8 @@ export default function TaskContainer({
   }
   const mounted = useRef(true);
   const TutorialRef = useRef(null);
-  const { userId, isCreator } = useMyState();
+  const { userId, managementLevel } = useMyState();
+  const isManager = useMemo(() => managementLevel >= 2, [managementLevel]);
   const loadMission = useAppContext((v) => v.requestHelpers.loadMission);
   const loadMissionTypeIdHash = useAppContext(
     (v) => v.requestHelpers.loadMissionTypeIdHash
@@ -114,7 +115,7 @@ export default function TaskContainer({
   }, [currentTaskOrderIndex, taskOrder]);
 
   const prevTaskPassed = useMemo(() => {
-    if (isCreator || currentTaskOrderIndex === 0) {
+    if (isManager || currentTaskOrderIndex === 0) {
       return true;
     }
     if (currentTaskOrderIndex > 0 && myAttempts.loaded) {
@@ -126,7 +127,7 @@ export default function TaskContainer({
     }
     return false;
   }, [
-    isCreator,
+    isManager,
     currentTaskOrderIndex,
     missionTypeIdHash,
     myAttempts,
@@ -147,7 +148,7 @@ export default function TaskContainer({
 
   return (
     <div style={{ width: '100%' }}>
-      <GoBack isAtTop={!isCreator} bordered to="./" text={mission.title} />
+      <GoBack isAtTop={!isManager} bordered to="./" text={mission.title} />
       <Task
         style={{ width: '100%', marginTop: '2rem' }}
         task={task}

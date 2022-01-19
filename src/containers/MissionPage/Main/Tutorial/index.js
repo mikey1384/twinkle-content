@@ -5,6 +5,7 @@ import ViewTutorial from './ViewTutorial';
 import InteractiveContent from 'components/InteractiveContent';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { useMyState } from 'helpers/hooks';
+import { useMissionContext } from 'contexts';
 import { scrollElementTo, scrollElementToCenter } from 'helpers';
 
 Tutorial.propTypes = {
@@ -23,11 +24,21 @@ export default function Tutorial({
   innerRef
 }) {
   const { managementLevel } = useMyState();
+  const myAttempts = useMissionContext((v) => v.state.myAttempts);
   const canEditTutorial = useMemo(
     () => managementLevel >= 2,
     [managementLevel]
   );
   const divToCenter = useRef(null);
+  const myAttempt = useMemo(
+    () => myAttempts[mission.id],
+    [mission.id, myAttempts]
+  );
+  const tutorialButtonShownForNonManager = useMemo(
+    () => mission.tutorialIsPublished && myAttempt?.status !== 'pass',
+    [mission.tutorialIsPublished, myAttempt?.status]
+  );
+
   return (
     <ErrorBoundary
       className={className}
@@ -44,8 +55,7 @@ export default function Tutorial({
         <AddTutorial missionId={mission.id} missionTitle={mission.title} />
       )}
       {!!mission.tutorialId &&
-        (canEditTutorial ||
-          (mission.tutorialIsPublished && !mission.tutorialStarted)) && (
+        (canEditTutorial || tutorialButtonShownForNonManager) && (
           <ViewTutorial
             canEditTutorial={canEditTutorial}
             missionId={mission.id}
@@ -61,14 +71,15 @@ export default function Tutorial({
             }
           />
         )}
-      {!!mission.tutorialId && canEditTutorial && (
-        <InteractiveContent
-          onScrollElementTo={scrollElementTo}
-          onScrollElementToCenter={scrollElementToCenter}
-          interactiveId={mission.tutorialId}
-          onGoBackToMission={handleGoBackToMission}
-        />
-      )}
+      {!!mission.tutorialId &&
+        (canEditTutorial || myAttempt?.status === 'pass') && (
+          <InteractiveContent
+            onScrollElementTo={scrollElementTo}
+            onScrollElementToCenter={scrollElementToCenter}
+            interactiveId={mission.tutorialId}
+            onGoBackToMission={handleGoBackToMission}
+          />
+        )}
     </ErrorBoundary>
   );
 
