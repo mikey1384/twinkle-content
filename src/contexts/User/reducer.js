@@ -27,6 +27,7 @@ export default function UserReducer(state, action) {
           ...state.myState,
           ...action.data
         },
+        missions: action.data.state?.missions || {},
         loaded: true
       };
     case 'LOAD_USERS': {
