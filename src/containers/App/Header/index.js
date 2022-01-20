@@ -254,6 +254,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
     socket.on('peer_hung_up', handlePeerHungUp);
     socket.on('profile_pic_changed', handleProfilePicChange);
     socket.on('subject_changed', handleSubjectChange);
+    socket.on('user_type_updated', handleUserTypeUpdate);
     socket.on('username_changed', handleUsernameChange);
     socket.on('new_vocab_activity_received', handleReceiveVocabActivity);
 
@@ -304,6 +305,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
       socket.removeListener('peer_hung_up', handlePeerHungUp);
       socket.removeListener('profile_pic_changed', handleProfilePicChange);
       socket.removeListener('subject_changed', handleSubjectChange);
+      socket.removeListener('user_type_updated', handleUserTypeUpdate);
       socket.removeListener('username_changed', handleUsernameChange);
       socket.removeListener(
         'new_vocab_activity_received',
@@ -638,6 +640,10 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
       if (message.targetMessage?.userId === userId && message.rewardAmount) {
         handleUpdateMyXp();
       }
+    }
+
+    function handleUserTypeUpdate({ userId, userType, userTypeProps }) {
+      onSetUserState({ userId, newState: { userType, ...userTypeProps } });
     }
 
     function handleUsernameChange({ userId, newUsername }) {
