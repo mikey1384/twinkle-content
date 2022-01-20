@@ -730,6 +730,7 @@ function Message({
                         onShowSubjectMsgsModal={onShowSubjectMsgsModal}
                         socketConnected={socketConnected}
                         subjectId={subjectId}
+                        thumbUrl={thumbUrl}
                         targetMessage={targetMessage}
                         theme={currentChannel.theme}
                         userCanEditThis={userCanEditThis}
