@@ -252,6 +252,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
     socket.on('new_recommendation_posted', handleNewRecommendation);
     socket.on('peer_accepted', handlePeerAccepted);
     socket.on('peer_hung_up', handlePeerHungUp);
+    socket.on('profile_pic_changed', handleProfilePicChange);
     socket.on('subject_changed', handleSubjectChange);
     socket.on('username_changed', handleUsernameChange);
     socket.on('new_vocab_activity_received', handleReceiveVocabActivity);
@@ -301,6 +302,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
       );
       socket.removeListener('peer_accepted', handlePeerAccepted);
       socket.removeListener('peer_hung_up', handlePeerHungUp);
+      socket.removeListener('profile_pic_changed', handleProfilePicChange);
       socket.removeListener('subject_changed', handleSubjectChange);
       socket.removeListener('username_changed', handleUsernameChange);
       socket.removeListener(
@@ -603,6 +605,10 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
         delete membersOnCall.current[peerId];
         onHangUp({ peerId, memberId, iHungUp: memberId === userId });
       }
+    }
+
+    function handleProfilePicChange({ userId, profilePicUrl }) {
+      onSetUserState({ userId, newState: { profilePicUrl } });
     }
 
     async function handleReceiveMessage({ message, channel, newMembers }) {
