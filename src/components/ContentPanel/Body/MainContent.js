@@ -69,6 +69,9 @@ export default function MainContent({
   const onAddTagToContents = useContentContext(
     (v) => v.actions.onAddTagToContents
   );
+  const onSetMediaStarted = useContentContext(
+    (v) => v.actions.onSetMediaStarted
+  );
   const onEditContent = useContentContext((v) => v.actions.onEditContent);
   const onLoadTags = useContentContext((v) => v.actions.onLoadTags);
   const onSetIsEditing = useContentContext((v) => v.actions.onSetIsEditing);
@@ -173,6 +176,12 @@ export default function MainContent({
               filePath={filePath}
               fileSize={fileSize}
               thumbUrl={thumbUrl}
+              onMediaPause={() =>
+                onSetMediaStarted({ contentType, contentId, started: false })
+              }
+              onMediaPlay={() =>
+                onSetMediaStarted({ contentType, contentId, started: true })
+              }
               videoHeight="100%"
               style={{
                 display: 'flex',
