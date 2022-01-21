@@ -46,6 +46,9 @@ export default function UsernameText({
     (v) => v.user.state.userObj[user.id] || {}
   );
   const { userId, username, profilePicUrl, authLevel } = useMyState();
+  const onUpdateSelectedChannelId = useChatContext(
+    (v) => v.actions.onUpdateSelectedChannelId
+  );
   const onOpenNewChatTab = useChatContext((v) => v.actions.onOpenNewChatTab);
   const [dropdownContext, setDropdownContext] = useState(null);
   const menuShownRef = useRef(false);
@@ -235,7 +238,7 @@ export default function UsernameText({
   async function onLinkClick() {
     setDropdownContext(null);
     if (user.id !== userId) {
-      const { pathId } = await loadDMChannel({ recepient: user });
+      const { channelId, pathId } = await loadDMChannel({ recepient: user });
       if (mounted.current) {
         if (!pathId) {
           onOpenNewChatTab({
@@ -248,6 +251,7 @@ export default function UsernameText({
             }
           });
         }
+        onUpdateSelectedChannelId(channelId);
         history.push(pathId ? `/chat/${pathId}` : `/chat/new`);
       }
     }
