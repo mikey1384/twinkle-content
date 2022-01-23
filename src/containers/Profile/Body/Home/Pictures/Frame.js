@@ -45,8 +45,8 @@ export default function Frame({
         border: 1px solid ${Color.borderGray()};
         border-radius: ${borderRadius};
         width: ${frameWidth}%;
-        height: ${frameWidth}%;
-        padding-bottom: CALC(${frameWidth}% - 2px);
+        height: CALC(${frameWidth}% - 2px);
+        padding-bottom: CALC(${frameWidth}% - ${numPictures}px);
       `}
     >
       {imageUrl && (
@@ -62,7 +62,7 @@ export default function Frame({
             right: 0,
             width: '100%',
             height: '100%',
-            objectFit: 'contain',
+            objectFit: 'cover',
             objectPosition: 'center'
           }}
           onClick={() => setImageModalShown(true)}
