@@ -80,7 +80,7 @@ function Reaction({
     }
 
     async function handleLoadProfile(userId) {
-      if (!userObj[userId]) {
+      if (!userObj[userId]?.username) {
         const data = await loadProfile(userId);
         if (mounted.current) {
           onSetUserState({
@@ -153,7 +153,7 @@ function Reaction({
     setLoadingOtherUsers(true);
     setUserListModalShown(true);
     for (let reactedUserId of reactedUserIdsExcludingMine) {
-      if (!userObj[reactedUserId]) {
+      if (!userObj[reactedUserId]?.username) {
         const data = await loadProfile(reactedUserId);
         if (mounted.current) {
           onSetUserState({
