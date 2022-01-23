@@ -95,8 +95,8 @@ export default function Modal({
                 top: 1rem;
                 right: 1rem;
                 border: none;
-                width: 1.5rem;
-                height: 1.5rem;
+                width: 30px;
+                height: 30px;
                 cursor: pointer;
                 opacity: 0.5;
                 &:hover {
