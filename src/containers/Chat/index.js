@@ -271,6 +271,8 @@ function Chat({ onFileUpload }) {
       handleEnterVocabulary();
       prevPathId.current = currentPathId;
       return;
+    } else {
+      onUpdateChatType('default');
     }
     if (
       currentPathId &&
@@ -332,7 +334,7 @@ function Chat({ onFileUpload }) {
       loadingRef.current = false;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPathId, currentChannel.pathId, chatType]);
+  }, [currentPathId, currentChannel.pathId]);
 
   useEffect(() => {
     if (!currentPathId) {
