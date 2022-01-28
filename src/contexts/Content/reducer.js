@@ -851,7 +851,7 @@ export default function ContentReducer(state, action) {
               const replies = comment.replies || [];
               const targetReplyIndex = replies
                 .map((reply) => reply.id)
-                .indexOf(action.replyId);
+                .indexOf(action.loadMoreButtonId || action.replyId);
               return {
                 ...comment,
                 replies: [
