@@ -108,7 +108,8 @@ function Replies({
               handleLoadMoreRepliesOfReply({
                 lastReplyId: reply.lastReplyId,
                 rootReplyId: reply.rootReplyId,
-                commentId: reply.commentId
+                commentId: reply.commentId,
+                loadMoreButtonId: reply.id
               })
             }
           />
@@ -154,7 +155,8 @@ function Replies({
   async function handleLoadMoreRepliesOfReply({
     lastReplyId,
     rootReplyId,
-    commentId
+    commentId,
+    loadMoreButtonId
   }) {
     setLoadingMoreRepliesOfReply(true);
     const { replies, loadMoreButton } = await loadReplies({
@@ -170,7 +172,8 @@ function Replies({
         rootReplyId,
         contentId: parent.contentId,
         contentType: parent.contentType,
-        loadMoreButton
+        loadMoreButton,
+        loadMoreButtonId
       });
     }
     setLoadingMoreRepliesOfReply(false);

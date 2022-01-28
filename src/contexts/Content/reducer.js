@@ -858,7 +858,8 @@ export default function ContentReducer(state, action) {
                   ...replies
                     .filter(
                       (reply, index) =>
-                        index <= targetReplyIndex && !reply.isLoadMoreButton
+                        index <= targetReplyIndex &&
+                        reply.id !== action.loadMoreButtonId
                     )
                     .map((reply) =>
                       reply.id ===
@@ -887,7 +888,7 @@ export default function ContentReducer(state, action) {
                   ...replies.filter(
                     (reply, index) =>
                       index > targetReplyIndex &&
-                      (index > targetReplyIndex + 1 || !reply.isLoadMoreButton)
+                      reply.id !== action.loadMoreButtonId
                   )
                 ]
               };

@@ -230,7 +230,8 @@ export default function ContentActions(dispatch) {
       rootReplyId,
       contentType,
       contentId,
-      loadMoreButton
+      loadMoreButton,
+      loadMoreButtonId
     }) {
       return dispatch({
         type: 'LOAD_REPLIES_OF_REPLY',
@@ -240,7 +241,8 @@ export default function ContentActions(dispatch) {
         rootReplyId,
         contentType,
         contentId,
-        loadMoreButton
+        loadMoreButton,
+        loadMoreButtonId
       });
     },
     onLoadSubjectRepliesOfReply({
