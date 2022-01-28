@@ -884,7 +884,10 @@ export default function ContentReducer(state, action) {
                         }
                       ]
                     : []),
-                  ...replies.filter((reply, index) => index > targetReplyIndex)
+                  ...replies.filter(
+                    (reply, index) =>
+                      index > targetReplyIndex && !reply.isLoadMoreButton
+                  )
                 ]
               };
             }
