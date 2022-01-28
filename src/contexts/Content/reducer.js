@@ -886,7 +886,8 @@ export default function ContentReducer(state, action) {
                     : []),
                   ...replies.filter(
                     (reply, index) =>
-                      index > targetReplyIndex && !reply.isLoadMoreButton
+                      index > targetReplyIndex &&
+                      (index > targetReplyIndex + 1 || !reply.isLoadMoreButton)
                   )
                 ]
               };
