@@ -107,7 +107,8 @@ function Replies({
             onClick={() =>
               handleLoadMoreRepliesOfReply({
                 lastReplyId: reply.lastReplyId,
-                rootReplyId: reply.rootReplyId
+                rootReplyId: reply.rootReplyId,
+                commentId: reply.commentId
               })
             }
           />
@@ -150,7 +151,11 @@ function Replies({
     }
   }
 
-  async function handleLoadMoreRepliesOfReply({ lastReplyId, rootReplyId }) {
+  async function handleLoadMoreRepliesOfReply({
+    lastReplyId,
+    rootReplyId,
+    commentId
+  }) {
     setLoadingMoreRepliesOfReply(true);
     const { replies, loadMoreButton } = await loadReplies({
       lastReplyId,
@@ -160,13 +165,15 @@ function Replies({
     if (replies.length > 0) {
       onLoadRepliesOfReply({
         replies,
-        commentId: rootReplyId,
+        commentId,
         replyId: lastReplyId,
+        rootReplyId,
         contentId: parent.contentId,
         contentType: parent.contentType,
         loadMoreButton
       });
     }
+    setLoadingMoreRepliesOfReply(false);
   }
 
   function handleDeleteReply(replyId) {

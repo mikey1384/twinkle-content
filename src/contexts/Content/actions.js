@@ -227,6 +227,7 @@ export default function ContentActions(dispatch) {
       replies,
       commentId,
       replyId,
+      rootReplyId,
       contentType,
       contentId,
       loadMoreButton
@@ -236,6 +237,7 @@ export default function ContentActions(dispatch) {
         replies,
         commentId,
         replyId,
+        rootReplyId,
         contentType,
         contentId,
         loadMoreButton

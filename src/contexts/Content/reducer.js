@@ -875,7 +875,8 @@ export default function ContentReducer(state, action) {
                         {
                           id: uuidv1(),
                           userId: uuidv1(),
-                          rootReplyId: action.replyId,
+                          commentId: action.commentId,
+                          rootReplyId: action.rootReplyId || action.replyId,
                           lastReplyId:
                             action.replies[action.replies.length - 1].id,
                           isLoadMoreButton: true
