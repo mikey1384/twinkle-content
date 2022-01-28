@@ -1,4 +1,5 @@
 import { defaultContentState } from 'constants/defaultValues';
+import { v1 as uuidv1 } from 'uuid';
 
 export default function ContentReducer(state, action) {
   const contentKey =
@@ -855,7 +856,10 @@ export default function ContentReducer(state, action) {
                 ...comment,
                 replies: [
                   ...replies
-                    .filter((reply, index) => index <= targetReplyIndex)
+                    .filter(
+                      (reply, index) =>
+                        index <= targetReplyIndex && !reply.isLoadMoreButton
+                    )
                     .map((reply) =>
                       reply.id === action.replyId
                         ? {
@@ -866,7 +870,22 @@ export default function ContentReducer(state, action) {
                         : reply
                     ),
                   ...action.replies,
-                  ...replies.filter((reply, index) => index > targetReplyIndex)
+                  ...(action.loadMoreButton
+                    ? [
+                        {
+                          id: uuidv1(),
+                          userId: uuidv1(),
+                          rootReplyId: action.replyId,
+                          lastReplyId:
+                            action.replies[action.replies.length - 1].id,
+                          isLoadMoreButton: true
+                        }
+                      ]
+                    : []),
+                  ...replies.filter(
+                    (reply, index) =>
+                      index > targetReplyIndex && !reply.isLoadMoreButton
+                  )
                 ]
               };
             }

@@ -604,8 +604,9 @@ function Reply({
     ReplyInputAreaRef.current.focus();
     setLoadingReplies(true);
     if (reply.numReplies > 0) {
-      const { replies } = await loadReplies({
-        commentId: reply.id
+      const { replies, loadMoreButton } = await loadReplies({
+        commentId: reply.id,
+        isReverse: true
       });
       if (replies.length > 0) {
         onLoadRepliesOfReply({
@@ -613,7 +614,8 @@ function Reply({
           commentId: reply.commentId,
           replyId: reply.id,
           contentId: parent.contentId,
-          contentType: parent.contentType
+          contentType: parent.contentType,
+          loadMoreButton
         });
       }
     }

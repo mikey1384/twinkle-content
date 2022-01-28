@@ -474,12 +474,18 @@ export default function SubjectPanel({
               onLoadMoreReplies={(data) =>
                 onLoadMoreReplies({ ...data, subjectId })
               }
-              onLoadRepliesOfReply={({ replies, commentId, replyId }) =>
+              onLoadRepliesOfReply={({
+                replies,
+                commentId,
+                replyId,
+                loadMoreButton
+              }) =>
                 onLoadRepliesOfReply({
                   replies,
                   commentId,
                   replyId,
-                  subjectId
+                  subjectId,
+                  loadMoreButton
                 })
               }
               onReplySubmit={onUploadReply}
