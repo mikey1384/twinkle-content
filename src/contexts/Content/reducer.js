@@ -861,7 +861,8 @@ export default function ContentReducer(state, action) {
                         index <= targetReplyIndex && !reply.isLoadMoreButton
                     )
                     .map((reply) =>
-                      reply.id === action.replyId
+                      reply.id ===
+                      (action.rootReplyId ? action.rootReplyId : action.replyId)
                         ? {
                             ...reply,
                             isExpanded: true,
