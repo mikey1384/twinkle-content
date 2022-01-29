@@ -981,13 +981,12 @@ function MessagesContainer({
           />
         )}
         <div
-          className={css`
-            height: 100%;
-            display: flex;
-            flex-direction: column-reverse;
-            overflow-y: scroll;
-            -webkit-overflow-scrolling: touch;
-          `}
+          style={{
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column-reverse',
+            overflowY: 'scroll'
+          }}
           ref={MessagesRef}
         >
           {loadingAnimationShown ? (
