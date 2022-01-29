@@ -15,7 +15,7 @@ export default function Textarea({
   className,
   innerRef,
   type = 'text',
-  maxRows = 25,
+  maxRows = 20,
   ...props
 }) {
   return (
