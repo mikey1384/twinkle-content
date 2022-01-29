@@ -69,6 +69,7 @@ export default function UserReducer(state, action) {
     case 'LOGOUT_AND_OPEN_SIGNIN_MODAL':
       return {
         ...state,
+        signinModalShown: true,
         myState: initialMyState
       };
     case 'OPEN_SIGNIN_MODAL':
