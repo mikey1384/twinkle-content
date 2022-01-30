@@ -2,9 +2,9 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Loading from 'components/Loading';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FilterBar from 'components/FilterBar';
-import RoundList from 'components/RoundList';
 import MyRank from 'components/MyRank';
-import RankingsListItem from 'components/RankingsListItem';
+import Top30 from './Top30';
+import All from './All';
 import { Color, borderRadius } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
 import { useNotiContext } from 'contexts';
@@ -88,11 +88,13 @@ export default function Rankings() {
         </div>
       )}
       {rankingsLoaded && users.length > 0 && (
-        <RoundList style={{ marginTop: 0 }}>
-          {users.map((user) => (
-            <RankingsListItem key={user.id} user={user} myId={userId} />
-          ))}
-        </RoundList>
+        <>
+          {allSelected ? (
+            <All users={users} myId={userId} />
+          ) : (
+            <Top30 users={users} myId={userId} />
+          )}
+        </>
       )}
     </ErrorBoundary>
   );
