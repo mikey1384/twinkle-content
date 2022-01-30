@@ -1,18 +1,16 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Loading from 'components/Loading';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FilterBar from 'components/FilterBar';
 import MyRank from 'components/MyRank';
 import Top30 from './Top30';
 import All from './All';
-import { Color, borderRadius } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
 import { useNotiContext } from 'contexts';
 import localize from 'constants/localize';
 
 const myRankingLabel = localize('myRanking');
 const top30Label = localize('top30');
-const notRankedDescriptionLabel = localize('notRankedDescription');
 
 export default function Rankings() {
   const { rank, twinkleXP, userId } = useMyState();
@@ -35,11 +33,6 @@ export default function Rankings() {
   useEffect(() => {
     setAllSelected(!!userId);
   }, [userId]);
-
-  const users = useMemo(
-    () => (allSelected ? allRanks : top30s),
-    [allRanks, allSelected, top30s]
-  );
 
   return (
     <ErrorBoundary>
@@ -75,24 +68,12 @@ export default function Rankings() {
       {!!rankingsLoaded && allSelected && !!userId && (
         <MyRank myId={userId} rank={rank} twinkleXP={twinkleXP} />
       )}
-      {rankingsLoaded && allSelected && users.length === 0 && !!userId && (
-        <div
-          style={{
-            background: '#fff',
-            borderRadius,
-            padding: '1rem',
-            border: `1px solid ${Color.borderGray()}`
-          }}
-        >
-          {notRankedDescriptionLabel}
-        </div>
-      )}
-      {rankingsLoaded && users.length > 0 && (
+      {rankingsLoaded && (
         <>
           {allSelected ? (
-            <All users={users} myId={userId} />
+            <All allRanks={allRanks} myId={userId} />
           ) : (
-            <Top30 users={users} myId={userId} />
+            <Top30 top30s={top30s} myId={userId} />
           )}
         </>
       )}

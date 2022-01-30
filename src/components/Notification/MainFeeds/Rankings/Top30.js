@@ -4,14 +4,15 @@ import RoundList from 'components/RoundList';
 import RankingsListItem from 'components/RankingsListItem';
 
 Top30.propTypes = {
-  users: PropTypes.array,
+  top30s: PropTypes.array,
   myId: PropTypes.number
 };
 
-export default function Top30({ users, myId }) {
+export default function Top30({ top30s, myId }) {
+  if (top30s.length === 0) return null;
   return (
     <RoundList style={{ marginTop: 0 }}>
-      {users.map((user) => (
+      {top30s.map((user) => (
         <RankingsListItem key={user.id} user={user} myId={myId} />
       ))}
     </RoundList>
