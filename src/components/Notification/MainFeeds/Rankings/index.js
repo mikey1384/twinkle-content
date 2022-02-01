@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import Loading from 'components/Loading';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FilterBar from 'components/FilterBar';
-import MyRank from 'components/MyRank';
 import Top30 from './Top30';
 import All from './All';
 import { useMyState } from 'helpers/hooks';
@@ -13,11 +12,11 @@ const myRankingLabel = localize('myRanking');
 const top30Label = localize('top30');
 
 export default function Rankings() {
+  const [allSelected, setAllSelected] = useState(true);
   const { rank, twinkleXP, userId } = useMyState();
   const allRanks = useNotiContext((v) => v.state.allRanks);
   const top30s = useNotiContext((v) => v.state.top30s);
   const rankingsLoaded = useNotiContext((v) => v.state.rankingsLoaded);
-  const [allSelected, setAllSelected] = useState(true);
   const userChangedTab = useRef(false);
   const mounted = useRef(true);
   const prevId = useRef(userId);
@@ -65,13 +64,15 @@ export default function Rankings() {
         </FilterBar>
       )}
       {rankingsLoaded === false && <Loading />}
-      {!!rankingsLoaded && allSelected && !!userId && (
-        <MyRank myId={userId} rank={rank} twinkleXP={twinkleXP} />
-      )}
       {rankingsLoaded && (
         <>
           {allSelected ? (
-            <All allRanks={allRanks} myId={userId} />
+            <All
+              rank={rank}
+              twinkleXP={twinkleXP}
+              allRanks={allRanks}
+              myId={userId}
+            />
           ) : (
             <Top30 top30s={top30s} myId={userId} />
           )}

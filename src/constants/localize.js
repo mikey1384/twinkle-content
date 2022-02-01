@@ -88,6 +88,10 @@ const languageObj = {
     en: 'All Posts',
     kr: '모든 게시물'
   },
+  allTime: {
+    en: 'All Time',
+    kr: '역대'
+  },
   approved: {
     en: 'Approved',
     kr: '승인됨'
@@ -1399,6 +1403,10 @@ const languageObj = {
   thereMustBeAtLeastTwoChoices: {
     en: 'There must be at least two choices',
     kr: '최소 두 개의 선택지를 입력해주세요'
+  },
+  thisMonth: {
+    en: 'This Month',
+    kr: '이번 달'
   },
   toAccessAllFeatures: {
     en: 'to access all features',

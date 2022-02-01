@@ -1,18 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import RoundList from 'components/RoundList';
 import RankingsListItem from 'components/RankingsListItem';
 import localize from 'constants/localize';
+import FilterBar from 'components/FilterBar';
+import MyRank from 'components/MyRank';
 import { Color, borderRadius } from 'constants/css';
 
+const allTimeLabel = localize('allTime');
 const notRankedDescriptionLabel = localize('notRankedDescription');
+const thisMonthLabel = localize('thisMonth');
 
 All.propTypes = {
   allRanks: PropTypes.array,
-  myId: PropTypes.number
+  myId: PropTypes.number,
+  rank: PropTypes.number,
+  twinkleXP: PropTypes.number
 };
 
-export default function All({ allRanks, myId }) {
+export default function All({ allRanks, myId, rank, twinkleXP }) {
+  const [thisMonthSelected, setThisMonthSelected] = useState(true);
   const loggedIn = !!myId;
   return allRanks.length === 0 ? (
     loggedIn ? (
@@ -28,10 +35,37 @@ export default function All({ allRanks, myId }) {
       </div>
     ) : null
   ) : (
-    <RoundList style={{ marginTop: 0 }}>
-      {allRanks.map((user) => (
-        <RankingsListItem key={user.id} user={user} myId={myId} />
-      ))}
-    </RoundList>
+    <>
+      <FilterBar
+        bordered
+        style={{
+          height: '4.5rem',
+          fontSize: '1.6rem'
+        }}
+      >
+        <nav
+          className={thisMonthSelected ? 'active' : ''}
+          onClick={() => {
+            setThisMonthSelected(true);
+          }}
+        >
+          {thisMonthLabel}
+        </nav>
+        <nav
+          className={thisMonthSelected ? '' : 'active'}
+          onClick={() => {
+            setThisMonthSelected(false);
+          }}
+        >
+          {allTimeLabel}
+        </nav>
+      </FilterBar>
+      {loggedIn && <MyRank myId={myId} rank={rank} twinkleXP={twinkleXP} />}
+      <RoundList style={{ marginTop: 0 }}>
+        {allRanks.map((user) => (
+          <RankingsListItem key={user.id} user={user} myId={myId} />
+        ))}
+      </RoundList>
+    </>
   );
 }
