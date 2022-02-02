@@ -10,7 +10,7 @@ import { Color, borderRadius } from 'constants/css';
 const noRankersThisMonthLabel = localize('noRankersThisMonth');
 const myRankingLabel = localize('myRanking');
 const top30Label = localize('top30');
-const notRankedDescriptionLabel = localize('notRankedDescription');
+const notRankedForThisMonthLabel = localize('notRankedForThisMonth');
 
 ThisMonth.propTypes = {
   allMonthly: PropTypes.array,
@@ -74,7 +74,7 @@ export default function ThisMonth({
           }}
         >
           {myMonthlyXP === 0
-            ? notRankedDescriptionLabel
+            ? notRankedForThisMonthLabel
             : noRankersThisMonthLabel}
         </div>
       ) : (
