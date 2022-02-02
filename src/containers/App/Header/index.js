@@ -878,8 +878,8 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
   }
 
   async function handleUpdateMyXp() {
-    const { all, top30s } = await loadRankings();
-    onGetRanks({ all, top30s });
+    const { all, top30s, allMonthly, top30sMonthly } = await loadRankings();
+    onGetRanks({ all, top30s, allMonthly, top30sMonthly });
     const { xp, rank } = await loadXP();
     onSetUserState({ userId, newState: { twinkleXP: xp, rank } });
   }

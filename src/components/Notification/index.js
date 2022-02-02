@@ -248,9 +248,9 @@ function Notification({ className, location, style }) {
     }
   }
   async function fetchRankings() {
-    const { all, top30s } = await loadRankings();
+    const { all, top30s, allMonthly, top30sMonthly } = await loadRankings();
     if (mounted.current) {
-      onGetRanks({ all, top30s });
+      onGetRanks({ all, top30s, allMonthly, top30sMonthly });
     }
   }
 }

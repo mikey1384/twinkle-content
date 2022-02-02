@@ -16,6 +16,8 @@ export default function Rankings() {
   const { rank, twinkleXP, userId } = useMyState();
   const allRanks = useNotiContext((v) => v.state.allRanks);
   const top30s = useNotiContext((v) => v.state.top30s);
+  const allMonthly = useNotiContext((v) => v.state.allMonthly);
+  const top30sMonthly = useNotiContext((v) => v.state.top30sMonthly);
   const rankingsLoaded = useNotiContext((v) => v.state.rankingsLoaded);
   const userChangedTab = useRef(false);
   const mounted = useRef(true);
@@ -71,10 +73,15 @@ export default function Rankings() {
               rank={rank}
               twinkleXP={twinkleXP}
               allRanks={allRanks}
+              allMonthly={allMonthly}
               myId={userId}
             />
           ) : (
-            <Top30 top30s={top30s} myId={userId} />
+            <Top30
+              top30s={top30s}
+              top30sMonthly={top30sMonthly}
+              myId={userId}
+            />
           )}
         </>
       )}
