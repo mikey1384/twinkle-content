@@ -5,11 +5,12 @@ import RankingsListItem from 'components/RankingsListItem';
 import localize from 'constants/localize';
 import FilterBar from 'components/FilterBar';
 import MyRank from 'components/MyRank';
+import moment from 'moment';
 import { Color, borderRadius } from 'constants/css';
 
+const monthLabel = moment().format('MMMM');
 const allTimeLabel = localize('allTime');
 const notRankedDescriptionLabel = localize('notRankedDescription');
-const thisMonthLabel = localize('thisMonth');
 
 All.propTypes = {
   allMonthly: PropTypes.array,
@@ -56,7 +57,7 @@ export default function All({ allRanks, allMonthly, myId, rank, twinkleXP }) {
             setThisMonthSelected(true);
           }}
         >
-          {thisMonthLabel}
+          {monthLabel}
         </nav>
         <nav
           className={thisMonthSelected ? '' : 'active'}
