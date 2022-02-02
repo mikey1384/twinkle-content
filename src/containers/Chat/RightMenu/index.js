@@ -52,8 +52,26 @@ function RightMenu({
   }, [twinkleXP]);
 
   const handleLoadRankings = useCallback(async () => {
-    const { all, top30s, allMonthly, top30sMonthly } = await loadRankings();
-    onGetRanks({ all, top30s, allMonthly, top30sMonthly });
+    const {
+      all,
+      top30s,
+      allMonthly,
+      top30sMonthly,
+      myMonthlyRank,
+      myAllTimeRank,
+      myAllTimeXP,
+      myMonthlyXP
+    } = await loadRankings();
+    onGetRanks({
+      all,
+      top30s,
+      allMonthly,
+      top30sMonthly,
+      myMonthlyRank,
+      myAllTimeRank,
+      myAllTimeXP,
+      myMonthlyXP
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

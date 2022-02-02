@@ -16,11 +16,21 @@ All.propTypes = {
   allMonthly: PropTypes.array,
   allRanks: PropTypes.array,
   myId: PropTypes.number,
-  rank: PropTypes.number,
-  twinkleXP: PropTypes.number
+  myMonthlyRank: PropTypes.number,
+  myAllTimeRank: PropTypes.number,
+  myAllTimeXP: PropTypes.number,
+  myMonthlyXP: PropTypes.number
 };
 
-export default function All({ allRanks, allMonthly, myId, rank, twinkleXP }) {
+export default function All({
+  allRanks,
+  allMonthly,
+  myId,
+  myMonthlyRank,
+  myAllTimeRank,
+  myMonthlyXP,
+  myAllTimeXP
+}) {
   const [thisMonthSelected, setThisMonthSelected] = useState(true);
   const users = useMemo(() => {
     if (thisMonthSelected) {
@@ -28,6 +38,18 @@ export default function All({ allRanks, allMonthly, myId, rank, twinkleXP }) {
     }
     return allRanks;
   }, [allMonthly, allRanks, thisMonthSelected]);
+  const rank = useMemo(() => {
+    if (thisMonthSelected) {
+      return myMonthlyRank;
+    }
+    return myAllTimeRank;
+  }, [myAllTimeRank, myMonthlyRank, thisMonthSelected]);
+  const xp = useMemo(() => {
+    if (thisMonthSelected) {
+      return myMonthlyXP;
+    }
+    return myAllTimeXP;
+  }, [myAllTimeXP, myMonthlyXP, thisMonthSelected]);
   const loggedIn = !!myId;
   return allRanks.length === 0 ? (
     loggedIn ? (
@@ -68,7 +90,7 @@ export default function All({ allRanks, allMonthly, myId, rank, twinkleXP }) {
           {allTimeLabel}
         </nav>
       </FilterBar>
-      {loggedIn && <MyRank myId={myId} rank={rank} twinkleXP={twinkleXP} />}
+      {loggedIn && <MyRank myId={myId} rank={rank} twinkleXP={xp} />}
       <RoundList style={{ marginTop: 0 }}>
         {users.map((user) => (
           <RankingsListItem key={user.id} user={user} myId={myId} />

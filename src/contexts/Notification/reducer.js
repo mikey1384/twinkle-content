@@ -79,6 +79,10 @@ export default function NotiReducer(state, action) {
         top30s: action.top30s,
         allMonthly: action.allMonthly,
         top30sMonthly: action.top30sMonthly,
+        myMonthlyRank: action.myMonthlyRank,
+        myAllTimeRank: action.myAllTimeRank,
+        myAllTimeXP: action.myAllTimeXP,
+        myMonthlyXP: action.myMonthlyXP,
         rankingsLoaded: true
       };
     case 'RESET_NUM_NEW_POSTS':

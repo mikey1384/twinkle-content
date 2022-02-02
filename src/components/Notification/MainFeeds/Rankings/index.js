@@ -13,12 +13,16 @@ const top30Label = localize('top30');
 
 export default function Rankings() {
   const [allSelected, setAllSelected] = useState(true);
-  const { rank, twinkleXP, userId } = useMyState();
+  const { userId } = useMyState();
   const allRanks = useNotiContext((v) => v.state.allRanks);
   const top30s = useNotiContext((v) => v.state.top30s);
   const allMonthly = useNotiContext((v) => v.state.allMonthly);
   const top30sMonthly = useNotiContext((v) => v.state.top30sMonthly);
   const rankingsLoaded = useNotiContext((v) => v.state.rankingsLoaded);
+  const myMonthlyRank = useNotiContext((v) => v.state.myMonthlyRank);
+  const myAllTimeRank = useNotiContext((v) => v.state.myAllTimeRank);
+  const myMonthlyXP = useNotiContext((v) => v.state.myMonthlyXP);
+  const myAllTimeXP = useNotiContext((v) => v.state.myAllTimeXP);
   const userChangedTab = useRef(false);
   const mounted = useRef(true);
   const prevId = useRef(userId);
@@ -70,8 +74,10 @@ export default function Rankings() {
         <>
           {allSelected ? (
             <All
-              rank={rank}
-              twinkleXP={twinkleXP}
+              myAllTimeRank={myAllTimeRank}
+              myMonthlyRank={myMonthlyRank}
+              myAllTimeXP={myAllTimeXP}
+              myMonthlyXP={myMonthlyXP}
               allRanks={allRanks}
               allMonthly={allMonthly}
               myId={userId}
