@@ -901,11 +901,11 @@ const languageObj = {
     kr: 'XP를 획득하셔서 이번달 리더보드에 이름을 올리세요'
   },
   notRankedDescription: {
-    en: 'You are not ranked. To get ranked, earn XP by completing missions, watching XP videos, or leaving comments',
+    en: `Earn XP by completing missions, watching XP videos, or leaving comments to join the leaderboard`,
     kr: '현재 XP가 없습니다. 미션을 완료하거나, XP 동영상을 시청하거나, 댓글을 남기시면 XP를 보상받으실 수 있습니다'
   },
   notRankedForThisMonth: {
-    en: 'You are not ranked for this month. To get ranked, earn XP by completing missions, watching XP videos, or leaving comments',
+    en: `Earn XP by completing missions, watching XP videos, or leaving comments to join this month's leaderboard`,
     kr: '이번달 랭킹이 미배정된 상태입니다. XP를 획득하시고 이번달 랭킹을 배정받으세요'
   },
   notableActivities: {
