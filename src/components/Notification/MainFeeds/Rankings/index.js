@@ -2,17 +2,18 @@ import React, { useEffect, useRef, useState } from 'react';
 import Loading from 'components/Loading';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FilterBar from 'components/FilterBar';
-import Top30 from './Top30';
-import All from './All';
+import ThisMonth from './ThisMonth';
+import AllTime from './AllTime';
 import { useMyState } from 'helpers/hooks';
 import { useNotiContext } from 'contexts';
 import localize from 'constants/localize';
+import moment from 'moment';
 
-const myRankingLabel = localize('myRanking');
-const top30Label = localize('top30');
+const monthLabel = moment().format('MMMM');
+const allTimeLabel = localize('allTime');
 
 export default function Rankings() {
-  const [allSelected, setAllSelected] = useState(true);
+  const [thisMonthSelected, setThisMonthSelected] = useState(true);
   const { userId } = useMyState();
   const allRanks = useNotiContext((v) => v.state.allRanks);
   const top30s = useNotiContext((v) => v.state.top30s);
@@ -30,13 +31,13 @@ export default function Rankings() {
   useEffect(() => {
     userChangedTab.current = false;
     if (!rankingsLoaded && mounted.current) {
-      setAllSelected(!!userId);
+      setThisMonthSelected(!!userId);
     }
     prevId.current = userId;
   }, [userId, rankingsLoaded]);
 
   useEffect(() => {
-    setAllSelected(!!userId);
+    setThisMonthSelected(!!userId);
   }, [userId]);
 
   return (
@@ -50,42 +51,42 @@ export default function Rankings() {
           }}
         >
           <nav
-            className={allSelected ? 'active' : ''}
+            className={thisMonthSelected ? 'active' : ''}
             onClick={() => {
               userChangedTab.current = true;
-              setAllSelected(true);
+              setThisMonthSelected(true);
             }}
           >
-            {myRankingLabel}
+            {monthLabel}
           </nav>
           <nav
-            className={allSelected ? '' : 'active'}
+            className={thisMonthSelected ? '' : 'active'}
             onClick={() => {
               userChangedTab.current = true;
-              setAllSelected(false);
+              setThisMonthSelected(false);
             }}
           >
-            {top30Label}
+            {allTimeLabel}
           </nav>
         </FilterBar>
       )}
       {rankingsLoaded === false && <Loading />}
       {rankingsLoaded && (
         <>
-          {allSelected ? (
-            <All
-              myAllTimeRank={myAllTimeRank}
-              myMonthlyRank={myMonthlyRank}
-              myAllTimeXP={myAllTimeXP}
-              myMonthlyXP={myMonthlyXP}
-              allRanks={allRanks}
+          {thisMonthSelected ? (
+            <ThisMonth
               allMonthly={allMonthly}
+              top30sMonthly={top30sMonthly}
+              myMonthlyRank={myMonthlyRank}
+              myMonthlyXP={myMonthlyXP}
               myId={userId}
             />
           ) : (
-            <Top30
+            <AllTime
+              allRanks={allRanks}
               top30s={top30s}
-              top30sMonthly={top30sMonthly}
+              myAllTimeRank={myAllTimeRank}
+              myAllTimeXP={myAllTimeXP}
               myId={userId}
             />
           )}
