@@ -7,6 +7,7 @@ import FilterBar from 'components/FilterBar';
 import MyRank from 'components/MyRank';
 import { Color, borderRadius } from 'constants/css';
 
+const noRankersThisMonthLabel = localize('noRankersThisMonth');
 const myRankingLabel = localize('myRanking');
 const top30Label = localize('top30');
 const notRankedDescriptionLabel = localize('notRankedDescription');
@@ -72,7 +73,9 @@ export default function ThisMonth({
             border: `1px solid ${Color.borderGray()}`
           }}
         >
-          {notRankedDescriptionLabel}
+          {myMonthlyXP === 0
+            ? notRankedDescriptionLabel
+            : noRankersThisMonthLabel}
         </div>
       ) : (
         <RoundList style={{ marginTop: 0 }}>

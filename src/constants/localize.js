@@ -896,6 +896,10 @@ const languageObj = {
     en: 'There are no newly deleted posts',
     kr: '새로이 삭제된 게시물이 없습니다'
   },
+  noRankersThisMonth: {
+    en: `Be the first to join this month's leaderboard by earning XP`,
+    kr: 'XP를 획득하셔서 이번달 리더보드에 이름을 올리세요'
+  },
   notRankedDescription: {
     en: 'You are not ranked. To get ranked, earn XP by completing missions, watching XP videos, or leaving comments',
     kr: '현재 XP가 없습니다. 미션을 완료하거나, XP 동영상을 시청하거나, 댓글을 남기시면 XP를 보상받으실 수 있습니다'
