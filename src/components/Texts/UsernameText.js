@@ -56,7 +56,7 @@ export default function UsernameText({
     if (!twinkleXP && !user.twinkleXP) {
       return null;
     }
-    return addCommasToNumber(twinkleXP || user.twinkleXP);
+    return addCommasToNumber(user.twinkleXP || twinkleXP);
   }, [twinkleXP, user.twinkleXP]);
   const userRank = useMemo(() => {
     return rank || user.rank;
