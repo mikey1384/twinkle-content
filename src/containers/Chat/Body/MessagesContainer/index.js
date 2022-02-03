@@ -155,10 +155,20 @@ function MessagesContainer({
   const prevChannelId = useRef(null);
   const prevTopMessageId = useRef(null);
   const prevScrollPosition = useRef(null);
-  const messages = useMemo(
-    () => messageIds.map((messageId) => messagesObj[messageId] || {}),
-    [messageIds, messagesObj]
-  );
+  const messages = useMemo(() => {
+    const result = [];
+    const dupe = {};
+    for (let messageId of messageIds) {
+      if (!dupe[messageId]) {
+        const message = messagesObj[messageId];
+        if (message) {
+          result.push(message);
+          dupe[messageId] = true;
+        }
+      }
+    }
+    return result;
+  }, [messageIds, messagesObj]);
 
   const favorited = useMemo(() => {
     return allFavoriteChannelIds[selectedChannelId];
