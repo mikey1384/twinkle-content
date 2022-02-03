@@ -2,10 +2,10 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import DropdownList from 'components/DropdownList';
 import { Color } from 'constants/css';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useChatContext } from 'contexts';
-import { isMobile } from 'helpers';
+import { isMobile, getSectionFromPathname } from 'helpers';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import localize from 'constants/localize';
 
@@ -31,8 +31,13 @@ export default function UsernameText({
   user = {},
   wordBreakEnabled
 }) {
-  const mounted = useRef(true);
   const history = useHistory();
+  const location = useLocation();
+  const usingChat = useMemo(
+    () => getSectionFromPathname(location?.pathname)?.section === 'chat',
+    [location?.pathname]
+  );
+  const mounted = useRef(true);
   const coolDownRef = useRef(null);
   const showTimerRef = useRef(null);
   const hideTimerRef = useRef(null);
@@ -251,7 +256,9 @@ export default function UsernameText({
             }
           });
         }
-        onUpdateSelectedChannelId(channelId);
+        if (!usingChat) {
+          onUpdateSelectedChannelId(channelId);
+        }
         history.push(pathId ? `/chat/${pathId}` : `/chat/new`);
       }
     }
