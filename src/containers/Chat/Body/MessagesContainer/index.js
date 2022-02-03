@@ -1019,7 +1019,7 @@ function MessagesContainer({
               </div>
               {messages.map((message, index) => (
                 <Message
-                  key={messageIds[index]}
+                  key={message.id || message.tempMessageId}
                   channelId={selectedChannelId}
                   channelName={channelName}
                   chessCountdownNumber={chessCountdownNumber}
