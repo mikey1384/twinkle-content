@@ -64,7 +64,7 @@ export default function UsernameText({
     return addCommasToNumber(user.twinkleXP || twinkleXP);
   }, [twinkleXP, user.twinkleXP]);
   const userRank = useMemo(() => {
-    return rank || user.rank;
+    return user.rank || rank;
   }, [rank, user.rank]);
 
   useEffect(() => {
