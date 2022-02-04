@@ -1,6 +1,6 @@
 export const Color = {
-  blue: (opacity = 1) => `rgba(20,130,186,${opacity})`,
-  lightBlue: (opacity = 1) => `rgba(117,202,235,${opacity})`,
+  blue: (opacity = 1) => `rgba(5,110,178,${opacity})`,
+  lightBlue: (opacity = 1) => `rgba(117,192,255,${opacity})`,
   darkBlue: (opacity = 1) => `rgba(0,70,195,${opacity})`,
   logoBlue: (opacity = 1) => `rgba(75, 155, 225,${opacity})`,
   oceanBlue: (opacity = 1) => `rgba(33,150,243,${opacity})`,
