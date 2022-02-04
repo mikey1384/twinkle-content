@@ -8,7 +8,6 @@ import React, {
   useState
 } from 'react';
 import PropTypes from 'prop-types';
-import Emojis from '../emojis.png';
 import Tooltip from './Tooltip';
 import UserListModal from 'components/Modals/UserListModal';
 import LocalContext from '../../Context';
@@ -209,8 +208,8 @@ function Reaction({
           className={css`
             width: 1.7rem;
             height: 1.7rem;
-            background: url(${Emojis}) ${reactionsObj[reaction].position} /
-              5100%;
+            background: url('${process.env.PUBLIC_URL}/img/emojis.png')
+              ${reactionsObj[reaction].position} / 5100%;
           `}
         />
         <span
@@ -254,8 +253,8 @@ function Reaction({
                 className={css`
                   width: 2rem;
                   height: 2rem;
-                  background: url(${Emojis}) ${reactionsObj[reaction].position} /
-                    5100%;
+                  background: url('${process.env.PUBLIC_URL}/img/emojis.png')
+                    ${reactionsObj[reaction].position} / 5100%;
                 `}
               />
             </div>
