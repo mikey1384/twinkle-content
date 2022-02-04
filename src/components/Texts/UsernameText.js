@@ -7,6 +7,7 @@ import { useMyState } from 'helpers/hooks';
 import { useAppContext, useChatContext } from 'contexts';
 import { isMobile, getSectionFromPathname } from 'helpers';
 import { addCommasToNumber } from 'helpers/stringHelpers';
+import Icon from 'components/Icon';
 import localize from 'constants/localize';
 
 const deviceIsMobile = isMobile(navigator);
@@ -142,17 +143,24 @@ export default function UsernameText({
             }, 500);
           }}
         >
-          <li onClick={() => history.push(`/users/${user.username}`)}>
-            <a
-              style={{ color: Color.darkerGray(), cursor: 'pointer' }}
-              onClick={(e) => e.preventDefault()}
-            >
-              {profileLabel}
-            </a>
+          <li
+            style={{
+              color: Color.darkerGray()
+            }}
+            onClick={() => history.push(`/users/${user.username}`)}
+          >
+            <Icon icon="user" />
+            <span style={{ marginLeft: '1rem' }}>{profileLabel}</span>
           </li>
           {user.id !== userId && (
-            <li onClick={onLinkClick}>
-              <a style={{ color: Color.darkerGray() }}>{chatLabel}</a>
+            <li
+              style={{
+                color: Color.darkerGray()
+              }}
+              onClick={onLinkClick}
+            >
+              <Icon icon="comment" />
+              <span style={{ marginLeft: '1rem' }}>{chatLabel}</span>
             </li>
           )}
           {userXP && (

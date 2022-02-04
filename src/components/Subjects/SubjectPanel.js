@@ -29,7 +29,9 @@ import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
 const commentLabel = localize('comment');
+const editLabel = localize('edit');
 const byLabel = localize('by');
+const removeLabel = localize('remove');
 const secretMessageLabel = localize('secretMessage');
 const postedLabel = localize('posted');
 
@@ -234,9 +236,33 @@ export default function SubjectPanel({
               {editButtonShown && !onEdit && (
                 <DropdownButton
                   skeuomorphic
+                  icon="chevron-down"
                   style={{ marginLeft: '1rem' }}
                   color="darkerGray"
-                  menuProps={renderMenuProps()}
+                  menuProps={[
+                    {
+                      label: (
+                        <>
+                          <Icon icon="pencil-alt" />
+                          <span style={{ marginLeft: '1rem' }}>
+                            {editLabel}
+                          </span>
+                        </>
+                      ),
+                      onClick: () => setOnEdit(true)
+                    },
+                    {
+                      label: (
+                        <>
+                          <Icon icon="trash-alt" />
+                          <span style={{ marginLeft: '1rem' }}>
+                            {removeLabel}
+                          </span>
+                        </>
+                      ),
+                      onClick: () => setConfirmModalShown(true)
+                    }
+                  ]}
                 />
               )}
             </div>
@@ -551,20 +577,6 @@ export default function SubjectPanel({
     } catch (error) {
       return console.error(error);
     }
-  }
-
-  function renderMenuProps() {
-    const menuProps = [
-      {
-        label: 'Edit',
-        onClick: () => setOnEdit(true)
-      },
-      {
-        label: 'Remove',
-        onClick: () => setConfirmModalShown(true)
-      }
-    ];
-    return menuProps;
   }
 
   async function handleCommentSubmit(params) {
