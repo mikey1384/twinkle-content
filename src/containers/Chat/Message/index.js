@@ -125,6 +125,7 @@ function Message({
   onShowSubjectMsgsModal,
   zIndex
 }) {
+  const spoilerClickedRef = useRef(false);
   const [highlighted, setHighlighted] = useState(false);
   const [reactionsMenuShown, setReactionsMenuShown] = useState(false);
   const {
@@ -461,11 +462,14 @@ function Message({
   );
 
   const handleChessSpoilerClick = useCallback(async () => {
+    if (spoilerClickedRef.current) return;
+    spoilerClickedRef.current = true;
     onSetReplyTarget({ channelId: currentChannel.id, target: null });
     try {
       await setChessMoveViewTimeStamp({ channelId, message });
       onUpdateChessMoveViewTimeStamp(channelId);
       onChessSpoilerClick(userId);
+      spoilerClickedRef.current = false;
     } catch (error) {
       console.error(error);
     }
