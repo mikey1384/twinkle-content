@@ -991,7 +991,7 @@ export default function ChatReducer(state, action) {
             ),
             messagesObj: {
               ...state.channelsObj[action.message.channelId].messagesObj,
-              [messageId]: action.message
+              [messageId]: { ...action.message, id: messageId }
             },
             members: [
               ...state.channelsObj[action.message.channelId].members,
@@ -1081,7 +1081,7 @@ export default function ChatReducer(state, action) {
             ),
             messagesObj: {
               ...state.channelsObj[action.channel.id]?.messagesObj,
-              [messageId]: action.message
+              [messageId]: { ...action.message, id: messageId }
             },
             numUnreads: action.isMyMessage
               ? Number(state.channelsObj[action.channel.id]?.numUnreads || 0)
