@@ -5,7 +5,8 @@ import RankingsListItem from 'components/RankingsListItem';
 import localize from 'constants/localize';
 import FilterBar from 'components/FilterBar';
 import MyRank from 'components/MyRank';
-import { Color, borderRadius } from 'constants/css';
+import { css } from '@emotion/css';
+import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 
 const noRankersThisMonthLabel = localize('noRankersThisMonth');
 const myRankingLabel = localize('myRanking');
@@ -66,12 +67,17 @@ export default function ThisMonth({
       )}
       {users.length === 0 || (allSelected && myMonthlyXP === 0) ? (
         <div
-          style={{
-            background: '#fff',
-            borderRadius,
-            padding: '1rem',
-            border: `1px solid ${Color.borderGray()}`
-          }}
+          className={css`
+            border-radius: ${borderRadius};
+            border: 1px solid ${Color.borderGray()};
+            background: #fff;
+            padding: 1rem;
+            @media (max-width: ${mobileMaxWidth}) {
+              border-radius: 0;
+              border-left: none;
+              border-right: none;
+            }
+          `}
         >
           {myMonthlyXP === 0
             ? notRankedForThisMonthLabel
