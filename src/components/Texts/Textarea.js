@@ -26,9 +26,9 @@ export default function Textarea({
       ref={innerRef}
       className={`${className} ${css`
         width: 100%;
-        line-height: 1.5;
+        line-height: 1.6;
         position: relative;
-        font-size: 1.6rem;
+        font-size: 1.5rem;
         padding: 1rem;
         border: 1px solid ${Color.darkerBorderGray()};
         &:focus {
