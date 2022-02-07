@@ -1,27 +1,44 @@
 import React from 'react';
 import ErrorBoundary from 'components/ErrorBoundary';
 import HighXPSubjects from './HighXPSubjects';
+import localize from 'constants/localize';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
+import Leaderboard from './Leaderboard';
+
+const earnXPLabel = localize('earnXP');
+const leaderboardsLabel = localize('leaderboards');
 
 export default function Earn() {
   return (
     <ErrorBoundary>
-      <section
+      <div
         className={css`
-          @media (max-width: ${mobileMaxWidth}) {
-            padding-top: 1rem;
+          > section {
+            margin-bottom: 3rem;
             > h2 {
-              padding-left: 1rem;
+              margin-bottom: 1.3rem;
+            }
+          }
+          @media (max-width: ${mobileMaxWidth}) {
+            > section {
+              padding-bottom: 2rem;
+              > h2 {
+                padding-left: 1rem;
+              }
             }
           }
         `}
       >
-        <h2>Earn XP</h2>
-        <div style={{ marginTop: '1.3rem' }}>
+        <section>
+          <h2>{earnXPLabel}</h2>
           <HighXPSubjects />
-        </div>
-      </section>
+        </section>
+        <section>
+          <h2>{leaderboardsLabel}</h2>
+          <Leaderboard />
+        </section>
+      </div>
     </ErrorBoundary>
   );
 }
