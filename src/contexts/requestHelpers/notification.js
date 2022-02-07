@@ -63,13 +63,28 @@ export default function notificationRequestHelpers({ auth, handleError }) {
     },
     async loadRewards() {
       if (auth().headers.authorization === null) {
-        return { rewards: [], loadMore: false };
+        return {
+          rewards: [],
+          loadMore: false,
+          totalRewardedTwinkles: 0,
+          totalRewardedTwinkleCoins: 0
+        };
       }
       try {
         const {
-          data: { rewards, loadMoreRewards }
+          data: {
+            rewards,
+            loadMoreRewards,
+            totalRewardedTwinkles,
+            totalRewardedTwinkleCoins
+          }
         } = await request.get(`${URL}/notification/rewards`, auth());
-        return Promise.resolve({ rewards, loadMoreRewards });
+        return Promise.resolve({
+          rewards,
+          loadMoreRewards,
+          totalRewardedTwinkles,
+          totalRewardedTwinkleCoins
+        });
       } catch (error) {
         return handleError(error);
       }
