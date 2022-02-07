@@ -26,8 +26,14 @@ export default function notificationRequestHelpers({ auth, handleError }) {
             currentChatSubject: data
           });
         } else {
-          const { data } = await request.get(`${URL}/notification`, auth());
-          return Promise.resolve(data);
+          const {
+            data: { currentChatSubject, loadMoreNotifications, notifications }
+          } = await request.get(`${URL}/notification`, auth());
+          return Promise.resolve({
+            currentChatSubject,
+            loadMoreNotifications,
+            notifications
+          });
         }
       } catch (error) {
         return handleError(error);
@@ -51,6 +57,19 @@ export default function notificationRequestHelpers({ auth, handleError }) {
           auth()
         );
         return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
+    async loadRewards() {
+      if (auth().headers.authorization === null) {
+        return { rewards: [], loadMore: false };
+      }
+      try {
+        const {
+          data: { rewards, loadMoreRewards }
+        } = await request.get(`${URL}/notification/rewards`, auth());
+        return Promise.resolve({ rewards, loadMoreRewards });
       } catch (error) {
         return handleError(error);
       }

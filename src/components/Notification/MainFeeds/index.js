@@ -240,9 +240,14 @@ function MainFeeds({
 
   async function handleNewNotiAlertClick() {
     setLoadingNewFeeds(true);
-    const data = await fetchNotifications();
+    const { currentChatSubject, loadMoreNotifications, notifications } =
+      await fetchNotifications();
     if (mounted.current) {
-      onFetchNotifications(data);
+      onFetchNotifications({
+        currentChatSubject,
+        loadMoreNotifications,
+        notifications
+      });
     }
     if (mounted.current) {
       selectNotiTab();

@@ -25,6 +25,7 @@ function Notification({ className, location, style }) {
   const fetchNotifications = useAppContext(
     (v) => v.requestHelpers.fetchNotifications
   );
+  const loadRewards = useAppContext((v) => v.requestHelpers.loadRewards);
   const { userId, twinkleXP } = useMyState();
   const loadMore = useNotiContext((v) => v.state.loadMore);
   const notifications = useNotiContext((v) => v.state.notifications);
@@ -48,6 +49,7 @@ function Notification({ className, location, style }) {
   const onFetchNotifications = useNotiContext(
     (v) => v.actions.onFetchNotifications
   );
+  const onLoadRewards = useNotiContext((v) => v.actions.onLoadRewards);
   const onGetRanks = useNotiContext((v) => v.actions.onGetRanks);
   const onResetRewards = useNotiContext((v) => v.actions.onResetRewards);
   const onSetPrevUserId = useNotiContext((v) => v.actions.onSetPrevUserId);
@@ -237,9 +239,29 @@ function Notification({ className, location, style }) {
     if (!loadingNotificationRef.current) {
       setLoadingNotifications(true);
       loadingNotificationRef.current = true;
-      const data = await fetchNotifications();
+      const [
+        { currentChatSubject, loadMoreNotifications, notifications },
+        {
+          rewards,
+          loadMoreRewards,
+          totalRewardedTwinkles,
+          totalRewardedTwinkleCoins
+        }
+      ] = await Promise.all([fetchNotifications(), loadRewards()]);
       if (mounted.current) {
-        onFetchNotifications(data);
+        onFetchNotifications({
+          currentChatSubject,
+          loadMoreNotifications,
+          notifications
+        });
+      }
+      if (mounted.current) {
+        onLoadRewards({
+          rewards,
+          loadMoreRewards,
+          totalRewardedTwinkles,
+          totalRewardedTwinkleCoins
+        });
       }
       if (mounted.current) {
         setLoadingNotifications(false);

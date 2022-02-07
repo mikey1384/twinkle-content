@@ -58,9 +58,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
     (v) => v.requestHelpers.checkIfHomeOutdated
   );
   const checkVersion = useAppContext((v) => v.requestHelpers.checkVersion);
-  const fetchNotifications = useAppContext(
-    (v) => v.requestHelpers.fetchNotifications
-  );
+  const loadRewards = useAppContext((v) => v.requestHelpers.loadRewards);
   const getNumberOfUnreadMessages = useAppContext(
     (v) => v.requestHelpers.getNumberOfUnreadMessages
   );
@@ -172,9 +170,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
     (v) => v.actions.onChangeSocketStatus
   );
   const onCheckVersion = useNotiContext((v) => v.actions.onCheckVersion);
-  const onFetchNotifications = useNotiContext(
-    (v) => v.actions.onFetchNotifications
-  );
+  const onLoadRewards = useNotiContext((v) => v.actions.onLoadRewards);
   const onGetRanks = useNotiContext((v) => v.actions.onGetRanks);
   const onIncreaseNumNewPosts = useNotiContext(
     (v) => v.actions.onIncreaseNumNewPosts
@@ -553,8 +549,18 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
         });
       }
       if (receiverId === userId) {
-        const data = await fetchNotifications();
-        onFetchNotifications(data);
+        const {
+          rewards,
+          loadMoreRewards,
+          totalRewardedTwinkles,
+          totalRewardedTwinkleCoins
+        } = await loadRewards();
+        onLoadRewards({
+          rewards,
+          loadMoreRewards,
+          totalRewardedTwinkles,
+          totalRewardedTwinkleCoins
+        });
       }
     }
 
