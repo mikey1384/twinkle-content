@@ -80,10 +80,11 @@ export default function NotiActions(dispatch) {
         type: 'INCREASE_NUM_NEW_POSTS'
       });
     },
-    onLoadMoreNotifications(data) {
+    onLoadMoreNotifications({ loadMoreNotifications, notifications }) {
       return dispatch({
         type: 'LOAD_MORE_NOTIFICATIONS',
-        data
+        loadMoreNotifications,
+        notifications
       });
     },
     onLoadMoreRewards(data) {

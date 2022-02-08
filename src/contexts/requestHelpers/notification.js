@@ -41,11 +41,10 @@ export default function notificationRequestHelpers({ auth, handleError }) {
     },
     async loadMoreNotifications(lastId) {
       try {
-        const { data } = await request.get(
-          `${URL}/notification?lastId=${lastId}`,
-          auth()
-        );
-        return Promise.resolve(data);
+        const {
+          data: { loadMoreNotifications, notifications }
+        } = await request.get(`${URL}/notification?lastId=${lastId}`, auth());
+        return Promise.resolve({ loadMoreNotifications, notifications });
       } catch (error) {
         return handleError(error);
       }

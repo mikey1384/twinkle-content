@@ -260,11 +260,13 @@ function MainFeeds({
   async function onLoadMore() {
     setLoading(true);
     if (activeTab === 'notification') {
-      const data = await loadMoreNotifications(
-        notifications[notifications.length - 1].id
-      );
+      const { loadMoreNotifications: loadMore, notifications: notis } =
+        await loadMoreNotifications(notifications[notifications.length - 1].id);
       if (mounted.current) {
-        onLoadMoreNotifications(data);
+        onLoadMoreNotifications({
+          loadMoreNotifications: loadMore,
+          notifications: notis
+        });
       }
     } else {
       const data = await loadMoreRewards(rewards[rewards.length - 1].id);
