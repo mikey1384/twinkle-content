@@ -58,6 +58,9 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
     (v) => v.requestHelpers.checkIfHomeOutdated
   );
   const checkVersion = useAppContext((v) => v.requestHelpers.checkVersion);
+  const fetchNotifications = useAppContext(
+    (v) => v.requestHelpers.fetchNotifications
+  );
   const loadRewards = useAppContext((v) => v.requestHelpers.loadRewards);
   const getNumberOfUnreadMessages = useAppContext(
     (v) => v.requestHelpers.getNumberOfUnreadMessages
@@ -170,6 +173,9 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
     (v) => v.actions.onChangeSocketStatus
   );
   const onCheckVersion = useNotiContext((v) => v.actions.onCheckVersion);
+  const onFetchNotifications = useNotiContext(
+    (v) => v.actions.onFetchNotifications
+  );
   const onLoadRewards = useNotiContext((v) => v.actions.onLoadRewards);
   const onGetRanks = useNotiContext((v) => v.actions.onGetRanks);
   const onIncreaseNumNewPosts = useNotiContext(
@@ -549,17 +555,25 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
         });
       }
       if (receiverId === userId) {
-        const {
-          rewards,
-          loadMoreRewards,
-          totalRewardedTwinkles,
-          totalRewardedTwinkleCoins
-        } = await loadRewards();
+        const [
+          { currentChatSubject, loadMoreNotifications, notifications },
+          {
+            rewards,
+            loadMoreRewards,
+            totalRewardedTwinkles,
+            totalRewardedTwinkleCoins
+          }
+        ] = await Promise.all([fetchNotifications(), loadRewards()]);
         onLoadRewards({
           rewards,
           loadMoreRewards,
           totalRewardedTwinkles,
           totalRewardedTwinkleCoins
+        });
+        onFetchNotifications({
+          currentChatSubject,
+          loadMoreNotifications,
+          notifications
         });
       }
     }
