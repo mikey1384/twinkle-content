@@ -904,8 +904,9 @@ export function replaceFakeAtSymbol(string) {
 }
 
 export function stringIsEmpty(string) {
-  if (typeof string !== 'string') return false;
-  return string.length === 0 || !string.trim();
+  const evalString = string || '';
+  if (evalString && typeof evalString !== 'string') return true;
+  return evalString.length === 0 || !evalString.trim();
 }
 
 export function translateMBToGB(size) {
