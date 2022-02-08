@@ -904,14 +904,8 @@ export function replaceFakeAtSymbol(string) {
 }
 
 export function stringIsEmpty(string) {
-  if (typeof string === 'string' && string.length > 0) {
-    return false;
-  }
-  const checkedString =
-    string && typeof string === 'string'
-      ? string.replace(/\s/g, '').replace(/\r?\n/g, '')
-      : '';
-  return checkedString === '';
+  if (typeof string !== 'string') return false;
+  return string.length === 0 || !string.trim();
 }
 
 export function translateMBToGB(size) {
