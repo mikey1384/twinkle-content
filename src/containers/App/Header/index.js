@@ -640,7 +640,8 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
           message,
           channel,
           pageVisible,
-          usingChat
+          usingChat,
+          newMembers
         });
       }
       if (message.targetMessage?.userId === userId && message.rewardAmount) {
