@@ -51,10 +51,10 @@ export default function NotiReducer(state, action) {
     case 'LOAD_MORE_NOTIFICATIONS':
       return {
         ...state,
-        notifications: state.notifications.concat(action.data.notifications),
+        notifications: state.notifications.concat(action.notifications),
         loadMore: {
           ...state.loadMore,
-          ...action.data.loadMore
+          notifications: action.loadMoreNotifications
         }
       };
     case 'LOAD_NOTIFICATIONS':
