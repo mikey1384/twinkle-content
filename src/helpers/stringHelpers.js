@@ -607,7 +607,7 @@ export function processedStringWithURL(string) {
       .replace(
         logoBlueWordRegex,
         (string) =>
-          `<span style="color: rgb(75, 155, 225);">${string.substring(
+          `<span style="color: rgb(65, 140, 235);">${string.substring(
             3,
             string.length - 3
           )}</span>`
@@ -747,7 +747,7 @@ export function processedStringWithURL(string) {
       .replace(
         logoBlueSentenceRegex,
         (string) =>
-          `<span style="color: rgb(75, 155, 225);">${string.substring(
+          `<span style="color: rgb(65, 140, 235);">${string.substring(
             3,
             string.length - 3
           )}</span>`
