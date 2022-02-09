@@ -25,8 +25,8 @@ export default function Textarea({
       type={type}
       ref={innerRef}
       className={`${className} ${css`
+        font-family: 'Noto Sans', Helvetica, sans-serif, Arial;
         width: 100%;
-        line-height: 2;
         position: relative;
         font-size: 1.7rem;
         padding: 1rem;
