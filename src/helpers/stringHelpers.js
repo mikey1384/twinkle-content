@@ -583,7 +583,7 @@ export function processedStringWithURL(string) {
       .replace(
         blueWordRegex,
         (string) =>
-          `<span style="color: blue;">${string.substring(
+          `<span style="color: rgb(5,110,178);">${string.substring(
             2,
             string.length - 2
           )}</span>`
@@ -639,7 +639,7 @@ export function processedStringWithURL(string) {
       .replace(
         purpleWordRegex,
         (string) =>
-          `<span style="color: purple;">${string.substring(
+          `<span style="color: rgb(152,28,235);">${string.substring(
             3,
             string.length - 3
           )}</span>`
@@ -723,7 +723,7 @@ export function processedStringWithURL(string) {
       .replace(
         blueSentenceRegex,
         (string) =>
-          `<span style="color: blue;">${string.substring(
+          `<span style="color: rgb(5,110,178);">${string.substring(
             2,
             string.length - 2
           )}</span>`
@@ -771,7 +771,7 @@ export function processedStringWithURL(string) {
       .replace(
         purpleSentenceRegex,
         (string) =>
-          `<span style="color: purple;">${string.substring(
+          `<span style="color: rgb(152,28,235);">${string.substring(
             3,
             string.length - 3
           )}</span>`
