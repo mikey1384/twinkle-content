@@ -583,7 +583,7 @@ export function processedStringWithURL(string) {
       .replace(
         blueWordRegex,
         (string) =>
-          `<span style="color: blue;">${string.substring(
+          `<span style="color: rgb(5,110,178);">${string.substring(
             2,
             string.length - 2
           )}</span>`
@@ -723,7 +723,7 @@ export function processedStringWithURL(string) {
       .replace(
         blueSentenceRegex,
         (string) =>
-          `<span style="color: blue;">${string.substring(
+          `<span style="color: rgb(5,110,178);">${string.substring(
             2,
             string.length - 2
           )}</span>`
