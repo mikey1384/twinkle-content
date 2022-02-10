@@ -36,7 +36,7 @@ export default function ReactionButton({
   const BarRef = useRef(null);
   const coolDownRef = useRef(null);
   useOutsideClick(BarRef, () => {
-    if (!deviceIsMobile) return;
+    if (!deviceIsMobile || !reactionsMenuShown) return;
     coolDownRef.current = true;
     onSetReactionsMenuShown(false);
     setTimeout(() => {
