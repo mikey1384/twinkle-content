@@ -1142,12 +1142,6 @@ function MessagesContainer({
           subjectId={subjectId}
         />
       </div>
-      <div
-        className={css`
-          display: none;
-          background: url('${process.env.PUBLIC_URL}/img/emojis.png');
-        `}
-      />
       {chessModalShown && (
         <ChessModal
           currentChannel={currentChannel}
