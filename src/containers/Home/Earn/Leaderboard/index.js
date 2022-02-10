@@ -27,7 +27,9 @@ export default function Leaderboard({ style }) {
         <p>
           {year} {leaderboardLabel}
         </p>
-        <MonthItem />
+        <div style={{ marginTop: '2rem' }}>
+          <MonthItem />
+        </div>
       </div>
     </ErrorBoundary>
   );

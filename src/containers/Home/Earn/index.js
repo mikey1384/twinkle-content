@@ -38,6 +38,7 @@ export default function Earn() {
           <h2>{leaderboardsLabel}</h2>
           <Leaderboard />
         </section>
+        <div style={{ height: '15rem' }} />
       </div>
     </ErrorBoundary>
   );

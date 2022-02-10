@@ -1,8 +1,11 @@
 import React from 'react';
 import { css } from '@emotion/css';
+import { useMyState } from 'helpers/hooks';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
+import TopRanker from './TopRanker';
 
 export default function MonthItem() {
+  const { userId, profilePicUrl, username } = useMyState();
   return (
     <div
       className={css`
@@ -23,7 +26,25 @@ export default function MonthItem() {
       >
         February
       </p>
-      <div style={{ marginTop: '1rem', display: 'flex' }}>Testing</div>
+      <div
+        style={{ marginTop: '1rem', display: 'flex', justifyContent: 'center' }}
+      >
+        <TopRanker
+          username={username}
+          profilePicUrl={profilePicUrl}
+          userId={userId}
+        />
+        <TopRanker
+          username={username}
+          profilePicUrl={profilePicUrl}
+          userId={userId}
+        />
+        <TopRanker
+          username={username}
+          profilePicUrl={profilePicUrl}
+          userId={userId}
+        />
+      </div>
     </div>
   );
 }
