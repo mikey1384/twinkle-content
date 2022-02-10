@@ -75,7 +75,7 @@ export default function ReactionButton({
                 cursor: pointer;
                 width: 2rem;
                 height: 2rem;
-                background: url('${process.env.PUBLIC_URL}/img/emojis.png')
+                background: url('/img/emojis.png')
                   ${reactionsObj[reaction].position} / 5100%;
                 transition: all 0.1s ease-in-out;
                 &:hover {

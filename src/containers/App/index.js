@@ -567,7 +567,7 @@ function App({ location, history }) {
         className={css`
           opacity: 0;
           position: fixed;
-          background: url('${process.env.PUBLIC_URL}/img/emojis.png');
+          background: url('/img/emojis.png');
         `}
       />
     </div>
