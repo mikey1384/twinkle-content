@@ -33,16 +33,21 @@ export default function MonthItem() {
           username={username}
           profilePicUrl={profilePicUrl}
           userId={userId}
+          rank={1}
         />
         <TopRanker
+          style={{ marginLeft: '1rem' }}
           username={username}
           profilePicUrl={profilePicUrl}
           userId={userId}
+          rank={2}
         />
         <TopRanker
+          style={{ marginLeft: '1rem' }}
           username={username}
           profilePicUrl={profilePicUrl}
           userId={userId}
+          rank={3}
         />
       </div>
     </div>

@@ -1,15 +1,32 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ProfilePic from 'components/ProfilePic';
-import { Color, borderRadius } from 'constants/css';
+import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
+import { css } from '@emotion/css';
 
 TopRanker.propTypes = {
   userId: PropTypes.number,
   profilePicUrl: PropTypes.string,
-  username: PropTypes.string
+  style: PropTypes.object,
+  username: PropTypes.string,
+  rank: PropTypes.number
 };
 
-export default function TopRanker({ userId, profilePicUrl, username }) {
+export default function TopRanker({
+  userId,
+  profilePicUrl,
+  style,
+  username,
+  rank
+}) {
+  const rankColor = useMemo(() => {
+    return rank === 1
+      ? Color.gold()
+      : rank === 2
+      ? Color.lighterGray()
+      : Color.orange();
+  }, [rank]);
+
   return (
     <div
       style={{
@@ -18,26 +35,31 @@ export default function TopRanker({ userId, profilePicUrl, username }) {
         alignItems: 'center',
         border: `1px solid ${Color.borderGray()}`,
         borderRadius,
-        padding: '2rem'
+        padding: '2rem',
+        ...style
       }}
     >
       <ProfilePic
-        style={{
-          width: '15rem',
-          height: '15rem',
-          cursor: 'pointer'
-        }}
+        className={css`
+          width: 15rem;
+          height: 15rem;
+          cursor: pointer;
+          @media (max-width: ${mobileMaxWidth}) {
+            width: 20vw;
+            height: 20vw;
+          }
+        `}
         userId={userId}
         profilePicUrl={profilePicUrl}
       />
       <p
         style={{
-          color: Color.gold(),
+          color: rankColor,
           fontWeight: 'bold',
           marginTop: '1rem'
         }}
       >
-        #1 {username}
+        #{rank} {username}
       </p>
     </div>
   );

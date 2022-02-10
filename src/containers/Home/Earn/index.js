@@ -21,6 +21,7 @@ export default function Earn() {
             }
           }
           @media (max-width: ${mobileMaxWidth}) {
+            margin-top: 1rem;
             > section {
               padding-bottom: 2rem;
               > h2 {
