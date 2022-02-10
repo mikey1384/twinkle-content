@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import localize from 'constants/localize';
-import { panel } from './Styles';
+import { panel } from '../Styles';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 
 Leaderboard.propTypes = {
