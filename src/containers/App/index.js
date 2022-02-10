@@ -563,6 +563,13 @@ function App({ location, history }) {
       {signinModalShown && <SigninModal show onHide={onCloseSigninModal} />}
       {channelOnCall.incomingShown && <Incoming />}
       {outgoingShown && <Outgoing />}
+      <div
+        className={css`
+          opacity: 0;
+          position: fixed;
+          background: url('${process.env.PUBLIC_URL}/img/emojis.png');
+        `}
+      />
     </div>
   );
 }
