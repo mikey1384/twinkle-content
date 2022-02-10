@@ -33,7 +33,7 @@ export default function ThisMonth({
     if (allSelected) {
       return allMonthly;
     }
-    return top30sMonthly;
+    return top30sMonthly || [];
   }, [allMonthly, allSelected, top30sMonthly]);
   const loggedIn = !!myId;
   return (
