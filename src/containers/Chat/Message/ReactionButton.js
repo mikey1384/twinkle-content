@@ -54,6 +54,9 @@ export default function ReactionButton({
         onMouseLeave={() =>
           deviceIsMobile ? {} : onSetReactionsMenuShown(false)
         }
+        onClick={() =>
+          deviceIsMobile ? onSetReactionsMenuShown((shown) => !shown) : {}
+        }
       >
         <div
           ref={BarRef}
