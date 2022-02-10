@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import localize from 'constants/localize';
+import MonthItem from './MonthItem';
 import { panel } from '../Styles';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 
@@ -26,6 +27,7 @@ export default function Leaderboard({ style }) {
         <p>
           {year} {leaderboardLabel}
         </p>
+        <MonthItem />
       </div>
     </ErrorBoundary>
   );
