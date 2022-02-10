@@ -565,7 +565,8 @@ function App({ location, history }) {
       {outgoingShown && <Outgoing />}
       <div
         className={css`
-          display: none;
+          opacity: 0;
+          position: fixed;
           background: url('${process.env.PUBLIC_URL}/img/emojis.png');
         `}
       />
