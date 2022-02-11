@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ProfilePic from 'components/ProfilePic';
-import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
+import { Color, borderRadius } from 'constants/css';
 import { css } from '@emotion/css';
 
 TopRanker.propTypes = {
@@ -31,6 +31,7 @@ export default function TopRanker({
     <div
       style={{
         display: 'flex',
+        width: '30%',
         flexDirection: 'column',
         alignItems: 'center',
         border: `1px solid ${Color.borderGray()}`,
@@ -41,13 +42,8 @@ export default function TopRanker({
     >
       <ProfilePic
         className={css`
-          width: 15rem;
-          height: 15rem;
+          width: 100%;
           cursor: pointer;
-          @media (max-width: ${mobileMaxWidth}) {
-            width: 20vw;
-            height: 20vw;
-          }
         `}
         userId={userId}
         profilePicUrl={profilePicUrl}

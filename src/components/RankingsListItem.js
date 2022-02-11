@@ -99,11 +99,13 @@ export default function RankingsListItem({ myId, small, style, user }) {
             alignItems: 'center'
           }}
         >
-          <ProfilePic
-            style={{ width: profileSize, height: profileSize }}
-            profilePicUrl={user.profilePicUrl}
-            userId={user.id}
-          />
+          <div>
+            <ProfilePic
+              style={{ width: profileSize }}
+              profilePicUrl={user.profilePicUrl}
+              userId={user.id}
+            />
+          </div>
           <UsernameText
             color={
               rankColor ||
