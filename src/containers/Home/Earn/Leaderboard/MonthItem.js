@@ -47,6 +47,9 @@ export default function MonthItem() {
           />
         ))}
       </div>
+      <div style={{ marginTop: '2rem', textAlign: 'center' }}>
+        <a style={{ fontWeight: 'bold', cursor: 'pointer' }}>Show Top 30</a>
+      </div>
     </div>
   );
 }
