@@ -20,43 +20,69 @@ export default function TopRanker({
   rank
 }) {
   const rankColor = useMemo(() => {
+    return rank === 1 ? Color.gold() : rank === 2 ? '#fff' : Color.bronze();
+  }, [rank]);
+  const backgroundColor = useMemo(() => {
     return rank === 1
-      ? Color.gold()
+      ? Color.gold(0.5)
       : rank === 2
-      ? Color.lighterGray()
-      : Color.orange();
+      ? Color.lighterGray(0.3)
+      : Color.brownOrange(0.3);
   }, [rank]);
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        width: '30%',
-        flexDirection: 'column',
-        alignItems: 'center',
-        border: `1px solid ${Color.borderGray()}`,
-        borderRadius,
-        padding: '2rem',
-        ...style
-      }}
-    >
-      <ProfilePic
-        className={css`
-          width: 100%;
-          cursor: pointer;
-        `}
-        userId={userId}
-        profilePicUrl={profilePicUrl}
-      />
-      <p
+    <div style={{ width: '30%', ...style }}>
+      <div
         style={{
-          color: rankColor,
-          fontWeight: 'bold',
-          marginTop: '1rem'
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          border: `1px solid ${Color.borderGray()}`,
+          borderBottom: 0,
+          borderTopLeftRadius: borderRadius,
+          borderTopRightRadius: borderRadius,
+          background: backgroundColor,
+          padding: '2rem'
         }}
       >
-        #{rank} {username}
-      </p>
+        <ProfilePic
+          className={css`
+            width: 100%;
+            cursor: pointer;
+          `}
+          userId={userId}
+          profilePicUrl={profilePicUrl}
+        />
+      </div>
+      <div
+        style={{
+          borderBottomLeftRadius: borderRadius,
+          borderBottomRightRadius: borderRadius,
+          padding: '1rem',
+          textAlign: 'center',
+          background: Color.black()
+        }}
+      >
+        <div
+          style={{
+            color: rankColor,
+            fontWeight: 'bold'
+          }}
+        >
+          #{rank}
+        </div>
+        <div
+          style={{
+            width: '100%',
+            fontWeight: 'bold',
+            color: rankColor,
+            overflowX: 'hidden',
+            textOverflow: 'ellipsis'
+          }}
+        >
+          {username}
+        </div>
+      </div>
     </div>
   );
 }

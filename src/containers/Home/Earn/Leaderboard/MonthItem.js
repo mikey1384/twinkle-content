@@ -37,7 +37,7 @@ export default function MonthItem() {
         {monthLabel}
       </p>
       <div
-        style={{ marginTop: '1rem', display: 'flex', justifyContent: 'center' }}
+        style={{ marginTop: '2rem', display: 'flex', justifyContent: 'center' }}
       >
         {top3.map((user, index) => (
           <TopRanker
