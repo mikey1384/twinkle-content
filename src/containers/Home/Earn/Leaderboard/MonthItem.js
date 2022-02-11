@@ -3,6 +3,9 @@ import { css } from '@emotion/css';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { useNotiContext } from 'contexts';
 import TopRanker from './TopRanker';
+import moment from 'moment';
+
+const monthLabel = moment().format('MMMM');
 
 export default function MonthItem() {
   const top30sMonthly = useNotiContext((v) => v.state.top30sMonthly);
@@ -28,7 +31,7 @@ export default function MonthItem() {
           }
         `}
       >
-        February
+        {monthLabel}
       </p>
       <div
         style={{ marginTop: '1rem', display: 'flex', justifyContent: 'center' }}
