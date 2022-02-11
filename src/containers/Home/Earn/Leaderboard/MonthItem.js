@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { css } from '@emotion/css';
-import { useMyState } from 'helpers/hooks';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
+import { useNotiContext } from 'contexts';
 import TopRanker from './TopRanker';
 
 export default function MonthItem() {
-  const { userId, profilePicUrl, username } = useMyState();
+  const top30sMonthly = useNotiContext((v) => v.state.top30sMonthly);
+  const top3 = useMemo(() => {
+    return top30sMonthly.slice(0, 3);
+  }, [top30sMonthly]);
+
   return (
     <div
       className={css`
@@ -29,26 +33,16 @@ export default function MonthItem() {
       <div
         style={{ marginTop: '1rem', display: 'flex', justifyContent: 'center' }}
       >
-        <TopRanker
-          username={username}
-          profilePicUrl={profilePicUrl}
-          userId={userId}
-          rank={1}
-        />
-        <TopRanker
-          style={{ marginLeft: '1rem' }}
-          username={username}
-          profilePicUrl={profilePicUrl}
-          userId={userId}
-          rank={2}
-        />
-        <TopRanker
-          style={{ marginLeft: '1rem' }}
-          username={username}
-          profilePicUrl={profilePicUrl}
-          userId={userId}
-          rank={3}
-        />
+        {top3.map((user, index) => (
+          <TopRanker
+            key={user.id}
+            style={{ marginLeft: index === 0 ? 0 : '1rem' }}
+            username={user.username}
+            profilePicUrl={user.profilePicUrl}
+            userId={user.id}
+            rank={user.rank}
+          />
+        ))}
       </div>
     </div>
   );
