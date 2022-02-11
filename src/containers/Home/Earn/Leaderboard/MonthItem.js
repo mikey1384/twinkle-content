@@ -62,6 +62,7 @@ export default function MonthItem() {
         <Top30Modal
           month={monthLabel}
           year={yearLabel}
+          users={top30sMonthly}
           onHide={() => setTop30ModalShown(false)}
         />
       )}
