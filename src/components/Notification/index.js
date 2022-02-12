@@ -26,7 +26,7 @@ function Notification({ className, location, style }) {
     (v) => v.requestHelpers.fetchNotifications
   );
   const loadRewards = useAppContext((v) => v.requestHelpers.loadRewards);
-  const { userId, twinkleXP } = useMyState();
+  const { userId } = useMyState();
   const loadMore = useNotiContext((v) => v.state.loadMore);
   const notifications = useNotiContext((v) => v.state.notifications);
   const numNewNotis = useNotiContext((v) => v.state.numNewNotis);
@@ -59,7 +59,6 @@ function Notification({ className, location, style }) {
   const [activeTab, setActiveTab] = useState('rankings');
   const userChangedTab = useRef(false);
   const mounted = useRef(true);
-  const prevTwinkleXP = useRef(twinkleXP);
 
   useEffect(() => {
     mounted.current = true;
@@ -116,17 +115,6 @@ function Notification({ className, location, style }) {
     onSetPrevUserId(userId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prevUserId, userId]);
-
-  useEffect(() => {
-    if (
-      typeof twinkleXP === 'number' &&
-      twinkleXP > (prevTwinkleXP.current || 0)
-    ) {
-      fetchRankings();
-    }
-    prevTwinkleXP.current = twinkleXP;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [twinkleXP]);
 
   const rewardTabShown = useMemo(() => {
     return (
