@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import localize from 'constants/localize';
-import MonthItem from './MonthItem';
+import CurrentMonth from './CurrentMonth';
 import { panel } from '../Styles';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 
@@ -28,7 +28,7 @@ export default function Leaderboard({ style }) {
           {year} {leaderboardLabel}
         </p>
         <div style={{ marginTop: '2rem' }}>
-          <MonthItem />
+          <CurrentMonth />
         </div>
       </div>
     </ErrorBoundary>

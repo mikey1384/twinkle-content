@@ -1,20 +1,21 @@
 import React, { useMemo, useState } from 'react';
+import PropTypes from 'prop-types';
 import { css } from '@emotion/css';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
-import { useNotiContext } from 'contexts';
 import TopRanker from './TopRanker';
-import moment from 'moment';
 import Top30Modal from './Top30Modal';
 
-const monthLabel = moment().format('MMMM');
-const yearLabel = moment().format('YYYY');
+MonthItem.propTypes = {
+  monthLabel: PropTypes.string,
+  yearLabel: PropTypes.string,
+  top30: PropTypes.array
+};
 
-export default function MonthItem() {
+export default function MonthItem({ monthLabel, yearLabel, top30 }) {
   const [top30ModalShown, setTop30ModalShown] = useState(false);
-  const top30sMonthly = useNotiContext((v) => v.state.top30sMonthly);
   const top3 = useMemo(() => {
-    return top30sMonthly.slice(0, 3);
-  }, [top30sMonthly]);
+    return top30.slice(0, 3);
+  }, [top30]);
 
   return (
     <div
@@ -62,7 +63,7 @@ export default function MonthItem() {
         <Top30Modal
           month={monthLabel}
           year={yearLabel}
-          users={top30sMonthly}
+          users={top30}
           onHide={() => setTop30ModalShown(false)}
         />
       )}
