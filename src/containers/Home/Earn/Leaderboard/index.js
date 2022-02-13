@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import localize from 'constants/localize';
 import CurrentMonth from './CurrentMonth';
+import LoadMoreButton from 'components/Buttons/LoadMoreButton';
+import moment from 'moment';
+import { useHomeContext } from 'contexts';
 import { panel } from '../Styles';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
-import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 
 Leaderboard.propTypes = {
   style: PropTypes.object
@@ -22,6 +24,20 @@ const year = (() => {
 })();
 
 export default function Leaderboard({ style }) {
+  const leaderboardsObj = useHomeContext((v) => v.state.leaderboardsObj);
+  useEffect(() => {
+    const currentYear = moment().format('YYYY');
+    if (!leaderboardsObj?.[currentYear]?.loaded) {
+      console.log('year not loaded');
+    }
+  }, [leaderboardsObj]);
+
+  const showAllButtonShown = useMemo(() => {
+    return (
+      leaderboardsObj?.[year]?.loaded && !leaderboardsObj?.[year]?.expanded
+    );
+  }, [leaderboardsObj]);
+
   return (
     <ErrorBoundary>
       <div style={style} className={panel}>
@@ -30,13 +46,14 @@ export default function Leaderboard({ style }) {
         </p>
         <div style={{ marginTop: '2rem' }}>
           <CurrentMonth />
-          <LoadMoreButton
-            style={{ fontSize: '2rem', marginTop: '1rem' }}
-            label="Show All"
-            transparent
-            loading={false}
-            onClick={() => console.log('clicked')}
-          />
+          {showAllButtonShown && (
+            <LoadMoreButton
+              style={{ fontSize: '2rem', marginTop: '1rem' }}
+              label="Show All"
+              transparent
+              onClick={() => console.log('clicked')}
+            />
+          )}
         </div>
       </div>
     </ErrorBoundary>
