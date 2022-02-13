@@ -5,6 +5,7 @@ import localize from 'constants/localize';
 import CurrentMonth from './CurrentMonth';
 import { panel } from '../Styles';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
+import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 
 Leaderboard.propTypes = {
   style: PropTypes.object
@@ -29,6 +30,13 @@ export default function Leaderboard({ style }) {
         </p>
         <div style={{ marginTop: '2rem' }}>
           <CurrentMonth />
+          <LoadMoreButton
+            style={{ fontSize: '2rem', marginTop: '1rem' }}
+            label="Show All"
+            transparent
+            loading={false}
+            onClick={() => console.log('clicked')}
+          />
         </div>
       </div>
     </ErrorBoundary>
