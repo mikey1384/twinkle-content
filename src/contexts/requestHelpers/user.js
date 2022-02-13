@@ -327,6 +327,15 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
+    async loadMonthlyLeaderboards() {
+      try {
+        const { data } = await request.get(`${URL}/user/leaderBoard/monthly`);
+        console.log(data);
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async loadUsers({ orderBy, lastUserId, lastActive, lastTwinkleXP } = {}) {
       try {
         const { data } = await request.get(

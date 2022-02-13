@@ -5,7 +5,7 @@ import localize from 'constants/localize';
 import CurrentMonth from './CurrentMonth';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import moment from 'moment';
-import { useHomeContext } from 'contexts';
+import { useAppContext, useHomeContext } from 'contexts';
 import { panel } from '../Styles';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 
@@ -24,12 +24,20 @@ const year = (() => {
 })();
 
 export default function Leaderboard({ style }) {
+  const loadMonthlyLeaderboards = useAppContext(
+    (v) => v.requestHelpers.loadMonthlyLeaderboards
+  );
   const leaderboardsObj = useHomeContext((v) => v.state.leaderboardsObj);
   useEffect(() => {
     const currentYear = moment().format('YYYY');
     if (!leaderboardsObj?.[currentYear]?.loaded) {
-      console.log('year not loaded');
+      handleLoadMonthlyLeaderboards();
     }
+
+    async function handleLoadMonthlyLeaderboards() {
+      await loadMonthlyLeaderboards();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [leaderboardsObj]);
 
   const showAllButtonShown = useMemo(() => {
