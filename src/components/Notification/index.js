@@ -8,9 +8,11 @@ import Loading from 'components/Loading';
 import { container } from './Styles';
 import { defaultChatSubject } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
-import { useAppContext, useNotiContext } from 'contexts';
+import { useAppContext, useNotiContext, useViewContext } from 'contexts';
+import { isMobile } from 'helpers';
 import localize from 'constants/localize';
 
+const deviceIsMobile = isMobile(navigator);
 const newsLabel = localize('news');
 const rankingsLabel = localize('rankings');
 
@@ -21,6 +23,7 @@ Notification.propTypes = {
 };
 
 function Notification({ className, location, style }) {
+  const ContainerRef = useRef(null);
   const loadRankings = useAppContext((v) => v.requestHelpers.loadRankings);
   const fetchNotifications = useAppContext(
     (v) => v.requestHelpers.fetchNotifications
@@ -53,6 +56,10 @@ function Notification({ className, location, style }) {
   const onGetRanks = useNotiContext((v) => v.actions.onGetRanks);
   const onResetRewards = useNotiContext((v) => v.actions.onResetRewards);
   const onSetPrevUserId = useNotiContext((v) => v.actions.onSetPrevUserId);
+  const scrollPositions = useViewContext((v) => v.state.scrollPositions);
+  const onRecordScrollPosition = useViewContext(
+    (v) => v.actions.onRecordScrollPosition
+  );
 
   const loadingNotificationRef = useRef(false);
   const [loadingNotifications, setLoadingNotifications] = useState(false);
@@ -116,6 +123,19 @@ function Notification({ className, location, style }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prevUserId, userId]);
 
+  useEffect(() => {
+    if (
+      !deviceIsMobile &&
+      scrollPositions?.notification &&
+      activeTab === 'notification'
+    ) {
+      setTimeout(() => {
+        ContainerRef.current.scrollTop = scrollPositions.notification;
+      }, 10);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTab]);
+
   const rewardTabShown = useMemo(() => {
     return (
       (!loadingNotifications || activeTab === 'reward') && rewards.length > 0
@@ -124,7 +144,12 @@ function Notification({ className, location, style }) {
 
   return (
     <ErrorBoundary>
-      <div style={style} className={`${container} ${className}`}>
+      <div
+        ref={ContainerRef}
+        onScroll={handleScroll}
+        style={style}
+        className={`${container} ${className}`}
+      >
         <section
           style={{
             marginBottom: '1rem',
@@ -280,6 +305,13 @@ function Notification({ className, location, style }) {
         myMonthlyXP
       });
     }
+  }
+
+  function handleScroll(event) {
+    onRecordScrollPosition({
+      section: 'notification',
+      position: event.target.scrollTop
+    });
   }
 }
 
