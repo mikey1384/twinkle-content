@@ -8,10 +8,11 @@ import Top30Modal from './Top30Modal';
 MonthItem.propTypes = {
   monthLabel: PropTypes.string,
   yearLabel: PropTypes.string,
+  style: PropTypes.object,
   top30: PropTypes.array
 };
 
-export default function MonthItem({ monthLabel, yearLabel, top30 }) {
+export default function MonthItem({ monthLabel, yearLabel, style, top30 }) {
   const [top30ModalShown, setTop30ModalShown] = useState(false);
   const top3 = useMemo(() => {
     return top30.slice(0, 3);
@@ -25,6 +26,7 @@ export default function MonthItem({ monthLabel, yearLabel, top30 }) {
         border: 1px solid ${Color.borderGray()};
         border-radius: ${borderRadius};
       `}
+      style={style}
     >
       <p
         className={css`

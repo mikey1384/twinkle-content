@@ -78,6 +78,17 @@ export default function HomeReducer(state, action) {
         ...state,
         fileUploadComplete: true
       };
+    case 'SET_LEADERBOARDS_EXPANDED':
+      return {
+        ...state,
+        leaderboardsObj: {
+          ...state.leaderboardsObj,
+          [action.year]: {
+            ...state.leaderboardsObj[action.year],
+            expanded: action.expanded
+          }
+        }
+      };
     case 'SET_SECRET_ATTACHMENT_UPLOAD_COMPLETE':
       return {
         ...state,

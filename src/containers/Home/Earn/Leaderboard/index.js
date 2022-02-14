@@ -4,10 +4,25 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import localize from 'constants/localize';
 import CurrentMonth from './CurrentMonth';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
-import moment from 'moment';
+import MonthItem from './MonthItem';
 import { useAppContext, useHomeContext } from 'contexts';
 import { panel } from '../Styles';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
+
+const months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+];
 
 Leaderboard.propTypes = {
   style: PropTypes.object
@@ -17,9 +32,6 @@ const leaderboardLabel = localize('leaderboard');
 const year = (() => {
   const dt = new Date();
   const yr = dt.getFullYear();
-  if (SELECTED_LANGUAGE === 'kr') {
-    return `${yr}년`;
-  }
   return yr;
 })();
 
@@ -30,10 +42,12 @@ export default function Leaderboard({ style }) {
   const onLoadMonthlyLeaderboards = useHomeContext(
     (v) => v.actions.onLoadMonthlyLeaderboards
   );
+  const onSetLeaderboardsExpanded = useHomeContext(
+    (v) => v.actions.onSetLeaderboardsExpanded
+  );
   const leaderboardsObj = useHomeContext((v) => v.state.leaderboardsObj);
   useEffect(() => {
-    const currentYear = moment().format('YYYY');
-    if (!leaderboardsObj?.[currentYear]?.loaded) {
+    if (!leaderboardsObj?.[year]?.loaded) {
       handleLoadMonthlyLeaderboards();
     }
 
@@ -50,20 +64,38 @@ export default function Leaderboard({ style }) {
     );
   }, [leaderboardsObj]);
 
+  const { expanded, leaderboards } = useMemo(() => {
+    return leaderboardsObj?.[year] || {};
+  }, [leaderboardsObj]);
+
   return (
     <ErrorBoundary>
       <div style={style} className={panel}>
         <p>
-          {year} {leaderboardLabel}
+          {year}
+          {SELECTED_LANGUAGE === 'kr' ? '년' : ''} {leaderboardLabel}
         </p>
         <div style={{ marginTop: '2rem' }}>
           <CurrentMonth />
+          {expanded
+            ? leaderboards.map((leaderboard) => (
+                <MonthItem
+                  key={leaderboard.id}
+                  style={{ marginTop: '1rem' }}
+                  monthLabel={months[leaderboard.month - 1]}
+                  yearLabel={String(leaderboard.year)}
+                  top30={leaderboard.rankings}
+                />
+              ))
+            : null}
           {showAllButtonShown && (
             <LoadMoreButton
               style={{ fontSize: '2rem', marginTop: '1rem' }}
               label="Show All"
               transparent
-              onClick={() => console.log('clicked')}
+              onClick={() =>
+                onSetLeaderboardsExpanded({ expanded: true, year })
+              }
             />
           )}
         </div>

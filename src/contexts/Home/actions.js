@@ -62,6 +62,13 @@ export default function HomeActions(dispatch) {
         type: 'SET_FILE_UPLOAD_COMPLETE'
       });
     },
+    onSetLeaderboardsExpanded({ expanded, year }) {
+      return dispatch({
+        type: 'SET_LEADERBOARDS_EXPANDED',
+        expanded,
+        year
+      });
+    },
     onSetSecretAttachmentUploadComplete() {
       return dispatch({
         type: 'SET_SECRET_ATTACHMENT_UPLOAD_COMPLETE'
