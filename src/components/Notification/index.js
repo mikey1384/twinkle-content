@@ -128,12 +128,13 @@ function Notification({ className, location, style, trackScrollPosition }) {
     if (
       trackScrollPosition &&
       !deviceIsMobile &&
-      scrollPositions?.notification &&
+      scrollPositions?.[`notification-${location}`] &&
       activeTab === 'notification'
     ) {
       setTimeout(() => {
-        ContainerRef.current.scrollTop = scrollPositions.notification;
-      }, 0);
+        ContainerRef.current.scrollTop =
+          scrollPositions[`notification-${location}`];
+      }, 10);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
@@ -312,7 +313,7 @@ function Notification({ className, location, style, trackScrollPosition }) {
   function handleScroll(event) {
     if (!trackScrollPosition) return;
     onRecordScrollPosition({
-      section: 'notification',
+      section: `notification-${location}`,
       position: event.target.scrollTop
     });
   }
