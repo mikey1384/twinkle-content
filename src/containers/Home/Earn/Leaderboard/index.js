@@ -58,15 +58,17 @@ export default function Leaderboard({ style }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [leaderboardsObj]);
 
-  const showAllButtonShown = useMemo(() => {
-    return (
-      leaderboardsObj?.[year]?.loaded && !leaderboardsObj?.[year]?.expanded
-    );
-  }, [leaderboardsObj]);
-
   const { expanded, leaderboards } = useMemo(() => {
     return leaderboardsObj?.[year] || {};
   }, [leaderboardsObj]);
+
+  const showAllButtonShown = useMemo(() => {
+    return (
+      leaderboardsObj?.[year]?.loaded &&
+      !leaderboardsObj?.[year]?.expanded &&
+      leaderboards?.length > 0
+    );
+  }, [leaderboards?.length, leaderboardsObj]);
 
   return (
     <ErrorBoundary>
