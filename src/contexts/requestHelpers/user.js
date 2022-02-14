@@ -329,9 +329,10 @@ export default function userRequestHelpers({ auth, handleError, token }) {
     },
     async loadMonthlyLeaderboards() {
       try {
-        const { data } = await request.get(`${URL}/user/leaderBoard/monthly`);
-        console.log(data);
-        return Promise.resolve(data);
+        const { data: leaderboards } = await request.get(
+          `${URL}/user/leaderBoard/monthly`
+        );
+        return Promise.resolve(leaderboards);
       } catch (error) {
         return handleError(error);
       }

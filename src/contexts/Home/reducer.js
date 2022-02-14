@@ -38,6 +38,19 @@ export default function HomeReducer(state, action) {
         loadMoreButton: action.loadMoreButton,
         loaded: true
       };
+    case 'LOAD_MONTHLY_LEADERBOARDS':
+      return {
+        ...state,
+        leaderboardsObj: {
+          ...state.leaderboardsObj,
+          [action.year]: {
+            ...state.leaderboardsObj[action.year],
+            loaded: true,
+            expanded: false,
+            leaderboards: action.leaderboards
+          }
+        }
+      };
     case 'LOAD_MORE_FEEDS':
       return {
         ...state,

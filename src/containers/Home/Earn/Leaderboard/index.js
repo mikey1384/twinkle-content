@@ -27,6 +27,9 @@ export default function Leaderboard({ style }) {
   const loadMonthlyLeaderboards = useAppContext(
     (v) => v.requestHelpers.loadMonthlyLeaderboards
   );
+  const onLoadMonthlyLeaderboards = useHomeContext(
+    (v) => v.actions.onLoadMonthlyLeaderboards
+  );
   const leaderboardsObj = useHomeContext((v) => v.state.leaderboardsObj);
   useEffect(() => {
     const currentYear = moment().format('YYYY');
@@ -35,7 +38,8 @@ export default function Leaderboard({ style }) {
     }
 
     async function handleLoadMonthlyLeaderboards() {
-      await loadMonthlyLeaderboards();
+      const leaderboards = await loadMonthlyLeaderboards();
+      onLoadMonthlyLeaderboards({ leaderboards, year });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [leaderboardsObj]);
