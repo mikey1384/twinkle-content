@@ -144,6 +144,7 @@ export default function Explore({ history, location }) {
           />
         </div>
         <Notification
+          trackScrollPosition
           className={css`
             width: 31rem;
             overflow-y: scroll;
