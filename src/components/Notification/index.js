@@ -311,7 +311,7 @@ function Notification({ className, location, style, trackScrollPosition }) {
   }
 
   function handleScroll(event) {
-    if (!trackScrollPosition) return;
+    if (!trackScrollPosition || activeTab !== 'notification') return;
     onRecordScrollPosition({
       section: `notification-${location}`,
       position: event.target.scrollTop
