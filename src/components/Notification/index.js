@@ -131,7 +131,7 @@ function Notification({ className, location, style }) {
     ) {
       setTimeout(() => {
         ContainerRef.current.scrollTop = scrollPositions.notification;
-      }, 10);
+      }, 0);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
