@@ -19,10 +19,11 @@ const rankingsLabel = localize('rankings');
 Notification.propTypes = {
   className: PropTypes.string,
   location: PropTypes.string,
-  style: PropTypes.object
+  style: PropTypes.object,
+  trackScrollPosition: PropTypes.bool
 };
 
-function Notification({ className, location, style }) {
+function Notification({ className, location, style, trackScrollPosition }) {
   const ContainerRef = useRef(null);
   const loadRankings = useAppContext((v) => v.requestHelpers.loadRankings);
   const fetchNotifications = useAppContext(
@@ -125,6 +126,7 @@ function Notification({ className, location, style }) {
 
   useEffect(() => {
     if (
+      trackScrollPosition &&
       !deviceIsMobile &&
       scrollPositions?.notification &&
       activeTab === 'notification'
@@ -308,6 +310,7 @@ function Notification({ className, location, style }) {
   }
 
   function handleScroll(event) {
+    if (!trackScrollPosition) return;
     onRecordScrollPosition({
       section: 'notification',
       position: event.target.scrollTop
