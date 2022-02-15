@@ -27,7 +27,7 @@ export default function AllTime({
   myAllTimeXP,
   top30s
 }) {
-  const [allSelected, setAllSelected] = useState(true);
+  const [allSelected, setAllSelected] = useState(!!myId);
   const users = useMemo(() => {
     if (allSelected) {
       return allRanks;

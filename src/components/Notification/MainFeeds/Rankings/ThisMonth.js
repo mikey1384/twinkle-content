@@ -28,7 +28,7 @@ export default function ThisMonth({
   myMonthlyRank,
   myMonthlyXP
 }) {
-  const [allSelected, setAllSelected] = useState(true);
+  const [allSelected, setAllSelected] = useState(!!myId);
   const users = useMemo(() => {
     if (allSelected) {
       return allMonthly;
@@ -38,30 +38,32 @@ export default function ThisMonth({
   const loggedIn = !!myId;
   return (
     <>
-      <FilterBar
-        bordered
-        style={{
-          height: '4.5rem',
-          fontSize: '1.6rem'
-        }}
-      >
-        <nav
-          className={allSelected ? 'active' : ''}
-          onClick={() => {
-            setAllSelected(true);
+      {loggedIn && (
+        <FilterBar
+          bordered
+          style={{
+            height: '4.5rem',
+            fontSize: '1.6rem'
           }}
         >
-          {myRankingLabel}
-        </nav>
-        <nav
-          className={allSelected ? '' : 'active'}
-          onClick={() => {
-            setAllSelected(false);
-          }}
-        >
-          {top30Label}
-        </nav>
-      </FilterBar>
+          <nav
+            className={allSelected ? 'active' : ''}
+            onClick={() => {
+              setAllSelected(true);
+            }}
+          >
+            {myRankingLabel}
+          </nav>
+          <nav
+            className={allSelected ? '' : 'active'}
+            onClick={() => {
+              setAllSelected(false);
+            }}
+          >
+            {top30Label}
+          </nav>
+        </FilterBar>
+      )}
       {loggedIn && allSelected && (
         <MyRank myId={myId} rank={myMonthlyRank} twinkleXP={myMonthlyXP} />
       )}
