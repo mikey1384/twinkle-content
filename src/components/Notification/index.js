@@ -106,18 +106,22 @@ function Notification({ className, location, style, trackScrollPosition }) {
   ]);
 
   useEffect(() => {
-    userChangedTab.current = false;
-    handleFetchNotifications();
+    if (!userId && !prevUserId) {
+      fetchRankings();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId]);
+  }, []);
 
   useEffect(() => {
+    userChangedTab.current = false;
     onResetRewards();
-    if (userId !== prevUserId) {
-      if (activeTab === 'reward') {
-        setActiveTab('notification');
-      }
+    if (activeTab === 'reward') {
+      setActiveTab('notification');
+    }
+    if (!userId) {
       onClearNotifications();
+    }
+    if ((userId && userId !== prevUserId) || (!userId && prevUserId)) {
       handleFetchNotifications(true);
     }
     onSetPrevUserId(userId);
@@ -244,9 +248,9 @@ function Notification({ className, location, style, trackScrollPosition }) {
     </ErrorBoundary>
   );
 
-  async function handleFetchNotifications(reloading) {
+  async function handleFetchNotifications() {
     await fetchRankings();
-    if (reloading || notifications.length === 0) {
+    if (notifications.length === 0) {
       fetchNews();
     }
   }
@@ -255,12 +259,15 @@ function Notification({ className, location, style, trackScrollPosition }) {
     if (!loadingNotificationRef.current) {
       setLoadingNotifications(true);
       loadingNotificationRef.current = true;
-      const {
-        rewards,
-        loadMoreRewards,
-        totalRewardedTwinkles,
-        totalRewardedTwinkleCoins
-      } = await loadRewards();
+      const [
+        { currentChatSubject, loadMoreNotifications, notifications },
+        {
+          rewards,
+          loadMoreRewards,
+          totalRewardedTwinkles,
+          totalRewardedTwinkleCoins
+        }
+      ] = await Promise.all([fetchNotifications(), loadRewards()]);
       if (mounted.current) {
         onLoadRewards({
           rewards,
@@ -269,8 +276,6 @@ function Notification({ className, location, style, trackScrollPosition }) {
           totalRewardedTwinkleCoins
         });
       }
-      const { currentChatSubject, loadMoreNotifications, notifications } =
-        await fetchNotifications();
       if (mounted.current) {
         onFetchNotifications({
           currentChatSubject,
