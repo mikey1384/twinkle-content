@@ -244,39 +244,38 @@ function Notification({ className, location, style, trackScrollPosition }) {
     </ErrorBoundary>
   );
 
-  function handleFetchNotifications(reloading) {
+  async function handleFetchNotifications(reloading) {
+    await fetchRankings();
     if (reloading || notifications.length === 0) {
       fetchNews();
     }
-    fetchRankings();
   }
 
   async function fetchNews() {
     if (!loadingNotificationRef.current) {
       setLoadingNotifications(true);
       loadingNotificationRef.current = true;
-      const [
-        { currentChatSubject, loadMoreNotifications, notifications },
-        {
-          rewards,
-          loadMoreRewards,
-          totalRewardedTwinkles,
-          totalRewardedTwinkleCoins
-        }
-      ] = await Promise.all([fetchNotifications(), loadRewards()]);
-      if (mounted.current) {
-        onFetchNotifications({
-          currentChatSubject,
-          loadMoreNotifications,
-          notifications
-        });
-      }
+      const {
+        rewards,
+        loadMoreRewards,
+        totalRewardedTwinkles,
+        totalRewardedTwinkleCoins
+      } = await loadRewards();
       if (mounted.current) {
         onLoadRewards({
           rewards,
           loadMoreRewards,
           totalRewardedTwinkles,
           totalRewardedTwinkleCoins
+        });
+      }
+      const { currentChatSubject, loadMoreNotifications, notifications } =
+        await fetchNotifications();
+      if (mounted.current) {
+        onFetchNotifications({
+          currentChatSubject,
+          loadMoreNotifications,
+          notifications
         });
       }
       if (mounted.current) {
@@ -308,6 +307,7 @@ function Notification({ className, location, style, trackScrollPosition }) {
         myMonthlyXP
       });
     }
+    return Promise.resolve();
   }
 
   function handleScroll(event) {
