@@ -122,7 +122,7 @@ function Notification({ className, location, style, trackScrollPosition }) {
       onClearNotifications();
     }
     if ((userId && userId !== prevUserId) || (!userId && prevUserId)) {
-      handleFetchNotifications(true);
+      handleFetchNotifications();
     }
     onSetPrevUserId(userId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
