@@ -849,9 +849,14 @@ export default function ContentReducer(state, action) {
           comments: prevContentState.comments.map((comment) => {
             if (comment.id === action.commentId) {
               const replies = comment.replies || [];
+              const replyIds = replies.map((reply) => reply.id);
+              const loadedReplies = action.replies.filter(
+                (reply) => !replyIds.includes(reply.id)
+              );
               const targetReplyIndex = replies
                 .map((reply) => reply.id)
                 .indexOf(action.loadMoreButtonId || action.replyId);
+
               return {
                 ...comment,
                 replies: [
@@ -871,7 +876,7 @@ export default function ContentReducer(state, action) {
                           }
                         : reply
                     ),
-                  ...action.replies,
+                  ...loadedReplies,
                   ...(action.loadMoreButton
                     ? [
                         {
@@ -904,6 +909,10 @@ export default function ContentReducer(state, action) {
               const replies = (comment.replies || []).filter(
                 (reply) => reply.id <= action.replyId
               );
+              const replyIds = (comment.replies || []).map((reply) => reply.id);
+              const loadedReplies = action.replies.filter(
+                (reply) => !replyIds.includes(reply.id)
+              );
               replies[replies.length - 1] = {
                 ...replies[replies.length - 1],
                 isExpanded: true,
@@ -921,7 +930,7 @@ export default function ContentReducer(state, action) {
                         }
                       : reply
                   ),
-                  ...action.replies,
+                  ...loadedReplies,
                   ...(comment.replies || []).filter(
                     (reply) => reply.id > action.replyId
                   )
@@ -938,6 +947,10 @@ export default function ContentReducer(state, action) {
         [contentKey]: {
           ...prevContentState,
           comments: prevContentState.comments.map((comment) => {
+            const replyIds = (comment.replies || []).map((reply) => reply.id);
+            const loadedReplies = action.replies.filter(
+              (reply) => !replyIds.includes(reply.id)
+            );
             if (comment.id === action.commentId) {
               return {
                 ...comment,
@@ -952,7 +965,7 @@ export default function ContentReducer(state, action) {
                           }
                         : reply
                     ),
-                  ...action.replies,
+                  ...loadedReplies,
                   ...(comment.replies || []).filter(
                     (reply) => reply.id > action.replyId
                   )
@@ -974,6 +987,10 @@ export default function ContentReducer(state, action) {
                 ...replies[replies.length - 1],
                 numReplies: 0
               };
+              const replyIds = (comment.replies || []).map((reply) => reply.id);
+              const loadedReplies = action.replies.filter(
+                (reply) => !replyIds.includes(reply.id)
+              );
               return {
                 ...comment,
                 replies: [
@@ -985,7 +1002,7 @@ export default function ContentReducer(state, action) {
                         }
                       : reply
                   ),
-                  ...action.replies,
+                  ...loadedReplies,
                   ...(comment.replies || []).filter(
                     (reply) => reply.id > action.replyId
                   )
