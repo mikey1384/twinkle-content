@@ -42,10 +42,11 @@ export default function Home({ profile, selectedTheme }) {
   const onUploadReply = useContentContext((v) => v.actions.onUploadReply);
 
   const { id, numPics, username, pictures } = profile;
-  const { comments, commentsLoaded, commentsLoadMoreButton } = useContentState({
-    contentType: 'user',
-    contentId: profile.id
-  });
+  const { comments, commentsLoaded, commentsLoadMoreButton, pinnedCommentId } =
+    useContentState({
+      contentType: 'user',
+      contentId: profile.id
+    });
   const [loadingComments, setLoadingComments] = useState(false);
   const mounted = useRef(true);
   const CommentInputAreaRef = useRef(null);
@@ -135,7 +136,7 @@ export default function Home({ profile, selectedTheme }) {
             onPreviewClick={onLoadComments}
             onReplySubmit={onUploadReply}
             onRewardCommentEdit={onEditRewardComment}
-            parent={{ ...profile, contentType: 'user' }}
+            parent={{ ...profile, pinnedCommentId, contentType: 'user' }}
             userId={userId}
           />
         </SectionPanel>
