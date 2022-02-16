@@ -136,7 +136,11 @@ export default function Home({ profile, selectedTheme }) {
             onPreviewClick={onLoadComments}
             onReplySubmit={onUploadReply}
             onRewardCommentEdit={onEditRewardComment}
-            parent={{ ...profile, pinnedCommentId, contentType: 'user' }}
+            parent={{
+              ...profile,
+              pinnedCommentId: pinnedCommentId || profile.pinnedCommentId,
+              contentType: 'user'
+            }}
             userId={userId}
           />
         </SectionPanel>
