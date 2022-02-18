@@ -15,7 +15,7 @@ export default function ChatActions(dispatch) {
         channelId
       });
     },
-    onChangeOnlineStatus({ userId, member, isOnline }) {
+    onChangeOnlineStatus({ userId, member = {}, isOnline }) {
       return dispatch({
         type: 'CHANGE_ONLINE_STATUS',
         userId,
