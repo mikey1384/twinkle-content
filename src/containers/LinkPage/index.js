@@ -17,6 +17,7 @@ import Icon from 'components/Icon';
 import InvalidPage from 'components/InvalidPage';
 import Loading from 'components/Loading';
 import Description from './Description';
+import Advertisement from 'components/Advertisement';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { determineUserCanRewardThis, determineXpButtonDisabled } from 'helpers';
@@ -295,6 +296,7 @@ export default function LinkPage({
         paddingBottom: '10rem'
       }}
     >
+      <Advertisement />
       <div
         className={css`
           width: 60%;
