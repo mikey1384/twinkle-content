@@ -134,7 +134,7 @@ function Notification({ className, location, style, trackScrollPosition }) {
 
   useEffect(() => {
     if (rankingsLoaded && !notificationsLoaded) {
-      handleFetchNotifications();
+      fetchNews();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
