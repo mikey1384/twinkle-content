@@ -640,6 +640,9 @@ function Comment({
                         />
                       </span>
                     )}
+                  {isCommentForContentSubject && (
+                    <SubjectLink subject={subject} />
+                  )}
                   {filePath &&
                     !isDeleteNotification &&
                     (userId ? (
@@ -684,9 +687,6 @@ function Comment({
                     />
                   ) : (
                     <div>
-                      {isCommentForContentSubject && (
-                        <SubjectLink subject={subject} />
-                      )}
                       {isHidden ? (
                         <SecretComment
                           onClick={() =>
@@ -706,20 +706,18 @@ function Comment({
                             ? viewedTheSecretMessageLabel
                             : commentWasDeletedLabel}
                         </div>
-                      ) : (
-                        !commentIsEmpty && (
-                          <LongText
-                            contentId={commentId}
-                            contentType="comment"
-                            section="comment"
-                            maxLines={maxLines}
-                            className="comment__content"
-                            isPreview={isPreview}
-                          >
-                            {comment.content}
-                          </LongText>
-                        )
-                      )}
+                      ) : !commentIsEmpty ? (
+                        <LongText
+                          contentId={commentId}
+                          contentType="comment"
+                          section="comment"
+                          maxLines={maxLines}
+                          className="comment__content"
+                          isPreview={isPreview}
+                        >
+                          {comment.content}
+                        </LongText>
+                      ) : null}
                       {!isPreview &&
                         !isHidden &&
                         !isNotification &&

@@ -370,7 +370,7 @@ function Reply({
                 )}
               {filePath &&
                 (userId ? (
-                  <div style={{ width: '100%' }}>
+                  <div style={{ width: '100%', marginTop: '2rem' }}>
                     <ContentFileViewer
                       contentId={reply.id}
                       contentType="comment"
@@ -411,14 +411,16 @@ function Reply({
                 />
               ) : (
                 <div>
-                  <LongText
-                    contentType="comment"
-                    contentId={reply.id}
-                    section="reply"
-                    className="comment__content"
-                  >
-                    {reply.content}
-                  </LongText>
+                  {!replyIsEmpty ? (
+                    <LongText
+                      contentType="comment"
+                      contentId={reply.id}
+                      section="reply"
+                      className="comment__content"
+                    >
+                      {reply.content}
+                    </LongText>
+                  ) : null}
                   <div
                     style={{
                       marginTop: '1rem',

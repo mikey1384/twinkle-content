@@ -482,6 +482,7 @@ function Comment({
                     />
                   </span>
                 )}
+              {isCommentForContentSubject && <SubjectLink subject={subject} />}
               {filePath &&
                 (userId ? (
                   <div style={{ width: '100%', paddingTop: '3rem' }}>
@@ -525,9 +526,6 @@ function Comment({
                 />
               ) : (
                 <div>
-                  {isCommentForContentSubject && (
-                    <SubjectLink subject={subject} />
-                  )}
                   {isHidden ? (
                     <SecretComment
                       onClick={() => history.push(`/subjects/${subject?.id}`)}
