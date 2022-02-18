@@ -266,7 +266,7 @@ export default function HomeMenuItems({ history, style = {} }) {
           </div>
         </div>
       </div>
-      {!userId ? (
+      {!userId && !deviceIsMobile ? (
         <div
           style={{
             height: '150px',
