@@ -14,10 +14,11 @@ export default function Advertisement() {
   return (
     <ins
       className="adsbygoogle"
-      style={{ display: 'block' }}
+      style={{ display: 'block', width: '100%' }}
       data-ad-client="ca-pub-9422244865978432"
-      data-ad-slot="9422244865978432"
+      data-ad-slot="8704975620"
       data-ad-format="auto"
+      data-full-width-responsive="true"
     />
   );
 }
