@@ -31,7 +31,7 @@ export default function ThisMonth({
   const [allSelected, setAllSelected] = useState(!!myId);
   const users = useMemo(() => {
     if (allSelected) {
-      return allMonthly;
+      return allMonthly || [];
     }
     return top30sMonthly || [];
   }, [allMonthly, allSelected, top30sMonthly]);
