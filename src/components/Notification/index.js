@@ -33,6 +33,10 @@ function Notification({ className, location, style, trackScrollPosition }) {
   const { userId } = useMyState();
   const loadMore = useNotiContext((v) => v.state.loadMore);
   const notifications = useNotiContext((v) => v.state.notifications);
+  const notificationsLoaded = useNotiContext(
+    (v) => v.state.notificationsLoaded
+  );
+  const rankingsLoaded = useNotiContext((v) => v.state.rankingsLoaded);
   const numNewNotis = useNotiContext((v) => v.state.numNewNotis);
   const prevUserId = useNotiContext((v) => v.state.prevUserId);
   const rewards = useNotiContext((v) => v.state.rewards);
@@ -127,6 +131,13 @@ function Notification({ className, location, style, trackScrollPosition }) {
     onSetPrevUserId(userId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prevUserId, userId]);
+
+  useEffect(() => {
+    if (rankingsLoaded && !notificationsLoaded) {
+      handleFetchNotifications();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (

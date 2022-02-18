@@ -66,7 +66,8 @@ export default function NotiReducer(state, action) {
           ...state.loadMore,
           notifications: action.loadMoreNotifications
         },
-        numNewNotis: 0
+        numNewNotis: 0,
+        notificationsLoaded: true
       };
     case 'LOAD_REWARDS':
       return {
