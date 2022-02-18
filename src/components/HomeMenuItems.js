@@ -266,7 +266,7 @@ export default function HomeMenuItems({ history, style = {} }) {
           </div>
         </div>
       </div>
-      {userId === 5 ? (
+      {!userId ? (
         <div
           style={{
             height: '150px',
