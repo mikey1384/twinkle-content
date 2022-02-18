@@ -313,6 +313,16 @@ export default function VideoPage({
                 }
               `}
             >
+              {!userId && !deviceIsMobile ? (
+                <div
+                  style={{
+                    height: '150px',
+                    marginTop: '1rem'
+                  }}
+                >
+                  <Advertisement />
+                </div>
+              ) : null}
               <PageTab
                 questions={questions}
                 watchTabActive={watchTabActive}
@@ -320,16 +330,6 @@ export default function VideoPage({
                 onQuestionTabClick={() => setWatchTabActive(false)}
               />
               <div style={{ marginTop: '2rem' }}>
-                {!userId && !deviceIsMobile ? (
-                  <div
-                    style={{
-                      height: '150px',
-                      marginTop: '1rem'
-                    }}
-                  >
-                    <Advertisement />
-                  </div>
-                ) : null}
                 {!questionsBuilderShown && (
                   <XPVideoPlayer
                     autoplay
