@@ -266,7 +266,17 @@ export default function HomeMenuItems({ history, style = {} }) {
           </div>
         </div>
       </div>
-      {userId === 5 ? <Advertisement /> : null}
+      {userId === 5 ? (
+        <div
+          style={{
+            width: '100%',
+            height: '20rem',
+            marginTop: '1rem'
+          }}
+        >
+          <Advertisement />
+        </div>
+      ) : null}
     </ErrorBoundary>
   );
 
