@@ -9,6 +9,7 @@ import Body from './Body';
 import TargetContent from './TargetContent';
 import Embedly from 'components/Embedly';
 import Profile from './Profile';
+import Advertisement from 'components/Advertisement';
 import { css } from '@emotion/css';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { container } from './Styles';
@@ -220,6 +221,7 @@ export default function ContentPanel({
         }}
       >
         <div style={style} className={className} ref={ComponentRef}>
+          <Advertisement />
           <div
             style={{
               width: '100%',

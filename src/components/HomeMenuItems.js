@@ -30,7 +30,7 @@ export default function HomeMenuItems({ history, style = {} }) {
   const onSetProfilesLoaded = useAppContext(
     (v) => v.user.actions.onSetProfilesLoaded
   );
-  const { managementLevel, profileTheme, userId } = useMyState();
+  const { managementLevel, profileTheme } = useMyState();
 
   return (
     <ErrorBoundary>
@@ -266,16 +266,7 @@ export default function HomeMenuItems({ history, style = {} }) {
           </div>
         </div>
       </div>
-      {!userId && !deviceIsMobile ? (
-        <div
-          style={{
-            height: '150px',
-            marginTop: '1rem'
-          }}
-        >
-          <Advertisement />
-        </div>
-      ) : null}
+      {!deviceIsMobile ? <Advertisement style={{ marginTop: '1rem' }} /> : null}
     </ErrorBoundary>
   );
 

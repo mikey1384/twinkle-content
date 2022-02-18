@@ -4,6 +4,7 @@ import { Color } from 'constants/css';
 import { useAppContext } from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
+import Advertisement from 'components/Advertisement';
 
 const logInLabel = localize('logIn');
 
@@ -81,6 +82,7 @@ export default function PleaseLogIn() {
           {logInLabel}
         </Button>
       </div>
+      <Advertisement style={{ marginTop: '1rem' }} />
     </div>
   );
 }
