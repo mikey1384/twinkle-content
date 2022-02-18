@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, Route } from 'react-router-dom';
-import Icon from 'components/Icon';
-import ErrorBoundary from 'components/ErrorBoundary';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { isMobile } from 'helpers';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
 import { css } from '@emotion/css';
+import Icon from 'components/Icon';
+import ErrorBoundary from 'components/ErrorBoundary';
+import Advertisement from './Advertisement';
 import localize from 'constants/localize';
 
 HomeMenuItems.propTypes = {
@@ -29,7 +30,7 @@ export default function HomeMenuItems({ history, style = {} }) {
   const onSetProfilesLoaded = useAppContext(
     (v) => v.user.actions.onSetProfilesLoaded
   );
-  const { managementLevel, profileTheme } = useMyState();
+  const { managementLevel, profileTheme, userId } = useMyState();
 
   return (
     <ErrorBoundary>
@@ -265,6 +266,7 @@ export default function HomeMenuItems({ history, style = {} }) {
           </div>
         </div>
       </div>
+      {userId === 5 ? <Advertisement /> : null}
     </ErrorBoundary>
   );
 
