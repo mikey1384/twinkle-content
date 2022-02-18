@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import ErrorBoundary from 'components/ErrorBoundary';
+import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 
 export default function Advertisement() {
-  const [, setTime] = useState(Date.now());
   useEffect(() => {
-    const interval = setInterval(() => setTime(Date.now()), 1000);
-    return () => {
-      clearInterval(interval);
+    addEvent(window, 'load', handleLoad);
+    return function cleanUp() {
+      removeEvent(window, 'load', handleLoad);
     };
-  }, []);
-  useEffect(() => {
-    (window.adsbygoogle = window.adsbygoogle || []).push({});
-  }, []);
+    function handleLoad() {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    }
+  });
   return (
     <ErrorBoundary>
       <ins
