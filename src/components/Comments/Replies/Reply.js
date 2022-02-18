@@ -370,7 +370,7 @@ function Reply({
                 )}
               {filePath &&
                 (userId ? (
-                  <div style={{ width: '100%', marginTop: '2rem' }}>
+                  <div style={{ width: '100%', paddingTop: '2rem' }}>
                     <ContentFileViewer
                       contentId={reply.id}
                       contentType="comment"

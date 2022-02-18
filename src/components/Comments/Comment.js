@@ -646,7 +646,7 @@ function Comment({
                   {filePath &&
                     !isDeleteNotification &&
                     (userId ? (
-                      <div style={{ width: '100%', paddingTop: '3rem' }}>
+                      <div style={{ width: '100%', paddingTop: '2rem' }}>
                         <ContentFileViewer
                           contentId={comment.id}
                           contentType="comment"
