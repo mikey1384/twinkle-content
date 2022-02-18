@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ErrorBoundary from 'components/ErrorBoundary';
 
 export default function Advertisement() {
   const [, setTime] = useState(Date.now());
@@ -12,13 +13,15 @@ export default function Advertisement() {
     (window.adsbygoogle = window.adsbygoogle || []).push({});
   }, []);
   return (
-    <ins
-      className="adsbygoogle"
-      style={{ display: 'block' }}
-      data-ad-client="ca-pub-9422244865978432"
-      data-ad-slot="8704975620"
-      data-ad-format="auto"
-      data-full-width-responsive="true"
-    />
+    <ErrorBoundary>
+      <ins
+        className="adsbygoogle"
+        style={{ display: 'block' }}
+        data-ad-client="ca-pub-9422244865978432"
+        data-ad-slot="8704975620"
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      />
+    </ErrorBoundary>
   );
 }
