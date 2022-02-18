@@ -269,8 +269,7 @@ export default function HomeMenuItems({ history, style = {} }) {
       {userId === 5 ? (
         <div
           style={{
-            width: '100%',
-            height: '20rem',
+            height: '150px',
             marginTop: '1rem'
           }}
         >
