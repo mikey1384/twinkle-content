@@ -18,9 +18,11 @@ import Loading from 'components/Loading';
 import Details from './Details';
 import NavMenu from './NavMenu';
 import PageTab from './PageTab';
+import Advertisement from 'components/Advertisement';
 import URL from 'constants/URL';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import { isMobile } from 'helpers';
 import { fetchedVideoCodeFromURL } from 'helpers/stringHelpers';
 import { useContentState, useMyState } from 'helpers/hooks';
 import {
@@ -31,6 +33,7 @@ import {
 } from 'contexts';
 import localize from 'constants/localize';
 
+const deviceIsMobile = isMobile(navigator);
 const addEditQuestionsLabel = localize('addEditQuestions');
 const addQuestionsLabel = localize('addQuestions');
 const commentOnThisVideoLabel = localize('commentOnThisVideo');
@@ -317,6 +320,16 @@ export default function VideoPage({
                 onQuestionTabClick={() => setWatchTabActive(false)}
               />
               <div style={{ marginTop: '2rem' }}>
+                {!userId && !deviceIsMobile ? (
+                  <div
+                    style={{
+                      height: '150px',
+                      marginTop: '1rem'
+                    }}
+                  >
+                    <Advertisement />
+                  </div>
+                ) : null}
                 {!questionsBuilderShown && (
                   <XPVideoPlayer
                     autoplay
