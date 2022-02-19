@@ -114,7 +114,7 @@ function ContentInput() {
   }, [contentIsVideo, urlError, youTubeVideoDetails]);
 
   useEffect(() => {
-    if (contentIsVideo && !isValidYoutubeUrl(url)) {
+    if (contentIsVideo && !isValidYoutubeUrl(url) && !stringIsEmpty(url)) {
       setUrlError('That is not a valid YouTube url');
     }
   }, [contentIsVideo, url]);
