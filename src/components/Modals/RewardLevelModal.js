@@ -59,13 +59,11 @@ export default function RewardLevelModal({
       <ErrorBoundary>
         <header>{setRewardLevelLabel}</header>
         <main style={{ fontSize: '3rem', paddingTop: 0 }}>
-          {contentType === 'video' && (
-            <RewardLevelExplainer
-              style={{ marginTop: '5rem' }}
-              rewardLevel={rewardLevel}
-              type="video"
-            />
-          )}
+          <RewardLevelExplainer
+            style={{ marginTop: '5rem' }}
+            rewardLevel={rewardLevel}
+            type={contentType}
+          />
           <RewardLevelForm
             rewardLevel={rewardLevel}
             onSetRewardLevel={setRewardLevel}

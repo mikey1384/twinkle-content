@@ -35,10 +35,10 @@ import {
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useHomeContext, useInputContext } from 'contexts';
 import localize from 'constants/localize';
+import RewardLevelExplainer from 'components/RewardLevelExplainer';
 
 const BodyRef = document.scrollingElement || document.documentElement;
 const enterDescriptionOptionalLabel = localize('enterDescriptionOptional');
-const forEveryStarYouAddLabel = localize('forEveryStarYouAddSubject');
 const postLabel = localize('post');
 const postSubjectLabel = localize('postSubject');
 const postSubjectPlaceholder = localize('postSubjectPlaceholder');
@@ -297,9 +297,10 @@ function SubjectInput() {
               )}
               {canEditRewardLevel && (
                 <div style={{ marginTop: '1rem' }}>
-                  <div style={{ fontSize: '1.5rem' }}>
-                    {forEveryStarYouAddLabel}
-                  </div>
+                  <RewardLevelExplainer
+                    rewardLevel={rewardLevel}
+                    type="subject"
+                  />
                   <RewardLevelForm
                     themed
                     isFromSubjectInput
