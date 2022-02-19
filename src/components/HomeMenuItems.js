@@ -8,7 +8,6 @@ import { useAppContext } from 'contexts';
 import { css } from '@emotion/css';
 import Icon from 'components/Icon';
 import ErrorBoundary from 'components/ErrorBoundary';
-import Advertisement from './Advertisement';
 import localize from 'constants/localize';
 
 HomeMenuItems.propTypes = {
@@ -266,7 +265,6 @@ export default function HomeMenuItems({ history, style = {} }) {
           </div>
         </div>
       </div>
-      {!deviceIsMobile ? <Advertisement style={{ marginTop: '1rem' }} /> : null}
     </ErrorBoundary>
   );
 

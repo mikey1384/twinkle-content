@@ -18,7 +18,6 @@ import Loading from 'components/Loading';
 import Details from './Details';
 import NavMenu from './NavMenu';
 import PageTab from './PageTab';
-import Advertisement from 'components/Advertisement';
 import URL from 'constants/URL';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
@@ -311,7 +310,6 @@ export default function VideoPage({
                 }
               `}
             >
-              <Advertisement />
               <PageTab
                 questions={questions}
                 watchTabActive={watchTabActive}
