@@ -5,12 +5,12 @@ import localize from 'constants/localize';
 import { Color } from 'constants/css';
 import ErrorBoundary from 'components/ErrorBoundary';
 
-RewardLevelExplainer.propTypes = {
+Video.propTypes = {
   rewardLevel: PropTypes.number,
   style: PropTypes.object
 };
 
-export default function RewardLevelExplainer({ rewardLevel, style }) {
+export default function Video({ rewardLevel, style }) {
   const forEveryStarYouAddLabel = localize('forEveryStarYouAdd');
   const rewardLevelDescription = useMemo(() => {
     switch (rewardLevel) {

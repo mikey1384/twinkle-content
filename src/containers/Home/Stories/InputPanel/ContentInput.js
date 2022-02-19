@@ -23,7 +23,7 @@ import {
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useHomeContext, useInputContext } from 'contexts';
 import localize from 'constants/localize';
-import VideoRewardLevelExplainer from 'components/VideoRewardLevelExplainer';
+import RewardLevelExplainer from 'components/RewardLevelExplainer';
 
 const BodyRef = document.scrollingElement || document.documentElement;
 const enterDescriptionOptionalLabel = localize('enterDescriptionOptional');
@@ -300,7 +300,10 @@ function ContentInput() {
             contentIsVideo &&
             canEditRewardLevel && (
               <div style={{ marginTop: '1rem' }}>
-                <VideoRewardLevelExplainer rewardLevel={form.rewardLevel} />
+                <RewardLevelExplainer
+                  rewardLevel={form.rewardLevel}
+                  type="video"
+                />
                 <RewardLevelForm
                   themed
                   isFromContentInput

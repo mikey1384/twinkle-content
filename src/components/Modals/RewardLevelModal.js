@@ -4,7 +4,7 @@ import Modal from 'components/Modal';
 import Button from 'components/Button';
 import ErrorBoundary from 'components/ErrorBoundary';
 import RewardLevelForm from 'components/Forms/RewardLevelForm';
-import VideoRewardLevelExplainer from 'components/VideoRewardLevelExplainer';
+import RewardLevelExplainer from 'components/RewardLevelExplainer';
 import AlertModal from 'components/Modals/AlertModal';
 import { useAppContext } from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
@@ -60,9 +60,10 @@ export default function RewardLevelModal({
         <header>{setRewardLevelLabel}</header>
         <main style={{ fontSize: '3rem', paddingTop: 0 }}>
           {contentType === 'video' && (
-            <VideoRewardLevelExplainer
+            <RewardLevelExplainer
               style={{ marginTop: '5rem' }}
               rewardLevel={rewardLevel}
+              type="video"
             />
           )}
           <RewardLevelForm
