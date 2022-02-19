@@ -15,6 +15,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import LocalContext from '../../../Context';
 import {
   addEmoji,
+  getFileInfoFromFileName,
   exceedsCharLimit,
   stringIsEmpty,
   finalizeEmoji
@@ -162,6 +163,13 @@ function SubjectInput() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const fileType = useMemo(() => {
+    const { fileType: result } = getFileInfoFromFileName(
+      attachment?.file?.name
+    );
+    return ['other', 'archive', 'word'].includes(result) ? 'file' : result;
+  }, [attachment]);
+
   return (
     <ErrorBoundary className={PanelStyle}>
       {!uploadingFile && (
@@ -226,7 +234,11 @@ function SubjectInput() {
             >
               <SwitchButton
                 checked={!!isMadeByUser}
-                label="I made this myself"
+                label={
+                  <>
+                    I made this <b>{fileType}</b> myself
+                  </>
+                }
                 labelStyle={{ fontSize: '1.5rem' }}
                 onChange={() => handleSetIsMadeByUser(!isMadeByUser)}
                 style={{ marginRight: '1rem' }}
