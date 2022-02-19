@@ -276,6 +276,7 @@ export default function LinkItem({
         <div>
           <DropdownButton
             skeuomorphic
+            icon="chevron-down"
             color="darkerGray"
             menuProps={editMenuItems}
           />
