@@ -12,10 +12,7 @@ import Link from 'components/Link';
 import UserDetails from 'components/UserDetails';
 import Loading from 'components/Loading';
 import { useHistory } from 'react-router-dom';
-import {
-  MAX_PROFILE_PIC_SIZE,
-  SELECTED_LANGUAGE
-} from 'constants/defaultValues';
+import { MAX_PROFILE_PIC_SIZE } from 'constants/defaultValues';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { timeSince } from 'helpers/timeStampHelpers';
@@ -28,6 +25,7 @@ import {
   useProfileContext
 } from 'contexts';
 import localize from 'constants/localize';
+import MessagesButton from './MessagesButton';
 
 const chatLabel = localize('chat2');
 const changePicLabel = localize('changePic');
@@ -255,22 +253,6 @@ function ProfilePanel({ expandable, profileId, style }) {
     () => !profileLoaded || heightNotSet || visible || inView,
     [heightNotSet, inView, profileLoaded, visible]
   );
-  const leaveMessageLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'kr') {
-      return (
-        <>
-          메시지
-          {profileId === userId ? '' : ' 남기기'}
-        </>
-      );
-    }
-    return (
-      <>
-        {profileId === userId ? '' : 'Leave '}
-        Message
-      </>
-    );
-  }, [profileId, userId]);
 
   return (
     <div style={style} ref={ComponentRef} key={profileId}>
@@ -472,11 +454,16 @@ function ProfilePanel({ expandable, profileId, style }) {
                           >
                             {editBioLabel}
                           </Button>
-                          {profileId === userId &&
-                            comments.length > 0 &&
-                            renderMessagesButton({
-                              style: { marginLeft: '0.5rem' }
-                            })}
+                          {profileId === userId && comments.length > 0 && (
+                            <MessagesButton
+                              commentsShown={commentsShown}
+                              profileId={profileId}
+                              myId={userId}
+                              onMessagesButtonClick={onMessagesButtonClick}
+                              numMessages={numMessages}
+                              style={{ marginLeft: '1rem' }}
+                            />
+                          )}
                         </div>
                       </div>
                     )}
@@ -493,7 +480,14 @@ function ProfilePanel({ expandable, profileId, style }) {
                             {chatLabel}
                           </span>
                         </Button>
-                        {renderMessagesButton()}
+                        <MessagesButton
+                          commentsShown={commentsShown}
+                          profileId={profileId}
+                          myId={userId}
+                          onMessagesButtonClick={onMessagesButtonClick}
+                          numMessages={numMessages}
+                          style={{ marginLeft: '1rem' }}
+                        />
                       </div>
                     )}
                     {lastActive && !online && profileId !== userId && (
@@ -666,26 +660,6 @@ function ProfilePanel({ expandable, profileId, style }) {
     if (mounted.current) {
       if (profileId !== userId) CommentInputAreaRef.current?.focus();
     }
-  }
-
-  function renderMessagesButton() {
-    return (
-      <Button
-        style={{ marginLeft: '1rem' }}
-        disabled={commentsShown && profileId === userId}
-        color="logoBlue"
-        onClick={onMessagesButtonClick}
-      >
-        <Icon icon="comment-alt" />
-        <span style={{ marginLeft: '0.7rem' }}>
-          {leaveMessageLabel}
-          {profileId === userId && Number(numMessages) > 0 && !commentsShown
-            ? `${numMessages > 1 ? 's' : ''}`
-            : ''}
-          {Number(numMessages) > 0 && !commentsShown ? ` (${numMessages})` : ''}
-        </span>
-      </Button>
-    );
   }
 
   async function handleUploadBio(params) {
