@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import SectionPanel from 'components/SectionPanel';
-import BarChart from './BarChart';
+import MonthlyXPBarChart from './MonthlyXPBarChart';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { useAppContext } from 'contexts';
 import localize from 'constants/localize';
@@ -10,10 +10,11 @@ const monthlyXpGrowthLabel = localize('monthlyXpGrowth');
 
 MonthlyXp.propTypes = {
   selectedTheme: PropTypes.string,
-  userId: PropTypes.number.isRequired
+  userId: PropTypes.number.isRequired,
+  style: PropTypes.object
 };
 
-export default function MonthlyXp({ selectedTheme, userId }) {
+export default function MonthlyXp({ selectedTheme, userId, style }) {
   const loadMonthlyXp = useAppContext((v) => v.requestHelpers.loadMonthlyXp);
   const [data, setData] = useState();
   const [loaded, setLoaded] = useState(false);
@@ -44,9 +45,13 @@ export default function MonthlyXp({ selectedTheme, userId }) {
         customColorTheme={selectedTheme}
         title={monthlyXpGrowthLabel}
         loaded={loaded}
+        style={style}
       >
         {data && (
-          <BarChart bars={data?.bars || []} topValue={data?.topValue || 1} />
+          <MonthlyXPBarChart
+            bars={data?.bars || []}
+            colorTheme={selectedTheme}
+          />
         )}
       </SectionPanel>
     </ErrorBoundary>

@@ -108,7 +108,13 @@ export default function Achievements({
           />
         )}
       </SectionPanel>
-      <MonthlyXp selectedTheme={selectedTheme} userId={id} />
+      <div style={{ display: 'flex', width: '100%' }}>
+        <MonthlyXp
+          style={{ width: '50%' }}
+          userId={id}
+          selectedTheme={selectedTheme}
+        />
+      </div>
     </ErrorBoundary>
   );
 
