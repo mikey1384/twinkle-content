@@ -113,11 +113,15 @@ function ContentInput() {
     return contentIsVideo && !youTubeVideoDetails && !urlError;
   }, [contentIsVideo, urlError, youTubeVideoDetails]);
 
+  const titleIsEmpty = useMemo(() => stringIsEmpty(title), [title]);
+  const urlIsEmpty = useMemo(() => stringIsEmpty(url), [url]);
+  const urlHelperIsEmpty = useMemo(() => stringIsEmpty(urlHelper), [urlHelper]);
+
   useEffect(() => {
-    if (contentIsVideo && !isValidYoutubeUrl(url) && !stringIsEmpty(url)) {
+    if (contentIsVideo && !isValidYoutubeUrl(url) && !urlIsEmpty) {
       setUrlError('That is not a valid YouTube url');
     }
-  }, [contentIsVideo, url]);
+  }, [contentIsVideo, url, urlIsEmpty]);
 
   const descriptionExceedsCharLimit = useMemo(
     () =>
@@ -150,18 +154,18 @@ function ContentInput() {
   );
 
   const buttonDisabled = useMemo(() => {
-    if (stringIsEmpty(url) || stringIsEmpty(title)) return true;
+    if (urlIsEmpty || titleIsEmpty) return true;
     if (urlError || urlExceedsCharLimit) return true;
     if (titleExceedsCharLimit) return true;
     if (descriptionExceedsCharLimit) return true;
     return false;
   }, [
     descriptionExceedsCharLimit,
-    title,
     titleExceedsCharLimit,
-    url,
+    titleIsEmpty,
     urlError,
-    urlExceedsCharLimit
+    urlExceedsCharLimit,
+    urlIsEmpty
   ]);
 
   useEffect(() => {
@@ -218,7 +222,7 @@ function ContentInput() {
         style={{ marginTop: '1rem' }}
         checked={contentIsVideo}
       />
-      {!stringIsEmpty(urlHelper) && (
+      {!urlHelperIsEmpty && (
         <span
           style={{
             fontSize: '1.7rem',
@@ -235,7 +239,7 @@ function ContentInput() {
           }}
         />
       )}
-      {loadingYTDetails && !stringIsEmpty(url) ? (
+      {loadingYTDetails && !urlIsEmpty ? (
         <Loading />
       ) : (
         <div style={{ marginTop: '1.5rem' }}>
@@ -296,7 +300,7 @@ function ContentInput() {
             )}
           </div>
           {!buttonDisabled &&
-            !urlHelper &&
+            urlHelperIsEmpty &&
             contentIsVideo &&
             canEditRewardLevel && (
               <div style={{ marginTop: '1rem' }}>
