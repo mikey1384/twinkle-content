@@ -55,8 +55,11 @@ export default function MonthlyXPBarChart({ bars }) {
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={barData}>
             <XAxis dataKey="name" />
-            <YAxis tickFormatter={handleYAxisTickFormat} />
-            <Tooltip wrapperStyle={{ width: 100, backgroundColor: '#ccc' }} />
+            <YAxis tickFormatter={handleYAxisTickFormatting} />
+            <Tooltip
+              formatter={(value) => addCommasToNumber(value)}
+              wrapperStyle={{ width: 100, backgroundColor: '#ccc' }}
+            />
             <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
             <Bar
               dataKey="XP"
@@ -69,7 +72,7 @@ export default function MonthlyXPBarChart({ bars }) {
     </div>
   );
 
-  function handleYAxisTickFormat(value) {
+  function handleYAxisTickFormatting(value) {
     if (value > 1000000) {
       return value / 1000000 + 'M';
     }
