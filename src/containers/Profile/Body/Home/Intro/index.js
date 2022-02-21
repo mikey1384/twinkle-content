@@ -317,17 +317,34 @@ export default function Intro({ profile, selectedTheme }) {
                 color="darkerGray"
                 menuProps={[
                   {
-                    label: editLabel,
+                    label: (
+                      <>
+                        <Icon icon="pencil-alt" />
+                        <span style={{ marginLeft: '1rem' }}>{editLabel}</span>
+                      </>
+                    ),
                     onClick: () => setBioEditModalShown(true)
                   },
                   {
-                    label: removeLabel,
-                    onClick: () =>
-                      uploadBio({
+                    label: (
+                      <>
+                        <Icon icon="trash-alt" />
+                        <span style={{ marginLeft: '1rem' }}>
+                          {removeLabel}
+                        </span>
+                      </>
+                    ),
+                    onClick: async () => {
+                      const data = await uploadBio({
                         firstLine: '',
                         secondLine: '',
                         thirdLine: ''
-                      })
+                      });
+                      onSetUserState({
+                        userId: data.userId,
+                        newState: data.bio
+                      });
+                    }
                   }
                 ]}
               />
