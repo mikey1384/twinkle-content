@@ -16,7 +16,7 @@ XPGrowth.propTypes = {
 
 export default function XPGrowth({ selectedTheme, userId, style }) {
   const loadMonthlyXp = useAppContext((v) => v.requestHelpers.loadMonthlyXp);
-  const [data, setData] = useState();
+  const [monthlyXPData, setMonthlyXPData] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const mounted = useRef(true);
 
@@ -32,7 +32,7 @@ export default function XPGrowth({ selectedTheme, userId, style }) {
     async function init() {
       const data = await loadMonthlyXp(userId);
       if (mounted.current) {
-        setData(data);
+        setMonthlyXPData(data);
         setLoaded(true);
       }
     }
@@ -47,12 +47,7 @@ export default function XPGrowth({ selectedTheme, userId, style }) {
         loaded={loaded}
         style={style}
       >
-        {data && (
-          <MonthlyXPBarChart
-            bars={data?.bars || []}
-            colorTheme={selectedTheme}
-          />
-        )}
+        <MonthlyXPBarChart data={monthlyXPData} colorTheme={selectedTheme} />
       </SectionPanel>
     </ErrorBoundary>
   );

@@ -18,17 +18,17 @@ import localize from 'constants/localize';
 const monthlyXpGrowthLabel = localize('monthlyXpGrowth');
 
 MonthlyXPBarChart.propTypes = {
-  bars: PropTypes.array.isRequired
+  data: PropTypes.array.isRequired
 };
 
-export default function MonthlyXPBarChart({ bars }) {
+export default function MonthlyXPBarChart({ data }) {
   const barData = useMemo(() => {
     const result = [];
-    for (let bar of bars) {
+    for (let bar of data) {
       result.push({ name: bar.label, XP: bar.value });
     }
     return result;
-  }, [bars]);
+  }, [data]);
 
   return (
     <div>
