@@ -11,6 +11,7 @@ import {
 } from 'recharts';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import { addCommasToNumber } from 'helpers/stringHelpers';
 import CustomBar from './Bar';
 import localize from 'constants/localize';
 
@@ -54,7 +55,7 @@ export default function MonthlyXPBarChart({ bars }) {
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={barData}>
             <XAxis dataKey="name" />
-            <YAxis />
+            <YAxis tickFormatter={handleYAxisTickFormat} />
             <Tooltip wrapperStyle={{ width: 100, backgroundColor: '#ccc' }} />
             <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
             <Bar
@@ -67,4 +68,14 @@ export default function MonthlyXPBarChart({ bars }) {
       </div>
     </div>
   );
+
+  function handleYAxisTickFormat(value) {
+    if (value > 1000000) {
+      return value / 1000000 + 'M';
+    }
+    if (value > 1000) {
+      return value / 1000 + 'k';
+    }
+    return addCommasToNumber(value);
+  }
 }
