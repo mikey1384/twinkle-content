@@ -13,7 +13,7 @@ const colors = {
   posting: Color.logoBlue(),
   watching: Color.passionFruit(),
   vocabulary: Color.orange(),
-  missions: Color.yellowGreen(),
+  missions: Color.green(),
   grammar: Color.purple()
 };
 
