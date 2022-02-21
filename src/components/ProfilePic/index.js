@@ -25,7 +25,7 @@ export default function ProfilePic({
   isBusy,
   isProfilePage,
   large,
-  onClick = () => {},
+  onClick,
   userId,
   online,
   profilePicUrl,
@@ -52,10 +52,13 @@ export default function ProfilePic({
         userSelect: 'none',
         borderRadius: '50%',
         paddingBottom: '100%',
-        cursor: myId === userId && isProfilePage ? 'pointer' : 'default',
+        cursor:
+          (myId === userId && isProfilePage) || onClick
+            ? 'pointer'
+            : style?.cursor || 'default',
         ...style
       }}
-      onClick={onClick}
+      onClick={onClick || (() => {})}
       onMouseEnter={() => setChangePictureShown(true)}
       onMouseLeave={() => setChangePictureShown(false)}
     >
