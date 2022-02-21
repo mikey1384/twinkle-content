@@ -269,6 +269,16 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
+    async loadMonthlyLeaderboards() {
+      try {
+        const { data: leaderboards } = await request.get(
+          `${URL}/user/leaderBoard/monthly`
+        );
+        return Promise.resolve(leaderboards);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async loadMonthlyXp(userId) {
       try {
         const { data } = await request.get(
@@ -327,16 +337,6 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
-    async loadMonthlyLeaderboards() {
-      try {
-        const { data: leaderboards } = await request.get(
-          `${URL}/user/leaderBoard/monthly`
-        );
-        return Promise.resolve(leaderboards);
-      } catch (error) {
-        return handleError(error);
-      }
-    },
     async loadUsers({ orderBy, lastUserId, lastActive, lastTwinkleXP } = {}) {
       try {
         const { data } = await request.get(
@@ -369,6 +369,16 @@ export default function userRequestHelpers({ auth, handleError, token }) {
           data: { rank, xp }
         } = await request.get(`${URL}/user/xp`, auth());
         return Promise.resolve({ rank, xp });
+      } catch (error) {
+        return handleError(error);
+      }
+    },
+    async loadXpComposition(userId) {
+      try {
+        const { data } = await request.get(
+          `${URL}/user/xp/composition?userId=${userId}`
+        );
+        return Promise.resolve(data);
       } catch (error) {
         return handleError(error);
       }

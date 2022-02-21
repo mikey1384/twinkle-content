@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import SectionPanel from 'components/SectionPanel';
 import MonthlyXPBarChart from './MonthlyXPBarChart';
+import CompositionPieChart from './CompositionPieChart';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { useAppContext } from 'contexts';
 import localize from 'constants/localize';
@@ -16,7 +17,11 @@ XPGrowth.propTypes = {
 
 export default function XPGrowth({ selectedTheme, userId, style }) {
   const loadMonthlyXp = useAppContext((v) => v.requestHelpers.loadMonthlyXp);
+  const loadXpComposition = useAppContext(
+    (v) => v.requestHelpers.loadXpComposition
+  );
   const [monthlyXPData, setMonthlyXPData] = useState([]);
+  const [xpCompositionData, setXpCompositionData] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const mounted = useRef(true);
 
@@ -29,12 +34,28 @@ export default function XPGrowth({ selectedTheme, userId, style }) {
 
   useEffect(() => {
     init();
+
     async function init() {
+      if (userId) {
+        await Promise.all([handleLoadXpComposition(), handleLoadMonthlyXP()]);
+        if (mounted.current) {
+          setLoaded(true);
+        }
+      }
+    }
+    async function handleLoadXpComposition() {
+      const data = await loadXpComposition(userId);
+      if (mounted.current) {
+        setXpCompositionData(data);
+      }
+      return Promise.resolve();
+    }
+    async function handleLoadMonthlyXP() {
       const data = await loadMonthlyXp(userId);
       if (mounted.current) {
         setMonthlyXPData(data);
-        setLoaded(true);
       }
+      return Promise.resolve();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
@@ -47,7 +68,16 @@ export default function XPGrowth({ selectedTheme, userId, style }) {
         loaded={loaded}
         style={style}
       >
-        <MonthlyXPBarChart data={monthlyXPData} colorTheme={selectedTheme} />
+        <div
+          style={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'space-between'
+          }}
+        >
+          <MonthlyXPBarChart data={monthlyXPData} colorTheme={selectedTheme} />
+          <CompositionPieChart data={xpCompositionData} />
+        </div>
       </SectionPanel>
     </ErrorBoundary>
   );

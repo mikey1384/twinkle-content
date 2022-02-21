@@ -31,7 +31,15 @@ export default function MonthlyXPBarChart({ data }) {
   }, [data]);
 
   return (
-    <div>
+    <div
+      style={{
+        width: 'CALC(50% - 2rem)',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}
+    >
       <p
         className={css`
           font-weight: bold;
@@ -46,7 +54,7 @@ export default function MonthlyXPBarChart({ data }) {
       <div
         style={{
           marginTop: '2rem',
-          width: 'CALC(50% - 2rem)',
+          width: '100%',
           height: '25rem',
           display: 'flex',
           justifyContent: 'center'

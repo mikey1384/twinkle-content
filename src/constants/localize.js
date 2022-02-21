@@ -1560,6 +1560,10 @@ const languageObj = {
     en: 'XP Analysis',
     kr: 'XP 분석'
   },
+  xpAcquisition: {
+    en: 'XP Acquisition',
+    kr: 'XP 획득처'
+  },
   xpVideos: {
     en: 'XP Videos',
     kr: 'XP 동영상'
