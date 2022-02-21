@@ -6,15 +6,15 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import { useAppContext } from 'contexts';
 import localize from 'constants/localize';
 
-const monthlyXpGrowthLabel = localize('monthlyXpGrowth');
+const xpAnalysisLabel = localize('xpAnalysis');
 
-MonthlyXp.propTypes = {
+XPGrowth.propTypes = {
   selectedTheme: PropTypes.string,
   userId: PropTypes.number.isRequired,
   style: PropTypes.object
 };
 
-export default function MonthlyXp({ selectedTheme, userId, style }) {
+export default function XPGrowth({ selectedTheme, userId, style }) {
   const loadMonthlyXp = useAppContext((v) => v.requestHelpers.loadMonthlyXp);
   const [data, setData] = useState();
   const [loaded, setLoaded] = useState(false);
@@ -43,7 +43,7 @@ export default function MonthlyXp({ selectedTheme, userId, style }) {
     <ErrorBoundary>
       <SectionPanel
         customColorTheme={selectedTheme}
-        title={monthlyXpGrowthLabel}
+        title={xpAnalysisLabel}
         loaded={loaded}
         style={style}
       >

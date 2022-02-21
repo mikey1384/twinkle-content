@@ -1556,6 +1556,10 @@ const languageObj = {
     en: 'When you are ready, press "Start"',
     kr: '준비되시면 시작 버튼을 누르세요'
   },
+  xpAnalysis: {
+    en: 'XP Analysis',
+    kr: 'XP 분석'
+  },
   xpVideos: {
     en: 'XP Videos',
     kr: 'XP 동영상'

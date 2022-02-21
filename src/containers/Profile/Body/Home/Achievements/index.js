@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import SectionPanel from 'components/SectionPanel';
 import ContentPanel from 'components/ContentPanel';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
-import MonthlyXp from './MonthlyXp';
+import XPGrowth from './XPGrowth';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import { useAppContext, useProfileContext } from 'contexts';
@@ -109,11 +109,7 @@ export default function Achievements({
         )}
       </SectionPanel>
       <div style={{ display: 'flex', width: '100%' }}>
-        <MonthlyXp
-          style={{ width: '50%' }}
-          userId={id}
-          selectedTheme={selectedTheme}
-        />
+        <XPGrowth userId={id} selectedTheme={selectedTheme} />
       </div>
     </ErrorBoundary>
   );

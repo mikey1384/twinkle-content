@@ -9,7 +9,12 @@ import {
   CartesianGrid,
   ResponsiveContainer
 } from 'recharts';
+import { mobileMaxWidth } from 'constants/css';
+import { css } from '@emotion/css';
 import CustomBar from './Bar';
+import localize from 'constants/localize';
+
+const monthlyXpGrowthLabel = localize('monthlyXpGrowth');
 
 MonthlyXPBarChart.propTypes = {
   bars: PropTypes.array.isRequired
@@ -25,28 +30,41 @@ export default function MonthlyXPBarChart({ bars }) {
   }, [bars]);
 
   return (
-    <div
-      style={{
-        marginTop: '2rem',
-        width: '80%',
-        height: '25rem',
-        display: 'flex',
-        justifyContent: 'center'
-      }}
-    >
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={barData}>
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip wrapperStyle={{ width: 100, backgroundColor: '#ccc' }} />
-          <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-          <Bar
-            dataKey="XP"
-            shape={<CustomBar totalLength={barData.length} />}
-            barSize={30}
-          />
-        </BarChart>
-      </ResponsiveContainer>
+    <div>
+      <p
+        className={css`
+          font-weight: bold;
+          font-size: 2rem;
+          @media (max-width: ${mobileMaxWidth}) {
+            font-size: 1.7rem;
+          }
+        `}
+      >
+        {monthlyXpGrowthLabel}
+      </p>
+      <div
+        style={{
+          marginTop: '2rem',
+          width: 'CALC(50% - 2rem)',
+          height: '25rem',
+          display: 'flex',
+          justifyContent: 'center'
+        }}
+      >
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={barData}>
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip wrapperStyle={{ width: 100, backgroundColor: '#ccc' }} />
+            <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+            <Bar
+              dataKey="XP"
+              shape={<CustomBar totalLength={barData.length} />}
+              barSize={30}
+            />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 }
