@@ -82,17 +82,10 @@ export default function Feeds({
             bordered
             color={selectedTheme}
             style={{
+              height: '5rem',
               marginTop: '-1rem',
               marginBottom: '2rem'
             }}
-            className={css`
-              height: 5rem;
-              font-size: 1.6rem;
-              @media (max-width: ${mobileMaxWidth}) {
-                height: 4.5rem;
-                font-size: 1.3rem;
-              }
-            `}
           >
             <nav
               className={match?.params?.filter === 'byuser' ? '' : 'active'}
