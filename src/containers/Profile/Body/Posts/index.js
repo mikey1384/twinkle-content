@@ -5,6 +5,7 @@ import Loading from 'components/Loading';
 import SideMenu from '../SideMenu';
 import InvalidPage from 'components/InvalidPage';
 import Feeds from './Feeds';
+import { Route, Switch } from 'react-router-dom';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import { useInfiniteScroll, useProfileState } from 'helpers/hooks';
@@ -31,6 +32,7 @@ export default function Posts({
   history,
   location,
   match: {
+    path,
     params: { section, username }
   },
   selectedTheme
@@ -129,16 +131,43 @@ export default function Posts({
           }
         `}
       >
-        <Feeds
-          feeds={profileFeeds}
-          filterTable={filterTable}
-          loading={loadingFeeds}
-          loadMoreButton={loadMoreButton}
-          onLoadMoreFeeds={handleLoadMoreFeeds}
-          section={section}
-          selectedTheme={selectedTheme}
-          username={username}
-        />
+        <Switch>
+          <Route
+            exact
+            path={path}
+            render={({ match }) => (
+              <Feeds
+                match={match}
+                feeds={profileFeeds}
+                filterTable={filterTable}
+                history={history}
+                loading={loadingFeeds}
+                loadMoreButton={loadMoreButton}
+                onLoadMoreFeeds={handleLoadMoreFeeds}
+                section={section}
+                selectedTheme={selectedTheme}
+                username={username}
+              />
+            )}
+          />
+          <Route
+            path={`${path}/:filter`}
+            render={({ match }) => (
+              <Feeds
+                match={match}
+                feeds={profileFeeds}
+                filterTable={filterTable}
+                history={history}
+                loading={loadingFeeds}
+                loadMoreButton={loadMoreButton}
+                onLoadMoreFeeds={handleLoadMoreFeeds}
+                section={section}
+                selectedTheme={selectedTheme}
+                username={username}
+              />
+            )}
+          />
+        </Switch>
         {!['likes', 'watched'].includes(section) && (
           <SideMenu
             className={`desktop ${css`

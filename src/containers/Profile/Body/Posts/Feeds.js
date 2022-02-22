@@ -11,8 +11,10 @@ import { css } from '@emotion/css';
 Feeds.propTypes = {
   feeds: PropTypes.array.isRequired,
   filterTable: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
   loading: PropTypes.bool,
   loadMoreButton: PropTypes.bool,
+  match: PropTypes.object,
   onLoadMoreFeeds: PropTypes.func.isRequired,
   section: PropTypes.string.isRequired,
   selectedTheme: PropTypes.string,
@@ -22,8 +24,10 @@ Feeds.propTypes = {
 export default function Feeds({
   feeds,
   filterTable,
+  history,
   loading,
   loadMoreButton,
+  match,
   onLoadMoreFeeds,
   section,
   selectedTheme,
@@ -93,10 +97,18 @@ export default function Feeds({
                 }
               `}
             >
-              <nav className="active" onClick={() => console.log('clicked')}>
+              <nav
+                className={match?.params?.filter === 'byuser' ? '' : 'active'}
+                onClick={() => history.push(`/users/${username}/${section}`)}
+              >
                 All
               </nav>
-              <nav className="" onClick={() => console.log('clicked')}>
+              <nav
+                className={match?.params?.filter === 'byuser' ? 'active' : ''}
+                onClick={() =>
+                  history.push(`/users/${username}/${section}/byuser`)
+                }
+              >
                 Made by {username}
               </nav>
             </FilterBar>
