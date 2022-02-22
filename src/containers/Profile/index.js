@@ -83,7 +83,9 @@ export default function Profile({ history, location, match }) {
     <ErrorBoundary style={{ minHeight: '10rem' }}>
       {!notExist ? (
         <>
-          {loading && <Loading text="Loading Profile..." />}
+          {loading && (
+            <Loading style={{ marginTop: '5rem' }} text="Loading Profile..." />
+          )}
           {!loading && profile.id && (
             <div
               className={css`
