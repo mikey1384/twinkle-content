@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import FilterBar from 'components/FilterBar';
-import Loading from 'components/Loading';
 import SideMenu from '../SideMenu';
 import InvalidPage from 'components/InvalidPage';
 import Feeds from './Feeds';
@@ -43,8 +42,11 @@ export default function Posts({
   const {
     posts: {
       [section]: profileFeeds,
+      [section + 'ByUser']: byUserFeeds = [],
       [`${section}LoadMoreButton`]: loadMoreButton,
-      [`${section}Loaded`]: loaded
+      [`${section}ByUserLoadMoreButton`]: byUserLoadMoreButton,
+      [`${section}Loaded`]: loaded,
+      [`${section}ByUserLoaded`]: byUserloaded
     }
   } = useProfileState(username);
   if (!profileFeeds) return <InvalidPage style={{ paddingTop: '13rem' }} />;
@@ -89,9 +91,7 @@ export default function Posts({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname, profileFeeds.length, section, username]);
 
-  return !loaded ? (
-    <Loading style={{ marginBottom: '50vh' }} text="Loading..." />
-  ) : (
+  return (
     <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
       {!['likes', 'watched'].includes(section) && (
         <FilterBar
@@ -141,6 +141,7 @@ export default function Posts({
                 feeds={profileFeeds}
                 filterTable={filterTable}
                 history={history}
+                loaded={loaded}
                 loading={loadingFeeds}
                 loadMoreButton={loadMoreButton}
                 onLoadMoreFeeds={handleLoadMoreFeeds}
@@ -155,11 +156,12 @@ export default function Posts({
             render={({ match }) => (
               <Feeds
                 match={match}
-                feeds={profileFeeds}
+                feeds={byUserFeeds}
                 filterTable={filterTable}
                 history={history}
+                loaded={byUserloaded}
                 loading={loadingFeeds}
-                loadMoreButton={loadMoreButton}
+                loadMoreButton={byUserLoadMoreButton}
                 onLoadMoreFeeds={handleLoadMoreFeeds}
                 section={section}
                 selectedTheme={selectedTheme}

@@ -12,6 +12,7 @@ Feeds.propTypes = {
   feeds: PropTypes.array.isRequired,
   filterTable: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
+  loaded: PropTypes.bool,
   loading: PropTypes.bool,
   loadMoreButton: PropTypes.bool,
   match: PropTypes.object,
@@ -25,6 +26,7 @@ export default function Feeds({
   feeds,
   filterTable,
   history,
+  loaded,
   loading,
   loadMoreButton,
   match,
@@ -66,113 +68,113 @@ export default function Feeds({
 
   return (
     <ErrorBoundary>
-      {loading ? (
-        <Loading
-          className={css`
-            margin-top: ${['likes', 'watched'].includes(section)
-              ? '12rem'
-              : '3rem'};
-            width: ${['likes', 'watched'].includes(section) ? '55%' : '50%'};
-            @media (max-width: ${mobileMaxWidth}) {
-              width: 100%;
-            }
-          `}
-          text="Loading..."
-        />
-      ) : (
-        <div
-          className={css`
-            margin-top: 1rem;
-            width: ${['likes', 'watched'].includes(section) ? '55%' : '50%'};
-            @media (max-width: ${mobileMaxWidth}) {
-              width: 100%;
-            }
-          `}
-        >
-          {filterBarShown && (
-            <FilterBar
-              bordered
-              color={selectedTheme}
-              style={{
-                height: '5rem',
-                marginTop: '-1rem',
-                marginBottom: '2rem'
-              }}
-              className={css`
-                font-size: 1.6rem;
-                @media (max-width: ${mobileMaxWidth}) {
-                  font-size: 1.3rem;
-                }
-              `}
-            >
-              <nav
-                className={match?.params?.filter === 'byuser' ? '' : 'active'}
-                onClick={() => history.push(`/users/${username}/${section}`)}
-              >
-                All
-              </nav>
-              <nav
-                className={match?.params?.filter === 'byuser' ? 'active' : ''}
-                onClick={() =>
-                  history.push(`/users/${username}/${section}/byuser`)
-                }
-              >
-                Made by {username}
-              </nav>
-            </FilterBar>
-          )}
-          {feeds.length > 0 &&
-            feeds.map((feed, index) => {
-              const { contentId, contentType } = feed;
-              return (
-                <ContentPanel
-                  key={filterTable[section] + feed.feedId}
-                  style={{
-                    marginTop: index === 0 && '-1rem',
-                    marginBottom: '1rem',
-                    zIndex: feeds.length - index
-                  }}
-                  zIndex={feeds.length - index}
-                  contentId={contentId}
-                  contentType={contentType}
-                  commentsLoadLimit={5}
-                  numPreviewComments={1}
-                />
-              );
-            })}
-          {feeds.length === 0 && (
-            <div
-              style={{
-                marginTop: '7rem',
-                fontSize: '2.5rem',
-                fontWeight: 'bold',
-                display: 'flex',
-                justifyContent: 'center'
-              }}
-            >
-              <div style={{ textAlign: 'center' }}>{noFeedLabel}</div>
-            </div>
-          )}
-          {loadMoreButton && (
-            <LoadMoreButton
-              style={{ marginBottom: '1rem' }}
-              onClick={onLoadMoreFeeds}
-              loading={loading}
-              color="lightBlue"
-              filled
-            />
-          )}
-          <div
+      <div
+        className={css`
+          margin-top: 1rem;
+          width: ${['likes', 'watched'].includes(section) ? '55%' : '50%'};
+          @media (max-width: ${mobileMaxWidth}) {
+            width: 100%;
+          }
+        `}
+      >
+        {filterBarShown && (
+          <FilterBar
+            bordered
+            color={selectedTheme}
+            style={{
+              marginTop: '-1rem',
+              marginBottom: '2rem'
+            }}
             className={css`
-              display: ${loadMoreButton ? 'none' : 'block'};
-              height: 7rem;
+              height: 5rem;
+              font-size: 1.6rem;
               @media (max-width: ${mobileMaxWidth}) {
-                display: block;
+                height: 4.5rem;
+                font-size: 1.3rem;
               }
             `}
+          >
+            <nav
+              className={match?.params?.filter === 'byuser' ? '' : 'active'}
+              onClick={() => history.push(`/users/${username}/${section}`)}
+            >
+              All
+            </nav>
+            <nav
+              className={match?.params?.filter === 'byuser' ? 'active' : ''}
+              onClick={() =>
+                history.push(`/users/${username}/${section}/byuser`)
+              }
+            >
+              Made by {username}
+            </nav>
+          </FilterBar>
+        )}
+        {!loaded || loading ? (
+          <Loading
+            className={css`
+              margin-top: ${['likes', 'watched'].includes(section)
+                ? '12rem'
+                : '8rem'};
+              width: 100%;
+            `}
+            text="Loading..."
           />
-        </div>
-      )}
+        ) : (
+          <>
+            {feeds.length > 0 &&
+              feeds.map((feed, index) => {
+                const { contentId, contentType } = feed;
+                return (
+                  <ContentPanel
+                    key={filterTable[section] + feed.feedId}
+                    style={{
+                      marginTop: index === 0 && '-1rem',
+                      marginBottom: '1rem',
+                      zIndex: feeds.length - index
+                    }}
+                    zIndex={feeds.length - index}
+                    contentId={contentId}
+                    contentType={contentType}
+                    commentsLoadLimit={5}
+                    numPreviewComments={1}
+                  />
+                );
+              })}
+            {feeds.length === 0 && (
+              <div
+                style={{
+                  marginTop: '7rem',
+                  fontSize: '2.5rem',
+                  fontWeight: 'bold',
+                  display: 'flex',
+                  justifyContent: 'center'
+                }}
+              >
+                <div style={{ textAlign: 'center' }}>{noFeedLabel}</div>
+              </div>
+            )}
+          </>
+        )}
+        {loadMoreButton && (
+          <LoadMoreButton
+            style={{ marginBottom: '1rem' }}
+            onClick={onLoadMoreFeeds}
+            loading={loading}
+            color="lightBlue"
+            filled
+          />
+        )}
+        <div
+          className={css`
+            display: ${loadMoreButton ? 'none' : 'block'};
+            height: 7rem;
+            @media (max-width: ${mobileMaxWidth}) {
+              display: block;
+            }
+          `}
+        />
+      </div>
     </ErrorBoundary>
   );
 }
