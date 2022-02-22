@@ -4,11 +4,12 @@ import ProfilePic from 'components/ProfilePic';
 import ColorSelector from 'components/ColorSelector';
 import Button from 'components/Button';
 import AlertModal from 'components/Modals/AlertModal';
+import ImageModal from 'components/Modals/ImageModal';
 import ImageEditModal from 'components/Modals/ImageEditModal';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from '@emotion/css';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
-import { MAX_PROFILE_PIC_SIZE } from 'constants/defaultValues';
+import { cloudFrontURL, MAX_PROFILE_PIC_SIZE } from 'constants/defaultValues';
 import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import localize from 'constants/localize';
@@ -45,6 +46,7 @@ export default function Cover({
   } = profile;
   const [alertModalShown, setAlertModalShown] = useState(false);
   const [colorSelectorShown, setColorSelectorShown] = useState(false);
+  const [imageModalShown, setImageModalShown] = useState(false);
   const [imageEditModalShown, setImageEditModalShown] = useState(false);
   const [imageUri, setImageUri] = useState(null);
   const FileInputRef = useRef(null);
@@ -232,7 +234,9 @@ export default function Cover({
           onClick={
             userId === profile.id
               ? () => FileInputRef.current.click()
-              : undefined
+              : profilePicUrl
+              ? () => setImageModalShown(true)
+              : null
           }
           profilePicUrl={profilePicUrl}
           online={!!online}
@@ -240,6 +244,13 @@ export default function Cover({
           statusShown
         />
       </div>
+      {imageModalShown && (
+        <ImageModal
+          downloadable={false}
+          src={`${cloudFrontURL}${profilePicUrl}`}
+          onHide={() => setImageModalShown(false)}
+        />
+      )}
       {imageEditModalShown && (
         <ImageEditModal
           isProfilePic

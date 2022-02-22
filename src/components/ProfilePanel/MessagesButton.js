@@ -9,7 +9,7 @@ MessagesButton.propTypes = {
   profileId: PropTypes.number.isRequired,
   myId: PropTypes.number,
   onMessagesButtonClick: PropTypes.func.isRequired,
-  numMessages: PropTypes.number,
+  numMessages: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   style: PropTypes.object
 };
 
