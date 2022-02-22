@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import ContentPanel from 'components/ContentPanel';
@@ -37,6 +37,14 @@ export default function Feeds({
     () => ['all', 'subjects', 'links', 'videos'].includes(section),
     [section]
   );
+  useEffect(() => {
+    if (match?.params?.filter && match?.params?.filter !== 'byuser') {
+      return history.push(`/users/${username}/${section}`);
+    }
+    if (match?.params?.filter === 'byuser' && !filterBarShown) {
+      return history.push(`/users/${username}/${section}`);
+    }
+  }, [filterBarShown, history, match?.params?.filter, section, username]);
   const noFeedLabel = useMemo(() => {
     switch (section) {
       case 'all':
