@@ -4,7 +4,7 @@ import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import FilterBar from 'components/FilterBar';
 import ContentPanel from 'components/ContentPanel';
 import Loading from 'components/Loading';
-import SideMenu from './SideMenu';
+import SideMenu from '../SideMenu';
 import InvalidPage from 'components/InvalidPage';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
