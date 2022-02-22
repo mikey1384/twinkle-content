@@ -45,7 +45,7 @@ export default function CompositionPieChart({ data }) {
       </p>
       <div
         style={{
-          marginTop: '1rem',
+          marginTop: '2rem',
           width: '100%',
           height: '25rem',
           display: 'flex',

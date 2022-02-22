@@ -72,11 +72,14 @@ export default function XPGrowth({ selectedTheme, userId, style }) {
           style={{
             width: '100%',
             display: 'flex',
-            justifyContent: 'space-between'
+            justifyContent:
+              xpCompositionData.length > 0 ? 'space-between' : 'center'
           }}
         >
           <MonthlyXPBarChart data={monthlyXPData} colorTheme={selectedTheme} />
-          <CompositionPieChart data={xpCompositionData} />
+          {xpCompositionData.length > 0 && (
+            <CompositionPieChart data={xpCompositionData} />
+          )}
         </div>
       </SectionPanel>
     </ErrorBoundary>
