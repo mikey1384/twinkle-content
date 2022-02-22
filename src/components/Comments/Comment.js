@@ -806,7 +806,7 @@ function Comment({
                     </div>
                   )}
                 </div>
-                {!isPreview && (
+                {!isPreview && !isDeleteNotification && (
                   <RecommendationStatus
                     style={{ marginTop: likes.length > 0 ? '0.5rem' : '1rem' }}
                     contentType="comment"
@@ -839,7 +839,7 @@ function Comment({
                     uploaderId={uploader?.id}
                   />
                 )}
-                {!isPreview && (
+                {!isPreview && !isDeleteNotification && (
                   <RewardStatus
                     contentType="comment"
                     contentId={comment.id}
