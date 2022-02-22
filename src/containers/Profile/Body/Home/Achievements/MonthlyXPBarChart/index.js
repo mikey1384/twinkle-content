@@ -21,7 +21,7 @@ MonthlyXPBarChart.propTypes = {
   data: PropTypes.array.isRequired
 };
 
-export default function MonthlyXPBarChart({ data }) {
+export default function MonthlyXPBarChart({ data = [] }) {
   const barData = useMemo(() => {
     const result = [];
     for (let bar of data) {
