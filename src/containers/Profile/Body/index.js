@@ -83,7 +83,7 @@ export default function Body({
               location.pathname === `/users/${username}/watched` ? 'active' : ''
             }
             style={{ cursor: 'pointer' }}
-            onClick={() => history.push(`${match.url}${`/watched`}`)}
+            onClick={() => history.push(`/users/${username}/watched`)}
           >
             <a>{watchedLabel}</a>
           </nav>
@@ -92,7 +92,7 @@ export default function Body({
               location.pathname === `/users/${username}/likes` ? 'active' : ''
             }
             style={{ cursor: 'pointer' }}
-            onClick={() => history.push(`${match.url}${`/likes`}`)}
+            onClick={() => history.push(`/users/${username}/likes`)}
           >
             <a>{likesLabel}</a>
           </nav>
@@ -105,7 +105,7 @@ export default function Body({
                 : ''
             }
             style={{ cursor: 'pointer' }}
-            onClick={() => history.push(`${match.url}${`/all`}`)}
+            onClick={() => history.push(`/users/${username}/all`)}
           >
             <a>{postsLabel}</a>
           </nav>
