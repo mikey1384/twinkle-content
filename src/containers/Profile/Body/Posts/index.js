@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import FilterBar from 'components/FilterBar';
-import ContentPanel from 'components/ContentPanel';
 import Loading from 'components/Loading';
 import SideMenu from '../SideMenu';
 import InvalidPage from 'components/InvalidPage';
+import Feeds from './Feeds';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import { useInfiniteScroll, useProfileState } from 'helpers/hooks';
@@ -130,81 +129,15 @@ export default function Posts({
           }
         `}
       >
-        {loadingFeeds ? (
-          <Loading
-            className={css`
-              margin-top: ${['likes', 'watched'].includes(section)
-                ? '12rem'
-                : '3rem'};
-              width: ${['likes', 'watched'].includes(section) ? '55%' : '50%'};
-              @media (max-width: ${mobileMaxWidth}) {
-                width: 100%;
-              }
-            `}
-            text="Loading..."
-          />
-        ) : (
-          <div
-            className={css`
-              margin-top: 1rem;
-              width: ${['likes', 'watched'].includes(section) ? '55%' : '50%'};
-              @media (max-width: ${mobileMaxWidth}) {
-                width: 100%;
-              }
-            `}
-          >
-            {profileFeeds.length > 0 &&
-              profileFeeds.map((feed, index) => {
-                const { contentId, contentType } = feed;
-                return (
-                  <ContentPanel
-                    key={filterTable[section] + feed.feedId}
-                    style={{
-                      marginTop: index === 0 && '-1rem',
-                      marginBottom: '1rem',
-                      zIndex: profileFeeds.length - index
-                    }}
-                    zIndex={profileFeeds.length - index}
-                    contentId={contentId}
-                    contentType={contentType}
-                    commentsLoadLimit={5}
-                    numPreviewComments={1}
-                  />
-                );
-              })}
-            {profileFeeds.length === 0 && (
-              <div
-                style={{
-                  marginTop: '6rem',
-                  fontSize: '2.5rem',
-                  fontWeight: 'bold',
-                  display: 'flex',
-                  justifyContent: 'center'
-                }}
-              >
-                <div style={{ textAlign: 'center' }}>{onNoFeed(username)}</div>
-              </div>
-            )}
-            {loadMoreButton && (
-              <LoadMoreButton
-                style={{ marginBottom: '1rem' }}
-                onClick={handleLoadMoreFeeds}
-                loading={loading}
-                color="lightBlue"
-                filled
-              />
-            )}
-            <div
-              className={css`
-                display: ${loadMoreButton ? 'none' : 'block'};
-                height: 7rem;
-                @media (max-width: ${mobileMaxWidth}) {
-                  display: block;
-                }
-              `}
-            />
-          </div>
-        )}
+        <Feeds
+          feeds={profileFeeds}
+          filterTable={filterTable}
+          loading={loadingFeeds}
+          loadMoreButton={loadMoreButton}
+          onLoadMoreFeeds={handleLoadMoreFeeds}
+          section={section}
+          username={username}
+        />
         {!['likes', 'watched'].includes(section) && (
           <SideMenu
             className={`desktop ${css`
@@ -256,24 +189,5 @@ export default function Posts({
         item === 'all' ? '' : 's'
       }`
     );
-  }
-
-  function onNoFeed(username) {
-    switch (section) {
-      case 'all':
-        return `${username} has not uploaded anything, yet`;
-      case 'subjects':
-        return `${username} has not uploaded a subject, yet`;
-      case 'comments':
-        return `${username} has not uploaded a comment, yet`;
-      case 'links':
-        return `${username} has not uploaded a link, yet`;
-      case 'videos':
-        return `${username} has not uploaded a video, yet`;
-      case 'watched':
-        return `${username} has not watched any XP video so far`;
-      case 'likes':
-        return `${username} has not liked any content so far`;
-    }
   }
 }
