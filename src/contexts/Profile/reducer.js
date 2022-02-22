@@ -8,6 +8,9 @@ export default function ProfileReducer(state, action) {
       all: [],
       allLoaded: false,
       allLoadMoreButton: false,
+      allByUser: [],
+      allByUserLoaded: false,
+      allByUserLoadMoreButton: false,
       comments: [],
       commentsLoaded: false,
       commentsLoadMoreButton: false,
@@ -17,15 +20,24 @@ export default function ProfileReducer(state, action) {
       subjects: [],
       subjectsLoaded: false,
       subjectsLoadMoreButton: false,
+      subjectsByUser: [],
+      subjectsByUserLoaded: false,
+      subjectsByUserLoadMoreButton: false,
       videos: [],
       videosLoaded: false,
       videosLoadMoreButton: false,
+      videosByUser: [],
+      videosByUserLoaded: false,
+      videosByUserLoadMoreButton: false,
       watched: [],
       watchedLoaded: false,
       watchedLoadMoreButton: false,
       links: [],
       linksLoaded: false,
-      linksLoadMoreButton: false
+      linksLoadMoreButton: false,
+      linksByUser: [],
+      linksByUserLoaded: false,
+      linksByUserLoadMoreButton: false
     }
   };
   const username = action.username;
