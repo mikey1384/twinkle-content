@@ -136,6 +136,7 @@ export default function Posts({
           loadMoreButton={loadMoreButton}
           onLoadMoreFeeds={handleLoadMoreFeeds}
           section={section}
+          selectedTheme={selectedTheme}
           username={username}
         />
         {!['likes', 'watched'].includes(section) && (

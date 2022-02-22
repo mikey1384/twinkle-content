@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import ContentPanel from 'components/ContentPanel';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
+import FilterBar from 'components/FilterBar';
 import Loading from 'components/Loading';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
@@ -14,6 +15,7 @@ Feeds.propTypes = {
   loadMoreButton: PropTypes.bool,
   onLoadMoreFeeds: PropTypes.func.isRequired,
   section: PropTypes.string.isRequired,
+  selectedTheme: PropTypes.string,
   username: PropTypes.string.isRequired
 };
 
@@ -24,8 +26,13 @@ export default function Feeds({
   loadMoreButton,
   onLoadMoreFeeds,
   section,
+  selectedTheme,
   username
 }) {
+  const filterBarShown = useMemo(
+    () => ['all', 'subjects', 'links', 'videos'].includes(section),
+    [section]
+  );
   const noFeedLabel = useMemo(() => {
     switch (section) {
       case 'all':
@@ -70,6 +77,30 @@ export default function Feeds({
             }
           `}
         >
+          {filterBarShown && (
+            <FilterBar
+              bordered
+              color={selectedTheme}
+              style={{
+                height: '4.5rem',
+                marginTop: '-1rem',
+                marginBottom: '2rem'
+              }}
+              className={css`
+                font-size: 1.6rem;
+                @media (max-width: ${mobileMaxWidth}) {
+                  font-size: 1.3rem;
+                }
+              `}
+            >
+              <nav className="active" onClick={() => console.log('clicked')}>
+                All
+              </nav>
+              <nav className="" onClick={() => console.log('clicked')}>
+                Made by {username}
+              </nav>
+            </FilterBar>
+          )}
           {feeds.length > 0 &&
             feeds.map((feed, index) => {
               const { contentId, contentType } = feed;
@@ -92,7 +123,7 @@ export default function Feeds({
           {feeds.length === 0 && (
             <div
               style={{
-                marginTop: '6rem',
+                marginTop: '7rem',
                 fontSize: '2.5rem',
                 fontWeight: 'bold',
                 display: 'flex',
