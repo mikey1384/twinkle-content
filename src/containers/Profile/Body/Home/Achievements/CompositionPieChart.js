@@ -103,7 +103,7 @@ export default function CompositionPieChart({ data }) {
               data={data}
               dataKey="value"
               nameKey="name"
-              label={({ payload }) => addCommasToNumber(payload.value)}
+              label={handlePieLabelFormatting}
               cx="50%"
               cy="50%"
               outerRadius={deviceIsMobile ? 40 : 73}
@@ -120,4 +120,11 @@ export default function CompositionPieChart({ data }) {
       </div>
     </div>
   );
+
+  function handlePieLabelFormatting({ payload }) {
+    if (payload.value > 1000000) {
+      return Math.round(payload.value / 100000) / 10 + 'M';
+    }
+    return addCommasToNumber(payload.value);
+  }
 }
