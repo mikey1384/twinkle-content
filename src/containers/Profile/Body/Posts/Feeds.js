@@ -82,7 +82,7 @@ export default function Feeds({
               bordered
               color={selectedTheme}
               style={{
-                height: '4.5rem',
+                height: '5rem',
                 marginTop: '-1rem',
                 marginBottom: '2rem'
               }}
