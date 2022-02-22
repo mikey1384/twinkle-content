@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import ContentPanel from 'components/ContentPanel';
@@ -26,6 +26,25 @@ export default function Feeds({
   section,
   username
 }) {
+  const noFeedLabel = useMemo(() => {
+    switch (section) {
+      case 'all':
+        return `${username} has not uploaded anything, yet`;
+      case 'subjects':
+        return `${username} has not uploaded a subject, yet`;
+      case 'comments':
+        return `${username} has not uploaded a comment, yet`;
+      case 'links':
+        return `${username} has not uploaded a link, yet`;
+      case 'videos':
+        return `${username} has not uploaded a video, yet`;
+      case 'watched':
+        return `${username} has not watched any XP video so far`;
+      case 'likes':
+        return `${username} has not liked any content so far`;
+    }
+  }, [section, username]);
+
   return (
     <ErrorBoundary>
       {loading ? (
@@ -80,9 +99,7 @@ export default function Feeds({
                 justifyContent: 'center'
               }}
             >
-              <div style={{ textAlign: 'center' }}>
-                {handleNoFeed(username)}
-              </div>
+              <div style={{ textAlign: 'center' }}>{noFeedLabel}</div>
             </div>
           )}
           {loadMoreButton && (
@@ -107,23 +124,4 @@ export default function Feeds({
       )}
     </ErrorBoundary>
   );
-
-  function handleNoFeed(username) {
-    switch (section) {
-      case 'all':
-        return `${username} has not uploaded anything, yet`;
-      case 'subjects':
-        return `${username} has not uploaded a subject, yet`;
-      case 'comments':
-        return `${username} has not uploaded a comment, yet`;
-      case 'links':
-        return `${username} has not uploaded a link, yet`;
-      case 'videos':
-        return `${username} has not uploaded a video, yet`;
-      case 'watched':
-        return `${username} has not watched any XP video so far`;
-      case 'likes':
-        return `${username} has not liked any content so far`;
-    }
-  }
 }
