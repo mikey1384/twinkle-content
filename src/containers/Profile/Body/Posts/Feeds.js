@@ -17,7 +17,7 @@ Feeds.propTypes = {
   loaded: PropTypes.bool,
   loadMoreButton: PropTypes.bool,
   location: PropTypes.object.isRequired,
-  match: PropTypes.object,
+  filter: PropTypes.string,
   section: PropTypes.string.isRequired,
   selectedTheme: PropTypes.string,
   username: PropTypes.string.isRequired
@@ -30,7 +30,7 @@ export default function Feeds({
   loaded,
   loadMoreButton,
   location,
-  match,
+  filter,
   section,
   selectedTheme,
   username
@@ -84,13 +84,13 @@ export default function Feeds({
     [section]
   );
   useEffect(() => {
-    if (match?.params?.filter && match?.params?.filter !== 'byuser') {
+    if (filter && filter !== 'byuser') {
       return history.push(`/users/${username}/${section}`);
     }
-    if (match?.params?.filter === 'byuser' && !filterBarShown) {
+    if (filter === 'byuser' && !filterBarShown) {
       return history.push(`/users/${username}/${section}`);
     }
-  }, [filterBarShown, history, match?.params?.filter, section, username]);
+  }, [filterBarShown, history, filter, section, username]);
   const noFeedLabel = useMemo(() => {
     switch (section) {
       case 'all':
@@ -132,13 +132,13 @@ export default function Feeds({
             }}
           >
             <nav
-              className={match?.params?.filter === 'byuser' ? '' : 'active'}
+              className={filter === 'byuser' ? '' : 'active'}
               onClick={() => history.push(`/users/${username}/${section}`)}
             >
               All
             </nav>
             <nav
-              className={match?.params?.filter === 'byuser' ? 'active' : ''}
+              className={filter === 'byuser' ? 'active' : ''}
               onClick={() =>
                 history.push(`/users/${username}/${section}/byuser`)
               }

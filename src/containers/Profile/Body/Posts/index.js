@@ -111,7 +111,7 @@ export default function Posts({
             render={({ match }) => (
               <Feeds
                 location={location}
-                match={match}
+                filter={match?.params?.filter}
                 feeds={byUserFeeds}
                 filterTable={filterTable}
                 history={history}
