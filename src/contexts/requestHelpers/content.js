@@ -302,7 +302,7 @@ export default function contentRequestHelpers({ auth, handleError }) {
     } = {}) {
       try {
         const { data } = await request.get(
-          `${URL}/content/feeds?section=${section}&username=${username}${
+          `${URL}/content/feeds/byUser?section=${section}&username=${username}${
             lastFeedId
               ? `&lastFeedId=${lastFeedId}&lastTimeStamp=${lastTimeStamp}`
               : ''
