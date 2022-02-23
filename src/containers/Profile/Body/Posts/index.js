@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import FilterBar from 'components/FilterBar';
 import SideMenu from '../SideMenu';
@@ -7,8 +7,7 @@ import Feeds from './Feeds';
 import { Route, Switch } from 'react-router-dom';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
-import { useInfiniteScroll, useProfileState } from 'helpers/hooks';
-import { useAppContext, useProfileContext } from 'contexts';
+import { useProfileState } from 'helpers/hooks';
 
 Posts.propTypes = {
   history: PropTypes.object.isRequired,
@@ -36,9 +35,6 @@ export default function Posts({
   },
   selectedTheme
 }) {
-  const loadFeeds = useAppContext((v) => v.requestHelpers.loadFeeds);
-  const onLoadPosts = useProfileContext((v) => v.actions.onLoadPosts);
-  const onLoadMorePosts = useProfileContext((v) => v.actions.onLoadMorePosts);
   const {
     posts: {
       [section]: profileFeeds,
@@ -50,46 +46,6 @@ export default function Posts({
     }
   } = useProfileState(username);
   if (!profileFeeds) return <InvalidPage style={{ paddingTop: '13rem' }} />;
-
-  const [loading, setLoading] = useState(false);
-  const [loadingFeeds, setLoadingFeeds] = useState(false);
-  const mounted = useRef(true);
-  const selectedFilter = useRef('all');
-  useInfiniteScroll({
-    feedsLength: profileFeeds.length,
-    scrollable: profileFeeds.length > 0,
-    loadable: loadMoreButton,
-    loading,
-    onScrollToBottom: () => setLoading(true),
-    onLoad: handleLoadMoreFeeds
-  });
-
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    if (profileFeeds.length === 0) {
-      handleLoadTab(section);
-    }
-
-    async function handleLoadTab(tabName) {
-      selectedFilter.current = filterTable[tabName];
-      setLoadingFeeds(true);
-      const { data, filter: loadedFilter } = await loadFeeds({
-        username,
-        filter: filterTable[tabName]
-      });
-      if (loadedFilter === selectedFilter.current) {
-        onLoadPosts({ ...data, section: tabName, username });
-        setLoadingFeeds(false);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname, profileFeeds.length, section, username]);
 
   return (
     <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -137,14 +93,13 @@ export default function Posts({
             path={path}
             render={({ match }) => (
               <Feeds
+                location={location}
                 match={match}
                 feeds={profileFeeds}
                 filterTable={filterTable}
                 history={history}
                 loaded={loaded}
-                loading={loadingFeeds}
                 loadMoreButton={loadMoreButton}
-                onLoadMoreFeeds={handleLoadMoreFeeds}
                 section={section}
                 selectedTheme={selectedTheme}
                 username={username}
@@ -155,14 +110,13 @@ export default function Posts({
             path={`${path}/:filter`}
             render={({ match }) => (
               <Feeds
+                location={location}
                 match={match}
                 feeds={byUserFeeds}
                 filterTable={filterTable}
                 history={history}
                 loaded={byUserloaded}
-                loading={loadingFeeds}
                 loadMoreButton={byUserLoadMoreButton}
-                onLoadMoreFeeds={handleLoadMoreFeeds}
                 section={section}
                 selectedTheme={selectedTheme}
                 username={username}
@@ -189,31 +143,6 @@ export default function Posts({
       </div>
     </div>
   );
-
-  async function handleLoadMoreFeeds() {
-    try {
-      const { data } = await loadFeeds({
-        username,
-        filter: filterTable[section],
-        lastFeedId:
-          profileFeeds.length > 0
-            ? profileFeeds[profileFeeds.length - 1].feedId
-            : null,
-        lastTimeStamp:
-          profileFeeds.length > 0
-            ? profileFeeds[profileFeeds.length - 1][
-                section === 'watched' ? 'viewTimeStamp' : 'lastInteraction'
-              ]
-            : null
-      });
-      onLoadMorePosts({ ...data, section, username });
-      if (mounted.current) {
-        setLoading(false);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
 
   function onClickPostsMenu({ item }) {
     history.push(

@@ -1,10 +1,12 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import ContentPanel from 'components/ContentPanel';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import FilterBar from 'components/FilterBar';
 import Loading from 'components/Loading';
+import { useInfiniteScroll } from 'helpers/hooks';
+import { useAppContext, useProfileContext } from 'contexts';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 
@@ -13,10 +15,9 @@ Feeds.propTypes = {
   filterTable: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   loaded: PropTypes.bool,
-  loading: PropTypes.bool,
   loadMoreButton: PropTypes.bool,
+  location: PropTypes.object.isRequired,
   match: PropTypes.object,
-  onLoadMoreFeeds: PropTypes.func.isRequired,
   section: PropTypes.string.isRequired,
   selectedTheme: PropTypes.string,
   username: PropTypes.string.isRequired
@@ -27,14 +28,57 @@ export default function Feeds({
   filterTable,
   history,
   loaded,
-  loading,
   loadMoreButton,
+  location,
   match,
-  onLoadMoreFeeds,
   section,
   selectedTheme,
   username
 }) {
+  const [loading, setLoading] = useState(false);
+  const [loadingFeeds, setLoadingFeeds] = useState(false);
+  const selectedFilter = useRef('all');
+  const mounted = useRef(true);
+  const loadFeeds = useAppContext((v) => v.requestHelpers.loadFeeds);
+  const onLoadPosts = useProfileContext((v) => v.actions.onLoadPosts);
+  const onLoadMorePosts = useProfileContext((v) => v.actions.onLoadMorePosts);
+
+  useEffect(() => {
+    mounted.current = true;
+    return function cleanUp() {
+      mounted.current = false;
+    };
+  }, []);
+
+  useInfiniteScroll({
+    feedsLength: feeds.length,
+    scrollable: feeds.length > 0,
+    loadable: loadMoreButton,
+    loading,
+    onScrollToBottom: () => setLoading(true),
+    onLoad: handleLoadMoreFeeds
+  });
+
+  useEffect(() => {
+    if (feeds.length === 0) {
+      handleLoadTab(section);
+    }
+
+    async function handleLoadTab(tabName) {
+      selectedFilter.current = filterTable[tabName];
+      setLoadingFeeds(true);
+      const { data, filter: loadedFilter } = await loadFeeds({
+        username,
+        filter: filterTable[tabName]
+      });
+      if (loadedFilter === selectedFilter.current) {
+        onLoadPosts({ ...data, section: tabName, username });
+        setLoadingFeeds(false);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname, feeds.length, section, username]);
+
   const filterBarShown = useMemo(
     () => ['all', 'subjects', 'links', 'videos'].includes(section),
     [section]
@@ -103,7 +147,7 @@ export default function Feeds({
             </nav>
           </FilterBar>
         )}
-        {!loaded || loading ? (
+        {!loaded || loadingFeeds ? (
           <Loading
             className={css`
               margin-top: ${['likes', 'watched'].includes(section)
@@ -152,8 +196,8 @@ export default function Feeds({
         {loadMoreButton && (
           <LoadMoreButton
             style={{ marginBottom: '1rem' }}
-            onClick={onLoadMoreFeeds}
-            loading={loading}
+            onClick={handleLoadMoreFeeds}
+            loading={loadingFeeds}
             color="lightBlue"
             filled
           />
@@ -170,4 +214,26 @@ export default function Feeds({
       </div>
     </ErrorBoundary>
   );
+
+  async function handleLoadMoreFeeds() {
+    try {
+      const { data } = await loadFeeds({
+        username,
+        filter: filterTable[section],
+        lastFeedId: feeds.length > 0 ? feeds[feeds.length - 1].feedId : null,
+        lastTimeStamp:
+          feeds.length > 0
+            ? feeds[feeds.length - 1][
+                section === 'watched' ? 'viewTimeStamp' : 'lastInteraction'
+              ]
+            : null
+      });
+      onLoadMorePosts({ ...data, section, username });
+      if (mounted.current) {
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
