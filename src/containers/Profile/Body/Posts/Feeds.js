@@ -37,7 +37,7 @@ export default function Feeds({
 }) {
   const [loadingFeeds, setLoadingFeeds] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
-  const selectedFilter = useRef('all');
+  const selectedSection = useRef('all');
   const mounted = useRef(true);
   const loadFeeds = useAppContext((v) => v.requestHelpers.loadFeeds);
   const onLoadPosts = useProfileContext((v) => v.actions.onLoadPosts);
@@ -61,18 +61,21 @@ export default function Feeds({
 
   useEffect(() => {
     if (feeds.length === 0) {
+      if (filter === 'byuser') {
+        return console.log('byuser');
+      }
       handleLoadTab(section);
     }
 
-    async function handleLoadTab(tabName) {
-      selectedFilter.current = filterTable[tabName];
+    async function handleLoadTab(section) {
+      selectedSection.current = filterTable[section];
       setLoadingFeeds(true);
-      const { data, filter: loadedFilter } = await loadFeeds({
+      const { data, filter: loadedSection } = await loadFeeds({
         username,
-        filter: filterTable[tabName]
+        filter: filterTable[section]
       });
-      if (loadedFilter === selectedFilter.current) {
-        onLoadPosts({ ...data, section: tabName, username });
+      if (loadedSection === selectedSection.current) {
+        onLoadPosts({ ...data, section, username });
         setLoadingFeeds(false);
       }
     }
