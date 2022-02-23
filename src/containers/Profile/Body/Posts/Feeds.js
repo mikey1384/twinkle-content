@@ -125,19 +125,31 @@ export default function Feeds({
   const noFeedLabel = useMemo(() => {
     switch (section) {
       case 'all':
-        return `${username} has not uploaded anything, yet`;
+        return `${username} has not posted anything, yet`;
       case 'subjects':
-        return `${username} has not uploaded a subject, yet`;
+        return `${username} has not posted a subject, yet`;
       case 'comments':
-        return `${username} has not uploaded a comment, yet`;
+        return `${username} has not posted a comment, yet`;
       case 'links':
-        return `${username} has not uploaded a link, yet`;
+        return `${username} has not posted a link, yet`;
       case 'videos':
-        return `${username} has not uploaded a video, yet`;
+        return `${username} has not posted a video, yet`;
       case 'watched':
         return `${username} has not watched any XP video so far`;
       case 'likes':
         return `${username} has not liked any content so far`;
+    }
+  }, [section, username]);
+  const noFeedByUserLabel = useMemo(() => {
+    switch (section) {
+      case 'all':
+        return `${username} hasn't posted anything to show here`;
+      case 'subjects':
+        return `${username} hasn't posted any subject to show here`;
+      case 'links':
+        return `${username} hasn't posted any link to show here`;
+      case 'videos':
+        return `${username} hasn't posted any video to show here`;
     }
   }, [section, username]);
 
@@ -212,14 +224,16 @@ export default function Feeds({
             {feeds.length === 0 && (
               <div
                 style={{
-                  marginTop: '7rem',
+                  marginTop: '10rem',
                   fontSize: '2.5rem',
                   fontWeight: 'bold',
                   display: 'flex',
                   justifyContent: 'center'
                 }}
               >
-                <div style={{ textAlign: 'center' }}>{noFeedLabel}</div>
+                <div style={{ textAlign: 'center' }}>
+                  {filter === 'byuser' ? noFeedByUserLabel : noFeedLabel}
+                </div>
               </div>
             )}
           </>
