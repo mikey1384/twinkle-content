@@ -35,8 +35,8 @@ export default function Feeds({
   selectedTheme,
   username
 }) {
-  const [loading, setLoading] = useState(false);
   const [loadingFeeds, setLoadingFeeds] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
   const selectedFilter = useRef('all');
   const mounted = useRef(true);
   const loadFeeds = useAppContext((v) => v.requestHelpers.loadFeeds);
@@ -54,8 +54,8 @@ export default function Feeds({
     feedsLength: feeds.length,
     scrollable: feeds.length > 0,
     loadable: loadMoreButton,
-    loading,
-    onScrollToBottom: () => setLoading(true),
+    loading: loadingMore,
+    onScrollToBottom: () => setLoadingMore(true),
     onLoad: handleLoadMoreFeeds
   });
 
@@ -197,7 +197,7 @@ export default function Feeds({
           <LoadMoreButton
             style={{ marginBottom: '1rem' }}
             onClick={handleLoadMoreFeeds}
-            loading={loadingFeeds}
+            loading={loadingMore}
             color="lightBlue"
             filled
           />
@@ -230,7 +230,7 @@ export default function Feeds({
       });
       onLoadMorePosts({ ...data, section, username });
       if (mounted.current) {
-        setLoading(false);
+        setLoadingMore(false);
       }
     } catch (error) {
       console.error(error);
