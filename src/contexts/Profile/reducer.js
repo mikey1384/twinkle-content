@@ -81,6 +81,19 @@ export default function ProfileReducer(state, action) {
           }
         }
       };
+    case 'LOAD_POSTS_BY_USER':
+      return {
+        ...state,
+        [username]: {
+          ...prevContentState,
+          posts: {
+            ...prevContentState.posts,
+            [`${action.section}ByUser`]: action.feeds,
+            [`${action.section}ByUserLoaded`]: true,
+            [`${action.section}ByUserLoadMoreButton`]: action.loadMoreButton
+          }
+        }
+      };
     case 'LOAD_MORE_POSTS':
       return {
         ...state,
@@ -92,6 +105,20 @@ export default function ProfileReducer(state, action) {
               action.feeds
             ),
             [`${action.section}LoadMoreButton`]: action.loadMoreButton
+          }
+        }
+      };
+    case 'LOAD_MORE_POSTS_BY_USER':
+      return {
+        ...state,
+        [username]: {
+          ...prevContentState,
+          posts: {
+            ...prevContentState.posts,
+            [`${action.section}ByUser`]: prevContentState.posts[
+              `${action.section}ByUser`
+            ].concat(action.feeds),
+            [`${action.section}ByUserLoadMoreButton`]: action.loadMoreButton
           }
         }
       };

@@ -38,10 +38,20 @@ export default function Feeds({
   const [loadingFeeds, setLoadingFeeds] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const selectedSection = useRef('all');
+  const byUserSelected = useRef(false);
   const mounted = useRef(true);
   const loadFeeds = useAppContext((v) => v.requestHelpers.loadFeeds);
+  const loadFeedsByUser = useAppContext(
+    (v) => v.requestHelpers.loadFeedsByUser
+  );
   const onLoadPosts = useProfileContext((v) => v.actions.onLoadPosts);
+  const onLoadPostsByUser = useProfileContext(
+    (v) => v.actions.onLoadPostsByUser
+  );
   const onLoadMorePosts = useProfileContext((v) => v.actions.onLoadMorePosts);
+  const onLoadMorePostsByUser = useProfileContext(
+    (v) => v.actions.onLoadMorePostsByUser
+  );
 
   useEffect(() => {
     mounted.current = true;
@@ -62,13 +72,31 @@ export default function Feeds({
   useEffect(() => {
     if (feeds.length === 0) {
       if (filter === 'byuser') {
-        return console.log('byuser');
+        return handleLoadByUserTab(section);
       }
       handleLoadTab(section);
     }
 
+    async function handleLoadByUserTab(section) {
+      selectedSection.current = filterTable[section];
+      byUserSelected.current = true;
+      setLoadingFeeds(true);
+      const { data, section: loadedSection } = await loadFeedsByUser({
+        username,
+        section: filterTable[section]
+      });
+      if (
+        loadedSection === selectedSection.current &&
+        byUserSelected.current === true
+      ) {
+        onLoadPostsByUser({ ...data, section, username });
+        setLoadingFeeds(false);
+      }
+    }
+
     async function handleLoadTab(section) {
       selectedSection.current = filterTable[section];
+      byUserSelected.current = false;
       setLoadingFeeds(true);
       const { data, filter: loadedSection } = await loadFeeds({
         username,
@@ -219,24 +247,47 @@ export default function Feeds({
   );
 
   async function handleLoadMoreFeeds() {
-    try {
-      const { data } = await loadFeeds({
-        username,
-        filter: filterTable[section],
-        lastFeedId: feeds.length > 0 ? feeds[feeds.length - 1].feedId : null,
-        lastTimeStamp:
-          feeds.length > 0
-            ? feeds[feeds.length - 1][
-                section === 'watched' ? 'viewTimeStamp' : 'lastInteraction'
-              ]
-            : null
-      });
-      onLoadMorePosts({ ...data, section, username });
-      if (mounted.current) {
-        setLoadingMore(false);
+    if (filter === 'byuser') {
+      return loadMoreFeedsByUser();
+    }
+    loadMoreFeeds();
+    async function loadMoreFeeds() {
+      try {
+        const { data } = await loadFeeds({
+          username,
+          filter: filterTable[section],
+          lastFeedId: feeds.length > 0 ? feeds[feeds.length - 1].feedId : null,
+          lastTimeStamp:
+            feeds.length > 0
+              ? feeds[feeds.length - 1][
+                  section === 'watched' ? 'viewTimeStamp' : 'lastInteraction'
+                ]
+              : null
+        });
+        onLoadMorePosts({ ...data, section, username });
+        if (mounted.current) {
+          setLoadingMore(false);
+        }
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
+    }
+    async function loadMoreFeedsByUser() {
+      try {
+        const { data } = await loadFeedsByUser({
+          username,
+          section: filterTable[section],
+          lastFeedId: feeds.length > 0 ? feeds[feeds.length - 1].feedId : null,
+          lastTimeStamp:
+            feeds.length > 0 ? feeds[feeds.length - 1].lastInteraction : null
+        });
+        onLoadMorePostsByUser({ ...data, section, username });
+        if (mounted.current) {
+          setLoadingMore(false);
+        }
+      } catch (error) {
+        console.error(error);
+      }
     }
   }
 }

@@ -294,6 +294,26 @@ export default function contentRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async loadFeedsByUser({
+      lastFeedId,
+      lastTimeStamp,
+      section = 'all',
+      username
+    } = {}) {
+      try {
+        const { data } = await request.get(
+          `${URL}/content/feeds?section=${section}&username=${username}${
+            lastFeedId
+              ? `&lastFeedId=${lastFeedId}&lastTimeStamp=${lastTimeStamp}`
+              : ''
+          }`,
+          auth()
+        );
+        return Promise.resolve({ data, section });
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async loadHighXPSubjects() {
       try {
         const { data } = await request.get(`${URL}/content/highxp/subjects`);

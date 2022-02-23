@@ -25,9 +25,27 @@ export default function HomeActions(dispatch) {
         username
       });
     },
+    onLoadPostsByUser({ feeds, loadMoreButton, section, username }) {
+      return dispatch({
+        type: 'LOAD_POSTS_BY_USER',
+        feeds,
+        loadMoreButton,
+        section,
+        username
+      });
+    },
     onLoadMorePosts({ feeds, loadMoreButton, section, username }) {
       return dispatch({
         type: 'LOAD_MORE_POSTS',
+        feeds,
+        loadMoreButton,
+        section,
+        username
+      });
+    },
+    onLoadMorePostsByUser({ feeds, loadMoreButton, section, username }) {
+      return dispatch({
+        type: 'LOAD_MORE_POSTS_BY_USER',
         feeds,
         loadMoreButton,
         section,
