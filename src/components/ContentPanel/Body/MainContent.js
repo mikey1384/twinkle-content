@@ -83,7 +83,11 @@ export default function MainContent({
     [fileName]
   );
   const subjectIsAttachedToVideo = useMemo(
-    () => contentType === 'subject' && rootType === 'video' && rootObj,
+    () =>
+      contentType === 'subject' &&
+      rootType === 'video' &&
+      rootObj &&
+      !rootObj?.notFound,
     [contentType, rootObj, rootType]
   );
   const Description = useMemo(() => {

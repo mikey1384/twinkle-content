@@ -88,6 +88,7 @@ export default function Achievements({
           const { contentId, contentType } = notable;
           return (
             <ContentPanel
+              alwaysShow={feeds.length <= 3}
               key={contentType + contentId}
               zIndex={feeds.length - index}
               style={{ marginBottom: '1rem' }}

@@ -19,6 +19,7 @@ import { useInView } from 'react-intersection-observer';
 import localize from 'constants/localize';
 
 ContentPanel.propTypes = {
+  alwaysShow: PropTypes.bool,
   autoExpand: PropTypes.bool,
   className: PropTypes.string,
   commentsLoadLimit: PropTypes.number,
@@ -30,6 +31,7 @@ ContentPanel.propTypes = {
 };
 
 export default function ContentPanel({
+  alwaysShow,
   autoExpand,
   className,
   commentsLoadLimit,
@@ -181,8 +183,14 @@ export default function ContentPanel({
 
   const contentShown = useMemo(
     () =>
-      !loaded || heightNotSet || visible || inView || started || rootStarted,
-    [heightNotSet, inView, loaded, rootStarted, started, visible]
+      alwaysShow ||
+      !loaded ||
+      heightNotSet ||
+      visible ||
+      inView ||
+      started ||
+      rootStarted,
+    [alwaysShow, heightNotSet, inView, loaded, rootStarted, started, visible]
   );
 
   if (
