@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import XPAnalysis from './XPAnalysis';
 import ErrorBoundary from 'components/ErrorBoundary';
 import NotableActivities from './NotableActivities';
+import MissionProgress from './MissionProgress';
 
 Achievements.propTypes = {
   profile: PropTypes.object.isRequired,
@@ -23,6 +24,7 @@ export default function Achievements({
         selectedTheme={selectedTheme}
       />
       <XPAnalysis userId={id} selectedTheme={selectedTheme} />
+      <MissionProgress />
     </ErrorBoundary>
   );
 }
