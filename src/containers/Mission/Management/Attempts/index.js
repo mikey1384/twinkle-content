@@ -50,7 +50,10 @@ export default function Attempts({
       } = await loadMissionAttempts({
         activeTab: selectedTab
       });
-      onSetManagementObj({ [selectedTab]: attemptIds, loadMoreButton });
+      onSetManagementObj({
+        [selectedTab]: attemptIds,
+        [`${selectedTab}LoadMoreButton`]: loadMoreButton
+      });
       onSetAttemptObj(attemptObj);
       setLoading(false);
     }
@@ -117,7 +120,7 @@ export default function Attempts({
           })}
         </>
       )}
-      {managementObj.loadMoreButton && !loading && (
+      {managementObj[`${selectedTab}LoadMoreButton`] && !loading && (
         <LoadMoreButton
           style={{ marginTop: '2rem', fontSize: '1.7rem' }}
           filled
@@ -143,7 +146,7 @@ export default function Attempts({
     onSetAttemptObj(attemptObj);
     onSetManagementObj({
       [selectedTab]: [...currentAttemptIds, ...attemptIds],
-      loadMoreButton
+      [`${selectedTab}LoadMoreButton`]: loadMoreButton
     });
     setLoadingMore(false);
   }

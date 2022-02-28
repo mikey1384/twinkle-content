@@ -7,7 +7,9 @@ import MissionReducer from './reducer';
 export const MissionContext = createContext();
 export const initialMissionState = {
   missions: [],
-  loadMoreButton: false,
+  pendingLoadMoreButton: false,
+  passLoadMoreButton: false,
+  failLoadMoreButton: false,
   attemptObj: {},
   managementObj: {},
   missionObj: {},
