@@ -9,13 +9,13 @@ import localize from 'constants/localize';
 
 const xpAnalysisLabel = localize('xpAnalysis');
 
-XPGrowth.propTypes = {
+XPAnalysis.propTypes = {
   selectedTheme: PropTypes.string,
   userId: PropTypes.number.isRequired,
   style: PropTypes.object
 };
 
-export default function XPGrowth({ selectedTheme, userId, style }) {
+export default function XPAnalysis({ selectedTheme, userId, style }) {
   const loadMonthlyXp = useAppContext((v) => v.requestHelpers.loadMonthlyXp);
   const loadXpComposition = useAppContext(
     (v) => v.requestHelpers.loadXpComposition
