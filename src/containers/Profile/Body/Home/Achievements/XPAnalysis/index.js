@@ -4,8 +4,8 @@ import SectionPanel from 'components/SectionPanel';
 import MonthlyXPBarChart from './MonthlyXPBarChart';
 import CompositionPieChart from './CompositionPieChart';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { useAppContext } from 'contexts';
 import localize from 'constants/localize';
+import { useAppContext } from 'contexts';
 
 const xpAnalysisLabel = localize('xpAnalysis');
 
