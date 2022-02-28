@@ -134,16 +134,18 @@ export default function Attempts({
 
   async function handleLoadMoreAttempts() {
     const currentAttemptIds = managementObj[selectedTab];
+    const lastAttemptId = currentAttemptIds[currentAttemptIds.length - 1];
     setLoadingMore(true);
     const {
-      attemptObj,
+      attemptObj: newAttemptObj,
       [`${selectedTab}AttemptIds`]: attemptIds,
       loadMoreButton
     } = await loadMissionAttempts({
       activeTab: selectedTab,
-      lastAttemptId: currentAttemptIds[currentAttemptIds.length - 1]
+      lastAttemptId,
+      lastAttemptReviewTimeStamp: attemptObj[lastAttemptId].reviewTimeStamp
     });
-    onSetAttemptObj(attemptObj);
+    onSetAttemptObj(newAttemptObj);
     onSetManagementObj({
       [selectedTab]: [...currentAttemptIds, ...attemptIds],
       [`${selectedTab}LoadMoreButton`]: loadMoreButton

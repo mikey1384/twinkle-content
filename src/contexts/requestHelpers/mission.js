@@ -174,11 +174,19 @@ export default function missionRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async loadMissionAttempts({ activeTab, lastAttemptId }) {
+    async loadMissionAttempts({
+      activeTab,
+      lastAttemptId,
+      lastAttemptReviewTimeStamp
+    }) {
       try {
         const { data } = await request.get(
           `${URL}/mission/attempt?activeTab=${activeTab}${
             lastAttemptId ? `&lastAttemptId=${lastAttemptId}` : ''
+          }${
+            lastAttemptReviewTimeStamp
+              ? `&lastAttemptReviewTimeStamp=${lastAttemptReviewTimeStamp}`
+              : ''
           }`,
           auth()
         );
