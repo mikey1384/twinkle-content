@@ -4,6 +4,9 @@ import { css } from '@emotion/css';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import TopRanker from './TopRanker';
 import Top30Modal from './Top30Modal';
+import localize from 'constants/localize';
+
+const noRankersThisMonthLabel = localize('noRankersThisMonth');
 
 MonthItem.propTypes = {
   monthLabel: PropTypes.string,
@@ -42,25 +45,42 @@ export default function MonthItem({ monthLabel, yearLabel, style, top30 }) {
       <div
         style={{ marginTop: '2rem', display: 'flex', justifyContent: 'center' }}
       >
-        {top3.map((user, index) => (
-          <TopRanker
-            key={user.id}
-            style={{ marginLeft: index === 0 ? 0 : '1rem' }}
-            username={user.username}
-            profilePicUrl={user.profilePicUrl}
-            userId={user.id}
-            rank={user.rank}
-          />
-        ))}
+        {top3.length > 0 ? (
+          <>
+            {top3.map((user, index) => (
+              <TopRanker
+                key={user.id}
+                style={{ marginLeft: index === 0 ? 0 : '1rem' }}
+                username={user.username}
+                profilePicUrl={user.profilePicUrl}
+                userId={user.id}
+                rank={user.rank}
+              />
+            ))}
+          </>
+        ) : (
+          <div
+            style={{
+              paddingTop: '1rem',
+              paddingBottom: '3rem',
+              fontWeight: 'bold'
+            }}
+          >
+            {noRankersThisMonthLabel}
+          </div>
+        )}
       </div>
-      <div style={{ marginTop: '2rem', textAlign: 'center' }}>
-        <a
-          style={{ fontWeight: 'bold', cursor: 'pointer' }}
-          onClick={() => setTop30ModalShown(true)}
-        >
-          Show Top 30
-        </a>
-      </div>
+      <div style={{ height: '1rem' }} />
+      {top3.length === 3 && (
+        <div style={{ marginTop: '1rem', textAlign: 'center' }}>
+          <a
+            style={{ fontWeight: 'bold', cursor: 'pointer' }}
+            onClick={() => setTop30ModalShown(true)}
+          >
+            Show Top 30
+          </a>
+        </div>
+      )}
       {top30ModalShown && (
         <Top30Modal
           month={monthLabel}
