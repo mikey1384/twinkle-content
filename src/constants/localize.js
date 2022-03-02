@@ -876,18 +876,6 @@ const languageObj = {
     en: "No, I don't have an account",
     kr: '아니오, 계정이 없습니다'
   },
-  noLinks: {
-    en: 'No Uploaded Links',
-    kr: '업로드된 링크가 없습니다'
-  },
-  noModerators: {
-    en: 'No Moderators',
-    kr: '관리자가 없습니다'
-  },
-  noPlaylists: {
-    en: 'No playlists',
-    kr: '재생목록이 존재하지 않습니다'
-  },
   noFeaturedSubjects: {
     en: 'No Featured Subjects',
     kr: '추천 주제가 없습니다'
@@ -899,6 +887,18 @@ const languageObj = {
   noNewlyDeletedPosts: {
     en: 'There are no newly deleted posts',
     kr: '새로이 삭제된 게시물이 없습니다'
+  },
+  noLinks: {
+    en: 'No Uploaded Links',
+    kr: '업로드된 링크가 없습니다'
+  },
+  noModerators: {
+    en: 'No Moderators',
+    kr: '관리자가 없습니다'
+  },
+  noPlaylists: {
+    en: 'No playlists',
+    kr: '재생목록이 존재하지 않습니다'
   },
   noRankersThisMonth: {
     en: `Be the first to join this month's leaderboard by earning XP`,
