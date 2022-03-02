@@ -122,7 +122,7 @@ function Notification({ className, location, style, trackScrollPosition }) {
     if (activeTab === 'reward') {
       setActiveTab('notification');
     }
-    if (!userId) {
+    if (prevUserId && !userId) {
       onClearNotifications();
     }
     if ((userId && userId !== prevUserId) || (!userId && prevUserId)) {
