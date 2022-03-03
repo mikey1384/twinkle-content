@@ -580,12 +580,12 @@ function Reply({
   ) : null;
 
   async function handleEditDone(editedReply) {
-    await editContent({
+    const { content } = await editContent({
       editedComment: editedReply,
       contentId: reply.id,
       contentType: 'comment'
     });
-    onEditDone({ editedComment: editedReply, commentId: reply.id });
+    onEditDone({ editedComment: content, commentId: reply.id });
     onSetIsEditing({
       contentId: reply.id,
       contentType: 'comment',
