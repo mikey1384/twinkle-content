@@ -914,13 +914,13 @@ function Comment({
   ) : null;
 
   async function handleEditDone(editedComment) {
-    await editContent({
+    const { content } = await editContent({
       editedComment,
       contentId: comment.id,
       contentType: 'comment'
     });
     if (mounted.current) {
-      onEditDone({ editedComment, commentId: comment.id });
+      onEditDone({ editedComment: content, commentId: comment.id });
     }
     if (mounted.current) {
       onSetIsEditing({
