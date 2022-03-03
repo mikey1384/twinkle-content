@@ -17,11 +17,11 @@ const colors = {
   grammar: Color.purple()
 };
 
-CompositionPieChart.propTypes = {
+AcquisitionPieChart.propTypes = {
   data: PropTypes.array.isRequired
 };
 
-export default function CompositionPieChart({ data }) {
+export default function AcquisitionPieChart({ data }) {
   return (
     <div
       style={{

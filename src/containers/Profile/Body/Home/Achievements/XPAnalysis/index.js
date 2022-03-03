@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import SectionPanel from 'components/SectionPanel';
 import MonthlyXPBarChart from './MonthlyXPBarChart';
-import CompositionPieChart from './CompositionPieChart';
+import AcquisitionPieChart from './AcquisitionPieChart';
 import ErrorBoundary from 'components/ErrorBoundary';
 import localize from 'constants/localize';
 import { useAppContext } from 'contexts';
@@ -17,11 +17,11 @@ XPAnalysis.propTypes = {
 
 export default function XPAnalysis({ selectedTheme, userId, style }) {
   const loadMonthlyXp = useAppContext((v) => v.requestHelpers.loadMonthlyXp);
-  const loadXpComposition = useAppContext(
-    (v) => v.requestHelpers.loadXpComposition
+  const loadXpAcquisition = useAppContext(
+    (v) => v.requestHelpers.loadXpAcquisition
   );
   const [monthlyXPData, setMonthlyXPData] = useState([]);
-  const [xpCompositionData, setXpCompositionData] = useState([]);
+  const [xpAcquisitionData, setXpAcquisitionData] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const mounted = useRef(true);
 
@@ -37,16 +37,16 @@ export default function XPAnalysis({ selectedTheme, userId, style }) {
 
     async function init() {
       if (userId) {
-        await Promise.all([handleLoadXpComposition(), handleLoadMonthlyXP()]);
+        await Promise.all([handleLoadXpAcquisition(), handleLoadMonthlyXP()]);
         if (mounted.current) {
           setLoaded(true);
         }
       }
     }
-    async function handleLoadXpComposition() {
-      const data = await loadXpComposition(userId);
+    async function handleLoadXpAcquisition() {
+      const data = await loadXpAcquisition(userId);
       if (mounted.current) {
-        setXpCompositionData(data);
+        setXpAcquisitionData(data);
       }
       return Promise.resolve();
     }
@@ -73,12 +73,12 @@ export default function XPAnalysis({ selectedTheme, userId, style }) {
             width: '100%',
             display: 'flex',
             justifyContent:
-              xpCompositionData.length > 0 ? 'space-between' : 'center'
+              xpAcquisitionData.length > 0 ? 'space-between' : 'center'
           }}
         >
           <MonthlyXPBarChart data={monthlyXPData} colorTheme={selectedTheme} />
-          {xpCompositionData.length > 0 && (
-            <CompositionPieChart data={xpCompositionData} />
+          {xpAcquisitionData.length > 0 && (
+            <AcquisitionPieChart data={xpAcquisitionData} />
           )}
         </div>
       </SectionPanel>

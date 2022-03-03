@@ -373,10 +373,10 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
-    async loadXpComposition(userId) {
+    async loadXpAcquisition(userId) {
       try {
         const { data } = await request.get(
-          `${URL}/user/xp/composition?userId=${userId}`
+          `${URL}/user/xp/acquisition?userId=${userId}`
         );
         return Promise.resolve(data);
       } catch (error) {
