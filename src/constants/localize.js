@@ -784,6 +784,10 @@ const languageObj = {
     en: 'Mission Failed',
     kr: '미션 실패'
   },
+  missionProgress: {
+    en: 'Mission Progress',
+    kr: '미션 진행률'
+  },
   missions: {
     en: 'Missions',
     kr: '미션 목록'

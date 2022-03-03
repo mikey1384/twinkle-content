@@ -24,7 +24,7 @@ export default function Achievements({
         selectedTheme={selectedTheme}
       />
       <XPAnalysis userId={id} selectedTheme={selectedTheme} />
-      <MissionProgress />
+      <MissionProgress selectedTheme={selectedTheme} />
     </ErrorBoundary>
   );
 }
