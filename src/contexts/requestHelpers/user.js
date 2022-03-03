@@ -373,6 +373,16 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
+    async loadMissionProgress(userId) {
+      try {
+        const { data } = await request.get(
+          `${URL}/user/state/mission?userId=${userId}`
+        );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async loadXpAcquisition(userId) {
       try {
         const { data } = await request.get(
