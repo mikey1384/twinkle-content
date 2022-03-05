@@ -10,8 +10,11 @@ import Icon from 'components/Icon';
 import ErrorBoundary from 'components/ErrorBoundary';
 import localize from 'constants/localize';
 
+const BodyRef = document.scrollingElement || document.documentElement;
+
 HomeMenuItems.propTypes = {
   history: PropTypes.object,
+  location: PropTypes.object,
   style: PropTypes.object
 };
 
@@ -25,7 +28,7 @@ const year = (() => {
   return dt.getFullYear();
 })();
 
-export default function HomeMenuItems({ history, style = {} }) {
+export default function HomeMenuItems({ history, location, style = {} }) {
   const onSetProfilesLoaded = useAppContext(
     (v) => v.user.actions.onSetProfilesLoaded
   );
@@ -148,10 +151,7 @@ export default function HomeMenuItems({ history, style = {} }) {
           path="/"
           exact
           children={({ match }) => (
-            <nav
-              className={match ? 'active' : ''}
-              onClick={() => history.push('/')}
-            >
+            <nav className={match ? 'active' : ''} onClick={handleStoryClick}>
               <a href="/" onClick={(e) => e.preventDefault()}>
                 <div className="homemenu__item">
                   <div className="selection" />
@@ -267,6 +267,15 @@ export default function HomeMenuItems({ history, style = {} }) {
       </div>
     </ErrorBoundary>
   );
+
+  function handleStoryClick() {
+    if (location.pathname === '/') {
+      document.getElementById('App').scrollTop = 0;
+      BodyRef.scrollTop = 0;
+      return;
+    }
+    history.push('/');
+  }
 
   function handleOnPeopleClick() {
     if (deviceIsMobile) {
