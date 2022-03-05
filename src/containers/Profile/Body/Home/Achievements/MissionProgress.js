@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
+import FilterBar from 'components/FilterBar';
 import SectionPanel from 'components/SectionPanel';
 import localize from 'constants/localize';
 import { useAppContext } from 'contexts';
 
 const missionProgressLabel = localize('missionProgress');
+const completeLabel = localize('complete');
+const inProgressLabel = localize('inProgress');
 
 MissionProgress.propTypes = {
   selectedTheme: PropTypes.string,
@@ -17,6 +20,8 @@ export default function MissionProgress({ selectedTheme, style, userId }) {
   const loadMissionProgress = useAppContext(
     (v) => v.requestHelpers.loadMissionProgress
   );
+  const [missions, setMissions] = useState([]);
+  const [selectedMissionListTab, setSelectedMissionListTab] = useState('');
   const [loaded, setLoaded] = useState(false);
   const mounted = useRef(true);
 
@@ -33,9 +38,24 @@ export default function MissionProgress({ selectedTheme, style, userId }) {
     }
 
     async function handleLoadMissionProgress(userId) {
-      const data = await loadMissionProgress(userId);
+      setLoaded(false);
+      setMissions([]);
+      const missions = await loadMissionProgress(userId);
+      const passedMissions = [];
+      for (let mission of missions) {
+        if (mission.status === 'pass') {
+          passedMissions.push(mission);
+        }
+      }
       if (mounted.current) {
-        console.log(data);
+        if (passedMissions.length > 0) {
+          setSelectedMissionListTab('complete');
+        } else {
+          setSelectedMissionListTab('ongoing');
+        }
+      }
+      if (mounted.current) {
+        setMissions(missions);
       }
       if (mounted.current) {
         setLoaded(true);
@@ -52,7 +72,29 @@ export default function MissionProgress({ selectedTheme, style, userId }) {
         loaded={loaded}
         style={style}
       >
-        <div>testing</div>
+        <FilterBar bordered>
+          <nav
+            className={selectedMissionListTab === 'complete' ? 'active' : ''}
+            onClick={() => setSelectedMissionListTab('complete')}
+          >
+            {completeLabel}
+          </nav>
+          <nav
+            className={selectedMissionListTab === 'ongoing' ? 'active' : ''}
+            onClick={() => setSelectedMissionListTab('ongoing')}
+          >
+            {inProgressLabel}
+          </nav>
+        </FilterBar>
+        {missions
+          .filter((mission) =>
+            selectedMissionListTab === 'complete'
+              ? mission.status === 'pass'
+              : mission.status !== 'pass'
+          )
+          .map((mission) => (
+            <div key={mission.key}>{mission.key}</div>
+          ))}
       </SectionPanel>
     </ErrorBoundary>
   );
