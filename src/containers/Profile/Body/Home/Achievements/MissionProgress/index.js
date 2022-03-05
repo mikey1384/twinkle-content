@@ -4,6 +4,8 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import FilterBar from 'components/FilterBar';
 import SectionPanel from 'components/SectionPanel';
 import localize from 'constants/localize';
+import MissionItem from './MissionItem';
+import { css } from '@emotion/css';
 import { useAppContext } from 'contexts';
 
 const missionProgressLabel = localize('missionProgress');
@@ -86,15 +88,32 @@ export default function MissionProgress({ selectedTheme, style, userId }) {
             {inProgressLabel}
           </nav>
         </FilterBar>
-        {missions
-          .filter((mission) =>
-            selectedMissionListTab === 'complete'
-              ? mission.status === 'pass'
-              : mission.status !== 'pass'
-          )
-          .map((mission) => (
-            <div key={mission.key}>{mission.key}</div>
-          ))}
+        <div
+          style={{ display: 'flex', justifyContent: 'center', width: '100%' }}
+        >
+          <div
+            className={css`
+              display: flex;
+              height: auto;
+              flex-wrap: wrap;
+              margin-bottom: ${missions.length > 0 ? '-1rem' : 0};
+            `}
+          >
+            {missions
+              .filter((mission) =>
+                selectedMissionListTab === 'complete'
+                  ? mission.status === 'pass'
+                  : mission.status !== 'pass'
+              )
+              .map((mission) => (
+                <MissionItem
+                  key={mission.key}
+                  style={{ marginRight: '1rem', marginBottom: '1rem' }}
+                  missionType={mission.key}
+                />
+              ))}
+          </div>
+        </div>
       </SectionPanel>
     </ErrorBoundary>
   );
