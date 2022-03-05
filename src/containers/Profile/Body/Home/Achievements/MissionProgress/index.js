@@ -109,6 +109,7 @@ export default function MissionProgress({ selectedTheme, style, userId }) {
                 <MissionItem
                   key={mission.key}
                   style={{ marginRight: '1rem', marginBottom: '1rem' }}
+                  missionName={mission.name}
                   missionType={mission.key}
                 />
               ))}

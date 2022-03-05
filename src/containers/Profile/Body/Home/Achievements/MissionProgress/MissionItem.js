@@ -5,11 +5,12 @@ import { css } from '@emotion/css';
 import { returnMissionThumb } from 'constants/defaultValues';
 
 MissionItem.propTypes = {
+  missionName: PropTypes.string,
   missionType: PropTypes.string,
   style: PropTypes.object
 };
 
-export default function MissionItem({ missionType, style }) {
+export default function MissionItem({ missionName, missionType, style }) {
   const missionThumb = useMemo(
     () => returnMissionThumb(missionType),
     [missionType]
@@ -20,6 +21,7 @@ export default function MissionItem({ missionType, style }) {
       className={css`
         border: 1px solid ${Color.borderGray()};
         border-radius: ${borderRadius};
+        width: 15rem;
         height: 15rem;
         display: flex;
         flex-direction: column;
@@ -28,15 +30,14 @@ export default function MissionItem({ missionType, style }) {
       <div
         className={css`
           position: relative;
-          width: 15rem;
-          height: 10rem;
+          width: 100%;
+          height: 12rem;
           padding-bottom: 10rem;
         `}
       >
         <img
           src={missionThumb}
           style={{
-            cursor: 'pointer',
             borderTopLeftRadius: innerBorderRadius,
             borderTopRightRadius: innerBorderRadius,
             position: 'absolute',
@@ -47,7 +48,29 @@ export default function MissionItem({ missionType, style }) {
           }}
         />
       </div>
-      <div style={{ paddingTop: '1rem', textAlign: 'center' }}>hello</div>
+      <div
+        style={{
+          paddingLeft: '0.5rem',
+          paddingRight: '0.5rem',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100%'
+        }}
+      >
+        <p
+          style={{
+            color: Color.blue(),
+            fontSize: '1.2rem',
+            fontWeight: 'bold',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+            overflow: 'hidden'
+          }}
+        >
+          {missionName}
+        </p>
+      </div>
     </div>
   );
 }
