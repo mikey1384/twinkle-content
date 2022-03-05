@@ -10,7 +10,7 @@ import { useAppContext } from 'contexts';
 
 const missionProgressLabel = localize('missionProgress');
 const completeLabel = localize('complete');
-const inProgressLabel = localize('inProgress');
+const incompleteLabel = localize('incomplete');
 
 MissionProgress.propTypes = {
   selectedTheme: PropTypes.string,
@@ -85,7 +85,7 @@ export default function MissionProgress({ selectedTheme, style, userId }) {
             className={selectedMissionListTab === 'ongoing' ? 'active' : ''}
             onClick={() => setSelectedMissionListTab('ongoing')}
           >
-            {inProgressLabel}
+            {incompleteLabel}
           </nav>
         </FilterBar>
         <div

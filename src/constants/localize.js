@@ -284,6 +284,10 @@ const languageObj = {
     en: 'Complete',
     kr: '완료'
   },
+  incomplete: {
+    en: 'Incomplete',
+    kr: '미완료'
+  },
   completed: {
     en: 'Completed',
     kr: '완료'
