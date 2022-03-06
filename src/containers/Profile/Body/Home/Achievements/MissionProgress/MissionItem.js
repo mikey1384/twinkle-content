@@ -1,6 +1,7 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'components/Link';
+import FullTextReveal from 'components/Texts/FullTextRevealFromOuterLayer';
 import {
   Color,
   borderRadius,
@@ -8,6 +9,7 @@ import {
   mobileMaxWidth
 } from 'constants/css';
 import { css } from '@emotion/css';
+import { textIsOverflown } from 'helpers';
 import { returnMissionThumb } from 'constants/defaultValues';
 
 MissionItem.propTypes = {
@@ -25,6 +27,8 @@ export default function MissionItem({
   missionType,
   style
 }) {
+  const NameRef = useRef(null);
+  const [nameContext, setNameContext] = useState(null);
   const missionThumb = useMemo(
     () => returnMissionThumb(missionType),
     [missionType]
@@ -84,6 +88,9 @@ export default function MissionItem({
         }}
       >
         <Link
+          innerRef={NameRef}
+          onMouseOver={handleMouseOver}
+          onMouseLeave={() => setNameContext(null)}
           to={`/missions/${missionType}`}
           style={{
             color: completed ? Color.green() : Color.black(),
@@ -98,6 +105,13 @@ export default function MissionItem({
         >
           {missionName}
         </Link>
+        {nameContext && (
+          <FullTextReveal
+            textContext={nameContext}
+            text={missionName}
+            style={{ fontSize: '1.3rem' }}
+          />
+        )}
         {taskProgress && !completed ? (
           <div
             style={{
@@ -112,4 +126,17 @@ export default function MissionItem({
       </div>
     </div>
   );
+
+  function handleMouseOver() {
+    if (textIsOverflown(NameRef.current)) {
+      const parentElementDimensions =
+        NameRef.current?.getBoundingClientRect() || {
+          x: 0,
+          y: 0,
+          width: 0,
+          height: 0
+        };
+      setNameContext(parentElementDimensions);
+    }
+  }
 }

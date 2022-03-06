@@ -3,6 +3,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 Link.propTypes = {
+  innerRef: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   className: PropTypes.string,
   children: PropTypes.node,
   onClick: PropTypes.func,
@@ -13,17 +14,21 @@ Link.propTypes = {
 };
 
 export default function Link({
+  innerRef,
   className,
   to,
   onClick = () => {},
   onClickAsync,
   children,
   style,
-  target
+  target,
+  ...props
 }) {
   const history = useHistory();
   return to ? (
     <a
+      {...props}
+      ref={innerRef}
       className={className}
       style={{
         whiteSpace: 'pre-wrap',
