@@ -102,7 +102,7 @@ export default function MissionProgress({
         loaded={loaded}
         style={style}
       >
-        <FilterBar bordered>
+        <FilterBar bordered style={{ fontSize: '1.5rem', height: '5rem' }}>
           <nav
             className={selectedMissionListTab === 'complete' ? 'active' : ''}
             onClick={() => setSelectedMissionListTab('complete')}
@@ -117,7 +117,12 @@ export default function MissionProgress({
           </nav>
         </FilterBar>
         <div
-          style={{ display: 'flex', justifyContent: 'center', width: '100%' }}
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            width: '100%',
+            padding: '2rem 0'
+          }}
         >
           <div
             className={css`
@@ -133,6 +138,8 @@ export default function MissionProgress({
                   <MissionItem
                     key={mission.key}
                     style={{ marginRight: '1rem', marginBottom: '1rem' }}
+                    completed={selectedMissionListTab === 'complete'}
+                    taskProgress={mission.taskProgress}
                     missionName={mission.name}
                     missionType={mission.key}
                   />

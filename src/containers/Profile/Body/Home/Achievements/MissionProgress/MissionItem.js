@@ -6,20 +6,27 @@ import { css } from '@emotion/css';
 import { returnMissionThumb } from 'constants/defaultValues';
 
 MissionItem.propTypes = {
+  completed: PropTypes.bool,
   missionName: PropTypes.string,
+  taskProgress: PropTypes.string,
   missionType: PropTypes.string,
   style: PropTypes.object
 };
 
-export default function MissionItem({ missionName, missionType, style }) {
+export default function MissionItem({
+  completed,
+  missionName,
+  taskProgress,
+  missionType,
+  style
+}) {
   const missionThumb = useMemo(
     () => returnMissionThumb(missionType),
     [missionType]
   );
   return (
-    <Link
+    <div
       style={style}
-      to={`/missions/${missionType}`}
       className={css`
         border: 1px solid ${Color.borderGray()};
         border-radius: ${borderRadius};
@@ -29,40 +36,47 @@ export default function MissionItem({ missionName, missionType, style }) {
         flex-direction: column;
       `}
     >
-      <div
+      <Link
         className={css`
           position: relative;
           width: 100%;
           height: 12rem;
           padding-bottom: 10rem;
         `}
+        to={`/missions/${missionType}`}
       >
-        <img
-          src={missionThumb}
-          style={{
-            borderTopLeftRadius: innerBorderRadius,
-            borderTopRightRadius: innerBorderRadius,
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            objectPosition: 'center'
-          }}
-        />
-      </div>
+        <div>
+          <img
+            src={missionThumb}
+            style={{
+              borderTopLeftRadius: innerBorderRadius,
+              borderTopRightRadius: innerBorderRadius,
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center'
+            }}
+          />
+        </div>
+      </Link>
       <div
         style={{
           paddingLeft: '0.5rem',
           paddingRight: '0.5rem',
           display: 'flex',
+          flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
+          width: '100%',
           height: '100%'
         }}
       >
-        <p
+        <Link
+          to={`/missions/${missionType}`}
           style={{
-            color: Color.blue(),
+            width: '100%',
+            textAlign: 'center',
             fontSize: '1.2rem',
             fontWeight: 'bold',
             whiteSpace: 'nowrap',
@@ -71,8 +85,19 @@ export default function MissionItem({ missionName, missionType, style }) {
           }}
         >
           {missionName}
-        </p>
+        </Link>
+        {taskProgress && !completed ? (
+          <div
+            style={{
+              textAlign: 'center',
+              fontWeight: 'bold',
+              color: Color.green()
+            }}
+          >
+            {taskProgress} complete
+          </div>
+        ) : null}
       </div>
-    </Link>
+    </div>
   );
 }
