@@ -146,6 +146,7 @@ export default function MissionProgress({
               display: flex;
               height: auto;
               flex-wrap: wrap;
+              justify-content: center;
               margin-bottom: ${missions.length > 0 ? '-1rem' : 0};
             `}
           >

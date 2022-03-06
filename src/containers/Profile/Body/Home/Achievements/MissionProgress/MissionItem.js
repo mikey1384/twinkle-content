@@ -1,7 +1,12 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'components/Link';
-import { Color, borderRadius, innerBorderRadius } from 'constants/css';
+import {
+  Color,
+  borderRadius,
+  innerBorderRadius,
+  mobileMaxWidth
+} from 'constants/css';
 import { css } from '@emotion/css';
 import { returnMissionThumb } from 'constants/defaultValues';
 
@@ -34,14 +39,20 @@ export default function MissionItem({
         height: 15rem;
         display: flex;
         flex-direction: column;
+        @media (max-width: ${mobileMaxWidth}) {
+          width: 12rem;
+          height: 12rem;
+        }
       `}
     >
       <Link
         className={css`
           position: relative;
           width: 100%;
-          height: 12rem;
           padding-bottom: 10rem;
+          @media (max-width: ${mobileMaxWidth}) {
+            padding-bottom: 8rem;
+          }
         `}
         to={`/missions/${missionType}`}
       >
