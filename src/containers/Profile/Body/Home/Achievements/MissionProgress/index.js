@@ -51,13 +51,19 @@ export default function MissionProgress({
     return `${username} has not completed any missions yet`;
   }, [username]);
 
+  const completedMissions = useMemo(() => {
+    return missions.filter((mission) => mission.status === 'pass');
+  }, [missions]);
+
+  const incompleteMissions = useMemo(() => {
+    return missions.filter((mission) => mission.status !== 'pass');
+  }, [missions]);
+
   const filteredMissions = useMemo(() => {
-    return missions.filter((mission) =>
-      selectedMissionListTab === 'complete'
-        ? mission.status === 'pass'
-        : mission.status !== 'pass'
-    );
-  }, [missions, selectedMissionListTab]);
+    return selectedMissionListTab === 'complete'
+      ? completedMissions
+      : incompleteMissions;
+  }, [completedMissions, incompleteMissions, selectedMissionListTab]);
 
   useEffect(() => {
     mounted.current = true;
@@ -119,7 +125,7 @@ export default function MissionProgress({
               })
             }
           >
-            {completeLabel}
+            {`${completedMissions.length}/${missions.length}`} {completeLabel}
           </nav>
           <nav
             className={selectedMissionListTab === 'ongoing' ? 'active' : ''}
