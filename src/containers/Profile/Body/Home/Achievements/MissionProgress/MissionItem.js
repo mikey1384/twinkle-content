@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
+import Link from 'components/Link';
 import { Color, borderRadius, innerBorderRadius } from 'constants/css';
 import { css } from '@emotion/css';
 import { returnMissionThumb } from 'constants/defaultValues';
@@ -16,8 +17,9 @@ export default function MissionItem({ missionName, missionType, style }) {
     [missionType]
   );
   return (
-    <div
+    <Link
       style={style}
+      to={`/missions/${missionType}`}
       className={css`
         border: 1px solid ${Color.borderGray()};
         border-radius: ${borderRadius};
@@ -71,6 +73,6 @@ export default function MissionItem({ missionName, missionType, style }) {
           {missionName}
         </p>
       </div>
-    </div>
+    </Link>
   );
 }
