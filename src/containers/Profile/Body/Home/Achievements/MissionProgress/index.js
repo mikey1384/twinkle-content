@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FilterBar from 'components/FilterBar';
@@ -14,6 +14,9 @@ const completeLabel = localize('complete');
 const incompleteLabel = localize('incomplete');
 
 MissionProgress.propTypes = {
+  missionsLoaded: PropTypes.bool,
+  missions: PropTypes.array.isRequired,
+  selectedMissionListTab: PropTypes.string,
   selectedTheme: PropTypes.string,
   style: PropTypes.object,
   username: PropTypes.string,
@@ -21,17 +24,18 @@ MissionProgress.propTypes = {
 };
 
 export default function MissionProgress({
+  missionsLoaded,
+  missions,
+  selectedMissionListTab,
   selectedTheme,
   style,
   userId,
   username
 }) {
+  const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const loadMissionProgress = useAppContext(
     (v) => v.requestHelpers.loadMissionProgress
   );
-  const [missions, setMissions] = useState([]);
-  const [selectedMissionListTab, setSelectedMissionListTab] = useState('');
-  const [loaded, setLoaded] = useState(false);
   const mounted = useRef(true);
 
   const allMissionsCompleteLabel = useMemo(() => {
@@ -68,8 +72,6 @@ export default function MissionProgress({
     }
 
     async function handleLoadMissionProgress(userId) {
-      setLoaded(false);
-      setMissions([]);
       const missions = await loadMissionProgress(userId);
       const passedMissions = [];
       for (let mission of missions) {
@@ -77,18 +79,23 @@ export default function MissionProgress({
           passedMissions.push(mission);
         }
       }
-      if (mounted.current) {
-        if (passedMissions.length > 0) {
-          setSelectedMissionListTab('complete');
-        } else {
-          setSelectedMissionListTab('ongoing');
-        }
+      if (mounted.current && !missionsLoaded) {
+        onSetUserState({
+          userId,
+          newState: {
+            selectedMissionListTab:
+              passedMissions.length > 0 ? 'complete' : 'ongoing'
+          }
+        });
       }
       if (mounted.current) {
-        setMissions(missions);
-      }
-      if (mounted.current) {
-        setLoaded(true);
+        onSetUserState({
+          userId,
+          newState: {
+            missions,
+            missionsLoaded: true
+          }
+        });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -99,19 +106,29 @@ export default function MissionProgress({
       <SectionPanel
         customColorTheme={selectedTheme}
         title={missionProgressLabel}
-        loaded={loaded}
+        loaded={missionsLoaded}
         style={style}
       >
         <FilterBar bordered style={{ fontSize: '1.5rem', height: '5rem' }}>
           <nav
             className={selectedMissionListTab === 'complete' ? 'active' : ''}
-            onClick={() => setSelectedMissionListTab('complete')}
+            onClick={() =>
+              onSetUserState({
+                userId,
+                newState: { selectedMissionListTab: 'complete' }
+              })
+            }
           >
             {completeLabel}
           </nav>
           <nav
             className={selectedMissionListTab === 'ongoing' ? 'active' : ''}
-            onClick={() => setSelectedMissionListTab('ongoing')}
+            onClick={() =>
+              onSetUserState({
+                userId,
+                newState: { selectedMissionListTab: 'ongoing' }
+              })
+            }
           >
             {incompleteLabel}
           </nav>

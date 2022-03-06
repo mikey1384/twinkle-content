@@ -12,7 +12,7 @@ Achievements.propTypes = {
 
 export default function Achievements({
   profile,
-  profile: { id, username },
+  profile: { id, username, selectedMissionListTab, missions, missionsLoaded },
   selectedTheme
 }) {
   return (
@@ -25,9 +25,12 @@ export default function Achievements({
       />
       <XPAnalysis userId={id} selectedTheme={selectedTheme} />
       <MissionProgress
+        missionsLoaded={missionsLoaded}
+        missions={missions || []}
         userId={id}
         username={username}
         selectedTheme={selectedTheme}
+        selectedMissionListTab={selectedMissionListTab}
       />
     </ErrorBoundary>
   );
