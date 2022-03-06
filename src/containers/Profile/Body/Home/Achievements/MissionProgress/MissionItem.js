@@ -75,6 +75,7 @@ export default function MissionItem({
         <Link
           to={`/missions/${missionType}`}
           style={{
+            color: completed ? Color.green() : Color.black(),
             width: '100%',
             textAlign: 'center',
             fontSize: '1.2rem',
