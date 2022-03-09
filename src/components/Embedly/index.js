@@ -425,7 +425,14 @@ function Embedly({
   ]);
 
   return (
-    <div style={{ position: 'relative', height: '100%', ...style }}>
+    <div
+      style={{
+        position: 'relative',
+        height: '100%',
+        background: '#fff',
+        ...style
+      }}
+    >
       {contentType === 'chat' && userCanEditThis && !notFound && (
         <Icon
           style={{
@@ -453,7 +460,6 @@ function Embedly({
         className={css`
           width: ${imageWidth || (contentType === 'chat' ? '50%' : '100%')};
           position: relative;
-          height: 100%;
           align-items: center;
           justify-content: ${contentType === 'chat' && imageOnly && 'center'};
           display: flex;

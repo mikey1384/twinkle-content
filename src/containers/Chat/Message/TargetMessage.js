@@ -130,7 +130,6 @@ export default function TargetMessage({ message }) {
           style={{
             width: '25%',
             display: 'flex',
-            background: '#fff',
             justifyContent: 'center'
           }}
         >
