@@ -46,7 +46,7 @@ export default function Googling({ mission, onSetMissionState, style }) {
 
   return (
     <div style={style}>
-      {mission.questions.map((question) => (
+      {mission.questions?.map((question) => (
         <Question
           key={question.id}
           innerRef={(ref) => (QuestionRefs.current[question.id] = ref)}
