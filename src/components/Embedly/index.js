@@ -429,7 +429,6 @@ function Embedly({
       style={{
         position: 'relative',
         height: '100%',
-        background: '#fff',
         ...style
       }}
     >

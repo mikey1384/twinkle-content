@@ -145,7 +145,8 @@ export default function TargetMessage({ message }) {
             mobileLoadingHeight="10rem"
             style={{
               width: '30rem',
-              height: '10rem'
+              height: '10rem',
+              background: '#fff'
             }}
           />
         </div>
