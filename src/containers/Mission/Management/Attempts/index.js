@@ -143,7 +143,7 @@ export default function Attempts({
     } = await loadMissionAttempts({
       activeTab: selectedTab,
       lastAttemptId,
-      lastAttemptReviewTimeStamp: attemptObj[lastAttemptId].reviewTimeStamp
+      lastAttemptReviewTimeStamp: attemptObj[lastAttemptId]?.reviewTimeStamp
     });
     onSetAttemptObj(newAttemptObj);
     onSetManagementObj({
