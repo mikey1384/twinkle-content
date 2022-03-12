@@ -1,0 +1,30 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import Cell from './Cell';
+import { getGuessStatuses } from '../lib/statuses';
+import { unicodeSplit } from '../lib/words';
+
+CompletedRow.propTypes = {
+  guess: PropTypes.string.isRequired,
+  isRevealing: PropTypes.bool
+};
+
+export default function CompletedRow({ guess, isRevealing }) {
+  const statuses = getGuessStatuses(guess);
+  const splitGuess = unicodeSplit(guess);
+
+  return (
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
+      {splitGuess.map((letter, i) => (
+        <Cell
+          key={i}
+          value={letter}
+          status={statuses[i]}
+          position={i}
+          isRevealing={isRevealing}
+          isCompleted
+        />
+      ))}
+    </div>
+  );
+}

@@ -49,6 +49,7 @@
     "exenv": "^1.2.2",
     "file-loader": "6.2.0",
     "fs-extra": "^10.0.0",
+    "grapheme-splitter": "^1.0.4",
     "html-react-parser": "^1.4.5",
     "html-webpack-plugin": "^5.5.0",
     "identity-obj-proxy": "3.0.0",
