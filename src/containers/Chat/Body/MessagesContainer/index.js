@@ -20,6 +20,7 @@ import FullTextReveal from 'components/Texts/FullTextReveal';
 import SubjectMsgsModal from '../../Modals/SubjectMsgsModal';
 import InviteUsersModal from '../../Modals/InviteUsers';
 import ChessModal from '../../Modals/ChessModal';
+import WordleModal from '../../Modals/WordleModal';
 import SelectVideoModal from '../../Modals/SelectVideoModal';
 import SelectNewOwnerModal from '../../Modals/SelectNewOwnerModal';
 import SettingsModal from '../../Modals/SettingsModal';
@@ -80,6 +81,7 @@ function MessagesContainer({
       onReceiveMessageOnDifferentChannel,
       onSendFirstDirectMessage,
       onSetChessModalShown,
+      onSetWordleModalShown,
       onSetCreatingNewDMChannel,
       onSetFavoriteChannel,
       onSetReplyTarget,
@@ -110,7 +112,8 @@ function MessagesContainer({
       reconnecting,
       selectedChannelId,
       socketConnected,
-      subjectObj
+      subjectObj,
+      wordleModalShown
     }
   } = useContext(LocalContext);
   const { banned, profilePicUrl, userId, username } = useMyState();
@@ -416,6 +419,13 @@ function MessagesContainer({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [banned?.chess, chessCountdownObj, currentChannel?.id]);
+
+  const handleWordleModalShown = useCallback(() => {
+    const channelId = currentChannel?.id;
+    onSetReplyTarget({ channelId, target: null });
+    onSetWordleModalShown(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentChannel?.id]);
 
   const handleHideChat = useCallback(async () => {
     await hideChat(selectedChannelId);
@@ -1128,6 +1138,7 @@ function MessagesContainer({
           currentChannelId={selectedChannelId}
           currentChannel={currentChannel}
           onChessButtonClick={handleChessModalShown}
+          onWordleButtonClick={handleWordleModalShown}
           onMessageSubmit={(content) =>
             handleMessageSubmit({ content, target: currentChannel.replyTarget })
           }
@@ -1156,6 +1167,9 @@ function MessagesContainer({
           opponentName={chessOpponent?.username}
           socketConnected={socketConnected}
         />
+      )}
+      {wordleModalShown && (
+        <WordleModal onHide={() => onSetWordleModalShown(false)} />
       )}
       {inviteUsersModalShown && (
         <InviteUsersModal

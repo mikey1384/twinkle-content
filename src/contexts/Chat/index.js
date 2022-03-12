@@ -42,6 +42,7 @@ export const initialChatState = {
   vocabErrorMessage: '',
   wordCollectors: {},
   wordRegisterStatus: undefined,
+  wordleModalShown: false,
   wordsObj: {},
   userSearchResults: [],
   vocabActivities: [],

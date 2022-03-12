@@ -1393,6 +1393,11 @@ export default function ChatReducer(state, action) {
         wordRegisterStatus: action.status
       };
     }
+    case 'SET_WORDLE_MODAL_SHOWN':
+      return {
+        ...state,
+        wordleModalShown: action.shown
+      };
     case 'SHOW_INCOMING': {
       return {
         ...state,

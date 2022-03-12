@@ -144,6 +144,7 @@ function Chat({ onFileUpload }) {
   const subjectSearchResults = useChatContext(
     (v) => v.state.subjectSearchResults
   );
+  const wordleModalShown = useChatContext((v) => v.state.wordleModalShown);
   const onAddReactionToMessage = useChatContext(
     (v) => v.actions.onAddReactionToMessage
   );
@@ -191,6 +192,9 @@ function Chat({ onFileUpload }) {
   const onSetChessModalShown = useChatContext(
     (v) => v.actions.onSetChessModalShown
   );
+  const onSetWordleModalShown = useChatContext(
+    (v) => v.actions.onSetWordleModalShown
+  );
   const onSetCurrentChannelName = useChatContext(
     (v) => v.actions.onSetCurrentChannelName
   );
@@ -235,12 +239,12 @@ function Chat({ onFileUpload }) {
     (v) => v.actions.onSetActualDescription
   );
   const onSetActualTitle = useContentContext((v) => v.actions.onSetActualTitle);
-  const onSetIsEditing = useContentContext((v) => v.actions.onSetIsEditing);
-  const onSetSiteUrl = useContentContext((v) => v.actions.onSetSiteUrl);
-  const onSetThumbUrl = useContentContext((v) => v.actions.onSetThumbUrl);
   const onSetMediaStarted = useContentContext(
     (v) => v.actions.onSetMediaStarted
   );
+  const onSetIsEditing = useContentContext((v) => v.actions.onSetIsEditing);
+  const onSetSiteUrl = useContentContext((v) => v.actions.onSetSiteUrl);
+  const onSetThumbUrl = useContentContext((v) => v.actions.onSetThumbUrl);
 
   const pageVisible = useViewContext((v) => v.state.pageVisible);
   const allRanks = useNotiContext((v) => v.state.allRanks);
@@ -548,6 +552,7 @@ function Chat({ onFileUpload }) {
           onSetActualDescription,
           onSetActualTitle,
           onSetChessModalShown,
+          onSetWordleModalShown,
           onSetCreatingNewDMChannel,
           onSetEmbeddedUrl,
           onSetIsEditing,
@@ -611,7 +616,8 @@ function Chat({ onFileUpload }) {
           socketConnected,
           subjectObj,
           subjectSearchResults,
-          userObj
+          userObj,
+          wordleModalShown
         },
         onFileUpload
       }}

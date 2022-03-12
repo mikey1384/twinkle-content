@@ -554,6 +554,12 @@ export default function ChatActions(dispatch) {
         message
       });
     },
+    onSetWordleModalShown(shown) {
+      return dispatch({
+        type: 'SET_WORDLE_MODAL_SHOWN',
+        shown
+      });
+    },
     onSetWordsObj(wordObj) {
       return dispatch({
         type: 'SET_WORDS_OBJECT',

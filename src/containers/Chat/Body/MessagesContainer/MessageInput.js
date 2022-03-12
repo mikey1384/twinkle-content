@@ -38,6 +38,7 @@ MessageInput.propTypes = {
   isTwoPeopleChannel: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   loading: PropTypes.bool,
   onChessButtonClick: PropTypes.func.isRequired,
+  onWordleButtonClick: PropTypes.func.isRequired,
   onHeightChange: PropTypes.func.isRequired,
   onMessageSubmit: PropTypes.func.isRequired,
   onSelectVideoButtonClick: PropTypes.func.isRequired,
@@ -56,6 +57,7 @@ function MessageInput({
   isTwoPeopleChannel,
   loading,
   onChessButtonClick,
+  onWordleButtonClick,
   onHeightChange,
   onMessageSubmit,
   onSelectVideoButtonClick,
@@ -302,13 +304,13 @@ function MessageInput({
         />
       ) : null}
       <div style={{ display: 'flex' }}>
-        {!!isTwoPeopleChannel && (
-          <div
-            style={{
-              margin: '0.2rem 1rem 0.2rem 0',
-              height: '100%'
-            }}
-          >
+        <div
+          style={{
+            margin: '0.2rem 1rem 0.2rem 0',
+            height: '100%'
+          }}
+        >
+          {isTwoPeopleChannel ? (
             <Button
               disabled={loading || banned?.chess}
               skeuomorphic
@@ -320,8 +322,16 @@ function MessageInput({
                 Chess
               </span>
             </Button>
-          </div>
-        )}
+          ) : (
+            <Button
+              skeuomorphic
+              onClick={onWordleButtonClick}
+              color={profileTheme}
+            >
+              <span className="desktop">Wordle</span>
+            </Button>
+          )}
+        </div>
         <Textarea
           innerRef={innerRef}
           minRows={1}
