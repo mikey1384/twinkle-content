@@ -39,7 +39,6 @@ export default function TakeScreenshot({
     (v) => v.actions.onUpdateMissionAttempt
   );
   const [screenshotTaken, setScreenshotTaken] = useState(false);
-  const [submitDisabled, setSubmitDisabled] = useState(false);
   const [buttonShown, setButtonShown] = useState(false);
   const { fileUploadLvl, username } = useMyState();
   const [alertModalShown, setAlertModalShown] = useState(false);
@@ -155,12 +154,32 @@ export default function TakeScreenshot({
               </div>
             </div>
           </div>
+          {screenshotTaken && (
+            <p style={{ marginTop: '2rem' }}>
+              <b>2.</b>{' '}
+              {attachment?.preview ? (
+                <>
+                  Make sure {`you've`} selected the correct screenshot. It must
+                  have{' '}
+                  <b style={{ color: Color.green() }}>
+                    that <Icon icon="arrow-up" />
+                  </b>{' '}
+                  in it
+                </>
+              ) : (
+                <>
+                  Press this <b style={{ color: Color.logoBlue() }}>button</b>{' '}
+                  and select the screenshot image file you have just taken
+                </>
+              )}
+            </p>
+          )}
           {attachment?.preview && (
             <div style={{ marginTop: '1rem' }}>
               <img style={{ width: '100%' }} src={attachment?.preview} />
               <div style={{ marginTop: '1.5rem' }}>
                 <b>3.</b>{' '}
-                {`Make sure you've selected the correct file and then tap "Submit"`}
+                {`If you've selected the correct screenshot file, tap "Submit"`}
               </div>
             </div>
           )}
@@ -177,24 +196,17 @@ export default function TakeScreenshot({
           }}
         >
           {!attachment?.preview && (
-            <p>
-              <b>2.</b> Press this{' '}
-              <b style={{ color: Color.logoBlue() }}>button</b> and select the
-              screenshot image file you have just taken
-            </p>
-          )}
-          {!attachment?.preview && (
             <Button
               skeuomorphic
               color="logoBlue"
-              style={{ fontSize: '2rem', marginTop: '1.5rem' }}
+              style={{ fontSize: '2rem' }}
               onClick={() => FileInputRef.current.click()}
             >
               <Icon icon="image" />
               <span style={{ marginLeft: '1rem' }}>Select Screenshot</span>
             </Button>
           )}
-          {attachment?.preview && (
+          {attachment?.preview && !uploadingFile && (
             <div
               style={{
                 display: 'flex',
@@ -203,7 +215,7 @@ export default function TakeScreenshot({
               }}
             >
               <Button
-                disabled={submitDisabled}
+                disabled={uploadingFile}
                 color="darkBlue"
                 skeuomorphic
                 style={{ fontSize: '2rem' }}
@@ -213,6 +225,7 @@ export default function TakeScreenshot({
                 <span style={{ marginLeft: '1rem' }}>Submit</span>
               </Button>
               <Button
+                disabled={uploadingFile}
                 color="darkerGray"
                 skeuomorphic
                 style={{ fontSize: '2rem', marginTop: '1rem' }}
@@ -280,10 +293,11 @@ export default function TakeScreenshot({
           )}
           <div style={{ marginTop: '5rem' }}>
             <span>
-              {`If you don't know what the word "screenshot" means, `}
-              press the <b style={{ color: Color.brownOrange() }}>
-                button
-              </b>{' '}
+              <>
+                If you {`don't`} know what the word <b>{`"screenshot"`}</b>{' '}
+                means,{' '}
+              </>
+              press the <b style={{ color: Color.brownOrange() }}>button</b>{' '}
               below
             </span>
             <Icon
@@ -394,7 +408,7 @@ export default function TakeScreenshot({
       document.getElementById('App').scrollTop = 0;
       BodyRef.scrollTop = 0;
     }
-    setSubmitDisabled(false);
+    setUploadingFile(false);
 
     function handleUploadProgress({ loaded, total }) {
       onSetMissionState({
