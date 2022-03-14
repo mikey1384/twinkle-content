@@ -179,7 +179,7 @@ export default function TakeScreenshot({
               <img style={{ width: '100%' }} src={attachment?.preview} />
               <div style={{ marginTop: '1.5rem' }}>
                 <b>3.</b>{' '}
-                {`If you've selected the correct screenshot file, tap "Submit"`}
+                {`If you've selected the correct screenshot image file, tap "Submit"`}
               </div>
             </div>
           )}
