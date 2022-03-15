@@ -14,7 +14,13 @@ export default function CompletedRow({ guess, isRevealing }) {
   const splitGuess = unicodeSplit(guess);
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        marginBottom: '0.5rem'
+      }}
+    >
       {splitGuess.map((letter, i) => (
         <Cell
           key={i}
