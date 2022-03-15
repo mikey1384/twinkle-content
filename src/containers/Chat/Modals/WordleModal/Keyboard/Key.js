@@ -10,7 +10,13 @@ Key.propTypes = {
   isRevealing: PropTypes.bool
 };
 
-export function Key({ children, width = 40, value, onClick, isRevealing }) {
+export default function Key({
+  children,
+  width = 40,
+  value,
+  onClick,
+  isRevealing
+}) {
   const keyDelayMs = REVEAL_TIME_MS * MAX_WORD_LENGTH;
 
   return (

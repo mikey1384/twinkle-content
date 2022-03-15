@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { getStatuses } from '../lib/statuses';
-import { Key } from './Key';
+import Key from './Key';
 import { ENTER_TEXT, DELETE_TEXT } from '../constants/strings';
 import { localeAwareUpperCase } from '../lib/words';
 
@@ -12,7 +12,14 @@ Keyboard.propTypes = {
   guesses: PropTypes.array,
   isRevealing: PropTypes.bool
 };
-export function Keyboard({ onChar, onDelete, onEnter, guesses, isRevealing }) {
+
+export default function Keyboard({
+  onChar,
+  onDelete,
+  onEnter,
+  guesses,
+  isRevealing
+}) {
   const charStatuses = getStatuses(guesses);
 
   const onClick = (value) => {
