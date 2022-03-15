@@ -26,12 +26,23 @@ export default function WordleModal({ onHide }) {
     <Modal onHide={onHide}>
       <header>Wordle</header>
       <main>
-        <Grid
-          guesses={guesses}
-          currentGuess={currentGuess}
-          isRevealing={isRevealing}
-          currentRowClassName={currentRowClass}
-        />
+        <div
+          style={{
+            flexGrow: 1,
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column'
+          }}
+        >
+          <div style={{ paddingBottom: '6px', flexGrow: 1 }}>
+            <Grid
+              guesses={guesses}
+              currentGuess={currentGuess}
+              isRevealing={isRevealing}
+              currentRowClassName={currentRowClass}
+            />
+          </div>
+        </div>
       </main>
       <footer>
         <Button transparent style={{ marginRight: '0.7rem' }} onClick={onHide}>

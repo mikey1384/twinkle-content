@@ -11,7 +11,14 @@ export default function Cell({ value, position = 0 }) {
   const animationDelay = `${position * REVEAL_TIME_MS}ms`;
 
   return (
-    <div style={{ animationDelay }}>
+    <div
+      style={{
+        width: '3.5rem',
+        height: '3.5rem',
+        border: '1px solid black',
+        animationDelay
+      }}
+    >
       <div style={{ animationDelay }}>{value}</div>
     </div>
   );
