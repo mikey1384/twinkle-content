@@ -17,7 +17,7 @@ export default function CurrentRow({ guess }) {
       style={{
         display: 'flex',
         justifyContent: 'center',
-        marginBottom: '0.25rem'
+        marginBottom: '0.5rem'
       }}
     >
       {splitGuess.map((letter, i) => (

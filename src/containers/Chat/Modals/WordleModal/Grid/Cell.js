@@ -16,6 +16,7 @@ export default function Cell({ value, position = 0 }) {
         width: '3.5rem',
         height: '3.5rem',
         border: '1px solid black',
+        marginRight: '0.5rem',
         animationDelay
       }}
     >

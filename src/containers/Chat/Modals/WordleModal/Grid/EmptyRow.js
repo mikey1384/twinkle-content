@@ -10,7 +10,7 @@ export default function EmptyRow() {
       style={{
         display: 'flex',
         justifyContent: 'center',
-        marginBottom: '0.25rem'
+        marginBottom: '0.5rem'
       }}
     >
       {emptyCells.map((_, i) => (
