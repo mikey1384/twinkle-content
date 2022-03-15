@@ -34,7 +34,7 @@ export default function WordleModal({ onHide }) {
             flexDirection: 'column'
           }}
         >
-          <div style={{ paddingBottom: '6px', flexGrow: 1 }}>
+          <div style={{ flexGrow: 1 }}>
             <Grid
               guesses={guesses}
               currentGuess={currentGuess}
