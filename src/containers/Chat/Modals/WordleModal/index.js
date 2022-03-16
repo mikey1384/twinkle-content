@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
@@ -13,7 +13,10 @@ import {
   solution,
   unicodeLength
 } from './lib/words';
-import { loadGameStateFromLocalStorage } from './lib/localStorage';
+import {
+  loadGameStateFromLocalStorage,
+  saveGameStateToLocalStorage
+} from './lib/localStorage';
 import {
   ALERT_TIME_MS,
   MAX_CHALLENGES,
@@ -51,6 +54,9 @@ export default function WordleModal({ onHide }) {
     }
     return 'green';
   }, [alertMessage.status]);
+  useEffect(() => {
+    saveGameStateToLocalStorage({ guesses, solution });
+  }, [guesses]);
 
   return (
     <Modal onHide={onHide}>
