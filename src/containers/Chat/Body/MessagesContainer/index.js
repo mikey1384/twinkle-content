@@ -74,6 +74,7 @@ function MessagesContainer({
       onDeleteMessage,
       onEditChannelSettings,
       onEnterChannelWithId,
+      onGetRanks,
       onHideChat,
       onLeaveChannel,
       onLoadMoreMessages,
@@ -95,6 +96,7 @@ function MessagesContainer({
       leaveChannel,
       loadChatChannel,
       loadMoreChatMessages,
+      loadRankings,
       putFavoriteChannel,
       sendInvitationMessage,
       startNewDMChannel,
@@ -873,10 +875,35 @@ function MessagesContainer({
         type: 'increase',
         userId: message.userId
       });
+      handleUpdateRankings();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [handleMessageSubmit]
   );
+
+  const handleUpdateRankings = useCallback(async () => {
+    const {
+      all,
+      top30s,
+      allMonthly,
+      top30sMonthly,
+      myMonthlyRank,
+      myAllTimeRank,
+      myAllTimeXP,
+      myMonthlyXP
+    } = await loadRankings();
+    onGetRanks({
+      all,
+      top30s,
+      allMonthly,
+      top30sMonthly,
+      myMonthlyRank,
+      myAllTimeRank,
+      myAllTimeXP,
+      myMonthlyXP
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSelectNewOwner = useCallback(
     async ({ newOwner, andLeave }) => {
