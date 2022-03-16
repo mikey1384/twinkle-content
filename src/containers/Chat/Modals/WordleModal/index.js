@@ -14,6 +14,7 @@ import {
 } from './lib/words';
 import { loadGameStateFromLocalStorage } from './lib/localStorage';
 import {
+  ALERT_TIME_MS,
   MAX_CHALLENGES,
   MAX_WORD_LENGTH,
   REVEAL_TIME_MS
@@ -23,7 +24,6 @@ import {
   NOT_ENOUGH_LETTERS_MESSAGE,
   WORD_NOT_FOUND_MESSAGE
 } from './constants/strings';
-import { useAlert } from './context/AlertContext';
 import { default as GraphemeSplitter } from 'grapheme-splitter';
 
 WordleModal.propTypes = {
@@ -31,7 +31,7 @@ WordleModal.propTypes = {
 };
 
 export default function WordleModal({ onHide }) {
-  const { showError: showErrorAlert } = useAlert();
+  const [, setAlertMessage] = useState(null);
   const [guesses, setGuesses] = useState(handleInitGuesses);
   const [currentGuess, setCurrentGuess] = useState('');
   const [isHardMode] = useState(
@@ -105,15 +105,23 @@ export default function WordleModal({ onHide }) {
 
     if (!(unicodeLength(currentGuess) === MAX_WORD_LENGTH)) {
       setCurrentRowClass('jiggle');
-      return showErrorAlert(NOT_ENOUGH_LETTERS_MESSAGE, {
-        onClose: () => setCurrentRowClass('')
+      return handleShowAlert({
+        status: 'error',
+        message: NOT_ENOUGH_LETTERS_MESSAGE,
+        options: {
+          onClose: () => setCurrentRowClass('')
+        }
       });
     }
 
     if (!isWordInWordList(currentGuess)) {
       setCurrentRowClass('jiggle');
-      return showErrorAlert(WORD_NOT_FOUND_MESSAGE, {
-        onClose: () => setCurrentRowClass('')
+      return handleShowAlert({
+        status: 'error',
+        message: WORD_NOT_FOUND_MESSAGE,
+        options: {
+          onClose: () => setCurrentRowClass('')
+        }
       });
     }
 
@@ -122,8 +130,12 @@ export default function WordleModal({ onHide }) {
       const firstMissingReveal = findFirstUnusedReveal(currentGuess, guesses);
       if (firstMissingReveal) {
         setCurrentRowClass('jiggle');
-        return showErrorAlert(firstMissingReveal, {
-          onClose: () => setCurrentRowClass('')
+        return handleShowAlert({
+          status: 'error',
+          message: firstMissingReveal,
+          options: {
+            onClose: () => setCurrentRowClass('')
+          }
         });
       }
     }
@@ -153,12 +165,37 @@ export default function WordleModal({ onHide }) {
       if (guesses.length === MAX_CHALLENGES - 1) {
         setStats(addStatsForCompletedGame(stats, guesses.length + 1));
         setIsGameLost(true);
-        showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
-          persist: true,
-          delayMs: REVEAL_TIME_MS * MAX_WORD_LENGTH + 1
+        handleShowAlert({
+          status: 'error',
+          message: CORRECT_WORD_MESSAGE(solution),
+          options: {
+            persist: true,
+            delayMs: REVEAL_TIME_MS * MAX_WORD_LENGTH + 1
+          }
         });
       }
     }
+  }
+
+  function handleShowAlert({ status, message, options }) {
+    const {
+      delayMs = 0,
+      persist,
+      onClose,
+      durationMs = ALERT_TIME_MS
+    } = options || {};
+    setTimeout(() => {
+      setAlertMessage({ shown: true, status, message });
+
+      if (!persist) {
+        setTimeout(() => {
+          setAlertMessage({ shown: false, status: '', message: '' });
+          if (onClose) {
+            onClose();
+          }
+        }, durationMs);
+      }
+    }, delayMs);
   }
 
   function handleInitGuesses() {
@@ -172,8 +209,12 @@ export default function WordleModal({ onHide }) {
     }
     if (loaded.guesses.length === MAX_CHALLENGES && !gameWasWon) {
       setIsGameLost(true);
-      showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
-        persist: true
+      handleShowAlert({
+        status: 'error',
+        message: CORRECT_WORD_MESSAGE(solution),
+        options: {
+          persist: true
+        }
       });
     }
     return loaded.guesses;
