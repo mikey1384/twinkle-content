@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
@@ -45,12 +45,20 @@ export default function WordleModal({ onHide }) {
   const [isGameWon, setIsGameWon] = useState(false);
   const [isGameLost, setIsGameLost] = useState(false);
   const [stats, setStats] = useState(() => loadStats());
+  const alertMessageColor = useMemo(() => {
+    if (alertMessage.status === 'error') {
+      return 'rose';
+    }
+    return 'green';
+  }, [alertMessage.status]);
 
   return (
     <Modal onHide={onHide}>
       <header>Wordle</header>
       <main>
-        {alertMessage.shown && <Banner>{alertMessage.message}</Banner>}
+        {alertMessage.shown && (
+          <Banner color={alertMessageColor}>{alertMessage.message}</Banner>
+        )}
         <div
           style={{
             flexGrow: 1,
