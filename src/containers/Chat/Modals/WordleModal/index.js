@@ -4,6 +4,7 @@ import Modal from 'components/Modal';
 import Button from 'components/Button';
 import Grid from './Grid';
 import Keyboard from './Keyboard';
+import Banner from 'components/Banner';
 import { addStatsForCompletedGame, loadStats } from './lib/stats';
 import {
   findFirstUnusedReveal,
@@ -31,7 +32,7 @@ WordleModal.propTypes = {
 };
 
 export default function WordleModal({ onHide }) {
-  const [, setAlertMessage] = useState(null);
+  const [alertMessage, setAlertMessage] = useState({});
   const [guesses, setGuesses] = useState(handleInitGuesses);
   const [currentGuess, setCurrentGuess] = useState('');
   const [isHardMode] = useState(
@@ -49,6 +50,7 @@ export default function WordleModal({ onHide }) {
     <Modal onHide={onHide}>
       <header>Wordle</header>
       <main>
+        {alertMessage.shown && <Banner>{alertMessage.message}</Banner>}
         <div
           style={{
             flexGrow: 1,
