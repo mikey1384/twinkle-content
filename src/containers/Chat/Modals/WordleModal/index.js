@@ -35,6 +35,7 @@ WordleModal.propTypes = {
 };
 
 export default function WordleModal({ onHide }) {
+  const [isGameWon, setIsGameWon] = useState(false);
   const [alertMessage, setAlertMessage] = useState({});
   const [guesses, setGuesses] = useState(handleInitGuesses);
   const [currentGuess, setCurrentGuess] = useState('');
@@ -45,7 +46,6 @@ export default function WordleModal({ onHide }) {
   );
   const [isRevealing, setIsRevealing] = useState(false);
   const [currentRowClass, setCurrentRowClass] = useState('');
-  const [isGameWon, setIsGameWon] = useState(false);
   const [isGameLost, setIsGameLost] = useState(false);
   const [stats, setStats] = useState(() => loadStats());
   const alertMessageColor = useMemo(() => {
