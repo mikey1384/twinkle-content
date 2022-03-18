@@ -19,6 +19,7 @@ import {
 } from './lib/localStorage';
 import {
   ALERT_TIME_MS,
+  GAME_LOST_INFO_DELAY,
   MAX_CHALLENGES,
   MAX_WORD_LENGTH,
   REVEAL_TIME_MS
@@ -26,6 +27,7 @@ import {
 import {
   CORRECT_WORD_MESSAGE,
   NOT_ENOUGH_LETTERS_MESSAGE,
+  WIN_MESSAGES,
   WORD_NOT_FOUND_MESSAGE
 } from './constants/strings';
 import { default as GraphemeSplitter } from 'grapheme-splitter';
@@ -45,6 +47,7 @@ export default function WordleModal({ onHide }) {
       : false
   );
   const [isRevealing, setIsRevealing] = useState(false);
+  const [, setIsStatsModalOpen] = useState(false);
   const [currentRowClass, setCurrentRowClass] = useState('');
   const [isGameLost, setIsGameLost] = useState(false);
   const [stats, setStats] = useState(() => loadStats());
@@ -57,6 +60,28 @@ export default function WordleModal({ onHide }) {
   useEffect(() => {
     saveGameStateToLocalStorage({ guesses, solution });
   }, [guesses]);
+  useEffect(() => {
+    if (isGameWon) {
+      const winMessage =
+        WIN_MESSAGES[Math.floor(Math.random() * WIN_MESSAGES.length)];
+      const delayMs = REVEAL_TIME_MS * MAX_WORD_LENGTH;
+
+      handleShowAlert({
+        status: 'success',
+        message: winMessage,
+        options: {
+          delayMs,
+          onClose: () => setIsStatsModalOpen(true)
+        }
+      });
+    }
+
+    if (isGameLost) {
+      setTimeout(() => {
+        setIsStatsModalOpen(true);
+      }, GAME_LOST_INFO_DELAY);
+    }
+  }, [isGameWon, isGameLost]);
 
   return (
     <Modal onHide={onHide}>
