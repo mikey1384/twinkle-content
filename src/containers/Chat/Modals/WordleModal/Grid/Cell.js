@@ -12,14 +12,26 @@ Cell.propTypes = {
 export default function Cell({ status, value, position = 0 }) {
   const animationDelay = `${position * REVEAL_TIME_MS}ms`;
   const borderColor = useMemo(() => {
+    if (status === 'correct') {
+      return Color.green();
+    }
     if (status === 'present') {
       return Color.orange();
+    }
+    if (status === 'absent') {
+      return Color.gray();
     }
     return 'black';
   }, [status]);
   const backgroundColor = useMemo(() => {
+    if (status === 'correct') {
+      return Color.green();
+    }
     if (status === 'present') {
       return Color.orange();
+    }
+    if (status === 'absent') {
+      return Color.gray();
     }
     return null;
   }, [status]);

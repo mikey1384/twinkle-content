@@ -22,8 +22,14 @@ export default function Key({
 }) {
   const keyDelayMs = REVEAL_TIME_MS * MAX_WORD_LENGTH;
   const backgroundColor = useMemo(() => {
+    if (status === 'correct') {
+      return Color.green();
+    }
     if (status === 'present') {
       return Color.orange();
+    }
+    if (status === 'absent') {
+      return Color.gray();
     }
     return null;
   }, [status]);
