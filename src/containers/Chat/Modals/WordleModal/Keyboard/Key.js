@@ -39,6 +39,7 @@ export default function Key({
       style={{
         borderRadius,
         color: '#fff',
+        cursor: 'pointer',
         marginRight: '2px',
         border: 0,
         transitionDelay: isRevealing ? `${keyDelayMs}ms` : 'unset',
