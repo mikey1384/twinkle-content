@@ -10,7 +10,8 @@ Keyboard.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onEnter: PropTypes.func.isRequired,
   guesses: PropTypes.array,
-  isRevealing: PropTypes.bool
+  isRevealing: PropTypes.bool,
+  style: PropTypes.object
 };
 
 export default function Keyboard({
@@ -18,7 +19,8 @@ export default function Keyboard({
   onDelete,
   onEnter,
   guesses,
-  isRevealing
+  isRevealing,
+  style
 }) {
   const charStatuses = getStatuses(guesses);
 
@@ -53,8 +55,8 @@ export default function Keyboard({
   }, [onEnter, onDelete, onChar]);
 
   return (
-    <div>
-      <div className="flex justify-center mb-1">
+    <div style={style}>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
         {['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'].map((key) => (
           <Key
             value={key}
@@ -65,7 +67,7 @@ export default function Keyboard({
           />
         ))}
       </div>
-      <div className="flex justify-center mb-1">
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
         {['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'].map((key) => (
           <Key
             value={key}
@@ -76,7 +78,7 @@ export default function Keyboard({
           />
         ))}
       </div>
-      <div className="flex justify-center">
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
         <Key width={65.4} value="ENTER" onClick={onClick}>
           {ENTER_TEXT}
         </Key>

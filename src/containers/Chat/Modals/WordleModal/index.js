@@ -100,20 +100,19 @@ export default function WordleModal({ onHide }) {
             flexDirection: 'column'
           }}
         >
-          <div style={{ flexGrow: 1 }}>
-            <Grid
-              guesses={guesses}
-              currentGuess={currentGuess}
-              isRevealing={isRevealing}
-              currentRowClassName={currentRowClass}
-            />
-          </div>
+          <Grid
+            guesses={guesses}
+            currentGuess={currentGuess}
+            isRevealing={isRevealing}
+            currentRowClassName={currentRowClass}
+          />
           <Keyboard
             onChar={handleChar}
             onDelete={handleDelete}
             onEnter={handleEnter}
             guesses={guesses}
             isRevealing={isRevealing}
+            style={{ marginTop: '2rem' }}
           />
           {isStatsModalOpen && (
             <StatsModal
