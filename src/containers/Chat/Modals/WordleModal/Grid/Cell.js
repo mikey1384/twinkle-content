@@ -16,25 +16,25 @@ export default function Cell({ status, value, position = 0 }) {
       return Color.limeGreen();
     }
     if (status === 'present') {
-      return Color.orange();
+      return Color.brownOrange();
     }
-    if (status === 'absent') {
-      return Color.blueGray();
-    }
-    return 'black';
+    return Color.blueGray();
   }, [status]);
   const backgroundColor = useMemo(() => {
     if (status === 'correct') {
       return Color.limeGreen();
     }
     if (status === 'present') {
-      return Color.orange();
+      return Color.brownOrange();
     }
     if (status === 'absent') {
       return Color.blueGray();
     }
+    if (value) {
+      return Color.lightBlueGray();
+    }
     return null;
-  }, [status]);
+  }, [status, value]);
 
   return (
     <div
@@ -51,7 +51,7 @@ export default function Cell({ status, value, position = 0 }) {
         marginRight: '0.5rem',
         backgroundColor,
         animationDelay,
-        textShadow: 'rgb(0, 0, 0) 1px 1px 1px'
+        ...(status ? { textShadow: 'rgb(0, 0, 0) 1px 1px 1px' } : {})
       }}
     >
       <div style={{ animationDelay }}>{value}</div>

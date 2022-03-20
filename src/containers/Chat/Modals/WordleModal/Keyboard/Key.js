@@ -26,7 +26,7 @@ export default function Key({
       return Color.limeGreen();
     }
     if (status === 'present') {
-      return Color.orange();
+      return Color.brownOrange();
     }
     if (status === 'absent') {
       return Color.blueGray();
