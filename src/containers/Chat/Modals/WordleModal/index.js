@@ -90,7 +90,9 @@ export default function WordleModal({ onHide }) {
       <header>Wordle</header>
       <main>
         {alertMessage.shown && (
-          <Banner color={alertMessageColor}>{alertMessage.message}</Banner>
+          <Banner style={{ marginBottom: '2rem' }} color={alertMessageColor}>
+            {alertMessage.message}
+          </Banner>
         )}
         <div
           style={{
