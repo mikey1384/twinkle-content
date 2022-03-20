@@ -29,7 +29,7 @@ export default function Key({
       return Color.brownOrange();
     }
     if (status === 'absent') {
-      return Color.blueGray();
+      return Color.darkBlueGray();
     }
     return Color.lightBlueGray();
   }, [status]);

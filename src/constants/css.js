@@ -24,6 +24,7 @@ export const Color = {
   lighterGray: (opacity = 1) => `rgba(207,207,207,${opacity})`,
   blueGray: (opacity = 1) => `rgba(61,75,95,${opacity})`,
   lightBlueGray: (opacity = 1) => `rgba(91,105,125,${opacity})`,
+  darkBlueGray: (opacity = 1) => `rgba(41,55,75,${opacity})`,
   borderGray: (opacity = 1) => `rgba(204,204,204,${opacity})`,
   checkboxAreaGray: (opacity = 1) => `rgba(229,229,229,${opacity})`,
   targetGray: (opacity = 1) => `rgba(218,218,230,${opacity})`,
