@@ -40,8 +40,8 @@ export default function Cell({ status, value, position = 0 }) {
     <div
       style={{
         borderRadius,
-        width: '3.5rem',
-        height: '3.5rem',
+        width: '3.7rem',
+        height: '3.7rem',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',

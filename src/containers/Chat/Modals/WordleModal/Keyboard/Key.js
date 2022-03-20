@@ -44,7 +44,7 @@ export default function Key({
         border: 0,
         transitionDelay: isRevealing ? `${keyDelayMs}ms` : 'unset',
         width: `${width}px`,
-        height: '5rem',
+        height: '5.5rem',
         backgroundColor
       }}
       onClick={handleClick}
