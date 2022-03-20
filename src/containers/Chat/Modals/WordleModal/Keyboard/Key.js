@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Color } from 'constants/css';
+import { borderRadius, Color } from 'constants/css';
 import { MAX_WORD_LENGTH, REVEAL_TIME_MS } from '../constants/settings';
 
 Key.propTypes = {
@@ -37,7 +37,10 @@ export default function Key({
   return (
     <button
       style={{
+        borderRadius,
         color: '#fff',
+        marginRight: '1px',
+        border: 0,
         transitionDelay: isRevealing ? `${keyDelayMs}ms` : 'unset',
         width: `${width}px`,
         height: '58px',
