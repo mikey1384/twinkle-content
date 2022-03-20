@@ -41,6 +41,11 @@ export default function Cell({ status, value, position = 0 }) {
       style={{
         width: '3.5rem',
         height: '3.5rem',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontWeight: 'bold',
+        color: '#fff',
         border: `1px solid ${borderColor}`,
         marginRight: '0.5rem',
         backgroundColor,

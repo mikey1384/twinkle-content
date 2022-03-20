@@ -96,7 +96,6 @@ export default function WordleModal({ onHide }) {
         )}
         <div
           style={{
-            flexGrow: 1,
             width: '100%',
             display: 'flex',
             flexDirection: 'column'
