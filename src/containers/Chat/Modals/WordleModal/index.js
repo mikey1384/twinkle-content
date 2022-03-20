@@ -26,11 +26,13 @@ import {
 } from './constants/settings';
 import {
   CORRECT_WORD_MESSAGE,
+  GAME_COPIED_MESSAGE,
   NOT_ENOUGH_LETTERS_MESSAGE,
   WIN_MESSAGES,
   WORD_NOT_FOUND_MESSAGE
 } from './constants/strings';
 import { default as GraphemeSplitter } from 'grapheme-splitter';
+import StatsModal from './Modals/StatsModal';
 
 WordleModal.propTypes = {
   onHide: PropTypes.func.isRequired
@@ -47,7 +49,7 @@ export default function WordleModal({ onHide }) {
       : false
   );
   const [isRevealing, setIsRevealing] = useState(false);
-  const [, setIsStatsModalOpen] = useState(false);
+  const [isStatsModalOpen, setIsStatsModalOpen] = useState(false);
   const [currentRowClass, setCurrentRowClass] = useState('');
   const [isGameLost, setIsGameLost] = useState(false);
   const [stats, setStats] = useState(() => loadStats());
@@ -113,6 +115,23 @@ export default function WordleModal({ onHide }) {
             guesses={guesses}
             isRevealing={isRevealing}
           />
+          {isStatsModalOpen && (
+            <StatsModal
+              onHide={() => setIsStatsModalOpen(false)}
+              guesses={guesses}
+              gameStats={stats}
+              isGameLost={isGameLost}
+              isGameWon={isGameWon}
+              handleShareToClipboard={() =>
+                handleShowAlert({
+                  status: 'success',
+                  message: GAME_COPIED_MESSAGE
+                })
+              }
+              isHardMode={isHardMode}
+              numberOfGuessesMade={guesses.length}
+            />
+          )}
         </div>
       </main>
       <footer>
