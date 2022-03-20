@@ -23,20 +23,21 @@ export default function Key({
   const keyDelayMs = REVEAL_TIME_MS * MAX_WORD_LENGTH;
   const backgroundColor = useMemo(() => {
     if (status === 'correct') {
-      return Color.green();
+      return Color.limeGreen();
     }
     if (status === 'present') {
       return Color.orange();
     }
     if (status === 'absent') {
-      return Color.gray();
+      return Color.blueGray();
     }
-    return null;
+    return Color.lightBlueGray();
   }, [status]);
 
   return (
     <button
       style={{
+        color: '#fff',
         transitionDelay: isRevealing ? `${keyDelayMs}ms` : 'unset',
         width: `${width}px`,
         height: '58px',

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Color } from 'constants/css';
+import { borderRadius, Color } from 'constants/css';
 import { REVEAL_TIME_MS } from '../constants/settings';
 
 Cell.propTypes = {
@@ -13,25 +13,25 @@ export default function Cell({ status, value, position = 0 }) {
   const animationDelay = `${position * REVEAL_TIME_MS}ms`;
   const borderColor = useMemo(() => {
     if (status === 'correct') {
-      return Color.green();
+      return Color.limeGreen();
     }
     if (status === 'present') {
       return Color.orange();
     }
     if (status === 'absent') {
-      return Color.gray();
+      return Color.blueGray();
     }
     return 'black';
   }, [status]);
   const backgroundColor = useMemo(() => {
     if (status === 'correct') {
-      return Color.green();
+      return Color.limeGreen();
     }
     if (status === 'present') {
       return Color.orange();
     }
     if (status === 'absent') {
-      return Color.gray();
+      return Color.blueGray();
     }
     return null;
   }, [status]);
@@ -39,6 +39,7 @@ export default function Cell({ status, value, position = 0 }) {
   return (
     <div
       style={{
+        borderRadius,
         width: '3.5rem',
         height: '3.5rem',
         display: 'flex',
@@ -49,7 +50,8 @@ export default function Cell({ status, value, position = 0 }) {
         border: `1px solid ${borderColor}`,
         marginRight: '0.5rem',
         backgroundColor,
-        animationDelay
+        animationDelay,
+        textShadow: 'rgb(0, 0, 0) 1px 1px 1px'
       }}
     >
       <div style={{ animationDelay }}>{value}</div>
