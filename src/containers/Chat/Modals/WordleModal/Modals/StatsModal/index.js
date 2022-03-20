@@ -43,9 +43,9 @@ export default function StatsModal({
         ) : (
           <>
             <StatBar gameStats={gameStats} />
-            <h4 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
+            <p style={{ fontWeight: 'bold', fontSize: '1.7rem' }}>
               {GUESS_DISTRIBUTION_TEXT}
-            </h4>
+            </p>
             <Histogram
               gameStats={gameStats}
               numberOfGuessesMade={numberOfGuessesMade}

@@ -8,9 +8,17 @@ Progress.propTypes = {
 };
 export default function Progress({ index, size, label }) {
   return (
-    <div className="flex justify-left m-1">
-      <div className="items-center justify-center w-2">{index + 1}</div>
-      <div className="w-full ml-2">
+    <div style={{ display: 'flex', textAlign: 'left' }}>
+      <div
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '1rem'
+        }}
+      >
+        {index + 1}
+      </div>
+      <div style={{ width: '100%', marginLeft: '0.5rem' }}>
         <div style={{ width: `${8 + size}%` }}>{label}</div>
       </div>
     </div>
