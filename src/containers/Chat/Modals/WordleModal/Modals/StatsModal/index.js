@@ -35,7 +35,7 @@ export default function StatsModal({
   numberOfGuessesMade
 }) {
   return (
-    <Modal modalOverModal onHide={onHide}>
+    <Modal small modalOverModal onHide={onHide}>
       <header>{STATISTICS_TITLE}</header>
       <main>
         {gameStats.totalGames <= 0 ? (
