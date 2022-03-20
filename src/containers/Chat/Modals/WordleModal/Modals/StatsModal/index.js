@@ -43,7 +43,13 @@ export default function StatsModal({
         ) : (
           <>
             <StatBar gameStats={gameStats} />
-            <p style={{ fontWeight: 'bold', fontSize: '1.7rem' }}>
+            <p
+              style={{
+                fontWeight: 'bold',
+                fontSize: '1.7rem',
+                marginTop: '1.5rem'
+              }}
+            >
               {GUESS_DISTRIBUTION_TEXT}
             </p>
             <Histogram

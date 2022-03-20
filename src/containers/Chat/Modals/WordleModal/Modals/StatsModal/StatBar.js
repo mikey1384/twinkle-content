@@ -18,11 +18,14 @@ function StatItem({ label, value }) {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginRight: '1rem'
       }}
     >
-      <div className="text-3xl font-bold">{value}</div>
-      <div className="text-xs">{label}</div>
+      <div style={{ fontWeight: 'bold', fontSize: '3rem', lineHeight: 1 }}>
+        {value}
+      </div>
+      <div style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>{label}</div>
     </div>
   );
 }
