@@ -39,11 +39,11 @@ export default function Key({
       style={{
         borderRadius,
         color: '#fff',
-        marginRight: '1px',
+        marginRight: '2px',
         border: 0,
         transitionDelay: isRevealing ? `${keyDelayMs}ms` : 'unset',
         width: `${width}px`,
-        height: '58px',
+        height: '5rem',
         backgroundColor
       }}
       onClick={handleClick}

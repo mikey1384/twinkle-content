@@ -60,7 +60,7 @@ export default function Keyboard({
         style={{
           display: 'flex',
           justifyContent: 'center',
-          marginBottom: '1px'
+          marginBottom: '2px'
         }}
       >
         {['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'].map((key) => (
@@ -77,7 +77,7 @@ export default function Keyboard({
         style={{
           display: 'flex',
           justifyContent: 'center',
-          marginBottom: '1px'
+          marginBottom: '2px'
         }}
       >
         {['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'].map((key) => (
