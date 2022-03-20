@@ -11,7 +11,7 @@ export default function Histogram({ gameStats, numberOfGuessesMade }) {
   const maxValue = Math.max(...winDistribution);
 
   return (
-    <div style={{ columnCount: 1, textAlign: 'left', width: '100%' }}>
+    <div style={{ width: '100%' }}>
       {winDistribution.map((value, i) => (
         <Progress
           key={i}

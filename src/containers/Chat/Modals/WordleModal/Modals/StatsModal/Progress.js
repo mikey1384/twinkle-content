@@ -13,8 +13,6 @@ export default function Progress({ currentDayStatRow, index, size, label }) {
     <div style={{ display: 'flex', textAlign: 'left' }}>
       <div
         style={{
-          alignItems: 'center',
-          justifyContent: 'center',
           width: '1rem'
         }}
       >

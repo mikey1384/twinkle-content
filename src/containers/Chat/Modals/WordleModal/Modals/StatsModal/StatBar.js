@@ -13,7 +13,14 @@ StatItem.propTypes = {
 };
 function StatItem({ label, value }) {
   return (
-    <div className="items-center justify-center m-1 w-1/4 dark:text-white">
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}
+    >
       <div className="text-3xl font-bold">{value}</div>
       <div className="text-xs">{label}</div>
     </div>
@@ -25,7 +32,7 @@ StatBar.propTypes = {
 };
 export default function StatBar({ gameStats }) {
   return (
-    <div className="flex justify-center my-2">
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
       <StatItem label={TOTAL_TRIES_TEXT} value={gameStats.totalGames} />
       <StatItem label={SUCCESS_RATE_TEXT} value={`${gameStats.successRate}%`} />
       <StatItem label={CURRENT_STREAK_TEXT} value={gameStats.currentStreak} />
