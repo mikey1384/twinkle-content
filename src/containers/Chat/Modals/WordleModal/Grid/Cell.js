@@ -25,7 +25,7 @@ export default function Cell({
   return (
     <div
       className={`${css`
-        border: 1px solid ${Color.blueGray()};
+        border: 1px solid ${Color.lightBlueGray()};
         background: ${value ? Color.lightBlueGray() : ''};
       `} ${shouldReveal ? 'cell-reveal' : ''} ${status || ''}`}
       style={{
@@ -38,8 +38,7 @@ export default function Cell({
         fontWeight: 'bold',
         color: '#fff',
         marginRight: '0.5rem',
-        animationDelay,
-        ...(status ? { textShadow: 'rgb(0, 0, 0) 1px 1px 1px' } : {})
+        animationDelay
       }}
     >
       <div className="letter-container" style={{ animationDelay }}>
