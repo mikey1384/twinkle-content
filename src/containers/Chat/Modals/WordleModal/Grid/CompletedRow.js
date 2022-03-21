@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Cell from './Cell';
-import { getGuessStatuses } from '../lib/statuses';
-import { unicodeSplit } from '../lib/words';
+import { getGuessStatuses } from '../helpers/statuses';
+import { unicodeSplit } from '../helpers/words';
 
 CompletedRow.propTypes = {
   guess: PropTypes.string.isRequired,

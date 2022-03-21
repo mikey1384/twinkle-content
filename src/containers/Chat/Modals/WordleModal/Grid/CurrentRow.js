@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Cell from './Cell';
 import { MAX_WORD_LENGTH } from '../constants/settings';
-import { unicodeSplit } from '../lib/words';
+import { unicodeSplit } from '../helpers/words';
 
 CurrentRow.propTypes = {
   guess: PropTypes.string,

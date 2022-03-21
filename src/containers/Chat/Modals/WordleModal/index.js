@@ -5,18 +5,18 @@ import Button from 'components/Button';
 import Grid from './Grid';
 import Keyboard from './Keyboard';
 import Banner from 'components/Banner';
-import { addStatsForCompletedGame, loadStats } from './lib/stats';
+import { addStatsForCompletedGame, loadStats } from './helpers/stats';
 import {
   findFirstUnusedReveal,
   isWinningWord,
   isWordInWordList,
   solution,
   unicodeLength
-} from './lib/words';
+} from './helpers/words';
 import {
   loadGameStateFromLocalStorage,
   saveGameStateToLocalStorage
-} from './lib/localStorage';
+} from './helpers/localStorage';
 import {
   ALERT_TIME_MS,
   GAME_LOST_INFO_DELAY,

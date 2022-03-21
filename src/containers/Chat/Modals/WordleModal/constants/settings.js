@@ -1,4 +1,4 @@
-import { solution } from '../lib/words';
+import { solution } from '../helpers/words';
 
 export const MAX_WORD_LENGTH = solution.length;
 export const MAX_CHALLENGES = 6;
