@@ -5,9 +5,9 @@ async function loadPolyfills() {
 }
 loadPolyfills();
 
+import './styles.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './styles.css';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faAlignJustify } from '@fortawesome/pro-solid-svg-icons/faAlignJustify';

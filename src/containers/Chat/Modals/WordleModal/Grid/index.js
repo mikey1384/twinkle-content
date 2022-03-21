@@ -4,6 +4,7 @@ import { MAX_CHALLENGES } from '../constants/settings';
 import CompletedRow from './CompletedRow';
 import CurrentRow from './CurrentRow';
 import EmptyRow from './EmptyRow';
+import { gridContainer } from './Styles';
 
 Grid.propTypes = {
   guesses: PropTypes.array,
@@ -24,7 +25,7 @@ export default function Grid({
       : [];
 
   return (
-    <>
+    <div className={gridContainer}>
       {guesses.map((guess, i) => (
         <CompletedRow
           key={i}
@@ -38,6 +39,6 @@ export default function Grid({
       {empties.map((_, i) => (
         <EmptyRow key={i} />
       ))}
-    </>
+    </div>
   );
 }

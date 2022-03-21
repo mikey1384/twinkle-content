@@ -1,43 +1,33 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { borderRadius, Color } from 'constants/css';
 import { REVEAL_TIME_MS } from '../constants/settings';
+import { css } from '@emotion/css';
 
 Cell.propTypes = {
+  isCompleted: PropTypes.bool,
+  isRevealing: PropTypes.bool,
   status: PropTypes.string,
   value: PropTypes.string,
   position: PropTypes.number
 };
 
-export default function Cell({ status, value, position = 0 }) {
+export default function Cell({
+  isCompleted,
+  isRevealing,
+  status,
+  value,
+  position = 0
+}) {
+  const shouldReveal = isRevealing && isCompleted;
   const animationDelay = `${position * REVEAL_TIME_MS}ms`;
-  const borderColor = useMemo(() => {
-    if (status === 'correct') {
-      return Color.limeGreen();
-    }
-    if (status === 'present') {
-      return Color.brownOrange();
-    }
-    return Color.blueGray();
-  }, [status]);
-  const backgroundColor = useMemo(() => {
-    if (status === 'correct') {
-      return Color.limeGreen();
-    }
-    if (status === 'present') {
-      return Color.brownOrange();
-    }
-    if (status === 'absent') {
-      return Color.blueGray();
-    }
-    if (value) {
-      return Color.lightBlueGray();
-    }
-    return null;
-  }, [status, value]);
 
   return (
     <div
+      className={`${css`
+        border: 1px solid ${Color.blueGray()};
+        background: ${value ? Color.lightBlueGray() : ''};
+      `} ${shouldReveal ? 'cell-reveal' : ''} ${status || ''}`}
       style={{
         borderRadius,
         width: '3.7rem',
@@ -47,14 +37,14 @@ export default function Cell({ status, value, position = 0 }) {
         alignItems: 'center',
         fontWeight: 'bold',
         color: '#fff',
-        border: `1px solid ${borderColor}`,
         marginRight: '0.5rem',
-        backgroundColor,
         animationDelay,
         ...(status ? { textShadow: 'rgb(0, 0, 0) 1px 1px 1px' } : {})
       }}
     >
-      <div style={{ animationDelay }}>{value}</div>
+      <div className="letter-container" style={{ animationDelay }}>
+        {value}
+      </div>
     </div>
   );
 }
