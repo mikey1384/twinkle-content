@@ -136,7 +136,7 @@ export default function WordleModal({ onHide }) {
       </main>
       <footer>
         <Button transparent style={{ marginRight: '0.7rem' }} onClick={onHide}>
-          Cancel
+          Close
         </Button>
       </footer>
     </Modal>
