@@ -5,15 +5,17 @@ import { MAX_WORD_LENGTH } from '../constants/settings';
 import { unicodeSplit } from '../lib/words';
 
 CurrentRow.propTypes = {
-  guess: PropTypes.string
+  guess: PropTypes.string,
+  className: PropTypes.string
 };
 
-export default function CurrentRow({ guess }) {
+export default function CurrentRow({ guess, className }) {
   const splitGuess = unicodeSplit(guess);
   const emptyCells = Array.from(Array(MAX_WORD_LENGTH - splitGuess.length));
 
   return (
     <div
+      className={className}
       style={{
         display: 'flex',
         justifyContent: 'center',
