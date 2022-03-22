@@ -8,10 +8,7 @@ import { getGuessStatuses } from './statuses';
 import { default as GraphemeSplitter } from 'grapheme-splitter';
 
 export const isWordInWordList = (word) => {
-  return (
-    WORDS.includes(localeAwareLowerCase(word)) ||
-    VALID_GUESSES.includes(localeAwareLowerCase(word))
-  );
+  return VALID_GUESSES.includes(localeAwareLowerCase(word));
 };
 
 export const isWinningWord = (word) => {
