@@ -25,6 +25,11 @@ export const gridContainer = css`
     animation-duration: 0.35s;
   }
 
+  .cell-waving {
+    animation: wave ease-in-out;
+    animation-duration: 200ms;
+  }
+
   .cell-reveal {
     animation-duration: 0.35s;
     animation-timing-function: linear;
@@ -151,6 +156,18 @@ export const gridContainer = css`
     }
     75% {
       transform: translate(-0.5rem, 0);
+    }
+    100% {
+      transform: translate(0, 0);
+    }
+  }
+
+  @keyframes wave {
+    0% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(0, -2rem);
     }
     100% {
       transform: translate(0, 0);

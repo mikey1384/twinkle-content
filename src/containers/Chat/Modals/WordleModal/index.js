@@ -49,6 +49,7 @@ export default function WordleModal({ onHide }) {
       : false
   );
   const [isRevealing, setIsRevealing] = useState(false);
+  const [isWaving, setIsWaving] = useState(false);
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false);
   const [currentRowClass, setCurrentRowClass] = useState('');
   const [isGameLost, setIsGameLost] = useState(false);
@@ -67,7 +68,6 @@ export default function WordleModal({ onHide }) {
       const winMessage =
         WIN_MESSAGES[Math.floor(Math.random() * WIN_MESSAGES.length)];
       const delayMs = REVEAL_TIME_MS * MAX_WORD_LENGTH;
-
       handleShowAlert({
         status: 'success',
         message: winMessage,
@@ -105,6 +105,7 @@ export default function WordleModal({ onHide }) {
             guesses={guesses}
             currentGuess={currentGuess}
             isRevealing={isRevealing}
+            isWaving={isWaving}
             currentRowClassName={currentRowClass}
           />
           <Keyboard
@@ -246,6 +247,12 @@ export default function WordleModal({ onHide }) {
     } = options || {};
     setTimeout(() => {
       setAlertMessage({ shown: true, status, message });
+      if (status === 'success') {
+        setIsWaving(true);
+        setTimeout(() => {
+          setIsWaving(false);
+        }, REVEAL_TIME_MS * MAX_WORD_LENGTH);
+      }
 
       if (!persist) {
         setTimeout(() => {

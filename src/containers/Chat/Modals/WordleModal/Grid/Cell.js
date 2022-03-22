@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { borderRadius, Color } from 'constants/css';
 import { REVEAL_TIME_MS } from '../constants/settings';
@@ -7,6 +7,7 @@ import { css } from '@emotion/css';
 Cell.propTypes = {
   isCompleted: PropTypes.bool,
   isRevealing: PropTypes.bool,
+  isWaving: PropTypes.bool,
   status: PropTypes.string,
   value: PropTypes.string,
   position: PropTypes.number
@@ -17,17 +18,25 @@ export default function Cell({
   isRevealing,
   status,
   value,
+  isWaving,
   position = 0
 }) {
+  const shouldWave = isWaving && isCompleted;
   const shouldReveal = isRevealing && isCompleted;
-  const animationDelay = `${position * REVEAL_TIME_MS}ms`;
+  const animationDelay = useMemo(() => {
+    return shouldWave
+      ? `${(position * REVEAL_TIME_MS) / 5}ms`
+      : `${position * REVEAL_TIME_MS}ms`;
+  }, [position, shouldWave]);
 
   return (
     <div
       className={`${css`
         border: 1px solid ${Color.lightBlueGray()};
         background: ${value ? Color.lightBlueGray() : ''};
-      `} ${shouldReveal ? 'cell-reveal' : ''} ${status || ''}`}
+      `} ${shouldWave ? 'cell-waving' : shouldReveal ? 'cell-reveal' : ''} ${
+        status || ''
+      }`}
       style={{
         borderRadius,
         width: '3.7rem',

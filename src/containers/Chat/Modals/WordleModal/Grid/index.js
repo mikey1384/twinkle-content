@@ -10,6 +10,7 @@ Grid.propTypes = {
   guesses: PropTypes.array,
   currentGuess: PropTypes.string,
   isRevealing: PropTypes.bool,
+  isWaving: PropTypes.bool,
   currentRowClassName: PropTypes.string
 };
 
@@ -17,6 +18,7 @@ export default function Grid({
   guesses,
   currentGuess,
   isRevealing,
+  isWaving,
   currentRowClassName
 }) {
   const empties =
@@ -31,6 +33,7 @@ export default function Grid({
           key={i}
           guess={guess}
           isRevealing={isRevealing && guesses.length - 1 === i}
+          isWaving={isWaving && guesses.length - 1 === i}
         />
       ))}
       {guesses.length < MAX_CHALLENGES && (
