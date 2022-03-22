@@ -7,11 +7,13 @@ export const gridContainer = css`
     background: ${Color.limeGreen()};
     text-shadow: rgb(0, 0, 0) 1px 1px 1px;
   }
+
   .present {
     border-color: ${Color.brownOrange()};
     background: ${Color.brownOrange()};
     text-shadow: rgb(0, 0, 0) 1px 1px 1px;
   }
+
   .absent {
     border-color: ${Color.blueGray()};
     background: ${Color.blueGray()};
