@@ -1,5 +1,5 @@
 import { getGuessStatuses } from './statuses';
-import { solutionIndex, unicodeSplit } from './words';
+import { unicodeSplit } from './words';
 import { MAX_CHALLENGES } from '../constants/settings';
 import { UAParser } from 'ua-parser-js';
 
@@ -17,7 +17,7 @@ export const shareStatus = (
   handleShareToClipboard
 ) => {
   const textToShare =
-    `Wordle ${solutionIndex} ${lost ? 'X' : guesses.length}/${MAX_CHALLENGES}${
+    `Wordle ${lost ? 'X' : guesses.length}/${MAX_CHALLENGES}${
       isHardMode ? '*' : ''
     }\n\n` +
     generateEmojiGrid(guesses, getEmojiTiles(isDarkMode, isHighContrastMode));

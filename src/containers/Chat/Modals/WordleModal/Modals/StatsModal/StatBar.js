@@ -9,7 +9,7 @@ import {
 
 StatItem.propTypes = {
   label: PropTypes.string.isRequired,
-  value: PropTypes.number.isRequired
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired
 };
 function StatItem({ label, value }) {
   return (
