@@ -21,7 +21,7 @@ export const shareStatus = ({
     }\n\n` +
     generateEmojiGrid({
       guesses,
-      tiles: getEmojiTiles(),
+      tiles: ['🟩', '🟨', '⬛'],
       solution
     });
 
@@ -75,12 +75,4 @@ const attemptShare = (shareData) => {
     navigator.canShare(shareData) &&
     navigator.share
   );
-};
-
-const getEmojiTiles = () => {
-  let tiles = [];
-  tiles.push('🟩');
-  tiles.push('🟨');
-  tiles.push('⬛');
-  return tiles;
 };
