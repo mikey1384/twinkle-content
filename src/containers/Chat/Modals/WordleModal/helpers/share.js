@@ -12,8 +12,6 @@ export const shareStatus = ({
   guesses,
   isGameLost,
   isHardMode,
-  isDarkMode,
-  isHighContrastMode,
   handleShareToClipboard,
   solution
 }) => {
@@ -23,7 +21,7 @@ export const shareStatus = ({
     }\n\n` +
     generateEmojiGrid({
       guesses,
-      tiles: getEmojiTiles(isDarkMode, isHighContrastMode),
+      tiles: getEmojiTiles(),
       solution
     });
 
@@ -79,10 +77,10 @@ const attemptShare = (shareData) => {
   );
 };
 
-const getEmojiTiles = (isDarkMode: boolean, isHighContrastMode: boolean) => {
+const getEmojiTiles = () => {
   let tiles = [];
-  tiles.push(isHighContrastMode ? '🟧' : '🟩');
-  tiles.push(isHighContrastMode ? '🟦' : '🟨');
-  tiles.push(isDarkMode ? '⬛' : '⬜');
+  tiles.push('🟩');
+  tiles.push('🟨');
+  tiles.push('⬛');
   return tiles;
 };
