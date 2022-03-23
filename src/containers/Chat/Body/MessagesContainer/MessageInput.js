@@ -24,7 +24,11 @@ import {
   finalizeEmoji,
   exceedsCharLimit
 } from 'helpers/stringHelpers';
-import { mb, returnMaxUploadSize } from 'constants/defaultValues';
+import {
+  mb,
+  returnMaxUploadSize,
+  GENERAL_CHAT_ID
+} from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import LocalContext from '../../Context';
 import localize from 'constants/localize';
@@ -322,7 +326,7 @@ function MessageInput({
                 Chess
               </span>
             </Button>
-          ) : (
+          ) : currentChannelId === GENERAL_CHAT_ID ? (
             <Button
               skeuomorphic
               onClick={onWordleButtonClick}
@@ -330,7 +334,7 @@ function MessageInput({
             >
               <span className="desktop">Wordle</span>
             </Button>
-          )}
+          ) : null}
         </div>
         <Textarea
           innerRef={innerRef}
