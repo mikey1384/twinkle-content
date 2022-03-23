@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Cell from './Cell';
-import { MAX_WORD_LENGTH } from '../constants/settings';
 import { unicodeSplit } from '../helpers/words';
 
 CurrentRow.propTypes = {
   guess: PropTypes.string,
-  className: PropTypes.string
+  className: PropTypes.string,
+  maxWordLength: PropTypes.number
 };
 
-export default function CurrentRow({ guess, className }) {
+export default function CurrentRow({ guess, className, maxWordLength }) {
   const splitGuess = unicodeSplit(guess);
-  const emptyCells = Array.from(Array(MAX_WORD_LENGTH - splitGuess.length));
+  const emptyCells = Array.from(Array(maxWordLength - splitGuess.length));
 
   return (
     <div

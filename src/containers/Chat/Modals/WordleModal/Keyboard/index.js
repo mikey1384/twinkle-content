@@ -11,6 +11,8 @@ Keyboard.propTypes = {
   onEnter: PropTypes.func.isRequired,
   guesses: PropTypes.array,
   isRevealing: PropTypes.bool,
+  maxWordLength: PropTypes.number,
+  solution: PropTypes.string,
   style: PropTypes.object
 };
 
@@ -20,9 +22,11 @@ export default function Keyboard({
   onEnter,
   guesses,
   isRevealing,
+  maxWordLength,
+  solution,
   style
 }) {
-  const charStatuses = getStatuses(guesses);
+  const charStatuses = getStatuses({ guesses, solution });
 
   const onClick = (value) => {
     if (value === 'ENTER') {
@@ -87,6 +91,7 @@ export default function Keyboard({
             onClick={onClick}
             status={charStatuses[key]}
             isRevealing={isRevealing}
+            maxWordLength={maxWordLength}
           />
         ))}
       </div>

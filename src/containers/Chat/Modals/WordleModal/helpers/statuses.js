@@ -1,6 +1,6 @@
-import { solution, unicodeSplit } from './words';
+import { unicodeSplit } from './words';
 
-export function getStatuses(guesses) {
+export function getStatuses({ guesses, solution }) {
   const charObj = {};
   const splitSolution = unicodeSplit(solution);
 
@@ -23,7 +23,7 @@ export function getStatuses(guesses) {
   return charObj;
 }
 
-export function getGuessStatuses(guess) {
+export function getGuessStatuses({ guess, solution }) {
   const splitSolution = unicodeSplit(solution);
   const splitGuess = unicodeSplit(guess);
 

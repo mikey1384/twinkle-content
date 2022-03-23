@@ -1,9 +1,12 @@
 import React from 'react';
-import { MAX_WORD_LENGTH } from '../constants/settings';
+import PropTypes from 'prop-types';
 import Cell from './Cell';
 
-export default function EmptyRow() {
-  const emptyCells = Array.from(Array(MAX_WORD_LENGTH));
+EmptyRow.propTypes = {
+  maxWordLength: PropTypes.number
+};
+export default function EmptyRow({ maxWordLength }) {
+  const emptyCells = Array.from(Array(maxWordLength));
 
   return (
     <div

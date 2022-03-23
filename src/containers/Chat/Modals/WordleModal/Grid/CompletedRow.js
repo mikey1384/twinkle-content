@@ -7,11 +7,17 @@ import { unicodeSplit } from '../helpers/words';
 CompletedRow.propTypes = {
   guess: PropTypes.string.isRequired,
   isRevealing: PropTypes.bool,
-  isWaving: PropTypes.bool
+  isWaving: PropTypes.bool,
+  solution: PropTypes.string
 };
 
-export default function CompletedRow({ guess, isRevealing, isWaving }) {
-  const statuses = getGuessStatuses(guess);
+export default function CompletedRow({
+  guess,
+  isRevealing,
+  isWaving,
+  solution
+}) {
+  const statuses = getGuessStatuses({ guess, solution });
   const splitGuess = unicodeSplit(guess);
 
   return (

@@ -123,7 +123,9 @@ function MessagesContainer({
     isRespondingToSubject = false,
     messageIds = [],
     messagesObj = {},
-    messagesLoadMoreButton = false
+    messagesLoadMoreButton = false,
+    wordleSolution,
+    wordleNextWordTimeStamp
   } = currentChannel;
   const scrolledToBottomRef = useRef(true);
   const loadMoreButtonLock = useRef(false);
@@ -1196,7 +1198,11 @@ function MessagesContainer({
         />
       )}
       {wordleModalShown && (
-        <WordleModal onHide={() => onSetWordleModalShown(false)} />
+        <WordleModal
+          wordleSolution={wordleSolution}
+          nextWordTimeStamp={wordleNextWordTimeStamp}
+          onHide={() => onSetWordleModalShown(false)}
+        />
       )}
       {inviteUsersModalShown && (
         <InviteUsersModal

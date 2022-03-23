@@ -11,7 +11,9 @@ Grid.propTypes = {
   currentGuess: PropTypes.string,
   isRevealing: PropTypes.bool,
   isWaving: PropTypes.bool,
-  currentRowClassName: PropTypes.string
+  currentRowClassName: PropTypes.string,
+  maxWordLength: PropTypes.number,
+  solution: PropTypes.string
 };
 
 export default function Grid({
@@ -19,7 +21,9 @@ export default function Grid({
   currentGuess,
   isRevealing,
   isWaving,
-  currentRowClassName
+  currentRowClassName,
+  maxWordLength,
+  solution
 }) {
   const empties =
     guesses.length < MAX_CHALLENGES - 1
@@ -34,13 +38,18 @@ export default function Grid({
           guess={guess}
           isRevealing={isRevealing && guesses.length - 1 === i}
           isWaving={isWaving && guesses.length - 1 === i}
+          solution={solution}
         />
       ))}
       {guesses.length < MAX_CHALLENGES && (
-        <CurrentRow guess={currentGuess} className={currentRowClassName} />
+        <CurrentRow
+          guess={currentGuess}
+          className={currentRowClassName}
+          maxWordLength={maxWordLength}
+        />
       )}
       {empties.map((_, i) => (
-        <EmptyRow key={i} />
+        <EmptyRow key={i} maxWordLength={maxWordLength} />
       ))}
     </div>
   );

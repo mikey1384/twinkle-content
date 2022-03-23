@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { borderRadius, Color } from 'constants/css';
-import { MAX_WORD_LENGTH, REVEAL_TIME_MS } from '../constants/settings';
+import { REVEAL_TIME_MS } from '../constants/settings';
 
 Key.propTypes = {
   children: PropTypes.node,
@@ -9,6 +9,7 @@ Key.propTypes = {
   width: PropTypes.number,
   onClick: PropTypes.func,
   isRevealing: PropTypes.bool,
+  maxWordLength: PropTypes.number,
   status: PropTypes.string
 };
 
@@ -18,9 +19,10 @@ export default function Key({
   value,
   onClick,
   isRevealing,
+  maxWordLength,
   status
 }) {
-  const keyDelayMs = REVEAL_TIME_MS * MAX_WORD_LENGTH;
+  const keyDelayMs = REVEAL_TIME_MS * maxWordLength;
   const backgroundColor = useMemo(() => {
     if (status === 'correct') {
       return Color.limeGreen();

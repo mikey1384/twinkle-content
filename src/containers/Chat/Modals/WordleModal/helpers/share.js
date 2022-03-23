@@ -8,19 +8,24 @@ const parser = new UAParser();
 const browser = parser.getBrowser();
 const device = parser.getDevice();
 
-export const shareStatus = (
+export const shareStatus = ({
   guesses,
-  lost,
+  isGameLost,
   isHardMode,
   isDarkMode,
   isHighContrastMode,
-  handleShareToClipboard
-) => {
+  handleShareToClipboard,
+  solution
+}) => {
   const textToShare =
-    `Wordle ${lost ? 'X' : guesses.length}/${MAX_CHALLENGES}${
+    `Wordle ${isGameLost ? 'X' : guesses.length}/${MAX_CHALLENGES}${
       isHardMode ? '*' : ''
     }\n\n` +
-    generateEmojiGrid(guesses, getEmojiTiles(isDarkMode, isHighContrastMode));
+    generateEmojiGrid({
+      guesses,
+      tiles: getEmojiTiles(isDarkMode, isHighContrastMode),
+      solution
+    });
 
   const shareData = { text: textToShare };
 
@@ -41,10 +46,10 @@ export const shareStatus = (
   }
 };
 
-export const generateEmojiGrid = (guesses: string[], tiles: string[]) => {
+export const generateEmojiGrid = ({ guesses, tiles, solution }) => {
   return guesses
     .map((guess) => {
-      const status = getGuessStatuses(guess);
+      const status = getGuessStatuses({ guess, solution });
       const splitGuess = unicodeSplit(guess);
 
       return splitGuess

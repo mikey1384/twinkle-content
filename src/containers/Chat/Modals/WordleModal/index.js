@@ -8,9 +8,7 @@ import Banner from 'components/Banner';
 import { addStatsForCompletedGame, loadStats } from './helpers/stats';
 import {
   findFirstUnusedReveal,
-  isWinningWord,
   isWordInWordList,
-  solution,
   unicodeLength
 } from './helpers/words';
 import {
@@ -19,9 +17,7 @@ import {
 } from './helpers/localStorage';
 import {
   ALERT_TIME_MS,
-  GAME_LOST_INFO_DELAY,
   MAX_CHALLENGES,
-  MAX_WORD_LENGTH,
   REVEAL_TIME_MS
 } from './constants/settings';
 import {
@@ -35,10 +31,18 @@ import { default as GraphemeSplitter } from 'grapheme-splitter';
 import StatsModal from './Modals/StatsModal';
 
 WordleModal.propTypes = {
+  nextWordTimeStamp: PropTypes.number,
+  wordleSolution: PropTypes.string.isRequired,
   onHide: PropTypes.func.isRequired
 };
 
-export default function WordleModal({ onHide }) {
+export default function WordleModal({
+  nextWordTimeStamp,
+  wordleSolution,
+  onHide
+}) {
+  const MAX_WORD_LENGTH = wordleSolution.length;
+  const GAME_LOST_INFO_DELAY = (MAX_WORD_LENGTH + 1) * REVEAL_TIME_MS;
   const [isGameWon, setIsGameWon] = useState(false);
   const [alertMessage, setAlertMessage] = useState({});
   const [guesses, setGuesses] = useState(handleInitGuesses);
@@ -61,8 +65,8 @@ export default function WordleModal({ onHide }) {
     return 'green';
   }, [alertMessage.status]);
   useEffect(() => {
-    saveGameStateToLocalStorage({ guesses, solution });
-  }, [guesses]);
+    saveGameStateToLocalStorage({ guesses, solution: wordleSolution });
+  }, [guesses, wordleSolution]);
   useEffect(() => {
     if (isGameWon) {
       const winMessage =
@@ -83,7 +87,8 @@ export default function WordleModal({ onHide }) {
         setIsStatsModalOpen(true);
       }, GAME_LOST_INFO_DELAY);
     }
-  }, [isGameWon, isGameLost]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isGameWon, isGameLost, MAX_WORD_LENGTH]);
 
   return (
     <Modal onHide={onHide}>
@@ -107,6 +112,8 @@ export default function WordleModal({ onHide }) {
             isRevealing={isRevealing}
             isWaving={isWaving}
             currentRowClassName={currentRowClass}
+            maxWordLength={MAX_WORD_LENGTH}
+            solution={wordleSolution}
           />
           <Keyboard
             onChar={handleChar}
@@ -114,6 +121,8 @@ export default function WordleModal({ onHide }) {
             onEnter={handleEnter}
             guesses={guesses}
             isRevealing={isRevealing}
+            maxWordLength={MAX_WORD_LENGTH}
+            solution={wordleSolution}
             style={{ marginTop: '2rem' }}
           />
           {isStatsModalOpen && (
@@ -130,7 +139,9 @@ export default function WordleModal({ onHide }) {
                 })
               }
               isHardMode={isHardMode}
+              nextWordTimeStamp={nextWordTimeStamp}
               numberOfGuessesMade={guesses.length}
+              solution={wordleSolution}
             />
           )}
         </div>
@@ -188,7 +199,11 @@ export default function WordleModal({ onHide }) {
 
     // enforce hard mode - all guesses must contain all previously revealed letters
     if (isHardMode) {
-      const firstMissingReveal = findFirstUnusedReveal(currentGuess, guesses);
+      const firstMissingReveal = findFirstUnusedReveal({
+        word: currentGuess,
+        guesses,
+        solution: wordleSolution
+      });
       if (firstMissingReveal) {
         setCurrentRowClass('jiggle');
         return handleShowAlert({
@@ -208,8 +223,6 @@ export default function WordleModal({ onHide }) {
       setIsRevealing(false);
     }, REVEAL_TIME_MS * MAX_WORD_LENGTH);
 
-    const winningWord = isWinningWord(currentGuess);
-
     if (
       unicodeLength(currentGuess) === MAX_WORD_LENGTH &&
       guesses.length < MAX_CHALLENGES &&
@@ -218,7 +231,7 @@ export default function WordleModal({ onHide }) {
       setGuesses([...guesses, currentGuess]);
       setCurrentGuess('');
 
-      if (winningWord) {
+      if (currentGuess === wordleSolution) {
         setStats(addStatsForCompletedGame(stats, guesses.length));
         return setIsGameWon(true);
       }
@@ -228,7 +241,7 @@ export default function WordleModal({ onHide }) {
         setIsGameLost(true);
         handleShowAlert({
           status: 'error',
-          message: CORRECT_WORD_MESSAGE(solution),
+          message: CORRECT_WORD_MESSAGE(wordleSolution),
           options: {
             persist: true,
             delayMs: REVEAL_TIME_MS * MAX_WORD_LENGTH + 1
@@ -267,10 +280,10 @@ export default function WordleModal({ onHide }) {
 
   function handleInitGuesses() {
     const loaded = loadGameStateFromLocalStorage();
-    if (loaded?.solution !== solution) {
+    if (loaded?.solution !== wordleSolution) {
       return [];
     }
-    const gameWasWon = loaded.guesses.includes(solution);
+    const gameWasWon = loaded.guesses.includes(wordleSolution);
     if (gameWasWon) {
       setIsGameWon(true);
     }
@@ -278,7 +291,7 @@ export default function WordleModal({ onHide }) {
       setIsGameLost(true);
       handleShowAlert({
         status: 'error',
-        message: CORRECT_WORD_MESSAGE(solution),
+        message: CORRECT_WORD_MESSAGE(wordleSolution),
         options: {
           persist: true
         }

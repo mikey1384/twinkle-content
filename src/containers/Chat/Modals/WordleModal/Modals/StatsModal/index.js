@@ -4,7 +4,6 @@ import Countdown from 'react-countdown';
 import StatBar from './StatBar';
 import Histogram from './Histogram';
 import { shareStatus } from '../../helpers/share';
-import { tomorrow } from '../../helpers/words';
 import { css } from '@emotion/css';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
@@ -23,7 +22,9 @@ StatsModal.propTypes = {
   isGameWon: PropTypes.bool,
   handleShareToClipboard: PropTypes.func,
   isHardMode: PropTypes.bool,
-  numberOfGuessesMade: PropTypes.number
+  nextWordTimeStamp: PropTypes.number,
+  numberOfGuessesMade: PropTypes.number,
+  solution: PropTypes.string
 };
 export default function StatsModal({
   onHide,
@@ -33,7 +34,9 @@ export default function StatsModal({
   isGameWon,
   handleShareToClipboard,
   isHardMode,
-  numberOfGuessesMade
+  nextWordTimeStamp,
+  numberOfGuessesMade,
+  solution
 }) {
   return (
     <Modal small modalOverModal onHide={onHide}>
@@ -79,7 +82,7 @@ export default function StatsModal({
                     className={css`
                       font-size: 1rem;
                     `}
-                    date={tomorrow}
+                    date={nextWordTimeStamp}
                     daysInHours={true}
                   />
                 </div>
@@ -96,12 +99,13 @@ export default function StatsModal({
                     filled
                     color="blue"
                     onClick={() => {
-                      shareStatus(
+                      shareStatus({
                         guesses,
                         isGameLost,
                         isHardMode,
-                        handleShareToClipboard
-                      );
+                        handleShareToClipboard,
+                        solution
+                      });
                     }}
                   >
                     {SHARE_TEXT}
