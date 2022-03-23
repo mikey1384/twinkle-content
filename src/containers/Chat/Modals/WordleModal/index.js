@@ -22,7 +22,6 @@ import {
 } from './constants/settings';
 import {
   CORRECT_WORD_MESSAGE,
-  GAME_COPIED_MESSAGE,
   NOT_ENOUGH_LETTERS_MESSAGE,
   WIN_MESSAGES,
   WORD_NOT_FOUND_MESSAGE
@@ -132,12 +131,6 @@ export default function WordleModal({
               gameStats={stats}
               isGameLost={isGameLost}
               isGameWon={isGameWon}
-              handleShareToClipboard={() =>
-                handleShowAlert({
-                  status: 'success',
-                  message: GAME_COPIED_MESSAGE
-                })
-              }
               isHardMode={isHardMode}
               nextWordTimeStamp={nextWordTimeStamp}
               numberOfGuessesMade={guesses.length}

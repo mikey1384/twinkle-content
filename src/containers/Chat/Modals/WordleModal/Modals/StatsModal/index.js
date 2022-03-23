@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Countdown from 'react-countdown';
 import StatBar from './StatBar';
 import Histogram from './Histogram';
+import Banner from 'components/Banner';
 import { shareStatus } from '../../helpers/share';
 import { css } from '@emotion/css';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import {
   STATISTICS_TITLE,
+  GAME_COPIED_MESSAGE,
   GUESS_DISTRIBUTION_TEXT,
   NEW_WORD_TEXT,
   SHARE_TEXT
@@ -20,7 +22,6 @@ StatsModal.propTypes = {
   gameStats: PropTypes.object,
   isGameLost: PropTypes.bool,
   isGameWon: PropTypes.bool,
-  handleShareToClipboard: PropTypes.func,
   isHardMode: PropTypes.bool,
   nextWordTimeStamp: PropTypes.number,
   numberOfGuessesMade: PropTypes.number,
@@ -32,16 +33,21 @@ export default function StatsModal({
   gameStats,
   isGameLost,
   isGameWon,
-  handleShareToClipboard,
   isHardMode,
   nextWordTimeStamp,
   numberOfGuessesMade,
   solution
 }) {
+  const [alertShown, setAlertShown] = useState(false);
   return (
     <Modal small modalOverModal onHide={onHide}>
       <header>{STATISTICS_TITLE}</header>
       <main>
+        {alertShown && (
+          <Banner style={{ marginBottom: '2rem' }} color="green">
+            {GAME_COPIED_MESSAGE}
+          </Banner>
+        )}
         {gameStats.totalGames <= 0 ? (
           <StatBar gameStats={gameStats} />
         ) : (
@@ -103,7 +109,10 @@ export default function StatsModal({
                         guesses,
                         isGameLost,
                         isHardMode,
-                        handleShareToClipboard,
+                        handleShareToClipboard: () => {
+                          setAlertShown(true);
+                          setTimeout(() => setAlertShown(false), 1000);
+                        },
                         solution
                       });
                     }}
