@@ -125,7 +125,7 @@ function MessagesContainer({
     messagesObj = {},
     messagesLoadMoreButton = false,
     wordleSolution,
-    wordleNextWordTimeStamp
+    nextWordTimeStamp
   } = currentChannel;
   const scrolledToBottomRef = useRef(true);
   const loadMoreButtonLock = useRef(false);
@@ -1200,7 +1200,7 @@ function MessagesContainer({
       {wordleModalShown && (
         <WordleModal
           wordleSolution={wordleSolution}
-          nextWordTimeStamp={wordleNextWordTimeStamp}
+          nextWordTimeStamp={nextWordTimeStamp}
           onHide={() => onSetWordleModalShown(false)}
         />
       )}
