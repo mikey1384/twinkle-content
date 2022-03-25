@@ -27,21 +27,28 @@ import {
   WORD_NOT_FOUND_MESSAGE
 } from './constants/strings';
 import { default as GraphemeSplitter } from 'grapheme-splitter';
+import { useAppContext } from 'contexts';
+import { GENERAL_CHAT_ID } from 'constants/defaultValues';
 import StatsModal from './Modals/StatsModal';
 
 WordleModal.propTypes = {
+  channelId: PropTypes.number,
   nextWordTimeStamp: PropTypes.number,
   wordleSolution: PropTypes.string.isRequired,
   onHide: PropTypes.func.isRequired
 };
 
 export default function WordleModal({
+  channelId,
   nextWordTimeStamp,
   wordleSolution,
   onHide
 }) {
   const MAX_WORD_LENGTH = wordleSolution.length;
   const GAME_LOST_INFO_DELAY = (MAX_WORD_LENGTH + 1) * REVEAL_TIME_MS;
+  const saveWordleState = useAppContext(
+    (v) => v.requestHelpers.saveWordleState
+  );
   const [isGameWon, setIsGameWon] = useState(false);
   const [alertMessage, setAlertMessage] = useState({});
   const [guesses, setGuesses] = useState(handleInitGuesses);
@@ -64,7 +71,14 @@ export default function WordleModal({
     return 'green';
   }, [alertMessage.status]);
   useEffect(() => {
-    saveGameStateToLocalStorage({ guesses, solution: wordleSolution });
+    handleSave({ channelId });
+    async function handleSave() {
+      saveGameStateToLocalStorage({ guesses, solution: wordleSolution });
+      if (channelId === GENERAL_CHAT_ID) {
+        saveWordleState({ channelId, guesses, solution: wordleSolution });
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [guesses, wordleSolution]);
   useEffect(() => {
     if (isGameWon) {

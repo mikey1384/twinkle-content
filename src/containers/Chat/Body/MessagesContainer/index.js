@@ -1199,6 +1199,7 @@ function MessagesContainer({
       )}
       {wordleModalShown && (
         <WordleModal
+          channelId={selectedChannelId}
           wordleSolution={wordleSolution}
           nextWordTimeStamp={nextWordTimeStamp}
           onHide={() => onSetWordleModalShown(false)}
