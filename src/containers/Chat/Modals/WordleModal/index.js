@@ -11,10 +11,7 @@ import {
   isWordInWordList,
   unicodeLength
 } from './helpers/words';
-import {
-  loadGameStateFromLocalStorage,
-  saveGameStateToLocalStorage
-} from './helpers/localStorage';
+import { saveGameStateToLocalStorage } from './helpers/localStorage';
 import {
   ALERT_TIME_MS,
   MAX_CHALLENGES,
@@ -29,6 +26,7 @@ import {
 import { default as GraphemeSplitter } from 'grapheme-splitter';
 import { useAppContext } from 'contexts';
 import { GENERAL_CHAT_ID } from 'constants/defaultValues';
+import { useMyState } from 'helpers/hooks';
 import StatsModal from './Modals/StatsModal';
 
 WordleModal.propTypes = {
@@ -44,6 +42,7 @@ export default function WordleModal({
   wordleSolution,
   onHide
 }) {
+  const { wordle: { daily } = {} } = useMyState();
   const MAX_WORD_LENGTH = wordleSolution.length;
   const GAME_LOST_INFO_DELAY = (MAX_WORD_LENGTH + 1) * REVEAL_TIME_MS;
   const saveWordleState = useAppContext(
@@ -286,15 +285,14 @@ export default function WordleModal({
   }
 
   function handleInitGuesses() {
-    const loaded = loadGameStateFromLocalStorage();
-    if (loaded?.solution !== wordleSolution) {
+    if (daily?.solution !== wordleSolution) {
       return [];
     }
-    const gameWasWon = loaded.guesses.includes(wordleSolution);
+    const gameWasWon = daily?.guesses.includes(wordleSolution);
     if (gameWasWon) {
       setIsGameWon(true);
     }
-    if (loaded.guesses.length === MAX_CHALLENGES && !gameWasWon) {
+    if (daily?.guesses.length === MAX_CHALLENGES && !gameWasWon) {
       setIsGameLost(true);
       handleShowAlert({
         status: 'error',
@@ -304,6 +302,6 @@ export default function WordleModal({
         }
       });
     }
-    return loaded.guesses;
+    return daily?.guesses;
   }
 }
