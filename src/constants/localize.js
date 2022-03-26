@@ -1012,6 +1012,10 @@ const languageObj = {
     en: 'Pinned',
     kr: '고정됨'
   },
+  playlist: {
+    en: 'Playlist',
+    kr: '재생목록'
+  },
   playlistNotExist: {
     en: 'Playlist does not exist',
     kr: '존재하지 않는 재생목록입니다'
