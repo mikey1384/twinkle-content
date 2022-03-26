@@ -86,6 +86,13 @@ export default function UserActions(dispatch) {
         type: 'SET_SESSION_LOADED'
       });
     },
+    onSetWordleState({ userId, newState }) {
+      return dispatch({
+        type: 'SET_WORDLE_STATE',
+        userId,
+        newState
+      });
+    },
     onSetUserState({ userId, newState }) {
       return dispatch({
         type: 'SET_USER_STATE',

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
@@ -24,7 +24,6 @@ import {
 } from './constants/strings';
 import { default as GraphemeSplitter } from 'grapheme-splitter';
 import { useAppContext } from 'contexts';
-import { GENERAL_CHAT_ID } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import StatsModal from './Modals/StatsModal';
 
@@ -41,13 +40,18 @@ export default function WordleModal({
   wordleSolution,
   onHide
 }) {
+  const mounted = useRef(true);
   const { wordle: { daily } = {}, userId } = useMyState();
   const MAX_WORD_LENGTH = wordleSolution.length;
   const GAME_LOST_INFO_DELAY = (MAX_WORD_LENGTH + 1) * REVEAL_TIME_MS;
   const saveWordleState = useAppContext(
     (v) => v.requestHelpers.saveWordleState
   );
+  const onSetWordleState = useAppContext(
+    (v) => v.user.actions.onSetWordleState
+  );
   const [isGameWon, setIsGameWon] = useState(false);
+  const [isGameLost, setIsGameLost] = useState(false);
   const [alertMessage, setAlertMessage] = useState({});
   const [guesses, setGuesses] = useState(handleInitGuesses);
   const [currentGuess, setCurrentGuess] = useState('');
@@ -60,7 +64,6 @@ export default function WordleModal({
   const [isWaving, setIsWaving] = useState(false);
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false);
   const [currentRowClass, setCurrentRowClass] = useState('');
-  const [isGameLost, setIsGameLost] = useState(false);
   const [stats, setStats] = useState(() => loadStats());
   const alertMessageColor = useMemo(() => {
     if (alertMessage.status === 'error') {
@@ -68,19 +71,6 @@ export default function WordleModal({
     }
     return 'green';
   }, [alertMessage.status]);
-  useEffect(() => {
-    handleSave({ channelId, guesses, solution: wordleSolution });
-    async function handleSave({ channelId, guesses, solution }) {
-      if (channelId === GENERAL_CHAT_ID) {
-        saveWordleState({ channelId, guesses, solution });
-        onSetWordleState({
-          userId,
-          newState: { daily: { guesses, solution } }
-        });
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [guesses, wordleSolution]);
   useEffect(() => {
     if (isGameWon) {
       const winMessage =
@@ -103,6 +93,13 @@ export default function WordleModal({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isGameWon, isGameLost, MAX_WORD_LENGTH]);
+
+  useEffect(() => {
+    mounted.current = true;
+    return function cleanup() {
+      mounted.current = false;
+    };
+  }, []);
 
   return (
     <Modal onHide={onHide}>
@@ -178,7 +175,9 @@ export default function WordleModal({
     );
   }
 
-  function handleEnter() {
+  async function handleEnter() {
+    const newGuesses = guesses.concat(currentGuess);
+    handleSaveGuess(newGuesses);
     if (isGameWon || isGameLost) {
       return;
     }
@@ -228,7 +227,9 @@ export default function WordleModal({
     // turn this back off after all
     // chars have been revealed
     setTimeout(() => {
-      setIsRevealing(false);
+      if (mounted.current) {
+        setIsRevealing(false);
+      }
     }, REVEAL_TIME_MS * MAX_WORD_LENGTH);
 
     if (
@@ -236,7 +237,7 @@ export default function WordleModal({
       guesses.length < MAX_CHALLENGES &&
       !isGameWon
     ) {
-      setGuesses([...guesses, currentGuess]);
+      setGuesses(newGuesses);
       setCurrentGuess('');
 
       if (currentGuess === wordleSolution) {
@@ -244,7 +245,7 @@ export default function WordleModal({
         return setIsGameWon(true);
       }
 
-      if (guesses.length === MAX_CHALLENGES - 1) {
+      if (newGuesses.length === MAX_CHALLENGES) {
         setStats(addStatsForCompletedGame(stats, guesses.length + 1));
         setIsGameLost(true);
         handleShowAlert({
@@ -254,6 +255,20 @@ export default function WordleModal({
             persist: true,
             delayMs: REVEAL_TIME_MS * MAX_WORD_LENGTH + 1
           }
+        });
+      }
+    }
+
+    async function handleSaveGuess(newGuesses) {
+      await saveWordleState({
+        channelId,
+        guesses: newGuesses,
+        solution: wordleSolution
+      });
+      if (mounted.current) {
+        onSetWordleState({
+          userId,
+          newState: { daily: { guesses: newGuesses, solution: wordleSolution } }
         });
       }
     }
@@ -267,17 +282,25 @@ export default function WordleModal({
       durationMs = ALERT_TIME_MS
     } = options || {};
     setTimeout(() => {
-      setAlertMessage({ shown: true, status, message });
+      if (mounted.current) {
+        setAlertMessage({ shown: true, status, message });
+      }
       if (status === 'success') {
-        setIsWaving(true);
+        if (mounted.current) {
+          setIsWaving(true);
+        }
         setTimeout(() => {
-          setIsWaving(false);
+          if (mounted.current) {
+            setIsWaving(false);
+          }
         }, REVEAL_TIME_MS * MAX_WORD_LENGTH);
       }
 
       if (!persist) {
         setTimeout(() => {
-          setAlertMessage({ shown: false, status: '', message: '' });
+          if (mounted.current) {
+            setAlertMessage({ shown: false, status: '', message: '' });
+          }
           if (onClose) {
             onClose();
           }
