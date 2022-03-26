@@ -11,7 +11,6 @@ import {
   isWordInWordList,
   unicodeLength
 } from './helpers/words';
-import { saveGameStateToLocalStorage } from './helpers/localStorage';
 import {
   ALERT_TIME_MS,
   MAX_CHALLENGES,
@@ -42,7 +41,7 @@ export default function WordleModal({
   wordleSolution,
   onHide
 }) {
-  const { wordle: { daily } = {} } = useMyState();
+  const { wordle: { daily } = {}, userId } = useMyState();
   const MAX_WORD_LENGTH = wordleSolution.length;
   const GAME_LOST_INFO_DELAY = (MAX_WORD_LENGTH + 1) * REVEAL_TIME_MS;
   const saveWordleState = useAppContext(
@@ -70,11 +69,14 @@ export default function WordleModal({
     return 'green';
   }, [alertMessage.status]);
   useEffect(() => {
-    handleSave({ channelId });
-    async function handleSave() {
-      saveGameStateToLocalStorage({ guesses, solution: wordleSolution });
+    handleSave({ channelId, guesses, solution: wordleSolution });
+    async function handleSave({ channelId, guesses, solution }) {
       if (channelId === GENERAL_CHAT_ID) {
-        saveWordleState({ channelId, guesses, solution: wordleSolution });
+        saveWordleState({ channelId, guesses, solution });
+        onSetWordleState({
+          userId,
+          newState: { daily: { guesses, solution } }
+        });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
