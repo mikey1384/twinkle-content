@@ -43,7 +43,7 @@ export default function WordleModal({
   const mounted = useRef(true);
   const { wordle: { daily } = {}, userId } = useMyState();
   const MAX_WORD_LENGTH = wordleSolution.length;
-  const GAME_LOST_INFO_DELAY = (MAX_WORD_LENGTH + 1) * REVEAL_TIME_MS;
+  const delayMs = REVEAL_TIME_MS * MAX_WORD_LENGTH;
   const saveWordleState = useAppContext(
     (v) => v.requestHelpers.saveWordleState
   );
@@ -75,21 +75,25 @@ export default function WordleModal({
     if (isGameWon) {
       const winMessage =
         WIN_MESSAGES[Math.floor(Math.random() * WIN_MESSAGES.length)];
-      const delayMs = REVEAL_TIME_MS * MAX_WORD_LENGTH;
       handleShowAlert({
         status: 'success',
         message: winMessage,
         options: {
           delayMs,
-          onClose: () => setIsStatsModalOpen(true)
+          callback: () => setIsStatsModalOpen(true)
         }
       });
     }
-
     if (isGameLost) {
-      setTimeout(() => {
-        setIsStatsModalOpen(true);
-      }, GAME_LOST_INFO_DELAY);
+      handleShowAlert({
+        status: 'error',
+        message: CORRECT_WORD_MESSAGE(wordleSolution),
+        options: {
+          persist: true,
+          delayMs,
+          callback: () => setIsStatsModalOpen(true)
+        }
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isGameWon, isGameLost, MAX_WORD_LENGTH]);
@@ -188,7 +192,7 @@ export default function WordleModal({
         status: 'error',
         message: NOT_ENOUGH_LETTERS_MESSAGE,
         options: {
-          onClose: () => setCurrentRowClass('')
+          callback: () => setCurrentRowClass('')
         }
       });
     }
@@ -199,7 +203,7 @@ export default function WordleModal({
         status: 'error',
         message: WORD_NOT_FOUND_MESSAGE,
         options: {
-          onClose: () => setCurrentRowClass('')
+          callback: () => setCurrentRowClass('')
         }
       });
     }
@@ -217,7 +221,7 @@ export default function WordleModal({
           status: 'error',
           message: firstMissingReveal,
           options: {
-            onClose: () => setCurrentRowClass('')
+            callback: () => setCurrentRowClass('')
           }
         });
       }
@@ -248,14 +252,6 @@ export default function WordleModal({
       if (newGuesses.length === MAX_CHALLENGES) {
         setStats(addStatsForCompletedGame(stats, guesses.length + 1));
         setIsGameLost(true);
-        handleShowAlert({
-          status: 'error',
-          message: CORRECT_WORD_MESSAGE(wordleSolution),
-          options: {
-            persist: true,
-            delayMs: REVEAL_TIME_MS * MAX_WORD_LENGTH + 1
-          }
-        });
       }
     }
 
@@ -278,7 +274,7 @@ export default function WordleModal({
     const {
       delayMs = 0,
       persist,
-      onClose,
+      callback,
       durationMs = ALERT_TIME_MS
     } = options || {};
     setTimeout(() => {
@@ -295,17 +291,14 @@ export default function WordleModal({
           }
         }, REVEAL_TIME_MS * MAX_WORD_LENGTH);
       }
-
-      if (!persist) {
-        setTimeout(() => {
-          if (mounted.current) {
-            setAlertMessage({ shown: false, status: '', message: '' });
-          }
-          if (onClose) {
-            onClose();
-          }
-        }, durationMs);
-      }
+      setTimeout(() => {
+        if (!persist && mounted.current) {
+          setAlertMessage({ shown: false, status: '', message: '' });
+        }
+        if (callback) {
+          callback();
+        }
+      }, durationMs);
     }, delayMs);
   }
 
@@ -319,13 +312,6 @@ export default function WordleModal({
     }
     if (daily?.guesses.length === MAX_CHALLENGES && !gameWasWon) {
       setIsGameLost(true);
-      handleShowAlert({
-        status: 'error',
-        message: CORRECT_WORD_MESSAGE(wordleSolution),
-        options: {
-          persist: true
-        }
-      });
     }
     return daily?.guesses;
   }
