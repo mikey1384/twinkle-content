@@ -59,8 +59,14 @@ export default function Daily({
   const [isWaving, setIsWaving] = useState(false);
   const [currentGuess, setCurrentGuess] = useState('');
   const [currentRowClass, setCurrentRowClass] = useState('');
-  const [isGameWon, setIsGameWon] = useState(false);
-  const [isGameLost, setIsGameLost] = useState(false);
+  const isGameWon = useMemo(
+    () => guesses.includes(wordleSolution),
+    [guesses, wordleSolution]
+  );
+  const isGameLost = useMemo(
+    () => !isGameWon && guesses.length === MAX_CHALLENGES,
+    [guesses.length, isGameWon]
+  );
   const alertMessageColor = useMemo(() => {
     if (alertMessage.status === 'error') {
       return 'rose';
@@ -205,7 +211,6 @@ export default function Daily({
             numIncorrect: guesses.length
           })
         );
-        setIsGameWon(true);
         return handleShowAlert({
           status: 'success',
           message:
@@ -224,7 +229,6 @@ export default function Daily({
             numIncorrect: newGuesses.length
           })
         );
-        setIsGameLost(true);
         handleShowAlert({
           status: 'error',
           message: CORRECT_WORD_MESSAGE(wordleSolution),
