@@ -6,18 +6,18 @@ import {
 
 // In stats array elements 0-5 are successes in 1-6 trys
 
-export const addStatsForCompletedGame = (gameStats, count) => {
+export const addStatsForCompletedGame = ({ gameStats, numIncorrect }) => {
   // Count is number of incorrect guesses before end.
   const stats = { ...gameStats };
 
   stats.totalGames += 1;
 
-  if (count >= MAX_CHALLENGES) {
+  if (numIncorrect >= MAX_CHALLENGES) {
     // A fail situation
     stats.currentStreak = 0;
     stats.gamesFailed += 1;
   } else {
-    stats.winDistribution[count] += 1;
+    stats.winDistribution[numIncorrect] += 1;
     stats.currentStreak += 1;
 
     if (stats.bestStreak < stats.currentStreak) {

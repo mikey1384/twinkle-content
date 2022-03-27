@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Grid from './Grid';
 import Keyboard from './Keyboard';
-import StatsModal from './Modals/StatsModal';
 import Banner from 'components/Banner';
-import { addStatsForCompletedGame, loadStats } from './helpers/stats';
+import { addStatsForCompletedGame } from './helpers/stats';
 import {
   ALERT_TIME_MS,
   MAX_CHALLENGES,
@@ -23,22 +22,30 @@ import {
   WORD_NOT_FOUND_MESSAGE
 } from './constants/strings';
 import { default as GraphemeSplitter } from 'grapheme-splitter';
-import { useMyState } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
 
 Daily.propTypes = {
   channelId: PropTypes.number.isRequired,
-  nextWordTimeStamp: PropTypes.number,
+  gameStats: PropTypes.object.isRequired,
+  guesses: PropTypes.array.isRequired,
+  onSetGuesses: PropTypes.func.isRequired,
+  onSetStats: PropTypes.func.isRequired,
+  onSetStatsModalShown: PropTypes.func.isRequired,
+  userId: PropTypes.number.isRequired,
   wordleSolution: PropTypes.string.isRequired
 };
 
 export default function Daily({
   channelId,
-  nextWordTimeStamp,
+  gameStats,
+  guesses,
+  onSetGuesses,
+  onSetStats,
+  onSetStatsModalShown,
+  userId,
   wordleSolution
 }) {
   const mounted = useRef(true);
-  const { wordle: { daily } = {}, userId } = useMyState();
   const saveWordleState = useAppContext(
     (v) => v.requestHelpers.saveWordleState
   );
@@ -50,32 +57,10 @@ export default function Daily({
   const [alertMessage, setAlertMessage] = useState({});
   const [isRevealing, setIsRevealing] = useState(false);
   const [isWaving, setIsWaving] = useState(false);
-  const [isStatsModalOpen, setIsStatsModalOpen] = useState(false);
   const [currentGuess, setCurrentGuess] = useState('');
   const [currentRowClass, setCurrentRowClass] = useState('');
   const [isGameWon, setIsGameWon] = useState(false);
   const [isGameLost, setIsGameLost] = useState(false);
-  const [stats, setStats] = useState(loadStats);
-  const [guesses, setGuesses] = useState(() => {
-    if (daily?.solution !== wordleSolution) {
-      return [];
-    }
-    const gameWasWon = daily?.guesses.includes(wordleSolution);
-    if (gameWasWon) {
-      setIsGameWon(true);
-    }
-    if (daily?.guesses.length === MAX_CHALLENGES && !gameWasWon) {
-      setIsGameLost(true);
-      handleShowAlert({
-        status: 'error',
-        message: CORRECT_WORD_MESSAGE(wordleSolution),
-        options: {
-          persist: true
-        }
-      });
-    }
-    return daily?.guesses;
-  });
   const alertMessageColor = useMemo(() => {
     if (alertMessage.status === 'error') {
       return 'rose';
@@ -130,19 +115,6 @@ export default function Daily({
           solution={wordleSolution}
           style={{ marginTop: '2rem' }}
         />
-        {isStatsModalOpen && (
-          <StatsModal
-            onHide={() => setIsStatsModalOpen(false)}
-            guesses={guesses}
-            gameStats={stats}
-            isGameLost={isGameLost}
-            isGameWon={isGameWon}
-            isHardMode={isHardMode}
-            nextWordTimeStamp={nextWordTimeStamp}
-            numberOfGuessesMade={guesses.length}
-            solution={wordleSolution}
-          />
-        )}
       </div>
     </ErrorBoundary>
   );
@@ -223,11 +195,16 @@ export default function Daily({
       guesses.length < MAX_CHALLENGES &&
       !isGameWon
     ) {
-      setGuesses(newGuesses);
+      onSetGuesses(newGuesses);
       setCurrentGuess('');
 
       if (currentGuess === wordleSolution) {
-        setStats(addStatsForCompletedGame(stats, guesses.length));
+        onSetStats(
+          addStatsForCompletedGame({
+            gameStats,
+            numIncorrect: guesses.length
+          })
+        );
         setIsGameWon(true);
         return handleShowAlert({
           status: 'success',
@@ -235,13 +212,18 @@ export default function Daily({
             WIN_MESSAGES[Math.floor(Math.random() * WIN_MESSAGES.length)],
           options: {
             delayMs,
-            callback: () => setIsStatsModalOpen(true)
+            callback: () => onSetStatsModalShown(true)
           }
         });
       }
 
       if (newGuesses.length === MAX_CHALLENGES) {
-        setStats(addStatsForCompletedGame(stats, newGuesses.length));
+        onSetStats(
+          addStatsForCompletedGame({
+            gameStats,
+            numIncorrect: newGuesses.length
+          })
+        );
         setIsGameLost(true);
         handleShowAlert({
           status: 'error',
@@ -249,7 +231,7 @@ export default function Daily({
           options: {
             persist: true,
             delayMs,
-            callback: () => setIsStatsModalOpen(true)
+            callback: () => onSetStatsModalShown(true)
           }
         });
       }

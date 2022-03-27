@@ -1,53 +1,33 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Countdown from 'react-countdown';
 import StatBar from './StatBar';
 import Histogram from './Histogram';
-import Banner from 'components/Banner';
-import { shareStatus } from '../../helpers/share';
 import { css } from '@emotion/css';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import {
   STATISTICS_TITLE,
-  GAME_COPIED_MESSAGE,
   GUESS_DISTRIBUTION_TEXT,
-  NEW_WORD_TEXT,
-  SHARE_TEXT
+  NEW_WORD_TEXT
 } from '../../constants/strings';
 
 StatsModal.propTypes = {
   onHide: PropTypes.func,
-  guesses: PropTypes.array,
   gameStats: PropTypes.object,
-  isGameLost: PropTypes.bool,
-  isGameWon: PropTypes.bool,
-  isHardMode: PropTypes.bool,
   nextWordTimeStamp: PropTypes.number,
-  numberOfGuessesMade: PropTypes.number,
-  solution: PropTypes.string
+  numberOfGuessesMade: PropTypes.number
 };
 export default function StatsModal({
   onHide,
-  guesses,
   gameStats,
-  isGameLost,
-  isGameWon,
-  isHardMode,
   nextWordTimeStamp,
-  numberOfGuessesMade,
-  solution
+  numberOfGuessesMade
 }) {
-  const [alertShown, setAlertShown] = useState(false);
   return (
     <Modal small modalOverModal onHide={onHide}>
       <header>{STATISTICS_TITLE}</header>
       <main>
-        {alertShown && (
-          <Banner style={{ marginBottom: '2rem' }} color="green">
-            {GAME_COPIED_MESSAGE}
-          </Banner>
-        )}
         {gameStats.totalGames <= 0 ? (
           <StatBar gameStats={gameStats} />
         ) : (
@@ -66,62 +46,32 @@ export default function StatsModal({
               gameStats={gameStats}
               numberOfGuessesMade={numberOfGuessesMade}
             />
-            {(isGameLost || isGameWon) && (
+            <div
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                marginTop: '2rem'
+              }}
+            >
               <div
                 style={{
-                  width: '100%',
                   display: 'flex',
+                  flexDirection: 'column',
                   justifyContent: 'center',
-                  marginTop: '2rem'
+                  alignItems: 'center'
                 }}
               >
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                  }}
-                >
-                  <p style={{ fontWeight: 'bold' }}>{NEW_WORD_TEXT}</p>
-                  <Countdown
-                    className={css`
-                      font-size: 1rem;
-                    `}
-                    date={nextWordTimeStamp}
-                    daysInHours={true}
-                  />
-                </div>
-                <div
-                  style={{
-                    marginLeft: '3rem',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    flexDirection: 'column'
-                  }}
-                >
-                  <Button
-                    filled
-                    color="blue"
-                    onClick={() => {
-                      shareStatus({
-                        guesses,
-                        isGameLost,
-                        isHardMode,
-                        handleShareToClipboard: () => {
-                          setAlertShown(true);
-                          setTimeout(() => setAlertShown(false), 1000);
-                        },
-                        solution
-                      });
-                    }}
-                  >
-                    {SHARE_TEXT}
-                  </Button>
-                </div>
+                <p style={{ fontWeight: 'bold' }}>{NEW_WORD_TEXT}</p>
+                <Countdown
+                  className={css`
+                    font-size: 1rem;
+                  `}
+                  date={nextWordTimeStamp}
+                  daysInHours={true}
+                />
               </div>
-            )}
+            </div>
           </>
         )}
       </main>
