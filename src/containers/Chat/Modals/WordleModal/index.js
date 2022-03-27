@@ -5,6 +5,7 @@ import Button from 'components/Button';
 import Grid from './Grid';
 import Keyboard from './Keyboard';
 import Banner from 'components/Banner';
+import FilterBar from 'components/FilterBar';
 import { addStatsForCompletedGame, loadStats } from './helpers/stats';
 import {
   findFirstUnusedReveal,
@@ -83,13 +84,25 @@ export default function WordleModal({
     <Modal onHide={onHide}>
       <header>Wordle</header>
       <main>
+        <FilterBar
+          style={{
+            marginTop: '-2rem',
+            fontSize: '1.5rem',
+            height: '5rem'
+          }}
+        >
+          <nav className="active">Wordle of the Day</nav>
+          <nav>Earn XP</nav>
+          <nav>Rankings</nav>
+        </FilterBar>
         {alertMessage.shown && (
-          <Banner style={{ marginBottom: '2rem' }} color={alertMessageColor}>
+          <Banner style={{ marginTop: '1rem' }} color={alertMessageColor}>
             {alertMessage.message}
           </Banner>
         )}
         <div
           style={{
+            marginTop: '2.5rem',
             width: '100%',
             display: 'flex',
             flexDirection: 'column'
@@ -219,7 +232,7 @@ export default function WordleModal({
       if (currentGuess === wordleSolution) {
         setStats(addStatsForCompletedGame(stats, guesses.length));
         setIsGameWon(true);
-        handleShowAlert({
+        return handleShowAlert({
           status: 'success',
           message:
             WIN_MESSAGES[Math.floor(Math.random() * WIN_MESSAGES.length)],
@@ -231,7 +244,7 @@ export default function WordleModal({
       }
 
       if (newGuesses.length === MAX_CHALLENGES) {
-        setStats(addStatsForCompletedGame(stats, guesses.length + 1));
+        setStats(addStatsForCompletedGame(stats, newGuesses.length));
         setIsGameLost(true);
         handleShowAlert({
           status: 'error',
