@@ -33,6 +33,7 @@ export default function WordleModal({
     }
     return daily?.guesses;
   });
+  const [isRevealingDaily, setIsRevealingDaily] = useState(false);
   const [dailyGameStats, setDailyGameStats] = useState(loadStats);
   const [dailyStatsModalShown, setDailyStatsModalShown] = useState(false);
   const isDailyGameWon = useMemo(
@@ -78,6 +79,8 @@ export default function WordleModal({
         </FilterBar>
         {selectedTab === 'daily' && (
           <Daily
+            isRevealing={isRevealingDaily}
+            onSetIsRevealing={setIsRevealingDaily}
             channelId={channelId}
             gameStats={dailyGameStats}
             guesses={dailyGuesses}
@@ -106,17 +109,17 @@ export default function WordleModal({
             width: '100%',
             display: 'flex',
             justifyContent:
-              isDailyGameOver && selectedTab === 'daily'
+              isDailyGameOver && selectedTab === 'daily' && !isRevealingDaily
                 ? 'space-around'
                 : 'flex-end'
           }}
         >
-          {isDailyGameOver && selectedTab === 'daily' && (
+          {isDailyGameOver && selectedTab === 'daily' && !isRevealingDaily && (
             <Button color="blue" onClick={() => setDailyStatsModalShown(true)}>
               Show Stats
             </Button>
           )}
-          {isDailyGameOver && selectedTab === 'daily' && (
+          {isDailyGameOver && selectedTab === 'daily' && !isRevealingDaily && (
             <div
               style={{
                 display: 'flex',

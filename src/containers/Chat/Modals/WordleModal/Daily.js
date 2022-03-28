@@ -30,7 +30,9 @@ Daily.propTypes = {
   guesses: PropTypes.array.isRequired,
   isGameWon: PropTypes.bool,
   isGameLost: PropTypes.bool,
+  isRevealing: PropTypes.bool,
   onSetGuesses: PropTypes.func.isRequired,
+  onSetIsRevealing: PropTypes.func.isRequired,
   onSetStats: PropTypes.func.isRequired,
   onSetStatsModalShown: PropTypes.func.isRequired,
   userId: PropTypes.number.isRequired,
@@ -47,7 +49,9 @@ export default function Daily({
   onSetStats,
   onSetStatsModalShown,
   userId,
-  wordleSolution
+  wordleSolution,
+  isRevealing,
+  onSetIsRevealing
 }) {
   const mounted = useRef(true);
   const saveWordleState = useAppContext(
@@ -59,7 +63,6 @@ export default function Daily({
   const MAX_WORD_LENGTH = wordleSolution.length;
   const delayMs = REVEAL_TIME_MS * MAX_WORD_LENGTH;
   const [alertMessage, setAlertMessage] = useState({});
-  const [isRevealing, setIsRevealing] = useState(false);
   const [isWaving, setIsWaving] = useState(false);
   const [currentGuess, setCurrentGuess] = useState('');
   const [currentRowClass, setCurrentRowClass] = useState('');
@@ -199,10 +202,10 @@ export default function Daily({
       }
     }
 
-    setIsRevealing(true);
+    onSetIsRevealing(true);
     setTimeout(() => {
       if (mounted.current) {
-        setIsRevealing(false);
+        onSetIsRevealing(false);
       }
     }, REVEAL_TIME_MS * MAX_WORD_LENGTH);
 
@@ -279,10 +282,12 @@ export default function Daily({
       }
       if (status === 'success') {
         if (mounted.current) {
+          onSetIsRevealing(true);
           setIsWaving(true);
         }
         setTimeout(() => {
           if (mounted.current) {
+            onSetIsRevealing(false);
             setIsWaving(false);
           }
         }, REVEAL_TIME_MS * MAX_WORD_LENGTH);
