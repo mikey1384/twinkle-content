@@ -43,6 +43,10 @@ export default function WordleModal({
     () => !isDailyGameWon && dailyGuesses.length === MAX_CHALLENGES,
     [dailyGuesses.length, isDailyGameWon]
   );
+  const isDailyGameOver = useMemo(
+    () => isDailyGameWon || isDailyGameLost,
+    [isDailyGameLost, isDailyGameWon]
+  );
 
   return (
     <Modal onHide={onHide}>
@@ -101,31 +105,39 @@ export default function WordleModal({
           style={{
             width: '100%',
             display: 'flex',
-            justifyContent: 'space-around'
+            justifyContent:
+              isDailyGameOver && selectedTab === 'daily'
+                ? 'space-around'
+                : 'flex-end'
           }}
         >
-          {(isDailyGameWon || isDailyGameLost) && selectedTab === 'daily' && (
+          {isDailyGameOver && selectedTab === 'daily' && (
             <Button color="blue" onClick={() => setDailyStatsModalShown(true)}>
-              Show Results
+              Show Stats
             </Button>
           )}
-          {(isDailyGameWon || isDailyGameLost) && selectedTab === 'daily' && (
-            <div>
-              <p style={{ fontWeight: 'bold' }}>{NEW_WORD_TEXT}</p>
+          {isDailyGameOver && selectedTab === 'daily' && (
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'column'
+              }}
+            >
+              <p style={{ fontWeight: 'bold', fontSize: '1.5rem' }}>
+                {NEW_WORD_TEXT}
+              </p>
               <Countdown
                 className={css`
-                  font-size: 1rem;
+                  font-size: 1.3rem;
                 `}
                 date={nextWordTimeStamp}
                 daysInHours={true}
               />
             </div>
           )}
-          <Button
-            transparent
-            style={{ marginRight: '0.7rem' }}
-            onClick={onHide}
-          >
+          <Button transparent onClick={onHide}>
             Close
           </Button>
         </div>
