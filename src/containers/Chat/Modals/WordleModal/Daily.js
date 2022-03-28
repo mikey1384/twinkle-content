@@ -92,10 +92,11 @@ export default function Daily({
       )}
       <div
         style={{
-          marginTop: '2.5rem',
+          marginTop: '2rem',
           width: '100%',
           display: 'flex',
-          flexDirection: 'column'
+          flexDirection: 'column',
+          marginBottom: '2rem'
         }}
       >
         <Grid
