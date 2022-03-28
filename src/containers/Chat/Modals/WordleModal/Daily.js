@@ -28,6 +28,8 @@ Daily.propTypes = {
   channelId: PropTypes.number.isRequired,
   gameStats: PropTypes.object.isRequired,
   guesses: PropTypes.array.isRequired,
+  isGameWon: PropTypes.bool,
+  isGameLost: PropTypes.bool,
   onSetGuesses: PropTypes.func.isRequired,
   onSetStats: PropTypes.func.isRequired,
   onSetStatsModalShown: PropTypes.func.isRequired,
@@ -39,6 +41,8 @@ export default function Daily({
   channelId,
   gameStats,
   guesses,
+  isGameWon,
+  isGameLost,
   onSetGuesses,
   onSetStats,
   onSetStatsModalShown,
@@ -59,14 +63,6 @@ export default function Daily({
   const [isWaving, setIsWaving] = useState(false);
   const [currentGuess, setCurrentGuess] = useState('');
   const [currentRowClass, setCurrentRowClass] = useState('');
-  const isGameWon = useMemo(
-    () => guesses.includes(wordleSolution),
-    [guesses, wordleSolution]
-  );
-  const isGameLost = useMemo(
-    () => !isGameWon && guesses.length === MAX_CHALLENGES,
-    [guesses.length, isGameWon]
-  );
   const alertMessageColor = useMemo(() => {
     if (alertMessage.status === 'error') {
       return 'rose';

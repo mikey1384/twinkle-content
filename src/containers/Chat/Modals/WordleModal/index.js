@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import Daily from './Daily';
 import FilterBar from 'components/FilterBar';
 import StatsModal from './Modals/StatsModal';
+import { MAX_CHALLENGES } from './constants/settings';
 import { useMyState } from 'helpers/hooks';
 import { loadStats } from './helpers/stats';
 
@@ -31,6 +32,14 @@ export default function WordleModal({
   });
   const [dailyGameStats, setDailyGameStats] = useState(loadStats);
   const [dailyStatsModalShown, setDailyStatsModalShown] = useState(false);
+  const isDailyGameWon = useMemo(
+    () => dailyGuesses.includes(wordleSolution),
+    [dailyGuesses, wordleSolution]
+  );
+  const isDailyGameLost = useMemo(
+    () => !isDailyGameWon && dailyGuesses.length === MAX_CHALLENGES,
+    [dailyGuesses.length, isDailyGameWon]
+  );
 
   return (
     <Modal onHide={onHide}>
@@ -65,6 +74,8 @@ export default function WordleModal({
             channelId={channelId}
             gameStats={dailyGameStats}
             guesses={dailyGuesses}
+            isGameWon={isDailyGameWon}
+            isGameLost={isDailyGameLost}
             onSetGuesses={setDailyGuesses}
             nextWordTimeStamp={nextWordTimeStamp}
             userId={userId}
@@ -83,9 +94,26 @@ export default function WordleModal({
         )}
       </main>
       <footer>
-        <Button transparent style={{ marginRight: '0.7rem' }} onClick={onHide}>
-          Close
-        </Button>
+        <div
+          style={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'space-around'
+          }}
+        >
+          {(isDailyGameWon || isDailyGameLost) && selectedTab === 'daily' && (
+            <Button color="blue" onClick={() => setDailyStatsModalShown(true)}>
+              Show Results
+            </Button>
+          )}
+          <Button
+            transparent
+            style={{ marginRight: '0.7rem' }}
+            onClick={onHide}
+          >
+            Close
+          </Button>
+        </div>
       </footer>
     </Modal>
   );
