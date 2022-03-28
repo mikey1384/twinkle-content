@@ -72,9 +72,19 @@ export default function Daily({
 
   useEffect(() => {
     mounted.current = true;
+    if (isGameLost) {
+      handleShowAlert({
+        status: 'error',
+        message: CORRECT_WORD_MESSAGE(wordleSolution),
+        options: {
+          persist: true
+        }
+      });
+    }
     return function cleanup() {
       mounted.current = false;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [isHardMode] = useState(
