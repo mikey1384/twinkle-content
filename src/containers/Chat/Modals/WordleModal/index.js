@@ -5,9 +5,12 @@ import Button from 'components/Button';
 import Daily from './Daily';
 import FilterBar from 'components/FilterBar';
 import StatsModal from './Modals/StatsModal';
+import Countdown from 'react-countdown';
+import { css } from '@emotion/css';
 import { MAX_CHALLENGES } from './constants/settings';
 import { useMyState } from 'helpers/hooks';
 import { loadStats } from './helpers/stats';
+import { NEW_WORD_TEXT } from './constants/strings';
 
 WordleModal.propTypes = {
   channelId: PropTypes.number,
@@ -105,6 +108,18 @@ export default function WordleModal({
             <Button color="blue" onClick={() => setDailyStatsModalShown(true)}>
               Show Results
             </Button>
+          )}
+          {(isDailyGameWon || isDailyGameLost) && selectedTab === 'daily' && (
+            <div>
+              <p style={{ fontWeight: 'bold' }}>{NEW_WORD_TEXT}</p>
+              <Countdown
+                className={css`
+                  font-size: 1rem;
+                `}
+                date={nextWordTimeStamp}
+                daysInHours={true}
+              />
+            </div>
           )}
           <Button
             transparent
