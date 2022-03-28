@@ -67,6 +67,9 @@ export default function Daily({
     if (alertMessage.status === 'error') {
       return 'rose';
     }
+    if (alertMessage.status === 'fail') {
+      return 'orange';
+    }
     return 'green';
   }, [alertMessage.status]);
 
@@ -74,7 +77,7 @@ export default function Daily({
     mounted.current = true;
     if (isGameLost) {
       handleShowAlert({
-        status: 'error',
+        status: 'fail',
         message: CORRECT_WORD_MESSAGE(wordleSolution),
         options: {
           persist: true
@@ -237,7 +240,7 @@ export default function Daily({
           })
         );
         handleShowAlert({
-          status: 'error',
+          status: 'fail',
           message: CORRECT_WORD_MESSAGE(wordleSolution),
           options: {
             persist: true,
