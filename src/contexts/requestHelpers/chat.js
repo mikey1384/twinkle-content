@@ -422,11 +422,11 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async saveDailyWordleWinner({ guesses, solution }) {
+    async postDailyWordleAttempt({ guesses, solution, isSolved }) {
       try {
         const { data } = await request.post(
-          `${URL}/chat/wordle/daily/winner`,
-          { guesses, solution },
+          `${URL}/chat/wordle/daily/attempt`,
+          { guesses, solution, isSolved },
           auth()
         );
         return Promise.resolve(data);

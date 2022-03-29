@@ -59,8 +59,8 @@ export default function Daily({
   const saveDailyWordleState = useAppContext(
     (v) => v.requestHelpers.saveDailyWordleState
   );
-  const saveDailyWordleWinner = useAppContext(
-    (v) => v.requestHelpers.saveDailyWordleWinner
+  const postDailyWordleAttempt = useAppContext(
+    (v) => v.requestHelpers.postDailyWordleAttempt
   );
   const onSetWordleState = useAppContext(
     (v) => v.user.actions.onSetWordleState
@@ -231,22 +231,53 @@ export default function Daily({
       }
 
       if (newGuesses.length === MAX_CHALLENGES) {
-        onSetStats(
-          addStatsForCompletedGame({
-            gameStats,
-            numIncorrect: newGuesses.length
-          })
-        );
-        handleShowAlert({
-          status: 'fail',
-          message: CORRECT_WORD_MESSAGE(wordleSolution),
-          options: {
-            persist: true,
-            delayMs,
-            callback: () => onSetStatsModalShown(true)
-          }
-        });
+        handleGameLost();
       }
+    }
+
+    async function handleGameLost() {
+      await postDailyWordleAttempt({
+        guesses,
+        solution: wordleSolution,
+        isSolved: false
+      });
+      onSetStats(
+        addStatsForCompletedGame({
+          gameStats,
+          numIncorrect: newGuesses.length
+        })
+      );
+      handleShowAlert({
+        status: 'fail',
+        message: CORRECT_WORD_MESSAGE(wordleSolution),
+        options: {
+          persist: true,
+          delayMs,
+          callback: () => onSetStatsModalShown(true)
+        }
+      });
+    }
+
+    async function handleGameWon() {
+      await postDailyWordleAttempt({
+        guesses,
+        solution: wordleSolution,
+        isSolved: true
+      });
+      onSetStats(
+        addStatsForCompletedGame({
+          gameStats,
+          numIncorrect: guesses.length
+        })
+      );
+      return handleShowAlert({
+        status: 'success',
+        message: WIN_MESSAGES[Math.floor(Math.random() * WIN_MESSAGES.length)],
+        options: {
+          delayMs,
+          callback: () => onSetStatsModalShown(true)
+        }
+      });
     }
 
     async function handleSaveGuess(newGuesses) {
@@ -262,24 +293,6 @@ export default function Daily({
         });
       }
     }
-  }
-
-  async function handleGameWon() {
-    await saveDailyWordleWinner({ guesses, solution: wordleSolution });
-    onSetStats(
-      addStatsForCompletedGame({
-        gameStats,
-        numIncorrect: guesses.length
-      })
-    );
-    return handleShowAlert({
-      status: 'success',
-      message: WIN_MESSAGES[Math.floor(Math.random() * WIN_MESSAGES.length)],
-      options: {
-        delayMs,
-        callback: () => onSetStatsModalShown(true)
-      }
-    });
   }
 
   function handleShowAlert({ status, message, options }) {
