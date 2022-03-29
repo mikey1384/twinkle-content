@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { borderRadius, Color } from 'constants/css';
 import { REVEAL_TIME_MS } from '../constants/settings';
@@ -23,21 +23,24 @@ export default function Key({
   status
 }) {
   const keyDelayMs = REVEAL_TIME_MS * maxWordLength;
+  const prevBackgroundColor = useRef('');
   const backgroundColor = useMemo(() => {
-    if (status === 'ready') {
-      return Color.logoBlue();
+    const colorKeys = {
+      ready: 'logoBlue',
+      correct: 'limeGreen',
+      present: 'brownOrange',
+      absent: 'darkBlueGray'
+    };
+    if (isRevealing && prevBackgroundColor.current) {
+      return prevBackgroundColor.current;
     }
-    if (status === 'correct') {
-      return Color.limeGreen();
+    if (colorKeys[status]) {
+      prevBackgroundColor.current = Color[colorKeys[status]]();
+      return Color[colorKeys[status]]();
     }
-    if (status === 'present') {
-      return Color.brownOrange();
-    }
-    if (status === 'absent') {
-      return Color.darkBlueGray();
-    }
+    prevBackgroundColor.current = Color.lightBlueGray();
     return Color.lightBlueGray();
-  }, [status]);
+  }, [isRevealing, status]);
 
   return (
     <button
