@@ -28,6 +28,7 @@ Daily.propTypes = {
   channelId: PropTypes.number.isRequired,
   gameStats: PropTypes.object.isRequired,
   guesses: PropTypes.array.isRequired,
+  isGameOver: PropTypes.bool,
   isGameWon: PropTypes.bool,
   isGameLost: PropTypes.bool,
   isRevealing: PropTypes.bool,
@@ -43,6 +44,7 @@ export default function Daily({
   channelId,
   gameStats,
   guesses,
+  isGameOver,
   isGameWon,
   isGameLost,
   onSetGuesses,
@@ -66,6 +68,10 @@ export default function Daily({
   const [isWaving, setIsWaving] = useState(false);
   const [currentGuess, setCurrentGuess] = useState('');
   const [currentRowClass, setCurrentRowClass] = useState('');
+  const isEnterReady = useMemo(
+    () => !isGameOver && currentGuess.length === MAX_WORD_LENGTH,
+    [MAX_WORD_LENGTH, currentGuess.length, isGameOver]
+  );
   const alertMessageColor = useMemo(() => {
     if (alertMessage.status === 'error') {
       return 'rose';
@@ -132,6 +138,7 @@ export default function Daily({
           isRevealing={isRevealing}
           maxWordLength={MAX_WORD_LENGTH}
           solution={wordleSolution}
+          isEnterReady={isEnterReady}
           style={{ marginTop: '2rem' }}
         />
       </div>
@@ -156,7 +163,6 @@ export default function Daily({
 
   async function handleEnter() {
     const newGuesses = guesses.concat(currentGuess);
-    handleSaveGuess(newGuesses);
     if (isGameWon || isGameLost) {
       return;
     }
@@ -201,7 +207,7 @@ export default function Daily({
         });
       }
     }
-
+    handleSaveGuess(newGuesses);
     onSetIsRevealing(true);
     setTimeout(() => {
       if (mounted.current) {

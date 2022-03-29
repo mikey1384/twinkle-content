@@ -84,6 +84,7 @@ export default function WordleModal({
             channelId={channelId}
             gameStats={dailyGameStats}
             guesses={dailyGuesses}
+            isGameOver={isDailyGameOver}
             isGameWon={isDailyGameWon}
             isGameLost={isDailyGameLost}
             onSetGuesses={setDailyGuesses}

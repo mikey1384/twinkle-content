@@ -6,6 +6,7 @@ import { ENTER_TEXT, DELETE_TEXT } from '../constants/strings';
 import { localeAwareUpperCase } from '../helpers/words';
 
 Keyboard.propTypes = {
+  isEnterReady: PropTypes.bool,
   onChar: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onEnter: PropTypes.func.isRequired,
@@ -17,6 +18,7 @@ Keyboard.propTypes = {
 };
 
 export default function Keyboard({
+  isEnterReady,
   onChar,
   onDelete,
   onEnter,
@@ -96,7 +98,12 @@ export default function Keyboard({
         ))}
       </div>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <Key width={65.4} value="ENTER" onClick={onClick}>
+        <Key
+          status={isEnterReady ? 'ready' : ''}
+          width={65.4}
+          value="ENTER"
+          onClick={onClick}
+        >
           {ENTER_TEXT}
         </Key>
         {['Z', 'X', 'C', 'V', 'B', 'N', 'M'].map((key) => (
