@@ -15,13 +15,13 @@ import {
 StatsModal.propTypes = {
   onHide: PropTypes.func,
   gameStats: PropTypes.object,
-  nextWordTimeStamp: PropTypes.number,
+  nextDayTimeStamp: PropTypes.number,
   numberOfGuessesMade: PropTypes.number
 };
 export default function StatsModal({
   onHide,
   gameStats,
-  nextWordTimeStamp,
+  nextDayTimeStamp,
   numberOfGuessesMade
 }) {
   return (
@@ -67,7 +67,7 @@ export default function StatsModal({
                   className={css`
                     font-size: 1rem;
                   `}
-                  date={nextWordTimeStamp}
+                  date={nextDayTimeStamp}
                   daysInHours={true}
                 />
               </div>

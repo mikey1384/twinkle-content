@@ -14,14 +14,14 @@ import { NEW_WORD_TEXT } from './constants/strings';
 
 WordleModal.propTypes = {
   channelId: PropTypes.number,
-  nextWordTimeStamp: PropTypes.number,
+  nextDayTimeStamp: PropTypes.number,
   wordleSolution: PropTypes.string.isRequired,
   onHide: PropTypes.func.isRequired
 };
 
 export default function WordleModal({
   channelId,
-  nextWordTimeStamp,
+  nextDayTimeStamp,
   wordleSolution,
   onHide
 }) {
@@ -88,7 +88,7 @@ export default function WordleModal({
             isGameWon={isDailyGameWon}
             isGameLost={isDailyGameLost}
             onSetGuesses={setDailyGuesses}
-            nextWordTimeStamp={nextWordTimeStamp}
+            nextDayTimeStamp={nextDayTimeStamp}
             userId={userId}
             wordleSolution={wordleSolution}
             onSetStats={setDailyGameStats}
@@ -99,7 +99,7 @@ export default function WordleModal({
           <StatsModal
             onHide={() => setDailyStatsModalShown(false)}
             gameStats={dailyGameStats}
-            nextWordTimeStamp={nextWordTimeStamp}
+            nextDayTimeStamp={nextDayTimeStamp}
             numberOfGuessesMade={dailyGuesses.length}
           />
         )}
@@ -136,7 +136,7 @@ export default function WordleModal({
                 className={css`
                   font-size: 1.3rem;
                 `}
-                date={nextWordTimeStamp}
+                date={nextDayTimeStamp}
                 daysInHours={true}
               />
             </div>
