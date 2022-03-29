@@ -224,21 +224,7 @@ export default function Daily({
       setCurrentGuess('');
 
       if (currentGuess === wordleSolution) {
-        onSetStats(
-          addStatsForCompletedGame({
-            gameStats,
-            numIncorrect: guesses.length
-          })
-        );
-        return handleShowAlert({
-          status: 'success',
-          message:
-            WIN_MESSAGES[Math.floor(Math.random() * WIN_MESSAGES.length)],
-          options: {
-            delayMs,
-            callback: () => onSetStatsModalShown(true)
-          }
-        });
+        return handleGameWon();
       }
 
       if (newGuesses.length === MAX_CHALLENGES) {
@@ -273,6 +259,23 @@ export default function Daily({
         });
       }
     }
+  }
+
+  async function handleGameWon() {
+    onSetStats(
+      addStatsForCompletedGame({
+        gameStats,
+        numIncorrect: guesses.length
+      })
+    );
+    return handleShowAlert({
+      status: 'success',
+      message: WIN_MESSAGES[Math.floor(Math.random() * WIN_MESSAGES.length)],
+      options: {
+        delayMs,
+        callback: () => onSetStatsModalShown(true)
+      }
+    });
   }
 
   function handleShowAlert({ status, message, options }) {
