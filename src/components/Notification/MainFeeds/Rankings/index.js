@@ -9,7 +9,7 @@ import { useNotiContext } from 'contexts';
 import localize from 'constants/localize';
 import moment from 'moment';
 
-const monthLabel = moment().format('MMMM');
+const monthLabel = moment().utc().format('MMMM');
 const allTimeLabel = localize('allTime');
 
 export default function Rankings() {
