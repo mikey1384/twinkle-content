@@ -782,6 +782,8 @@ function Chess({
               flex-direction: column;
               margin: 1.5rem 0;
               @media (max-width: ${mobileMaxWidth}) {
+                margin-top: 0.5rem;
+                margin-bottom: 1rem;
                 height: 3rem;
               }
             `}
