@@ -15,6 +15,7 @@ const reactions = [
   'angry',
   'crying',
   'surprised',
+  'wave',
   'laughing',
   'heart',
   'thumb'
@@ -59,7 +60,6 @@ export default function ReactionButton({
           ref={BarRef}
           style={{
             display: reactionsMenuShown ? 'flex' : 'none',
-            width: '20rem',
             background: 'rgb(255, 255, 255)',
             justifyContent: 'space-around',
             alignItems: 'center',
@@ -67,6 +67,12 @@ export default function ReactionButton({
             boxShadow: `0 0 1px ${Color.black()}`,
             outline: 0
           }}
+          className={css`
+            width: 20rem;
+            @media (max-width: ${mobileMaxWidth}) {
+              width: 16rem;
+            }
+          `}
         >
           {reactions.map((reaction) => (
             <div
@@ -82,6 +88,8 @@ export default function ReactionButton({
                   transform: scale(1.5);
                 }
                 @media (max-width: ${mobileMaxWidth}) {
+                  width: 1.7rem;
+                  height: 1.7rem;
                   &:hover {
                     transform: none;
                   }

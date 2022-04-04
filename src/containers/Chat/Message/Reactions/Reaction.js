@@ -130,6 +130,7 @@ function Reaction({
           height: 0
         };
       setTooltipContext(parentElementDimensions);
+      setTimeout(() => setTooltipContext(null), 1500);
     } else {
       hideTimerRef.current = setTimeout(() => {
         if (mounted.current) {
