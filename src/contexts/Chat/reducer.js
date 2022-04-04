@@ -12,7 +12,7 @@ export default function ChatReducer(state, action) {
           ...state.channelsObj,
           [action.channelId]: {
             ...state.channelsObj[action.channelId],
-            messageIds: state.channelsObj[action.channelId].messageIds.map(
+            messageIds: state.channelsObj[action.channelId].messageIds?.map(
               (messageId) =>
                 messageId === action.tempMessageId
                   ? action.messageId
@@ -322,7 +322,7 @@ export default function ChatReducer(state, action) {
           ...state.channelsObj,
           [action.channelId]: {
             ...state.channelsObj[action.channelId],
-            messageIds: state.channelsObj[action.channelId].messageIds.filter(
+            messageIds: state.channelsObj[action.channelId].messageIds?.filter(
               (messageId) => messageId !== action.messageId
             )
           }
@@ -945,7 +945,7 @@ export default function ChatReducer(state, action) {
           ...state.channelsObj,
           [action.channelId]: {
             ...state.channelsObj[action.channelId],
-            messageIds: state.channelsObj[action.channelId].messageIds.map(
+            messageIds: state.channelsObj[action.channelId].messageIds?.map(
               (messageId) =>
                 messageId === action.tempMessageId
                   ? action.messageId
