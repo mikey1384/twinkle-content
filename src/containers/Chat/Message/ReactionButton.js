@@ -15,6 +15,7 @@ const reactions = [
   'angry',
   'crying',
   'surprised',
+  'wave',
   'laughing',
   'heart',
   'thumb'

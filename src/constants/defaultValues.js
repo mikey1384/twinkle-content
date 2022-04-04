@@ -1,6 +1,6 @@
 import localize from 'constants/localize';
 
-export const clientVersion = '1.6.5';
+export const clientVersion = '1.6.6';
 export const defaultChatSubject = 'Welcome!';
 export const defaultContentState = {
   isEditing: false,
@@ -139,6 +139,10 @@ export const reactionsObj = {
   laughing: {
     label: 'laughing',
     position: '82% 7.5%'
+  },
+  wave: {
+    label: 'wave',
+    position: '28% 95%'
   },
   surprised: {
     label: 'surprised',
