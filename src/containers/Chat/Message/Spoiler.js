@@ -1,6 +1,8 @@
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { processedStringWithURL } from 'helpers/stringHelpers';
+import parse from 'html-react-parser';
+import Link from 'components/Link';
+import { limitBrs, processedStringWithURL } from 'helpers/stringHelpers';
 import { Color } from 'constants/css';
 
 Spoiler.propTypes = {
@@ -28,6 +30,18 @@ export default function Spoiler({ content }) {
     }
   }, [content]);
 
+  const innerHTML = useMemo(() => {
+    const finalText = parse(limitBrs(displayedContent), {
+      replace: (domNode) => {
+        if (domNode.name === 'a' && domNode.attribs.class === 'mention') {
+          const node = domNode.children[0];
+          return <Link to={domNode.attribs.href}>{node?.data}</Link>;
+        }
+      }
+    });
+    return finalText;
+  }, [displayedContent]);
+
   return (
     <div>
       {spoilerShown ? (
@@ -36,10 +50,9 @@ export default function Spoiler({ content }) {
             background: Color.lighterGray(),
             borderRadius: '2px'
           }}
-          dangerouslySetInnerHTML={{
-            __html: displayedContent
-          }}
-        />
+        >
+          {innerHTML}
+        </span>
       ) : (
         <div
           style={{
