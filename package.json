@@ -59,7 +59,7 @@
     "jest-resolve": "^27.4.6",
     "jest-watch-typeahead": "^1.0.0",
     "mini-css-extract-plugin": "^2.4.5",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "optimize-css-assets-webpack-plugin": "^6.0.1",
     "path": "^0.12.7",
     "postcss": "^8.4.4",
