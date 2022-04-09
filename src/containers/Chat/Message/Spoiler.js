@@ -21,7 +21,7 @@ export default function Spoiler({ content }) {
     }
   }, [content]);
 
-  const displayedContent = useMemo(() => {
+  const processedText = useMemo(() => {
     if (content.startsWith('/spoiler ')) {
       return processedStringWithURL(content.substr(9));
     }
@@ -30,8 +30,8 @@ export default function Spoiler({ content }) {
     }
   }, [content]);
 
-  const innerHTML = useMemo(() => {
-    const finalText = parse(limitBrs(displayedContent), {
+  const finalText = useMemo(() => {
+    const result = parse(limitBrs(processedText), {
       replace: (domNode) => {
         if (domNode.name === 'a' && domNode.attribs.class === 'mention') {
           const node = domNode.children[0];
@@ -39,8 +39,8 @@ export default function Spoiler({ content }) {
         }
       }
     });
-    return finalText;
-  }, [displayedContent]);
+    return result;
+  }, [processedText]);
 
   return (
     <div>
@@ -51,7 +51,7 @@ export default function Spoiler({ content }) {
             borderRadius: '2px'
           }}
         >
-          {innerHTML}
+          {finalText}
         </span>
       ) : (
         <div

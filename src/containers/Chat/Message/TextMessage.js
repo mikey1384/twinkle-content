@@ -103,6 +103,8 @@ function TextMessage({
     }
   }, [isEditing, forceRefreshForMobile]);
 
+  const isSpoiler = useMemo(() => isValidSpoiler(content), [content]);
+
   return (
     <ErrorBoundary>
       <div
@@ -129,7 +131,7 @@ function TextMessage({
           <>
             <div className={MessageStyle.messageWrapper}>
               {Prefix}
-              {isValidSpoiler(content) ? (
+              {isSpoiler ? (
                 <Spoiler content={content} />
               ) : (
                 <LongText
@@ -157,7 +159,7 @@ function TextMessage({
             )}
           </>
         )}
-        {extractedUrl && messageId && !attachmentHidden && (
+        {extractedUrl && messageId && !attachmentHidden && !isSpoiler && (
           <Embedly
             style={{ marginTop: '1rem' }}
             contentId={messageId}
