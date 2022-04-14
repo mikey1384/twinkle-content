@@ -856,7 +856,6 @@ export default function ContentReducer(state, action) {
               const targetReplyIndex = replies
                 .map((reply) => reply.id)
                 .indexOf(action.loadMoreButtonId || action.replyId);
-
               return {
                 ...comment,
                 replies: [
@@ -906,8 +905,11 @@ export default function ContentReducer(state, action) {
               }
             }
             if (containsRootReply) {
+              const targetReplyIndex = (comment.replies || [])
+                .map((reply) => reply.id)
+                .indexOf(action.replyId);
               const replies = (comment.replies || []).filter(
-                (reply) => reply.id <= action.replyId
+                (reply, index) => index <= targetReplyIndex
               );
               const replyIds = (comment.replies || []).map((reply) => reply.id);
               const loadedReplies = action.replies.filter(
@@ -932,7 +934,7 @@ export default function ContentReducer(state, action) {
                   ),
                   ...loadedReplies,
                   ...(comment.replies || []).filter(
-                    (reply) => reply.id > action.replyId
+                    (reply, index) => index > targetReplyIndex
                   )
                 ]
               };
