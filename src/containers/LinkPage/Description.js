@@ -6,6 +6,7 @@ import LongText from 'components/Texts/LongText';
 import Button from 'components/Button';
 import Textarea from 'components/Texts/Textarea';
 import Input from 'components/Texts/Input';
+import Icon from 'components/Icon';
 import { timeSince } from 'helpers/timeStampHelpers';
 import {
   exceedsCharLimit,
@@ -144,7 +145,12 @@ export default function Description({
     const items = [];
     if (userIsUploader || canEdit) {
       items.push({
-        label: editLabel,
+        label: (
+          <>
+            <Icon icon="pencil-alt" />
+            <span style={{ marginLeft: '1rem' }}>{editLabel}</span>
+          </>
+        ),
         onClick: () =>
           onSetIsEditing({
             contentId: linkId,
@@ -155,7 +161,12 @@ export default function Description({
     }
     if (userIsUploader || canDelete) {
       items.push({
-        label: deleteLabel,
+        label: (
+          <>
+            <Icon icon="trash-alt" />
+            <span style={{ marginLeft: '1rem' }}>{deleteLabel}</span>
+          </>
+        ),
         onClick: onDelete
       });
     }
@@ -213,6 +224,7 @@ export default function Description({
       {editButtonShown && !isEditing && (
         <DropdownButton
           skeuomorphic
+          icon="chevron-down"
           color="darkerGray"
           opacity={0.8}
           style={{ position: 'absolute', top: '1rem', right: '1rem' }}
