@@ -6,6 +6,7 @@ import DropdownButton from 'components/Buttons/DropdownButton';
 import EditTitleForm from 'components/Forms/EditTitleForm';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import Embedly from 'components/Embedly';
+import Icon from 'components/Icon';
 import { useHistory } from 'react-router-dom';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
@@ -78,13 +79,23 @@ export default function LinkItem({
     const items = [];
     if (userIsUploader || canEdit) {
       items.push({
-        label: editLabel,
+        label: (
+          <>
+            <Icon icon="pencil-alt" />
+            <span style={{ marginLeft: '1rem' }}>{editLabel}</span>
+          </>
+        ),
         onClick: () => setOnEdit(true)
       });
     }
     if (userIsUploader || canDelete) {
       items.push({
-        label: removeLabel,
+        label: (
+          <>
+            <Icon icon="trash-alt" />
+            <span style={{ marginLeft: '1rem' }}>{removeLabel}</span>
+          </>
+        ),
         onClick: () => setConfirmModalShown(true)
       });
     }
