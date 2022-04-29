@@ -412,7 +412,7 @@ export default function chatRequestHelpers({ auth, handleError }) {
     },
     async saveDailyWordleState({ guesses, solution }) {
       try {
-        const { data } = await request.post(
+        const { data } = await request.put(
           `${URL}/chat/wordle/daily`,
           { guesses, solution },
           auth()
