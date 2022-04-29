@@ -10,11 +10,7 @@ import {
   MAX_CHALLENGES,
   REVEAL_TIME_MS
 } from './constants/settings';
-import {
-  findFirstUnusedReveal,
-  isWordInWordList,
-  unicodeLength
-} from './helpers/words';
+import { isWordInWordList, unicodeLength } from './helpers/words';
 import {
   CORRECT_WORD_MESSAGE,
   NOT_ENOUGH_LETTERS_MESSAGE,
@@ -102,12 +98,6 @@ export default function Daily({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [isHardMode] = useState(
-    localStorage.getItem('gameMode')
-      ? localStorage.getItem('gameMode') === 'hard'
-      : false
-  );
-
   return (
     <ErrorBoundary>
       {alertMessage.shown && (
@@ -192,24 +182,6 @@ export default function Daily({
       });
     }
 
-    // enforce hard mode - all guesses must contain all previously revealed letters
-    if (isHardMode) {
-      const firstMissingReveal = findFirstUnusedReveal({
-        word: currentGuess,
-        guesses,
-        solution
-      });
-      if (firstMissingReveal) {
-        setCurrentRowClass('jiggle');
-        return handleShowAlert({
-          status: 'error',
-          message: firstMissingReveal,
-          options: {
-            callback: () => setCurrentRowClass('')
-          }
-        });
-      }
-    }
     handleSaveGuess(newGuesses);
     onSetIsRevealing(true);
     setTimeout(() => {

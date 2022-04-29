@@ -8,9 +8,6 @@ export const HARD_MODE_DESCRIPTION =
   'Any revealed hints must be used in subsequent guesses';
 export const HIGH_CONTRAST_MODE_DESCRIPTION = 'For improved color vision';
 export const CORRECT_WORD_MESSAGE = (solution) => `The word was ${solution}`;
-export const WRONG_SPOT_MESSAGE = (guess, position) =>
-  `Must use ${guess} in position ${position}`;
-export const NOT_CONTAINED_MESSAGE = (letter) => `Guess must contain ${letter}`;
 export const ENTER_TEXT = 'Enter';
 export const DELETE_TEXT = 'Delete';
 export const STATISTICS_TITLE = 'Statistics';
