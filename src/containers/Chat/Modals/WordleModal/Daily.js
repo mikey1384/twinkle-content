@@ -209,7 +209,7 @@ export default function Daily({
 
     async function handleGameLost() {
       await postDailyWordleAttempt({
-        guesses,
+        guesses: guesses.concat(currentGuess),
         solution,
         isSolved: false
       });
@@ -232,7 +232,7 @@ export default function Daily({
 
     async function handleGameWon() {
       await postDailyWordleAttempt({
-        guesses,
+        guesses: guesses.concat(currentGuess),
         solution,
         isSolved: true
       });
