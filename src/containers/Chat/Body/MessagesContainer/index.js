@@ -125,6 +125,7 @@ function MessagesContainer({
     messagesObj = {},
     messagesLoadMoreButton = false,
     wordleSolution,
+    wordleWordLevel,
     nextDayTimeStamp
   } = currentChannel;
   const scrolledToBottomRef = useRef(true);
@@ -1200,7 +1201,8 @@ function MessagesContainer({
       {wordleModalShown && (
         <WordleModal
           channelId={selectedChannelId}
-          wordleSolution={wordleSolution}
+          solution={wordleSolution}
+          wordLevel={wordleWordLevel}
           nextDayTimeStamp={nextDayTimeStamp}
           onHide={() => onSetWordleModalShown(false)}
         />

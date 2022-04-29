@@ -15,20 +15,20 @@ import { NEW_WORD_TEXT } from './constants/strings';
 WordleModal.propTypes = {
   channelId: PropTypes.number,
   nextDayTimeStamp: PropTypes.number,
-  wordleSolution: PropTypes.string.isRequired,
+  solution: PropTypes.string.isRequired,
   onHide: PropTypes.func.isRequired
 };
 
 export default function WordleModal({
   channelId,
   nextDayTimeStamp,
-  wordleSolution,
+  solution,
   onHide
 }) {
   const [selectedTab, setSelectedTab] = useState('daily');
   const { wordle: { daily } = {}, userId } = useMyState();
   const [dailyGuesses, setDailyGuesses] = useState(() => {
-    if (daily?.solution !== wordleSolution) {
+    if (daily?.solution !== solution) {
       return [];
     }
     return daily?.guesses;
@@ -37,8 +37,8 @@ export default function WordleModal({
   const [dailyGameStats, setDailyGameStats] = useState(loadStats);
   const [dailyStatsModalShown, setDailyStatsModalShown] = useState(false);
   const isDailyGameWon = useMemo(
-    () => dailyGuesses.includes(wordleSolution),
-    [dailyGuesses, wordleSolution]
+    () => dailyGuesses.includes(solution),
+    [dailyGuesses, solution]
   );
   const isDailyGameLost = useMemo(
     () => !isDailyGameWon && dailyGuesses.length === MAX_CHALLENGES,
@@ -90,7 +90,7 @@ export default function WordleModal({
             onSetGuesses={setDailyGuesses}
             nextDayTimeStamp={nextDayTimeStamp}
             userId={userId}
-            wordleSolution={wordleSolution}
+            solution={solution}
             onSetStats={setDailyGameStats}
             onSetStatsModalShown={setDailyStatsModalShown}
           />

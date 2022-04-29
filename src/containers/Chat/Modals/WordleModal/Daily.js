@@ -37,7 +37,7 @@ Daily.propTypes = {
   onSetStats: PropTypes.func.isRequired,
   onSetStatsModalShown: PropTypes.func.isRequired,
   userId: PropTypes.number.isRequired,
-  wordleSolution: PropTypes.string.isRequired
+  solution: PropTypes.string.isRequired
 };
 
 export default function Daily({
@@ -51,7 +51,7 @@ export default function Daily({
   onSetStats,
   onSetStatsModalShown,
   userId,
-  wordleSolution,
+  solution,
   isRevealing,
   onSetIsRevealing
 }) {
@@ -65,7 +65,7 @@ export default function Daily({
   const onSetWordleState = useAppContext(
     (v) => v.user.actions.onSetWordleState
   );
-  const MAX_WORD_LENGTH = wordleSolution.length;
+  const MAX_WORD_LENGTH = solution.length;
   const delayMs = REVEAL_TIME_MS * MAX_WORD_LENGTH;
   const [alertMessage, setAlertMessage] = useState({});
   const [isWaving, setIsWaving] = useState(false);
@@ -90,7 +90,7 @@ export default function Daily({
     if (isGameLost) {
       handleShowAlert({
         status: 'fail',
-        message: CORRECT_WORD_MESSAGE(wordleSolution),
+        message: CORRECT_WORD_MESSAGE(solution),
         options: {
           persist: true
         }
@@ -131,7 +131,7 @@ export default function Daily({
           isWaving={isWaving}
           currentRowClassName={currentRowClass}
           maxWordLength={MAX_WORD_LENGTH}
-          solution={wordleSolution}
+          solution={solution}
         />
         <Keyboard
           onChar={handleChar}
@@ -140,7 +140,7 @@ export default function Daily({
           guesses={guesses}
           isRevealing={isRevealing}
           maxWordLength={MAX_WORD_LENGTH}
-          solution={wordleSolution}
+          solution={solution}
           isEnterReady={isEnterReady}
           style={{ marginTop: '2rem' }}
         />
@@ -197,7 +197,7 @@ export default function Daily({
       const firstMissingReveal = findFirstUnusedReveal({
         word: currentGuess,
         guesses,
-        solution: wordleSolution
+        solution
       });
       if (firstMissingReveal) {
         setCurrentRowClass('jiggle');
@@ -226,7 +226,7 @@ export default function Daily({
       onSetGuesses(newGuesses);
       setCurrentGuess('');
 
-      if (currentGuess === wordleSolution) {
+      if (currentGuess === solution) {
         return handleGameWon();
       }
 
@@ -238,7 +238,7 @@ export default function Daily({
     async function handleGameLost() {
       await postDailyWordleAttempt({
         guesses,
-        solution: wordleSolution,
+        solution,
         isSolved: false
       });
       onSetStats(
@@ -249,7 +249,7 @@ export default function Daily({
       );
       handleShowAlert({
         status: 'fail',
-        message: CORRECT_WORD_MESSAGE(wordleSolution),
+        message: CORRECT_WORD_MESSAGE(solution),
         options: {
           persist: true,
           delayMs,
@@ -261,7 +261,7 @@ export default function Daily({
     async function handleGameWon() {
       await postDailyWordleAttempt({
         guesses,
-        solution: wordleSolution,
+        solution,
         isSolved: true
       });
       onSetStats(
@@ -284,12 +284,12 @@ export default function Daily({
       await saveDailyWordleState({
         channelId,
         guesses: newGuesses,
-        solution: wordleSolution
+        solution
       });
       if (mounted.current) {
         onSetWordleState({
           userId,
-          newState: { daily: { guesses: newGuesses, solution: wordleSolution } }
+          newState: { daily: { guesses: newGuesses, solution } }
         });
       }
     }
