@@ -61,12 +61,6 @@ export default function WordleModal({
           }}
         >
           <nav
-            onClick={() => setSelectedTab('earn')}
-            className={selectedTab === 'earn' ? 'active' : ''}
-          >
-            Earn XP
-          </nav>
-          <nav
             onClick={() => setSelectedTab('daily')}
             className={selectedTab === 'daily' ? 'active' : ''}
           >{`Today's Wordle`}</nav>
