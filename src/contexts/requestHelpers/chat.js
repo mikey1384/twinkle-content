@@ -422,10 +422,10 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async updateDailyWordleAttempt({ guesses, solution, isSolved }) {
+    async updateWordleAttempt({ guesses, solution, isSolved }) {
       try {
         const { data } = await request.put(
-          `${URL}/chat/wordle/daily/attempt`,
+          `${URL}/chat/wordle/attempt`,
           { guesses, solution, isSolved },
           auth()
         );
