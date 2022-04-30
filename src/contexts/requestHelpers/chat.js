@@ -410,23 +410,11 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async saveDailyWordleState({ guesses, solution }) {
-      try {
-        const { data } = await request.put(
-          `${URL}/chat/wordle/daily`,
-          { guesses, solution },
-          auth()
-        );
-        return Promise.resolve(data);
-      } catch (error) {
-        return handleError(error);
-      }
-    },
-    async updateWordleAttempt({ guesses, solution, isSolved }) {
+    async updateWordleAttempt({ channelId, guesses, solution, isSolved }) {
       try {
         const { data } = await request.put(
           `${URL}/chat/wordle/attempt`,
-          { guesses, solution, isSolved },
+          { channelId, guesses, solution, isSolved },
           auth()
         );
         return Promise.resolve(data);

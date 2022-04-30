@@ -52,9 +52,6 @@ export default function Daily({
   onSetIsRevealing
 }) {
   const mounted = useRef(true);
-  const saveDailyWordleState = useAppContext(
-    (v) => v.requestHelpers.saveDailyWordleState
-  );
   const updateWordleAttempt = useAppContext(
     (v) => v.requestHelpers.updateWordleAttempt
   );
@@ -209,6 +206,7 @@ export default function Daily({
 
     async function handleGameLost() {
       await updateWordleAttempt({
+        channelId,
         guesses: guesses.concat(currentGuess),
         solution,
         isSolved: false
@@ -232,6 +230,7 @@ export default function Daily({
 
     async function handleGameWon() {
       await updateWordleAttempt({
+        channelId,
         guesses: guesses.concat(currentGuess),
         solution,
         isSolved: true
@@ -253,7 +252,7 @@ export default function Daily({
     }
 
     async function handleSaveGuess(newGuesses) {
-      await saveDailyWordleState({
+      await updateWordleAttempt({
         channelId,
         guesses: newGuesses,
         solution
