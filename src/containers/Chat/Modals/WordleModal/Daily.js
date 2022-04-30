@@ -245,19 +245,19 @@ export default function Daily({
     }
 
     async function handleSaveGuess(newGuesses) {
-      await updateWordleAttempt({
+      updateWordleAttempt({
         channelId,
         guesses: newGuesses,
         solution
       });
       if (mounted.current) {
+        setCurrentGuess('');
+      }
+      if (mounted.current) {
         onSetWordleGuesses({
           channelId,
           guesses: newGuesses
         });
-      }
-      if (mounted.current) {
-        setCurrentGuess('');
       }
     }
   }
