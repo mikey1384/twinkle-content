@@ -106,7 +106,6 @@ export function useMyState() {
         isCreator:
           myState.userType === 'admin' || myState.userType === 'creator',
         loggedIn: true,
-        wordle: myState?.state?.wordle,
         profileTheme: myState.profileTheme || DEFAULT_PROFILE_THEME,
         signinModalShown,
         xpThisMonth
