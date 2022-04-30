@@ -124,6 +124,7 @@ function MessagesContainer({
     messageIds = [],
     messagesObj = {},
     messagesLoadMoreButton = false,
+    wordleGuesses,
     wordleSolution,
     wordleWordLevel,
     nextDayTimeStamp
@@ -1201,6 +1202,7 @@ function MessagesContainer({
       {wordleModalShown && (
         <WordleModal
           channelId={selectedChannelId}
+          guesses={wordleGuesses}
           solution={wordleSolution}
           wordLevel={wordleWordLevel}
           nextDayTimeStamp={nextDayTimeStamp}

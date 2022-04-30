@@ -120,23 +120,6 @@ export default function UserReducer(state, action) {
         ...state,
         profilesLoaded: action.loaded
       };
-    case 'SET_WORDLE_STATE':
-      return {
-        ...state,
-        userObj: {
-          ...state.userObj,
-          [action.userId]: {
-            ...(state.userObj[action.userId] || {}),
-            state: {
-              ...(state.userObj[action.userId]?.state || {}),
-              wordle: {
-                ...(state.userObj[action.userId]?.state?.wordle || {}),
-                ...action.newState
-              }
-            }
-          }
-        }
-      };
     case 'SET_USER_STATE':
       return {
         ...state,

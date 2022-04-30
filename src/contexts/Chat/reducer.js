@@ -1398,6 +1398,17 @@ export default function ChatReducer(state, action) {
         ...state,
         wordleModalShown: action.shown
       };
+    case 'SET_WORDLE_GUESSES':
+      return {
+        ...state,
+        channelsObj: {
+          ...state.channelsObj,
+          [action.channelId]: {
+            ...state.channelsObj[action.channelId],
+            wordleGuesses: action.guesses
+          }
+        }
+      };
     case 'SHOW_INCOMING': {
       return {
         ...state,

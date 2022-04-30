@@ -8,12 +8,12 @@ import StatsModal from './Modals/StatsModal';
 import Countdown from 'react-countdown';
 import { css } from '@emotion/css';
 import { MAX_CHALLENGES } from './constants/settings';
-import { useMyState } from 'helpers/hooks';
 import { loadStats } from './helpers/stats';
 import { NEW_WORD_TEXT } from './constants/strings';
 
 WordleModal.propTypes = {
   channelId: PropTypes.number,
+  guesses: PropTypes.array,
   nextDayTimeStamp: PropTypes.number,
   solution: PropTypes.string.isRequired,
   onHide: PropTypes.func.isRequired
@@ -22,27 +22,21 @@ WordleModal.propTypes = {
 export default function WordleModal({
   channelId,
   nextDayTimeStamp,
+  guesses = [],
   solution,
   onHide
 }) {
   const [selectedTab, setSelectedTab] = useState('daily');
-  const { wordle: { daily } = {}, userId } = useMyState();
-  const [dailyGuesses, setDailyGuesses] = useState(() => {
-    if (daily?.solution !== solution) {
-      return [];
-    }
-    return daily?.guesses;
-  });
   const [isRevealingDaily, setIsRevealingDaily] = useState(false);
   const [dailyGameStats, setDailyGameStats] = useState(loadStats);
   const [dailyStatsModalShown, setDailyStatsModalShown] = useState(false);
   const isDailyGameWon = useMemo(
-    () => dailyGuesses.includes(solution),
-    [dailyGuesses, solution]
+    () => guesses.includes(solution),
+    [guesses, solution]
   );
   const isDailyGameLost = useMemo(
-    () => !isDailyGameWon && dailyGuesses.length === MAX_CHALLENGES,
-    [dailyGuesses.length, isDailyGameWon]
+    () => !isDailyGameWon && guesses.length === MAX_CHALLENGES,
+    [guesses.length, isDailyGameWon]
   );
   const isDailyGameOver = useMemo(
     () => isDailyGameWon || isDailyGameLost,
@@ -77,13 +71,11 @@ export default function WordleModal({
             onSetIsRevealing={setIsRevealingDaily}
             channelId={channelId}
             gameStats={dailyGameStats}
-            guesses={dailyGuesses}
+            guesses={guesses}
             isGameOver={isDailyGameOver}
             isGameWon={isDailyGameWon}
             isGameLost={isDailyGameLost}
-            onSetGuesses={setDailyGuesses}
             nextDayTimeStamp={nextDayTimeStamp}
-            userId={userId}
             solution={solution}
             onSetStats={setDailyGameStats}
             onSetStatsModalShown={setDailyStatsModalShown}
@@ -94,7 +86,7 @@ export default function WordleModal({
             onHide={() => setDailyStatsModalShown(false)}
             gameStats={dailyGameStats}
             nextDayTimeStamp={nextDayTimeStamp}
-            numberOfGuessesMade={dailyGuesses.length}
+            numberOfGuessesMade={guesses.length}
           />
         )}
       </main>

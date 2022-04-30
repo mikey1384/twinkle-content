@@ -554,6 +554,13 @@ export default function ChatActions(dispatch) {
         message
       });
     },
+    onSetWordleGuesses({ channelId, guesses }) {
+      return dispatch({
+        type: 'SET_WORDLE_GUESSES',
+        channelId,
+        guesses
+      });
+    },
     onSetWordleModalShown(shown) {
       return dispatch({
         type: 'SET_WORDLE_MODAL_SHOWN',

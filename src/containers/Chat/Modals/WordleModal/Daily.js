@@ -18,7 +18,7 @@ import {
   WORD_NOT_FOUND_MESSAGE
 } from './constants/strings';
 import { default as GraphemeSplitter } from 'grapheme-splitter';
-import { useAppContext } from 'contexts';
+import { useAppContext, useChatContext } from 'contexts';
 
 Daily.propTypes = {
   channelId: PropTypes.number.isRequired,
@@ -28,11 +28,9 @@ Daily.propTypes = {
   isGameWon: PropTypes.bool,
   isGameLost: PropTypes.bool,
   isRevealing: PropTypes.bool,
-  onSetGuesses: PropTypes.func.isRequired,
   onSetIsRevealing: PropTypes.func.isRequired,
   onSetStats: PropTypes.func.isRequired,
   onSetStatsModalShown: PropTypes.func.isRequired,
-  userId: PropTypes.number.isRequired,
   solution: PropTypes.string.isRequired
 };
 
@@ -43,10 +41,8 @@ export default function Daily({
   isGameOver,
   isGameWon,
   isGameLost,
-  onSetGuesses,
   onSetStats,
   onSetStatsModalShown,
-  userId,
   solution,
   isRevealing,
   onSetIsRevealing
@@ -55,8 +51,8 @@ export default function Daily({
   const updateWordleAttempt = useAppContext(
     (v) => v.requestHelpers.updateWordleAttempt
   );
-  const onSetWordleState = useAppContext(
-    (v) => v.user.actions.onSetWordleState
+  const onSetWordleGuesses = useChatContext(
+    (v) => v.actions.onSetWordleGuesses
   );
   const MAX_WORD_LENGTH = solution.length;
   const delayMs = REVEAL_TIME_MS * MAX_WORD_LENGTH;
@@ -192,9 +188,6 @@ export default function Daily({
       guesses.length < MAX_CHALLENGES &&
       !isGameWon
     ) {
-      onSetGuesses(newGuesses);
-      setCurrentGuess('');
-
       if (currentGuess === solution) {
         return handleGameWon();
       }
@@ -258,10 +251,13 @@ export default function Daily({
         solution
       });
       if (mounted.current) {
-        onSetWordleState({
-          userId,
-          newState: { daily: { guesses: newGuesses, solution } }
+        onSetWordleGuesses({
+          channelId,
+          guesses: newGuesses
         });
+      }
+      if (mounted.current) {
+        setCurrentGuess('');
       }
     }
   }
