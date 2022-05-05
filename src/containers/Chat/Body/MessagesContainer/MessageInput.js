@@ -332,7 +332,7 @@ function MessageInput({
               onClick={onWordleButtonClick}
               color={profileTheme}
             >
-              <span className="desktop">Wordle</span>
+              W<span className="desktop">ordle</span>
             </Button>
           ) : null}
         </div>
