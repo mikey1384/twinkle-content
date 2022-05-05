@@ -4,7 +4,7 @@ import Modal from 'components/Modal';
 import Button from 'components/Button';
 import Daily from './Daily';
 import FilterBar from 'components/FilterBar';
-import StatsModal from './Modals/StatsModal';
+import StatsModal from './StatsModal';
 import Countdown from 'react-countdown';
 import { css } from '@emotion/css';
 import { MAX_CHALLENGES } from './constants/settings';
