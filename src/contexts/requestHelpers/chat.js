@@ -322,6 +322,23 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async loadWordle(channelId) {
+      try {
+        const {
+          data: { wordleSolution, wordleWordLevel, nextDayTimeStamp }
+        } = await request.get(
+          `${URL}/chat/wordle?channelId=${channelId}`,
+          auth()
+        );
+        return Promise.resolve({
+          wordleSolution,
+          wordleWordLevel,
+          nextDayTimeStamp
+        });
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async reloadChatSubject({ subjectId, channelId }) {
       try {
         const {

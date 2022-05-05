@@ -10,6 +10,7 @@ import { css } from '@emotion/css';
 import { MAX_CHALLENGES } from './constants/settings';
 import { loadStats } from './helpers/stats';
 import { NEW_WORD_TEXT } from './constants/strings';
+import { useAppContext, useChatContext } from 'contexts';
 
 WordleModal.propTypes = {
   channelId: PropTypes.number,
@@ -26,6 +27,8 @@ export default function WordleModal({
   solution,
   onHide
 }) {
+  const loadWordle = useAppContext((v) => v.requestHelpers.loadWordle);
+  const onSetChannelState = useChatContext((v) => v.actions.onSetChannelState);
   const [selectedTab, setSelectedTab] = useState('daily');
   const [isRevealingDaily, setIsRevealingDaily] = useState(false);
   const [dailyGameStats, setDailyGameStats] = useState(loadStats);
@@ -124,11 +127,13 @@ export default function WordleModal({
                   {NEW_WORD_TEXT}
                 </p>
                 <Countdown
+                  key={nextDayTimeStamp}
                   className={css`
                     font-size: 1.3rem;
                   `}
                   date={nextDayTimeStamp}
                   daysInHours={true}
+                  onComplete={handleCountdownComplete}
                 />
               </div>
             )}
@@ -144,4 +149,21 @@ export default function WordleModal({
       </footer>
     </Modal>
   );
+
+  async function handleCountdownComplete() {
+    const {
+      wordleSolution,
+      wordleWordLevel,
+      nextDayTimeStamp: newNextDayTimeStamp
+    } = await loadWordle(channelId);
+    onSetChannelState({
+      channelId,
+      newState: {
+        wordleSolution,
+        wordleWordLevel,
+        nextDayTimeStamp: newNextDayTimeStamp,
+        wordleGuesses: []
+      }
+    });
+  }
 }

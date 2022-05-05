@@ -1218,6 +1218,17 @@ export default function ChatReducer(state, action) {
           : {}
       };
     }
+    case 'SET_CHANNEL_STATE':
+      return {
+        ...state,
+        channelsObj: {
+          ...state.channelsObj,
+          [action.channelId]: {
+            ...state.channelsObj[action.channelId],
+            ...action.newState
+          }
+        }
+      };
     case 'SET_CHAT_INVITATION_DETAIL':
       return {
         ...state,
