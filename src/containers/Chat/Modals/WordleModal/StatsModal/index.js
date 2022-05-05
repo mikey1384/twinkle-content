@@ -1,29 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Countdown from 'react-countdown';
 import StatBar from './StatBar';
 import Histogram from './Histogram';
-import { css } from '@emotion/css';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import {
   STATISTICS_TITLE,
-  GUESS_DISTRIBUTION_TEXT,
-  NEW_WORD_TEXT
+  GUESS_DISTRIBUTION_TEXT
 } from '../constants/strings';
 
 StatsModal.propTypes = {
   onHide: PropTypes.func,
   gameStats: PropTypes.object,
-  nextDayTimeStamp: PropTypes.number,
   numberOfGuessesMade: PropTypes.number
 };
-export default function StatsModal({
-  onHide,
-  gameStats,
-  nextDayTimeStamp,
-  numberOfGuessesMade
-}) {
+
+export default function StatsModal({ onHide, gameStats, numberOfGuessesMade }) {
   return (
     <Modal small modalOverModal onHide={onHide}>
       <header>{STATISTICS_TITLE}</header>
@@ -46,32 +38,6 @@ export default function StatsModal({
               gameStats={gameStats}
               numberOfGuessesMade={numberOfGuessesMade}
             />
-            <div
-              style={{
-                width: '100%',
-                display: 'flex',
-                justifyContent: 'center',
-                marginTop: '2rem'
-              }}
-            >
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center'
-                }}
-              >
-                <p style={{ fontWeight: 'bold' }}>{NEW_WORD_TEXT}</p>
-                <Countdown
-                  className={css`
-                    font-size: 1rem;
-                  `}
-                  date={nextDayTimeStamp}
-                  daysInHours={true}
-                />
-              </div>
-            </div>
           </>
         )}
       </main>

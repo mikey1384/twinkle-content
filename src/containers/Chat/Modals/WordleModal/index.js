@@ -88,7 +88,6 @@ export default function WordleModal({
           <StatsModal
             onHide={() => setDailyStatsModalShown(false)}
             gameStats={dailyGameStats}
-            nextDayTimeStamp={nextDayTimeStamp}
             numberOfGuessesMade={guesses.length}
           />
         )}
