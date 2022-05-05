@@ -94,42 +94,52 @@ export default function WordleModal({
         <div
           style={{
             width: '100%',
-            display: 'flex',
-            justifyContent:
-              isDailyGameOver && selectedTab === 'daily' && !isRevealingDaily
-                ? 'space-around'
-                : 'flex-end'
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr 1fr'
           }}
         >
-          {isDailyGameOver && selectedTab === 'daily' && !isRevealingDaily && (
-            <Button color="blue" onClick={() => setDailyStatsModalShown(true)}>
-              Show Stats
+          <div
+            style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+          >
+            {isDailyGameOver && selectedTab === 'daily' && !isRevealingDaily && (
+              <Button
+                color="blue"
+                onClick={() => setDailyStatsModalShown(true)}
+              >
+                Show Stats
+              </Button>
+            )}
+          </div>
+          <div>
+            {selectedTab === 'daily' && (
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'column'
+                }}
+              >
+                <p style={{ fontWeight: 'bold', fontSize: '1.5rem' }}>
+                  {NEW_WORD_TEXT}
+                </p>
+                <Countdown
+                  className={css`
+                    font-size: 1.3rem;
+                  `}
+                  date={nextDayTimeStamp}
+                  daysInHours={true}
+                />
+              </div>
+            )}
+          </div>
+          <div
+            style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+          >
+            <Button transparent onClick={onHide}>
+              Close
             </Button>
-          )}
-          {isDailyGameOver && selectedTab === 'daily' && !isRevealingDaily && (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                flexDirection: 'column'
-              }}
-            >
-              <p style={{ fontWeight: 'bold', fontSize: '1.5rem' }}>
-                {NEW_WORD_TEXT}
-              </p>
-              <Countdown
-                className={css`
-                  font-size: 1.3rem;
-                `}
-                date={nextDayTimeStamp}
-                daysInHours={true}
-              />
-            </div>
-          )}
-          <Button transparent onClick={onHide}>
-            Close
-          </Button>
+          </div>
         </div>
       </footer>
     </Modal>
