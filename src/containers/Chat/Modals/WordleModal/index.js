@@ -8,7 +8,6 @@ import StatsModal from './StatsModal';
 import Countdown from 'react-countdown';
 import { css } from '@emotion/css';
 import { MAX_CHALLENGES } from './constants/settings';
-import { loadStats } from './helpers/stats';
 import { useAppContext, useChatContext } from 'contexts';
 
 WordleModal.propTypes = {
@@ -30,7 +29,6 @@ export default function WordleModal({
   const onSetChannelState = useChatContext((v) => v.actions.onSetChannelState);
   const [selectedTab, setSelectedTab] = useState('daily');
   const [isRevealingDaily, setIsRevealingDaily] = useState(false);
-  const [dailyGameStats, setDailyGameStats] = useState(loadStats);
   const [dailyStatsModalShown, setDailyStatsModalShown] = useState(false);
   const isDailyGameWon = useMemo(
     () => guesses.includes(solution),
@@ -72,23 +70,17 @@ export default function WordleModal({
             isRevealing={isRevealingDaily}
             onSetIsRevealing={setIsRevealingDaily}
             channelId={channelId}
-            gameStats={dailyGameStats}
             guesses={guesses}
             isGameOver={isDailyGameOver}
             isGameWon={isDailyGameWon}
             isGameLost={isDailyGameLost}
             nextDayTimeStamp={nextDayTimeStamp}
             solution={solution}
-            onSetStats={setDailyGameStats}
             onSetStatsModalShown={setDailyStatsModalShown}
           />
         )}
         {dailyStatsModalShown && (
-          <StatsModal
-            onHide={() => setDailyStatsModalShown(false)}
-            gameStats={dailyGameStats}
-            numberOfGuessesMade={guesses.length}
-          />
+          <StatsModal onHide={() => setDailyStatsModalShown(false)} />
         )}
       </main>
       <footer>

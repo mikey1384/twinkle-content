@@ -4,7 +4,6 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import Grid from './Grid';
 import Keyboard from './Keyboard';
 import Banner from 'components/Banner';
-import { addStatsForCompletedGame } from './helpers/stats';
 import {
   ALERT_TIME_MS,
   MAX_CHALLENGES,
@@ -22,26 +21,22 @@ import { useAppContext, useChatContext } from 'contexts';
 
 Daily.propTypes = {
   channelId: PropTypes.number.isRequired,
-  gameStats: PropTypes.object.isRequired,
   guesses: PropTypes.array.isRequired,
   isGameOver: PropTypes.bool,
   isGameWon: PropTypes.bool,
   isGameLost: PropTypes.bool,
   isRevealing: PropTypes.bool,
   onSetIsRevealing: PropTypes.func.isRequired,
-  onSetStats: PropTypes.func.isRequired,
   onSetStatsModalShown: PropTypes.func.isRequired,
   solution: PropTypes.string.isRequired
 };
 
 export default function Daily({
   channelId,
-  gameStats,
   guesses,
   isGameOver,
   isGameWon,
   isGameLost,
-  onSetStats,
   onSetStatsModalShown,
   solution,
   isRevealing,
@@ -204,12 +199,6 @@ export default function Daily({
         solution,
         isSolved: false
       });
-      onSetStats(
-        addStatsForCompletedGame({
-          gameStats,
-          numIncorrect: newGuesses.length
-        })
-      );
       handleShowAlert({
         status: 'fail',
         message: CORRECT_WORD_MESSAGE(solution),
@@ -228,12 +217,6 @@ export default function Daily({
         solution,
         isSolved: true
       });
-      onSetStats(
-        addStatsForCompletedGame({
-          gameStats,
-          numIncorrect: guesses.length
-        })
-      );
       return handleShowAlert({
         status: 'success',
         message: WIN_MESSAGES[Math.floor(Math.random() * WIN_MESSAGES.length)],
