@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import StatBar from './StatBar';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
+import AttemptResult from './AttemptResult';
+import { Color } from 'constants/css';
 
 OverviewModal.propTypes = {
   isGameWon: PropTypes.bool,
@@ -20,19 +22,24 @@ const gameStats = {
 
 const wordLevelObj = {
   1: {
-    label: 'basic'
+    label: 'basic',
+    color: 'logoBlue'
   },
   2: {
-    label: 'elementary'
+    label: 'elementary',
+    color: 'pink'
   },
   3: {
-    label: 'intermediate'
+    label: 'intermediate',
+    color: 'orange'
   },
   4: {
-    label: 'advanced'
+    label: 'advanced',
+    color: 'rose'
   },
   5: {
-    label: 'epic'
+    label: 'epic',
+    color: 'gold'
   }
 };
 
@@ -46,14 +53,35 @@ export default function OverviewModal({
     <Modal small modalOverModal onHide={onHide}>
       <header>Overview</header>
       <main>
-        <div>
-          <span style={{ fontWeight: 'bold', fontSize: '2rem' }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column'
+          }}
+        >
+          <div
+            style={{
+              fontWeight: 'bold',
+              fontSize: '2.5rem',
+              textAlign: 'center'
+            }}
+          >
             {solution}
-          </span>{' '}
-          ({wordLevelObj[wordLevel].label})
+          </div>
+          <div style={{ fontWeight: 'bold', lineHeight: 1 }}>
+            <span>Level: </span>
+            <span
+              style={{
+                color: Color[wordLevelObj[wordLevel].color](),
+                textTransform: 'capitalize'
+              }}
+            >
+              {wordLevelObj[wordLevel].label}
+            </span>
+          </div>
         </div>
-        {isGameWon ? <div>won</div> : <div>lost</div>}
-        <StatBar style={{ marginTop: '2rem' }} gameStats={gameStats} />
+        <AttemptResult style={{ marginTop: '3.5rem' }} isGameWon={isGameWon} />
+        <StatBar style={{ marginTop: '4.5rem' }} gameStats={gameStats} />
       </main>
       <footer>
         <Button transparent onClick={onHide}>

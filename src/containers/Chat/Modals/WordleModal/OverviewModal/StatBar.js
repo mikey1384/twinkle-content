@@ -6,6 +6,7 @@ import {
   CURRENT_STREAK_TEXT,
   BEST_STREAK_TEXT
 } from '../constants/strings';
+import ErrorBoundary from 'components/ErrorBoundary';
 
 StatItem.propTypes = {
   label: PropTypes.string.isRequired,
@@ -36,11 +37,21 @@ StatBar.propTypes = {
 };
 export default function StatBar({ gameStats, style }) {
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', ...style }}>
-      <StatItem label={TOTAL_TRIES_TEXT} value={gameStats.totalGames} />
-      <StatItem label={SUCCESS_RATE_TEXT} value={`${gameStats.successRate}%`} />
-      <StatItem label={CURRENT_STREAK_TEXT} value={gameStats.currentStreak} />
-      <StatItem label={BEST_STREAK_TEXT} value={gameStats.bestStreak} />
-    </div>
+    <ErrorBoundary>
+      <div style={style}>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <StatItem label={TOTAL_TRIES_TEXT} value={gameStats.totalGames} />
+          <StatItem
+            label={SUCCESS_RATE_TEXT}
+            value={`${gameStats.successRate}%`}
+          />
+          <StatItem
+            label={CURRENT_STREAK_TEXT}
+            value={gameStats.currentStreak}
+          />
+          <StatItem label={BEST_STREAK_TEXT} value={gameStats.bestStreak} />
+        </div>
+      </div>
+    </ErrorBoundary>
   );
 }
