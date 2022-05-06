@@ -98,7 +98,7 @@ export default function OverviewModal({
             </span>
           </div>
         </div>
-        <AttemptResult style={{ marginTop: '3rem' }} isGameWon={isGameWon} />
+        <AttemptResult style={{ marginTop: '4rem' }} isGameWon={isGameWon} />
         <StatBar style={{ marginTop: '4.5rem' }} gameStats={gameStats} />
       </main>
       <footer>
