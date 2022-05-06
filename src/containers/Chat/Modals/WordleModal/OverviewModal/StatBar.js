@@ -38,8 +38,23 @@ StatBar.propTypes = {
 export default function StatBar({ gameStats, style }) {
   return (
     <ErrorBoundary>
-      <div style={style}>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', ...style }}>
+        <div
+          style={{
+            fontWeight: 'bold',
+            textAlign: 'center',
+            fontSize: '1.7rem'
+          }}
+        >
+          Your Stats
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginTop: '1rem'
+          }}
+        >
           <StatItem label={TOTAL_TRIES_TEXT} value={gameStats.totalGames} />
           <StatItem
             label={SUCCESS_RATE_TEXT}

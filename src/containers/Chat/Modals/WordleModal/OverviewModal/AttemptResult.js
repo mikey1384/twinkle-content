@@ -17,8 +17,8 @@ export default function AttemptResult({ isGameWon, style }) {
         ...style
       }}
     >
-      <p style={{ fontSize: '1.5rem' }}>Result</p>
-      <div style={{ fontSize: '1.7rem' }}>
+      <p style={{ fontSize: '1.7rem' }}>Result</p>
+      <div style={{ fontSize: '2rem' }}>
         {isGameWon ? (
           <span style={{ color: Color.green() }}>success</span>
         ) : (
