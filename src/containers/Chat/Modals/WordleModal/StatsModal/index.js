@@ -6,6 +6,7 @@ import Button from 'components/Button';
 import { STATISTICS_TITLE } from '../constants/strings';
 
 StatsModal.propTypes = {
+  wordLevel: PropTypes.number,
   onHide: PropTypes.func
 };
 
@@ -16,11 +17,12 @@ const gameStats = {
   bestStreak: 3
 };
 
-export default function StatsModal({ onHide }) {
+export default function StatsModal({ onHide, wordLevel }) {
   return (
     <Modal small modalOverModal onHide={onHide}>
       <header>{STATISTICS_TITLE}</header>
       <main>
+        {wordLevel}
         <StatBar gameStats={gameStats} />
       </main>
       <footer>
