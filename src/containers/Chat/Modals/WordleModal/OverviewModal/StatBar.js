@@ -31,11 +31,12 @@ function StatItem({ label, value }) {
 }
 
 StatBar.propTypes = {
-  gameStats: PropTypes.object.isRequired
+  gameStats: PropTypes.object.isRequired,
+  style: PropTypes.object
 };
-export default function StatBar({ gameStats }) {
+export default function StatBar({ gameStats, style }) {
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', ...style }}>
       <StatItem label={TOTAL_TRIES_TEXT} value={gameStats.totalGames} />
       <StatItem label={SUCCESS_RATE_TEXT} value={`${gameStats.successRate}%`} />
       <StatItem label={CURRENT_STREAK_TEXT} value={gameStats.currentStreak} />

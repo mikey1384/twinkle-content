@@ -10,7 +10,6 @@ export const HIGH_CONTRAST_MODE_DESCRIPTION = 'For improved color vision';
 export const CORRECT_WORD_MESSAGE = (solution) => `The word was ${solution}`;
 export const ENTER_TEXT = 'Enter';
 export const DELETE_TEXT = 'Delete';
-export const STATISTICS_TITLE = 'Statistics';
 export const SHARE_TEXT = 'Share';
 export const TOTAL_TRIES_TEXT = 'Total tries';
 export const SUCCESS_RATE_TEXT = 'Success rate';

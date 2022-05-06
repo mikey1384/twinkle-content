@@ -4,7 +4,7 @@ import Modal from 'components/Modal';
 import Button from 'components/Button';
 import Daily from './Daily';
 import FilterBar from 'components/FilterBar';
-import StatsModal from './StatsModal';
+import OverviewModal from './OverviewModal';
 import Countdown from 'react-countdown';
 import { css } from '@emotion/css';
 import { MAX_CHALLENGES } from './constants/settings';
@@ -82,7 +82,8 @@ export default function WordleModal({
           />
         )}
         {dailyStatsModalShown && (
-          <StatsModal
+          <OverviewModal
+            solution={solution}
             wordLevel={wordLevel}
             onHide={() => setDailyStatsModalShown(false)}
           />
@@ -104,7 +105,7 @@ export default function WordleModal({
                 color="blue"
                 onClick={() => setDailyStatsModalShown(true)}
               >
-                Show Stats
+                Show Overview
               </Button>
             )}
           </div>
