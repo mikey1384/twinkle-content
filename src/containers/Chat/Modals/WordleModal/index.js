@@ -9,7 +9,6 @@ import Countdown from 'react-countdown';
 import { css } from '@emotion/css';
 import { MAX_CHALLENGES } from './constants/settings';
 import { loadStats } from './helpers/stats';
-import { NEW_WORD_TEXT } from './constants/strings';
 import { useAppContext, useChatContext } from 'contexts';
 
 WordleModal.propTypes = {
@@ -123,7 +122,7 @@ export default function WordleModal({
                 }}
               >
                 <p style={{ fontWeight: 'bold', fontSize: '1.5rem' }}>
-                  {NEW_WORD_TEXT}
+                  Next Wordle in
                 </p>
                 <Countdown
                   key={nextDayTimeStamp}
