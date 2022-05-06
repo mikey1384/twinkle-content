@@ -84,7 +84,7 @@ export default function OverviewModal({
           >
             {solution}
           </div>
-          <div style={{ fontWeight: 'bold', lineHeight: 1 }}>
+          <div style={{ fontWeight: 'bold', lineHeight: 1.1 }}>
             <span style={{ color: Color[wordLevelObj[wordLevel].textColor]() }}>
               Level:{' '}
             </span>
