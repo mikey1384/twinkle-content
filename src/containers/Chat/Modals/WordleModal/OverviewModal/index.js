@@ -69,6 +69,7 @@ export default function OverviewModal({
             flexDirection: 'column',
             padding: '0.3rem 1rem 1rem 1rem',
             borderRadius,
+            boxShadow: `0 0 2px ${Color.borderGray()}`,
             border: `1px solid ${Color.borderGray()}`,
             background: Color[wordLevelObj[wordLevel].backgroundColor]()
           }}
