@@ -99,7 +99,7 @@ export default function OverviewModal({
           </div>
         </div>
         <AttemptResult style={{ marginTop: '4rem' }} isGameWon={isGameWon} />
-        <StatBar style={{ marginTop: '4.5rem' }} gameStats={gameStats} />
+        <StatBar style={{ marginTop: '4rem' }} gameStats={gameStats} />
       </main>
       <footer>
         <Button transparent onClick={onHide}>
