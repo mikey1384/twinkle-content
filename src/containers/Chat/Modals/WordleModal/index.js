@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
-import Daily from './Daily';
+import Game from './Game';
 import FilterBar from 'components/FilterBar';
 import OverviewModal from './OverviewModal';
 import Countdown from 'react-countdown';
@@ -29,20 +29,20 @@ export default function WordleModal({
 }) {
   const loadWordle = useAppContext((v) => v.requestHelpers.loadWordle);
   const onSetChannelState = useChatContext((v) => v.actions.onSetChannelState);
-  const [selectedTab, setSelectedTab] = useState('daily');
-  const [isRevealingDaily, setIsRevealingDaily] = useState(false);
-  const [dailyStatsModalShown, setDailyStatsModalShown] = useState(false);
-  const isDailyGameWon = useMemo(
+  const [selectedTab, setSelectedTab] = useState('game');
+  const [isRevealing, setIsRevealing] = useState(false);
+  const [statsModalShown, setStatsModalShown] = useState(false);
+  const isGameWon = useMemo(
     () => guesses.includes(solution),
     [guesses, solution]
   );
-  const isDailyGameLost = useMemo(
-    () => !isDailyGameWon && guesses.length === MAX_CHALLENGES,
-    [guesses.length, isDailyGameWon]
+  const isGameLost = useMemo(
+    () => !isGameWon && guesses.length === MAX_CHALLENGES,
+    [guesses.length, isGameWon]
   );
-  const isDailyGameOver = useMemo(
-    () => isDailyGameWon || isDailyGameLost,
-    [isDailyGameLost, isDailyGameWon]
+  const isGameOver = useMemo(
+    () => isGameWon || isGameLost,
+    [isGameLost, isGameWon]
   );
 
   return (
@@ -57,8 +57,8 @@ export default function WordleModal({
           }}
         >
           <nav
-            onClick={() => setSelectedTab('daily')}
-            className={selectedTab === 'daily' ? 'active' : ''}
+            onClick={() => setSelectedTab('game')}
+            className={selectedTab === 'game' ? 'active' : ''}
           >{`Today's Word`}</nav>
           <nav
             onClick={() => setSelectedTab('rankings')}
@@ -67,25 +67,25 @@ export default function WordleModal({
             Rankings
           </nav>
         </FilterBar>
-        {selectedTab === 'daily' && (
-          <Daily
-            isRevealing={isRevealingDaily}
-            onSetIsRevealing={setIsRevealingDaily}
+        {selectedTab === 'game' && (
+          <Game
+            isRevealing={isRevealing}
+            onSetIsRevealing={setIsRevealing}
             channelId={channelId}
             guesses={guesses}
-            isGameOver={isDailyGameOver}
-            isGameWon={isDailyGameWon}
-            isGameLost={isDailyGameLost}
+            isGameOver={isGameOver}
+            isGameWon={isGameWon}
+            isGameLost={isGameLost}
             nextDayTimeStamp={nextDayTimeStamp}
             solution={solution}
-            onSetStatsModalShown={setDailyStatsModalShown}
+            onSetStatsModalShown={setStatsModalShown}
           />
         )}
-        {dailyStatsModalShown && (
+        {statsModalShown && (
           <OverviewModal
             solution={solution}
             wordLevel={wordLevel}
-            onHide={() => setDailyStatsModalShown(false)}
+            onHide={() => setStatsModalShown(false)}
           />
         )}
       </main>
@@ -100,17 +100,18 @@ export default function WordleModal({
           <div
             style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
           >
-            {isDailyGameOver && selectedTab === 'daily' && !isRevealingDaily && (
+            {isGameOver && selectedTab === 'game' && !isRevealing && (
               <Button
                 color="blue"
-                onClick={() => setDailyStatsModalShown(true)}
+                onClick={() => setStatsModalShown(true)}
+                isGameWon={isGameWon}
               >
                 Show Overview
               </Button>
             )}
           </div>
           <div>
-            {selectedTab === 'daily' && (
+            {selectedTab === 'game' && (
               <div
                 style={{
                   display: 'flex',

@@ -5,6 +5,7 @@ import Modal from 'components/Modal';
 import Button from 'components/Button';
 
 OverviewModal.propTypes = {
+  isGameWon: PropTypes.bool,
   solution: PropTypes.string,
   wordLevel: PropTypes.number.isRequired,
   onHide: PropTypes.func
@@ -35,7 +36,12 @@ const wordLevelObj = {
   }
 };
 
-export default function OverviewModal({ solution, wordLevel, onHide }) {
+export default function OverviewModal({
+  isGameWon,
+  solution,
+  wordLevel,
+  onHide
+}) {
   return (
     <Modal small modalOverModal onHide={onHide}>
       <header>Overview</header>
@@ -46,6 +52,7 @@ export default function OverviewModal({ solution, wordLevel, onHide }) {
           </span>{' '}
           ({wordLevelObj[wordLevel].label})
         </div>
+        {isGameWon ? <div>won</div> : <div>lost</div>}
         <StatBar style={{ marginTop: '2rem' }} gameStats={gameStats} />
       </main>
       <footer>
