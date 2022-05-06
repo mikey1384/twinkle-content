@@ -4,7 +4,7 @@ import StatBar from './StatBar';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import AttemptResult from './AttemptResult';
-import { Color } from 'constants/css';
+import { borderRadius, Color } from 'constants/css';
 
 OverviewModal.propTypes = {
   isGameWon: PropTypes.bool,
@@ -23,23 +23,33 @@ const gameStats = {
 const wordLevelObj = {
   1: {
     label: 'basic',
-    color: 'logoBlue'
+    textColor: 'vantaBlack',
+    difficultyColor: 'logoBlue',
+    backgroundColor: 'white'
   },
   2: {
     label: 'elementary',
-    color: 'pink'
+    textColor: 'vantaBlack',
+    difficultyColor: 'pink',
+    background: 'white'
   },
   3: {
     label: 'intermediate',
-    color: 'orange'
+    textColor: 'vantaBlack',
+    difficultyColor: 'orange',
+    background: 'white'
   },
   4: {
     label: 'advanced',
-    color: 'rose'
+    textColor: 'vantaBlack',
+    difficultyColor: 'cranberry',
+    background: 'white'
   },
   5: {
     label: 'epic',
-    color: 'gold'
+    textColor: 'white',
+    difficultyColor: 'gold',
+    backgroundColor: 'black'
   }
 };
 
@@ -56,23 +66,30 @@ export default function OverviewModal({
         <div
           style={{
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            padding: '0.3rem 1rem 1rem 1rem',
+            borderRadius,
+            border: `1px solid ${Color.borderGray()}`,
+            background: Color[wordLevelObj[wordLevel].backgroundColor]()
           }}
         >
           <div
             style={{
               fontWeight: 'bold',
               fontSize: '2.5rem',
-              textAlign: 'center'
+              textAlign: 'center',
+              color: Color[wordLevelObj[wordLevel].textColor]()
             }}
           >
             {solution}
           </div>
           <div style={{ fontWeight: 'bold', lineHeight: 1 }}>
-            <span>Level: </span>
+            <span style={{ color: Color[wordLevelObj[wordLevel].textColor]() }}>
+              Level:{' '}
+            </span>
             <span
               style={{
-                color: Color[wordLevelObj[wordLevel].color](),
+                color: Color[wordLevelObj[wordLevel].difficultyColor](),
                 textTransform: 'capitalize'
               }}
             >
