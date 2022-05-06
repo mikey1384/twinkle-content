@@ -59,7 +59,7 @@ export default function WordleModal({
           <nav
             onClick={() => setSelectedTab('daily')}
             className={selectedTab === 'daily' ? 'active' : ''}
-          >{`Today's Wordle`}</nav>
+          >{`Today's Word`}</nav>
           <nav
             onClick={() => setSelectedTab('rankings')}
             className={selectedTab === 'rankings' ? 'active' : ''}
@@ -122,7 +122,7 @@ export default function WordleModal({
                 }}
               >
                 <p style={{ fontWeight: 'bold', fontSize: '1.5rem' }}>
-                  Next Wordle in
+                  Next word in
                 </p>
                 <Countdown
                   key={nextDayTimeStamp}
