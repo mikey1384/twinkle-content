@@ -170,7 +170,7 @@ export default function Daily({
       });
     }
 
-    if (newGuesses.length < MAX_GUESSES) {
+    if (newGuesses.length < MAX_GUESSES && currentGuess !== solution) {
       updateWordleAttempt({
         channelId,
         guesses: newGuesses,
