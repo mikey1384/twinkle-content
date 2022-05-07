@@ -170,7 +170,22 @@ export default function Daily({
       });
     }
 
-    handleSaveGuess(newGuesses);
+    if (newGuesses.length < MAX_GUESSES) {
+      updateWordleAttempt({
+        channelId,
+        guesses: newGuesses,
+        solution
+      });
+    }
+    if (mounted.current) {
+      setCurrentGuess('');
+    }
+    if (mounted.current) {
+      onSetWordleGuesses({
+        channelId,
+        guesses: newGuesses
+      });
+    }
     onSetIsRevealing(true);
     setTimeout(() => {
       if (mounted.current) {
@@ -225,23 +240,6 @@ export default function Daily({
           callback: () => onSetStatsModalShown(true)
         }
       });
-    }
-
-    async function handleSaveGuess(newGuesses) {
-      updateWordleAttempt({
-        channelId,
-        guesses: newGuesses,
-        solution
-      });
-      if (mounted.current) {
-        setCurrentGuess('');
-      }
-      if (mounted.current) {
-        onSetWordleGuesses({
-          channelId,
-          guesses: newGuesses
-        });
-      }
     }
   }
 
