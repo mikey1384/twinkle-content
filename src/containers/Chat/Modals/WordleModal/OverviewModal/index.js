@@ -31,19 +31,19 @@ const wordLevelObj = {
     label: 'elementary',
     textColor: 'vantaBlack',
     difficultyColor: 'pink',
-    background: 'white'
+    backgroundColor: 'white'
   },
   3: {
     label: 'intermediate',
     textColor: 'vantaBlack',
     difficultyColor: 'orange',
-    background: 'white'
+    backgroundColor: 'white'
   },
   4: {
     label: 'advanced',
     textColor: 'vantaBlack',
     difficultyColor: 'cranberry',
-    background: 'white'
+    backgroundColor: 'white'
   },
   5: {
     label: 'epic',
