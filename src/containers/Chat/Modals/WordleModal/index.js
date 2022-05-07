@@ -7,7 +7,7 @@ import FilterBar from 'components/FilterBar';
 import OverviewModal from './OverviewModal';
 import Countdown from 'react-countdown';
 import { css } from '@emotion/css';
-import { MAX_CHALLENGES } from './constants/settings';
+import { MAX_GUESSES } from './constants/settings';
 import { useAppContext, useChatContext } from 'contexts';
 
 WordleModal.propTypes = {
@@ -37,7 +37,7 @@ export default function WordleModal({
     [guesses, solution]
   );
   const isGameLost = useMemo(
-    () => !isGameWon && guesses.length === MAX_CHALLENGES,
+    () => !isGameWon && guesses.length === MAX_GUESSES,
     [guesses.length, isGameWon]
   );
   const isGameOver = useMemo(

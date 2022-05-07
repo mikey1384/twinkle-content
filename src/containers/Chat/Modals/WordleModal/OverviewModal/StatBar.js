@@ -23,7 +23,7 @@ function StatItem({ label, value }) {
         marginRight: '1rem'
       }}
     >
-      <div style={{ fontWeight: 'bold', fontSize: '3rem', lineHeight: 1 }}>
+      <div style={{ fontWeight: 'bold', fontSize: '2.5rem', lineHeight: 1 }}>
         {value}
       </div>
       <div style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>{label}</div>

@@ -6,7 +6,7 @@ import Keyboard from './Keyboard';
 import Banner from 'components/Banner';
 import {
   ALERT_TIME_MS,
-  MAX_CHALLENGES,
+  MAX_GUESSES,
   REVEAL_TIME_MS
 } from './constants/settings';
 import { isWordInWordList, unicodeLength } from './helpers/words';
@@ -129,7 +129,7 @@ export default function Daily({
   function handleChar(value) {
     if (
       unicodeLength(`${currentGuess}${value}`) <= MAX_WORD_LENGTH &&
-      guesses.length < MAX_CHALLENGES &&
+      guesses.length < MAX_GUESSES &&
       !isGameWon
     ) {
       setCurrentGuess(`${currentGuess}${value}`);
@@ -180,14 +180,14 @@ export default function Daily({
 
     if (
       unicodeLength(currentGuess) === MAX_WORD_LENGTH &&
-      guesses.length < MAX_CHALLENGES &&
+      guesses.length < MAX_GUESSES &&
       !isGameWon
     ) {
       if (currentGuess === solution) {
         return handleGameWon();
       }
 
-      if (newGuesses.length === MAX_CHALLENGES) {
+      if (newGuesses.length === MAX_GUESSES) {
         handleGameLost();
       }
     }
