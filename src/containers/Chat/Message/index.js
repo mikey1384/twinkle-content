@@ -570,7 +570,14 @@ function Message({
   }
 
   if (wordleResult) {
-    return <WordleResult myId={myId} userId={userId} username={username} />;
+    return (
+      <WordleResult
+        myId={myId}
+        userId={userId}
+        username={username}
+        wordleResult={wordleResult}
+      />
+    );
   }
 
   return (
