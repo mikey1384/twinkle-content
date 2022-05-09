@@ -89,7 +89,7 @@ export default function WordleResult({ username, userId, myId, wordleResult }) {
       {isSolved && (
         <p style={{ marginTop: '0.5rem' }}>
           Number of guesses: {numGuesses}
-          {numGuesses === 1 ? ' (wait what???)' : ''}
+          {numGuesses === 1 ? ' (wait, what???)' : ''}
         </p>
       )}
       {guessLabel && (
@@ -112,7 +112,15 @@ export default function WordleResult({ username, userId, myId, wordleResult }) {
         </p>
       )}
       <p style={{ marginTop: '0.5rem' }}>
-        {displayedUserLabel} earned {rewardAmountLabel} XP
+        {displayedUserLabel} earned{' '}
+        <span
+          style={{
+            fontSize: numGuesses <= 2 ? '2rem' : '',
+            fontWeight: isSolved ? 'bold' : ''
+          }}
+        >
+          {rewardAmountLabel} XP
+        </span>
         {isSolved ? '' : ' for trying'}
       </p>
     </div>
