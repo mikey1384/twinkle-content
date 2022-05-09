@@ -127,6 +127,7 @@ function MessagesContainer({
     wordleGuesses,
     wordleSolution,
     wordleWordLevel,
+    isWordleSolved,
     wordleStats,
     nextDayTimeStamp
   } = currentChannel;
@@ -1203,6 +1204,7 @@ function MessagesContainer({
       {wordleModalShown && (
         <WordleModal
           channelId={selectedChannelId}
+          isSolved={isWordleSolved}
           guesses={wordleGuesses}
           solution={wordleSolution}
           wordLevel={wordleWordLevel}

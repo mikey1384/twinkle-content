@@ -4,11 +4,11 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import { Color } from 'constants/css';
 
 AttemptResult.propTypes = {
-  isGameWon: PropTypes.bool,
+  isSolved: PropTypes.bool,
   style: PropTypes.object
 };
 
-export default function AttemptResult({ isGameWon, style }) {
+export default function AttemptResult({ isSolved, style }) {
   return (
     <ErrorBoundary
       style={{
@@ -19,7 +19,7 @@ export default function AttemptResult({ isGameWon, style }) {
     >
       <p style={{ fontSize: '1.7rem' }}>Result</p>
       <div style={{ fontSize: '2rem' }}>
-        {isGameWon ? (
+        {isSolved ? (
           <span style={{ color: Color.green() }}>success</span>
         ) : (
           <span style={{ color: Color.rose() }}>fail</span>

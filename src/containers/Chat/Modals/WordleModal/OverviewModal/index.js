@@ -7,7 +7,7 @@ import AttemptResult from './AttemptResult';
 import { borderRadius, Color } from 'constants/css';
 
 OverviewModal.propTypes = {
-  isGameWon: PropTypes.bool,
+  isSolved: PropTypes.bool,
   solution: PropTypes.string,
   wordLevel: PropTypes.number.isRequired,
   wordleStats: PropTypes.object,
@@ -48,7 +48,7 @@ const wordLevelObj = {
 };
 
 export default function OverviewModal({
-  isGameWon,
+  isSolved,
   solution,
   wordLevel,
   wordleStats,
@@ -93,7 +93,7 @@ export default function OverviewModal({
             </span>
           </div>
         </div>
-        <AttemptResult style={{ marginTop: '4rem' }} isGameWon={isGameWon} />
+        <AttemptResult style={{ marginTop: '4rem' }} isSolved={isSolved} />
         <StatBar style={{ marginTop: '4rem' }} stats={wordleStats} />
       </main>
       <footer>

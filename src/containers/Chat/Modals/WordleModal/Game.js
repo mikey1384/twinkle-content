@@ -89,7 +89,7 @@ export default function Daily({
   return (
     <ErrorBoundary>
       {alertMessage.shown && (
-        <Banner style={{ marginTop: '1rem' }} color={alertMessageColor}>
+        <Banner style={{ marginBottom: '2rem' }} color={alertMessageColor}>
           {alertMessage.message}
         </Banner>
       )}

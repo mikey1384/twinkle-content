@@ -11,6 +11,7 @@ import { useAppContext, useChatContext } from 'contexts';
 
 WordleModal.propTypes = {
   channelId: PropTypes.number,
+  isSolved: PropTypes.bool,
   guesses: PropTypes.array,
   nextDayTimeStamp: PropTypes.number,
   solution: PropTypes.string.isRequired,
@@ -21,6 +22,7 @@ WordleModal.propTypes = {
 
 export default function WordleModal({
   channelId,
+  isSolved,
   nextDayTimeStamp,
   guesses = [],
   solution,
@@ -66,6 +68,7 @@ export default function WordleModal({
             solution={solution}
             wordLevel={wordLevel}
             wordleStats={wordleStats}
+            isSolved={isSolved}
             onHide={() => setStatsModalShown(false)}
           />
         )}
@@ -133,6 +136,7 @@ export default function WordleModal({
     onSetChannelState({
       channelId,
       newState: {
+        isWordleSolved: false,
         wordleSolution,
         wordleWordLevel,
         nextDayTimeStamp: newNextDayTimeStamp,
