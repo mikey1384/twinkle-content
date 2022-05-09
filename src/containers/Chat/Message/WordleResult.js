@@ -68,6 +68,9 @@ export default function WordleResult({ username, userId, myId, wordleResult }) {
     if (numGuesses === 3) {
       return 'BRILLIANT';
     }
+    if (numGuesses === 4) {
+      return 'IMPRESSIVE';
+    }
     return null;
   }, [numGuesses]);
 
@@ -96,10 +99,21 @@ export default function WordleResult({ username, userId, myId, wordleResult }) {
         <p
           style={{
             marginBottom: '0.5rem',
-            color: numGuesses <= 2 ? Color.gold() : Color.brownOrange(),
+            color:
+              numGuesses <= 2
+                ? Color.gold()
+                : numGuesses === 3
+                ? Color.brownOrange()
+                : Color.orange(),
             fontWeight: 'bold',
             fontSize:
-              numGuesses === 1 ? '3rem' : numGuesses === 2 ? '2.5rem' : '2rem'
+              numGuesses === 1
+                ? '3rem'
+                : numGuesses === 2
+                ? '2.5rem'
+                : numGuesses === 3
+                ? '2.2rem'
+                : '2rem'
           }}
         >
           {guessLabel}
@@ -119,7 +133,7 @@ export default function WordleResult({ username, userId, myId, wordleResult }) {
         {isSolved ? (
           <>
             in{' '}
-            <span style={{ fontWeight: numGuesses <= 3 ? 'bold' : 'default' }}>
+            <span style={{ fontWeight: numGuesses <= 4 ? 'bold' : 'default' }}>
               {numGuesses} guess
               {numGuesses === 1
                 ? '!!!'

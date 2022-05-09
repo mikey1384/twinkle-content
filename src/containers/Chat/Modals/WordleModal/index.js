@@ -10,8 +10,8 @@ import { MAX_GUESSES } from './constants/settings';
 import { useAppContext, useChatContext } from 'contexts';
 
 WordleModal.propTypes = {
+  attemptState: PropTypes.object,
   channelId: PropTypes.number,
-  isSolved: PropTypes.bool,
   guesses: PropTypes.array,
   nextDayTimeStamp: PropTypes.number,
   solution: PropTypes.string.isRequired,
@@ -22,7 +22,7 @@ WordleModal.propTypes = {
 
 export default function WordleModal({
   channelId,
-  isSolved,
+  attemptState,
   nextDayTimeStamp,
   guesses = [],
   solution,
@@ -65,10 +65,12 @@ export default function WordleModal({
         />
         {statsModalShown && (
           <OverviewModal
+            numGuesses={guesses.length}
             solution={solution}
             wordLevel={wordLevel}
             wordleStats={wordleStats}
-            isSolved={isSolved}
+            isSolved={isGameWon}
+            attemptState={attemptState}
             onHide={() => setStatsModalShown(false)}
           />
         )}
@@ -136,7 +138,10 @@ export default function WordleModal({
     onSetChannelState({
       channelId,
       newState: {
-        isWordleSolved: false,
+        attemptState: {
+          isStrict: false,
+          xpRewardAmount: null
+        },
         wordleSolution,
         wordleWordLevel,
         nextDayTimeStamp: newNextDayTimeStamp,

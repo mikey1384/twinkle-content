@@ -23,10 +23,18 @@ function StatItem({ label, value }) {
         marginRight: '1rem'
       }}
     >
-      <div style={{ fontWeight: 'bold', fontSize: '2.5rem', lineHeight: 1 }}>
+      <div style={{ fontWeight: 'bold', fontSize: '2rem', lineHeight: 1 }}>
         {value}
       </div>
-      <div style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>{label}</div>
+      <div
+        style={{
+          fontSize: '1.2rem',
+          lineHeight: 1,
+          marginTop: '0.5rem'
+        }}
+      >
+        {label}
+      </div>
     </div>
   );
 }
@@ -52,7 +60,7 @@ export default function StatBar({ stats, style }) {
           style={{
             display: 'flex',
             justifyContent: 'center',
-            marginTop: '1rem'
+            marginTop: '1.2rem'
           }}
         >
           <StatItem label={TOTAL_TRIES_TEXT} value={stats.totalGames} />
