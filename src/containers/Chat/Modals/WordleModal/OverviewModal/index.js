@@ -10,14 +10,8 @@ OverviewModal.propTypes = {
   isGameWon: PropTypes.bool,
   solution: PropTypes.string,
   wordLevel: PropTypes.number.isRequired,
+  wordleStats: PropTypes.object,
   onHide: PropTypes.func
-};
-
-const gameStats = {
-  totalGames: 3,
-  successRate: 100,
-  currentStreak: 3,
-  bestStreak: 3
 };
 
 const wordLevelObj = {
@@ -57,6 +51,7 @@ export default function OverviewModal({
   isGameWon,
   solution,
   wordLevel,
+  wordleStats,
   onHide
 }) {
   return (
@@ -99,7 +94,7 @@ export default function OverviewModal({
           </div>
         </div>
         <AttemptResult style={{ marginTop: '4rem' }} isGameWon={isGameWon} />
-        <StatBar style={{ marginTop: '4rem' }} gameStats={gameStats} />
+        <StatBar style={{ marginTop: '4rem' }} stats={wordleStats} />
       </main>
       <footer>
         <Button transparent onClick={onHide}>

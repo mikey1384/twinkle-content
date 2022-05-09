@@ -127,6 +127,7 @@ function MessagesContainer({
     wordleGuesses,
     wordleSolution,
     wordleWordLevel,
+    wordleStats,
     nextDayTimeStamp
   } = currentChannel;
   const scrolledToBottomRef = useRef(true);
@@ -1205,6 +1206,7 @@ function MessagesContainer({
           guesses={wordleGuesses}
           solution={wordleSolution}
           wordLevel={wordleWordLevel}
+          wordleStats={wordleStats}
           nextDayTimeStamp={nextDayTimeStamp}
           onHide={() => onSetWordleModalShown(false)}
         />

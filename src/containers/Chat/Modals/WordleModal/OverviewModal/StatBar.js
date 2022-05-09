@@ -32,10 +32,10 @@ function StatItem({ label, value }) {
 }
 
 StatBar.propTypes = {
-  gameStats: PropTypes.object.isRequired,
+  stats: PropTypes.object.isRequired,
   style: PropTypes.object
 };
-export default function StatBar({ gameStats, style }) {
+export default function StatBar({ stats, style }) {
   return (
     <ErrorBoundary>
       <div style={{ display: 'flex', flexDirection: 'column', ...style }}>
@@ -55,16 +55,15 @@ export default function StatBar({ gameStats, style }) {
             marginTop: '1rem'
           }}
         >
-          <StatItem label={TOTAL_TRIES_TEXT} value={gameStats.totalGames} />
+          <StatItem label={TOTAL_TRIES_TEXT} value={stats.totalGames} />
           <StatItem
             label={SUCCESS_RATE_TEXT}
-            value={`${gameStats.successRate}%`}
+            value={`${
+              Math.round((stats.numSuccess * 100 * 10) / stats.totalGames) / 10
+            }%`}
           />
-          <StatItem
-            label={CURRENT_STREAK_TEXT}
-            value={gameStats.currentStreak}
-          />
-          <StatItem label={BEST_STREAK_TEXT} value={gameStats.bestStreak} />
+          <StatItem label={CURRENT_STREAK_TEXT} value={stats.currentStreak} />
+          <StatItem label={BEST_STREAK_TEXT} value={stats.bestStreak} />
         </div>
       </div>
     </ErrorBoundary>

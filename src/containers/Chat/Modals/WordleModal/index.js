@@ -15,6 +15,7 @@ WordleModal.propTypes = {
   nextDayTimeStamp: PropTypes.number,
   solution: PropTypes.string.isRequired,
   wordLevel: PropTypes.number,
+  wordleStats: PropTypes.object,
   onHide: PropTypes.func.isRequired
 };
 
@@ -24,6 +25,7 @@ export default function WordleModal({
   guesses = [],
   solution,
   wordLevel,
+  wordleStats,
   onHide
 }) {
   const loadWordle = useAppContext((v) => v.requestHelpers.loadWordle);
@@ -63,6 +65,7 @@ export default function WordleModal({
           <OverviewModal
             solution={solution}
             wordLevel={wordLevel}
+            wordleStats={wordleStats}
             onHide={() => setStatsModalShown(false)}
           />
         )}

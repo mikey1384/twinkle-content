@@ -105,7 +105,7 @@ export default function WordleResult({ username, userId, myId, wordleResult }) {
           {guessLabel}
         </p>
       )}
-      <p>
+      <div>
         {displayedUserLabel} earned{' '}
         <span
           style={{
@@ -133,7 +133,7 @@ export default function WordleResult({ username, userId, myId, wordleResult }) {
         ) : (
           ''
         )}
-      </p>
+      </div>
       <p style={{ marginTop: '0.5rem' }}>
         The word was <b>{solution}</b> (
         <b style={{ color: difficultyColor }}>{difficultyLabel[wordLevel]}</b>{' '}
