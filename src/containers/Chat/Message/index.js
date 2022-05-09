@@ -568,6 +568,7 @@ function Message({
       />
     );
   }
+
   if (wordleResult) {
     return <WordleResult myId={myId} userId={userId} username={username} />;
   }
