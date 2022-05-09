@@ -22,6 +22,7 @@ import TargetSubject from './TargetSubject';
 import RewardMessage from './RewardMessage';
 import Invitation from './Invitation';
 import DrawOffer from './DrawOffer';
+import WordleResult from './WordleResult';
 import MessageRewardModal from '../Modals/MessageRewardModal';
 import ErrorBoundary from 'components/ErrorBoundary';
 import LocalContext from '../Context';
@@ -112,6 +113,7 @@ function Message({
     timeStamp,
     uploaderAuthLevel,
     userId,
+    wordleResult,
     isResign
   },
   onAcceptGroupInvitation,
@@ -565,6 +567,9 @@ function Message({
         isDraw={!!isDraw}
       />
     );
+  }
+  if (wordleResult) {
+    return <WordleResult myId={myId} userId={userId} username={username} />;
   }
 
   return (
