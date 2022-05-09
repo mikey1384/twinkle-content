@@ -63,9 +63,19 @@ export default function WordleResult({ username, userId, myId, wordleResult }) {
       return 'JACKPOT';
     }
     if (numGuesses === 2) {
-      return 'INCREDIBLE';
+      return 'UNBELIEVABLE';
     }
-    return isStrict ? 'double reward unlocked!' : '';
+    if (numGuesses === 3) {
+      return 'BRILLIANT';
+    }
+    return null;
+  }, [numGuesses]);
+
+  const bonusLabel = useMemo(() => {
+    if (numGuesses < 3) {
+      return null;
+    }
+    return isStrict ? 'double reward bonus' : null;
   }, [isStrict, numGuesses]);
 
   return (
@@ -82,43 +92,20 @@ export default function WordleResult({ username, userId, myId, wordleResult }) {
         color: #fff;
       `}
     >
-      <p>
-        Wordle{' '}
-        {isSolved ? (
-          <span style={{ fontWeight: 'bold' }}>solved</span>
-        ) : (
-          'failed'
-        )}{' '}
-        - <b>{solution}</b> (
-        <b style={{ color: difficultyColor }}>{difficultyLabel[wordLevel]}</b>{' '}
-        word)
-      </p>
-      {isSolved && (
-        <p style={{ marginTop: '0.5rem' }}>
-          Number of guesses: {numGuesses}
-          {numGuesses === 1 ? ' (wait, what???)' : ''}
-        </p>
-      )}
       {guessLabel && (
         <p
           style={{
-            marginTop: '0.5rem',
-            color:
-              numGuesses <= 2
-                ? Color.gold()
-                : isSolved && isStrict
-                ? Color.orange()
-                : '#fff',
-            fontWeight:
-              numGuesses <= 2 || (isSolved && isStrict) ? 'bold' : 'default',
+            marginBottom: '0.5rem',
+            color: numGuesses <= 2 ? Color.gold() : Color.brownOrange(),
+            fontWeight: 'bold',
             fontSize:
-              numGuesses === 1 ? '3rem' : numGuesses === 2 ? '2.5rem' : '1.7rem'
+              numGuesses === 1 ? '3rem' : numGuesses === 2 ? '2.5rem' : '2rem'
           }}
         >
           {guessLabel}
         </p>
       )}
-      <p style={{ marginTop: '0.5rem' }}>
+      <p>
         {displayedUserLabel} earned{' '}
         <span
           style={{
@@ -128,7 +115,38 @@ export default function WordleResult({ username, userId, myId, wordleResult }) {
         >
           {rewardAmountLabel} XP
         </span>{' '}
-        for {isSolved ? 'solving' : 'trying'} {`today's`} Wordle
+        for {isSolved ? 'solving' : 'trying'} {`today's`} Wordle{' '}
+        {isSolved ? (
+          <>
+            in{' '}
+            <span style={{ fontWeight: numGuesses <= 3 ? 'bold' : 'default' }}>
+              {numGuesses} guess
+              {numGuesses === 1
+                ? '!!!'
+                : numGuesses === 2
+                ? 'es!!'
+                : numGuesses === 3
+                ? 'es!'
+                : 'es'}
+            </span>
+          </>
+        ) : (
+          ''
+        )}
+      </p>
+      <p style={{ marginTop: '0.5rem' }}>
+        The word was <b>{solution}</b> (
+        <b style={{ color: difficultyColor }}>{difficultyLabel[wordLevel]}</b>{' '}
+        word)
+      </p>
+      <p
+        style={{
+          marginTop: '0.5rem',
+          fontWeight: 'bold',
+          color: Color.brownOrange()
+        }}
+      >
+        {bonusLabel}
       </p>
     </div>
   );
