@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
+import UsernameText from 'components/Texts/UsernameText';
 import { css } from '@emotion/css';
 import { Color } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
@@ -43,7 +44,15 @@ export default function WordleResult({ username, userId, myId, wordleResult }) {
       }
       return 'You';
     }
-    return username;
+    return (
+      <UsernameText
+        color="#fff"
+        user={{
+          id: userId,
+          username
+        }}
+      />
+    );
   }, [myId, userId, username]);
   const rewardAmountLabel = useMemo(
     () => addCommasToNumber(xpRewardAmount),
@@ -120,8 +129,8 @@ export default function WordleResult({ username, userId, myId, wordleResult }) {
           }}
         >
           {rewardAmountLabel} XP
-        </span>
-        {isSolved ? '' : ' for trying'}
+        </span>{' '}
+        for {isSolved ? 'solving' : 'trying'} {`today's`} Wordle
       </p>
     </div>
   );
