@@ -85,9 +85,7 @@ export default function WordleResult({ username, userId, myId, wordleResult }) {
       <p>
         Wordle{' '}
         {isSolved ? (
-          <span style={{ color: Color.green(), fontWeight: 'bold' }}>
-            solved
-          </span>
+          <span style={{ fontWeight: 'bold' }}>solved</span>
         ) : (
           'failed'
         )}{' '}
