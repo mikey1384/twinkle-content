@@ -95,11 +95,10 @@ export default function Daily({
       )}
       <div
         style={{
-          marginTop: '2rem',
           width: '100%',
           display: 'flex',
           flexDirection: 'column',
-          marginBottom: '2rem'
+          marginBottom: '1rem'
         }}
       >
         <Grid

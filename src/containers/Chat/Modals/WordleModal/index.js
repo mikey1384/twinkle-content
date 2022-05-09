@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import Game from './Game';
-import FilterBar from 'components/FilterBar';
 import OverviewModal from './OverviewModal';
 import Countdown from 'react-countdown';
 import { css } from '@emotion/css';
@@ -29,7 +28,6 @@ export default function WordleModal({
 }) {
   const loadWordle = useAppContext((v) => v.requestHelpers.loadWordle);
   const onSetChannelState = useChatContext((v) => v.actions.onSetChannelState);
-  const [selectedTab, setSelectedTab] = useState('game');
   const [isRevealing, setIsRevealing] = useState(false);
   const [statsModalShown, setStatsModalShown] = useState(false);
   const isGameWon = useMemo(
@@ -49,38 +47,18 @@ export default function WordleModal({
     <Modal onHide={onHide}>
       <header>Wordle</header>
       <main>
-        <FilterBar
-          style={{
-            marginTop: '-2rem',
-            fontSize: '1.5rem',
-            height: '5rem'
-          }}
-        >
-          <nav
-            onClick={() => setSelectedTab('game')}
-            className={selectedTab === 'game' ? 'active' : ''}
-          >{`Today's Word`}</nav>
-          <nav
-            onClick={() => setSelectedTab('rankings')}
-            className={selectedTab === 'rankings' ? 'active' : ''}
-          >
-            Rankings
-          </nav>
-        </FilterBar>
-        {selectedTab === 'game' && (
-          <Game
-            isRevealing={isRevealing}
-            onSetIsRevealing={setIsRevealing}
-            channelId={channelId}
-            guesses={guesses}
-            isGameOver={isGameOver}
-            isGameWon={isGameWon}
-            isGameLost={isGameLost}
-            nextDayTimeStamp={nextDayTimeStamp}
-            solution={solution}
-            onSetStatsModalShown={setStatsModalShown}
-          />
-        )}
+        <Game
+          isRevealing={isRevealing}
+          onSetIsRevealing={setIsRevealing}
+          channelId={channelId}
+          guesses={guesses}
+          isGameOver={isGameOver}
+          isGameWon={isGameWon}
+          isGameLost={isGameLost}
+          nextDayTimeStamp={nextDayTimeStamp}
+          solution={solution}
+          onSetStatsModalShown={setStatsModalShown}
+        />
         {statsModalShown && (
           <OverviewModal
             solution={solution}
@@ -100,7 +78,7 @@ export default function WordleModal({
           <div
             style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
           >
-            {isGameOver && selectedTab === 'game' && !isRevealing && (
+            {isGameOver && !isRevealing && (
               <Button
                 color="blue"
                 onClick={() => setStatsModalShown(true)}
@@ -110,30 +88,26 @@ export default function WordleModal({
               </Button>
             )}
           </div>
-          <div>
-            {selectedTab === 'game' && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  flexDirection: 'column'
-                }}
-              >
-                <p style={{ fontWeight: 'bold', fontSize: '1.5rem' }}>
-                  Next word in
-                </p>
-                <Countdown
-                  key={nextDayTimeStamp}
-                  className={css`
-                    font-size: 1.3rem;
-                  `}
-                  date={nextDayTimeStamp}
-                  daysInHours={true}
-                  onComplete={handleCountdownComplete}
-                />
-              </div>
-            )}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column'
+            }}
+          >
+            <p style={{ fontWeight: 'bold', fontSize: '1.5rem' }}>
+              Next word in
+            </p>
+            <Countdown
+              key={nextDayTimeStamp}
+              className={css`
+                font-size: 1.3rem;
+              `}
+              date={nextDayTimeStamp}
+              daysInHours={true}
+              onComplete={handleCountdownComplete}
+            />
           </div>
           <div
             style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
