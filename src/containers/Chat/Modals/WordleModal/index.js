@@ -118,7 +118,7 @@ export default function WordleModal({
             }}
           >
             <p style={{ fontWeight: 'bold', fontSize: '1.5rem' }}>
-              Next word in
+              Next Wordle
             </p>
             <Countdown
               key={nextDayTimeStamp}
