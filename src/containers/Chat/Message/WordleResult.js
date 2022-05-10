@@ -78,8 +78,8 @@ export default function WordleResult({ username, userId, myId, wordleResult }) {
     if (numGuesses < 3) {
       return null;
     }
-    return isStrict ? 'double reward bonus achieved' : null;
-  }, [isStrict, numGuesses]);
+    return isSolved && isStrict ? 'double reward bonus achieved' : null;
+  }, [isSolved, isStrict, numGuesses]);
 
   return (
     <div

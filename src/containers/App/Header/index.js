@@ -252,13 +252,14 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
     socket.on('new_message_received', handleReceiveMessage);
     socket.on('new_reward_posted', handleNewReward);
     socket.on('new_recommendation_posted', handleNewRecommendation);
+    socket.on('new_vocab_activity_received', handleReceiveVocabActivity);
+    socket.on('new_wordle_attempt_received', handleNewWordleAttempt);
     socket.on('peer_accepted', handlePeerAccepted);
     socket.on('peer_hung_up', handlePeerHungUp);
     socket.on('profile_pic_changed', handleProfilePicChange);
     socket.on('subject_changed', handleSubjectChange);
     socket.on('user_type_updated', handleUserTypeUpdate);
     socket.on('username_changed', handleUsernameChange);
-    socket.on('new_vocab_activity_received', handleReceiveVocabActivity);
 
     return function cleanUp() {
       socket.removeListener('ban_status_updated', handleBanStatusUpdate);
@@ -300,6 +301,14 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
       socket.removeListener('new_message_received', handleReceiveMessage);
       socket.removeListener('new_reward_posted', handleNewReward);
       socket.removeListener(
+        'new_vocab_activity_received',
+        handleReceiveVocabActivity
+      );
+      socket.removeListener(
+        'new_wordle_attempt_received',
+        handleNewWordleAttempt
+      );
+      socket.removeListener(
         'new_recommendation_posted',
         handleNewRecommendation
       );
@@ -309,10 +318,6 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
       socket.removeListener('subject_changed', handleSubjectChange);
       socket.removeListener('user_type_updated', handleUserTypeUpdate);
       socket.removeListener('username_changed', handleUsernameChange);
-      socket.removeListener(
-        'new_vocab_activity_received',
-        handleReceiveVocabActivity
-      );
     };
 
     function handleBanStatusUpdate(banStatus) {
@@ -602,6 +607,33 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
           onSetMembersOnCall({ [memberId]: peerId });
         }
         membersOnCall.current[peerId] = true;
+      }
+    }
+
+    function handleNewWordleAttempt({ channelId, user, message }) {
+      const isForCurrentChannel = channelId === selectedChannelId;
+      if (isForCurrentChannel) {
+        if (usingChat) {
+          updateChatLastRead(channelId);
+        }
+        onReceiveMessage({
+          message,
+          pageVisible,
+          usingChat
+        });
+      }
+      if (!isForCurrentChannel) {
+        onReceiveMessageOnDifferentChannel({
+          message,
+          channel: {
+            id: channelId
+          },
+          pageVisible,
+          usingChat
+        });
+      }
+      if (user.id === userId && user.newXp) {
+        handleUpdateMyXp();
       }
     }
 
