@@ -27,7 +27,7 @@ Daily.propTypes = {
   isGameLost: PropTypes.bool,
   isRevealing: PropTypes.bool,
   onSetIsRevealing: PropTypes.func.isRequired,
-  onSetStatsModalShown: PropTypes.func.isRequired,
+  onSetOverviewModalShown: PropTypes.func.isRequired,
   solution: PropTypes.string.isRequired
 };
 
@@ -37,7 +37,7 @@ export default function Daily({
   isGameOver,
   isGameWon,
   isGameLost,
-  onSetStatsModalShown,
+  onSetOverviewModalShown,
   solution,
   isRevealing,
   onSetIsRevealing
@@ -49,6 +49,7 @@ export default function Daily({
   const onSetWordleGuesses = useChatContext(
     (v) => v.actions.onSetWordleGuesses
   );
+  const onSetChannelState = useChatContext((v) => v.actions.onSetChannelState);
   const MAX_WORD_LENGTH = solution.length;
   const delayMs = REVEAL_TIME_MS * MAX_WORD_LENGTH;
   const [alertMessage, setAlertMessage] = useState({});
@@ -207,36 +208,50 @@ export default function Daily({
     }
 
     async function handleGameLost() {
-      await updateWordleAttempt({
+      const loadStartTime = Date.now();
+      const { wordleAttemptState, wordleStats } = await updateWordleAttempt({
         channelId,
         guesses: guesses.concat(currentGuess),
         solution,
         isSolved: false
       });
+      onSetChannelState({
+        channelId,
+        newState: { wordleAttemptState, wordleStats }
+      });
+      const loadEndTime = Date.now();
+      const loadTime = loadEndTime - loadStartTime;
       handleShowAlert({
         status: 'fail',
         message: CORRECT_WORD_MESSAGE(solution),
         options: {
           persist: true,
-          delayMs,
-          callback: () => onSetStatsModalShown(true)
+          delayMs: Math.max(delayMs - loadTime, 0),
+          callback: () => onSetOverviewModalShown(true)
         }
       });
     }
 
     async function handleGameWon() {
-      await updateWordleAttempt({
+      const loadStartTime = Date.now();
+      const { wordleAttemptState, wordleStats } = await updateWordleAttempt({
         channelId,
         guesses: guesses.concat(currentGuess),
         solution,
         isSolved: true
       });
+      onSetChannelState({
+        channelId,
+        newState: { wordleAttemptState, wordleStats }
+      });
+      const loadEndTime = Date.now();
+      const loadTime = loadEndTime - loadStartTime;
       return handleShowAlert({
         status: 'success',
         message: WIN_MESSAGES[Math.floor(Math.random() * WIN_MESSAGES.length)],
         options: {
-          delayMs,
-          callback: () => onSetStatsModalShown(true)
+          delayMs: Math.max(delayMs - loadTime, 0),
+          callback: () => onSetOverviewModalShown(true)
         }
       });
     }

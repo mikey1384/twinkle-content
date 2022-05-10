@@ -33,7 +33,7 @@ export default function WordleModal({
   const loadWordle = useAppContext((v) => v.requestHelpers.loadWordle);
   const onSetChannelState = useChatContext((v) => v.actions.onSetChannelState);
   const [isRevealing, setIsRevealing] = useState(false);
-  const [statsModalShown, setStatsModalShown] = useState(false);
+  const [overviewModalShown, setOverviewModalShown] = useState(false);
   const isGameWon = useMemo(
     () => guesses.includes(solution),
     [guesses, solution]
@@ -61,9 +61,9 @@ export default function WordleModal({
           isGameLost={isGameLost}
           nextDayTimeStamp={nextDayTimeStamp}
           solution={solution}
-          onSetStatsModalShown={setStatsModalShown}
+          onSetOverviewModalShown={setOverviewModalShown}
         />
-        {statsModalShown && (
+        {overviewModalShown && (
           <OverviewModal
             numGuesses={guesses.length}
             solution={solution}
@@ -71,7 +71,7 @@ export default function WordleModal({
             wordleStats={wordleStats}
             isSolved={isGameWon}
             attemptState={attemptState}
-            onHide={() => setStatsModalShown(false)}
+            onHide={() => setOverviewModalShown(false)}
           />
         )}
       </main>
@@ -89,7 +89,7 @@ export default function WordleModal({
             {isGameOver && !isRevealing && (
               <Button
                 color="blue"
-                onClick={() => setStatsModalShown(true)}
+                onClick={() => setOverviewModalShown(true)}
                 isGameWon={isGameWon}
               >
                 Show Overview

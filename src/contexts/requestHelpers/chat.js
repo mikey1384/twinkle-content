@@ -429,12 +429,14 @@ export default function chatRequestHelpers({ auth, handleError }) {
     },
     async updateWordleAttempt({ channelId, guesses, solution, isSolved }) {
       try {
-        const { data } = await request.put(
+        const {
+          data: { wordleAttemptState, wordleStats }
+        } = await request.put(
           `${URL}/chat/wordle/attempt`,
           { channelId, guesses, solution, isSolved },
           auth()
         );
-        return Promise.resolve(data);
+        return Promise.resolve({ wordleAttemptState, wordleStats });
       } catch (error) {
         return handleError(error);
       }
