@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
@@ -31,6 +31,9 @@ export default function WordleModal({
   onHide
 }) {
   const loadWordle = useAppContext((v) => v.requestHelpers.loadWordle);
+  const getCurrentNextDayTimeStamp = useAppContext(
+    (v) => v.requestHelpers.getCurrentNextDayTimeStamp
+  );
   const onSetChannelState = useChatContext((v) => v.actions.onSetChannelState);
   const [isRevealing, setIsRevealing] = useState(false);
   const [overviewModalShown, setOverviewModalShown] = useState(false);
@@ -46,6 +49,16 @@ export default function WordleModal({
     () => isGameWon || isGameLost,
     [isGameLost, isGameWon]
   );
+  useEffect(() => {
+    init();
+    async function init() {
+      const currentNextDayTimeStamp = await getCurrentNextDayTimeStamp();
+      if (nextDayTimeStamp !== currentNextDayTimeStamp) {
+        handleCountdownComplete();
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Modal onHide={onHide}>

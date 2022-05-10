@@ -164,6 +164,16 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async getCurrentNextDayTimeStamp() {
+      try {
+        const {
+          data: { nextDayTimeStamp }
+        } = await request.get(`${URL}/chat/wordle/nextDayTimeStamp`);
+        return Promise.resolve(nextDayTimeStamp);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async getNumberOfUnreadMessages() {
       if (auth() === null) return;
       try {
