@@ -144,7 +144,10 @@ function ContentListItem({
                   contentType !== 'subject' && contentType !== 'url'
                     ? '75%'
                     : '100%',
-                padding: '1rem 0',
+                paddingTop: '1rem',
+                paddingBottom: '1rem',
+                paddingLeft: 0,
+                paddingRight: 0,
                 ...(contentType === 'url' ? { paddingTop: '0.5rem' } : {})
               }}
             >
