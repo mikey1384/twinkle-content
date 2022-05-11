@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import UsernameText from 'components/Texts/UsernameText';
 import { css } from '@emotion/css';
-import { Color } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 
@@ -89,10 +89,14 @@ export default function WordleResult({ username, userId, myId, wordleResult }) {
         justify-content: center;
         align-items: center;
         width: 100%;
-        padding: 2rem 0;
+        padding: 2rem 1rem;
         margin-bottom: 1.5rem;
         background: ${Color.darkBlueGray()};
         color: #fff;
+        font-size: 1.6rem;
+        @media (max-width: ${mobileMaxWidth}) {
+          font-size: 1.3rem;
+        }
       `}
     >
       {guessLabel && (
@@ -105,31 +109,46 @@ export default function WordleResult({ username, userId, myId, wordleResult }) {
                 : numGuesses === 3
                 ? Color.brownOrange()
                 : Color.orange(),
-            fontWeight: 'bold',
-            fontSize:
-              numGuesses === 1
-                ? '3rem'
-                : numGuesses === 2
-                ? '2.5rem'
-                : numGuesses === 3
-                ? '2.2rem'
-                : '2rem'
+            fontWeight: 'bold'
           }}
+          className={css`
+            font-size: ${numGuesses === 1
+              ? '3rem'
+              : numGuesses === 2
+              ? '2.5rem'
+              : numGuesses === 3
+              ? '2.2rem'
+              : '2rem'};
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: ${numGuesses === 1
+                ? '2.3rem'
+                : numGuesses === 2
+                ? '2rem'
+                : numGuesses === 3
+                ? '1.7rem'
+                : '1.5rem'};
+            }
+          `}
         >
           {guessLabel}
         </p>
       )}
-      <div>
+      <div style={{ textAlign: 'center' }}>
         {displayedUserLabel} earned{' '}
         <span
+          className={css`
+            font-size: ${numGuesses <= 2 ? '2rem' : ''};
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: ${numGuesses <= 2 ? '1.5rem' : ''};
+            }
+          `}
           style={{
-            fontSize: numGuesses <= 2 ? '2rem' : '',
             fontWeight: isSolved ? 'bold' : ''
           }}
         >
           {rewardAmountLabel} XP
         </span>{' '}
-        for {isSolved ? 'solving' : 'trying'} a Wordle puzzle{' '}
+        for {isSolved ? 'solving' : 'trying'} a Wordle{' '}
         {isSolved ? (
           <>
             in{' '}
