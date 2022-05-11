@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
-import SearchDropdown from '../SearchDropdown';
 import { css } from '@emotion/css';
 import { Color } from 'constants/css';
-import Input from './Input';
+import Input from '../Input';
 import Icon from 'components/Icon';
-import { useOutsideClick } from 'helpers/hooks';
+import DropdownList from './DropdownList';
 
 SearchInput.propTypes = {
   addonColor: PropTypes.string,
@@ -48,7 +47,6 @@ export default function SearchInput({
 }) {
   const [indexToHighlight, setIndexToHighlight] = useState(0);
   const SearchInputRef = useRef(null);
-  useOutsideClick(SearchInputRef, onClickOutSide);
 
   return (
     <div
@@ -103,23 +101,17 @@ export default function SearchInput({
         onChange={(text) => onChange(text)}
         onKeyDown={onKeyDown}
       />
-      {renderDropdownList()}
-    </div>
-  );
-
-  function renderDropdownList() {
-    return searchResults.length > 0 ? (
-      <SearchDropdown
-        searchResults={searchResults}
-        onUpdate={() => setIndexToHighlight(0)}
-        onUnmount={() => setIndexToHighlight(0)}
+      <DropdownList
         indexToHighlight={indexToHighlight}
-        onItemClick={(item) => onSelect(item)}
         renderItemLabel={renderItemLabel}
         renderItemUrl={renderItemUrl}
+        searchResults={searchResults}
+        onClickOutSide={onClickOutSide}
+        onSelect={onSelect}
+        onSetIndexToHighlight={setIndexToHighlight}
       />
-    ) : null;
-  }
+    </div>
+  );
 
   function onKeyDown(event) {
     let index = indexToHighlight;

@@ -5,6 +5,7 @@ import { Color } from 'constants/css';
 import { css } from '@emotion/css';
 
 Dropdown.propTypes = {
+  innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   dropdownFooter: PropTypes.node,
   indexToHighlight: PropTypes.number.isRequired,
   onItemClick: PropTypes.func.isRequired,
@@ -16,6 +17,7 @@ Dropdown.propTypes = {
 };
 
 export default function Dropdown({
+  innerRef,
   dropdownFooter,
   indexToHighlight,
   searchResults,
@@ -44,6 +46,7 @@ export default function Dropdown({
       style={style}
     >
       <div
+        ref={innerRef}
         className={css`
           width: 100%;
           display: block;
