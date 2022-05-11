@@ -43,12 +43,9 @@ export default function Categories({
       <div
         className={css`
           width: 80%;
-          flex-direction: column;
-          display: flex;
-          justify-content: center;
-          align-items: center;
           color: ${Color[profileTheme]()};
           > nav {
+            width: 100%;
             text-align: center;
             > p {
               cursor: default;
@@ -65,23 +62,23 @@ export default function Categories({
                 font-size: 2.5rem;
               }
             }
+            > a {
+              line-height: 1.8;
+              font-size: 2.7rem;
+              cursor: pointer;
+              text-transform: capitalize;
+              color: ${Color.gray()};
+              transition: color 0.1s;
+              &:hover {
+                text-decoration: none;
+                color: ${Color[profileTheme]()};
+              }
+              @media (max-width: ${mobileMaxWidth}) {
+                font-size: 1.7rem;
+              }
+            }
             span {
               font-size: 1.5rem;
-            }
-          }
-          > a {
-            line-height: 1.8;
-            font-size: 2.7rem;
-            cursor: pointer;
-            text-transform: capitalize;
-            color: ${Color.gray()};
-            transition: color 0.1s;
-            &:hover {
-              text-decoration: none;
-              color: ${Color[profileTheme]()};
-            }
-            @media (max-width: ${mobileMaxWidth}) {
-              font-size: 1.7rem;
             }
           }
         `}
@@ -156,14 +153,12 @@ export default function Categories({
               </div>
             </nav>
           ) : (
-            <Link
-              style={{ display: 'flex', alignItems: 'center' }}
-              key={contentType}
-              to={contentType}
-            >
-              {returnIcon(contentType)}
-              {exploreLabel}
-            </Link>
+            <nav>
+              <Link key={contentType} to={contentType}>
+                {returnIcon(contentType)}
+                {exploreLabel}
+              </Link>
+            </nav>
           );
         })}
       </div>
