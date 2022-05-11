@@ -206,13 +206,6 @@ function MessagesContainer({
 
   useEffect(() => {
     mounted.current = true;
-    if (deviceIsMobile) {
-      (MessagesRef.current || {}).scrollTop = 0;
-      (MessagesRef.current || {}).scrollTop = 0;
-      (MessagesRef.current || {}).scrollTop = 0;
-      (MessagesRef.current || {}).scrollTop = 0;
-      (MessagesRef.current || {}).scrollTop = 0;
-    }
     return function onUnmount() {
       mounted.current = false;
     };
