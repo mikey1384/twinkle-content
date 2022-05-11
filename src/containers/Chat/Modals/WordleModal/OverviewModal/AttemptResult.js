@@ -25,7 +25,7 @@ export default function AttemptResult({
     if (numGuesses < 3) {
       return null;
     }
-    return attemptState?.isStrict ? 'double reward bonus achieved' : null;
+    return attemptState?.isStrict ? 'double reward bonus' : null;
   }, [attemptState?.isStrict, numGuesses]);
 
   return (
