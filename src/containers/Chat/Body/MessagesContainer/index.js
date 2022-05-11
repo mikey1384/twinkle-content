@@ -206,6 +206,9 @@ function MessagesContainer({
 
   useEffect(() => {
     mounted.current = true;
+    if (deviceIsMobile) {
+      handleForceRefreshForMobile();
+    }
     return function onUnmount() {
       mounted.current = false;
     };
