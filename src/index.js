@@ -7,7 +7,7 @@ loadPolyfills();
 
 import './styles.css';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faAlignJustify } from '@fortawesome/pro-solid-svg-icons/faAlignJustify';
@@ -229,13 +229,13 @@ library.add(
   faWindows
 );
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('react-view'));
+root.render(
   <BrowserRouter>
     <AppContextProvider>
       <Route component={App} />
     </AppContextProvider>
-  </BrowserRouter>,
-  document.getElementById('react-view')
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -5,6 +5,7 @@ import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 
 Checkbox.propTypes = {
+  className: PropTypes.string,
   backgroundColor: PropTypes.string,
   checked: PropTypes.bool,
   label: PropTypes.string,
@@ -15,6 +16,7 @@ Checkbox.propTypes = {
 
 export default function Checkbox({
   backgroundColor = Color.inputGray(),
+  className,
   checked,
   label,
   onClick,
@@ -24,6 +26,7 @@ export default function Checkbox({
   const { profileTheme } = useMyState();
   return (
     <div
+      className={className}
       style={{
         display: 'flex',
         alignItems: 'center',
@@ -34,7 +37,7 @@ export default function Checkbox({
       }}
     >
       {label && (
-        <span
+        <p
           style={{
             color: Color.darkerGray(),
             cursor: textIsClickable ? 'pointer' : 'default'
@@ -43,7 +46,7 @@ export default function Checkbox({
         >
           {label}
           &nbsp;&nbsp;
-        </span>
+        </p>
       )}
       <div
         onClick={onClick}

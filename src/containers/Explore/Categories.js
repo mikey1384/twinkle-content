@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Checkbox from 'components/Checkbox';
 import Link from 'components/Link';
 import Icon from 'components/Icon';
-import { Color } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
@@ -57,6 +57,12 @@ export default function Categories({
               font-size: 3.5rem;
               > svg {
                 font-size: 3.2rem;
+                @media (max-width: ${mobileMaxWidth}) {
+                  font-size: 2.2rem;
+                }
+              }
+              @media (max-width: ${mobileMaxWidth}) {
+                font-size: 2.5rem;
               }
             }
             span {
@@ -73,6 +79,9 @@ export default function Categories({
             &:hover {
               text-decoration: none;
               color: ${Color[profileTheme]()};
+            }
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: 1.7rem;
             }
           }
         `}
@@ -117,9 +126,16 @@ export default function Categories({
                     textIsClickable
                     style={{
                       width: 'auto',
-                      fontSize: '1.8rem',
                       marginBottom: '0.5rem'
                     }}
+                    className={css`
+                      > p {
+                        font-size: 1.7rem;
+                        @media (max-width: ${mobileMaxWidth}) {
+                          font-size: 1.3rem;
+                        }
+                      }
+                    `}
                     checked={filter === defaultSearchFilter}
                     onClick={handleSetDefaultSearchFilter}
                   />
