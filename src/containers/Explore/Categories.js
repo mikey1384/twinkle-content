@@ -99,8 +99,14 @@ export default function Categories({
               : `Always explore ${contentType} first:`;
 
           return filter === contentType ? (
-            <nav key={contentType}>
-              <p style={{ display: 'flex', alignItems: 'center' }}>
+            <nav
+              style={{
+                width: '100%',
+                textAlign: 'center'
+              }}
+              key={contentType}
+            >
+              <p>
                 {returnIcon(contentType)}
                 {exploreLabel}
               </p>
