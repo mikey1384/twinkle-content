@@ -33,18 +33,33 @@ function AccountMenu({ className, history }) {
   const menuProps = useMemo(() => {
     const result = [
       {
-        label: profileLabel,
+        label: (
+          <>
+            <Icon icon="user" />
+            <span style={{ marginLeft: '1rem' }}>{profileLabel}</span>
+          </>
+        ),
         onClick: () => history.push(`/users/${username}`)
       }
     ];
     if (managementLevel > 0) {
       result.push({
-        label: managementLabel,
+        label: (
+          <div style={{ width: '12rem' }}>
+            <Icon icon="sliders-h" />
+            <span style={{ marginLeft: '1rem' }}>{managementLabel}</span>
+          </div>
+        ),
         onClick: () => history.push('/management')
       });
     }
     result.push({
-      label: logOutLabel,
+      label: (
+        <>
+          <Icon icon="sign-out-alt" />
+          <span style={{ marginLeft: '1rem' }}>{logOutLabel}</span>
+        </>
+      ),
       onClick: handleLogout
     });
     return result;

@@ -78,7 +78,7 @@ export default function RightMenu({ className, missionType, style }) {
             justifyContent: 'center'
           }}
         >
-          <Icon icon="tasks" />
+          <Icon icon="sliders-h" />
           <span style={{ marginLeft: '1.5rem' }}>Manage</span>
         </nav>
       </div>
