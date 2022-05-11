@@ -148,7 +148,7 @@ export default function WordleResult({ username, userId, myId, wordleResult }) {
         >
           {rewardAmountLabel} XP
         </span>{' '}
-        for {isSolved ? 'solving' : 'trying'} a Wordle{' '}
+        for {isSolved ? 'solving' : 'trying to solve'} a Wordle{' '}
         {isSolved ? (
           <>
             in{' '}
