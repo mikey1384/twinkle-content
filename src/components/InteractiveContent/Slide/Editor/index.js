@@ -65,32 +65,45 @@ export default function Editor({
   slideId,
   slideObj
 }) {
-  const defaultInputState = {
-    editedPortalButton: portalButton || {
-      label: 'Go Back',
-      icon: 'history',
-      destination: forkedFrom
-    },
-    editedIsFork: isFork,
-    editedIsPortal: isPortal,
-    editedAttachment: attachment || null,
-    editedHeading: heading || '',
-    editedDescription: description || '',
-    editedForkButtonIds: forkButtonIds.length > 0 ? forkButtonIds : [1, 2],
-    editedForkButtonsObj:
-      forkButtonsObj && Object.keys(forkButtonsObj).length > 0
-        ? forkButtonsObj
-        : {
-            1: {
-              id: 1,
-              label: 'option 1'
-            },
-            2: {
-              id: 2,
-              label: 'option 2'
+  const defaultInputState = useMemo(
+    () => ({
+      editedPortalButton: portalButton || {
+        label: 'Go Back',
+        icon: 'history',
+        destination: forkedFrom
+      },
+      editedIsFork: isFork,
+      editedIsPortal: isPortal,
+      editedAttachment: attachment || null,
+      editedHeading: heading || '',
+      editedDescription: description || '',
+      editedForkButtonIds: forkButtonIds.length > 0 ? forkButtonIds : [1, 2],
+      editedForkButtonsObj:
+        forkButtonsObj && Object.keys(forkButtonsObj).length > 0
+          ? forkButtonsObj
+          : {
+              1: {
+                id: 1,
+                label: 'option 1'
+              },
+              2: {
+                id: 2,
+                label: 'option 2'
+              }
             }
-          }
-  };
+    }),
+    [
+      attachment,
+      description,
+      forkButtonIds,
+      forkButtonsObj,
+      forkedFrom,
+      heading,
+      isFork,
+      isPortal,
+      portalButton
+    ]
+  );
 
   const editInteractiveSlide = useAppContext(
     (v) => v.requestHelpers.editInteractiveSlide
@@ -418,19 +431,20 @@ export default function Editor({
                 />
               )}
             </div>
-            {((editedIsFork && forkSwitchShown) || isFork) && (
-              <ForkButtonsField
-                style={{ marginTop: '1rem' }}
-                editedForkButtonIds={editedForkButtonIds}
-                editedForkButtonsObj={editedForkButtonsObj}
-                onSetInputState={(newState) =>
-                  handleSetInputState({
-                    ...editForm,
-                    ...newState
-                  })
-                }
-              />
-            )}
+            {((editedIsFork && forkSwitchShown) || isFork) &&
+              editedForkButtonIds && (
+                <ForkButtonsField
+                  style={{ marginTop: '1rem' }}
+                  editedForkButtonIds={editedForkButtonIds}
+                  editedForkButtonsObj={editedForkButtonsObj}
+                  onSetInputState={(newState) =>
+                    handleSetInputState({
+                      ...editForm,
+                      ...newState
+                    })
+                  }
+                />
+              )}
           </div>
           {portalSwitchShown && (
             <div

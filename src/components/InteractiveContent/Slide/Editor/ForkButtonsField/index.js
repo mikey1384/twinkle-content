@@ -18,9 +18,8 @@ export default function ForkButtonsField({
   onSetInputState,
   style
 }) {
-  const [reorderButtonsModalShown, setReorderButtonsModalShown] = useState(
-    false
-  );
+  const [reorderButtonsModalShown, setReorderButtonsModalShown] =
+    useState(false);
   return (
     <div
       style={{

@@ -33,7 +33,7 @@ export default function PinnedComment({
   });
   useEffect(() => {
     if (!comment.loaded) {
-      return init();
+      init();
     }
 
     async function init() {
