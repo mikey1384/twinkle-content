@@ -207,7 +207,11 @@ function MessagesContainer({
   useEffect(() => {
     mounted.current = true;
     if (deviceIsMobile) {
-      handleForceRefreshForMobile();
+      (MessagesRef.current || {}).scrollTop = 0;
+      (MessagesRef.current || {}).scrollTop = 0;
+      (MessagesRef.current || {}).scrollTop = 0;
+      (MessagesRef.current || {}).scrollTop = 0;
+      (MessagesRef.current || {}).scrollTop = 0;
     }
     return function onUnmount() {
       mounted.current = false;
