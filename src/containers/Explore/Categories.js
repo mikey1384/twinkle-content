@@ -153,8 +153,8 @@ export default function Categories({
               </div>
             </nav>
           ) : (
-            <nav>
-              <Link key={contentType} to={contentType}>
+            <nav key={contentType}>
+              <Link to={contentType}>
                 {returnIcon(contentType)}
                 {exploreLabel}
               </Link>
