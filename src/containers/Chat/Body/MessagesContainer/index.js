@@ -1201,7 +1201,7 @@ function MessagesContainer({
           socketConnected={socketConnected}
         />
       )}
-      {wordleModalShown && (
+      {wordleModalShown && socketConnected && (
         <WordleModal
           channelId={selectedChannelId}
           attemptState={wordleAttemptState}
