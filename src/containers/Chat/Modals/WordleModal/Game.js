@@ -28,6 +28,7 @@ Daily.propTypes = {
   isRevealing: PropTypes.bool,
   onSetIsRevealing: PropTypes.func.isRequired,
   onSetOverviewModalShown: PropTypes.func.isRequired,
+  socketConnected: PropTypes.bool,
   solution: PropTypes.string.isRequired
 };
 
@@ -40,7 +41,8 @@ export default function Daily({
   onSetOverviewModalShown,
   solution,
   isRevealing,
-  onSetIsRevealing
+  onSetIsRevealing,
+  socketConnected
 }) {
   const mounted = useRef(true);
   const updateWordleAttempt = useAppContext(
@@ -143,6 +145,7 @@ export default function Daily({
   }
 
   async function handleEnter() {
+    if (!socketConnected) return;
     const newGuesses = guesses.concat(currentGuess);
     if (isGameWon || isGameLost) {
       return;

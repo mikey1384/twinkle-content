@@ -1201,7 +1201,7 @@ function MessagesContainer({
           socketConnected={socketConnected}
         />
       )}
-      {wordleModalShown && socketConnected && (
+      {wordleModalShown && (
         <WordleModal
           channelId={selectedChannelId}
           attemptState={wordleAttemptState}
@@ -1211,6 +1211,7 @@ function MessagesContainer({
           wordleStats={wordleStats}
           nextDayTimeStamp={nextDayTimeStamp}
           onHide={() => onSetWordleModalShown(false)}
+          socketConnected={socketConnected}
         />
       )}
       {inviteUsersModalShown && (

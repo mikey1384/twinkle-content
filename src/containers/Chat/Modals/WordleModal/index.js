@@ -17,7 +17,8 @@ WordleModal.propTypes = {
   solution: PropTypes.string.isRequired,
   wordLevel: PropTypes.number,
   wordleStats: PropTypes.object,
-  onHide: PropTypes.func.isRequired
+  onHide: PropTypes.func.isRequired,
+  socketConnected: PropTypes.bool
 };
 
 export default function WordleModal({
@@ -28,7 +29,8 @@ export default function WordleModal({
   solution,
   wordLevel,
   wordleStats,
-  onHide
+  onHide,
+  socketConnected
 }) {
   const loadWordle = useAppContext((v) => v.requestHelpers.loadWordle);
   const getCurrentNextDayTimeStamp = useAppContext(
@@ -75,6 +77,7 @@ export default function WordleModal({
           nextDayTimeStamp={nextDayTimeStamp}
           solution={solution}
           onSetOverviewModalShown={setOverviewModalShown}
+          socketConnected={socketConnected}
         />
         {overviewModalShown && (
           <OverviewModal
