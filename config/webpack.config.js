@@ -344,6 +344,13 @@ module.exports = function (webpackEnv) {
     module: {
       strictExportPresence: true,
       rules: [
+        // do not require to specify extensions in imports if they are .js or .mjs
+        {
+          test: /\.m?js/,
+          resolve: {
+            fullySpecified: false
+          }
+        },
         // Handle node_modules packages that contain sourcemaps
         shouldUseSourceMap && {
           enforce: 'pre',
