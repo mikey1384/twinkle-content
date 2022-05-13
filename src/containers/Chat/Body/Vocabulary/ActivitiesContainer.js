@@ -1,4 +1,10 @@
-import React, { memo, useEffect, useRef, useState } from 'react';
+import React, {
+  memo,
+  useEffect,
+  useRef,
+  useState,
+  startTransition
+} from 'react';
 import PropTypes from 'prop-types';
 import Activity from './Activity';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
@@ -14,6 +20,7 @@ ActivitiesContainer.propTypes = {
 function ActivitiesContainer({ style }) {
   const [loadingMore, setLoadingMore] = useState(false);
   const [scrollAtBottom, setScrollAtBottom] = useState(false);
+  const [scrollHeight, setScrollHeight] = useState(0);
   const ActivitiesContainerRef = useRef(null);
   const ContentRef = useRef(null);
   const timerRef = useRef(null);
@@ -55,6 +62,13 @@ function ActivitiesContainer({ style }) {
       ? ActivitiesContainerRef.current?.offsetHeight -
         ContentRef.current?.offsetHeight
       : 20;
+
+  useEffect(() => {
+    if (scrollHeight) {
+      (ActivitiesContainerRef.current || {}).scrollTop =
+        ContentRef.current?.offsetHeight - scrollHeight;
+    }
+  }, [scrollHeight]);
 
   return (
     <div
@@ -122,10 +136,9 @@ function ActivitiesContainer({ style }) {
         setLoadingMore(true);
         const data = await loadVocabulary(wordsObj[vocabActivities[0]]?.id);
         onLoadMoreVocabulary(data);
-        ActivitiesContainerRef.current.scrollTop = Math.max(
-          ActivitiesContainerRef.current.scrollTop,
-          (ContentRef.current?.offsetHeight || 0) - prevContentHeight
-        );
+        startTransition(() => {
+          setScrollHeight(prevContentHeight);
+        });
         setLoadingMore(false);
       }
     }
