@@ -1,7 +1,6 @@
 import 'regenerator-runtime/runtime'; // for async await
 import React, {
   memo,
-  StrictMode,
   useCallback,
   useEffect,
   useMemo,
@@ -467,158 +466,156 @@ function App({ location, history }) {
   );
 
   return (
-    <StrictMode>
-      <div
-        className={css`
-          height: CALC(100% - 4.5rem);
-          width: 100%;
-          @media (max-width: ${mobileMaxWidth}) {
-            height: 100%;
-          }
-        `}
-      >
-        {mobileMenuShown && (
-          <MobileMenu
-            location={location}
-            history={history}
-            username={username}
-            onClose={() => setMobileMenuShown(false)}
-          />
-        )}
-        {updateNoticeShown && (
-          <div
-            className={css`
-              position: fixed;
-              width: 80%;
-              left: 10%;
-              top: 2rem;
-              z-index: 100000;
-              background: ${Color.blue()};
-              color: #fff;
-              padding: 1rem;
-              text-align: center;
-              font-size: 2rem;
-              display: flex;
-              flex-direction: column;
-              justify-content: center;
-              @media (max-width: ${mobileMaxWidth}) {
-                width: 100%;
-                left: 0;
-              }
-            `}
-          >
-            <p>
-              The website has been updated. Click the button below to apply the
-              update.
-            </p>
-            <p style={{ fontSize: '1.3em' }}>
-              {
-                "Warning: Update is mandatory. Some features will not work properly if you don't update!"
-              }
-            </p>
-            {updateDetail && (
-              <p style={{ color: Color.gold() }}>{updateDetail}</p>
-            )}
-            <Button
-              color="gold"
-              filled
-              style={{ marginTop: '3rem', width: '20%', alignSelf: 'center' }}
-              onClick={() => window.location.reload()}
-            >
-              Update!
-            </Button>
-          </div>
-        )}
-        <Header
+    <div
+      className={css`
+        height: CALC(100% - 4.5rem);
+        width: 100%;
+        @media (max-width: ${mobileMaxWidth}) {
+          height: 100%;
+        }
+      `}
+    >
+      {mobileMenuShown && (
+        <MobileMenu
+          location={location}
           history={history}
-          onMobileMenuOpen={() => setMobileMenuShown(true)}
+          username={username}
+          onClose={() => setMobileMenuShown(false)}
         />
-        <div
-          id="App"
-          className={`${userIsUsingIOS && !usingChat ? 'ios ' : ''}${css`
-            margin-top: 4.5rem;
-            height: 100%;
-            @media (max-width: ${mobileMaxWidth}) {
-              margin-top: 0;
-              padding-top: 0;
-            }
-          `}`}
-        >
-          <Switch>
-            <Route
-              path="/users/:username"
-              render={({ history, location, match }) => (
-                <Profile history={history} location={location} match={match} />
-              )}
-            />
-            <Route path="/comments/:contentId" component={ContentPage} />
-            <Route path="/videos/:videoId" component={VideoPage} />
-            <Route path="/videos" component={Explore} />
-            <Route path="/links/:linkId" component={LinkPage} />
-            <Route path="/links" component={Explore} />
-            <Route path="/subjects/:contentId" component={ContentPage} />
-            <Route path="/subjects" component={Explore} />
-            <Route path="/playlists" component={PlaylistPage} />
-            <Route
-              path="/missions/:missionType/:taskType"
-              component={MissionPage}
-            />
-            <Route path="/missions/:missionType" component={MissionPage} />
-            <Route path="/missions" component={Mission} />
-            <Route
-              path="/chat"
-              render={() => <Chat onFileUpload={handleFileUploadOnChat} />}
-            />
-            <Route path="/management" exact component={Management} />
-            <Route path="/management/mod-activities" component={Management} />
-            <Route path="/reset" component={ResetPassword} />
-            <Route path="/verify" component={Verify} />
-            <Route path="/privacy" component={Privacy} />
-            <Route
-              exact
-              path="/"
-              render={({ history, location }) => (
-                <Home
-                  history={history}
-                  location={location}
-                  onFileUpload={handleFileUploadOnHome}
-                />
-              )}
-            />
-            <Route
-              path="/earn"
-              render={({ history, location }) => (
-                <Home history={history} location={location} />
-              )}
-            />
-            <Route
-              path="/store"
-              render={({ history, location }) => (
-                <Home history={history} location={location} />
-              )}
-            />
-            <Route
-              exact
-              path="/users/"
-              render={({ history, location }) => (
-                <Home history={history} location={location} />
-              )}
-            />
-            <Route path="/:username" component={Redirect} />
-          </Switch>
-        </div>
-        {signinModalShown && <SigninModal show onHide={onCloseSigninModal} />}
-        {channelOnCall.incomingShown && <Incoming />}
-        {outgoingShown && <Outgoing />}
+      )}
+      {updateNoticeShown && (
         <div
           className={css`
-            opacity: 0;
             position: fixed;
-            background: url('/img/emojis.png');
+            width: 80%;
+            left: 10%;
+            top: 2rem;
+            z-index: 100000;
+            background: ${Color.blue()};
+            color: #fff;
+            padding: 1rem;
+            text-align: center;
+            font-size: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            @media (max-width: ${mobileMaxWidth}) {
+              width: 100%;
+              left: 0;
+            }
           `}
-        />
+        >
+          <p>
+            The website has been updated. Click the button below to apply the
+            update.
+          </p>
+          <p style={{ fontSize: '1.3em' }}>
+            {
+              "Warning: Update is mandatory. Some features will not work properly if you don't update!"
+            }
+          </p>
+          {updateDetail && (
+            <p style={{ color: Color.gold() }}>{updateDetail}</p>
+          )}
+          <Button
+            color="gold"
+            filled
+            style={{ marginTop: '3rem', width: '20%', alignSelf: 'center' }}
+            onClick={() => window.location.reload()}
+          >
+            Update!
+          </Button>
+        </div>
+      )}
+      <Header
+        history={history}
+        onMobileMenuOpen={() => setMobileMenuShown(true)}
+      />
+      <div
+        id="App"
+        className={`${userIsUsingIOS && !usingChat ? 'ios ' : ''}${css`
+          margin-top: 4.5rem;
+          height: 100%;
+          @media (max-width: ${mobileMaxWidth}) {
+            margin-top: 0;
+            padding-top: 0;
+          }
+        `}`}
+      >
+        <Switch>
+          <Route
+            path="/users/:username"
+            render={({ history, location, match }) => (
+              <Profile history={history} location={location} match={match} />
+            )}
+          />
+          <Route path="/comments/:contentId" component={ContentPage} />
+          <Route path="/videos/:videoId" component={VideoPage} />
+          <Route path="/videos" component={Explore} />
+          <Route path="/links/:linkId" component={LinkPage} />
+          <Route path="/links" component={Explore} />
+          <Route path="/subjects/:contentId" component={ContentPage} />
+          <Route path="/subjects" component={Explore} />
+          <Route path="/playlists" component={PlaylistPage} />
+          <Route
+            path="/missions/:missionType/:taskType"
+            component={MissionPage}
+          />
+          <Route path="/missions/:missionType" component={MissionPage} />
+          <Route path="/missions" component={Mission} />
+          <Route
+            path="/chat"
+            render={() => <Chat onFileUpload={handleFileUploadOnChat} />}
+          />
+          <Route path="/management" exact component={Management} />
+          <Route path="/management/mod-activities" component={Management} />
+          <Route path="/reset" component={ResetPassword} />
+          <Route path="/verify" component={Verify} />
+          <Route path="/privacy" component={Privacy} />
+          <Route
+            exact
+            path="/"
+            render={({ history, location }) => (
+              <Home
+                history={history}
+                location={location}
+                onFileUpload={handleFileUploadOnHome}
+              />
+            )}
+          />
+          <Route
+            path="/earn"
+            render={({ history, location }) => (
+              <Home history={history} location={location} />
+            )}
+          />
+          <Route
+            path="/store"
+            render={({ history, location }) => (
+              <Home history={history} location={location} />
+            )}
+          />
+          <Route
+            exact
+            path="/users/"
+            render={({ history, location }) => (
+              <Home history={history} location={location} />
+            )}
+          />
+          <Route path="/:username" component={Redirect} />
+        </Switch>
       </div>
-    </StrictMode>
+      {signinModalShown && <SigninModal show onHide={onCloseSigninModal} />}
+      {channelOnCall.incomingShown && <Incoming />}
+      {outgoingShown && <Outgoing />}
+      <div
+        className={css`
+          opacity: 0;
+          position: fixed;
+          background: url('/img/emojis.png');
+        `}
+      />
+    </div>
   );
 }
 

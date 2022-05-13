@@ -207,7 +207,7 @@ function XPVideoPlayer({
   const onVideoReady = useCallback(() => {
     totalDurationRef.current = PlayerRef.current
       ?.getInternalPlayer()
-      ?.getDuration();
+      ?.getDuration?.();
     if (
       totalDurationRef.current > 180 &&
       myViewDuration > totalDurationRef.current * 1.5
