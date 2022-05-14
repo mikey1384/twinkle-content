@@ -5,12 +5,7 @@ import Channels from './Channels';
 import Vocabulary from './Vocabulary';
 import Icon from 'components/Icon';
 import Tabs from './Tabs';
-import {
-  Color,
-  desktopMinWidth,
-  mobileMaxWidth,
-  phoneMaxWidth
-} from 'constants/css';
+import { Color, desktopMinWidth, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useChatContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
@@ -39,7 +34,7 @@ function LeftMenu({ onNewButtonClick }) {
         position: relative;
         background: #fff;
         -webkit-overflow-scrolling: touch;
-        @media (max-width: ${phoneMaxWidth}) {
+        @media (max-width: ${mobileMaxWidth}) {
           width: 32vw;
         }
       `}

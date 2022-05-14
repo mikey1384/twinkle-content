@@ -5,7 +5,7 @@ import Vocabulary from './Vocabulary';
 import Loading from 'components/Loading';
 import ErrorBoundary from 'components/ErrorBoundary';
 import LocalContext from '../Context';
-import { phoneMaxWidth, Color } from 'constants/css';
+import { mobileMaxWidth, Color } from 'constants/css';
 import { css } from '@emotion/css';
 
 Body.propTypes = {
@@ -30,7 +30,7 @@ function Body({ channelName, chessOpponent, currentChannel, loading }) {
           padding: 0;
           position: relative;
           background: #fff;
-          @media (max-width: ${phoneMaxWidth}) {
+          @media (max-width: ${mobileMaxWidth}) {
             width: ${chatType === 'vocabulary' ? '77vw' : '85vw'};
           }
         `}

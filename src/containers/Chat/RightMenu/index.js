@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ChatInfo from './ChatInfo';
 import VocabInfo from './VocabInfo';
 import { css } from '@emotion/css';
-import { Color, phoneMaxWidth } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
 import LocalContext from '../Context';
 
@@ -85,7 +85,7 @@ function RightMenu({
         border-left: 1px solid ${Color.borderGray()};
         overflow-y: scroll;
         -webkit-overflow-scrolling: touch;
-        @media (max-width: ${phoneMaxWidth}) {
+        @media (max-width: ${mobileMaxWidth}) {
           width: ${chatType === 'vocabulary' ? '43vw' : '35vw'};
         }
       `}

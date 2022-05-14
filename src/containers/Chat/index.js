@@ -17,7 +17,7 @@ import PleaseLogIn from './PleaseLogIn';
 import LocalContext from './Context';
 import { parseChannelPath } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { phoneMaxWidth } from 'constants/css';
+import { mobileMaxWidth } from 'constants/css';
 import { socket } from 'constants/io';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
@@ -632,7 +632,7 @@ function Chat({ onFileUpload }) {
                 display: flex;
                 font-size: 1.6rem;
                 position: relative;
-                @media (max-width: ${phoneMaxWidth}) {
+                @media (max-width: ${mobileMaxWidth}) {
                   width: 152vw;
                   height: CALC(100% - 7rem);
                 }

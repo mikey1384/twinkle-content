@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon from 'components/Icon';
 import { css } from '@emotion/css';
-import { Color, phoneMaxWidth } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { useChatContext } from 'contexts';
 
 export default function Tabs() {
@@ -25,7 +25,7 @@ export default function Tabs() {
           > svg {
             font-size: 3rem;
           }
-          @media (max-width: ${phoneMaxWidth}) {
+          @media (max-width: ${mobileMaxWidth}) {
             height: 5rem;
             > svg {
               font-size: 1.7rem;
