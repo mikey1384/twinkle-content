@@ -63,7 +63,7 @@ export default function WordleModal({
   }, []);
 
   return (
-    <Modal onHide={onHide}>
+    <Modal closeWhenClickedOutside={false} onHide={onHide}>
       <header>Wordle</header>
       <main>
         <Game
