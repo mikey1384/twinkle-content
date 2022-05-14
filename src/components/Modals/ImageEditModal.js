@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import PropTypes from 'prop-types';
-import ReactCrop from 'react-image-crop';
+import ReactCrop, { centerCrop, makeAspectCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Loading from 'components/Loading';
@@ -42,9 +42,7 @@ export default function ImageEditModal({
   const [processing, setProcessing] = useState(false);
   const [crop, setCrop] = useState({
     unit: '%',
-    width: 90,
-    height: aspectFixed ? 0 : 90,
-    aspect: aspectFixed ? 1 : null,
+    width: 50,
     x: 5
   });
   const [loading, setLoading] = useState(false);
@@ -78,22 +76,42 @@ export default function ImageEditModal({
             {loading && <Loading text="Loading..." />}
             {!loading && imageUri && (
               <ReactCrop
-                // eslint-disable-next-line no-undef
-                src={originalImageUrl}
                 crop={crop}
+                aspect={aspectFixed ? 1 : null}
                 minWidth={50}
                 minHeight={50}
                 keepSelection
                 ruleOfThirds
-                onImageLoaded={(image) => (ImageRef.current = image)}
                 onChange={setCrop}
                 onComplete={handleCropComplete}
-                imageStyle={{
-                  objectFit: 'contain',
-                  minHeight: '350px',
-                  maxHeight: '65vh'
-                }}
-              />
+              >
+                <img
+                  ref={ImageRef}
+                  onLoad={(e) => {
+                    const { width, height } = e.currentTarget;
+                    const crop = centerCrop(
+                      makeAspectCrop(
+                        {
+                          unit: '%',
+                          width: 90
+                        },
+                        1,
+                        width,
+                        height
+                      ),
+                      width,
+                      height
+                    );
+                    setCrop(crop);
+                  }}
+                  style={{
+                    objectFit: 'contain',
+                    minHeight: '350px',
+                    maxHeight: '65vh'
+                  }}
+                  src={originalImageUrl}
+                />
+              </ReactCrop>
             )}
           </div>
           {hasDescription && (
