@@ -130,7 +130,7 @@ export default function MissionItem({
   function handleMouseOver() {
     if (textIsOverflown(NameRef.current)) {
       const parentElementDimensions =
-        NameRef.current?.getBoundingClientRect() || {
+        NameRef.current?.getBoundingClientRect?.() || {
           x: 0,
           y: 0,
           width: 0,

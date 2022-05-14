@@ -16,7 +16,7 @@ export default function Audio({ stream }) {
       audioRef.current.srcObject = clonedStream;
     }
     return function cleanUp() {
-      currentAudio.srcObject?.getTracks()?.forEach((track) => {
+      currentAudio.srcObject?.getTracks()?.forEach?.((track) => {
         track.stop();
       });
     };

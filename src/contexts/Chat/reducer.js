@@ -787,7 +787,7 @@ export default function ChatReducer(state, action) {
         action.vocabActivities.pop();
         vocabActivitiesLoadMoreButton = true;
       }
-      action.vocabActivities?.reverse();
+      action.vocabActivities?.reverse?.();
       return {
         ...state,
         channelsObj: {
@@ -816,7 +816,7 @@ export default function ChatReducer(state, action) {
         action.vocabActivities.pop();
         vocabActivitiesLoadMoreButton = true;
       }
-      action.vocabActivities?.reverse();
+      action.vocabActivities?.reverse?.();
       return {
         ...state,
         selectedChannelId: null,

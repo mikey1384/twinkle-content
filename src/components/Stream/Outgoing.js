@@ -22,7 +22,7 @@ export default function Outgoing() {
     return function cleanUp() {
       mounted.current = false;
       onSetMyStream(null);
-      myStreamRef.current?.getTracks()?.[0]?.stop();
+      myStreamRef.current?.getTracks()?.[0]?.stop?.();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

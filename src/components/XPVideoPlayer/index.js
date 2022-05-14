@@ -206,7 +206,7 @@ function XPVideoPlayer({
 
   const onVideoReady = useCallback(() => {
     totalDurationRef.current = PlayerRef.current
-      ?.getInternalPlayer()
+      ?.getInternalPlayer?.()
       ?.getDuration?.();
     if (
       totalDurationRef.current > 180 &&
@@ -229,8 +229,8 @@ function XPVideoPlayer({
         totalTime: totalDurationRef.current
       });
       if (
-        PlayerRef.current?.getInternalPlayer()?.isMuted() ||
-        PlayerRef.current?.getInternalPlayer()?.getVolume() === 0
+        PlayerRef.current?.getInternalPlayer()?.isMuted?.() ||
+        PlayerRef.current?.getInternalPlayer()?.getVolume?.() === 0
       ) {
         return;
       }

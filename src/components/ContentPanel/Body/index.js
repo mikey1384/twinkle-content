@@ -687,13 +687,13 @@ export default function Body({
       await handleExpandComments();
     }
     if (!deviceIsMobile) {
-      CommentInputAreaRef.current?.focus();
+      CommentInputAreaRef.current?.focus?.();
     }
     scrollElementToCenter(CommentInputAreaRef.current);
   }
 
   function onSecretAnswerClick() {
-    CommentInputAreaRef.current?.focus();
+    CommentInputAreaRef.current?.focus?.();
   }
 
   async function deleteThisContent() {

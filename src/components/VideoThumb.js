@@ -48,7 +48,7 @@ function VideoThumb({ className, clickSafe, style, to, user, video }) {
   const onMouseOver = useCallback(() => {
     if (textIsOverflown(ThumbLabelRef.current)) {
       const parentElementDimensions =
-        ThumbLabelContainerRef.current?.getBoundingClientRect() || {
+        ThumbLabelContainerRef.current?.getBoundingClientRect?.() || {
           x: 0,
           y: 0,
           width: 0,

@@ -214,7 +214,7 @@ export default function UsernameText({
   async function onMouseEnter() {
     mouseEntered.current = true;
     const parentElementDimensions =
-      UsernameTextRef.current?.getBoundingClientRect() || {
+      UsernameTextRef.current?.getBoundingClientRect?.() || {
         x: 0,
         y: 0,
         width: 0,

@@ -128,7 +128,7 @@ export default function FileViewer({
 
   function handleReady() {
     if (fileType === 'video') {
-      PlayerRef.current?.getInternalPlayer()?.play();
+      PlayerRef.current?.getInternalPlayer?.()?.play?.();
     }
   }
 }

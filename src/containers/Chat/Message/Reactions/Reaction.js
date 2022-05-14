@@ -123,7 +123,7 @@ function Reaction({
     if (!deviceIsMobile) return;
     if (reactionsMenuShown) {
       const parentElementDimensions =
-        ReactionRef.current?.getBoundingClientRect() || {
+        ReactionRef.current?.getBoundingClientRect?.() || {
           x: 0,
           y: 0,
           width: 0,
@@ -272,7 +272,7 @@ function Reaction({
     clearTimeout(hideTimerRef.current);
     clearTimeout(hideTimerRef2.current);
     const parentElementDimensions =
-      ReactionRef.current?.getBoundingClientRect() || {
+      ReactionRef.current?.getBoundingClientRect?.() || {
         x: 0,
         y: 0,
         width: 0,

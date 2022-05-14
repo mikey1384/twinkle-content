@@ -136,7 +136,7 @@ export default function SortableThumb({ id, onMove, video }) {
   function onMouseOver() {
     if (textIsOverflown(ThumbLabelRef.current)) {
       const parentElementDimensions =
-        ThumbLabelContainerRef.current?.getBoundingClientRect() || {
+        ThumbLabelContainerRef.current?.getBoundingClientRect?.() || {
           x: 0,
           y: 0,
           width: 0,

@@ -129,7 +129,7 @@ export default function renderEnglishMessage({
                   rewardRootType === 'pass'
                     ? isTask
                       ? localize('task')
-                      : localize('mission')?.toLowerCase()
+                      : localize('mission')?.toLowerCase?.()
                     : localize(rewardRootType)
                 }`,
                 missionType: rewardRootMissionType

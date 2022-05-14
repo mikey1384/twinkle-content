@@ -188,7 +188,7 @@ export default function StarButton({
       if (coolDownRef.current) return;
       const menuDisplayed = !!dropdownContext;
       const parentElementDimensions =
-        StarButtonRef.current?.getBoundingClientRect() || {
+        StarButtonRef.current?.getBoundingClientRect?.() || {
           x: 0,
           y: 0,
           width: 0,

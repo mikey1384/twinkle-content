@@ -340,7 +340,7 @@ export function getFileInfoFromFileName(fileName) {
   if (typeof fileName !== 'string') return '';
   const fileNameArray = fileName.split('.');
   const extension =
-    fileNameArray[fileNameArray.length - 1]?.toLowerCase() || '';
+    fileNameArray[fileNameArray.length - 1]?.toLowerCase?.() || '';
   return { extension, fileType: getFileType(extension) };
 
   function getFileType(extension) {

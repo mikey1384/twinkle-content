@@ -137,7 +137,7 @@ export default function MediaPlayer({
 
   function handleReady() {
     if (light) {
-      PlayerRef.current?.getInternalPlayer()?.play();
+      PlayerRef.current?.getInternalPlayer?.()?.play?.();
     }
   }
 

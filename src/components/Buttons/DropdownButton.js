@@ -111,7 +111,7 @@ export default function DropdownButton({
       onButtonClick(!menuDisplayed);
     }
     const parentElementDimensions =
-      ButtonRef.current?.getBoundingClientRect() || {
+      ButtonRef.current?.getBoundingClientRect?.() || {
         x: 0,
         y: 0,
         width: 0,
