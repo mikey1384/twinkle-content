@@ -72,9 +72,10 @@ export default function Feeds({
   useEffect(() => {
     if (feeds.length === 0) {
       if (filter === 'byuser') {
-        return handleLoadByUserTab(section);
+        handleLoadByUserTab(section);
+      } else {
+        handleLoadTab(section);
       }
-      handleLoadTab(section);
     }
 
     async function handleLoadByUserTab(section) {
@@ -116,10 +117,9 @@ export default function Feeds({
   );
   useEffect(() => {
     if (filter && filter !== 'byuser') {
-      return history.push(`/users/${username}/${section}`);
-    }
-    if (filter === 'byuser' && !filterBarShown) {
-      return history.push(`/users/${username}/${section}`);
+      history.push(`/users/${username}/${section}`);
+    } else if (filter === 'byuser' && !filterBarShown) {
+      history.push(`/users/${username}/${section}`);
     }
   }, [filterBarShown, history, filter, section, username]);
   const noFeedLabel = useMemo(() => {
