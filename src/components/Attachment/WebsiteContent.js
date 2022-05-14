@@ -18,6 +18,7 @@ export default function WebsiteContent({ attachment }) {
     contentId: attachment.id
   });
   const fallbackImage = '/img/link.png';
+
   useEffect(() => {
     setImageUrl(
       attachment.contentType === 'video'
@@ -25,6 +26,7 @@ export default function WebsiteContent({ attachment }) {
         : thumbUrl || fallbackImage
     );
   }, [attachment.contentType, content, thumbUrl]);
+
   return (
     <ErrorBoundary>
       <div

@@ -55,7 +55,7 @@ export default function Keyboard({
       }
     };
     window.addEventListener('keyup', listener);
-    return () => {
+    return function cleanUp() {
       window.removeEventListener('keyup', listener);
     };
   }, [onEnter, onDelete, onChar]);

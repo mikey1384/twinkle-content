@@ -53,6 +53,7 @@ export default function DropdownButton({
   const [dropdownContext, setDropdownContext] = useState(null);
   const coolDownRef = useRef(null);
   const ButtonRef = useRef(null);
+
   useEffect(() => {
     onDropdownShown?.(!!dropdownContext);
   }, [dropdownContext, onDropdownShown]);

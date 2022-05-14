@@ -35,9 +35,8 @@ export default function RewardLevelForm({
   const { authLevel, profileTheme } = useMyState();
   useEffect(() => {
     if (alreadyPosted) {
-      return onSetRewardLevel(0);
-    }
-    if (!rewardLevel) {
+      onSetRewardLevel(0);
+    } else if (!rewardLevel) {
       if (isFromSubjectInput && isMadeByUser) {
         onSetRewardLevel(1);
       }

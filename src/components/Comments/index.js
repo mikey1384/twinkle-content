@@ -406,9 +406,8 @@ function Comments({
     if (comments.length < prevComments.length && deleting) {
       setDeleting(false);
       if (comments.length === 0) {
-        return scrollElementToCenter(ContainerRef.current);
-      }
-      if (
+        scrollElementToCenter(ContainerRef.current);
+      } else if (
         comments[comments.length - 1].id !==
         prevComments[prevComments.length - 1].id
       ) {

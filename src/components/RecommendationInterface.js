@@ -46,11 +46,11 @@ export default function RecommendationInterface({
 
   useEffect(() => {
     mounted.current = true;
-
     return function onDismount() {
       mounted.current = false;
     };
   }, []);
+
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const recommendContent = useAppContext(
     (v) => v.requestHelpers.recommendContent

@@ -50,10 +50,9 @@ export default function MissionList({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [missions, myAttempts]);
   useEffect(() => {
-    if (selectedMissionListTab) {
-      return;
+    if (!selectedMissionListTab) {
+      onSetSelectedMissionListTab('ongoing');
     }
-    onSetSelectedMissionListTab('ongoing');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ongoingMissions.length, selectedMissionListTab]);
   let displayedMissions = useMemo(() => {

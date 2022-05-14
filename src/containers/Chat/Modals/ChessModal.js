@@ -100,9 +100,7 @@ export default function ChessModal({
   useEffect(() => {
     if (!prevChannelId.current) {
       prevChannelId.current = channelId;
-      return;
-    }
-    if (prevChannelId.current !== channelId) {
+    } else if (prevChannelId.current !== channelId) {
       onHide();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -59,9 +59,8 @@ function Replies({
       if (deleting) {
         setDeleting(false);
         if (replies.length === 0) {
-          return scrollElementToCenter(ContainerRef.current);
-        }
-        if (
+          scrollElementToCenter(ContainerRef.current);
+        } else if (
           replies[replies.length - 1].id !==
           prevReplies.current[prevReplies.current.length - 1].id
         ) {

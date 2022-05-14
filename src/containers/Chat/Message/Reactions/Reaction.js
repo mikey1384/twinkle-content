@@ -120,23 +120,24 @@ function Reaction({
   }, [reactedUsers]);
 
   useEffect(() => {
-    if (!deviceIsMobile) return;
-    if (reactionsMenuShown) {
-      const parentElementDimensions =
-        ReactionRef.current?.getBoundingClientRect?.() || {
-          x: 0,
-          y: 0,
-          width: 0,
-          height: 0
-        };
-      setTooltipContext(parentElementDimensions);
-      setTimeout(() => setTooltipContext(null), 2000);
-    } else {
-      hideTimerRef.current = setTimeout(() => {
-        if (mounted.current) {
-          setTooltipContext(null);
-        }
-      }, 50);
+    if (deviceIsMobile) {
+      if (reactionsMenuShown) {
+        const parentElementDimensions =
+          ReactionRef.current?.getBoundingClientRect?.() || {
+            x: 0,
+            y: 0,
+            width: 0,
+            height: 0
+          };
+        setTooltipContext(parentElementDimensions);
+        setTimeout(() => setTooltipContext(null), 2000);
+      } else {
+        hideTimerRef.current = setTimeout(() => {
+          if (mounted.current) {
+            setTooltipContext(null);
+          }
+        }, 50);
+      }
     }
   }, [reactionsMenuShown]);
 

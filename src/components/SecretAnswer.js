@@ -50,6 +50,7 @@ function SecretAnswer({
     contentId: subjectId
   });
   const spoilerShown = secretShown || uploaderId === userId;
+
   useEffect(() => {
     if (userId && userId !== prevSecretViewerId) {
       init();

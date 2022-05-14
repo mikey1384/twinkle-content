@@ -79,7 +79,7 @@ export default function ChangePasswordModal({ onHide }) {
     clearTimeout(newPasswordTimerRef.current);
     newPasswordTimerRef.current = setTimeout(() => {
       if (!stringIsEmpty(newPassword) && !passwordIsValid) {
-        return setErrorMsgObj((obj) => ({
+        setErrorMsgObj((obj) => ({
           ...obj,
           newPassword: passwordsNeedToBeAtLeastLabel
         }));
@@ -89,7 +89,7 @@ export default function ChangePasswordModal({ onHide }) {
 
   useEffect(() => {
     if (newPasswordIsTheSameAsTheCurrentOne) {
-      return setErrorMsgObj((obj) => ({
+      setErrorMsgObj((obj) => ({
         ...obj,
         newPassword: newPasswordMatchesCurrentPasswordLabel
       }));
@@ -100,7 +100,7 @@ export default function ChangePasswordModal({ onHide }) {
     clearTimeout(retypeNewPasswordTimerRef.current);
     retypeNewPasswordTimerRef.current = setTimeout(() => {
       if (!stringIsEmpty(retypeNewPassword) && !retypePasswordMatches) {
-        return setErrorMsgObj((obj) => ({
+        setErrorMsgObj((obj) => ({
           ...obj,
           retypeNewPassword: retypePasswordDoesNotMatchLabel
         }));

@@ -100,14 +100,17 @@ export default function Description({
     prevEditedDescription || description
   );
   const editedDescriptionRef = useRef(prevEditedDescription || description);
-  useEffect(
-    () => handleDescriptionChange(prevEditedDescription || description),
-    [description, prevEditedDescription]
-  );
+
+  useEffect(() => {
+    handleDescriptionChange(prevEditedDescription || description);
+  }, [description, prevEditedDescription]);
 
   const [editedUrl, setEditedUrl] = useState(prevEditedUrl || url);
   const editedUrlRef = useRef(prevEditedUrl || url);
-  useEffect(() => handleUrlChange(prevEditedUrl || url), [url, prevEditedUrl]);
+
+  useEffect(() => {
+    handleUrlChange(prevEditedUrl || url);
+  }, [url, prevEditedUrl]);
 
   const descriptionExceedsCharLimit = useMemo(
     () =>

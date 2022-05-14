@@ -39,23 +39,19 @@ export default function LetsLaunch({ index, innerRef, taskId }) {
         setUrlError(`Please copy and paste the url. Don't type`);
         setUrl('');
         timerRef.current = setTimeout(() => setUrlError(''), 2000);
-        return;
-      }
-      if (!isValidUrl(url) && !urlError) {
+      } else if (!isValidUrl(url) && !urlError) {
         urlErrorRef.current = notValidUrl;
         setUrlError(notValidUrl);
         setUrl('');
         timerRef.current = setTimeout(() => setUrlError(''), 3000);
-        return;
-      }
-      if (!url.includes('vercel.app')) {
+      } else if (!url.includes('vercel.app')) {
         urlErrorRef.current = notValidVercelUrl;
         setUrlError(notValidVercelUrl);
         setUrl('');
         timerRef.current = setTimeout(() => setUrlError(''), 3000);
-        return;
+      } else {
+        setUrlError('');
       }
-      return setUrlError('');
     }
   }, [url, urlError, urlIsNotEmpty]);
 

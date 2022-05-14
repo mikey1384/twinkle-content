@@ -54,6 +54,7 @@ export default function Attempts({ mission, missionId, onSetMissionState }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab, isCreator]);
+
   return (
     <div style={{ width: '100%' }}>
       <FilterBar

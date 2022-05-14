@@ -155,9 +155,8 @@ function Embedly({
     }
     const extractedVideoId = extractVideoIdFromTwinkleVideoUrl(url);
     if (extractedVideoId && contentType === 'chat') {
-      return setTwinkleVideoId(extractedVideoId);
-    }
-    if (
+      setTwinkleVideoId(extractedVideoId);
+    } else if (
       !loadingRef.current &&
       url &&
       ((typeof siteUrl !== 'string' && !thumbUrl) ||
@@ -165,7 +164,9 @@ function Embedly({
     ) {
       fetchUrlData();
     }
-    onSetPrevUrl({ contentId, contentType, prevUrl: url, thumbUrl });
+    if (!extractedVideoId || contentType !== 'chat') {
+      onSetPrevUrl({ contentId, contentType, prevUrl: url, thumbUrl });
+    }
     async function fetchUrlData() {
       setLoading(true);
       loadingRef.current = true;

@@ -274,24 +274,25 @@ function Chat({ onFileUpload }) {
     if (currentPathId === 'vocabulary') {
       handleEnterVocabulary();
       prevPathId.current = currentPathId;
-      return;
-    } else if (!stringIsEmpty(currentPathId)) {
-      onUpdateChatType('default');
-    }
-    if (
-      currentPathId &&
-      Number(currentPathId) !== Number(prevPathId.current) &&
-      userId
-    ) {
-      prevPathId.current = currentPathId;
-      if (currentPathId === 'new') {
-        if (history.action !== 'POP') {
-          onEnterEmptyChat();
+    } else {
+      if (!stringIsEmpty(currentPathId)) {
+        onUpdateChatType('default');
+      }
+      if (
+        currentPathId &&
+        Number(currentPathId) !== Number(prevPathId.current) &&
+        userId
+      ) {
+        prevPathId.current = currentPathId;
+        if (currentPathId === 'new') {
+          if (history.action !== 'POP') {
+            onEnterEmptyChat();
+          } else {
+            history.replace(`/chat`);
+          }
         } else {
-          history.replace(`/chat`);
+          handleChannelEnter(currentPathId);
         }
-      } else {
-        handleChannelEnter(currentPathId);
       }
     }
 
@@ -355,9 +356,9 @@ function Chat({ onFileUpload }) {
   useEffect(() => {
     if (!prevUserId.current) {
       prevUserId.current = userId;
-      return;
+    } else {
+      history.replace(`/chat`);
     }
-    history.replace(`/chat`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
