@@ -103,6 +103,13 @@ export default function ImageEditModal({
                       height
                     );
                     setCrop(crop);
+                    setTimeout(() => {
+                      const cropped = initImage({
+                        image: ImageRef.current,
+                        crop
+                      });
+                      setCroppedImageUrl(cropped);
+                    }, 100);
                   }}
                   style={{
                     objectFit: 'contain',
@@ -151,6 +158,28 @@ export default function ImageEditModal({
     }
   }
 
+  function initImage({ image, crop }) {
+    const canvas = document.createElement('canvas');
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    canvas.width = (image.width * crop.width) / 100;
+    canvas.height = (image.height * crop.height) / 100;
+    const ctx = canvas.getContext('2d');
+
+    ctx.drawImage(
+      image,
+      ((image.width * crop.x) / 100) * scaleX,
+      ((image.height * crop.y) / 100) * scaleY,
+      ((image.width * crop.width) / 100) * scaleX,
+      ((image.height * crop.height) / 100) * scaleY,
+      0,
+      0,
+      (image.width * crop.width) / 100,
+      (image.height * crop.height) / 100
+    );
+    return canvas.toDataURL('image/jpeg');
+  }
+
   function getCroppedImg({ image, crop }) {
     const canvas = document.createElement('canvas');
     const scaleX = image.naturalWidth / image.width;
@@ -158,6 +187,7 @@ export default function ImageEditModal({
     canvas.width = crop.width;
     canvas.height = crop.height;
     const ctx = canvas.getContext('2d');
+    console.log(crop.x);
 
     ctx.drawImage(
       image,
