@@ -103,13 +103,11 @@ export default function ImageEditModal({
                       height
                     );
                     setCrop(crop);
-                    setTimeout(() => {
-                      const cropped = initImage({
-                        image: ImageRef.current,
-                        crop
-                      });
-                      setCroppedImageUrl(cropped);
-                    }, 100);
+                    const cropped = initImage({
+                      image: ImageRef.current,
+                      crop
+                    });
+                    setCroppedImageUrl(cropped);
                   }}
                   style={{
                     objectFit: 'contain',
