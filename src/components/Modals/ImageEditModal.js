@@ -187,7 +187,6 @@ export default function ImageEditModal({
     canvas.width = crop.width;
     canvas.height = crop.height;
     const ctx = canvas.getContext('2d');
-    console.log(crop.x);
 
     ctx.drawImage(
       image,
