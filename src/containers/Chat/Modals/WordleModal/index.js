@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
@@ -32,6 +32,7 @@ export default function WordleModal({
   onHide,
   socketConnected
 }) {
+  const prevChannelId = useRef(null);
   const loadWordle = useAppContext((v) => v.requestHelpers.loadWordle);
   const getCurrentNextDayTimeStamp = useAppContext(
     (v) => v.requestHelpers.getCurrentNextDayTimeStamp
@@ -51,6 +52,7 @@ export default function WordleModal({
     () => isGameWon || isGameLost,
     [isGameLost, isGameWon]
   );
+
   useEffect(() => {
     init();
     async function init() {
@@ -61,6 +63,15 @@ export default function WordleModal({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (!prevChannelId.current) {
+      prevChannelId.current = channelId;
+    } else if (prevChannelId.current !== channelId) {
+      onHide();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [channelId]);
 
   return (
     <Modal closeWhenClickedOutside={false} onHide={onHide}>
