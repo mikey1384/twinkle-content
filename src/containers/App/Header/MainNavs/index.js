@@ -88,72 +88,105 @@ function MainNavs({
 
   const chatMatch = useMemo(
     () =>
-      matchPath(pathname, {
-        path: '/chat'
-      }),
+      matchPath(
+        {
+          path: '/chat'
+        },
+        pathname
+      ),
     [pathname]
   );
 
   const homeMatch = useMemo(
     () =>
-      matchPath(pathname, {
-        path: '/',
-        exact: true
-      }),
+      matchPath(
+        {
+          path: '/',
+          exact: true
+        },
+        pathname
+      ),
     [pathname]
   );
 
   const usersMatch = useMemo(
     () =>
-      matchPath(pathname, {
-        path: '/users',
-        exact: true
-      }),
+      matchPath(
+        {
+          path: '/users',
+          exact: true
+        },
+        pathname
+      ),
     [pathname]
   );
 
   const earnMatch = useMemo(
     () =>
-      matchPath(pathname, {
-        path: '/earn',
-        exact: true
-      }),
+      matchPath(
+        {
+          path: '/earn',
+          exact: true
+        },
+        pathname
+      ),
     [pathname]
   );
 
   const storeMatch = useMemo(
     () =>
-      matchPath(pathname, {
-        path: '/store',
-        exact: true
-      }),
+      matchPath(
+        {
+          path: '/store',
+          exact: true
+        },
+        pathname
+      ),
     [pathname]
   );
 
   const contentPageMatch = useMemo(() => {
-    const subjectPageMatch = matchPath(pathname, {
-      path: '/subjects/:id',
-      exact: true
-    });
-    const playlistsMatch = matchPath(pathname, {
-      path: '/playlists/:id',
-      exact: true
-    });
-    const videoPageMatch = matchPath(pathname, {
-      path: '/videos/:id',
-      exact: true
-    });
-    const linkPageMatch = matchPath(pathname, {
-      path: '/links/:id',
-      exact: true
-    });
-    const commentPageMatch = matchPath(pathname, {
-      path: '/comments/:id',
-      exact: true
-    });
-    const missionPageMatch = matchPath(pathname, {
-      path: '/missions/:missionType'
-    });
+    const subjectPageMatch = matchPath(
+      {
+        path: '/subjects/:id',
+        exact: true
+      },
+      pathname
+    );
+    const playlistsMatch = matchPath(
+      {
+        path: '/playlists/:id',
+        exact: true
+      },
+      pathname
+    );
+    const videoPageMatch = matchPath(
+      {
+        path: '/videos/:id',
+        exact: true
+      },
+      pathname
+    );
+    const linkPageMatch = matchPath(
+      {
+        path: '/links/:id',
+        exact: true
+      },
+      pathname
+    );
+    const commentPageMatch = matchPath(
+      {
+        path: '/comments/:id',
+        exact: true
+      },
+      pathname
+    );
+    const missionPageMatch = matchPath(
+      {
+        path: '/missions/:missionType'
+      },
+      pathname
+    );
 
     return (
       !!subjectPageMatch ||
@@ -165,9 +198,12 @@ function MainNavs({
     );
   }, [pathname]);
 
-  const profilePageMatch = matchPath(pathname, {
-    path: '/users/:userId'
-  });
+  const profilePageMatch = matchPath(
+    {
+      path: '/users/:userId'
+    },
+    pathname
+  );
 
   useEffect(() => {
     const { section } = getSectionFromPathname(pathname);

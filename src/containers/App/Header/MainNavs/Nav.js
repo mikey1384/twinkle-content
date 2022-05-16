@@ -1,7 +1,7 @@
 import React, { memo, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
-import { Route, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Color, desktopMinWidth, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import {
@@ -23,9 +23,7 @@ Nav.propTypes = {
   imgLabel: PropTypes.string,
   isHome: PropTypes.bool,
   onClick: PropTypes.func,
-  pathname: PropTypes.string,
-  style: PropTypes.object,
-  to: PropTypes.string
+  style: PropTypes.object
 };
 
 function Nav({
@@ -33,16 +31,14 @@ function Nav({
   alert,
   alertColor,
   className,
-  to,
   children,
   imgLabel,
   isHome,
   isMobileSideMenu,
   onClick = () => {},
-  pathname,
   style
 }) {
-  const history = useHistory();
+  const location = useLocation();
   const onResetProfile = useProfileContext((v) => v.actions.onResetProfile);
   const profileState = useProfileContext((v) => v.state) || {};
   const onReloadContent = useContentContext((v) => v.actions.onReloadContent);
@@ -55,16 +51,6 @@ function Nav({
   const onSetSubjectsLoaded = useExploreContext(
     (v) => v.actions.onSetSubjectsLoaded
   );
-  const highlighted = useMemo(
-    () =>
-      ['/featured', '/videos', '/links', '/subjects', '/comments'].includes(
-        to
-      ) &&
-      ['featured', 'videos', 'links', 'subjects', 'comments'].includes(
-        pathname.substring(1)
-      ),
-    [pathname, to]
-  );
   const highlightColor = useMemo(
     () => (alert ? alertColor : Color.darkGray()),
     [alert, alertColor]
@@ -74,114 +60,107 @@ function Nav({
   );
 
   return (
-    <Route
-      path={to}
-      exact
-      children={({ match }) => (
-        <div
-          onClick={() => {
-            if (!isMobileSideMenu) {
-              if (match) {
-                handleMatch(match);
-              }
-              history.push(to);
-            } else {
-              onClick();
-            }
-          }}
-          className={`${className} ${css`
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            .chat {
-              color: ${Color.lightGray()};
-            }
-            nav {
-              text-decoration: none;
-              font-weight: bold;
-              color: ${Color.lightGray()};
-              align-items: center;
-              line-height: 1;
-            }
-            > nav.active {
-              color: ${highlightColor}!important;
+    <div
+      onClick={() => {
+        if (!isMobileSideMenu) {
+          if (location.pathname) {
+            handleMatch(location.pathname);
+          }
+        } else {
+          onClick();
+        }
+      }}
+      className={`${className} ${css`
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        .chat {
+          color: ${Color.lightGray()};
+        }
+        nav {
+          text-decoration: none;
+          font-weight: bold;
+          color: ${Color.lightGray()};
+          align-items: center;
+          line-height: 1;
+        }
+        > nav.active {
+          color: ${highlightColor}!important;
+          > svg {
+            color: ${highlightColor}!important;
+          }
+        }
+        @media (min-width: ${desktopMinWidth}) {
+          &:hover {
+            > nav {
               > svg {
-                color: ${highlightColor}!important;
+                color: ${highlightColor};
               }
+              color: ${highlightColor};
             }
-            @media (min-width: ${desktopMinWidth}) {
-              &:hover {
-                > nav {
-                  > svg {
-                    color: ${highlightColor};
-                  }
-                  color: ${highlightColor};
-                }
-              }
+          }
+        }
+        @media (max-width: ${mobileMaxWidth}) {
+          width: 100%;
+          justify-content: center;
+          font-size: 3rem;
+          nav {
+            .nav-label {
+              display: none;
             }
-            @media (max-width: ${mobileMaxWidth}) {
-              width: 100%;
-              justify-content: center;
-              font-size: 3rem;
-              nav {
-                .nav-label {
-                  display: none;
-                }
-              }
-              > nav.active {
-                > svg {
-                  color: ${highlightColor};
-                }
-              }
+          }
+          > nav.active {
+            > svg {
+              color: ${highlightColor};
             }
-          `}`}
-          style={style}
+          }
+        }
+      `}`}
+      style={style}
+    >
+      {!isMobileSideMenu ? (
+        <nav
+          className={location.pathname ? 'active ' : ''}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            ...(alert ? { color: alertColor || Color.gold() } : {})
+          }}
+          onClick={onClick}
         >
-          {!isMobileSideMenu ? (
-            <nav
-              className={to && (match || highlighted) ? 'active ' : ''}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                ...(alert ? { color: alertColor || Color.gold() } : {})
-              }}
-              onClick={onClick}
-            >
-              <Icon icon={isHome ? 'home' : imgLabel} />
-              <span className="nav-label" style={{ marginLeft: '0.7rem' }}>
-                {children}
-              </span>
-            </nav>
-          ) : (
-            <nav
-              className={active ? 'active ' : ''}
-              style={{
-                display: 'flex',
-                cursor: 'pointer',
-                justifyContent: 'center'
-              }}
-            >
-              <Icon
-                style={{
-                  ...(alert ? { color: alertColor || Color.gold() } : {})
-                }}
-                icon={imgLabel}
-              />
-              <span
-                className="nav-label"
-                style={{
-                  marginLeft: '0.7rem',
-                  ...(alert ? { color: alertColor || Color.gold() } : {})
-                }}
-              >
-                {children}
-              </span>
-            </nav>
-          )}
-        </div>
+          <Icon icon={isHome ? 'home' : imgLabel} />
+          <span className="nav-label" style={{ marginLeft: '0.7rem' }}>
+            {children}
+          </span>
+        </nav>
+      ) : (
+        <nav
+          className={active ? 'active ' : ''}
+          style={{
+            display: 'flex',
+            cursor: 'pointer',
+            justifyContent: 'center'
+          }}
+        >
+          <Icon
+            style={{
+              ...(alert ? { color: alertColor || Color.gold() } : {})
+            }}
+            icon={imgLabel}
+          />
+          <span
+            className="nav-label"
+            style={{
+              marginLeft: '0.7rem',
+              ...(alert ? { color: alertColor || Color.gold() } : {})
+            }}
+          >
+            {children}
+          </span>
+        </nav>
       )}
-    />
+    </div>
   );
 
   function handleMatch(match) {

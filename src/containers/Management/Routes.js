@@ -5,14 +5,14 @@ import Notification from 'components/Notification';
 import ModActivities from './ModActivities';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
-Routes.propTypes = {
+ManagementRoutes.propTypes = {
   className: PropTypes.string,
   location: PropTypes.object
 };
 
-export default function Routes({ location, className }) {
+export default function ManagementRoutes({ location, className }) {
   return (
     <div className={className}>
       <div
@@ -26,10 +26,13 @@ export default function Routes({ location, className }) {
           }
         `}
       >
-        <Switch>
-          <Route path="/management" exact component={Main} />
-          <Route path="/management/mod-activities" component={ModActivities} />
-        </Switch>
+        <Routes>
+          <Route path="/management" exact element={<Main />} />
+          <Route
+            path="/management/mod-activities"
+            element={<ModActivities />}
+          />
+        </Routes>
       </div>
       <Notification
         className={css`

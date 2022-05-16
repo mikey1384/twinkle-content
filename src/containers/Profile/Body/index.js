@@ -4,7 +4,7 @@ import { Color, mobileMaxWidth } from 'constants/css';
 import FilterBar from 'components/FilterBar';
 import Home from './Home';
 import Posts from './Posts';
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { css } from '@emotion/css';
 import localize from 'constants/localize';
 
@@ -133,7 +133,7 @@ export default function Body({
             }
           `}
         >
-          <Switch>
+          <Routes>
             <Route
               exact
               path={`${match.path}`}
@@ -157,7 +157,7 @@ export default function Body({
                 />
               )}
             />
-          </Switch>
+          </Routes>
         </div>
       </div>
     </div>

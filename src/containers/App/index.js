@@ -7,7 +7,6 @@ import React, {
   useRef,
   useState
 } from 'react';
-import PropTypes from 'prop-types';
 import Chat from 'containers/Chat';
 import ContentPage from 'containers/ContentPage';
 import Explore from 'containers/Explore';
@@ -29,7 +28,7 @@ import Verify from 'containers/Verify';
 import VideoPage from 'containers/VideoPage';
 import Incoming from 'components/Stream/Incoming';
 import Outgoing from 'components/Stream/Outgoing';
-import { Switch, Route } from 'react-router-dom';
+import { useLocation, useNavigate, Routes, Route } from 'react-router-dom';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { socket } from 'constants/io';
@@ -47,15 +46,12 @@ import {
   useChatContext
 } from 'contexts';
 
-App.propTypes = {
-  history: PropTypes.object,
-  location: PropTypes.object
-};
-
 const deviceIsMobile = isMobile(navigator);
 const userIsUsingIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-function App({ location, history }) {
+function App() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const onCloseSigninModal = useAppContext(
     (v) => v.user.actions.onCloseSigninModal
   );
@@ -244,9 +240,6 @@ function App({ location, history }) {
 
   useEffect(() => {
     window.ga('send', 'pageview', location.pathname);
-    history.listen((location) => {
-      window.ga('send', 'pageview', location.pathname);
-    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
@@ -354,7 +347,8 @@ function App({ location, history }) {
           pathId: channel.pathId
         });
         onSendFirstDirectMessage({ channel, message });
-        history.replace(`/chat/${channel.pathId}`);
+        navigate(-1);
+        navigate(`/chat/${channel.pathId}`);
         socket.emit('join_chat_group', message.channelId);
         socket.emit('send_bi_chat_invitation', {
           userId: recepientId,
@@ -478,7 +472,7 @@ function App({ location, history }) {
       {mobileMenuShown && (
         <MobileMenu
           location={location}
-          history={history}
+          navigate={navigate}
           username={username}
           onClose={() => setMobileMenuShown(false)}
         />
@@ -527,10 +521,7 @@ function App({ location, history }) {
           </Button>
         </div>
       )}
-      <Header
-        history={history}
-        onMobileMenuOpen={() => setMobileMenuShown(true)}
-      />
+      <Header onMobileMenuOpen={() => setMobileMenuShown(true)} />
       <div
         id="App"
         className={`${userIsUsingIOS && !usingChat ? 'ios ' : ''}${css`
@@ -542,36 +533,36 @@ function App({ location, history }) {
           }
         `}`}
       >
-        <Switch>
+        <Routes>
           <Route
             path="/users/:username"
             render={({ history, location, match }) => (
               <Profile history={history} location={location} match={match} />
             )}
           />
-          <Route path="/comments/:contentId" component={ContentPage} />
-          <Route path="/videos/:videoId" component={VideoPage} />
-          <Route path="/videos" component={Explore} />
-          <Route path="/links/:linkId" component={LinkPage} />
-          <Route path="/links" component={Explore} />
-          <Route path="/subjects/:contentId" component={ContentPage} />
-          <Route path="/subjects" component={Explore} />
-          <Route path="/playlists" component={PlaylistPage} />
+          <Route path="/comments/:contentId" element={<ContentPage />} />
+          <Route path="/videos/:videoId" element={<VideoPage />} />
+          <Route path="/videos" element={<Explore />} />
+          <Route path="/links/:linkId" element={<LinkPage />} />
+          <Route path="/links" element={<Explore />} />
+          <Route path="/subjects/:contentId" element={<ContentPage />} />
+          <Route path="/subjects" element={<Explore />} />
+          <Route path="/playlists" element={<PlaylistPage />} />
           <Route
             path="/missions/:missionType/:taskType"
-            component={MissionPage}
+            element={<MissionPage />}
           />
-          <Route path="/missions/:missionType" component={MissionPage} />
-          <Route path="/missions" component={Mission} />
+          <Route path="/missions/:missionType" element={<MissionPage />} />
+          <Route path="/missions" element={<Mission />} />
           <Route
             path="/chat"
             render={() => <Chat onFileUpload={handleFileUploadOnChat} />}
           />
-          <Route path="/management" exact component={Management} />
-          <Route path="/management/mod-activities" component={Management} />
-          <Route path="/reset" component={ResetPassword} />
-          <Route path="/verify" component={Verify} />
-          <Route path="/privacy" component={Privacy} />
+          <Route path="/management" exact element={<Management />} />
+          <Route path="/management/mod-activities" element={<Management />} />
+          <Route path="/reset" element={<ResetPassword />} />
+          <Route path="/verify" element={<Verify />} />
+          <Route path="/privacy" element={<Privacy />} />
           <Route
             exact
             path="/"
@@ -602,8 +593,8 @@ function App({ location, history }) {
               <Home history={history} location={location} />
             )}
           />
-          <Route path="/:username" component={Redirect} />
-        </Switch>
+          <Route path="/:username" element={<Redirect />} />
+        </Routes>
       </div>
       {signinModalShown && <SigninModal show onHide={onCloseSigninModal} />}
       {channelOnCall.incomingShown && <Incoming />}

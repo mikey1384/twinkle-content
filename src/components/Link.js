@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 Link.propTypes = {
   innerRef: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -24,7 +24,7 @@ export default function Link({
   target,
   ...props
 }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   return to ? (
     <a
       {...props}
@@ -60,10 +60,10 @@ export default function Link({
     if (target) return window.open(to, target);
     if (typeof onClickAsync === 'function') {
       return onClickAsync().then((clickSafe) => {
-        if (!clickSafe) history.push(to);
+        if (!clickSafe) navigate(to);
       });
     }
-    history.push(to);
+    navigate(to);
     onClick();
   }
 }

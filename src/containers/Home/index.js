@@ -11,7 +11,7 @@ import Earn from './Earn';
 import Store from './Store';
 import Stories from './Stories';
 import LocalContext from './Context';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { container, Left, Center, Right } from './Styles';
@@ -54,7 +54,7 @@ function Home({ history, location, onFileUpload }) {
           </div>
           <div className={Center}>
             <div style={{ maxWidth: '700px', width: '100%' }}>
-              <Switch>
+              <Routes>
                 <Route
                   path="/users"
                   render={({ history, location }) => (
@@ -82,7 +82,7 @@ function Home({ history, location, onFileUpload }) {
                     <Stories location={location} history={history} />
                   )}
                 />
-              </Switch>
+              </Routes>
             </div>
           </div>
           <Notification trackScrollPosition className={Right} location="home" />

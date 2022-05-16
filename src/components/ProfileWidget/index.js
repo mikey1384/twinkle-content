@@ -16,12 +16,12 @@ const viewProfileLabel = localize('viewProfile');
 const changePictureLabel = localize('changePicture');
 
 ProfileWidget.propTypes = {
-  history: PropTypes.object,
+  navigate: PropTypes.object,
   onLoadImage: PropTypes.func,
   onShowAlert: PropTypes.func
 };
 
-export default function ProfileWidget({ history, onLoadImage, onShowAlert }) {
+export default function ProfileWidget({ navigate, onLoadImage, onShowAlert }) {
   const onOpenSigninModal = useAppContext(
     (v) => v.user.actions.onOpenSigninModal
   );
@@ -34,9 +34,7 @@ export default function ProfileWidget({ history, onLoadImage, onShowAlert }) {
         {username && (
           <div
             className="heading"
-            onClick={() =>
-              username ? history.push(`/users/${username}`) : null
-            }
+            onClick={() => (username ? navigate(`/users/${username}`) : null)}
           >
             <div>
               <ProfilePic
@@ -69,7 +67,7 @@ export default function ProfileWidget({ history, onLoadImage, onShowAlert }) {
               <Button
                 style={{ width: '100%' }}
                 transparent
-                onClick={() => history.push(`/users/${username}`)}
+                onClick={() => navigate(`/users/${username}`)}
               >
                 {viewProfileLabel}
               </Button>

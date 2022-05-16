@@ -4,7 +4,7 @@ import FilterBar from 'components/FilterBar';
 import SideMenu from '../SideMenu';
 import InvalidPage from 'components/InvalidPage';
 import Feeds from './Feeds';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import { useProfileState } from 'helpers/hooks';
@@ -87,7 +87,7 @@ export default function Posts({
           }
         `}
       >
-        <Switch>
+        <Routes>
           <Route
             exact
             path={path}
@@ -123,7 +123,7 @@ export default function Posts({
               />
             )}
           />
-        </Switch>
+        </Routes>
         {!['likes', 'watched'].includes(section) && (
           <SideMenu
             className={`desktop ${css`

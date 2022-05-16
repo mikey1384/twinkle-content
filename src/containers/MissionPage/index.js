@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useRef } from 'react';
-import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
 import Main from './Main';
 import RightMenu from './RightMenu';
@@ -9,22 +8,22 @@ import FilterBar from 'components/FilterBar';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
-import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
+import {
+  Routes,
+  Route,
+  useLocation,
+  useMatch,
+  useNavigate,
+  useParams
+} from 'react-router-dom';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useMissionContext } from 'contexts';
 
-MissionPage.propTypes = {
-  match: PropTypes.object.isRequired
-};
-
-export default function MissionPage({
-  match: {
-    path,
-    params: { missionType }
-  }
-}) {
+export default function MissionPage() {
+  const { path } = useMatch();
+  const { missionType } = useParams();
   const mounted = useRef(true);
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const { loaded, userId, isCreator } = useMyState();
   const loadMission = useAppContext((v) => v.requestHelpers.loadMission);
@@ -138,7 +137,7 @@ export default function MissionPage({
                   ? 'active'
                   : ''
               }
-              onClick={() => history.push(`/missions/${missionType}`)}
+              onClick={() => navigate(`/missions/${missionType}`)}
             >
               Mission
             </nav>
@@ -148,7 +147,7 @@ export default function MissionPage({
                   ? 'active'
                   : ''
               }
-              onClick={() => history.push(`/missions/${missionType}/manage`)}
+              onClick={() => navigate(`/missions/${missionType}/manage`)}
             >
               Manage
             </nav>
@@ -182,7 +181,7 @@ export default function MissionPage({
               }
             `}
           >
-            <Switch>
+            <Routes>
               <Route
                 exact
                 path={`/missions/${missionType}/manage`}
@@ -205,7 +204,7 @@ export default function MissionPage({
                   />
                 )}
               />
-            </Switch>
+            </Routes>
           </div>
           {isCreator && (
             <RightMenu

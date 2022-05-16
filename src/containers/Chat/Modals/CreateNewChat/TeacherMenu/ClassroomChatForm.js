@@ -10,7 +10,7 @@ import { css } from '@emotion/css';
 import { socket } from 'constants/io';
 import { mobileMaxWidth } from 'constants/css';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import localize from 'constants/localize';
 
 const addMembersOfClassLabel = localize('addMembersOfClass');
@@ -25,7 +25,7 @@ ClassroomChat.propTypes = {
 };
 
 export default function ClassroomChat({ onBackClick, onHide }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const createNewChat = useAppContext((v) => v.requestHelpers.createNewChat);
   const searchUserToInvite = useAppContext(
     (v) => v.requestHelpers.searchUserToInvite
@@ -152,7 +152,7 @@ export default function ClassroomChat({ onBackClick, onHide }) {
       members,
       pathId
     });
-    history.push(`/chat/${pathId}`);
+    navigate(`/chat/${pathId}`);
     onHide();
   }
 }

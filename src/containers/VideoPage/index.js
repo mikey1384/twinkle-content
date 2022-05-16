@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import Carousel from 'components/Carousel';
 import Button from 'components/Button';
 import XPVideoPlayer from 'components/XPVideoPlayer';
@@ -19,6 +18,7 @@ import Details from './Details';
 import NavMenu from './NavMenu';
 import PageTab from './PageTab';
 import URL from 'constants/URL';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { fetchedVideoCodeFromURL } from 'helpers/stringHelpers';
@@ -36,19 +36,10 @@ const addQuestionsLabel = localize('addQuestions');
 const commentOnThisVideoLabel = localize('commentOnThisVideo');
 const thereAreNoQuestionsLabel = localize('thereAreNoQuestions');
 
-VideoPage.propTypes = {
-  history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired
-};
-
-export default function VideoPage({
-  history,
-  location: { search },
-  match: {
-    params: { videoId: initialVideoId }
-  }
-}) {
+export default function VideoPage() {
+  const navigate = useNavigate();
+  const { search } = useLocation();
+  const { videoId: initialVideoId } = useParams();
   const videoId = Number(initialVideoId);
   const [changingPage, setChangingPage] = useState(false);
   const [watchTabActive, setWatchTabActive] = useState(true);
@@ -168,7 +159,7 @@ export default function VideoPage({
   useEffect(() => {
     if (!prevDeleted.current && isDeleted) {
       onSetContentNav('');
-      history.push('/videos');
+      navigate('/videos');
     }
     prevDeleted.current = isDeleted;
     // eslint-disable-next-line react-hooks/exhaustive-deps

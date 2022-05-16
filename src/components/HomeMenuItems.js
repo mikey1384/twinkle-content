@@ -13,7 +13,7 @@ import localize from 'constants/localize';
 const BodyRef = document.scrollingElement || document.documentElement;
 
 HomeMenuItems.propTypes = {
-  history: PropTypes.object,
+  navigate: PropTypes.object,
   location: PropTypes.object,
   style: PropTypes.object
 };
@@ -28,7 +28,7 @@ const year = (() => {
   return dt.getFullYear();
 })();
 
-export default function HomeMenuItems({ history, location, style = {} }) {
+export default function HomeMenuItems({ navigate, location, style = {} }) {
   const onSetProfilesLoaded = useAppContext(
     (v) => v.user.actions.onSetProfilesLoaded
   );
@@ -190,7 +190,7 @@ export default function HomeMenuItems({ history, location, style = {} }) {
           children={({ match }) => (
             <nav
               className={match ? 'active' : ''}
-              onClick={() => history.push('/earn')}
+              onClick={() => navigate('/earn')}
             >
               <a href="/earn" onClick={(e) => e.preventDefault()}>
                 <div className="homemenu__item">
@@ -210,7 +210,7 @@ export default function HomeMenuItems({ history, location, style = {} }) {
           children={({ match }) => (
             <nav
               className={match ? 'active' : ''}
-              onClick={() => history.push('/store')}
+              onClick={() => navigate('/store')}
             >
               <a href="/store" onClick={(e) => e.preventDefault()}>
                 <div className="homemenu__item">
@@ -231,7 +231,7 @@ export default function HomeMenuItems({ history, location, style = {} }) {
             children={({ match }) => (
               <nav
                 className={match ? 'active' : ''}
-                onClick={() => history.push('/management')}
+                onClick={() => navigate('/management')}
               >
                 <a href="/management" onClick={(e) => e.preventDefault()}>
                   <div className="homemenu__item">
@@ -274,13 +274,13 @@ export default function HomeMenuItems({ history, location, style = {} }) {
       BodyRef.scrollTop = 0;
       return;
     }
-    history.push('/');
+    navigate('/');
   }
 
   function handleOnPeopleClick() {
     if (deviceIsMobile) {
       onSetProfilesLoaded(false);
     }
-    history.push('/users');
+    navigate('/users');
   }
 }

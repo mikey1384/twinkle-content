@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Embedly from 'components/Embedly';
 import Comments from 'components/Comments';
@@ -28,24 +27,16 @@ import {
   useViewContext,
   useExploreContext
 } from 'contexts';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
 const rewardLabel = localize('reward');
 
-LinkPage.propTypes = {
-  history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired
-};
-
-export default function LinkPage({
-  history,
-  location,
-  match: {
-    params: { linkId: initialLinkId }
-  }
-}) {
+export default function LinkPage() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { linkId: initialLinkId } = useParams();
   const linkId = Number(initialLinkId);
   const deleteContent = useAppContext((v) => v.requestHelpers.deleteContent);
   const editContent = useAppContext((v) => v.requestHelpers.editContent);
@@ -158,7 +149,7 @@ export default function LinkPage({
   useEffect(() => {
     if (!prevDeleted.current && isDeleted) {
       onSetContentNav('');
-      history.push('/links');
+      navigate('/links');
     }
     prevDeleted.current = isDeleted;
     // eslint-disable-next-line react-hooks/exhaustive-deps

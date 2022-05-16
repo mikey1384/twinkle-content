@@ -9,7 +9,7 @@ import { Color, desktopMinWidth, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useChatContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import localize from 'constants/localize';
 
 const newChatLabel = localize('newChat');
@@ -19,7 +19,7 @@ LeftMenu.propTypes = {
 };
 
 function LeftMenu({ onNewButtonClick }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { profileTheme } = useMyState();
   const chatType = useChatContext((v) => v.state.chatType);
   const loadingVocabulary = useChatContext((v) => v.state.loadingVocabulary);
@@ -71,7 +71,7 @@ function LeftMenu({ onNewButtonClick }) {
       </div>
       <Vocabulary
         selected={chatType === 'vocabulary' || loadingVocabulary}
-        onClick={() => history.push('/chat/vocabulary')}
+        onClick={() => navigate('/chat/vocabulary')}
       />
       <ChatSearchBox
         style={{

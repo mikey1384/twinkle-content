@@ -1,27 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import ContentPanel from 'components/ContentPanel';
 import InvalidPage from 'components/InvalidPage';
 import request from 'axios';
 import URL from 'constants/URL';
 import ErrorBoundary from 'components/ErrorBoundary';
+import { useParams, useNavigate } from 'react-router-dom';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useViewContext } from 'contexts';
 
-ContentPage.propTypes = {
-  match: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired
-};
-
-export default function ContentPage({
-  history,
-  match: {
-    params: { contentId: initialContentId },
-    url
-  }
-}) {
+export default function ContentPage() {
+  const navigate = useNavigate();
+  const { contentId: initialContentId, url } = useParams();
   const contentId = Number(initialContentId);
   const { userId } = useMyState();
   const onSetContentNav = useViewContext((v) => v.actions.onSetContentNav);
@@ -44,7 +35,7 @@ export default function ContentPage({
   useEffect(() => {
     if (!prevDeleted.current && (isDeleted || isDeleteNotification)) {
       onSetContentNav('');
-      history.push('/');
+      navigate('/');
     }
     prevDeleted.current = isDeleted || isDeleteNotification;
     // eslint-disable-next-line react-hooks/exhaustive-deps

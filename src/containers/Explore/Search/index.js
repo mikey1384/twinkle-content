@@ -9,13 +9,13 @@ import { getSectionFromPathname } from 'helpers';
 import { useExploreContext } from 'contexts';
 
 Search.propTypes = {
-  history: PropTypes.object,
+  navigate: PropTypes.object,
   innerRef: PropTypes.object,
   pathname: PropTypes.string.isRequired,
   style: PropTypes.object
 };
 
-export default function Search({ history, innerRef, pathname, style }) {
+export default function Search({ navigate, innerRef, pathname, style }) {
   const searchText = useExploreContext((v) => v.state.search.searchText);
   const onLoadSearchResults = useExploreContext(
     (v) => v.actions.onLoadSearchResults
@@ -59,7 +59,7 @@ export default function Search({ history, innerRef, pathname, style }) {
               width: 100%;
               margin-top: 2rem;
             `}
-            history={history}
+            navigate={navigate}
             selectedFilter={category}
           />
           <Results searchText={searchText} filter={category} />

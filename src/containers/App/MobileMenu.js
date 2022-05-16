@@ -15,11 +15,11 @@ import { useAppContext, useChatContext } from 'contexts';
 
 MobileMenu.propTypes = {
   location: PropTypes.object,
-  history: PropTypes.object,
+  navigate: PropTypes.object,
   onClose: PropTypes.func.isRequired
 };
 
-export default function MobileMenu({ location, history, onClose }) {
+export default function MobileMenu({ location, navigate, onClose }) {
   const styles = useSpring({
     to: { marginLeft: '0' },
     from: { marginLeft: '-100%' }
@@ -77,7 +77,7 @@ export default function MobileMenu({ location, history, onClose }) {
         `}`}
       >
         <ProfileWidget
-          history={history}
+          history={navigate}
           onShowAlert={() => setAlertModalShown(true)}
           onLoadImage={(upload) =>
             setImageEditStatus({
@@ -88,7 +88,7 @@ export default function MobileMenu({ location, history, onClose }) {
           }
         />
         <HomeMenuItems
-          history={history}
+          history={navigate}
           location={location}
           style={{ marginTop: '1rem' }}
         />

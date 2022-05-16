@@ -21,7 +21,7 @@ import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 MainContent.propTypes = {
   contentId: PropTypes.number.isRequired,
@@ -41,7 +41,7 @@ export default function MainContent({
   userId
 }) {
   const ContainerRef = useRef(null);
-  const history = useHistory();
+  const navigate = useNavigate();
   const editContent = useAppContext((v) => v.requestHelpers.editContent);
   const { profileTheme } = useMyState();
   const {
@@ -266,9 +266,7 @@ export default function MainContent({
                 (secretHidden ? (
                   <SecretComment
                     onClick={() =>
-                      history.push(
-                        `/subjects/${targetObj?.subject?.id || rootId}`
-                      )
+                      navigate(`/subjects/${targetObj?.subject?.id || rootId}`)
                     }
                   />
                 ) : isNotification ? (

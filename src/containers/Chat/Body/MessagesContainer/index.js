@@ -38,7 +38,7 @@ import { css } from '@emotion/css';
 import { Color } from 'constants/css';
 import { socket } from 'constants/io';
 import { isMobile, parseChannelPath } from 'helpers';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useMyState } from 'helpers/hooks';
 import LocalContext from '../../Context';
 import localize from 'constants/localize';
@@ -68,7 +68,7 @@ function MessagesContainer({
   currentChannel,
   loading: channelLoading
 }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const {
     actions: {
@@ -528,7 +528,8 @@ function MessagesContainer({
             onSendFirstDirectMessage({ channel, message });
           }
           onSetChessModalShown(false);
-          history.replace(`/chat/${pathId}`);
+          navigate(-1);
+          navigate(`/chat/${pathId}`);
           return;
         }
       } catch (error) {
@@ -687,7 +688,7 @@ function MessagesContainer({
           username,
           profilePicUrl
         });
-        history.push(`/chat/${GENERAL_CHAT_PATH_ID}`);
+        navigate(`/chat/${GENERAL_CHAT_PATH_ID}`);
         if (mounted.current) {
           setLeaveConfirmModalShown(false);
         }
@@ -779,7 +780,7 @@ function MessagesContainer({
           },
           newMembers: [{ id: userId, username, profilePicUrl }]
         });
-        history.push(`/chat/${invitationChannelPath}`);
+        navigate(`/chat/${invitationChannelPath}`);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -836,7 +837,8 @@ function MessagesContainer({
           if (mounted.current) {
             onSetCreatingNewDMChannel(false);
           }
-          history.replace(`/chat/${pathId}`);
+          navigate(-1);
+          navigate(`/chat/${pathId}`);
           return Promise.resolve();
         } catch (error) {
           return Promise.reject(error);

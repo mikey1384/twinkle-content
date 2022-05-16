@@ -7,7 +7,7 @@ import Loading from 'components/Loading';
 import SideMenu from 'components/SideMenu';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useMyState } from 'helpers/hooks';
 import { useManagementContext } from 'contexts';
 import localize from 'constants/localize';
@@ -20,7 +20,7 @@ Management.propTypes = {
 };
 
 export default function Management({ location }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const loaded = useManagementContext((v) => v.state.loaded);
   const onLoadManagement = useManagementContext(
     (v) => v.actions.onLoadManagement
@@ -54,7 +54,7 @@ export default function Management({ location }) {
       >
         <nav
           className={location.pathname === `/management` ? 'active' : ''}
-          onClick={() => history.push('/management')}
+          onClick={() => navigate('/management')}
         >
           {accountMgmtLabel}
         </nav>
@@ -62,7 +62,7 @@ export default function Management({ location }) {
           className={
             location.pathname === `/management/mod-activities` ? 'active' : ''
           }
-          onClick={() => history.push('/management/mod-activities')}
+          onClick={() => navigate('/management/mod-activities')}
         >
           {modActivitiesLabel}
         </nav>

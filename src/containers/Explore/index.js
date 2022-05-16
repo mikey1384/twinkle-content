@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
-import { Switch, Route } from 'react-router';
-import { NavLink } from 'react-router-dom';
+import { Routes, Route } from 'react-router';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import { socket } from 'constants/io';
@@ -24,12 +23,9 @@ const subjectsLabel = localize('subjects');
 const videosLabel = localize('videos2');
 const linksLabel = localize('links');
 
-Explore.propTypes = {
-  history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired
-};
-
-export default function Explore({ history, location }) {
+export default function Explore() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const searchText = useExploreContext((v) => v.state.search.searchText);
   const onSetPrevUserId = useExploreContext((v) => v.actions.onSetPrevUserId);
   const { userId } = useMyState();
@@ -112,7 +108,7 @@ export default function Explore({ history, location }) {
             />
           )}
           <Search
-            history={history}
+            navigate={navigate}
             pathname={location.pathname}
             innerRef={SearchBoxRef}
             style={{
@@ -123,11 +119,11 @@ export default function Explore({ history, location }) {
               marginBottom: '3rem'
             }}
           />
-          <Switch>
-            <Route path="/videos" component={Videos} />
-            <Route path="/links" component={Links} />
-            <Route path="/subjects" component={Subjects} />
-          </Switch>
+          <Routes>
+            <Route path="/videos" element={<Videos />} />
+            <Route path="/links" element={<Links />} />
+            <Route path="/subjects" element={<Subjects />} />
+          </Routes>
           <Categories
             style={{ marginTop: '3rem', marginBottom: '4rem' }}
             filter={category}

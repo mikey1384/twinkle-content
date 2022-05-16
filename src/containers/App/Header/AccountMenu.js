@@ -17,10 +17,10 @@ const logOutLabel = localize('logOut');
 
 AccountMenu.propTypes = {
   className: PropTypes.string,
-  history: PropTypes.object.isRequired
+  navigate: PropTypes.func.isRequired
 };
 
-function AccountMenu({ className, history }) {
+function AccountMenu({ className, navigate }) {
   const [twinkleCoinsHovered, setTwinkleCoinsHovered] = useState(false);
   const { loggedIn, username, userId, managementLevel, twinkleCoins } =
     useMyState();
@@ -39,7 +39,7 @@ function AccountMenu({ className, history }) {
             <span style={{ marginLeft: '1rem' }}>{profileLabel}</span>
           </>
         ),
-        onClick: () => history.push(`/users/${username}`)
+        onClick: () => navigate(`/users/${username}`)
       }
     ];
     if (managementLevel > 0) {
@@ -50,7 +50,7 @@ function AccountMenu({ className, history }) {
             <span style={{ marginLeft: '1rem' }}>{managementLabel}</span>
           </div>
         ),
-        onClick: () => history.push('/management')
+        onClick: () => navigate('/management')
       });
     }
     result.push({

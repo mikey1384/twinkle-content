@@ -4,27 +4,27 @@ import FilterBar from 'components/FilterBar';
 
 TopFilter.propTypes = {
   className: PropTypes.string,
-  history: PropTypes.object,
+  navigate: PropTypes.object,
   selectedFilter: PropTypes.string.isRequired
 };
 
-export default function TopFilter({ history, selectedFilter, className }) {
+export default function TopFilter({ navigate, selectedFilter, className }) {
   return (
     <FilterBar className={className} bordered>
       <nav
-        onClick={() => history.push('/videos')}
+        onClick={() => navigate('/videos')}
         className={selectedFilter === 'videos' ? 'active' : ''}
       >
         Videos
       </nav>
       <nav
-        onClick={() => history.push('/links')}
+        onClick={() => navigate('/links')}
         className={selectedFilter === 'links' ? 'active' : ''}
       >
         Links
       </nav>
       <nav
-        onClick={() => history.push('/subjects')}
+        onClick={() => navigate('/subjects')}
         className={selectedFilter === 'subjects' ? 'active' : ''}
       >
         Subjects
