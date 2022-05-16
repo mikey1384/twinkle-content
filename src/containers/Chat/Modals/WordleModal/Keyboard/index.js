@@ -6,6 +6,7 @@ import { ENTER_TEXT, DELETE_TEXT } from '../constants/strings';
 import { localeAwareUpperCase } from '../helpers/words';
 
 Keyboard.propTypes = {
+  isChecking: PropTypes.bool,
   isEnterReady: PropTypes.bool,
   onChar: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
@@ -18,6 +19,7 @@ Keyboard.propTypes = {
 };
 
 export default function Keyboard({
+  isChecking,
   isEnterReady,
   onChar,
   onDelete,
@@ -42,6 +44,7 @@ export default function Keyboard({
 
   useEffect(() => {
     const listener = (e) => {
+      if (isChecking) return;
       if (e.code === 'Enter') {
         onEnter();
       } else if (e.code === 'Backspace') {
@@ -58,10 +61,10 @@ export default function Keyboard({
     return function cleanUp() {
       window.removeEventListener('keyup', listener);
     };
-  }, [onEnter, onDelete, onChar]);
+  }, [onEnter, onDelete, onChar, isChecking]);
 
   return (
-    <div style={style}>
+    <div style={{ ...style, opacity: isChecking ? 0.5 : 1 }}>
       <div
         style={{
           display: 'flex',
@@ -76,6 +79,7 @@ export default function Keyboard({
             onClick={onClick}
             status={charStatuses[key]}
             isRevealing={isRevealing}
+            isChecking={isChecking}
           />
         ))}
       </div>
@@ -94,6 +98,7 @@ export default function Keyboard({
             status={charStatuses[key]}
             isRevealing={isRevealing}
             maxWordLength={maxWordLength}
+            isChecking={isChecking}
           />
         ))}
       </div>
@@ -103,6 +108,7 @@ export default function Keyboard({
           width={65.4}
           value="ENTER"
           onClick={onClick}
+          isChecking={isChecking}
         >
           {ENTER_TEXT}
         </Key>
@@ -113,9 +119,15 @@ export default function Keyboard({
             onClick={onClick}
             status={charStatuses[key]}
             isRevealing={isRevealing}
+            isChecking={isChecking}
           />
         ))}
-        <Key width={65.4} value="DELETE" onClick={onClick}>
+        <Key
+          width={65.4}
+          value="DELETE"
+          onClick={onClick}
+          isChecking={isChecking}
+        >
           {DELETE_TEXT}
         </Key>
       </div>

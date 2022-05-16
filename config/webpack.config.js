@@ -351,13 +351,14 @@ module.exports = function (webpackEnv) {
             fullySpecified: false
           }
         },
-        // Handle node_modules packages that contain sourcemaps
+        /* Handle node_modules packages that contain sourcemaps
         shouldUseSourceMap && {
           enforce: 'pre',
           exclude: /@babel(?:\/|\\{1,2})runtime/,
           test: /\.(js|mjs|jsx|ts|tsx|css)$/,
           loader: require.resolve('source-map-loader')
         },
+        */
         {
           // "oneOf" will traverse all following loaders until one will
           // match the requirements. When no loader matches it will fall
