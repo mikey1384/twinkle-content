@@ -437,10 +437,24 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async checkIfDuplicateWordleAttempt({ channelId, numGuesses, solution }) {
+      try {
+        const {
+          data: { isDuplicate }
+        } = await request.get(
+          `${URL}/chat/wordle/attempt/duplicate?channelId=${channelId}&numGuesses=${numGuesses}&solution=${solution}`,
+          auth()
+        );
+        return Promise.resolve(isDuplicate);
+      } catch (error) {
+        handleError(error);
+        return Promise.resolve(true);
+      }
+    },
     async updateWordleAttempt({ channelId, guesses, solution, isSolved }) {
       try {
         const {
-          data: { wordleAttemptState, wordleStats, isDuplicate }
+          data: { wordleAttemptState, wordleStats }
         } = await request.put(
           `${URL}/chat/wordle/attempt`,
           { channelId, guesses, solution, isSolved },
@@ -448,8 +462,7 @@ export default function chatRequestHelpers({ auth, handleError }) {
         );
         return Promise.resolve({
           wordleAttemptState,
-          wordleStats,
-          isDuplicate
+          wordleStats
         });
       } catch (error) {
         return handleError(error);

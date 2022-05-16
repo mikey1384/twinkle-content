@@ -49,6 +49,9 @@ export default function Game({
   const updateWordleAttempt = useAppContext(
     (v) => v.requestHelpers.updateWordleAttempt
   );
+  const checkIfDuplicateWordleAttempt = useAppContext(
+    (v) => v.requestHelpers.checkIfDuplicateWordleAttempt
+  );
   const onSetWordleGuesses = useChatContext(
     (v) => v.actions.onSetWordleGuesses
   );
@@ -177,12 +180,17 @@ export default function Game({
 
     if (newGuesses.length < MAX_GUESSES && currentGuess !== solution) {
       setIsChecking(true);
-      const { isDuplicate } = await updateWordleAttempt({
+      const isDuplicate = await checkIfDuplicateWordleAttempt({
+        channelId,
+        numGuesses: newGuesses.length,
+        solution
+      });
+      if (isDuplicate) return;
+      updateWordleAttempt({
         channelId,
         guesses: newGuesses,
         solution
       });
-      if (isDuplicate) return;
       setIsChecking(false);
     }
 
