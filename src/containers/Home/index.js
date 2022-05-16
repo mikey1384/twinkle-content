@@ -11,18 +11,18 @@ import Earn from './Earn';
 import Store from './Store';
 import Stories from './Stories';
 import LocalContext from './Context';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { container, Left, Center, Right } from './Styles';
 
 Home.propTypes = {
-  history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
   onFileUpload: PropTypes.func
 };
 
-function Home({ history, location, onFileUpload }) {
+function Home({ onFileUpload }) {
+  const navigate = useNavigate();
+  const location = useLocation();
   const { userId } = useMyState();
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const [alertModalShown, setAlertModalShown] = useState(false);
@@ -39,7 +39,7 @@ function Home({ history, location, onFileUpload }) {
         <div className={container}>
           <div className={Left}>
             <ProfileWidget
-              history={history}
+              navigate={navigate}
               onShowAlert={() => setAlertModalShown(true)}
               onLoadImage={(upload) => {
                 setImageEditModalShown(true);
@@ -48,7 +48,7 @@ function Home({ history, location, onFileUpload }) {
             />
             <HomeMenuItems
               style={{ marginTop: '1rem' }}
-              history={history}
+              navigate={navigate}
               location={location}
             />
           </div>

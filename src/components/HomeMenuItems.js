@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { isMobile } from 'helpers';
 import { useMyState } from 'helpers/hooks';
@@ -13,7 +13,7 @@ import localize from 'constants/localize';
 const BodyRef = document.scrollingElement || document.documentElement;
 
 HomeMenuItems.propTypes = {
-  navigate: PropTypes.object,
+  navigate: PropTypes.func,
   location: PropTypes.object,
   style: PropTypes.object
 };
@@ -147,104 +147,62 @@ export default function HomeMenuItems({ navigate, location, style = {} }) {
         `}`}
         style={style}
       >
-        <Route
-          path="/"
-          exact
-          children={({ match }) => (
-            <nav className={match ? 'active' : ''} onClick={handleStoryClick}>
-              <a href="/" onClick={(e) => e.preventDefault()}>
-                <div className="homemenu__item">
-                  <div className="selection" />
-                  <div className="icon">
-                    <Icon icon="book" size="1x" />
-                  </div>
-                  <div className="label">{storiesLabel}</div>
-                </div>
-              </a>
-            </nav>
-          )}
-        />
-        <Route
-          exact
-          path="/users"
-          children={({ match }) => (
-            <nav
-              className={match ? 'active' : ''}
-              onClick={handleOnPeopleClick}
-            >
-              <a href="/users" onClick={(e) => e.preventDefault()}>
-                <div className="homemenu__item">
-                  <div className="selection" />
-                  <div className="icon">
-                    <Icon icon="users" size="1x" />
-                  </div>
-                  <div className="label">{peopleLabel}</div>
-                </div>
-              </a>
-            </nav>
-          )}
-        />
-        <Route
-          exact
-          path="/earn"
-          children={({ match }) => (
-            <nav
-              className={match ? 'active' : ''}
-              onClick={() => navigate('/earn')}
-            >
-              <a href="/earn" onClick={(e) => e.preventDefault()}>
-                <div className="homemenu__item">
-                  <div className="selection" />
-                  <div className="icon">
-                    <Icon icon="bolt" size="1x" />
-                  </div>
-                  <div className="label">{earnXPLabel}</div>
-                </div>
-              </a>
-            </nav>
-          )}
-        />
-        <Route
-          exact
-          path="/store"
-          children={({ match }) => (
-            <nav
-              className={match ? 'active' : ''}
-              onClick={() => navigate('/store')}
-            >
-              <a href="/store" onClick={(e) => e.preventDefault()}>
-                <div className="homemenu__item">
-                  <div className="selection" />
-                  <div className="icon">
-                    <Icon icon="shopping-bag" size="1x" />
-                  </div>
-                  <div className="label">{storeLabel}</div>
-                </div>
-              </a>
-            </nav>
-          )}
-        />
+        <nav className="active" onClick={handleStoryClick}>
+          <a href="/" onClick={(e) => e.preventDefault()}>
+            <div className="homemenu__item">
+              <div className="selection" />
+              <div className="icon">
+                <Icon icon="book" size="1x" />
+              </div>
+              <div className="label">{storiesLabel}</div>
+            </div>
+          </a>
+        </nav>
+        <nav className="active" onClick={handleOnPeopleClick}>
+          <a href="/users" onClick={(e) => e.preventDefault()}>
+            <div className="homemenu__item">
+              <div className="selection" />
+              <div className="icon">
+                <Icon icon="users" size="1x" />
+              </div>
+              <div className="label">{peopleLabel}</div>
+            </div>
+          </a>
+        </nav>
+        <nav className="active" onClick={() => navigate('/earn')}>
+          <a href="/earn" onClick={(e) => e.preventDefault()}>
+            <div className="homemenu__item">
+              <div className="selection" />
+              <div className="icon">
+                <Icon icon="bolt" size="1x" />
+              </div>
+              <div className="label">{earnXPLabel}</div>
+            </div>
+          </a>
+        </nav>
+        <nav className="active" onClick={() => navigate('/store')}>
+          <a href="/store" onClick={(e) => e.preventDefault()}>
+            <div className="homemenu__item">
+              <div className="selection" />
+              <div className="icon">
+                <Icon icon="shopping-bag" size="1x" />
+              </div>
+              <div className="label">{storeLabel}</div>
+            </div>
+          </a>
+        </nav>
         {managementLevel > 0 && deviceIsMobile && (
-          <Route
-            exact
-            path="/management"
-            children={({ match }) => (
-              <nav
-                className={match ? 'active' : ''}
-                onClick={() => navigate('/management')}
-              >
-                <a href="/management" onClick={(e) => e.preventDefault()}>
-                  <div className="homemenu__item">
-                    <div className="selection" />
-                    <div className="icon">
-                      <Icon icon="sliders-h" size="1x" />
-                    </div>
-                    <span className="label">Manage</span>
-                  </div>
-                </a>
-              </nav>
-            )}
-          />
+          <nav className="active" onClick={() => navigate('/management')}>
+            <a href="/management" onClick={(e) => e.preventDefault()}>
+              <div className="homemenu__item">
+                <div className="selection" />
+                <div className="icon">
+                  <Icon icon="sliders-h" size="1x" />
+                </div>
+                <span className="label">Manage</span>
+              </div>
+            </a>
+          </nav>
         )}
         <div
           style={{

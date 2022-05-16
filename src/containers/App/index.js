@@ -566,33 +566,11 @@ function App() {
           <Route
             exact
             path="/"
-            render={({ history, location }) => (
-              <Home
-                history={history}
-                location={location}
-                onFileUpload={handleFileUploadOnHome}
-              />
-            )}
+            element={<Home onFileUpload={handleFileUploadOnHome} />}
           />
-          <Route
-            path="/earn"
-            render={({ history, location }) => (
-              <Home history={history} location={location} />
-            )}
-          />
-          <Route
-            path="/store"
-            render={({ history, location }) => (
-              <Home history={history} location={location} />
-            )}
-          />
-          <Route
-            exact
-            path="/users/"
-            render={({ history, location }) => (
-              <Home history={history} location={location} />
-            )}
-          />
+          <Route path="/earn" element={<Home />} />
+          <Route path="/store" element={<Home />} />
+          <Route exact path="/users/" element={<Home />} />
           <Route path="/:username" element={<Redirect />} />
         </Routes>
       </div>

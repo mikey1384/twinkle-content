@@ -16,7 +16,7 @@ const viewProfileLabel = localize('viewProfile');
 const changePictureLabel = localize('changePicture');
 
 ProfileWidget.propTypes = {
-  navigate: PropTypes.object,
+  navigate: PropTypes.func,
   onLoadImage: PropTypes.func,
   onShowAlert: PropTypes.func
 };
