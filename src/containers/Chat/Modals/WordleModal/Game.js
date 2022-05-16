@@ -19,7 +19,7 @@ import {
 import { default as GraphemeSplitter } from 'grapheme-splitter';
 import { useAppContext, useChatContext } from 'contexts';
 
-Daily.propTypes = {
+Game.propTypes = {
   channelId: PropTypes.number.isRequired,
   guesses: PropTypes.array.isRequired,
   isGameOver: PropTypes.bool,
@@ -32,7 +32,7 @@ Daily.propTypes = {
   solution: PropTypes.string.isRequired
 };
 
-export default function Daily({
+export default function Game({
   channelId,
   guesses,
   isGameOver,
@@ -44,6 +44,7 @@ export default function Daily({
   onSetIsRevealing,
   socketConnected
 }) {
+  const [isChecking, setIsChecking] = useState(false);
   const mounted = useRef(true);
   const updateWordleAttempt = useAppContext(
     (v) => v.requestHelpers.updateWordleAttempt
@@ -114,6 +115,7 @@ export default function Daily({
           solution={solution}
         />
         <Keyboard
+          isChecking={isChecking}
           onChar={handleChar}
           onDelete={handleDelete}
           onEnter={handleEnter}
@@ -174,12 +176,14 @@ export default function Daily({
     }
 
     if (newGuesses.length < MAX_GUESSES && currentGuess !== solution) {
+      setIsChecking(true);
       const { isDuplicate } = await updateWordleAttempt({
         channelId,
         guesses: newGuesses,
         solution
       });
       if (isDuplicate) return;
+      setIsChecking(false);
     }
 
     if (mounted.current) {

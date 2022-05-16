@@ -5,6 +5,7 @@ import { REVEAL_TIME_MS } from '../constants/settings';
 
 Key.propTypes = {
   children: PropTypes.node,
+  isChecking: PropTypes.bool,
   value: PropTypes.string,
   width: PropTypes.number,
   onClick: PropTypes.func,
@@ -15,6 +16,7 @@ Key.propTypes = {
 
 export default function Key({
   children,
+  isChecking,
   width = 40,
   value,
   onClick,
@@ -47,7 +49,7 @@ export default function Key({
       style={{
         borderRadius,
         color: '#fff',
-        cursor: 'pointer',
+        cursor: isChecking ? 'default' : 'pointer',
         marginRight: '2px',
         border: 0,
         transitionDelay: isRevealing ? `${keyDelayMs}ms` : 'unset',
