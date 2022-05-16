@@ -440,13 +440,17 @@ export default function chatRequestHelpers({ auth, handleError }) {
     async updateWordleAttempt({ channelId, guesses, solution, isSolved }) {
       try {
         const {
-          data: { wordleAttemptState, wordleStats }
+          data: { wordleAttemptState, wordleStats, isDuplicate }
         } = await request.put(
           `${URL}/chat/wordle/attempt`,
           { channelId, guesses, solution, isSolved },
           auth()
         );
-        return Promise.resolve({ wordleAttemptState, wordleStats });
+        return Promise.resolve({
+          wordleAttemptState,
+          wordleStats,
+          isDuplicate
+        });
       } catch (error) {
         return handleError(error);
       }

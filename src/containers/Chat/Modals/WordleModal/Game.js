@@ -174,12 +174,14 @@ export default function Daily({
     }
 
     if (newGuesses.length < MAX_GUESSES && currentGuess !== solution) {
-      updateWordleAttempt({
+      const { isDuplicate } = await updateWordleAttempt({
         channelId,
         guesses: newGuesses,
         solution
       });
+      if (isDuplicate) return;
     }
+
     if (mounted.current) {
       setCurrentGuess('');
     }
