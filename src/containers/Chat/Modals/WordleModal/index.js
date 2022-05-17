@@ -26,7 +26,7 @@ export default function WordleModal({
   attemptState,
   nextDayTimeStamp,
   guesses = [],
-  solution,
+  solution = '',
   wordLevel,
   wordleStats,
   onHide,
