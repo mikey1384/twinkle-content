@@ -21,6 +21,7 @@ Nav.propTypes = {
   children: PropTypes.node,
   imgLabel: PropTypes.string,
   isHome: PropTypes.bool,
+  onClick: PropTypes.func,
   to: PropTypes.string,
   style: PropTypes.object
 };
@@ -33,6 +34,7 @@ function Nav({
   imgLabel,
   isHome,
   isMobileSideMenu,
+  onClick,
   to,
   style
 }) {
@@ -79,7 +81,7 @@ function Nav({
             handleMatch(location.pathname);
           }
         } else {
-          navigate(to);
+          onClick?.();
         }
       }}
       className={`${className} ${css`

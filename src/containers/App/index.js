@@ -470,8 +470,6 @@ function App() {
     >
       {mobileMenuShown && (
         <MobileMenu
-          location={location}
-          navigate={navigate}
           username={username}
           onClose={() => setMobileMenuShown(false)}
         />

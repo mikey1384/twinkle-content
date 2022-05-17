@@ -11,7 +11,7 @@ import Earn from './Earn';
 import Store from './Store';
 import Stories from './Stories';
 import LocalContext from './Context';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { container, Left, Center, Right } from './Styles';
@@ -23,7 +23,6 @@ Home.propTypes = {
 
 function Home({ onFileUpload, section }) {
   const navigate = useNavigate();
-  const location = useLocation();
   const { userId } = useMyState();
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const [alertModalShown, setAlertModalShown] = useState(false);
@@ -47,11 +46,7 @@ function Home({ onFileUpload, section }) {
                 setImageUri(upload.target.result);
               }}
             />
-            <HomeMenuItems
-              style={{ marginTop: '1rem' }}
-              navigate={navigate}
-              location={location}
-            />
+            <HomeMenuItems style={{ marginTop: '1rem' }} />
           </div>
           <div className={Center}>
             <div style={{ maxWidth: '700px', width: '100%' }}>

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { isMobile } from 'helpers';
 import { useMyState } from 'helpers/hooks';
@@ -13,8 +13,6 @@ import localize from 'constants/localize';
 const BodyRef = document.scrollingElement || document.documentElement;
 
 HomeMenuItems.propTypes = {
-  navigate: PropTypes.func,
-  location: PropTypes.object,
   style: PropTypes.object
 };
 
@@ -28,7 +26,9 @@ const year = (() => {
   return dt.getFullYear();
 })();
 
-export default function HomeMenuItems({ navigate, location, style = {} }) {
+export default function HomeMenuItems({ style = {} }) {
+  const location = useLocation();
+  const navigate = useNavigate();
   const onSetProfilesLoaded = useAppContext(
     (v) => v.user.actions.onSetProfilesLoaded
   );
