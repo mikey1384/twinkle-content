@@ -8,7 +8,6 @@ import {
   Routes,
   Route,
   useParams,
-  useMatch,
   useLocation,
   useNavigate
 } from 'react-router-dom';
@@ -31,7 +30,6 @@ Body.propTypes = {
 export default function Body({ profile, selectedTheme }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const match = useMatch();
   const { username } = useParams();
   return (
     <div
@@ -82,7 +80,7 @@ export default function Body({ profile, selectedTheme }) {
               location.pathname === `/users/${username}/watched` ? 'active' : ''
             }
             style={{ cursor: 'pointer' }}
-            onClick={() => navigate(`/users/${username}/watched`)}
+            onClick={() => navigate(`./watched`)}
           >
             <a>{watchedLabel}</a>
           </nav>
@@ -91,7 +89,7 @@ export default function Body({ profile, selectedTheme }) {
               location.pathname === `/users/${username}/likes` ? 'active' : ''
             }
             style={{ cursor: 'pointer' }}
-            onClick={() => navigate(`/users/${username}/likes`)}
+            onClick={() => navigate(`./likes`)}
           >
             <a>{likesLabel}</a>
           </nav>
@@ -104,7 +102,7 @@ export default function Body({ profile, selectedTheme }) {
                 : ''
             }
             style={{ cursor: 'pointer' }}
-            onClick={() => navigate(`/users/${username}/all`)}
+            onClick={() => navigate(`./all`)}
           >
             <a>{postsLabel}</a>
           </nav>
@@ -135,17 +133,18 @@ export default function Body({ profile, selectedTheme }) {
           <Routes>
             <Route
               exact
-              path={`${match.path}`}
-              element={<Home profile={profile} selectedTheme={selectedTheme} />}
-            />
-            <Route
-              path={`${match.path}/:section`}
+              path="/:section"
               element={
                 <Posts
                   username={profile.username}
                   selectedTheme={selectedTheme}
                 />
               }
+            />
+            <Route
+              exact
+              path="*"
+              element={<Home profile={profile} selectedTheme={selectedTheme} />}
             />
           </Routes>
         </div>

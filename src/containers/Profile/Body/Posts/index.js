@@ -7,7 +7,6 @@ import Feeds from './Feeds';
 import {
   Route,
   Routes,
-  useMatch,
   useParams,
   useLocation,
   useNavigate
@@ -33,7 +32,6 @@ const filterTable = {
 export default function Posts({ selectedTheme }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { path } = useMatch();
   const { section, username, filter } = useParams();
   const {
     posts: {
@@ -89,24 +87,7 @@ export default function Posts({ selectedTheme }) {
       >
         <Routes>
           <Route
-            exact
-            path={path}
-            render={({ match }) => (
-              <Feeds
-                location={location}
-                match={match}
-                feeds={profileFeeds}
-                filterTable={filterTable}
-                loaded={loaded}
-                loadMoreButton={loadMoreButton}
-                section={section}
-                selectedTheme={selectedTheme}
-                username={username}
-              />
-            )}
-          />
-          <Route
-            path={`${path}/:filter`}
+            path={`/:filter`}
             element={
               <Feeds
                 location={location}
@@ -120,6 +101,23 @@ export default function Posts({ selectedTheme }) {
                 username={username}
               />
             }
+          />
+          <Route
+            exact
+            path="*"
+            render={({ match }) => (
+              <Feeds
+                location={location}
+                match={match}
+                feeds={profileFeeds}
+                filterTable={filterTable}
+                loaded={loaded}
+                loadMoreButton={loadMoreButton}
+                section={section}
+                selectedTheme={selectedTheme}
+                username={username}
+              />
+            )}
           />
         </Routes>
         {!['likes', 'watched'].includes(section) && (

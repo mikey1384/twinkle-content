@@ -534,7 +534,7 @@ function App() {
         `}`}
       >
         <Routes>
-          <Route path="/users/:username" element={<Profile />} />
+          <Route path="/users/:username/*" element={<Profile />} />
           <Route path="/comments/:contentId" element={<ContentPage />} />
           <Route path="/videos/:videoId" element={<VideoPage />} />
           <Route path="/videos" element={<Explore />} />
@@ -558,15 +558,15 @@ function App() {
           <Route path="/reset" element={<ResetPassword />} />
           <Route path="/verify" element={<Verify />} />
           <Route path="/privacy" element={<Privacy />} />
-          <Route
-            exact
-            path="/"
-            element={<Home onFileUpload={handleFileUploadOnHome} />}
-          />
           <Route path="/earn" element={<Home />} />
           <Route path="/store" element={<Home />} />
           <Route exact path="/users/" element={<Home />} />
           <Route path="/:username" element={<Redirect />} />
+          <Route
+            exact
+            path="*"
+            element={<Home onFileUpload={handleFileUploadOnHome} />}
+          />
         </Routes>
       </div>
       {signinModalShown && <SigninModal show onHide={onCloseSigninModal} />}
