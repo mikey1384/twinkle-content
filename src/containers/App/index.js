@@ -347,8 +347,7 @@ function App() {
           pathId: channel.pathId
         });
         onSendFirstDirectMessage({ channel, message });
-        navigate(-1);
-        navigate(`/chat/${channel.pathId}`);
+        navigate(`/chat/${channel.pathId}`, { replace: true });
         socket.emit('join_chat_group', message.channelId);
         socket.emit('send_bi_chat_invitation', {
           userId: recepientId,
@@ -549,6 +548,10 @@ function App() {
           />
           <Route path="/missions/:missionType" element={<MissionPage />} />
           <Route path="/missions" element={<Mission />} />
+          <Route
+            path="/chat/*"
+            element={<Chat onFileUpload={handleFileUploadOnChat} />}
+          />
           <Route
             path="/chat"
             element={<Chat onFileUpload={handleFileUploadOnChat} />}

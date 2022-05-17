@@ -39,7 +39,7 @@ Chat.propTypes = {
 
 function Chat({ onFileUpload }) {
   const { lastChatPath, userId } = useMyState();
-  const { state: { from } = {}, pathname } = useLocation();
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   const userObj = useAppContext((v) => v.user.state.userObj);
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
@@ -132,6 +132,7 @@ function Chat({ onFileUpload }) {
   );
   const currentChannelName = useChatContext((v) => v.state.currentChannelName);
   const filesBeingUploaded = useChatContext((v) => v.state.filesBeingUploaded);
+  const homeChannelIds = useChatContext((v) => v.state.homeChannelIds);
   const isRespondingToSubject = useChatContext(
     (v) => v.state.isRespondingToSubject
   );
@@ -285,11 +286,10 @@ function Chat({ onFileUpload }) {
       ) {
         prevPathId.current = currentPathId;
         if (currentPathId === 'new') {
-          if (!from) {
+          if (homeChannelIds.includes(0)) {
             onEnterEmptyChat();
           } else {
-            navigate(-1);
-            navigate(`/chat`);
+            navigate(`/chat`, { replace: true });
           }
         } else {
           handleChannelEnter(currentPathId);
@@ -302,8 +302,7 @@ function Chat({ onFileUpload }) {
       onUpdateChatType('default');
       const { isAccessible } = await checkChatAccessible(pathId);
       if (!isAccessible) {
-        navigate(-1);
-        return navigate(`/chat/${GENERAL_CHAT_PATH_ID}`);
+        return navigate(`/chat/${GENERAL_CHAT_PATH_ID}`, { replace: true });
       }
       const channelId = channelPathIdHash[pathId] || parseChannelPath(pathId);
       if (!channelPathIdHash[pathId] && mounted.current) {
@@ -347,12 +346,10 @@ function Chat({ onFileUpload }) {
     if (!currentPathId) {
       if (chatType === 'vocabulary') {
         prevPathId.current = 'vocabulary';
-        navigate(-1);
-        navigate(`/chat/vocabulary`);
+        navigate(`/chat/vocabulary`, { replace: true });
       } else if (!isNaN(currentChannel.pathId)) {
         prevPathId.current = currentChannel.pathId;
-        navigate(-1);
-        navigate(`/chat/${currentChannel.pathId}`);
+        navigate(`/chat/${currentChannel.pathId}`, { replace: true });
       }
     }
   }, [chatType, currentChannel.pathId, currentPathId, navigate]);
@@ -361,8 +358,7 @@ function Chat({ onFileUpload }) {
     if (!prevUserId.current) {
       prevUserId.current = userId;
     } else {
-      navigate(-1);
-      navigate(`/chat`);
+      navigate(`/chat`, { replace: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
