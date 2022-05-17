@@ -122,7 +122,7 @@ function Nav({
     >
       {!isMobileSideMenu ? (
         <nav
-          className={location.pathname ? 'active ' : ''}
+          className={location.pathname === to ? 'active ' : ''}
           style={{
             display: 'flex',
             alignItems: 'center',
