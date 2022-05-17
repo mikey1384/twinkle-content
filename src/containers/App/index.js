@@ -534,12 +534,7 @@ function App() {
         `}`}
       >
         <Routes>
-          <Route
-            path="/users/:username"
-            render={({ history, location, match }) => (
-              <Profile history={history} location={location} match={match} />
-            )}
-          />
+          <Route path="/users/:username" element={<Profile />} />
           <Route path="/comments/:contentId" element={<ContentPage />} />
           <Route path="/videos/:videoId" element={<VideoPage />} />
           <Route path="/videos" element={<Explore />} />
@@ -556,7 +551,7 @@ function App() {
           <Route path="/missions" element={<Mission />} />
           <Route
             path="/chat"
-            render={() => <Chat onFileUpload={handleFileUploadOnChat} />}
+            element={<Chat onFileUpload={handleFileUploadOnChat} />}
           />
           <Route path="/management" exact element={<Management />} />
           <Route path="/management/mod-activities" element={<Management />} />

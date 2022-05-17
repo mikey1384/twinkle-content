@@ -4,15 +4,19 @@ import FilterBar from 'components/FilterBar';
 import SideMenu from '../SideMenu';
 import InvalidPage from 'components/InvalidPage';
 import Feeds from './Feeds';
-import { Route, Routes } from 'react-router-dom';
+import {
+  Route,
+  Routes,
+  useMatch,
+  useParams,
+  useLocation,
+  useNavigate
+} from 'react-router-dom';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import { useProfileState } from 'helpers/hooks';
 
 Posts.propTypes = {
-  history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired,
   selectedTheme: PropTypes.string
 };
 
@@ -26,15 +30,11 @@ const filterTable = {
   links: 'url'
 };
 
-export default function Posts({
-  history,
-  location,
-  match: {
-    path,
-    params: { section, username }
-  },
-  selectedTheme
-}) {
+export default function Posts({ selectedTheme }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { path } = useMatch();
+  const { section, username, filter } = useParams();
   const {
     posts: {
       [section]: profileFeeds,
@@ -97,7 +97,6 @@ export default function Posts({
                 match={match}
                 feeds={profileFeeds}
                 filterTable={filterTable}
-                history={history}
                 loaded={loaded}
                 loadMoreButton={loadMoreButton}
                 section={section}
@@ -108,20 +107,19 @@ export default function Posts({
           />
           <Route
             path={`${path}/:filter`}
-            render={({ match }) => (
+            element={
               <Feeds
                 location={location}
-                filter={match?.params?.filter}
+                filter={filter}
                 feeds={byUserFeeds}
                 filterTable={filterTable}
-                history={history}
                 loaded={byUserloaded}
                 loadMoreButton={byUserLoadMoreButton}
                 section={section}
                 selectedTheme={selectedTheme}
                 username={username}
               />
-            )}
+            }
           />
         </Routes>
         {!['likes', 'watched'].includes(section) && (
@@ -145,7 +143,7 @@ export default function Posts({
   );
 
   function onClickPostsMenu({ item }) {
-    history.push(
+    navigate(
       `/users/${username}/${item === 'url' ? 'link' : item}${
         item === 'all' ? '' : 's'
       }`

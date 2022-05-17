@@ -75,13 +75,7 @@ function Home({ onFileUpload }) {
                     <Store location={location} history={history} />
                   )}
                 />
-                <Route
-                  exact
-                  path="/"
-                  render={({ location, history }) => (
-                    <Stories location={location} history={history} />
-                  )}
-                />
+                <Route path="*" element={<Stories />} />
               </Routes>
             </div>
           </div>

@@ -4,7 +4,14 @@ import { Color, mobileMaxWidth } from 'constants/css';
 import FilterBar from 'components/FilterBar';
 import Home from './Home';
 import Posts from './Posts';
-import { Routes, Route } from 'react-router-dom';
+import {
+  Routes,
+  Route,
+  useParams,
+  useMatch,
+  useLocation,
+  useNavigate
+} from 'react-router-dom';
 import { css } from '@emotion/css';
 import localize from 'constants/localize';
 
@@ -14,9 +21,6 @@ const likesLabel = localize('likes');
 const postsLabel = localize('posts');
 
 Body.propTypes = {
-  history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired,
   profile: PropTypes.shape({
     id: PropTypes.number.isRequired,
     username: PropTypes.string
@@ -24,16 +28,11 @@ Body.propTypes = {
   selectedTheme: PropTypes.string
 };
 
-export default function Body({
-  history,
-  location,
-  match,
-  match: {
-    params: { username }
-  },
-  profile,
-  selectedTheme
-}) {
+export default function Body({ profile, selectedTheme }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const match = useMatch();
+  const { username } = useParams();
   return (
     <div
       className={css`
@@ -74,7 +73,7 @@ export default function Body({
               location.pathname === `/users/${username}` ? 'active' : ''
             }
             style={{ cursor: 'pointer' }}
-            onClick={() => history.push(`/users/${username}`)}
+            onClick={() => navigate(`/users/${username}`)}
           >
             <a>{profileLabel}</a>
           </nav>
@@ -83,7 +82,7 @@ export default function Body({
               location.pathname === `/users/${username}/watched` ? 'active' : ''
             }
             style={{ cursor: 'pointer' }}
-            onClick={() => history.push(`/users/${username}/watched`)}
+            onClick={() => navigate(`/users/${username}/watched`)}
           >
             <a>{watchedLabel}</a>
           </nav>
@@ -92,7 +91,7 @@ export default function Body({
               location.pathname === `/users/${username}/likes` ? 'active' : ''
             }
             style={{ cursor: 'pointer' }}
-            onClick={() => history.push(`/users/${username}/likes`)}
+            onClick={() => navigate(`/users/${username}/likes`)}
           >
             <a>{likesLabel}</a>
           </nav>
@@ -105,7 +104,7 @@ export default function Body({
                 : ''
             }
             style={{ cursor: 'pointer' }}
-            onClick={() => history.push(`/users/${username}/all`)}
+            onClick={() => navigate(`/users/${username}/all`)}
           >
             <a>{postsLabel}</a>
           </nav>
@@ -137,25 +136,16 @@ export default function Body({
             <Route
               exact
               path={`${match.path}`}
-              render={() => (
-                <Home
-                  location={location}
-                  profile={profile}
-                  selectedTheme={selectedTheme}
-                />
-              )}
+              element={<Home profile={profile} selectedTheme={selectedTheme} />}
             />
             <Route
               path={`${match.path}/:section`}
-              render={({ match }) => (
+              element={
                 <Posts
-                  history={history}
-                  match={match}
                   username={profile.username}
-                  location={location}
                   selectedTheme={selectedTheme}
                 />
-              )}
+              }
             />
           </Routes>
         </div>
