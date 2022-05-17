@@ -1,12 +1,11 @@
 import React from 'react';
-import { Route, Routes, useMatch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import InvalidPage from 'components/InvalidPage';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import Content from './Content';
 
 export default function PlaylistPage() {
-  const match = useMatch();
   return (
     <div
       className={css`
@@ -31,8 +30,8 @@ export default function PlaylistPage() {
         `}
       >
         <Routes>
-          <Route exact path={`${match.url}/:contentId`} element={<Content />} />
-          <Route element={<InvalidPage />} />
+          <Route path={'/:contentId'} element={<Content />} />
+          <Route path="*" element={<InvalidPage />} />
         </Routes>
       </section>
     </div>

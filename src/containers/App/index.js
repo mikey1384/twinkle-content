@@ -539,6 +539,7 @@ function App() {
           <Route path="/videos" element={<Explore category="videos" />} />
           <Route path="/links" element={<Explore category="links" />} />
           <Route path="/subjects" element={<Explore category="subjects" />} />
+          <Route path="/playlists/*" element={<PlaylistPage />} />
           <Route path="/playlists" element={<PlaylistPage />} />
           <Route
             path="/missions/:missionType/:taskType"
