@@ -4,7 +4,7 @@ import InvalidPage from 'components/InvalidPage';
 import request from 'axios';
 import URL from 'constants/URL';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useContentState, useMyState } from 'helpers/hooks';
@@ -12,11 +12,12 @@ import { useViewContext } from 'contexts';
 
 export default function ContentPage() {
   const navigate = useNavigate();
-  const { contentId: initialContentId, url } = useParams();
+  const location = useLocation();
+  const { contentId: initialContentId } = useParams();
   const contentId = Number(initialContentId);
   const { userId } = useMyState();
   const onSetContentNav = useViewContext((v) => v.actions.onSetContentNav);
-  const contentType = url.split('/')[1].slice(0, -1);
+  const contentType = location.pathname.split('/')[1].slice(0, -1);
   const { loaded, isDeleted, isDeleteNotification } = useContentState({
     contentType,
     contentId
@@ -61,7 +62,7 @@ export default function ContentPage() {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [contentId, url]);
+  }, [contentId, location.pathname]);
 
   return (
     <ErrorBoundary
