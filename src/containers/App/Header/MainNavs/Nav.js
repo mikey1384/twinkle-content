@@ -15,7 +15,6 @@ const BodyRef = document.scrollingElement || document.documentElement;
 
 Nav.propTypes = {
   isMobileSideMenu: PropTypes.bool,
-  active: PropTypes.bool,
   alert: PropTypes.bool,
   alertColor: PropTypes.string,
   className: PropTypes.string,
@@ -27,7 +26,6 @@ Nav.propTypes = {
 };
 
 function Nav({
-  active,
   alert,
   alertColor,
   className,
@@ -59,6 +57,19 @@ function Nav({
   const onSetProfilesLoaded = useAppContext(
     (v) => v.user.actions.onSetProfilesLoaded
   );
+
+  const navClassName = useMemo(() => {
+    if ((to || '').split('/')[1] === 'chat') {
+      if (location.pathname.split('/')[1] === 'chat') {
+        return 'active';
+      }
+      return '';
+    }
+    if (location.pathname === to) {
+      return 'active';
+    }
+    return '';
+  }, [location.pathname, to]);
 
   return (
     <div
@@ -122,7 +133,7 @@ function Nav({
     >
       {!isMobileSideMenu ? (
         <nav
-          className={location.pathname === to ? 'active ' : ''}
+          className={navClassName}
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -137,7 +148,7 @@ function Nav({
         </nav>
       ) : (
         <nav
-          className={active ? 'active ' : ''}
+          className={navClassName}
           style={{
             display: 'flex',
             cursor: 'pointer',
