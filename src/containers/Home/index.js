@@ -11,16 +11,17 @@ import Earn from './Earn';
 import Store from './Store';
 import Stories from './Stories';
 import LocalContext from './Context';
-import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { container, Left, Center, Right } from './Styles';
 
 Home.propTypes = {
-  onFileUpload: PropTypes.func
+  onFileUpload: PropTypes.func,
+  section: PropTypes.string
 };
 
-function Home({ onFileUpload }) {
+function Home({ onFileUpload, section }) {
   const navigate = useNavigate();
   const location = useLocation();
   const { userId } = useMyState();
@@ -54,29 +55,10 @@ function Home({ onFileUpload }) {
           </div>
           <div className={Center}>
             <div style={{ maxWidth: '700px', width: '100%' }}>
-              <Routes>
-                <Route
-                  path="/users"
-                  render={({ history, location }) => (
-                    <People location={location} history={history} />
-                  )}
-                />
-                <Route
-                  exact
-                  path="/earn"
-                  render={({ location, history }) => (
-                    <Earn location={location} history={history} />
-                  )}
-                />
-                <Route
-                  exact
-                  path="/store"
-                  render={({ location, history }) => (
-                    <Store location={location} history={history} />
-                  )}
-                />
-                <Route path="*" element={<Stories />} />
-              </Routes>
+              {section === 'people' && <People />}
+              {section === 'earn' && <Earn />}
+              {section === 'store' && <Store />}
+              {section === 'story' && <Stories />}
             </div>
           </div>
           <Notification trackScrollPosition className={Right} location="home" />

@@ -539,7 +539,9 @@ function App() {
           <Route path="/videos/:videoId" element={<VideoPage />} />
           <Route path="/links/:linkId" element={<LinkPage />} />
           <Route path="/subjects/:contentId" element={<ContentPage />} />
-          <Route exact path="/:category" element={<Explore />} />
+          <Route path="/videos" element={<Explore category="videos" />} />
+          <Route path="/links" element={<Explore category="links" />} />
+          <Route path="/subjects" element={<Explore category="subjects" />} />
           <Route path="/playlists" element={<PlaylistPage />} />
           <Route
             path="/missions/:missionType/:taskType"
@@ -556,15 +558,16 @@ function App() {
           <Route path="/reset" element={<ResetPassword />} />
           <Route path="/verify" element={<Verify />} />
           <Route path="/privacy" element={<Privacy />} />
-          <Route path="/earn" element={<Home />} />
-          <Route path="/store" element={<Home />} />
-          <Route exact path="/users/" element={<Home />} />
-          <Route path="/:username" element={<Redirect />} />
+          <Route path="/users" element={<Home section="people" />} />
+          <Route path="/store" element={<Home section="store" />} />
+          <Route path="/earn" element={<Home section="earn" />} />
           <Route
-            exact
-            path="*"
-            element={<Home onFileUpload={handleFileUploadOnHome} />}
+            path="/"
+            element={
+              <Home section="story" onFileUpload={handleFileUploadOnHome} />
+            }
           />
+          <Route path="/:username" element={<Redirect />} />
         </Routes>
       </div>
       {signinModalShown && <SigninModal show onHide={onCloseSigninModal} />}

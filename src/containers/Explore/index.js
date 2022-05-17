@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import { socket } from 'constants/io';
@@ -21,10 +22,13 @@ const subjectsLabel = localize('subjects');
 const videosLabel = localize('videos2');
 const linksLabel = localize('links');
 
-export default function Explore() {
+Explore.propTypes = {
+  category: PropTypes.string.isRequired
+};
+
+export default function Explore({ category }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { category } = useParams();
   const searchText = useExploreContext((v) => v.state.search.searchText);
   const onSetPrevUserId = useExploreContext((v) => v.actions.onSetPrevUserId);
   const { userId } = useMyState();
