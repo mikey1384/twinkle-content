@@ -105,10 +105,9 @@ export default function Posts({ selectedTheme }) {
           <Route
             exact
             path="*"
-            render={({ match }) => (
+            element={
               <Feeds
                 location={location}
-                match={match}
                 feeds={profileFeeds}
                 filterTable={filterTable}
                 loaded={loaded}
@@ -117,7 +116,7 @@ export default function Posts({ selectedTheme }) {
                 selectedTheme={selectedTheme}
                 username={username}
               />
-            )}
+            }
           />
         </Routes>
         {!['likes', 'watched'].includes(section) && (

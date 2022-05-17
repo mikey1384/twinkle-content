@@ -133,7 +133,7 @@ export default function Body({ profile, selectedTheme }) {
           <Routes>
             <Route
               exact
-              path="/:section"
+              path="/:section/*"
               element={
                 <Posts
                   username={profile.username}
