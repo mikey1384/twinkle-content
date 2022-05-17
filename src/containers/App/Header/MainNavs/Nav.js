@@ -68,7 +68,7 @@ function Nav({
             handleMatch(location.pathname);
           }
         } else {
-          handleNavClick();
+          navigate(to);
         }
       }}
       className={`${className} ${css`
@@ -128,7 +128,7 @@ function Nav({
             alignItems: 'center',
             ...(alert ? { color: alertColor || Color.gold() } : {})
           }}
-          onClick={handleNavClick}
+          onClick={() => navigate(to)}
         >
           <Icon icon={isHome ? 'home' : imgLabel} />
           <span className="nav-label" style={{ marginLeft: '0.7rem' }}>
@@ -163,10 +163,6 @@ function Nav({
       )}
     </div>
   );
-
-  function handleNavClick() {
-    navigate(to);
-  }
 
   function handleMatch(pathname) {
     if (pathname === '/') {
