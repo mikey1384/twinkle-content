@@ -9,7 +9,7 @@ import { getSectionFromPathname } from 'helpers';
 import { useExploreContext } from 'contexts';
 
 Search.propTypes = {
-  navigate: PropTypes.object,
+  navigate: PropTypes.func,
   innerRef: PropTypes.object,
   pathname: PropTypes.string.isRequired,
   style: PropTypes.object

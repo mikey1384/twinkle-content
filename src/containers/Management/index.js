@@ -36,10 +36,17 @@ export default function Management({ location }) {
   ) : managementLevel > 0 ? (
     <div>
       <SideMenu style={{ top: 'CALC(50vh - 8rem)' }}>
-        <NavLink to="/management" exact activeClassName="active">
+        <NavLink
+          to="/management"
+          exact
+          className={(navData) => (navData.isActive ? 'active' : '')}
+        >
           <span style={{ marginLeft: '1.1rem' }}>{accountMgmtLabel}</span>
         </NavLink>
-        <NavLink to="/management/mod-activities" activeClassName="active">
+        <NavLink
+          to="/management/mod-activities"
+          className={(navData) => (navData.isActive ? 'active' : '')}
+        >
           <span style={{ marginLeft: '1.1rem' }}>{modActivitiesLabel}</span>
         </NavLink>
       </SideMenu>

@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useMemo } from 'react';
-import PropTypes from 'prop-types';
 import ButtonGroup from 'components/Buttons/ButtonGroup';
 import FeaturedPlaylistsPanel from './FeaturedPlaylistsPanel';
 import PlaylistsPanel from './PlaylistsPanel';
@@ -14,11 +13,7 @@ import localize from 'constants/localize';
 const addPlaylistLabel = localize('addPlaylist');
 const allPlaylistsLabel = localize('allPlaylists');
 
-Videos.propTypes = {
-  history: PropTypes.object.isRequired
-};
-
-export default function Videos({ history }) {
+export default function Videos() {
   const loadPlaylists = useAppContext((v) => v.requestHelpers.loadPlaylists);
   const searchContent = useAppContext((v) => v.requestHelpers.searchContent);
   const { authLevel, userId } = useMyState();
@@ -86,7 +81,7 @@ export default function Videos({ history }) {
   return (
     <div>
       <ContinueWatchingPanel />
-      <FeaturedPlaylistsPanel history={history} />
+      <FeaturedPlaylistsPanel />
       <PlaylistsPanel
         key="allplaylists"
         style={{ marginTop: '2.5rem' }}

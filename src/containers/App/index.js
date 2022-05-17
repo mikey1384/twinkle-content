@@ -537,11 +537,9 @@ function App() {
           <Route path="/users/:username/*" element={<Profile />} />
           <Route path="/comments/:contentId" element={<ContentPage />} />
           <Route path="/videos/:videoId" element={<VideoPage />} />
-          <Route path="/videos" element={<Explore />} />
           <Route path="/links/:linkId" element={<LinkPage />} />
-          <Route path="/links" element={<Explore />} />
           <Route path="/subjects/:contentId" element={<ContentPage />} />
-          <Route path="/subjects" element={<Explore />} />
+          <Route exact path="/:category" element={<Explore />} />
           <Route path="/playlists" element={<PlaylistPage />} />
           <Route
             path="/missions/:missionType/:taskType"

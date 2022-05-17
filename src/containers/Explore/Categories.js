@@ -154,7 +154,7 @@ export default function Categories({
             </nav>
           ) : (
             <nav key={contentType}>
-              <Link to={contentType}>
+              <Link to={`/${contentType}`}>
                 {returnIcon(contentType)}
                 {exploreLabel}
               </Link>
