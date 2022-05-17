@@ -1,7 +1,7 @@
 import React, { memo, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Color, desktopMinWidth, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import {
@@ -22,7 +22,7 @@ Nav.propTypes = {
   children: PropTypes.node,
   imgLabel: PropTypes.string,
   isHome: PropTypes.bool,
-  onClick: PropTypes.func,
+  to: PropTypes.string,
   style: PropTypes.object
 };
 
@@ -35,9 +35,10 @@ function Nav({
   imgLabel,
   isHome,
   isMobileSideMenu,
-  onClick = () => {},
+  to,
   style
 }) {
+  const navigate = useNavigate();
   const location = useLocation();
   const onResetProfile = useProfileContext((v) => v.actions.onResetProfile);
   const profileState = useProfileContext((v) => v.state) || {};
@@ -67,7 +68,7 @@ function Nav({
             handleMatch(location.pathname);
           }
         } else {
-          onClick();
+          handleNavClick();
         }
       }}
       className={`${className} ${css`
@@ -127,7 +128,7 @@ function Nav({
             alignItems: 'center',
             ...(alert ? { color: alertColor || Color.gold() } : {})
           }}
-          onClick={onClick}
+          onClick={handleNavClick}
         >
           <Icon icon={isHome ? 'home' : imgLabel} />
           <span className="nav-label" style={{ marginLeft: '0.7rem' }}>
@@ -163,13 +164,17 @@ function Nav({
     </div>
   );
 
-  function handleMatch(match) {
-    if (match.path === '/') {
+  function handleNavClick() {
+    navigate(to);
+  }
+
+  function handleMatch(pathname) {
+    if (pathname === '/') {
       document.getElementById('App').scrollTop = 0;
       BodyRef.scrollTop = 0;
     }
-    if (match.path.includes('/users/')) {
-      const username = match.path.split('/users/')[1].split('/')[0];
+    if (pathname.includes('/users/')) {
+      const username = pathname.split('/users/')[1].split('/')[0];
       const { profileId } = profileState[username] || {};
       onReloadContent({
         contentId: profileId,
@@ -177,12 +182,12 @@ function Nav({
       });
       onResetProfile(username);
     }
-    if (match.path === '/users') {
+    if (pathname === '/users') {
       onSetProfilesLoaded(false);
     }
     if (
       ['/featured', '/videos', '/links', '/subjects', '/comments'].includes(
-        match.path
+        pathname
       )
     ) {
       onClearLinksLoaded();
