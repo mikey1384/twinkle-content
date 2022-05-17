@@ -147,7 +147,10 @@ export default function HomeMenuItems({ navigate, location, style = {} }) {
         `}`}
         style={style}
       >
-        <nav className="active" onClick={handleStoryClick}>
+        <nav
+          className={location.pathname === '/' ? 'active' : ''}
+          onClick={handleStoryClick}
+        >
           <a href="/" onClick={(e) => e.preventDefault()}>
             <div className="homemenu__item">
               <div className="selection" />
@@ -158,7 +161,10 @@ export default function HomeMenuItems({ navigate, location, style = {} }) {
             </div>
           </a>
         </nav>
-        <nav className="active" onClick={handleOnPeopleClick}>
+        <nav
+          className={location.pathname === '/users' ? 'active' : ''}
+          onClick={handleOnPeopleClick}
+        >
           <a href="/users" onClick={(e) => e.preventDefault()}>
             <div className="homemenu__item">
               <div className="selection" />
@@ -169,7 +175,10 @@ export default function HomeMenuItems({ navigate, location, style = {} }) {
             </div>
           </a>
         </nav>
-        <nav className="active" onClick={() => navigate('/earn')}>
+        <nav
+          className={location.pathname === '/earn' ? 'active' : ''}
+          onClick={() => navigate('/earn')}
+        >
           <a href="/earn" onClick={(e) => e.preventDefault()}>
             <div className="homemenu__item">
               <div className="selection" />
@@ -180,7 +189,10 @@ export default function HomeMenuItems({ navigate, location, style = {} }) {
             </div>
           </a>
         </nav>
-        <nav className="active" onClick={() => navigate('/store')}>
+        <nav
+          className={location.pathname === '/store' ? 'active' : ''}
+          onClick={() => navigate('/store')}
+        >
           <a href="/store" onClick={(e) => e.preventDefault()}>
             <div className="homemenu__item">
               <div className="selection" />
