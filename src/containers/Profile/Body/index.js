@@ -132,7 +132,6 @@ export default function Body({ profile, selectedTheme }) {
         >
           <Routes>
             <Route
-              exact
               path="/:section/*"
               element={
                 <Posts
@@ -142,7 +141,6 @@ export default function Body({ profile, selectedTheme }) {
               }
             />
             <Route
-              exact
               path="*"
               element={<Home profile={profile} selectedTheme={selectedTheme} />}
             />
