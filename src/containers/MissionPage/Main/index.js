@@ -28,7 +28,7 @@ export default function Main({
             element={<TaskContainer mission={mission} />}
           />
           <Route
-            path="*"
+            path="/"
             element={
               <MissionContainer
                 mission={mission}
