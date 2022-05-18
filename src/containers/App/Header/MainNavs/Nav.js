@@ -135,47 +135,20 @@ function Nav({
       `}`}
       style={style}
     >
-      {!isMobileSideMenu ? (
-        <nav
-          className={navClassName}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            ...(alert ? { color: alertColor || Color.gold() } : {})
-          }}
-          onClick={() => navigate(to)}
-        >
-          <Icon icon={isHome ? 'home' : imgLabel} />
-          <span className="nav-label" style={{ marginLeft: '0.7rem' }}>
-            {children}
-          </span>
-        </nav>
-      ) : (
-        <nav
-          className={navClassName}
-          style={{
-            display: 'flex',
-            cursor: 'pointer',
-            justifyContent: 'center'
-          }}
-        >
-          <Icon
-            style={{
-              ...(alert ? { color: alertColor || Color.gold() } : {})
-            }}
-            icon={imgLabel}
-          />
-          <span
-            className="nav-label"
-            style={{
-              marginLeft: '0.7rem',
-              ...(alert ? { color: alertColor || Color.gold() } : {})
-            }}
-          >
-            {children}
-          </span>
-        </nav>
-      )}
+      <nav
+        className={navClassName}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          ...(alert ? { color: alertColor || Color.gold() } : {})
+        }}
+        onClick={() => navigate(to)}
+      >
+        <Icon icon={isHome ? 'home' : imgLabel} />
+        <span className="nav-label" style={{ marginLeft: '0.7rem' }}>
+          {children}
+        </span>
+      </nav>
     </div>
   );
 
