@@ -204,7 +204,12 @@ export default function HomeMenuItems({ style = {} }) {
           </a>
         </nav>
         {managementLevel > 0 && deviceIsMobile && (
-          <nav className="active" onClick={() => navigate('/management')}>
+          <nav
+            className={
+              location.pathname.split('/')[1] === 'management' ? 'active' : ''
+            }
+            onClick={() => navigate('/management')}
+          >
             <a href="/management" onClick={(e) => e.preventDefault()}>
               <div className="homemenu__item">
                 <div className="selection" />

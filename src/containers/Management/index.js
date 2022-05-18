@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import InvalidPage from 'components/InvalidPage';
 import FilterBar from 'components/FilterBar';
-import Routes from './Routes';
+import ManagementRoutes from './ManagementRoutes';
 import Loading from 'components/Loading';
 import SideMenu from 'components/SideMenu';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useMyState } from 'helpers/hooks';
 import { useManagementContext } from 'contexts';
 import localize from 'constants/localize';
@@ -15,11 +14,8 @@ import localize from 'constants/localize';
 const accountMgmtLabel = localize('accountMgmt');
 const modActivitiesLabel = localize('modActivities');
 
-Management.propTypes = {
-  location: PropTypes.object
-};
-
-export default function Management({ location }) {
+export default function Management() {
+  const location = useLocation();
   const navigate = useNavigate();
   const loaded = useManagementContext((v) => v.state.loaded);
   const onLoadManagement = useManagementContext(
@@ -38,7 +34,7 @@ export default function Management({ location }) {
       <SideMenu style={{ top: 'CALC(50vh - 8rem)' }}>
         <NavLink
           to="/management"
-          exact
+          end
           className={(navData) => (navData.isActive ? 'active' : '')}
         >
           <span style={{ marginLeft: '1.1rem' }}>{accountMgmtLabel}</span>
@@ -74,7 +70,7 @@ export default function Management({ location }) {
           {modActivitiesLabel}
         </nav>
       </FilterBar>
-      <Routes
+      <ManagementRoutes
         className={css`
           width: CALC(100vw - 51rem - 2rem);
           margin-left: 20rem;

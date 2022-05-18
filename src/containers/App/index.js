@@ -551,8 +551,7 @@ function App() {
             path="/chat"
             element={<Chat onFileUpload={handleFileUploadOnChat} />}
           />
-          <Route path="/management" exact element={<Management />} />
-          <Route path="/management/mod-activities" element={<Management />} />
+          <Route path="/management/*" element={<Management />} />
           <Route path="/reset/*" element={<ResetPassword />} />
           <Route path="/verify/*" element={<Verify />} />
           <Route path="/privacy" element={<Privacy />} />

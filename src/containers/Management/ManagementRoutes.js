@@ -27,11 +27,8 @@ export default function ManagementRoutes({ location, className }) {
         `}
       >
         <Routes>
-          <Route path="/management" exact element={<Main />} />
-          <Route
-            path="/management/mod-activities"
-            element={<ModActivities />}
-          />
+          <Route path="*" element={<Main />} />
+          <Route path="mod-activities" element={<ModActivities />} />
         </Routes>
       </div>
       <Notification
