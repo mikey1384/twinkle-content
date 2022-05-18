@@ -181,7 +181,7 @@ export default function MissionPage() {
           >
             <Routes>
               <Route
-                path={`/${missionType}/manage`}
+                path={`/manage`}
                 element={
                   <Management
                     missionId={missionId}
