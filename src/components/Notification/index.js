@@ -126,7 +126,7 @@ function Notification({ className, location, style, trackScrollPosition }) {
       onClearNotifications();
     }
     if ((userId && userId !== prevUserId) || (!userId && prevUserId)) {
-      handleFetchNotifications();
+      handleFetchNotifications(userId && userId !== prevUserId);
     }
     onSetPrevUserId(userId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -259,9 +259,9 @@ function Notification({ className, location, style, trackScrollPosition }) {
     </ErrorBoundary>
   );
 
-  async function handleFetchNotifications() {
+  async function handleFetchNotifications(userChanged) {
     await fetchRankings();
-    if (notifications.length === 0) {
+    if (notifications.length === 0 || userChanged) {
       fetchNews();
     }
   }
