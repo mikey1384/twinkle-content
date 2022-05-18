@@ -41,7 +41,7 @@ function Nav({
   style
 }) {
   const navigate = useNavigate();
-  const location = useLocation();
+  const { pathname } = useLocation();
   const onResetProfile = useProfileContext((v) => v.actions.onResetProfile);
   const profileState = useProfileContext((v) => v.state) || {};
   const onReloadContent = useContentContext((v) => v.actions.onReloadContent);
@@ -64,7 +64,7 @@ function Nav({
 
   const navClassName = useMemo(() => {
     if ((to || '').split('/')[1] === 'chat') {
-      if (location.pathname.split('/')[1] === 'chat') {
+      if (pathname.split('/')[1] === 'chat') {
         return 'active';
       }
       return '';
@@ -72,28 +72,20 @@ function Nav({
 
     if (
       profileUsername &&
-      (location.pathname.split('/')[1] === profileUsername ||
-        location.pathname.split('/')[2] === profileUsername)
+      (pathname.split('/')[1] === profileUsername ||
+        pathname.split('/')[2] === profileUsername)
     ) {
       return 'active';
     }
-    if (location.pathname === to) {
+    if (pathname === to) {
       return 'active';
     }
     return '';
-  }, [location.pathname, profileUsername, to]);
+  }, [pathname, profileUsername, to]);
 
   return (
     <div
-      onClick={() => {
-        if (!isMobileSideMenu) {
-          if (location.pathname) {
-            handleMatch(location.pathname);
-          }
-        } else {
-          onClick?.();
-        }
-      }}
+      onClick={handleNavClick}
       className={`${className} ${css`
         display: flex;
         align-items: center;
@@ -187,7 +179,11 @@ function Nav({
     </div>
   );
 
-  function handleMatch(pathname) {
+  function handleNavClick() {
+    if (isMobileSideMenu) {
+      return onClick?.();
+    }
+    if (!pathname) return;
     if (pathname === '/') {
       document.getElementById('App').scrollTop = 0;
       BodyRef.scrollTop = 0;
