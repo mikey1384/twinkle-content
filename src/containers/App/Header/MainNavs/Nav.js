@@ -22,6 +22,7 @@ Nav.propTypes = {
   imgLabel: PropTypes.string,
   isHome: PropTypes.bool,
   onClick: PropTypes.func,
+  profileUsername: PropTypes.string,
   to: PropTypes.string,
   style: PropTypes.object
 };
@@ -35,6 +36,7 @@ function Nav({
   isHome,
   isMobileSideMenu,
   onClick,
+  profileUsername,
   to,
   style
 }) {
@@ -67,11 +69,19 @@ function Nav({
       }
       return '';
     }
+
+    if (
+      profileUsername &&
+      (location.pathname.split('/')[1] === profileUsername ||
+        location.pathname.split('/')[2] === profileUsername)
+    ) {
+      return 'active';
+    }
     if (location.pathname === to) {
       return 'active';
     }
     return '';
-  }, [location.pathname, to]);
+  }, [location.pathname, profileUsername, to]);
 
   return (
     <div

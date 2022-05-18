@@ -183,7 +183,7 @@ function MainNavs({
     );
     const missionPageMatch = matchPath(
       {
-        path: '/missions/:missionType'
+        path: '/missions/:missionType/*'
       },
       pathname
     );
@@ -200,7 +200,7 @@ function MainNavs({
 
   const profilePageMatch = matchPath(
     {
-      path: '/users/:userId'
+      path: '/users/:userId/*'
     },
     pathname
   );
@@ -228,9 +228,11 @@ function MainNavs({
       }
       onSetContentPath(pathname.substring(1));
     }
+
     if (profilePageMatch) {
       onSetProfileNav(pathname);
     }
+
     if (['links', 'videos', 'subjects'].includes(section)) {
       onSetExploreCategory(section);
       loaded.current = true;
@@ -353,6 +355,7 @@ function MainNavs({
       {profileNav && (
         <Nav
           to={profileNav}
+          profileUsername={profileUsername}
           pathname={pathname}
           className="desktop"
           style={{ marginRight: '2rem' }}
