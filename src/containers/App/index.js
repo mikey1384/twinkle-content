@@ -545,7 +545,7 @@ function App() {
             path="/missions/:missionType/:taskType"
             element={<MissionPage />}
           />
-          <Route path="/missions/:missionType" element={<MissionPage />} />
+          <Route path="/missions/:missionType/*" element={<MissionPage />} />
           <Route path="/missions" element={<Mission />} />
           <Route
             path="/chat/*"

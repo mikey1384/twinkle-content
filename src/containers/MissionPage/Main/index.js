@@ -24,21 +24,18 @@ export default function Main({
       {mission ? (
         <Routes>
           <Route
-            path={`/missions/${mission.missionType}/:taskType`}
-            render={({ match }) => (
-              <TaskContainer match={match} mission={mission} />
-            )}
+            path={`/:taskType`}
+            element={<TaskContainer mission={mission} />}
           />
           <Route
-            exact
-            path={`/missions/${mission.missionType}`}
-            render={() => (
+            path="*"
+            element={
               <MissionContainer
                 mission={mission}
                 myAttempts={myAttempts}
                 onSetMissionState={onSetMissionState}
               />
-            )}
+            }
           />
         </Routes>
       ) : (

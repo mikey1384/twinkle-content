@@ -12,7 +12,6 @@ import {
   Routes,
   Route,
   useLocation,
-  useMatch,
   useNavigate,
   useParams
 } from 'react-router-dom';
@@ -20,7 +19,6 @@ import { useMyState } from 'helpers/hooks';
 import { useAppContext, useMissionContext } from 'contexts';
 
 export default function MissionPage() {
-  const { path } = useMatch();
   const { missionType } = useParams();
   const mounted = useRef(true);
   const navigate = useNavigate();
@@ -183,26 +181,24 @@ export default function MissionPage() {
           >
             <Routes>
               <Route
-                exact
-                path={`/missions/${missionType}/manage`}
-                render={() => (
+                path={`/${missionType}/manage`}
+                element={
                   <Management
                     missionId={missionId}
                     mission={mission}
                     onSetMissionState={onSetMissionState}
                   />
-                )}
+                }
               />
               <Route
-                exact
-                path={path}
-                render={() => (
+                path="*"
+                element={
                   <Main
                     onSetMissionState={onSetMissionState}
                     mission={mission}
                     myAttempts={myAttempts}
                   />
-                )}
+                }
               />
             </Routes>
           </div>
