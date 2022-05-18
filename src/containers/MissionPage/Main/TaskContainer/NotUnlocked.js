@@ -32,7 +32,7 @@ export default function NotUnlocked({ missionTitle }) {
         isAtTop={false}
         style={{ marginTop: '5rem' }}
         bordered
-        to="./"
+        to=".."
         text={missionTitle}
       />
     </div>
