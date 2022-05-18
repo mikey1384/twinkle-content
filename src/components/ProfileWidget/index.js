@@ -6,6 +6,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import WelcomeMessage from './WelcomeMessage';
 import { container } from './Styles';
 import { borderRadius } from 'constants/css';
+import { useNavigate } from 'react-router-dom';
 import { MAX_PROFILE_PIC_SIZE } from 'constants/defaultValues';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
@@ -16,12 +17,12 @@ const viewProfileLabel = localize('viewProfile');
 const changePictureLabel = localize('changePicture');
 
 ProfileWidget.propTypes = {
-  navigate: PropTypes.func,
   onLoadImage: PropTypes.func,
   onShowAlert: PropTypes.func
 };
 
-export default function ProfileWidget({ navigate, onLoadImage, onShowAlert }) {
+export default function ProfileWidget({ onLoadImage, onShowAlert }) {
+  const navigate = useNavigate();
   const onOpenSigninModal = useAppContext(
     (v) => v.user.actions.onOpenSigninModal
   );

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import { socket } from 'constants/io';
@@ -27,8 +27,6 @@ Explore.propTypes = {
 };
 
 export default function Explore({ category }) {
-  const navigate = useNavigate();
-  const location = useLocation();
   const searchText = useExploreContext((v) => v.state.search.searchText);
   const onSetPrevUserId = useExploreContext((v) => v.actions.onSetPrevUserId);
   const { userId } = useMyState();
@@ -119,8 +117,6 @@ export default function Explore({ category }) {
             />
           )}
           <Search
-            navigate={navigate}
-            pathname={location.pathname}
             innerRef={SearchBoxRef}
             style={{
               width: '100%',

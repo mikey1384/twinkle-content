@@ -875,7 +875,6 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
                 margin-right: 0;
               }
             `}
-            navigate={navigate}
           />
         </div>
       </nav>

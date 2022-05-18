@@ -11,7 +11,6 @@ import Earn from './Earn';
 import Store from './Store';
 import Stories from './Stories';
 import LocalContext from './Context';
-import { useNavigate } from 'react-router-dom';
 import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { container, Left, Center, Right } from './Styles';
@@ -22,7 +21,6 @@ Home.propTypes = {
 };
 
 function Home({ onFileUpload, section }) {
-  const navigate = useNavigate();
   const { userId } = useMyState();
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const [alertModalShown, setAlertModalShown] = useState(false);
@@ -39,7 +37,6 @@ function Home({ onFileUpload, section }) {
         <div className={container}>
           <div className={Left}>
             <ProfileWidget
-              navigate={navigate}
               onShowAlert={() => setAlertModalShown(true)}
               onLoadImage={(upload) => {
                 setImageEditModalShown(true);

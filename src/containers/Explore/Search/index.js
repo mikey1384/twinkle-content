@@ -5,22 +5,22 @@ import { css } from '@emotion/css';
 import TopFilter from './TopFilter';
 import Results from './Results';
 import SearchBox from './SearchBox';
+import { useLocation } from 'react-router-dom';
 import { getSectionFromPathname } from 'helpers';
 import { useExploreContext } from 'contexts';
 
 Search.propTypes = {
-  navigate: PropTypes.func,
   innerRef: PropTypes.object,
-  pathname: PropTypes.string.isRequired,
   style: PropTypes.object
 };
 
-export default function Search({ navigate, innerRef, pathname, style }) {
+export default function Search({ innerRef, style }) {
+  const location = useLocation();
   const searchText = useExploreContext((v) => v.state.search.searchText);
   const onLoadSearchResults = useExploreContext(
     (v) => v.actions.onLoadSearchResults
   );
-  const category = getSectionFromPathname(pathname)?.section;
+  const category = getSectionFromPathname(location.pathname)?.section;
   const prevSearchText = useRef(searchText);
 
   useEffect(() => {
@@ -59,7 +59,6 @@ export default function Search({ navigate, innerRef, pathname, style }) {
               width: 100%;
               margin-top: 2rem;
             `}
-            navigate={navigate}
             selectedFilter={category}
           />
           <Results searchText={searchText} filter={category} />

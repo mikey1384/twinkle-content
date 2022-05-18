@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import FilterBar from 'components/FilterBar';
+import { useNavigate } from 'react-router-dom';
 
 TopFilter.propTypes = {
   className: PropTypes.string,
-  navigate: PropTypes.object,
   selectedFilter: PropTypes.string.isRequired
 };
 
-export default function TopFilter({ navigate, selectedFilter, className }) {
+export default function TopFilter({ selectedFilter, className }) {
+  const navigate = useNavigate();
   return (
     <FilterBar className={className} bordered>
       <nav

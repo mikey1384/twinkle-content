@@ -5,14 +5,14 @@ import Notification from 'components/Notification';
 import ModActivities from './ModActivities';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 
 ManagementRoutes.propTypes = {
-  className: PropTypes.string,
-  location: PropTypes.object
+  className: PropTypes.string
 };
 
-export default function ManagementRoutes({ location, className }) {
+export default function ManagementRoutes({ className }) {
+  const location = useLocation();
   return (
     <div className={className}>
       <div

@@ -82,7 +82,6 @@ export default function Management() {
             margin-right: 0;
           }
         `}
-        location={location}
       />
     </div>
   ) : (

@@ -4,13 +4,7 @@ import FilterBar from 'components/FilterBar';
 import SideMenu from '../SideMenu';
 import InvalidPage from 'components/InvalidPage';
 import Feeds from './Feeds';
-import {
-  Route,
-  Routes,
-  useParams,
-  useLocation,
-  useNavigate
-} from 'react-router-dom';
+import { Route, Routes, useParams, useNavigate } from 'react-router-dom';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import { useProfileState } from 'helpers/hooks';
@@ -31,7 +25,6 @@ const filterTable = {
 
 export default function Posts({ selectedTheme }) {
   const navigate = useNavigate();
-  const location = useLocation();
   const { section, username, filter } = useParams();
   const {
     posts: {
@@ -90,7 +83,6 @@ export default function Posts({ selectedTheme }) {
             path={`/:filter`}
             element={
               <Feeds
-                location={location}
                 filter={filter}
                 feeds={byUserFeeds}
                 filterTable={filterTable}
@@ -107,7 +99,6 @@ export default function Posts({ selectedTheme }) {
             path="*"
             element={
               <Feeds
-                location={location}
                 feeds={profileFeeds}
                 filterTable={filterTable}
                 loaded={loaded}

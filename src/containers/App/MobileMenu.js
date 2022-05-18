@@ -7,7 +7,7 @@ import AlertModal from 'components/Modals/AlertModal';
 import ImageEditModal from 'components/Modals/ImageEditModal';
 import Icon from 'components/Icon';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useSpring, animated } from 'react-spring';
 import { Color } from 'constants/css';
 import { css } from '@emotion/css';
@@ -19,7 +19,6 @@ MobileMenu.propTypes = {
 };
 
 export default function MobileMenu({ onClose }) {
-  const navigate = useNavigate();
   const location = useLocation();
   const styles = useSpring({
     to: { marginLeft: '0' },
@@ -78,7 +77,6 @@ export default function MobileMenu({ onClose }) {
         `}`}
       >
         <ProfileWidget
-          history={navigate}
           onShowAlert={() => setAlertModalShown(true)}
           onLoadImage={(upload) =>
             setImageEditStatus({
