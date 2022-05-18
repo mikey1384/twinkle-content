@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import ProfilePic from 'components/ProfilePic';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { css } from '@emotion/css';
 import useHeadingText from './useHeadingText';
@@ -30,7 +30,7 @@ function Heading({
   contentObj,
   contentObj: { contentType, id, rootObj = {}, timeStamp, uploader = {} }
 }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const HeadingText = useHeadingText({
     action,
     contentObj
@@ -69,7 +69,7 @@ function Heading({
               }
             `}`}
             onClick={() =>
-              history.push(
+              navigate(
                 `/${
                   contentType === 'pass'
                     ? 'mission'

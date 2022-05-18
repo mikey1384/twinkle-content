@@ -8,6 +8,7 @@ import { useAppContext, useChatContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { socket } from 'constants/io';
 import { addCommasToNumber } from 'helpers/stringHelpers';
+import { useNavigate } from 'react-router-dom';
 import localize from 'constants/localize';
 
 const logInLabel = localize('logIn');
@@ -16,11 +17,11 @@ const managementLabel = localize('management');
 const logOutLabel = localize('logOut');
 
 AccountMenu.propTypes = {
-  className: PropTypes.string,
-  history: PropTypes.object.isRequired
+  className: PropTypes.string
 };
 
-function AccountMenu({ className, history }) {
+function AccountMenu({ className }) {
+  const navigate = useNavigate();
   const [twinkleCoinsHovered, setTwinkleCoinsHovered] = useState(false);
   const { loggedIn, username, userId, managementLevel, twinkleCoins } =
     useMyState();
@@ -39,7 +40,7 @@ function AccountMenu({ className, history }) {
             <span style={{ marginLeft: '1rem' }}>{profileLabel}</span>
           </>
         ),
-        onClick: () => history.push(`/users/${username}`)
+        onClick: () => navigate(`/users/${username}`)
       }
     ];
     if (managementLevel > 0) {
@@ -50,7 +51,7 @@ function AccountMenu({ className, history }) {
             <span style={{ marginLeft: '1rem' }}>{managementLabel}</span>
           </div>
         ),
-        onClick: () => history.push('/management')
+        onClick: () => navigate('/management')
       });
     }
     result.push({

@@ -7,7 +7,6 @@ import React, {
   useRef,
   useState
 } from 'react';
-import PropTypes from 'prop-types';
 import Chat from 'containers/Chat';
 import ContentPage from 'containers/ContentPage';
 import Explore from 'containers/Explore';
@@ -29,7 +28,7 @@ import Verify from 'containers/Verify';
 import VideoPage from 'containers/VideoPage';
 import Incoming from 'components/Stream/Incoming';
 import Outgoing from 'components/Stream/Outgoing';
-import { Switch, Route } from 'react-router-dom';
+import { useLocation, useNavigate, Routes, Route } from 'react-router-dom';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { socket } from 'constants/io';
@@ -47,15 +46,12 @@ import {
   useChatContext
 } from 'contexts';
 
-App.propTypes = {
-  history: PropTypes.object,
-  location: PropTypes.object
-};
-
 const deviceIsMobile = isMobile(navigator);
 const userIsUsingIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-function App({ location, history }) {
+function App() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const onCloseSigninModal = useAppContext(
     (v) => v.user.actions.onCloseSigninModal
   );
@@ -244,9 +240,6 @@ function App({ location, history }) {
 
   useEffect(() => {
     window.ga('send', 'pageview', location.pathname);
-    history.listen((location) => {
-      window.ga('send', 'pageview', location.pathname);
-    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
@@ -354,7 +347,7 @@ function App({ location, history }) {
           pathId: channel.pathId
         });
         onSendFirstDirectMessage({ channel, message });
-        history.replace(`/chat/${channel.pathId}`);
+        navigate(`/chat/${channel.pathId}`, { replace: true });
         socket.emit('join_chat_group', message.channelId);
         socket.emit('send_bi_chat_invitation', {
           userId: recepientId,
@@ -477,8 +470,6 @@ function App({ location, history }) {
     >
       {mobileMenuShown && (
         <MobileMenu
-          location={location}
-          history={history}
           username={username}
           onClose={() => setMobileMenuShown(false)}
         />
@@ -527,10 +518,7 @@ function App({ location, history }) {
           </Button>
         </div>
       )}
-      <Header
-        history={history}
-        onMobileMenuOpen={() => setMobileMenuShown(true)}
-      />
+      <Header onMobileMenuOpen={() => setMobileMenuShown(true)} />
       <div
         id="App"
         className={`${userIsUsingIOS && !usingChat ? 'ios ' : ''}${css`
@@ -542,68 +530,42 @@ function App({ location, history }) {
           }
         `}`}
       >
-        <Switch>
+        <Routes>
+          <Route path="/users/:username/*" element={<Profile />} />
+          <Route path="/comments/:contentId" element={<ContentPage />} />
+          <Route path="/videos/:videoId" element={<VideoPage />} />
+          <Route path="/links/:linkId" element={<LinkPage />} />
+          <Route path="/subjects/:contentId" element={<ContentPage />} />
+          <Route path="/videos" element={<Explore category="videos" />} />
+          <Route path="/links" element={<Explore category="links" />} />
+          <Route path="/subjects" element={<Explore category="subjects" />} />
+          <Route path="/playlists/*" element={<PlaylistPage />} />
+          <Route path="/playlists" element={<PlaylistPage />} />
+          <Route path="/missions/:missionType/*" element={<MissionPage />} />
+          <Route path="/missions" element={<Mission />} />
           <Route
-            path="/users/:username"
-            render={({ history, location, match }) => (
-              <Profile history={history} location={location} match={match} />
-            )}
+            path="/chat/*"
+            element={<Chat onFileUpload={handleFileUploadOnChat} />}
           />
-          <Route path="/comments/:contentId" component={ContentPage} />
-          <Route path="/videos/:videoId" component={VideoPage} />
-          <Route path="/videos" component={Explore} />
-          <Route path="/links/:linkId" component={LinkPage} />
-          <Route path="/links" component={Explore} />
-          <Route path="/subjects/:contentId" component={ContentPage} />
-          <Route path="/subjects" component={Explore} />
-          <Route path="/playlists" component={PlaylistPage} />
-          <Route
-            path="/missions/:missionType/:taskType"
-            component={MissionPage}
-          />
-          <Route path="/missions/:missionType" component={MissionPage} />
-          <Route path="/missions" component={Mission} />
           <Route
             path="/chat"
-            render={() => <Chat onFileUpload={handleFileUploadOnChat} />}
+            element={<Chat onFileUpload={handleFileUploadOnChat} />}
           />
-          <Route path="/management" exact component={Management} />
-          <Route path="/management/mod-activities" component={Management} />
-          <Route path="/reset" component={ResetPassword} />
-          <Route path="/verify" component={Verify} />
-          <Route path="/privacy" component={Privacy} />
+          <Route path="/management/*" element={<Management />} />
+          <Route path="/reset/*" element={<ResetPassword />} />
+          <Route path="/verify/*" element={<Verify />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/users" element={<Home section="people" />} />
+          <Route path="/store" element={<Home section="store" />} />
+          <Route path="/earn" element={<Home section="earn" />} />
           <Route
-            exact
             path="/"
-            render={({ history, location }) => (
-              <Home
-                history={history}
-                location={location}
-                onFileUpload={handleFileUploadOnHome}
-              />
-            )}
+            element={
+              <Home section="story" onFileUpload={handleFileUploadOnHome} />
+            }
           />
-          <Route
-            path="/earn"
-            render={({ history, location }) => (
-              <Home history={history} location={location} />
-            )}
-          />
-          <Route
-            path="/store"
-            render={({ history, location }) => (
-              <Home history={history} location={location} />
-            )}
-          />
-          <Route
-            exact
-            path="/users/"
-            render={({ history, location }) => (
-              <Home history={history} location={location} />
-            )}
-          />
-          <Route path="/:username" component={Redirect} />
-        </Switch>
+          <Route path="/:username" element={<Redirect />} />
+        </Routes>
       </div>
       {signinModalShown && <SigninModal show onHide={onCloseSigninModal} />}
       {channelOnCall.incomingShown && <Incoming />}

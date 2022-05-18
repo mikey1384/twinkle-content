@@ -6,7 +6,7 @@ import RewardLevelBar from 'components/RewardLevelBar';
 import SecretAnswer from 'components/SecretAnswer';
 import Loading from 'components/Loading';
 import ContentFileViewer from 'components/ContentFileViewer';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useContentState, useMyState } from 'helpers/hooks';
@@ -32,7 +32,7 @@ function ContentListItem({
   selected,
   style
 }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { profileTheme, userId } = useMyState();
   const {
     content,
@@ -103,7 +103,7 @@ function ContentListItem({
           expandable || selectable
             ? () => {}
             : () =>
-                history.push(
+                navigate(
                   `/${
                     contentType === 'url' ? 'link' : contentType
                   }s/${contentId}`

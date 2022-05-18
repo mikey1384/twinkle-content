@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import Cover from './Cover';
 import Body from './Body';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from '@emotion/css';
 import { useAppContext, useProfileContext } from 'contexts';
 import { useMyState, useProfileState } from 'helpers/hooks';
+import { useParams, useNavigate } from 'react-router-dom';
 import InvalidPage from 'components/InvalidPage';
 import Loading from 'components/Loading';
 
-Profile.propTypes = {
-  history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired
-};
-
-export default function Profile({ history, location, match }) {
+export default function Profile() {
+  const params = useParams();
+  const navigate = useNavigate();
   const loadProfileViaUsername = useAppContext(
     (v) => v.requestHelpers.loadProfileViaUsername
   );
@@ -26,7 +22,7 @@ export default function Profile({ history, location, match }) {
   const onUserNotExist = useProfileContext((v) => v.actions.onUserNotExist);
   const [selectedTheme, setSelectedTheme] = useState('logoBlue');
   const [loading, setLoading] = useState(false);
-  const { notExist, profileId } = useProfileState(match.params.username);
+  const { notExist, profileId } = useProfileState(params.username);
   const profile = useAppContext((v) => v.user.state.userObj[profileId] || {});
   useEffect(() => {
     if (!notExist && !profile.loaded) {
@@ -36,43 +32,39 @@ export default function Profile({ history, location, match }) {
       setLoading(true);
       try {
         const { pageNotExists, user } = await loadProfileViaUsername(
-          match.params.username
+          params.username
         );
         if (pageNotExists) {
           setLoading(false);
-          return onUserNotExist(match.params.username);
+          return onUserNotExist(params.username);
         }
-        onSetProfileId({ username: match.params.username, profileId: user.id });
+        onSetProfileId({ username: params.username, profileId: user.id });
         onSetUserState({
           userId: user.id,
           newState: {
             userId: user.id,
             contentId: user.id,
-            username: match.params.username,
+            username: params.username,
             ...user,
             loaded: true
           }
         });
       } catch (error) {
-        onUserNotExist(match.params.username);
+        onUserNotExist(params.username);
       }
       setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [match.params.username, notExist, profile.loaded]);
+  }, [params.username, notExist, profile.loaded]);
 
   useEffect(() => {
-    if (
-      match.params.username === 'undefined' &&
-      userId &&
-      profile?.unavailable
-    ) {
-      history.push(`/${username}`);
+    if (params.username === 'undefined' && userId && profile?.unavailable) {
+      navigate(`/${username}`);
     }
     setSelectedTheme(profile?.profileTheme || 'logoBlue');
   }, [
-    history,
-    match.params.username,
+    navigate,
+    params.username,
     profile?.profileTheme,
     profile?.unavailable,
     userId,
@@ -107,13 +99,7 @@ export default function Profile({ history, location, match }) {
                 selectedTheme={selectedTheme}
                 onSetTheme={handleSetTheme}
               />
-              <Body
-                history={history}
-                location={location}
-                match={match}
-                profile={profile}
-                selectedTheme={selectedTheme}
-              />
+              <Body profile={profile} selectedTheme={selectedTheme} />
             </div>
           )}
         </>

@@ -11,7 +11,7 @@ import Comments from 'components/Comments';
 import Link from 'components/Link';
 import UserDetails from 'components/UserDetails';
 import Loading from 'components/Loading';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { MAX_PROFILE_PIC_SIZE } from 'constants/defaultValues';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
@@ -53,7 +53,7 @@ function ProfilePanel({ expandable, profileId, style }) {
     };
   }, []);
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const profilePanelState = useContentState({
     contentType: 'user',
     contentId: profileId
@@ -374,7 +374,7 @@ function ProfilePanel({ expandable, profileId, style }) {
                           color: mouseEnteredProfile && Color.orange(),
                           padding: '0.5rem'
                         }}
-                        onClick={() => history.push(`/users/${profileName}`)}
+                        onClick={() => navigate(`/users/${profileName}`)}
                       >
                         {viewProfileLabel}
                       </Button>
@@ -626,7 +626,7 @@ function ProfilePanel({ expandable, profileId, style }) {
         });
       }
       onUpdateSelectedChannelId(channelId);
-      history.push(pathId ? `/chat/${pathId}` : `/chat/new`);
+      navigate(pathId ? `/chat/${pathId}` : `/chat/new`);
     }
   }
 

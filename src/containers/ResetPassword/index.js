@@ -1,18 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Content from './Content';
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import InvalidPage from 'components/InvalidPage';
 
-ResetPassword.propTypes = {
-  match: PropTypes.object.isRequired
-};
-
-export default function ResetPassword({ match }) {
+export default function ResetPassword() {
   return (
-    <Switch>
-      <Route path={`${match.path}/password/:token`} component={Content} />
-      <Route component={InvalidPage} />
-    </Switch>
+    <Routes>
+      <Route path="password/:token" element={<Content />} />
+      <Route path="*" element={<InvalidPage />} />
+    </Routes>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { truncateText } from 'helpers/stringHelpers';
 import { useContentState } from 'helpers/hooks';
 import YouTubeIcon from './YoutubeIcon.svg';
@@ -11,7 +11,7 @@ WebsiteContent.propTypes = {
 };
 
 export default function WebsiteContent({ attachment }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [imageUrl, setImageUrl] = useState('');
   const { content, thumbUrl } = useContentState({
     contentType: attachment.contentType,
@@ -38,7 +38,7 @@ export default function WebsiteContent({ attachment }) {
           flexDirection: 'column'
         }}
         onClick={() =>
-          history.push(
+          navigate(
             `/${attachment.contentType === 'url' ? 'links' : 'videos'}/${
               attachment.id
             }`

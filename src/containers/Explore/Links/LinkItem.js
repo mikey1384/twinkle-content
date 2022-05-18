@@ -7,7 +7,7 @@ import EditTitleForm from 'components/Forms/EditTitleForm';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import Embedly from 'components/Embedly';
 import Icon from 'components/Icon';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { timeSince } from 'helpers/timeStampHelpers';
@@ -37,7 +37,7 @@ LinkItem.propTypes = {
 export default function LinkItem({
   link: { id, numComments, likes, timeStamp, title, uploader, ...embedProps }
 }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const deleteContent = useAppContext((v) => v.requestHelpers.deleteContent);
   const editContent = useAppContext((v) => v.requestHelpers.editContent);
   const { authLevel, canDelete, canEdit, userId } = useMyState();
@@ -171,7 +171,7 @@ export default function LinkItem({
     >
       <div
         onMouseUp={() => {
-          if (!onEdit) history.push(`/links/${id}`);
+          if (!onEdit) navigate(`/links/${id}`);
         }}
         style={{ cursor: !onEdit && 'pointer' }}
         className={css`
@@ -229,7 +229,7 @@ export default function LinkItem({
               {!onEdit && (
                 <p
                   onMouseUp={() => {
-                    if (!onEdit) history.push(`/links/${id}`);
+                    if (!onEdit) navigate(`/links/${id}`);
                   }}
                   style={{
                     width: '100%',

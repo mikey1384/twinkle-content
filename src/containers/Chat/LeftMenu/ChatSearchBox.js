@@ -5,14 +5,14 @@ import SearchInput from 'components/Texts/SearchInput';
 import { useMyState, useSearch } from 'helpers/hooks';
 import { useAppContext, useChatContext } from 'contexts';
 import { Color } from 'constants/css';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 ChatSearchBox.propTypes = {
   style: PropTypes.object
 };
 
 function ChatSearchBox({ style }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const searchChat = useAppContext((v) => v.requestHelpers.searchChat);
   const { profilePicUrl, userId, username, authLevel } = useMyState();
   const chatSearchResults = useChatContext((v) => v.state.chatSearchResults);
@@ -37,7 +37,7 @@ function ChatSearchBox({ style }) {
   const handleSelect = useCallback(
     async (item) => {
       if (item.primary || !!item.pathId) {
-        history.push(`/chat/${item.pathId}`);
+        navigate(`/chat/${item.pathId}`);
       } else {
         onOpenNewChatTab({
           user: { username, id: userId, profilePicUrl, authLevel },
@@ -48,7 +48,7 @@ function ChatSearchBox({ style }) {
             authLevel: item.authLevel
           }
         });
-        history.push(`/chat/new`);
+        navigate(`/chat/new`);
       }
       setSearchText('');
       onClearChatSearchResults();

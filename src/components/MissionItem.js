@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import RewardText from 'components/Texts/RewardText';
 import { css } from '@emotion/css';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAppContext, useMissionContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { checkMultiMissionPassStatus } from 'helpers/userDataHelpers';
@@ -26,7 +26,7 @@ export default function MissionItem({
   missionLink,
   showStatus = true
 }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { userId } = useMyState();
   const onOpenSigninModal = useAppContext(
     (v) => v.user.actions.onOpenSigninModal
@@ -178,7 +178,7 @@ export default function MissionItem({
   function handleLinkClick() {
     if (locked) return;
     if (userId) {
-      history.push(missionLink);
+      navigate(missionLink);
     } else {
       onOpenSigninModal();
     }

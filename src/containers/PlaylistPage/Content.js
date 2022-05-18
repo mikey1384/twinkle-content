@@ -1,16 +1,9 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import Playlist from 'components/Playlist';
+import { useParams } from 'react-router-dom';
 
-Content.propTypes = {
-  match: PropTypes.object.isRequired
-};
-
-export default function Content({
-  match: {
-    params: { contentId }
-  }
-}) {
+export default function Content() {
+  const { contentId } = useParams();
   const [background, setBackground] = useState();
   const [title, setTitle] = useState('');
   return (

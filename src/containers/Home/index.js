@@ -11,18 +11,16 @@ import Earn from './Earn';
 import Store from './Store';
 import Stories from './Stories';
 import LocalContext from './Context';
-import { Route, Switch } from 'react-router-dom';
 import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { container, Left, Center, Right } from './Styles';
 
 Home.propTypes = {
-  history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  onFileUpload: PropTypes.func
+  onFileUpload: PropTypes.func,
+  section: PropTypes.string
 };
 
-function Home({ history, location, onFileUpload }) {
+function Home({ onFileUpload, section }) {
   const { userId } = useMyState();
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const [alertModalShown, setAlertModalShown] = useState(false);
@@ -39,50 +37,20 @@ function Home({ history, location, onFileUpload }) {
         <div className={container}>
           <div className={Left}>
             <ProfileWidget
-              history={history}
               onShowAlert={() => setAlertModalShown(true)}
               onLoadImage={(upload) => {
                 setImageEditModalShown(true);
                 setImageUri(upload.target.result);
               }}
             />
-            <HomeMenuItems
-              style={{ marginTop: '1rem' }}
-              history={history}
-              location={location}
-            />
+            <HomeMenuItems style={{ marginTop: '1rem' }} />
           </div>
           <div className={Center}>
             <div style={{ maxWidth: '700px', width: '100%' }}>
-              <Switch>
-                <Route
-                  path="/users"
-                  render={({ history, location }) => (
-                    <People location={location} history={history} />
-                  )}
-                />
-                <Route
-                  exact
-                  path="/earn"
-                  render={({ location, history }) => (
-                    <Earn location={location} history={history} />
-                  )}
-                />
-                <Route
-                  exact
-                  path="/store"
-                  render={({ location, history }) => (
-                    <Store location={location} history={history} />
-                  )}
-                />
-                <Route
-                  exact
-                  path="/"
-                  render={({ location, history }) => (
-                    <Stories location={location} history={history} />
-                  )}
-                />
-              </Switch>
+              {section === 'people' && <People />}
+              {section === 'earn' && <Earn />}
+              {section === 'store' && <Store />}
+              {section === 'story' && <Stories />}
             </div>
           </div>
           <Notification trackScrollPosition className={Right} location="home" />

@@ -8,7 +8,7 @@ import Peer from 'simple-peer';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth, desktopMinWidth } from 'constants/css';
 import { socket } from 'constants/io';
-import { useHistory, useLocation, matchPath } from 'react-router-dom';
+import { useNavigate, useLocation, matchPath } from 'react-router-dom';
 import { getSectionFromPathname, parseChannelPath } from 'helpers';
 import { useMyState } from 'helpers/hooks';
 import {
@@ -36,12 +36,15 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
   const { pathname } = useLocation();
   const chatMatch = useMemo(
     () =>
-      matchPath(pathname, {
-        path: '/chat'
-      }),
+      matchPath(
+        {
+          path: '/chat'
+        },
+        pathname
+      ),
     [pathname]
   );
-  const history = useHistory();
+  const navigate = useNavigate();
   const currentPathId = useMemo(() => pathname.split('chat/')[1], [pathname]);
   const usingChat = useMemo(
     () => getSectionFromPathname(pathname)?.section === 'chat',
@@ -361,7 +364,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
         );
         onInitChat(data);
         if (!currentChannelIsAccessible) {
-          return history.replace(`/chat/${GENERAL_CHAT_PATH_ID}`);
+          return navigate(`/chat/${GENERAL_CHAT_PATH_ID}`);
         }
         socket.emit(
           'check_online_members',
@@ -471,7 +474,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
       if (selectedChannelId === channelId) {
         onLeaveChannel(channelId);
         if (usingChat) {
-          history.push(`/chat/${GENERAL_CHAT_PATH_ID}`);
+          navigate(`/chat/${GENERAL_CHAT_PATH_ID}`);
         } else {
           onUpdateSelectedChannelId(GENERAL_CHAT_ID);
           onSetLastChatPath(`/${GENERAL_CHAT_PATH_ID}`);
@@ -872,7 +875,6 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
                 margin-right: 0;
               }
             `}
-            history={history}
           />
         </div>
       </nav>

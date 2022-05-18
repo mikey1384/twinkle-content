@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
 import Link from 'components/Link';
+import { useParams } from 'react-router-dom';
 import { useAppContext } from 'contexts';
 
-Email.propTypes = {
-  match: PropTypes.object.isRequired
-};
-
-export default function Email({ match }) {
+export default function Email() {
+  const { token } = useParams();
   const verifyEmail = useAppContext((v) => v.requestHelpers.verifyEmail);
   const [loaded, setLoaded] = useState(false);
   const [verified, setVerified] = useState(false);
@@ -21,7 +18,7 @@ export default function Email({ match }) {
     async function init() {
       try {
         const { username, errorMsg } = await verifyEmail({
-          token: match?.params?.token.replace(/\+/g, '.')
+          token: token.replace(/\+/g, '.')
         });
         setLoaded(true);
         setVerified(!!username);

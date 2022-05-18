@@ -1,12 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import { socket } from 'constants/io';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { getSectionFromPathname } from 'helpers';
 import { useExploreContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import ErrorBoundary from 'components/ErrorBoundary';
@@ -25,11 +23,10 @@ const videosLabel = localize('videos2');
 const linksLabel = localize('links');
 
 Explore.propTypes = {
-  history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired
+  category: PropTypes.string.isRequired
 };
 
-export default function Explore({ history, location }) {
+export default function Explore({ category }) {
   const searchText = useExploreContext((v) => v.state.search.searchText);
   const onSetPrevUserId = useExploreContext((v) => v.actions.onSetPrevUserId);
   const { userId } = useMyState();
@@ -37,7 +34,6 @@ export default function Explore({ history, location }) {
   const disconnected = useRef(false);
   const ContainerRef = useRef({});
   const SearchBoxRef = useRef(null);
-  const category = getSectionFromPathname(location.pathname)?.section;
 
   useEffect(() => {
     mounted.current = true;
@@ -79,15 +75,24 @@ export default function Explore({ history, location }) {
         `}
       >
         <SideMenu>
-          <NavLink to="/subjects" activeClassName="active">
+          <NavLink
+            to="/subjects"
+            className={(navData) => (navData.isActive ? 'active' : '')}
+          >
             <Icon icon="bolt" />
             <span style={{ marginLeft: '1.1rem' }}>{subjectsLabel}</span>
           </NavLink>
-          <NavLink to="/videos" activeClassName="active">
+          <NavLink
+            to="/videos"
+            className={(navData) => (navData.isActive ? 'active' : '')}
+          >
             <Icon icon="film" />
             <span style={{ marginLeft: '1.1rem' }}>{videosLabel}</span>
           </NavLink>
-          <NavLink to="/links" activeClassName="active">
+          <NavLink
+            to="/links"
+            className={(navData) => (navData.isActive ? 'active' : '')}
+          >
             <Icon icon="book" />
             <span style={{ marginLeft: '1.1rem' }}>{linksLabel}</span>
           </NavLink>
@@ -112,8 +117,6 @@ export default function Explore({ history, location }) {
             />
           )}
           <Search
-            history={history}
-            pathname={location.pathname}
             innerRef={SearchBoxRef}
             style={{
               width: '100%',
@@ -123,11 +126,9 @@ export default function Explore({ history, location }) {
               marginBottom: '3rem'
             }}
           />
-          <Switch>
-            <Route path="/videos" component={Videos} />
-            <Route path="/links" component={Links} />
-            <Route path="/subjects" component={Subjects} />
-          </Switch>
+          {category === 'videos' && <Videos />}
+          {category === 'links' && <Links />}
+          {category === 'subjects' && <Subjects />}
           <Categories
             style={{ marginTop: '3rem', marginBottom: '4rem' }}
             filter={category}

@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useMyState } from 'helpers/hooks';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { useAppContext } from 'contexts';
@@ -20,7 +20,7 @@ Cover.propTypes = {
 };
 
 export default function Cover({ missionIds, missionObj, myAttempts }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { profileTheme, profilePicUrl, userId, username } = useMyState();
   const loadMissionRankings = useAppContext(
     (v) => v.requestHelpers.loadMissionRankings
@@ -155,7 +155,7 @@ export default function Cover({ missionIds, missionObj, myAttempts }) {
                 }
               }
             `}
-            onClick={() => history.push('/missions/grammar')}
+            onClick={() => navigate('/missions/grammar')}
             style={{ color: myGrammarRank === 1 ? Color.gold() : '#fff' }}
           >
             {grammarRankLabel} #{myGrammarRank}

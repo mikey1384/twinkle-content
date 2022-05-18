@@ -4,7 +4,13 @@ import { Color, mobileMaxWidth } from 'constants/css';
 import FilterBar from 'components/FilterBar';
 import Home from './Home';
 import Posts from './Posts';
-import { Switch, Route } from 'react-router-dom';
+import {
+  Routes,
+  Route,
+  useParams,
+  useLocation,
+  useNavigate
+} from 'react-router-dom';
 import { css } from '@emotion/css';
 import localize from 'constants/localize';
 
@@ -14,9 +20,6 @@ const likesLabel = localize('likes');
 const postsLabel = localize('posts');
 
 Body.propTypes = {
-  history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired,
   profile: PropTypes.shape({
     id: PropTypes.number.isRequired,
     username: PropTypes.string
@@ -24,16 +27,10 @@ Body.propTypes = {
   selectedTheme: PropTypes.string
 };
 
-export default function Body({
-  history,
-  location,
-  match,
-  match: {
-    params: { username }
-  },
-  profile,
-  selectedTheme
-}) {
+export default function Body({ profile, selectedTheme }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { username } = useParams();
   return (
     <div
       className={css`
@@ -74,7 +71,7 @@ export default function Body({
               location.pathname === `/users/${username}` ? 'active' : ''
             }
             style={{ cursor: 'pointer' }}
-            onClick={() => history.push(`/users/${username}`)}
+            onClick={() => navigate(`/users/${username}`)}
           >
             <a>{profileLabel}</a>
           </nav>
@@ -83,7 +80,7 @@ export default function Body({
               location.pathname === `/users/${username}/watched` ? 'active' : ''
             }
             style={{ cursor: 'pointer' }}
-            onClick={() => history.push(`/users/${username}/watched`)}
+            onClick={() => navigate(`watched`)}
           >
             <a>{watchedLabel}</a>
           </nav>
@@ -92,7 +89,7 @@ export default function Body({
               location.pathname === `/users/${username}/likes` ? 'active' : ''
             }
             style={{ cursor: 'pointer' }}
-            onClick={() => history.push(`/users/${username}/likes`)}
+            onClick={() => navigate(`likes`)}
           >
             <a>{likesLabel}</a>
           </nav>
@@ -105,7 +102,7 @@ export default function Body({
                 : ''
             }
             style={{ cursor: 'pointer' }}
-            onClick={() => history.push(`/users/${username}/all`)}
+            onClick={() => navigate(`all`)}
           >
             <a>{postsLabel}</a>
           </nav>
@@ -133,31 +130,21 @@ export default function Body({
             }
           `}
         >
-          <Switch>
+          <Routes>
             <Route
-              exact
-              path={`${match.path}`}
-              render={() => (
-                <Home
-                  location={location}
-                  profile={profile}
-                  selectedTheme={selectedTheme}
-                />
-              )}
-            />
-            <Route
-              path={`${match.path}/:section`}
-              render={({ match }) => (
+              path="/:section/*"
+              element={
                 <Posts
-                  history={history}
-                  match={match}
                   username={profile.username}
-                  location={location}
                   selectedTheme={selectedTheme}
                 />
-              )}
+              }
             />
-          </Switch>
+            <Route
+              path="*"
+              element={<Home profile={profile} selectedTheme={selectedTheme} />}
+            />
+          </Routes>
         </div>
       </div>
     </div>

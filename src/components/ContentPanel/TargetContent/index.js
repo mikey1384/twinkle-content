@@ -31,7 +31,7 @@ import {
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useInputContext } from 'contexts';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import { v1 as uuidv1 } from 'uuid';
 import localize from 'constants/localize';
@@ -76,7 +76,7 @@ export default function TargetContent({
     };
   }, []);
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const uploadComment = useAppContext((v) => v.requestHelpers.uploadComment);
   const uploadFile = useAppContext((v) => v.requestHelpers.uploadFile);
   const {
@@ -339,7 +339,7 @@ export default function TargetContent({
                             text-decoration: underline;
                           }
                         `}`}
-                        onClick={() => history.push(`/comments/${comment.id}`)}
+                        onClick={() => navigate(`/comments/${comment.id}`)}
                       >
                         ({timeSince(comment.timeStamp)})
                       </span>
@@ -376,7 +376,7 @@ export default function TargetContent({
                     {contentHidden ? (
                       <SecretComment
                         style={{ marginBottom: '1rem' }}
-                        onClick={() => history.push(`/subjects/${subject.id}`)}
+                        onClick={() => navigate(`/subjects/${subject.id}`)}
                       />
                     ) : (
                       <LongText>{comment.content}</LongText>

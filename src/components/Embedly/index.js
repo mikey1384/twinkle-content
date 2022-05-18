@@ -19,7 +19,7 @@ import {
   isValidYoutubeUrl,
   extractVideoIdFromTwinkleVideoUrl
 } from 'helpers/stringHelpers';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { useAppContext, useContentContext } from 'contexts';
 import { useContentState } from 'helpers/hooks';
@@ -68,7 +68,7 @@ function Embedly({
   videoWidth,
   videoHeight
 }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const makeThumbnailSecure = useAppContext(
     (v) => v.requestHelpers.makeThumbnailSecure
   );
@@ -367,7 +367,7 @@ function Embedly({
               `,
               onClick:
                 small && !directUrl && !noLink
-                  ? () => history.push(`/links/${contentId}`)
+                  ? () => navigate(`/links/${contentId}`)
                   : null
             },
             <>
@@ -411,7 +411,7 @@ function Embedly({
     defaultActualTitle,
     description,
     directUrl,
-    history,
+    navigate,
     imageOnly,
     imageUrl,
     loading,

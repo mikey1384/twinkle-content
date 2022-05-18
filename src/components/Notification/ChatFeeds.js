@@ -8,7 +8,7 @@ import Icon from 'components/Icon';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { Color } from 'constants/css';
 import { css } from '@emotion/css';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useChatContext } from 'contexts';
 import { GENERAL_CHAT_ID, GENERAL_CHAT_PATH_ID } from 'constants/defaultValues';
 import localize from 'constants/localize';
@@ -45,7 +45,7 @@ function ChatFeeds({
   );
   const mounted = useRef(true);
   const [loadingChat, setLoadingChat] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
   const [timeSincePost, setTimeSincePost] = useState(timeSince(timeStamp));
   const [timeSinceReload, setTimeSinceReload] = useState(
     timeSince(reloadTimeStamp)
@@ -148,12 +148,9 @@ function ChatFeeds({
     if (myId) {
       setLoadingChat(true);
       onUpdateSelectedChannelId(GENERAL_CHAT_ID);
-      return setTimeout(
-        () => history.push(`/chat/${GENERAL_CHAT_PATH_ID}`),
-        10
-      );
+      return setTimeout(() => navigate(`/chat/${GENERAL_CHAT_PATH_ID}`), 10);
     }
-    history.push('/chat');
+    navigate('/chat');
   }
 }
 

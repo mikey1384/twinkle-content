@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import InvalidPage from 'components/InvalidPage';
 import FilterBar from 'components/FilterBar';
-import Routes from './Routes';
+import ManagementRoutes from './ManagementRoutes';
 import Loading from 'components/Loading';
 import SideMenu from 'components/SideMenu';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useMyState } from 'helpers/hooks';
 import { useManagementContext } from 'contexts';
 import localize from 'constants/localize';
@@ -15,12 +14,9 @@ import localize from 'constants/localize';
 const accountMgmtLabel = localize('accountMgmt');
 const modActivitiesLabel = localize('modActivities');
 
-Management.propTypes = {
-  location: PropTypes.object
-};
-
-export default function Management({ location }) {
-  const history = useHistory();
+export default function Management() {
+  const location = useLocation();
+  const navigate = useNavigate();
   const loaded = useManagementContext((v) => v.state.loaded);
   const onLoadManagement = useManagementContext(
     (v) => v.actions.onLoadManagement
@@ -36,10 +32,17 @@ export default function Management({ location }) {
   ) : managementLevel > 0 ? (
     <div>
       <SideMenu style={{ top: 'CALC(50vh - 8rem)' }}>
-        <NavLink to="/management" exact activeClassName="active">
+        <NavLink
+          to="/management"
+          end
+          className={(navData) => (navData.isActive ? 'active' : '')}
+        >
           <span style={{ marginLeft: '1.1rem' }}>{accountMgmtLabel}</span>
         </NavLink>
-        <NavLink to="/management/mod-activities" activeClassName="active">
+        <NavLink
+          to="/management/mod-activities"
+          className={(navData) => (navData.isActive ? 'active' : '')}
+        >
           <span style={{ marginLeft: '1.1rem' }}>{modActivitiesLabel}</span>
         </NavLink>
       </SideMenu>
@@ -54,7 +57,7 @@ export default function Management({ location }) {
       >
         <nav
           className={location.pathname === `/management` ? 'active' : ''}
-          onClick={() => history.push('/management')}
+          onClick={() => navigate('/management')}
         >
           {accountMgmtLabel}
         </nav>
@@ -62,12 +65,12 @@ export default function Management({ location }) {
           className={
             location.pathname === `/management/mod-activities` ? 'active' : ''
           }
-          onClick={() => history.push('/management/mod-activities')}
+          onClick={() => navigate('/management/mod-activities')}
         >
           {modActivitiesLabel}
         </nav>
       </FilterBar>
-      <Routes
+      <ManagementRoutes
         className={css`
           width: CALC(100vw - 51rem - 2rem);
           margin-left: 20rem;
@@ -79,7 +82,6 @@ export default function Management({ location }) {
             margin-right: 0;
           }
         `}
-        location={location}
       />
     </div>
   ) : (

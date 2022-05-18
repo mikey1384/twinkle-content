@@ -21,7 +21,7 @@ import { mobileMaxWidth } from 'constants/css';
 import { socket } from 'constants/io';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   useAppContext,
   useContentContext,
@@ -40,7 +40,7 @@ Chat.propTypes = {
 function Chat({ onFileUpload }) {
   const { lastChatPath, userId } = useMyState();
   const { pathname } = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const userObj = useAppContext((v) => v.user.state.userObj);
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const acceptInvitation = useAppContext(
@@ -132,6 +132,7 @@ function Chat({ onFileUpload }) {
   );
   const currentChannelName = useChatContext((v) => v.state.currentChannelName);
   const filesBeingUploaded = useChatContext((v) => v.state.filesBeingUploaded);
+  const homeChannelIds = useChatContext((v) => v.state.homeChannelIds);
   const isRespondingToSubject = useChatContext(
     (v) => v.state.isRespondingToSubject
   );
@@ -285,10 +286,10 @@ function Chat({ onFileUpload }) {
       ) {
         prevPathId.current = currentPathId;
         if (currentPathId === 'new') {
-          if (history.action !== 'POP') {
+          if (homeChannelIds.includes(0)) {
             onEnterEmptyChat();
           } else {
-            history.replace(`/chat`);
+            navigate(`/chat`, { replace: true });
           }
         } else {
           handleChannelEnter(currentPathId);
@@ -301,7 +302,7 @@ function Chat({ onFileUpload }) {
       onUpdateChatType('default');
       const { isAccessible } = await checkChatAccessible(pathId);
       if (!isAccessible) {
-        return history.replace(`/chat/${GENERAL_CHAT_PATH_ID}`);
+        return navigate(`/chat/${GENERAL_CHAT_PATH_ID}`, { replace: true });
       }
       const channelId = channelPathIdHash[pathId] || parseChannelPath(pathId);
       if (!channelPathIdHash[pathId] && mounted.current) {
@@ -345,19 +346,19 @@ function Chat({ onFileUpload }) {
     if (!currentPathId) {
       if (chatType === 'vocabulary') {
         prevPathId.current = 'vocabulary';
-        history.replace(`/chat/vocabulary`);
+        navigate(`/chat/vocabulary`, { replace: true });
       } else if (!isNaN(currentChannel.pathId)) {
         prevPathId.current = currentChannel.pathId;
-        history.replace(`/chat/${currentChannel.pathId}`);
+        navigate(`/chat/${currentChannel.pathId}`, { replace: true });
       }
     }
-  }, [chatType, currentChannel.pathId, currentPathId, history]);
+  }, [chatType, currentChannel.pathId, currentPathId, navigate]);
 
   useEffect(() => {
     if (!prevUserId.current) {
       prevUserId.current = userId;
     } else {
-      history.replace(`/chat`);
+      navigate(`/chat`, { replace: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
@@ -490,7 +491,7 @@ function Chat({ onFileUpload }) {
         onCreateNewChannel({ message, isClosed, members, pathId });
       }
       socket.emit('join_chat_group', message.channelId);
-      history.push(`/chat/${pathId}`);
+      navigate(`/chat/${pathId}`);
       if (mounted.current) {
         setCreateNewChatModalShown(false);
       }

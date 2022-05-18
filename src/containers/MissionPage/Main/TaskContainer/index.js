@@ -7,28 +7,26 @@ import InvalidPage from 'components/InvalidPage';
 import Loading from 'components/Loading';
 import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
+import { useParams } from 'react-router-dom';
 import { mobileMaxWidth } from 'constants/css';
 import { useAppContext, useMissionContext } from 'contexts';
 import NotUnlocked from './NotUnlocked';
 import TutorialModal from '../TutorialModal';
 
 TaskContainer.propTypes = {
-  match: PropTypes.object.isRequired,
   mission: PropTypes.object.isRequired
 };
 
-export default function TaskContainer({
-  match: {
-    params: { taskType }
-  },
-  mission
-}) {
-  if (!mission.isMultiMission) {
-    return <InvalidPage />;
-  }
+export default function TaskContainer({ mission }) {
   const mounted = useRef(true);
-  const TutorialRef = useRef(null);
+  const { taskType } = useParams();
   const { userId, managementLevel } = useMyState();
+  const missionTypeIdHash = useMissionContext((v) => v.state.missionTypeIdHash);
+  const taskId = useMemo(() => {
+    if (!taskType) return null;
+    return missionTypeIdHash?.[taskType];
+  }, [missionTypeIdHash, taskType]);
+  const TutorialRef = useRef(null);
   const isManager = useMemo(() => managementLevel >= 2, [managementLevel]);
   const loadMission = useAppContext((v) => v.requestHelpers.loadMission);
   const loadMissionTypeIdHash = useAppContext(
@@ -45,26 +43,16 @@ export default function TaskContainer({
     (v) => v.actions.onSetMyMissionAttempts
   );
   const missionObj = useMissionContext((v) => v.state.missionObj);
-  const missionTypeIdHash = useMissionContext((v) => v.state.missionTypeIdHash);
   const myAttempts = useMissionContext((v) => v.state.myAttempts);
   const prevUserId = useMissionContext((v) => v.state.prevUserId);
 
-  const taskId = useMemo(() => {
-    return missionTypeIdHash?.[taskType];
-  }, [missionTypeIdHash, taskType]);
-
-  const task = useMemo(() => missionObj[taskId] || {}, [taskId, missionObj]);
+  const task = missionObj[taskId] || {};
 
   useEffect(() => {
     if (!taskId) {
       getMissionId();
     } else if (!task.loaded || (userId && prevUserId !== userId)) {
       init();
-    }
-
-    async function getMissionId() {
-      const data = await loadMissionTypeIdHash();
-      onLoadMissionTypeIdHash(data);
     }
 
     async function init() {
@@ -83,9 +71,12 @@ export default function TaskContainer({
         onLoadMission({ mission: { id: taskId }, prevUserId: userId });
       }
     }
-
+    async function getMissionId() {
+      const data = await loadMissionTypeIdHash();
+      onLoadMissionTypeIdHash(data);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId, prevUserId, taskId, mission.loaded]);
+  }, [userId, prevUserId, taskId, mission.loaded, task.loaded]);
 
   const taskOrder = useMemo(() => {
     const result = [];
@@ -101,10 +92,6 @@ export default function TaskContainer({
     () => taskOrder.indexOf(taskType),
     [taskOrder, taskType]
   );
-
-  if (currentTaskOrderIndex === -1) {
-    return <InvalidPage />;
-  }
 
   const nextTask = useMemo(() => {
     const finalTaskIndex = taskOrder.length - 1;
@@ -134,6 +121,14 @@ export default function TaskContainer({
     taskOrder
   ]);
 
+  if (!mission.isMultiMission) {
+    return <InvalidPage />;
+  }
+
+  if (currentTaskOrderIndex === -1) {
+    return <InvalidPage />;
+  }
+
   if (userId && taskType && missionTypeIdHash && !missionTypeIdHash[taskType]) {
     return <InvalidPage />;
   }
@@ -148,7 +143,7 @@ export default function TaskContainer({
 
   return (
     <div style={{ width: '100%' }}>
-      <GoBack isAtTop={!isManager} bordered to="./" text={mission.title} />
+      <GoBack isAtTop={!isManager} bordered to=".." text={mission.title} />
       <Task
         style={{ width: '100%', marginTop: '2rem' }}
         task={task}
@@ -160,7 +155,7 @@ export default function TaskContainer({
         isAtTop={false}
         style={{ marginTop: '2rem' }}
         bordered
-        to="./"
+        to=".."
         text={mission.title}
       />
       <Tutorial

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ProfilePic from 'components/ProfilePic';
 import { Color, borderRadius } from 'constants/css';
 import { css } from '@emotion/css';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Link from 'components/Link';
 
 TopRanker.propTypes = {
@@ -21,7 +21,7 @@ export default function TopRanker({
   username,
   rank
 }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const rankColor = useMemo(() => {
     return rank === 1 ? Color.gold() : rank === 2 ? '#fff' : Color.bronze();
   }, [rank]);
@@ -53,7 +53,7 @@ export default function TopRanker({
             width: 100%;
           `}
           userId={userId}
-          onClick={() => history.push(`/users/${username}`)}
+          onClick={() => navigate(`/users/${username}`)}
           profilePicUrl={profilePicUrl}
         />
       </div>

@@ -29,7 +29,7 @@ import Icon from 'components/Icon';
 import LoginToViewContent from 'components/LoginToViewContent';
 import ContentFileViewer from 'components/ContentFileViewer';
 import { css } from '@emotion/css';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { commentContainer } from './Styles';
 import { timeSince } from 'helpers/timeStampHelpers';
 import {
@@ -128,7 +128,7 @@ function Comment({
   const mounted = useRef(true);
   subject = subject || comment.targetObj?.subject || {};
   const { fileType } = getFileInfoFromFileName(fileName);
-  const history = useHistory();
+  const navigate = useNavigate();
   const checkIfUserResponded = useAppContext(
     (v) => v.requestHelpers.checkIfUserResponded
   );
@@ -619,7 +619,7 @@ function Comment({
                       onClick={() =>
                         isNotification || isDeleteNotification
                           ? null
-                          : history.push(`/comments/${comment.id}`)
+                          : navigate(`/comments/${comment.id}`)
                       }
                     >
                       {timeSincePost}
@@ -689,9 +689,7 @@ function Comment({
                     <div>
                       {isHidden ? (
                         <SecretComment
-                          onClick={() =>
-                            history.push(`/subjects/${subject?.id}`)
-                          }
+                          onClick={() => navigate(`/subjects/${subject?.id}`)}
                         />
                       ) : isNotification || isDeleteNotification ? (
                         <div

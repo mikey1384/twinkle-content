@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 GoToNextTask.propTypes = {
   style: PropTypes.object,
@@ -10,7 +10,7 @@ GoToNextTask.propTypes = {
 };
 
 export default function GoToNextTask({ style, nextTaskType }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   return (
     <div
       style={{
@@ -24,7 +24,7 @@ export default function GoToNextTask({ style, nextTaskType }) {
         filled
         skeuomorphic
         color="green"
-        onClick={() => history.push(nextTaskType ? `./${nextTaskType}` : './')}
+        onClick={() => navigate(nextTaskType ? `../${nextTaskType}` : '..')}
       >
         {!nextTaskType && <Icon icon="arrow-left" />}
         <span

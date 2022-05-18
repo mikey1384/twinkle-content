@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import { css } from '@emotion/css';
 import { Color } from 'constants/css';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 RightMenu.propTypes = {
   className: PropTypes.string,
@@ -12,7 +12,7 @@ RightMenu.propTypes = {
 };
 
 export default function RightMenu({ className, missionType, style }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   return (
     <div
@@ -53,7 +53,7 @@ export default function RightMenu({ className, missionType, style }) {
               ? 'active'
               : ''
           }
-          onClick={() => history.push(`/missions/${missionType}`)}
+          onClick={() => navigate(`/missions/${missionType}`)}
           style={{
             cursor: 'pointer',
             display: 'flex',
@@ -65,7 +65,7 @@ export default function RightMenu({ className, missionType, style }) {
           <span style={{ marginLeft: '1.5rem' }}>Mission</span>
         </nav>
         <nav
-          onClick={() => history.push(`/missions/${missionType}/manage`)}
+          onClick={() => navigate(`/missions/${missionType}/manage`)}
           className={
             location.pathname === `/missions/${missionType}/manage`
               ? 'active'

@@ -10,7 +10,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import ContentFileViewer from 'components/ContentFileViewer';
 import LoginToViewContent from 'components/LoginToViewContent';
 import { css } from '@emotion/css';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { Color } from 'constants/css';
 import { useContentState } from 'helpers/hooks';
@@ -43,7 +43,7 @@ function Comment({
   userId,
   username
 }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const deleteContent = useAppContext((v) => v.requestHelpers.deleteContent);
   const editContent = useAppContext((v) => v.requestHelpers.editContent);
   const onSetIsEditing = useContentContext((v) => v.actions.onSetIsEditing);
@@ -119,7 +119,7 @@ function Comment({
                   text-decoration: underline;
                 }
               `}
-              onClick={() => history.push(`/comments/${comment.id}`)}
+              onClick={() => navigate(`/comments/${comment.id}`)}
               style={{ color: Color.gray() }}
             >
               &nbsp;

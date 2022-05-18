@@ -9,7 +9,7 @@ import { Color, mobileMaxWidth } from 'constants/css';
 import { stringIsEmpty, trimUrl } from 'helpers/stringHelpers';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { unix } from 'moment';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useChatContext, useInputContext } from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
@@ -61,7 +61,7 @@ export default function BasicInfos({
   youtubeUrl,
   style
 }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const {
     userId: myId,
     username: myUsername,
@@ -346,7 +346,7 @@ export default function BasicInfos({
           }
         });
       }
-      history.push(pathId ? `/chat/${pathId}` : `/chat/new`);
+      navigate(pathId ? `/chat/${pathId}` : `/chat/new`);
     }
   }
 

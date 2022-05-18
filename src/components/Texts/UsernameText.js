@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import DropdownList from 'components/DropdownList';
 import { Color } from 'constants/css';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useChatContext } from 'contexts';
 import { isMobile, getSectionFromPathname } from 'helpers';
@@ -32,7 +32,7 @@ export default function UsernameText({
   user = {},
   wordBreakEnabled
 }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const usingChat = useMemo(
     () => getSectionFromPathname(location?.pathname)?.section === 'chat',
@@ -147,7 +147,7 @@ export default function UsernameText({
             style={{
               color: Color.darkerGray()
             }}
-            onClick={() => history.push(`/users/${user.username}`)}
+            onClick={() => navigate(`/users/${user.username}`)}
           >
             <Icon icon="user" />
             <span style={{ marginLeft: '1rem' }}>{profileLabel}</span>
@@ -267,7 +267,7 @@ export default function UsernameText({
         if (!usingChat) {
           onUpdateSelectedChannelId(channelId);
         }
-        history.push(pathId ? `/chat/${pathId}` : `/chat/new`);
+        navigate(pathId ? `/chat/${pathId}` : `/chat/new`);
       }
     }
   }

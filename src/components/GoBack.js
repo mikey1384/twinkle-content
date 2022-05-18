@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 GoBack.propTypes = {
   isAtTop: PropTypes.bool,
@@ -22,7 +22,7 @@ export default function GoBack({
   style,
   text
 }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   return (
     <div
       style={style}
@@ -55,7 +55,7 @@ export default function GoBack({
           }
         }
       `}`}
-      onClick={() => (to ? history.push(to) : history.goBack())}
+      onClick={() => (to ? navigate(to) : navigate(-1))}
     >
       <span>
         <Icon icon="arrow-left" /> {text || 'Go Back'}

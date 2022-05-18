@@ -27,7 +27,7 @@ import Icon from 'components/Icon';
 import LoginToViewContent from 'components/LoginToViewContent';
 import ContentFileViewer from 'components/ContentFileViewer';
 import { css } from '@emotion/css';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { commentContainer } from '../Styles';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { useContentState, useMyState } from 'helpers/hooks';
@@ -107,7 +107,7 @@ function Comment({
 
   subject = subject || comment.targetObj?.subject || {};
   const { fileType } = getFileInfoFromFileName(fileName);
-  const history = useHistory();
+  const navigate = useNavigate();
   const checkIfUserResponded = useAppContext(
     (v) => v.requestHelpers.checkIfUserResponded
   );
@@ -459,9 +459,7 @@ function Comment({
                   `}
                   style={{ cursor: isNotification ? 'default' : 'pointer' }}
                   onClick={() =>
-                    isNotification
-                      ? null
-                      : history.push(`/comments/${comment.id}`)
+                    isNotification ? null : navigate(`/comments/${comment.id}`)
                   }
                 >
                   {timeSince(comment.timeStamp)}
@@ -528,7 +526,7 @@ function Comment({
                 <div>
                   {isHidden ? (
                     <SecretComment
-                      onClick={() => history.push(`/subjects/${subject?.id}`)}
+                      onClick={() => navigate(`/subjects/${subject?.id}`)}
                     />
                   ) : isNotification ? (
                     <div
@@ -571,9 +569,7 @@ function Comment({
                           <Button
                             transparent
                             style={{ marginLeft: '1rem' }}
-                            onClick={() =>
-                              history.push(`/comments/${comment.id}`)
-                            }
+                            onClick={() => navigate(`/comments/${comment.id}`)}
                           >
                             <Icon icon="comment-alt" />
                             <span style={{ marginLeft: '1rem' }}>

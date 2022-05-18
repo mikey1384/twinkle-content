@@ -6,6 +6,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import WelcomeMessage from './WelcomeMessage';
 import { container } from './Styles';
 import { borderRadius } from 'constants/css';
+import { useNavigate } from 'react-router-dom';
 import { MAX_PROFILE_PIC_SIZE } from 'constants/defaultValues';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
@@ -16,12 +17,12 @@ const viewProfileLabel = localize('viewProfile');
 const changePictureLabel = localize('changePicture');
 
 ProfileWidget.propTypes = {
-  history: PropTypes.object,
   onLoadImage: PropTypes.func,
   onShowAlert: PropTypes.func
 };
 
-export default function ProfileWidget({ history, onLoadImage, onShowAlert }) {
+export default function ProfileWidget({ onLoadImage, onShowAlert }) {
+  const navigate = useNavigate();
   const onOpenSigninModal = useAppContext(
     (v) => v.user.actions.onOpenSigninModal
   );
@@ -34,9 +35,7 @@ export default function ProfileWidget({ history, onLoadImage, onShowAlert }) {
         {username && (
           <div
             className="heading"
-            onClick={() =>
-              username ? history.push(`/users/${username}`) : null
-            }
+            onClick={() => (username ? navigate(`/users/${username}`) : null)}
           >
             <div>
               <ProfilePic
@@ -69,7 +68,7 @@ export default function ProfileWidget({ history, onLoadImage, onShowAlert }) {
               <Button
                 style={{ width: '100%' }}
                 transparent
-                onClick={() => history.push(`/users/${username}`)}
+                onClick={() => navigate(`/users/${username}`)}
               >
                 {viewProfileLabel}
               </Button>

@@ -14,7 +14,7 @@ import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { container } from './Styles';
 import { useContentState, useLazyLoad } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import localize from 'constants/localize';
 
@@ -45,7 +45,7 @@ export default function ContentPanel({
     threshold: 0
   });
   const PanelRef = useRef(null);
-  const history = useHistory();
+  const navigate = useNavigate();
   const loadContent = useAppContext((v) => v.requestHelpers.loadContent);
   const onAddTags = useContentContext((v) => v.actions.onAddTags);
   const onAddTagToContents = useContentContext(
@@ -305,7 +305,7 @@ export default function ContentPanel({
                       }}
                       expandable
                       onClick={() =>
-                        history.push(`/subjects/${targetObj.subject.id}`)
+                        navigate(`/subjects/${targetObj.subject.id}`)
                       }
                       contentObj={targetObj.subject}
                       onChangeSpoilerStatus={onChangeSpoilerStatus}
@@ -319,7 +319,7 @@ export default function ContentPanel({
                         position: 'relative'
                       }}
                       expandable
-                      onClick={() => history.push(`/videos/${rootObj.id}`)}
+                      onClick={() => navigate(`/videos/${rootObj.id}`)}
                       contentObj={rootObj}
                     />
                   )}
@@ -366,7 +366,7 @@ export default function ContentPanel({
                         margin-top: -0.5rem;
                       }
                     `}
-                    onClick={() => history.push(`/users/${rootObj.username}`)}
+                    onClick={() => navigate(`/users/${rootObj.username}`)}
                   >
                     <Profile profile={rootObj} />
                   </div>

@@ -4,7 +4,7 @@ import Loading from 'components/Loading';
 import XPVideoPlayer from 'components/XPVideoPlayer';
 import Link from 'components/Link';
 import VideoThumbImage from 'components/VideoThumbImage';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import { useAppContext, useContentContext } from 'contexts';
@@ -18,7 +18,7 @@ TwinkleVideo.propTypes = {
 };
 
 export default function TwinkleVideo({ imageOnly, onPlay, style, videoId }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const loadContent = useAppContext((v) => v.requestHelpers.loadContent);
   const onInitContent = useContentContext((v) => v.actions.onInitContent);
   const { loaded, notFound, byUser, content, rewardLevel, uploader } =
@@ -54,7 +54,7 @@ export default function TwinkleVideo({ imageOnly, onPlay, style, videoId }) {
           rewardLevel={rewardLevel}
           src={`https://img.youtube.com/vi/${content}/mqdefault.jpg`}
           videoId={videoId}
-          onClick={() => history.push(`/videos/${videoId}`)}
+          onClick={() => navigate(`/videos/${videoId}`)}
         />
       ) : (
         <XPVideoPlayer

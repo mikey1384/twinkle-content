@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
 import ErrorBoundary from 'components/ErrorBoundary';
 import MissionContainer from './MissionContainer';
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import TaskContainer from './TaskContainer';
 
 Main.propTypes = {
@@ -22,25 +22,22 @@ export default function Main({
   return (
     <ErrorBoundary style={{ width: '100%', ...style }}>
       {mission ? (
-        <Switch>
+        <Routes>
           <Route
-            path={`/missions/${mission.missionType}/:taskType`}
-            render={({ match }) => (
-              <TaskContainer match={match} mission={mission} />
-            )}
+            path={`/:taskType`}
+            element={<TaskContainer mission={mission} />}
           />
           <Route
-            exact
-            path={`/missions/${mission.missionType}`}
-            render={() => (
+            path="/"
+            element={
               <MissionContainer
                 mission={mission}
                 myAttempts={myAttempts}
                 onSetMissionState={onSetMissionState}
               />
-            )}
+            }
           />
-        </Switch>
+        </Routes>
       ) : (
         <Loading text="Loading Mission..." />
       )}

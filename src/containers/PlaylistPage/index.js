@@ -1,16 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import InvalidPage from 'components/InvalidPage';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import Content from './Content';
 
-Playlists.propTypes = {
-  match: PropTypes.object.isRequired
-};
-
-export default function Playlists({ match }) {
+export default function PlaylistPage() {
   return (
     <div
       className={css`
@@ -34,10 +29,10 @@ export default function Playlists({ match }) {
           }
         `}
       >
-        <Switch>
-          <Route exact path={`${match.url}/:contentId`} component={Content} />
-          <Route component={InvalidPage} />
-        </Switch>
+        <Routes>
+          <Route path={'/:contentId'} element={<Content />} />
+          <Route path="*" element={<InvalidPage />} />
+        </Routes>
       </section>
     </div>
   );

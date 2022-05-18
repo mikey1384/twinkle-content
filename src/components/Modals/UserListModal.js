@@ -7,7 +7,7 @@ import Icon from 'components/Icon';
 import ProfilePic from 'components/ProfilePic';
 import Loading from 'components/Loading';
 import { Color } from 'constants/css';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useChatContext } from 'contexts';
 
@@ -31,7 +31,7 @@ export default function UserListModal({
   title,
   users
 }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { userId, username, profilePicUrl, authLevel } = useMyState();
   const loadDMChannel = useAppContext((v) => v.requestHelpers.loadDMChannel);
   const onUpdateSelectedChannelId = useChatContext(
@@ -88,7 +88,7 @@ export default function UserListModal({
                         userId={user.id}
                         profilePicUrl={user.profilePicUrl}
                         online={!!user.online}
-                        onClick={() => history.push(`/users/${user.username}`)}
+                        onClick={() => navigate(`/users/${user.username}`)}
                         statusShown
                       />
                     </div>
@@ -146,7 +146,7 @@ export default function UserListModal({
           });
         }
         onUpdateSelectedChannelId(channelId);
-        history.push(pathId ? `/chat/${pathId}` : `/chat/new`);
+        navigate(pathId ? `/chat/${pathId}` : `/chat/new`);
       }
     }
   }

@@ -5,6 +5,7 @@ import ContentPanel from 'components/ContentPanel';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import FilterBar from 'components/FilterBar';
 import Loading from 'components/Loading';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { useInfiniteScroll } from 'helpers/hooks';
 import { useAppContext, useProfileContext } from 'contexts';
 import { mobileMaxWidth } from 'constants/css';
@@ -13,11 +14,8 @@ import { css } from '@emotion/css';
 Feeds.propTypes = {
   feeds: PropTypes.array.isRequired,
   filterTable: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
   loaded: PropTypes.bool,
   loadMoreButton: PropTypes.bool,
-  location: PropTypes.object.isRequired,
-  filter: PropTypes.string,
   section: PropTypes.string.isRequired,
   selectedTheme: PropTypes.string,
   username: PropTypes.string.isRequired
@@ -26,15 +24,15 @@ Feeds.propTypes = {
 export default function Feeds({
   feeds,
   filterTable,
-  history,
   loaded,
   loadMoreButton,
-  location,
-  filter,
   section,
   selectedTheme,
   username
 }) {
+  const { filter } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [loadingFeeds, setLoadingFeeds] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const selectedSection = useRef('all');
@@ -117,11 +115,11 @@ export default function Feeds({
   );
   useEffect(() => {
     if (filter && filter !== 'byuser') {
-      history.push(`/users/${username}/${section}`);
+      navigate(`/users/${username}/${section}`);
     } else if (filter === 'byuser' && !filterBarShown) {
-      history.push(`/users/${username}/${section}`);
+      navigate(`/users/${username}/${section}`);
     }
-  }, [filterBarShown, history, filter, section, username]);
+  }, [filterBarShown, filter, section, username, navigate]);
   const noFeedLabel = useMemo(() => {
     switch (section) {
       case 'all':
@@ -176,15 +174,13 @@ export default function Feeds({
           >
             <nav
               className={filter === 'byuser' ? '' : 'active'}
-              onClick={() => history.push(`/users/${username}/${section}`)}
+              onClick={() => navigate(`/users/${username}/${section}`)}
             >
               All
             </nav>
             <nav
               className={filter === 'byuser' ? 'active' : ''}
-              onClick={() =>
-                history.push(`/users/${username}/${section}/byuser`)
-              }
+              onClick={() => navigate(`/users/${username}/${section}/byuser`)}
             >
               Made by {username}
             </nav>

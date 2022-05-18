@@ -4,7 +4,7 @@ import Input from 'components/Texts/Input';
 import Button from 'components/Button';
 import { useAppContext } from 'contexts';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 PasswordForm.propTypes = {
   profilePicUrl: PropTypes.number,
@@ -13,7 +13,7 @@ PasswordForm.propTypes = {
 };
 
 export default function PasswordForm({ profilePicUrl, userId, username }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const onLogin = useAppContext((v) => v.user.actions.onLogin);
@@ -75,7 +75,7 @@ export default function PasswordForm({ profilePicUrl, userId, username }) {
     await changePassword({ userId, password });
     onLogin({ userId, username });
     onSetUserState({ userId, newState: { profilePicUrl, userId, username } });
-    history.push('/');
+    navigate('/');
   }
 
   function isValidPassword(password) {

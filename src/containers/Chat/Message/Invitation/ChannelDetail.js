@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import UserListModal from 'components/Modals/UserListModal';
 import localize from 'constants/localize';
@@ -23,7 +23,7 @@ export default function ChannelDetail({
   invitePath,
   members
 }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { profileTheme } = useMyState();
   const [shownMembers, setShownMembers] = useState([]);
   const [userListModalShown, setUserListModalShown] = useState(false);
@@ -38,7 +38,7 @@ export default function ChannelDetail({
   }, [members]);
   const handleChannelEnter = useCallback(() => {
     if (alreadyJoined) {
-      history.push(`/chat/${invitePath}`);
+      navigate(`/chat/${invitePath}`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [alreadyJoined, invitePath]);

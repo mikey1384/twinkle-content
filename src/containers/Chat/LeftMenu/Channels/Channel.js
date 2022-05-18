@@ -4,7 +4,7 @@ import { Color, desktopMinWidth, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import localize from 'constants/localize';
 
 const deletedLabel = localize('deleted');
@@ -31,7 +31,7 @@ function Channel({
   chatType,
   selectedChannelId
 }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const currentPathId = useMemo(() => {
     return Number(location.pathname.split('chat/')[1]);
@@ -117,11 +117,11 @@ function Channel({
 
   const handleChannelClick = useCallback(() => {
     if (pathId) {
-      return history.push(`/chat/${pathId}`);
+      return navigate(`/chat/${pathId}`);
     }
-    history.push('/chat/new');
+    navigate('/chat/new');
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [history, pathId]);
+  }, [navigate, pathId]);
 
   const badgeShown = useMemo(() => {
     return (
