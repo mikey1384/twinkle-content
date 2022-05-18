@@ -143,7 +143,7 @@ export default function TaskContainer({ mission }) {
 
   return (
     <div style={{ width: '100%' }}>
-      <GoBack isAtTop={!isManager} bordered to="./" text={mission.title} />
+      <GoBack isAtTop={!isManager} bordered to=".." text={mission.title} />
       <Task
         style={{ width: '100%', marginTop: '2rem' }}
         task={task}
@@ -155,7 +155,7 @@ export default function TaskContainer({ mission }) {
         isAtTop={false}
         style={{ marginTop: '2rem' }}
         bordered
-        to="./"
+        to=".."
         text={mission.title}
       />
       <Tutorial
