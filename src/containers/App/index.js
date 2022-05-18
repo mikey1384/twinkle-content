@@ -553,7 +553,7 @@ function App() {
           />
           <Route path="/management" exact element={<Management />} />
           <Route path="/management/mod-activities" element={<Management />} />
-          <Route path="/reset" element={<ResetPassword />} />
+          <Route path="/reset/*" element={<ResetPassword />} />
           <Route path="/verify/*" element={<Verify />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/users" element={<Home section="people" />} />

@@ -6,8 +6,8 @@ import Email from './Email';
 export default function Verify() {
   return (
     <Routes>
-      <Route path={`email/:token`} element={<Email />} />
-      <Route element={<InvalidPage />} />
+      <Route path="email/:token" element={<Email />} />
+      <Route path="*" element={<InvalidPage />} />
     </Routes>
   );
 }

@@ -6,8 +6,8 @@ import InvalidPage from 'components/InvalidPage';
 export default function ResetPassword() {
   return (
     <Routes>
-      <Route path={`/password/:token`} element={<Content />} />
-      <Route element={<InvalidPage />} />
+      <Route path="password/:token" element={<Content />} />
+      <Route path="*" element={<InvalidPage />} />
     </Routes>
   );
 }

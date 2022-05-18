@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
 import PasswordForm from './PasswordForm';
+import { useParams } from 'react-router-dom';
 import { useAppContext } from 'contexts';
 
-Content.propTypes = {
-  match: PropTypes.object.isRequired
-};
-
-export default function Content({ match }) {
+export default function Content() {
+  const { token } = useParams();
   const verifyEmail = useAppContext((v) => v.requestHelpers.verifyEmail);
   const [loaded, setLoaded] = useState(false);
   const [profilePicUrl, setProfilePicUrl] = useState(null);
@@ -23,7 +20,7 @@ export default function Content({ match }) {
       try {
         const { profilePicUrl, userId, username, errorMsg } = await verifyEmail(
           {
-            token: match?.params?.token.replace(/\+/g, '.'),
+            token: token.replace(/\+/g, '.'),
             forPasswordReset: true
           }
         );
