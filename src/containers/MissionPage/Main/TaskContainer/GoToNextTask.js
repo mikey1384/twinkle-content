@@ -24,7 +24,7 @@ export default function GoToNextTask({ style, nextTaskType }) {
         filled
         skeuomorphic
         color="green"
-        onClick={() => navigate(nextTaskType ? `./${nextTaskType}` : './')}
+        onClick={() => navigate(nextTaskType ? `../${nextTaskType}` : '..')}
       >
         {!nextTaskType && <Icon icon="arrow-left" />}
         <span
