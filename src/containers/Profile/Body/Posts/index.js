@@ -25,7 +25,7 @@ const filterTable = {
 
 export default function Posts({ selectedTheme }) {
   const navigate = useNavigate();
-  const { section, username, filter } = useParams();
+  const { section, username } = useParams();
   const {
     posts: {
       [section]: profileFeeds,
@@ -83,7 +83,6 @@ export default function Posts({ selectedTheme }) {
             path={`/:filter`}
             element={
               <Feeds
-                filter={filter}
                 feeds={byUserFeeds}
                 filterTable={filterTable}
                 loaded={byUserloaded}
@@ -95,7 +94,6 @@ export default function Posts({ selectedTheme }) {
             }
           />
           <Route
-            exact
             path="*"
             element={
               <Feeds

@@ -5,7 +5,7 @@ import ContentPanel from 'components/ContentPanel';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import FilterBar from 'components/FilterBar';
 import Loading from 'components/Loading';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { useInfiniteScroll } from 'helpers/hooks';
 import { useAppContext, useProfileContext } from 'contexts';
 import { mobileMaxWidth } from 'constants/css';
@@ -16,7 +16,6 @@ Feeds.propTypes = {
   filterTable: PropTypes.object.isRequired,
   loaded: PropTypes.bool,
   loadMoreButton: PropTypes.bool,
-  filter: PropTypes.string,
   section: PropTypes.string.isRequired,
   selectedTheme: PropTypes.string,
   username: PropTypes.string.isRequired
@@ -27,11 +26,11 @@ export default function Feeds({
   filterTable,
   loaded,
   loadMoreButton,
-  filter,
   section,
   selectedTheme,
   username
 }) {
+  const { filter } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
   const [loadingFeeds, setLoadingFeeds] = useState(false);
