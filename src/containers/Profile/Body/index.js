@@ -80,7 +80,7 @@ export default function Body({ profile, selectedTheme }) {
               location.pathname === `/users/${username}/watched` ? 'active' : ''
             }
             style={{ cursor: 'pointer' }}
-            onClick={() => navigate(`./watched`)}
+            onClick={() => navigate(`watched`)}
           >
             <a>{watchedLabel}</a>
           </nav>
@@ -89,7 +89,7 @@ export default function Body({ profile, selectedTheme }) {
               location.pathname === `/users/${username}/likes` ? 'active' : ''
             }
             style={{ cursor: 'pointer' }}
-            onClick={() => navigate(`./likes`)}
+            onClick={() => navigate(`likes`)}
           >
             <a>{likesLabel}</a>
           </nav>
@@ -102,7 +102,7 @@ export default function Body({ profile, selectedTheme }) {
                 : ''
             }
             style={{ cursor: 'pointer' }}
-            onClick={() => navigate(`./all`)}
+            onClick={() => navigate(`all`)}
           >
             <a>{postsLabel}</a>
           </nav>

@@ -8,7 +8,7 @@ loadPolyfills();
 import './styles.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faAlignJustify } from '@fortawesome/pro-solid-svg-icons/faAlignJustify';
 import { faAndroid } from '@fortawesome/free-brands-svg-icons/faAndroid';
@@ -233,9 +233,7 @@ const root = ReactDOM.createRoot(document.getElementById('react-view'));
 root.render(
   <BrowserRouter>
     <AppContextProvider>
-      <Routes>
-        <Route path="*" element={<App />} />
-      </Routes>
+      <App />
     </AppContextProvider>
   </BrowserRouter>
 );
