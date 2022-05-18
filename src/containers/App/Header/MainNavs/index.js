@@ -90,7 +90,7 @@ function MainNavs({
     () =>
       matchPath(
         {
-          path: '/chat'
+          path: '/chat/*'
         },
         pathname
       ),
