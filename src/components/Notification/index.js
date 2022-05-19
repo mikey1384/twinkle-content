@@ -264,6 +264,7 @@ function Notification({ className, location, style, trackScrollPosition }) {
   async function handleFetchNotifications({ userChanged }) {
     if (userChanged) {
       handleClearNotifications();
+      setLoadingNotifications(false);
       loadingNotificationRef.current = false;
     }
     await fetchRankings();
