@@ -394,21 +394,19 @@ function MessagesContainer({
 
     function handleScroll() {
       clearTimeout(timerRef.current);
-      timerRef.current = setTimeout(() => {
-        scrolledToBottomRef.current =
-          (MessagesRef.current || {}).scrollTop >= unseenButtonThreshold;
-        const scrollThreshold =
-          (MessagesRef.current || {}).scrollHeight -
-          (MessagesRef.current || {}).offsetHeight;
-        const scrollTop = (MessagesRef.current || {}).scrollTop;
-        const distanceFromTop = scrollThreshold + scrollTop;
-        if (mounted.current && distanceFromTop < 3) {
-          handleLoadMore();
-        }
-        if (mounted.current && scrollTop >= unseenButtonThreshold) {
-          setNewUnseenMessage(false);
-        }
-      }, 100);
+      scrolledToBottomRef.current =
+        (MessagesRef.current || {}).scrollTop >= unseenButtonThreshold;
+      const scrollThreshold =
+        (MessagesRef.current || {}).scrollHeight -
+        (MessagesRef.current || {}).offsetHeight;
+      const scrollTop = (MessagesRef.current || {}).scrollTop;
+      const distanceFromTop = scrollThreshold + scrollTop;
+      if (mounted.current && distanceFromTop < 3) {
+        handleLoadMore();
+      }
+      if (mounted.current && scrollTop >= unseenButtonThreshold) {
+        setNewUnseenMessage(false);
+      }
     }
   });
 
@@ -1291,8 +1289,6 @@ function MessagesContainer({
 
   function handleScrollToBottom() {
     if (mounted.current && MessagesRef.current) {
-      (MessagesRef.current || {}).scrollTop = 0;
-      (MessagesRef.current || {}).scrollTop = -1000;
       (MessagesRef.current || {}).scrollTop = 0;
     }
   }
