@@ -32,7 +32,7 @@ function Notification({ className, location, style, trackScrollPosition }) {
   const loadRewards = useAppContext((v) => v.requestHelpers.loadRewards);
   const { userId } = useMyState();
   const loadMore = useNotiContext((v) => v.state.loadMore);
-  const notifications = useNotiContext((v) => v.state.notifications);
+  const notiObj = useNotiContext((v) => v.state.notiObj);
   const notificationsLoaded = useNotiContext(
     (v) => v.state.notificationsLoaded
   );
@@ -51,11 +51,8 @@ function Notification({ className, location, style, trackScrollPosition }) {
     loaded,
     ...subject
   } = useNotiContext((v) => v.state.currentChatSubject);
-  const onClearNotifications = useNotiContext(
-    (v) => v.actions.onClearNotifications
-  );
-  const onFetchNotifications = useNotiContext(
-    (v) => v.actions.onFetchNotifications
+  const onLoadNotifications = useNotiContext(
+    (v) => v.actions.onLoadNotifications
   );
   const onLoadRewards = useNotiContext((v) => v.actions.onLoadRewards);
   const onGetRanks = useNotiContext((v) => v.actions.onGetRanks);
@@ -71,6 +68,7 @@ function Notification({ className, location, style, trackScrollPosition }) {
   const [activeTab, setActiveTab] = useState('rankings');
   const userChangedTab = useRef(false);
   const mounted = useRef(true);
+  const notifications = useMemo(() => notiObj[userId] || [], [userId, notiObj]);
 
   useEffect(() => {
     mounted.current = true;
@@ -123,12 +121,10 @@ function Notification({ className, location, style, trackScrollPosition }) {
       setActiveTab('notification');
     }
     if (!userId && prevUserId) {
-      handleClearNotifications();
+      setActiveTab('rankings');
     }
     if ((userId && userId !== prevUserId) || (!userId && prevUserId)) {
-      handleFetchNotifications({
-        userChanged: userId && prevUserId && userId !== prevUserId
-      });
+      handleFetchNotifications();
     }
     onSetPrevUserId(userId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -261,14 +257,9 @@ function Notification({ className, location, style, trackScrollPosition }) {
     </ErrorBoundary>
   );
 
-  async function handleFetchNotifications({ userChanged }) {
-    if (userChanged) {
-      handleClearNotifications();
-      setLoadingNotifications(false);
-      loadingNotificationRef.current = false;
-    }
+  async function handleFetchNotifications() {
     await fetchRankings();
-    if (notifications.length === 0 || userChanged) {
+    if (notifications.length === 0) {
       fetchNews();
     }
   }
@@ -295,10 +286,11 @@ function Notification({ className, location, style, trackScrollPosition }) {
         });
       }
       if (mounted.current) {
-        onFetchNotifications({
+        onLoadNotifications({
           currentChatSubject,
           loadMoreNotifications,
-          notifications
+          notifications,
+          userId
         });
       }
       if (mounted.current) {
@@ -332,11 +324,6 @@ function Notification({ className, location, style, trackScrollPosition }) {
       });
     }
     return Promise.resolve();
-  }
-
-  function handleClearNotifications() {
-    setActiveTab('rankings');
-    onClearNotifications();
   }
 
   function handleScroll(event) {

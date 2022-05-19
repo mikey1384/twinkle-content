@@ -17,21 +17,18 @@ export default function NotiActions(dispatch) {
         type: 'CLEAR_REWARDS'
       });
     },
-    onClearNotifications() {
-      return dispatch({
-        type: 'CLEAR_NOTIFICATIONS'
-      });
-    },
-    onFetchNotifications({
+    onLoadNotifications({
       currentChatSubject,
       loadMoreNotifications,
-      notifications
+      notifications,
+      userId
     }) {
       return dispatch({
         type: 'LOAD_NOTIFICATIONS',
         currentChatSubject,
         loadMoreNotifications,
-        notifications
+        notifications,
+        userId
       });
     },
     onLoadRewards({
@@ -80,11 +77,12 @@ export default function NotiActions(dispatch) {
         type: 'INCREASE_NUM_NEW_POSTS'
       });
     },
-    onLoadMoreNotifications({ loadMoreNotifications, notifications }) {
+    onLoadMoreNotifications({ loadMoreNotifications, notifications, userId }) {
       return dispatch({
         type: 'LOAD_MORE_NOTIFICATIONS',
         loadMoreNotifications,
-        notifications
+        notifications,
+        userId
       });
     },
     onLoadMoreRewards(data) {

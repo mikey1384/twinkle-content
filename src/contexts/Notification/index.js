@@ -7,7 +7,7 @@ import NotiReducer from './reducer';
 export const NotiContext = createContext();
 export const initialNotiState = {
   versionMatch: true,
-  notifications: [],
+  notiObj: {},
   rewards: [],
   currentChatSubject: {},
   loadMore: {

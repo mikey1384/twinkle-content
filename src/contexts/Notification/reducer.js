@@ -1,5 +1,3 @@
-import { initialNotiState } from '.';
-
 export default function NotiReducer(state, action) {
   switch (action.type) {
     case 'CHANGE_SOCKET_STATUS':
@@ -31,13 +29,6 @@ export default function NotiReducer(state, action) {
           rewards: false
         }
       };
-    case 'CLEAR_NOTIFICATIONS':
-      return {
-        ...initialNotiState,
-        socketConnected: state.socketConnected,
-        updateDetail: state.updateDetail,
-        updateNoticeShown: state.updateNoticeShown
-      };
     case 'INCREASE_NUM_NEW_NOTIS':
       return {
         ...state,
@@ -51,7 +42,12 @@ export default function NotiReducer(state, action) {
     case 'LOAD_MORE_NOTIFICATIONS':
       return {
         ...state,
-        notifications: state.notifications.concat(action.notifications),
+        notiObj: {
+          ...state.notiObj,
+          [action.userId]: state.notiObj[action.userId].concat(
+            action.notifications
+          )
+        },
         loadMore: {
           ...state.loadMore,
           notifications: action.loadMoreNotifications
@@ -61,7 +57,10 @@ export default function NotiReducer(state, action) {
       return {
         ...state,
         currentChatSubject: action.currentChatSubject,
-        notifications: action.notifications,
+        notiObj: {
+          ...state.notiObj,
+          [action.userId]: action.notifications
+        },
         loadMore: {
           ...state.loadMore,
           notifications: action.loadMoreNotifications

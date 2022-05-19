@@ -61,8 +61,8 @@ function MainFeeds({
     (v) => v.state.totalRewardedTwinkleCoins
   );
   const onClearRewards = useNotiContext((v) => v.actions.onClearRewards);
-  const onFetchNotifications = useNotiContext(
-    (v) => v.actions.onFetchNotifications
+  const onLoadNotifications = useNotiContext(
+    (v) => v.actions.onLoadNotifications
   );
   const onLoadMoreNotifications = useNotiContext(
     (v) => v.actions.onLoadMoreNotifications
@@ -243,10 +243,11 @@ function MainFeeds({
     const { currentChatSubject, loadMoreNotifications, notifications } =
       await fetchNotifications();
     if (mounted.current) {
-      onFetchNotifications({
+      onLoadNotifications({
         currentChatSubject,
         loadMoreNotifications,
-        notifications
+        notifications,
+        userId
       });
     }
     if (mounted.current) {
@@ -265,7 +266,8 @@ function MainFeeds({
       if (mounted.current) {
         onLoadMoreNotifications({
           loadMoreNotifications: loadMore,
-          notifications: notis
+          notifications: notis,
+          userId
         });
       }
     } else {

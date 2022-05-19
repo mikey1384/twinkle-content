@@ -176,8 +176,8 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
     (v) => v.actions.onChangeSocketStatus
   );
   const onCheckVersion = useNotiContext((v) => v.actions.onCheckVersion);
-  const onFetchNotifications = useNotiContext(
-    (v) => v.actions.onFetchNotifications
+  const onLoadNotifications = useNotiContext(
+    (v) => v.actions.onLoadNotifications
   );
   const onLoadRewards = useNotiContext((v) => v.actions.onLoadRewards);
   const onGetRanks = useNotiContext((v) => v.actions.onGetRanks);
@@ -578,10 +578,11 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
           totalRewardedTwinkles,
           totalRewardedTwinkleCoins
         });
-        onFetchNotifications({
+        onLoadNotifications({
           currentChatSubject,
           loadMoreNotifications,
-          notifications
+          notifications,
+          userId
         });
       }
     }
