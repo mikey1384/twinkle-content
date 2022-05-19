@@ -190,10 +190,9 @@ function MainFeeds({
       {activeTab === 'reward' && !!userId && (
         <MyRank myId={userId} rank={rank} twinkleXP={twinkleXP} />
       )}
-      {userId &&
-        activeTab === 'notification' &&
-        notifications.length === 0 &&
-        loadingNotifications && <Loading style={{ position: 'absolute' }} />}
+      {userId && activeTab === 'notification' && loadingNotifications && (
+        <Loading style={{ position: 'absolute' }} />
+      )}
       {userId && activeTab === 'notification' && notifications.length > 0 && (
         <RoundList style={{ marginTop: 0 }}>{NotificationsItems}</RoundList>
       )}
@@ -201,8 +200,9 @@ function MainFeeds({
       {activeTab === 'reward' && rewards.length > 0 && (
         <RoundList style={{ marginTop: 0 }}>{RewardListItems}</RoundList>
       )}
-      {((activeTab === 'notification' && loadMore.notifications) ||
-        (activeTab === 'reward' && loadMore.rewards)) &&
+      {!loadingNotifications &&
+        ((activeTab === 'notification' && loadMore.notifications) ||
+          (activeTab === 'reward' && loadMore.rewards)) &&
         !!userId && (
           <LoadMoreButton
             style={{ marginTop: '1rem' }}
