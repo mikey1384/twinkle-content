@@ -8,7 +8,6 @@ import NotiItem from './NotiItem';
 import RewardItem from './RewardItem';
 import MyRank from 'components/MyRank';
 import ErrorBoundary from 'components/ErrorBoundary';
-import Loading from 'components/Loading';
 import { REWARD_VALUE, SELECTED_LANGUAGE } from 'constants/defaultValues';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
@@ -21,7 +20,8 @@ const yourTwinkleCoinsLabel = localize('yourTwinkleCoins');
 
 MainFeeds.propTypes = {
   loadingNotifications: PropTypes.bool.isRequired,
-  loadMore: PropTypes.object.isRequired,
+  loadMoreNotificationsButton: PropTypes.bool.isRequired,
+  loadMoreRewardsButton: PropTypes.bool.isRequired,
   activeTab: PropTypes.string,
   notifications: PropTypes.array.isRequired,
   rewards: PropTypes.array,
@@ -32,7 +32,8 @@ MainFeeds.propTypes = {
 function MainFeeds({
   activeTab,
   loadingNotifications,
-  loadMore,
+  loadMoreNotificationsButton,
+  loadMoreRewardsButton,
   notifications,
   rewards,
   selectNotiTab,
@@ -190,9 +191,6 @@ function MainFeeds({
       {activeTab === 'reward' && !!userId && (
         <MyRank myId={userId} rank={rank} twinkleXP={twinkleXP} />
       )}
-      {userId && activeTab === 'notification' && loadingNotifications && (
-        <Loading style={{ position: 'absolute' }} />
-      )}
       {userId && activeTab === 'notification' && notifications.length > 0 && (
         <RoundList style={{ marginTop: 0 }}>{NotificationsItems}</RoundList>
       )}
@@ -201,8 +199,8 @@ function MainFeeds({
         <RoundList style={{ marginTop: 0 }}>{RewardListItems}</RoundList>
       )}
       {!loadingNotifications &&
-        ((activeTab === 'notification' && loadMore.notifications) ||
-          (activeTab === 'reward' && loadMore.rewards)) &&
+        ((activeTab === 'notification' && loadMoreNotificationsButton) ||
+          (activeTab === 'reward' && loadMoreRewardsButton)) &&
         !!userId && (
           <LoadMoreButton
             style={{ marginTop: '1rem' }}

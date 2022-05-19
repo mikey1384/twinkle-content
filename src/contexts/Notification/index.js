@@ -10,10 +10,7 @@ export const initialNotiState = {
   notiObj: {},
   rewards: [],
   currentChatSubject: {},
-  loadMore: {
-    notifications: false,
-    rewards: false
-  },
+  loadMoreRewards: false,
   numNewNotis: 0,
   numNewPosts: 0,
   rankingsLoaded: false,

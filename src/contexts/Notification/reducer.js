@@ -24,10 +24,7 @@ export default function NotiReducer(state, action) {
         ...state,
         totalRewardedTwinkles: 0,
         totalRewardedTwinkleCoins: 0,
-        loadMore: {
-          ...state.loadMore,
-          rewards: false
-        }
+        loadMoreRewards: false
       };
     case 'INCREASE_NUM_NEW_NOTIS':
       return {
@@ -44,13 +41,12 @@ export default function NotiReducer(state, action) {
         ...state,
         notiObj: {
           ...state.notiObj,
-          [action.userId]: state.notiObj[action.userId].concat(
-            action.notifications
-          )
-        },
-        loadMore: {
-          ...state.loadMore,
-          notifications: action.loadMoreNotifications
+          [action.userId]: {
+            notifications: (
+              state.notiObj[action.userId]?.notifications || []
+            ).concat(action.notifications),
+            loadMore: action.loadMoreNotifications
+          }
         }
       };
     case 'LOAD_NOTIFICATIONS':
@@ -59,11 +55,10 @@ export default function NotiReducer(state, action) {
         currentChatSubject: action.currentChatSubject,
         notiObj: {
           ...state.notiObj,
-          [action.userId]: action.notifications
-        },
-        loadMore: {
-          ...state.loadMore,
-          notifications: action.loadMoreNotifications
+          [action.userId]: {
+            notifications: action.notifications,
+            loadMore: action.loadMoreNotifications
+          }
         },
         numNewNotis: 0,
         notificationsLoaded: true
@@ -74,19 +69,13 @@ export default function NotiReducer(state, action) {
         rewards: action.rewards,
         totalRewardedTwinkles: action.totalRewardedTwinkles,
         totalRewardedTwinkleCoins: action.totalRewardedTwinkleCoins,
-        loadMore: {
-          ...state.loadMore,
-          rewards: action.loadMoreRewards
-        }
+        loadMoreRewards: action.loadMoreRewards
       };
     case 'LOAD_MORE_REWARDS':
       return {
         ...state,
         rewards: state.rewards.concat(action.data.rewards),
-        loadMore: {
-          ...state.loadMore,
-          rewards: action.data.loadMore
-        }
+        loadMoreRewards: action.data.loadMore
       };
     case 'LOAD_RANKS':
       return {

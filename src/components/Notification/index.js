@@ -31,7 +31,7 @@ function Notification({ className, location, style, trackScrollPosition }) {
   );
   const loadRewards = useAppContext((v) => v.requestHelpers.loadRewards);
   const { userId } = useMyState();
-  const loadMore = useNotiContext((v) => v.state.loadMore);
+  const loadMoreRewards = useNotiContext((v) => v.state.loadMoreRewards);
   const notiObj = useNotiContext((v) => v.state.notiObj);
   const notificationsLoaded = useNotiContext(
     (v) => v.state.notificationsLoaded
@@ -66,7 +66,14 @@ function Notification({ className, location, style, trackScrollPosition }) {
   const [activeTab, setActiveTab] = useState('rankings');
   const userChangedTab = useRef(false);
   const mounted = useRef(true);
-  const notifications = useMemo(() => notiObj[userId] || [], [userId, notiObj]);
+  const notifications = useMemo(
+    () => notiObj[userId]?.notifications || [],
+    [userId, notiObj]
+  );
+  const loadMoreNotifications = useMemo(
+    () => notiObj[userId]?.loadMore || false,
+    [userId, notiObj]
+  );
 
   useEffect(() => {
     mounted.current = true;
@@ -79,20 +86,16 @@ function Notification({ className, location, style, trackScrollPosition }) {
 
   useEffect(() => {
     if (!userChangedTab.current) {
-      if (!userId) {
-        setActiveTab('rankings');
-      } else {
-        const tab =
-          activeTab === 'reward' ||
-          totalRewardedTwinkles + totalRewardedTwinkleCoins > 0
-            ? 'reward'
-            : activeTab === 'notification' ||
-              (location === 'home' && notifications.length > 0) ||
-              numNewNotis > 0
-            ? 'notification'
-            : 'rankings';
-        setActiveTab(tab);
-      }
+      const tab =
+        activeTab === 'reward' ||
+        totalRewardedTwinkles + totalRewardedTwinkleCoins > 0
+          ? 'reward'
+          : (activeTab === 'notification' && notifications.length > 0) ||
+            (location === 'home' && notifications.length > 0) ||
+            numNewNotis > 0
+          ? 'notification'
+          : 'rankings';
+      setActiveTab(tab);
     }
   }, [
     userId,
@@ -226,18 +229,10 @@ function Notification({ className, location, style, trackScrollPosition }) {
             </FilterBar>
           )}
           <div style={{ position: 'relative' }}>
-            {loadingNotifications && activeTab === 'reward' && (
-              <Loading
-                style={{
-                  position: 'absolute',
-                  height: 0,
-                  top: '2rem'
-                }}
-              />
-            )}
             <MainFeeds
               loadingNotifications={loadingNotifications}
-              loadMore={loadMore}
+              loadMoreRewardsButton={loadMoreRewards}
+              loadMoreNotificationsButton={loadMoreNotifications}
               activeTab={activeTab}
               notifications={notifications}
               rewards={rewards}
@@ -248,6 +243,16 @@ function Notification({ className, location, style, trackScrollPosition }) {
             />
           </div>
         </section>
+        {loadingNotifications && (
+          <Loading
+            style={{
+              position: 'absolute',
+              height: 0,
+              top: '16rem',
+              zIndex: 1000
+            }}
+          />
+        )}
       </div>
     </ErrorBoundary>
   );
