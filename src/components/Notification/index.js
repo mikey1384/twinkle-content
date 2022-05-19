@@ -184,77 +184,79 @@ function Notification({ className, location, style, trackScrollPosition }) {
               {...subject}
             />
           )}
-          {userId && (numNewNotis > 0 || notifications.length > 0) && (
-            <FilterBar
-              bordered
-              style={{
-                fontSize: '1.6rem',
-                height: '5rem',
-                marginBottom:
-                  loadingNotifications && activeTab === 'reward' ? 0 : null
-              }}
-            >
-              <nav
-                className={`${activeTab === 'notification' && 'active'} ${
-                  numNewNotis > 0 && 'alert'
-                }`}
-                onClick={() => {
-                  userChangedTab.current = true;
-                  setActiveTab('notification');
+          <div style={{ position: 'relative' }}>
+            {userId && (numNewNotis > 0 || notifications.length > 0) && (
+              <FilterBar
+                bordered
+                style={{
+                  fontSize: '1.6rem',
+                  height: '5rem',
+                  marginBottom:
+                    loadingNotifications && activeTab === 'reward' ? 0 : null
                 }}
               >
-                {newsLabel}
-              </nav>
-              <nav
-                className={activeTab === 'rankings' ? 'active' : undefined}
-                onClick={() => {
-                  userChangedTab.current = true;
-                  setActiveTab('rankings');
-                }}
-              >
-                {rankingsLabel}
-              </nav>
-              {rewardTabShown && (
                 <nav
-                  className={`${activeTab === 'reward' && 'active'} ${
-                    totalRewardedTwinkles + totalRewardedTwinkleCoins > 0 &&
-                    'alert'
+                  className={`${activeTab === 'notification' && 'active'} ${
+                    numNewNotis > 0 && 'alert'
                   }`}
                   onClick={() => {
                     userChangedTab.current = true;
-                    setActiveTab('reward');
+                    setActiveTab('notification');
                   }}
                 >
-                  Rewards
+                  {newsLabel}
                 </nav>
-              )}
-            </FilterBar>
-          )}
-          <div style={{ position: 'relative' }}>
-            <MainFeeds
-              loadingNotifications={loadingNotifications}
-              loadMoreRewardsButton={loadMoreRewards}
-              loadMoreNotificationsButton={loadMoreNotifications}
-              activeTab={activeTab}
-              notifications={notifications}
-              rewards={rewards}
-              selectNotiTab={() => {
-                userChangedTab.current = true;
-                setActiveTab('notification');
-              }}
-            />
+                <nav
+                  className={activeTab === 'rankings' ? 'active' : undefined}
+                  onClick={() => {
+                    userChangedTab.current = true;
+                    setActiveTab('rankings');
+                  }}
+                >
+                  {rankingsLabel}
+                </nav>
+                {rewardTabShown && (
+                  <nav
+                    className={`${activeTab === 'reward' && 'active'} ${
+                      totalRewardedTwinkles + totalRewardedTwinkleCoins > 0 &&
+                      'alert'
+                    }`}
+                    onClick={() => {
+                      userChangedTab.current = true;
+                      setActiveTab('reward');
+                    }}
+                  >
+                    Rewards
+                  </nav>
+                )}
+              </FilterBar>
+            )}
+            <div style={{ position: 'relative' }}>
+              <MainFeeds
+                loadingNotifications={loadingNotifications}
+                loadMoreRewardsButton={loadMoreRewards}
+                loadMoreNotificationsButton={loadMoreNotifications}
+                activeTab={activeTab}
+                notifications={notifications}
+                rewards={rewards}
+                selectNotiTab={() => {
+                  userChangedTab.current = true;
+                  setActiveTab('notification');
+                }}
+              />
+            </div>
+            {loadingNotifications && (
+              <Loading
+                style={{
+                  position: 'absolute',
+                  height: 0,
+                  top: '8.5rem',
+                  zIndex: 1000
+                }}
+              />
+            )}
           </div>
         </section>
-        {loadingNotifications && (
-          <Loading
-            style={{
-              position: 'absolute',
-              height: 0,
-              top: '16rem',
-              zIndex: 1000
-            }}
-          />
-        )}
       </div>
     </ErrorBoundary>
   );
