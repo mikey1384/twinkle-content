@@ -122,8 +122,8 @@ function Notification({ className, location, style, trackScrollPosition }) {
     if (activeTab === 'reward') {
       setActiveTab('notification');
     }
-    if (prevUserId && !userId) {
-      onClearNotifications();
+    if (!userId && prevUserId) {
+      handleClearNotifications();
     }
     if ((userId && userId !== prevUserId) || (!userId && prevUserId)) {
       handleFetchNotifications({
@@ -263,7 +263,7 @@ function Notification({ className, location, style, trackScrollPosition }) {
 
   async function handleFetchNotifications({ userChanged }) {
     if (userChanged) {
-      onClearNotifications();
+      handleClearNotifications();
       loadingNotificationRef.current = false;
     }
     await fetchRankings();
@@ -317,6 +317,7 @@ function Notification({ className, location, style, trackScrollPosition }) {
       myAllTimeXP,
       myMonthlyXP
     } = await loadRankings();
+
     if (mounted.current) {
       onGetRanks({
         all,
@@ -330,6 +331,11 @@ function Notification({ className, location, style, trackScrollPosition }) {
       });
     }
     return Promise.resolve();
+  }
+
+  function handleClearNotifications() {
+    setActiveTab('rankings');
+    onClearNotifications();
   }
 
   function handleScroll(event) {
