@@ -126,7 +126,9 @@ function Notification({ className, location, style, trackScrollPosition }) {
       onClearNotifications();
     }
     if ((userId && userId !== prevUserId) || (!userId && prevUserId)) {
-      handleFetchNotifications(userId && userId !== prevUserId);
+      handleFetchNotifications({
+        userChanged: userId && prevUserId && userId !== prevUserId
+      });
     }
     onSetPrevUserId(userId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -259,7 +261,7 @@ function Notification({ className, location, style, trackScrollPosition }) {
     </ErrorBoundary>
   );
 
-  async function handleFetchNotifications(userChanged) {
+  async function handleFetchNotifications({ userChanged }) {
     if (userChanged) {
       onClearNotifications();
       loadingNotificationRef.current = false;
