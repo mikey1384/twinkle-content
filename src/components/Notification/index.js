@@ -38,7 +38,6 @@ function Notification({ className, location, style, trackScrollPosition }) {
   );
   const rankingsLoaded = useNotiContext((v) => v.state.rankingsLoaded);
   const numNewNotis = useNotiContext((v) => v.state.numNewNotis);
-  const prevUserId = useNotiContext((v) => v.state.prevUserId);
   const rewards = useNotiContext((v) => v.state.rewards);
   const totalRewardedTwinkles = useNotiContext(
     (v) => v.state.totalRewardedTwinkles
@@ -57,7 +56,6 @@ function Notification({ className, location, style, trackScrollPosition }) {
   const onLoadRewards = useNotiContext((v) => v.actions.onLoadRewards);
   const onGetRanks = useNotiContext((v) => v.actions.onGetRanks);
   const onResetRewards = useNotiContext((v) => v.actions.onResetRewards);
-  const onSetPrevUserId = useNotiContext((v) => v.actions.onSetPrevUserId);
   const scrollPositions = useViewContext((v) => v.state.scrollPositions);
   const onRecordScrollPosition = useViewContext(
     (v) => v.actions.onRecordScrollPosition
@@ -108,7 +106,7 @@ function Notification({ className, location, style, trackScrollPosition }) {
   ]);
 
   useEffect(() => {
-    if (!userId && !prevUserId) {
+    if (!userId) {
       fetchRankings();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -120,15 +118,12 @@ function Notification({ className, location, style, trackScrollPosition }) {
     if (activeTab === 'reward') {
       setActiveTab('notification');
     }
-    if (!userId && prevUserId) {
+    if (!userId) {
       setActiveTab('rankings');
     }
-    if ((userId && userId !== prevUserId) || (!userId && prevUserId)) {
-      handleFetchNotifications();
-    }
-    onSetPrevUserId(userId);
+    handleFetchNotifications();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [prevUserId, userId]);
+  }, [userId]);
 
   useEffect(() => {
     if (rankingsLoaded && !notificationsLoaded) {

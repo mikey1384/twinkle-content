@@ -114,11 +114,6 @@ export default function NotiReducer(state, action) {
             ? []
             : state.rewards
       };
-    case 'SET_PREV_USER_ID_FOR_NOTIFICATION':
-      return {
-        ...state,
-        prevUserId: action.userId
-      };
     case 'SHOW_UPDATE_NOTICE':
       return {
         ...state,

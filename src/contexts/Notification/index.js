@@ -24,7 +24,6 @@ export const initialNotiState = {
   myMonthlyRank: null,
   myAllTimeXP: 0,
   myMonthlyXP: 0,
-  prevUserId: null,
   top30s: [],
   top30sMonthly: [],
   socketConnected: false,
