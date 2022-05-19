@@ -27,42 +27,34 @@ export function getGuessStatuses({ guess, solution }) {
   const splitSolution = unicodeSplit(solution);
   const splitGuess = unicodeSplit(guess);
 
-  const solutionCharsTaken = splitSolution.map(() => false);
-
   const statuses = Array.from(Array(guess.length));
+  const indiceOnHold = [];
+  const correctLetters = [];
 
-  // handle all correct cases first
-  splitGuess.forEach((letter, i) => {
-    if (letter === splitSolution[i]) {
-      statuses[i] = 'correct';
-      solutionCharsTaken[i] = true;
-      return;
-    }
-  });
-
-  splitGuess.forEach((letter, i) => {
-    if (statuses[i]) return;
-
+  for (let i = 0; i < splitGuess.length; i++) {
+    const letter = splitGuess[i];
     if (!splitSolution.includes(letter)) {
-      // handles the absent case
       statuses[i] = 'absent';
-      return;
+      continue;
     }
-
-    // now we are left with "present"s
-    const indexOfPresentChar = splitSolution.findIndex(
-      (x, index) => x === letter && !solutionCharsTaken[index]
-    );
-
-    if (indexOfPresentChar > -1) {
+    if (letter !== splitSolution[i]) {
+      if (correctLetters[letter]) {
+        statuses[i] = 'absent';
+        continue;
+      }
       statuses[i] = 'present';
-      solutionCharsTaken[indexOfPresentChar] = true;
-      return;
-    } else {
-      statuses[i] = 'absent';
-      return;
+      indiceOnHold.push(i);
+      continue;
     }
-  });
+    statuses[i] = 'correct';
+    correctLetters[letter] = true;
+    for (let prevIndex of indiceOnHold) {
+      if (splitGuess[prevIndex] === letter) {
+        statuses[prevIndex] = 'absent';
+      }
+    }
+    continue;
+  }
 
   return statuses;
 }
