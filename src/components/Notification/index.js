@@ -63,12 +63,14 @@ function Notification({ className, location, style, trackScrollPosition }) {
 
   const loadingNotificationRef = useRef(false);
   const [loadingNotifications, setLoadingNotifications] = useState(false);
-  const [activeTab, setActiveTab] = useState('rankings');
   const userChangedTab = useRef(false);
   const mounted = useRef(true);
   const notifications = useMemo(
     () => notiObj[userId]?.notifications || [],
     [userId, notiObj]
+  );
+  const [activeTab, setActiveTab] = useState(
+    notifications?.length > 0 ? 'notifications' : 'rankings'
   );
   const loadMoreNotifications = useMemo(
     () => notiObj[userId]?.loadMore || false,
