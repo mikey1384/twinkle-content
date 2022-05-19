@@ -121,7 +121,7 @@ function Notification({ className, location, style, trackScrollPosition }) {
     if (!userId) {
       setActiveTab('rankings');
     }
-    handleFetchNotifications();
+    handleFetchNotifications(userId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
@@ -252,10 +252,10 @@ function Notification({ className, location, style, trackScrollPosition }) {
     </ErrorBoundary>
   );
 
-  async function handleFetchNotifications() {
+  async function handleFetchNotifications(userId) {
     await fetchRankings();
-    if (notifications.length === 0) {
-      fetchNews();
+    if (notifications.length === 0 && userId) {
+      fetchNews(userId);
     }
   }
 
