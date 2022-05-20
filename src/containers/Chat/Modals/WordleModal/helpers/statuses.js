@@ -28,8 +28,8 @@ export function getGuessStatuses({ guess, solution }) {
   const splitGuess = unicodeSplit(guess);
 
   const statuses = Array.from(Array(guess.length));
-  const indiceOnHold = [];
-  const correctLetters = [];
+  const indexesOnHold = [];
+  const correctLetters = {};
 
   for (let i = 0; i < splitGuess.length; i++) {
     const letter = splitGuess[i];
@@ -43,12 +43,12 @@ export function getGuessStatuses({ guess, solution }) {
         continue;
       }
       statuses[i] = 'present';
-      indiceOnHold.push(i);
+      indexesOnHold.push(i);
       continue;
     }
     statuses[i] = 'correct';
     correctLetters[letter] = true;
-    for (let prevIndex of indiceOnHold) {
+    for (let prevIndex of indexesOnHold) {
       if (splitGuess[prevIndex] === letter) {
         statuses[prevIndex] = 'absent';
       }
