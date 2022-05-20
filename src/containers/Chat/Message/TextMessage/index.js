@@ -163,7 +163,6 @@ function TextMessage({
           <LinkAttachment
             style={{ marginTop: '1rem' }}
             contentId={messageId}
-            contentType="chat"
             defaultThumbUrl={thumbUrl}
             extractedUrl={extractedUrl}
             loadingHeight="30vw"

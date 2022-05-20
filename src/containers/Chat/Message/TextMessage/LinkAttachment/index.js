@@ -29,7 +29,6 @@ const API_URL = `${URL}/content`;
 
 LinkAttachment.propTypes = {
   contentId: PropTypes.number,
-  contentType: PropTypes.string,
   directUrl: PropTypes.string,
   defaultThumbUrl: PropTypes.string,
   defaultActualTitle: PropTypes.string,
@@ -50,7 +49,6 @@ LinkAttachment.propTypes = {
 
 function LinkAttachment({
   contentId,
-  contentType = 'url',
   directUrl,
   defaultThumbUrl,
   defaultActualTitle,
@@ -73,17 +71,15 @@ function LinkAttachment({
     (v) => v.requestHelpers.makeThumbnailSecure
   );
   const translator = {
-    actualDescription:
-      contentType === 'url' ? 'actualDescription' : 'linkDescription',
-    actualTitle: contentType === 'url' ? 'actualTitle' : 'linkTitle',
-    siteUrl: contentType === 'url' ? 'siteUrl' : 'linkUrl',
-    url: contentType === 'url' ? 'content' : 'embeddedUrl'
+    actualDescription: 'linkDescription',
+    actualTitle: 'linkTitle',
+    siteUrl: 'linkUrl',
+    url: 'embeddedUrl'
   };
   const onSetActualDescription = useContentContext(
     (v) => v.actions.onSetActualDescription
   );
   const onSetActualTitle = useContentContext((v) => v.actions.onSetActualTitle);
-  const onSetPrevUrl = useContentContext((v) => v.actions.onSetPrevUrl);
   const onSetSiteUrl = useContentContext((v) => v.actions.onSetSiteUrl);
   const onSetThumbUrl = useContentContext((v) => v.actions.onSetThumbUrl);
   const onSetVideoCurrentTime = useContentContext(
@@ -104,7 +100,7 @@ function LinkAttachment({
     [translator.actualTitle]: actualTitle,
     [translator.siteUrl]: siteUrl,
     [translator.url]: contentStateUrl
-  } = useContentState({ contentType, contentId });
+  } = useContentState({ contentType: 'chat', contentId });
 
   const url = useMemo(
     () => contentStateUrl || extractedUrl,
@@ -128,8 +124,8 @@ function LinkAttachment({
     contentType: 'video'
   });
   const isYouTube = useMemo(() => {
-    return contentType === 'chat' && isValidYoutubeUrl(url);
-  }, [contentType, url]);
+    return isValidYoutubeUrl(url);
+  }, [url]);
   const YTPlayerRef = useRef(null);
   const mounted = useRef(true);
   const loadingRef = useRef(false);
@@ -154,7 +150,7 @@ function LinkAttachment({
       setStartingPosition(currentTime);
     }
     const extractedVideoId = extractVideoIdFromTwinkleVideoUrl(url);
-    if (extractedVideoId && contentType === 'chat') {
+    if (extractedVideoId) {
       setTwinkleVideoId(extractedVideoId);
     } else if (
       !loadingRef.current &&
@@ -163,9 +159,6 @@ function LinkAttachment({
         (prevUrl && url !== prevUrl))
     ) {
       fetchUrlData();
-    }
-    if (!extractedVideoId || contentType !== 'chat') {
-      onSetPrevUrl({ contentId, contentType, prevUrl: url, thumbUrl });
     }
     async function fetchUrlData() {
       setLoading(true);
@@ -176,23 +169,27 @@ function LinkAttachment({
         } = await request.put(`${API_URL}/embed`, {
           url,
           contentId,
-          contentType
+          contentType: 'chat'
         });
         if (mounted.current) {
           onSetThumbUrl({
             contentId,
-            contentType,
+            contentType: 'chat',
             thumbUrl: image.url.replace('http://', 'https://')
           });
         }
         if (mounted.current) {
-          onSetActualDescription({ contentId, contentType, description });
+          onSetActualDescription({
+            contentId,
+            contentType: 'chat',
+            description
+          });
         }
         if (mounted.current) {
-          onSetActualTitle({ contentId, contentType, title });
+          onSetActualTitle({ contentId, contentType: 'chat', title });
         }
         if (mounted.current) {
-          onSetSiteUrl({ contentId, contentType, siteUrl: site });
+          onSetSiteUrl({ contentId, contentType: 'chat', siteUrl: site });
         }
         if (mounted.current) {
           setLoading(false);
@@ -228,7 +225,7 @@ function LinkAttachment({
       setImageUrl(url);
     } else {
       if (thumbUrl?.includes('http://')) {
-        makeThumbnailSecure({ contentId, contentType, thumbUrl });
+        makeThumbnailSecure({ contentId, contentType: 'chat', thumbUrl });
       }
       setImageUrl(thumbUrl || fallbackImage);
     }
@@ -239,7 +236,7 @@ function LinkAttachment({
     return function setCurrentTimeBeforeUnmount() {
       if (timeAt > 0) {
         onSetVideoCurrentTime({
-          contentType,
+          contentType: 'chat',
           contentId,
           currentTime: timeAt
         });
@@ -258,12 +255,12 @@ function LinkAttachment({
 
   const handlePlay = useCallback(() => {
     onSetMediaStarted({
-      contentType,
+      contentType: 'chat',
       contentId,
       started: true
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [contentId, contentType]);
+  }, [contentId]);
 
   const InnerContent = useMemo(() => {
     return (
@@ -296,7 +293,7 @@ function LinkAttachment({
                   position: absolute;
                   width: 100%;
                   height: 100%;
-                  object-fit: ${contentType === 'chat' ? 'contain' : 'cover'};
+                  object-fit: contain;
                 `}
                 src={imageUrl}
                 onError={handleImageLoadError}
@@ -328,7 +325,7 @@ function LinkAttachment({
                   position: absolute;
                   width: 100%;
                   height: 100%;
-                  object-fit: ${contentType === 'chat' ? 'contain' : 'cover'};
+                  object-fit: contain;
                 `}
                 src={imageUrl}
                 onError={handleImageLoadError}
@@ -339,29 +336,21 @@ function LinkAttachment({
         )}
         {!imageOnly &&
           React.createElement(
-            contentType === 'chat' || directUrl ? 'a' : 'section',
+            'a',
             {
               style: {
                 textDecoration: 'none',
                 color: Color.darkerGray()
               },
-              target: contentType === 'chat' || directUrl ? '_blank' : null,
-              rel:
-                contentType === 'chat' || directUrl
-                  ? 'noopener noreferrer'
-                  : null,
-              href:
-                contentType === 'chat' || directUrl ? directUrl || url : null,
+              target: '_blank',
+              rel: 'noopener noreferrer',
+              href: true,
               className: css`
                 width: 100%;
                 line-height: 1.5;
                 padding: 1rem;
-                cursor: ${contentType === 'chat' || directUrl || small
-                  ? 'pointer'
-                  : ''};
-                ${contentType === 'chat' || directUrl
-                  ? 'margin-bottom: 1rem;'
-                  : ''}
+                cursor: pointer;
+                'margin-bottom: 1rem;
                 ${small ? 'margin-left: 1rem;' : ''}
                 ${small ? '' : 'margin-top: 1rem;'}
               `,
@@ -406,7 +395,6 @@ function LinkAttachment({
     actualTitle,
     contentCss,
     contentId,
-    contentType,
     defaultActualDescription,
     defaultActualTitle,
     description,
@@ -433,7 +421,7 @@ function LinkAttachment({
         ...style
       }}
     >
-      {contentType === 'chat' && userCanEditThis && !notFound && (
+      {userCanEditThis && !notFound && (
         <Icon
           style={{
             position: 'absolute',
@@ -458,10 +446,10 @@ function LinkAttachment({
       <div
         style={{ height: '100%' }}
         className={css`
-          width: ${imageWidth || (contentType === 'chat' ? '50%' : '100%')};
+          width: ${imageWidth || '50%'};
           position: relative;
           align-items: center;
-          justify-content: ${contentType === 'chat' && imageOnly && 'center'};
+          justify-content: ${imageOnly && 'center'};
           display: flex;
           @media (max-width: ${mobileMaxWidth}) {
             width: 100%;
@@ -476,19 +464,19 @@ function LinkAttachment({
               text-decoration: none;
             }
             h3 {
-              font-size: ${contentType === 'chat' ? '1.4rem' : '1.9rem'};
+              font-size: 1.4rem;
             }
             p {
-              font-size: ${contentType === 'chat' ? '1.2rem' : '1.5rem'};
+              font-size: 1.2rem;
               margin-top: 1rem;
             }
             @media (max-width: ${mobileMaxWidth}) {
-              width: ${contentType === 'chat' ? '85%' : '100%'};
+              width: 85%;
               h3 {
-                font-size: ${contentType === 'chat' ? '1.3rem' : '1.7rem'};
+                font-size: 1.3rem;
               }
               p {
-                font-size: ${contentType === 'chat' ? '1.1rem' : '1.3rem'};
+                font-size: 1.1rem;
               }
             }
           `}
