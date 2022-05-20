@@ -63,6 +63,7 @@ function Notification({ className, location, style, trackScrollPosition }) {
 
   const loadingNotificationRef = useRef(false);
   const [loadingNotifications, setLoadingNotifications] = useState(false);
+  const [loadingRankings, setLoadingRankings] = useState(false);
   const userChangedTab = useRef(false);
   const mounted = useRef(true);
   const notifications = useMemo(
@@ -233,6 +234,7 @@ function Notification({ className, location, style, trackScrollPosition }) {
             )}
             <div style={{ position: 'relative' }}>
               <MainFeeds
+                loadingRankings={loadingRankings}
                 loadingNotifications={loadingNotifications}
                 loadMoreRewardsButton={loadMoreRewards}
                 loadMoreNotificationsButton={loadMoreNotifications}
@@ -245,7 +247,7 @@ function Notification({ className, location, style, trackScrollPosition }) {
                 }}
               />
             </div>
-            {loadingNotifications && (
+            {(loadingNotifications || loadingRankings) && (
               <Loading
                 style={{
                   position: 'absolute',
@@ -304,6 +306,9 @@ function Notification({ className, location, style, trackScrollPosition }) {
     }
   }
   async function fetchRankings() {
+    if (mounted.current) {
+      setLoadingRankings(true);
+    }
     const {
       all,
       top30s,
@@ -326,6 +331,9 @@ function Notification({ className, location, style, trackScrollPosition }) {
         myAllTimeXP,
         myMonthlyXP
       });
+    }
+    if (mounted.current) {
+      setLoadingRankings(false);
     }
     return Promise.resolve();
   }
