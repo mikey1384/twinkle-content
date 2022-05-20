@@ -9,15 +9,15 @@ import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import EditTextArea from 'components/Texts/EditTextArea';
 import ErrorBoundary from 'components/ErrorBoundary';
-import Embedly from 'components/Embedly';
+import LinkAttachment from './LinkAttachment';
 import LongText from 'components/Texts/LongText';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { isValidSpoiler } from 'helpers/stringHelpers';
 import { socket } from 'constants/io';
 import { isMobile } from 'helpers';
 import { css } from '@emotion/css';
-import Spoiler from './Spoiler';
-import LocalContext from '../Context';
+import Spoiler from '../Spoiler';
+import LocalContext from '../../Context';
 
 const deviceIsMobile = isMobile(navigator);
 
@@ -160,23 +160,17 @@ function TextMessage({
           </>
         )}
         {extractedUrl && messageId && !attachmentHidden && !isSpoiler && (
-          <div
-            className={css`
-              border: 1px solid red;
-            `}
-          >
-            <Embedly
-              style={{ marginTop: '1rem' }}
-              contentId={messageId}
-              contentType="chat"
-              defaultThumbUrl={thumbUrl}
-              extractedUrl={extractedUrl}
-              loadingHeight="30vw"
-              mobileLoadingHeight="70vw"
-              onHideAttachment={handleHideAttachment}
-              userCanEditThis={userCanEditThis}
-            />
-          </div>
+          <LinkAttachment
+            style={{ marginTop: '1rem' }}
+            contentId={messageId}
+            contentType="chat"
+            defaultThumbUrl={thumbUrl}
+            extractedUrl={extractedUrl}
+            loadingHeight="30vw"
+            mobileLoadingHeight="70vw"
+            onHideAttachment={handleHideAttachment}
+            userCanEditThis={userCanEditThis}
+          />
         )}
       </div>
     </ErrorBoundary>
