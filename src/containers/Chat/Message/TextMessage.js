@@ -160,17 +160,23 @@ function TextMessage({
           </>
         )}
         {extractedUrl && messageId && !attachmentHidden && !isSpoiler && (
-          <Embedly
-            style={{ marginTop: '1rem' }}
-            contentId={messageId}
-            contentType="chat"
-            defaultThumbUrl={thumbUrl}
-            extractedUrl={extractedUrl}
-            loadingHeight="30vw"
-            mobileLoadingHeight="70vw"
-            onHideAttachment={handleHideAttachment}
-            userCanEditThis={userCanEditThis}
-          />
+          <div
+            className={css`
+              border: 1px solid red;
+            `}
+          >
+            <Embedly
+              style={{ marginTop: '1rem' }}
+              contentId={messageId}
+              contentType="chat"
+              defaultThumbUrl={thumbUrl}
+              extractedUrl={extractedUrl}
+              loadingHeight="30vw"
+              mobileLoadingHeight="70vw"
+              onHideAttachment={handleHideAttachment}
+              userCanEditThis={userCanEditThis}
+            />
+          </div>
         )}
       </div>
     </ErrorBoundary>
