@@ -46,6 +46,7 @@ export default function Key({
 
   return (
     <button
+      className="unselectable"
       style={{
         borderRadius,
         color: '#fff',

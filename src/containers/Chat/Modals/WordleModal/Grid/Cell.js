@@ -31,7 +31,7 @@ export default function Cell({
 
   return (
     <div
-      className={`${css`
+      className={`unselectable ${css`
         border: 1px solid ${Color.lightBlueGray()};
         background: ${value ? Color.lightBlueGray() : ''};
       `} ${shouldWave ? 'cell-waving' : shouldReveal ? 'cell-reveal' : ''} ${
