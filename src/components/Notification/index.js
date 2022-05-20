@@ -234,7 +234,6 @@ function Notification({ className, location, style, trackScrollPosition }) {
             )}
             <div style={{ position: 'relative' }}>
               <MainFeeds
-                loadingRankings={loadingRankings}
                 loadingNotifications={loadingNotifications}
                 loadMoreRewardsButton={loadMoreRewards}
                 loadMoreNotificationsButton={loadMoreNotifications}
@@ -247,7 +246,7 @@ function Notification({ className, location, style, trackScrollPosition }) {
                 }}
               />
             </div>
-            {(loadingNotifications || loadingRankings) && (
+            {(loadingNotifications || loadingRankings || !rankingsLoaded) && (
               <Loading
                 style={{
                   position: 'absolute',
