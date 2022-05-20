@@ -28,7 +28,6 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 
 const createEnvironmentHash = require('./webpack/persistentCache/createEnvironmentHash');
 
-// Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 
 const reactRefreshRuntimeEntry = require.resolve('react-refresh/runtime');
@@ -160,7 +159,7 @@ module.exports = function (webpackEnv) {
                   ]
                 ]
           },
-          sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment
+          sourceMap: isEnvDevelopment
         }
       }
     ].filter(Boolean);
@@ -169,7 +168,7 @@ module.exports = function (webpackEnv) {
         {
           loader: require.resolve('resolve-url-loader'),
           options: {
-            sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+            sourceMap: isEnvDevelopment,
             root: paths.appSrc
           }
         },
@@ -484,9 +483,7 @@ module.exports = function (webpackEnv) {
               exclude: cssModuleRegex,
               use: getStyleLoaders({
                 importLoaders: 1,
-                sourceMap: isEnvProduction
-                  ? shouldUseSourceMap
-                  : isEnvDevelopment,
+                sourceMap: isEnvDevelopment,
                 modules: {
                   mode: 'icss'
                 }
@@ -503,9 +500,7 @@ module.exports = function (webpackEnv) {
               test: cssModuleRegex,
               use: getStyleLoaders({
                 importLoaders: 1,
-                sourceMap: isEnvProduction
-                  ? shouldUseSourceMap
-                  : isEnvDevelopment,
+                sourceMap: isEnvDevelopment,
                 modules: {
                   mode: 'local',
                   getLocalIdent: getCSSModuleLocalIdent
@@ -659,9 +654,7 @@ module.exports = function (webpackEnv) {
             }),
             configOverwrite: {
               compilerOptions: {
-                sourceMap: isEnvProduction
-                  ? shouldUseSourceMap
-                  : isEnvDevelopment,
+                sourceMap: isEnvDevelopment,
                 skipLibCheck: true,
                 inlineSourceMap: false,
                 declarationMap: false,
