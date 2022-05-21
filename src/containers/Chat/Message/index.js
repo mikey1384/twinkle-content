@@ -239,7 +239,7 @@ function Message({
     ...post
   } = message;
   const [messageRewardModalShown, setMessageRewardModalShown] = useState(false);
-  const [extractedUrl, setExtractedUrl] = useState('');
+  const [extractedUrl, setExtractedUrl] = useState(fetchURLFromText(content));
   const [spoilerOff, setSpoilerOff] = useState(false);
 
   if (fileToUpload && !userId) {

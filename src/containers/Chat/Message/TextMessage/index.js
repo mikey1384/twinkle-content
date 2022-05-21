@@ -165,7 +165,6 @@ function TextMessage({
             contentId={messageId}
             defaultThumbUrl={thumbUrl}
             extractedUrl={extractedUrl}
-            mobileLoadingHeight="70vw"
             onHideAttachment={handleHideAttachment}
             userCanEditThis={userCanEditThis}
           />

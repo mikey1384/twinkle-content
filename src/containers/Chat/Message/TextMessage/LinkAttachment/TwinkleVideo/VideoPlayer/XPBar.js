@@ -10,6 +10,7 @@ import { isMobile } from 'helpers';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
+import Link from 'components/Link';
 import localize from 'constants/localize';
 
 const deviceIsMobile = isMobile(navigator);
@@ -19,6 +20,7 @@ const perMinuteLabel = localize('perMinute');
 
 XPBar.propTypes = {
   isChat: PropTypes.bool,
+  loaded: PropTypes.bool,
   rewardLevel: PropTypes.number,
   reachedMaxWatchDuration: PropTypes.bool,
   started: PropTypes.bool,
@@ -29,6 +31,7 @@ XPBar.propTypes = {
 
 function XPBar({
   isChat,
+  loaded,
   rewardLevel,
   started,
   startingPosition,
@@ -90,84 +93,115 @@ function XPBar({
     }
     if (started) {
       return (
-        <ProgressBar
-          className={css`
-            margin-top: 0;
-            flex-grow: 1;
-            height: 2.7rem !important;
-            margin-top: 0 !important;
-            @media (max-width: ${mobileMaxWidth}) {
-              font-size: ${isChat ? '1rem' : '1.2rem'};
-              height: ${isChat ? '2rem' : '2.7rem'} !important;
-              font-size: ${isChat ? '0.8rem' : '1.2rem'}!important;
-            }
-          `}
-          progress={videoProgress}
-          color={Color[xpLevelColor]()}
-          noBorderRadius
-        />
+        <div>
+          <ProgressBar
+            className={css`
+              margin-top: 0;
+              flex-grow: 1;
+              height: 2.7rem !important;
+              margin-top: 0 !important;
+              @media (max-width: ${mobileMaxWidth}) {
+                font-size: ${isChat ? '1rem' : '1.2rem'};
+                height: ${isChat ? '2rem' : '2.7rem'} !important;
+                font-size: ${isChat ? '0.8rem' : '1.2rem'}!important;
+              }
+            `}
+            progress={videoProgress}
+            color={Color[xpLevelColor]()}
+            noBorderRadius
+          />
+          {loaded && (
+            <div
+              style={{
+                width: '100%'
+              }}
+            >
+              <Link
+                className={css`
+                  font-weight: bold;
+                  font-size: 1.7rem;
+                  @media (max-width: ${mobileMaxWidth}) {
+                    font-size: 1rem;
+                  }
+                `}
+                to={`/videos/${videoId}`}
+              >
+                Comment or post subjects about this video
+              </Link>
+            </div>
+          )}
+        </div>
       );
     } else {
       return (
-        <div
-          className={css`
-            height: 2.7rem;
-            font-size: 1.3rem;
-            @media (max-width: ${mobileMaxWidth}) {
-              font-size: 1rem;
-              height: ${isChat ? '2rem' : '2.7rem'};
-            }
-          `}
-          style={{
-            background: continuingStatusShown
-              ? Color.darkBlue()
-              : Color[xpLevelColor](),
-            color: '#fff',
-            fontWeight: 'bold',
-            display: 'flex',
-            flexGrow: 1,
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-        >
-          <div style={{ marginLeft: '0.7rem' }}>
-            {continuingStatusShown && (
-              <span>
-                {continueLabel}
-                {deviceIsMobile && isChat ? '' : ` ${watchingLabel}`} (
-              </span>
-            )}
-            <span>{addCommasToNumber(xpRewardAmount)} XP</span>
-            {rewardLevel > 2 ? (
-              <>
-                {' '}
-                <span>&</span>
-                <Icon
-                  style={{ marginLeft: '0.5rem' }}
-                  icon={['far', 'badge-dollar']}
-                />
-                <span style={{ marginLeft: '0.2rem' }}>{coinRewardAmount}</span>
-              </>
-            ) : (
-              ''
-            )}
-            {continuingStatusShown ? (
-              <span>{`)`}</span>
-            ) : (
-              <span> {perMinuteLabel}</span>
-            )}
+        <div style={{ width: '100%', height: '2.7rem' }}>
+          <div
+            className={css`
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              height: 2.7rem;
+              font-size: 1.3rem;
+              @media (max-width: ${mobileMaxWidth}) {
+                font-size: 1rem;
+                height: ${isChat ? '2rem' : '2.7rem'};
+              }
+            `}
+            style={{
+              background: continuingStatusShown
+                ? Color.darkBlue()
+                : Color[xpLevelColor](),
+              color: '#fff',
+              fontWeight: 'bold',
+              display: 'flex',
+              flexGrow: 1,
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <div style={{ marginLeft: '0.7rem' }}>
+              {continuingStatusShown && (
+                <span>
+                  {continueLabel}
+                  {deviceIsMobile && isChat ? '' : ` ${watchingLabel}`} (
+                </span>
+              )}
+              <span>{addCommasToNumber(xpRewardAmount)} XP</span>
+              {rewardLevel > 2 ? (
+                <>
+                  {' '}
+                  <span>&</span>
+                  <Icon
+                    style={{ marginLeft: '0.5rem' }}
+                    icon={['far', 'badge-dollar']}
+                  />
+                  <span style={{ marginLeft: '0.2rem' }}>
+                    {coinRewardAmount}
+                  </span>
+                </>
+              ) : (
+                ''
+              )}
+              {continuingStatusShown ? (
+                <span>{`)`}</span>
+              ) : (
+                <span> {perMinuteLabel}</span>
+              )}
+            </div>
           </div>
         </div>
       );
     }
   }, [
-    continuingStatusShown,
     userId,
-    started,
     rewardLevel,
+    started,
     isChat,
     videoProgress,
     xpLevelColor,
+    loaded,
+    videoId,
+    continuingStatusShown,
     xpRewardAmount,
     coinRewardAmount
   ]);
@@ -180,123 +214,72 @@ function XPBar({
     [rewardLevel]
   );
 
-  return userId ? (
+  return (
     <ErrorBoundary>
-      <div
-        className={css`
-          display: flex;
-          margin-top: 1rem;
-          align-items: center;
-          width: 100%;
-          justify-content: space-between;
-        `}
-      >
-        {Bar}
-        {rewardLevel ? (
-          <div
-            className={css`
-              height: 2.7rem;
-              min-width: ${canEarnCoins ? `1${rewardLevel - 1}rem` : '7rem'};
-              margin-left: 1rem;
-              display: flex;
-              @media (max-width: ${mobileMaxWidth}) {
-                min-width: 0;
-                max-width: 8.5rem;
-                height: ${isChat ? '2rem' : '2.7rem'};
-              }
-            `}
-          >
+      <div style={{ height: '5rem', marginTop: '1rem' }}>
+        <div
+          className={css`
+            display: flex;
+            align-items: center;
+            width: 100%;
+            justify-content: space-between;
+          `}
+        >
+          {Bar}
+          {rewardLevel ? (
             <div
               className={css`
-                flex-grow: 1;
+                height: 2.7rem;
+                min-width: ${canEarnCoins ? `1${rewardLevel - 1}rem` : '7rem'};
+                margin-left: 1rem;
+                display: flex;
+                @media (max-width: ${mobileMaxWidth}) {
+                  min-width: 0;
+                  max-width: 8.5rem;
+                  height: ${isChat ? '2rem' : '2.7rem'};
+                }
               `}
             >
               <div
                 className={css`
-                  height: 100%;
-                  width: 100%;
-                  display: flex;
-                  position: relative;
-                  justify-content: center;
-                  align-items: center;
-                  color: #fff;
-                  font-size: 1.3rem;
-                  font-weight: bold;
-                  background: ${Color[xpLevelColor](
-                    reachedMaxWatchDuration ? 0.3 : 1
-                  )};
-                  cursor: default;
-                  @media (max-width: ${mobileMaxWidth}) {
-                    flex-grow: 0;
-                    width: 5rem;
-                    font-size: ${numXpEarned > 0 ? '0.7rem' : '1rem'};
-                  }
+                  flex-grow: 1;
                 `}
-                onMouseEnter={
-                  reachedMaxWatchDuration ? () => setXPHovered(true) : () => {}
-                }
-                onMouseLeave={() => setXPHovered(false)}
               >
-                {numXpEarned > 0 && !reachedMaxWatchDuration
-                  ? `+ ${numXpEarnedWithComma}`
-                  : deviceIsMobile
-                  ? `${rewardLevel}-STAR`
-                  : Stars}
-              </div>
-              {xpHovered ? (
-                <FullTextReveal
-                  show
-                  direction="left"
-                  style={{
-                    marginTop: '0.5rem',
-                    color: '#000',
-                    width: '30rem',
-                    fontSize: '1.2rem',
-                    position: 'absolute'
-                  }}
-                  text={`You have earned all the XP you can earn from this video`}
-                />
-              ) : null}
-            </div>
-            {canEarnCoins && (
-              <div>
                 <div
-                  onClick={() =>
-                    deviceIsMobile ? setCoinHovered((hovered) => !hovered) : {}
-                  }
-                  onMouseEnter={
-                    twinkleCoins > 1000 ? () => setCoinHovered(true) : () => {}
-                  }
-                  onMouseLeave={() => setCoinHovered(false)}
                   className={css`
                     height: 100%;
-                    position: relative;
-                    min-width: 5rem;
+                    width: 100%;
                     display: flex;
-                    align-items: center;
+                    position: relative;
                     justify-content: center;
-                    font-weight: bold;
+                    align-items: center;
                     color: #fff;
-                    font-size: ${numCoinsEarned > 0 ? '1.3rem' : '1.5rem'};
-                    background: ${Color.brownOrange(
-                      twinkleCoins > 1000 ? 0.3 : 1
+                    font-size: 1.3rem;
+                    font-weight: bold;
+                    background: ${Color[xpLevelColor](
+                      reachedMaxWatchDuration ? 0.3 : 1
                     )};
+                    cursor: default;
                     @media (max-width: ${mobileMaxWidth}) {
-                      flex-grow: 1;
-                      min-width: 3.5rem;
-                      font-size: ${numCoinsEarned > 0 && twinkleCoins <= 1000
-                        ? '0.7rem'
-                        : '1.2rem'};
+                      flex-grow: 0;
+                      width: 5rem;
+                      font-size: ${numXpEarned > 0 ? '0.7rem' : '1rem'};
                     }
                   `}
+                  onMouseEnter={
+                    reachedMaxWatchDuration
+                      ? () => setXPHovered(true)
+                      : () => {}
+                  }
+                  onMouseLeave={() => setXPHovered(false)}
                 >
-                  {numCoinsEarned > 0 && twinkleCoins <= 1000 ? (
-                    `+ ${numCoinsEarnedWithComma}`
-                  ) : (
-                    <Icon size="lg" icon={['far', 'badge-dollar']} />
-                  )}
+                  {numXpEarned > 0 && !reachedMaxWatchDuration
+                    ? `+ ${numXpEarnedWithComma}`
+                    : deviceIsMobile
+                    ? `${rewardLevel}-STAR`
+                    : Stars}
                 </div>
-                {coinHovered && (
+                {xpHovered ? (
                   <FullTextReveal
                     show
                     direction="left"
@@ -307,16 +290,94 @@ function XPBar({
                       fontSize: '1.2rem',
                       position: 'absolute'
                     }}
-                    text={`You can no longer earn Twinkle Coins by watching videos because you have more than 1,000 coins`}
+                    text={`You have earned all the XP you can earn from this video`}
                   />
-                )}
+                ) : null}
               </div>
-            )}
+              {canEarnCoins && (
+                <div>
+                  <div
+                    onClick={() =>
+                      deviceIsMobile
+                        ? setCoinHovered((hovered) => !hovered)
+                        : {}
+                    }
+                    onMouseEnter={
+                      twinkleCoins > 1000
+                        ? () => setCoinHovered(true)
+                        : () => {}
+                    }
+                    onMouseLeave={() => setCoinHovered(false)}
+                    className={css`
+                      height: 100%;
+                      position: relative;
+                      min-width: 5rem;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      font-weight: bold;
+                      color: #fff;
+                      font-size: ${numCoinsEarned > 0 ? '1.3rem' : '1.5rem'};
+                      background: ${Color.brownOrange(
+                        twinkleCoins > 1000 ? 0.3 : 1
+                      )};
+                      @media (max-width: ${mobileMaxWidth}) {
+                        flex-grow: 1;
+                        min-width: 3.5rem;
+                        font-size: ${numCoinsEarned > 0 && twinkleCoins <= 1000
+                          ? '0.7rem'
+                          : '1.2rem'};
+                      }
+                    `}
+                  >
+                    {numCoinsEarned > 0 && twinkleCoins <= 1000 ? (
+                      `+ ${numCoinsEarnedWithComma}`
+                    ) : (
+                      <Icon size="lg" icon={['far', 'badge-dollar']} />
+                    )}
+                  </div>
+                  {coinHovered && (
+                    <FullTextReveal
+                      show
+                      direction="left"
+                      style={{
+                        marginTop: '0.5rem',
+                        color: '#000',
+                        width: '30rem',
+                        fontSize: '1.2rem',
+                        position: 'absolute'
+                      }}
+                      text={`You can no longer earn Twinkle Coins by watching videos because you have more than 1,000 coins`}
+                    />
+                  )}
+                </div>
+              )}
+            </div>
+          ) : null}
+        </div>
+        {loaded && (
+          <div
+            style={{
+              width: '100%'
+            }}
+          >
+            <Link
+              className={css`
+                font-weight: bold;
+                font-size: 1.7rem;
+                @media (max-width: ${mobileMaxWidth}) {
+                  font-size: 1rem;
+                }
+              `}
+              to={`/videos/${videoId}`}
+            >
+              Comment or post subjects about this video
+            </Link>
           </div>
-        ) : null}
+        )}
       </div>
     </ErrorBoundary>
-  ) : null;
+  );
 }
 
 export default memo(XPBar);

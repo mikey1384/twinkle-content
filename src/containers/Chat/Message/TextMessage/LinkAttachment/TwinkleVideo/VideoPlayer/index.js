@@ -27,6 +27,7 @@ const intervalLength = 2000;
 VideoPlayer.propTypes = {
   isChat: PropTypes.bool,
   isLink: PropTypes.bool,
+  loaded: PropTypes.bool,
   byUser: PropTypes.bool,
   minimized: PropTypes.bool,
   onPlay: PropTypes.func,
@@ -40,6 +41,7 @@ VideoPlayer.propTypes = {
 function VideoPlayer({
   isChat,
   isLink,
+  loaded,
   byUser,
   rewardLevel,
   minimized,
@@ -482,6 +484,7 @@ function VideoPlayer({
       {(!!rewardLevel || (startingPosition > 0 && !started)) && (
         <XPBar
           isChat={isChat}
+          loaded={loaded}
           reachedMaxWatchDuration={reachedMaxWatchDuration}
           rewardLevel={rewardLevel}
           started={started}

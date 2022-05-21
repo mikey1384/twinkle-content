@@ -19,7 +19,6 @@ import {
   isValidYoutubeUrl,
   extractVideoIdFromTwinkleVideoUrl
 } from 'helpers/stringHelpers';
-import { useNavigate } from 'react-router-dom';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { useAppContext, useContentContext } from 'contexts';
 import { useContentState } from 'helpers/hooks';
@@ -29,18 +28,9 @@ const API_URL = `${URL}/content`;
 
 LinkAttachment.propTypes = {
   contentId: PropTypes.number,
-  directUrl: PropTypes.string,
   defaultThumbUrl: PropTypes.string,
-  defaultActualTitle: PropTypes.string,
-  defaultActualDescription: PropTypes.string,
   extractedUrl: PropTypes.string,
-  imageWidth: PropTypes.string,
-  imageOnly: PropTypes.bool,
-  loadingHeight: PropTypes.string,
-  mobileLoadingHeight: PropTypes.string,
-  noLink: PropTypes.bool,
   onHideAttachment: PropTypes.func,
-  small: PropTypes.bool,
   style: PropTypes.object,
   userCanEditThis: PropTypes.bool,
   videoWidth: PropTypes.string
@@ -48,23 +38,13 @@ LinkAttachment.propTypes = {
 
 function LinkAttachment({
   contentId,
-  directUrl,
   defaultThumbUrl,
-  defaultActualTitle,
-  defaultActualDescription,
   extractedUrl,
-  imageWidth,
-  imageOnly,
-  loadingHeight = '100%',
-  mobileLoadingHeight = '100%',
-  noLink,
   onHideAttachment = () => {},
-  small,
   style,
   userCanEditThis,
   videoWidth
 }) {
-  const navigate = useNavigate();
   const makeThumbnailSecure = useAppContext(
     (v) => v.requestHelpers.makeThumbnailSecure
   );
@@ -89,13 +69,10 @@ function LinkAttachment({
 
   const {
     currentTime = 0,
-    description,
     prevUrl,
     thumbUrl: rawThumbUrl,
     title,
     thumbLoaded,
-    [translator.actualDescription]: actualDescription,
-    [translator.actualTitle]: actualTitle,
     [translator.siteUrl]: siteUrl,
     [translator.url]: contentStateUrl
   } = useContentState({ contentType: 'chat', contentId });
@@ -128,20 +105,6 @@ function LinkAttachment({
   const mounted = useRef(true);
   const loadingRef = useRef(false);
   const fallbackImage = '/img/link.png';
-  const contentCss = useMemo(
-    () => css`
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-      color: ${Color.darkerGray()};
-      position: relative;
-      overflow: hidden;
-      ${!small ? 'flex-direction: column;' : ''};
-    `,
-    [small]
-  );
 
   useEffect(() => {
     if (isYouTube) {
@@ -262,46 +225,23 @@ function LinkAttachment({
 
   const InnerContent = useMemo(() => {
     return (
-      <div className={contentCss}>
+      <div
+        className={`
+          color: ${Color.darkerGray()};
+          position: relative;
+          overflow: hidden;
+        `}
+        style={{ width: '100%', height: '100%' }}
+      >
         {!imageUrl || loading ? (
           <Loading
             className={css`
-              height: ${loadingHeight};
-              @media (max-width: ${mobileMaxWidth}) {
-                height: ${mobileLoadingHeight};
-              }
+              height: 100%;
             `}
           />
-        ) : noLink ? (
-          <div style={{ width: small ? '25%' : '100%', height: '100%' }}>
-            <section
-              className={css`
-                position: relative;
-                width: 100%;
-                height: 100%;
-                &:after {
-                  content: '';
-                  display: block;
-                  padding-bottom: ${small ? '100%' : '60%'};
-                }
-              `}
-            >
-              <img
-                className={css`
-                  position: absolute;
-                  width: 100%;
-                  height: 100%;
-                  object-fit: contain;
-                `}
-                src={imageUrl}
-                onError={handleImageLoadError}
-                alt={title}
-              />
-            </section>
-          </div>
         ) : (
           <a
-            style={{ width: small ? '25%' : '100%', height: '100%' }}
+            style={{ width: '100%', height: '100%' }}
             target="_blank"
             rel="noopener noreferrer"
             href={url}
@@ -312,15 +252,14 @@ function LinkAttachment({
                 width: 100%;
                 height: 100%;
                 &:after {
+                  padding-bottom: 60%;
                   content: '';
                   display: block;
-                  padding-bottom: ${small ? '100%' : '60%'};
                 }
               `}
             >
               <img
                 className={css`
-                  position: absolute;
                   width: 100%;
                   height: 100%;
                   object-fit: contain;
@@ -332,55 +271,6 @@ function LinkAttachment({
             </section>
           </a>
         )}
-        {!imageOnly &&
-          React.createElement(
-            'a',
-            {
-              style: {
-                textDecoration: 'none',
-                color: Color.darkerGray()
-              },
-              target: '_blank',
-              rel: 'noopener noreferrer',
-              href: true,
-              className: css`
-                width: 100%;
-                line-height: 1.5;
-                padding: 1rem;
-                cursor: pointer;
-                'margin-bottom: 1rem;
-                ${small ? 'margin-left: 1rem;' : ''}
-                ${small ? '' : 'margin-top: 1rem;'}
-              `,
-              onClick:
-                small && !directUrl && !noLink
-                  ? () => navigate(`/links/${contentId}`)
-                  : null
-            },
-            <>
-              <h3
-                style={{
-                  overflow: 'hidden',
-                  display: '-webkit-box',
-                  WebkitLineClamp: 1,
-                  WebkitBoxOrient: 'vertical'
-                }}
-              >
-                {actualTitle || defaultActualTitle || title}
-              </h3>
-              <p
-                style={{
-                  overflow: 'hidden',
-                  display: '-webkit-box',
-                  WebkitLineClamp: 4,
-                  WebkitBoxOrient: 'vertical'
-                }}
-              >
-                {actualDescription || defaultActualDescription || description}
-              </p>
-              <p style={{ fontWeight: 'bold' }}>{siteUrl}</p>
-            </>
-          )}
       </div>
     );
     function handleImageLoadError() {
@@ -388,28 +278,7 @@ function LinkAttachment({
         !thumbUrl || imageUrl === thumbUrl ? fallbackImage : thumbUrl
       );
     }
-  }, [
-    actualDescription,
-    actualTitle,
-    contentCss,
-    contentId,
-    defaultActualDescription,
-    defaultActualTitle,
-    description,
-    directUrl,
-    navigate,
-    imageOnly,
-    imageUrl,
-    loading,
-    loadingHeight,
-    mobileLoadingHeight,
-    noLink,
-    siteUrl,
-    small,
-    thumbUrl,
-    title,
-    url
-  ]);
+  }, [imageUrl, loading, thumbUrl, title, url]);
 
   return (
     <div
@@ -419,41 +288,42 @@ function LinkAttachment({
         ...style
       }}
     >
-      {userCanEditThis && !notFound && (
-        <Icon
-          style={{
-            position: 'absolute',
-            cursor: 'pointer',
-            zIndex: 10
-          }}
-          onClick={() => onHideAttachment()}
-          className={css`
-            right: ${isYouTube || twinkleVideoId ? '1rem' : 'CALC(50% - 1rem)'};
-            color: ${Color.darkGray()};
-            font-size: 2rem;
-            &:hover {
-              color: ${Color.black()};
-            }
-            @media (max-width: ${mobileMaxWidth}) {
-              right: 1rem;
-            }
-          `}
-          icon="times"
-        />
-      )}
       <div
         style={{ height: '100%' }}
         className={css`
-          width: ${imageWidth || '50%'};
+          width: 100%;
+          height: 100%;
           position: relative;
-          align-items: center;
-          justify-content: ${imageOnly && 'center'};
-          display: flex;
           @media (max-width: ${mobileMaxWidth}) {
             width: 100%;
           }
         `}
       >
+        {userCanEditThis && !notFound && (
+          <Icon
+            style={{
+              right: '1rem',
+              position: 'absolute',
+              cursor: 'pointer',
+              zIndex: 10
+            }}
+            onClick={() => onHideAttachment()}
+            className={css`
+              right: ${isYouTube || twinkleVideoId
+                ? '1rem'
+                : 'CALC(50% - 1rem)'};
+              color: ${Color.darkGray()};
+              font-size: 2rem;
+              &:hover {
+                color: ${Color.black()};
+              }
+              @media (max-width: ${mobileMaxWidth}) {
+                right: 1rem;
+              }
+            `}
+            icon="times"
+          />
+        )}
         <div
           className={css`
             width: 100%;
@@ -479,15 +349,12 @@ function LinkAttachment({
             }
           `}
         >
-          {noLink ? (
-            <div className={contentCss}>{InnerContent}</div>
-          ) : twinkleVideoId ? (
+          {twinkleVideoId ? (
             <TwinkleVideo
-              imageOnly={imageOnly}
               onPlay={handlePlay}
               style={{
                 width: videoWidth || '50vw',
-                height: '100%'
+                height: 'CALC(100% - 2rem)'
               }}
               videoId={Number(twinkleVideoId)}
             />
