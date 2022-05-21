@@ -24,7 +24,7 @@ import { useAppContext, useContentContext, useViewContext } from 'contexts';
 
 const intervalLength = 2000;
 
-XPVideoPlayer.propTypes = {
+VideoPlayer.propTypes = {
   isChat: PropTypes.bool,
   isLink: PropTypes.bool,
   byUser: PropTypes.bool,
@@ -37,7 +37,7 @@ XPVideoPlayer.propTypes = {
   videoId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
 };
 
-function XPVideoPlayer({
+function VideoPlayer({
   isChat,
   isLink,
   byUser,
@@ -417,16 +417,9 @@ function XPVideoPlayer({
         className={`${css`
           user-select: none;
           position: relative;
-          padding-top: 56.25%;
         `}${minimized ? ' desktop' : ''}`}
         style={{
-          display: minimized && !started && 'none',
-          width: started && minimized && '39rem',
-          paddingTop: started && minimized && '22rem',
-          position: started && minimized && 'absolute',
-          bottom: started && minimized && '1rem',
-          right: started && minimized && '1rem',
-          cursor: !isEditing && !started && 'pointer'
+          height: '100%'
         }}
       >
         {isLink && (
@@ -501,4 +494,4 @@ function XPVideoPlayer({
   );
 }
 
-export default memo(XPVideoPlayer);
+export default memo(VideoPlayer);

@@ -494,7 +494,7 @@ function LinkAttachment({
           ) : isYouTube ? (
             <ReactPlayer
               ref={YTPlayerRef}
-              width={videoWidth || '50vw'}
+              width="65rem"
               height="100%"
               url={videoUrl}
               controls

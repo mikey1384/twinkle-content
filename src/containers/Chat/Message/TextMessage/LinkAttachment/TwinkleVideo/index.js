@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
-import XPVideoPlayer from './XPVideoPlayer';
+import VideoPlayer from './VideoPlayer';
 import Link from 'components/Link';
 import VideoThumbImage from 'components/VideoThumbImage';
 import { useNavigate } from 'react-router-dom';
@@ -57,9 +57,9 @@ export default function TwinkleVideo({ imageOnly, onPlay, style, videoId }) {
           onClick={() => navigate(`/videos/${videoId}`)}
         />
       ) : (
-        <XPVideoPlayer
+        <VideoPlayer
           isChat
-          style={{ width: '100%', height: '100%' }}
+          style={{ width: '65rem', height: '100%' }}
           byUser={!!byUser}
           rewardLevel={rewardLevel}
           uploader={uploader}
