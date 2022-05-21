@@ -19,7 +19,6 @@ const watchingLabel = localize('watching');
 const perMinuteLabel = localize('perMinute');
 
 XPBar.propTypes = {
-  isChat: PropTypes.bool,
   loaded: PropTypes.bool,
   rewardLevel: PropTypes.number,
   reachedMaxWatchDuration: PropTypes.bool,
@@ -30,7 +29,6 @@ XPBar.propTypes = {
 };
 
 function XPBar({
-  isChat,
   loaded,
   rewardLevel,
   started,
@@ -101,9 +99,9 @@ function XPBar({
               height: 2.7rem !important;
               margin-top: 0 !important;
               @media (max-width: ${mobileMaxWidth}) {
-                font-size: ${isChat ? '1rem' : '1.2rem'};
-                height: ${isChat ? '2rem' : '2.7rem'} !important;
-                font-size: ${isChat ? '0.8rem' : '1.2rem'}!important;
+                font-size: 1rem;
+                height: 2rem !important;
+                font-size: 0.8rem !important;
               }
             `}
             progress={videoProgress}
@@ -144,7 +142,7 @@ function XPBar({
               font-size: 1.3rem;
               @media (max-width: ${mobileMaxWidth}) {
                 font-size: 1rem;
-                height: ${isChat ? '2rem' : '2.7rem'};
+                height: '2rem';
               }
             `}
             style={{
@@ -163,7 +161,7 @@ function XPBar({
               {continuingStatusShown && (
                 <span>
                   {continueLabel}
-                  {deviceIsMobile && isChat ? '' : ` ${watchingLabel}`} (
+                  {` ${watchingLabel}`} (
                 </span>
               )}
               <span>{addCommasToNumber(xpRewardAmount)} XP</span>
@@ -196,7 +194,6 @@ function XPBar({
     userId,
     rewardLevel,
     started,
-    isChat,
     videoProgress,
     xpLevelColor,
     loaded,
@@ -236,7 +233,7 @@ function XPBar({
                 @media (max-width: ${mobileMaxWidth}) {
                   min-width: 0;
                   max-width: 8.5rem;
-                  height: ${isChat ? '2rem' : '2.7rem'};
+                  height: 2rem;
                 }
               `}
             >

@@ -42,33 +42,32 @@ export default function UrlContent({
           `}
         />
       ) : (
-        <a
-          style={{ width: '100%', height: '100%' }}
-          target="_blank"
-          rel="noopener noreferrer"
-          href={url}
+        <section
+          className={css`
+            position: relative;
+            width: 100%;
+            height: 100%;
+            &:after {
+              padding-bottom: 60%;
+              content: '';
+              display: block;
+            }
+          `}
         >
-          <section
-            className={css`
-              position: relative;
-              width: 100%;
-              height: 100%;
-              &:after {
-                padding-bottom: 60%;
-                content: '';
-                display: block;
-              }
-            `}
+          <a
+            style={{ width: '100%', height: '100%' }}
+            target="_blank"
+            rel="noopener noreferrer"
+            href={url}
           >
             {isYouTube ? (
               <div
                 style={{ position: 'relative' }}
                 className={css`
-                  background: url(${imageUrl}), url(${fallbackImage});
+                  background: url(${imageUrl});
                   background-repeat: no-repeat;
                   background-position: center;
                   background-size: contain;
-                  border-radius: ${borderRadius};
                   width: 100%;
                   height: 100%;
                 `}
@@ -97,8 +96,8 @@ export default function UrlContent({
                 alt={title}
               />
             )}
-          </section>
-        </a>
+          </a>
+        </section>
       )}
     </div>
   );
