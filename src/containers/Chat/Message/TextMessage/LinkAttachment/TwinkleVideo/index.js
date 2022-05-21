@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
-import XPVideoPlayer from 'components/XPVideoPlayer';
+import XPVideoPlayer from './XPVideoPlayer';
 import Link from 'components/Link';
 import VideoThumbImage from 'components/VideoThumbImage';
 import { useNavigate } from 'react-router-dom';

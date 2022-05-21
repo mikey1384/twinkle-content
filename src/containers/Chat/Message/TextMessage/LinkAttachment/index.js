@@ -43,8 +43,7 @@ LinkAttachment.propTypes = {
   small: PropTypes.bool,
   style: PropTypes.object,
   userCanEditThis: PropTypes.bool,
-  videoWidth: PropTypes.string,
-  videoHeight: PropTypes.string
+  videoWidth: PropTypes.string
 };
 
 function LinkAttachment({
@@ -63,8 +62,7 @@ function LinkAttachment({
   small,
   style,
   userCanEditThis,
-  videoWidth,
-  videoHeight
+  videoWidth
 }) {
   const navigate = useNavigate();
   const makeThumbnailSecure = useAppContext(
@@ -417,7 +415,7 @@ function LinkAttachment({
     <div
       style={{
         position: 'relative',
-        height: '100%',
+        height: '35rem',
         ...style
       }}
     >
@@ -489,7 +487,7 @@ function LinkAttachment({
               onPlay={handlePlay}
               style={{
                 width: videoWidth || '50vw',
-                height: videoHeight || 'CALC(30vw + 3rem)'
+                height: '100%'
               }}
               videoId={Number(twinkleVideoId)}
             />
@@ -497,7 +495,7 @@ function LinkAttachment({
             <ReactPlayer
               ref={YTPlayerRef}
               width={videoWidth || '50vw'}
-              height={videoHeight || '30vw'}
+              height="100%"
               url={videoUrl}
               controls
               onPlay={handlePlay}
