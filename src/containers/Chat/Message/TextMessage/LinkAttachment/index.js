@@ -8,11 +8,11 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import request from 'axios';
-import Loading from 'components/Loading';
 import ReactPlayer from 'react-player/youtube';
 import Icon from 'components/Icon';
 import URL from 'constants/URL';
 import TwinkleVideo from './TwinkleVideo';
+import UrlContent from './UrlContent';
 import { css } from '@emotion/css';
 import {
   getFileInfoFromFileName,
@@ -223,63 +223,6 @@ function LinkAttachment({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contentId]);
 
-  const InnerContent = useMemo(() => {
-    return (
-      <div
-        className={`
-          color: ${Color.darkerGray()};
-          position: relative;
-          overflow: hidden;
-        `}
-        style={{ width: '100%', height: '100%' }}
-      >
-        {!imageUrl || loading ? (
-          <Loading
-            className={css`
-              height: 100%;
-            `}
-          />
-        ) : (
-          <a
-            style={{ width: '100%', height: '100%' }}
-            target="_blank"
-            rel="noopener noreferrer"
-            href={url}
-          >
-            <section
-              className={css`
-                position: relative;
-                width: 100%;
-                height: 100%;
-                &:after {
-                  padding-bottom: 60%;
-                  content: '';
-                  display: block;
-                }
-              `}
-            >
-              <img
-                className={css`
-                  width: 100%;
-                  height: 100%;
-                  object-fit: contain;
-                `}
-                src={imageUrl}
-                onError={handleImageLoadError}
-                alt={title}
-              />
-            </section>
-          </a>
-        )}
-      </div>
-    );
-    function handleImageLoadError() {
-      setImageUrl(
-        !thumbUrl || imageUrl === thumbUrl ? fallbackImage : thumbUrl
-      );
-    }
-  }, [imageUrl, loading, thumbUrl, title, url]);
-
   return (
     <div
       style={{
@@ -369,7 +312,15 @@ function LinkAttachment({
               onProgress={handleVideoProgress}
             />
           ) : (
-            InnerContent
+            <UrlContent
+              fallbackImage={fallbackImage}
+              imageUrl={imageUrl}
+              loading={loading}
+              onSetImageUrl={setImageUrl}
+              thumbUrl={thumbUrl}
+              title={title}
+              url={url}
+            />
           )}
         </div>
       </div>
