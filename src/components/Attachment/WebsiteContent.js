@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { truncateText } from 'helpers/stringHelpers';
 import { useContentState } from 'helpers/hooks';
-import YouTubeIcon from './YoutubeIcon.svg';
+import YouTubeIcon from 'assets/YoutubeIcon.svg';
 import ErrorBoundary from 'components/ErrorBoundary';
 
 WebsiteContent.propTypes = {

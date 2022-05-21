@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
+import YouTubeIcon from 'assets/YoutubeIcon.svg';
 import { css } from '@emotion/css';
-import { Color } from 'constants/css';
+import { borderRadius, Color } from 'constants/css';
 
 UrlContent.propTypes = {
   fallbackImage: PropTypes.string,
   imageUrl: PropTypes.string,
+  isYouTube: PropTypes.bool,
   loading: PropTypes.bool,
   onSetImageUrl: PropTypes.func,
   thumbUrl: PropTypes.string,
@@ -17,6 +19,7 @@ UrlContent.propTypes = {
 export default function UrlContent({
   fallbackImage,
   imageUrl,
+  isYouTube,
   loading,
   onSetImageUrl,
   thumbUrl,
@@ -57,16 +60,43 @@ export default function UrlContent({
               }
             `}
           >
-            <img
-              className={css`
-                width: 100%;
-                height: 100%;
-                object-fit: contain;
-              `}
-              src={imageUrl}
-              onError={handleImageLoadError}
-              alt={title}
-            />
+            {isYouTube ? (
+              <div
+                style={{ position: 'relative' }}
+                className={css`
+                  background: url(${imageUrl}), url(${fallbackImage});
+                  background-repeat: no-repeat;
+                  background-position: center;
+                  background-size: contain;
+                  border-radius: ${borderRadius};
+                  width: 100%;
+                  height: 100%;
+                `}
+              >
+                <img
+                  style={{
+                    width: '8rem',
+                    height: '6rem',
+                    position: 'absolute',
+                    top: 'CALC(50% - 3rem)',
+                    left: 'CALC(50% - 4rem)'
+                  }}
+                  src={YouTubeIcon}
+                />
+              </div>
+            ) : (
+              <img
+                className={css`
+                  border-radius: ${borderRadius};
+                  width: 100%;
+                  height: 100%;
+                  object-fit: contain;
+                `}
+                src={imageUrl}
+                onError={handleImageLoadError}
+                alt={title}
+              />
+            )}
           </section>
         </a>
       )}

@@ -23,8 +23,10 @@ import { Color, mobileMaxWidth } from 'constants/css';
 import { useAppContext, useContentContext } from 'contexts';
 import { useContentState } from 'helpers/hooks';
 import { cloudFrontURL } from 'constants/defaultValues';
+import { isMobile } from 'helpers';
 
 const API_URL = `${URL}/content`;
+const deviceIsMobile = isMobile(navigator);
 
 LinkAttachment.propTypes = {
   contentId: PropTypes.number,
@@ -71,7 +73,6 @@ function LinkAttachment({
     currentTime = 0,
     prevUrl,
     thumbUrl: rawThumbUrl,
-    title,
     thumbLoaded,
     [translator.siteUrl]: siteUrl,
     [translator.url]: contentStateUrl
@@ -227,9 +228,14 @@ function LinkAttachment({
     <div
       style={{
         position: 'relative',
-        height: '35rem',
         ...style
       }}
+      className={css`
+        height: 35rem;
+        @media (max-width: ${mobileMaxWidth}) {
+          height: 15rem;
+        }
+      `}
     >
       <div
         style={{ height: '100%' }}
@@ -301,7 +307,7 @@ function LinkAttachment({
               }}
               videoId={Number(twinkleVideoId)}
             />
-          ) : isYouTube ? (
+          ) : isYouTube && !deviceIsMobile ? (
             <ReactPlayer
               ref={YTPlayerRef}
               width="65rem"
@@ -314,11 +320,9 @@ function LinkAttachment({
           ) : (
             <UrlContent
               fallbackImage={fallbackImage}
+              isYouTube={isYouTube}
               imageUrl={imageUrl}
               loading={loading}
-              onSetImageUrl={setImageUrl}
-              thumbUrl={thumbUrl}
-              title={title}
               url={url}
             />
           )}
