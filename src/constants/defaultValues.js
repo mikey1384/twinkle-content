@@ -297,4 +297,16 @@ export function returnWordLevel({ frequency, word }) {
   return 3;
 }
 
+export function returnXpLevelColor(rewardLevel) {
+  return rewardLevel === 5
+    ? 'gold'
+    : rewardLevel === 4
+    ? 'cranberry'
+    : rewardLevel === 3
+    ? 'orange'
+    : rewardLevel === 2
+    ? 'pink'
+    : 'logoBlue';
+}
+
 export const strongColors = ['rose', 'red', 'purple'];

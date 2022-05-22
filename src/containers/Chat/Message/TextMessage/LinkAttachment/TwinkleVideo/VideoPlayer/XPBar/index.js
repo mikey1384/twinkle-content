@@ -1,22 +1,18 @@
 import React, { memo, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
-import ProgressBar from 'components/ProgressBar';
 import Icon from 'components/Icon';
 import FullTextReveal from 'components/Texts/FullTextReveal';
-import { videoRewardHash } from 'constants/defaultValues';
+import XPProgressBar from './XPProgressBar';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { isMobile } from 'helpers';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import { returnXpLevelColor } from 'constants/defaultValues';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import Link from 'components/Link';
-import localize from 'constants/localize';
 
 const deviceIsMobile = isMobile(navigator);
-const continueLabel = localize('continue');
-const watchingLabel = localize('watching');
-const perMinuteLabel = localize('perMinute');
 
 XPBar.propTypes = {
   loaded: PropTypes.bool,
@@ -39,16 +35,7 @@ function XPBar({
 }) {
   const [coinHovered, setCoinHovered] = useState(false);
   const [xpHovered, setXPHovered] = useState(false);
-  const watching = startingPosition > 0;
   const { rewardBoostLvl, twinkleCoins } = useMyState();
-  const xpRewardAmount = useMemo(
-    () => rewardLevel * (videoRewardHash?.[rewardBoostLvl]?.xp || 20),
-    [rewardBoostLvl, rewardLevel]
-  );
-  const coinRewardAmount = useMemo(
-    () => videoRewardHash?.[rewardBoostLvl]?.coin || 2,
-    [rewardBoostLvl]
-  );
   const canEarnCoins = rewardLevel >= 3;
   const {
     videoProgress = 0,
@@ -67,118 +54,10 @@ function XPBar({
     () => addCommasToNumber(numCoinsEarned),
     [numCoinsEarned]
   );
-
-  const xpLevelColor = useMemo(() => {
-    return rewardLevel === 5
-      ? 'gold'
-      : rewardLevel === 4
-      ? 'cranberry'
-      : rewardLevel === 3
-      ? 'orange'
-      : rewardLevel === 2
-      ? 'pink'
-      : 'logoBlue';
-  }, [rewardLevel]);
-
-  const continuingStatusShown = useMemo(
-    () => watching && !started,
-    [started, watching]
+  const xpLevelColor = useMemo(
+    () => returnXpLevelColor(rewardLevel),
+    [rewardLevel]
   );
-
-  const Bar = useMemo(() => {
-    if (!userId || !rewardLevel) {
-      return null;
-    }
-    if (started) {
-      return (
-        <ProgressBar
-          className={css`
-            margin-top: 0;
-            flex-grow: 1;
-            height: 2.7rem !important;
-            margin-top: 0 !important;
-            @media (max-width: ${mobileMaxWidth}) {
-              font-size: 1rem;
-              height: 2rem !important;
-              font-size: 0.8rem !important;
-            }
-          `}
-          progress={videoProgress}
-          color={Color[xpLevelColor]()}
-          noBorderRadius
-        />
-      );
-    } else {
-      return (
-        <div style={{ width: '100%', height: '2.7rem' }}>
-          <div
-            className={css`
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              height: 2.7rem;
-              font-size: 1.3rem;
-              @media (max-width: ${mobileMaxWidth}) {
-                font-size: 1rem;
-                height: '2rem';
-              }
-            `}
-            style={{
-              background: continuingStatusShown
-                ? Color.darkBlue()
-                : Color[xpLevelColor](),
-              color: '#fff',
-              fontWeight: 'bold',
-              display: 'flex',
-              flexGrow: 1,
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-          >
-            <div style={{ marginLeft: '0.7rem' }}>
-              {continuingStatusShown && (
-                <span>
-                  {continueLabel}
-                  {` ${watchingLabel}`} (
-                </span>
-              )}
-              <span>{addCommasToNumber(xpRewardAmount)} XP</span>
-              {rewardLevel > 2 ? (
-                <>
-                  {' '}
-                  <span>&</span>
-                  <Icon
-                    style={{ marginLeft: '0.5rem' }}
-                    icon={['far', 'badge-dollar']}
-                  />
-                  <span style={{ marginLeft: '0.2rem' }}>
-                    {coinRewardAmount}
-                  </span>
-                </>
-              ) : (
-                ''
-              )}
-              {continuingStatusShown ? (
-                <span>{`)`}</span>
-              ) : (
-                <span> {perMinuteLabel}</span>
-              )}
-            </div>
-          </div>
-        </div>
-      );
-    }
-  }, [
-    userId,
-    rewardLevel,
-    started,
-    videoProgress,
-    xpLevelColor,
-    continuingStatusShown,
-    xpRewardAmount,
-    coinRewardAmount
-  ]);
-
   const Stars = useMemo(
     () =>
       [...Array(rewardLevel)].map((elem, index) => (
@@ -198,7 +77,14 @@ function XPBar({
             justify-content: space-between;
           `}
         >
-          {Bar}
+          <XPProgressBar
+            started={started}
+            startingPosition={startingPosition}
+            userId={userId}
+            rewardLevel={rewardLevel}
+            rewardBoostLvl={rewardBoostLvl}
+            videoProgress={videoProgress}
+          />
           {rewardLevel ? (
             <div
               className={css`
