@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ProgressBar from 'components/ProgressBar';
 import Icon from 'components/Icon';
+import { useMyState } from 'helpers/hooks';
 import { returnXpLevelColor, videoRewardHash } from 'constants/defaultValues';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
@@ -13,22 +14,21 @@ const watchingLabel = localize('watching');
 const perMinuteLabel = localize('perMinute');
 
 XPProgressBar.propTypes = {
+  rewardLevel: PropTypes.number,
   started: PropTypes.bool,
   startingPosition: PropTypes.number,
   userId: PropTypes.number,
-  rewardLevel: PropTypes.number,
-  rewardBoostLvl: PropTypes.number,
   videoProgress: PropTypes.number
 };
 
 export default function XPProgressBar({
   rewardLevel,
-  rewardBoostLvl,
   started,
   startingPosition,
   userId,
   videoProgress
 }) {
+  const { rewardBoostLvl } = useMyState();
   const watching = startingPosition > 0;
   const continuingStatusShown = useMemo(
     () => watching && !started,
