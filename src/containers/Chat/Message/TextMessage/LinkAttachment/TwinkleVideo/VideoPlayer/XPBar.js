@@ -91,44 +91,22 @@ function XPBar({
     }
     if (started) {
       return (
-        <div>
-          <ProgressBar
-            className={css`
-              margin-top: 0;
-              flex-grow: 1;
-              height: 2.7rem !important;
-              margin-top: 0 !important;
-              @media (max-width: ${mobileMaxWidth}) {
-                font-size: 1rem;
-                height: 2rem !important;
-                font-size: 0.8rem !important;
-              }
-            `}
-            progress={videoProgress}
-            color={Color[xpLevelColor]()}
-            noBorderRadius
-          />
-          {loaded && (
-            <div
-              style={{
-                width: '100%'
-              }}
-            >
-              <Link
-                className={css`
-                  font-weight: bold;
-                  font-size: 1.7rem;
-                  @media (max-width: ${mobileMaxWidth}) {
-                    font-size: 1rem;
-                  }
-                `}
-                to={`/videos/${videoId}`}
-              >
-                Comment or post subjects about this video
-              </Link>
-            </div>
-          )}
-        </div>
+        <ProgressBar
+          className={css`
+            margin-top: 0;
+            flex-grow: 1;
+            height: 2.7rem !important;
+            margin-top: 0 !important;
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: 1rem;
+              height: 2rem !important;
+              font-size: 0.8rem !important;
+            }
+          `}
+          progress={videoProgress}
+          color={Color[xpLevelColor]()}
+          noBorderRadius
+        />
       );
     } else {
       return (
@@ -196,8 +174,6 @@ function XPBar({
     started,
     videoProgress,
     xpLevelColor,
-    loaded,
-    videoId,
     continuingStatusShown,
     xpRewardAmount,
     coinRewardAmount
@@ -355,7 +331,9 @@ function XPBar({
         {loaded && (
           <div
             style={{
-              width: '100%'
+              marginTop: '0.5rem',
+              width: '100%',
+              textAlign: 'center'
             }}
           >
             <Link
