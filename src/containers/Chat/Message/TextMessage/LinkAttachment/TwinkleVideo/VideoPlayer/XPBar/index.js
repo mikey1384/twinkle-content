@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import XPProgressBar from './XPProgressBar';
-import RewardLevelInfo from './RewardLevelInfo';
+import RewardLevelInfo from '../../RewardLevelInfo';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import Link from 'components/Link';

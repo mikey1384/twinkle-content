@@ -11,7 +11,7 @@ import ReactPlayer from 'react-player/youtube';
 import ErrorBoundary from 'components/ErrorBoundary';
 import XPBar from './XPBar';
 import Link from 'components/Link';
-import playButtonImg from './play-button-image.png';
+import playButtonImg from 'assets/play-button-image.png';
 import {
   videoRewardHash,
   strongColors,
