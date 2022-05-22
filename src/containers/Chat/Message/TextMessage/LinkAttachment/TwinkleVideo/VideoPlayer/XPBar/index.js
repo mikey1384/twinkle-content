@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import XPProgressBar from './XPProgressBar';
 import RewardLevelInfo from '../../RewardLevelInfo';
+import { useContentState } from 'helpers/hooks';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import Link from 'components/Link';
@@ -26,6 +27,11 @@ function XPBar({
   reachedMaxWatchDuration,
   videoId
 }) {
+  const { videoProgress = 0 } = useContentState({
+    contentType: 'video',
+    contentId: videoId
+  });
+
   return (
     <ErrorBoundary>
       <div style={{ height: '5rem', marginTop: '1rem' }}>
@@ -42,6 +48,7 @@ function XPBar({
             startingPosition={startingPosition}
             userId={userId}
             rewardLevel={rewardLevel}
+            videoProgress={videoProgress}
           />
           <RewardLevelInfo
             reachedMaxWatchDuration={reachedMaxWatchDuration}
