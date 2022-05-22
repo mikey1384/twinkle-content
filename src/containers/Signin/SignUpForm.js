@@ -267,7 +267,7 @@ export default function SignUpForm({
         email
       });
       onSignup(data);
-      onSetUserState({ userId: data.id, newState: { ...data, loaded: true } });
+      onSetUserState({ userId: data.id, newState: data });
     } catch (error) {
       setErrorMessage(error?.data);
     }

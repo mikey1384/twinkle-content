@@ -1290,6 +1290,8 @@ function MessagesContainer({
   function handleScrollToBottom() {
     if (mounted.current && MessagesRef.current) {
       (MessagesRef.current || {}).scrollTop = 0;
+      (MessagesRef.current || {}).scrollTop = -1000;
+      (MessagesRef.current || {}).scrollTop = 0;
     }
   }
 
