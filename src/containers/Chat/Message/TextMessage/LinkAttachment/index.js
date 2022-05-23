@@ -275,9 +275,9 @@ function LinkAttachment({
         ...style
       }}
       className={css`
-        height: 35rem;
+        height: 37rem;
         @media (max-width: ${mobileMaxWidth}) {
-          height: 20rem;
+          height: 23rem;
         }
       `}
     >
@@ -345,7 +345,7 @@ function LinkAttachment({
             <TwinkleVideo
               onPlay={handlePlay}
               style={{
-                height: 'CALC(100% - 2rem)'
+                height: `CALC(100% - ${deviceIsMobile ? '1' : '5'}rem)`
               }}
               title={videoTitle}
               videoId={Number(twinkleVideoId)}
