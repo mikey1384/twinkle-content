@@ -226,49 +226,46 @@ function LinkAttachment({
       }}
       className={css`
         height: 35rem;
-        max-width: 65%;
         @media (max-width: ${mobileMaxWidth}) {
           height: 20rem;
-          max-width: 100%;
         }
       `}
     >
+      {userCanEditThis && !notFound && (
+        <Icon
+          style={{
+            right: '1rem',
+            position: 'absolute',
+            cursor: 'pointer',
+            zIndex: 10
+          }}
+          onClick={() => onHideAttachment()}
+          className={css`
+            right: ${isYouTube || twinkleVideoId ? '1rem' : 'CALC(50% - 1rem)'};
+            color: ${Color.darkGray()};
+            font-size: 2rem;
+            &:hover {
+              color: ${Color.black()};
+            }
+            @media (max-width: ${mobileMaxWidth}) {
+              right: 1rem;
+            }
+          `}
+          icon="times"
+        />
+      )}
       <div
         style={{ height: '100%' }}
         className={css`
-          width: 100%;
+          max-width: 65%;
           height: 100%;
           position: relative;
           @media (max-width: ${mobileMaxWidth}) {
             width: 100%;
+            max-width: 100%;
           }
         `}
       >
-        {userCanEditThis && !notFound && (
-          <Icon
-            style={{
-              right: '1rem',
-              position: 'absolute',
-              cursor: 'pointer',
-              zIndex: 10
-            }}
-            onClick={() => onHideAttachment()}
-            className={css`
-              right: ${isYouTube || twinkleVideoId
-                ? '1rem'
-                : 'CALC(50% - 1rem)'};
-              color: ${Color.darkGray()};
-              font-size: 2rem;
-              &:hover {
-                color: ${Color.black()};
-              }
-              @media (max-width: ${mobileMaxWidth}) {
-                right: 1rem;
-              }
-            `}
-            icon="times"
-          />
-        )}
         <div
           className={css`
             width: 100%;
