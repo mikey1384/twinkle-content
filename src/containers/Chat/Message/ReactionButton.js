@@ -59,6 +59,7 @@ export default function ReactionButton({
         <div
           ref={BarRef}
           style={{
+            zIndex: reactionsMenuShown ? 5000 : 0,
             display: reactionsMenuShown ? 'flex' : 'none',
             background: 'rgb(255, 255, 255)',
             justifyContent: 'space-around',
@@ -101,7 +102,11 @@ export default function ReactionButton({
         </div>
         <Button
           className="menu-button"
-          style={{ padding: '0.5rem 0.7rem', lineHeight: 1 }}
+          style={{
+            zIndex: 5000,
+            padding: '0.5rem 0.7rem',
+            lineHeight: 1
+          }}
           color="darkerGray"
           opacity={0.5}
           skeuomorphic
