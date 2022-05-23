@@ -17,7 +17,8 @@ import { css } from '@emotion/css';
 import {
   getFileInfoFromFileName,
   isValidYoutubeUrl,
-  extractVideoIdFromTwinkleVideoUrl
+  extractVideoIdFromTwinkleVideoUrl,
+  fetchedVideoCodeFromURL
 } from 'helpers/stringHelpers';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { useAppContext, useContentContext } from 'contexts';
@@ -47,6 +48,9 @@ function LinkAttachment({
 }) {
   const makeThumbnailSecure = useAppContext(
     (v) => v.requestHelpers.makeThumbnailSecure
+  );
+  const checkContentUrl = useAppContext(
+    (v) => v.requestHelpers.checkContentUrl
   );
   const onSetActualDescription = useContentContext(
     (v) => v.actions.onSetActualDescription
@@ -96,6 +100,15 @@ function LinkAttachment({
   const isYouTube = useMemo(() => {
     return isValidYoutubeUrl(url);
   }, [url]);
+  const videoThumbUrl = useMemo(
+    () =>
+      isYouTube
+        ? `https://img.youtube.com/vi/${fetchedVideoCodeFromURL(
+            url
+          )}/mqdefault.jpg`
+        : '',
+    [url, isYouTube]
+  );
   const YTPlayerRef = useRef(null);
   const mounted = useRef(true);
   const loadingRef = useRef(false);
@@ -119,6 +132,41 @@ function LinkAttachment({
     async function fetchUrlData() {
       setLoading(true);
       loadingRef.current = true;
+      if (isYouTube) {
+        await loadYouTubeVideoData();
+      } else {
+        await loadUrlData();
+      }
+      loadingRef.current = false;
+    }
+
+    async function loadYouTubeVideoData() {
+      try {
+        const { ytDetails } = await checkContentUrl({
+          url,
+          contentType: 'video'
+        });
+        if (mounted.current) {
+          onSetActualDescription({
+            contentId,
+            contentType: 'chat',
+            description: ytDetails.ytDescription
+          });
+        }
+        if (mounted.current) {
+          onSetActualTitle({
+            contentId,
+            contentType: 'chat',
+            title: ytDetails.ytTitle
+          });
+        }
+      } catch (error) {
+        console.error(error.response || error);
+        return Promise.reject();
+      }
+    }
+
+    async function loadUrlData() {
       try {
         const {
           data: { image, title, description, site }
@@ -150,6 +198,7 @@ function LinkAttachment({
         if (mounted.current) {
           setLoading(false);
         }
+        return Promise.resove();
       } catch (error) {
         if (mounted.current) {
           setLoading(false);
@@ -161,8 +210,8 @@ function LinkAttachment({
           onHideAttachment();
         }
         console.error(error.response || error);
+        return Promise.reject(error);
       }
-      loadingRef.current = false;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prevUrl, url, thumbLoaded, siteUrl, thumbUrl]);
@@ -316,7 +365,7 @@ function LinkAttachment({
               actualDescription={actualDescription}
               fallbackImage={fallbackImage}
               isYouTube={isYouTube}
-              imageUrl={imageUrl}
+              imageUrl={videoThumbUrl || imageUrl}
               loading={loading}
               url={url}
               siteUrl={siteUrl}

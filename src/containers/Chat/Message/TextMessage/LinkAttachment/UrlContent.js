@@ -41,7 +41,7 @@ export default function UrlContent({
       `}
       style={{ width: '100%', height: '100%' }}
     >
-      {!imageUrl || loading ? (
+      {!imageUrl || (!isYouTube && loading) ? (
         <Loading
           className={css`
             height: 100%;
@@ -137,7 +137,11 @@ export default function UrlContent({
                 {actualDescription}
               </p>
             )}
-            <p style={{ fontWeight: 'bold' }}>{siteUrl || url}</p>
+            {siteUrl || isYouTube ? (
+              <p style={{ fontWeight: 'bold' }}>
+                {isYouTube ? 'YouTube' : siteUrl}
+              </p>
+            ) : null}
           </div>
         </section>
       )}
