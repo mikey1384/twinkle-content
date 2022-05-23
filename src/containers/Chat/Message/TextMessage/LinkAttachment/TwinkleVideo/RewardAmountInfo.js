@@ -37,7 +37,7 @@ export default function RewardAmountInfo({
   );
   return (
     <div
-      style={{ width: '100%' }}
+      style={{ flexGrow: 1 }}
       className={css`
         font-size: 1.3rem;
         height: 2.7rem;

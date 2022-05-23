@@ -54,7 +54,6 @@ export default function RewardLevelInfo({
     <div
       className={css`
         height: 2.7rem;
-        min-width: ${canEarnCoins ? `1${rewardLevel - 1}rem` : '7rem'};
         margin-left: 1rem;
         display: flex;
         @media (max-width: ${mobileMaxWidth}) {
@@ -74,11 +73,13 @@ export default function RewardLevelInfo({
           className={css`
             height: 100%;
             width: 100%;
+            min-width: 6rem;
             display: flex;
             position: relative;
             justify-content: center;
             align-items: center;
             color: #fff;
+            padding: 0 1rem;
             font-size: 1.3rem;
             font-weight: bold;
             background: ${Color[xpLevelColor](

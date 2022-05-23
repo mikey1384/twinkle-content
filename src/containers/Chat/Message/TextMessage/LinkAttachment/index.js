@@ -34,8 +34,7 @@ LinkAttachment.propTypes = {
   extractedUrl: PropTypes.string,
   onHideAttachment: PropTypes.func,
   style: PropTypes.object,
-  userCanEditThis: PropTypes.bool,
-  videoWidth: PropTypes.string
+  userCanEditThis: PropTypes.bool
 };
 
 function LinkAttachment({
@@ -44,8 +43,7 @@ function LinkAttachment({
   extractedUrl,
   onHideAttachment = () => {},
   style,
-  userCanEditThis,
-  videoWidth
+  userCanEditThis
 }) {
   const makeThumbnailSecure = useAppContext(
     (v) => v.requestHelpers.makeThumbnailSecure
@@ -91,7 +89,7 @@ function LinkAttachment({
   const [twinkleVideoId, setTwinkleVideoId] = useState(false);
   const [timeAt, setTimeAt] = useState(0);
   const [startingPosition, setStartingPosition] = useState(0);
-  const { notFound } = useContentState({
+  const { notFound, title: videoTitle } = useContentState({
     contentId: Number(twinkleVideoId),
     contentType: 'video'
   });
@@ -298,9 +296,9 @@ function LinkAttachment({
             <TwinkleVideo
               onPlay={handlePlay}
               style={{
-                width: videoWidth || '50vw',
                 height: 'CALC(100% - 2rem)'
               }}
+              title={videoTitle}
               videoId={Number(twinkleVideoId)}
             />
           ) : isYouTube && !deviceIsMobile ? (

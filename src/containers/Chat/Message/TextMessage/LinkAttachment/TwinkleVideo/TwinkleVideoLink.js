@@ -8,11 +8,17 @@ import { useNavigate } from 'react-router-dom';
 
 TwinkleVideoLink.propTypes = {
   rewardLevel: PropTypes.number,
+  title: PropTypes.string,
   videoCode: PropTypes.string.isRequired,
   videoId: PropTypes.number.isRequired
 };
 
-export default function TwinkleVideoLink({ rewardLevel, videoCode, videoId }) {
+export default function TwinkleVideoLink({
+  title,
+  rewardLevel,
+  videoCode,
+  videoId
+}) {
   const navigate = useNavigate();
   return (
     <div
@@ -31,7 +37,7 @@ export default function TwinkleVideoLink({ rewardLevel, videoCode, videoId }) {
           background-position: center;
           background-size: contain;
           width: 100%;
-          height: 100%;
+          height: CALC(100% - 5rem);
         `}
         onClick={() => navigate(`/videos/${videoId}`)}
       >
@@ -46,10 +52,30 @@ export default function TwinkleVideoLink({ rewardLevel, videoCode, videoId }) {
           src={YouTubeIcon}
         />
       </div>
+      <div
+        className={css`
+          width: 100%;
+          text-align: center;
+          margin-top: 1rem;
+          height: 2rem;
+        `}
+      >
+        <h3
+          style={{
+            overflow: 'hidden',
+            display: '-webkit-box',
+            WebkitLineClamp: 1,
+            WebkitBoxOrient: 'vertical'
+          }}
+        >
+          {title}
+        </h3>
+      </div>
       {rewardLevel ? (
         <div
           style={{
-            height: '5rem',
+            marginTop: '1rem',
+            height: '3rem',
             width: '100%',
             display: 'flex',
             alignItems: 'center'

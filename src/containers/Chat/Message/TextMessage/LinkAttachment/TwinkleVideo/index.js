@@ -12,10 +12,11 @@ const deviceIsMobile = isMobile(navigator);
 TwinkleVideo.propTypes = {
   onPlay: PropTypes.func,
   style: PropTypes.object,
+  title: PropTypes.string,
   videoId: PropTypes.number.isRequired
 };
 
-export default function TwinkleVideo({ onPlay, style, videoId }) {
+export default function TwinkleVideo({ title, onPlay, style, videoId }) {
   const loadContent = useAppContext((v) => v.requestHelpers.loadContent);
   const onInitContent = useContentContext((v) => v.actions.onInitContent);
   const { loaded, notFound, byUser, content, rewardLevel, uploader } =
@@ -44,6 +45,7 @@ export default function TwinkleVideo({ onPlay, style, videoId }) {
       ) : deviceIsMobile ? (
         <TwinkleVideoLink
           rewardLevel={rewardLevel}
+          title={title}
           videoCode={content}
           videoId={videoId}
         />
