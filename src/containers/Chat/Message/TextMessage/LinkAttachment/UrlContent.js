@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
 import YouTubeIcon from 'assets/YoutubeIcon.svg';
 import { css } from '@emotion/css';
-import { borderRadius, Color } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 
 UrlContent.propTypes = {
+  actualTitle: PropTypes.string,
+  actualDescription: PropTypes.string,
   fallbackImage: PropTypes.string,
   imageUrl: PropTypes.string,
   isYouTube: PropTypes.bool,
@@ -13,10 +15,13 @@ UrlContent.propTypes = {
   onSetImageUrl: PropTypes.func,
   thumbUrl: PropTypes.string,
   title: PropTypes.string,
-  url: PropTypes.string
+  url: PropTypes.string,
+  siteUrl: PropTypes.string
 };
 
 export default function UrlContent({
+  actualTitle,
+  actualDescription,
   fallbackImage,
   imageUrl,
   isYouTube,
@@ -24,15 +29,16 @@ export default function UrlContent({
   onSetImageUrl,
   thumbUrl,
   title,
-  url
+  url,
+  siteUrl
 }) {
   return (
     <div
       className={`
-      color: ${Color.darkerGray()};
-      position: relative;
-      overflow: hidden;
-    `}
+        color: ${Color.darkerGray()};
+        position: relative;
+        overflow: hidden;
+      `}
       style={{ width: '100%', height: '100%' }}
     >
       {!imageUrl || loading ? (
@@ -46,11 +52,14 @@ export default function UrlContent({
           className={css`
             position: relative;
             width: 100%;
-            height: 100%;
+            height: 30rem;
             &:after {
               padding-bottom: 60%;
               content: '';
               display: block;
+            }
+            @media (max-width: ${mobileMaxWidth}) {
+              height: 16rem;
             }
           `}
         >
@@ -97,6 +106,38 @@ export default function UrlContent({
               />
             )}
           </a>
+          <div
+            className={css`
+              height: 5rem;
+              @media (max-width: ${mobileMaxWidth}) {
+                height: 4rem;
+              }
+            `}
+          >
+            <h3
+              style={{
+                overflow: 'hidden',
+                display: '-webkit-box',
+                WebkitLineClamp: 1,
+                WebkitBoxOrient: 'vertical'
+              }}
+            >
+              {actualTitle || title}
+            </h3>
+            {actualDescription && (
+              <p
+                style={{
+                  overflow: 'hidden',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 4,
+                  WebkitBoxOrient: 'vertical'
+                }}
+              >
+                {actualDescription}
+              </p>
+            )}
+            <p style={{ fontWeight: 'bold' }}>{siteUrl || url}</p>
+          </div>
         </section>
       )}
     </div>

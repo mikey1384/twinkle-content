@@ -50,12 +50,6 @@ function LinkAttachment({
   const makeThumbnailSecure = useAppContext(
     (v) => v.requestHelpers.makeThumbnailSecure
   );
-  const translator = {
-    actualDescription: 'linkDescription',
-    actualTitle: 'linkTitle',
-    siteUrl: 'linkUrl',
-    url: 'embeddedUrl'
-  };
   const onSetActualDescription = useContentContext(
     (v) => v.actions.onSetActualDescription
   );
@@ -74,8 +68,10 @@ function LinkAttachment({
     prevUrl,
     thumbUrl: rawThumbUrl,
     thumbLoaded,
-    [translator.siteUrl]: siteUrl,
-    [translator.url]: contentStateUrl
+    linkTitle: actualTitle,
+    linkDescription: actualDescription,
+    linkUrl: siteUrl,
+    embeddedUrl: contentStateUrl
   } = useContentState({ contentType: 'chat', contentId });
 
   const url = useMemo(
@@ -319,11 +315,14 @@ function LinkAttachment({
             />
           ) : (
             <UrlContent
+              actualTitle={actualTitle}
+              actualDescription={actualDescription}
               fallbackImage={fallbackImage}
               isYouTube={isYouTube}
               imageUrl={imageUrl}
               loading={loading}
               url={url}
+              siteUrl={siteUrl}
             />
           )}
         </div>
