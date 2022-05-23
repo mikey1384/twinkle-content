@@ -66,6 +66,7 @@ export default function RewardLevelInfo({
     >
       <div
         className={css`
+          height: 100%;
           flex-grow: 1;
         `}
       >

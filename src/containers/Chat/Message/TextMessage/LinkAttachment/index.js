@@ -233,7 +233,7 @@ function LinkAttachment({
       className={css`
         height: 35rem;
         @media (max-width: ${mobileMaxWidth}) {
-          height: 15rem;
+          height: 20rem;
         }
       `}
     >

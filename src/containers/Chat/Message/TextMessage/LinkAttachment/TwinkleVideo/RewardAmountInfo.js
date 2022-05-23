@@ -17,7 +17,10 @@ RewardAmountInfo.propTypes = {
   startingPosition: PropTypes.number
 };
 
-export default function RewardAmountInfo({ rewardLevel, startingPosition }) {
+export default function RewardAmountInfo({
+  rewardLevel,
+  startingPosition = 0
+}) {
   const xpLevelColor = useMemo(
     () => returnXpLevelColor(rewardLevel),
     [rewardLevel]
@@ -33,18 +36,23 @@ export default function RewardAmountInfo({ rewardLevel, startingPosition }) {
     [rewardBoostLvl]
   );
   return (
-    <div style={{ width: '100%', height: '2.7rem' }}>
+    <div
+      style={{ width: '100%' }}
+      className={css`
+        font-size: 1.3rem;
+        height: 2.7rem;
+        @media (max-width: ${mobileMaxWidth}) {
+          font-size: 1rem;
+          height: 2rem;
+        }
+      `}
+    >
       <div
         className={css`
+          height: 100%;
           display: flex;
           flex-direction: column;
           align-items: center;
-          height: 2.7rem;
-          font-size: 1.3rem;
-          @media (max-width: ${mobileMaxWidth}) {
-            font-size: 1rem;
-            height: '2rem';
-          }
         `}
         style={{
           background: watching ? Color.darkBlue() : Color[xpLevelColor](),
