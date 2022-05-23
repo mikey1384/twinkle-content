@@ -90,7 +90,9 @@ function LinkAttachment({
 
   const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(false);
-  const [twinkleVideoId, setTwinkleVideoId] = useState(false);
+  const [twinkleVideoId, setTwinkleVideoId] = useState(
+    extractVideoIdFromTwinkleVideoUrl(url)
+  );
   const [timeAt, setTimeAt] = useState(0);
   const [startingPosition, setStartingPosition] = useState(0);
   const { notFound, title: videoTitle } = useContentState({

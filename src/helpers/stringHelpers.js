@@ -266,7 +266,7 @@ export function extractVideoIdFromTwinkleVideoUrl(string) {
     /(^((http[s]?:\/\/(www\.)?|www\.)(twin-kle.com)\/videos\/[0-9]+))/g;
   if (!regex.test(string)) return null;
   const urlArray = string.match(regex);
-  const videoId = urlArray?.[0].split('videos/')[1];
+  const videoId = urlArray?.[0]?.split?.('videos/')?.[1];
   return videoId;
 }
 
