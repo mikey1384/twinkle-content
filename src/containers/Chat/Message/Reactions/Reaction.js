@@ -187,7 +187,8 @@ function Reaction({
           userReacted ? Color[profileTheme]() : Color.borderGray()
         }`,
         background: Color.targetGray(),
-        marginRight: '0.5rem'
+        marginRight: '0.5rem',
+        zIndex: 5000
       }}
     >
       <div
