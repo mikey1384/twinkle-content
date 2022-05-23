@@ -52,14 +52,14 @@ export default function UrlContent({
           className={css`
             position: relative;
             width: 100%;
-            height: 30rem;
+            height: 27rem;
             &:after {
               padding-bottom: 60%;
               content: '';
               display: block;
             }
             @media (max-width: ${mobileMaxWidth}) {
-              height: 16rem;
+              height: 13rem;
             }
           `}
         >
@@ -108,9 +108,10 @@ export default function UrlContent({
           </a>
           <div
             className={css`
-              height: 5rem;
+              margin-top: 1rem;
+              height: 8rem;
               @media (max-width: ${mobileMaxWidth}) {
-                height: 4rem;
+                height: 7rem;
               }
             `}
           >
@@ -129,7 +130,7 @@ export default function UrlContent({
                 style={{
                   overflow: 'hidden',
                   display: '-webkit-box',
-                  WebkitLineClamp: 4,
+                  WebkitLineClamp: 2,
                   WebkitBoxOrient: 'vertical'
                 }}
               >
