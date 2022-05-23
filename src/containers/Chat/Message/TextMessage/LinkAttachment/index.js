@@ -160,6 +160,7 @@ function LinkAttachment({
             title: ytDetails.ytTitle
           });
         }
+        return Promise.resolve();
       } catch (error) {
         console.error(error.response || error);
         return Promise.reject();
@@ -198,7 +199,7 @@ function LinkAttachment({
         if (mounted.current) {
           setLoading(false);
         }
-        return Promise.resove();
+        return Promise.resolve();
       } catch (error) {
         if (mounted.current) {
           setLoading(false);
