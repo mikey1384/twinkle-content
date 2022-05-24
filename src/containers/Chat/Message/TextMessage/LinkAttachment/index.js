@@ -356,13 +356,13 @@ function LinkAttachment({
             <div
               style={{
                 width: '100%',
-                height: deviceIsMobile ? 'CALC(100% - 2rem)' : '100%',
-                paddingTop: deviceIsMobile ? '3rem' : 0
+                height: deviceIsMobile ? 'CALC(100% - 2.5rem)' : '100%',
+                paddingTop: deviceIsMobile ? '2.5rem' : 0
               }}
             >
               <ReactPlayer
                 ref={YTPlayerRef}
-                width={deviceIsMobile ? '34rem' : '66rem'}
+                width={deviceIsMobile ? '33rem' : '66rem'}
                 height="100%"
                 url={videoUrl}
                 controls
