@@ -32,12 +32,17 @@ export default function TargetMessage({ message }) {
   } = useContext(LocalContext);
   const [imageModalShown, setImageModalShown] = useState(false);
 
+  const fetchedUrl = useMemo(
+    () => fetchURLFromText(message.content),
+    [message]
+  );
+
   useEffect(() => {
-    if (fetchURLFromText(message.content)) {
+    if (fetchedUrl) {
       onSetEmbeddedUrl({
         contentId: message.id,
         contentType: 'chat',
-        url: fetchURLFromText(message.content)
+        url: fetchedUrl
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -57,18 +62,14 @@ export default function TargetMessage({ message }) {
   }, [message.fileName, message.filePath]);
 
   const embedlyShown = useMemo(() => {
-    const extractedVideoId = extractVideoIdFromTwinkleVideoUrl(
-      fetchURLFromText(message.content)
-    );
+    const extractedVideoId = extractVideoIdFromTwinkleVideoUrl(fetchedUrl);
     return (
       fileType !== 'video' &&
       fileType !== 'audio' &&
-      (message.thumbUrl ||
-        extractedVideoId ||
-        fetchURLFromText(message.content)) &&
+      (message.thumbUrl || extractedVideoId || fetchedUrl) &&
       !message.attachmentHidden
     );
-  }, [fileType, message.attachmentHidden, message.content, message.thumbUrl]);
+  }, [fetchedUrl, fileType, message.attachmentHidden, message.thumbUrl]);
 
   const displayedTime = useMemo(
     () => unix(message?.timeStamp).format('lll'),
@@ -139,7 +140,8 @@ export default function TargetMessage({ message }) {
               height: '100%'
             }}
             thumbUrl={message.thumbUrl}
-            videoId={message.id}
+            messageId={message.id}
+            videoUrl={fetchedUrl}
           />
         </div>
       )}

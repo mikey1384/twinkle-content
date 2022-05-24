@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 TwinkleVideoThumb.propTypes = {
-  videoId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  messageId: PropTypes.number.isRequired
 };
 
-export default function TwinkleVideoThumb({ videoId }) {
+export default function TwinkleVideoThumb({ messageId }) {
   return (
     <div>
-      <div>{videoId} this is twinkle video thumb</div>
+      <div>{messageId} this is twinkle video thumb</div>
     </div>
   );
 }

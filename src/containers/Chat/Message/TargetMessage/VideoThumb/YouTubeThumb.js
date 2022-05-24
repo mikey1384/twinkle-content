@@ -5,11 +5,13 @@ import { css } from '@emotion/css';
 import YTVideoModal from './YTVideoModal';
 
 YouTubeThumb.propTypes = {
+  messageId: PropTypes.string.isRequired,
   style: PropTypes.object,
-  thumbUrl: PropTypes.string
+  thumbUrl: PropTypes.string,
+  videoUrl: PropTypes.string
 };
 
-export default function YouTubeThumb({ style, thumbUrl }) {
+export default function YouTubeThumb({ messageId, style, thumbUrl, videoUrl }) {
   const [modalShown, setModalShown] = useState(false);
   return (
     <div style={style}>
@@ -37,7 +39,13 @@ export default function YouTubeThumb({ style, thumbUrl }) {
           src={YouTubeIcon}
         />
       </div>
-      {modalShown && <YTVideoModal onHide={() => setModalShown(false)} />}
+      {modalShown && (
+        <YTVideoModal
+          messageId={messageId}
+          url={videoUrl}
+          onHide={() => setModalShown(false)}
+        />
+      )}
     </div>
   );
 }

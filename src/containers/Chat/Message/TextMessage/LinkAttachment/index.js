@@ -30,7 +30,7 @@ const API_URL = `${URL}/content`;
 const deviceIsMobile = isMobile(navigator);
 
 LinkAttachment.propTypes = {
-  contentId: PropTypes.number,
+  messageId: PropTypes.number,
   defaultThumbUrl: PropTypes.string,
   extractedUrl: PropTypes.string,
   onHideAttachment: PropTypes.func,
@@ -39,7 +39,7 @@ LinkAttachment.propTypes = {
 };
 
 function LinkAttachment({
-  contentId,
+  messageId,
   defaultThumbUrl,
   extractedUrl,
   onHideAttachment = () => {},
@@ -74,7 +74,7 @@ function LinkAttachment({
     linkDescription: actualDescription,
     linkUrl: siteUrl,
     embeddedUrl: contentStateUrl
-  } = useContentState({ contentType: 'chat', contentId });
+  } = useContentState({ contentType: 'chat', contentId: messageId });
 
   const url = useMemo(
     () => contentStateUrl || extractedUrl,
@@ -150,14 +150,14 @@ function LinkAttachment({
         });
         if (mounted.current) {
           onSetActualDescription({
-            contentId,
+            contentId: messageId,
             contentType: 'chat',
             description: ytDetails.ytDescription
           });
         }
         if (mounted.current) {
           onSetActualTitle({
-            contentId,
+            contentId: messageId,
             contentType: 'chat',
             title: ytDetails.ytTitle
           });
@@ -175,28 +175,36 @@ function LinkAttachment({
           data: { image, title, description, site }
         } = await request.put(`${API_URL}/embed`, {
           url,
-          contentId,
+          contentId: messageId,
           contentType: 'chat'
         });
         if (mounted.current) {
           onSetThumbUrl({
-            contentId,
+            contentId: messageId,
             contentType: 'chat',
             thumbUrl: image.url.replace('http://', 'https://')
           });
         }
         if (mounted.current) {
           onSetActualDescription({
-            contentId,
+            contentId: messageId,
             contentType: 'chat',
             description
           });
         }
         if (mounted.current) {
-          onSetActualTitle({ contentId, contentType: 'chat', title });
+          onSetActualTitle({
+            contentId: messageId,
+            contentType: 'chat',
+            title
+          });
         }
         if (mounted.current) {
-          onSetSiteUrl({ contentId, contentType: 'chat', siteUrl: site });
+          onSetSiteUrl({
+            contentId: messageId,
+            contentType: 'chat',
+            siteUrl: site
+          });
         }
         if (mounted.current) {
           setLoading(false);
@@ -233,7 +241,11 @@ function LinkAttachment({
       setImageUrl(url);
     } else {
       if (thumbUrl?.includes('http://')) {
-        makeThumbnailSecure({ contentId, contentType: 'chat', thumbUrl });
+        makeThumbnailSecure({
+          contentId: messageId,
+          contentType: 'chat',
+          thumbUrl
+        });
       }
       setImageUrl(thumbUrl || fallbackImage);
     }
@@ -245,7 +257,7 @@ function LinkAttachment({
       if (timeAt > 0) {
         onSetVideoCurrentTime({
           contentType: 'chat',
-          contentId,
+          contentId: messageId,
           currentTime: timeAt
         });
       }
@@ -264,11 +276,11 @@ function LinkAttachment({
   const handlePlay = useCallback(() => {
     onSetMediaStarted({
       contentType: 'chat',
-      contentId,
+      contentId: messageId,
       started: true
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [contentId]);
+  }, [messageId]);
 
   return (
     <div
