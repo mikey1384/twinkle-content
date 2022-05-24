@@ -4,7 +4,7 @@ import Image from 'components/Image';
 import FileIcon from 'components/FileIcon';
 import ImageModal from 'components/Modals/ImageModal';
 import UsernameText from 'components/Texts/UsernameText';
-import Spoiler from './Spoiler';
+import Spoiler from '../Spoiler';
 import Embedly from 'components/Embedly';
 import ExtractedThumb from 'components/ExtractedThumb';
 import LongText from 'components/Texts/LongText';
@@ -19,7 +19,7 @@ import {
 } from 'helpers/stringHelpers';
 import { css } from '@emotion/css';
 import { cloudFrontURL } from 'constants/defaultValues';
-import LocalContext from '../Context';
+import LocalContext from '../../Context';
 
 TargetMessage.propTypes = {
   message: PropTypes.object.isRequired
