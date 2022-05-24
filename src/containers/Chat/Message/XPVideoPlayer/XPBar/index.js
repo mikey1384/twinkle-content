@@ -77,7 +77,7 @@ function XPBar({
                 font-weight: bold;
                 font-size: 1.7rem;
                 @media (max-width: ${mobileMaxWidth}) {
-                  font-size: 1rem;
+                  font-size: 1.3rem;
                 }
               `}
               to={`/videos/${videoId}`}
