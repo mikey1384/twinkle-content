@@ -9,6 +9,7 @@ VideoThumb.propTypes = {
   thumbUrl: PropTypes.string,
   videoId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
+
 export default function VideoThumb({ thumbUrl, videoId, style }) {
   const isYouTube = useMemo(() => !!thumbUrl, [thumbUrl]);
   return (

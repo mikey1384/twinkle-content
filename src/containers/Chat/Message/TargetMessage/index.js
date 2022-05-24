@@ -135,7 +135,8 @@ export default function TargetMessage({ message }) {
         >
           <VideoThumb
             style={{
-              width: '100%'
+              width: '100%',
+              height: '100%'
             }}
             thumbUrl={message.thumbUrl}
             videoId={message.id}
