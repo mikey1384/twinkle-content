@@ -355,7 +355,7 @@ function XPVideoPlayer({
         className={css`
           user-select: none;
           position: relative;
-          padding-top: CALC(50% - 1rem);
+          padding-top: CALC(50% ${rewardLevel ? '- 1rem' : '+ 5rem'});
         `}
       >
         <ReactPlayer

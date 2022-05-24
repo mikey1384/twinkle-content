@@ -25,6 +25,7 @@ export default function TwinkleVideoThumb({ messageId, videoUrl }) {
   return (
     <div
       style={{
+        position: 'relative',
         width: '100%',
         height: '100%',
         display: 'flex',
@@ -40,7 +41,7 @@ export default function TwinkleVideoThumb({ messageId, videoUrl }) {
           onClick={() => setModalShown(true)}
         />
       ) : (
-        <Loading />
+        <Loading style={{ position: 'absolute' }} />
       )}
       {modalShown && (
         <TwinkleVideoModal
