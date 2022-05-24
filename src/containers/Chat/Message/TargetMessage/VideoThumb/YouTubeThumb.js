@@ -5,7 +5,7 @@ import { css } from '@emotion/css';
 import YTVideoModal from './YTVideoModal';
 
 YouTubeThumb.propTypes = {
-  messageId: PropTypes.string.isRequired,
+  messageId: PropTypes.number.isRequired,
   style: PropTypes.object,
   thumbUrl: PropTypes.string,
   videoUrl: PropTypes.string

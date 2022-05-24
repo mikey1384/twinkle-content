@@ -10,44 +10,27 @@ import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player/youtube';
 import ErrorBoundary from 'components/ErrorBoundary';
 import XPBar from './XPBar';
-import Link from 'components/Link';
-import playButtonImg from 'assets/play-button-image.png';
-import {
-  videoRewardHash,
-  strongColors,
-  SELECTED_LANGUAGE
-} from 'constants/defaultValues';
-import { Color, mobileMaxWidth } from 'constants/css';
+import { videoRewardHash } from 'constants/defaultValues';
 import { css } from '@emotion/css';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useViewContext } from 'contexts';
 
 const intervalLength = 2000;
 
-VideoPlayer.propTypes = {
-  isChat: PropTypes.bool,
-  isLink: PropTypes.bool,
+XPVideoPlayer.propTypes = {
   loaded: PropTypes.bool,
-  byUser: PropTypes.bool,
-  minimized: PropTypes.bool,
   onPlay: PropTypes.func,
   rewardLevel: PropTypes.number,
   style: PropTypes.object,
-  uploader: PropTypes.object.isRequired,
   videoCode: PropTypes.string.isRequired,
   videoId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
 };
 
-function VideoPlayer({
-  isChat,
-  isLink,
+function XPVideoPlayer({
   loaded,
-  byUser,
   rewardLevel,
-  minimized,
   onPlay,
   style = {},
-  uploader,
   videoCode,
   videoId
 }) {
@@ -81,7 +64,7 @@ function VideoPlayer({
   );
 
   const pageVisible = useViewContext((v) => v.state.pageVisible);
-  const { profileTheme, rewardBoostLvl, userId, twinkleCoins } = useMyState();
+  const { rewardBoostLvl, userId, twinkleCoins } = useMyState();
   const coinRewardAmount = useMemo(
     () => videoRewardHash?.[rewardBoostLvl]?.coin || 2,
     [rewardBoostLvl]
@@ -136,7 +119,6 @@ function VideoPlayer({
   const watchCodeRef = useRef(Math.floor(Math.random() * 10000));
   const rewardingCoin = useRef(false);
   const rewardingXP = useRef(false);
-  const themeColor = profileTheme || 'logoBlue';
   const rewardLevelRef = useRef(0);
   const pageVisibleRef = useRef(pageVisible);
   const twinkleCoinsRef = useRef(twinkleCoins);
@@ -367,123 +349,46 @@ function VideoPlayer({
     [handleIncreaseMeter, playing, videoId]
   );
 
-  const thisVideoWasMadeByLabel = useMemo(() => {
-    if (SELECTED_LANGUAGE === 'kr') {
-      return <>{uploader?.username}님이 직접 제작한 동영상입니다</>;
-    }
-    return <>This video was made by {uploader?.username}</>;
-  }, [uploader?.username]);
-
   return (
     <ErrorBoundary style={style}>
-      {byUser && !isChat && (
-        <div
-          className={css`
-            background: ${Color[themeColor](
-              strongColors.includes(themeColor) ? 0.7 : 0.9
-            )};
-            display: flex;
-            align-items: center;
-            font-weight: bold;
-            font-size: 1.5rem;
-            color: #fff;
-            justify-content: center;
-            padding: 0.5rem;
-            @media (max-width: ${mobileMaxWidth}) {
-              padding: 0.3rem;
-              font-size: ${isChat ? '1rem' : '1.5rem'};
-            }
-          `}
-        >
-          <div>
-            {uploader.youtubeUrl ? (
-              <a
-                style={{
-                  color: '#fff',
-                  cursor: 'pointer',
-                  textDecoration: 'underline'
-                }}
-                target="_blank"
-                rel="noopener noreferrer"
-                href={uploader.youtubeUrl}
-              >
-                {`Visit ${uploader.username}'s`} YouTube Channel
-              </a>
-            ) : (
-              <span>{thisVideoWasMadeByLabel}</span>
-            )}
-          </div>
-        </div>
-      )}
       <div
-        className={`${css`
+        className={css`
           user-select: none;
           position: relative;
-        `}${minimized ? ' desktop' : ''}`}
-        style={{
-          height: '100%'
-        }}
+          padding-top: CALC(50% - 1rem);
+        `}
       >
-        {isLink && (
-          <Link to={`/videos/${videoId}`}>
-            <div
-              className={css`
-                position: absolute;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                top: 0;
-                left: 0;
-                z-index: 1;
-                width: 100%;
-                height: 100%;
-                background: url(https://img.youtube.com/vi/${videoCode}/mqdefault.jpg)
-                  no-repeat center;
-                background-size: 100% auto;
-              `}
-              alt="video_thumb"
-            >
-              <img
-                style={{ width: '45px', height: '45px' }}
-                src={playButtonImg}
-              />
-            </div>
-          </Link>
-        )}
-        {!isLink && (
-          <ReactPlayer
-            ref={PlayerRef}
-            className={css`
-              position: absolute;
-              top: 0;
-              left: 0;
-              z-index: 1;
-            `}
-            width="100%"
-            height="100%"
-            url={videoUrl}
-            playing={playing}
-            controls
-            onReady={onVideoReady}
-            onPlay={() => {
-              onPlay?.();
-              onVideoPlay({
-                userId: userIdRef.current
-              });
-            }}
-            onPause={handleVideoStop}
-            onEnded={() => {
-              handleVideoStop();
-              if (userIdRef.current) {
-                finishWatchingVideo(videoId);
-              }
-            }}
-          />
-        )}
+        <ReactPlayer
+          ref={PlayerRef}
+          className={css`
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+          `}
+          width="100%"
+          height="100%"
+          url={videoUrl}
+          playing={playing}
+          controls
+          onReady={onVideoReady}
+          onPlay={() => {
+            onPlay?.();
+            onVideoPlay({
+              userId: userIdRef.current
+            });
+          }}
+          onPause={handleVideoStop}
+          onEnded={() => {
+            handleVideoStop();
+            if (userIdRef.current) {
+              finishWatchingVideo(videoId);
+            }
+          }}
+        />
       </div>
       {(!!rewardLevel || (startingPosition > 0 && !started)) && (
         <XPBar
-          isChat={isChat}
           loaded={loaded}
           reachedMaxWatchDuration={reachedMaxWatchDuration}
           rewardLevel={rewardLevel}
@@ -497,4 +402,4 @@ function VideoPlayer({
   );
 }
 
-export default memo(VideoPlayer);
+export default memo(XPVideoPlayer);

@@ -23,7 +23,11 @@ export default function VideoThumb({ thumbUrl, messageId, style, videoUrl }) {
           videoUrl={videoUrl}
         />
       ) : (
-        <TwinkleVideoThumb style={style} videoUrl={videoUrl} />
+        <TwinkleVideoThumb
+          style={style}
+          messageId={messageId}
+          videoUrl={videoUrl}
+        />
       )}
     </ErrorBoundary>
   );

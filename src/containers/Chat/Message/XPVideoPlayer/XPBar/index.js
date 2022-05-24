@@ -34,7 +34,7 @@ function XPBar({
 
   return (
     <ErrorBoundary>
-      <div style={{ height: '5rem', marginTop: '1rem' }}>
+      <div style={{ marginTop: '1rem', fontSize: '1.7rem' }}>
         <div
           className={css`
             display: flex;

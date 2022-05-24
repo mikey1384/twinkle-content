@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import YouTubeIcon from 'assets/YoutubeIcon.svg';
-import RewardAmountInfo from './RewardAmountInfo';
-import RewardLevelInfo from './RewardLevelInfo';
+import RewardAmountInfo from '../../../RewardAmountInfo';
+import RewardLevelInfo from '../../../RewardLevelInfo';
 import { css } from '@emotion/css';
 import { useNavigate } from 'react-router-dom';
 

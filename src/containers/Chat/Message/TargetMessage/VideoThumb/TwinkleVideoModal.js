@@ -1,51 +1,28 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import localize from 'constants/localize';
-import ReactPlayer from 'react-player/youtube';
-import { css } from '@emotion/css';
+import XPVideoPlayer from '../../XPVideoPlayer';
 import { useContentContext } from 'contexts';
 import { useContentState } from 'helpers/hooks';
 
 const closelLabel = localize('close');
 
 TwinkleVideoModal.propTypes = {
+  videoId: PropTypes.number.isRequired,
   messageId: PropTypes.number.isRequired,
-  onHide: PropTypes.func.isRequired,
-  url: PropTypes.string.isRequired
+  onHide: PropTypes.func.isRequired
 };
 
-export default function TwinkleVideoModal({ messageId, onHide, url }) {
-  const YTPlayerRef = useRef(null);
-  const [timeAt, setTimeAt] = useState(0);
-  const [startingPosition, setStartingPosition] = useState(0);
-  const onSetVideoCurrentTime = useContentContext(
-    (v) => v.actions.onSetVideoCurrentTime
+export default function TwinkleVideoModal({ videoId, onHide, messageId }) {
+  const onSetMediaStarted = useContentContext(
+    (v) => v.actions.onSetMediaStarted
   );
-  const { currentTime = 0 } = useContentState({
-    contentType: 'chat',
-    contentId: messageId
+  const { loaded, notFound, content, rewardLevel } = useContentState({
+    contentId: videoId,
+    contentType: 'video'
   });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => setStartingPosition(currentTime), []);
-  useEffect(() => {
-    return function setCurrentTimeBeforeUnmount() {
-      if (timeAt > 0) {
-        onSetVideoCurrentTime({
-          contentType: 'chat',
-          contentId: messageId,
-          currentTime: timeAt
-        });
-      }
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timeAt]);
-
-  const videoUrl = useMemo(
-    () => `${url}${startingPosition > 0 ? `?t=${startingPosition}` : ''}`,
-    [startingPosition, url]
-  );
 
   return (
     <Modal large onHide={onHide}>
@@ -58,31 +35,31 @@ export default function TwinkleVideoModal({ messageId, onHide, url }) {
       >
         <div
           style={{
-            display: 'block',
-            width: '85%',
-            height: '100%'
+            display: 'flex',
+            width: '100%',
+            height: '100%',
+            justifyContent: 'center'
           }}
         >
           <div
-            className={css`
-              position: relative;
-              padding-top: 56.25%;
-            `}
+            style={{
+              display: 'block',
+              width: '85%',
+              height: '100%'
+            }}
           >
-            <ReactPlayer
-              ref={YTPlayerRef}
-              width="100%"
-              height="100%"
-              className={css`
-                position: absolute;
-                top: 0;
-                left: 0;
-                z-index: 1;
-              `}
-              url={videoUrl}
-              controls
-              onProgress={handleVideoProgress}
-            />
+            {notFound ? (
+              <div>Video Not Found</div>
+            ) : (
+              <XPVideoPlayer
+                loaded={loaded}
+                style={{ width: '100%', height: '100%' }}
+                rewardLevel={rewardLevel}
+                videoCode={content}
+                videoId={videoId}
+                onPlay={handlePlay}
+              />
+            )}
           </div>
         </div>
       </main>
@@ -94,7 +71,11 @@ export default function TwinkleVideoModal({ messageId, onHide, url }) {
     </Modal>
   );
 
-  function handleVideoProgress() {
-    setTimeAt(YTPlayerRef.current.getCurrentTime());
+  function handlePlay() {
+    onSetMediaStarted({
+      contentType: 'chat',
+      contentId: messageId,
+      started: true
+    });
   }
 }

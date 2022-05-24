@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
-import VideoPlayer from './VideoPlayer';
+import XPVideoPlayer from '../../../XPVideoPlayer';
 import TwinkleVideoLink from './TwinkleVideoLink';
 import { useAppContext, useContentContext } from 'contexts';
 import { useContentState } from 'helpers/hooks';
@@ -19,11 +19,10 @@ TwinkleVideo.propTypes = {
 export default function TwinkleVideo({ title, onPlay, style, videoId }) {
   const loadContent = useAppContext((v) => v.requestHelpers.loadContent);
   const onInitContent = useContentContext((v) => v.actions.onInitContent);
-  const { loaded, notFound, byUser, content, rewardLevel, uploader } =
-    useContentState({
-      contentId: videoId,
-      contentType: 'video'
-    });
+  const { loaded, notFound, content, rewardLevel } = useContentState({
+    contentId: videoId,
+    contentType: 'video'
+  });
   useEffect(() => {
     if (!loaded) {
       init();
@@ -50,13 +49,10 @@ export default function TwinkleVideo({ title, onPlay, style, videoId }) {
           videoId={videoId}
         />
       ) : (
-        <VideoPlayer
-          isChat
+        <XPVideoPlayer
           loaded={loaded}
           style={{ width: '65rem', height: '100%' }}
-          byUser={!!byUser}
           rewardLevel={rewardLevel}
-          uploader={uploader}
           videoCode={content}
           videoId={videoId}
           onPlay={onPlay}

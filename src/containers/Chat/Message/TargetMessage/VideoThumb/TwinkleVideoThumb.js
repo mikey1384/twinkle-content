@@ -1,15 +1,18 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import VideoThumbImage from 'components/VideoThumbImage';
+import Loading from 'components/Loading';
+import TwinkleVideoModal from './TwinkleVideoModal';
 import { useContentState } from 'helpers/hooks';
 import { extractVideoIdFromTwinkleVideoUrl } from 'helpers/stringHelpers';
-import Loading from 'components/Loading';
 
 TwinkleVideoThumb.propTypes = {
+  messageId: PropTypes.number.isRequired,
   videoUrl: PropTypes.string.isRequired
 };
 
-export default function TwinkleVideoThumb({ videoUrl }) {
+export default function TwinkleVideoThumb({ messageId, videoUrl }) {
+  const [modalShown, setModalShown] = useState(false);
   const videoId = useMemo(
     () => extractVideoIdFromTwinkleVideoUrl(videoUrl),
     [videoUrl]
@@ -32,12 +35,20 @@ export default function TwinkleVideoThumb({ videoUrl }) {
         <VideoThumbImage
           style={{ height: '5rem', cursor: 'pointer' }}
           rewardLevel={rewardLevel}
-          videoId={videoId}
+          videoId={Number(videoId)}
           src={`https://img.youtube.com/vi/${content}/mqdefault.jpg`}
-          onClick={() => console.log('clicked')}
+          onClick={() => setModalShown(true)}
         />
       ) : (
         <Loading />
+      )}
+      {modalShown && (
+        <TwinkleVideoModal
+          messageId={messageId}
+          videoId={Number(videoId)}
+          url={videoUrl}
+          onHide={() => setModalShown(false)}
+        />
       )}
     </div>
   );
