@@ -5,9 +5,9 @@ import FileIcon from 'components/FileIcon';
 import ImageModal from 'components/Modals/ImageModal';
 import UsernameText from 'components/Texts/UsernameText';
 import Spoiler from '../Spoiler';
-import Embedly from 'components/Embedly';
 import ExtractedThumb from 'components/ExtractedThumb';
 import LongText from 'components/Texts/LongText';
+import VideoThumb from './VideoThumb';
 import { v1 as uuidv1 } from 'uuid';
 import { unix } from 'moment';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
@@ -133,22 +133,7 @@ export default function TargetMessage({ message }) {
             justifyContent: 'center'
           }}
         >
-          <Embedly
-            imageOnly
-            defaultThumbUrl={message.thumbUrl}
-            contentId={message.id}
-            contentType="chat"
-            imageWidth="100%"
-            videoWidth="100%"
-            videoHeight="10rem"
-            loadingHeight="10rem"
-            mobileLoadingHeight="10rem"
-            style={{
-              width: '30rem',
-              height: '10rem',
-              background: '#fff'
-            }}
-          />
+          <VideoThumb thumbUrl={message.thumbUrl} videoId={message.id} />
         </div>
       )}
       {fileType && message.fileName && (
