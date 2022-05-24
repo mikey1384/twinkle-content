@@ -5,6 +5,7 @@ import Button from 'components/Button';
 import localize from 'constants/localize';
 import ReactPlayer from 'react-player/youtube';
 import { css } from '@emotion/css';
+import { mobileMaxWidth } from 'constants/css';
 import { useContentContext } from 'contexts';
 import { useContentState } from 'helpers/hooks';
 
@@ -59,9 +60,14 @@ export default function YTVideoModal({ messageId, onHide, url }) {
         <div
           style={{
             display: 'block',
-            width: '85%',
             height: '100%'
           }}
+          className={css`
+            width: 85%;
+            @media (max-width: ${mobileMaxWidth}) {
+              width: 100%;
+            }
+          `}
         >
           <div
             className={css`

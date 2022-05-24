@@ -4,6 +4,8 @@ import Modal from 'components/Modal';
 import Button from 'components/Button';
 import localize from 'constants/localize';
 import XPVideoPlayer from './XPVideoPlayer';
+import { mobileMaxWidth } from 'constants/css';
+import { css } from '@emotion/css';
 import { useContentContext } from 'contexts';
 import { useContentState } from 'helpers/hooks';
 
@@ -44,9 +46,14 @@ export default function TwinkleVideoModal({ videoId, onHide, messageId }) {
           <div
             style={{
               display: 'block',
-              width: '85%',
               height: '100%'
             }}
+            className={css`
+              width: 85%;
+              @media (max-width: ${mobileMaxWidth}) {
+                width: 100%;
+              }
+            `}
           >
             {notFound ? (
               <div>Video Not Found</div>
