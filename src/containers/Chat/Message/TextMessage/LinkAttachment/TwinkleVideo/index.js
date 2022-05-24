@@ -10,13 +10,20 @@ import { isMobile } from 'helpers';
 const deviceIsMobile = isMobile(navigator);
 
 TwinkleVideo.propTypes = {
+  messageId: PropTypes.number.isRequired,
   onPlay: PropTypes.func,
   style: PropTypes.object,
   title: PropTypes.string,
   videoId: PropTypes.number.isRequired
 };
 
-export default function TwinkleVideo({ title, onPlay, style, videoId }) {
+export default function TwinkleVideo({
+  messageId,
+  title,
+  onPlay,
+  style,
+  videoId
+}) {
   const loadContent = useAppContext((v) => v.requestHelpers.loadContent);
   const onInitContent = useContentContext((v) => v.actions.onInitContent);
   const { loaded, notFound, content, rewardLevel } = useContentState({
@@ -45,6 +52,7 @@ export default function TwinkleVideo({ title, onPlay, style, videoId }) {
         <TwinkleVideoLink
           rewardLevel={rewardLevel}
           title={title}
+          messageId={messageId}
           videoCode={content}
           videoId={videoId}
         />

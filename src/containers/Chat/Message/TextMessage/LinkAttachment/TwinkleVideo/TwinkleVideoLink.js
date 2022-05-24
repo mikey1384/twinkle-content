@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import YouTubeIcon from 'assets/YoutubeIcon.svg';
 import RewardAmountInfo from '../../../RewardAmountInfo';
 import RewardLevelInfo from '../../../RewardLevelInfo';
+import TwinkleVideoModal from '../../../TwinkleVideoModal';
 import { css } from '@emotion/css';
-import { useNavigate } from 'react-router-dom';
 
 TwinkleVideoLink.propTypes = {
+  messageId: PropTypes.number.isRequired,
   rewardLevel: PropTypes.number,
   title: PropTypes.string,
   videoCode: PropTypes.string.isRequired,
@@ -17,9 +18,10 @@ export default function TwinkleVideoLink({
   title,
   rewardLevel,
   videoCode,
-  videoId
+  videoId,
+  messageId
 }) {
-  const navigate = useNavigate();
+  const [modalShown, setModalShown] = useState(false);
   return (
     <div
       style={{
@@ -39,7 +41,7 @@ export default function TwinkleVideoLink({
           width: 100%;
           height: CALC(100% - 5rem);
         `}
-        onClick={() => navigate(`/videos/${videoId}`)}
+        onClick={() => setModalShown(true)}
       >
         <img
           style={{
@@ -85,6 +87,13 @@ export default function TwinkleVideoLink({
           <RewardLevelInfo rewardLevel={rewardLevel} videoId={videoId} />
         </div>
       ) : null}
+      {modalShown && (
+        <TwinkleVideoModal
+          messageId={messageId}
+          videoId={Number(videoId)}
+          onHide={() => setModalShown(false)}
+        />
+      )}
     </div>
   );
 }

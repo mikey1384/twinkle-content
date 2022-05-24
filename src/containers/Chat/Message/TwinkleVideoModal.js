@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import localize from 'constants/localize';
-import XPVideoPlayer from '../../XPVideoPlayer';
+import XPVideoPlayer from './XPVideoPlayer';
 import { useContentContext } from 'contexts';
 import { useContentState } from 'helpers/hooks';
 

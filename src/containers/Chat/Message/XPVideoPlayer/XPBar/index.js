@@ -34,7 +34,15 @@ function XPBar({
 
   return (
     <ErrorBoundary>
-      <div style={{ marginTop: '1rem', fontSize: '1.7rem' }}>
+      <div
+        style={{ marginTop: '1rem' }}
+        className={css`
+          font-size: 1.7rem;
+          @media (max-width: ${mobileMaxWidth}) {
+            font-size: 1rem;
+          }
+        `}
+      >
         <div
           className={css`
             display: flex;

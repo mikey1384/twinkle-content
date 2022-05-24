@@ -357,6 +357,7 @@ function LinkAttachment({
         >
           {twinkleVideoId ? (
             <TwinkleVideo
+              messageId={messageId}
               onPlay={handlePlay}
               style={{
                 height: `CALC(100% - ${deviceIsMobile ? '1' : '5'}rem)`

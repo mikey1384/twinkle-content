@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import VideoThumbImage from 'components/VideoThumbImage';
 import Loading from 'components/Loading';
-import TwinkleVideoModal from './TwinkleVideoModal';
+import TwinkleVideoModal from '../../TwinkleVideoModal';
 import { useContentState } from 'helpers/hooks';
 import { extractVideoIdFromTwinkleVideoUrl } from 'helpers/stringHelpers';
 
@@ -47,7 +47,6 @@ export default function TwinkleVideoThumb({ messageId, videoUrl }) {
         <TwinkleVideoModal
           messageId={messageId}
           videoId={Number(videoId)}
-          url={videoUrl}
           onHide={() => setModalShown(false)}
         />
       )}
