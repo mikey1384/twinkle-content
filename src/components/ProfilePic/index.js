@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ChangePicture from './ChangePicture';
 import { cloudFrontURL } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
+import { useAppContext } from 'contexts';
 import StatusTag from './StatusTag';
 
 ProfilePic.propTypes = {
@@ -32,12 +33,20 @@ export default function ProfilePic({
   statusShown,
   style
 }) {
+  const userObj = useAppContext((v) => v.user.state.userObj);
   const { userId: myId } = useMyState();
   const [changePictureShown, setChangePictureShown] = useState(false);
   const [src, setSrc] = useState(`${cloudFrontURL}${profilePicUrl}`);
+  const displayedProfilePicUrl = useMemo(() => {
+    if (userObj?.[userId]?.profilePicUrl) {
+      return userObj?.[userId]?.profilePicUrl;
+    }
+    return profilePicUrl;
+  }, [profilePicUrl, userId, userObj]);
+
   useEffect(() => {
-    setSrc(`${cloudFrontURL}${profilePicUrl}`);
-  }, [profilePicUrl, userId]);
+    setSrc(`${cloudFrontURL}${displayedProfilePicUrl}`);
+  }, [displayedProfilePicUrl, userId]);
   const statusTagShown = useMemo(
     () => (online || myId === userId) && statusShown,
     [myId, online, statusShown, userId]
@@ -71,7 +80,7 @@ export default function ProfilePic({
           height: '100%',
           borderRadius: '50%'
         }}
-        src={profilePicUrl ? src : '/img/default.png'}
+        src={displayedProfilePicUrl ? src : '/img/default.png'}
         onError={() => setSrc('/img/default.png')}
       />
       <ChangePicture
