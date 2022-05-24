@@ -12,7 +12,8 @@ export default function YouTubeThumb({ style, thumbUrl }) {
   return (
     <div style={style}>
       <div
-        className={css`
+        className={`unselectable ${css`
+          cursor: pointer;
           background: url(${thumbUrl});
           background-repeat: no-repeat;
           background-position: center;
@@ -22,13 +23,13 @@ export default function YouTubeThumb({ style, thumbUrl }) {
           display: flex;
           justify-content: center;
           align-items: center;
-        `}
+        `}`}
         src={thumbUrl}
       >
         <img
           style={{
-            width: '4rem',
-            height: '3rem'
+            width: '6rem',
+            height: '4.5rem'
           }}
           src={YouTubeIcon}
         />
