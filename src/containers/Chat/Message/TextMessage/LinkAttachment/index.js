@@ -353,15 +353,23 @@ function LinkAttachment({
               videoId={Number(twinkleVideoId)}
             />
           ) : isYouTube ? (
-            <ReactPlayer
-              ref={YTPlayerRef}
-              width={deviceIsMobile ? '30rem' : '66rem'}
-              height="100%"
-              url={videoUrl}
-              controls
-              onPlay={handlePlay}
-              onProgress={handleVideoProgress}
-            />
+            <div
+              style={{
+                width: '100%',
+                height: deviceIsMobile ? 'CALC(100% - 2rem)' : '100%',
+                paddingTop: deviceIsMobile ? '3rem' : 0
+              }}
+            >
+              <ReactPlayer
+                ref={YTPlayerRef}
+                width={deviceIsMobile ? '34rem' : '66rem'}
+                height="100%"
+                url={videoUrl}
+                controls
+                onPlay={handlePlay}
+                onProgress={handleVideoProgress}
+              />
+            </div>
           ) : (
             <UrlContent
               actualTitle={actualTitle}
