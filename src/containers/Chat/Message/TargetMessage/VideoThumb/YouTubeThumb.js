@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import YouTubeIcon from 'assets/YoutubeIcon.svg';
 import { css } from '@emotion/css';
+import YTVideoModal from './YTVideoModal';
 
 YouTubeThumb.propTypes = {
   style: PropTypes.object,
@@ -9,6 +10,7 @@ YouTubeThumb.propTypes = {
 };
 
 export default function YouTubeThumb({ style, thumbUrl }) {
+  const [modalShown, setModalShown] = useState(false);
   return (
     <div style={style}>
       <div
@@ -25,6 +27,7 @@ export default function YouTubeThumb({ style, thumbUrl }) {
           align-items: center;
         `}`}
         src={thumbUrl}
+        onClick={() => setModalShown(true)}
       >
         <img
           style={{
@@ -34,6 +37,7 @@ export default function YouTubeThumb({ style, thumbUrl }) {
           src={YouTubeIcon}
         />
       </div>
+      {modalShown && <YTVideoModal onHide={() => setModalShown(false)} />}
     </div>
   );
 }
