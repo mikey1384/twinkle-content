@@ -133,7 +133,13 @@ export default function TargetMessage({ message }) {
             justifyContent: 'center'
           }}
         >
-          <VideoThumb thumbUrl={message.thumbUrl} videoId={message.id} />
+          <VideoThumb
+            style={{
+              width: '100%'
+            }}
+            thumbUrl={message.thumbUrl}
+            videoId={message.id}
+          />
         </div>
       )}
       {fileType && message.fileName && (
