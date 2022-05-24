@@ -14,6 +14,7 @@ import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import {
   extractVideoIdFromTwinkleVideoUrl,
   fetchURLFromText,
+  fetchedVideoCodeFromURL,
   getFileInfoFromFileName,
   isValidSpoiler
 } from 'helpers/stringHelpers';
@@ -61,15 +62,30 @@ export default function TargetMessage({ message }) {
     }/${encodeURIComponent(message.fileName)}`;
   }, [message.fileName, message.filePath]);
 
+  const extractedVideoId = useMemo(
+    () => extractVideoIdFromTwinkleVideoUrl(fetchedUrl),
+    [fetchedUrl]
+  );
+
+  const videoCode = useMemo(
+    () => fetchedVideoCodeFromURL(fetchedUrl),
+    [fetchedUrl]
+  );
+
   const embedlyShown = useMemo(() => {
-    const extractedVideoId = extractVideoIdFromTwinkleVideoUrl(fetchedUrl);
     return (
       fileType !== 'video' &&
       fileType !== 'audio' &&
       (message.thumbUrl || extractedVideoId || fetchedUrl) &&
       !message.attachmentHidden
     );
-  }, [fetchedUrl, fileType, message.attachmentHidden, message.thumbUrl]);
+  }, [
+    extractedVideoId,
+    fetchedUrl,
+    fileType,
+    message.attachmentHidden,
+    message.thumbUrl
+  ]);
 
   const displayedTime = useMemo(
     () => unix(message?.timeStamp).format('lll'),
@@ -135,12 +151,13 @@ export default function TargetMessage({ message }) {
           }}
         >
           <VideoThumb
+            isYouTube={!extractedVideoId}
             style={{
               width: '100%',
               height: '100%'
             }}
-            thumbUrl={message.thumbUrl}
             messageId={message.id}
+            thumbUrl={`https://i.ytimg.com/vi/${videoCode}/mqdefault.jpg`}
             videoUrl={fetchedUrl}
           />
         </div>

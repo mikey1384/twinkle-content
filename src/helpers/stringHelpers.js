@@ -319,13 +319,13 @@ export function fetchURLFromText(text) {
 export function fetchedVideoCodeFromURL(url) {
   let videoCode = '';
   if (typeof url.split('v=')[1] !== 'undefined') {
-    let trimmedUrl = url.split('v=')[1].split('#')[0];
+    let trimmedUrl = url?.split('v=')[1]?.split('#')[0];
     videoCode = trimmedUrl.split('&')[0];
   } else {
-    let trimmedUrl = url.split('youtu.be/')[1].split('#')[0];
-    videoCode = trimmedUrl.split('&')[0].split('?')[0];
+    let trimmedUrl = url?.split('youtu.be/')[1]?.split('#')?.[0];
+    videoCode = trimmedUrl?.split('&')[0]?.split('?')?.[0];
   }
-  return videoCode;
+  return videoCode || '';
 }
 
 export function finalizeEmoji(string) {
