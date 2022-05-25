@@ -13,7 +13,6 @@ import ProfilePic from 'components/ProfilePic';
 import UsernameText from 'components/Texts/UsernameText';
 import Chess from '../Chess';
 import GameOverMessage from './GameOverMessage';
-import ContentFileViewer from 'components/ContentFileViewer';
 import TextMessage from './TextMessage';
 import Icon from 'components/Icon';
 import DropdownButton from 'components/Buttons/DropdownButton';
@@ -33,14 +32,12 @@ import { useInView } from 'react-intersection-observer';
 import { socket } from 'constants/io';
 import { unix } from 'moment';
 import { MessageStyle } from '../Styles';
-import {
-  fetchURLFromText,
-  getFileInfoFromFileName
-} from 'helpers/stringHelpers';
+import { fetchURLFromText } from 'helpers/stringHelpers';
 import { useContentState, useMyState, useLazyLoad } from 'helpers/hooks';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { isMobile } from 'helpers';
+import FileAttachment from './FileAttachment';
 
 const deviceIsMobile = isMobile(navigator);
 const replyLabel = localize('reply2');
@@ -142,7 +139,6 @@ function Message({
       onSetIsEditing,
       onSetSiteUrl,
       onSetThumbUrl,
-      onSetMediaStarted,
       onSetReplyTarget,
       onUpdateChessMoveViewTimeStamp,
       onUpdateRecentChessMessage
@@ -291,14 +287,6 @@ function Message({
         channel: channelData
       });
     }
-
-    return function cleanUp() {
-      onSetMediaStarted({
-        contentType: 'chat',
-        contentId: messageId,
-        started: false
-      });
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -446,11 +434,6 @@ function Message({
   const displayedTimeStamp = useMemo(
     () => unix(timeStamp).format('lll'),
     [timeStamp]
-  );
-
-  const fileViewerMarginBottom = useMemo(
-    () => getFileInfoFromFileName(fileName)?.fileType === 'audio' && '2rem',
-    [fileName]
   );
 
   const dropdownButtonShown = useMemo(
@@ -700,33 +683,14 @@ function Message({
                   <>
                     {targetSubject && <TargetSubject subject={targetSubject} />}
                     {targetMessage && <TargetMessage message={targetMessage} />}
-                    {filePath && (
-                      <ContentFileViewer
-                        contentId={messageId}
-                        contentType="chat"
+                    {filePath && fileName && (
+                      <FileAttachment
                         content={content}
-                        filePath={filePath}
                         fileName={fileName}
+                        filePath={filePath}
                         fileSize={fileSize}
-                        onMediaPause={() =>
-                          onSetMediaStarted({
-                            contentType: 'chat',
-                            contentId: messageId,
-                            started: false
-                          })
-                        }
-                        onMediaPlay={() =>
-                          onSetMediaStarted({
-                            contentType: 'chat',
-                            contentId: messageId,
-                            started: true
-                          })
-                        }
+                        messageId={messageId}
                         thumbUrl={thumbUrl || recentThumbUrl}
-                        style={{
-                          marginTop: '1rem',
-                          marginBottom: fileViewerMarginBottom
-                        }}
                       />
                     )}
                     {rewardAmount ? (
