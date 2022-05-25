@@ -11,6 +11,7 @@ VideoThumb.propTypes = {
   thumbUrl: PropTypes.string,
   src: PropTypes.string
 };
+
 export default function VideoThumb({ messageId, thumbUrl, src }) {
   const {
     requests: { uploadThumb }
