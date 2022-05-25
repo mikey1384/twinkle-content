@@ -27,8 +27,10 @@ export default function FileAttachment({
   const {
     actions: { onSetMediaStarted }
   } = useContext(LocalContext);
-  const isAudio = useMemo(
-    () => getFileInfoFromFileName(fileName)?.fileType === 'audio',
+  const isImageOrVideo = useMemo(
+    () =>
+      getFileInfoFromFileName(fileName)?.fileType === 'image' ||
+      getFileInfoFromFileName(fileName)?.fileType === 'video',
     [fileName]
   );
   const { fileType } = useMemo(
@@ -59,9 +61,11 @@ export default function FileAttachment({
       className={css`
         margin-top: 1rem;
         width: 100%;
-        height: ${isAudio ? '9rem' : '37rem'};
+        min-height: 9rem;
+        height: ${isImageOrVideo ? '37rem' : 'auto'};
         @media (max-width: ${mobileMaxWidth}) {
-          height: ${isAudio ? '8rem' : '23rem'};
+          min-height: 8rem;
+          height: ${isImageOrVideo ? '23rem' : 'auto'};
         }
       `}
     >

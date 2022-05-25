@@ -14,25 +14,18 @@ FileInfo.propTypes = {
   fileName: PropTypes.string.isRequired,
   fileType: PropTypes.string.isRequired,
   fileSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  isThumb: PropTypes.bool,
   src: PropTypes.string.isRequired
 };
 
-export default function FileInfo({
-  fileName,
-  fileType,
-  fileSize,
-  isThumb,
-  src
-}) {
+export default function FileInfo({ fileName, fileType, fileSize, src }) {
   const displayedFileSize = useMemo(() => renderFileSize(fileSize), [fileSize]);
   return (
     <div
       style={{
         width: '100%',
         height: '100%',
-        background: !isThumb && Color.wellGray(),
-        padding: !isThumb && '1rem',
+        background: Color.wellGray(),
+        padding: '1rem',
         borderRadius
       }}
     >
@@ -46,18 +39,14 @@ export default function FileInfo({
         }}
       >
         <div
-          className={
-            isThumb
-              ? ''
-              : css`
-                  color: ${Color.black()};
-                  cursor: pointer;
-                  &:hover {
-                    color: #000;
-                  }
-                `
-          }
-          onClick={() => (isThumb ? {} : window.open(src))}
+          className={css`
+            color: ${Color.black()};
+            cursor: pointer;
+            &:hover {
+              color: #000;
+            }
+          `}
+          onClick={() => window.open(src)}
         >
           <Icon
             className={css`
@@ -69,85 +58,84 @@ export default function FileInfo({
             icon={fileType === 'other' ? 'file' : `file-${fileType}`}
           />
         </div>
-        {!isThumb && (
+
+        <div
+          style={{
+            width: '100%',
+            marginLeft: '1rem',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between'
+          }}
+        >
           <div
+            className={css`
+              height: 7rem;
+              @media (max-width: ${mobileMaxWidth}) {
+                height: 6rem;
+              }
+            `}
             style={{
-              width: '100%',
-              marginLeft: '1rem',
-              display: 'flex',
+              displahy: 'flex',
               flexDirection: 'column',
-              justifyContent: 'space-between'
+              width: '100%'
             }}
           >
+            <div style={{ width: '100%' }}>
+              <a
+                style={{ fontWeight: 'bold' }}
+                className={css`
+                  @media (max-width: ${mobileMaxWidth}) {
+                    font-size: 1.5rem;
+                  }
+                `}
+                href={src}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {fileName}
+              </a>
+            </div>
             <div
               className={css`
-                height: 7rem;
+                font-size: 1.2rem;
                 @media (max-width: ${mobileMaxWidth}) {
-                  height: 6rem;
+                  font-size: 1rem;
                 }
               `}
-              style={{
-                displahy: 'flex',
-                flexDirection: 'column',
-                width: '100%'
-              }}
             >
-              <div style={{ width: '100%' }}>
-                <a
-                  style={{ fontWeight: 'bold' }}
-                  className={css`
-                    @media (max-width: ${mobileMaxWidth}) {
-                      font-size: 1.5rem;
-                    }
-                  `}
-                  href={src}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {fileName}
-                </a>
-              </div>
-              <div
-                className={css`
-                  font-size: 1.2rem;
-                  @media (max-width: ${mobileMaxWidth}) {
-                    font-size: 1rem;
-                  }
-                `}
-              >
-                {displayedFileSize}
-              </div>
+              {displayedFileSize}
             </div>
-            <p
-              style={{
-                fontWeight: 'bold',
-                width: '100%',
-                display: 'flex',
-                justifyContent: 'flex-end'
-              }}
-              onClick={() => window.open(src)}
-            >
-              <span
-                className={css`
-                  cursor: pointer;
-                  color: ${Color.black()};
-                  &:hover {
-                    color: #000;
-                    @media (min-width: ${desktopMinWidth}) {
-                      text-decoration: underline;
-                    }
-                  }
-                  line-height: 1;
-                  @media (max-width: ${mobileMaxWidth}) {
-                    font-size: 1.3rem;
-                  }
-                `}
-              >
-                Download
-              </span>
-            </p>
           </div>
-        )}
+          <p
+            style={{
+              fontWeight: 'bold',
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'flex-end'
+            }}
+            onClick={() => window.open(src)}
+          >
+            <span
+              className={css`
+                cursor: pointer;
+                color: ${Color.black()};
+                &:hover {
+                  color: #000;
+                  @media (min-width: ${desktopMinWidth}) {
+                    text-decoration: underline;
+                  }
+                }
+                line-height: 1;
+                @media (max-width: ${mobileMaxWidth}) {
+                  font-size: 1.3rem;
+                }
+              `}
+            >
+              Download
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   );
