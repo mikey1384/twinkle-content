@@ -6,6 +6,7 @@ import SearchInput from 'components/Texts/SearchInput';
 import Input from 'components/Texts/Input';
 import Icon from 'components/Icon';
 import Loading from 'components/Loading';
+import Button from 'components/Button';
 import { addEmoji, stringIsEmpty } from 'helpers/stringHelpers';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
@@ -130,19 +131,34 @@ export default function SectionPanel({
             }}
           >
             {onEdit ? (
-              <Input
-                inputRef={TitleInputRef}
-                maxLength={100}
-                placeholder={placeholder}
-                autoFocus
-                onChange={(text) => setEditedTitle(addEmoji(text))}
-                onKeyPress={(event) => {
-                  if (!stringIsEmpty(editedTitle) && event.key === 'Enter') {
-                    onChangeTitle(editedTitle);
-                  }
-                }}
-                value={editedTitle}
-              />
+              <div
+                ref={TitleInputRef}
+                style={{ width: '100%', display: 'flex' }}
+              >
+                <Input
+                  style={{ width: '100%' }}
+                  maxLength={100}
+                  placeholder={placeholder}
+                  autoFocus
+                  onChange={(text) => setEditedTitle(addEmoji(text))}
+                  onKeyPress={(event) => {
+                    if (!stringIsEmpty(editedTitle) && event.key === 'Enter') {
+                      onChangeTitle(editedTitle);
+                    }
+                  }}
+                  value={editedTitle}
+                />
+                {!stringIsEmpty(editedTitle) && title !== editedTitle && (
+                  <Button
+                    style={{ marginLeft: '1rem', zIndex: 1000 }}
+                    filled
+                    color="green"
+                    onClick={() => onChangeTitle(editedTitle)}
+                  >
+                    <Icon icon="check" size="lg" />
+                  </Button>
+                )}
+              </div>
             ) : (
               <div
                 style={{
