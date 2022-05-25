@@ -50,18 +50,18 @@ export default function UrlContent({
             position: relative;
             width: 100%;
             height: 27rem;
-            &:after {
-              padding-bottom: 60%;
-              content: '';
-              display: block;
-            }
             @media (max-width: ${mobileMaxWidth}) {
               height: 13rem;
             }
           `}
         >
           <a
-            style={{ width: '100%', height: '100%' }}
+            style={{
+              width: '100%',
+              height: '100%',
+              textDecoration: 'none',
+              color: Color.darkerGray()
+            }}
             target="_blank"
             rel="noopener noreferrer"
             href={url}
@@ -77,40 +77,40 @@ export default function UrlContent({
               onError={handleImageLoadError}
               alt={title}
             />
-          </a>
-          <div
-            className={css`
-              margin-top: 1rem;
-              height: 8rem;
-              @media (max-width: ${mobileMaxWidth}) {
-                height: 7rem;
-              }
-            `}
-          >
-            <h3
-              style={{
-                overflow: 'hidden',
-                display: '-webkit-box',
-                WebkitLineClamp: 1,
-                WebkitBoxOrient: 'vertical'
-              }}
+            <div
+              className={css`
+                margin-top: 1rem;
+                height: 8rem;
+                @media (max-width: ${mobileMaxWidth}) {
+                  height: 7rem;
+                }
+              `}
             >
-              {actualTitle || title}
-            </h3>
-            {actualDescription && (
-              <p
+              <h3
                 style={{
                   overflow: 'hidden',
                   display: '-webkit-box',
-                  WebkitLineClamp: 2,
+                  WebkitLineClamp: 1,
                   WebkitBoxOrient: 'vertical'
                 }}
               >
-                {actualDescription}
-              </p>
-            )}
-            {siteUrl ? <p style={{ fontWeight: 'bold' }}>{siteUrl}</p> : null}
-          </div>
+                {actualTitle || title}
+              </h3>
+              {actualDescription && (
+                <p
+                  style={{
+                    overflow: 'hidden',
+                    display: '-webkit-box',
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: 'vertical'
+                  }}
+                >
+                  {actualDescription}
+                </p>
+              )}
+              {siteUrl ? <p style={{ fontWeight: 'bold' }}>{siteUrl}</p> : null}
+            </div>
+          </a>
         </section>
       )}
     </div>

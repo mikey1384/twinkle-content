@@ -31,6 +31,7 @@ export default function TargetMessage({ message }) {
     requests: { uploadThumb },
     actions: { onSetEmbeddedUrl }
   } = useContext(LocalContext);
+  const [imageUrl, setImageUrl] = useState(message.thumbUrl);
   const [imageModalShown, setImageModalShown] = useState(false);
 
   const fetchedUrl = useMemo(
@@ -142,7 +143,7 @@ export default function TargetMessage({ message }) {
           </LongText>
         )}
       </div>
-      {embedlyShown && (
+      {embedlyShown && (extractedVideoId || videoCode) ? (
         <div
           style={{
             width: '25%',
@@ -161,7 +162,44 @@ export default function TargetMessage({ message }) {
             videoUrl={fetchedUrl}
           />
         </div>
-      )}
+      ) : imageUrl && !(fileType && message.fileName) ? (
+        <div
+          className={`unselectable ${css`
+            width: 25%;
+            height: 7rem;
+            position: relative;
+            @media (max-width: ${mobileMaxWidth}) {
+              height: 5rem;
+            }
+          `}`}
+        >
+          <a
+            style={{ width: '100%', height: '100%' }}
+            target="_blank"
+            rel="noopener noreferrer"
+            href={fetchedUrl}
+          >
+            <section
+              className={css`
+                position: relative;
+                width: 100%;
+                height: 100%;
+              `}
+            >
+              <img
+                className={css`
+                  position: absolute;
+                  width: 100%;
+                  height: 100%;
+                  object-fit: contain;
+                `}
+                src={imageUrl}
+                onError={() => setImageUrl('/img/link.png')}
+              />
+            </section>
+          </a>
+        </div>
+      ) : null}
       {fileType && message.fileName && (
         <div
           className={css`

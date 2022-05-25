@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import YouTubeIcon from 'assets/YoutubeIcon.svg';
-import { css } from '@emotion/css';
 import YTVideoModal from './YTVideoModal';
+import { mobileMaxWidth } from 'constants/css';
+import { css } from '@emotion/css';
 
 YouTubeThumb.propTypes = {
   messageId: PropTypes.number.isRequired,
@@ -17,26 +18,35 @@ export default function YouTubeThumb({ messageId, style, thumbUrl, videoUrl }) {
     <div style={style}>
       <div
         className={`unselectable ${css`
-          cursor: pointer;
-          background: url(${thumbUrl});
-          background-repeat: no-repeat;
-          background-position: center;
-          background-size: contain;
           width: 100%;
-          height: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
+          height: 7rem;
+          position: relative;
+          @media (max-width: ${mobileMaxWidth}) {
+            height: 5rem;
+          }
         `}`}
-        src={thumbUrl}
-        onClick={() => setModalShown(true)}
       >
         <img
           style={{
-            width: '6rem',
-            height: '4.5rem'
+            cursor: 'pointer',
+            width: '100%',
+            height: '100%',
+            display: 'flex'
+          }}
+          src={thumbUrl}
+          onClick={() => setModalShown(true)}
+        />
+        <img
+          style={{
+            cursor: 'pointer',
+            top: 'CALC(50% - 2rem)',
+            left: 'CALC(50% - 3rem)',
+            position: 'absolute',
+            height: '4rem',
+            width: '6rem'
           }}
           src={YouTubeIcon}
+          onClick={() => setModalShown(true)}
         />
       </div>
       {modalShown && (
