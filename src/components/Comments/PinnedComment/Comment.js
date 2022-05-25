@@ -577,10 +577,7 @@ function Comment({
                               parent.contentType === 'comment'
                                 ? 'Replies'
                                 : 'Reply'}
-                              {numReplies > 0 &&
-                              parent.contentType === 'comment'
-                                ? ` (${numReplies})`
-                                : ''}
+                              {numReplies > 0 ? ` (${numReplies})` : ''}
                             </span>
                           </Button>
                           {userCanRewardThis && (
