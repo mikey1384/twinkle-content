@@ -331,6 +331,7 @@ function MessageInput({
             </Button>
           ) : selectedChannelId === GENERAL_CHAT_ID ? (
             <Button
+              disabled={loading}
               skeuomorphic
               onClick={onWordleButtonClick}
               color={profileTheme}
