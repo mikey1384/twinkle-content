@@ -150,7 +150,7 @@ export const reactionsObj = {
   },
   crying: {
     label: 'crying',
-    position: '84% 2.5%'
+    position: '82% 95%'
   },
   angry: {
     label: 'angry',
