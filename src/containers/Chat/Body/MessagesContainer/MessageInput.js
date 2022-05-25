@@ -36,7 +36,7 @@ import localize from 'constants/localize';
 const enterMessageLabel = localize('enterMessage');
 
 MessageInput.propTypes = {
-  currentChannelId: PropTypes.number,
+  selectedChannelId: PropTypes.number,
   innerRef: PropTypes.object,
   inputText: PropTypes.string,
   isRespondingToSubject: PropTypes.bool,
@@ -58,7 +58,7 @@ MessageInput.propTypes = {
 const deviceIsMobile = isMobile(navigator);
 
 function MessageInput({
-  currentChannelId = 0,
+  selectedChannelId = 0,
   innerRef,
   inputText,
   isRespondingToSubject,
@@ -82,7 +82,7 @@ function MessageInput({
     actions: { onEnterComment, onSetIsRespondingToSubject, onSetReplyTarget }
   } = useContext(LocalContext);
   const FileInputRef = useRef(null);
-  const prevChannelId = useRef(currentChannelId);
+  const prevChannelId = useRef(selectedChannelId);
   const maxSize = useMemo(
     () => returnMaxUploadSize(fileUploadLvl),
     [fileUploadLvl]
@@ -97,7 +97,7 @@ function MessageInput({
   const textIsEmpty = useMemo(() => stringIsEmpty(inputText), [inputText]);
 
   useEffect(() => {
-    if (prevChannelId !== currentChannelId) {
+    if (prevChannelId !== selectedChannelId) {
       onEnterComment({
         contentType: 'chat',
         contentId: prevChannelId.current,
@@ -105,9 +105,9 @@ function MessageInput({
       });
       handleSetText('');
     }
-    prevChannelId.current = currentChannelId;
+    prevChannelId.current = selectedChannelId;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentChannelId]);
+  }, [selectedChannelId]);
 
   useEffect(() => {
     handleSetText(textForThisChannel);
@@ -126,7 +126,7 @@ function MessageInput({
     if (!deviceIsMobile) {
       innerRef.current.focus();
     }
-  }, [currentChannelId, innerRef]);
+  }, [selectedChannelId, innerRef]);
 
   const messageExceedsCharLimit = useMemo(
     () =>
@@ -178,7 +178,7 @@ function MessageInput({
     innerRef.current.focus();
     if (stringIsEmpty(inputText)) return;
     try {
-      if (currentChannelId === 0) {
+      if (selectedChannelId === 0) {
         handleSetText('');
       }
       await onMessageSubmit(finalizeEmoji(inputText));
@@ -188,7 +188,7 @@ function MessageInput({
       if (mounted.current) {
         onEnterComment({
           contentType: 'chat',
-          contentId: currentChannelId,
+          contentId: selectedChannelId,
           text: ''
         });
       }
@@ -198,7 +198,7 @@ function MessageInput({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     banned?.chat,
-    currentChannelId,
+    selectedChannelId,
     innerRef,
     onEnterComment,
     onMessageSubmit,
@@ -294,10 +294,10 @@ function MessageInput({
     >
       {isRespondingToSubject ? (
         <TargetSubjectPreview
-          channelId={currentChannelId}
+          channelId={selectedChannelId}
           onClose={() =>
             onSetIsRespondingToSubject({
-              channelId: currentChannelId,
+              channelId: selectedChannelId,
               isResponding: false
             })
           }
@@ -306,7 +306,7 @@ function MessageInput({
         <TargetMessagePreview
           replyTarget={replyTarget}
           onClose={() =>
-            onSetReplyTarget({ channelId: currentChannelId, target: null })
+            onSetReplyTarget({ channelId: selectedChannelId, target: null })
           }
         />
       ) : null}
@@ -329,7 +329,7 @@ function MessageInput({
                 Chess
               </span>
             </Button>
-          ) : currentChannelId === GENERAL_CHAT_ID ? (
+          ) : selectedChannelId === GENERAL_CHAT_ID ? (
             <Button
               skeuomorphic
               onClick={onWordleButtonClick}
@@ -411,7 +411,7 @@ function MessageInput({
           initialCaption={inputText}
           recepientId={recepientId}
           subjectId={subjectId}
-          channelId={currentChannelId}
+          channelId={selectedChannelId}
           fileObj={fileObj}
           onUpload={() => {
             handleSetText('');

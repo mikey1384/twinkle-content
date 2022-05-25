@@ -1168,7 +1168,7 @@ function MessagesContainer({
         }}
       >
         <MessageInput
-          currentChannelId={selectedChannelId}
+          selectedChannelId={selectedChannelId}
           innerRef={ChatInputRef}
           loading={loadingAnimationShown}
           socketConnected={socketConnected}
