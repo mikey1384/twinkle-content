@@ -1,15 +1,13 @@
-import React, { useContext, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Image from 'components/Image';
 import FileIcon from 'components/FileIcon';
-import ExtractedThumb from 'components/ExtractedThumb';
 import ImageModal from 'components/Modals/ImageModal';
-import LocalContext from '../../../Context';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { cloudFrontURL } from 'constants/defaultValues';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { v1 as uuidv1 } from 'uuid';
 import { css } from '@emotion/css';
+import VideoThumb from './VideoThumb';
 
 FileThumb.propTypes = {
   fileName: PropTypes.string,
@@ -26,9 +24,6 @@ export default function FileThumb({
   messageId,
   thumbUrl
 }) {
-  const {
-    requests: { uploadThumb }
-  } = useContext(LocalContext);
   const src = useMemo(() => {
     if (!filePath) return '';
     return `${cloudFrontURL}/attachments/chat/${filePath}/${encodeURIComponent(
@@ -41,7 +36,6 @@ export default function FileThumb({
       <div
         className={css`
           color: ${Color.black()};
-          cursor: pointer;
           height: 12rem;
           max-width: ${fileType === 'image' ? '12rem' : '15rem'};
           &:hover {
@@ -56,23 +50,22 @@ export default function FileThumb({
           display: 'flex',
           flexDirection: 'column'
         }}
-        onClick={handleFileClick}
       >
         {fileType === 'image' ? (
-          <Image imageUrl={src} />
+          <Image onClick={() => setImageModalShown(true)} imageUrl={src} />
         ) : fileType === 'video' ? (
-          <ExtractedThumb
-            src={src}
-            style={{ width: '100%', height: '7rem' }}
-            thumbUrl={thumbUrl}
-            onThumbnailLoad={handleThumbnailLoad}
-          />
+          <VideoThumb messageId={messageId} thumbUrl={thumbUrl} src={src} />
         ) : (
-          <FileIcon size="5x" fileType={fileType} />
+          <FileIcon
+            onClick={() => window.open(src)}
+            size="5x"
+            fileType={fileType}
+          />
         )}
-        {fileType !== 'image' && (
+        {fileType !== 'image' && fileType !== 'video' && (
           <div
             style={{
+              cursor: 'pointer',
               marginTop: '0.5rem',
               textAlign: 'center'
             }}
@@ -82,6 +75,7 @@ export default function FileThumb({
                 font-size: 1rem;
               }
             `}
+            onClick={() => window.open(src)}
           >
             <p
               style={{
@@ -114,23 +108,4 @@ export default function FileThumb({
       )}
     </ErrorBoundary>
   );
-
-  function handleFileClick() {
-    if (fileType === 'image' && !imageModalShown) {
-      return setImageModalShown(true);
-    }
-    window.open(src);
-  }
-
-  function handleThumbnailLoad(thumb) {
-    const dataUri = thumb.replace(/^data:image\/\w+;base64,/, '');
-    const buffer = Buffer.from(dataUri, 'base64');
-    const file = new File([buffer], 'thumb.png');
-    uploadThumb({
-      contentType: 'chat',
-      contentId: messageId,
-      file,
-      path: uuidv1()
-    });
-  }
 }
