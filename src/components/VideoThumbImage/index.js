@@ -6,6 +6,9 @@ import WatchProgressBar from './WatchProgressBar';
 import { useMyState } from 'helpers/hooks';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import { isMobile } from 'helpers';
+
+const deviceIsMobile = isMobile(navigator);
 
 VideoThumbImage.propTypes = {
   height: PropTypes.string,
@@ -33,9 +36,11 @@ function VideoThumbImage({
 
   const Stars = useMemo(
     () =>
-      [...Array(rewardLevel)].map((elem, index) => (
-        <Icon key={index} style={{ verticalAlign: 0 }} icon="star" />
-      )),
+      deviceIsMobile
+        ? `${rewardLevel}-STAR`
+        : [...Array(rewardLevel)].map((elem, index) => (
+            <Icon key={index} style={{ verticalAlign: 0 }} icon="star" />
+          )),
     [rewardLevel]
   );
 
