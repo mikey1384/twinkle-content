@@ -1261,7 +1261,7 @@ const languageObj = {
     kr: '보상'
   },
   rewardable: {
-    en: 'everyone can reward',
+    en: 'anyone can reward',
     kr: '보상 허용'
   },
   rewardLevel: {
