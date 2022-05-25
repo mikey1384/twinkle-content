@@ -152,6 +152,7 @@ export default function TargetMessage({ message }) {
         <div
           className={`unselectable ${css`
             width: 25%;
+            background: #fff;
             height: 7rem;
             position: relative;
             @media (max-width: ${mobileMaxWidth}) {
