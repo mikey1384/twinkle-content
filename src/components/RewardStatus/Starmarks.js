@@ -41,7 +41,7 @@ function Starmarks({ stars }) {
     return starMarks;
   }, [stars]);
 
-  return <div>{Marks}</div>;
+  return <div style={{ width: '100%', textAlign: 'center' }}>{Marks}</div>;
 }
 
 export default memo(Starmarks);
