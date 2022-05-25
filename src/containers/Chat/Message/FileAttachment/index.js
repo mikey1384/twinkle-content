@@ -1,11 +1,15 @@
 import React, { useContext, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import ContentFileViewer from 'components/ContentFileViewer';
 import LocalContext from '../../Context';
+import FileInfo from './FileInfo';
+import ImagePreview from './ImagePreview';
+import MediaPlayer from './MediaPlayer';
+import { css } from '@emotion/css';
+import { mobileMaxWidth } from 'constants/css';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
+import { cloudFrontURL } from 'constants/defaultValues';
 
 FileAttachment.propTypes = {
-  content: PropTypes.string,
   messageId: PropTypes.number,
   fileName: PropTypes.string,
   filePath: PropTypes.string,
@@ -14,7 +18,6 @@ FileAttachment.propTypes = {
 };
 
 export default function FileAttachment({
-  content,
   messageId,
   fileName,
   filePath,
@@ -27,6 +30,17 @@ export default function FileAttachment({
   const fileViewerMarginBottom = useMemo(
     () => getFileInfoFromFileName(fileName)?.fileType === 'audio' && '2rem',
     [fileName]
+  );
+  const { fileType } = useMemo(
+    () => getFileInfoFromFileName(fileName),
+    [fileName]
+  );
+  const src = useMemo(
+    () =>
+      `${cloudFrontURL}/attachments/chat/${filePath}/${encodeURIComponent(
+        fileName
+      )}`,
+    [fileName, filePath]
   );
 
   useEffect(() => {
@@ -41,32 +55,73 @@ export default function FileAttachment({
   }, []);
 
   return (
-    <ContentFileViewer
-      contentId={messageId}
-      contentType="chat"
-      content={content}
-      filePath={filePath}
-      fileName={fileName}
-      fileSize={fileSize}
-      onMediaPause={() =>
-        onSetMediaStarted({
-          contentType: 'chat',
-          contentId: messageId,
-          started: false
-        })
-      }
-      onMediaPlay={() =>
-        onSetMediaStarted({
-          contentType: 'chat',
-          contentId: messageId,
-          started: true
-        })
-      }
-      thumbUrl={thumbUrl}
+    <div
       style={{
+        width: '100%',
         marginTop: '1rem',
         marginBottom: fileViewerMarginBottom
       }}
-    />
+      className={css`
+        height: 37rem;
+        @media (max-width: ${mobileMaxWidth}) {
+          height: 23rem;
+        }
+      `}
+    >
+      {fileType === 'image' ? (
+        <ImagePreview src={src} fileName={fileName} />
+      ) : fileType === 'video' || fileType === 'audio' ? (
+        <div
+          style={{
+            width: '100%',
+            height: '100%'
+          }}
+        >
+          <div
+            style={{
+              width: '100%',
+              height: 'auto'
+            }}
+          >
+            <a
+              style={{ fontWeight: 'bold' }}
+              href={src}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {fileName}
+            </a>
+          </div>
+          <MediaPlayer
+            contentId={messageId}
+            contentType="chat"
+            fileType={fileType}
+            onPlay={() =>
+              onSetMediaStarted({
+                contentType: 'chat',
+                contentId: messageId,
+                started: true
+              })
+            }
+            onPause={() =>
+              onSetMediaStarted({
+                contentType: 'chat',
+                contentId: messageId,
+                started: false
+              })
+            }
+            src={src}
+            thumbUrl={thumbUrl}
+          />
+        </div>
+      ) : (
+        <FileInfo
+          fileName={fileName}
+          fileType={fileType}
+          fileSize={fileSize}
+          src={src}
+        />
+      )}
+    </div>
   );
 }

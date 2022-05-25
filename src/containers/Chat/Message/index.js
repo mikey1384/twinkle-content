@@ -685,7 +685,6 @@ function Message({
                     {targetMessage && <TargetMessage message={targetMessage} />}
                     {filePath && fileName && (
                       <FileAttachment
-                        content={content}
                         fileName={fileName}
                         filePath={filePath}
                         fileSize={fileSize}
