@@ -38,6 +38,7 @@ const enterMessageLabel = localize('enterMessage');
 MessageInput.propTypes = {
   currentChannelId: PropTypes.number,
   innerRef: PropTypes.object,
+  inputText: PropTypes.string,
   isRespondingToSubject: PropTypes.bool,
   isTwoPeopleChannel: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   loading: PropTypes.bool,
@@ -46,10 +47,12 @@ MessageInput.propTypes = {
   onHeightChange: PropTypes.func.isRequired,
   onMessageSubmit: PropTypes.func.isRequired,
   onSelectVideoButtonClick: PropTypes.func.isRequired,
+  onSetInputText: PropTypes.func.isRequired,
   replyTarget: PropTypes.object,
   recepientId: PropTypes.number,
   socketConnected: PropTypes.bool,
-  subjectId: PropTypes.number
+  subjectId: PropTypes.number,
+  textForThisChannel: PropTypes.string
 };
 
 const deviceIsMobile = isMobile(navigator);
@@ -57,6 +60,7 @@ const deviceIsMobile = isMobile(navigator);
 function MessageInput({
   currentChannelId = 0,
   innerRef,
+  inputText,
   isRespondingToSubject,
   isTwoPeopleChannel,
   loading,
@@ -65,23 +69,20 @@ function MessageInput({
   onHeightChange,
   onMessageSubmit,
   onSelectVideoButtonClick,
+  onSetInputText,
   replyTarget,
   recepientId,
   socketConnected,
-  subjectId
+  subjectId,
+  textForThisChannel
 }) {
   const mounted = useRef(true);
   const { banned, profileTheme, fileUploadLvl } = useMyState();
   const {
-    actions: { onEnterComment, onSetIsRespondingToSubject, onSetReplyTarget },
-    inputState
+    actions: { onEnterComment, onSetIsRespondingToSubject, onSetReplyTarget }
   } = useContext(LocalContext);
   const FileInputRef = useRef(null);
   const prevChannelId = useRef(currentChannelId);
-  const textForThisChannel = useMemo(
-    () => inputState['chat' + currentChannelId]?.text || '',
-    [currentChannelId, inputState]
-  );
   const maxSize = useMemo(
     () => returnMaxUploadSize(fileUploadLvl),
     [fileUploadLvl]
@@ -93,8 +94,7 @@ function MessageInput({
   const [fileObj, setFileObj] = useState(null);
   const [uploadModalShown, setUploadModalShown] = useState(false);
   const [coolingDown, setCoolingDown] = useState(false);
-  const [text, setText] = useState(textForThisChannel);
-  const textIsEmpty = useMemo(() => stringIsEmpty(text), [text]);
+  const textIsEmpty = useMemo(() => stringIsEmpty(inputText), [inputText]);
 
   useEffect(() => {
     if (prevChannelId !== currentChannelId) {
@@ -111,6 +111,7 @@ function MessageInput({
 
   useEffect(() => {
     handleSetText(textForThisChannel);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [textForThisChannel]);
 
   useEffect(() => {
@@ -132,9 +133,9 @@ function MessageInput({
       exceedsCharLimit({
         inputType: 'message',
         contentType: 'chat',
-        text
+        text: inputText
       }),
-    [text]
+    [inputText]
   );
 
   useEffect(() => {
@@ -175,12 +176,12 @@ function MessageInput({
       return;
     }
     innerRef.current.focus();
-    if (stringIsEmpty(text)) return;
+    if (stringIsEmpty(inputText)) return;
     try {
       if (currentChannelId === 0) {
         handleSetText('');
       }
-      await onMessageSubmit(finalizeEmoji(text));
+      await onMessageSubmit(finalizeEmoji(inputText));
       if (mounted.current) {
         handleSetText('');
       }
@@ -194,6 +195,7 @@ function MessageInput({
     } catch (error) {
       console.error(error);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     banned?.chat,
     currentChannelId,
@@ -201,11 +203,11 @@ function MessageInput({
     onEnterComment,
     onMessageSubmit,
     socketConnected,
-    text
+    inputText
   ]);
 
   const handleSetText = (newText) => {
-    setText(newText);
+    onSetInputText(newText);
     textRef.current = newText;
   };
 
@@ -261,6 +263,7 @@ function MessageInput({
       }, 0);
       handleSetText(event.target.value);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [innerRef, onHeightChange]
   );
 
@@ -341,7 +344,7 @@ function MessageInput({
           minRows={1}
           placeholder={`${enterMessageLabel}...`}
           onKeyDown={handleKeyDown}
-          value={text}
+          value={inputText}
           onChange={handleChange}
           onKeyUp={(event) => {
             if (event.key === ' ') {
@@ -405,7 +408,7 @@ function MessageInput({
       )}
       {uploadModalShown && (
         <UploadModal
-          initialCaption={text}
+          initialCaption={inputText}
           recepientId={recepientId}
           subjectId={subjectId}
           channelId={currentChannelId}

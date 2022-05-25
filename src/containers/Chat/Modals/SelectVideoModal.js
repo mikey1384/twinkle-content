@@ -11,10 +11,10 @@ import { useSearch } from 'helpers/hooks';
 
 SelectVideoModal.propTypes = {
   onHide: PropTypes.func.isRequired,
-  onSend: PropTypes.func.isRequired
+  onDone: PropTypes.func.isRequired
 };
 
-export default function SelectVideoModal({ onSend, onHide }) {
+export default function SelectVideoModal({ onDone, onHide }) {
   const loadUploads = useAppContext((v) => v.requestHelpers.loadUploads);
   const searchContent = useAppContext((v) => v.requestHelpers.searchContent);
   const onInitContent = useContentContext((v) => v.actions.onInitContent);
@@ -59,7 +59,7 @@ export default function SelectVideoModal({ onSend, onHide }) {
   }, []);
   return (
     <Modal large onHide={onHide}>
-      <header>Send a Video</header>
+      <header>Attach a Video</header>
       <main>
         <SearchInput
           placeholder="Search..."
@@ -98,9 +98,9 @@ export default function SelectVideoModal({ onSend, onHide }) {
           disabled={selectedUpload.length === 0}
           color="blue"
           style={{ marginLeft: '0.7rem' }}
-          onClick={() => onSend(selectedUpload?.[0])}
+          onClick={() => onDone(selectedUpload?.[0])}
         >
-          Send
+          Done
         </Button>
       </footer>
     </Modal>

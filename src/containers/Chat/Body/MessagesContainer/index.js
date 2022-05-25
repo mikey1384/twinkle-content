@@ -38,6 +38,7 @@ import { css } from '@emotion/css';
 import { Color } from 'constants/css';
 import { socket } from 'constants/io';
 import { isMobile, parseChannelPath } from 'helpers';
+import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useMyState } from 'helpers/hooks';
 import LocalContext from '../../Context';
@@ -74,6 +75,7 @@ function MessagesContainer({
     actions: {
       onDeleteMessage,
       onEditChannelSettings,
+      onEnterComment,
       onEnterChannelWithId,
       onGetRanks,
       onHideChat,
@@ -116,7 +118,8 @@ function MessagesContainer({
       socketConnected,
       subjectObj,
       wordleModalShown
-    }
+    },
+    inputState
   } = useContext(LocalContext);
   const { banned, profilePicUrl, userId, username } = useMyState();
   const {
@@ -134,6 +137,11 @@ function MessagesContainer({
   const scrolledToBottomRef = useRef(true);
   const loadMoreButtonLock = useRef(false);
   const currentPathId = useMemo(() => pathname.split('chat/')[1], [pathname]);
+  const textForThisChannel = useMemo(
+    () => inputState['chat' + selectedChannelId]?.text || '',
+    [selectedChannelId, inputState]
+  );
+  const [inputText, setInputText] = useState(textForThisChannel);
   const [chessCountdownObj, setChessCountdownObj] = useState({});
   const [textAreaHeight, setTextAreaHeight] = useState(0);
   const [inviteUsersModalShown, setInviteUsersModalShown] = useState(false);
@@ -1160,13 +1168,15 @@ function MessagesContainer({
         }}
       >
         <MessageInput
+          currentChannelId={selectedChannelId}
           innerRef={ChatInputRef}
           loading={loadingAnimationShown}
           socketConnected={socketConnected}
           myId={userId}
+          inputText={inputText}
+          onSetInputText={setInputText}
           isRespondingToSubject={currentChannel.isRespondingToSubject}
           isTwoPeopleChannel={currentChannel.twoPeople}
-          currentChannelId={selectedChannelId}
           currentChannel={currentChannel}
           onChessButtonClick={handleChessModalShown}
           onWordleButtonClick={handleWordleModalShown}
@@ -1182,6 +1192,7 @@ function MessagesContainer({
           recepientId={recepientId}
           replyTarget={currentChannel.replyTarget}
           subjectId={subjectId}
+          textForThisChannel={textForThisChannel}
         />
       </div>
       {chessModalShown && (
@@ -1251,10 +1262,13 @@ function MessagesContainer({
       {selectVideoModalShown && (
         <SelectVideoModal
           onHide={() => setSelectVideoModalShown(false)}
-          onSend={(videoId) => {
-            handleMessageSubmit({
-              content: `https://www.twin-kle.com/videos/${videoId}`,
-              target: currentChannel.replyTarget
+          onDone={(videoId) => {
+            onEnterComment({
+              contentType: 'chat',
+              contentId: prevChannelId.current,
+              text: !stringIsEmpty(inputText)
+                ? `${inputText.trim()} https://www.twin-kle.com/videos/${videoId}`
+                : `https://www.twin-kle.com/videos/${videoId}`
             });
             setSelectVideoModalShown(false);
           }}
