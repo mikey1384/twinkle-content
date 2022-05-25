@@ -7,7 +7,10 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import { cloudFrontURL } from 'constants/defaultValues';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import { isMobile } from 'helpers';
 import VideoThumb from './VideoThumb';
+
+const deviceIsMobile = isMobile(navigator);
 
 FileThumb.propTypes = {
   fileName: PropTypes.string,
@@ -48,6 +51,7 @@ export default function FileThumb({
         `}
         style={{
           display: 'flex',
+          alignItems: 'center',
           flexDirection: 'column'
         }}
       >
@@ -58,7 +62,7 @@ export default function FileThumb({
         ) : (
           <FileIcon
             onClick={() => window.open(src)}
-            size="5x"
+            size={deviceIsMobile ? '4x' : '5x'}
             fileType={fileType}
           />
         )}

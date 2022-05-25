@@ -4,6 +4,8 @@ import ExtractedThumb from 'components/ExtractedThumb';
 import LocalContext from '../../../Context';
 import playButtonImg from 'assets/play-button-image.png';
 import ErrorBoundary from 'components/ErrorBoundary';
+import { mobileMaxWidth } from 'constants/css';
+import { css } from '@emotion/css';
 import { v1 as uuidv1 } from 'uuid';
 
 VideoThumb.propTypes = {
@@ -22,10 +24,15 @@ export default function VideoThumb({ messageId, thumbUrl, src }) {
       <div
         style={{
           width: '100%',
-          height: '7rem',
           cursor: 'pointer',
           position: 'relative'
         }}
+        className={css`
+          height: 7rem;
+          @media (max-width: ${mobileMaxWidth}) {
+            height: 5rem;
+          }
+        `}
       >
         <ExtractedThumb
           style={{ width: '100%', height: '100%' }}
