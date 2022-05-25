@@ -27,8 +27,8 @@ export default function FileAttachment({
   const {
     actions: { onSetMediaStarted }
   } = useContext(LocalContext);
-  const fileViewerMarginBottom = useMemo(
-    () => getFileInfoFromFileName(fileName)?.fileType === 'audio' && '2rem',
+  const isAudio = useMemo(
+    () => getFileInfoFromFileName(fileName)?.fileType === 'audio',
     [fileName]
   );
   const { fileType } = useMemo(
@@ -56,15 +56,12 @@ export default function FileAttachment({
 
   return (
     <div
-      style={{
-        width: '100%',
-        marginTop: '1rem',
-        marginBottom: fileViewerMarginBottom
-      }}
       className={css`
-        height: 37rem;
+        margin-top: 1rem;
+        width: 100%;
+        height: ${isAudio ? '9rem' : '37rem'};
         @media (max-width: ${mobileMaxWidth}) {
-          height: 23rem;
+          height: ${isAudio ? '8rem' : '23rem'};
         }
       `}
     >

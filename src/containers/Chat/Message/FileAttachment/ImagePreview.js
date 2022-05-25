@@ -5,18 +5,11 @@ import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 
 ImagePreview.propTypes = {
-  isThumb: PropTypes.bool,
-  modalOverModal: PropTypes.bool,
   src: PropTypes.string.isRequired,
   fileName: PropTypes.string.isRequired
 };
 
-export default function ImagePreview({
-  isThumb,
-  modalOverModal,
-  src,
-  fileName
-}) {
+export default function ImagePreview({ src, fileName }) {
   const [imageModalShown, setImageModalShown] = useState(false);
   const [imageWorks, setImageWorks] = useState(true);
   return imageWorks ? (
@@ -24,8 +17,8 @@ export default function ImagePreview({
       style={{
         display: 'flex',
         height: '100%',
-        width: isThumb ? '100%' : 'auto',
-        justifyContent: isThumb ? 'center' : 'flex-start',
+        width: 'auto',
+        justifyContent: 'flex-start',
         alignItems: 'center'
       }}
     >
@@ -33,7 +26,7 @@ export default function ImagePreview({
         style={{
           maxWidth: '100%',
           maxHeight: '100%',
-          objectFit: isThumb ? 'cover' : 'contain',
+          objectFit: 'contain',
           cursor: 'pointer'
         }}
         className={css`
@@ -50,7 +43,6 @@ export default function ImagePreview({
       {imageModalShown && (
         <ImageModal
           onHide={() => setImageModalShown(false)}
-          modalOverModal={modalOverModal}
           fileName={fileName}
           src={src}
         />
