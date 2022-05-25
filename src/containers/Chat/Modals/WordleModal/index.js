@@ -32,7 +32,7 @@ export default function WordleModal({
   onHide,
   socketConnected
 }) {
-  const prevChannelId = useRef(null);
+  const prevChannelId = useRef(channelId);
   const loadWordle = useAppContext((v) => v.requestHelpers.loadWordle);
   const getCurrentNextDayTimeStamp = useAppContext(
     (v) => v.requestHelpers.getCurrentNextDayTimeStamp
