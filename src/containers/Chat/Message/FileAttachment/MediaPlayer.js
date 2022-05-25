@@ -9,9 +9,7 @@ import { isMobile } from 'helpers';
 
 MediaPlayer.propTypes = {
   contentId: PropTypes.number,
-  contentType: PropTypes.string,
   fileType: PropTypes.string,
-  isSecretAttachment: PropTypes.bool,
   onPause: PropTypes.func,
   onPlay: PropTypes.func,
   src: PropTypes.string,
@@ -22,9 +20,7 @@ const deviceIsMobile = isMobile(navigator);
 
 export default function MediaPlayer({
   contentId,
-  contentType,
   fileType,
-  isSecretAttachment,
   onPause = () => {},
   onPlay = () => {},
   src,
@@ -35,10 +31,10 @@ export default function MediaPlayer({
   const onSetVideoCurrentTime = useContentContext(
     (v) => v.actions.onSetVideoCurrentTime
   );
-  const {
-    [isSecretAttachment ? 'secretAttachmentCurrentTime' : 'currentTime']:
-      currentTime = 0
-  } = useContentState({ contentType, contentId });
+  const { currentTime = 0 } = useContentState({
+    contentType: 'chat',
+    contentId
+  });
   const timeAtRef = useRef(0);
   const PlayerRef = useRef(null);
 
@@ -53,10 +49,9 @@ export default function MediaPlayer({
     return function setCurrentTimeBeforeUnmount() {
       if (timeAtRef.current > 0) {
         onSetVideoCurrentTime({
-          contentType,
+          contentType: 'chat',
           contentId,
-          [isSecretAttachment ? 'secretAttachmentCurrentTime' : 'currentTime']:
-            timeAtRef.current
+          currentTime: timeAtRef.current
         });
       }
     };
@@ -110,11 +105,7 @@ export default function MediaPlayer({
           left: 0,
           bottom: 0,
           paddingBottom:
-            fileType === 'audio' && isSecretAttachment
-              ? '2rem'
-              : fileType === 'audio' || fileType === 'video'
-              ? '1rem'
-              : 0
+            fileType === 'audio' || fileType === 'video' ? '1rem' : 0
         }}
         width="100%"
         height={fileType === 'video' ? '100%' : '5rem'}
@@ -138,17 +129,15 @@ export default function MediaPlayer({
 
     async function handleUploadThumb() {
       const thumbUrl = await uploadThumb({
-        contentType,
+        contentType: 'chat',
         contentId,
         file,
-        isSecretAttachment,
         path: uuidv1()
       });
       onSetThumbUrl({
         contentId,
-        contentType,
-        thumbUrl,
-        isSecretAttachment
+        contentType: 'chat',
+        thumbUrl
       });
     }
   }

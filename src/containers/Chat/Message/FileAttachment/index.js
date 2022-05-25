@@ -94,7 +94,6 @@ export default function FileAttachment({
           </div>
           <MediaPlayer
             contentId={messageId}
-            contentType="chat"
             fileType={fileType}
             onPlay={() =>
               onSetMediaStarted({
