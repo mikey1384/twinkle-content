@@ -56,7 +56,7 @@ export default function WordleModal({
     init();
     async function init() {
       const currentNextDayTimeStamp = await getCurrentNextDayTimeStamp();
-      if (nextDayTimeStamp !== currentNextDayTimeStamp) {
+      if (nextDayTimeStamp && nextDayTimeStamp !== currentNextDayTimeStamp) {
         handleCountdownComplete();
       }
     }
