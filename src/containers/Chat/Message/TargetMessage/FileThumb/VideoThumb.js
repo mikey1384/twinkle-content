@@ -11,10 +11,11 @@ import { v1 as uuidv1 } from 'uuid';
 VideoThumb.propTypes = {
   messageId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   thumbUrl: PropTypes.string,
-  src: PropTypes.string
+  src: PropTypes.string,
+  onClick: PropTypes.func
 };
 
-export default function VideoThumb({ messageId, thumbUrl, src }) {
+export default function VideoThumb({ messageId, onClick, thumbUrl, src }) {
   const {
     requests: { uploadThumb }
   } = useContext(LocalContext);
@@ -22,6 +23,7 @@ export default function VideoThumb({ messageId, thumbUrl, src }) {
   return (
     <ErrorBoundary>
       <div
+        onClick={onClick}
         style={{
           width: '100%',
           cursor: 'pointer',

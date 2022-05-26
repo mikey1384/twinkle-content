@@ -94,7 +94,7 @@ export default function FileAttachment({
             </a>
           </div>
           <MediaPlayer
-            contentId={messageId}
+            messageId={messageId}
             fileType={fileType}
             onPlay={() =>
               onSetMediaStarted({

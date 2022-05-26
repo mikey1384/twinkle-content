@@ -8,7 +8,7 @@ import { useContentState } from 'helpers/hooks';
 import { isMobile } from 'helpers';
 
 MediaPlayer.propTypes = {
-  contentId: PropTypes.number,
+  messageId: PropTypes.number,
   fileType: PropTypes.string,
   onPause: PropTypes.func,
   onPlay: PropTypes.func,
@@ -19,7 +19,7 @@ MediaPlayer.propTypes = {
 const deviceIsMobile = isMobile(navigator);
 
 export default function MediaPlayer({
-  contentId,
+  messageId,
   fileType,
   onPause = () => {},
   onPlay = () => {},
@@ -33,7 +33,7 @@ export default function MediaPlayer({
   );
   const { currentTime = 0 } = useContentState({
     contentType: 'chat',
-    contentId
+    contentId: messageId
   });
   const timeAtRef = useRef(0);
   const PlayerRef = useRef(null);
@@ -50,7 +50,7 @@ export default function MediaPlayer({
       if (timeAtRef.current > 0) {
         onSetVideoCurrentTime({
           contentType: 'chat',
-          contentId,
+          contentId: messageId,
           currentTime: timeAtRef.current
         });
       }
@@ -130,12 +130,12 @@ export default function MediaPlayer({
     async function handleUploadThumb() {
       const thumbUrl = await uploadThumb({
         contentType: 'chat',
-        contentId,
+        contentId: messageId,
         file,
         path: uuidv1()
       });
       onSetThumbUrl({
-        contentId,
+        contentId: messageId,
         contentType: 'chat',
         thumbUrl
       });

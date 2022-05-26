@@ -4,11 +4,12 @@ import Image from 'components/Image';
 import FileIcon from 'components/FileIcon';
 import ImageModal from 'components/Modals/ImageModal';
 import ErrorBoundary from 'components/ErrorBoundary';
+import VideoThumb from './VideoThumb';
+import VideoModal from './VideoModal';
 import { cloudFrontURL } from 'constants/defaultValues';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { isMobile } from 'helpers';
-import VideoThumb from './VideoThumb';
 
 const deviceIsMobile = isMobile(navigator);
 
@@ -33,7 +34,9 @@ export default function FileThumb({
       fileName
     )}`;
   }, [fileName, filePath]);
+  const [videoModalShown, setVideoModalShown] = useState(false);
   const [imageModalShown, setImageModalShown] = useState(false);
+
   return (
     <ErrorBoundary>
       <div
@@ -58,7 +61,12 @@ export default function FileThumb({
         {fileType === 'image' ? (
           <Image onClick={() => setImageModalShown(true)} imageUrl={src} />
         ) : fileType === 'video' ? (
-          <VideoThumb messageId={messageId} thumbUrl={thumbUrl} src={src} />
+          <VideoThumb
+            onClick={() => setVideoModalShown(true)}
+            messageId={messageId}
+            thumbUrl={thumbUrl}
+            src={src}
+          />
         ) : (
           <FileIcon
             onClick={() => window.open(src)}
@@ -107,6 +115,14 @@ export default function FileThumb({
         <ImageModal
           onHide={() => setImageModalShown(false)}
           fileName={fileName}
+          src={src}
+        />
+      )}
+      {videoModalShown && (
+        <VideoModal
+          fileName={fileName}
+          messageId={messageId}
+          onHide={() => setVideoModalShown(false)}
           src={src}
         />
       )}
