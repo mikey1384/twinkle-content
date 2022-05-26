@@ -138,8 +138,8 @@ function MainFeeds({
           style={{ marginBottom: '1rem' }}
           onClick={totalRewardAmount > 0 ? onCollectReward : null}
         >
-          {totalRewardAmount > 0 && (
-            <>
+          {totalRewardAmount > 0 ? (
+            <div>
               <p>{tapToCollectRewardsLabel}</p>
               {totalTwinkles > 0 && (
                 <p style={{ fontSize: '1.5rem' }}>
@@ -153,9 +153,9 @@ function MainFeeds({
                   {totalCoins > 0 ? 's' : ''}
                 </p>
               )}
-            </>
-          )}
-          {totalRewardAmount === 0 && totalTwinkles > 0 && (
+            </div>
+          ) : null}
+          {totalRewardAmount === 0 && totalTwinkles > 0 ? (
             <div style={{ fontSize: '1.7rem' }}>
               <p>
                 {yourXPLabel}: {addCommasToNumber(originalTwinkleXP)} XP {'=>'}{' '}
@@ -168,8 +168,8 @@ function MainFeeds({
                 (+ {addCommasToNumber(totalTwinkles * REWARD_VALUE)} XP)
               </p>
             </div>
-          )}
-          {totalRewardAmount === 0 && totalCoins > 0 && (
+          ) : null}
+          {totalRewardAmount === 0 && totalCoins > 0 ? (
             <div
               style={{
                 fontSize: '1.7rem',
@@ -185,7 +185,7 @@ function MainFeeds({
                 (+ {addCommasToNumber(totalCoins)})
               </p>
             </div>
-          )}
+          ) : null}
         </Banner>
       )}
       {activeTab === 'reward' && !!userId && (
