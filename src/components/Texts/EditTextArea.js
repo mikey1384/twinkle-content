@@ -19,6 +19,7 @@ EditTextArea.propTypes = {
   contentType: PropTypes.string,
   disabled: PropTypes.bool,
   marginTop: PropTypes.string,
+  maxRows: PropTypes.number,
   onCancel: PropTypes.func.isRequired,
   onEditDone: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
@@ -34,6 +35,7 @@ export default function EditTextArea({
   contentType,
   disabled,
   marginTop = '1rem',
+  maxRows,
   onCancel,
   onEditDone,
   placeholder = 'Enter text',
@@ -101,6 +103,7 @@ export default function EditTextArea({
           position: 'relative',
           ...(commentExceedsCharLimit?.style || {})
         }}
+        maxRows={maxRows}
         minRows={rows}
         value={editText}
         onChange={handleChange}

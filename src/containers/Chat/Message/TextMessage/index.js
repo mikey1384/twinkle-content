@@ -123,6 +123,7 @@ function TextMessage({
             autoFocus
             disabled={!socketConnected}
             rows={2}
+            maxRows={10}
             text={content}
             onCancel={onEditCancel}
             onEditDone={onEditDone}
