@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import ExtractedThumb from 'components/ExtractedThumb';
 import LocalContext from '../../../Context';
 import playButtonImg from 'assets/play-button-image.png';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { mobileMaxWidth } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { v1 as uuidv1 } from 'uuid';
 
@@ -16,6 +16,7 @@ VideoThumb.propTypes = {
 };
 
 export default function VideoThumb({ messageId, onClick, thumbUrl, src }) {
+  const [thumbnailLoadFail, setThumbnailLoadFail] = useState(false);
   const {
     requests: { uploadThumb }
   } = useContext(LocalContext);
@@ -36,13 +37,23 @@ export default function VideoThumb({ messageId, onClick, thumbUrl, src }) {
           }
         `}
       >
-        <ExtractedThumb
-          style={{ width: '100%', height: '100%' }}
-          src={src}
-          thumbUrl={thumbUrl}
-          onThumbnailLoad={handleThumbnailLoad}
-          onClick={() => console.log('clicked')}
-        />
+        {thumbnailLoadFail ? (
+          <div
+            style={{
+              width: '100%',
+              height: '100%',
+              background: Color.black()
+            }}
+          />
+        ) : (
+          <ExtractedThumb
+            style={{ width: '100%', height: '100%' }}
+            src={src}
+            thumbUrl={thumbUrl}
+            onThumbnailLoad={handleThumbnailLoad}
+            onThumbnailLoadFail={() => setThumbnailLoadFail(true)}
+          />
+        )}
         <img
           style={{
             top: 'CALC(50% - 1.5rem)',

@@ -8,7 +8,8 @@ ExtractedThumb.propTypes = {
   onThumbnailLoad: PropTypes.func,
   src: PropTypes.string.isRequired,
   style: PropTypes.object,
-  thumbUrl: PropTypes.string
+  thumbUrl: PropTypes.string,
+  onThumbnailLoadFail: PropTypes.func
 };
 
 export default function ExtractedThumb({
@@ -16,7 +17,8 @@ export default function ExtractedThumb({
   src,
   onThumbnailLoad,
   style,
-  thumbUrl
+  thumbUrl,
+  onThumbnailLoadFail
 }) {
   const [dataLoaded, setDataLoaded] = useState(false);
   const [metadataLoaded, setMetadataLoaded] = useState(false);
@@ -39,6 +41,8 @@ export default function ExtractedThumb({
         if (seeked && !thumbnail) {
           handleLoadThumbnail();
         }
+      } else {
+        onThumbnailLoadFail?.();
       }
     }
     function handleLoadThumbnail() {

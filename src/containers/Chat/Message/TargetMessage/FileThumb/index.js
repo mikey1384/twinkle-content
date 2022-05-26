@@ -43,16 +43,17 @@ export default function FileThumb({
         className={css`
           color: ${Color.black()};
           height: 12rem;
-          max-width: ${fileType === 'image' ? '12rem' : '15rem'};
+          max-width: ${fileType === 'image' ? '12rem' : '13rem'};
           &:hover {
             color: #000;
           }
           @media (max-width: ${mobileMaxWidth}) {
-            max-width: ${fileType === 'image' ? '7rem' : '9rem'};
+            max-width: ${fileType === 'image' ? '7rem' : '8rem'};
             height: ${fileType === 'image' ? '7rem' : '11rem'};
           }
         `}
         style={{
+          width: '100%',
           display: 'flex',
           alignItems: 'center',
           flexDirection: 'column'
