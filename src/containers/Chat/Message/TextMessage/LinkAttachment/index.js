@@ -282,7 +282,7 @@ function LinkAttachment({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messageId]);
 
-  return (
+  return notFound ? null : (
     <div
       style={{
         position: 'relative',
@@ -295,7 +295,7 @@ function LinkAttachment({
         }
       `}
     >
-      {userCanEditThis && !notFound && (
+      {userCanEditThis && (
         <Icon
           style={{
             right: '1rem',

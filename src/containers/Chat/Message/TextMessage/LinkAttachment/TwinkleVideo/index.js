@@ -26,7 +26,7 @@ export default function TwinkleVideo({
 }) {
   const loadContent = useAppContext((v) => v.requestHelpers.loadContent);
   const onInitContent = useContentContext((v) => v.actions.onInitContent);
-  const { loaded, notFound, content, rewardLevel } = useContentState({
+  const { loaded, content, rewardLevel } = useContentState({
     contentId: videoId,
     contentType: 'video'
   });
@@ -44,7 +44,7 @@ export default function TwinkleVideo({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return !notFound ? (
+  return (
     <div style={{ position: 'relative', ...style }}>
       {!loaded ? (
         <Loading style={{ height: '100%' }} />
@@ -67,5 +67,5 @@ export default function TwinkleVideo({
         />
       )}
     </div>
-  ) : null;
+  );
 }

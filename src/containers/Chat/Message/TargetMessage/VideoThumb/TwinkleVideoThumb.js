@@ -17,12 +17,12 @@ export default function TwinkleVideoThumb({ messageId, videoUrl }) {
     () => extractVideoIdFromTwinkleVideoUrl(videoUrl),
     [videoUrl]
   );
-  const { content, rewardLevel } = useContentState({
+  const { content, rewardLevel, notFound } = useContentState({
     contentId: videoId,
     contentType: 'video'
   });
 
-  return (
+  return notFound ? null : (
     <div
       style={{
         position: 'relative',
