@@ -339,7 +339,10 @@ function MessagesContainer({
   useEffect(() => {
     handleScrollToBottom();
     prevChannelId.current = selectedChannelId;
+    onSetChessModalShown(false);
+    onSetWordleModalShown(false);
     prevTopMessageId.current = null;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedChannelId]);
 
   useEffect(() => {

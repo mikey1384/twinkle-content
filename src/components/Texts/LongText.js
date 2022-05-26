@@ -106,7 +106,7 @@ export default function LongText({
 
   return (
     <div style={style} className={className}>
-      <p>
+      <div>
         {fullText ? (
           <span style={{ lineHeight }}>{innerHTML}</span>
         ) : (
@@ -144,7 +144,7 @@ export default function LongText({
             </div>
           </div>
         )}
-      </p>
+      </div>
     </div>
   );
 }

@@ -70,7 +70,6 @@ export default function ChessModal({
   const [spoilerOff, setSpoilerOff] = useState(false);
   const [userMadeLastMove, setUserMadeLastMove] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const prevChannelId = useRef(channelId);
   const submittingRef = useRef(false);
   const loading = useRef(null);
 
@@ -96,15 +95,6 @@ export default function ChessModal({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    if (!prevChannelId.current) {
-      prevChannelId.current = channelId;
-    } else if (prevChannelId.current !== channelId) {
-      onHide();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [channelId]);
 
   useEffect(() => {
     if (typeof countdownNumber === 'number') {
