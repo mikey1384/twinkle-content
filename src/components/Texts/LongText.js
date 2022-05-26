@@ -47,7 +47,7 @@ export default function LongText({
   const [fullText, setFullText] = useState(
     isPreview ? false : fullTextState[section]
   );
-  const [isOverflown, setIsOverflown] = useState(false);
+  const [isOverflown, setIsOverflown] = useState(null);
   useEffect(() => {
     setFullText(false);
     setIsOverflown(
@@ -110,7 +110,7 @@ export default function LongText({
         {fullText ? (
           <span style={{ lineHeight }}>{innerHTML}</span>
         ) : (
-          <>
+          <div>
             <span
               ref={ContainerRef}
               style={{
@@ -123,28 +123,26 @@ export default function LongText({
             >
               {innerHTML}
             </span>
-            <>
+            <div style={{ minHeight: isOverflown === false ? 0 : '4rem' }}>
               {isOverflown && (
-                <>
-                  <a
-                    style={{
-                      fontWeight: 'bold',
-                      cursor: 'pointer',
-                      color: readMoreColor,
-                      display: 'inline-block',
-                      paddingTop: '1.5rem'
-                    }}
-                    onClick={() => {
-                      setFullText(true);
-                      fullTextRef.current = true;
-                    }}
-                  >
-                    {readMoreLabel}
-                  </a>
-                </>
+                <a
+                  style={{
+                    fontWeight: 'bold',
+                    cursor: 'pointer',
+                    color: readMoreColor,
+                    display: 'inline-block',
+                    paddingTop: '1.5rem'
+                  }}
+                  onClick={() => {
+                    setFullText(true);
+                    fullTextRef.current = true;
+                  }}
+                >
+                  {readMoreLabel}
+                </a>
               )}
-            </>
-          </>
+            </div>
+          </div>
         )}
       </p>
     </div>
