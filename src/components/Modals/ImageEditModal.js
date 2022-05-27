@@ -38,7 +38,6 @@ export default function ImageEditModal({
   const { userId } = useMyState();
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(null);
-  const [uploadComplete, setUploadComplete] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [crop, setCrop] = useState({
     unit: '%',
@@ -125,7 +124,6 @@ export default function ImageEditModal({
           {uploading && (
             <FileUploadStatusIndicator
               style={{ width: '20rem' }}
-              uploadComplete={uploadComplete}
               uploadProgress={uploadProgress}
             />
           )}
@@ -221,7 +219,6 @@ export default function ImageEditModal({
       isProfilePic,
       caption
     });
-    setUploadComplete(true);
     setProcessing(false);
     onEditDone({
       pictures,
