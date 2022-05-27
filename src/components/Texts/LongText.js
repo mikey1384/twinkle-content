@@ -126,7 +126,7 @@ export default function LongText({
       </span>
       <div
         style={{
-          height: readMoreHeightFixed ? '2.5rem' : 'auto',
+          height: readMoreHeightFixed ? '2rem' : 'auto',
           display: 'flex',
           width: '100%',
           alignItems: 'center'
