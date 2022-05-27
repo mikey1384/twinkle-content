@@ -18,9 +18,7 @@ export default function HomeReducer(state, action) {
       return {
         ...state,
         fileUploadProgress: null,
-        fileUploadComplete: false,
-        secretAttachmentUploadProgress: null,
-        secretAttachmentUploadComplete: false
+        secretAttachmentUploadProgress: null
       };
     case 'DELETE_FEED':
       return {
@@ -73,11 +71,6 @@ export default function HomeReducer(state, action) {
         ...state,
         feedsOutdated: action.outdated
       };
-    case 'SET_FILE_UPLOAD_COMPLETE':
-      return {
-        ...state,
-        fileUploadComplete: true
-      };
     case 'SET_LEADERBOARDS_EXPANDED':
       return {
         ...state,
@@ -88,11 +81,6 @@ export default function HomeReducer(state, action) {
             expanded: action.expanded
           }
         }
-      };
-    case 'SET_SECRET_ATTACHMENT_UPLOAD_COMPLETE':
-      return {
-        ...state,
-        secretAttachmentUploadComplete: true
       };
     case 'SET_SUBMITTING_SUBJECT':
       return {

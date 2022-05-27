@@ -155,8 +155,7 @@ export default function ContentReducer(state, action) {
         ...state,
         [contentKey]: {
           ...prevContentState,
-          fileUploadProgress: null,
-          fileUploadComplete: false
+          fileUploadProgress: null
         }
       };
     case 'CHANGE_SPOILER_STATUS': {
@@ -1298,14 +1297,6 @@ export default function ContentReducer(state, action) {
             : undefined
         }
       };
-    case 'SET_COMMENT_FILE_UPLOAD_COMPLETE':
-      return {
-        ...state,
-        [contentKey]: {
-          ...prevContentState,
-          fileUploadComplete: true
-        }
-      };
     case 'SET_COMMENTS_SHOWN':
       return {
         ...state,
@@ -1509,6 +1500,14 @@ export default function ContentReducer(state, action) {
           started: action.started
         }
       };
+    case 'SET_UPLOADING_FILE':
+      return {
+        ...state,
+        [contentKey]: {
+          ...prevContentState,
+          uploadingFile: action.isUploading
+        }
+      };
     case 'SET_VIDEO_PROGRESS':
       return {
         ...state,
@@ -1555,6 +1554,14 @@ export default function ContentReducer(state, action) {
         [contentKey]: {
           ...prevContentState,
           targetObj: { ...prevContentState.targetObj, replyInputShown: true }
+        }
+      };
+    case 'UPDATE_SECRET_FILE_UPLOAD_PROGRESS':
+      return {
+        ...state,
+        [contentKey]: {
+          ...prevContentState,
+          fileUploadProgress: action.progress
         }
       };
     case 'UPDATE_COMMENT_FILE_UPLOAD_PROGRESS':
