@@ -1,9 +1,9 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import InputForm from 'components/Forms/InputForm';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
-import { useInputContext } from 'contexts';
+import { useContentContext, useInputContext } from 'contexts';
 import { useContentState } from 'helpers/hooks';
 import { v1 as uuidv1 } from 'uuid';
 import localize from 'constants/localize';
@@ -35,11 +35,13 @@ export default function ReplyInputArea({
   const onSetCommentAttachment = useInputContext(
     (v) => v.actions.onSetCommentAttachment
   );
-  const { fileUploadComplete, fileUploadProgress } = useContentState({
+  const onSetUploadingFile = useContentContext(
+    (v) => v.actions.onSetUploadingFile
+  );
+  const { fileUploadProgress, uploadingFile } = useContentState({
     contentId: targetCommentId,
     contentType: 'comment'
   });
-  const [uploadingFile, setUploadingFile] = useState(false);
   const attachment = useMemo(
     () => state['comment' + targetCommentId]?.attachment,
     [state, targetCommentId]
@@ -57,7 +59,6 @@ export default function ReplyInputArea({
               width: '100%'
             }}
             fileName={attachment?.file?.name}
-            uploadComplete={fileUploadComplete}
             uploadProgress={fileUploadProgress}
           />
         ) : (
@@ -76,7 +77,11 @@ export default function ReplyInputArea({
 
   async function handleSubmit(text) {
     if (attachment) {
-      setUploadingFile(true);
+      onSetUploadingFile({
+        contentId: targetCommentId,
+        contentType: 'comment',
+        isUploading: true
+      });
       await onSubmitWithAttachment({
         attachment,
         commentContent: text,
@@ -102,7 +107,11 @@ export default function ReplyInputArea({
         targetCommentId
       });
     }
-    setUploadingFile(false);
+    onSetUploadingFile({
+      contentId: targetCommentId,
+      contentType: 'comment',
+      isUploading: false
+    });
     return Promise.resolve();
   }
 }
