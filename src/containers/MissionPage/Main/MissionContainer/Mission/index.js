@@ -23,7 +23,6 @@ Mission.propTypes = {
 export default function Mission({
   mission,
   mission: {
-    fileUploadComplete,
     fileUploadProgress,
     title,
     subtitle,
@@ -33,7 +32,8 @@ export default function Mission({
     xpReward,
     coinReward,
     repeatXpReward,
-    repeatCoinReward
+    repeatCoinReward,
+    uploadingFile
   },
   style,
   onSetMissionState
@@ -190,9 +190,9 @@ export default function Mission({
         <MissionModule
           mission={mission}
           isRepeating={isRepeating}
-          fileUploadComplete={fileUploadComplete}
           fileUploadProgress={fileUploadProgress}
           onSetMissionState={onSetMissionState}
+          uploadingFile={uploadingFile}
           style={{ marginTop: '4.5rem' }}
         />
       )}
