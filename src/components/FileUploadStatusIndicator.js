@@ -5,7 +5,6 @@ import { Color } from 'constants/css';
 
 FileUploadStatusIndicator.propTypes = {
   fileName: PropTypes.string,
-  uploadComplete: PropTypes.bool,
   uploadProgress: PropTypes.number,
   style: PropTypes.object
 };
@@ -13,15 +12,20 @@ FileUploadStatusIndicator.propTypes = {
 export default function FileUploadStatusIndicator({
   fileName,
   style,
-  uploadComplete,
   uploadProgress
 }) {
-  const text = useMemo(() => (uploadComplete ? 'Upload Complete!' : ''), [
-    uploadComplete
-  ]);
-  const color = useMemo(() => (uploadComplete ? Color.green() : undefined), [
-    uploadComplete
-  ]);
+  const uploadComplete = useMemo(
+    () => uploadProgress > 0.995,
+    [uploadProgress]
+  );
+  const text = useMemo(
+    () => (uploadComplete ? 'Upload Complete!' : ''),
+    [uploadComplete]
+  );
+  const color = useMemo(
+    () => (uploadComplete ? Color.green() : undefined),
+    [uploadComplete]
+  );
   const progress = useMemo(
     () => (uploadComplete ? 100 : Math.ceil(100 * uploadProgress)),
     [uploadComplete, uploadProgress]
