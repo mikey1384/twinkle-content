@@ -16,20 +16,20 @@ const BodyRef = document.scrollingElement || document.documentElement;
 
 TakeScreenshot.propTypes = {
   attachment: PropTypes.object,
-  fileUploadComplete: PropTypes.bool,
   fileUploadProgress: PropTypes.number,
   missionId: PropTypes.number,
   onSetMissionState: PropTypes.func,
-  style: PropTypes.object
+  style: PropTypes.object,
+  uploadingFile: PropTypes.bool
 };
 
 export default function TakeScreenshot({
   attachment,
-  fileUploadComplete,
   fileUploadProgress,
   missionId,
   onSetMissionState,
-  style
+  style,
+  uploadingFile
 }) {
   const uploadFile = useAppContext((v) => v.requestHelpers.uploadFile);
   const uploadMissionAttempt = useAppContext(
@@ -42,7 +42,6 @@ export default function TakeScreenshot({
   const [buttonShown, setButtonShown] = useState(false);
   const { fileUploadLvl, username } = useMyState();
   const [alertModalShown, setAlertModalShown] = useState(false);
-  const [uploadingFile, setUploadingFile] = useState(false);
   const FileInputRef = useRef(null);
   const maxSize = useMemo(
     () => returnMaxUploadSize(fileUploadLvl),
@@ -53,9 +52,7 @@ export default function TakeScreenshot({
   useEffect(() => {
     mounted.current = true;
     setTimeout(() => {
-      if (mounted.current) {
-        setButtonShown(true);
-      }
+      setButtonShown(true);
     }, 3200);
     return function onUnmount() {
       mounted.current = false;
@@ -80,7 +77,6 @@ export default function TakeScreenshot({
             paddingBottom: '1rem'
           }}
           fileName={attachment?.file?.name}
-          uploadComplete={fileUploadComplete}
           uploadProgress={fileUploadProgress}
         />
       ) : (
@@ -262,7 +258,7 @@ export default function TakeScreenshot({
             alignItems: 'center'
           }}
         >
-          {buttonShown && (
+          {buttonShown && !uploadingFile && (
             <div
               className={css`
                 margin-top: 1rem;
@@ -361,21 +357,18 @@ export default function TakeScreenshot({
   }
 
   async function handleFileUpload() {
-    setUploadingFile(true);
+    onSetMissionState({
+      missionId,
+      newState: {
+        uploadingFile: true
+      }
+    });
     const uploadedFilePath = await uploadFile({
       context: 'mission',
       filePath: uuidv1(),
       file: attachment.file,
       onUploadProgress: handleUploadProgress
     });
-    if (mounted.current) {
-      onSetMissionState({
-        missionId,
-        newState: {
-          fileUploadComplete: true
-        }
-      });
-    }
     const { success } = await uploadMissionAttempt({
       missionId,
       attempt: {
@@ -386,29 +379,29 @@ export default function TakeScreenshot({
     });
 
     if (success) {
-      if (mounted.current) {
-        onSetMissionState({
-          missionId,
-          newState: {
-            attachment: null,
-            fileUploadComplete: false,
-            fileUploadProgress: null
-          }
-        });
-      }
-      if (mounted.current) {
-        onUpdateMissionAttempt({
-          missionId,
-          newState: {
-            status: 'pending',
-            tryingAgain: false
-          }
-        });
-      }
+      onSetMissionState({
+        missionId,
+        newState: {
+          attachment: null,
+          fileUploadProgress: null
+        }
+      });
+      onUpdateMissionAttempt({
+        missionId,
+        newState: {
+          status: 'pending',
+          tryingAgain: false
+        }
+      });
       document.getElementById('App').scrollTop = 0;
       BodyRef.scrollTop = 0;
     }
-    setUploadingFile(false);
+    onSetMissionState({
+      missionId,
+      newState: {
+        uploadingFile: false
+      }
+    });
 
     function handleUploadProgress({ loaded, total }) {
       onSetMissionState({
