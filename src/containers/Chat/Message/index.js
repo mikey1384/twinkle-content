@@ -676,7 +676,6 @@ function Message({
                   <FileUploadStatusIndicator
                     key={channelId}
                     fileName={fileToUpload.name}
-                    uploadComplete={!!uploadStatus.uploadComplete}
                     uploadProgress={uploadStatus.uploadProgress}
                   />
                 ) : (
