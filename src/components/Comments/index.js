@@ -110,9 +110,6 @@ function Comments({
   const onUpdateCommentFileUploadProgress = useContentContext(
     (v) => v.actions.onUpdateCommentFileUploadProgress
   );
-  const onSetCommentFileUploadComplete = useContentContext(
-    (v) => v.actions.onSetCommentFileUploadComplete
-  );
   const [deleting, setDeleting] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [commentSubmitted, setCommentSubmitted] = useState(false);
@@ -219,10 +216,6 @@ function Comments({
           filePath,
           file,
           onUploadProgress: handleUploadProgress
-        });
-        onSetCommentFileUploadComplete({
-          contentType: finalContentType,
-          contentId: finalContentId
         });
         const { comment } = await uploadComment({
           content: commentContent,
