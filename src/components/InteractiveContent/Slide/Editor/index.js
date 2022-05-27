@@ -30,7 +30,6 @@ Editor.propTypes = {
   attachment: PropTypes.object,
   heading: PropTypes.string,
   description: PropTypes.string,
-  fileUploadComplete: PropTypes.bool,
   fileUploadProgress: PropTypes.number,
   forkedFrom: PropTypes.number,
   isFork: PropTypes.bool,
@@ -43,13 +42,13 @@ Editor.propTypes = {
   onHideDeletedMessages: PropTypes.func,
   slideId: PropTypes.number,
   slideObj: PropTypes.object,
-  isLastSlide: PropTypes.bool
+  isLastSlide: PropTypes.bool,
+  uploadingFile: PropTypes.bool
 };
 
 export default function Editor({
   attachment,
   description,
-  fileUploadComplete,
   fileUploadProgress,
   forkedFrom,
   heading,
@@ -63,7 +62,8 @@ export default function Editor({
   portalButton,
   paths,
   slideId,
-  slideObj
+  slideObj,
+  uploadingFile
 }) {
   const defaultInputState = useMemo(
     () => ({
@@ -126,7 +126,6 @@ export default function Editor({
 
   const mounted = useRef(true);
   const inputStateRef = useRef(prevInputState || defaultInputState);
-  const [uploadingFile, setUploadingFile] = useState(false);
   const [inputState, setInputState] = useState(
     prevInputState || defaultInputState
   );
@@ -396,7 +395,6 @@ export default function Editor({
                 paddingBottom: '1rem'
               }}
               fileName={editedAttachment.newAttachment.file?.name}
-              uploadComplete={fileUploadComplete}
               uploadProgress={fileUploadProgress}
             />
           )}
@@ -548,20 +546,22 @@ export default function Editor({
     };
 
     if (editedAttachment?.newAttachment && editedAttachment?.type !== 'none') {
-      setUploadingFile(true);
+      onSetSlideState({
+        interactiveId,
+        slideId,
+        newState: { uploadingFile: true }
+      });
       const uploadedFilePath = await uploadFile({
         context: 'interactive',
         filePath: uuidv1(),
         file: editedAttachment.newAttachment.file,
         onUploadProgress: handleUploadProgress
       });
-      if (mounted.current) {
-        onSetSlideState({
-          interactiveId,
-          slideId,
-          newState: { fileUploadComplete: true }
-        });
-      }
+      onSetSlideState({
+        interactiveId,
+        slideId,
+        newState: { uploadingFile: false }
+      });
       const post = {
         ...editForm,
         editedAttachment: {
@@ -575,24 +575,17 @@ export default function Editor({
         slideId,
         post
       });
-      if (mounted.current) {
-        onChangeNumUpdates({ interactiveId, numUpdates });
-      }
-      if (mounted.current) {
-        onSetSlideState({
-          interactiveId,
-          slideId,
-          newState: {
-            ...newState,
-            isEditing: false,
-            fileUploadComplete: false,
-            fileUploadProgress: null
-          }
-        });
-      }
-      if (mounted.current) {
-        handleSetInputState(post);
-      }
+      onChangeNumUpdates({ interactiveId, numUpdates });
+      onSetSlideState({
+        interactiveId,
+        slideId,
+        newState: {
+          ...newState,
+          isEditing: false,
+          fileUploadProgress: null
+        }
+      });
+      handleSetInputState(post);
     } else {
       const { slide: newState, numUpdates } = await editInteractiveSlide({
         slideId,
@@ -608,7 +601,6 @@ export default function Editor({
           newState: {
             ...newState,
             isEditing: false,
-            fileUploadComplete: false,
             fileUploadProgress: null
           }
         });
