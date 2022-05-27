@@ -21,6 +21,7 @@ LongText.propTypes = {
   maxLines: PropTypes.number,
   section: PropTypes.string,
   style: PropTypes.object,
+  readMoreHeightFixed: PropTypes.bool,
   readMoreColor: PropTypes.string
 };
 
@@ -34,6 +35,7 @@ export default function LongText({
   isPreview,
   section,
   maxLines = 10,
+  readMoreHeightFixed,
   readMoreColor = Color.blue()
 }) {
   const onSetFullTextState = useContentContext(
@@ -106,43 +108,46 @@ export default function LongText({
 
   return (
     <div style={style} className={className}>
-      <div>
-        {fullText ? (
-          <span style={{ lineHeight }}>{innerHTML}</span>
-        ) : (
-          <div>
-            <span
-              ref={ContainerRef}
-              style={{
+      <span
+        ref={ContainerRef}
+        style={{
+          lineHeight,
+          ...(fullText
+            ? {}
+            : {
                 overflow: 'hidden',
-                lineHeight,
                 display: '-webkit-box',
                 WebkitLineClamp: maxLines,
                 WebkitBoxOrient: 'vertical'
-              }}
-            >
-              {innerHTML}
-            </span>
-            <div style={{ minHeight: isOverflown === false ? 0 : '4rem' }}>
-              {isOverflown && (
-                <a
-                  style={{
-                    fontWeight: 'bold',
-                    cursor: 'pointer',
-                    color: readMoreColor,
-                    display: 'inline-block',
-                    paddingTop: '1.5rem'
-                  }}
-                  onClick={() => {
-                    setFullText(true);
-                    fullTextRef.current = true;
-                  }}
-                >
-                  {readMoreLabel}
-                </a>
-              )}
-            </div>
-          </div>
+              })
+        }}
+      >
+        {innerHTML}
+      </span>
+      <div
+        style={{
+          height: readMoreHeightFixed ? '2.5rem' : 'auto',
+          display: 'flex',
+          width: '100%',
+          alignItems: 'center'
+        }}
+      >
+        {!fullText && isOverflown && (
+          <a
+            style={{
+              fontWeight: 'bold',
+              cursor: 'pointer',
+              color: readMoreColor,
+              display: 'inline',
+              paddingTop: '1rem'
+            }}
+            onClick={() => {
+              setFullText(true);
+              fullTextRef.current = true;
+            }}
+          >
+            {readMoreLabel}
+          </a>
         )}
       </div>
     </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Button from 'components/Button';
@@ -42,15 +42,6 @@ export default function RecommendationInterface({
     userType?.toLowerCase?.() === 'staff'
   );
   const [hidden, setHidden] = useState(false);
-  const mounted = useRef(true);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function onDismount() {
-      mounted.current = false;
-    };
-  }, []);
-
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const recommendContent = useAppContext(
     (v) => v.requestHelpers.recommendContent
@@ -216,18 +207,12 @@ export default function RecommendationInterface({
         currentRecommendations,
         rewardDisabled
       });
-      if (mounted.current) {
-        setHidden(true);
-      }
-      if (mounted.current) {
-        onSetUserState({ userId, newState: { twinkleCoins: coins } });
-      }
-      if (recommendations && mounted.current) {
+      setHidden(true);
+      onSetUserState({ userId, newState: { twinkleCoins: coins } });
+      if (recommendations) {
         onRecommendContent({ contentId, contentType, recommendations });
       }
-      if (mounted.current) {
-        onHide();
-      }
+      onHide();
     } catch (error) {
       console.error(error);
       onHide();

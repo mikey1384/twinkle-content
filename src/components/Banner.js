@@ -23,23 +23,13 @@ export default function Banner({
   spinnerDelay = 1000,
   style = {}
 }) {
-  const mounted = useRef(true);
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
-
   const timerRef = useRef(null);
   const [spinnerShown, setSpinnerShown] = useState(false);
 
   useEffect(() => {
     if (loading) {
       timerRef.current = setTimeout(() => {
-        if (mounted.current) {
-          setSpinnerShown(true);
-        }
+        setSpinnerShown(true);
       }, spinnerDelay);
     } else {
       clearTimeout(timerRef.current);

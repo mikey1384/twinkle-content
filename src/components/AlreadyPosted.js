@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'components/Link';
 import { Color } from 'constants/css';
@@ -25,13 +25,6 @@ export default function AlreadyPosted({
   url,
   videoCode
 }) {
-  const mounted = useRef(true);
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
   const checkContentUrl = useAppContext(
     (v) => v.requestHelpers.checkContentUrl
   );
@@ -65,12 +58,8 @@ export default function AlreadyPosted({
         url,
         videoCode
       });
-      if (mounted.current) {
-        onSetExistingContent({ contentId, contentType, content });
-      }
-      if (mounted.current) {
-        setLoading(false);
-      }
+      onSetExistingContent({ contentId, contentType, content });
+      setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url, uploaderId]);
