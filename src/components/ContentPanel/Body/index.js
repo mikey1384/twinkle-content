@@ -79,14 +79,6 @@ export default function Body({
   numPreviewComments,
   onChangeSpoilerStatus
 }) {
-  const mounted = useRef(true);
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
-
   const deleteContent = useAppContext((v) => v.requestHelpers.deleteContent);
   const loadComments = useAppContext((v) => v.requestHelpers.loadComments);
 
@@ -261,17 +253,13 @@ export default function Body({
         isPreview,
         parentHasSecretMessage: !!secretAnswer || !!secretAttachment
       });
-      if (mounted.current) {
-        onLoadComments({
-          ...data,
-          contentId,
-          contentType,
-          isPreview
-        });
-      }
-      if (mounted.current) {
-        setLoadingComments(false);
-      }
+      onLoadComments({
+        ...data,
+        contentId,
+        contentType,
+        isPreview
+      });
+      setLoadingComments(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -662,13 +650,11 @@ export default function Body({
       !secretShown
     ) {
       await handleExpandComments();
-      if (mounted.current) {
-        onChangeSpoilerStatus({
-          shown: true,
-          subjectId: contentObj.id,
-          prevSecretViewerId: userId
-        });
-      }
+      onChangeSpoilerStatus({
+        shown: true,
+        subjectId: contentObj.id,
+        prevSecretViewerId: userId
+      });
     } else {
       onCommentSubmit(params);
     }
@@ -713,15 +699,9 @@ export default function Body({
       limit: commentsLoadLimit,
       parentHasSecretMessage: !!secretAnswer || !!secretAttachment
     });
-    if (mounted.current) {
-      onLoadComments({ ...data, contentId, contentType });
-    }
-    if (mounted.current) {
-      onSetCommentsShown({ contentId, contentType });
-    }
-    if (mounted.current) {
-      setLoadingComments(false);
-    }
+    onLoadComments({ ...data, contentId, contentType });
+    onSetCommentsShown({ contentId, contentType });
+    setLoadingComments(false);
   }
 
   async function handleLikeClick({ isUnlike }) {

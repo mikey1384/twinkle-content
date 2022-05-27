@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
 import NotEnoughKarmaInstructions from './NotEnoughKarmaInstructions';
@@ -21,7 +21,6 @@ export default function TwinkleStore({ mission }) {
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const pageVisible = useViewContext((v) => v.state.pageVisible);
   const [loadingKarma, setLoadingKarma] = useState(false);
-  const mounted = useRef(true);
   const requiredKarmaPoints = karmaPointTable.username;
   const unlockProgress = useMemo(() => {
     return Math.floor(Math.min((karmaPoints * 100) / requiredKarmaPoints, 100));
@@ -33,20 +32,12 @@ export default function TwinkleStore({ mission }) {
     }
 
     async function init() {
-      if (mounted.current) {
-        setLoadingKarma(true);
-      }
+      setLoadingKarma(true);
       const data = await loadMyData();
-      if (mounted.current) {
-        onSetUserState({ userId: data.userId, newState: data });
-      }
+      onSetUserState({ userId: data.userId, newState: data });
       const { karmaPoints: kp } = await loadKarmaPoints();
-      if (mounted.current) {
-        onSetUserState({ userId, newState: { karmaPoints: kp } });
-      }
-      if (mounted.current) {
-        setLoadingKarma(false);
-      }
+      onSetUserState({ userId, newState: { karmaPoints: kp } });
+      setLoadingKarma(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId, pageVisible]);
@@ -54,13 +45,6 @@ export default function TwinkleStore({ mission }) {
   const hasEnoughKarmaPoints = useMemo(() => {
     return karmaPoints >= requiredKarmaPoints;
   }, [karmaPoints, requiredKarmaPoints]);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function onUnmount() {
-      mounted.current = false;
-    };
-  }, []);
 
   return loadingKarma ? (
     <Loading />

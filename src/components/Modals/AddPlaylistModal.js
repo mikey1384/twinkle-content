@@ -63,10 +63,8 @@ export default function AddPlaylistModal({
     onSetSearchText: setSearchText
   });
   const playlistVideoObjects = useRef({});
-  const mounted = useRef(true);
 
   useEffect(() => {
-    mounted.current = true;
     loadVideos();
     async function loadVideos() {
       const { results: loadedVideos, loadMoreButton } = await loadUploads({
@@ -74,16 +72,11 @@ export default function AddPlaylistModal({
         limit: 18,
         excludeContentIds: existingVideoIds
       });
-      if (mounted.current) {
-        playlistVideoObjects.current = objectify(loadedVideos);
-        setAllVideos(loadedVideos.map((video) => video.id));
-        setLoadMoreButton(loadMoreButton);
-        setLoaded(true);
-      }
+      playlistVideoObjects.current = objectify(loadedVideos);
+      setAllVideos(loadedVideos.map((video) => video.id));
+      setLoadMoreButton(loadMoreButton);
+      setLoaded(true);
     }
-    return function cleanUp() {
-      mounted.current = false;
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

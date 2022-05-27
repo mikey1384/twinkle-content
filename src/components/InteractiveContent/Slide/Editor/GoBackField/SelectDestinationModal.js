@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
@@ -20,7 +20,6 @@ export default function SelectDestinationModal({
   originForkId,
   slideObj
 }) {
-  const mounted = useRef(true);
   const [forkIds, setForkIds] = useState([]);
   const [selectedSlideId, setSelectedSlideId] = useState(null);
 
@@ -36,13 +35,6 @@ export default function SelectDestinationModal({
       }
     }
   }, [originForkId, slideObj]);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function onDismount() {
-      mounted.current = false;
-    };
-  }, []);
 
   return (
     <Modal onHide={onHide}>

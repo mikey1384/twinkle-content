@@ -56,19 +56,11 @@ export default function Links() {
   );
 
   const [addLinkModalShown, setAddLinkModalShown] = useState(false);
-  const mounted = useRef(true);
   const lastId = useRef(null);
   const lastByUserId = useRef(null);
   const lastRecommendedId = useRef(null);
   const lastRecommendedTime = useRef(null);
   const loadedRef = useRef(false);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
 
   useEffect(() => {
     if (recommendeds.length > 0) {

@@ -123,8 +123,6 @@ export default function Editor({
     () => state[`edit-interactive-${interactiveId}-${slideId}`],
     [interactiveId, slideId, state]
   );
-
-  const mounted = useRef(true);
   const inputStateRef = useRef(prevInputState || defaultInputState);
   const [inputState, setInputState] = useState(
     prevInputState || defaultInputState
@@ -290,14 +288,12 @@ export default function Editor({
   ]);
 
   useEffect(() => {
-    mounted.current = true;
     return function saveInputStateBeforeUnmount() {
       onSetEditInteractiveForm({
         interactiveId,
         slideId,
         form: inputStateRef.current
       });
-      mounted.current = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -591,25 +587,19 @@ export default function Editor({
         slideId,
         post
       });
-      if (mounted.current) {
-        onChangeNumUpdates({ interactiveId, numUpdates });
-      }
-      if (mounted.current) {
-        onSetSlideState({
-          interactiveId,
-          slideId,
-          newState: {
-            ...newState,
-            isEditing: false,
-            fileUploadProgress: null
-          }
-        });
-      }
-      if (mounted.current) {
-        handleSetInputState(post);
-      }
+      onChangeNumUpdates({ interactiveId, numUpdates });
+      onSetSlideState({
+        interactiveId,
+        slideId,
+        newState: {
+          ...newState,
+          isEditing: false,
+          fileUploadProgress: null
+        }
+      });
+      handleSetInputState(post);
     }
-    if (editForm.editedIsFork && mounted.current) {
+    if (editForm.editedIsFork) {
       onHideDeletedMessages(slideId);
     }
 

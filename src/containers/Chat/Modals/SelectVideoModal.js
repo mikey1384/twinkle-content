@@ -31,7 +31,6 @@ export default function SelectVideoModal({ onDone, onHide }) {
     onClear: () => setSearchedUploads([]),
     onSetSearchText: setSearchText
   });
-  const mounted = useRef(true);
   const contentObjs = useRef({});
 
   useEffect(() => {
@@ -41,19 +40,17 @@ export default function SelectVideoModal({ onDone, onHide }) {
         limit: 18,
         contentType: 'video'
       });
-      if (mounted.current) {
-        for (let result of results) {
-          onInitContent({
-            contentId: result.id,
-            contentType: 'video',
-            ...result
-          });
-        }
-        setAllUploads(results.map((result) => result.id));
-        contentObjs.current = objectify(results);
-        setLoadMoreButton(loadMoreButton);
-        setLoaded(true);
+      for (let result of results) {
+        onInitContent({
+          contentId: result.id,
+          contentType: 'video',
+          ...result
+        });
       }
+      setAllUploads(results.map((result) => result.id));
+      contentObjs.current = objectify(results);
+      setLoadMoreButton(loadMoreButton);
+      setLoaded(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

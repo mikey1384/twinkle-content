@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FilterBar from 'components/FilterBar';
@@ -36,8 +36,6 @@ export default function MissionProgress({
   const loadMissionProgress = useAppContext(
     (v) => v.requestHelpers.loadMissionProgress
   );
-  const mounted = useRef(true);
-
   const allMissionsCompleteLabel = useMemo(() => {
     if (SELECTED_LANGUAGE === 'kr') {
       return `${username}님은 모든 미션을 완료했습니다`;
@@ -66,13 +64,6 @@ export default function MissionProgress({
   }, [completedMissions, incompleteMissions, selectedMissionListTab]);
 
   useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
-
-  useEffect(() => {
     if (userId) {
       handleLoadMissionProgress(userId);
     }
@@ -85,7 +76,7 @@ export default function MissionProgress({
           passedMissions.push(mission);
         }
       }
-      if (mounted.current && !missionsLoaded) {
+      if (!missionsLoaded) {
         onSetUserState({
           userId,
           newState: {
@@ -94,15 +85,13 @@ export default function MissionProgress({
           }
         });
       }
-      if (mounted.current) {
-        onSetUserState({
-          userId,
-          newState: {
-            missions,
-            missionsLoaded: true
-          }
-        });
-      }
+      onSetUserState({
+        userId,
+        newState: {
+          missions,
+          missionsLoaded: true
+        }
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);

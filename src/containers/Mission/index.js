@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Cover from './Cover';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Main from './Main';
@@ -41,35 +41,24 @@ export default function Mission() {
     (v) => v.actions.onSetSelectedMissionsTab
   );
 
-  const mounted = useRef(true);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
-
   useEffect(() => {
     init();
 
     async function init() {
       setLoading(true);
       const { missions, myAttempts, loadMoreButton } = await loadMissionList();
-      if (mounted.current) {
-        let displayedMissions = missions;
-        if (!isCreator) {
-          displayedMissions = missions.filter((mission) => !mission.isHidden);
-          onSetSelectedMissionsTab('missions');
-        }
-        setLoading(false);
-        onLoadMissionList({
-          missions: displayedMissions,
-          myAttempts,
-          loadMoreButton,
-          prevUserId: userId
-        });
+      let displayedMissions = missions;
+      if (!isCreator) {
+        displayedMissions = missions.filter((mission) => !mission.isHidden);
+        onSetSelectedMissionsTab('missions');
       }
+      setLoading(false);
+      onLoadMissionList({
+        missions: displayedMissions,
+        myAttempts,
+        loadMoreButton,
+        prevUserId: userId
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId, isCreator]);

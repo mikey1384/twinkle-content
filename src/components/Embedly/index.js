@@ -131,7 +131,6 @@ function Embedly({
     return contentType === 'chat' && isValidYoutubeUrl(url);
   }, [contentType, url]);
   const YTPlayerRef = useRef(null);
-  const mounted = useRef(true);
   const loadingRef = useRef(false);
   const fallbackImage = '/img/link.png';
   const contentCss = useMemo(
@@ -178,35 +177,19 @@ function Embedly({
           contentId,
           contentType
         });
-        if (mounted.current) {
-          onSetThumbUrl({
-            contentId,
-            contentType,
-            thumbUrl: image.url.replace('http://', 'https://')
-          });
-        }
-        if (mounted.current) {
-          onSetActualDescription({ contentId, contentType, description });
-        }
-        if (mounted.current) {
-          onSetActualTitle({ contentId, contentType, title });
-        }
-        if (mounted.current) {
-          onSetSiteUrl({ contentId, contentType, siteUrl: site });
-        }
-        if (mounted.current) {
-          setLoading(false);
-        }
+        onSetThumbUrl({
+          contentId,
+          contentType,
+          thumbUrl: image.url.replace('http://', 'https://')
+        });
+        onSetActualDescription({ contentId, contentType, description });
+        onSetActualTitle({ contentId, contentType, title });
+        onSetSiteUrl({ contentId, contentType, siteUrl: site });
+        setLoading(false);
       } catch (error) {
-        if (mounted.current) {
-          setLoading(false);
-        }
-        if (mounted.current) {
-          setImageUrl(fallbackImage);
-        }
-        if (mounted.current) {
-          onHideAttachment();
-        }
+        setLoading(false);
+        setImageUrl(fallbackImage);
+        onHideAttachment();
         console.error(error.response || error);
       }
       loadingRef.current = false;
@@ -247,14 +230,6 @@ function Embedly({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeAt]);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const handlePlay = useCallback(() => {
     onSetMediaStarted({

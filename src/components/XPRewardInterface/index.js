@@ -95,7 +95,6 @@ export default function XPRewardInterface({
     return Math.min(remainingRewards, myRewardables);
   }, [myRewardables, remainingRewards]);
 
-  const mounted = useRef(true);
   const commentRef = useRef(prevComment);
   const rewardingRef = useRef(false);
   const [rewarding, setRewarding] = useState(false);
@@ -192,7 +191,6 @@ export default function XPRewardInterface({
   }, [requiresPayment, selectedAmount]);
 
   useEffect(() => {
-    mounted.current = true;
     return function cleanUp() {
       onSetRewardForm({
         contentType,
@@ -202,7 +200,6 @@ export default function XPRewardInterface({
           selectedAmount: selectedAmountRef.current
         }
       });
-      mounted.current = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -323,43 +320,33 @@ export default function XPRewardInterface({
       if (alreadyRewarded) {
         return window.location.reload();
       }
-      if (mounted.current) {
-        onSetRewardForm({
-          contentType,
-          contentId,
-          form: undefined
-        });
-      }
-      if (reward && mounted.current) {
+      onSetRewardForm({
+        contentType,
+        contentId,
+        form: undefined
+      });
+      if (reward) {
         onAttachReward({
           reward,
           contentId,
           contentType
         });
       }
-      if (typeof netCoins === 'number' && mounted.current) {
+      if (typeof netCoins === 'number') {
         onSetUserState({ userId, newState: { twinkleCoins: netCoins } });
       }
-      if (selectedAmount === myRewardables && mounted.current) {
+      if (selectedAmount === myRewardables) {
         onReward?.();
       }
-      if (mounted.current) {
-        handleSetComment('');
-      }
-      if (mounted.current) {
-        handleSetSelectedAmount(0);
-      }
-      if (mounted.current) {
-        setRewarding(false);
-      }
+      handleSetComment('');
+      handleSetSelectedAmount(0);
+      setRewarding(false);
       rewardingRef.current = false;
-      if (mounted.current) {
-        onSetXpRewardInterfaceShown({
-          contentId,
-          contentType,
-          shown: false
-        });
-      }
+      onSetXpRewardInterfaceShown({
+        contentId,
+        contentType,
+        shown: false
+      });
     } catch (error) {
       console.error(error);
     }

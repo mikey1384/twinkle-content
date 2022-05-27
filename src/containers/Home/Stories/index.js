@@ -61,7 +61,6 @@ export default function Stories() {
   const [loadingFeeds, setLoadingFeeds] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [loadingNewFeeds, setLoadingNewFeeds] = useState(false);
-  const mounted = useRef(true);
   const categoryRef = useRef(null);
   const ContainerRef = useRef(null);
   const hideWatchedRef = useRef(null);
@@ -72,19 +71,10 @@ export default function Stories() {
     loadable: loadMoreButton,
     loading: loadingMore,
     onScrollToBottom: () => {
-      if (mounted.current) {
-        setLoadingMore(true);
-      }
+      setLoadingMore(true);
     },
     onLoad: handleLoadMoreFeeds
   });
-
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
 
   useEffect(() => {
     if (
@@ -101,7 +91,7 @@ export default function Stories() {
         filter: categoryObj.videos.filter,
         orderBy: categoryObj.videos.orderBy
       });
-      if (category === 'videos' && mounted.current) {
+      if (category === 'videos') {
         onLoadFeeds(data);
       }
     }
@@ -124,12 +114,8 @@ export default function Stories() {
         const { data } = await loadFeeds({
           mustInclude: 'totalRecommendations'
         });
-        if (mounted.current) {
-          onLoadFeeds(data);
-        }
-        if (mounted.current) {
-          setLoadingFeeds(false);
-        }
+        onLoadFeeds(data);
+        setLoadingFeeds(false);
       } catch (error) {
         console.error(error);
       }
@@ -254,20 +240,10 @@ export default function Stories() {
     onChangeSubFilter(filter);
     onResetNumNewPosts();
     const { data, filter: newFilter } = await loadFeeds({ filter });
-    if (
-      filter === newFilter &&
-      categoryRef.current === 'uploads' &&
-      mounted.current
-    ) {
-      if (mounted.current) {
-        onLoadFeeds(data);
-      }
-      if (mounted.current) {
-        onSetDisplayOrder('desc');
-      }
-      if (mounted.current) {
-        setLoadingFeeds(false);
-      }
+    if (filter === newFilter && categoryRef.current === 'uploads') {
+      onLoadFeeds(data);
+      onSetDisplayOrder('desc');
+      setLoadingFeeds(false);
     }
   }
 
@@ -287,12 +263,8 @@ export default function Stories() {
         lastViewDuration:
           feeds.length > 0 ? feeds[feeds.length - 1].totalViewDuration : null
       });
-      if (mounted.current) {
-        onLoadMoreFeeds(data);
-      }
-      if (mounted.current) {
-        setLoadingMore(false);
-      }
+      onLoadMoreFeeds(data);
+      setLoadingMore(false);
     } catch (error) {
       console.error(error);
       setLoadingMore(false);
@@ -311,21 +283,13 @@ export default function Stories() {
       orderBy: categoryObj[newCategory].orderBy,
       mustInclude: categoryObj[newCategory].mustInclude
     });
-    if (mounted.current) {
-      if (
-        loadedFilter === categoryObj[categoryRef.current].filter &&
-        categoryRef.current === newCategory
-      ) {
-        if (mounted.current) {
-          onLoadFeeds(data);
-        }
-        if (mounted.current) {
-          onSetDisplayOrder('desc');
-        }
-        if (mounted.current) {
-          setLoadingFeeds(false);
-        }
-      }
+    if (
+      loadedFilter === categoryObj[categoryRef.current].filter &&
+      categoryRef.current === newCategory
+    ) {
+      onLoadFeeds(data);
+      onSetDisplayOrder('desc');
+      setLoadingFeeds(false);
     }
   }
 
@@ -340,7 +304,7 @@ export default function Stories() {
       categoryRef.current = 'uploads';
       onChangeCategory('uploads');
       const { data } = await loadFeeds();
-      if (categoryRef.current === 'uploads' && mounted.current) {
+      if (categoryRef.current === 'uploads') {
         onLoadFeeds(data);
       }
       return;
@@ -350,12 +314,10 @@ export default function Stories() {
       const data = await loadNewFeeds({
         lastInteraction: feeds[0] ? feeds[0].lastInteraction : 0
       });
-      if (data && mounted.current) {
+      if (data) {
         onLoadNewFeeds(data);
       }
-      if (mounted.current) {
-        setLoadingNewFeeds(false);
-      }
+      setLoadingNewFeeds(false);
     }
   }
 
@@ -370,15 +332,9 @@ export default function Stories() {
       filter: initialFilter
     });
     if (filter === initialFilter) {
-      if (mounted.current) {
-        onLoadFeeds(data);
-      }
-      if (mounted.current) {
-        onSetDisplayOrder(newDisplayOrder);
-      }
-      if (mounted.current) {
-        setLoadingFeeds(false);
-      }
+      onLoadFeeds(data);
+      onSetDisplayOrder(newDisplayOrder);
+      setLoadingFeeds(false);
     }
   }
 }

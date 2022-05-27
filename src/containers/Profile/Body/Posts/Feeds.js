@@ -37,7 +37,6 @@ export default function Feeds({
   const [loadingMore, setLoadingMore] = useState(false);
   const selectedSection = useRef('all');
   const byUserSelected = useRef(false);
-  const mounted = useRef(true);
   const loadFeeds = useAppContext((v) => v.requestHelpers.loadFeeds);
   const loadFeedsByUser = useAppContext(
     (v) => v.requestHelpers.loadFeedsByUser
@@ -50,13 +49,6 @@ export default function Feeds({
   const onLoadMorePostsByUser = useProfileContext(
     (v) => v.actions.onLoadMorePostsByUser
   );
-
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
 
   useInfiniteScroll({
     feedsLength: feeds.length,
@@ -275,9 +267,7 @@ export default function Feeds({
               : null
         });
         onLoadMorePosts({ ...data, section, username });
-        if (mounted.current) {
-          setLoadingMore(false);
-        }
+        setLoadingMore(false);
       } catch (error) {
         console.error(error);
       }
@@ -292,9 +282,7 @@ export default function Feeds({
             feeds.length > 0 ? feeds[feeds.length - 1].lastInteraction : null
         });
         onLoadMorePostsByUser({ ...data, section, username });
-        if (mounted.current) {
-          setLoadingMore(false);
-        }
+        setLoadingMore(false);
       } catch (error) {
         console.error(error);
       }

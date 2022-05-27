@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Input from 'components/Texts/Input';
 import Button from 'components/Button';
@@ -30,7 +30,6 @@ CopyAndPaste.propTypes = {
 };
 
 export default function CopyAndPaste({ mission, onSetMissionState, style }) {
-  const mounted = useRef(true);
   const [submitDisabled, setSubmitDisabled] = useState(false);
   const { userId } = useMyState();
   const uploadMissionAttempt = useAppContext(
@@ -45,7 +44,6 @@ export default function CopyAndPaste({ mission, onSetMissionState, style }) {
   const [status, setStatus] = useState('');
 
   useEffect(() => {
-    mounted.current = true;
     if (!stringIsEmpty(content)) {
       setStatus(
         content.localeCompare(missionText) === 0
@@ -58,13 +56,6 @@ export default function CopyAndPaste({ mission, onSetMissionState, style }) {
       setStatus('');
     }
   }, [content]);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function onDismount() {
-      mounted.current = false;
-    };
-  }, []);
 
   return (
     <div style={style}>
@@ -132,29 +123,25 @@ export default function CopyAndPaste({ mission, onSetMissionState, style }) {
       attempt: { content, status: 'pass' }
     });
     if (success) {
-      if (newXpAndRank.xp && mounted.current) {
+      if (newXpAndRank.xp) {
         onSetUserState({
           userId,
           newState: { twinkeXP: newXpAndRank.xp, rank: newXpAndRank.rank }
         });
       }
-      if (newCoins.netCoins && mounted.current) {
+      if (newCoins.netCoins) {
         onSetUserState({
           userId,
           newState: { twinkleCoins: newCoins.netCoins }
         });
       }
-      if (mounted.current) {
-        onUpdateMissionAttempt({
-          missionId: mission.id,
-          newState: { status: 'pass' }
-        });
-      }
+      onUpdateMissionAttempt({
+        missionId: mission.id,
+        newState: { status: 'pass' }
+      });
       document.getElementById('App').scrollTop = 0;
       BodyRef.scrollTop = 0;
     }
-    if (mounted.current) {
-      setSubmitDisabled(false);
-    }
+    setSubmitDisabled(false);
   }
 }

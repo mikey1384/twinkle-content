@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, useRef } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { capitalize, stringIsEmpty } from 'helpers/stringHelpers';
 import { css } from '@emotion/css';
@@ -30,7 +30,6 @@ export default function QuestionEditForm({
   questionId,
   onCancel
 }) {
-  const mounted = useRef(true);
   const editGrammarQuestion = useAppContext(
     (v) => v.requestHelpers.editGrammarQuestion
   );
@@ -132,13 +131,6 @@ export default function QuestionEditForm({
     wrongChoice2,
     wrongChoice3
   ]);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function onUnmount() {
-      mounted.current = false;
-    };
-  }, []);
 
   return (
     <div>
@@ -264,8 +256,6 @@ export default function QuestionEditForm({
       wrongChoice3: editedWrongChoice3,
       questionId
     });
-    if (mounted.current) {
-      onEditQuestion(editedQuestion);
-    }
+    onEditQuestion(editedQuestion);
   }
 }

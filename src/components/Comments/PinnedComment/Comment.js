@@ -97,14 +97,6 @@ function Comment({
     thumbUrl: originalThumbUrl
   }
 }) {
-  const mounted = useRef(true);
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
-
   subject = subject || comment.targetObj?.subject || {};
   const { fileType } = getFileInfoFromFileName(fileName);
   const navigate = useNavigate();
@@ -382,32 +374,28 @@ function Comment({
   }, [isPreview, rewardLevel, rewards, userId, xpRewardInterfaceShown]);
 
   useEffect(() => {
-    if (mounted.current) {
-      if (
-        userId &&
-        subjectHasSecretMessage &&
-        subjectId &&
-        subjectState.prevSecretViewerId !== userId
-      ) {
-        handleCheckSecretShown();
-      }
-      if (!userId) {
-        onChangeSpoilerStatus({
-          shown: false,
-          subjectId
-        });
-      }
+    if (
+      userId &&
+      subjectHasSecretMessage &&
+      subjectId &&
+      subjectState.prevSecretViewerId !== userId
+    ) {
+      handleCheckSecretShown();
+    }
+    if (!userId) {
+      onChangeSpoilerStatus({
+        shown: false,
+        subjectId
+      });
     }
 
     async function handleCheckSecretShown() {
       const { responded } = await checkIfUserResponded(subjectId);
-      if (mounted.current) {
-        onChangeSpoilerStatus({
-          shown: responded,
-          subjectId,
-          prevSecretViewerId: userId
-        });
-      }
+      onChangeSpoilerStatus({
+        shown: responded,
+        subjectId,
+        prevSecretViewerId: userId
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subjectId, subjectState.prevSecretViewerId, userId]);
@@ -696,16 +684,12 @@ function Comment({
       contentId: comment.id,
       contentType: 'comment'
     });
-    if (mounted.current) {
-      onEditDone({ editedComment, commentId: comment.id });
-    }
-    if (mounted.current) {
-      onSetIsEditing({
-        contentId: comment.id,
-        contentType: 'comment',
-        isEditing: false
-      });
-    }
+    onEditDone({ editedComment, commentId: comment.id });
+    onSetIsEditing({
+      contentId: comment.id,
+      contentType: 'comment',
+      isEditing: false
+    });
   }
 
   function handleLikeClick({ likes, isUnlike }) {

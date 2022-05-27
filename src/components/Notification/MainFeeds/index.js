@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import RoundList from 'components/RoundList';
 import Banner from 'components/Banner';
@@ -77,7 +77,6 @@ function MainFeeds({
   const [originalTwinkleCoins, setOriginalTwinkleCoins] = useState(0);
   const [totalTwinkles, setTotalTwinkles] = useState(0);
   const [totalCoins, setTotalCoins] = useState(0);
-  const mounted = useRef(true);
 
   useEffect(() => {
     if (totalRewardedTwinkles > 0) {
@@ -87,12 +86,6 @@ function MainFeeds({
       setTotalCoins(totalRewardedTwinkleCoins);
     }
   }, [totalRewardedTwinkles, totalRewardedTwinkleCoins]);
-
-  useEffect(() => {
-    return function unmount() {
-      mounted.current = false;
-    };
-  }, []);
 
   const twinkleLabel = useMemo(() => {
     return SELECTED_LANGUAGE === 'kr'
@@ -222,38 +215,26 @@ function MainFeeds({
     const { xp, rank } = await updateUserXP({
       action: 'collect'
     });
-    if (mounted.current) {
-      onSetUserState({
-        userId,
-        newState: { twinkleXP: xp, twinkleCoins: coins, rank }
-      });
-    }
-    if (mounted.current) {
-      onClearRewards();
-    }
-    if (mounted.current) {
-      setCollectingReward(false);
-    }
+    onSetUserState({
+      userId,
+      newState: { twinkleXP: xp, twinkleCoins: coins, rank }
+    });
+    onClearRewards();
+    setCollectingReward(false);
   }
 
   async function handleNewNotiAlertClick() {
     setLoadingNewFeeds(true);
     const { currentChatSubject, loadMoreNotifications, notifications } =
       await fetchNotifications();
-    if (mounted.current) {
-      onLoadNotifications({
-        currentChatSubject,
-        loadMoreNotifications,
-        notifications,
-        userId
-      });
-    }
-    if (mounted.current) {
-      selectNotiTab();
-    }
-    if (mounted.current) {
-      setLoadingNewFeeds(false);
-    }
+    onLoadNotifications({
+      currentChatSubject,
+      loadMoreNotifications,
+      notifications,
+      userId
+    });
+    selectNotiTab();
+    setLoadingNewFeeds(false);
   }
 
   async function onLoadMore() {
@@ -261,22 +242,16 @@ function MainFeeds({
     if (activeTab === 'notification') {
       const { loadMoreNotifications: loadMore, notifications: notis } =
         await loadMoreNotifications(notifications[notifications.length - 1].id);
-      if (mounted.current) {
-        onLoadMoreNotifications({
-          loadMoreNotifications: loadMore,
-          notifications: notis,
-          userId
-        });
-      }
+      onLoadMoreNotifications({
+        loadMoreNotifications: loadMore,
+        notifications: notis,
+        userId
+      });
     } else {
       const data = await loadMoreRewards(rewards[rewards.length - 1].id);
-      if (mounted.current) {
-        onLoadMoreRewards(data);
-      }
+      onLoadMoreRewards(data);
     }
-    if (mounted.current) {
-      setLoading(false);
-    }
+    setLoading(false);
   }
 }
 

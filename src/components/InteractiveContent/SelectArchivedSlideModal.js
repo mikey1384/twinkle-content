@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
@@ -17,15 +17,7 @@ export default function SelectArchivedSlideModal({
   onHide,
   archivedSlides
 }) {
-  const mounted = useRef(true);
   const [selectedSlideId, setSelectedSlideId] = useState(null);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function onDismount() {
-      mounted.current = false;
-    };
-  }, []);
 
   return (
     <Modal onHide={onHide}>

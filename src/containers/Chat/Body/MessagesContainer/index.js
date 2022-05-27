@@ -167,7 +167,6 @@ function MessagesContainer({
   const [hideModalShown, setHideModalShown] = useState(false);
   const [addToFavoritesShown, setAddToFavoritesShown] = useState(false);
   const MessagesRef = useRef(null);
-  const mounted = useRef(true);
   const ChatInputRef = useRef(null);
   const favoritingRef = useRef(false);
   const timerRef = useRef(null);
@@ -211,13 +210,6 @@ function MessagesContainer({
       parseChannelPath(pathId) !== selectedChannelId
     );
   }, [currentPathId, selectedChannelId]);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function onUnmount() {
-      mounted.current = false;
-    };
-  }, []);
 
   useEffect(() => {
     if (selectedChannelId === channelOnCall.id) {
@@ -415,10 +407,10 @@ function MessagesContainer({
         (MessagesRef.current || {}).offsetHeight;
       const scrollTop = (MessagesRef.current || {}).scrollTop;
       const distanceFromTop = scrollThreshold + scrollTop;
-      if (mounted.current && distanceFromTop < 3) {
+      if (distanceFromTop < 3) {
         handleLoadMore();
       }
-      if (mounted.current && scrollTop >= unseenButtonThreshold) {
+      if (scrollTop >= unseenButtonThreshold) {
         setNewUnseenMessage(false);
       }
     }
@@ -449,18 +441,12 @@ function MessagesContainer({
 
   const handleHideChat = useCallback(async () => {
     await hideChat(selectedChannelId);
-    if (mounted.current) {
-      onHideChat(selectedChannelId);
-    }
+    onHideChat(selectedChannelId);
     const data = await loadChatChannel({
       channelId: GENERAL_CHAT_ID
     });
-    if (mounted.current) {
-      onEnterChannelWithId({ data });
-    }
-    if (mounted.current) {
-      setHideModalShown(false);
-    }
+    onEnterChannelWithId({ data });
+    setHideModalShown(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedChannelId]);
 
@@ -533,12 +519,8 @@ function MessagesContainer({
             pathId,
             message
           });
-          if (mounted.current) {
-            onUpdateChannelPathIdHash({ channelId: channel.id, pathId });
-          }
-          if (mounted.current) {
-            onSendFirstDirectMessage({ channel, message });
-          }
+          onUpdateChannelPathIdHash({ channelId: channel.id, pathId });
+          onSendFirstDirectMessage({ channel, message });
           onSetChessModalShown(false);
           navigate(`/chat/${pathId}`, { replace: true });
           return;
@@ -554,17 +536,13 @@ function MessagesContainer({
   const handleDelete = useCallback(async () => {
     const { fileName, filePath, messageId } = deleteModal;
     await deleteChatMessage({ fileName, filePath, messageId });
-    if (mounted.current) {
-      onDeleteMessage({ channelId: selectedChannelId, messageId });
-    }
-    if (mounted.current) {
-      setDeleteModal({
-        shown: false,
-        fileName: '',
-        filePath: '',
-        messageId: null
-      });
-    }
+    onDeleteMessage({ channelId: selectedChannelId, messageId });
+    setDeleteModal({
+      shown: false,
+      fileName: '',
+      filePath: '',
+      messageId: null
+    });
     socket.emit('delete_chat_message', {
       channelId: selectedChannelId,
       messageId
@@ -586,15 +564,13 @@ function MessagesContainer({
         canChangeSubject: editedCanChangeSubject,
         theme: editedTheme
       });
-      if (mounted.current) {
-        onEditChannelSettings({
-          channelName: editedChannelName,
-          isClosed: editedIsClosed,
-          channelId: selectedChannelId,
-          canChangeSubject: editedCanChangeSubject,
-          theme: editedTheme
-        });
-      }
+      onEditChannelSettings({
+        channelName: editedChannelName,
+        isClosed: editedIsClosed,
+        channelId: selectedChannelId,
+        canChangeSubject: editedCanChangeSubject,
+        theme: editedTheme
+      });
       if (userId === currentChannel.creatorId) {
         socket.emit('new_channel_settings', {
           channelName: editedChannelName,
@@ -642,15 +618,13 @@ function MessagesContainer({
           origin: currentChannel.id
         });
         for (let i = 0; i < channels.length; i++) {
-          if (mounted.current) {
-            onReceiveMessageOnDifferentChannel({
-              message: messages[i],
-              channel: channels[i].channel,
-              pageVisible: true,
-              usingChat: true,
-              isMyMessage: true
-            });
-          }
+          onReceiveMessageOnDifferentChannel({
+            message: messages[i],
+            channel: channels[i].channel,
+            pageVisible: true,
+            usingChat: true,
+            isMyMessage: true
+          });
         }
       }
       setInviteUsersModalShown(false);
@@ -690,9 +664,7 @@ function MessagesContainer({
       try {
         setLeaving(true);
         await leaveChannel(selectedChannelId);
-        if (mounted.current) {
-          onLeaveChannel(selectedChannelId);
-        }
+        onLeaveChannel(selectedChannelId);
         socket.emit('leave_chat_channel', {
           channelId: selectedChannelId,
           userId,
@@ -700,12 +672,8 @@ function MessagesContainer({
           profilePicUrl
         });
         navigate(`/chat/${GENERAL_CHAT_PATH_ID}`);
-        if (mounted.current) {
-          setLeaveConfirmModalShown(false);
-        }
-        if (mounted.current) {
-          setLeaving(false);
-        }
+        setLeaveConfirmModalShown(false);
+        setLeaving(false);
       } catch (error) {
         console.error(error);
         setLeaving(false);
@@ -749,12 +717,8 @@ function MessagesContainer({
               messageId,
               channelId: selectedChannelId
             });
-          if (mounted.current) {
-            onLoadMoreMessages({ messageIds, messagesObj, loadedChannelId });
-          }
-          if (mounted.current) {
-            setLoadingMore(false);
-          }
+          onLoadMoreMessages({ messageIds, messagesObj, loadedChannelId });
+          setLoadingMore(false);
           loadMoreButtonLock.current = false;
         } catch (error) {
           console.error(error);
@@ -803,9 +767,7 @@ function MessagesContainer({
       favoritingRef.current = true;
       try {
         const favorited = await putFavoriteChannel(selectedChannelId);
-        if (mounted.current) {
-          onSetFavoriteChannel({ channelId: selectedChannelId, favorited });
-        }
+        onSetFavoriteChannel({ channelId: selectedChannelId, favorited });
         favoritingRef.current = false;
       } catch (error) {
         console.error(error);
@@ -839,15 +801,9 @@ function MessagesContainer({
             pathId,
             message
           });
-          if (mounted.current) {
-            onUpdateChannelPathIdHash({ channelId: channel.id, pathId });
-          }
-          if (mounted.current) {
-            onSendFirstDirectMessage({ channel, message });
-          }
-          if (mounted.current) {
-            onSetCreatingNewDMChannel(false);
-          }
+          onUpdateChannelPathIdHash({ channelId: channel.id, pathId });
+          onSendFirstDirectMessage({ channel, message });
+          onSetCreatingNewDMChannel(false);
           navigate(`/chat/${pathId}`, { replace: true });
           return Promise.resolve();
         } catch (error) {
@@ -950,9 +906,7 @@ function MessagesContainer({
       if (andLeave) {
         handleLeaveChannel();
       }
-      if (mounted.current) {
-        setSelectNewOwnerModalShown(false);
-      }
+      setSelectNewOwnerModalShown(false);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [handleLeaveChannel, profilePicUrl, selectedChannelId, userId, username]
@@ -1308,7 +1262,7 @@ function MessagesContainer({
   }
 
   function handleScrollToBottom() {
-    if (mounted.current && MessagesRef.current) {
+    if (MessagesRef.current) {
       if (deviceIsMobile) {
         (MessagesRef.current || {}).scrollTop = 0;
         (MessagesRef.current || {}).scrollTop = -1000;

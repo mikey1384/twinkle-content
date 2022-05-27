@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import { Color } from 'constants/css';
@@ -25,14 +25,6 @@ export default function GitHubVerifier({ onSetMissionState, task }) {
   const { code } = useMemo(() => queryString.parse(search), [search]);
   const [errorMsg, setErrorMsg] = useState('');
   const [loading, setLoading] = useState(false);
-  const mounted = useRef(true);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function onUnmount() {
-      mounted.current = false;
-    };
-  }, []);
 
   useEffect(() => {
     if (code) {
@@ -42,20 +34,14 @@ export default function GitHubVerifier({ onSetMissionState, task }) {
       try {
         setLoading(true);
         const githubUsername = await loadGitHubData(code);
-        if (mounted.current) {
-          onSetUserState({
-            userId,
-            newState: { githubUsername }
-          });
-        }
+        onSetUserState({
+          userId,
+          newState: { githubUsername }
+        });
       } catch (error) {
-        if (mounted.current) {
-          setErrorMsg('Failed to fetch your GitHub username - try again');
-        }
+        setErrorMsg('Failed to fetch your GitHub username - try again');
       }
-      if (mounted.current) {
-        setLoading(false);
-      }
+      setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code]);

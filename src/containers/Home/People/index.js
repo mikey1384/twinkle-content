@@ -46,7 +46,6 @@ function People() {
     onClear: onClearUserSearch
   });
   const prevOrderUsersBy = useRef(orderUsersBy);
-  const mounted = useRef(true);
   const dropdownLabel =
     orderUsersBy === LAST_ONLINE_FILTER_LABEL
       ? RANKING_FILTER_LABEL
@@ -58,9 +57,7 @@ function People() {
     loading,
     feedsLength: profiles.length,
     onScrollToBottom: () => {
-      if (mounted.current) {
-        setLoading(true);
-      }
+      setLoading(true);
     },
     onLoad: loadMoreProfiles
   });
@@ -72,21 +69,12 @@ function People() {
         const data = await loadUsers({
           orderBy: orderUsersBy === RANKING_FILTER_LABEL ? 'twinkleXP' : ''
         });
-        if (mounted.current) {
-          onLoadUsers(data);
-          prevOrderUsersBy.current = orderUsersBy;
-        }
+        onLoadUsers(data);
+        prevOrderUsersBy.current = orderUsersBy;
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [orderUsersBy, profilesLoaded]);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function onUnmount() {
-      mounted.current = false;
-    };
-  }, []);
 
   const loadMoreButtonShown = useMemo(
     () => stringIsEmpty(userSearchText) && profilesLoaded && loadMoreButton,
@@ -191,9 +179,7 @@ function People() {
     const { data: users } = await request.get(
       `${URL}/user/users/search?queryString=${text}`
     );
-    if (mounted.current) {
-      onSearchUsers(users);
-    }
+    onSearchUsers(users);
   }
 
   async function loadMoreProfiles() {
@@ -207,10 +193,8 @@ function People() {
           profiles.length > 0 ? profiles[profiles.length - 1].twinkleXP : null,
         orderBy: orderUsersBy === RANKING_FILTER_LABEL ? 'twinkleXP' : ''
       });
-      if (mounted.current) {
-        onLoadMoreUsers(data);
-        setLoading(false);
-      }
+      onLoadMoreUsers(data);
+      setLoading(false);
     } catch (error) {
       console.error(error);
       setLoading(false);

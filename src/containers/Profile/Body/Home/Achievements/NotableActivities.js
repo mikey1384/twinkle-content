@@ -23,7 +23,6 @@ export default function NotableActivities({
   userId,
   username
 }) {
-  const mounted = useRef(true);
   const loadingMoreRef = useRef(false);
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -41,12 +40,6 @@ export default function NotableActivities({
     (v) => v.actions.onLoadMoreNotables
   );
   useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
-  useEffect(() => {
     if (!loaded) {
       initNotables();
     }
@@ -55,10 +48,8 @@ export default function NotableActivities({
       const { results, loadMoreButton } = await loadNotableContent({
         userId
       });
-      if (mounted.current) {
-        onLoadNotables({ username, feeds: results, loadMoreButton });
-        setLoading(false);
-      }
+      onLoadNotables({ username, feeds: results, loadMoreButton });
+      setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId, loaded, profile.id, username]);

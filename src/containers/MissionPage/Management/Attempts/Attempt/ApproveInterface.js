@@ -23,7 +23,6 @@ export default function ApproveInterface({
   mission,
   onSetMissionState
 }) {
-  const mounted = useRef(true);
   const uploadMissionFeedback = useAppContext(
     (v) => v.requestHelpers.uploadMissionFeedback
   );
@@ -54,7 +53,6 @@ export default function ApproveInterface({
   );
 
   useEffect(() => {
-    mounted.current = true;
     return function cleanUp() {
       onSetMissionFeedbackForm({
         attemptId: attempt.id,
@@ -63,7 +61,6 @@ export default function ApproveInterface({
           status: statusRef.current
         }
       });
-      mounted.current = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

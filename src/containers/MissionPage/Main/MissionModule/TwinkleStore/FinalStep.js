@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
@@ -21,14 +21,6 @@ export default function FinalStep({ mission, style, userId }) {
     (v) => v.actions.onUpdateMissionAttempt
   );
   const [submitDisabled, setSubmitDisabled] = useState(false);
-  const mounted = useRef(true);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function onUnmount() {
-      mounted.current = false;
-    };
-  }, []);
 
   return (
     <div
@@ -75,27 +67,23 @@ export default function FinalStep({ mission, style, userId }) {
       attempt: { status: 'pass' }
     });
     if (success) {
-      if (newXpAndRank.xp && mounted.current) {
+      if (newXpAndRank.xp) {
         onSetUserState({
           userId,
           newState: { xp: newXpAndRank.xp, rank: newXpAndRank.rank }
         });
       }
-      if (newCoins.netCoins && mounted.current) {
+      if (newCoins.netCoins) {
         onSetUserState({
           userId,
           newState: { twinkleCoins: newCoins.netCoins }
         });
       }
-      if (mounted.current) {
-        onUpdateMissionAttempt({
-          missionId: mission.id,
-          newState: { status: 'pass' }
-        });
-      }
+      onUpdateMissionAttempt({
+        missionId: mission.id,
+        newState: { status: 'pass' }
+      });
     }
-    if (mounted.current) {
-      setSubmitDisabled(false);
-    }
+    setSubmitDisabled(false);
   }
 }

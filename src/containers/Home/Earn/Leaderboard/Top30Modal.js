@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
@@ -16,14 +16,6 @@ Top30Modal.propTypes = {
 export default function Top30Modal({ onHide, month, year, users }) {
   const { userId } = useMyState();
   const [usermenuShown, setUsermenuShown] = useState(false);
-  const mounted = useRef(true);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
 
   return (
     <Modal small closeWhenClickedOutside={!usermenuShown} onHide={onHide}>

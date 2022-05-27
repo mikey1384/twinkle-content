@@ -12,7 +12,6 @@ Grammar.propTypes = {
 };
 
 export default function Grammar({ isRepeating, mission }) {
-  const mounted = useRef(true);
   const { userId } = useMyState();
   const loadMission = useAppContext((v) => v.requestHelpers.loadMission);
   const myAttempts = useMissionContext((v) => v.state.myAttempts);
@@ -25,9 +24,7 @@ export default function Grammar({ isRepeating, mission }) {
   const [loading, setLoading] = useState(false);
   const loadingRef = useRef(false);
   useEffect(() => {
-    mounted.current = true;
     return function onUnmount() {
-      mounted.current = false;
       onSetMissionState({
         missionId: mission.id,
         newState: {
@@ -96,22 +93,16 @@ export default function Grammar({ isRepeating, mission }) {
       loadingRef.current = true;
       setLoading(true);
       const { page, myAttempts } = await loadMission({ missionId: mission.id });
-      if (mounted.current) {
-        onSetMissionState({
-          missionId: mission.id,
-          newState: {
-            ...page,
-            managementTab: mission.managementTab
-          }
-        });
-      }
-      if (mounted.current) {
-        onSetMyMissionAttempts(myAttempts);
-      }
-      if (mounted.current) {
-        setLoading(false);
-        loadingRef.current = false;
-      }
+      onSetMissionState({
+        missionId: mission.id,
+        newState: {
+          ...page,
+          managementTab: mission.managementTab
+        }
+      });
+      onSetMyMissionAttempts(myAttempts);
+      setLoading(false);
+      loadingRef.current = false;
     }
   }
 }

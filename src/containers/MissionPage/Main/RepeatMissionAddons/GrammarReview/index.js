@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FilterBar from 'components/FilterBar';
@@ -28,15 +28,7 @@ export default function GrammarReview({
     (v) => v.requestHelpers.loadMoreGrammarAttempts
   );
   const [loadingMore, setLoadingMore] = useState(false);
-  const mounted = useRef(true);
   const { [`${activeTab}LoadMoreButtonShown`]: loadMoreButtonShown } = mission;
-
-  useEffect(() => {
-    mounted.current = true;
-    return function onUnmount() {
-      mounted.current = false;
-    };
-  }, []);
 
   return (
     <ErrorBoundary style={style}>
@@ -128,21 +120,17 @@ export default function GrammarReview({
       activeTab,
       lastTimeStamp: currentAttempts[currentAttempts.length - 1].timeStamp
     });
-    if (mounted.current) {
-      onSetMissionState({
-        missionId: mission.id,
-        newState: {
-          questionObj: {
-            ...mission.questionObj,
-            ...questionObj
-          },
-          [`${activeTab}Attempts`]: currentAttempts.concat(attempts),
-          [`${activeTab}LoadMoreButtonShown`]: loadMoreButton
-        }
-      });
-    }
-    if (mounted.current) {
-      setLoadingMore(false);
-    }
+    onSetMissionState({
+      missionId: mission.id,
+      newState: {
+        questionObj: {
+          ...mission.questionObj,
+          ...questionObj
+        },
+        [`${activeTab}Attempts`]: currentAttempts.concat(attempts),
+        [`${activeTab}LoadMoreButtonShown`]: loadMoreButton
+      }
+    });
+    setLoadingMore(false);
   }
 }

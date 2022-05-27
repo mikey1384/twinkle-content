@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { css } from '@emotion/css';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
@@ -58,7 +58,6 @@ export default function KarmaStatus() {
     (v) => v.requestHelpers.loadKarmaPoints
   );
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
-  const mounted = useRef(true);
   const { authLevel, userType, userId, karmaPoints } = useMyState();
   const [loadingKarma, setLoadingKarma] = useState(false);
   const [numTwinklesRewarded, setNumTwinklesRewarded] = useState(0);
@@ -66,21 +65,13 @@ export default function KarmaStatus() {
     useState(0);
   const [numPostsRewarded, setNumPostsRewarded] = useState(0);
   const [numRecommended, setNumRecommended] = useState(0);
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
 
   useEffect(() => {
     if (userId) {
       handleLoadKarmaPoints();
     }
     async function handleLoadKarmaPoints() {
-      if (mounted.current) {
-        setLoadingKarma(true);
-      }
+      setLoadingKarma(true);
       const {
         karmaPoints: kp,
         numTwinklesRewarded,
@@ -88,27 +79,15 @@ export default function KarmaStatus() {
         numPostsRewarded,
         numRecommended
       } = await loadKarmaPoints();
-      if (mounted.current) {
-        onSetUserState({ userId, newState: { karmaPoints: kp } });
-      }
+      onSetUserState({ userId, newState: { karmaPoints: kp } });
       if (authLevel < 2) {
-        if (mounted.current) {
-          setNumTwinklesRewarded(numTwinklesRewarded);
-        }
-        if (mounted.current) {
-          setNumApprovedRecommendations(numApprovedRecommendations);
-        }
+        setNumTwinklesRewarded(numTwinklesRewarded);
+        setNumApprovedRecommendations(numApprovedRecommendations);
       } else {
-        if (mounted.current) {
-          setNumPostsRewarded(numPostsRewarded);
-        }
-        if (mounted.current) {
-          setNumRecommended(numRecommended);
-        }
+        setNumPostsRewarded(numPostsRewarded);
+        setNumRecommended(numRecommended);
       }
-      if (mounted.current) {
-        setLoadingKarma(false);
-      }
+      setLoadingKarma(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);

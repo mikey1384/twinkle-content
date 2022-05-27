@@ -68,8 +68,6 @@ export default function InteractiveContent({
     (v) => v.actions.onSetSlideState
   );
   const { managementLevel, userId } = useMyState();
-
-  const mounted = useRef(true);
   const expanded = useRef(false);
   const SlideRefs = useRef({});
   const prevDisplayedSlideIds = useRef([]);
@@ -113,13 +111,11 @@ export default function InteractiveContent({
         const newNumUpdates = await checkInteractiveNumUpdates(interactiveId);
         if (newNumUpdates > numUpdates) {
           const interactive = await loadInteractive(interactiveId);
-          if (mounted.current) {
-            onLoadInteractive({
-              ...interactive,
-              loaded: true,
-              prevUserId: userId
-            });
-          }
+          onLoadInteractive({
+            ...interactive,
+            loaded: true,
+            prevUserId: userId
+          });
         }
       }
     }
@@ -176,25 +172,16 @@ export default function InteractiveContent({
   }, [displayedSlideIds, slideObj, onScrollElementToCenter]);
 
   useEffect(() => {
-    mounted.current = true;
-    return function onUnmount() {
-      mounted.current = false;
-    };
-  }, []);
-
-  useEffect(() => {
     init();
 
     async function init() {
       if (interactiveId && userId && prevUserId !== userId) {
         const interactive = await loadInteractive(interactiveId);
-        if (mounted.current) {
-          onLoadInteractive({
-            ...interactive,
-            loaded: true,
-            prevUserId: userId
-          });
-        }
+        onLoadInteractive({
+          ...interactive,
+          loaded: true,
+          prevUserId: userId
+        });
       } else {
         onLoadInteractive({
           id: 0,

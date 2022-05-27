@@ -25,11 +25,10 @@ export default function Rankings() {
   const myMonthlyXP = useNotiContext((v) => v.state.myMonthlyXP);
   const myAllTimeXP = useNotiContext((v) => v.state.myAllTimeXP);
   const userChangedTab = useRef(false);
-  const mounted = useRef(true);
 
   useEffect(() => {
     userChangedTab.current = false;
-    if (!rankingsLoaded && mounted.current) {
+    if (!rankingsLoaded) {
       setThisMonthSelected(!!userId);
     }
   }, [userId, rankingsLoaded]);

@@ -28,7 +28,6 @@ export default function LetsLaunch({ index, innerRef, taskId }) {
   const timerRef = useRef(null);
   const urlErrorRef = useRef('');
   const urlIsNotEmpty = useMemo(() => !stringIsEmpty(url), [url]);
-  const mounted = useRef(true);
 
   useEffect(() => {
     const notValidUrl = `That's not a valid url`;
@@ -54,13 +53,6 @@ export default function LetsLaunch({ index, innerRef, taskId }) {
       }
     }
   }, [url, urlError, urlIsNotEmpty]);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function onUnmount() {
-      mounted.current = false;
-    };
-  }, []);
 
   return (
     <StepSlide
@@ -141,17 +133,13 @@ export default function LetsLaunch({ index, innerRef, taskId }) {
         }
       });
       if (success) {
-        if (mounted.current) {
-          onUpdateMissionAttempt({
-            missionId: taskId,
-            newState: { status: 'pending', tryingAgain: false }
-          });
-        }
+        onUpdateMissionAttempt({
+          missionId: taskId,
+          newState: { status: 'pending', tryingAgain: false }
+        });
       }
       submittingRef.current = false;
-      if (mounted.current) {
-        setSubmitting(false);
-      }
+      setSubmitting(false);
     }
   }
 }

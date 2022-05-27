@@ -3,24 +3,19 @@ import { useChatContext } from 'contexts';
 
 export default function Outgoing() {
   const myStreamRef = useRef(null);
-  const mounted = useRef(true);
   const myStream = useChatContext((v) => v.state.myStream);
   const onSetMyStream = useChatContext((v) => v.actions.onSetMyStream);
   useEffect(() => {
-    mounted.current = true;
     init();
     async function init() {
       const options = { audio: true };
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         const stream = await navigator.mediaDevices.getUserMedia(options);
-        if (mounted.current) {
-          onSetMyStream(stream);
-        }
+        onSetMyStream(stream);
       }
     }
 
     return function cleanUp() {
-      mounted.current = false;
       onSetMyStream(null);
       myStreamRef.current?.getTracks()?.[0]?.stop?.();
     };

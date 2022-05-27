@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import Loading from 'components/Loading';
 import Main from './Main';
 import RightMenu from './RightMenu';
@@ -20,7 +20,6 @@ import { useAppContext, useMissionContext } from 'contexts';
 
 export default function MissionPage() {
   const { missionType } = useParams();
-  const mounted = useRef(true);
   const navigate = useNavigate();
   const location = useLocation();
   const { loaded, userId, isCreator } = useMyState();
@@ -83,12 +82,8 @@ export default function MissionPage() {
     async function init() {
       if (userId) {
         const { page, myAttempts } = await loadMission({ missionId });
-        if (mounted.current) {
-          onLoadMission({ mission: page, prevUserId: userId });
-        }
-        if (mounted.current) {
-          onSetMyMissionAttempts(myAttempts);
-        }
+        onLoadMission({ mission: page, prevUserId: userId });
+        onSetMyMissionAttempts(myAttempts);
       } else {
         onLoadMission({ mission: { id: missionId }, prevUserId: userId });
       }
@@ -96,13 +91,6 @@ export default function MissionPage() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId, prevUserId, missionId, mission.loaded]);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function onUnmount() {
-      mounted.current = false;
-    };
-  }, []);
 
   if (!loaded) {
     return <Loading />;

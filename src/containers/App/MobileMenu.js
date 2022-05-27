@@ -24,8 +24,6 @@ export default function MobileMenu({ onClose }) {
     to: { marginLeft: '0' },
     from: { marginLeft: '-100%' }
   });
-
-  const mounted = useRef(true);
   const displayedRef = useRef(false);
   const onLogout = useAppContext((v) => v.user.actions.onLogout);
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
@@ -45,13 +43,6 @@ export default function MobileMenu({ onClose }) {
     displayedRef.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function onDismount() {
-      mounted.current = false;
-    };
-  }, []);
 
   return (
     <ErrorBoundary
@@ -155,14 +146,8 @@ export default function MobileMenu({ onClose }) {
   }
 
   function handleLogout() {
-    if (mounted.current) {
-      onLogout();
-    }
-    if (mounted.current) {
-      onSetUserState({ userId, newState: { online: false } });
-    }
-    if (mounted.current) {
-      onResetChat();
-    }
+    onLogout();
+    onSetUserState({ userId, newState: { online: false } });
+    onResetChat();
   }
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DropdownButton from 'components/Buttons/DropdownButton';
 import SwitchButton from 'components/Buttons/SwitchButton';
 import FilterBar from 'components/FilterBar';
@@ -59,14 +59,6 @@ export default function HomeFilter({
   );
   const { hideWatched, userId } = useMyState();
   const [activeTab, setActiveTab] = useState();
-  const mounted = useRef(true);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
 
   useEffect(() => {
     setActiveTab(category);
@@ -192,8 +184,6 @@ export default function HomeFilter({
 
   async function handleToggleHideWatched() {
     const hideWatched = await toggleHideWatched();
-    if (mounted.current) {
-      onToggleHideWatched(hideWatched);
-    }
+    onToggleHideWatched(hideWatched);
   }
 }

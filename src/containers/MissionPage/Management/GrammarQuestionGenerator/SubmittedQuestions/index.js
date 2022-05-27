@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import FilterBar from 'components/FilterBar';
 import Loading from 'components/Loading';
@@ -18,7 +18,6 @@ export default function SubmittedQuestions({
   mission,
   onSetMissionState
 }) {
-  const mounted = useRef(true);
   const { isCreator } = useMyState();
   const {
     managementTab: activeTab = 'pending',
@@ -30,7 +29,6 @@ export default function SubmittedQuestions({
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   useEffect(() => {
-    mounted.current = true;
     if (isCreator) {
       init();
     }
@@ -41,29 +39,18 @@ export default function SubmittedQuestions({
         [`${activeTab}QuestionIds`]: questionIds,
         loadMoreButton
       } = await loadGrammarQuestions({ activeTab });
-      if (mounted.current) {
-        onSetMissionState({
-          missionId: mission.id,
-          newState: {
-            [`${activeTab}QuestionIds`]: questionIds,
-            questionObj: { ...mission.questionObj, ...questionObj },
-            loadMoreGrammarQuestionsButton: loadMoreButton
-          }
-        });
-      }
-      if (mounted.current) {
-        setLoading(false);
-      }
+      onSetMissionState({
+        missionId: mission.id,
+        newState: {
+          [`${activeTab}QuestionIds`]: questionIds,
+          questionObj: { ...mission.questionObj, ...questionObj },
+          loadMoreGrammarQuestionsButton: loadMoreButton
+        }
+      });
+      setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab, isCreator]);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function onUnmount() {
-      mounted.current = false;
-    };
-  }, []);
 
   return (
     <div style={style}>
@@ -196,19 +183,15 @@ export default function SubmittedQuestions({
       [`${activeTab}QuestionIds`]: loadedQuestionIds,
       loadMoreButton
     } = await loadGrammarQuestions({ activeTab, lastQuestionId });
-    if (mounted.current) {
-      onSetMissionState({
-        missionId: mission.id,
-        newState: {
-          [`${activeTab}QuestionIds`]:
-            mission[`${activeTab}QuestionIds`].concat(loadedQuestionIds),
-          questionObj: { ...mission.questionObj, ...questionObj },
-          loadMoreGrammarQuestionsButton: loadMoreButton
-        }
-      });
-    }
-    if (mounted.current) {
-      setLoadingMore(false);
-    }
+    onSetMissionState({
+      missionId: mission.id,
+      newState: {
+        [`${activeTab}QuestionIds`]:
+          mission[`${activeTab}QuestionIds`].concat(loadedQuestionIds),
+        questionObj: { ...mission.questionObj, ...questionObj },
+        loadMoreGrammarQuestionsButton: loadMoreButton
+      }
+    });
+    setLoadingMore(false);
   }
 }

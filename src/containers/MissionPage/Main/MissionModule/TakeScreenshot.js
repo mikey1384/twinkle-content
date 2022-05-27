@@ -47,16 +47,11 @@ export default function TakeScreenshot({
     () => returnMaxUploadSize(fileUploadLvl),
     [fileUploadLvl]
   );
-  const mounted = useRef(true);
 
   useEffect(() => {
-    mounted.current = true;
     setTimeout(() => {
       setButtonShown(true);
     }, 3200);
-    return function onUnmount() {
-      mounted.current = false;
-    };
   });
 
   return (

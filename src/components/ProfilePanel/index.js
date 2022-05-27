@@ -44,15 +44,7 @@ ProfilePanel.propTypes = {
 };
 
 function ProfilePanel({ expandable, profileId, style }) {
-  const mounted = useRef(true);
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
-
   const navigate = useNavigate();
   const profilePanelState = useContentState({
     contentType: 'user',
@@ -184,9 +176,7 @@ function ProfilePanel({ expandable, profileId, style }) {
 
   useEffect(() => {
     setTimeout(() => {
-      if (mounted.current) {
-        handleCheckIfUserOnline();
-      }
+      handleCheckIfUserOnline();
     }, 100);
     if (!profileLoaded && !loading.current && profileId) {
       handleInitProfile();
@@ -196,24 +186,20 @@ function ProfilePanel({ expandable, profileId, style }) {
     }
     async function handleCheckIfUserOnline() {
       const online = await checkIfUserOnline(profileId);
-      if (mounted.current) {
-        onSetUserState({ userId: profileId, newState: { online } });
-      }
+      onSetUserState({ userId: profileId, newState: { online } });
     }
     async function handleInitProfile() {
       loading.current = true;
       const data = await loadProfile(profileId);
-      if (mounted.current) {
-        onInitContent({
-          contentType: 'user',
-          contentId: profileId
-        });
-        onSetUserState({
-          userId: profileId,
-          newState: { ...data, loaded: true }
-        });
-        loading.current = false;
-      }
+      onInitContent({
+        contentType: 'user',
+        contentId: profileId
+      });
+      onSetUserState({
+        userId: profileId,
+        newState: { ...data, loaded: true }
+      });
+      loading.current = false;
     }
     async function handleLoadComments() {
       try {
@@ -222,14 +208,12 @@ function ProfilePanel({ expandable, profileId, style }) {
           contentType: 'user',
           limit: 1
         });
-        if (mounted.current) {
-          onLoadComments({
-            ...data,
-            contentId: profileId,
-            contentType: 'user',
-            isPreview: true
-          });
-        }
+        onLoadComments({
+          ...data,
+          contentId: profileId,
+          contentType: 'user',
+          isPreview: true
+        });
       } catch (error) {
         console.error(error);
       }
@@ -613,21 +597,19 @@ function ProfilePanel({ expandable, profileId, style }) {
 
   async function handleTalkClick() {
     const { channelId, pathId } = await loadDMChannel({ recepient: profile });
-    if (mounted.current) {
-      if (!pathId) {
-        onOpenNewChatTab({
-          user: { username, id: userId, profilePicUrl, authLevel },
-          recepient: {
-            username: profile.username,
-            id: profile.id,
-            profilePicUrl: profile.profilePicUrl,
-            authLevel: profile.authLevel
-          }
-        });
-      }
-      onUpdateSelectedChannelId(channelId);
-      navigate(pathId ? `/chat/${pathId}` : `/chat/new`);
+    if (!pathId) {
+      onOpenNewChatTab({
+        user: { username, id: userId, profilePicUrl, authLevel },
+        recepient: {
+          username: profile.username,
+          id: profile.id,
+          profilePicUrl: profile.profilePicUrl,
+          authLevel: profile.authLevel
+        }
+      });
     }
+    onUpdateSelectedChannelId(channelId);
+    navigate(pathId ? `/chat/${pathId}` : `/chat/new`);
   }
 
   function onChangeProfilePictureClick() {
@@ -642,24 +624,20 @@ function ProfilePanel({ expandable, profileId, style }) {
         contentType: 'user',
         limit: 5
       });
-      if (mounted.current) {
-        onLoadComments({
-          comments,
-          contentId: profileId,
-          contentType: 'user',
-          loadMoreButton
-        });
-        onSetCommentsShown({ contentId: profileId, contentType: 'user' });
-        setLoadingComments(false);
-      }
+      onLoadComments({
+        comments,
+        contentId: profileId,
+        contentType: 'user',
+        loadMoreButton
+      });
+      onSetCommentsShown({ contentId: profileId, contentType: 'user' });
+      setLoadingComments(false);
     }
   }
 
   async function onMessagesButtonClick() {
     await onExpandComments();
-    if (mounted.current) {
-      if (profileId !== userId) CommentInputAreaRef.current?.focus?.();
-    }
+    if (profileId !== userId) CommentInputAreaRef.current?.focus?.();
   }
 
   async function handleUploadBio(params) {
@@ -667,10 +645,8 @@ function ProfilePanel({ expandable, profileId, style }) {
       ...params,
       profileId
     });
-    if (mounted.current) {
-      onSetUserState({ userId: data.userId, newState: data.bio });
-      setBioEditModalShown(false);
-    }
+    onSetUserState({ userId: data.userId, newState: data.bio });
+    setBioEditModalShown(false);
   }
 }
 

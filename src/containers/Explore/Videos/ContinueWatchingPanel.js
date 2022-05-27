@@ -40,7 +40,6 @@ export default function ContinueWatchingPanel() {
   const [loaded, setLoaded] = useState(continueWatchingLoaded);
   const loadingRef = useRef(false);
   const loadedRef = useRef(false);
-  const mounted = useRef(true);
 
   useEffect(() => {
     if (
@@ -55,29 +54,18 @@ export default function ContinueWatchingPanel() {
       loadingRef.current = true;
       const { videos, loadMoreButton, noVideosToContinue } =
         await loadContinueWatching();
-      if (mounted.current) {
-        onLoadContinueWatching({
-          videos,
-          loadMoreButton,
-          showingRecommendedVideos: !!noVideosToContinue
-        });
-      }
+      onLoadContinueWatching({
+        videos,
+        loadMoreButton,
+        showingRecommendedVideos: !!noVideosToContinue
+      });
       loadedRef.current = true;
-      if (mounted.current) {
-        setLoaded(true);
-      }
+      setLoaded(true);
       loadingRef.current = false;
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [continueWatchingLoaded, userId, prevUserId, profileLoaded]);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
 
   return (
     <ErrorBoundary>
@@ -142,8 +130,6 @@ export default function ContinueWatchingPanel() {
     const { videos, loadMoreButton } = await loadContinueWatching(
       continueWatchingVideos[continueWatchingVideos.length - 1]?.viewTimeStamp
     );
-    if (mounted.current) {
-      onLoadMoreContinueWatching({ videos, loadMoreButton });
-    }
+    onLoadMoreContinueWatching({ videos, loadMoreButton });
   }
 }

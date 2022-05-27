@@ -143,7 +143,6 @@ function App() {
   const hiddenRef = useRef(null);
   const authRef = useRef(null);
   const prevTwinkleXP = useRef(twinkleXP);
-  const mounted = useRef(true);
   const usingChat = useMemo(
     () => getSectionFromPathname(location?.pathname)?.section === 'chat',
     [location?.pathname]
@@ -176,28 +175,19 @@ function App() {
         myAllTimeXP,
         myMonthlyXP
       } = await loadRankings();
-      if (mounted.current) {
-        onGetRanks({
-          all,
-          top30s,
-          allMonthly,
-          top30sMonthly,
-          myMonthlyRank,
-          myAllTimeRank,
-          myAllTimeXP,
-          myMonthlyXP
-        });
-      }
+      onGetRanks({
+        all,
+        top30s,
+        allMonthly,
+        top30sMonthly,
+        myMonthlyRank,
+        myAllTimeRank,
+        myAllTimeXP,
+        myMonthlyXP
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [twinkleXP]);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
 
   useEffect(() => {
     if (!auth()?.headers?.authorization && !signinModalShown) {
@@ -219,13 +209,11 @@ function App() {
       await recordUserTraffic(location.pathname);
       if (authRef.current?.headers?.authorization) {
         const data = await loadMyData(location.pathname);
-        if (mounted.current) {
-          onSetUserState({
-            userId: data.userId,
-            newState: { ...data, loaded: true }
-          });
-          if (data?.userId) onInitMyState(data);
-        }
+        onSetUserState({
+          userId: data.userId,
+          newState: { ...data, loaded: true }
+        });
+        if (data?.userId) onInitMyState(data);
       }
       onSetSessionLoaded();
     }

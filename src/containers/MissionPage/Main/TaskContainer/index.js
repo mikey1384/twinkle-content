@@ -18,7 +18,6 @@ TaskContainer.propTypes = {
 };
 
 export default function TaskContainer({ mission }) {
-  const mounted = useRef(true);
   const { taskType } = useParams();
   const { userId, managementLevel } = useMyState();
   const missionTypeIdHash = useMissionContext((v) => v.state.missionTypeIdHash);
@@ -61,12 +60,8 @@ export default function TaskContainer({ mission }) {
           missionId: taskId,
           isTask: true
         });
-        if (mounted.current) {
-          onLoadMission({ mission: page, prevUserId: userId });
-        }
-        if (mounted.current) {
-          onSetMyMissionAttempts(myAttempts);
-        }
+        onLoadMission({ mission: page, prevUserId: userId });
+        onSetMyMissionAttempts(myAttempts);
       } else {
         onLoadMission({ mission: { id: taskId }, prevUserId: userId });
       }

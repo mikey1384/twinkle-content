@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import SectionPanel from 'components/SectionPanel';
 import MonthlyXPBarChart from './MonthlyXPBarChart';
@@ -23,14 +23,6 @@ export default function XPAnalysis({ selectedTheme, userId, style }) {
   const [monthlyXPData, setMonthlyXPData] = useState([]);
   const [xpAcquisitionData, setXpAcquisitionData] = useState([]);
   const [loaded, setLoaded] = useState(false);
-  const mounted = useRef(true);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
 
   useEffect(() => {
     init();
@@ -38,23 +30,17 @@ export default function XPAnalysis({ selectedTheme, userId, style }) {
     async function init() {
       if (userId) {
         await Promise.all([handleLoadXpAcquisition(), handleLoadMonthlyXP()]);
-        if (mounted.current) {
-          setLoaded(true);
-        }
+        setLoaded(true);
       }
     }
     async function handleLoadXpAcquisition() {
       const data = await loadXpAcquisition(userId);
-      if (mounted.current) {
-        setXpAcquisitionData(data);
-      }
+      setXpAcquisitionData(data);
       return Promise.resolve();
     }
     async function handleLoadMonthlyXP() {
       const data = await loadMonthlyXp(userId);
-      if (mounted.current) {
-        setMonthlyXPData(data);
-      }
+      setMonthlyXPData(data);
       return Promise.resolve();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

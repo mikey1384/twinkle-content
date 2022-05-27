@@ -48,7 +48,6 @@ function Reaction({
   const ReactionRef = useRef(null);
   const hideTimerRef = useRef(null);
   const hideTimerRef2 = useRef(null);
-  const mounted = useRef(true);
   const prevReactedUserIdsExcludingMine = useRef([]);
   const [loadingOtherUsers, setLoadingOtherUsers] = useState(false);
   const [tooltipContext, setTooltipContext] = useState(null);
@@ -81,12 +80,10 @@ function Reaction({
     async function handleLoadProfile(userId) {
       if (!userObj[userId]?.username) {
         const data = await loadProfile(userId);
-        if (mounted.current) {
-          onSetUserState({
-            userId: userId,
-            newState: { ...data, loaded: true }
-          });
-        }
+        onSetUserState({
+          userId: userId,
+          newState: { ...data, loaded: true }
+        });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -133,21 +130,11 @@ function Reaction({
         setTimeout(() => setTooltipContext(null), 2000);
       } else {
         hideTimerRef.current = setTimeout(() => {
-          if (mounted.current) {
-            setTooltipContext(null);
-          }
+          setTooltipContext(null);
         }, 50);
       }
     }
   }, [reactionsMenuShown]);
-
-  useEffect(() => {
-    mounted.current = true;
-
-    return function cleanup() {
-      mounted.current = false;
-    };
-  }, []);
 
   const handleShowAllReactedUsers = useCallback(async () => {
     setTooltipContext(null);
@@ -156,17 +143,13 @@ function Reaction({
     for (let reactedUserId of reactedUserIdsExcludingMine) {
       if (!userObj[reactedUserId]?.username) {
         const data = await loadProfile(reactedUserId);
-        if (mounted.current) {
-          onSetUserState({
-            userId: reactedUserId,
-            newState: { ...data, loaded: true }
-          });
-        }
+        onSetUserState({
+          userId: reactedUserId,
+          newState: { ...data, loaded: true }
+        });
       }
     }
-    if (mounted.current) {
-      setLoadingOtherUsers(false);
-    }
+    setLoadingOtherUsers(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reactedUserIdsExcludingMine, userObj]);
 
@@ -234,9 +217,7 @@ function Reaction({
           }}
           onMouseLeave={() => {
             hideTimerRef2.current = setTimeout(() => {
-              if (mounted.current) {
-                setTooltipContext(null);
-              }
+              setTooltipContext(null);
             }, 300);
           }}
           parentContext={tooltipContext}
@@ -286,9 +267,7 @@ function Reaction({
   function handleRemoveTooltipContext() {
     if (deviceIsMobile) return;
     hideTimerRef.current = setTimeout(() => {
-      if (mounted.current) {
-        setTooltipContext(null);
-      }
+      setTooltipContext(null);
     }, 200);
   }
 }

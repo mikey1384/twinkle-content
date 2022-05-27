@@ -30,17 +30,9 @@ export default function Explore({ category }) {
   const searchText = useExploreContext((v) => v.state.search.searchText);
   const onSetPrevUserId = useExploreContext((v) => v.actions.onSetPrevUserId);
   const { userId } = useMyState();
-  const mounted = useRef(true);
   const disconnected = useRef(false);
   const ContainerRef = useRef({});
   const SearchBoxRef = useRef(null);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
 
   useEffect(() => {
     onSetPrevUserId(userId);

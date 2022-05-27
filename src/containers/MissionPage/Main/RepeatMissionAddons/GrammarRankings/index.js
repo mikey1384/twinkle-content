@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import FilterBar from 'components/FilterBar';
 import Ranker from './Ranker';
@@ -23,27 +23,16 @@ export default function GrammarRankings({ mission, myAttempts }) {
   );
   const [top30s, setTop30s] = useState([]);
   const [all, setAll] = useState([]);
-  const mounted = useRef(true);
   const loadMissionRankings = useAppContext(
     (v) => v.requestHelpers.loadMissionRankings
   );
-  useEffect(() => {
-    mounted.current = true;
-    return function onUnmount() {
-      mounted.current = false;
-    };
-  }, []);
   useEffect(() => {
     init();
 
     async function init() {
       const { top30s, all } = await loadMissionRankings(mission.id);
-      if (mounted.current) {
-        setTop30s(top30s);
-      }
-      if (mounted.current) {
-        setAll(all);
-      }
+      setTop30s(top30s);
+      setAll(all);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

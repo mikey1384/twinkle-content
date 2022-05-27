@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useMemo, useState } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import { useInterval } from 'helpers/hooks';
 import PropTypes from 'prop-types';
 import UsernameText from 'components/Texts/UsernameText';
@@ -43,7 +43,6 @@ function ChatFeeds({
   const onUpdateSelectedChannelId = useChatContext(
     (v) => v.actions.onUpdateSelectedChannelId
   );
-  const mounted = useRef(true);
   const [loadingChat, setLoadingChat] = useState(false);
   const navigate = useNavigate();
   const [timeSincePost, setTimeSincePost] = useState(timeSince(timeStamp));
@@ -85,13 +84,6 @@ function ChatFeeds({
     userId,
     username
   ]);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function onUnmount() {
-      mounted.current = false;
-    };
-  }, []);
 
   return (
     <RoundList

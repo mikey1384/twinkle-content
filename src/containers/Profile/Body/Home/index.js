@@ -48,15 +48,7 @@ export default function Home({ profile, selectedTheme }) {
       contentId: profile.id
     });
   const [loadingComments, setLoadingComments] = useState(false);
-  const mounted = useRef(true);
   const CommentInputAreaRef = useRef(null);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
 
   useEffect(() => {
     if (!commentsLoaded) {
@@ -70,15 +62,13 @@ export default function Home({ profile, selectedTheme }) {
           contentType: 'user',
           limit: 5
         });
-        if (mounted.current) {
-          onLoadComments({
-            contentId: profile.id,
-            contentType: 'user',
-            comments,
-            loadMoreButton
-          });
-          setLoadingComments(false);
-        }
+        onLoadComments({
+          contentId: profile.id,
+          contentType: 'user',
+          comments,
+          loadMoreButton
+        });
+        setLoadingComments(false);
       } catch (error) {
         console.error(error);
       }

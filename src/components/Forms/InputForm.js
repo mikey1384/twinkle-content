@@ -100,13 +100,10 @@ function InputForm({
     return inputState?.text || '';
   }, [inputState]);
   const textRef = useRef(prevText);
-  const mounted = useRef(true);
   const [text, setText] = useState(prevText);
   const [onHover, setOnHover] = useState(false);
   useEffect(() => {
-    if (mounted.current) {
-      handleSetText(prevText);
-    }
+    handleSetText(prevText);
   }, [prevText]);
   const textIsEmpty = useMemo(() => stringIsEmpty(text), [text]);
   const commentExceedsCharLimit = useMemo(
@@ -129,7 +126,6 @@ function InputForm({
 
   useEffect(() => {
     return function saveTextBeforeUnmount() {
-      mounted.current = false;
       if (textRef.current !== prevText) {
         onEnterComment({
           contentType,
@@ -146,10 +142,8 @@ function InputForm({
     setText('');
     try {
       await onSubmit(finalizeEmoji(text));
-      if (mounted.current) {
-        handleSetText('');
-        setSubmitting(false);
-      }
+      handleSetText('');
+      setSubmitting(false);
     } catch (error) {
       setSubmitting(false);
       console.error(error);

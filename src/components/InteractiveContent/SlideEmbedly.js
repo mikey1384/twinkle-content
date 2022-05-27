@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
 import { css } from '@emotion/css';
@@ -40,7 +40,6 @@ function SlideEmbedly({
     (v) => v.actions.onChangeNumUpdates
   );
   const [loading, setLoading] = useState(false);
-  const mounted = useRef(true);
   const fallbackImage = '/img/link.png';
 
   useEffect(() => {
@@ -54,26 +53,22 @@ function SlideEmbedly({
         const { image, title, description, site } = await fetchUrlEmbedData(
           url
         );
-        if (mounted.current) {
-          setLoading(false);
-          onSetEmbedProps({
-            thumbUrl: image.url,
-            actualTitle: title,
-            actualDescription: description,
-            siteUrl: site,
-            prevUrl: url
-          });
-          const numUpdates = await updateEmbedData({
-            slideId,
-            thumbUrl: image.url,
-            actualTitle: title,
-            actualDescription: description,
-            siteUrl: site
-          });
-          if (mounted.current) {
-            onChangeNumUpdates({ interactiveId, numUpdates });
-          }
-        }
+        setLoading(false);
+        onSetEmbedProps({
+          thumbUrl: image.url,
+          actualTitle: title,
+          actualDescription: description,
+          siteUrl: site,
+          prevUrl: url
+        });
+        const numUpdates = await updateEmbedData({
+          slideId,
+          thumbUrl: image.url,
+          actualTitle: title,
+          actualDescription: description,
+          siteUrl: site
+        });
+        onChangeNumUpdates({ interactiveId, numUpdates });
       } catch (error) {
         setLoading(false);
         onSetEmbedProps({ thumbUrl: fallbackImage });
@@ -82,14 +77,6 @@ function SlideEmbedly({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url, thumbUrl, prevUrl]);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <div style={{ position: 'relative', ...style }}>

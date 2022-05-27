@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import { useAppContext } from 'contexts';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
@@ -32,7 +32,6 @@ function VideoThumbImage({
   );
   const { userId } = useMyState();
   const [progressBarPercentage, setProgressBarPercentage] = useState(0);
-  const mounted = useRef(true);
 
   const Stars = useMemo(
     () =>
@@ -45,21 +44,12 @@ function VideoThumbImage({
   );
 
   useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
-
-  useEffect(() => {
     init();
 
     async function init() {
       if (userId) {
         const percentage = await loadVideoWatchPercentage(videoId);
-        if (mounted.current) {
-          setProgressBarPercentage(percentage);
-        }
+        setProgressBarPercentage(percentage);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

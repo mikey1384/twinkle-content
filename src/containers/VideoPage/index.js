@@ -50,16 +50,8 @@ export default function VideoPage() {
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   const [questionsBuilderShown, setQuestionsBuilderShown] = useState(false);
   const [videoUnavailable, setVideoUnavailable] = useState(false);
-  const mounted = useRef(true);
   const CommentInputAreaRef = useRef(null);
   const prevDeleted = useRef(false);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
 
   const deleteContent = useAppContext((v) => v.requestHelpers.deleteContent);
   const editContent = useAppContext((v) => v.requestHelpers.editContent);
@@ -186,16 +178,14 @@ export default function VideoPage() {
         const { data } = await request.get(
           `${URL}/video/page?videoId=${videoId}`
         );
-        if (mounted.current) {
-          if (data.notFound) {
-            return setVideoUnavailable(true);
-          }
-          onInitContent({
-            ...data,
-            contentId: videoId,
-            contentType: 'video'
-          });
+        if (data.notFound) {
+          return setVideoUnavailable(true);
         }
+        onInitContent({
+          ...data,
+          contentId: videoId,
+          contentType: 'video'
+        });
       } catch (error) {
         console.error(error.response || error);
       }
@@ -228,9 +218,7 @@ export default function VideoPage() {
     }
     async function handleLoadTags() {
       const tags = await fetchPlaylistsContaining({ videoId });
-      if (mounted.current) {
-        onLoadTags({ tags, contentId: videoId, contentType: 'video' });
-      }
+      onLoadTags({ tags, contentId: videoId, contentType: 'video' });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [videoId]);

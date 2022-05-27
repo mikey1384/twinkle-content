@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
@@ -46,14 +46,6 @@ export default function UserListModal({
     }
     return userArray.concat(otherUsers);
   }, [userId, users]);
-  const mounted = useRef(true);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
 
   return (
     <Modal small onHide={onHide}>
@@ -133,18 +125,16 @@ export default function UserListModal({
   async function handleTalkClick(user) {
     if (user.id !== userId) {
       const { channelId, pathId } = await loadDMChannel({ recepient: user });
-      if (mounted.current) {
-        if (!pathId) {
-          onOpenNewChatTab({
-            user: { username, id: userId, profilePicUrl, authLevel },
-            recepient: {
-              username: user.username,
-              id: user.id,
-              profilePicUrl: user.profilePicUrl,
-              authLevel: user.authLevel
-            }
-          });
-        }
+      if (!pathId) {
+        onOpenNewChatTab({
+          user: { username, id: userId, profilePicUrl, authLevel },
+          recepient: {
+            username: user.username,
+            id: user.id,
+            profilePicUrl: user.profilePicUrl,
+            authLevel: user.authLevel
+          }
+        });
         onUpdateSelectedChannelId(channelId);
         navigate(pathId ? `/chat/${pathId}` : `/chat/new`);
       }

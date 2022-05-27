@@ -2,19 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 import { addEvent, removeEvent } from '../listenerHelpers';
 
 export default function useScrollToBottom(containerRef, threshold = 0) {
-  const mounted = useRef(true);
   const timerRef = useRef(null);
   const [atBottom, setAtBottom] = useState(false);
   const [scrollTop, setScrollTop] = useState(
     document.getElementById('App')?.scrollTop
   );
-
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
 
   useEffect(() => {
     if (containerRef.current?.clientHeight - scrollTop < window.innerHeight) {

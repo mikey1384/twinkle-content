@@ -38,7 +38,6 @@ export default function UsernameText({
     () => getSectionFromPathname(location?.pathname)?.section === 'chat',
     [location?.pathname]
   );
-  const mounted = useRef(true);
   const coolDownRef = useRef(null);
   const showTimerRef = useRef(null);
   const hideTimerRef = useRef(null);
@@ -69,14 +68,6 @@ export default function UsernameText({
   }, [rank, user.rank]);
 
   useEffect(() => {
-    mounted.current = true;
-
-    return function cleanup() {
-      mounted.current = false;
-    };
-  }, []);
-
-  useEffect(() => {
     menuShownRef.current = !!dropdownContext;
     onMenuShownChange?.(!!dropdownContext);
   }, [dropdownContext, onMenuShownChange]);
@@ -96,9 +87,7 @@ export default function UsernameText({
       onMouseLeave={() => {
         clearTimeout(showTimerRef.current);
         hideTimerRef.current = setTimeout(() => {
-          if (mounted.current) {
-            setDropdownContext(null);
-          }
+          setDropdownContext(null);
         }, 500);
       }}
     >
@@ -137,9 +126,7 @@ export default function UsernameText({
           style={{ minWidth: '10rem' }}
           onMouseLeave={() => {
             hideTimerRef2.current = setTimeout(() => {
-              if (mounted.current) {
-                setDropdownContext(null);
-              }
+              setDropdownContext(null);
             }, 500);
           }}
         >
@@ -228,15 +215,11 @@ export default function UsernameText({
         showTimerRef.current = setTimeout(async () => {
           const data = await loadProfile(user.id);
           if (mouseEntered.current) {
-            if (mounted.current) {
-              onSetUserState({
-                userId: user.id,
-                newState: { ...data, loaded: true }
-              });
-            }
-            if (mounted.current) {
-              setDropdownContext(parentElementDimensions);
-            }
+            onSetUserState({
+              userId: user.id,
+              newState: { ...data, loaded: true }
+            });
+            setDropdownContext(parentElementDimensions);
           }
         }, 500);
       } else {
@@ -252,18 +235,16 @@ export default function UsernameText({
     setDropdownContext(null);
     if (user.id !== userId) {
       const { channelId, pathId } = await loadDMChannel({ recepient: user });
-      if (mounted.current) {
-        if (!pathId) {
-          onOpenNewChatTab({
-            user: { username, id: userId, profilePicUrl, authLevel },
-            recepient: {
-              username: user.username,
-              id: user.id,
-              profilePicUrl: user.profilePicUrl,
-              authLevel: user.authLevel
-            }
-          });
-        }
+      if (!pathId) {
+        onOpenNewChatTab({
+          user: { username, id: userId, profilePicUrl, authLevel },
+          recepient: {
+            username: user.username,
+            id: user.id,
+            profilePicUrl: user.profilePicUrl,
+            authLevel: user.authLevel
+          }
+        });
         if (!usingChat) {
           onUpdateSelectedChannelId(channelId);
         }
@@ -282,15 +263,11 @@ export default function UsernameText({
     if (user.username) {
       if (!twinkleXP && !user.twinkleXP && !menuShownRef.current) {
         const data = await loadProfile(user.id);
-        if (mounted.current) {
-          onSetUserState({
-            userId: user.id,
-            newState: { ...data, loaded: true }
-          });
-        }
-        if (mounted.current) {
-          setDropdownContext(elementContext);
-        }
+        onSetUserState({
+          userId: user.id,
+          newState: { ...data, loaded: true }
+        });
+        setDropdownContext(elementContext);
       } else {
         setDropdownContext(menuShownRef.current ? null : elementContext);
       }

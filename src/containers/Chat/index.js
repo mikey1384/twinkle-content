@@ -258,7 +258,6 @@ function Chat({ onFileUpload }) {
   const loadingRef = useRef(false);
   const prevPathId = useRef('');
   const prevUserId = useRef(null);
-  const mounted = useRef(true);
   const currentChannel = useMemo(
     () => channelsObj[selectedChannelId] || {},
     [channelsObj, selectedChannelId]
@@ -305,38 +304,28 @@ function Chat({ onFileUpload }) {
         return navigate(`/chat/${GENERAL_CHAT_PATH_ID}`, { replace: true });
       }
       const channelId = channelPathIdHash[pathId] || parseChannelPath(pathId);
-      if (!channelPathIdHash[pathId] && mounted.current) {
+      if (!channelPathIdHash[pathId]) {
         onUpdateChannelPathIdHash({ channelId, pathId });
       }
       if (channelsObj[channelId]?.loaded) {
-        if (mounted.current) {
-          onUpdateSelectedChannelId(channelId);
-        }
+        onUpdateSelectedChannelId(channelId);
         if (lastChatPath !== `/${pathId}`) {
           updateLastChannelId(channelId);
         }
         return;
       }
-      if (mounted.current) {
-        setLoading(true);
-      }
+      setLoading(true);
       const data = await loadChatChannel({ channelId });
       if (
         !isNaN(Number(prevPathId.current)) &&
         data.channel.pathId !== Number(prevPathId.current)
       ) {
-        if (mounted.current) {
-          setLoading(false);
-        }
+        setLoading(false);
         loadingRef.current = false;
         return;
       }
-      if (mounted.current) {
-        onEnterChannelWithId({ data });
-      }
-      if (mounted.current) {
-        setLoading(false);
-      }
+      onEnterChannelWithId({ data });
+      setLoading(false);
       loadingRef.current = false;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -369,12 +358,8 @@ function Chat({ onFileUpload }) {
     const { vocabActivities, wordsObj, wordCollectors } =
       await loadVocabulary();
     if (currentPathIdRef.current === 'vocabulary') {
-      if (mounted.current) {
-        onLoadVocabulary({ vocabActivities, wordsObj, wordCollectors });
-      }
-      if (mounted.current) {
-        onSetLoadingVocabulary(false);
-      }
+      onLoadVocabulary({ vocabActivities, wordsObj, wordCollectors });
+      onSetLoadingVocabulary(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatType]);
@@ -448,13 +433,11 @@ function Chat({ onFileUpload }) {
 
   useEffect(() => {
     socket.emit('change_away_status', pageVisible);
-    mounted.current = true;
     return function cleanUp() {
       onClearNumUnreads();
       if (selectedChannelId) {
         onTrimMessages(selectedChannelId);
       }
-      mounted.current = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedChannelId]);
@@ -487,17 +470,11 @@ function Chat({ onFileUpload }) {
         channelName,
         isClosed
       });
-      if (mounted.current) {
-        onCreateNewChannel({ message, isClosed, members, pathId });
-      }
+      onCreateNewChannel({ message, isClosed, members, pathId });
       socket.emit('join_chat_group', message.channelId);
       navigate(`/chat/${pathId}`);
-      if (mounted.current) {
-        setCreateNewChatModalShown(false);
-      }
-      if (mounted.current) {
-        setCreatingChat(false);
-      }
+      setCreateNewChatModalShown(false);
+      setCreatingChat(false);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []

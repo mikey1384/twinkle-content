@@ -126,7 +126,6 @@ export default function ContentPanel({
     },
     delay: 1000
   });
-  const mounted = useRef(true);
   const loading = useRef(false);
   const inputAtBottom = contentType === 'comment';
   const heightNotSet = useMemo(
@@ -139,7 +138,6 @@ export default function ContentPanel({
   });
 
   useEffect(() => {
-    mounted.current = true;
     return function cleanUp() {
       onSetPlaceholderHeight({
         contentType,
@@ -151,7 +149,6 @@ export default function ContentPanel({
         contentType,
         visible: visibleRef.current
       });
-      mounted.current = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -163,20 +160,18 @@ export default function ContentPanel({
     async function onMount() {
       loading.current = true;
       const data = await loadContent({ contentId, contentType });
-      if (mounted.current) {
+      onInitContent({
+        ...data,
+        feedId: contentState.feedId
+      });
+      if (data.rootObj) {
         onInitContent({
-          ...data,
-          feedId: contentState.feedId
+          contentId: data.rootId,
+          contentType: data.rootType,
+          ...data.rootObj
         });
-        if (data.rootObj) {
-          onInitContent({
-            contentId: data.rootId,
-            contentType: data.rootType,
-            ...data.rootObj
-          });
-        }
-        loading.current = false;
       }
+      loading.current = false;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loaded]);

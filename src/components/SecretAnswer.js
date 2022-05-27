@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef } from 'react';
+import React, { memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import LongText from 'components/Texts/LongText';
@@ -30,14 +30,6 @@ function SecretAnswer({
   subjectId,
   uploaderId
 }) {
-  const mounted = useRef(true);
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
-
   const checkIfUserResponded = useAppContext(
     (v) => v.requestHelpers.checkIfUserResponded
   );
@@ -61,13 +53,11 @@ function SecretAnswer({
 
     async function init() {
       const { responded } = await checkIfUserResponded(subjectId);
-      if (mounted.current) {
-        onChangeSpoilerStatus({
-          shown: responded,
-          subjectId,
-          prevSecretViewerId: userId
-        });
-      }
+      onChangeSpoilerStatus({
+        shown: responded,
+        subjectId,
+        prevSecretViewerId: userId
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prevSecretViewerId, subjectId, userId]);

@@ -33,7 +33,6 @@ export default function SelectAttachmentScreen({
   const [loaded, setLoaded] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [searchText, setSearchText] = useState('');
-  const mounted = useRef(true);
   const contentObjs = useRef({});
   const { handleSearch, searching } = useSearch({
     onSearch,
@@ -48,15 +47,13 @@ export default function SelectAttachmentScreen({
         limit: 18,
         contentType
       });
-      if (mounted.current) {
-        for (let result of results) {
-          onInitContent({ contentId: result.id, contentType, ...result });
-        }
-        setAllUploads(results.map((result) => result.id));
-        contentObjs.current = objectify(results);
-        setLoadMoreButton(loadMoreButton);
-        setLoaded(true);
+      for (let result of results) {
+        onInitContent({ contentId: result.id, contentType, ...result });
       }
+      setAllUploads(results.map((result) => result.id));
+      contentObjs.current = objectify(results);
+      setLoadMoreButton(loadMoreButton);
+      setLoaded(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

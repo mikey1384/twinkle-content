@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Modal from 'components/Modal';
@@ -22,7 +22,6 @@ export default function EditBanStatusModal({ onHide, target }) {
   const onUpdateBanStatus = useManagementContext(
     (v) => v.actions.onUpdateBanStatus
   );
-  const mounted = useRef(true);
   const [banStatus, setBanStatus] = useState(target.banned);
   const submitDisabled = useMemo(() => {
     const bannedFeatures = {};
@@ -39,12 +38,6 @@ export default function EditBanStatusModal({ onHide, target }) {
     }
     return isEqual(bannedFeatures, prevBannedFeatures);
   }, [banStatus, target.banned]);
-  useEffect(() => {
-    mounted.current = true;
-    return function onUnmount() {
-      mounted.current = false;
-    };
-  }, []);
 
   return (
     <ErrorBoundary>
@@ -121,8 +114,6 @@ export default function EditBanStatusModal({ onHide, target }) {
   async function handleSubmit() {
     await updateBanStatus({ userId: target.id, banStatus });
     onUpdateBanStatus({ ...target, banned: banStatus });
-    if (mounted.current) {
-      onHide();
-    }
+    onHide();
   }
 }

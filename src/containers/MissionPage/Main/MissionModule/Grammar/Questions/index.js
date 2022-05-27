@@ -13,7 +13,6 @@ Questions.propTypes = {
 };
 
 export default function Questions({ isRepeating, mission, onFail }) {
-  const mounted = useRef(true);
   const [submitDisabled, setSubmitDisabled] = useState(true);
   const { userId } = useMyState();
   const [repeatMissionComplete, setRepeatMissionComplete] = useState(false);
@@ -37,7 +36,6 @@ export default function Questions({ isRepeating, mission, onFail }) {
   const [questionIds, setQuestionIds] = useState([]);
   const [questionObj, setQuestionObj] = useState({});
   useEffect(() => {
-    mounted.current = true;
     if (!mission.questions || mission.questions.length === 0) return;
     const resultObj = mission.questions.reduce((prev, curr, index) => {
       const choices = curr.choices.map((choice) => ({
@@ -80,13 +78,6 @@ export default function Questions({ isRepeating, mission, onFail }) {
     }
     return '';
   }, [currentSlideIndex, questionObj]);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function onDismount() {
-      mounted.current = false;
-    };
-  }, []);
 
   return (
     <div>
@@ -189,50 +180,40 @@ export default function Questions({ isRepeating, mission, onFail }) {
           targetId: mission.id,
           type: 'increase'
         });
-        if (mounted.current) {
-          onSetUserState({
-            userId,
-            newState: { twinkleXP: xp, twinkleCoins: coins, rank }
-          });
-        }
-        if (mounted.current) {
-          setRepeatMissionComplete(true);
-        }
+        onSetUserState({
+          userId,
+          newState: { twinkleXP: xp, twinkleCoins: coins, rank }
+        });
+        setRepeatMissionComplete(true);
       } else {
         const { success, newXpAndRank, newCoins } = await uploadMissionAttempt({
           missionId: mission.id,
           attempt: { status: 'pass' }
         });
         if (success) {
-          if (newXpAndRank.xp && mounted.current) {
+          if (newXpAndRank.xp) {
             onSetUserState({
               userId,
               newState: { twinkleXP: newXpAndRank.xp, rank: newXpAndRank.rank }
             });
           }
-          if (newCoins.netCoins && mounted.current) {
+          if (newCoins.netCoins) {
             onSetUserState({
               userId,
               newState: { twinkleCoins: newCoins.netCoins }
             });
           }
-          if (mounted.current) {
-            onUpdateMissionAttempt({
-              missionId: mission.id,
-              newState: { status: 'pass' }
-            });
-          }
-          if (mounted.current) {
-            onSetMissionState({
-              missionId: mission.id,
-              newState: { started: false, grammarReviewLoaded: false }
-            });
-          }
+          onUpdateMissionAttempt({
+            missionId: mission.id,
+            newState: { status: 'pass' }
+          });
+          onSetMissionState({
+            missionId: mission.id,
+            newState: { started: false, grammarReviewLoaded: false }
+          });
         }
       }
-      if (mounted.current) {
-        setSubmitDisabled(false);
-      }
+      setSubmitDisabled(false);
     } catch (error) {
       setSubmitDisabled(false);
     }

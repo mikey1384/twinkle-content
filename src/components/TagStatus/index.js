@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import PlaylistModal from 'components/Modals/PlaylistModal';
 import TagModal from './TagModal';
@@ -36,14 +36,6 @@ function TagStatus({
   const [shownPlaylistId, setShownPlaylistId] = useState();
   const [shownPlaylistTitle, setShownPlaylistTitle] = useState('');
   const [tagModalShown, setTagModalShown] = useState(false);
-  const mounted = useRef(true);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
 
   useEffect(() => {
     if (onLoadTags) {
@@ -51,9 +43,7 @@ function TagStatus({
     }
     async function loadTags() {
       const tags = await fetchPlaylistsContaining({ videoId: contentId });
-      if (mounted.current) {
-        onLoadTags({ tags, contentId, contentType: 'video' });
-      }
+      onLoadTags({ tags, contentId, contentType: 'video' });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contentId]);

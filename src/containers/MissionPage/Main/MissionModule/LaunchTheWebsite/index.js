@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import MultiStepContainer from '../components/MultiStepContainer';
@@ -101,14 +101,6 @@ export default function LaunchTheWebsite({ onSetMissionState, style, task }) {
     () => taskState.code || defaultCode({ username }),
     [taskState.code, username]
   );
-  const mounted = useRef(true);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function onDismount() {
-      mounted.current = false;
-    };
-  }, []);
 
   return (
     <ErrorBoundary style={style}>

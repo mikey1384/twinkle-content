@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Grid from './Grid';
@@ -45,7 +45,6 @@ export default function Game({
   socketConnected
 }) {
   const [isChecking, setIsChecking] = useState(false);
-  const mounted = useRef(true);
   const updateWordleAttempt = useAppContext(
     (v) => v.requestHelpers.updateWordleAttempt
   );
@@ -77,7 +76,6 @@ export default function Game({
   }, [alertMessage.status]);
 
   useEffect(() => {
-    mounted.current = true;
     if (isGameLost) {
       handleShowAlert({
         status: 'fail',
@@ -87,9 +85,6 @@ export default function Game({
         }
       });
     }
-    return function cleanup() {
-      mounted.current = false;
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -193,21 +188,14 @@ export default function Game({
       });
       setIsChecking(false);
     }
-
-    if (mounted.current) {
-      setCurrentGuess('');
-    }
-    if (mounted.current) {
-      onSetWordleGuesses({
-        channelId,
-        guesses: newGuesses
-      });
-    }
+    setCurrentGuess('');
+    onSetWordleGuesses({
+      channelId,
+      guesses: newGuesses
+    });
     onSetIsRevealing(true);
     setTimeout(() => {
-      if (mounted.current) {
-        onSetIsRevealing(false);
-      }
+      onSetIsRevealing(false);
     }, REVEAL_TIME_MS * MAX_WORD_LENGTH);
 
     if (
@@ -282,23 +270,17 @@ export default function Game({
       durationMs = ALERT_TIME_MS
     } = options || {};
     setTimeout(() => {
-      if (mounted.current) {
-        setAlertMessage({ shown: true, status, message });
-      }
+      setAlertMessage({ shown: true, status, message });
       if (status === 'success') {
-        if (mounted.current) {
-          onSetIsRevealing(true);
-          setIsWaving(true);
-        }
+        onSetIsRevealing(true);
+        setIsWaving(true);
         setTimeout(() => {
-          if (mounted.current) {
-            onSetIsRevealing(false);
-            setIsWaving(false);
-          }
+          onSetIsRevealing(false);
+          setIsWaving(false);
         }, REVEAL_TIME_MS * MAX_WORD_LENGTH);
       }
       setTimeout(() => {
-        if (!persist && mounted.current) {
+        if (!persist) {
           setAlertMessage({ shown: false, status: '', message: '' });
         }
         if (callback) {

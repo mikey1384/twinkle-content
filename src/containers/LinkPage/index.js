@@ -135,16 +135,8 @@ export default function LinkPage() {
   const [likesModalShown, setLikesModalShown] = useState(false);
   const [recommendationInterfaceShown, setRecommendationInterfaceShown] =
     useState(false);
-  const mounted = useRef(true);
   const prevDeleted = useRef(false);
   const RewardInterfaceRef = useRef(null);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
 
   useEffect(() => {
     if (!prevDeleted.current && isDeleted) {
@@ -170,14 +162,12 @@ export default function LinkPage() {
         contentId: linkId,
         contentType: 'url'
       });
-      if (mounted.current) {
-        if (data.notFound) return setNotFound(true);
-        onInitContent({
-          ...data,
-          contentId: linkId,
-          contentType: 'url'
-        });
-      }
+      if (data.notFound) return setNotFound(true);
+      onInitContent({
+        ...data,
+        contentId: linkId,
+        contentType: 'url'
+      });
     }
     async function handleLoadComments() {
       setLoadingComments(true);

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import GrammarReview from './GrammarReview';
 import FilterBar from 'components/FilterBar';
@@ -17,7 +17,6 @@ export default function RepeatMissionAddon({ mission, onSetMissionState }) {
     (v) => v.requestHelpers.loadGrammarAttempts
   );
   const myAttempts = useMissionContext((v) => v.state.myAttempts);
-  const mounted = useRef(true);
   const { userId } = useMyState();
   const [loadingReview, setLoadingReview] = useState(false);
   const {
@@ -30,7 +29,6 @@ export default function RepeatMissionAddon({ mission, onSetMissionState }) {
   }, [mission.selectedAddonTab]);
 
   useEffect(() => {
-    mounted.current = true;
     init();
     async function init() {
       setLoadingReview(true);
@@ -41,10 +39,7 @@ export default function RepeatMissionAddon({ mission, onSetMissionState }) {
         gotWrongLoadMoreButton,
         gotRightLoadMoreButton
       } = await loadGrammarAttempts();
-      if (
-        mounted.current &&
-        (!grammarReviewLoaded || userId !== grammarReviewPrevUserId)
-      ) {
+      if (!grammarReviewLoaded || userId !== grammarReviewPrevUserId) {
         onSetMissionState({
           missionId: mission.id,
           newState: {
@@ -65,9 +60,7 @@ export default function RepeatMissionAddon({ mission, onSetMissionState }) {
           }
         });
       }
-      if (mounted.current) {
-        setLoadingReview(false);
-      }
+      setLoadingReview(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId, grammarReviewPrevUserId, grammarReviewLoaded, mission.id]);
@@ -79,13 +72,6 @@ export default function RepeatMissionAddon({ mission, onSetMissionState }) {
         0 || myAttempts[mission.id]?.status === 'pass'
     );
   }, [mission, myAttempts]);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function onUnmount() {
-      mounted.current = false;
-    };
-  }, []);
 
   return (
     <div style={{ width: '100%' }}>

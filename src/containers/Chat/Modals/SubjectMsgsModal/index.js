@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
@@ -23,9 +23,7 @@ export default function SubjectMsgsModal({ onHide, subjectId, subjectTitle }) {
   const [loadMoreButtonShown, setLoadMoreButtonShown] = useState(false);
   const [messages, setMessages] = useState([]);
   const [usermenuShown, setUsermenuShown] = useState(false);
-  const mounted = useRef(true);
   useEffect(() => {
-    mounted.current = true;
     handleLoadMessages();
     async function handleLoadMessages() {
       try {
@@ -34,17 +32,12 @@ export default function SubjectMsgsModal({ onHide, subjectId, subjectTitle }) {
         } = await request.get(
           `${API_URL}/chatSubject/messages?subjectId=${subjectId}`
         );
-        if (mounted.current) {
-          setMessages(messages);
-          setLoadMoreButtonShown(loadMoreButtonShown);
-        }
+        setMessages(messages);
+        setLoadMoreButtonShown(loadMoreButtonShown);
       } catch (error) {
         console.error(error.response || error);
       }
     }
-    return function cleanUp() {
-      mounted.current = false;
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

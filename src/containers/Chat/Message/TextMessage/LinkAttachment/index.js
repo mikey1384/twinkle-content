@@ -112,7 +112,6 @@ function LinkAttachment({
     [url, isYouTube]
   );
   const YTPlayerRef = useRef(null);
-  const mounted = useRef(true);
   const loadingRef = useRef(false);
   const fallbackImage = '/img/link.png';
 
@@ -148,20 +147,16 @@ function LinkAttachment({
           url,
           contentType: 'video'
         });
-        if (mounted.current) {
-          onSetActualDescription({
-            contentId: messageId,
-            contentType: 'chat',
-            description: ytDetails.ytDescription
-          });
-        }
-        if (mounted.current) {
-          onSetActualTitle({
-            contentId: messageId,
-            contentType: 'chat',
-            title: ytDetails.ytTitle
-          });
-        }
+        onSetActualDescription({
+          contentId: messageId,
+          contentType: 'chat',
+          description: ytDetails.ytDescription
+        });
+        onSetActualTitle({
+          contentId: messageId,
+          contentType: 'chat',
+          title: ytDetails.ytTitle
+        });
         return Promise.resolve();
       } catch (error) {
         console.error(error.response || error);
@@ -178,48 +173,32 @@ function LinkAttachment({
           contentId: messageId,
           contentType: 'chat'
         });
-        if (mounted.current) {
-          onSetThumbUrl({
-            contentId: messageId,
-            contentType: 'chat',
-            thumbUrl: image.url.replace('http://', 'https://')
-          });
-        }
-        if (mounted.current) {
-          onSetActualDescription({
-            contentId: messageId,
-            contentType: 'chat',
-            description
-          });
-        }
-        if (mounted.current) {
-          onSetActualTitle({
-            contentId: messageId,
-            contentType: 'chat',
-            title
-          });
-        }
-        if (mounted.current) {
-          onSetSiteUrl({
-            contentId: messageId,
-            contentType: 'chat',
-            siteUrl: site
-          });
-        }
-        if (mounted.current) {
-          setLoading(false);
-        }
+        onSetThumbUrl({
+          contentId: messageId,
+          contentType: 'chat',
+          thumbUrl: image.url.replace('http://', 'https://')
+        });
+        onSetActualDescription({
+          contentId: messageId,
+          contentType: 'chat',
+          description
+        });
+        onSetActualTitle({
+          contentId: messageId,
+          contentType: 'chat',
+          title
+        });
+        onSetSiteUrl({
+          contentId: messageId,
+          contentType: 'chat',
+          siteUrl: site
+        });
+        setLoading(false);
         return Promise.resolve();
       } catch (error) {
-        if (mounted.current) {
-          setLoading(false);
-        }
-        if (mounted.current) {
-          setImageUrl(fallbackImage);
-        }
-        if (mounted.current) {
-          onHideAttachment();
-        }
+        setLoading(false);
+        setImageUrl(fallbackImage);
+        onHideAttachment();
         console.error(error.response || error);
         return Promise.reject(error);
       }
@@ -264,14 +243,6 @@ function LinkAttachment({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeAt]);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const handlePlay = useCallback(() => {
     onSetMediaStarted({

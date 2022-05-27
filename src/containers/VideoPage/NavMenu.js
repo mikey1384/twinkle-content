@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'components/Link';
 import { Color, mobileMaxWidth } from 'constants/css';
@@ -71,14 +71,6 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
     useState(false);
   const [videoTabActive, setVideoTabActive] = useState(true);
   const [loading, setLoading] = useState(false);
-  const mounted = useRef(true);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
 
   const noVideos = useMemo(() => {
     return (
@@ -121,28 +113,26 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
           playlistId,
           isContinuing
         });
-        if (mounted.current) {
-          if (data.playlistTitle) {
-            setPlaylistTitle(data.playlistTitle);
-          }
-          if (data.continueWatching) {
-            setContinueWatchingVideos(data.continueWatching);
-          }
-          if (data.nextVideos) {
-            setNextVideos(data.nextVideos);
-          }
-          if (data.relatedVideos) {
-            setRelatedVideos(data.relatedVideos);
-          }
-          if (data.playlistVideos) {
-            setPlaylistVideos(data.playlistVideos);
-          }
-          setPlaylistVideosLoadMoreShown(!!data.playlistVideosLoadMoreShown);
-          if (data.otherVideos) {
-            setOtherVideos(data.otherVideos);
-          }
-          setLoading(false);
+        if (data.playlistTitle) {
+          setPlaylistTitle(data.playlistTitle);
         }
+        if (data.continueWatching) {
+          setContinueWatchingVideos(data.continueWatching);
+        }
+        if (data.nextVideos) {
+          setNextVideos(data.nextVideos);
+        }
+        if (data.relatedVideos) {
+          setRelatedVideos(data.relatedVideos);
+        }
+        if (data.playlistVideos) {
+          setPlaylistVideos(data.playlistVideos);
+        }
+        setPlaylistVideosLoadMoreShown(!!data.playlistVideosLoadMoreShown);
+        if (data.otherVideos) {
+          setOtherVideos(data.otherVideos);
+        }
+        setLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -315,23 +305,19 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
       totalRewardedTwinkles,
       totalRewardedTwinkleCoins
     } = await loadRewards();
-    if (mounted.current) {
-      onLoadRewards({
-        rewards,
-        loadMoreRewards,
-        totalRewardedTwinkles,
-        totalRewardedTwinkleCoins
-      });
-    }
+    onLoadRewards({
+      rewards,
+      loadMoreRewards,
+      totalRewardedTwinkles,
+      totalRewardedTwinkleCoins
+    });
   }
 
   async function handleToggleHideWatched() {
     setFiltering(true);
     const hideWatched = await toggleHideWatched();
-    if (mounted.current) {
-      onToggleHideWatched(hideWatched);
-      setFiltering(false);
-    }
+    onToggleHideWatched(hideWatched);
+    setFiltering(false);
   }
 
   async function handleLoadMorePlaylistVideos() {

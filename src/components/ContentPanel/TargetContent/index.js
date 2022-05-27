@@ -68,14 +68,6 @@ export default function TargetContent({
     contentType: type
   }
 }) {
-  const mounted = useRef(true);
-  useEffect(() => {
-    mounted.current = true;
-    return function onUnmount() {
-      mounted.current = false;
-    };
-  }, []);
-
   const navigate = useNavigate();
   const uploadComment = useAppContext((v) => v.requestHelpers.uploadComment);
   const uploadFile = useAppContext((v) => v.requestHelpers.uploadFile);

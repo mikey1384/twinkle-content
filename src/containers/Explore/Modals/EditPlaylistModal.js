@@ -32,13 +32,6 @@ export default function EditPlaylistModal({
   onHide,
   playlistId
 }) {
-  const mounted = useRef(true);
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
   const editPlaylistVideos = useAppContext(
     (v) => v.requestHelpers.editPlaylistVideos
   );
@@ -101,7 +94,7 @@ export default function EditPlaylistModal({
       } else {
         initialSelectedVideos.current = modalVids.map((video) => video.id);
       }
-      if (!openedRemoveVideosTab.current && mounted.current) {
+      if (!openedRemoveVideosTab.current) {
         setModalVideos(modalVids.map((video) => video.id));
         setSelectedVideos(initialSelectedVideos.current);
         setLoadMoreButton(loadMoreShown);
@@ -520,24 +513,20 @@ export default function EditPlaylistModal({
       ...playlistVideoObjects.current,
       ...objectify(loadedVideos)
     };
-    if (mounted.current) {
-      for (let video of loadedVideos) {
-        if (!selectedVideos.includes(video.id) && !removedVideoIds[video.id]) {
-          setSelectedVideos((selectedVideos) =>
-            selectedVideos.concat(video.id)
-          );
-        }
+    for (let video of loadedVideos) {
+      if (!selectedVideos.includes(video.id) && !removedVideoIds[video.id]) {
+        setSelectedVideos((selectedVideos) => selectedVideos.concat(video.id));
       }
-      setLoadedOrSearchedVideos((loadedOrSearchedVideos) =>
-        loadedOrSearchedVideos.concat(
-          loadedVideos
-            .map((video) => video.id)
-            .filter((videoId) => !loadedOrSearchedVideos.includes(videoId))
-        )
-      );
-      setRemoveVideosLoadMoreButton(loadMoreButton);
-      setLoading(false);
     }
+    setLoadedOrSearchedVideos((loadedOrSearchedVideos) =>
+      loadedOrSearchedVideos.concat(
+        loadedVideos
+          .map((video) => video.id)
+          .filter((videoId) => !loadedOrSearchedVideos.includes(videoId))
+      )
+    );
+    setRemoveVideosLoadMoreButton(loadMoreButton);
+    setLoading(false);
   }
 
   async function handleSearchVideo(text) {
@@ -553,17 +542,15 @@ export default function EditPlaylistModal({
       ...playlistVideoObjects.current,
       ...objectify(searchResults)
     };
-    if (mounted.current) {
-      setSearchedVideos(searchResults.map((video) => video.id));
-      setSearchLoadMoreButton(loadMoreButton);
-      setSelectedVideos((selectedVideos) =>
-        selectedVideos.concat(
-          playlistVideos
-            .map((video) => video.id)
-            .filter((id) => !selectedVideos.includes(id))
-        )
-      );
-      setLoading(false);
-    }
+    setSearchedVideos(searchResults.map((video) => video.id));
+    setSearchLoadMoreButton(loadMoreButton);
+    setSelectedVideos((selectedVideos) =>
+      selectedVideos.concat(
+        playlistVideos
+          .map((video) => video.id)
+          .filter((id) => !selectedVideos.includes(id))
+      )
+    );
+    setLoading(false);
   }
 }

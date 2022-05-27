@@ -34,13 +34,6 @@ function XPVideoPlayer({
   videoCode,
   videoId
 }) {
-  const mounted = useRef(true);
-  useEffect(() => {
-    mounted.current = true;
-    return function onUnmount() {
-      mounted.current = false;
-    };
-  }, []);
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const addVideoView = useAppContext((v) => v.requestHelpers.addVideoView);
   const checkCurrentlyWatchingAnotherVideo = useAppContext(
@@ -134,10 +127,10 @@ function XPVideoPlayer({
         const { currentTime, userViewDuration } = await loadVideoCurrentTime(
           videoId
         );
-        if (currentTime && mounted.current) {
+        if (currentTime) {
           setStartingPosition(currentTime);
         }
-        if (userViewDuration && mounted.current) {
+        if (userViewDuration) {
           setMyViewDuration(userViewDuration);
         }
       }
@@ -239,9 +232,7 @@ function XPVideoPlayer({
               targetId: videoId,
               type: 'increase'
             });
-            if (mounted.current) {
-              onSetUserState({ userId, newState: { twinkleCoins: coins } });
-            }
+            onSetUserState({ userId, newState: { twinkleCoins: coins } });
             rewardingCoin.current = false;
           } catch (error) {
             console.error(error.response || error);
@@ -260,12 +251,10 @@ function XPVideoPlayer({
               totalDuration: totalDurationRef.current,
               type: 'increase'
             });
-            if (mounted.current) {
-              if (alreadyDone) {
-                setReachedMaxWatchDuration(true);
-              } else {
-                onSetUserState({ userId, newState: { twinkleXP: xp, rank } });
-              }
+            if (alreadyDone) {
+              setReachedMaxWatchDuration(true);
+            } else {
+              onSetUserState({ userId, newState: { twinkleXP: xp, rank } });
             }
             rewardingXP.current = false;
             rewarded = true;
@@ -308,7 +297,7 @@ function XPVideoPlayer({
               rewardLevel: rewardLevelRef.current,
               watchCode: watchCodeRef.current
             });
-          if (currentlyWatchingAnotherVideo && mounted.current) {
+          if (currentlyWatchingAnotherVideo) {
             PlayerRef.current?.getInternalPlayer()?.pauseVideo?.();
           }
         }
@@ -329,9 +318,7 @@ function XPVideoPlayer({
         await updateCurrentlyWatching({
           watchCode: watchCodeRef.current
         });
-        if (mounted.current) {
-          setPlaying(true);
-        }
+        setPlaying(true);
         const time = PlayerRef.current.getCurrentTime();
         if (Math.floor(time) === 0 && userId) {
           addVideoView({ videoId, userId });

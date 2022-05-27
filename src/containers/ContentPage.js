@@ -23,15 +23,7 @@ export default function ContentPage() {
     contentId
   });
   const [exists, setExists] = useState(true);
-  const mounted = useRef(true);
   const prevDeleted = useRef(false);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
 
   useEffect(() => {
     if (!prevDeleted.current && (isDeleted || isDeleteNotification)) {
@@ -53,9 +45,7 @@ export default function ContentPage() {
         } = await request.get(
           `${URL}/content/check?contentId=${contentId}&contentType=${contentType}`
         );
-        if (mounted.current) {
-          setExists(exists);
-        }
+        setExists(exists);
       } catch (error) {
         console.error(error);
         setExists(false);

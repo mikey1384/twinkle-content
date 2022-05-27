@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useAppContext } from 'contexts';
 import Loading from 'components/Loading';
@@ -23,26 +23,18 @@ export default function SelectFromArchive({
   const [loadingMore, setLoadingMore] = useState(false);
   const [loading, setLoading] = useState(false);
   const [pictures, setPictures] = useState([]);
-  const mounted = useRef(true);
 
   useEffect(() => {
-    mounted.current = true;
     init();
     async function init() {
       setLoading(true);
       const { pictures: pics, loadMoreShown } = await loadUserPictures({
         exclude: currentPictures
       });
-      if (mounted.current) {
-        setPictures(pics);
-        setLoadMoreButtonShown(loadMoreShown);
-        setLoading(false);
-      }
+      setPictures(pics);
+      setLoadMoreButtonShown(loadMoreShown);
+      setLoading(false);
     }
-
-    return function onUnmount() {
-      mounted.current = false;
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

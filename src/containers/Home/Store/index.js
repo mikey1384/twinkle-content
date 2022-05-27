@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import KarmaStatus from './KarmaStatus';
 import ItemPanel from './ItemPanel';
 import ChangePassword from './ChangePassword';
@@ -47,7 +47,6 @@ export default function Store() {
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const pageVisible = useViewContext((v) => v.state.pageVisible);
   const { canChangeUsername, karmaPoints, userId } = useMyState();
-  const mounted = useRef(true);
 
   useEffect(() => {
     if (userId) {
@@ -56,19 +55,10 @@ export default function Store() {
 
     async function init() {
       const data = await loadMyData();
-      if (mounted.current) {
-        onSetUserState({ userId: data.userId, newState: data });
-      }
+      onSetUserState({ userId: data.userId, newState: data });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageVisible, userId]);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function onUnmount() {
-      mounted.current = false;
-    };
-  }, []);
 
   return (
     <div style={{ paddingBottom: '15rem' }}>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
@@ -45,28 +45,21 @@ export default function SubjectsModal({
     loadMoreButton: false,
     loading: false
   });
-  const mounted = useRef(true);
 
   useEffect(() => {
-    mounted.current = true;
     handleLoadSubjects();
     async function handleLoadSubjects() {
       try {
         const { mySubjects, allSubjects } = await loadChatSubjects({
           channelId
         });
-        if (mounted.current) {
-          setMySubjects(mySubjects);
-          setAllSubjects(allSubjects);
-          setLoaded(true);
-        }
+        setMySubjects(mySubjects);
+        setAllSubjects(allSubjects);
+        setLoaded(true);
       } catch (error) {
         console.error(error.response || error);
       }
     }
-    return function cleanUp() {
-      mounted.current = false;
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

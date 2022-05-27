@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Color } from 'constants/css';
 import { useAppContext, useMissionContext } from 'contexts';
@@ -33,13 +33,6 @@ export default function TaskComplete({
   const myAttempt = useMemo(() => myAttempts[taskId], [myAttempts, taskId]);
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const [submitDisabled, setSubmitDisabled] = useState(false);
-  const mounted = useRef(true);
-  useEffect(() => {
-    mounted.current = true;
-    return function onUnmount() {
-      mounted.current = false;
-    };
-  }, []);
 
   return myAttempt?.status ? null : (
     <ErrorBoundary
@@ -88,27 +81,23 @@ export default function TaskComplete({
       attempt: { status: 'pass' }
     });
     if (success) {
-      if (newXpAndRank.xp && mounted.current) {
+      if (newXpAndRank.xp) {
         onSetUserState({
           userId,
           newState: { twinkeXP: newXpAndRank.xp, rank: newXpAndRank.rank }
         });
       }
-      if (newCoins.netCoins && mounted.current) {
+      if (newCoins.netCoins) {
         onSetUserState({
           userId,
           newState: { twinkleCoins: newCoins.netCoins }
         });
       }
-      if (mounted.current) {
-        onUpdateMissionAttempt({
-          missionId: taskId,
-          newState: { status: 'pass' }
-        });
-      }
+      onUpdateMissionAttempt({
+        missionId: taskId,
+        newState: { status: 'pass' }
+      });
     }
-    if (mounted.current) {
-      setSubmitDisabled(false);
-    }
+    setSubmitDisabled(false);
   }
 }

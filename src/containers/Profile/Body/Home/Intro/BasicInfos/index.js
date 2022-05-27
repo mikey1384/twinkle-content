@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
@@ -86,18 +86,10 @@ export default function BasicInfos({
   const [passwordInputModalShown, setPasswordInputModalShown] = useState(false);
   const [emailCheckHighlighted, setEmailCheckHighlighted] = useState(false);
   const [verificationEmailSent, setVerificationEmailSent] = useState(false);
-  const mounted = useRef(true);
   const emailVerified = useMemo(
     () => !stringIsEmpty(email) && email === verifiedEmail,
     [email, verifiedEmail]
   );
-
-  useEffect(() => {
-    mounted.current = true;
-    return function cleanUp() {
-      mounted.current = false;
-    };
-  }, []);
 
   const displayedTime = useMemo(() => {
     if (SELECTED_LANGUAGE === 'kr') {
@@ -329,23 +321,21 @@ export default function BasicInfos({
     const { pathId } = await loadDMChannel({
       recepient: { id: userId, username }
     });
-    if (mounted.current) {
-      if (!pathId) {
-        onOpenNewChatTab({
-          user: {
-            username: myUsername,
-            id: myId,
-            profilePicUrl,
-            authLevel: myAuthLevel
-          },
-          recepient: {
-            username: username,
-            id: userId,
-            profilePicUrl: profilePicUrl,
-            authLevel
-          }
-        });
-      }
+    if (!pathId) {
+      onOpenNewChatTab({
+        user: {
+          username: myUsername,
+          id: myId,
+          profilePicUrl,
+          authLevel: myAuthLevel
+        },
+        recepient: {
+          username: username,
+          id: userId,
+          profilePicUrl: profilePicUrl,
+          authLevel
+        }
+      });
       navigate(pathId ? `/chat/${pathId}` : `/chat/new`);
     }
   }
@@ -371,9 +361,7 @@ export default function BasicInfos({
       youtubeUrl
     });
     onSetUserState({ userId, newState: data });
-    if (mounted.current) {
-      onSetUserInfoOnEdit(false);
-    }
+    onSetUserInfoOnEdit(false);
   }
 
   function onVerifyEmail() {

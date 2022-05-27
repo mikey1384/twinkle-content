@@ -64,7 +64,6 @@ function Notification({ className, location, style, trackScrollPosition }) {
   const loadingNotificationRef = useRef(false);
   const [loadingNotifications, setLoadingNotifications] = useState(false);
   const userChangedTab = useRef(false);
-  const mounted = useRef(true);
   const notifications = useMemo(
     () => notiObj[userId]?.notifications || [],
     [userId, notiObj]
@@ -78,10 +77,8 @@ function Notification({ className, location, style, trackScrollPosition }) {
   );
 
   useEffect(() => {
-    mounted.current = true;
     return function cleanUp() {
       onResetRewards();
-      mounted.current = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -281,25 +278,19 @@ function Notification({ className, location, style, trackScrollPosition }) {
           totalRewardedTwinkleCoins
         }
       ] = await Promise.all([fetchNotifications(), loadRewards()]);
-      if (mounted.current) {
-        onLoadRewards({
-          rewards,
-          loadMoreRewards,
-          totalRewardedTwinkles,
-          totalRewardedTwinkleCoins
-        });
-      }
-      if (mounted.current) {
-        onLoadNotifications({
-          currentChatSubject,
-          loadMoreNotifications,
-          notifications,
-          userId
-        });
-      }
-      if (mounted.current) {
-        setLoadingNotifications(false);
-      }
+      onLoadRewards({
+        rewards,
+        loadMoreRewards,
+        totalRewardedTwinkles,
+        totalRewardedTwinkleCoins
+      });
+      onLoadNotifications({
+        currentChatSubject,
+        loadMoreNotifications,
+        notifications,
+        userId
+      });
+      setLoadingNotifications(false);
       loadingNotificationRef.current = false;
     }
   }
@@ -315,18 +306,16 @@ function Notification({ className, location, style, trackScrollPosition }) {
       myMonthlyXP
     } = await loadRankings();
 
-    if (mounted.current) {
-      onGetRanks({
-        all,
-        top30s,
-        allMonthly,
-        top30sMonthly,
-        myMonthlyRank,
-        myAllTimeRank,
-        myAllTimeXP,
-        myMonthlyXP
-      });
-    }
+    onGetRanks({
+      all,
+      top30s,
+      allMonthly,
+      top30sMonthly,
+      myMonthlyRank,
+      myAllTimeRank,
+      myAllTimeXP,
+      myMonthlyXP
+    });
     return Promise.resolve();
   }
 

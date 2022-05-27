@@ -125,7 +125,6 @@ function Comment({
     threshold: 0
   });
   const PanelRef = useRef(null);
-  const mounted = useRef(true);
   subject = subject || comment.targetObj?.subject || {};
   const { fileType } = getFileInfoFromFileName(fileName);
   const navigate = useNavigate();
@@ -490,38 +489,33 @@ function Comment({
   );
 
   useEffect(() => {
-    if (mounted.current) {
-      if (
-        userId &&
-        subjectHasSecretMessage &&
-        subjectId &&
-        subjectState.prevSecretViewerId !== userId
-      ) {
-        handleCheckSecretShown();
-      }
-      if (!userId) {
-        onChangeSpoilerStatus({
-          shown: false,
-          subjectId
-        });
-      }
+    if (
+      userId &&
+      subjectHasSecretMessage &&
+      subjectId &&
+      subjectState.prevSecretViewerId !== userId
+    ) {
+      handleCheckSecretShown();
+    }
+    if (!userId) {
+      onChangeSpoilerStatus({
+        shown: false,
+        subjectId
+      });
     }
 
     async function handleCheckSecretShown() {
       const { responded } = await checkIfUserResponded(subjectId);
-      if (mounted.current) {
-        onChangeSpoilerStatus({
-          shown: responded,
-          subjectId,
-          prevSecretViewerId: userId
-        });
-      }
+      onChangeSpoilerStatus({
+        shown: responded,
+        subjectId,
+        prevSecretViewerId: userId
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subjectId, subjectState?.prevSecretViewerId, userId]);
 
   useEffect(() => {
-    mounted.current = true;
     return function cleanUp() {
       onSetCommentPlaceholderHeight({
         commentId,
@@ -531,7 +525,6 @@ function Comment({
         commentId,
         visible: visibleRef.current
       });
-      mounted.current = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -902,9 +895,7 @@ function Comment({
           title={removeCommentLabel}
           onConfirm={async () => {
             await onDelete(comment.id);
-            if (mounted.current) {
-              setConfirmModalShown(false);
-            }
+            setConfirmModalShown(false);
           }}
         />
       )}
@@ -917,16 +908,12 @@ function Comment({
       contentId: comment.id,
       contentType: 'comment'
     });
-    if (mounted.current) {
-      onEditDone({ editedComment: content, commentId: comment.id });
-    }
-    if (mounted.current) {
-      onSetIsEditing({
-        contentId: comment.id,
-        contentType: 'comment',
-        isEditing: false
-      });
-    }
+    onEditDone({ editedComment: content, commentId: comment.id });
+    onSetIsEditing({
+      contentId: comment.id,
+      contentType: 'comment',
+      isEditing: false
+    });
   }
 
   function handleLikeClick({ likes, isUnlike }) {
@@ -965,18 +952,14 @@ function Comment({
     if (numReplies > 0 && parent.contentType === 'comment') {
       setLoadingReplies(true);
       const { loadMoreButton, replies } = await loadReplies({ commentId });
-      if (mounted.current) {
-        onLoadReplies({
-          commentId,
-          loadMoreButton,
-          replies,
-          contentType: 'comment',
-          contentId: parent.contentId
-        });
-      }
-      if (mounted.current) {
-        setLoadingReplies(false);
-      }
+      onLoadReplies({
+        commentId,
+        loadMoreButton,
+        replies,
+        contentType: 'comment',
+        contentId: parent.contentId
+      });
+      setLoadingReplies(false);
     }
     ReplyInputAreaRef.current.focus();
   }

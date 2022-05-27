@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, useRef } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import ErrorBoundary from 'components/ErrorBoundary';
 import MissionItem from 'components/MissionItem';
 import Loading from 'components/Loading';
@@ -18,8 +18,6 @@ export default function DidNotPassCopyAndPaste() {
     [missionObj, missionTypeIdHash]
   );
 
-  const mounted = useRef(true);
-
   useEffect(() => {
     if (!copyAndPasteMission && missionTypeIdHash?.['copy-and-paste']) {
       handleLoadCopyAndPasteMission(missionTypeIdHash?.['copy-and-paste']);
@@ -27,12 +25,8 @@ export default function DidNotPassCopyAndPaste() {
     async function handleLoadCopyAndPasteMission(missionId) {
       setLoading(true);
       const { page } = await loadMission({ missionId });
-      if (mounted.current) {
-        onLoadMission({ mission: page });
-      }
-      if (mounted.current) {
-        setLoading(false);
-      }
+      onLoadMission({ mission: page });
+      setLoading(false);
     }
   }, [
     copyAndPasteMission,
@@ -41,13 +35,6 @@ export default function DidNotPassCopyAndPaste() {
     missionTypeIdHash,
     onLoadMission
   ]);
-
-  useEffect(() => {
-    mounted.current = true;
-    return function onUnmount() {
-      mounted.current = false;
-    };
-  }, []);
 
   return (
     <ErrorBoundary
