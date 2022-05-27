@@ -96,9 +96,6 @@ export default function TargetContent({
   const onUpdateCommentFileUploadProgress = useContentContext(
     (v) => v.actions.onUpdateCommentFileUploadProgress
   );
-  const onSetCommentFileUploadComplete = useContentContext(
-    (v) => v.actions.onSetCommentFileUploadComplete
-  );
 
   const {
     onDeleteComment,
@@ -106,7 +103,7 @@ export default function TargetContent({
     onEditRewardComment,
     onUploadTargetComment
   } = useContext(LocalContext);
-  const { xpRewardInterfaceShown, fileUploadComplete, fileUploadProgress } =
+  const { xpRewardInterfaceShown, fileUploadProgress, uploadingFile } =
     useContentState({
       contentType: 'comment',
       contentId: comment.id
@@ -120,11 +117,13 @@ export default function TargetContent({
   const onSetCommentAttachment = useInputContext(
     (v) => v.actions.onSetCommentAttachment
   );
+  const onSetUploadingFile = useContentContext(
+    (v) => v.actions.onSetUploadingFile
+  );
   const attachment = state['comment' + comment.id]?.attachment;
   const { fileType } = comment?.fileName
     ? getFileInfoFromFileName(comment?.fileName)
     : '';
-  const [uploadingFile, setUploadingFile] = useState(false);
   const [recommendationInterfaceShown, setRecommendationInterfaceShown] =
     useState(false);
   const [userListModalShown, setUserListModalShown] = useState(false);
@@ -539,7 +538,6 @@ export default function TargetContent({
                     marginRight: '1rem'
                   }}
                   fileName={attachment?.file?.name}
-                  uploadComplete={fileUploadComplete}
                   uploadProgress={fileUploadProgress}
                 />
               )}
@@ -608,7 +606,11 @@ export default function TargetContent({
   async function handleSubmit(text) {
     try {
       if (attachment) {
-        setUploadingFile(true);
+        onSetUploadingFile({
+          contentId: comment.id,
+          contentType: 'comment',
+          isUploading: true
+        });
         const filePath = uuidv1();
         await uploadFile({
           filePath,
@@ -627,29 +629,26 @@ export default function TargetContent({
           fileName: attachment.file.name,
           fileSize: attachment.file.size
         });
-        if (mounted.current) {
-          onSetCommentFileUploadComplete({
-            contentType: 'comment',
-            contentId: comment.id
-          });
-          setUploadingFile(false);
-          onUploadTargetComment({ ...data.comment, contentId, contentType });
-          onClearCommentFileUploadProgress({
-            contentType: 'comment',
-            contentId: comment.id
-          });
-          setUploadingFile(false);
-          onEnterComment({
-            contentType: 'comment',
-            contentId: comment.id,
-            text: ''
-          });
-          onSetCommentAttachment({
-            attachment: undefined,
-            contentType: 'comment',
-            contentId: comment.id
-          });
-        }
+        onSetUploadingFile({
+          contentId: comment.id,
+          contentType: 'comment',
+          isUploading: false
+        });
+        onUploadTargetComment({ ...data.comment, contentId, contentType });
+        onClearCommentFileUploadProgress({
+          contentType: 'comment',
+          contentId: comment.id
+        });
+        onEnterComment({
+          contentType: 'comment',
+          contentId: comment.id,
+          text: ''
+        });
+        onSetCommentAttachment({
+          attachment: undefined,
+          contentType: 'comment',
+          contentId: comment.id
+        });
       } else {
         const data = await uploadComment({
           content: text,
