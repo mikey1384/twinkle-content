@@ -14,31 +14,31 @@ import WriteItYourself from './WriteItYourself';
 import LaunchTheWebsite from './LaunchTheWebsite';
 
 MissionModule.propTypes = {
-  fileUploadComplete: PropTypes.bool,
   fileUploadProgress: PropTypes.number,
   isRepeating: PropTypes.bool,
   mission: PropTypes.object.isRequired,
   onSetMissionState: PropTypes.func,
-  style: PropTypes.object
+  style: PropTypes.object,
+  uploadingFile: PropTypes.bool
 };
 
 export default function MissionModule({
   mission,
-  fileUploadComplete,
   fileUploadProgress,
   isRepeating,
   onSetMissionState,
-  style
+  style,
+  uploadingFile
 }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', ...style }}>
       {mission.missionType === 'screenshot' && (
         <TakeScreenshot
           attachment={mission.attachment}
-          fileUploadComplete={fileUploadComplete}
           fileUploadProgress={fileUploadProgress}
           missionId={mission.id}
           onSetMissionState={onSetMissionState}
+          uploadingFile={uploadingFile}
         />
       )}
       {mission.missionType === 'twinkle-store' && (
