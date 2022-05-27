@@ -48,11 +48,7 @@ function SubjectInput() {
   const { onFileUpload } = useContext(LocalContext);
   const uploadContent = useAppContext((v) => v.requestHelpers.uploadContent);
   const { canEditRewardLevel, profileTheme, banned } = useMyState();
-  const fileUploadComplete = useHomeContext((v) => v.state.fileUploadComplete);
   const fileUploadProgress = useHomeContext((v) => v.state.fileUploadProgress);
-  const secretAttachmentUploadComplete = useHomeContext(
-    (v) => v.state.secretAttachmentUploadComplete
-  );
   const secretAttachmentUploadProgress = useHomeContext(
     (v) => v.state.secretAttachmentUploadProgress
   );
@@ -344,7 +340,6 @@ function SubjectInput() {
         <FileUploadStatusIndicator
           style={{ fontSize: '1.7rem', fontWeight: 'bold', marginTop: 0 }}
           fileName={attachment?.file?.name}
-          uploadComplete={fileUploadComplete}
           uploadProgress={fileUploadProgress}
         />
       )}
@@ -356,7 +351,6 @@ function SubjectInput() {
             marginTop: attachment?.contentType === 'file' ? '1.5rem' : 0
           }}
           fileName={secretAttachment?.file?.name}
-          uploadComplete={secretAttachmentUploadComplete}
           uploadProgress={secretAttachmentUploadProgress}
         />
       )}
