@@ -20,7 +20,6 @@ Slide.propTypes = {
   cannotMoveUp: PropTypes.bool,
   cannotMoveDown: PropTypes.bool,
   displayedSlideIds: PropTypes.array,
-  fileUploadComplete: PropTypes.bool,
   fileUploadProgress: PropTypes.number,
   innerRef: PropTypes.func,
   index: PropTypes.number,
@@ -47,7 +46,8 @@ Slide.propTypes = {
   slideId: PropTypes.number,
   slideObj: PropTypes.object,
   paths: PropTypes.object,
-  selectedForkButtonId: PropTypes.number
+  selectedForkButtonId: PropTypes.number,
+  uploadingFile: PropTypes.bool
 };
 
 export default function Slide({
@@ -58,7 +58,6 @@ export default function Slide({
   heading,
   index,
   description,
-  fileUploadComplete,
   fileUploadProgress,
   innerRef,
   insertButtonShown,
@@ -83,7 +82,8 @@ export default function Slide({
   attachment,
   selectedForkButtonId,
   slideObj,
-  style
+  style,
+  uploadingFile
 }) {
   const [ComponentRef, inView] = useInView({
     threshold: 1
@@ -275,7 +275,6 @@ export default function Slide({
           <Editor
             attachment={attachment}
             description={description}
-            fileUploadComplete={fileUploadComplete}
             fileUploadProgress={fileUploadProgress}
             forkedFrom={forkedFrom}
             heading={heading}
@@ -290,6 +289,7 @@ export default function Slide({
             portalButton={portalButton}
             slideId={slideId}
             slideObj={slideObj}
+            uploadingFile={uploadingFile}
           />
         ) : isDeleted ? (
           <Deleted
