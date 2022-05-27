@@ -27,13 +27,13 @@ export default function Task({
     description,
     title,
     subtitle,
-    fileUploadComplete,
     fileUploadProgress,
     objective,
     xpReward,
     coinReward,
     retryable,
-    missionType
+    missionType,
+    uploadingFile
   },
   onSetMissionState,
   style,
@@ -166,9 +166,9 @@ export default function Task({
       {missionModuleShown && (
         <MissionModule
           mission={task}
-          fileUploadComplete={fileUploadComplete}
           fileUploadProgress={fileUploadProgress}
           onSetMissionState={onSetMissionState}
+          uploadingFile={uploadingFile}
           style={{ marginTop: '4.5rem' }}
         />
       )}
