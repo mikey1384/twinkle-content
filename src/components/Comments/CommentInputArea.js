@@ -1,9 +1,9 @@
-import React, { useContext, useMemo, useState } from 'react';
+import React, { useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import InputForm from 'components/Forms/InputForm';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
 import LocalContext from './Context';
-import { useInputContext } from 'contexts';
+import { useContentContext, useInputContext } from 'contexts';
 import { useContentState } from 'helpers/hooks';
 import { v1 as uuidv1 } from 'uuid';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
@@ -62,13 +62,14 @@ export default function CommentInputArea({
   const onSetCommentAttachment = useInputContext(
     (v) => v.actions.onSetCommentAttachment
   );
+  const onSetUploadingFile = useContentContext(
+    (v) => v.actions.onSetUploadingFile
+  );
 
-  const { fileUploadComplete, fileUploadProgress } = useContentState({
+  const { fileUploadProgress, uploadingFile } = useContentState({
     contentId,
     contentType
   });
-
-  const [uploadingFile, setUploadingFile] = useState(false);
   const attachment = useMemo(
     () => state[contentType + contentId]?.attachment,
     [contentId, contentType, state]
@@ -88,7 +89,6 @@ export default function CommentInputArea({
             paddingBottom: '1rem'
           }}
           fileName={attachment?.file?.name}
-          uploadComplete={fileUploadComplete}
           uploadProgress={fileUploadProgress}
         />
       ) : (
@@ -109,7 +109,11 @@ export default function CommentInputArea({
 
   async function handleSubmit(text) {
     if (attachment) {
-      setUploadingFile(true);
+      onSetUploadingFile({
+        contentId,
+        contentType,
+        isUploading: true
+      });
       await onSubmitWithAttachment({
         attachment,
         commentContent: text,
@@ -134,7 +138,11 @@ export default function CommentInputArea({
         targetCommentId
       });
     }
-    setUploadingFile(false);
+    onSetUploadingFile({
+      contentId,
+      contentType,
+      isUploading: false
+    });
     return Promise.resolve();
   }
 }
