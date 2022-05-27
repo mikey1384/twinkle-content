@@ -75,7 +75,7 @@ export default function MediaPlayer({
       style={{
         marginTop: '1rem',
         width: '100%',
-        height: '100%',
+        height: 'CALC(100% - 3rem)',
         position: 'relative'
       }}
     >
@@ -97,13 +97,8 @@ export default function MediaPlayer({
         onProgress={handleVideoProgress}
         onReady={handleReady}
         style={{
-          position: 'absolute',
           width: '100%',
           height: '100%',
-          top: 0,
-          right: 0,
-          left: 0,
-          bottom: 0,
           paddingBottom:
             fileType === 'audio' || fileType === 'video' ? '1rem' : 0
         }}

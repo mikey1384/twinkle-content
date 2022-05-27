@@ -62,7 +62,7 @@ export default function FileAttachment({
         margin-top: 1rem;
         width: 100%;
         min-height: 9rem;
-        height: ${isImageOrVideo ? '37rem' : 'auto'};
+        height: ${isImageOrVideo ? '41rem' : 'auto'};
         @media (max-width: ${mobileMaxWidth}) {
           min-height: 8rem;
           height: ${isImageOrVideo ? '23rem' : 'auto'};
