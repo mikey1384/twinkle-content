@@ -8,7 +8,8 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import RewardLevelForm from 'components/Forms/RewardLevelForm';
 import SecretMessageInput from 'components/Forms/SecretMessageInput';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
-import { useAppContext, useInputContext } from 'contexts';
+import { useAppContext, useContentContext, useInputContext } from 'contexts';
+import { useContentState } from 'helpers/hooks';
 import { v1 as uuidv1 } from 'uuid';
 import localize from 'constants/localize';
 
@@ -44,8 +45,18 @@ export default function SubjectInputForm({
   descriptionPlaceholder,
   onSubmit
 }) {
+  const { fileUploadProgress, uploadingFile } = useContentState({
+    contentType,
+    contentId
+  });
   const uploadFile = useAppContext((v) => v.requestHelpers.uploadFile);
   const state = useInputContext((v) => v.state);
+  const onUpdateSecretFileUploadProgress = useContentContext(
+    (v) => v.actions.onUpdateSecretFileUploadProgress
+  );
+  const onSetUploadingFile = useContentContext(
+    (v) => v.actions.onSetUploadingFile
+  );
   const onSetSubjectInputForm = useInputContext(
     (v) => v.actions.onSetSubjectInputForm
   );
@@ -65,9 +76,6 @@ export default function SubjectInputForm({
   const secretAnswerRef = useRef(prevSecretAnswer);
   const [secretAttachment, setSecretAttachment] =
     useState(prevSecretAttachment);
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [uploadingFile, setUploadingFile] = useState(false);
-  const [uploadComplete, setUploadComplete] = useState(false);
   const secretAttachmentRef = useRef(prevSecretAttachment);
 
   const [submitting, setSubmitting] = useState(false);
@@ -95,8 +103,7 @@ export default function SubjectInputForm({
           <FileUploadStatusIndicator
             style={{ fontSize: '1.7rem', fontWeight: 'bold', marginTop: 0 }}
             fileName={secretAttachment?.file?.name}
-            uploadComplete={uploadComplete}
-            uploadProgress={uploadProgress}
+            uploadProgress={fileUploadProgress}
           />
         ) : (
           <>
@@ -240,7 +247,11 @@ export default function SubjectInputForm({
     setSubmitting(true);
     const filePath = uuidv1();
     if (secretAttachment) {
-      setUploadingFile(true);
+      onSetUploadingFile({
+        contentId,
+        contentType,
+        isUploading: true
+      });
       onSetSubjectInputForm({
         contentId,
         contentType,
@@ -250,9 +261,17 @@ export default function SubjectInputForm({
         filePath,
         file: secretAttachment?.file,
         onUploadProgress: ({ loaded, total }) =>
-          setUploadProgress(loaded / total)
+          onUpdateSecretFileUploadProgress({
+            contentId,
+            contentType,
+            progress: loaded / total
+          })
       });
-      setUploadComplete(true);
+      onSetUploadingFile({
+        contentId,
+        contentType,
+        isUploading: false
+      });
     }
     try {
       await onSubmit({
