@@ -352,8 +352,11 @@ function MessagesContainer({
       prevTopMessageId.current &&
       topMessageId !== prevTopMessageId.current
     ) {
-      (MessagesRef.current || {}).scrollTop = prevScrollPosition.current;
-      (MessagesRef.current || {}).scrollTop = prevScrollPosition.current + 1000;
+      if (deviceIsMobile) {
+        (MessagesRef.current || {}).scrollTop = prevScrollPosition.current;
+        (MessagesRef.current || {}).scrollTop =
+          prevScrollPosition.current + 1000;
+      }
       (MessagesRef.current || {}).scrollTop = prevScrollPosition.current;
     }
     if (messageIds.length > 1) {
@@ -1306,8 +1309,10 @@ function MessagesContainer({
 
   function handleScrollToBottom() {
     if (mounted.current && MessagesRef.current) {
-      (MessagesRef.current || {}).scrollTop = 0;
-      (MessagesRef.current || {}).scrollTop = -1000;
+      if (deviceIsMobile) {
+        (MessagesRef.current || {}).scrollTop = 0;
+        (MessagesRef.current || {}).scrollTop = -1000;
+      }
       (MessagesRef.current || {}).scrollTop = 0;
     }
   }
