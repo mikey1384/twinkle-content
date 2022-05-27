@@ -118,6 +118,7 @@ export default function TargetMessage({ message }) {
           <Spoiler content={message.content} />
         ) : (
           <LongText
+            readMoreHeightFixed
             style={{ marginTop: '0.5rem' }}
             className={css`
               @media (max-width: ${mobileMaxWidth}) {
