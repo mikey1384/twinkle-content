@@ -105,12 +105,6 @@ function App() {
   );
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const onLoadNewFeeds = useHomeContext((v) => v.actions.onLoadNewFeeds);
-  const onSetFileUploadComplete = useHomeContext(
-    (v) => v.actions.onSetFileUploadComplete
-  );
-  const onSetSecretAttachmentUploadComplete = useHomeContext(
-    (v) => v.actions.onSetSecretAttachmentUploadComplete
-  );
   const onSetSubmittingSubject = useHomeContext(
     (v) => v.actions.onSetSubmittingSubject
   );
@@ -411,12 +405,6 @@ function App() {
           );
         }
         await Promise.all(promises);
-        if (attachment) {
-          onSetFileUploadComplete();
-        }
-        if (hasSecretAnswer && secretAttachment) {
-          onSetSecretAttachmentUploadComplete();
-        }
         const data = await uploadContent({
           title,
           byUser,
