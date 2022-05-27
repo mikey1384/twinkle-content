@@ -349,13 +349,6 @@ export default function ContentActions(dispatch) {
         contentType
       });
     },
-    onSetCommentFileUploadComplete({ contentId, contentType }) {
-      return dispatch({
-        type: 'SET_COMMENT_FILE_UPLOAD_COMPLETE',
-        contentId,
-        contentType
-      });
-    },
     onSetCommentsShown({ contentId, contentType }) {
       return dispatch({
         type: 'SET_COMMENTS_SHOWN',
@@ -468,6 +461,14 @@ export default function ContentActions(dispatch) {
         isSecretAttachment
       });
     },
+    onSetUploadingFile({ contentId, contentType, isUploading }) {
+      return dispatch({
+        type: 'SET_UPLOADING_FILE',
+        contentId,
+        contentType,
+        isUploading
+      });
+    },
     onSetVideoProgress({ videoId, progress }) {
       return dispatch({
         type: 'SET_VIDEO_PROGRESS',
@@ -544,7 +545,15 @@ export default function ContentActions(dispatch) {
         contentType
       });
     },
-    onUpdateCommentFileUploadProgress({ contentType, contentId, progress }) {
+    onUpdateSecretFileUploadProgress({ contentId, contentType, progress }) {
+      return dispatch({
+        type: 'UPDATE_SECRET_FILE_UPLOAD_PROGRESS',
+        contentId,
+        contentType,
+        progress
+      });
+    },
+    onUpdateCommentFileUploadProgress({ contentId, contentType, progress }) {
       return dispatch({
         type: 'UPDATE_COMMENT_FILE_UPLOAD_PROGRESS',
         progress,
