@@ -547,7 +547,6 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
       if (
         uploaderId === userId &&
         newlyRecommended &&
-        target.contentType !== 'pass' &&
         recommenderId !== userId
       ) {
         onIncreaseNumNewNotis();

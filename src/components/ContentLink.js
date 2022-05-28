@@ -9,7 +9,7 @@ ContentLink.propTypes = {
   content: PropTypes.shape({
     byUser: PropTypes.number,
     content: PropTypes.string,
-    id: PropTypes.number,
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     missionType: PropTypes.string,
     rootMissionType: PropTypes.string,
     title: PropTypes.string,
@@ -37,6 +37,8 @@ export default function ContentLink({
     let result = '';
     if (contentType === 'url') {
       result = 'links';
+    } else if (contentType === 'pass') {
+      result = 'missions';
     } else {
       result = contentType + 's';
     }

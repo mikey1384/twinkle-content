@@ -16,6 +16,10 @@ const languageObj = {
     en: 'Account Types',
     kr: '계정유형'
   },
+  achievement: {
+    en: 'achievement',
+    kr: '업적'
+  },
   add: {
     en: 'Add',
     kr: '추가'

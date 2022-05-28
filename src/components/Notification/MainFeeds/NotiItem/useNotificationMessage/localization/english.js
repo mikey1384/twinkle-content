@@ -18,12 +18,20 @@ export default function renderEnglishMessage({
   targetObj,
   targetSubject
 }) {
+  const displayedContent =
+    targetObj.contentType === 'pass'
+      ? targetObj.missionTitle
+      : targetObj.content;
   const contentPreview = `${
-    targetObj.contentType === 'url' ? 'link' : targetObj.contentType
+    targetObj.contentType === 'url'
+      ? 'link'
+      : targetObj.contentType === 'pass'
+      ? 'achievement'
+      : targetObj.contentType
   } ${
-    !stringIsEmpty(targetObj.content)
+    !stringIsEmpty(displayedContent)
       ? `(${truncateText({
-          text: targetObj.content,
+          text: displayedContent,
           limit: 100
         })})`
       : ''
@@ -71,7 +79,12 @@ export default function renderEnglishMessage({
           <ContentLink
             contentType={targetObj.contentType}
             content={{
-              id: targetObj.id,
+              id:
+                targetObj.contentType === 'pass'
+                  ? `${rootMissionType ? `${rootMissionType}/` : ''}${
+                      targetObj.missionType
+                    }`
+                  : targetObj.id,
               title: contentPreview
             }}
           />
