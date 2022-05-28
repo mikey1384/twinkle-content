@@ -4,7 +4,10 @@ import ChangePicture from './ChangePicture';
 import { cloudFrontURL } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
+import { isMobile } from 'helpers';
 import StatusTag from './StatusTag';
+
+const deviceIsMobile = isMobile(navigator);
 
 ProfilePic.propTypes = {
   className: PropTypes.string,
@@ -83,9 +86,11 @@ export default function ProfilePic({
         src={displayedProfilePicUrl ? src : '/img/default.png'}
         onError={() => setSrc('/img/default.png')}
       />
-      <ChangePicture
-        shown={myId === userId && isProfilePage && changePictureShown}
-      />
+      {!deviceIsMobile && (
+        <ChangePicture
+          shown={myId === userId && isProfilePage && changePictureShown}
+        />
+      )}
       {statusTagShown && (
         <StatusTag
           status={isAway ? 'away' : isBusy ? 'busy' : 'online'}
