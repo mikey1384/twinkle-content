@@ -79,7 +79,7 @@ export default function MediaPlayer({
         position: 'relative'
       }}
     >
-      {fileType !== 'audio' && (
+      {fileType !== 'audio' && !thumbUrl && (
         <ExtractedThumb
           isHidden
           src={src}
