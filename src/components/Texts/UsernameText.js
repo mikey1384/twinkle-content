@@ -248,8 +248,8 @@ export default function UsernameText({
         if (!usingChat) {
           onUpdateSelectedChannelId(channelId);
         }
-        navigate(pathId ? `/chat/${pathId}` : `/chat/new`);
       }
+      navigate(pathId ? `/chat/${pathId}` : `/chat/new`);
     }
   }
 
