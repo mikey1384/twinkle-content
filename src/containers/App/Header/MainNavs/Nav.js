@@ -157,7 +157,7 @@ function Nav({
       return onClick?.();
     }
     if (!pathname) return;
-    if (pathname === '/') {
+    if (pathname === to) {
       document.getElementById('App').scrollTop = 0;
       BodyRef.scrollTop = 0;
     }
@@ -170,7 +170,7 @@ function Nav({
       });
       onResetProfile(username);
     }
-    if (pathname === '/users') {
+    if (pathname === '/users' && pathname === to) {
       onSetProfilesLoaded(false);
     }
     if (
@@ -182,8 +182,6 @@ function Nav({
       onSetSubjectsLoaded(false);
       onClearVideosLoaded();
     }
-    document.getElementById('App').scrollTop = 0;
-    BodyRef.scrollTop = 0;
   }
 }
 
