@@ -83,7 +83,7 @@ export default function MediaPlayer({
         <ExtractedThumb
           isHidden
           src={src}
-          style={{ width: '100%', height: '7rem' }}
+          style={{ width: '100%' }}
           onThumbnailLoad={handleThumbnailLoad}
           thumbUrl={thumbUrl}
         />
