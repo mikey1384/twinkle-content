@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import LocalContext from '../../Context';
 import FileInfo from './FileInfo';
@@ -44,6 +44,7 @@ export default function FileAttachment({
       )}`,
     [fileName, filePath]
   );
+  const [imageWorks, setImageWorks] = useState(true);
 
   useEffect(() => {
     return function cleanUp() {
@@ -62,7 +63,7 @@ export default function FileAttachment({
         margin-top: 1rem;
         width: 100%;
         min-height: 9rem;
-        height: ${isImageOrVideo ? '41rem' : 'auto'};
+        height: ${isImageOrVideo && imageWorks ? '41rem' : 'auto'};
         @media (max-width: ${mobileMaxWidth}) {
           min-height: 8rem;
           height: ${isImageOrVideo ? '23rem' : 'auto'};
@@ -70,7 +71,20 @@ export default function FileAttachment({
       `}
     >
       {fileType === 'image' ? (
-        <ImagePreview src={src} fileName={fileName} />
+        imageWorks ? (
+          <ImagePreview
+            src={src}
+            fileName={fileName}
+            onSetImageWorks={setImageWorks}
+          />
+        ) : (
+          <FileInfo
+            fileName={fileName}
+            fileType={fileType}
+            fileSize={fileSize}
+            src={src}
+          />
+        )
       ) : fileType === 'video' || fileType === 'audio' ? (
         <div
           style={{

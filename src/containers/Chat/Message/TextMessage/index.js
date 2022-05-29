@@ -12,7 +12,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import LinkAttachment from './LinkAttachment';
 import LongText from 'components/Texts/LongText';
 import { Color } from 'constants/css';
-import { isValidSpoiler } from 'helpers/stringHelpers';
+import { isValidSpoiler, stringIsEmpty } from 'helpers/stringHelpers';
 import { socket } from 'constants/io';
 import { isMobile } from 'helpers';
 import Spoiler from '../Spoiler';
@@ -126,7 +126,7 @@ function TextMessage({
               {Prefix}
               {isSpoiler ? (
                 <Spoiler content={content} />
-              ) : (
+              ) : stringIsEmpty(content) ? null : (
                 <LongText
                   readMoreHeightFixed
                   style={{

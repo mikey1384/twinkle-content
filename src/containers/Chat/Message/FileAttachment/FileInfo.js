@@ -55,7 +55,11 @@ export default function FileInfo({ fileName, fileType, fileSize, src }) {
                 font-size: 7rem;
               }
             `}
-            icon={fileType === 'other' ? 'file' : `file-${fileType}`}
+            icon={
+              fileType === 'other' || fileType === 'image'
+                ? 'file'
+                : `file-${fileType}`
+            }
           />
         </div>
 

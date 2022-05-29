@@ -6,13 +6,13 @@ import { css } from '@emotion/css';
 
 ImagePreview.propTypes = {
   src: PropTypes.string.isRequired,
-  fileName: PropTypes.string.isRequired
+  fileName: PropTypes.string.isRequired,
+  onSetImageWorks: PropTypes.func.isRequired
 };
 
-export default function ImagePreview({ src, fileName }) {
+export default function ImagePreview({ src, fileName, onSetImageWorks }) {
   const [imageModalShown, setImageModalShown] = useState(false);
-  const [imageWorks, setImageWorks] = useState(true);
-  return imageWorks ? (
+  return (
     <div
       style={{
         display: 'flex',
@@ -38,7 +38,7 @@ export default function ImagePreview({ src, fileName }) {
         src={src}
         rel={fileName}
         onClick={() => setImageModalShown(true)}
-        onError={() => setImageWorks(false)}
+        onError={() => onSetImageWorks(false)}
       />
       {imageModalShown && (
         <ImageModal
@@ -48,5 +48,5 @@ export default function ImagePreview({ src, fileName }) {
         />
       )}
     </div>
-  ) : null;
+  );
 }
