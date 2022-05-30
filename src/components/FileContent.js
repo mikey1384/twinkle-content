@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import FileIcon from 'components/FileIcon';
 import Image from 'components/Image';
+import ExtractedThumb from 'components/ExtractedThumb';
 import { truncateText } from 'helpers/stringHelpers';
 
 FileContent.propTypes = {
@@ -25,6 +26,14 @@ export default function FileContent({
   fileNameLength,
   imageBackgroundColor
 }) {
+  const [videoSrc, setVideoSrc] = useState(null);
+  useEffect(() => {
+    if (fileType === 'video') {
+      const url = URL.createObjectURL(file);
+      setVideoSrc(url);
+    }
+  }, [file, fileType]);
+
   return (
     <div
       style={{
@@ -33,6 +42,13 @@ export default function FileContent({
         ...style
       }}
     >
+      {videoSrc && (
+        <ExtractedThumb
+          src={videoSrc}
+          onThumbnailLoad={(thumbnail) => console.log(thumbnail)}
+          onThumbnailLoadFail={() => console.log('fail')}
+        />
+      )}
       {fileType === 'image' ? (
         <Image backgroundColor={imageBackgroundColor} imageUrl={imageUrl} />
       ) : (
