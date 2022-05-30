@@ -44,9 +44,9 @@ export default function FileContent({
     >
       {videoSrc && (
         <ExtractedThumb
+          isHidden
           src={videoSrc}
           onThumbnailLoad={(thumbnail) => console.log(thumbnail)}
-          onThumbnailLoadFail={() => console.log('fail')}
         />
       )}
       {fileType === 'image' ? (
