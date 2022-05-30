@@ -857,10 +857,7 @@ export default function contentRequestHelpers({ auth, handleError }) {
         auth()
       );
       await request.put(url.signedRequest, file, {
-        onUploadProgress,
-        headers: {
-          'Content-Disposition': `attachment; filename="${file.name}"`
-        }
+        onUploadProgress
       });
       return Promise.resolve(url?.url?.split('.com')?.[1]);
     },

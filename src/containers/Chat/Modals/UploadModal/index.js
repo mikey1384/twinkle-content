@@ -103,8 +103,9 @@ function UploadModal({
     if (selectedFile) {
       const filePath = uuidv1();
       const messageId = uuidv1();
+      const splitFileName = selectedFile.name.split('.');
       const fileName = `${Math.floor(Date.now() / 1000)}.${
-        selectedFile.name.split('.')[1]
+        selectedFile.name.split('.')[splitFileName.length - 1]
       }`;
       onFileUpload({
         channelId,
