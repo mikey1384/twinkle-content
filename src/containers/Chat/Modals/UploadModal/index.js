@@ -103,9 +103,13 @@ function UploadModal({
     if (selectedFile) {
       const filePath = uuidv1();
       const messageId = uuidv1();
+      const fileName = `${Math.floor(Date.now() / 1000)}.${
+        selectedFile.name.split('.')[1]
+      }`;
       onFileUpload({
         channelId,
         content: finalizeEmoji(caption),
+        fileName,
         filePath,
         fileToUpload: selectedFile,
         userId,
@@ -121,7 +125,7 @@ function UploadModal({
           channelId,
           fileToUpload: selectedFile,
           filePath,
-          fileName: selectedFile.name,
+          fileName,
           profilePicUrl,
           userId,
           username

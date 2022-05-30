@@ -566,6 +566,7 @@ export default function chatRequestHelpers({ auth, handleError }) {
     async uploadFileOnChat({
       channelId,
       content,
+      fileName,
       selectedFile,
       onUploadProgress,
       path,
@@ -577,20 +578,21 @@ export default function chatRequestHelpers({ auth, handleError }) {
         const { data: url } = await request.get(
           `${URL}/content/sign-s3?fileSize=${
             selectedFile.size
-          }&fileName=${encodeURIComponent(
-            selectedFile.name
-          )}&path=${path}&context=chat`,
+          }&fileName=${encodeURIComponent(fileName)}&path=${path}&context=chat`,
           auth()
         );
         await request.put(url.signedRequest, selectedFile, {
-          onUploadProgress
+          onUploadProgress,
+          headers: {
+            'Content-Disposition': `attachment; filename="${fileName}"`
+          }
         });
         const {
           data: { channel, message, messageId, alreadyExists }
         } = await request.post(
           `${URL}/chat/file`,
           {
-            fileName: selectedFile.name,
+            fileName,
             fileSize: selectedFile.size,
             path,
             channelId,
@@ -601,7 +603,13 @@ export default function chatRequestHelpers({ auth, handleError }) {
           },
           auth()
         );
-        return Promise.resolve({ channel, message, messageId, alreadyExists });
+        return Promise.resolve({
+          channel,
+          message,
+          messageId,
+          alreadyExists,
+          fileName
+        });
       } catch (error) {
         return handleError(error);
       }

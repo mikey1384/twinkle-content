@@ -259,6 +259,7 @@ function App() {
     async ({
       channelId,
       content,
+      fileName,
       filePath,
       fileToUpload,
       recepientId,
@@ -269,7 +270,7 @@ function App() {
       onPostFileUploadStatus({
         channelId,
         content,
-        fileName: fileToUpload.name,
+        fileName,
         filePath,
         fileToUpload,
         recepientId
@@ -278,6 +279,7 @@ function App() {
         await uploadFileOnChat({
           channelId,
           content,
+          fileName,
           selectedFile: fileToUpload,
           onUploadProgress: handleUploadProgress,
           recepientId,
@@ -297,7 +299,7 @@ function App() {
       });
       const params = {
         content,
-        fileName: fileToUpload.name,
+        fileName,
         filePath,
         fileSize: fileToUpload.size,
         id: messageId,
