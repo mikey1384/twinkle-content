@@ -73,10 +73,10 @@ export default function MyRank({
           font-weight: bold;
         }
         span {
-          font-size: ${twinkleXP > 1000000 ? '2.8rem' : '3rem'};
+          font-size: ${twinkleXP > 1_000_000 ? '2.8rem' : '3rem'};
         }
         span.rank {
-          font-size: ${twinkleXP > 1000000 ? '1.7rem' : '2rem'};
+          font-size: ${twinkleXP > 1_000_000 ? '1.7rem' : '2rem'};
         }
         @media (max-width: ${mobileMaxWidth}) {
           border-radius: 0;
@@ -84,7 +84,7 @@ export default function MyRank({
             font-size: 2rem;
           }
           span.rank {
-            font-size: ${twinkleXP > 1000000 ? '1.3rem' : '1.6rem'};
+            font-size: ${twinkleXP > 1_000_000 ? '1.3rem' : '1.6rem'};
           }
         }
       `}

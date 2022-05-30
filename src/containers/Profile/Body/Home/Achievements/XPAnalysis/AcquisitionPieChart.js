@@ -122,8 +122,8 @@ export default function AcquisitionPieChart({ data }) {
   );
 
   function handlePieLabelFormatting({ payload }) {
-    if (payload.value > 1000000) {
-      return Math.round(payload.value / 100000) / 10 + 'M';
+    if (payload.value > 1_000_000) {
+      return Math.round(payload.value / 100_000) / 10 + 'M';
     }
     return addCommasToNumber(payload.value);
   }

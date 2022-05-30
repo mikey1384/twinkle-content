@@ -100,7 +100,7 @@ export default function Tooltip({
   return createPortal(
     <ErrorBoundary
       style={{
-        zIndex: 100 * 1000 * 1000,
+        zIndex: 100_000_000,
         top: 0,
         position: 'fixed'
       }}

@@ -33,7 +33,7 @@ export default function DropdownList({
   onHideMenu = () => {},
   onMouseEnter = () => {},
   onMouseLeave = () => {},
-  zIndex = 100 * 1000 * 1000
+  zIndex = 100_000_000
 }) {
   const MenuRef = useRef(null);
   const { x, y, width, height } = dropdownContext;

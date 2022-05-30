@@ -879,8 +879,8 @@ export function removeLineBreaks(string) {
 }
 
 export function renderFileSize(fileSize) {
-  if (fileSize > 1000000) {
-    return `(${(fileSize / 1000000).toFixed(2)} MB)`;
+  if (fileSize > 1_000_000) {
+    return `(${(fileSize / 1_000_000).toFixed(2)} MB)`;
   }
   if (fileSize > 1000) {
     return `(${(fileSize / 1000).toFixed(2)} KB)`;

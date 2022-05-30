@@ -124,7 +124,7 @@ function XPVideoPlayer({
   const timeWatchedRef = useRef(prevTimeWatched);
   const totalDurationRef = useRef(0);
   const userIdRef = useRef(userId);
-  const watchCodeRef = useRef(Math.floor(Math.random() * 10000));
+  const watchCodeRef = useRef(Math.floor(Math.random() * 10_000));
   const rewardingCoin = useRef(false);
   const rewardingXP = useRef(false);
   const themeColor = profileTheme || 'logoBlue';

@@ -459,7 +459,7 @@ function App() {
             width: 80%;
             left: 10%;
             top: 2rem;
-            z-index: 100000;
+            z-index: 100_000;
             background: ${Color.blue()};
             color: #fff;
             padding: 1rem;

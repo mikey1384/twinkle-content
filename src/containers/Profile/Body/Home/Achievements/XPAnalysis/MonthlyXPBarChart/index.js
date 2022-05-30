@@ -81,8 +81,8 @@ export default function MonthlyXPBarChart({ data = [] }) {
   );
 
   function handleYAxisTickFormatting(value) {
-    if (value > 1000000) {
-      return value / 1000000 + 'M';
+    if (value > 1_000_000) {
+      return value / 1_000_000 + 'M';
     }
     if (value > 1000) {
       return value / 1000 + 'k';
