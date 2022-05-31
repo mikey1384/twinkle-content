@@ -12,7 +12,8 @@ export const initialInputState = {
       title: '',
       description: '',
       secretAnswer: '',
-      rewardLevel: 0
+      rewardLevel: 0,
+      thumbnail: ''
     },
     hasSecretAnswer: false
   },

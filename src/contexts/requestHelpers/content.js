@@ -749,6 +749,7 @@ export default function contentRequestHelpers({ auth, handleError }) {
       secretAttachmentFilePath,
       secretAttachmentFileName,
       secretAttachmentFileSize,
+      thumbUrl,
       ytDetails
     }) {
       try {
@@ -770,6 +771,7 @@ export default function contentRequestHelpers({ auth, handleError }) {
             secretAttachmentFilePath,
             secretAttachmentFileName,
             secretAttachmentFileSize,
+            thumbUrl,
             ytDetails
           },
           auth()

@@ -179,14 +179,15 @@ export default function InputReducer(state, action) {
     case 'SET_EDIT_INTERACTIVE_FORM':
       return {
         ...state,
-        [`edit-interactive-${action.interactiveId}-${action.slideId}`]: action.form
-          ? {
-              ...(state[
-                `edit-interactive-${action.interactiveId}-${action.slideId}`
-              ] || {}),
-              ...action.form
-            }
-          : undefined
+        [`edit-interactive-${action.interactiveId}-${action.slideId}`]:
+          action.form
+            ? {
+                ...(state[
+                  `edit-interactive-${action.interactiveId}-${action.slideId}`
+                ] || {}),
+                ...action.form
+              }
+            : undefined
       };
     case 'SET_EMAIL_ERROR':
       return {
@@ -298,6 +299,17 @@ export default function InputReducer(state, action) {
               ...action.form
             }
           : undefined
+      };
+    case 'SET_SUBJECT_THUMBNAIL':
+      return {
+        ...state,
+        subject: {
+          ...state.subject,
+          details: {
+            ...state.subject.details,
+            thumbnail: action.thumbnail
+          }
+        }
       };
     case 'SET_SUBJECT_TITLE':
       return {

@@ -76,6 +76,9 @@ function SubjectInput() {
   const onSetSubjectAttachment = useInputContext(
     (v) => v.actions.onSetSubjectAttachment
   );
+  const onSetSubjectThumbnail = useInputContext(
+    (v) => v.actions.onSetSubjectThumbnail
+  );
   const onSetSubjectDescription = useInputContext(
     (v) => v.actions.onSetSubjectDescription
   );
@@ -89,7 +92,7 @@ function SubjectInput() {
 
   const {
     details,
-    details: { attachment, rewardLevel, secretAttachment }
+    details: { thumbnail, attachment, rewardLevel, secretAttachment }
   } = subject;
   const [attachContentModalShown, setAttachContentModalShown] = useState(false);
   const titleRef = useRef(details.title);
@@ -194,7 +197,7 @@ function SubjectInput() {
               {attachment ? (
                 <Attachment
                   attachment={attachment}
-                  onThumbnailLoad={handleThumbnailLoad}
+                  onThumbnailLoad={onSetSubjectThumbnail}
                   onClose={() => onSetSubjectAttachment(undefined)}
                 />
               ) : (
@@ -391,7 +394,8 @@ function SubjectInput() {
       secretAttachment,
       title,
       filePath: uuidv1(),
-      file: attachment?.file
+      file: attachment?.file,
+      thumbnail
     });
   }
 
@@ -433,7 +437,8 @@ function SubjectInput() {
         rewardLevel,
         secretAnswer,
         secretAttachment,
-        title
+        title,
+        thumbnail
       });
       handleSetIsMadeByUser(false);
     } else {
@@ -471,11 +476,6 @@ function SubjectInput() {
   function handleSetSecretAnswer(text) {
     setSecretAnswer(text);
     secretAnswerRef.current = text;
-  }
-
-  function handleThumbnailLoad(thumb) {
-    console.log(thumb);
-    console.log('loaded');
   }
 
   async function handleUploadSubject() {

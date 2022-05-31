@@ -122,6 +122,7 @@ function App() {
   );
   const updateDetail = useNotiContext((v) => v.state.updateDetail);
   const updateNoticeShown = useNotiContext((v) => v.state.updateNoticeShown);
+  const uploadThumb = useAppContext((v) => v.requestHelpers.uploadThumb);
   const onGetRanks = useNotiContext((v) => v.actions.onGetRanks);
   const pageVisible = useViewContext((v) => v.state.pageVisible);
   const scrollPositions = useViewContext((v) => v.state.scrollPositions);
@@ -371,7 +372,8 @@ function App() {
       rewardLevel,
       secretAnswer,
       secretAttachment,
-      title
+      title,
+      thumbnail
     }) => {
       try {
         const promises = [];
@@ -395,12 +397,23 @@ function App() {
           );
         }
         await Promise.all(promises);
+        let thumbUrl = '';
+        if (thumbnail) {
+          const dataUri = thumbnail.replace(/^data:image\/\w+;base64,/, '');
+          const buffer = Buffer.from(dataUri, 'base64');
+          const file = new File([buffer], 'thumb.png');
+          thumbUrl = await uploadThumb({
+            file,
+            path: uuidv1()
+          });
+        }
         const data = await uploadContent({
           title,
           byUser,
           description: finalizeEmoji(description),
           secretAnswer: hasSecretAnswer ? secretAnswer : '',
           rewardLevel,
+          thumbUrl,
           ...(hasSecretAnswer && secretAttachment
             ? {
                 secretAttachmentFilePath,

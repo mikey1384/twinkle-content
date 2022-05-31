@@ -225,6 +225,12 @@ export default function InputActions(dispatch) {
         rewardLevel
       });
     },
+    onSetSubjectThumbnail(thumbnail) {
+      return dispatch({
+        type: 'SET_SUBJECT_THUMBNAIL',
+        thumbnail
+      });
+    },
     onSetSubjectTitle(title) {
       return dispatch({
         type: 'SET_SUBJECT_TITLE',
