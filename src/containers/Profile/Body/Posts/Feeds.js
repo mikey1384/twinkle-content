@@ -60,7 +60,7 @@ export default function Feeds({
   });
 
   useEffect(() => {
-    if (feeds.length === 0) {
+    if (!loaded) {
       if (filter === 'byuser') {
         handleLoadByUserTab(section);
       } else {
@@ -81,8 +81,8 @@ export default function Feeds({
         byUserSelected.current === true
       ) {
         onLoadPostsByUser({ ...data, section, username });
-        setLoadingFeeds(false);
       }
+      setLoadingFeeds(false);
     }
 
     async function handleLoadTab(section) {
@@ -95,11 +95,11 @@ export default function Feeds({
       });
       if (loadedSection === selectedSection.current) {
         onLoadPosts({ ...data, section, username });
-        setLoadingFeeds(false);
       }
+      setLoadingFeeds(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname, feeds.length, section, username]);
+  }, [location.pathname, section, username, loaded, filter, filterTable]);
 
   const filterBarShown = useMemo(
     () => ['all', 'subjects', 'links', 'videos'].includes(section),

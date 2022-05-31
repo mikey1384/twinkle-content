@@ -161,7 +161,7 @@ function Nav({
       document.getElementById('App').scrollTop = 0;
       BodyRef.scrollTop = 0;
     }
-    if (pathname.includes('/users/')) {
+    if (pathname.includes('/users/') && pathname === to) {
       const username = pathname.split('/users/')[1].split('/')[0];
       const { profileId } = profileState[username] || {};
       onReloadContent({
