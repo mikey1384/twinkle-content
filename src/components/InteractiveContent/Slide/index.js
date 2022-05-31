@@ -254,7 +254,7 @@ export default function Slide({
         `}
         style={style}
       >
-        {canEdit && !isEditing && !isDeleted && (
+        {!!canEdit && !isEditing && !isDeleted && (
           <div className="dropdown-wrapper">
             <DropdownButton
               skeuomorphic
