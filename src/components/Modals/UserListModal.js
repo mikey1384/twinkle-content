@@ -136,8 +136,8 @@ export default function UserListModal({
           }
         });
         onUpdateSelectedChannelId(channelId);
-        navigate(pathId ? `/chat/${pathId}` : `/chat/new`);
       }
+      navigate(pathId ? `/chat/${pathId}` : `/chat/new`);
     }
   }
 }
