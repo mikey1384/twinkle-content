@@ -194,6 +194,7 @@ function SubjectInput() {
               {attachment ? (
                 <Attachment
                   attachment={attachment}
+                  onThumbnailLoad={handleThumbnailLoad}
                   onClose={() => onSetSubjectAttachment(undefined)}
                 />
               ) : (
@@ -470,6 +471,11 @@ function SubjectInput() {
   function handleSetSecretAnswer(text) {
     setSecretAnswer(text);
     secretAnswerRef.current = text;
+  }
+
+  function handleThumbnailLoad(thumb) {
+    console.log(thumb);
+    console.log('loaded');
   }
 
   async function handleUploadSubject() {

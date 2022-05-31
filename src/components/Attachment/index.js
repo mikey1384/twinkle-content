@@ -8,6 +8,7 @@ import FileContent from 'components/FileContent';
 Attachment.propTypes = {
   attachment: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
+  onThumbnailLoad: PropTypes.func,
   style: PropTypes.object
 };
 
@@ -15,6 +16,7 @@ export default function Attachment({
   attachment,
   attachment: { contentType = 'file', fileType },
   onClose,
+  onThumbnailLoad,
   style
 }) {
   return (
@@ -52,6 +54,7 @@ export default function Attachment({
           file={attachment.file}
           fileType={fileType}
           imageUrl={attachment.imageUrl}
+          onThumbnailLoad={onThumbnailLoad}
         />
       ) : (
         <WebsiteContent attachment={attachment} />

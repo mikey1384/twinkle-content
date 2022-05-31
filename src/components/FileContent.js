@@ -13,7 +13,8 @@ FileContent.propTypes = {
   fileIconSize: PropTypes.string,
   fileNameStyle: PropTypes.object,
   fileNameLength: PropTypes.number,
-  imageBackgroundColor: PropTypes.string
+  imageBackgroundColor: PropTypes.string,
+  onThumbnailLoad: PropTypes.func
 };
 
 export default function FileContent({
@@ -24,7 +25,8 @@ export default function FileContent({
   fileIconSize = '3x',
   fileNameStyle = {},
   fileNameLength,
-  imageBackgroundColor
+  imageBackgroundColor,
+  onThumbnailLoad
 }) {
   const [videoSrc, setVideoSrc] = useState(null);
   useEffect(() => {
@@ -46,7 +48,7 @@ export default function FileContent({
         <ExtractedThumb
           isHidden
           src={videoSrc}
-          onThumbnailLoad={(thumbnail) => console.log(thumbnail)}
+          onThumbnailLoad={onThumbnailLoad}
         />
       )}
       {fileType === 'image' ? (
