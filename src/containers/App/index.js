@@ -430,8 +430,8 @@ function App() {
         });
         if (data) {
           onLoadNewFeeds([data]);
-          onResetSubjectInput();
         }
+        onResetSubjectInput();
         onSetSubmittingSubject(false);
         onClearFileUploadProgress();
         onSetUploadingFile(false);
