@@ -8,6 +8,7 @@ import { fetchedVideoCodeFromURL } from 'helpers/stringHelpers';
 import { useAppContext, useInteractiveContext } from 'contexts';
 import { v1 as uuidv1 } from 'uuid';
 import { css } from '@emotion/css';
+import { returnImageFileFromUrl } from 'helpers';
 
 Attachment.propTypes = {
   small: PropTypes.bool,
@@ -131,9 +132,7 @@ export default function Attachment({
   }
 
   function handleThumbnailLoad(thumb) {
-    const dataUri = thumb.replace(/^data:image\/\w+;base64,/, '');
-    const buffer = Buffer.from(dataUri, 'base64');
-    const file = new File([buffer], 'thumb.png');
+    const file = returnImageFileFromUrl({ imageUrl: thumb });
     handleUploadThumb();
 
     async function handleUploadThumb() {

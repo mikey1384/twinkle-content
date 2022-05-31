@@ -10,6 +10,7 @@ import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
 import CaptionEditor from 'components/Texts/CaptionEditor';
 import { v1 as uuidv1 } from 'uuid';
 import { useMyState } from 'helpers/hooks';
+import { returnImageFileFromUrl } from 'helpers';
 import { useAppContext } from 'contexts';
 import { finalizeEmoji } from 'helpers/stringHelpers';
 
@@ -202,10 +203,11 @@ export default function ImageEditModal({
     setUploading(true);
     setProcessing(true);
     const path = uuidv1();
-    const dataUri = croppedImageUrl.replace(/^data:image\/\w+;base64,/, '');
-    const buffer = Buffer.from(dataUri, 'base64');
     const fileName = `${path}.jpg`;
-    const file = new File([buffer], fileName);
+    const file = returnImageFileFromUrl({
+      imageUrl: croppedImageUrl,
+      fileName
+    });
     const filePath = `${userId}/${fileName}`;
     const caption = finalizeEmoji(captionText);
     await uploadFile({

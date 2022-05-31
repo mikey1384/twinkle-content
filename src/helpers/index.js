@@ -52,6 +52,13 @@ export function determineXpButtonDisabled({
   return false;
 }
 
+export function returnImageFileFromUrl({ imageUrl, fileName = 'thumb.png' }) {
+  const dataUri = imageUrl.replace(/^data:image\/\w+;base64,/, '');
+  const buffer = Buffer.from(dataUri, 'base64');
+  const file = new File([buffer], fileName);
+  return file;
+}
+
 export function getSectionFromPathname(pathname) {
   const result = pathname?.split('/')[1];
   return {

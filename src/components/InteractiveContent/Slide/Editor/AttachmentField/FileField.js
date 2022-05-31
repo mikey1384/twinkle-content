@@ -8,6 +8,7 @@ import FileContent from 'components/FileContent';
 import { mb, returnMaxUploadSize } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
+import { returnImageFileFromUrl } from 'helpers';
 import { css } from '@emotion/css';
 
 FileField.propTypes = {
@@ -163,9 +164,10 @@ export default function FileField({
               const imageUri = img.toDataURL(
                 `image/${extension === 'png' ? 'png' : 'jpeg'}`
               );
-              const dataUri = imageUri.replace(/^data:image\/\w+;base64,/, '');
-              const buffer = Buffer.from(dataUri, 'base64');
-              const file = new File([buffer], fileObj.name);
+              const file = returnImageFileFromUrl({
+                imageUrl: imageUri,
+                fileName: fileObj.name
+              });
               onSetAttachmentState({
                 newAttachment: {
                   fileType,

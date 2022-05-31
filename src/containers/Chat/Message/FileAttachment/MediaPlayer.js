@@ -5,7 +5,7 @@ import ReactPlayer from 'react-player';
 import { v1 as uuidv1 } from 'uuid';
 import { useAppContext, useContentContext } from 'contexts';
 import { useContentState } from 'helpers/hooks';
-import { isMobile } from 'helpers';
+import { isMobile, returnImageFileFromUrl } from 'helpers';
 
 MediaPlayer.propTypes = {
   messageId: PropTypes.number,
@@ -117,9 +117,9 @@ export default function MediaPlayer({
   }
 
   function handleThumbnailLoad(thumb) {
-    const dataUri = thumb.replace(/^data:image\/\w+;base64,/, '');
-    const buffer = Buffer.from(dataUri, 'base64');
-    const file = new File([buffer], 'thumb.png');
+    const file = returnImageFileFromUrl({
+      imageUrl: thumb
+    });
     handleUploadThumb();
 
     async function handleUploadThumb() {

@@ -4,6 +4,7 @@ import ExtractedThumb from 'components/ExtractedThumb';
 import LocalContext from '../../../Context';
 import playButtonImg from 'assets/play-button-image.png';
 import ErrorBoundary from 'components/ErrorBoundary';
+import { returnImageFileFromUrl } from 'helpers';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { v1 as uuidv1 } from 'uuid';
@@ -69,9 +70,7 @@ export default function VideoThumb({ messageId, onClick, thumbUrl, src }) {
   );
 
   function handleThumbnailLoad(thumb) {
-    const dataUri = thumb.replace(/^data:image\/\w+;base64,/, '');
-    const buffer = Buffer.from(dataUri, 'base64');
-    const file = new File([buffer], 'thumb.png');
+    const file = returnImageFileFromUrl({ imageUrl: thumb });
     uploadThumb({
       contentType: 'chat',
       contentId: messageId,

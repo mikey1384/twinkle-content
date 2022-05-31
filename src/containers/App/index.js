@@ -35,7 +35,11 @@ import { socket } from 'constants/io';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 import { finalizeEmoji } from 'helpers/stringHelpers';
 import { useMyState, useScrollPosition } from 'helpers/hooks';
-import { isMobile, getSectionFromPathname } from 'helpers';
+import {
+  isMobile,
+  getSectionFromPathname,
+  returnImageFileFromUrl
+} from 'helpers';
 import { v1 as uuidv1 } from 'uuid';
 import {
   useAppContext,
@@ -399,9 +403,7 @@ function App() {
         await Promise.all(promises);
         let thumbUrl = '';
         if (thumbnail) {
-          const dataUri = thumbnail.replace(/^data:image\/\w+;base64,/, '');
-          const buffer = Buffer.from(dataUri, 'base64');
-          const file = new File([buffer], 'thumb.png');
+          const file = returnImageFileFromUrl({ imageUrl: thumbnail });
           thumbUrl = await uploadThumb({
             file,
             path: uuidv1()

@@ -11,6 +11,7 @@ import Modal from 'components/Modal';
 import Button from 'components/Button';
 import Loading from 'components/Loading';
 import FileInfo from './FileInfo';
+import { returnImageFileFromUrl } from 'helpers';
 import { useMyState } from 'helpers/hooks';
 import { v1 as uuidv1 } from 'uuid';
 import {
@@ -72,10 +73,10 @@ function UploadModal({
                 `image/${extension === 'png' ? 'png' : 'jpeg'}`
               );
               setImageUrl(image);
-              const dataUri = image.replace(/^data:image\/\w+;base64,/, '');
-              const buffer = Buffer.from(dataUri, 'base64');
-              // eslint-disable-next-line no-undef
-              const file = new File([buffer], fileObj.name);
+              const file = returnImageFileFromUrl({
+                imageUrl: image,
+                fileName: fileObj.name
+              });
               setSelectedFile(file);
             },
             { orientation: true, canvas: true }

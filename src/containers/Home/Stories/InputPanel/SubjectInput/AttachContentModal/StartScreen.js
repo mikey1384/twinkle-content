@@ -4,7 +4,7 @@ import Button from 'components/Button';
 import Icon from 'components/Icon';
 import AlertModal from 'components/Modals/AlertModal';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { isMobile } from 'helpers';
+import { isMobile, returnImageFileFromUrl } from 'helpers';
 import { Color } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
 import {
@@ -190,10 +190,10 @@ export default function StartScreen({ navigateTo, onHide }) {
               const imageUrl = img.toDataURL(
                 `image/${extension === 'png' ? 'png' : 'jpeg'}`
               );
-              const dataUri = imageUrl.replace(/^data:image\/\w+;base64,/, '');
-              const buffer = Buffer.from(dataUri, 'base64');
-              const file = new File([buffer], fileObj.name);
-
+              const file = returnImageFileFromUrl({
+                imageUrl,
+                fileName: fileObj.name
+              });
               onSetSubjectAttachment({
                 file,
                 contentType: 'file',

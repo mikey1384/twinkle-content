@@ -8,6 +8,7 @@ import {
   getFileInfoFromFileName
 } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
+import { returnImageFileFromUrl } from 'helpers';
 import {
   FILE_UPLOAD_XP_REQUIREMENT,
   mb,
@@ -180,9 +181,10 @@ export default function SecretMessageInput({
               const imageUrl = img.toDataURL(
                 `image/${extension === 'png' ? 'png' : 'jpeg'}`
               );
-              const dataUri = imageUrl.replace(/^data:image\/\w+;base64,/, '');
-              const buffer = Buffer.from(dataUri, 'base64');
-              const file = new File([buffer], fileObj.name);
+              const file = returnImageFileFromUrl({
+                imageUrl,
+                fileName: fileObj.name
+              });
               onSetSecretAttachment({
                 file,
                 fileType,

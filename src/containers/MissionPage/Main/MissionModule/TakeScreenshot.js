@@ -6,6 +6,7 @@ import Icon from 'components/Icon';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
 import { mb, returnMaxUploadSize } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
+import { returnImageFileFromUrl } from 'helpers';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 import { useAppContext, useMissionContext } from 'contexts';
 import { v1 as uuidv1 } from 'uuid';
@@ -329,9 +330,10 @@ export default function TakeScreenshot({
           payload,
           function (img) {
             const imageUri = img.toDataURL('image/jpeg');
-            const dataUri = imageUri.replace(/^data:image\/\w+;base64,/, '');
-            const buffer = Buffer.from(dataUri, 'base64');
-            const file = new File([buffer], fileObj.name);
+            const file = returnImageFileFromUrl({
+              imageUrl: imageUri,
+              fileName: fileObj.name
+            });
             onSetMissionState({
               missionId,
               newState: {
