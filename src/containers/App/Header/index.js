@@ -613,7 +613,13 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
       }
     }
 
-    function handleNewWordleAttempt({ channelId, user, message }) {
+    function handleNewWordleAttempt({
+      channelId,
+      channelName,
+      user,
+      message,
+      pathId
+    }) {
       const isForCurrentChannel = channelId === selectedChannelId;
       if (isForCurrentChannel) {
         if (usingChat) {
@@ -629,7 +635,9 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
         onReceiveMessageOnDifferentChannel({
           message,
           channel: {
-            id: channelId
+            id: channelId,
+            channelName,
+            pathId
           },
           pageVisible,
           usingChat

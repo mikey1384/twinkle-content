@@ -1173,6 +1173,7 @@ function MessagesContainer({
       {wordleModalShown && (
         <WordleModal
           channelId={selectedChannelId}
+          channelName={channelName}
           attemptState={wordleAttemptState}
           guesses={wordleGuesses}
           solution={wordleSolution}

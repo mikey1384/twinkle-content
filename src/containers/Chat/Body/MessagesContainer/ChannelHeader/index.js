@@ -408,7 +408,8 @@ export default function ChannelHeader({
         subject,
         message,
         channelName: currentChannel.channelName,
-        channelId: selectedChannelId
+        channelId: selectedChannelId,
+        pathId: currentChannel.pathId
       });
       setOnEdit(false);
       onClearSubjectSearchResults();
@@ -462,7 +463,8 @@ export default function ChannelHeader({
           subject,
           message,
           channelName: currentChannel.channelName,
-          channelId: selectedChannelId
+          channelId: selectedChannelId,
+          pathId: currentChannel.pathId
         });
         setOnEdit(false);
         setSubmitting(false);
