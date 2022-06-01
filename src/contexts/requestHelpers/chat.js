@@ -451,13 +451,19 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return Promise.resolve(true);
       }
     },
-    async updateWordleAttempt({ channelId, guesses, solution, isSolved }) {
+    async updateWordleAttempt({
+      channelName,
+      channelId,
+      guesses,
+      solution,
+      isSolved
+    }) {
       try {
         const {
           data: { wordleAttemptState, wordleStats }
         } = await request.put(
           `${URL}/chat/wordle/attempt`,
-          { channelId, guesses, solution, isSolved },
+          { channelName, channelId, guesses, solution, isSolved },
           auth()
         );
         return Promise.resolve({

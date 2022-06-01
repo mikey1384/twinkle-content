@@ -21,6 +21,7 @@ import { useAppContext, useChatContext } from 'contexts';
 
 Game.propTypes = {
   channelId: PropTypes.number.isRequired,
+  channelName: PropTypes.string.isRequired,
   guesses: PropTypes.array.isRequired,
   isGameOver: PropTypes.bool,
   isGameWon: PropTypes.bool,
@@ -34,6 +35,7 @@ Game.propTypes = {
 
 export default function Game({
   channelId,
+  channelName,
   guesses,
   isGameOver,
   isGameWon,
@@ -182,6 +184,7 @@ export default function Game({
       });
       if (isDuplicate) return;
       updateWordleAttempt({
+        channelName,
         channelId,
         guesses: newGuesses,
         solution
@@ -215,6 +218,7 @@ export default function Game({
     async function handleGameLost() {
       const loadStartTime = Date.now();
       const { wordleAttemptState, wordleStats } = await updateWordleAttempt({
+        channelName,
         channelId,
         guesses: guesses.concat(currentGuess),
         solution,
@@ -240,6 +244,7 @@ export default function Game({
     async function handleGameWon() {
       const loadStartTime = Date.now();
       const { wordleAttemptState, wordleStats } = await updateWordleAttempt({
+        channelName,
         channelId,
         guesses: guesses.concat(currentGuess),
         solution,

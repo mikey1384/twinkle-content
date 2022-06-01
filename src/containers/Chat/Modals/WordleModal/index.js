@@ -12,6 +12,7 @@ import { useAppContext, useChatContext } from 'contexts';
 WordleModal.propTypes = {
   attemptState: PropTypes.object,
   channelId: PropTypes.number,
+  channelName: PropTypes.string,
   guesses: PropTypes.array,
   nextDayTimeStamp: PropTypes.number,
   solution: PropTypes.string,
@@ -23,6 +24,7 @@ WordleModal.propTypes = {
 
 export default function WordleModal({
   channelId,
+  channelName,
   attemptState,
   nextDayTimeStamp,
   guesses = [],
@@ -70,6 +72,7 @@ export default function WordleModal({
         <Game
           isRevealing={isRevealing}
           onSetIsRevealing={setIsRevealing}
+          channelName={channelName}
           channelId={channelId}
           guesses={guesses}
           isGameOver={isGameOver}

@@ -481,7 +481,7 @@ function Chat({ onFileUpload }) {
   );
 
   const handleTopicChange = useCallback(
-    ({ message, channelId, channelName }) => {
+    ({ message, channelId, pathId, channelName }) => {
       let messageIsForCurrentChannel = message.channelId === selectedChannelId;
       let senderIsUser = message.userId === userId;
       if (senderIsUser) return;
@@ -494,6 +494,7 @@ function Chat({ onFileUpload }) {
           message,
           channel: {
             id: channelId,
+            pathId,
             channelName,
             isHidden: false,
             numUnreads: 1

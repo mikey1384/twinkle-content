@@ -120,7 +120,6 @@ function Channel({
       return navigate(`/chat/${pathId}`);
     }
     navigate('/chat/new');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate, pathId]);
 
   const badgeShown = useMemo(() => {
