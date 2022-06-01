@@ -28,6 +28,7 @@ import Verify from 'containers/Verify';
 import VideoPage from 'containers/VideoPage';
 import Incoming from 'components/Stream/Incoming';
 import Outgoing from 'components/Stream/Outgoing';
+import InvalidPage from 'components/InvalidPage';
 import { useLocation, useNavigate, Routes, Route } from 'react-router-dom';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
@@ -543,6 +544,7 @@ function App() {
             }
           />
           <Route path="/:username" element={<Redirect />} />
+          <Route path="*" element={<InvalidPage />} />
         </Routes>
       </div>
       {signinModalShown && <SigninModal show onHide={onCloseSigninModal} />}
