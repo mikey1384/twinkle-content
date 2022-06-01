@@ -25,6 +25,7 @@ const secretMessageLabel = localize('secretMessage');
 const enterSecretMessageLabel = localize('enterSecretMessage');
 
 SecretMessageInput.propTypes = {
+  autoFocus: PropTypes.bool,
   secretAnswer: PropTypes.string,
   secretAttachment: PropTypes.object,
   onSetSecretAnswer: PropTypes.func.isRequired,
@@ -32,6 +33,7 @@ SecretMessageInput.propTypes = {
 };
 
 export default function SecretMessageInput({
+  autoFocus = true,
   onSetSecretAnswer,
   secretAttachment,
   onSetSecretAttachment,
@@ -75,7 +77,7 @@ export default function SecretMessageInput({
       <div style={{ width: '100%', display: 'flex' }}>
         <div style={{ flexGrow: 1 }}>
           <Textarea
-            autoFocus
+            autoFocus={autoFocus}
             style={{
               marginTop: '0.5rem',
               ...(secretAnswerExceedsCharLimit || null)

@@ -146,6 +146,7 @@ export default function SubjectInputForm({
               )}
               {isSubject && (
                 <SecretMessageInput
+                  autoFocus={false}
                   secretAnswer={secretAnswer}
                   secretAttachment={secretAttachment}
                   onSetSecretAnswer={handleSetSecretAnswer}
@@ -245,35 +246,30 @@ export default function SubjectInputForm({
   async function handleSubmit(event) {
     event.preventDefault();
     setSubmitting(true);
-    const filePath = uuidv1();
-    if (secretAttachment) {
-      onSetUploadingFile({
-        contentId,
-        contentType,
-        isUploading: true
-      });
-      onSetSubjectInputForm({
-        contentId,
-        contentType,
-        form: undefined
-      });
-      await uploadFile({
-        filePath,
-        file: secretAttachment?.file,
-        onUploadProgress: ({ loaded, total }) =>
-          onUpdateSecretFileUploadProgress({
-            contentId,
-            contentType,
-            progress: loaded / total
-          })
-      });
-      onSetUploadingFile({
-        contentId,
-        contentType,
-        isUploading: false
-      });
-    }
     try {
+      const filePath = uuidv1();
+      if (secretAttachment) {
+        onSetUploadingFile({
+          contentId,
+          contentType,
+          isUploading: true
+        });
+        await uploadFile({
+          filePath,
+          file: secretAttachment?.file,
+          onUploadProgress: ({ loaded, total }) =>
+            onUpdateSecretFileUploadProgress({
+              contentId,
+              contentType,
+              progress: loaded / total
+            })
+        });
+        onSetUploadingFile({
+          contentId,
+          contentType,
+          isUploading: false
+        });
+      }
       await onSubmit({
         title: finalizeEmoji(title),
         description: finalizeEmoji(description),
@@ -287,11 +283,15 @@ export default function SubjectInputForm({
             }
           : {})
       });
-      onSetSubjectInputForm({
+      onUpdateSecretFileUploadProgress({
         contentId,
         contentType,
-        form: undefined
+        progress: 0
       });
+      titleRef.current = '';
+      descriptionRef.current = '';
+      secretAnswerRef.current = '';
+      secretAttachmentRef.current = null;
     } catch (error) {
       setSubmitting(false);
       console.error(error);
