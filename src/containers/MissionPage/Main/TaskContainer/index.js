@@ -116,11 +116,11 @@ export default function TaskContainer({ mission }) {
     taskOrder
   ]);
 
-  if (!mission.isMultiMission) {
+  if (!!mission.prevUserId && !mission.isMultiMission) {
     return <InvalidPage />;
   }
 
-  if (currentTaskOrderIndex === -1) {
+  if (!!mission.prevUserId && currentTaskOrderIndex === -1) {
     return <InvalidPage />;
   }
 
@@ -128,7 +128,7 @@ export default function TaskContainer({ mission }) {
     return <InvalidPage />;
   }
 
-  if (!myAttempts.loaded) {
+  if (!mission.prevUserId || !myAttempts.loaded) {
     return <Loading />;
   }
 
