@@ -171,7 +171,7 @@ export default function SectionPanel({
                 {title}
               </div>
             )}
-            {canEdit && onEditTitle && !onEdit ? (
+            {!!canEdit && !!onEditTitle && !onEdit ? (
               <div
                 style={{
                   color: Color.gray(),
