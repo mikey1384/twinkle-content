@@ -168,7 +168,7 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
         @media (max-width: ${mobileMaxWidth}) {
           width: 100%;
           margin: 0;
-          padding-bottom: 5rem;
+          padding-bottom: 20rem;
           section {
             margin: 0;
             border-left: 0;
