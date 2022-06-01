@@ -225,7 +225,7 @@ export default function VideoPage() {
   const { playlist: playlistId, continue: isContinuing } =
     queryString.parse(search);
   const userIsUploader = uploader?.id === userId;
-  const userCanEditThis = canEdit && authLevel >= uploader?.authLevel;
+  const userCanEditThis = !!canEdit && authLevel >= uploader?.authLevel;
 
   return (
     <ErrorBoundary
