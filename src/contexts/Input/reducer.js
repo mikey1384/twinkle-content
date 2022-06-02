@@ -262,6 +262,11 @@ export default function InputReducer(state, action) {
           details: {
             ...state.subject.details,
             secretAttachment: action.secretAttachment
+              ? {
+                  ...(state.subject.details?.secretAttachment ?? {}),
+                  ...action.secretAttachment
+                }
+              : null
           }
         }
       };
@@ -273,6 +278,11 @@ export default function InputReducer(state, action) {
           details: {
             ...state.subject.details,
             attachment: action.attachment
+              ? {
+                  ...(state.subject.details?.attachment ?? {}),
+                  ...action.attachment
+                }
+              : null
           }
         }
       };
@@ -304,17 +314,6 @@ export default function InputReducer(state, action) {
               ...action.form
             }
           : undefined
-      };
-    case 'SET_SUBJECT_THUMBNAIL':
-      return {
-        ...state,
-        subject: {
-          ...state.subject,
-          details: {
-            ...state.subject.details,
-            thumbnail: action.thumbnail
-          }
-        }
       };
     case 'SET_SUBJECT_TITLE':
       return {

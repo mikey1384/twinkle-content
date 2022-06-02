@@ -106,6 +106,11 @@ export default function SecretMessageInput({
             <Attachment
               style={{ marginLeft: '1rem', fontSize: '1rem' }}
               attachment={secretAttachment}
+              onThumbnailLoad={(thumbnail) =>
+                onSetSecretAttachment({
+                  thumbnail
+                })
+              }
               onClose={() => onSetSecretAttachment(null)}
             />
           ) : (

@@ -372,18 +372,17 @@ function App() {
       byUser,
       description,
       filePath,
-      file,
       hasSecretAnswer,
       rewardLevel,
       secretAnswer,
       secretAttachment,
-      title,
-      thumbnail
+      title
     }) => {
+      const { file, thumbnail, contentType } = attachment ?? {};
       try {
         const promises = [];
         const secretAttachmentFilePath = uuidv1();
-        if (attachment?.contentType === 'file') {
+        if (contentType === 'file') {
           promises.push(
             uploadFile({
               filePath,
@@ -402,6 +401,7 @@ function App() {
           );
         }
         let thumbUrl = '';
+        let secretThumbUrl = '';
         if (thumbnail) {
           promises.push(
             (async () => {
@@ -414,9 +414,27 @@ function App() {
             })()
           );
         }
+        if (secretAttachment?.thumbnail) {
+          promises.push(
+            (async () => {
+              const file = returnImageFileFromUrl({
+                imageUrl: secretAttachment?.thumbnail
+              });
+              const thumbUrl = await uploadThumb({
+                file,
+                path: uuidv1()
+              });
+              return Promise.resolve(thumbUrl);
+            })()
+          );
+        }
         const result = await Promise.all(promises);
         if (thumbnail) {
-          thumbUrl = result[result.length - 1];
+          const numberToDeduct = secretAttachment?.thumbnail ? 2 : 1;
+          thumbUrl = result[result.length - numberToDeduct];
+        }
+        if (secretAttachment?.thumbnail) {
+          secretThumbUrl = result[result.length - 1];
         }
         const data = await uploadContent({
           title,
@@ -425,6 +443,7 @@ function App() {
           secretAnswer: hasSecretAnswer ? secretAnswer : '',
           rewardLevel,
           thumbUrl,
+          secretAttachmentThumbUrl: secretThumbUrl,
           ...(hasSecretAnswer && secretAttachment
             ? {
                 secretAttachmentFilePath,
@@ -432,11 +451,11 @@ function App() {
                 secretAttachmentFileSize: secretAttachment.file.size
               }
             : {}),
-          ...(attachment?.contentType === 'file'
+          ...(contentType === 'file'
             ? { filePath, fileName: file.name, fileSize: file.size }
             : {}),
-          ...(attachment && attachment.contentType !== 'file'
-            ? { rootId: attachment.id, rootType: attachment.contentType }
+          ...(attachment && contentType !== 'file'
+            ? { rootId: attachment.id, rootType: contentType }
             : {})
         });
         if (data) {

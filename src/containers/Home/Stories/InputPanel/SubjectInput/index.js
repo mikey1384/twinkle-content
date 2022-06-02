@@ -76,9 +76,6 @@ function SubjectInput() {
   const onSetSubjectAttachment = useInputContext(
     (v) => v.actions.onSetSubjectAttachment
   );
-  const onSetSubjectThumbnail = useInputContext(
-    (v) => v.actions.onSetSubjectThumbnail
-  );
   const onSetSubjectDescription = useInputContext(
     (v) => v.actions.onSetSubjectDescription
   );
@@ -197,8 +194,12 @@ function SubjectInput() {
               {attachment ? (
                 <Attachment
                   attachment={attachment}
-                  onThumbnailLoad={onSetSubjectThumbnail}
-                  onClose={() => onSetSubjectAttachment(undefined)}
+                  onThumbnailLoad={(thumbnail) =>
+                    onSetSubjectAttachment({
+                      thumbnail
+                    })
+                  }
+                  onClose={() => onSetSubjectAttachment(null)}
                 />
               ) : (
                 <Button
@@ -393,9 +394,7 @@ function SubjectInput() {
       secretAnswer,
       secretAttachment,
       title,
-      filePath: uuidv1(),
-      file: attachment?.file,
-      thumbnail
+      filePath: uuidv1()
     });
   }
 
