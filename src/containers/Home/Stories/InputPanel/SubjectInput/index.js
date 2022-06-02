@@ -294,6 +294,11 @@ function SubjectInput() {
                   secretAttachment={secretAttachment}
                   onSetSecretAnswer={handleSetSecretAnswer}
                   onSetSecretAttachment={onSetSecretAttachment}
+                  onThumbnailLoad={(thumbnail) =>
+                    onSetSecretAttachment({
+                      thumbnail
+                    })
+                  }
                 />
               )}
               {canEditRewardLevel && (

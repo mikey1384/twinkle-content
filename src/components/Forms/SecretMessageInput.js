@@ -30,7 +30,8 @@ SecretMessageInput.propTypes = {
   secretAnswer: PropTypes.string,
   secretAttachment: PropTypes.object,
   onSetSecretAnswer: PropTypes.func.isRequired,
-  onSetSecretAttachment: PropTypes.func.isRequired
+  onSetSecretAttachment: PropTypes.func.isRequired,
+  onThumbnailLoad: PropTypes.func.isRequired
 };
 
 export default function SecretMessageInput({
@@ -38,6 +39,7 @@ export default function SecretMessageInput({
   onSetSecretAnswer,
   secretAttachment,
   onSetSecretAttachment,
+  onThumbnailLoad,
   secretAnswer
 }) {
   const [onHover, setOnHover] = useState(false);
@@ -106,11 +108,7 @@ export default function SecretMessageInput({
             <Attachment
               style={{ marginLeft: '1rem', fontSize: '1rem' }}
               attachment={secretAttachment}
-              onThumbnailLoad={(thumbnail) =>
-                onSetSecretAttachment({
-                  thumbnail
-                })
-              }
+              onThumbnailLoad={onThumbnailLoad}
               onClose={() => onSetSecretAttachment(null)}
             />
           ) : (
