@@ -43,7 +43,7 @@ export default function ProfilePictureItem({ style }) {
       }
       return `Upgrade this item to post up to ${
         numPics + 1
-      } pictures on you profile page`;
+      } pictures on your profile page`;
     }
     if (SELECTED_LANGUAGE === 'kr') {
       return '본 아이템을 잠금 해제 하시면 프로필 페이지에 사진을 게시하실 수 있게 됩니다';
