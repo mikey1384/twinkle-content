@@ -13,7 +13,8 @@ import Comment from './Comment';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import Loading from 'components/Loading';
 import PinnedComment from './PinnedComment';
-import { scrollElementToCenter } from 'helpers';
+import { v1 as uuidv1 } from 'uuid';
+import { returnImageFileFromUrl, scrollElementToCenter } from 'helpers';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { useMyState, useContentState } from 'helpers/hooks';
@@ -95,6 +96,7 @@ function Comments({
   userId
 }) {
   const { banned } = useMyState();
+  const uploadThumb = useAppContext((v) => v.requestHelpers.uploadThumb);
   const deleteContent = useAppContext((v) => v.requestHelpers.deleteContent);
   const loadComments = useAppContext((v) => v.requestHelpers.loadComments);
   const uploadComment = useAppContext((v) => v.requestHelpers.uploadComment);
@@ -212,11 +214,33 @@ function Comments({
       const finalContentId = targetCommentId || subjectId || contentId;
       try {
         setCommentSubmitted(true);
-        await uploadFile({
-          filePath,
-          file,
-          onUploadProgress: handleUploadProgress
-        });
+        const promises = [];
+        promises.push(
+          uploadFile({
+            filePath,
+            file,
+            onUploadProgress: handleUploadProgress
+          })
+        );
+        let thumbUrl = '';
+        if (attachment.thumbnail) {
+          promises.push(
+            (async () => {
+              const file = returnImageFileFromUrl({
+                imageUrl: attachment.thumbnail
+              });
+              const thumbUrl = await uploadThumb({
+                file,
+                path: uuidv1()
+              });
+              return Promise.resolve(thumbUrl);
+            })()
+          );
+        }
+        const result = await Promise.all(promises);
+        if (attachment.thumbnail) {
+          thumbUrl = result[result.length - 1];
+        }
         const { comment } = await uploadComment({
           content: commentContent,
           parent,
@@ -226,7 +250,8 @@ function Comments({
           attachment,
           filePath,
           fileName: file.name,
-          fileSize: file.size
+          fileSize: file.size,
+          thumbUrl
         });
         if (isReply) {
           onReplySubmit({

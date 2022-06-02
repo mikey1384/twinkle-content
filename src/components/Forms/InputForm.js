@@ -320,6 +320,13 @@ function InputForm({
         <Attachment
           style={{ marginLeft: '1rem', fontSize: '1rem' }}
           attachment={attachment}
+          onThumbnailLoad={(thumb) =>
+            onSetCommentAttachment({
+              attachment: { thumbnail: thumb },
+              contentType,
+              contentId
+            })
+          }
           onClose={() =>
             onSetCommentAttachment({
               attachment: null,

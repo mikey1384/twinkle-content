@@ -22,6 +22,11 @@ export default function InputReducer(state, action) {
         [contentKey]: {
           ...state[contentKey],
           attachment: action.attachment
+            ? {
+                ...(state[contentKey]?.attachment ?? {}),
+                ...action.attachment
+              }
+            : null
         }
       };
     case 'SET_CONTENT_ALREADY_POSTED':
