@@ -401,14 +401,22 @@ function App() {
             })
           );
         }
-        await Promise.all(promises);
         let thumbUrl = '';
         if (thumbnail) {
-          const file = returnImageFileFromUrl({ imageUrl: thumbnail });
-          thumbUrl = await uploadThumb({
-            file,
-            path: uuidv1()
-          });
+          promises.push(
+            (async () => {
+              const file = returnImageFileFromUrl({ imageUrl: thumbnail });
+              const thumbUrl = await uploadThumb({
+                file,
+                path: uuidv1()
+              });
+              return Promise.resolve(thumbUrl);
+            })()
+          );
+        }
+        const result = await Promise.all(promises);
+        if (thumbnail) {
+          thumbUrl = result[result.length - 1];
         }
         const data = await uploadContent({
           title,
