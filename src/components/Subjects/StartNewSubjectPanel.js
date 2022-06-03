@@ -96,7 +96,8 @@ export default function StartNewSubjectPanel({
     secretAnswer,
     secretAttachmentFilePath,
     secretAttachmentFileName,
-    secretAttachmentFileSize
+    secretAttachmentFileSize,
+    secretAttachmentThumbUrl
   }) {
     const data = await uploadSubject({
       title,
@@ -107,7 +108,8 @@ export default function StartNewSubjectPanel({
       contentType,
       secretAttachmentFilePath,
       secretAttachmentFileName,
-      secretAttachmentFileSize
+      secretAttachmentFileSize,
+      secretAttachmentThumbUrl
     });
     onSetSubjectFormShown({ contentId, contentType, shown: false });
     onUploadSubject({ ...data, contentType, contentId });

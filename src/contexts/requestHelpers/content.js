@@ -890,7 +890,8 @@ export default function contentRequestHelpers({ auth, handleError }) {
       secretAnswer,
       secretAttachmentFilePath,
       secretAttachmentFileName,
-      secretAttachmentFileSize
+      secretAttachmentFileSize,
+      secretAttachmentThumbUrl
     }) {
       try {
         const { data } = await request.post(
@@ -904,7 +905,8 @@ export default function contentRequestHelpers({ auth, handleError }) {
             contentType,
             secretAttachmentFilePath,
             secretAttachmentFileName,
-            secretAttachmentFileSize
+            secretAttachmentFileSize,
+            secretAttachmentThumbUrl
           },
           auth()
         );

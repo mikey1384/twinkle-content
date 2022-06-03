@@ -10,6 +10,7 @@ import SecretMessageInput from 'components/Forms/SecretMessageInput';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
 import { useAppContext, useContentContext, useInputContext } from 'contexts';
 import { useContentState } from 'helpers/hooks';
+import { returnImageFileFromUrl } from 'helpers';
 import { v1 as uuidv1 } from 'uuid';
 import localize from 'constants/localize';
 
@@ -50,6 +51,7 @@ export default function SubjectInputForm({
     contentId
   });
   const uploadFile = useAppContext((v) => v.requestHelpers.uploadFile);
+  const uploadThumb = useAppContext((v) => v.requestHelpers.uploadThumb);
   const state = useInputContext((v) => v.state);
   const onUpdateSecretFileUploadProgress = useContentContext(
     (v) => v.actions.onUpdateSecretFileUploadProgress
@@ -151,6 +153,9 @@ export default function SubjectInputForm({
                   secretAttachment={secretAttachment}
                   onSetSecretAnswer={handleSetSecretAnswer}
                   onSetSecretAttachment={handleSetSecretAttachment}
+                  onThumbnailLoad={(thumbnail) =>
+                    handleSetSecretAttachment({ thumbnail })
+                  }
                 />
               )}
               {canEditRewardLevel && (
@@ -239,31 +244,60 @@ export default function SubjectInputForm({
   }
 
   function handleSetSecretAttachment(attachment) {
-    setSecretAttachment(attachment);
+    setSecretAttachment((prev) =>
+      attachment
+        ? {
+            ...prev,
+            ...attachment
+          }
+        : null
+    );
     secretAttachmentRef.current = attachment;
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
     setSubmitting(true);
+    const filePath = uuidv1();
+    let secretThumbUrl = '';
     try {
-      const filePath = uuidv1();
       if (secretAttachment) {
+        const promises = [];
+        promises.push(
+          uploadFile({
+            filePath,
+            file: secretAttachment?.file,
+            onUploadProgress: ({ loaded, total }) =>
+              onUpdateSecretFileUploadProgress({
+                contentId,
+                contentType,
+                progress: loaded / total
+              })
+          })
+        );
+        if (secretAttachment.thumbnail) {
+          promises.push(
+            (async () => {
+              const file = returnImageFileFromUrl({
+                imageUrl: secretAttachment.thumbnail
+              });
+              const thumbUrl = await uploadThumb({
+                file,
+                path: uuidv1()
+              });
+              return Promise.resolve(thumbUrl);
+            })()
+          );
+        }
         onSetUploadingFile({
           contentId,
           contentType,
           isUploading: true
         });
-        await uploadFile({
-          filePath,
-          file: secretAttachment?.file,
-          onUploadProgress: ({ loaded, total }) =>
-            onUpdateSecretFileUploadProgress({
-              contentId,
-              contentType,
-              progress: loaded / total
-            })
-        });
+        const result = await Promise.all(promises);
+        if (secretAttachment.thumbnail) {
+          secretThumbUrl = result[result.length - 1];
+        }
         onSetUploadingFile({
           contentId,
           contentType,
@@ -279,7 +313,8 @@ export default function SubjectInputForm({
           ? {
               secretAttachmentFilePath: filePath,
               secretAttachmentFileName: secretAttachment.file.name,
-              secretAttachmentFileSize: secretAttachment.file.size
+              secretAttachmentFileSize: secretAttachment.file.size,
+              secretAttachmentThumbUrl: secretThumbUrl
             }
           : {})
       });
