@@ -19,13 +19,13 @@ const yourXPLabel = localize('yourXP');
 const yourTwinkleCoinsLabel = localize('yourTwinkleCoins');
 
 MainFeeds.propTypes = {
-  loadingNotifications: PropTypes.bool.isRequired,
-  loadMoreNotificationsButton: PropTypes.bool.isRequired,
-  loadMoreRewardsButton: PropTypes.bool.isRequired,
+  loadingNotifications: PropTypes.bool,
+  loadMoreNotificationsButton: PropTypes.bool,
+  loadMoreRewardsButton: PropTypes.bool,
   activeTab: PropTypes.string,
-  notifications: PropTypes.array.isRequired,
+  notifications: PropTypes.array,
   rewards: PropTypes.array,
-  selectNotiTab: PropTypes.func.isRequired,
+  selectNotiTab: PropTypes.func,
   style: PropTypes.object
 };
 

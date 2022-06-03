@@ -99,6 +99,8 @@ export default function ExtractedThumb({
         ref={canvasRef}
       ></canvas>
       <video
+        autoPlay
+        playsInline
         crossOrigin="anonymous"
         muted
         className={css`
