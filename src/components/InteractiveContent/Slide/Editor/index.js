@@ -13,6 +13,7 @@ import {
   isValidUrl,
   isValidYoutubeUrl
 } from 'helpers/stringHelpers';
+import { returnImageFileFromUrl } from 'helpers';
 import { edit } from 'constants/placeholders';
 import Textarea from 'components/Texts/Textarea';
 import Input from 'components/Texts/Input';
@@ -109,6 +110,7 @@ export default function Editor({
     (v) => v.requestHelpers.editInteractiveSlide
   );
   const uploadFile = useAppContext((v) => v.requestHelpers.uploadFile);
+  const uploadThumb = useAppContext((v) => v.requestHelpers.uploadThumb);
   const state = useInputContext((v) => v.state);
   const onSetEditInteractiveForm = useInputContext(
     (v) => v.actions.onSetEditInteractiveForm
@@ -371,6 +373,22 @@ export default function Editor({
             linkUrl={editedAttachment?.linkUrl || ''}
             thumbUrl={editedAttachment?.thumbUrl || ''}
             newAttachment={editedAttachment?.newAttachment || null}
+            onThumbnailLoad={(thumbnail) => {
+              handleSetInputState({
+                ...editForm,
+                editedAttachment: {
+                  ...editForm.editedAttachment,
+                  ...(editForm.editedAttachment?.newAttachment
+                    ? {
+                        newAttachment: {
+                          ...editForm.editedAttachment?.newAttachment,
+                          thumbnail
+                        }
+                      }
+                    : {})
+                }
+              });
+            }}
             onSetAttachmentState={(newState) => {
               handleSetInputState({
                 ...editForm,
@@ -390,7 +408,7 @@ export default function Editor({
                 marginTop: 0,
                 paddingBottom: '1rem'
               }}
-              fileName={editedAttachment.newAttachment.file?.name}
+              fileName={editedAttachment?.newAttachment?.file?.name}
               uploadProgress={fileUploadProgress}
             />
           )}
@@ -507,6 +525,7 @@ export default function Editor({
           </Button>
           <Button
             transparent
+            disabled={uploadingFile}
             style={{ marginRight: '1rem' }}
             onClick={() => {
               handleSetInputState(prevInputState);
@@ -542,17 +561,35 @@ export default function Editor({
     };
 
     if (editedAttachment?.newAttachment && editedAttachment?.type !== 'none') {
+      const promises = [];
       onSetSlideState({
         interactiveId,
         slideId,
         newState: { uploadingFile: true }
       });
-      const uploadedFilePath = await uploadFile({
-        context: 'interactive',
-        filePath: uuidv1(),
-        file: editedAttachment.newAttachment.file,
-        onUploadProgress: handleUploadProgress
-      });
+      promises.push(
+        uploadFile({
+          context: 'interactive',
+          filePath: uuidv1(),
+          file: editedAttachment.newAttachment.file,
+          onUploadProgress: handleUploadProgress
+        })
+      );
+      if (editedAttachment?.newAttachment?.thumbnail) {
+        promises.push(
+          (async () => {
+            const file = returnImageFileFromUrl({
+              imageUrl: editedAttachment?.newAttachment?.thumbnail
+            });
+            const thumbUrl = await uploadThumb({
+              file,
+              path: uuidv1()
+            });
+            return Promise.resolve(thumbUrl);
+          })()
+        );
+      }
+      const [uploadedFilePath, thumbUrl] = await Promise.all(promises);
       onSetSlideState({
         interactiveId,
         slideId,
@@ -562,7 +599,8 @@ export default function Editor({
         ...editForm,
         editedAttachment: {
           type: editForm.editedAttachment.type,
-          fileUrl: uploadedFilePath
+          fileUrl: uploadedFilePath,
+          thumbUrl
         },
         editedHeading: finalizeEmoji(editedHeading),
         editedDescription: finalizeEmoji(editedDescription)

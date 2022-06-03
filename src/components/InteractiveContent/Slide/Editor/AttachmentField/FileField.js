@@ -17,7 +17,8 @@ FileField.propTypes = {
   newAttachment: PropTypes.object,
   onSetAttachmentState: PropTypes.func.isRequired,
   thumbUrl: PropTypes.string,
-  uploadingFile: PropTypes.bool
+  uploadingFile: PropTypes.bool,
+  onThumbnailLoad: PropTypes.func
 };
 
 export default function FileField({
@@ -25,6 +26,7 @@ export default function FileField({
   fileUrl,
   newAttachment,
   onSetAttachmentState,
+  onThumbnailLoad,
   thumbUrl,
   uploadingFile
 }) {
@@ -81,6 +83,7 @@ export default function FileField({
               fileNameLength={50}
               fileNameStyle={{ fontSize: '1.5rem', lineHeight: 2.5 }}
               imageBackgroundColor="#fff"
+              onThumbnailLoad={onThumbnailLoad}
               style={{ width: '100%', marginBottom: '2rem', height: 'auto' }}
             />
           )}
