@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import Loading from 'components/Loading';
+import ExtractedThumb from 'components/ExtractedThumb';
 import FileInfo from './FileInfo';
 import { returnImageFileFromUrl } from 'helpers';
 import { useMyState } from 'helpers/hooks';
@@ -50,11 +51,19 @@ function UploadModal({
   } = useContext(LocalContext);
   const [caption, setCaption] = useState(initialCaption);
   const [imageUrl, setImageUrl] = useState('');
+  const [videoSrc, setVideoSrc] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [videoThumbnail, setVideoThumbnail] = useState('');
   const { fileType } = useMemo(
     () => getFileInfoFromFileName(fileObj.name),
     [fileObj.name]
   );
+  useEffect(() => {
+    if (fileType === 'video') {
+      const url = URL.createObjectURL(fileObj);
+      setVideoSrc(url);
+    }
+  }, [fileObj, fileType]);
 
   useEffect(() => {
     if (fileType === 'image') {
@@ -118,7 +127,8 @@ function UploadModal({
         recepientId,
         messageId,
         targetMessageId: replyTarget?.id,
-        subjectId: isRespondingToSubject ? subjectId : null
+        subjectId: isRespondingToSubject ? subjectId : null,
+        thumbnail: videoThumbnail
       });
       onSubmitMessage({
         messageId,
@@ -149,7 +159,8 @@ function UploadModal({
     selectedFile,
     subjectId,
     userId,
-    username
+    username,
+    videoThumbnail
   ]);
 
   return (
@@ -167,6 +178,13 @@ function UploadModal({
           />
         ) : (
           <Loading />
+        )}
+        {videoSrc && (
+          <ExtractedThumb
+            isHidden
+            src={videoSrc}
+            onThumbnailLoad={setVideoThumbnail}
+          />
         )}
       </main>
       <footer>

@@ -569,17 +569,7 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
-    async uploadFileOnChat({
-      channelId,
-      content,
-      fileName,
-      selectedFile,
-      onUploadProgress,
-      path,
-      recepientId,
-      targetMessageId,
-      subjectId
-    }) {
+    async uploadFileOnChat({ fileName, selectedFile, onUploadProgress, path }) {
       try {
         const { data: url } = await request.get(
           `${URL}/content/sign-s3?fileSize=${
@@ -593,32 +583,46 @@ export default function chatRequestHelpers({ auth, handleError }) {
             'Content-Disposition': `attachment; filename="${fileName}"`
           }
         });
-        const {
-          data: { channel, message, messageId, alreadyExists }
-        } = await request.post(
-          `${URL}/chat/file`,
-          {
-            fileName,
-            fileSize: selectedFile.size,
-            path,
-            channelId,
-            content,
-            recepientId,
-            targetMessageId,
-            subjectId
-          },
-          auth()
-        );
-        return Promise.resolve({
-          channel,
-          message,
-          messageId,
-          alreadyExists,
-          fileName
-        });
+        return Promise.resolve();
       } catch (error) {
         return handleError(error);
       }
+    },
+    async saveChatMessageWithFileAttachment({
+      channelId,
+      content,
+      fileName,
+      fileSize,
+      path,
+      recepientId,
+      targetMessageId,
+      subjectId,
+      thumbUrl
+    }) {
+      const {
+        data: { channel, message, messageId, alreadyExists }
+      } = await request.post(
+        `${URL}/chat/file`,
+        {
+          fileName,
+          fileSize,
+          path,
+          channelId,
+          content,
+          recepientId,
+          targetMessageId,
+          subjectId,
+          thumbUrl
+        },
+        auth()
+      );
+      return Promise.resolve({
+        channel,
+        message,
+        messageId,
+        alreadyExists,
+        fileName
+      });
     }
   };
 }

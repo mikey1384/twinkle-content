@@ -76,6 +76,9 @@ function App() {
   const uploadFileOnChat = useAppContext(
     (v) => v.requestHelpers.uploadFileOnChat
   );
+  const saveChatMessageWithFileAttachment = useAppContext(
+    (v) => v.requestHelpers.saveChatMessageWithFileAttachment
+  );
   const {
     authLevel,
     profilePicUrl,
@@ -271,8 +274,10 @@ function App() {
       recepientId,
       messageId: tempMessageId,
       targetMessageId,
-      subjectId
+      subjectId,
+      thumbnail
     }) => {
+      const promises = [];
       onPostFileUploadStatus({
         channelId,
         content,
@@ -281,16 +286,41 @@ function App() {
         fileToUpload,
         recepientId
       });
-      const { channel, message, messageId, alreadyExists } =
-        await uploadFileOnChat({
-          channelId,
-          content,
+      promises.push(
+        uploadFileOnChat({
           fileName,
           selectedFile: fileToUpload,
           onUploadProgress: handleUploadProgress,
-          recepientId,
+          path: filePath
+        })
+      );
+      if (thumbnail) {
+        promises.push(
+          (async () => {
+            const file = returnImageFileFromUrl({ imageUrl: thumbnail });
+            const thumbUrl = await uploadThumb({
+              file,
+              path: uuidv1()
+            });
+            return Promise.resolve(thumbUrl);
+          })()
+        );
+      }
+      let thumbUrl = '';
+      const result = await Promise.all(promises);
+      if (thumbnail) {
+        thumbUrl = result[result.length - 1];
+      }
+      const { channel, message, messageId, alreadyExists } =
+        await saveChatMessageWithFileAttachment({
+          channelId,
+          content,
+          fileName,
+          fileSize: fileToUpload.size,
           path: filePath,
+          recepientId,
           targetMessageId,
+          thumbUrl,
           subjectId
         });
       if (alreadyExists) {
@@ -314,6 +344,7 @@ function App() {
         userId,
         username,
         profilePicUrl,
+        thumbUrl,
         targetMessage: currentChannel.replyTarget
       };
       onDisplayAttachedFile(params);

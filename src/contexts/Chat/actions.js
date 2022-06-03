@@ -119,7 +119,8 @@ export default function ChatActions(dispatch) {
       userId,
       username,
       profilePicUrl,
-      uploaderAuthLevel
+      uploaderAuthLevel,
+      thumbUrl
     }) {
       return dispatch({
         type: 'DISPLAY_ATTACHED_FILE',
@@ -131,7 +132,8 @@ export default function ChatActions(dispatch) {
           username,
           profilePicUrl,
           uploaderAuthLevel,
-          fileSize
+          fileSize,
+          thumbUrl
         }
       });
     },
