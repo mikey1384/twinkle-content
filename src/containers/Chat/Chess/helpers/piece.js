@@ -1,3 +1,17 @@
+import WhitePawn from 'assets/chess/WhitePawn.svg';
+import WhiteBishop from 'assets/chess/WhiteBishop.svg';
+import WhiteKnight from 'assets/chess/WhiteKnight.svg';
+import WhiteRook from 'assets/chess/WhiteRook.svg';
+import WhiteQueen from 'assets/chess/WhiteQueen.svg';
+import WhiteKing from 'assets/chess/WhiteKing.svg';
+
+import BlackPawn from 'assets/chess/BlackPawn.svg';
+import BlackBishop from 'assets/chess/BlackBishop.svg';
+import BlackKnight from 'assets/chess/BlackKnight.svg';
+import BlackRook from 'assets/chess/BlackRook.svg';
+import BlackQueen from 'assets/chess/BlackQueen.svg';
+import BlackKing from 'assets/chess/BlackKing.svg';
+
 export default function getPiece({
   piece: { type, color },
   myColor,
@@ -16,10 +30,7 @@ export default function getPiece({
             cursor: color === myColor && interactable ? 'pointer' : '',
             position: 'absolute'
           },
-          src:
-            color === 'white'
-              ? 'https://upload.wikimedia.org/wikipedia/commons/4/45/Chess_plt45.svg'
-              : 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Chess_pdt45.svg'
+          src: color === 'white' ? WhitePawn : BlackPawn
         },
         isMovePossible({
           src,
@@ -82,10 +93,7 @@ export default function getPiece({
             cursor: color === myColor && interactable ? 'pointer' : '',
             position: 'absolute'
           },
-          src:
-            color === 'white'
-              ? 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Chess_blt45.svg'
-              : 'https://upload.wikimedia.org/wikipedia/commons/9/98/Chess_bdt45.svg'
+          src: color === 'white' ? WhiteBishop : BlackBishop
         },
         isMovePossible({ src, dest }) {
           const srcRow = Math.floor(src / 8);
@@ -130,10 +138,7 @@ export default function getPiece({
             cursor: color === myColor && interactable ? 'pointer' : '',
             position: 'absolute'
           },
-          src:
-            color === 'white'
-              ? 'https://upload.wikimedia.org/wikipedia/commons/7/70/Chess_nlt45.svg'
-              : 'https://upload.wikimedia.org/wikipedia/commons/e/ef/Chess_ndt45.svg'
+          src: color === 'white' ? WhiteKnight : BlackKnight
         },
         isMovePossible({ src, dest }) {
           const srcRow = Math.floor(src / 8);
@@ -163,10 +168,7 @@ export default function getPiece({
             cursor: color === myColor && interactable ? 'pointer' : '',
             position: 'absolute'
           },
-          src:
-            color === 'white'
-              ? 'https://upload.wikimedia.org/wikipedia/commons/7/72/Chess_rlt45.svg'
-              : 'https://upload.wikimedia.org/wikipedia/commons/f/ff/Chess_rdt45.svg'
+          src: color === 'white' ? WhiteRook : BlackRook
         },
         isMovePossible({ src, dest }) {
           const srcRow = Math.floor(src / 8);
@@ -209,10 +211,7 @@ export default function getPiece({
             cursor: color === myColor && interactable ? 'pointer' : '',
             position: 'absolute'
           },
-          src:
-            color === 'white'
-              ? 'https://upload.wikimedia.org/wikipedia/commons/1/15/Chess_qlt45.svg'
-              : 'https://upload.wikimedia.org/wikipedia/commons/4/47/Chess_qdt45.svg'
+          src: color === 'white' ? WhiteQueen : BlackQueen
         },
         isMovePossible({ src, dest }) {
           const srcRow = Math.floor(src / 8);
@@ -269,10 +268,7 @@ export default function getPiece({
             cursor: color === myColor && interactable ? 'pointer' : '',
             position: 'absolute'
           },
-          src:
-            color === 'white'
-              ? 'https://upload.wikimedia.org/wikipedia/commons/4/42/Chess_klt45.svg'
-              : 'https://upload.wikimedia.org/wikipedia/commons/f/f0/Chess_kdt45.svg'
+          src: color === 'white' ? WhiteKing : BlackKing
         },
         isMovePossible({ src, dest }) {
           const srcRow = Math.floor(src / 8);
