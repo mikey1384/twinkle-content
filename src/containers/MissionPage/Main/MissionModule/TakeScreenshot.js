@@ -7,7 +7,10 @@ import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
 import { mb, returnMaxUploadSize } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { returnImageFileFromUrl } from 'helpers';
-import { getFileInfoFromFileName } from 'helpers/stringHelpers';
+import {
+  getFileInfoFromFileName,
+  generateFileName
+} from 'helpers/stringHelpers';
 import { useAppContext, useMissionContext } from 'contexts';
 import { v1 as uuidv1 } from 'uuid';
 import { css } from '@emotion/css';
@@ -363,6 +366,7 @@ export default function TakeScreenshot({
     const uploadedFilePath = await uploadFile({
       context: 'mission',
       filePath: uuidv1(),
+      fileName: generateFileName(attachment.file.name),
       file: attachment.file,
       onUploadProgress: handleUploadProgress
     });

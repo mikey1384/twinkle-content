@@ -18,7 +18,8 @@ import { v1 as uuidv1 } from 'uuid';
 import {
   exceedsCharLimit,
   finalizeEmoji,
-  getFileInfoFromFileName
+  getFileInfoFromFileName,
+  generateFileName
 } from 'helpers/stringHelpers';
 import LocalContext from '../../Context';
 
@@ -113,10 +114,7 @@ function UploadModal({
     if (selectedFile) {
       const filePath = uuidv1();
       const messageId = uuidv1();
-      const splitFileName = selectedFile.name.split('.');
-      const fileName = `${Math.floor(Date.now() / 1000)}.${
-        selectedFile.name.split('.')[splitFileName.length - 1]
-      }`;
+      const fileName = generateFileName(selectedFile.name);
       onFileUpload({
         channelId,
         content: finalizeEmoji(caption),

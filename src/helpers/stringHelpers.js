@@ -914,6 +914,14 @@ export function replaceFakeAtSymbol(string) {
   return string.replace(/＠/g, '@');
 }
 
+export function generateFileName(fileName) {
+  const splitFileName = fileName.split('.');
+  const result = `${Math.floor(Date.now() / 1000)}.${
+    splitFileName[splitFileName.length - 1]
+  }`;
+  return result;
+}
+
 export function stringIsEmpty(string) {
   const evalString = string || '';
   if (evalString && typeof evalString !== 'string') return true;

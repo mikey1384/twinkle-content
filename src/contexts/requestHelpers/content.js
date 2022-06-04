@@ -870,7 +870,7 @@ export default function contentRequestHelpers({ auth, handleError }) {
       );
       await request.put(url.signedRequest, file, {
         onUploadProgress,
-        ...(context === 'interactive'
+        ...(context === 'interactive' || context === 'mission'
           ? {
               headers: {
                 'Content-Disposition': `attachment; filename="${fileName}"`

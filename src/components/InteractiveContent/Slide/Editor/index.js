@@ -9,6 +9,7 @@ import {
   addEmoji,
   exceedsCharLimit,
   finalizeEmoji,
+  generateFileName,
   stringIsEmpty,
   isValidUrl,
   isValidYoutubeUrl
@@ -561,12 +562,6 @@ export default function Editor({
     };
 
     if (editedAttachment?.newAttachment && editedAttachment?.type !== 'none') {
-      const splitFileName = editedAttachment.newAttachment.file.name.split('.');
-      const fileName = `${Math.floor(Date.now() / 1000)}.${
-        editedAttachment.newAttachment.file.name.split('.')[
-          splitFileName.length - 1
-        ]
-      }`;
       const promises = [];
       onSetSlideState({
         interactiveId,
@@ -576,7 +571,7 @@ export default function Editor({
       promises.push(
         uploadFile({
           context: 'interactive',
-          fileName,
+          fileName: generateFileName(editedAttachment.newAttachment.file.name),
           filePath: uuidv1(),
           file: editedAttachment.newAttachment.file,
           onUploadProgress: handleUploadProgress
