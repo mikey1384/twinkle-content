@@ -853,17 +853,30 @@ export default function contentRequestHelpers({ auth, handleError }) {
         handleError(error);
       }
     },
-    async uploadFile({ context = 'feed', filePath, file, onUploadProgress }) {
+    async uploadFile({
+      context = 'feed',
+      filePath,
+      file,
+      fileName,
+      onUploadProgress
+    }) {
       const { data: url } = await request.get(
         `${URL}/content/sign-s3?fileSize=${
           file.size
         }&fileName=${encodeURIComponent(
-          file.name
+          fileName ?? file.name
         )}&path=${filePath}&context=${context}`,
         auth()
       );
       await request.put(url.signedRequest, file, {
-        onUploadProgress
+        onUploadProgress,
+        ...(context === 'interactive'
+          ? {
+              headers: {
+                'Content-Disposition': `attachment; filename="${fileName}"`
+              }
+            }
+          : {})
       });
       return Promise.resolve(url?.url?.split('.com')?.[1]);
     },
