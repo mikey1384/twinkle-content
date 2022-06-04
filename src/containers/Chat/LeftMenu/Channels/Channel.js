@@ -116,11 +116,12 @@ function Channel({
   );
 
   const handleChannelClick = useCallback(() => {
+    if (selected) return;
     if (pathId) {
       return navigate(`/chat/${pathId}`);
     }
     navigate('/chat/new');
-  }, [navigate, pathId]);
+  }, [navigate, pathId, selected]);
 
   const badgeShown = useMemo(() => {
     return (
