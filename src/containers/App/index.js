@@ -29,7 +29,7 @@ import VideoPage from 'containers/VideoPage';
 import Incoming from 'components/Stream/Incoming';
 import Outgoing from 'components/Stream/Outgoing';
 import InvalidPage from 'components/InvalidPage';
-import { useLocation, useNavigate, Routes, Route } from 'react-router-dom';
+import { useLocation, Routes, Route } from 'react-router-dom';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { socket } from 'constants/io';
@@ -55,7 +55,6 @@ const deviceIsMobile = isMobile(navigator);
 const userIsUsingIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
 function App() {
-  const navigate = useNavigate();
   const location = useLocation();
   const onCloseSigninModal = useAppContext(
     (v) => v.user.actions.onCloseSigninModal
@@ -368,7 +367,6 @@ function App() {
           pathId: channel.pathId
         });
         onSendFirstDirectMessage({ channel, message });
-        navigate(`/chat/${channel.pathId}`, { replace: true });
         socket.emit('join_chat_group', message.channelId);
         socket.emit('send_bi_chat_invitation', {
           userId: recepientId,

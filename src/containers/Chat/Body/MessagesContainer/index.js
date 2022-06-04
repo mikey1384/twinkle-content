@@ -522,7 +522,6 @@ function MessagesContainer({
           onUpdateChannelPathIdHash({ channelId: channel.id, pathId });
           onSendFirstDirectMessage({ channel, message });
           onSetChessModalShown(false);
-          navigate(`/chat/${pathId}`, { replace: true });
           return;
         }
       } catch (error) {
@@ -804,7 +803,6 @@ function MessagesContainer({
           onUpdateChannelPathIdHash({ channelId: channel.id, pathId });
           onSendFirstDirectMessage({ channel, message });
           onSetCreatingNewDMChannel(false);
-          navigate(`/chat/${pathId}`, { replace: true });
           return Promise.resolve();
         } catch (error) {
           return Promise.reject(error);
