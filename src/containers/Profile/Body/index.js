@@ -71,7 +71,11 @@ export default function Body({ profile, selectedTheme }) {
               location.pathname === `/users/${username}` ? 'active' : ''
             }
             style={{ cursor: 'pointer' }}
-            onClick={() => navigate(`/users/${username}`)}
+            onClick={() =>
+              location.pathname === `/users/${username}`
+                ? null
+                : navigate(`/users/${username}`)
+            }
           >
             <a>{profileLabel}</a>
           </nav>
@@ -80,7 +84,11 @@ export default function Body({ profile, selectedTheme }) {
               location.pathname === `/users/${username}/watched` ? 'active' : ''
             }
             style={{ cursor: 'pointer' }}
-            onClick={() => navigate(`watched`)}
+            onClick={() =>
+              location.pathname === `/users/${username}/watched`
+                ? null
+                : navigate(`watched`)
+            }
           >
             <a>{watchedLabel}</a>
           </nav>
@@ -89,7 +97,11 @@ export default function Body({ profile, selectedTheme }) {
               location.pathname === `/users/${username}/likes` ? 'active' : ''
             }
             style={{ cursor: 'pointer' }}
-            onClick={() => navigate(`likes`)}
+            onClick={() =>
+              location.pathname === `/users/${username}/likes`
+                ? null
+                : navigate(`likes`)
+            }
           >
             <a>{likesLabel}</a>
           </nav>
@@ -102,7 +114,11 @@ export default function Body({ profile, selectedTheme }) {
                 : ''
             }
             style={{ cursor: 'pointer' }}
-            onClick={() => navigate(`all`)}
+            onClick={() =>
+              location.pathname === `/users/${username}/all`
+                ? null
+                : navigate(`all`)
+            }
           >
             <a>{postsLabel}</a>
           </nav>
