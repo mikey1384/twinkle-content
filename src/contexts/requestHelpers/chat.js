@@ -440,12 +440,12 @@ export default function chatRequestHelpers({ auth, handleError }) {
     async checkIfDuplicateWordleAttempt({ channelId, numGuesses, solution }) {
       try {
         const {
-          data: { isDuplicate }
+          data: { isDuplicate, actualSolution }
         } = await request.get(
           `${URL}/chat/wordle/attempt/duplicate?channelId=${channelId}&numGuesses=${numGuesses}&solution=${solution}`,
           auth()
         );
-        return Promise.resolve(isDuplicate);
+        return Promise.resolve({ isDuplicate, actualSolution });
       } catch (error) {
         handleError(error);
         return Promise.resolve(true);

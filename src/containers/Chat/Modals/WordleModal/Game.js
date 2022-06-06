@@ -177,17 +177,24 @@ export default function Game({
 
     if (newGuesses.length < MAX_GUESSES && currentGuess !== solution) {
       setIsChecking(true);
-      const isDuplicate = await checkIfDuplicateWordleAttempt({
-        channelId,
-        numGuesses: newGuesses.length,
-        solution
-      });
+      const { isDuplicate, actualSolution } =
+        await checkIfDuplicateWordleAttempt({
+          channelId,
+          numGuesses: newGuesses.length,
+          solution
+        });
       if (isDuplicate) return;
+      if (actualSolution) {
+        onSetChannelState({
+          channelId,
+          newState: { wordleSolution: actualSolution }
+        });
+      }
       updateWordleAttempt({
         channelName,
         channelId,
         guesses: newGuesses,
-        solution
+        solution: actualSolution || solution
       });
       setIsChecking(false);
     }
