@@ -41,15 +41,19 @@ function Channel({
     () => customChannelNames[channelId] || channelName,
     [channelName, customChannelNames, channelId]
   );
+  const pathIdMatches = useMemo(
+    () => pathId === currentPathId,
+    [currentPathId, pathId]
+  );
   const selected = useMemo(() => {
     if (currentPathId === 'vocabulary' || chatType === 'vocabulary') {
       return false;
     }
-    if (pathId === currentPathId || channelId === selectedChannelId) {
+    if (pathIdMatches || channelId === selectedChannelId) {
       return true;
     }
     return false;
-  }, [currentPathId, chatType, pathId, channelId, selectedChannelId]);
+  }, [currentPathId, chatType, pathIdMatches, channelId, selectedChannelId]);
   const lastMessage = useMemo(() => {
     const lastMessageId = messageIds[0];
     return messagesObj[lastMessageId];
@@ -116,12 +120,12 @@ function Channel({
   );
 
   const handleChannelClick = useCallback(() => {
-    if (selected) return;
+    if (pathIdMatches) return;
     if (pathId) {
       return navigate(`/chat/${pathId}`);
     }
     navigate('/chat/new');
-  }, [navigate, pathId, selected]);
+  }, [navigate, pathId, pathIdMatches]);
 
   const badgeShown = useMemo(() => {
     return (
