@@ -110,7 +110,7 @@ export default function MainContent({
   }, [isEditing]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="ContentPanel/Body/MainContent">
       <div ref={ContainerRef}>
         {contentType === 'pass' && (
           <MissionContent uploader={uploader} rootObj={rootObj} />

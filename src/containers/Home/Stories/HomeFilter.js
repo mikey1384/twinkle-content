@@ -65,7 +65,7 @@ export default function HomeFilter({
   }, [category]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Home/Stories/HomeFilter">
       <FilterBar
         inverted
         bordered

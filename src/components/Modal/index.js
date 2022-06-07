@@ -41,7 +41,7 @@ export default function Modal({
   };
   const widthKey = small ? 'small' : large ? 'large' : 'default';
   const Modal = (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Modal/index">
       <div
         className={`${css`
           position: fixed;

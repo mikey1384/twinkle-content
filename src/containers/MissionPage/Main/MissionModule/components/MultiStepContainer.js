@@ -102,7 +102,10 @@ export default function MultiStepContainer({
   }, [selectedIndex]);
 
   return (
-    <ErrorBoundary style={{ width: '100%' }}>
+    <ErrorBoundary
+      componentPath="MissionModule/components/MultiStepContainer"
+      style={{ width: '100%' }}
+    >
       <div style={{ width: '100%', minHeight: '7rem' }}>{DisplayedSlide}</div>
       <div
         style={{

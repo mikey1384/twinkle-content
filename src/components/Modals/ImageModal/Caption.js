@@ -21,7 +21,7 @@ export default function Caption({
   userIsUploader
 }) {
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="ImageModal/Caption">
       {userIsUploader && (stringIsEmpty(caption) || isEditing) ? (
         <CaptionEditor
           style={{ marginTop: '2rem' }}

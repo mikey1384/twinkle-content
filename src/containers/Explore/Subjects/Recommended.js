@@ -39,7 +39,7 @@ export default function Recommended({
   }, [subjects, expanded]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Explore/Subjects/Recommended">
       <SectionPanel
         style={style}
         title={recommendedSubjectsLabel}

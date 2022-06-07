@@ -59,7 +59,7 @@ export default function Playlist({
   }, []);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Playlist">
       {videos.length === 0 ? (
         loaded ? (
           <InvalidPage

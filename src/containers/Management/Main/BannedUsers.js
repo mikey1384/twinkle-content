@@ -34,7 +34,7 @@ export default function BannedUsers({ canManage }) {
   const [banStatusModalTarget, setEditBanStatusModalTarget] = useState(null);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Management/Main/BannedUsers">
       <SectionPanel
         title={restrictedAccountsLabel}
         isEmpty={bannedUsers.length === 0}

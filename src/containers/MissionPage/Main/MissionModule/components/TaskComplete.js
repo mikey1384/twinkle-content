@@ -36,6 +36,7 @@ export default function TaskComplete({
 
   return myAttempt?.status ? null : (
     <ErrorBoundary
+      componentPath="MissionModule/components/TaskComplete"
       innerRef={innerRef}
       style={{
         width: '100%',

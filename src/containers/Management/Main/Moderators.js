@@ -61,7 +61,7 @@ export default function Moderators({ canManage }) {
   }, []);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Management/Main/Moderators">
       <SectionPanel
         title={moderatorsLabel}
         isEmpty={moderators.length === 0}

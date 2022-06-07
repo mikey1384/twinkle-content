@@ -146,6 +146,7 @@ function Channels() {
 
   return (
     <ErrorBoundary
+      componentPath="LeftMenu/Channels/index"
       innerRef={ChannelListRef}
       style={{
         overflow: 'scroll',

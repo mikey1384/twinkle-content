@@ -30,6 +30,7 @@ export default function WriteItYourself({ task, onSetMissionState }) {
 
   return (
     <ErrorBoundary
+      componentPath="MissionModule/WriteItYourself/index"
       className={css`
         width: 100%;
         font-size: 1.5rem;

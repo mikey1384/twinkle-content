@@ -30,7 +30,7 @@ export default function Likers({
   wordBreakEnabled
 }) {
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Likers/index">
       <div style={style} className={className}>
         <InnerContent
           defaultText={defaultText}

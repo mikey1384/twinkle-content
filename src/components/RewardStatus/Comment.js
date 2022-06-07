@@ -142,7 +142,7 @@ function Comment({
   }, [maxRewardables, reward.rewardAmount]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="RewardStatus/Comment">
       <div
         className={css`
           padding: 1rem;

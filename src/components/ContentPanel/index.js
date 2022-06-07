@@ -197,7 +197,7 @@ export default function ContentPanel({
   }
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="ContentPanel/index">
       <Context.Provider
         value={{
           commentsLoadLimit,

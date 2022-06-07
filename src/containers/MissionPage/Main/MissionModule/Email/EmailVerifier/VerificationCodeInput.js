@@ -24,6 +24,7 @@ export default function VerificationCodeInput({ onRetry, email }) {
 
   return (
     <ErrorBoundary
+      componentPath="MissionModule/Email/EmailVerifier/VerificationCodeInput"
       style={{
         marginTop: '1rem',
         display: 'flex',

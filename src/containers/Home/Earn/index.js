@@ -11,7 +11,7 @@ const leaderboardsLabel = localize('leaderboards');
 
 export default function Earn() {
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Home/Earn/index">
       <div
         className={css`
           > section {

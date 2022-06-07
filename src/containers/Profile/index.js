@@ -72,7 +72,7 @@ export default function Profile() {
   ]);
 
   return (
-    <ErrorBoundary style={{ minHeight: '10rem' }}>
+    <ErrorBoundary componentPath="Profile/index" style={{ minHeight: '10rem' }}>
       {!notExist ? (
         <>
           {loading && (

@@ -15,7 +15,7 @@ export default function DeleteInterface({
   onSetRemainingPictures
 }) {
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Profile/Body/Home/Pictures/DeleteInterface/index">
       <div
         style={{
           width: '100%',

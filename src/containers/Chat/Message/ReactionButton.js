@@ -46,7 +46,7 @@ export default function ReactionButton({
   });
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Message/ReactionButton">
       <div
         style={{ display: 'flex', ...style }}
         onMouseEnter={() =>

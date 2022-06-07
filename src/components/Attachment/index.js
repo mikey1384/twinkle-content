@@ -21,6 +21,7 @@ export default function Attachment({
 }) {
   return (
     <ErrorBoundary
+      componentPath="Attachment/index"
       style={{
         display: 'flex',
         flexDirection: 'column',

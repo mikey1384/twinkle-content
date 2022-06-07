@@ -108,7 +108,10 @@ export default function MissionPage() {
 
   return userId ? (
     mission.loaded ? (
-      <ErrorBoundary style={{ width: '100%', paddingBottom: '10rem' }}>
+      <ErrorBoundary
+        componentPath="MissionPage/index"
+        style={{ width: '100%', paddingBottom: '10rem' }}
+      >
         {isCreator && (
           <FilterBar
             className="mobile"

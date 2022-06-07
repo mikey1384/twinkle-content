@@ -57,7 +57,7 @@ export default function NotiItem({
   }, [actionObj.contentType, user]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Notification/MainFeeds/NotiItem/index">
       <nav style={{ background: '#fff' }} className={notiFeedListItem} key={id}>
         <div>
           {userLabel}

@@ -78,6 +78,7 @@ export default function Home({ profile, selectedTheme }) {
 
   return (
     <ErrorBoundary
+      componentPath="Profile/Body/Home/index"
       className={css`
         width: 70vw;
         @media (max-width: ${mobileMaxWidth}) {

@@ -187,7 +187,7 @@ export default function Pictures({
   ]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Profile/Body/Home/Pictures/index">
       {pictures && pictures.length > 0 ? (
         <SectionPanel
           button={menuButtons}

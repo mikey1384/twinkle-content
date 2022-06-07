@@ -32,6 +32,7 @@ export default function Selectable({
 
   return (
     <ErrorBoundary
+      componentPath="SelectUploadsForm/Selectable"
       className={`unselectable ${css`
         width: 16%;
         @media (max-width: ${mobileMaxWidth}) {

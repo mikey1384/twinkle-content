@@ -47,7 +47,7 @@ export default function GitHubVerifier({ onSetMissionState, task }) {
   }, [code]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="MissionModule/GitHub/GitHubVerifier">
       <div>
         {loading && <Loading />}
         {!loading && (

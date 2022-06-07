@@ -46,7 +46,10 @@ export default function Main() {
   }, []);
 
   return (
-    <ErrorBoundary style={{ paddingBottom: '10rem' }}>
+    <ErrorBoundary
+      componentPath="Management/Main/index"
+      style={{ paddingBottom: '10rem' }}
+    >
       <Moderators canManage={canManage} />
       <AccountTypes canManage={canManage} />
       <BannedUsers canManage={canManage} />

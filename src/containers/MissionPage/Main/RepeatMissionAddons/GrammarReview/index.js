@@ -31,7 +31,10 @@ export default function GrammarReview({
   const { [`${activeTab}LoadMoreButtonShown`]: loadMoreButtonShown } = mission;
 
   return (
-    <ErrorBoundary style={style}>
+    <ErrorBoundary
+      componentPath="MissionPage/Main/RepeatMissionAddons/GrammarReview/index"
+      style={style}
+    >
       {loadingReview ? (
         <Loading />
       ) : (

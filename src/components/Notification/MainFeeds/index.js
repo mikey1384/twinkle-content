@@ -111,7 +111,7 @@ function MainFeeds({
   }, [rewards]);
 
   return (
-    <ErrorBoundary style={style}>
+    <ErrorBoundary componentPath="Notification/MainFeeds/index" style={style}>
       {numNewNotis > 0 && !(activeTab === 'reward' && totalRewardAmount > 0) && (
         <Banner
           loading={loadingNewFeeds}

@@ -825,7 +825,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
   }, [channelOnCall.isClass, myStream]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="App/Header/index">
       <nav
         className={`unselectable ${css`
           z-index: 99999;

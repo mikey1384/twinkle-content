@@ -15,7 +15,7 @@ export default function Signin({ onHide }) {
   const [username, setUsername] = useState('');
   const [currentPage, setCurrentPage] = useState('main');
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Signin/index">
       <Modal
         onHide={onHide}
         modalStyle={{

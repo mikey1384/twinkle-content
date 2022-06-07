@@ -21,7 +21,7 @@ export default function PlaylistModal({
 }) {
   return (
     <Modal onHide={onHide}>
-      <ErrorBoundary>
+      <ErrorBoundary componentPath="PlaylistModal">
         <header>
           <Link style={{ fontSize: '2.5rem' }} to={`/playlists/${playlistId}`}>
             {title}

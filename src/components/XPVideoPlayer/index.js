@@ -360,7 +360,7 @@ function XPVideoPlayer({
   }, [uploader?.username]);
 
   return (
-    <ErrorBoundary style={style}>
+    <ErrorBoundary componentPath="XPVideoPlayer/index" style={style}>
       {byUser && !isChat && (
         <div
           className={css`

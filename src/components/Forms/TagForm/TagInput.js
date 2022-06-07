@@ -69,7 +69,7 @@ export default function TagInput({
   useOutsideClick(TagInputRef, onClickOutSide);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="TagForm/TagInput">
       <div
         className={`${css`
           height: 4.3rem;

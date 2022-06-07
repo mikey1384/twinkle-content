@@ -42,8 +42,9 @@ function LikeButton({
   }, [likes, userId]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="LikeButton">
       <Button
+        componentPath="LikeButton"
         disabled={disabled}
         className={className}
         color={(filled && liked) || !filled ? 'logoBlue' : 'lightBlue'}

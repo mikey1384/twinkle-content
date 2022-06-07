@@ -45,7 +45,7 @@ StatBar.propTypes = {
 };
 export default function StatBar({ stats, style }) {
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="WordleModal/OverviewModal/StatBar">
       <div style={{ display: 'flex', flexDirection: 'column', ...style }}>
         <div
           style={{

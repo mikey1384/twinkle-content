@@ -602,7 +602,7 @@ function Chat({ onFileUpload }) {
         onFileUpload
       }}
     >
-      <ErrorBoundary>
+      <ErrorBoundary componentPath="Chat/index">
         {userId ? (
           loaded ? (
             <div

@@ -42,7 +42,7 @@ export default function UsernameSection({
   }, []);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Signin/RestoreAccount/UsernameSection/index">
       <p
         style={{
           fontSize: '2rem',

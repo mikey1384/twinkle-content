@@ -51,6 +51,7 @@ export default function CodeSandbox({
 
   return (
     <ErrorBoundary
+      componentPath="Forms/CodeSandbox/index"
       innerRef={ComponentRef}
       style={{
         display: 'flex',

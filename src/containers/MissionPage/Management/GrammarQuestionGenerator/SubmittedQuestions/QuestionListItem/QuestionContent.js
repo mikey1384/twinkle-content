@@ -15,7 +15,7 @@ export default function QuestionContent({
   wrongChoices
 }) {
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="GrammarQuestionGenerator/SubmittedQuestions/QuestionListItem/QuestionContent">
       <div style={{ width: '100%', textAlign: 'center' }}>
         <p style={{ fontSize: '2.2rem', fontWeight: 'bold' }}>
           {question.question}

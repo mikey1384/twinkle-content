@@ -35,7 +35,7 @@ export default function HomeMenuItems({ style = {} }) {
   const { managementLevel, profileTheme } = useMyState();
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="HomeMenuItems">
       <div
         className={`unselectable ${css`
           width: 100%;

@@ -65,7 +65,7 @@ export default function AddBanModal({ onHide }) {
   }, [banStatus, selectedUser]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Management/Modals/AddBanModal">
       <Modal onHide={onHide}>
         <header style={{ display: 'block' }}>Restrict Account</header>
         <main>

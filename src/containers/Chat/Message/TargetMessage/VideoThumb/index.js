@@ -20,7 +20,7 @@ export default function VideoThumb({
   videoUrl
 }) {
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Message/TargetMessage/VideoThumb/index">
       {isYouTube ? (
         <YouTubeThumb
           messageId={messageId}

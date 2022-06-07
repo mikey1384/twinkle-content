@@ -15,7 +15,10 @@ export default function GitHub({ onSetMissionState, task }) {
   const conditionPassed = useMemo(() => !!githubUsername, [githubUsername]);
 
   return (
-    <ErrorBoundary style={{ width: '100%' }}>
+    <ErrorBoundary
+      componentPath="MissionModule/GitHub/index"
+      style={{ width: '100%' }}
+    >
       {conditionPassed ? (
         <TaskComplete
           taskId={task.id}

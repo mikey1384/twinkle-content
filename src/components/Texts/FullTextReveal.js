@@ -19,7 +19,10 @@ export default function FullTextReveal({
   className
 }) {
   return (
-    <ErrorBoundary style={{ position: 'relative' }}>
+    <ErrorBoundary
+      componentPath="FullTextReveal"
+      style={{ position: 'relative' }}
+    >
       <div
         className={className}
         style={{

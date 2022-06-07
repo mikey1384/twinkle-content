@@ -85,6 +85,7 @@ export default function UserDetails({
 
   return (
     <ErrorBoundary
+      componentPath="UserDetails/index"
       style={{
         display: 'flex',
         flexDirection: 'column',

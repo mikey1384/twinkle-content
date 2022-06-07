@@ -92,7 +92,7 @@ export default function Carousel({
   }, [children]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Carousel/index">
       <div
         className={
           className ||

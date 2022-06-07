@@ -38,7 +38,7 @@ export default function Rankings() {
   }, [userId]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Notification/MainFeeds/Ranking/index">
       <FilterBar
         bordered
         style={{

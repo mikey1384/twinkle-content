@@ -30,7 +30,7 @@ export default function ProfileWidget({ onLoadImage, onShowAlert }) {
   const FileInputRef = useRef(null);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="ProfileWidget/index">
       <div className={container} style={{ cursor: 'pointer' }}>
         {username && (
           <div

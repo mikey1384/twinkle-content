@@ -76,7 +76,7 @@ export default function RepeatMissionAddon({ mission, onSetMissionState }) {
   return (
     <div style={{ width: '100%' }}>
       {(!mission.started || mission.failed) && (
-        <ErrorBoundary>
+        <ErrorBoundary componentPath="MissionPage/Main/RepeatMissionAddons/index">
           {missionAttemptExist && (
             <FilterBar style={{ marginTop: '1.5rem' }} bordered>
               <nav

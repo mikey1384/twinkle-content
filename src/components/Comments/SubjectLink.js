@@ -10,7 +10,7 @@ SubjectLink.propTypes = {
 
 export default function SubjectLink({ subject }) {
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Comments/SubjectLink">
       <Link
         style={{
           fontWeight: 'bold',

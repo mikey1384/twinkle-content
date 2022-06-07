@@ -33,7 +33,7 @@ function XPBar({
   });
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Message/XPVideoPlayer/XPBar/index">
       <div
         style={{ marginTop: '1rem' }}
         className={css`

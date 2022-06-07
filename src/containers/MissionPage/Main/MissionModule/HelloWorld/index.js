@@ -30,6 +30,7 @@ export default function HelloWorld({ task, onSetMissionState }) {
 
   return (
     <ErrorBoundary
+      componentPath="MissionModule/HelloWorld/index"
       className={css`
         width: 100%;
         font-size: 1.5rem;

@@ -99,7 +99,7 @@ export default function SubjectInputForm({
   }, []);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="SubjectInputForm">
       <div>
         {uploadingFile && secretAttachment ? (
           <FileUploadStatusIndicator

@@ -105,7 +105,7 @@ function TextMessage({
   const isSpoiler = useMemo(() => isValidSpoiler(content), [content]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Message/TextMessage/index">
       <div>
         {isEditing ? (
           <EditTextArea

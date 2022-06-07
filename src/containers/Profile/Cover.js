@@ -64,7 +64,7 @@ export default function Cover({
   }, []);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Profile/Cover">
       <div
         style={{
           color: '#fff',

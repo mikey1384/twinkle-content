@@ -18,7 +18,7 @@ export default function TeacherMenu({
 }) {
   const [section, setSection] = useState('select');
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="CreateNewChat/TeacherMenu/index">
       {section === 'select' && (
         <SelectScreen onSetSection={setSection} onHide={onHide} />
       )}

@@ -81,7 +81,10 @@ export default function ReplitVerifier({ task, onSetMissionState }) {
   const TaskCompleteRef = useRef(null);
 
   return (
-    <ErrorBoundary style={{ width: '100%' }}>
+    <ErrorBoundary
+      componentPath="MissionModule/Replit/ReplitVerifier/index"
+      style={{ width: '100%' }}
+    >
       {!correctCodeEntered ? (
         <MultiStepContainer
           buttons={[FirstButton, SecondButton]}

@@ -146,6 +146,7 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
 
   return (
     <ErrorBoundary
+      componentPath="VideoPage/NavMenu"
       className={css`
         width: 30%;
         font-size: 2rem;

@@ -80,7 +80,7 @@ export default function EditSubjectForm({
   }, [title]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="MessagesContainer/ChannelHeader/EditSubjectForm">
       {subjectsModalShown && (
         <SubjectsModal
           channelId={channelId}

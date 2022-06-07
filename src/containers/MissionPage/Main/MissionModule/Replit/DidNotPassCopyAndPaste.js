@@ -38,6 +38,7 @@ export default function DidNotPassCopyAndPaste() {
 
   return (
     <ErrorBoundary
+      componentPath="MissionModule/Replit/DidNotPassCopyAndPaste"
       className={css`
         width: 100%;
         font-size: 1.5rem;

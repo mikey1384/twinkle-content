@@ -30,6 +30,7 @@ export default function FixingBugs({ task, onSetMissionState }) {
 
   return (
     <ErrorBoundary
+      componentPath="MissionModule/FixingBugs/index"
       className={css`
         width: 100%;
         font-size: 1.5rem;

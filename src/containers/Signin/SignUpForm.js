@@ -92,7 +92,7 @@ export default function SignUpForm({
   }, [email]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Signin/SignupForm">
       <header>{letsSetUpYourAccountLabel}</header>
       {errorMessage && <Banner>{errorMessage}</Banner>}
       <main>

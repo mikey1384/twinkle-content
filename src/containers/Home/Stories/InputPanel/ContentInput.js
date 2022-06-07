@@ -185,7 +185,10 @@ function ContentInput() {
   }, []);
 
   return (
-    <ErrorBoundary className={PanelStyle}>
+    <ErrorBoundary
+      componentPath="Home/Stories/InputPanel/ContentInput"
+      className={PanelStyle}
+    >
       <p>{postContentLabel}</p>
       {urlError && (
         <Banner color="pink" style={{ marginBottom: '1rem' }}>

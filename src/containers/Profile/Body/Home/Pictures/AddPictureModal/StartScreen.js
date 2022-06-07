@@ -26,7 +26,10 @@ export default function StartScreen({ navigateTo, onHide, profileId }) {
   const FileInputRef = useRef(null);
 
   return (
-    <ErrorBoundary style={{ display: 'flex', width: '100%' }}>
+    <ErrorBoundary
+      componentPath="Profile/Body/Home/Pictures/AddPictureModal/StartScreen/index"
+      style={{ display: 'flex', width: '100%' }}
+    >
       <div
         style={{
           width: '50%',

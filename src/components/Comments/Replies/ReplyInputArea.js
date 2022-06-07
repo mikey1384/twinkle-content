@@ -48,7 +48,7 @@ export default function ReplyInputArea({
   );
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Comments/Replies/ReplyInputArea">
       <div style={style}>
         {uploadingFile ? (
           <FileUploadStatusIndicator

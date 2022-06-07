@@ -57,7 +57,7 @@ export default function Subject({ rewardLevel, style }) {
   }, [effortColor, rewardLevelExpectation]);
 
   return (
-    <ErrorBoundary style={style}>
+    <ErrorBoundary componentPath="RewardLevelExplainer/Subject" style={style}>
       {rewardLevelExpectation && (
         <div style={{ fontSize: '1.7rem', fontWeight: 'bold' }}>
           {rewardLevelDescription}

@@ -16,7 +16,7 @@ export default function Achievements({
   selectedTheme
 }) {
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Profile/Body/Home/Achievements/index">
       <NotableActivities
         userId={id}
         username={username}

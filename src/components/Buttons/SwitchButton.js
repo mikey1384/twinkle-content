@@ -29,6 +29,7 @@ export default function SwitchButton({
   const { profileTheme } = useMyState();
   return (
     <ErrorBoundary
+      componentPath="SwitchButton"
       style={{
         display: 'flex',
         flexDirection: small ? 'column' : 'row',

@@ -37,7 +37,7 @@ export default function LoginForm({
   const [errorMessage, setErrorMessage] = useState('');
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Signin/LoginForm">
       <header>{yourUsernameAndPasswordLabel}</header>
       {errorMessage && <Banner color="pink">{errorMessage}</Banner>}
       <main>

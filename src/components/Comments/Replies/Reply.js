@@ -306,7 +306,7 @@ function Reply({
   ]);
 
   return !isDeleted && !reply.isDeleted ? (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Comments/Replies/Reply">
       <div className={commentContainer} ref={innerRef}>
         {pinnedCommentId === reply.id && (
           <div
@@ -361,7 +361,7 @@ function Reply({
               {reply.targetObj?.comment?.uploader &&
                 !!reply.replyId &&
                 reply.replyId !== comment.id && (
-                  <ErrorBoundary>
+                  <ErrorBoundary componentPath="Comments/Replies/Reply/to">
                     <span className="to">
                       to:{' '}
                       <UsernameText user={reply.targetObj.comment.uploader} />

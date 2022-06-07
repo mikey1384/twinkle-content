@@ -156,7 +156,7 @@ function Notification({ className, location, style, trackScrollPosition }) {
   }, [activeTab, loadingNotifications, rewards.length]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Notification/index">
       <div
         ref={ContainerRef}
         onScroll={handleScroll}

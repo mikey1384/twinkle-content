@@ -28,7 +28,7 @@ function Home({ onFileUpload, section }) {
   const [imageUri, setImageUri] = useState(null);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Home/index">
       <LocalContext.Provider
         value={{
           onFileUpload

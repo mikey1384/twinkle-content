@@ -71,7 +71,7 @@ export default function Leaderboard({ style }) {
   }, [leaderboards?.length, leaderboardsObj]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Home/Earn/Leaderboard/index">
       <div style={style} className={panel}>
         <p>
           {year}

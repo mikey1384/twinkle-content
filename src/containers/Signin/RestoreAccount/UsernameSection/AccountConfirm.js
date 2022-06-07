@@ -20,7 +20,10 @@ export default function AccountConfirm({
   style
 }) {
   return (
-    <ErrorBoundary style={{ fontSize: '2rem', ...style }}>
+    <ErrorBoundary
+      componentPath="Signin/RestoreAccount/UsernameSection/AccountConfirm"
+      style={{ fontSize: '2rem', ...style }}
+    >
       {searching && <Loading />}
       {notExist && (
         <div style={{ padding: '1rem', fontWeight: 'bold' }}>

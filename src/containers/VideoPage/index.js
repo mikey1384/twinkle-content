@@ -229,6 +229,7 @@ export default function VideoPage() {
 
   return (
     <ErrorBoundary
+      componentPath="VideoPage/index"
       className={css`
         width: CALC(100% - 2rem);
         height: 100%;

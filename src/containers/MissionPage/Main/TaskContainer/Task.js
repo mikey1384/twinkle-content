@@ -85,6 +85,7 @@ export default function Task({
 
   return (
     <ErrorBoundary
+      componentPath="TaskContainer/Task"
       className={panel}
       style={{
         paddingBottom: '2.5rem',

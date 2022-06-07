@@ -40,7 +40,7 @@ export default function EditBanStatusModal({ onHide, target }) {
   }, [banStatus, target.banned]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Management/Modals/EditBanStatusModal">
       <Modal onHide={onHide}>
         <header style={{ display: 'block' }}>
           Edit Restriction Status of{' '}

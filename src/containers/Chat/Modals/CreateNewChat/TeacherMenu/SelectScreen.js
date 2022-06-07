@@ -18,7 +18,7 @@ SelectScreen.propTypes = {
 
 export default function SelectScreen({ onHide, onSetSection }) {
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="CreateNewChat/TeacherMenu/SelectScreen">
       <header>{startNewChatLabel}</header>
       <main>
         <div

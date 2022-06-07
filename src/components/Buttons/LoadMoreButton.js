@@ -18,7 +18,7 @@ LoadMoreButton.propTypes = {
 
 export default function LoadMoreButton({ label, loading, ...props }) {
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="LoadMoreButton">
       <div
         className={css`
           width: 100%;

@@ -90,7 +90,7 @@ export default function RecommendationInterface({
 
   return hidden ? null : (
     <ErrorBoundary
-      componentName="RecommendationInterface"
+      componentPath="RecommendationInterface"
       style={{
         position: 'relative',
         border: `1px ${Color.borderGray()} solid`,

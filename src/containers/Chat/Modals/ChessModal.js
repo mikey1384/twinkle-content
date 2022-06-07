@@ -150,7 +150,7 @@ export default function ChessModal({
   }, [drawOffererId, myId]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="ChessModal">
       <Modal large onHide={onHide}>
         <header>{chessLabel}</header>
         <main style={{ padding: 0 }}>

@@ -80,6 +80,7 @@ export default function Mission({
   const { isCreator } = useMyState();
   return (
     <ErrorBoundary
+      componentPath="MissionPage/Main/MissionContainer/Mission/index"
       className={`${panel} ${
         isCreator
           ? ''

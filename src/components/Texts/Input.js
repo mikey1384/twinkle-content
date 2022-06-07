@@ -26,7 +26,7 @@ export default function Input({
   ...props
 }) {
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Input">
       {autoComplete === 'off' && (
         <input
           autoComplete="on"

@@ -55,7 +55,7 @@ export default function Explore({ category }) {
   });
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Explore/index">
       <div
         ref={ContainerRef}
         className={css`

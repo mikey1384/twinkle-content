@@ -27,7 +27,7 @@ export default function ReorderInterface({
   }, [pictures]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Profile/Body/Home/Pictures/ReorderInterface/index">
       <DndProvider backend={Backend}>
         <div
           style={{

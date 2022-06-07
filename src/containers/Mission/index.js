@@ -64,7 +64,7 @@ export default function Mission() {
   }, [userId, isCreator]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Mission/index">
       <div style={{ width: '100%' }}>
         {userId && (
           <Cover

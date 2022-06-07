@@ -54,7 +54,10 @@ export default function StartScreen({ navigateTo, onHide }) {
   }, []);
 
   return (
-    <ErrorBoundary style={{ display: 'flex', width: '100%' }}>
+    <ErrorBoundary
+      componentPath="Home/Stories/InputPanel/SubjectInput/AttachContentModal/StartScreen"
+      style={{ display: 'flex', width: '100%' }}
+    >
       <div
         style={{
           width: '50%',

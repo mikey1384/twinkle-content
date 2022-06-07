@@ -220,6 +220,7 @@ export default function ChannelHeader({
 
   return (
     <ErrorBoundary
+      componentPath="MessagesContainer/ChannelHeader/index"
       className={css`
         z-index: 50000;
         position: relative;

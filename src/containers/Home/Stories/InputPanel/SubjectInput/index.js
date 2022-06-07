@@ -167,7 +167,10 @@ function SubjectInput() {
   }, [attachment]);
 
   return (
-    <ErrorBoundary className={PanelStyle}>
+    <ErrorBoundary
+      componentPath="Home/Stories/InputPanel/SubjectInput/index"
+      className={PanelStyle}
+    >
       {!uploadingFile && (
         <>
           <p>{postSubjectLabel}</p>

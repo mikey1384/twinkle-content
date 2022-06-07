@@ -81,7 +81,7 @@ export default function Subjects({
       }}
     >
       <div className={className} style={style}>
-        <ErrorBoundary>
+        <ErrorBoundary componentPath="Subjects/index">
           <StartNewSubjectPanel
             contentId={contentId}
             contentType={contentType}

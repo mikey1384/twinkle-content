@@ -46,6 +46,7 @@ export default function MobileMenu({ onClose }) {
 
   return (
     <ErrorBoundary
+      componentPath="App/MobileMenu"
       className={`mobile ${css`
         top: 0;
         bottom: 0;

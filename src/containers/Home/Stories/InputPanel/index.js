@@ -5,7 +5,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 
 export default function InputPanel() {
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Home/Stories/InputPanel/index">
       <SubjectInput />
       <ContentInput />
     </ErrorBoundary>

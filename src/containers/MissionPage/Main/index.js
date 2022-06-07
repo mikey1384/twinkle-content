@@ -21,7 +21,7 @@ export default function Main({
 }) {
   return (
     <ErrorBoundary
-      componentName="MissionPage/Main"
+      componentPath="MissionPage/Main/index"
       style={{ width: '100%', ...style }}
     >
       {mission ? (

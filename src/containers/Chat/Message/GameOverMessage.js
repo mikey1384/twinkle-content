@@ -76,7 +76,7 @@ function GameOverMessage({ myId, opponentName, winnerId, isDraw, isResign }) {
   }, [myId, opponentName, winnerId]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="GameOverMessage">
       <div
         style={{
           marginRight: '1rem',

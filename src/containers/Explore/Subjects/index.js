@@ -111,7 +111,7 @@ export default function Subjects() {
 
   return (
     <div>
-      <ErrorBoundary>
+      <ErrorBoundary componentPath="Explore/Subjects">
         {((featuredLoaded && featureds.length > 0) || canPinPlaylists) && (
           <Featured
             loaded={featuredLoaded}

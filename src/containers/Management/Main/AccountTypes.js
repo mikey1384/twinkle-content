@@ -39,7 +39,7 @@ export default function AccountTypes({ canManage }) {
   const [accountTypeModalTarget, setAccountTypeModalTarget] = useState(null);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Management/Main/AccountTypes">
       <SectionPanel
         title={accountTypesLabel}
         isEmpty={accountTypes.length === 0}

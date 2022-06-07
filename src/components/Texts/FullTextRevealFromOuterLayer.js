@@ -21,6 +21,7 @@ export default function FullTextRevealFromOuterLayer({
 
   return createPortal(
     <ErrorBoundary
+      componentPath="FullTextRevealFromOuterLayer"
       style={{
         zIndex: 100_000_000,
         top: 0,

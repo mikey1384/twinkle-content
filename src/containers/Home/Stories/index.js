@@ -148,7 +148,7 @@ export default function Stories() {
   }, [username]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Home/Stories/index">
       <div style={{ width: '100%' }} ref={ContainerRef}>
         <HomeFilter
           category={category}

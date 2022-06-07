@@ -40,7 +40,7 @@ export default function MadeByUsers({
   }, [subjects, expanded]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Explore/Subjects/MadeByUsers">
       <SectionPanel
         style={style}
         title={madeByUsersLabel}

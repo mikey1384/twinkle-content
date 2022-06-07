@@ -68,7 +68,7 @@ export default function ContinueWatchingPanel() {
   }, [continueWatchingLoaded, userId, prevUserId, profileLoaded]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Explore/Videos/ContinueWatchingPanel">
       <SectionPanel
         loaded={loaded || loadedRef.current}
         innerStyle={{ fontSize: '1.5rem' }}

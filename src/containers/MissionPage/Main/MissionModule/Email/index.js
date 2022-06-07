@@ -21,7 +21,10 @@ export default function Email({ taskId }) {
   );
 
   return (
-    <ErrorBoundary style={{ width: '100%' }}>
+    <ErrorBoundary
+      componentPath="MissionModule/Email"
+      style={{ width: '100%' }}
+    >
       {conditionPassed ? (
         <TaskComplete taskId={taskId} passMessage={passMessage} />
       ) : (

@@ -15,7 +15,7 @@ export default function NoPictures({ numPics, onAddButtonClick, profileId }) {
   const { userId } = useMyState();
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Profile/Body/Home/Pictures/NoPictures/index">
       {profileId === userId && numPics > 0 ? (
         <div
           style={{

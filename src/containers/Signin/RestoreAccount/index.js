@@ -48,7 +48,7 @@ export default function RestoreAccount({ username, onShowLoginForm, onHide }) {
   }, [matchingAccount, section]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Signin/RestoreAccount/index">
       <header>{headerTitle}</header>
       <main>
         {section === 'username' && (

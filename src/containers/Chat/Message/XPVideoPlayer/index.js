@@ -337,7 +337,7 @@ function XPVideoPlayer({
   );
 
   return (
-    <ErrorBoundary style={style}>
+    <ErrorBoundary componentPath="Message/XPVideoPlayer/index" style={style}>
       <div
         className={css`
           user-select: none;

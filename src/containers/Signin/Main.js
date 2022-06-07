@@ -21,7 +21,7 @@ export default function Main({
   onShowSignUpForm
 }) {
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Signin/Main">
       <header>{welcomeLabel}</header>
       <main>
         <Button

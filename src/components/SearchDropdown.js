@@ -4,7 +4,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import { Color } from 'constants/css';
 import { css } from '@emotion/css';
 
-Dropdown.propTypes = {
+SearchDropdown.propTypes = {
   innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   dropdownFooter: PropTypes.node,
   indexToHighlight: PropTypes.number.isRequired,
@@ -16,7 +16,7 @@ Dropdown.propTypes = {
   style: PropTypes.object
 };
 
-export default function Dropdown({
+export default function SearchDropdown({
   innerRef,
   dropdownFooter,
   indexToHighlight,
@@ -43,6 +43,7 @@ export default function Dropdown({
         box-shadow: 1px 1px 5px ${Color.black()};
         top: CALC(4.3rem - 1px);
       `}
+      componentPath="SearchDropdown"
       style={style}
     >
       <div

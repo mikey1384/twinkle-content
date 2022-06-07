@@ -21,7 +21,7 @@ function Body({ channelName, chessOpponent, currentChannel, loading }) {
   } = useContext(LocalContext);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Chat/Body/index">
       <div
         className={css`
           height: 100%;

@@ -103,7 +103,10 @@ export default function LaunchTheWebsite({ onSetMissionState, style, task }) {
   );
 
   return (
-    <ErrorBoundary style={style}>
+    <ErrorBoundary
+      componentPath="MissionModule/LaunchTheWebsite/index"
+      style={style}
+    >
       <MultiStepContainer
         buttons={[
           FirstButton,

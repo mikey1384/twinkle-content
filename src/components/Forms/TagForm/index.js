@@ -66,10 +66,10 @@ function TagForm({
     onClear,
     onSetSearchText: setSearchText
   });
-  const filteredResults = useMemo(() => searchResults.filter(filter), [
-    filter,
-    searchResults
-  ]);
+  const filteredResults = useMemo(
+    () => searchResults.filter(filter),
+    [filter, searchResults]
+  );
   const tags = useMemo(() => {
     return selectedItems.length > 0 ? (
       <div
@@ -93,7 +93,7 @@ function TagForm({
   }, [itemLabel, onRemoveItem, renderTagLabel, selectedItems]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="TagForm/index">
       <form
         style={style}
         className={className}

@@ -58,7 +58,7 @@ export default function TextEditSection({
   );
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="ContentPanel/Body/ContentEditor/TextEditSection">
       {(contentType === 'video' || contentType === 'url') && (
         <div
           className={css`

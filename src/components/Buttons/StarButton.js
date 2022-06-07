@@ -131,7 +131,7 @@ export default function StarButton({
   const { marginLeft, ...otherStyles } = useMemo(() => style, [style]);
 
   return buttonShown ? (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="StarButton">
       <div
         style={{ position: 'relative', height: '100%', marginLeft }}
         ref={StarButtonRef}

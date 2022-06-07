@@ -144,7 +144,7 @@ export default function Feeds({
   }, [section, username]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Profile/Body/Posts/Feeds">
       <div
         className={css`
           margin-top: 1rem;

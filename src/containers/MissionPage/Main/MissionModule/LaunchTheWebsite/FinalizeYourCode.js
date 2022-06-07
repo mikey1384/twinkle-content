@@ -35,6 +35,7 @@ export default function FinalizeYourCode({
 
   return (
     <ErrorBoundary
+      componentPath="MissionModule/LaunchTheWebsite/FinalizeYourCode"
       className={css`
         margin-top: 3rem;
         @media (max-width: ${mobileMaxWidth}) {

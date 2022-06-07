@@ -23,7 +23,7 @@ export default function VideoThumb({ messageId, onClick, thumbUrl, src }) {
   } = useContext(LocalContext);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Message/TargetMessage/FileThumb/VideoThumb">
       <div
         onClick={onClick}
         style={{

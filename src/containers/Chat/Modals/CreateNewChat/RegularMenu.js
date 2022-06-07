@@ -54,7 +54,7 @@ export default function RegularMenu({
   }, []);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="CreateNewChat/RegularMenu">
       <header>{newGroupLabel}</header>
       <main>
         <div style={{ width: '100%' }}>

@@ -114,7 +114,7 @@ export default function EditPlaylistModal({
   );
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="EditPlaylistModal">
       <DndProvider backend={Backend}>
         <Modal large onHide={onHide}>
           <header>

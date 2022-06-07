@@ -70,7 +70,7 @@ export default function EditAccountTypeModal({ onHide, target }) {
   }, [accountLabel, authLevel, perks, accountTypeObj]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Management/Modals/EditAccountTypeModal">
       <Modal onHide={onHide}>
         <header style={{ display: 'block' }}>Edit Account Type:</header>
         <main>

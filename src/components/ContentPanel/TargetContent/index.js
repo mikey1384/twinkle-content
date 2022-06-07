@@ -254,6 +254,7 @@ export default function TargetContent({
 
   return (
     <ErrorBoundary
+      componentPath="ContentPanel/TargetContent/index"
       className={`${className} ${css`
         font-size: 1.6rem;
         white-space: pre-wrap;
@@ -376,6 +377,7 @@ export default function TargetContent({
                 </div>
                 {!contentHidden && (
                   <ErrorBoundary
+                    componentPath="ContentPanel/TargetContent/index/bottom-menu"
                     style={{
                       display: 'flex',
                       justifyContent: 'space-between',

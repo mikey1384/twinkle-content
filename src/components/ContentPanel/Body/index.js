@@ -304,7 +304,7 @@ export default function Body({
   }, [views]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="ContentPanel/Body/index">
       <div
         style={{
           width: '100%'

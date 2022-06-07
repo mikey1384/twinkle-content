@@ -68,7 +68,7 @@ function VideoThumb({ className, clickSafe, style, to, user, video }) {
   }, [titleContext]);
 
   return !isDeleted ? (
-    <ErrorBoundary style={style}>
+    <ErrorBoundary componentPath="VideoThumb" style={style}>
       <div
         className={`${className} ${css`
           display: flex;

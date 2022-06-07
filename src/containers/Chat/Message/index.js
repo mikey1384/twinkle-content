@@ -564,7 +564,7 @@ function Message({
   }
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Chat/Message/index">
       <div
         ref={ComponentRef}
         className={css`

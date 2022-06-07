@@ -59,7 +59,7 @@ export default function ExerciseContainer({
   const ComponentRef = useRef(null);
 
   return prevPassed ? (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="MissionModule/components/ExerciseContainer/index">
       <div
         style={{
           width: '100%',

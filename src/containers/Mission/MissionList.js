@@ -75,7 +75,7 @@ export default function MissionList({
   ]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Mission/MissionList">
       <div style={style} className={className}>
         <p style={{ fontWeight: 'bold', fontSize: '2.5rem' }}>
           {allMissionsLabel}

@@ -10,7 +10,10 @@ ButtonGroup.propTypes = {
 
 export default function ButtonGroup({ buttons, style }) {
   return (
-    <ErrorBoundary style={{ ...style, display: 'flex' }}>
+    <ErrorBoundary
+      componentPath="ButtonGroup"
+      style={{ ...style, display: 'flex' }}
+    >
       {buttons.map((button, index) => {
         return (
           <Button

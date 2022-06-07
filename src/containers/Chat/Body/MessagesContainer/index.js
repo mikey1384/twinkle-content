@@ -911,7 +911,7 @@ function MessagesContainer({
   );
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="MessagesContainer/index">
       {!channelHeaderShown && !banned?.chat && selectedChannelId !== 0 && (
         <div
           style={{

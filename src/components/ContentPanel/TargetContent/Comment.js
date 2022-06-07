@@ -55,6 +55,7 @@ function Comment({
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   return (
     <ErrorBoundary
+      componentPath="ContentPanel/TargetContent/Comment"
       style={{
         display: 'flex',
         width: '100%',

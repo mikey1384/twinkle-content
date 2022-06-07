@@ -27,7 +27,7 @@ export default function ReorderButtonsModal({
 }) {
   const [forkButtonIds, setForkButtonIds] = useState(initialButtonIds);
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="ForkButtonsField/ReorderButtonsModal">
       <DndProvider backend={Backend}>
         <Modal small onHide={onHide}>
           <header>Reorder Buttons</header>

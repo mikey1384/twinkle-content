@@ -30,6 +30,7 @@ export default function AttemptResult({
 
   return (
     <ErrorBoundary
+      componentPath="WordleModal/OverviewModal/AttemptResult"
       style={{
         fontWeight: 'bold',
         textAlign: 'center',

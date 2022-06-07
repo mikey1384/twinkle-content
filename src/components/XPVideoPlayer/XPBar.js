@@ -181,7 +181,7 @@ function XPBar({
   );
 
   return userId ? (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="XPVideoPlayer/XPBar">
       <div
         className={css`
           display: flex;

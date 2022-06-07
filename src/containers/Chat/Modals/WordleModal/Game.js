@@ -91,7 +91,7 @@ export default function Game({
   }, []);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="WordleModal/Game">
       {alertMessage.shown && (
         <Banner style={{ marginBottom: '2rem' }} color={alertMessageColor}>
           {alertMessage.message}

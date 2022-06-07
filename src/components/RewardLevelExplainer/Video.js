@@ -73,7 +73,7 @@ export default function Video({ rewardLevel, style }) {
   }, [rewardLevel]);
 
   return (
-    <ErrorBoundary style={style}>
+    <ErrorBoundary componentPath="RewardLevelExplainer/Video" style={style}>
       {rewardLevelDescription && (
         <div style={{ fontSize: '1.7rem', fontWeight: 'bold' }}>
           {rewardLevelDescription}

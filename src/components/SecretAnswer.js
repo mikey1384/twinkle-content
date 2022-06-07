@@ -63,7 +63,7 @@ function SecretAnswer({
   }, [prevSecretViewerId, subjectId, userId]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="SecretAnswer">
       <div
         onClick={spoilerShown ? () => {} : onClick}
         style={{

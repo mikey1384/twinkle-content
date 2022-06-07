@@ -99,6 +99,7 @@ export default function Tooltip({
 
   return createPortal(
     <ErrorBoundary
+      componentPath="Message/Reactions/Tooltip"
       style={{
         zIndex: 100_000_000,
         top: 0,

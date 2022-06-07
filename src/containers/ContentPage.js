@@ -56,6 +56,7 @@ export default function ContentPage() {
 
   return (
     <ErrorBoundary
+      componentPath="ContentPage"
       style={{
         display: 'flex',
         flexDirection: 'column',

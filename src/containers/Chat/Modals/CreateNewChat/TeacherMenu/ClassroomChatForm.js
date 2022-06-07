@@ -19,12 +19,12 @@ const membersLabel = localize('members');
 const nameLabel = localize('name');
 const newClassroomLabel = localize('newClassroomChat');
 
-ClassroomChat.propTypes = {
+ClassroomChatForm.propTypes = {
   onBackClick: PropTypes.func,
   onHide: PropTypes.func.isRequired
 };
 
-export default function ClassroomChat({ onBackClick, onHide }) {
+export default function ClassroomChatForm({ onBackClick, onHide }) {
   const navigate = useNavigate();
   const createNewChat = useAppContext((v) => v.requestHelpers.createNewChat);
   const searchUserToInvite = useAppContext(
@@ -51,7 +51,7 @@ export default function ClassroomChat({ onBackClick, onHide }) {
   );
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="CreateNewChat/TeacherMenu/ClassroomChatForm">
       <header>{newClassroomLabel}</header>
       <main>
         <div

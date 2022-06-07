@@ -82,7 +82,7 @@ function RewardStatus({
   }, [amountRewarded, maxRewards]);
 
   return rewards && rewards.length > 0 ? (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="RewardStatus/index">
       <div
         style={style}
         className={`${className} ${css`

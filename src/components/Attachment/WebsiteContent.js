@@ -28,7 +28,7 @@ export default function WebsiteContent({ attachment }) {
   }, [attachment.contentType, content, thumbUrl]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Attachment/WebsiteContent">
       <div
         style={{
           width: '8rem',

@@ -29,7 +29,10 @@ export default function Management({ mission, missionId, onSetMissionState }) {
   }
 
   return (
-    <ErrorBoundary style={{ width: '100%', marginBottom: '10rem' }}>
+    <ErrorBoundary
+      componentPath="MissionPage/Management/index"
+      style={{ width: '100%', marginBottom: '10rem' }}
+    >
       {mission.missionType !== 'grammar' && (
         <Attempts
           mission={mission}

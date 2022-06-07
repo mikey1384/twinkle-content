@@ -38,7 +38,7 @@ export default function FileThumb({
   const [imageModalShown, setImageModalShown] = useState(false);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Message/TargetMessage/FileThumb/index">
       <div
         className={css`
           color: ${Color.black()};

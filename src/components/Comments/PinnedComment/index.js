@@ -47,7 +47,7 @@ export default function PinnedComment({
   }, [comment, commentId]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Comments/PinnedComment/index">
       {comment.loaded && !comment.isDeleted && !comment.notFound ? (
         <div
           style={{

@@ -60,6 +60,7 @@ export default function DropdownButton({
 
   return (
     <ErrorBoundary
+      componentPath="DropdownButton"
       innerRef={innerRef}
       style={{ position: 'relative', ...style }}
     >

@@ -41,6 +41,7 @@ export default function Tutorial({
 
   return (
     <ErrorBoundary
+      componentPath="MissionPage/Main/Tutorial"
       className={className}
       style={{
         display: 'flex',

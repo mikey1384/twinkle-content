@@ -87,7 +87,7 @@ export default function FeaturedPlaylistsPanel() {
   }, [featuredPlaylists.length]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Explore/Videos/FeaturedPlaylistsPanel">
       <PlaylistsPanel
         buttonGroupShown={!!canPinPlaylists}
         buttonGroup={() => (

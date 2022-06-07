@@ -47,7 +47,7 @@ export default function StatusInput({
   }, [profile.statusMsg]);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="UserDetails/StatusInput">
       <Textarea
         autoFocus={autoFocus}
         className={css`

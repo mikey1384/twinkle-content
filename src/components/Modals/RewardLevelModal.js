@@ -56,7 +56,7 @@ export default function RewardLevelModal({
 
   return (
     <Modal onHide={onHide}>
-      <ErrorBoundary>
+      <ErrorBoundary componentPath="RewardLevelModal">
         <header>{setRewardLevelLabel}</header>
         <main style={{ fontSize: '3rem', paddingTop: 0 }}>
           <RewardLevelExplainer

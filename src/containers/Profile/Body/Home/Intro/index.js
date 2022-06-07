@@ -108,7 +108,7 @@ export default function Intro({ profile, selectedTheme }) {
     userId === profile.id ? editedStatusMsg : statusMsg;
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary componentPath="Profile/Body/Home/Intro">
       <SectionPanel
         loaded
         customColorTheme={selectedTheme}

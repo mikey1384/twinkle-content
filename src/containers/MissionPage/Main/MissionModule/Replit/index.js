@@ -27,7 +27,10 @@ export default function Replit({ task, onSetMissionState }) {
   );
 
   return (
-    <ErrorBoundary style={{ width: '100%' }}>
+    <ErrorBoundary
+      componentPath="MissionModule/Replit/index"
+      style={{ width: '100%' }}
+    >
       {!copyAndPasteAttemptPassed && <DidNotPassCopyAndPaste />}
       {copyAndPasteAttemptPassed && (
         <ReplitVerifier task={task} onSetMissionState={onSetMissionState} />

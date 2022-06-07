@@ -21,7 +21,7 @@ export default class ErrorBoundary extends Component {
     innerRef: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     userId: PropTypes.number,
     username: PropTypes.string,
-    componentName: PropTypes.string
+    componentPath: PropTypes.string.isRequired
   };
 
   state = { hasError: false };
@@ -32,7 +32,7 @@ export default class ErrorBoundary extends Component {
     await StackTrace.report(errorStack, `${URL}/user/error`, {
       clientVersion,
       message: error.message,
-      componentName: this.props.componentName,
+      componentPath: this.props.componentPath,
       info: info?.componentStack,
       token: auth()?.headers?.authorization
     });
@@ -40,7 +40,7 @@ export default class ErrorBoundary extends Component {
   }
 
   render() {
-    const { children, innerRef, componentName, ...props } = this.props;
+    const { children, innerRef, componentPath, ...props } = this.props;
     const { hasError } = this.state;
 
     if (hasError) {
@@ -60,8 +60,8 @@ export default class ErrorBoundary extends Component {
         >
           <div style={{ color: Color.orange() }}>
             Something went wrong! Please tell Mikey what happened to earn XP!
-            {componentName
-              ? ` (tell him there's something wrong with ${componentName})`
+            {componentPath
+              ? ` (tell him there's something wrong with ${componentPath})`
               : ''}
           </div>
           <div

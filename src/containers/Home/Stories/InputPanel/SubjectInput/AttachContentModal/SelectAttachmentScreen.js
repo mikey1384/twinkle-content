@@ -59,7 +59,10 @@ export default function SelectAttachmentScreen({
   }, []);
 
   return (
-    <ErrorBoundary style={{ width: '100%' }}>
+    <ErrorBoundary
+      componentPath="Home/Stories/InputPanel/SubjectInput/AttachContentModal/SelectAttachmentScreen"
+      style={{ width: '100%' }}
+    >
       <SearchInput
         placeholder={`${searchLabel}...`}
         autoFocus

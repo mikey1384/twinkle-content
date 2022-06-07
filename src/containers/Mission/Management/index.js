@@ -24,6 +24,7 @@ export default function Management({
 }) {
   return (
     <ErrorBoundary
+      componentPath="Mission/Management/index"
       className={css`
         width: CALC(100% - 12rem);
         margin-left: 6rem;
