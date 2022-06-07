@@ -47,6 +47,7 @@ export default function DropdownList({
 
   return createPortal(
     <ErrorBoundary
+      componentName="DropdownList"
       style={{
         zIndex,
         top: 0,

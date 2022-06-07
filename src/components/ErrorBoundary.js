@@ -20,7 +20,8 @@ export default class ErrorBoundary extends Component {
     children: PropTypes.node,
     innerRef: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     userId: PropTypes.number,
-    username: PropTypes.string
+    username: PropTypes.string,
+    componentName: PropTypes.string
   };
 
   state = { hasError: false };
@@ -31,6 +32,7 @@ export default class ErrorBoundary extends Component {
     await StackTrace.report(errorStack, `${URL}/user/error`, {
       clientVersion,
       message: error.message,
+      componentName: this.props.componentName,
       info: info?.componentStack,
       token: auth()?.headers?.authorization
     });
@@ -38,7 +40,7 @@ export default class ErrorBoundary extends Component {
   }
 
   render() {
-    const { children, innerRef, ...props } = this.props;
+    const { children, innerRef, componentName, ...props } = this.props;
     const { hasError } = this.state;
 
     if (hasError) {
@@ -57,7 +59,10 @@ export default class ErrorBoundary extends Component {
           }}
         >
           <div style={{ color: Color.orange() }}>
-            Something went wrong! Please tell Mikey what happened
+            Something went wrong! Please tell Mikey what happened to earn XP!
+            {componentName
+              ? ` (tell him there's something wrong with ${componentName})`
+              : ''}
           </div>
           <div
             className={css`

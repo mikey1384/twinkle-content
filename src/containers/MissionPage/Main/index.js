@@ -20,7 +20,10 @@ export default function Main({
   style
 }) {
   return (
-    <ErrorBoundary style={{ width: '100%', ...style }}>
+    <ErrorBoundary
+      componentName="MissionPage/Main"
+      style={{ width: '100%', ...style }}
+    >
       {mission ? (
         <Routes>
           <Route
