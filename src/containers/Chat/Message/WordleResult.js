@@ -1,17 +1,27 @@
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import UsernameText from 'components/Texts/UsernameText';
+import DropdownButton from 'components/Buttons/DropdownButton';
+import Icon from 'components/Icon';
+import localize from 'constants/localize';
+import LocalContext from '../Context';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
+import { isMobile } from 'helpers';
+
+const deviceIsMobile = isMobile(navigator);
+const replyLabel = localize('reply2');
 
 WordleResult.propTypes = {
+  channelId: PropTypes.number,
   myId: PropTypes.number,
   userId: PropTypes.number,
   username: PropTypes.string,
-  wordleResult: PropTypes.object.isRequired,
-  timeStamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  onReplyClick: PropTypes.func.isRequired,
+  timeStamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  wordleResult: PropTypes.object.isRequired
 };
 
 const difficultyLabel = {
@@ -23,12 +33,18 @@ const difficultyLabel = {
 };
 
 export default function WordleResult({
+  channelId,
   username,
   userId,
   myId,
+  onReplyClick,
   wordleResult,
   timeStamp
 }) {
+  const {
+    actions: { onSetReplyTarget }
+  } = useContext(LocalContext);
+  const DropdownButtonRef = useRef(null);
   const {
     isSolved,
     isStrict,
@@ -101,17 +117,39 @@ export default function WordleResult({
       <div
         style={{
           position: 'absolute',
-          bottom: '5px',
-          right: '8px'
+          top: '3px',
+          right: '2px'
         }}
-        className={css`
-          font-size: 1rem;
-          @media (max-width: ${mobileMaxWidth}) {
-            font-size: 0.8rem;
-          }
-        `}
       >
-        {timeStamp}
+        <DropdownButton
+          skeuomorphic
+          buttonStyle={{
+            fontSize: '1rem',
+            lineHeight: 1
+          }}
+          className="menu-button"
+          innerRef={DropdownButtonRef}
+          color="darkerGray"
+          icon={deviceIsMobile ? 'chevron-down' : 'ellipsis-h'}
+          opacity={0.8}
+          menuProps={[
+            {
+              label: (
+                <>
+                  <Icon icon="reply" />
+                  <span style={{ marginLeft: '1rem' }}>{replyLabel}</span>
+                </>
+              ),
+              onClick: () => {
+                onSetReplyTarget({
+                  channelId,
+                  target: { ...wordleResult, timeStamp, userId, username }
+                });
+                onReplyClick();
+              }
+            }
+          ]}
+        />
       </div>
       <div
         className={css`
@@ -211,6 +249,21 @@ export default function WordleResult({
         >
           {bonusLabel}
         </p>
+      </div>
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '5px',
+          right: '8px'
+        }}
+        className={css`
+          font-size: 1rem;
+          @media (max-width: ${mobileMaxWidth}) {
+            font-size: 0.8rem;
+          }
+        `}
+      >
+        {timeStamp}
       </div>
     </div>
   );

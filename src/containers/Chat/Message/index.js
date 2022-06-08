@@ -559,6 +559,8 @@ function Message({
         userId={userId}
         username={username}
         wordleResult={wordleResult}
+        onReplyClick={onReplyClick}
+        channelId={currentChannel.id}
         timeStamp={displayedTimeStamp}
       />
     );

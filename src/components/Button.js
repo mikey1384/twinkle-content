@@ -61,7 +61,7 @@ function Button({
         ? '#fff'
         : Color[colorKey](textOpacity)};
       background: ${skeuomorphic
-        ? '#fff'
+        ? Color.white(opacity || 1)
         : Color[colorKey](
             disabled ? backgroundDisabledOpacity : backgroundOpacity
           )};
