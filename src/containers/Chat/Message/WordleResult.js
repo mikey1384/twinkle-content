@@ -102,7 +102,7 @@ export default function WordleResult({
         style={{
           position: 'absolute',
           bottom: '5px',
-          right: '5px'
+          right: '8px'
         }}
         className={css`
           font-size: 1rem;
