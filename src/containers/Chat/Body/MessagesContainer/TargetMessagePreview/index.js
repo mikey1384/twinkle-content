@@ -1,12 +1,9 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
-import ExtractedThumb from 'components/ExtractedThumb';
-import Image from 'components/Image';
-import FileIcon from 'components/FileIcon';
+import FileInfo from './FileInfo';
 import { Color, borderRadius } from 'constants/css';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
-import { cloudFrontURL } from 'constants/defaultValues';
 
 TargetMessagePreview.propTypes = {
   onClose: PropTypes.func.isRequired,
@@ -19,17 +16,6 @@ export default function TargetMessagePreview({ onClose, replyTarget }) {
       ? getFileInfoFromFileName(replyTarget.fileName)?.fileType
       : null;
   }, [replyTarget.fileName]);
-  const src = useMemo(() => {
-    if (
-      !replyTarget.filePath ||
-      (fileType !== 'image' && fileType !== 'video')
-    ) {
-      return '';
-    }
-    return `${cloudFrontURL}/attachments/chat/${
-      replyTarget.filePath
-    }/${encodeURIComponent(replyTarget.fileName)}`;
-  }, [fileType, replyTarget.fileName, replyTarget.filePath]);
 
   return (
     <div
@@ -78,19 +64,12 @@ export default function TargetMessagePreview({ onClose, replyTarget }) {
           </div>
         </div>
         {fileType && replyTarget.fileName && (
-          <div style={{ display: 'flex', width: src ? '12rem' : 'auto' }}>
-            {fileType === 'image' ? (
-              <Image imageUrl={src} />
-            ) : fileType === 'video' ? (
-              <ExtractedThumb
-                src={src}
-                style={{ width: '100%', height: '7rem' }}
-                thumbUrl={replyTarget.thumbUrl}
-              />
-            ) : (
-              <FileIcon size="5x" fileType={fileType} />
-            )}
-          </div>
+          <FileInfo
+            filePath={replyTarget.filePath}
+            fileType={fileType}
+            fileName={replyTarget.fileName}
+            thumbUrl={replyTarget.thumbUrl}
+          />
         )}
       </div>
     </div>

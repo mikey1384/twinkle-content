@@ -143,7 +143,7 @@ export default function WordleResult({
               onClick: () => {
                 onSetReplyTarget({
                   channelId,
-                  target: { ...wordleResult, timeStamp, userId, username }
+                  target: { wordleResult, timeStamp, userId, username }
                 });
                 onReplyClick();
               }
