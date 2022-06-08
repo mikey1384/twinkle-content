@@ -5,7 +5,7 @@ import { Color } from 'constants/css';
 import { css } from '@emotion/css';
 import { useChatContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
-import { returnWordLevel, vocabRewardHash } from 'constants/defaultValues';
+import { returnWordLevel, wordLevelHash } from 'constants/defaultValues';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import localize from 'constants/localize';
 
@@ -29,7 +29,7 @@ function Vocabulary({ selected, onClick }) {
   const lastRewardedXp = useMemo(
     () =>
       addCommasToNumber(
-        vocabRewardHash[
+        wordLevelHash[
           returnWordLevel({
             frequency: lastActivity?.frequency,
             word: lastActivity?.content

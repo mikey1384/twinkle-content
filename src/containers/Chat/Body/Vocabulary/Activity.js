@@ -5,7 +5,7 @@ import UsernameText from 'components/Texts/UsernameText';
 import WordModal from './WordModal';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import {
-  vocabRewardHash,
+  wordLevelHash,
   returnWordLevel,
   SELECTED_LANGUAGE
 } from 'constants/defaultValues';
@@ -100,7 +100,7 @@ export default function Activity({
         <div>
           <b
             style={{
-              color: Color[vocabRewardHash[wordLevel].color]()
+              color: Color[wordLevelHash[wordLevel].color]()
             }}
             className={css`
               font-size: 1.7rem;
@@ -109,7 +109,7 @@ export default function Activity({
               }
             `}
           >
-            {localize(vocabRewardHash[wordLevel].label)}
+            {localize(wordLevelHash[wordLevel].label)}
             {wordLabel}
           </b>
           를 수집하고{' '}
@@ -130,7 +130,7 @@ export default function Activity({
             `}
           >
             <span style={{ color: Color.logoGreen() }}>
-              {addCommasToNumber(vocabRewardHash[wordLevel].rewardAmount)}
+              {addCommasToNumber(wordLevelHash[wordLevel].rewardAmount)}
             </span>{' '}
             <span style={{ color: Color.gold() }}>XP</span>
           </b>
@@ -155,7 +155,7 @@ export default function Activity({
                 <span
                   style={{ color: Color.brownOrange(), marginLeft: '0.3rem' }}
                 >
-                  {addCommasToNumber(vocabRewardHash[wordLevel].coinAmount)}
+                  {addCommasToNumber(wordLevelHash[wordLevel].coinAmount)}
                 </span>
               </b>
             </>
@@ -185,7 +185,7 @@ export default function Activity({
         collected {wordLevel === 1 ? 'a' : 'an'}{' '}
         <b
           style={{
-            color: Color[vocabRewardHash[wordLevel].color]()
+            color: Color[wordLevelHash[wordLevel].color]()
           }}
           className={css`
             font-size: 1.7rem;
@@ -194,7 +194,7 @@ export default function Activity({
             }
           `}
         >
-          {vocabRewardHash[wordLevel].label}
+          {wordLevelHash[wordLevel].label}
         </b>{' '}
         {wordLabel},{' '}
         <span
@@ -231,7 +231,7 @@ export default function Activity({
           `}
         >
           <span style={{ color: Color.logoGreen() }}>
-            {addCommasToNumber(vocabRewardHash[wordLevel].rewardAmount)}
+            {addCommasToNumber(wordLevelHash[wordLevel].rewardAmount)}
           </span>{' '}
           <span style={{ color: Color.gold() }}>XP</span>
         </b>
@@ -257,7 +257,7 @@ export default function Activity({
               <span
                 style={{ color: Color.brownOrange(), marginLeft: '0.3rem' }}
               >
-                {addCommasToNumber(vocabRewardHash[wordLevel].coinAmount)}
+                {addCommasToNumber(wordLevelHash[wordLevel].coinAmount)}
               </span>
             </b>
           </>

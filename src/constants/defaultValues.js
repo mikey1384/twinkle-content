@@ -205,7 +205,14 @@ export const videoRewardHash = {
   }
 };
 
-export const vocabRewardHash = {
+export const wordleGuessReaction = {
+  1: 'JACKPOT',
+  2: 'UNBELIEVABLE',
+  3: 'BRILLIANT',
+  4: 'IMPRESSIVE'
+};
+
+export const wordLevelHash = {
   1: {
     label: 'basic',
     rewardAmount: 10,

@@ -8,7 +8,11 @@ import LocalContext from '../Context';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
-import { SELECTED_LANGUAGE } from 'constants/defaultValues';
+import {
+  wordLevelHash,
+  wordleGuessReaction,
+  SELECTED_LANGUAGE
+} from 'constants/defaultValues';
 import { isMobile } from 'helpers';
 
 const deviceIsMobile = isMobile(navigator);
@@ -22,14 +26,6 @@ WordleResult.propTypes = {
   onReplyClick: PropTypes.func.isRequired,
   timeStamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   wordleResult: PropTypes.object.isRequired
-};
-
-const difficultyLabel = {
-  1: 'basic',
-  2: 'elementary',
-  3: 'intermediate',
-  4: 'advanced',
-  5: 'epic'
 };
 
 export default function WordleResult({
@@ -53,13 +49,6 @@ export default function WordleResult({
     xpRewardAmount,
     wordLevel
   } = wordleResult;
-  const difficultyColor = useMemo(() => {
-    if (wordLevel === 5) return Color.gold();
-    if (wordLevel === 4) return Color.red();
-    if (wordLevel === 3) return Color.orange();
-    if (wordLevel === 2) return Color.pink();
-    return Color.logoBlue();
-  }, [wordLevel]);
   const displayedUserLabel = useMemo(() => {
     if (userId === myId) {
       if (SELECTED_LANGUAGE === 'kr') {
@@ -77,25 +66,28 @@ export default function WordleResult({
       />
     );
   }, [myId, userId, username]);
+
   const rewardAmountLabel = useMemo(
     () => addCommasToNumber(xpRewardAmount),
     [xpRewardAmount]
   );
+
   const guessLabel = useMemo(() => {
-    if (numGuesses === 1) {
-      return 'JACKPOT';
-    }
-    if (numGuesses === 2) {
-      return 'UNBELIEVABLE';
-    }
-    if (numGuesses === 3) {
-      return 'BRILLIANT';
-    }
-    if (numGuesses === 4) {
-      return 'IMPRESSIVE';
+    if (wordleGuessReaction[numGuesses]) {
+      return wordleGuessReaction[numGuesses];
     }
     return null;
   }, [numGuesses]);
+
+  const guessLabelColor = useMemo(
+    () =>
+      numGuesses <= 2
+        ? Color.gold()
+        : numGuesses === 3
+        ? Color.brownOrange()
+        : Color.orange(),
+    [numGuesses]
+  );
 
   const bonusLabel = useMemo(() => {
     if (numGuesses < 3) {
@@ -169,12 +161,7 @@ export default function WordleResult({
           <p
             style={{
               marginBottom: '0.5rem',
-              color:
-                numGuesses <= 2
-                  ? Color.gold()
-                  : numGuesses === 3
-                  ? Color.brownOrange()
-                  : Color.orange(),
+              color: guessLabelColor,
               fontWeight: 'bold'
             }}
             className={css`
@@ -237,7 +224,9 @@ export default function WordleResult({
         </div>
         <p style={{ marginTop: '0.5rem' }}>
           The word was <b>{solution}</b> (
-          <b style={{ color: difficultyColor }}>{difficultyLabel[wordLevel]}</b>{' '}
+          <b style={{ color: Color[wordLevelHash[wordLevel].color]() }}>
+            {wordLevelHash[wordLevel].label}
+          </b>{' '}
           word)
         </p>
         <p
