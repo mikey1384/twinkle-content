@@ -336,8 +336,8 @@ export default function BasicInfos({
           authLevel
         }
       });
-      navigate(pathId ? `/chat/${pathId}` : `/chat/new`);
     }
+    navigate(pathId ? `/chat/${pathId}` : `/chat/new`);
   }
 
   function goToEmail() {
