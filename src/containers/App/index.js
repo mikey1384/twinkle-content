@@ -531,7 +531,7 @@ function App() {
             width: 80%;
             left: 10%;
             top: 2rem;
-            z-index: 100_000;
+            z-index: ${100_000};
             background: ${Color.blue()};
             color: #fff;
             padding: 1rem;
@@ -561,7 +561,12 @@ function App() {
           <Button
             color="gold"
             filled
-            style={{ marginTop: '3rem', width: '20%', alignSelf: 'center' }}
+            style={{
+              marginTop: '3rem',
+              fontSize: '3rem',
+              width: '20%',
+              alignSelf: 'center'
+            }}
             onClick={() => window.location.reload()}
           >
             Update!
