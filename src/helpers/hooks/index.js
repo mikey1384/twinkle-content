@@ -1,13 +1,24 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, {
+  useEffect,
+  useMemo,
+  useLayoutEffect,
+  useRef,
+  useState
+} from 'react';
+import UsernameText from 'components/Texts/UsernameText';
 import { addEvent, removeEvent } from '../listenerHelpers';
-import { stringIsEmpty } from '../stringHelpers';
+import { stringIsEmpty, addCommasToNumber } from '../stringHelpers';
 import { useAppContext, useContentContext, useProfileContext } from 'contexts';
 export { default as useScrollToBottom } from './useScrollToBottom';
 export { default as useInfiniteScroll } from './useInfiniteScroll';
 import {
   defaultContentState,
-  DEFAULT_PROFILE_THEME
+  wordleGuessReaction,
+  DEFAULT_PROFILE_THEME,
+  SELECTED_LANGUAGE
 } from 'constants/defaultValues';
+import { css } from '@emotion/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 
 const BodyRef = document.scrollingElement || document.documentElement;
 
@@ -246,4 +257,102 @@ export function useScrollPosition({
       onRecordScrollPosition({ section: pathname, position });
     }
   });
+}
+
+export function useWordleLabels({
+  isSolved,
+  isStrict,
+  numGuesses,
+  xpRewardAmount,
+  username,
+  userId,
+  myId
+}) {
+  const displayedUserLabel = useMemo(() => {
+    if (userId === myId) {
+      if (SELECTED_LANGUAGE === 'kr') {
+        return '회원';
+      }
+      return 'You';
+    }
+    return (
+      <UsernameText
+        color="#fff"
+        user={{
+          id: userId,
+          username
+        }}
+      />
+    );
+  }, [myId, userId, username]);
+
+  const rewardAmountLabel = useMemo(
+    () => addCommasToNumber(xpRewardAmount),
+    [xpRewardAmount]
+  );
+
+  const guessLabel = useMemo(() => {
+    if (wordleGuessReaction[numGuesses]) {
+      return wordleGuessReaction[numGuesses];
+    }
+    return null;
+  }, [numGuesses]);
+
+  const guessLabelColor = useMemo(
+    () =>
+      numGuesses <= 2
+        ? Color.gold()
+        : numGuesses === 3
+        ? Color.brownOrange()
+        : Color.orange(),
+    [numGuesses]
+  );
+
+  const bonusLabel = useMemo(() => {
+    if (numGuesses < 3) {
+      return null;
+    }
+    return isSolved && isStrict ? 'double reward bonus' : null;
+  }, [isSolved, isStrict, numGuesses]);
+
+  const resultLabel = useMemo(() => {
+    return (
+      <>
+        {' '}
+        {displayedUserLabel} earned{' '}
+        <span
+          className={css`
+            font-size: ${numGuesses <= 2 ? '2rem' : ''};
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: ${numGuesses <= 2 ? '1.5rem' : ''};
+            }
+          `}
+          style={{
+            fontWeight: isSolved ? 'bold' : ''
+          }}
+        >
+          {rewardAmountLabel} XP
+        </span>{' '}
+        for {isSolved ? 'solving' : 'trying to solve'} a Wordle{' '}
+        {isSolved ? (
+          <>
+            in{' '}
+            <span style={{ fontWeight: numGuesses <= 4 ? 'bold' : 'default' }}>
+              {numGuesses} guess
+              {numGuesses === 1
+                ? '!!!'
+                : numGuesses === 2
+                ? 'es!!'
+                : numGuesses === 3
+                ? 'es!'
+                : 'es'}
+            </span>
+          </>
+        ) : (
+          ''
+        )}
+      </>
+    );
+  }, [displayedUserLabel, isSolved, numGuesses, rewardAmountLabel]);
+  return { guessLabel, bonusLabel, resultLabel, guessLabelColor };
 }

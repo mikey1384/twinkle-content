@@ -1,18 +1,13 @@
-import React, { useContext, useMemo, useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import UsernameText from 'components/Texts/UsernameText';
 import DropdownButton from 'components/Buttons/DropdownButton';
 import Icon from 'components/Icon';
 import localize from 'constants/localize';
 import LocalContext from '../Context';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { addCommasToNumber } from 'helpers/stringHelpers';
-import {
-  wordLevelHash,
-  wordleGuessReaction,
-  SELECTED_LANGUAGE
-} from 'constants/defaultValues';
+import { wordLevelHash } from 'constants/defaultValues';
+import { useWordleLabels } from 'helpers/hooks';
 import { isMobile } from 'helpers';
 
 const deviceIsMobile = isMobile(navigator);
@@ -50,52 +45,17 @@ export default function WordleResult({
     xpRewardAmount,
     wordLevel
   } = wordleResult;
-  const displayedUserLabel = useMemo(() => {
-    if (userId === myId) {
-      if (SELECTED_LANGUAGE === 'kr') {
-        return '회원';
-      }
-      return 'You';
-    }
-    return (
-      <UsernameText
-        color="#fff"
-        user={{
-          id: userId,
-          username
-        }}
-      />
-    );
-  }, [myId, userId, username]);
 
-  const rewardAmountLabel = useMemo(
-    () => addCommasToNumber(xpRewardAmount),
-    [xpRewardAmount]
-  );
-
-  const guessLabel = useMemo(() => {
-    if (wordleGuessReaction[numGuesses]) {
-      return wordleGuessReaction[numGuesses];
-    }
-    return null;
-  }, [numGuesses]);
-
-  const guessLabelColor = useMemo(
-    () =>
-      numGuesses <= 2
-        ? Color.gold()
-        : numGuesses === 3
-        ? Color.brownOrange()
-        : Color.orange(),
-    [numGuesses]
-  );
-
-  const bonusLabel = useMemo(() => {
-    if (numGuesses < 3) {
-      return null;
-    }
-    return isSolved && isStrict ? 'double reward bonus' : null;
-  }, [isSolved, isStrict, numGuesses]);
+  const { guessLabel, bonusLabel, resultLabel, guessLabelColor } =
+    useWordleLabels({
+      isSolved,
+      isStrict,
+      numGuesses,
+      xpRewardAmount,
+      username,
+      userId,
+      myId
+    });
 
   return (
     <div
@@ -198,42 +158,7 @@ export default function WordleResult({
             {guessLabel}
           </p>
         )}
-        <div style={{ textAlign: 'center' }}>
-          {displayedUserLabel} earned{' '}
-          <span
-            className={css`
-              font-size: ${numGuesses <= 2 ? '2rem' : ''};
-              @media (max-width: ${mobileMaxWidth}) {
-                font-size: ${numGuesses <= 2 ? '1.5rem' : ''};
-              }
-            `}
-            style={{
-              fontWeight: isSolved ? 'bold' : ''
-            }}
-          >
-            {rewardAmountLabel} XP
-          </span>{' '}
-          for {isSolved ? 'solving' : 'trying to solve'} a Wordle{' '}
-          {isSolved ? (
-            <>
-              in{' '}
-              <span
-                style={{ fontWeight: numGuesses <= 4 ? 'bold' : 'default' }}
-              >
-                {numGuesses} guess
-                {numGuesses === 1
-                  ? '!!!'
-                  : numGuesses === 2
-                  ? 'es!!'
-                  : numGuesses === 3
-                  ? 'es!'
-                  : 'es'}
-              </span>
-            </>
-          ) : (
-            ''
-          )}
-        </div>
+        <div style={{ textAlign: 'center' }}>{resultLabel}</div>
         <p style={{ marginTop: '0.5rem' }}>
           The word was <b>{solution}</b> (
           <b style={{ color: Color[wordLevelHash[wordLevel].color]() }}>
