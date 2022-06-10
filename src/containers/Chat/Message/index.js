@@ -560,6 +560,7 @@ function Message({
     return (
       <WordleResult
         myId={myId}
+        messageId={message.id}
         userId={userId}
         username={username}
         wordleResult={wordleResult}

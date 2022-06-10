@@ -14,6 +14,7 @@ const replyLabel = localize('reply2');
 
 WordleResult.propTypes = {
   channelId: PropTypes.number,
+  messageId: PropTypes.number,
   myId: PropTypes.number,
   userId: PropTypes.number,
   username: PropTypes.string,
@@ -24,6 +25,7 @@ WordleResult.propTypes = {
 
 export default function WordleResult({
   channelId,
+  messageId,
   username,
   userId,
   myId,
@@ -111,7 +113,13 @@ export default function WordleResult({
               onClick: () => {
                 onSetReplyTarget({
                   channelId,
-                  target: { wordleResult, timeStamp, userId, username }
+                  target: {
+                    id: messageId,
+                    wordleResult,
+                    timeStamp,
+                    userId,
+                    username
+                  }
                 });
                 onReplyClick();
               }
