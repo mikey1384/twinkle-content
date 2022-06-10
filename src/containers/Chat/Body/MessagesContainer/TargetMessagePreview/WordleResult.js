@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 
 WordleResult.propTypes = {
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
+  wordleResult: PropTypes.object.isRequired
 };
 
-export default function WordleResult({ onClose }) {
+export default function WordleResult({ onClose, wordleResult }) {
+  console.log(wordleResult);
   return (
     <div>
       <Icon

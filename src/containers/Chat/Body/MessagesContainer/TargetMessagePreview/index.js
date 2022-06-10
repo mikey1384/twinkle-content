@@ -20,7 +20,10 @@ export default function TargetMessagePreview({ onClose, replyTarget }) {
       }}
     >
       {replyTarget.wordleResult ? (
-        <WordleResult onClose={onClose} />
+        <WordleResult
+          wordleResult={replyTarget.wordleResult}
+          onClose={onClose}
+        />
       ) : (
         <TargetMessage onClose={onClose} replyTarget={replyTarget} />
       )}
