@@ -30,7 +30,10 @@ export default function WordleResult({
   });
 
   return (
-    <ErrorBoundary style={{ width: '100%', height: '100%' }}>
+    <ErrorBoundary
+      componentPath="MessagesContainer/TargetMessagesPreview/WordleResult"
+      style={{ width: '100%', height: '100%' }}
+    >
       <Icon
         icon="times"
         size="lg"
