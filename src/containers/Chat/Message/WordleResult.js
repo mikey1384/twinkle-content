@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useRef } from 'react';
+import React, { useContext, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import UsernameText from 'components/Texts/UsernameText';
 import DropdownButton from 'components/Buttons/DropdownButton';
@@ -37,6 +37,7 @@ export default function WordleResult({
   wordleResult,
   timeStamp
 }) {
+  const [dropdownShown, setDropdownShown] = useState(false);
   const {
     actions: { onSetReplyTarget }
   } = useContext(LocalContext);
@@ -98,6 +99,16 @@ export default function WordleResult({
 
   return (
     <div
+      className={css`
+        .menu-button {
+          display: ${dropdownShown ? 'block' : 'none'};
+        }
+        &:hover {
+          .menu-button {
+            display: block;
+          }
+        }
+      `}
       style={{
         width: '100%',
         background: Color.darkBlueGray(),
@@ -109,8 +120,8 @@ export default function WordleResult({
       <div
         style={{
           position: 'absolute',
-          top: '3px',
-          right: '2px'
+          top: '-0.5rem',
+          right: '1rem'
         }}
       >
         <DropdownButton
@@ -141,6 +152,7 @@ export default function WordleResult({
               }
             }
           ]}
+          onDropdownShown={setDropdownShown}
         />
       </div>
       <div

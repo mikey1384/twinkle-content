@@ -769,7 +769,7 @@ function Message({
                     icon={deviceIsMobile ? 'chevron-down' : 'ellipsis-h'}
                     opacity={0.5}
                     menuProps={messageMenuItems}
-                    onDropdownShown={(shown) => setHighlighted(shown)}
+                    onDropdownShown={setHighlighted}
                   />
                 </div>
               )}
