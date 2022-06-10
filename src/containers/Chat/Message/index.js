@@ -355,7 +355,11 @@ function Message({
             channelId: currentChannel.id,
             target: rewardAmount
               ? targetMessage
-              : { ...message, thumbUrl: thumbUrl || recentThumbUrl }
+              : {
+                  ...message,
+                  thumbUrl: thumbUrl || recentThumbUrl,
+                  timeStamp: displayedTimeStamp
+                }
           });
           onReplyClick();
         }

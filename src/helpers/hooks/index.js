@@ -14,11 +14,11 @@ export { default as useInfiniteScroll } from './useInfiniteScroll';
 import {
   defaultContentState,
   wordleGuessReaction,
+  wordLevelHash,
   DEFAULT_PROFILE_THEME,
   SELECTED_LANGUAGE
 } from 'constants/defaultValues';
-import { css } from '@emotion/css';
-import { Color, mobileMaxWidth } from 'constants/css';
+import { Color } from 'constants/css';
 
 const BodyRef = document.scrollingElement || document.documentElement;
 
@@ -263,6 +263,8 @@ export function useWordleLabels({
   isSolved,
   isStrict,
   numGuesses,
+  solution,
+  wordLevel,
   xpRewardAmount,
   username,
   userId,
@@ -289,6 +291,19 @@ export function useWordleLabels({
   const rewardAmountLabel = useMemo(
     () => addCommasToNumber(xpRewardAmount),
     [xpRewardAmount]
+  );
+
+  const solutionLabel = useMemo(
+    () => (
+      <>
+        The word was <b>{solution}</b> (
+        <b style={{ color: Color[wordLevelHash[wordLevel].color]() }}>
+          {wordLevelHash[wordLevel].label}
+        </b>{' '}
+        word)
+      </>
+    ),
+    [solution, wordLevel]
   );
 
   const guessLabel = useMemo(() => {
@@ -321,12 +336,7 @@ export function useWordleLabels({
         {' '}
         {displayedUserLabel} earned{' '}
         <span
-          className={css`
-            font-size: ${numGuesses <= 2 ? '2rem' : ''};
-            @media (max-width: ${mobileMaxWidth}) {
-              font-size: ${numGuesses <= 2 ? '1.5rem' : ''};
-            }
-          `}
+          className="reward-amount-label"
           style={{
             fontWeight: isSolved ? 'bold' : ''
           }}
@@ -354,5 +364,12 @@ export function useWordleLabels({
       </>
     );
   }, [displayedUserLabel, isSolved, numGuesses, rewardAmountLabel]);
-  return { guessLabel, bonusLabel, resultLabel, guessLabelColor };
+
+  return {
+    bonusLabel,
+    guessLabel,
+    guessLabelColor,
+    resultLabel,
+    solutionLabel
+  };
 }

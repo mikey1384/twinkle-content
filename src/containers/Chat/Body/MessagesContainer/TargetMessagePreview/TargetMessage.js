@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import FileInfo from './FileInfo';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
-import { Color, borderRadius } from 'constants/css';
+import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
+import { css } from '@emotion/css';
 
 TargetMessage.propTypes = {
   onClose: PropTypes.func.isRequired,
@@ -47,14 +48,28 @@ export default function TargetMessage({ onClose, replyTarget }) {
         }}
       >
         <div>
-          <p
-            style={{
-              fontWeight: 'bold',
-              color: Color.black()
-            }}
-          >
-            {replyTarget.username}
-          </p>
+          <div>
+            <p
+              style={{
+                fontWeight: 'bold',
+                display: 'inline',
+                color: Color.black()
+              }}
+            >
+              {replyTarget.username}
+            </p>{' '}
+            <span
+              className={css`
+                font-size: 0.8rem;
+                color: ${Color.gray()};
+                @media (max-width: ${mobileMaxWidth}) {
+                  font-size: 0.6rem;
+                }
+              `}
+            >
+              {replyTarget.timeStamp}
+            </span>
+          </div>
           <div style={{ marginTop: '0.5rem', paddingBottom: '1rem' }}>
             {replyTarget.content || replyTarget.fileName}
           </div>

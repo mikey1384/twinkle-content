@@ -6,7 +6,6 @@ import localize from 'constants/localize';
 import LocalContext from '../Context';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { wordLevelHash } from 'constants/defaultValues';
 import { useWordleLabels } from 'helpers/hooks';
 import { isMobile } from 'helpers';
 
@@ -37,25 +36,20 @@ export default function WordleResult({
     actions: { onSetReplyTarget }
   } = useContext(LocalContext);
   const DropdownButtonRef = useRef(null);
-  const {
-    isSolved,
-    isStrict,
-    numGuesses,
-    solution,
-    xpRewardAmount,
-    wordLevel
-  } = wordleResult;
+  const { numGuesses } = wordleResult;
 
-  const { guessLabel, bonusLabel, resultLabel, guessLabelColor } =
-    useWordleLabels({
-      isSolved,
-      isStrict,
-      numGuesses,
-      xpRewardAmount,
-      username,
-      userId,
-      myId
-    });
+  const {
+    guessLabel,
+    bonusLabel,
+    resultLabel,
+    guessLabelColor,
+    solutionLabel
+  } = useWordleLabels({
+    ...wordleResult,
+    username,
+    userId,
+    myId
+  });
 
   return (
     <div
@@ -66,6 +60,12 @@ export default function WordleResult({
         &:hover {
           .menu-button {
             display: block;
+          }
+        }
+        .reward-amount-label {
+          font-size: ${numGuesses <= 2 ? '2rem' : ''};
+          @media (max-width: ${mobileMaxWidth}) {
+            font-size: ${numGuesses <= 2 ? '1.5rem' : ''};
           }
         }
         @media (max-width: ${mobileMaxWidth}) {
@@ -164,13 +164,7 @@ export default function WordleResult({
           </p>
         )}
         <div style={{ textAlign: 'center' }}>{resultLabel}</div>
-        <p style={{ marginTop: '0.5rem' }}>
-          The word was <b>{solution}</b> (
-          <b style={{ color: Color[wordLevelHash[wordLevel].color]() }}>
-            {wordLevelHash[wordLevel].label}
-          </b>{' '}
-          word)
-        </p>
+        <p style={{ marginTop: '0.5rem' }}>{solutionLabel}</p>
         <p
           style={{
             marginTop: '0.5rem',

@@ -21,6 +21,9 @@ export default function TargetMessagePreview({ onClose, replyTarget }) {
     >
       {replyTarget.wordleResult ? (
         <WordleResult
+          userId={replyTarget.userId}
+          username={replyTarget.username}
+          timeStamp={replyTarget.timeStamp}
           wordleResult={replyTarget.wordleResult}
           onClose={onClose}
         />
