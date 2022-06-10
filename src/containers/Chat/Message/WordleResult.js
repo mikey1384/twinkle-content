@@ -68,6 +68,11 @@ export default function WordleResult({
             display: block;
           }
         }
+        @media (max-width: ${mobileMaxWidth}) {
+          .menu-button {
+            display: block;
+          }
+        }
       `}
       style={{
         width: '100%',
