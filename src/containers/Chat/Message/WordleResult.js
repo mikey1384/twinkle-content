@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import DropdownButton from 'components/Buttons/DropdownButton';
 import Icon from 'components/Icon';
@@ -8,6 +8,7 @@ import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { useWordleLabels } from 'helpers/hooks';
 import { isMobile } from 'helpers';
+import { unix } from 'moment';
 
 const deviceIsMobile = isMobile(navigator);
 const replyLabel = localize('reply2');
@@ -52,6 +53,11 @@ export default function WordleResult({
     userId,
     myId
   });
+
+  const displayedTimeStamp = useMemo(
+    () => unix(timeStamp).format('lll'),
+    [timeStamp]
+  );
 
   return (
     <div
@@ -196,7 +202,7 @@ export default function WordleResult({
           }
         `}
       >
-        {timeStamp}
+        {displayedTimeStamp}
       </div>
     </div>
   );

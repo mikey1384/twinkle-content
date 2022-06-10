@@ -358,7 +358,7 @@ function Message({
               : {
                   ...message,
                   thumbUrl: thumbUrl || recentThumbUrl,
-                  timeStamp: displayedTimeStamp
+                  timeStamp
                 }
           });
           onReplyClick();
@@ -566,7 +566,7 @@ function Message({
         wordleResult={wordleResult}
         onReplyClick={onReplyClick}
         channelId={currentChannel.id}
-        timeStamp={displayedTimeStamp}
+        timeStamp={timeStamp}
       />
     );
   }

@@ -5,6 +5,7 @@ import FileInfo from './FileInfo';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import { unix } from 'moment';
 
 TargetMessage.propTypes = {
   onClose: PropTypes.func.isRequired,
@@ -20,6 +21,10 @@ export default function TargetMessage({ onClose, replyTarget }) {
   const hasFileAttachment = useMemo(
     () => fileType && replyTarget.fileName,
     [fileType, replyTarget.fileName]
+  );
+  const displayedTimeStamp = useMemo(
+    () => unix(replyTarget.timeStamp).format('lll'),
+    [replyTarget.timeStamp]
   );
 
   return (
@@ -67,7 +72,7 @@ export default function TargetMessage({ onClose, replyTarget }) {
                 }
               `}
             >
-              {replyTarget.timeStamp}
+              {displayedTimeStamp}
             </span>
           </div>
           <div style={{ marginTop: '0.5rem', paddingBottom: '1rem' }}>

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { useMyState, useWordleLabels } from 'helpers/hooks';
+import { unix } from 'moment';
 
 WordleResult.propTypes = {
   username: PropTypes.string.isRequired,
@@ -28,6 +29,10 @@ export default function WordleResult({
     userId,
     myId
   });
+  const displayedTimeStamp = useMemo(
+    () => unix(timeStamp).format('lll'),
+    [timeStamp]
+  );
 
   return (
     <ErrorBoundary
@@ -85,7 +90,7 @@ export default function WordleResult({
             }
           `}
         >
-          {timeStamp}
+          {displayedTimeStamp}
         </div>
       </div>
     </ErrorBoundary>
