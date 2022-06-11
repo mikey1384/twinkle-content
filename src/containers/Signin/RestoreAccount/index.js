@@ -82,9 +82,9 @@ export default function RestoreAccount({ username, onShowLoginForm, onHide }) {
           style={{ fontSize: '2rem' }}
         >
           {section === 'username' ? (
-            <>
+            <div>
               Next <Icon icon="arrow-right" style={{ marginLeft: '0.7rem' }} />
-            </>
+            </div>
           ) : (
             'Close'
           )}
