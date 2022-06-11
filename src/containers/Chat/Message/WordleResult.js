@@ -179,15 +179,17 @@ export default function WordleResult({
         )}
         <div style={{ textAlign: 'center' }}>{resultLabel}</div>
         <p style={{ marginTop: '0.5rem' }}>{solutionLabel}</p>
-        <p
-          style={{
-            marginTop: '0.5rem',
-            fontWeight: 'bold',
-            color: Color.brownOrange()
-          }}
-        >
-          {bonusLabel}
-        </p>
+        {bonusLabel && (
+          <p
+            style={{
+              marginTop: '0.5rem',
+              fontWeight: 'bold',
+              color: Color.brownOrange()
+            }}
+          >
+            {bonusLabel}
+          </p>
+        )}
       </div>
       <div
         style={{

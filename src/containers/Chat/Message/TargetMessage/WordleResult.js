@@ -21,13 +21,18 @@ export default function WordleResult({
 }) {
   const { userId: myId } = useMyState();
   const { numGuesses } = wordleResult;
-  const { guessLabel, guessLabelColor, resultLabel, solutionLabel } =
-    useWordleLabels({
-      ...wordleResult,
-      username,
-      userId,
-      myId
-    });
+  const {
+    bonusLabel,
+    guessLabel,
+    guessLabelColor,
+    resultLabel,
+    solutionLabel
+  } = useWordleLabels({
+    ...wordleResult,
+    username,
+    userId,
+    myId
+  });
   const displayedTimeStamp = useMemo(
     () => unix(timeStamp).format('lll'),
     [timeStamp]
@@ -106,6 +111,17 @@ export default function WordleResult({
             )}
             <div style={{ textAlign: 'center' }}>{resultLabel}</div>
             <p style={{ marginTop: '0.5rem' }}>{solutionLabel}</p>
+            {bonusLabel && (
+              <p
+                style={{
+                  marginTop: '0.5rem',
+                  fontWeight: 'bold',
+                  color: Color.brownOrange()
+                }}
+              >
+                {bonusLabel}
+              </p>
+            )}
           </div>
           <div
             style={{
