@@ -105,6 +105,12 @@ export default function Feeds({
     () => ['all', 'subjects', 'links', 'videos'].includes(section),
     [section]
   );
+
+  const loadingShown = useMemo(
+    () => !loaded || loadingFeeds,
+    [loaded, loadingFeeds]
+  );
+
   useEffect(() => {
     if (filter && filter !== 'byuser') {
       navigate(`/users/${username}/${section}`);
@@ -178,7 +184,7 @@ export default function Feeds({
             </nav>
           </FilterBar>
         )}
-        {!loaded || loadingFeeds ? (
+        {loadingShown ? (
           <Loading
             className={css`
               margin-top: ${['likes', 'watched'].includes(section)
@@ -226,7 +232,7 @@ export default function Feeds({
             )}
           </>
         )}
-        {loadMoreButton && (
+        {loadMoreButton && !loadingShown && (
           <LoadMoreButton
             style={{ marginBottom: '1rem' }}
             onClick={handleLoadMoreFeeds}
