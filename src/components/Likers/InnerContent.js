@@ -19,7 +19,7 @@ export default function InnerContent({
   wordBreakEnabled,
   onLinkClick,
   target,
-  defaultText
+  defaultText = ''
 }) {
   const userLiked = useMemo(() => {
     for (let like of likes) {
@@ -156,6 +156,6 @@ export default function InnerContent({
       );
     }
   } else {
-    return defaultText ? <div>{defaultText}</div> : null;
+    return <div>{defaultText}</div>;
   }
 }
