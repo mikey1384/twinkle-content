@@ -5,6 +5,7 @@ import Button from 'components/Button';
 import Game from './Game';
 import OverviewModal from './OverviewModal';
 import Countdown from 'react-countdown';
+import FilterBar from 'components/FilterBar';
 import { css } from '@emotion/css';
 import { MAX_GUESSES } from './constants/settings';
 import { useAppContext, useChatContext } from 'contexts';
@@ -34,6 +35,7 @@ export default function WordleModal({
   onHide,
   socketConnected
 }) {
+  const [activeTab, setActiveTab] = useState('game');
   const loadWordle = useAppContext((v) => v.requestHelpers.loadWordle);
   const getCurrentNextDayTimeStamp = useAppContext(
     (v) => v.requestHelpers.getCurrentNextDayTimeStamp
@@ -69,6 +71,26 @@ export default function WordleModal({
     <Modal closeWhenClickedOutside={false} onHide={onHide}>
       <header>Wordle</header>
       <main>
+        <FilterBar
+          style={{
+            marginTop: '-1rem',
+            marginBottom: '5rem',
+            height: '5rem'
+          }}
+        >
+          <nav
+            className={activeTab === 'game' ? 'active' : null}
+            onClick={() => setActiveTab('game')}
+          >
+            Wordle
+          </nav>
+          <nav
+            className={activeTab === 'rankings' ? 'active' : null}
+            onClick={() => setActiveTab('rankings')}
+          >
+            Rankings
+          </nav>
+        </FilterBar>
         <Game
           isRevealing={isRevealing}
           onSetIsRevealing={setIsRevealing}
