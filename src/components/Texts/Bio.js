@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import LongText from 'components/Texts/LongText';
+import {
+  limitBrs,
+  processMentionLink,
+  processedStringWithURL
+} from 'helpers/stringHelpers';
 
 Bio.propTypes = {
   firstRow: PropTypes.string,
@@ -11,6 +15,19 @@ Bio.propTypes = {
 };
 
 export default function Bio({ firstRow, secondRow, thirdRow, small, style }) {
+  const processedFirstRow = useMemo(
+    () => processMentionLink(limitBrs(processedStringWithURL(firstRow))),
+    [firstRow]
+  );
+  const processedSecondRow = useMemo(
+    () => processMentionLink(limitBrs(processedStringWithURL(secondRow))),
+    [secondRow]
+  );
+  const processedThirdRow = useMemo(
+    () => processMentionLink(limitBrs(processedStringWithURL(thirdRow))),
+    [thirdRow]
+  );
+
   return (
     <ul
       style={{
@@ -28,21 +45,9 @@ export default function Bio({ firstRow, secondRow, thirdRow, small, style }) {
         ...style
       }}
     >
-      {firstRow && (
-        <li>
-          <LongText>{firstRow}</LongText>
-        </li>
-      )}
-      {secondRow && (
-        <li>
-          <LongText>{secondRow}</LongText>
-        </li>
-      )}
-      {thirdRow && (
-        <li>
-          <LongText>{thirdRow}</LongText>
-        </li>
-      )}
+      {firstRow && <li>{processedFirstRow}</li>}
+      {secondRow && <li>{processedSecondRow}</li>}
+      {thirdRow && <li>{processedThirdRow}</li>}
     </ul>
   );
 }
