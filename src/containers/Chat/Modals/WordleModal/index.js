@@ -38,6 +38,7 @@ export default function WordleModal({
   socketConnected
 }) {
   const [activeTab, setActiveTab] = useState('game');
+  const [rankingsTab, setRankingsTab] = useState('all');
   const loadWordle = useAppContext((v) => v.requestHelpers.loadWordle);
   const getCurrentNextDayTimeStamp = useAppContext(
     (v) => v.requestHelpers.getCurrentNextDayTimeStamp
@@ -115,7 +116,10 @@ export default function WordleModal({
             socketConnected={socketConnected}
           />
         ) : activeTab === 'rankings' ? (
-          <Rankings />
+          <Rankings
+            onSetRankingsTab={setRankingsTab}
+            rankingsTab={rankingsTab}
+          />
         ) : (
           <Streaks />
         )}
