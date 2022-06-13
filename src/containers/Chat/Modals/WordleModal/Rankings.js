@@ -13,10 +13,11 @@ Rankings.propTypes = {
 
 export default function Rankings({ rankingsTab, onSetRankingsTab }) {
   return (
-    <div>
+    <div style={{ width: '35rem' }}>
       <FilterBar
         bordered
         style={{
+          width: '100%',
           height: '4.5rem',
           fontSize: '1.6rem'
         }}

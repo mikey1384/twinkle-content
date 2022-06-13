@@ -5,6 +5,7 @@ import RankingsListItem from 'components/RankingsListItem';
 import localize from 'constants/localize';
 import FilterBar from 'components/FilterBar';
 import MyRank from 'components/MyRank';
+import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from '@emotion/css';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 
@@ -36,7 +37,7 @@ export default function AllTime({
   }, [allRanks, allSelected, top30s]);
   const loggedIn = !!myId;
   return (
-    <>
+    <ErrorBoundary componentPath="Notification/MainFeeds/Rankings/AllTime">
       {loggedIn && (
         <FilterBar
           bordered
@@ -89,6 +90,6 @@ export default function AllTime({
           ))}
         </RoundList>
       )}
-    </>
+    </ErrorBoundary>
   );
 }

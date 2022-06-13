@@ -5,6 +5,7 @@ import RankingsListItem from 'components/RankingsListItem';
 import localize from 'constants/localize';
 import FilterBar from 'components/FilterBar';
 import MyRank from 'components/MyRank';
+import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from '@emotion/css';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 
@@ -37,7 +38,7 @@ export default function ThisMonth({
   }, [allMonthly, allSelected, top30sMonthly]);
   const loggedIn = !!myId;
   return (
-    <>
+    <ErrorBoundary componentPath="Notification/MainFeeds/Rankings/ThisMonth">
       {loggedIn && (
         <FilterBar
           bordered
@@ -92,6 +93,6 @@ export default function ThisMonth({
           ))}
         </RoundList>
       )}
-    </>
+    </ErrorBoundary>
   );
 }

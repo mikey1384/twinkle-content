@@ -67,7 +67,7 @@ export default function Rankings() {
       </FilterBar>
       {rankingsLoaded === false && <Loading />}
       {rankingsLoaded && (
-        <>
+        <div style={{ width: '100%' }}>
           {thisMonthSelected ? (
             <ThisMonth
               allMonthly={allMonthly}
@@ -85,7 +85,7 @@ export default function Rankings() {
               myId={userId}
             />
           )}
-        </>
+        </div>
       )}
     </ErrorBoundary>
   );
