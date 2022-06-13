@@ -23,6 +23,7 @@ export default function Bio({ firstRow, secondRow, thirdRow, small, style }) {
         wordBreak: 'break-word',
         paddingLeft: '2rem',
         lineHeight: 1.6,
+        listStyleType: 'disc',
         fontSize: small ? '1.5rem' : '1.7rem',
         ...style
       }}
