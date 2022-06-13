@@ -349,6 +349,24 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async loadWordleRankings(channelId) {
+      try {
+        const {
+          data: { all, top30s, myRank, myXP }
+        } = await request.get(
+          `${URL}/chat/wordle/leaderBoard?channelId=${channelId}`,
+          auth()
+        );
+        return Promise.resolve({
+          all,
+          top30s,
+          myRank,
+          myXP
+        });
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async reloadChatSubject({ subjectId, channelId }) {
       try {
         const {

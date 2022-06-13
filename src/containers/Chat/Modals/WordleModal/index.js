@@ -117,6 +117,7 @@ export default function WordleModal({
           />
         ) : activeTab === 'rankings' ? (
           <Rankings
+            channelId={channelId}
             onSetRankingsTab={setRankingsTab}
             rankingsTab={rankingsTab}
           />
