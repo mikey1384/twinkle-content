@@ -1,3 +1,6 @@
+import React from 'react';
+import parse from 'html-react-parser';
+import Link from 'components/Link';
 import { charLimit } from 'constants/defaultValues';
 /* eslint-disable no-useless-escape */
 
@@ -442,6 +445,18 @@ export function limitBrs(string) {
     /(<br ?\/?>){11,}/gi,
     '<br><br><br><br><br><br><br><br><br><br>'
   );
+}
+
+export function processMentionLink(text) {
+  const result = parse(limitBrs(text), {
+    replace: (domNode) => {
+      if (domNode.name === 'a' && domNode.attribs.class === 'mention') {
+        const node = domNode.children[0];
+        return <Link to={domNode.attribs.href}>{node?.data}</Link>;
+      }
+    }
+  });
+  return result;
 }
 
 export function processedQueryString(string) {

@@ -1,8 +1,10 @@
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import parse from 'html-react-parser';
-import Link from 'components/Link';
-import { limitBrs, processedStringWithURL } from 'helpers/stringHelpers';
+import {
+  limitBrs,
+  processMentionLink,
+  processedStringWithURL
+} from 'helpers/stringHelpers';
 import { Color } from 'constants/css';
 
 Spoiler.propTypes = {
@@ -30,17 +32,10 @@ export default function Spoiler({ content }) {
     }
   }, [content]);
 
-  const finalText = useMemo(() => {
-    const result = parse(limitBrs(processedText), {
-      replace: (domNode) => {
-        if (domNode.name === 'a' && domNode.attribs.class === 'mention') {
-          const node = domNode.children[0];
-          return <Link to={domNode.attribs.href}>{node?.data}</Link>;
-        }
-      }
-    });
-    return result;
-  }, [processedText]);
+  const finalText = useMemo(
+    () => processMentionLink(limitBrs(processedText)),
+    [processedText]
+  );
 
   return (
     <div>
