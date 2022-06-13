@@ -6,6 +6,7 @@ import Game from './Game';
 import OverviewModal from './OverviewModal';
 import Countdown from 'react-countdown';
 import FilterBar from 'components/FilterBar';
+import Streaks from './Streaks';
 import Rankings from './Rankings';
 import { css } from '@emotion/css';
 import { MAX_GUESSES } from './constants/settings';
@@ -89,7 +90,13 @@ export default function WordleModal({
             className={activeTab === 'rankings' ? 'active' : null}
             onClick={() => setActiveTab('rankings')}
           >
-            Rankings
+            Top Scores
+          </nav>
+          <nav
+            className={activeTab === 'streaks' ? 'active' : null}
+            onClick={() => setActiveTab('streaks')}
+          >
+            Top Streaks
           </nav>
         </FilterBar>
         {activeTab === 'game' ? (
@@ -107,8 +114,10 @@ export default function WordleModal({
             onSetOverviewModalShown={setOverviewModalShown}
             socketConnected={socketConnected}
           />
-        ) : (
+        ) : activeTab === 'rankings' ? (
           <Rankings />
+        ) : (
+          <Streaks />
         )}
         {overviewModalShown && (
           <OverviewModal
