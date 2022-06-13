@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { getStatuses } from '../helpers/statuses';
 import Key from './Key';
-import { ENTER_TEXT, DELETE_TEXT } from '../constants/strings';
+import { ENTER_TEXT, DELETE_TEXT } from '../../constants/strings';
 import { localeAwareUpperCase } from '../helpers/words';
 
 Keyboard.propTypes = {

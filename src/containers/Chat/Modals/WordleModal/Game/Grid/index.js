@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { MAX_GUESSES } from '../constants/settings';
+import { MAX_GUESSES } from '../../constants/settings';
 import CompletedRow from './CompletedRow';
 import CurrentRow from './CurrentRow';
 import EmptyRow from './EmptyRow';

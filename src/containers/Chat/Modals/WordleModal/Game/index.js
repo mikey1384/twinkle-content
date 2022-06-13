@@ -8,14 +8,14 @@ import {
   ALERT_TIME_MS,
   MAX_GUESSES,
   REVEAL_TIME_MS
-} from './constants/settings';
+} from '../constants/settings';
 import { isWordInWordList, unicodeLength } from './helpers/words';
 import {
   CORRECT_WORD_MESSAGE,
   NOT_ENOUGH_LETTERS_MESSAGE,
   WIN_MESSAGES,
   WORD_NOT_FOUND_MESSAGE
-} from './constants/strings';
+} from '../constants/strings';
 import { default as GraphemeSplitter } from 'grapheme-splitter';
 import { useAppContext, useChatContext } from 'contexts';
 

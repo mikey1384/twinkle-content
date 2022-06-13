@@ -6,6 +6,7 @@ import Game from './Game';
 import OverviewModal from './OverviewModal';
 import Countdown from 'react-countdown';
 import FilterBar from 'components/FilterBar';
+import Rankings from './Rankings';
 import { css } from '@emotion/css';
 import { MAX_GUESSES } from './constants/settings';
 import { useAppContext, useChatContext } from 'contexts';
@@ -74,7 +75,7 @@ export default function WordleModal({
         <FilterBar
           style={{
             marginTop: '-1rem',
-            marginBottom: '5rem',
+            marginBottom: '4.5rem',
             height: '5rem'
           }}
         >
@@ -91,20 +92,24 @@ export default function WordleModal({
             Rankings
           </nav>
         </FilterBar>
-        <Game
-          isRevealing={isRevealing}
-          onSetIsRevealing={setIsRevealing}
-          channelName={channelName}
-          channelId={channelId}
-          guesses={guesses}
-          isGameOver={isGameOver}
-          isGameWon={isGameWon}
-          isGameLost={isGameLost}
-          nextDayTimeStamp={nextDayTimeStamp}
-          solution={solution}
-          onSetOverviewModalShown={setOverviewModalShown}
-          socketConnected={socketConnected}
-        />
+        {activeTab === 'game' ? (
+          <Game
+            isRevealing={isRevealing}
+            onSetIsRevealing={setIsRevealing}
+            channelName={channelName}
+            channelId={channelId}
+            guesses={guesses}
+            isGameOver={isGameOver}
+            isGameWon={isGameWon}
+            isGameLost={isGameLost}
+            nextDayTimeStamp={nextDayTimeStamp}
+            solution={solution}
+            onSetOverviewModalShown={setOverviewModalShown}
+            socketConnected={socketConnected}
+          />
+        ) : (
+          <Rankings />
+        )}
         {overviewModalShown && (
           <OverviewModal
             numGuesses={guesses.length}

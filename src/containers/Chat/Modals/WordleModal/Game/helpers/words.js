@@ -1,4 +1,4 @@
-import { VALID_GUESSES } from '../constants/validGuesses';
+import { VALID_GUESSES } from '../../constants/validGuesses';
 import { default as GraphemeSplitter } from 'grapheme-splitter';
 
 export const isWordInWordList = (word) => {

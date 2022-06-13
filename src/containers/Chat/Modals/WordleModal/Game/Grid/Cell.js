@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { borderRadius, Color } from 'constants/css';
-import { REVEAL_TIME_MS } from '../constants/settings';
+import { REVEAL_TIME_MS } from '../../constants/settings';
 import { css } from '@emotion/css';
 
 Cell.propTypes = {
