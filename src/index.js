@@ -8,6 +8,7 @@ loadPolyfills();
 import './styles.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import ErrorBoundary from 'components/ErrorBoundary';
 import { BrowserRouter } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faAlignJustify } from '@fortawesome/pro-solid-svg-icons/faAlignJustify';
@@ -232,9 +233,11 @@ library.add(
 const root = ReactDOM.createRoot(document.getElementById('react-view'));
 root.render(
   <BrowserRouter>
-    <AppContextProvider>
-      <App />
-    </AppContextProvider>
+    <ErrorBoundary componentPath="AppContext">
+      <AppContextProvider>
+        <App />
+      </AppContextProvider>
+    </ErrorBoundary>
   </BrowserRouter>
 );
 

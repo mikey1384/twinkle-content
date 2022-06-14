@@ -29,6 +29,7 @@ import VideoPage from 'containers/VideoPage';
 import Incoming from 'components/Stream/Incoming';
 import Outgoing from 'components/Stream/Outgoing';
 import InvalidPage from 'components/InvalidPage';
+import ErrorBoundary from 'components/ErrorBoundary';
 import { useLocation, Routes, Route } from 'react-router-dom';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
@@ -509,7 +510,8 @@ function App() {
   );
 
   return (
-    <div
+    <ErrorBoundary
+      componentPath="App/index"
       className={css`
         height: CALC(100% - 4.5rem);
         width: 100%;
@@ -633,7 +635,7 @@ function App() {
           background: url('/img/emojis.png');
         `}
       />
-    </div>
+    </ErrorBoundary>
   );
 }
 
