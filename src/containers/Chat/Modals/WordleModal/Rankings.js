@@ -62,7 +62,12 @@ export default function Rankings({ channelId, rankingsTab, onSetRankingsTab }) {
       </FilterBar>
       <RoundList style={{ marginTop: 0 }}>
         {users.map((user) => (
-          <RankingsListItem key={user.id} user={user} myId={myId} />
+          <RankingsListItem
+            key={user.id}
+            user={user}
+            myId={myId}
+            target="xpEarned"
+          />
         ))}
       </RoundList>
     </div>

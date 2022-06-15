@@ -10,6 +10,7 @@ RankingsListItem.propTypes = {
   myId: PropTypes.number,
   small: PropTypes.bool,
   style: PropTypes.object,
+  target: PropTypes.string,
   user: PropTypes.object,
   onUsermenuShownChange: PropTypes.func
 };
@@ -18,6 +19,7 @@ export default function RankingsListItem({
   myId,
   small,
   style,
+  target = 'twinkleXP',
   user,
   onUsermenuShownChange = () => {}
 }) {
@@ -144,7 +146,7 @@ export default function RankingsListItem({
         `}
       >
         <span style={{ color: Color.logoGreen() }}>
-          {addCommasToNumber(user.twinkleXP || 0)}
+          {addCommasToNumber(user[target] || 0)}
         </span>{' '}
         <span style={{ color: Color.gold() }}>XP</span>
       </div>
