@@ -6,6 +6,8 @@ import RoundList from 'components/RoundList';
 import RankingsListItem from 'components/RankingsListItem';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
+import { mobileMaxWidth } from 'constants/css';
+import { css } from '@emotion/css';
 
 const myRankingLabel = localize('myRanking');
 const top30Label = localize('top30');
@@ -38,13 +40,27 @@ export default function Rankings({ channelId, rankingsTab, onSetRankingsTab }) {
   }, []);
 
   return (
-    <div style={{ width: '35rem' }}>
+    <div
+      style={{
+        marginTop: '1rem',
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'column'
+      }}
+    >
       <FilterBar
         bordered
+        className={css`
+          width: 35rem;
+          @media (max-width: ${mobileMaxWidth}) {
+            width: 100%;
+          }
+        `}
         style={{
-          width: '100%',
           height: '4.5rem',
-          fontSize: '1.6rem'
+          fontSize: '1.6rem',
+          marginBottom: 0
         }}
       >
         <nav
@@ -60,16 +76,30 @@ export default function Rankings({ channelId, rankingsTab, onSetRankingsTab }) {
           {top30Label}
         </nav>
       </FilterBar>
-      <RoundList style={{ marginTop: 0 }}>
-        {users.map((user) => (
-          <RankingsListItem
-            key={user.id}
-            user={user}
-            myId={myId}
-            target="xpEarned"
-          />
-        ))}
-      </RoundList>
+      <div
+        style={{
+          height: 'CALC(100vh - 30rem)',
+          overflow: 'scroll',
+          width: '100%',
+          paddingTop: '1rem',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
+        }}
+      >
+        <RoundList style={{ marginTop: 0 }} width="35rem" mobileWidth="100%">
+          {users.map((user) => (
+            <RankingsListItem
+              small
+              key={user.id}
+              user={user}
+              myId={myId}
+              target="xpEarned"
+            />
+          ))}
+        </RoundList>
+        <div style={{ width: '100%', padding: '1rem' }} />
+      </div>
     </div>
   );
 }

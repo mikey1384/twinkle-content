@@ -93,7 +93,7 @@ export default function Game({
   return (
     <ErrorBoundary componentPath="WordleModal/Game">
       {alertMessage.shown && (
-        <Banner style={{ marginBottom: '2rem' }} color={alertMessageColor}>
+        <Banner style={{ marginTop: '1rem' }} color={alertMessageColor}>
           {alertMessage.message}
         </Banner>
       )}
@@ -102,7 +102,10 @@ export default function Game({
           width: '100%',
           display: 'flex',
           flexDirection: 'column',
-          marginBottom: '1rem'
+          marginTop: '4rem',
+          marginBottom: '1rem',
+          paddingLeft: '2rem',
+          paddingRight: '2rem'
         }}
       >
         <Grid

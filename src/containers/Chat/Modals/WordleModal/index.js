@@ -72,12 +72,10 @@ export default function WordleModal({
 
   return (
     <Modal closeWhenClickedOutside={false} onHide={onHide}>
-      <header>Wordle</header>
-      <main>
+      <header style={{ padding: 0 }}>
         <FilterBar
           style={{
-            marginTop: '-1rem',
-            marginBottom: '4.5rem',
+            marginTop: '3rem',
             height: '5rem'
           }}
         >
@@ -100,6 +98,13 @@ export default function WordleModal({
             Top Streaks
           </nav>
         </FilterBar>
+      </header>
+      <main
+        style={{
+          padding: 0,
+          marginTop: '-1rem'
+        }}
+      >
         {activeTab === 'game' ? (
           <Game
             isRevealing={isRevealing}
@@ -116,11 +121,19 @@ export default function WordleModal({
             socketConnected={socketConnected}
           />
         ) : activeTab === 'rankings' ? (
-          <Rankings
-            channelId={channelId}
-            onSetRankingsTab={setRankingsTab}
-            rankingsTab={rankingsTab}
-          />
+          <div
+            style={{
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center'
+            }}
+          >
+            <Rankings
+              channelId={channelId}
+              onSetRankingsTab={setRankingsTab}
+              rankingsTab={rankingsTab}
+            />
+          </div>
         ) : (
           <Streaks />
         )}

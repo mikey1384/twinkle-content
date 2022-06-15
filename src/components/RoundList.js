@@ -5,10 +5,17 @@ import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 
 RoundList.propTypes = {
   children: PropTypes.node.isRequired,
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  mobileWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   style: PropTypes.object
 };
 
-export default function RoundList({ children, style }) {
+export default function RoundList({
+  children,
+  width = '100%',
+  mobileWidth,
+  style
+}) {
   return (
     <div
       className={css`
@@ -16,7 +23,7 @@ export default function RoundList({ children, style }) {
         padding: 0;
         margin-top: 0;
         margin-bottom: 0;
-        width: 100%;
+        width: ${width};
         font-size: 1.5rem;
         nav {
           width: 100%;
@@ -44,6 +51,7 @@ export default function RoundList({ children, style }) {
         }
         @media (max-width: ${mobileMaxWidth}) {
           margin-top: 2rem;
+          ${mobileWidth ? `width: ${mobileWidth};` : ''}
         }
       `}
       style={style}
