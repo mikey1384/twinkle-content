@@ -103,7 +103,7 @@ export default function Game({
           display: 'flex',
           flexDirection: 'column',
           marginTop: '3rem',
-          marginBottom: '1rem',
+          marginBottom: '2.5rem',
           paddingLeft: '2rem',
           paddingRight: '2rem'
         }}
