@@ -369,11 +369,13 @@ export default function chatRequestHelpers({ auth, handleError }) {
     },
     async loadWordleStreaks(channelId) {
       try {
-        const { data } = await request.get(
+        const {
+          data: { bestStreaks, bestStreakObj }
+        } = await request.get(
           `${URL}/chat/wordle/leaderBoard/streak?channelId=${channelId}`,
           auth()
         );
-        return Promise.resolve(data);
+        return Promise.resolve({ bestStreaks, bestStreakObj });
       } catch (error) {
         return handleError(error);
       }

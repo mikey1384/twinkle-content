@@ -1,9 +1,7 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import RoundList from 'components/RoundList';
-import RankingsListItem from 'components/RankingsListItem';
 import Loading from 'components/Loading';
-import { useMyState } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
 
 Streaks.propTypes = {
@@ -15,13 +13,14 @@ export default function Streaks({ channelId }) {
     (v) => v.requestHelpers.loadWordleStreaks
   );
   const [loading, setLoading] = useState(true);
-  const users = useMemo(() => [], []);
-  const { userId: myId } = useMyState();
+  const [streakObj, setStreakObj] = useState({});
+  const [streaks, setStreaks] = useState([]);
   useEffect(() => {
     init();
     async function init() {
-      const data = await loadWordleStreaks(channelId);
-      console.log(data);
+      const { bestStreaks, bestStreakObj } = await loadWordleStreaks(channelId);
+      setStreakObj(bestStreakObj);
+      setStreaks(bestStreaks);
       setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,14 +50,10 @@ export default function Streaks({ channelId }) {
         }}
       >
         <RoundList style={{ marginTop: 0 }} width="35rem" mobileWidth="100%">
-          {users.map((user) => (
-            <RankingsListItem
-              small
-              key={user.id}
-              user={user}
-              myId={myId}
-              target="xpEarned"
-            />
+          {streaks.map((streak) => (
+            <div key={streak}>
+              {streak} {streakObj[streak][0].username}
+            </div>
           ))}
         </RoundList>
         <div style={{ width: '100%', padding: '1rem' }} />
