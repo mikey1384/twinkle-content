@@ -41,11 +41,11 @@ export default function Rankings({ channelId, rankingsTab, onSetRankingsTab }) {
   }, []);
 
   return loading ? (
-    <Loading />
+    <Loading style={{ height: 'CALC(100vh - 30rem)' }} />
   ) : (
     <div
       style={{
-        marginTop: '1rem',
+        height: 'CALC(100vh - 30rem)',
         width: '100%',
         display: 'flex',
         alignItems: 'center',
@@ -75,7 +75,7 @@ export default function Rankings({ channelId, rankingsTab, onSetRankingsTab }) {
       </FilterBar>
       <div
         style={{
-          height: 'CALC(100vh - 30rem)',
+          height: '100%',
           overflow: 'scroll',
           width: '100%',
           paddingTop: '2rem',
