@@ -7,8 +7,6 @@ import RankingsListItem from 'components/RankingsListItem';
 import Loading from 'components/Loading';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
-import { mobileMaxWidth } from 'constants/css';
-import { css } from '@emotion/css';
 
 const myRankingLabel = localize('myRanking');
 const top30Label = localize('top30');
@@ -55,14 +53,8 @@ export default function Rankings({ channelId, rankingsTab, onSetRankingsTab }) {
       }}
     >
       <FilterBar
-        bordered
-        className={css`
-          width: 35rem;
-          @media (max-width: ${mobileMaxWidth}) {
-            width: 100%;
-          }
-        `}
         style={{
+          width: '100%',
           height: '4.5rem',
           fontSize: '1.6rem',
           marginBottom: 0
@@ -86,7 +78,7 @@ export default function Rankings({ channelId, rankingsTab, onSetRankingsTab }) {
           height: 'CALC(100vh - 30rem)',
           overflow: 'scroll',
           width: '100%',
-          paddingTop: '1rem',
+          paddingTop: '2rem',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center'

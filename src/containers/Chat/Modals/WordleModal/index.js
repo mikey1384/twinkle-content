@@ -89,7 +89,7 @@ export default function WordleModal({
             className={activeTab === 'rankings' ? 'active' : null}
             onClick={() => setActiveTab('rankings')}
           >
-            Top Scores
+            Top Scorers
           </nav>
           <nav
             className={activeTab === 'streaks' ? 'active' : null}
