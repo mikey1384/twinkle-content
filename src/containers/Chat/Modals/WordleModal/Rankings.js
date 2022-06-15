@@ -4,6 +4,7 @@ import FilterBar from 'components/FilterBar';
 import localize from 'constants/localize';
 import RoundList from 'components/RoundList';
 import RankingsListItem from 'components/RankingsListItem';
+import Loading from 'components/Loading';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
 import { mobileMaxWidth } from 'constants/css';
@@ -22,6 +23,7 @@ export default function Rankings({ channelId, rankingsTab, onSetRankingsTab }) {
   const loadWordleRankings = useAppContext(
     (v) => v.requestHelpers.loadWordleRankings
   );
+  const [loading, setLoading] = useState(true);
   const [allRanks, setAllRanks] = useState([]);
   const [top30s, setTop30s] = useState([]);
   const { userId: myId } = useMyState();
@@ -35,11 +37,14 @@ export default function Rankings({ channelId, rankingsTab, onSetRankingsTab }) {
       const { all, top30s } = await loadWordleRankings(channelId);
       setAllRanks(all);
       setTop30s(top30s);
+      setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <div
       style={{
         marginTop: '1rem',
