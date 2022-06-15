@@ -193,9 +193,6 @@ function Chat({ onFileUpload }) {
   const onSetChessModalShown = useChatContext(
     (v) => v.actions.onSetChessModalShown
   );
-  const onSetWordleModalShown = useChatContext(
-    (v) => v.actions.onSetWordleModalShown
-  );
   const onSetCurrentChannelName = useChatContext(
     (v) => v.actions.onSetCurrentChannelName
   );
@@ -532,7 +529,6 @@ function Chat({ onFileUpload }) {
           onSetActualDescription,
           onSetActualTitle,
           onSetChessModalShown,
-          onSetWordleModalShown,
           onSetCreatingNewDMChannel,
           onSetEmbeddedUrl,
           onSetIsEditing,
