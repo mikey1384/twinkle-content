@@ -135,7 +135,7 @@ export default function WordleModal({
             />
           </div>
         ) : (
-          <Streaks />
+          <Streaks channelId={channelId} />
         )}
         {overviewModalShown && (
           <OverviewModal

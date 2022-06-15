@@ -1,16 +1,27 @@
 import React, { useMemo, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import RoundList from 'components/RoundList';
 import RankingsListItem from 'components/RankingsListItem';
 import Loading from 'components/Loading';
 import { useMyState } from 'helpers/hooks';
+import { useAppContext } from 'contexts';
 
-export default function Streaks() {
+Streaks.propTypes = {
+  channelId: PropTypes.number.isRequired
+};
+
+export default function Streaks({ channelId }) {
+  const loadWordleStreaks = useAppContext(
+    (v) => v.requestHelpers.loadWordleStreaks
+  );
   const [loading, setLoading] = useState(true);
   const users = useMemo(() => [], []);
   const { userId: myId } = useMyState();
   useEffect(() => {
     init();
     async function init() {
+      const data = await loadWordleStreaks(channelId);
+      console.log(data);
       setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -367,6 +367,17 @@ export default function chatRequestHelpers({ auth, handleError }) {
         return handleError(error);
       }
     },
+    async loadWordleStreaks(channelId) {
+      try {
+        const { data } = await request.get(
+          `${URL}/chat/wordle/leaderBoard/streak?channelId=${channelId}`,
+          auth()
+        );
+        return Promise.resolve(data);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async reloadChatSubject({ subjectId, channelId }) {
       try {
         const {
