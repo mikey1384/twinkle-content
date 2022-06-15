@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import RoundList from 'components/RoundList';
 import Loading from 'components/Loading';
 import { useAppContext } from 'contexts';
+import StreakItem from './StreakItem';
 
 Streaks.propTypes = {
   channelId: PropTypes.number.isRequired
@@ -51,9 +52,7 @@ export default function Streaks({ channelId }) {
       >
         <RoundList style={{ marginTop: 0 }} width="35rem" mobileWidth="100%">
           {streaks.map((streak) => (
-            <div key={streak}>
-              {streak} {streakObj[streak][0].username}
-            </div>
+            <StreakItem key={streak} streak={streak} streakObj={streakObj} />
           ))}
         </RoundList>
         <div style={{ width: '100%', padding: '1rem' }} />
