@@ -1,5 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
+import Icon from 'components/Icon';
+import { addCommasToNumber } from 'helpers/stringHelpers';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 
@@ -20,6 +22,10 @@ export default function StreakItem({ myId, streak, rank, streakObj }) {
       ? Color.orange()
       : undefined;
   }, [rank]);
+  const textColor = useMemo(
+    () => rankColor || (rank <= 10 ? Color.logoBlue() : Color.darkGray()),
+    [rankColor, rank]
+  );
   const rankFontSize = useMemo(() => {
     return rank < 5 ? '1.5rem' : '1rem';
   }, [rank]);
@@ -66,7 +72,28 @@ export default function StreakItem({ myId, streak, rank, streakObj }) {
         >
           {rank ? `#${rank}` : '--'}
         </span>
-        {streak} {streakObj[streak][0].username}...
+        {streakObj[streak][0].username}...
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          color: textColor,
+          fontWeight: 'bold'
+        }}
+      >
+        <Icon style={{ fontSize: '1.3rem' }} icon="times" />
+        <span
+          className={css`
+            font-size: ${rank === 1 ? '2rem' : rank <= 3 ? '1.7rem' : '1.5rem'};
+            @media (max-width: ${mobileMaxWidth}) {
+              font-size: 1.1rem;
+            }
+          `}
+          style={{ marginLeft: '0.5rem' }}
+        >
+          {addCommasToNumber(streak || 0)}
+        </span>
       </div>
     </nav>
   );
