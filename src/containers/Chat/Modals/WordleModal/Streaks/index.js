@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import RoundList from 'components/RoundList';
 import Loading from 'components/Loading';
 import { useAppContext } from 'contexts';
+import { useMyState } from 'helpers/hooks';
 import StreakItem from './StreakItem';
 
 Streaks.propTypes = {
@@ -10,6 +11,7 @@ Streaks.propTypes = {
 };
 
 export default function Streaks({ channelId }) {
+  const { userId: myId } = useMyState();
   const loadWordleStreaks = useAppContext(
     (v) => v.requestHelpers.loadWordleStreaks
   );
@@ -57,6 +59,7 @@ export default function Streaks({ channelId }) {
               rank={index + 1}
               streak={streak}
               streakObj={streakObj}
+              myId={myId}
             />
           ))}
         </RoundList>
