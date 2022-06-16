@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import UserListModal from 'components/Modals/UserListModal';
+import UsernameText from 'components/Texts/UsernameText';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
@@ -96,10 +97,25 @@ export default function StreakItem({ myId, streak, rank, streakObj }) {
         >
           {rank ? `#${rank}` : '--'}
         </span>
-        {displayedUsers.map((user) => user.username).join(', ')}
+        {displayedUsers.map((user, index) => (
+          <div
+            style={{ display: 'inline', marginRight: '0.5rem' }}
+            key={user.id}
+          >
+            <UsernameText color={Color.darkerGray()} user={user} />
+            {otherUserNumber === 0 &&
+            displayedUsers.length === 2 &&
+            index === 0 ? (
+              <span style={{ marginLeft: '0.5rem' }}>and</span>
+            ) : index === displayedUsers.length - 1 ? (
+              ''
+            ) : (
+              ','
+            )}
+          </div>
+        ))}
         {otherUserNumber > 0 ? (
           <span>
-            {', '}
             <a
               style={{
                 fontWeight: 'bold',
