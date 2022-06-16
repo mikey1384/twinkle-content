@@ -124,7 +124,11 @@ export default function StreakItem({ myId, streak, rank, streakObj }) {
         <Icon style={{ fontSize: '1.3rem' }} icon="times" />
         <span
           className={css`
-            font-size: ${rank === 1 ? '2rem' : rank <= 3 ? '1.7rem' : '1.5rem'};
+            font-size: ${rank === 1
+              ? '2.1rem'
+              : rank <= 3
+              ? '1.9rem'
+              : '1.7rem'};
             @media (max-width: ${mobileMaxWidth}) {
               font-size: 1.1rem;
             }
