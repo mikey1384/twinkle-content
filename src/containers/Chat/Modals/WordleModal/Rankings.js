@@ -24,6 +24,7 @@ export default function Rankings({ channelId, rankingsTab, onSetRankingsTab }) {
   const [loading, setLoading] = useState(true);
   const [allRanks, setAllRanks] = useState([]);
   const [top30s, setTop30s] = useState([]);
+  const [myRank, setMyRank] = useState(null);
   const { userId: myId } = useMyState();
   const users = useMemo(
     () => (rankingsTab === 'all' ? allRanks : top30s),
@@ -32,7 +33,12 @@ export default function Rankings({ channelId, rankingsTab, onSetRankingsTab }) {
   useEffect(() => {
     init();
     async function init() {
-      const { all, top30s } = await loadWordleRankings(channelId);
+      const {
+        all,
+        top30s,
+        myRank: loadedMyRank
+      } = await loadWordleRankings(channelId);
+      setMyRank(loadedMyRank);
       setAllRanks(all);
       setTop30s(top30s);
       setLoading(false);
@@ -52,27 +58,29 @@ export default function Rankings({ channelId, rankingsTab, onSetRankingsTab }) {
         flexDirection: 'column'
       }}
     >
-      <FilterBar
-        style={{
-          width: '100%',
-          height: '4.5rem',
-          fontSize: '1.6rem',
-          marginBottom: 0
-        }}
-      >
-        <nav
-          className={rankingsTab === 'all' ? 'active' : ''}
-          onClick={() => onSetRankingsTab('all')}
+      {!!myRank && (
+        <FilterBar
+          style={{
+            width: '100%',
+            height: '4.5rem',
+            fontSize: '1.6rem',
+            marginBottom: 0
+          }}
         >
-          {myRankingLabel}
-        </nav>
-        <nav
-          className={rankingsTab === 'top30' ? 'active' : ''}
-          onClick={() => onSetRankingsTab('top30')}
-        >
-          {top30Label}
-        </nav>
-      </FilterBar>
+          <nav
+            className={rankingsTab === 'all' ? 'active' : ''}
+            onClick={() => onSetRankingsTab('all')}
+          >
+            {myRankingLabel}
+          </nav>
+          <nav
+            className={rankingsTab === 'top30' ? 'active' : ''}
+            onClick={() => onSetRankingsTab('top30')}
+          >
+            {top30Label}
+          </nav>
+        </FilterBar>
+      )}
       <div
         style={{
           height: '100%',
