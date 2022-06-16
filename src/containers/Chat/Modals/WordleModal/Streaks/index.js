@@ -51,8 +51,13 @@ export default function Streaks({ channelId }) {
         }}
       >
         <RoundList style={{ marginTop: 0 }} width="35rem" mobileWidth="100%">
-          {streaks.map((streak) => (
-            <StreakItem key={streak} streak={streak} streakObj={streakObj} />
+          {streaks.map((streak, index) => (
+            <StreakItem
+              key={streak}
+              rank={index + 1}
+              streak={streak}
+              streakObj={streakObj}
+            />
           ))}
         </RoundList>
         <div style={{ width: '100%', padding: '1rem' }} />
