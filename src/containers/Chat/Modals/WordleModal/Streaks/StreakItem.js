@@ -130,7 +130,11 @@ export default function StreakItem({ myId, streak, rank, streakObj }) {
               ? '1.9rem'
               : '1.7rem'};
             @media (max-width: ${mobileMaxWidth}) {
-              font-size: 1.1rem;
+              font-size: ${rank === 1
+                ? '2rem'
+                : rank <= 3
+                ? '1.5rem'
+                : '1.3rem'};
             }
           `}
           style={{ marginLeft: '0.5rem' }}
