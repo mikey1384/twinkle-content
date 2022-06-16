@@ -21,6 +21,7 @@ UsernameText.propTypes = {
   onMenuShownChange: PropTypes.func,
   style: PropTypes.object,
   user: PropTypes.object,
+  displayedName: PropTypes.string,
   wordBreakEnabled: PropTypes.bool
 };
 
@@ -30,7 +31,8 @@ export default function UsernameText({
   onMenuShownChange,
   style = {},
   user = {},
-  wordBreakEnabled
+  wordBreakEnabled,
+  displayedName
 }) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -112,7 +114,7 @@ export default function UsernameText({
           onClick={onUsernameClick}
           onMouseEnter={onMouseEnter}
         >
-          {user.username || `(${deletedLabel})`}
+          {displayedName || user.username || `(${deletedLabel})`}
         </p>
       </div>
       {dropdownContext && (

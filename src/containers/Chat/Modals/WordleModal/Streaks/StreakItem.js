@@ -47,7 +47,7 @@ export default function StreakItem({ myId, streak, rank, streakObj }) {
     const users = [];
     for (let user of streakObj[streak]) {
       if (user.id === myId) {
-        users.unshift({ ...user, username: youLabel });
+        users.unshift(user);
       } else {
         users.push(user);
       }
@@ -99,7 +99,11 @@ export default function StreakItem({ myId, streak, rank, streakObj }) {
             style={{ display: 'inline', marginRight: '0.5rem' }}
             key={user.id}
           >
-            <UsernameText color={Color.darkerGray()} user={user} />
+            <UsernameText
+              displayedName={myId === user.id ? youLabel : ''}
+              color={Color.darkerGray()}
+              user={user}
+            />
             {otherUserNumber === 0 &&
             displayedUsers.length === 2 &&
             index === 0 ? (
