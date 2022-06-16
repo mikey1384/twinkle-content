@@ -32,9 +32,6 @@ export default function StreakItem({ myId, streak, rank, streakObj }) {
     () => rankColor || (rank <= 10 ? Color.logoBlue() : Color.darkGray()),
     [rankColor, rank]
   );
-  const rankFontSize = useMemo(() => {
-    return rank < 5 ? '1.5rem' : '1rem';
-  }, [rank]);
   const mobileRankFontSize = useMemo(() => {
     return rank <= 5 ? '1.2rem' : '1rem';
   }, [rank]);
@@ -84,7 +81,7 @@ export default function StreakItem({ myId, streak, rank, streakObj }) {
         <span
           className={css`
             font-weight: bold;
-            font-size: ${rankFontSize};
+            font-size: 1.5rem;
             width: 3rem;
             margin-right: 1rem;
             text-align: center;
