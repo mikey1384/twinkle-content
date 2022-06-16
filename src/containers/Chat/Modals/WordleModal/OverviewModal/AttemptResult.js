@@ -72,7 +72,7 @@ export default function AttemptResult({
       <div
         style={{
           fontSize: '1.7rem',
-          marginTop: isSolved ? '2rem' : '1.5rem'
+          marginTop: isSolved ? '2rem' : '1rem'
         }}
       >
         You earned {xpRewarded} XP{isSolved ? '' : ' for trying'}
