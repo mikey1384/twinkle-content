@@ -4,6 +4,8 @@ import RoundList from 'components/RoundList';
 import Loading from 'components/Loading';
 import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
+import { css } from '@emotion/css';
+import { mobileMaxWidth } from 'constants/css';
 import StreakItem from './StreakItem';
 
 Streaks.propTypes = {
@@ -51,10 +53,16 @@ export default function Streaks({ channelId }) {
           flexDirection: 'column',
           alignItems: 'center'
         }}
+        className={css`
+          padding-left: 1rem;
+          padding-right: 1rem;
+          @media (max-width: ${mobileMaxWidth}) {
+            padding-left: 0;
+            padding-right: 0;
+          }
+        `}
       >
-        <RoundList
-          style={{ marginTop: 0, paddingLeft: '1rem', paddingRight: '1rem' }}
-        >
+        <RoundList style={{ marginTop: 0 }}>
           {streaks.map((streak, index) => (
             <StreakItem
               key={streak}
