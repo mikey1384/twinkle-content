@@ -143,6 +143,7 @@ export default function WordleModal({
             solution={solution}
             wordLevel={wordLevel}
             wordleStats={wordleStats}
+            isGameOver={isGameOver}
             isSolved={isGameWon}
             attemptState={attemptState}
             onHide={() => setOverviewModalShown(false)}
@@ -160,15 +161,13 @@ export default function WordleModal({
           <div
             style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
           >
-            {isGameOver && !isRevealing && (
-              <Button
-                color="blue"
-                onClick={() => setOverviewModalShown(true)}
-                isGameWon={isGameWon}
-              >
-                Show Overview
-              </Button>
-            )}
+            <Button
+              color="blue"
+              onClick={() => setOverviewModalShown(true)}
+              isGameWon={isGameWon}
+            >
+              Show {isGameOver ? 'Overview' : 'Stats'}
+            </Button>
           </div>
           <div
             style={{

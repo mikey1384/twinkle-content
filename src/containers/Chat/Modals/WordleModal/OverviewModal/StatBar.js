@@ -40,27 +40,30 @@ function StatItem({ label, value }) {
 }
 
 StatBar.propTypes = {
+  isGameOver: PropTypes.bool,
   stats: PropTypes.object.isRequired,
   style: PropTypes.object
 };
-export default function StatBar({ stats, style }) {
+export default function StatBar({ stats, style, isGameOver }) {
   return (
     <ErrorBoundary componentPath="WordleModal/OverviewModal/StatBar">
       <div style={{ display: 'flex', flexDirection: 'column', ...style }}>
-        <div
-          style={{
-            fontWeight: 'bold',
-            textAlign: 'center',
-            fontSize: '1.7rem'
-          }}
-        >
-          Your Stats
-        </div>
+        {isGameOver && (
+          <div
+            style={{
+              fontWeight: 'bold',
+              textAlign: 'center',
+              fontSize: '1.7rem'
+            }}
+          >
+            Your Stats
+          </div>
+        )}
         <div
           style={{
             display: 'flex',
             justifyContent: 'center',
-            marginTop: '1.2rem'
+            marginTop: isGameOver ? '1.2rem' : 0
           }}
         >
           <StatItem label={TOTAL_TRIES_TEXT} value={stats.totalGames} />
