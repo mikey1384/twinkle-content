@@ -52,7 +52,9 @@ export default function Streaks({ channelId }) {
           alignItems: 'center'
         }}
       >
-        <RoundList style={{ marginTop: 0 }} width="35rem" mobileWidth="100%">
+        <RoundList
+          style={{ marginTop: 0, paddingLeft: '1rem', paddingRight: '1rem' }}
+        >
           {streaks.map((streak, index) => (
             <StreakItem
               key={streak}

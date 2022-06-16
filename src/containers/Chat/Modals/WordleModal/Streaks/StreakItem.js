@@ -1,9 +1,13 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
+import UserListModal from 'components/Modals/UserListModal';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import localize from 'constants/localize';
+
+const youLabel = localize('You');
 
 StreakItem.propTypes = {
   myId: PropTypes.number.isRequired,
@@ -13,6 +17,7 @@ StreakItem.propTypes = {
 };
 
 export default function StreakItem({ myId, streak, rank, streakObj }) {
+  const [userListModalShown, setUserListModalShown] = useState(false);
   const rankColor = useMemo(() => {
     return rank === 1
       ? Color.gold()
@@ -40,6 +45,25 @@ export default function StreakItem({ myId, streak, rank, streakObj }) {
     }
     return false;
   }, [myId, streak, streakObj]);
+  const includedUsers = useMemo(() => {
+    const users = [];
+    for (let user of streakObj[streak]) {
+      if (user.id === myId) {
+        users.unshift({ ...user, username: youLabel });
+      } else {
+        users.push(user);
+      }
+    }
+    return users;
+  }, [myId, streak, streakObj]);
+
+  const displayedUsers = useMemo(() => {
+    return includedUsers.slice(0, 2);
+  }, [includedUsers]);
+
+  const otherUserNumber = useMemo(() => {
+    return streakObj[streak].length - displayedUsers.length;
+  }, [displayedUsers.length, streak, streakObj]);
 
   return (
     <nav
@@ -72,7 +96,22 @@ export default function StreakItem({ myId, streak, rank, streakObj }) {
         >
           {rank ? `#${rank}` : '--'}
         </span>
-        {streakObj[streak][0].username}...
+        {displayedUsers.map((user) => user.username).join(', ')}
+        {otherUserNumber > 0 ? (
+          <span>
+            {', '}
+            <a
+              style={{
+                fontWeight: 'bold',
+                cursor: 'pointer'
+              }}
+              onClick={() => setUserListModalShown(true)}
+            >
+              and {otherUserNumber} other
+              {otherUserNumber === 1 ? '' : 's'}
+            </a>
+          </span>
+        ) : null}
       </div>
       <div
         style={{
@@ -95,6 +134,14 @@ export default function StreakItem({ myId, streak, rank, streakObj }) {
           {addCommasToNumber(streak || 0)}
         </span>
       </div>
+      {userListModalShown && (
+        <UserListModal
+          modalOverModal
+          title="People who achieved this streak"
+          users={streakObj[streak]}
+          onHide={() => setUserListModalShown(false)}
+        />
+      )}
     </nav>
   );
 }
