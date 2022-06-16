@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import LongText from 'components/Texts/LongText';
@@ -6,6 +6,7 @@ import ContentFileViewer from 'components/ContentFileViewer';
 import { borderRadius, Color, desktopMinWidth } from 'constants/css';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
+import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 import { css } from '@emotion/css';
 import localize from 'constants/localize';
 
@@ -50,7 +51,6 @@ function SecretAnswer({
     if (!userId) {
       onChangeSpoilerStatus({ shown: false, subjectId });
     }
-
     async function init() {
       const { responded } = await checkIfUserResponded(subjectId);
       onChangeSpoilerStatus({
@@ -61,6 +61,11 @@ function SecretAnswer({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prevSecretViewerId, subjectId, userId]);
+
+  const { fileType } = useMemo(
+    () => getFileInfoFromFileName(attachment?.fileName),
+    [attachment?.fileName]
+  );
 
   return (
     <ErrorBoundary componentPath="SecretAnswer">
@@ -110,7 +115,11 @@ function SecretAnswer({
                 />
               </div>
             )}
-            <LongText>{answer}</LongText>
+            <LongText
+              style={{ marginTop: fileType === 'image' ? '1.5rem' : 0 }}
+            >
+              {answer}
+            </LongText>
           </div>
         )}
         {!spoilerShown && (
