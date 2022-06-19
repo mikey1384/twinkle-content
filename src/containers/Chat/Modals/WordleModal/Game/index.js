@@ -180,12 +180,13 @@ export default function Game({
 
     if (newGuesses.length < MAX_GUESSES && currentGuess !== solution) {
       setIsChecking(true);
-      const { isDuplicate, actualSolution } =
+      const { isDuplicate, actualSolution, needsReload } =
         await checkIfDuplicateWordleAttempt({
           channelId,
           numGuesses: newGuesses.length,
           solution
         });
+      if (needsReload) window.location.reload();
       if (isDuplicate) return;
       if (actualSolution) {
         onSetChannelState({
