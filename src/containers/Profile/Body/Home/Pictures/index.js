@@ -240,7 +240,7 @@ export default function Pictures({
               >
                 {pictures.map((picture, index) => (
                   <Frame
-                    key={index}
+                    key={picture.id}
                     numPictures={pictures.length}
                     picture={picture}
                     userIsUploader={profileId === userId}
