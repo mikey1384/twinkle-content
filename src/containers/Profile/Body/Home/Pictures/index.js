@@ -41,7 +41,7 @@ export default function Pictures({
   const [reorderMode, setReorderMode] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
   const [reorderedPictureIds, setReorderedPictureIds] = useState([]);
-  const [remainingPictures, setRemainingPictures] = useState(pictures);
+  const [remainingPictures, setRemainingPictures] = useState(pictures || []);
   const deleteProfilePictures = useAppContext(
     (v) => v.requestHelpers.deleteProfilePictures
   );
@@ -56,7 +56,7 @@ export default function Pictures({
     return pictures.length >= numPics;
   }, [numPics, pictures]);
   useEffect(() => {
-    setReorderedPictureIds(pictures.map((picture) => picture.id));
+    setReorderedPictureIds(pictures.map((picture) => Number(picture.id)));
     setRemainingPictures(pictures);
   }, [pictures]);
 
@@ -138,7 +138,7 @@ export default function Pictures({
 
     function handlePictureReorderCancel() {
       setReorderMode(false);
-      setReorderedPictureIds(pictures.map((picture) => picture.id));
+      setReorderedPictureIds(pictures.map((picture) => Number(picture.id)));
     }
 
     function handleConfirm() {
@@ -219,7 +219,11 @@ export default function Pictures({
                 reorderedPictureIds={reorderedPictureIds}
                 pictures={pictures}
                 numPictures={pictures.length}
-                onSetReorderedPictureIds={setReorderedPictureIds}
+                onSetReorderedPictureIds={(pictureIds) =>
+                  setReorderedPictureIds(
+                    pictureIds.map((pictureId) => Number(pictureId))
+                  )
+                }
               />
             ) : (
               <div
@@ -273,7 +277,7 @@ export default function Pictures({
     }
     const pics = await updateUserPictures([
       ...selectedPictureIds,
-      ...pictures.map((picture) => picture.id)
+      ...pictures.map((picture) => Number(picture.id))
     ]);
     onSetUserState({ userId: profileId, newState: { pictures: pics } });
     setAddPictureModalShown(false);
@@ -284,7 +288,7 @@ export default function Pictures({
       userId: profileId,
       newState: {
         pictures: pictures.map((picture) =>
-          picture.id === pictureId
+          Number(picture.id) === Number(pictureId)
             ? {
                 ...picture,
                 caption

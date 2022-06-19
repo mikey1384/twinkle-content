@@ -59,17 +59,23 @@ export default function SelectFromArchive({
             selectedPictureIds={selectedPictureIds}
             onDeleteArchivedPicture={(pictureId) => {
               setPictures((pictures) =>
-                pictures.filter((picture) => picture.id !== pictureId)
+                pictures.filter(
+                  (picture) => Number(picture.id) !== Number(pictureId)
+                )
               );
               onSetSelectedPictureIds((selectedPictureIds) =>
-                selectedPictureIds.filter((id) => id !== pictureId)
+                selectedPictureIds.filter(
+                  (id) => Number(id) !== Number(pictureId)
+                )
               );
             }}
             onSelect={(pictureId) =>
               onSetSelectedPictureIds((selectedPictureIds) =>
                 selectedPictureIds.includes(pictureId)
-                  ? selectedPictureIds.filter((id) => id !== pictureId)
-                  : selectedPictureIds.concat(pictureId)
+                  ? selectedPictureIds.filter(
+                      (id) => Number(id) !== Number(pictureId)
+                    )
+                  : selectedPictureIds.concat(Number(pictureId))
               )
             }
             picture={picture}

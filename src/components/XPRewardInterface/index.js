@@ -323,7 +323,7 @@ export default function XPRewardInterface({
       onSetRewardForm({
         contentType,
         contentId,
-        form: undefined
+        form: null
       });
       if (reward) {
         onAttachReward({
