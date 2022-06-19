@@ -884,9 +884,6 @@ export function processedURL(url) {
 }
 
 export function queryStringForArray({ array, originVar, destinationVar }) {
-  if (array.length === 0) {
-    return `${destinationVar}[]`;
-  }
   return `${array
     .map((elem) => `${destinationVar}[]=${originVar ? elem[originVar] : elem}`)
     .join('&')}`;
