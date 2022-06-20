@@ -7,6 +7,7 @@ import { localeAwareUpperCase } from '../helpers/words';
 
 Keyboard.propTypes = {
   isChecking: PropTypes.bool,
+  isDeleteReady: PropTypes.bool,
   isEnterReady: PropTypes.bool,
   onChar: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
@@ -20,6 +21,7 @@ Keyboard.propTypes = {
 
 export default function Keyboard({
   isChecking,
+  isDeleteReady,
   isEnterReady,
   onChar,
   onDelete,
@@ -106,8 +108,8 @@ export default function Keyboard({
         <Key
           status={isEnterReady ? 'ready' : ''}
           width={65.4}
-          value="ENTER"
           onClick={onClick}
+          value="ENTER"
           isChecking={isChecking}
         >
           {ENTER_TEXT}
@@ -123,9 +125,10 @@ export default function Keyboard({
           />
         ))}
         <Key
+          status={isDeleteReady ? 'canDelete' : ''}
           width={65.4}
-          value="DELETE"
           onClick={onClick}
+          value="DELETE"
           isChecking={isChecking}
         >
           {DELETE_TEXT}

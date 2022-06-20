@@ -28,7 +28,8 @@ export default function Key({
   const prevBackgroundColor = useRef('');
   const backgroundColor = useMemo(() => {
     const colorKeys = {
-      ready: 'logoBlue',
+      ready: 'blue',
+      canDelete: 'cranberry',
       correct: 'limeGreen',
       present: 'brownOrange',
       absent: 'darkBlueGray'
@@ -53,6 +54,7 @@ export default function Key({
         cursor: isChecking ? 'default' : 'pointer',
         marginRight: '2px',
         border: 0,
+        fontWeight: value && status ? 'bold' : 'normal',
         transitionDelay: isRevealing ? `${keyDelayMs}ms` : 'unset',
         width: `${width}px`,
         height: '5.5rem',

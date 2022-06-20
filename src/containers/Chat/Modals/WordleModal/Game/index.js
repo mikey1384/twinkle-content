@@ -67,6 +67,10 @@ export default function Game({
     () => !isGameOver && currentGuess.length === MAX_WORD_LENGTH,
     [MAX_WORD_LENGTH, currentGuess.length, isGameOver]
   );
+  const isDeleteReady = useMemo(
+    () => !isGameOver && currentGuess.length > 0,
+    [currentGuess.length, isGameOver]
+  );
   const alertMessageColor = useMemo(() => {
     if (alertMessage.status === 'error') {
       return 'rose';
@@ -126,6 +130,7 @@ export default function Game({
           isRevealing={isRevealing}
           maxWordLength={MAX_WORD_LENGTH}
           solution={solution}
+          isDeleteReady={isDeleteReady}
           isEnterReady={isEnterReady}
           style={{ marginTop: '2rem' }}
         />
