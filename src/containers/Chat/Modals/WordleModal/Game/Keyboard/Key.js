@@ -54,7 +54,7 @@ export default function Key({
         cursor: isChecking ? 'default' : 'pointer',
         marginRight: '2px',
         border: 0,
-        fontWeight: value && status ? 'bold' : 'normal',
+        fontWeight: status ? 'bold' : 'normal',
         transitionDelay: isRevealing ? `${keyDelayMs}ms` : 'unset',
         width: `${width}px`,
         height: '5.5rem',
