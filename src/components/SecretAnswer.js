@@ -6,7 +6,7 @@ import ContentFileViewer from 'components/ContentFileViewer';
 import { borderRadius, Color, desktopMinWidth } from 'constants/css';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
-import { getFileInfoFromFileName } from 'helpers/stringHelpers';
+import { getFileInfoFromFileName, stringIsEmpty } from 'helpers/stringHelpers';
 import { css } from '@emotion/css';
 import localize from 'constants/localize';
 
@@ -115,11 +115,13 @@ function SecretAnswer({
                 />
               </div>
             )}
-            <LongText
-              style={{ marginTop: fileType === 'image' ? '1.5rem' : 0 }}
-            >
-              {answer}
-            </LongText>
+            {!stringIsEmpty(answer) && (
+              <LongText
+                style={{ marginTop: fileType === 'image' ? '1.3rem' : 0 }}
+              >
+                {answer}
+              </LongText>
+            )}
           </div>
         )}
         {!spoilerShown && (
