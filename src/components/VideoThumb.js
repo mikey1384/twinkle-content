@@ -63,7 +63,7 @@ function VideoThumb({ className, clickSafe, style, to, user, video }) {
       clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => {
         setTitleContext(null);
-      }, 1000);
+      }, 2000);
     }
   }, [titleContext]);
 

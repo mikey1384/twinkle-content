@@ -46,7 +46,7 @@ export default function SortableThumb({ id, onMove, video }) {
       clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => {
         setTitleContext(null);
-      }, 1000);
+      }, 2000);
     }
   }, [titleContext]);
 
