@@ -152,14 +152,13 @@ function Vocabulary() {
     if (isNew && !isSubmitting) {
       setIsSubmitting(true);
       try {
-        const { coins, xp, rank, word, rankings } = await registerWord(
-          definitions
-        );
+        const { coins, numWordsCollected, xp, rank, word, rankings } =
+          await registerWord(definitions);
         onSetUserState({
           userId,
           newState: { twinkleXP: xp, twinkleCoins: coins, rank }
         });
-        onUpdateNumWordsCollected(word.numWordsCollected);
+        onUpdateNumWordsCollected(numWordsCollected);
         onRegisterWord(word);
         onUpdateCollectorsRankings({ rankings });
         onSetWordRegisterStatus(wordObj);

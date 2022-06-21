@@ -6,11 +6,11 @@ import { Color, mobileMaxWidth } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { isMobile } from 'helpers';
 import { css } from '@emotion/css';
+import { useMyState } from 'helpers/hooks';
 import Icon from 'components/Icon';
 import localize from 'constants/localize';
 
 Collector.propTypes = {
-  myId: PropTypes.number,
   style: PropTypes.object,
   user: PropTypes.object
 };
@@ -18,7 +18,8 @@ Collector.propTypes = {
 const deviceIsMobile = isMobile(navigator);
 const collectedLabel = localize('collected');
 
-export default function Collector({ myId, style, user }) {
+export default function Collector({ style, user }) {
+  const { userId: myId } = useMyState();
   const rankColor = useMemo(() => {
     return user.rank === 1
       ? Color.gold()
