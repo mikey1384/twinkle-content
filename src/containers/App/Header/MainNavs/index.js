@@ -218,7 +218,9 @@ function MainNavs({
     }
 
     if (chatMatch) {
-      const lastChatPath = pathname.split('chat')[1];
+      const lastChatPath = pathname.split('chat')[1]
+        ? pathname.split('chat')[1]
+        : '';
       onSetLastChatPath(lastChatPath);
     }
 
