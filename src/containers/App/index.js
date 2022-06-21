@@ -566,7 +566,7 @@ function App() {
             style={{
               marginTop: '3rem',
               fontSize: '3rem',
-              width: '20%',
+              minWidth: '20%',
               alignSelf: 'center'
             }}
             onClick={() => window.location.reload()}
