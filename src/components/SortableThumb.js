@@ -5,6 +5,7 @@ import { useDrag, useDrop } from 'react-dnd';
 import FullTextReveal from 'components/Texts/FullTextRevealFromOuterLayer';
 import VideoThumbImage from 'components/VideoThumbImage';
 import { textIsOverflown, isMobile } from 'helpers';
+import { mobileFullTextRevealShowDuration } from 'constants/defaultValues';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 
@@ -46,7 +47,7 @@ export default function SortableThumb({ id, onMove, video }) {
       clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => {
         setTitleContext(null);
-      }, 2000);
+      }, mobileFullTextRevealShowDuration);
     }
   }, [titleContext]);
 

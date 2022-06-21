@@ -8,6 +8,7 @@ import VideoThumbImage from 'components/VideoThumbImage';
 import Icon from 'components/Icon';
 import { Color } from 'constants/css';
 import { css } from '@emotion/css';
+import { mobileFullTextRevealShowDuration } from 'constants/defaultValues';
 import { textIsOverflown, isMobile } from 'helpers';
 import { useContentState, useMyState } from 'helpers/hooks';
 import localize from 'constants/localize';
@@ -63,7 +64,7 @@ function VideoThumb({ className, clickSafe, style, to, user, video }) {
       clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => {
         setTitleContext(null);
-      }, 2000);
+      }, mobileFullTextRevealShowDuration);
     }
   }, [titleContext]);
 

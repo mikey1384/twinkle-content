@@ -119,6 +119,8 @@ export const karmaMultiplier = {
   }
 };
 
+export const mobileFullTextRevealShowDuration = 2000;
+
 export const priceTable = {
   chatSubject: 20,
   chatTheme: 30,
