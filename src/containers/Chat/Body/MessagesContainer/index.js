@@ -29,6 +29,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import Icon from 'components/Icon';
 import { v1 as uuidv1 } from 'uuid';
 import {
+  clientVersion,
   GENERAL_CHAT_ID,
   GENERAL_CHAT_PATH_ID,
   rewardReasons
@@ -41,6 +42,7 @@ import { isMobile, parseChannelPath } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useMyState } from 'helpers/hooks';
+import { useAppContext } from 'contexts';
 import LocalContext from '../../Context';
 import localize from 'constants/localize';
 
@@ -69,6 +71,7 @@ function MessagesContainer({
   currentChannel,
   loading: channelLoading
 }) {
+  const reportError = useAppContext((v) => v.requestHelpers.reportError);
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const {
@@ -502,6 +505,13 @@ function MessagesContainer({
             }
           );
         } else {
+          if (selectedChannelId === 0 && !recepientId) {
+            return reportError({
+              componentPath: 'MessagesContainer/index',
+              message: `handleConfirmChessMove: User is trying to send the first chess message to someone but recepient ID is missing`,
+              clientVersion
+            });
+          }
           const { alreadyExists, channel, message, pathId } =
             await startNewDMChannel({
               ...params,
@@ -610,7 +620,17 @@ function MessagesContainer({
           }
         );
       } else {
-        const recepientIds = users.map((user) => user.id);
+        const recepientIds = [];
+        for (let user of users) {
+          if (!user.id) {
+            return reportError({
+              componentPath: 'MessagesContainer/index',
+              message: `handleInviteUsersDone: User is trying to invite people to their channel but at least one of their user ID is missing. Channel ID was: ${selectedChannelId}`,
+              clientVersion
+            });
+          }
+          recepientIds.push(user.id);
+        }
         const { channels, messages } = await sendInvitationMessage({
           recepients: recepientIds,
           origin: currentChannel.id
@@ -781,6 +801,13 @@ function MessagesContainer({
       let isFirstDirectMessage = selectedChannelId === 0;
       if (isFirstDirectMessage) {
         if (creatingNewDMChannel) return;
+        if (!recepientId) {
+          return reportError({
+            componentPath: 'MessagesContainer/index',
+            message: `handleMessageSubmit: User is trying to send the first message to someone but recepient ID is missing`,
+            clientVersion
+          });
+        }
         onSetCreatingNewDMChannel(true);
         try {
           const { alreadyExists, channel, message, pathId } =

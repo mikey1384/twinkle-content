@@ -419,6 +419,20 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
+    async reportError({ componentPath, message, clientVersion }) {
+      try {
+        const {
+          data: { success }
+        } = await request.post(
+          `${URL}/user/error/manual`,
+          { componentPath, message, clientVersion },
+          auth()
+        );
+        return Promise.resolve(success);
+      } catch (error) {
+        return handleError(error);
+      }
+    },
     async rewardUser({
       maxRewardAmountForOnePerson,
       explanation,

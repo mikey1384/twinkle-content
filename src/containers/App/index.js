@@ -36,6 +36,7 @@ import { css } from '@emotion/css';
 import { socket } from 'constants/io';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 import { finalizeEmoji } from 'helpers/stringHelpers';
+import { clientVersion } from 'constants/defaultValues';
 import { useMyState, useScrollPosition } from 'helpers/hooks';
 import {
   isMobile,
@@ -79,6 +80,7 @@ function App() {
   const saveChatMessageWithFileAttachment = useAppContext(
     (v) => v.requestHelpers.saveChatMessageWithFileAttachment
   );
+  const reportError = useAppContext((v) => v.requestHelpers.reportError);
   const {
     authLevel,
     profilePicUrl,
@@ -277,6 +279,13 @@ function App() {
       subjectId,
       thumbnail
     }) => {
+      if (channelId === 0 && !recepientId) {
+        return reportError({
+          componentPath: 'App/index',
+          message: `handleFileUploadOnChat: User is trying to send the first file message to someone but recepient ID is missing`,
+          clientVersion
+        });
+      }
       const promises = [];
       onPostFileUploadStatus({
         channelId,
