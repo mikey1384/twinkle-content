@@ -261,7 +261,7 @@ export default function MainContent({
               contentType={contentType}
             />
           ) : (
-            <>
+            <div>
               {contentType === 'comment' &&
                 (secretHidden ? (
                   <SecretComment
@@ -358,7 +358,7 @@ export default function MainContent({
                   uploaderId={uploader.id}
                 />
               )}
-            </>
+            </div>
           )}
         </div>
         {!isEditing && contentType === 'url' && (
