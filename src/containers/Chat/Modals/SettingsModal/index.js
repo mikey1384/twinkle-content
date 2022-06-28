@@ -2,13 +2,13 @@ import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
-import Input from 'components/Texts/Input';
 import SelectNewOwnerModal from '../SelectNewOwnerModal';
 import SwitchButton from 'components/Buttons/SwitchButton';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import FullTextReveal from 'components/Texts/FullTextReveal';
 import Icon from 'components/Icon';
 import ColorSelector from './ColorSelector';
+import NameChanger from './NameChanger';
 import { priceTable } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { stringIsEmpty } from 'helpers/stringHelpers';
@@ -117,20 +117,11 @@ export default function SettingsModal({
             }
           `}
         >
-          <div style={{ width: '100%' }}>
-            {userIsChannelOwner && (
-              <p style={{ fontWeight: 'bold', fontSize: '1.7rem' }}>
-                Group Name:
-              </p>
-            )}
-            <Input
-              style={{ marginTop: '0.5rem', width: '100%' }}
-              autoFocus
-              placeholder="Enter group name..."
-              value={editedChannelName}
-              onChange={setEditedChannelName}
-            />
-          </div>
+          <NameChanger
+            editedChannelName={editedChannelName}
+            onSetEditedChannelName={setEditedChannelName}
+            userIsChannelOwner={userIsChannelOwner}
+          />
           {userIsChannelOwner && !isClass && (
             <div
               style={{
