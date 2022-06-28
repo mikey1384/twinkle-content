@@ -30,7 +30,7 @@ API source codes are private due to security concerns. If you are interested in 
 
 0. Ensure that the latest Node JS is installed
 1. Install yarn `npm install -g yarn`
-1. git clone https://github.com/mikey1384/twinkle-network.git [your directory name]
+1. git clone https://github.com/mikey1384/twinkle-content.git [your directory name]
 1. Run `yarn install` at the directory where you cloned the git repository.
 
 finally, run:
