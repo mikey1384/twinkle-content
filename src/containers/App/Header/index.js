@@ -472,7 +472,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
 
     async function handleLeftChatFromAnotherTab(channelId) {
       if (selectedChannelId === channelId) {
-        onLeaveChannel(channelId);
+        onLeaveChannel({ channelId, userId });
         if (usingChat) {
           navigate(`/chat/${GENERAL_CHAT_PATH_ID}`);
         } else {
@@ -480,7 +480,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
           onSetLastChatPath(`/${GENERAL_CHAT_PATH_ID}`);
         }
       } else {
-        onLeaveChannel(channelId);
+        onLeaveChannel({ channelId, userId });
       }
     }
 

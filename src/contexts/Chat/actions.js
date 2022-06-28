@@ -242,10 +242,11 @@ export default function ChatActions(dispatch) {
         data
       });
     },
-    onLeaveChannel(channelId) {
+    onLeaveChannel({ channelId, userId }) {
       return dispatch({
         type: 'LEAVE_CHANNEL',
-        channelId
+        channelId,
+        userId
       });
     },
     onLoadChatSubject(data) {

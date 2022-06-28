@@ -135,6 +135,7 @@ function MessagesContainer({
     wordleStats,
     nextDayTimeStamp
   } = currentChannel;
+
   const scrolledToBottomRef = useRef(true);
   const loadMoreButtonLock = useRef(false);
   const currentPathId = useMemo(() => pathname.split('chat/')[1], [pathname]);
@@ -682,7 +683,7 @@ function MessagesContainer({
       try {
         setLeaving(true);
         await leaveChannel(selectedChannelId);
-        onLeaveChannel(selectedChannelId);
+        onLeaveChannel({ channelId: selectedChannelId, userId });
         socket.emit('leave_chat_channel', {
           channelId: selectedChannelId,
           userId,
