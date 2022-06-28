@@ -58,7 +58,7 @@ export default function LongText({
       ContainerRef.current?.scrollHeight >
         ContainerRef.current?.clientHeight + 2
     );
-  }, [text]);
+  }, [text, isPreview]);
 
   useEffect(() => {
     if (fullTextState[section] && !isPreview) {
@@ -66,7 +66,7 @@ export default function LongText({
       setFullText(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isPreview]);
 
   useEffect(() => {
     return function saveFullTextStateBeforeUnmount() {
