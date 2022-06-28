@@ -2,13 +2,13 @@ import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
-import Input from 'components/Texts/Input';
 import SelectNewOwnerModal from '../SelectNewOwnerModal';
 import SwitchButton from 'components/Buttons/SwitchButton';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import FullTextReveal from 'components/Texts/FullTextReveal';
 import Icon from 'components/Icon';
 import ColorSelector from './ColorSelector';
+import NameChanger from './NameChanger';
 import { priceTable } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { stringIsEmpty } from 'helpers/stringHelpers';
@@ -65,7 +65,9 @@ export default function SettingsModal({
   const [selectNewOwnerModalShown, setSelectNewOwnerModalShown] =
     useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
-  const [editedChannelName, setEditedChannelName] = useState(channelName);
+  const [editedChannelName, setEditedChannelName] = useState(
+    customChannelNames[channelId] || channelName
+  );
   const [editedIsClosed, setEditedIsClosed] = useState(isClosed);
   const [editedCanChangeSubject, setEditedCanChangeSubject] =
     useState(canChangeSubject);
@@ -87,7 +89,8 @@ export default function SettingsModal({
       channelNameDidNotChange = false;
     }
     return (
-      (stringIsEmpty(editedChannelName) || channelNameDidNotChange) &&
+      ((userIsChannelOwner && stringIsEmpty(editedChannelName)) ||
+        channelNameDidNotChange) &&
       isClosed === editedIsClosed &&
       editedCanChangeSubject === canChangeSubject &&
       currentTheme === selectedTheme
@@ -102,7 +105,8 @@ export default function SettingsModal({
     editedChannelName,
     editedIsClosed,
     isClosed,
-    selectedTheme
+    selectedTheme,
+    userIsChannelOwner
   ]);
 
   return (
@@ -117,20 +121,13 @@ export default function SettingsModal({
             }
           `}
         >
-          <div style={{ width: '100%' }}>
-            {userIsChannelOwner && (
-              <p style={{ fontWeight: 'bold', fontSize: '1.7rem' }}>
-                Group Name:
-              </p>
-            )}
-            <Input
-              style={{ marginTop: '0.5rem', width: '100%' }}
-              autoFocus
-              placeholder="Enter group name..."
-              value={editedChannelName}
-              onChange={setEditedChannelName}
-            />
-          </div>
+          <NameChanger
+            editedChannelName={editedChannelName}
+            onSetEditedChannelName={setEditedChannelName}
+            userIsChannelOwner={userIsChannelOwner}
+            actualChannelName={channelName}
+            usingCustomName={!!customChannelNames[channelId]}
+          />
           {userIsChannelOwner && !isClass && (
             <div
               style={{
@@ -294,7 +291,10 @@ export default function SettingsModal({
           disabled={disabled}
           onClick={() =>
             onDone({
-              editedChannelName,
+              editedChannelName:
+                !userIsChannelOwner && editedChannelName === channelName
+                  ? null
+                  : editedChannelName,
               editedIsClosed,
               editedCanChangeSubject,
               editedTheme: selectedTheme
