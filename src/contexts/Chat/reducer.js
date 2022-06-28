@@ -3,6 +3,12 @@ import { defaultChatSubject } from 'constants/defaultValues';
 import { determineSelectedChatTab } from './helpers';
 import { v1 as uuidv1 } from 'uuid';
 
+const chatTabHash = {
+  home: 'homeChannelIds',
+  favorite: 'favoriteChannelIds',
+  class: 'classChannelIds'
+};
+
 export default function ChatReducer(state, action) {
   switch (action.type) {
     case 'ADD_ID_TO_NEW_MESSAGE':
@@ -716,11 +722,6 @@ export default function ChatReducer(state, action) {
         )
       };
     case 'LOAD_MORE_CHANNELS': {
-      const chatTabHash = {
-        home: 'homeChannelIds',
-        favorite: 'favoriteChannelIds',
-        class: 'classChannelIds'
-      };
       let loadMoreButton = false;
       if (action.channelType === 'home') {
         if (action.channels.length > 20) {
@@ -886,35 +887,38 @@ export default function ChatReducer(state, action) {
       const messageId = uuidv1();
       const leaveMessage = 'left the chat group';
       const timeStamp = Math.floor(Date.now() / 1000);
-      return {
-        ...state,
-        channelsObj: {
-          ...state.channelsObj,
-          [action.data.channelId]: {
-            ...state.channelsObj[action.data.channelId],
-            messageIds: [messageId].concat(
-              state.channelsObj[action.data.channelId].messageIds
-            ),
-            messagesObj: {
-              ...state.channelsObj[action.data.channelId].messagesObj,
-              [messageId]: {
-                id: messageId,
-                channelId: action.data.channelId,
-                content: leaveMessage,
-                timeStamp: timeStamp,
-                isNotification: true,
-                username: action.data.username,
-                userId: action.data.userId,
-                profilePicUrl: action.data.profilePicUrl
+      return state.channelsObj[action.data.channelId]
+        ? {
+            ...state,
+            channelsObj: {
+              ...state.channelsObj,
+              [action.data.channelId]: {
+                ...state.channelsObj[action.data.channelId],
+                messageIds: [messageId].concat(
+                  state.channelsObj[action.data.channelId].messageIds
+                ),
+                messagesObj: {
+                  ...state.channelsObj[action.data.channelId].messagesObj,
+                  [messageId]: {
+                    id: messageId,
+                    channelId: action.data.channelId,
+                    content: leaveMessage,
+                    timeStamp: timeStamp,
+                    isNotification: true,
+                    username: action.data.username,
+                    userId: action.data.userId,
+                    profilePicUrl: action.data.profilePicUrl
+                  }
+                },
+                numUnreads: 0,
+                members: state.channelsObj[
+                  action.data.channelId
+                ].members.filter((member) => member.id !== action.data.userId)
               }
-            },
-            numUnreads: 0,
-            members: state.channelsObj[action.data.channelId].members.filter(
-              (member) => member.id !== action.data.userId
-            )
+            }
           }
-        }
-      };
+        : state;
+      // yes, this will mean that if the channel where the user has left is not loaded in the left channel list initially, it will not appear in the list when user scrolls down and triggers "load more" event (because load more event only loads channels with older update time than the bottom item) but is that really that bad? this channel will surface when user reloads the website anyway and user wasn't really interested in this channel to keep it bumped up in the first place.
     }
     case 'OPEN_NEW_TAB':
       return {
