@@ -682,7 +682,7 @@ function MessagesContainer({
       try {
         setLeaving(true);
         await leaveChannel(selectedChannelId);
-        onLeaveChannel(selectedChannelId);
+        onLeaveChannel({ channelId: selectedChannelId, userId });
         socket.emit('leave_chat_channel', {
           channelId: selectedChannelId,
           userId,
