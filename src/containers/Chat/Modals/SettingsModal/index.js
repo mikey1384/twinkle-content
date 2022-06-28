@@ -65,7 +65,9 @@ export default function SettingsModal({
   const [selectNewOwnerModalShown, setSelectNewOwnerModalShown] =
     useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
-  const [editedChannelName, setEditedChannelName] = useState(channelName);
+  const [editedChannelName, setEditedChannelName] = useState(
+    customChannelNames[channelId] || channelName
+  );
   const [editedIsClosed, setEditedIsClosed] = useState(isClosed);
   const [editedCanChangeSubject, setEditedCanChangeSubject] =
     useState(canChangeSubject);
@@ -87,7 +89,8 @@ export default function SettingsModal({
       channelNameDidNotChange = false;
     }
     return (
-      (stringIsEmpty(editedChannelName) || channelNameDidNotChange) &&
+      ((userIsChannelOwner && stringIsEmpty(editedChannelName)) ||
+        channelNameDidNotChange) &&
       isClosed === editedIsClosed &&
       editedCanChangeSubject === canChangeSubject &&
       currentTheme === selectedTheme
@@ -102,7 +105,8 @@ export default function SettingsModal({
     editedChannelName,
     editedIsClosed,
     isClosed,
-    selectedTheme
+    selectedTheme,
+    userIsChannelOwner
   ]);
 
   return (
@@ -121,6 +125,8 @@ export default function SettingsModal({
             editedChannelName={editedChannelName}
             onSetEditedChannelName={setEditedChannelName}
             userIsChannelOwner={userIsChannelOwner}
+            actualChannelName={channelName}
+            usingCustomName={!!customChannelNames[channelId]}
           />
           {userIsChannelOwner && !isClass && (
             <div
@@ -285,7 +291,10 @@ export default function SettingsModal({
           disabled={disabled}
           onClick={() =>
             onDone({
-              editedChannelName,
+              editedChannelName:
+                !userIsChannelOwner && editedChannelName === channelName
+                  ? null
+                  : editedChannelName,
               editedIsClosed,
               editedCanChangeSubject,
               editedTheme: selectedTheme
