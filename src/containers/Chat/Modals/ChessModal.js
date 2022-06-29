@@ -230,7 +230,7 @@ export default function ChessModal({
             <Button
               color="blue"
               style={{ marginLeft: '1rem' }}
-              onClick={submitChessMove}
+              onClick={handleSubmitChessMove}
               disabled={
                 !newChessState ||
                 !socketConnected ||
@@ -284,7 +284,7 @@ export default function ChessModal({
     }
   }
 
-  async function submitChessMove() {
+  async function handleSubmitChessMove() {
     if (!submittingRef.current) {
       submittingRef.current = true;
       setSubmitting(true);
