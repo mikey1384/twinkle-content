@@ -61,6 +61,7 @@ export default function EditPlaylistModal({
   const [selectedVideos, setSelectedVideos] = useState([]);
   const [searchLoadMoreButton, setSearchLoadMoreButton] = useState(false);
   const [mainTabActive, setMainTabActive] = useState(true);
+  const mainTabActiveRef = useRef(true);
   const [searchText, setSearchText] = useState('');
   const { handleSearch, searching } = useSearch({
     onSearch: handleSearchVideo,
@@ -84,12 +85,14 @@ export default function EditPlaylistModal({
               playlistId,
               limit: 18
             });
+      if (!mainTabActiveRef.current) return;
       playlistVideoObjects.current = objectify(modalVids);
       if (modalType === 'change') {
         const { results } = await loadPlaylistVideos({
           playlistId,
           targetVideos: modalVids
         });
+        if (!mainTabActiveRef.current) return;
         initialSelectedVideos.current = results.map((video) => video.id);
       } else {
         initialSelectedVideos.current = modalVids.map((video) => video.id);
@@ -128,6 +131,7 @@ export default function EditPlaylistModal({
                 className={mainTabActive ? 'active' : ''}
                 onClick={() => {
                   setMainTabActive(true);
+                  mainTabActiveRef.current = true;
                   openedRemoveVideosTab.current = false;
                   setLoadingMore(false);
                 }}
@@ -158,7 +162,7 @@ export default function EditPlaylistModal({
             {loading || searching ? (
               <Loading />
             ) : (
-              <>
+              <div>
                 {mainTabActive && modalType === 'change' && (
                   <SelectUploadsForm
                     contentObjs={playlistVideoObjects.current}
@@ -298,7 +302,7 @@ export default function EditPlaylistModal({
                     loadMoreUploads={handleLoadMoreVideos}
                   />
                 )}
-              </>
+              </div>
             )}
           </main>
           <footer>
@@ -498,12 +502,14 @@ export default function EditPlaylistModal({
   async function handleOpenRemoveVideosTab() {
     if (openedRemoveVideosTab.current) {
       setMainTabActive(false);
+      mainTabActiveRef.current = false;
       setLoadingMore(false);
       return;
     }
     openedRemoveVideosTab.current = true;
     setLoadingMore(false);
     setMainTabActive(false);
+    mainTabActiveRef.current = false;
     setLoading(true);
     const { results: loadedVideos, loadMoreButton } = await loadPlaylistVideos({
       playlistId,
