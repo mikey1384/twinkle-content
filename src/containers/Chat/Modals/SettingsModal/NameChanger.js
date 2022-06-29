@@ -41,7 +41,7 @@ export default function NameChanger({
             fontSize: '1.3rem'
           }}
         >
-          <b>Original name:</b> {actualChannelName}
+          <b>Actual name:</b> {actualChannelName}
         </div>
       )}
     </div>
