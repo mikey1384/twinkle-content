@@ -162,7 +162,7 @@ export default function EditPlaylistModal({
             {loading || searching ? (
               <Loading />
             ) : (
-              <div>
+              <div style={{ width: '100%' }}>
                 {mainTabActive && modalType === 'change' && (
                   <SelectUploadsForm
                     contentObjs={playlistVideoObjects.current}
