@@ -48,6 +48,12 @@ export const Color = {
   yellow: (opacity = 1) => `rgba(253,253,150,${opacity})`
 };
 
+export function Theme(color) {
+  return {
+    default: Color[color]()
+  };
+}
+
 export const borderRadius = '5px';
 export const innerBorderRadius = '4px';
 export const mobileMaxWidth = '850px';

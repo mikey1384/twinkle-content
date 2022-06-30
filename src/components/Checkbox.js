@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { innerBorderRadius, Color, mobileMaxWidth } from 'constants/css';
+import { innerBorderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 
@@ -59,7 +59,7 @@ export default function Checkbox({
           alignItems: 'center',
           justifyContent: 'center',
           cursor: 'pointer',
-          background: checked ? Color[profileTheme]() : backgroundColor
+          background: checked ? Theme(profileTheme).default : backgroundColor
         }}
       >
         {checked && (
