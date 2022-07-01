@@ -1,6 +1,6 @@
 import React, { useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Color } from 'constants/css';
+import { Color, Theme } from 'constants/css';
 import {
   addEmoji,
   exceedsCharLimit,
@@ -123,7 +123,9 @@ export default function SecretMessageInput({
                   opacity: disabled ? 0.2 : 1,
                   cursor: disabled ? 'default' : 'pointer',
                   boxShadow: disabled ? 'none' : '',
-                  borderColor: disabled ? Color[profileTheme](0.2) : ''
+                  borderColor: disabled
+                    ? Theme(profileTheme).skeuomorphicDisabled
+                    : ''
                 }}
               >
                 <Icon size="lg" icon="upload" />

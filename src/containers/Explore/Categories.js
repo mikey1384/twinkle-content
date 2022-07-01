@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Checkbox from 'components/Checkbox';
 import Link from 'components/Link';
 import Icon from 'components/Icon';
-import { Color, mobileMaxWidth } from 'constants/css';
+import { Color, Theme, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
@@ -43,7 +43,7 @@ export default function Categories({
       <div
         className={css`
           width: 80%;
-          color: ${Color[profileTheme]()};
+          color: ${Theme(profileTheme).categories};
           > nav {
             width: 100%;
             text-align: center;
@@ -71,7 +71,7 @@ export default function Categories({
               transition: color 0.1s;
               &:hover {
                 text-decoration: none;
-                color: ${Color[profileTheme]()};
+                color: ${Theme(profileTheme).categories};
               }
               @media (max-width: ${mobileMaxWidth}) {
                 font-size: 1.7rem;

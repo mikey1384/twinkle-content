@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Color } from 'constants/css';
+import { Color, Theme } from 'constants/css';
 import { removeLineBreaks } from 'helpers/stringHelpers';
 import { useMyState } from '../helpers/hooks';
 
@@ -49,7 +49,7 @@ export default function ContentLink({
     <Link
       style={{
         fontWeight: 'bold',
-        color: byUser ? Color[profileTheme](0.9) : Color.blue(),
+        color: byUser ? Theme(profileTheme).userLink : Color.blue(),
         ...style
       }}
       to={`/${destination}/${

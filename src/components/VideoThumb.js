@@ -6,7 +6,7 @@ import FullTextReveal from 'components/Texts/FullTextRevealFromOuterLayer';
 import ErrorBoundary from 'components/ErrorBoundary';
 import VideoThumbImage from 'components/VideoThumbImage';
 import Icon from 'components/Icon';
-import { Color } from 'constants/css';
+import { Color, Theme } from 'constants/css';
 import { css } from '@emotion/css';
 import { mobileFullTextRevealShowDuration } from 'constants/defaultValues';
 import { textIsOverflown, isMobile } from 'helpers';
@@ -123,7 +123,9 @@ function VideoThumb({ className, clickSafe, style, to, user, video }) {
             >
               <a
                 style={{
-                  color: video.byUser ? Color[profileTheme](0.9) : Color.blue()
+                  color: video.byUser
+                    ? Theme(profileTheme).videoThumbTitle
+                    : Color.blue()
                 }}
                 href={`/${to}`}
                 onClick={onLinkClick}

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 import { useNavigate } from 'react-router-dom';
@@ -75,7 +75,7 @@ export default function ChannelDetail({
           line-height: 1.3;
           font-weight: bold;
           font-size: 2.2rem;
-          color: ${Color[profileTheme]()};
+          color: ${Theme(profileTheme).chatInvitation};
           cursor: ${alreadyJoined ? 'pointer' : 'default'};
           @media (max-width: ${mobileMaxWidth}) {
             font-size: 1.5rem;

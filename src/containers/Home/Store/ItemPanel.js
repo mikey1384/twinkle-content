@@ -7,7 +7,7 @@ import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
-import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
 import localize from 'constants/localize';
 
 const freeLabel = localize('free');
@@ -186,7 +186,9 @@ export default function ItemPanel({
             )}
             <ProgressBar
               color={
-                unlockProgress === 100 ? Color.green() : Color[profileTheme]()
+                unlockProgress === 100
+                  ? Color.green()
+                  : Theme(profileTheme).progressBar
               }
               progress={unlockProgress}
             />

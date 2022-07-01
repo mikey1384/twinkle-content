@@ -1,5 +1,5 @@
 import React from 'react';
-import { Color } from 'constants/css';
+import { Theme } from 'constants/css';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 
@@ -46,7 +46,7 @@ export default function Spinner() {
             stroke-dasharray: 187;
             stroke-dashoffset: 0;
             transform-origin: center;
-            stroke: ${Color[profileTheme]()};
+            stroke: ${Theme(profileTheme).spinner};
             animation: loading-dash 1.4s ease-in-out infinite;
           `}
           fill="none"

@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import UsernameText from 'components/Texts/UsernameText';
 import UserListModal from 'components/Modals/UserListModal';
-import { Color } from 'constants/css';
+import { Color, Theme } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
@@ -86,7 +86,9 @@ export default function RecommendationStatus({
     <div
       style={{
         padding: '0.5rem',
-        background: isRewardable && Color[profileTheme](0.1),
+        ...(isRewardable
+          ? { background: Theme(profileTheme).rewardableRecommendation }
+          : {}),
         borderTop: `1px solid ${Color.borderGray()}`,
         borderBottom: `1px solid ${Color.borderGray()}`,
         marginBottom: '1rem',

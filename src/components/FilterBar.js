@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth, Theme } from 'constants/css';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 
@@ -28,9 +28,8 @@ export default function FilterBar({
   const { profileTheme } = useMyState();
   const FilterBarStyle = useMemo(() => {
     const themeColor = color || profileTheme;
-    const selectedOpacity = 1;
     return `${css`
-      background: ${inverted ? Color[themeColor](0.7) : '#fff'};
+      background: ${inverted ? Theme(themeColor).mainFilterInactive : '#fff'};
       height: 6rem;
       margin-bottom: 1rem;
       ${!inverted && bordered
@@ -80,18 +79,18 @@ export default function FilterBar({
           }
         }
         > nav.active {
-          background: ${inverted ? Color[themeColor](selectedOpacity) : ''};
+          background: ${inverted ? Theme(themeColor).mainFilterActive : ''};
           border-bottom: ${inverted
             ? ''
-            : `3px solid ${Color[themeColor](selectedOpacity)}`};
-          color: ${inverted ? '#fff' : Color[themeColor](selectedOpacity)};
+            : `3px solid ${Theme(themeColor).mainFilterActive}`};
+          color: ${inverted ? '#fff' : Theme(themeColor).mainFilterActive};
           > a {
-            color: ${inverted ? '#fff' : Color[themeColor](selectedOpacity)};
+            color: ${inverted ? '#fff' : Theme(themeColor).mainFilterActive};
           }
           @media (max-width: ${mobileMaxWidth}) {
             border-bottom: ${inverted
               ? ''
-              : `4px solid ${Color[themeColor](selectedOpacity)}`};
+              : `4px solid ${Theme(themeColor).mainFilterActive}`};
           }
         }
         > nav.active.alert {
@@ -113,17 +112,17 @@ export default function FilterBar({
             : ''};
         }
         > nav:hover {
-          background: ${inverted ? Color[themeColor](selectedOpacity) : ''};
-          color: ${inverted ? '#fff' : Color[themeColor](selectedOpacity)};
+          background: ${inverted ? Theme(themeColor).mainFilterActive : ''};
+          color: ${inverted ? '#fff' : Theme(themeColor).mainFilterActive};
           border-bottom: ${inverted
             ? ''
-            : `3px solid ${Color[themeColor](selectedOpacity)}`};
+            : `3px solid ${Theme(themeColor).mainFilterActive}`};
           &.alert {
             color: ${Color.gold()}!important;
             border-bottom: 3px solid ${Color.gold()}!important;
           }
           > a {
-            color: ${inverted ? '#fff' : Color[themeColor](selectedOpacity)};
+            color: ${inverted ? '#fff' : Theme(themeColor).mainFilterActive};
             font-weight: bold;
           }
         }

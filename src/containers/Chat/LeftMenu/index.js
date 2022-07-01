@@ -5,7 +5,7 @@ import Channels from './Channels';
 import Vocabulary from './Vocabulary';
 import Icon from 'components/Icon';
 import Tabs from './Tabs';
-import { Color, desktopMinWidth, mobileMaxWidth } from 'constants/css';
+import { Theme, desktopMinWidth, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useChatContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
@@ -42,7 +42,7 @@ function LeftMenu({ onNewButtonClick }) {
       <div
         className={`unselectable ${css`
           padding: 1rem;
-          background: ${Color[profileTheme](0.8)};
+          background: ${Theme(profileTheme).chatFlatButton};
           color: #fff;
           display: flex;
           justify-content: center;
@@ -50,11 +50,11 @@ function LeftMenu({ onNewButtonClick }) {
           cursor: pointer;
           transition: background 0.2s;
           @media (max-width: ${mobileMaxWidth}) {
-            background: ${Color[profileTheme](1)};
+            background: ${Theme(profileTheme).default};
           }
           @media (min-width: ${desktopMinWidth}) {
             &:hover {
-              background: ${Color[profileTheme]()};
+              background: ${Theme(profileTheme).default};
             }
           }
         `}`}

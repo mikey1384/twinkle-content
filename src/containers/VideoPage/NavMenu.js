@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'components/Link';
-import { Color, mobileMaxWidth } from 'constants/css';
+import { Color, Theme, mobileMaxWidth } from 'constants/css';
 import { queryStringForArray } from 'helpers/stringHelpers';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import ErrorBoundary from 'components/ErrorBoundary';
@@ -211,7 +211,10 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
         >
           {filtering && (
             <Icon
-              style={{ marginRight: '1rem', color: Color[profileTheme]() }}
+              style={{
+                marginRight: '1rem',
+                color: Theme(profileTheme).spinner
+              }}
               icon="spinner"
               pulse
             />
@@ -394,7 +397,9 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
               arePlaylistVideos ? `?playlist=${playlistId}` : ''
             }`}
             style={{
-              color: video.byUser ? Color[profileTheme](0.9) : Color.blue()
+              color: video.byUser
+                ? Theme(profileTheme).byUserIndicator
+                : Color.blue()
             }}
           >
             {video.title}

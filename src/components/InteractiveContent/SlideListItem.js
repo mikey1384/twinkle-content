@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Attachment from './Attachment';
 import { css } from '@emotion/css';
-import { borderRadius, Color } from 'constants/css';
+import { borderRadius, Color, Theme } from 'constants/css';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useInteractiveContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
@@ -35,8 +35,12 @@ export default function SlideListItem({
     <div
       style={{
         ...style,
-        boxShadow: selected ? `0 0 3px ${Color[profileTheme](0.5)}` : null,
-        border: selected ? `0.3rem solid ${Color[profileTheme](0.5)}` : null
+        boxShadow: selected
+          ? `0 0 3px ${Theme(profileTheme).itemSelected}`
+          : null,
+        border: selected
+          ? `0.3rem solid ${Theme(profileTheme).itemSelected}`
+          : null
       }}
       onClick={() => onClick(slide.id)}
       className={css`
@@ -81,6 +85,7 @@ export default function SlideListItem({
         >
           <Attachment
             small
+            isOnModal
             type={slide.attachment.type}
             isYouTubeVideo={slide.attachment.isYouTubeVideo}
             fileUrl={slide.attachment.fileUrl}

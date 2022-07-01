@@ -4,7 +4,7 @@ import Icon from 'components/Icon';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import { css } from '@emotion/css';
 import { cloudFrontURL } from 'constants/defaultValues';
-import { Color, borderRadius, innerBorderRadius } from 'constants/css';
+import { Color, Theme, borderRadius, innerBorderRadius } from 'constants/css';
 import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
@@ -40,7 +40,7 @@ export default function ArchivedPicture({
   return (
     <div
       className={css`
-        background: black;
+        background: #fff;
         position: relative;
         width: CALC(${width}% - 2rem);
         padding-bottom: CALC(${width}% - 2rem - 2px);
@@ -48,9 +48,11 @@ export default function ArchivedPicture({
       style={{
         ...style,
         borderRadius,
-        boxShadow: isSelected ? `0 0 5px ${Color[profileTheme](0.8)}` : '',
+        boxShadow: isSelected
+          ? `0 0 5px ${Theme(profileTheme).itemSelected}`
+          : '',
         border: isSelected
-          ? `5px solid ${Color[profileTheme](0.8)}`
+          ? `5px solid ${Theme(profileTheme).itemSelected}`
           : `1px solid ${Color.borderGray()}`
       }}
     >

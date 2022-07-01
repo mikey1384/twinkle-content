@@ -317,5 +317,3 @@ export function returnXpLevelColor(rewardLevel) {
     ? 'pink'
     : 'logoBlue';
 }
-
-export const strongColors = ['rose', 'red', 'purple'];

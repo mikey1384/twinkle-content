@@ -1,5 +1,5 @@
 import React from 'react';
-import { Color } from 'constants/css';
+import { Color, Theme } from 'constants/css';
 import UsernameText from 'components/Texts/UsernameText';
 import ContentLink from 'components/ContentLink';
 import localize from 'constants/localize';
@@ -65,7 +65,9 @@ export default function renderKoreanMessage({
           <ContentLink
             content={{ id, title: '주제를' }}
             contentType={contentType}
-            style={{ color: byUser ? Color[profileTheme]() : Color.green() }}
+            style={{
+              color: byUser ? Theme(profileTheme).userLink : Color.green()
+            }}
           />{' '}
           개설했습니다{' '}
         </>

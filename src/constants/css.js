@@ -48,9 +48,36 @@ export const Color = {
   yellow: (opacity = 1) => `rgba(253,253,150,${opacity})`
 };
 
+export const strongColors = ['rose', 'red', 'purple'];
+
 export function Theme(color) {
   return {
-    default: Color[color]()
+    default: Color[color](),
+    byUserIndicator: Color[color](strongColors.includes(color) ? 0.7 : 0.9),
+    carousel: Color[color](),
+    categories: Color[color](),
+    cover: Color[color](),
+    generalChat: Color[color](),
+    chatFlatButton: Color[color](0.8),
+    chatInvitation: Color[color](),
+    homeMenuItemActive: Color[color](),
+    itemSelected: Color[color](strongColors.includes(color) ? 0.7 : 0.8),
+    mainFilterActive: Color[color](),
+    mainFilterInactive: Color[color](0.7),
+    profilePanel: Color[color](),
+    progressBar: Color[color](),
+    reactionButton: Color[color](0.2),
+    reactionButtonBorder: Color[color](),
+    rewardLevelForm: Color[color](strongColors.includes(color) ? 0.9 : 1),
+    rewardableRecommendation: Color[color](0.1),
+    sectionPanel: Color[color](),
+    skeuomorphicDisabled: Color[color](0.2),
+    spinner: Color[color](),
+    switch: Color[color](),
+    tableHeader: Color[color](),
+    userDetails: Color[color](0.7),
+    userLink: Color[color](0.9),
+    videoThumbTitle: Color[color](0.9)
   };
 }
 

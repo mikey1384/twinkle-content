@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
-import { Color } from 'constants/css';
+import { Theme } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
 import localize from 'constants/localize';
 
@@ -57,7 +57,7 @@ export default function RewardLevelForm({
     <div
       style={{
         ...style,
-        background: themed ? Color[profileTheme]() : '',
+        background: themed ? Theme(profileTheme).rewardLevelForm : '',
         color: themed ? '#fff' : ''
       }}
     >

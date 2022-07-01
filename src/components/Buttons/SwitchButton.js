@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { Color } from 'constants/css';
+import { Theme } from 'constants/css';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 
@@ -57,7 +57,7 @@ export default function SwitchButton({
         <input
           className={css`
             &:checked + span {
-              background-color: ${color || Color[profileTheme]()};
+              background-color: ${color || Theme(profileTheme).switch};
             }
             &:checked + span:before {
               transform: translateX(${small ? 16 : 26}px);

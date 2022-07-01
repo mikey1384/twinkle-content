@@ -10,7 +10,7 @@ import ConfirmModal from 'components/Modals/ConfirmModal';
 import Link from 'components/Link';
 import Icon from 'components/Icon';
 import { css } from '@emotion/css';
-import { Color, mobileMaxWidth } from 'constants/css';
+import { Color, Theme, mobileMaxWidth } from 'constants/css';
 import { charLimit } from 'constants/defaultValues';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext, useExploreContext } from 'contexts';
@@ -87,7 +87,7 @@ export default function PlaylistCarousel({
               text-decoration: none;
               &:hover {
                 transition: color 0.3s;
-                color: ${Color[profileTheme]()};
+                color: ${Theme(profileTheme).carousel};
               }
             }
           }

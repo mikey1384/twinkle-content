@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
-import { Color, borderRadius } from 'constants/css';
+import { Color, Theme, borderRadius } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
 
@@ -23,10 +23,12 @@ export default function GoBackToMissionItem({
       style={{
         ...style,
         boxShadow:
-          selectedSlideId === 0 ? `0 0 3px ${Color[profileTheme](0.5)}` : null,
+          selectedSlideId === 0
+            ? `0 0 3px ${Theme(profileTheme).itemSelected}`
+            : null,
         border:
           selectedSlideId === 0
-            ? `0.3rem solid ${Color[profileTheme](0.5)}`
+            ? `0.3rem solid ${Theme(profileTheme).itemSelected}`
             : `1px solid ${Color.borderGray()}`
       }}
       className={css`

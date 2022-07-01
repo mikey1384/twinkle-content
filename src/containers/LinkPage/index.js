@@ -17,7 +17,7 @@ import InvalidPage from 'components/InvalidPage';
 import Loading from 'components/Loading';
 import Description from './Description';
 import { css } from '@emotion/css';
-import { Color, mobileMaxWidth } from 'constants/css';
+import { Color, Theme, mobileMaxWidth } from 'constants/css';
 import { determineUserCanRewardThis, determineXpButtonDisabled } from 'helpers';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { processedURL } from 'helpers/stringHelpers';
@@ -308,7 +308,7 @@ export default function LinkPage() {
           <div
             style={{
               padding: '0.7rem',
-              background: Color[profileTheme](0.9),
+              background: Theme(profileTheme).byUserIndicator,
               color: '#fff',
               display: 'flex',
               justifyContent: 'center',

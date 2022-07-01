@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import FilterBar from 'components/FilterBar';
 import Ranker from './Ranker';
 import { useAppContext } from 'contexts';
-import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 import localize from 'constants/localize';
@@ -92,7 +92,7 @@ export default function GrammarRankings({ mission, myAttempts }) {
             style={{
               display: 'grid',
               gridTemplateColumns: '1fr 1fr 1fr 1fr',
-              background: Color[profileTheme](),
+              background: Theme(profileTheme).tableHeader,
               color: '#fff',
               fontWeight: 'bold',
               padding: '0.5rem 0'

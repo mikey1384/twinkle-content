@@ -14,7 +14,7 @@ import LocalContext from '../../Context';
 import { useAppContext } from 'contexts';
 import { reactionsObj } from 'constants/defaultValues';
 import { css } from '@emotion/css';
-import { Color, borderRadius, innerBorderRadius } from 'constants/css';
+import { Color, Theme, borderRadius, innerBorderRadius } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
 import { isMobile } from 'helpers';
 import { isEqual } from 'lodash';
@@ -167,7 +167,9 @@ function Reaction({
         borderRadius,
         height: '2.3rem',
         border: `1px solid ${
-          userReacted ? Color[profileTheme]() : Color.borderGray()
+          userReacted
+            ? Theme(profileTheme).reactionButtonBorder
+            : Color.borderGray()
         }`,
         background: Color.targetGray(),
         marginRight: '0.5rem',
@@ -176,7 +178,9 @@ function Reaction({
     >
       <div
         style={{
-          ...(userReacted ? { background: Color[profileTheme](0.2) } : {}),
+          ...(userReacted
+            ? { background: Theme(profileTheme).reactionButton }
+            : {}),
           borderRadius: innerBorderRadius,
           cursor: 'pointer',
           width: '100%',

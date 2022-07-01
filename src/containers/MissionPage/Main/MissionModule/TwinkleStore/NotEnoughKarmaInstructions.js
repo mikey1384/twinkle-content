@@ -5,7 +5,7 @@ import Icon from 'components/Icon';
 import MockUsernameSection from './MockUsernameSection';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { css } from '@emotion/css';
-import { Color, mobileMaxWidth } from 'constants/css';
+import { Color, Theme, mobileMaxWidth } from 'constants/css';
 
 NotEnoughKarmaInstructions.propTypes = {
   profileTheme: PropTypes.string,
@@ -104,7 +104,9 @@ export default function NotEnoughKarmaInstructions({
           <ProgressBar
             style={{ width: '100%', marginTop: '1.5rem' }}
             color={
-              unlockProgress === 100 ? Color.green() : Color[profileTheme]()
+              unlockProgress === 100
+                ? Color.green()
+                : Theme(profileTheme).progressBar
             }
             progress={unlockProgress}
           />

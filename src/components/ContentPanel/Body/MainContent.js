@@ -14,10 +14,9 @@ import SecretAnswer from 'components/SecretAnswer';
 import Link from 'components/Link';
 import SecretComment from 'components/SecretComment';
 import MissionContent from './MissionContent';
-import { strongColors } from 'constants/defaultValues';
 import { isMobile, scrollElementToCenter } from 'helpers';
 import { stringIsEmpty, getFileInfoFromFileName } from 'helpers/stringHelpers';
-import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth, Theme } from 'constants/css';
 import { css } from '@emotion/css';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
@@ -154,9 +153,7 @@ export default function MainContent({
             style={{
               ...(subjectIsAttachedToVideo ? { marginTop: '0.5rem' } : {}),
               padding: '0.7rem',
-              background: Color[profileTheme](
-                strongColors.includes(profileTheme) ? 0.7 : 0.9
-              ),
+              background: Theme(profileTheme).byUserIndicator,
               color: '#fff',
               display: 'flex',
               justifyContent: 'center',

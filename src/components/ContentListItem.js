@@ -7,7 +7,7 @@ import SecretAnswer from 'components/SecretAnswer';
 import Loading from 'components/Loading';
 import ContentFileViewer from 'components/ContentFileViewer';
 import { useNavigate } from 'react-router-dom';
-import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
+import { Color, Theme, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useContentContext } from 'contexts';
@@ -71,8 +71,12 @@ function ContentListItem({
       style={{
         cursor: 'pointer',
         borderRadius,
-        boxShadow: selected ? `0 0 5px ${Color[profileTheme](0.8)}` : null,
-        border: selected ? `0.5rem solid ${Color[profileTheme](0.8)}` : null,
+        boxShadow: selected
+          ? `0 0 5px ${Theme(profileTheme).itemSelected}`
+          : null,
+        border: selected
+          ? `0.5rem solid ${Theme(profileTheme).itemSelected}`
+          : null,
         ...style
       }}
       className={css`

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { borderRadius, Color, innerBorderRadius } from 'constants/css';
+import { borderRadius, Color, innerBorderRadius, Theme } from 'constants/css';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 
@@ -22,7 +22,7 @@ export default function ProgressBar({
   text
 }) {
   const { profileTheme } = useMyState();
-  const barColor = color || Color[profileTheme]();
+  const barColor = color || Theme(profileTheme).progressBar;
 
   return (
     <div

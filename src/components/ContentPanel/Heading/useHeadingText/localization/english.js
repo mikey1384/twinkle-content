@@ -1,5 +1,5 @@
 import React from 'react';
-import { Color } from 'constants/css';
+import { Color, Theme } from 'constants/css';
 import UsernameText from 'components/Texts/UsernameText';
 import ContentLink from 'components/ContentLink';
 
@@ -55,7 +55,9 @@ export default function renderEnglishMessage({
           <ContentLink
             content={{ id, title: 'subject ' }}
             contentType={contentType}
-            style={{ color: byUser ? Color[profileTheme]() : Color.green() }}
+            style={{
+              color: byUser ? Theme(profileTheme).userLink : Color.green()
+            }}
           />
           {rootObj.id && (
             <>

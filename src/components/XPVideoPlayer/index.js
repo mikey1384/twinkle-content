@@ -12,12 +12,8 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import XPBar from './XPBar';
 import Link from 'components/Link';
 import playButtonImg from 'assets/play-button-image.png';
-import {
-  videoRewardHash,
-  strongColors,
-  SELECTED_LANGUAGE
-} from 'constants/defaultValues';
-import { Color, mobileMaxWidth } from 'constants/css';
+import { videoRewardHash, SELECTED_LANGUAGE } from 'constants/defaultValues';
+import { Theme, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useViewContext } from 'contexts';
@@ -364,9 +360,7 @@ function XPVideoPlayer({
       {byUser && !isChat && (
         <div
           className={css`
-            background: ${Color[themeColor](
-              strongColors.includes(themeColor) ? 0.7 : 0.9
-            )};
+            background: ${Theme(themeColor).byUserIndicator};
             display: flex;
             align-items: center;
             font-weight: bold;

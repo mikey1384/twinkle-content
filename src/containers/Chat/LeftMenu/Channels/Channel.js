@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Color, desktopMinWidth, mobileMaxWidth } from 'constants/css';
+import { Color, Theme, desktopMinWidth, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
@@ -191,13 +191,13 @@ function Channel({
               style={{
                 color:
                   channelId === 2
-                    ? Color[
+                    ? Theme(
                         profileTheme === 'black'
                           ? 'logoBlue'
                           : profileTheme === 'vantablack'
                           ? 'darkBlue'
                           : profileTheme
-                      ]()
+                      ).generalChat
                     : !effectiveChannelName && !otherMember && '#7c7c7c',
                 fontWeight: 'bold',
                 margin: 0,

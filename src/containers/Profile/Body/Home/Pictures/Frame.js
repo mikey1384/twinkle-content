@@ -40,7 +40,7 @@ export default function Frame({
     <div
       style={style}
       className={css`
-        background: black;
+        background: #fff;
         position: relative;
         border: 1px solid ${Color.borderGray()};
         border-radius: ${borderRadius};

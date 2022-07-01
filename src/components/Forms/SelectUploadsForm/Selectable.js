@@ -5,7 +5,7 @@ import VideoThumbImage from 'components/VideoThumbImage';
 import Embedly from 'components/Embedly';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { isMobile, textIsOverflown } from 'helpers';
-import { Color, mobileMaxWidth } from 'constants/css';
+import { Color, mobileMaxWidth, Theme } from 'constants/css';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
 
@@ -43,9 +43,9 @@ export default function Selectable({
         margin: '0.3%',
         cursor: 'pointer',
         boxShadow: `0 0 5px ${
-          selected ? Color[profileTheme]() : Color.darkerGray()
+          selected ? Theme(profileTheme).itemSelected : Color.darkerGray()
         }`,
-        border: selected && `0.5rem solid ${Color[profileTheme]()}`,
+        border: selected && `0.5rem solid ${Theme(profileTheme).itemSelected}`,
         background: Color.whiteGray()
       }}
     >

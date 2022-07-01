@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
 import { isMobile } from 'helpers';
 import { useMyState } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
@@ -102,9 +102,9 @@ export default function HomeMenuItems({ style = {} }) {
           > nav.active {
             .homemenu__item {
               > .selection {
-                background: ${Color[profileTheme]()};
-                border: 1px solid ${Color[profileTheme]()};
-                box-shadow: 0 0 1px ${Color[profileTheme]()};
+                background: ${Theme(profileTheme).homeMenuItemActive};
+                border: 1px solid ${Theme(profileTheme).homeMenuItemActive};
+                box-shadow: 0 0 1px ${Theme(profileTheme).homeMenuItemActive};
               }
             }
             font-weight: bold;

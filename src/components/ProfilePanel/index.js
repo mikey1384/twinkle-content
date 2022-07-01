@@ -13,7 +13,7 @@ import UserDetails from 'components/UserDetails';
 import Loading from 'components/Loading';
 import { useNavigate } from 'react-router-dom';
 import { MAX_PROFILE_PIC_SIZE } from 'constants/defaultValues';
-import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { useContentState, useLazyLoad, useMyState } from 'helpers/hooks';
@@ -260,7 +260,7 @@ function ProfilePanel({ expandable, profileId, style }) {
           >
             <div
               className={css`
-                background: ${Color[profileTheme || 'logoBlue']()};
+                background: ${Theme(profileTheme || 'logoBlue').profilePanel};
                 min-height: 2.5rem;
                 border-top-right-radius: ${borderRadius};
                 border-top-left-radius: ${borderRadius};

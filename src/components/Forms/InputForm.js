@@ -14,7 +14,7 @@ import Attachment from 'components/Attachment';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import FullTextReveal from 'components/Texts/FullTextReveal';
 import AlertModal from 'components/Modals/AlertModal';
-import { Color } from 'constants/css';
+import { Theme } from 'constants/css';
 import {
   FILE_UPLOAD_XP_REQUIREMENT,
   mb,
@@ -353,7 +353,9 @@ function InputForm({
                 opacity: uploadDisabled ? 0.2 : 1,
                 cursor: uploadDisabled ? 'default' : 'pointer',
                 boxShadow: uploadDisabled ? 'none' : '',
-                borderColor: uploadDisabled ? Color[profileTheme](0.2) : ''
+                borderColor: uploadDisabled
+                  ? Theme(profileTheme).skeuomorphicDisabled
+                  : ''
               }}
             >
               <Icon size="lg" icon="upload" />

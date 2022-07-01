@@ -59,7 +59,7 @@ export default function Checkbox({
           alignItems: 'center',
           justifyContent: 'center',
           cursor: 'pointer',
-          background: checked ? Theme(profileTheme).default : backgroundColor
+          background: checked ? Theme(profileTheme).switch : backgroundColor
         }}
       >
         {checked && (

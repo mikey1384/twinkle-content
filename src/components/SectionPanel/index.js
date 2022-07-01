@@ -8,7 +8,7 @@ import Icon from 'components/Icon';
 import Loading from 'components/Loading';
 import Button from 'components/Button';
 import { addEmoji, stringIsEmpty } from 'helpers/stringHelpers';
-import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useMyState, useOutsideClick } from 'helpers/hooks';
 import localize from 'constants/localize';
@@ -86,7 +86,7 @@ export default function SectionPanel({
           grid-template-areas: 'title search buttons';
           grid-template-columns: auto ${onSearch ? '40%' : 'auto'} auto;
           background: #fff;
-          color: ${Color[themeColor]()};
+          color: ${Theme(themeColor).sectionPanel};
           border-top-left-radius: ${borderRadius};
           border-top-right-radius: ${borderRadius};
           padding: 1rem;
