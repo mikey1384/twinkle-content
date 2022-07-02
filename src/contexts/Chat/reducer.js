@@ -361,7 +361,7 @@ export default function ChatReducer(state, action) {
         ...state,
         channelsObj: {
           ...state.channelsObj,
-          ...(state.channelsObj[action.channelId]
+          ...(state.channelsObj[action.channelId]?.messagesObj
             ? {
                 [action.channelId]: {
                   ...state.channelsObj[action.channelId],
