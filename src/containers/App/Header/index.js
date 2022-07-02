@@ -363,9 +363,6 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
           !isNaN(pathId) ? parseChannelPath(pathId) : selectedChannelId
         );
         onInitChat(data);
-        if (!currentChannelIsAccessible) {
-          return navigate(`/chat/${GENERAL_CHAT_PATH_ID}`);
-        }
         socket.emit(
           'check_online_members',
           selectedChannelId,
@@ -378,6 +375,9 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
             }
           }
         );
+        if (!currentChannelIsAccessible) {
+          return navigate(`/chat/${GENERAL_CHAT_PATH_ID}`);
+        }
       }
 
       async function handleCheckOutdated() {
