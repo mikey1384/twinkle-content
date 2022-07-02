@@ -16,7 +16,7 @@ import URL from 'constants/URL';
 import { socket } from 'constants/io';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
-import { useAppContext, useNotiContext } from 'contexts';
+import { useAppContext, useExploreContext, useNotiContext } from 'contexts';
 import localize from 'constants/localize';
 
 const hideWatchedLabel = localize('hideWatched');
@@ -37,6 +37,17 @@ NavMenu.propTypes = {
 };
 
 export default function NavMenu({ playlistId, videoId, isContinuing }) {
+  const navVideos = useExploreContext((v) => v.state.videos.navVideos);
+  const {
+    nextVideos,
+    relatedVideos,
+    otherVideos,
+    playlistVideos,
+    continueWatching: continueWatchingVideos
+  } = navVideos;
+  const onSetNavVideoState = useExploreContext(
+    (v) => v.actions.onSetNavVideoState
+  );
   const onToggleHideWatched = useAppContext(
     (v) => v.user.actions.onToggleHideWatched
   );
@@ -58,11 +69,6 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
   );
   const onLoadRewards = useNotiContext((v) => v.actions.onLoadRewards);
 
-  const [continueWatchingVideos, setContinueWatchingVideos] = useState([]);
-  const [nextVideos, setNextVideos] = useState([]);
-  const [relatedVideos, setRelatedVideos] = useState([]);
-  const [otherVideos, setOtherVideos] = useState([]);
-  const [playlistVideos, setPlaylistVideos] = useState([]);
   const [rewardsExist, setRewardsExist] = useState(false);
   const [playlistTitle, setPlaylistTitle] = useState();
   const [filtering, setFiltering] = useState(false);
@@ -117,20 +123,20 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
           setPlaylistTitle(data.playlistTitle);
         }
         if (data.continueWatching) {
-          setContinueWatchingVideos(data.continueWatching);
+          onSetNavVideoState({ continueWatching: data.continueWatching });
         }
         if (data.nextVideos) {
-          setNextVideos(data.nextVideos);
+          onSetNavVideoState({ nextVideos: data.nextVideos });
         }
         if (data.relatedVideos) {
-          setRelatedVideos(data.relatedVideos);
+          onSetNavVideoState({ relatedVideos: data.relatedVideos });
         }
         if (data.playlistVideos) {
-          setPlaylistVideos(data.playlistVideos);
+          onSetNavVideoState({ playlistVideos: data.playlistVideos });
         }
         setPlaylistVideosLoadMoreShown(!!data.playlistVideosLoadMoreShown);
         if (data.otherVideos) {
-          setOtherVideos(data.otherVideos);
+          onSetNavVideoState({ otherVideos: data.otherVideos });
         }
         setLoading(false);
       } catch (error) {
@@ -342,7 +348,9 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
         auth()
       );
       setPlaylistVideosLoading(false);
-      setPlaylistVideos(playlistVideos.concat(newPlaylistVideos));
+      onSetNavVideoState({
+        playlistVideos: playlistVideos.concat(newPlaylistVideos)
+      });
       setPlaylistVideosLoadMoreShown(shown);
     } catch (error) {
       console.error(error);

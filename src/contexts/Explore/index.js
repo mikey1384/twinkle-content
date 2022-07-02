@@ -46,10 +46,17 @@ export const initialExploreState = {
     featuredPlaylistsLoaded: false,
     searchedPlaylists: [],
     loadMorePlaylistsButton: false,
-    selectFeaturedPlaylistsModalShown: false,
+    navVideos: {
+      nextVideos: [],
+      relatedVideos: [],
+      otherVideos: [],
+      playlistVideos: [],
+      continueWatching: []
+    },
     loadMoreFeaturedPlaylistsButton: false,
     loadMoreSearchedPlaylistsButton: false,
     playlistsToPin: [],
+    selectFeaturedPlaylistsModalShown: false,
     showingRecommendedVideos: false,
     reorderFeaturedPlaylistsShown: false,
     clickSafe: true

@@ -647,6 +647,17 @@ export default function ExploreReducer(state, action) {
         ...state,
         prevUserId: action.userId
       };
+    case 'SET_NAV_VIDEOS':
+      return {
+        ...state,
+        videos: {
+          ...state.videos,
+          navVideos: {
+            ...state.videos.navVideos,
+            ...action.newState
+          }
+        }
+      };
     case 'SET_REWARD_LEVEL':
       return {
         ...state,

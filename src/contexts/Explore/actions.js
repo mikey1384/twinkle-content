@@ -299,6 +299,12 @@ export default function ExploreActions(dispatch) {
         expanded
       });
     },
+    onSetNavVideoState(newState) {
+      return dispatch({
+        type: 'SET_NAV_VIDEOS',
+        newState
+      });
+    },
     onSetSubjectsLoaded(loaded) {
       return dispatch({
         type: 'SET_SUBJECTS_LOADED',
