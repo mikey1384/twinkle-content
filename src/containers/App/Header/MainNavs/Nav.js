@@ -41,7 +41,7 @@ function Nav({
   style
 }) {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   const onResetProfile = useProfileContext((v) => v.actions.onResetProfile);
   const profileState = useProfileContext((v) => v.state) || {};
   const onReloadContent = useContentContext((v) => v.actions.onReloadContent);
@@ -77,11 +77,11 @@ function Nav({
     ) {
       return 'active';
     }
-    if (pathname === to) {
+    if (pathname + (search || '') === to) {
       return 'active';
     }
     return '';
-  }, [pathname, profileUsername, to]);
+  }, [pathname, profileUsername, search, to]);
 
   return (
     <div

@@ -33,7 +33,7 @@ Header.propTypes = {
 };
 
 export default function Header({ onMobileMenuOpen, style = {} }) {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   const chatMatch = useMemo(
     () =>
       matchPath(
@@ -872,6 +872,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
             numNewPosts={numNewPosts}
             onMobileMenuOpen={onMobileMenuOpen}
             pathname={pathname}
+            search={search}
             totalRewardAmount={
               totalRewardedTwinkles + totalRewardedTwinkleCoins
             }

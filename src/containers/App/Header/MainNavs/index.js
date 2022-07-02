@@ -24,6 +24,7 @@ MainNavs.propTypes = {
   numNewPosts: PropTypes.number,
   onMobileMenuOpen: PropTypes.func.isRequired,
   pathname: PropTypes.string,
+  search: PropTypes.string,
   defaultSearchFilter: PropTypes.string,
   totalRewardAmount: PropTypes.number
 };
@@ -40,6 +41,7 @@ function MainNavs({
   numNewPosts,
   onMobileMenuOpen,
   pathname,
+  search,
   defaultSearchFilter,
   totalRewardAmount
 }) {
@@ -228,7 +230,7 @@ function MainNavs({
       if (contentNav !== section) {
         onSetContentNav(section);
       }
-      onSetContentPath(pathname.substring(1));
+      onSetContentPath(pathname.substring(1) + search || '');
     }
 
     if (profilePageMatch) {
