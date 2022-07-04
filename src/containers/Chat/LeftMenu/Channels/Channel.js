@@ -149,6 +149,11 @@ function Channel({
     return `${Math.min(numDigits, 4)}.5rem`;
   }, [numUnreads]);
 
+  const generalChatColor = useMemo(
+    () => Color[Theme(profileTheme).generalChat.color](),
+    [profileTheme]
+  );
+
   return (
     <div
       key={channelId}
@@ -191,13 +196,7 @@ function Channel({
               style={{
                 color:
                   channelId === 2
-                    ? Theme(
-                        profileTheme === 'black'
-                          ? 'logoBlue'
-                          : profileTheme === 'vantablack'
-                          ? 'darkBlue'
-                          : profileTheme
-                      ).generalChat
+                    ? generalChatColor
                     : !effectiveChannelName && !otherMember && '#7c7c7c',
                 fontWeight: 'bold',
                 margin: 0,

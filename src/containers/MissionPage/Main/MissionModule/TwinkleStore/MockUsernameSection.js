@@ -7,7 +7,7 @@ import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
 import { priceTable } from 'constants/defaultValues';
 import { addCommasToNumber } from 'helpers/stringHelpers';
-import { borderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 
 ItemPanel.propTypes = {
   requiredKarmaPoints: PropTypes.number,
@@ -24,7 +24,7 @@ export default function ItemPanel({
   karmaPoints,
   unlockProgress
 }) {
-  const { canChangeUsername, profileTheme } = useMyState();
+  const { canChangeUsername } = useMyState();
 
   return (
     <div
@@ -87,11 +87,7 @@ export default function ItemPanel({
         </div>
       </div>
       <ProgressBar
-        color={
-          unlockProgress === 100
-            ? Color.green()
-            : Theme(profileTheme).progressBar
-        }
+        color={unlockProgress === 100 ? Color.green() : null}
         progress={unlockProgress}
       />
       <p

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { borderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
@@ -33,6 +33,10 @@ export default function HomeMenuItems({ style = {} }) {
     (v) => v.user.actions.onSetProfilesLoaded
   );
   const { managementLevel, profileTheme } = useMyState();
+  const homeMenuItemActiveColor = useMemo(
+    () => Color[Theme(profileTheme).homeMenuItemActive.color](),
+    [profileTheme]
+  );
 
   return (
     <ErrorBoundary componentPath="HomeMenuItems">
@@ -102,9 +106,9 @@ export default function HomeMenuItems({ style = {} }) {
           > nav.active {
             .homemenu__item {
               > .selection {
-                background: ${Theme(profileTheme).homeMenuItemActive};
-                border: 1px solid ${Theme(profileTheme).homeMenuItemActive};
-                box-shadow: 0 0 1px ${Theme(profileTheme).homeMenuItemActive};
+                background: ${homeMenuItemActiveColor};
+                border: 1px solid ${homeMenuItemActiveColor};
+                box-shadow: 0 0 1px ${homeMenuItemActiveColor};
               }
             }
             font-weight: bold;

@@ -242,6 +242,14 @@ export default function LinkPage() {
     [byUser, rewards, userId, xpRewardInterfaceShown]
   );
 
+  const byUserIndicatorBackgroundColor = useMemo(
+    () =>
+      Color[Theme(profileTheme).byUserIndicator.color](
+        Theme(profileTheme).byUserIndicator.opacity
+      ),
+    [profileTheme]
+  );
+
   useEffect(() => {
     onSetXpRewardInterfaceShown({
       contentType: 'url',
@@ -308,7 +316,7 @@ export default function LinkPage() {
           <div
             style={{
               padding: '0.7rem',
-              background: Theme(profileTheme).byUserIndicator,
+              background: byUserIndicatorBackgroundColor,
               color: '#fff',
               display: 'flex',
               justifyContent: 'center',

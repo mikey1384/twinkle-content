@@ -1136,6 +1136,8 @@ function MessagesContainer({
         <SubjectMsgsModal
           subjectId={subjectMsgsModal.subjectId}
           subjectTitle={subjectMsgsModal.content}
+          channelId={selectedChannelId}
+          theme={currentChannel.theme}
           onHide={() =>
             setSubjectMsgsModal({
               shown: false,

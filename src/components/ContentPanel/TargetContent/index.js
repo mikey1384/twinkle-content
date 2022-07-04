@@ -20,7 +20,7 @@ import ContentFileViewer from 'components/ContentFileViewer';
 import SecretComment from 'components/SecretComment';
 import Icon from 'components/Icon';
 import LoginToViewContent from 'components/LoginToViewContent';
-import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { timeSince } from 'helpers/timeStampHelpers';
 import {
@@ -75,6 +75,7 @@ export default function TargetContent({
     authLevel,
     canReward,
     profilePicUrl,
+    profileTheme,
     userId,
     twinkleCoins,
     username
@@ -179,6 +180,11 @@ export default function TargetContent({
     [comment, finalRewardLevel, userId, xpRewardInterfaceShown]
   );
 
+  const contentLinkCommentColor = useMemo(
+    () => Color[Theme(profileTheme).comment.color](),
+    [profileTheme]
+  );
+
   const DetailText = useMemo(() => {
     return (
       <div>
@@ -204,7 +210,7 @@ export default function TargetContent({
               }:`
             }}
             contentType="comment"
-            style={{ color: Color.green() }}
+            style={{ color: contentLinkCommentColor }}
           />
         </>
       );
@@ -228,13 +234,13 @@ export default function TargetContent({
               }`
             }}
             contentType="comment"
-            style={{ color: Color.green() }}
+            style={{ color: contentLinkCommentColor }}
           />
           :
         </>
       );
     }
-  }, [comment.id, comment.uploader, rootType, type]);
+  }, [comment.id, comment.uploader, contentLinkCommentColor, rootType, type]);
 
   useEffect(() => {
     onSetXpRewardInterfaceShown({

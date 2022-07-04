@@ -19,7 +19,7 @@ import XPRewardInterface from 'components/XPRewardInterface';
 import RecommendationStatus from 'components/RecommendationStatus';
 import RecommendationInterface from 'components/RecommendationInterface';
 import { css } from '@emotion/css';
-import { Color, mobileMaxWidth } from 'constants/css';
+import { Color, Theme, mobileMaxWidth } from 'constants/css';
 import { stringIsEmpty, addEmoji, finalizeEmoji } from 'helpers/stringHelpers';
 import { determineXpButtonDisabled } from 'helpers';
 import { timeSince } from 'helpers/timeStampHelpers';
@@ -91,6 +91,7 @@ export default function SubjectPanel({
     canDelete,
     canEdit,
     canReward,
+    profileTheme,
     twinkleCoins,
     userId: myId
   } = useMyState();
@@ -181,9 +182,12 @@ export default function SubjectPanel({
     description,
     secretAnswer
   ]);
-
   const CommentsRef = useRef(null);
   const RewardInterfaceRef = useRef(null);
+  const contentLinkSubjectColor = useMemo(
+    () => Color[Theme(profileTheme).subject.color](),
+    [profileTheme]
+  );
 
   return !isDeleted ? (
     <div
@@ -212,7 +216,7 @@ export default function SubjectPanel({
               to={`/subjects/${subjectId}`}
               style={{
                 fontSize: '2.5rem',
-                color: Color.green(),
+                color: contentLinkSubjectColor,
                 fontWeight: 'bold'
               }}
             >

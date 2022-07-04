@@ -1,4 +1,11 @@
-import React, { memo, useEffect, useCallback, useRef, useState } from 'react';
+import React, {
+  memo,
+  useEffect,
+  useMemo,
+  useCallback,
+  useRef,
+  useState
+} from 'react';
 import PropTypes from 'prop-types';
 import UsernameText from 'components/Texts/UsernameText';
 import Link from 'components/Link';
@@ -68,6 +75,14 @@ function VideoThumb({ className, clickSafe, style, to, user, video }) {
     }
   }, [titleContext]);
 
+  const byUserColor = useMemo(
+    () =>
+      Color[Theme(profileTheme).byUserIndicator.color](
+        Theme(profileTheme).byUserIndicator.opacity
+      ),
+    [profileTheme]
+  );
+
   return !isDeleted ? (
     <ErrorBoundary componentPath="VideoThumb" style={style}>
       <div
@@ -123,9 +138,7 @@ function VideoThumb({ className, clickSafe, style, to, user, video }) {
             >
               <a
                 style={{
-                  color: video.byUser
-                    ? Theme(profileTheme).videoThumbTitle
-                    : Color.blue()
+                  color: video.byUser ? byUserColor : Color.blue()
                 }}
                 href={`/${to}`}
                 onClick={onLinkClick}

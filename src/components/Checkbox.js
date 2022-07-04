@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { innerBorderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
@@ -24,6 +24,11 @@ export default function Checkbox({
   textIsClickable
 }) {
   const { profileTheme } = useMyState();
+  const switchColor = useMemo(
+    () => Color[Theme(profileTheme).switch.color](),
+    [profileTheme]
+  );
+
   return (
     <div
       className={className}
@@ -59,7 +64,7 @@ export default function Checkbox({
           alignItems: 'center',
           justifyContent: 'center',
           cursor: 'pointer',
-          background: checked ? Theme(profileTheme).switch : backgroundColor
+          background: checked ? switchColor : backgroundColor
         }}
       >
         {checked && (

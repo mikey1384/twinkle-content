@@ -1,10 +1,10 @@
-import React, { memo, useCallback, useState } from 'react';
+import React, { memo, useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
 import SearchInput from 'components/Texts/SearchInput';
 import { useMyState, useSearch } from 'helpers/hooks';
 import { useAppContext, useChatContext } from 'contexts';
-import { Color } from 'constants/css';
+import { Color, Theme } from 'constants/css';
 import { useNavigate } from 'react-router-dom';
 
 ChatSearchBox.propTypes = {
@@ -14,7 +14,8 @@ ChatSearchBox.propTypes = {
 function ChatSearchBox({ style }) {
   const navigate = useNavigate();
   const searchChat = useAppContext((v) => v.requestHelpers.searchChat);
-  const { profilePicUrl, userId, username, authLevel } = useMyState();
+  const { profilePicUrl, profileTheme, userId, username, authLevel } =
+    useMyState();
   const chatSearchResults = useChatContext((v) => v.state.chatSearchResults);
   const selectedChannelId = useChatContext((v) => v.state.selectedChannelId);
   const onClearChatSearchResults = useChatContext(
@@ -56,6 +57,10 @@ function ChatSearchBox({ style }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [authLevel, profilePicUrl, selectedChannelId, userId, username]
   );
+  const generalChatColor = useMemo(
+    () => Color[Theme(profileTheme).generalChat.color](),
+    [profileTheme]
+  );
 
   return (
     <div style={style}>
@@ -73,7 +78,8 @@ function ChatSearchBox({ style }) {
           ) : (
             <span
               style={{
-                color: item.channelId === 2 ? Color.green() : Color.logoBlue(),
+                color:
+                  item.channelId === 2 ? generalChatColor : Color.logoBlue(),
                 fontWeight: 'bold'
               }}
             >

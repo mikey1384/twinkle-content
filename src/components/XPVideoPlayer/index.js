@@ -13,7 +13,7 @@ import XPBar from './XPBar';
 import Link from 'components/Link';
 import playButtonImg from 'assets/play-button-image.png';
 import { videoRewardHash, SELECTED_LANGUAGE } from 'constants/defaultValues';
-import { Theme, mobileMaxWidth } from 'constants/css';
+import { Color, Theme, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useContentState, useMyState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useViewContext } from 'contexts';
@@ -123,10 +123,16 @@ function XPVideoPlayer({
   const watchCodeRef = useRef(Math.floor(Math.random() * 10_000));
   const rewardingCoin = useRef(false);
   const rewardingXP = useRef(false);
-  const themeColor = profileTheme || 'logoBlue';
   const rewardLevelRef = useRef(0);
   const pageVisibleRef = useRef(pageVisible);
   const twinkleCoinsRef = useRef(twinkleCoins);
+  const byUserIndicatorBackgroundColor = useMemo(
+    () =>
+      Color[Theme(profileTheme).byUserIndicator.color](
+        Theme(profileTheme).byUserIndicator.opacity
+      ),
+    [profileTheme]
+  );
 
   useEffect(() => {
     pageVisibleRef.current = pageVisible;
@@ -360,7 +366,7 @@ function XPVideoPlayer({
       {byUser && !isChat && (
         <div
           className={css`
-            background: ${Theme(themeColor).byUserIndicator};
+            background: ${byUserIndicatorBackgroundColor};
             display: flex;
             align-items: center;
             font-weight: bold;

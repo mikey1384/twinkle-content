@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Carousel from 'components/Carousel';
 import VideoThumb from 'components/VideoThumb';
@@ -23,6 +23,7 @@ const reorderVideosLabel = localize('reorderVideos');
 const removeLabel = localize('remove');
 const removePlaylistLabel = localize('removePlaylist');
 const cellSpacing = 12;
+const numSlides = 4;
 
 PlaylistCarousel.propTypes = {
   userIsUploader: PropTypes.bool,
@@ -60,7 +61,10 @@ export default function PlaylistCarousel({
     useState(false);
   const [deleteConfirmModalShown, setDeleteConfirmModalShown] = useState(false);
   const [playlistModalShown, setPlaylistModalShown] = useState(false);
-  const numSlides = 4;
+  const carouselLinkHoverColor = useMemo(
+    () => Color[Theme(profileTheme).carousel.color](),
+    [profileTheme]
+  );
 
   return (
     <div
@@ -87,7 +91,7 @@ export default function PlaylistCarousel({
               text-decoration: none;
               &:hover {
                 transition: color 0.3s;
-                color: ${Theme(profileTheme).carousel};
+                color: ${carouselLinkHoverColor};
               }
             }
           }

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import Body from './Body';
@@ -70,6 +70,10 @@ export default function SectionPanel({
     setOnEdit(false);
     setEditedTitle(title);
   });
+  const sectionPanelTitleColor = useMemo(
+    () => Color[Theme(themeColor).sectionPanel.color](),
+    [themeColor]
+  );
 
   return (
     <div
@@ -86,7 +90,7 @@ export default function SectionPanel({
           grid-template-areas: 'title search buttons';
           grid-template-columns: auto ${onSearch ? '40%' : 'auto'} auto;
           background: #fff;
-          color: ${Theme(themeColor).sectionPanel};
+          color: ${sectionPanelTitleColor};
           border-top-left-radius: ${borderRadius};
           border-top-right-radius: ${borderRadius};
           padding: 1rem;

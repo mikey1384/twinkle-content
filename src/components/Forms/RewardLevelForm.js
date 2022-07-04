@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
-import { Theme } from 'constants/css';
+import { Color, Theme } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
 import localize from 'constants/localize';
 
@@ -33,6 +33,14 @@ export default function RewardLevelForm({
   style
 }) {
   const { authLevel, profileTheme } = useMyState();
+  const rewardLevelFormColor = useMemo(
+    () =>
+      Color[Theme(profileTheme).rewardLevelForm.color](
+        Theme(profileTheme).rewardLevelForm.opacity
+      ),
+    [profileTheme]
+  );
+
   useEffect(() => {
     if (alreadyPosted) {
       onSetRewardLevel(0);
@@ -57,7 +65,7 @@ export default function RewardLevelForm({
     <div
       style={{
         ...style,
-        background: themed ? Theme(profileTheme).rewardLevelForm : '',
+        background: themed ? rewardLevelFormColor : '',
         color: themed ? '#fff' : ''
       }}
     >

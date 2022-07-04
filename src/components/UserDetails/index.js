@@ -82,6 +82,13 @@ export default function UserDetails({
         : profile.statusMsg,
     [editedStatusMsg, profile.id, profile.statusMsg, userId]
   );
+  const usernameHoverColor = useMemo(
+    () =>
+      Color[Theme(profile.profileTheme || 'logoBlue').userLink.color](
+        Theme(profile.profileTheme || 'logoBlue').userLink.opacity
+      ),
+    [profile.profileTheme]
+  );
 
   return (
     <ErrorBoundary
@@ -111,8 +118,7 @@ export default function UserDetails({
             : css`
                 transition: color 0.2s;
                 &:hover {
-                  color: ${Theme(profile.profileTheme || 'logoBlue')
-                    .userDetails}!important;
+                  color: ${usernameHoverColor}!important;
                 }
               `
         }

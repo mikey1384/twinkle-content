@@ -7,7 +7,7 @@ import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
-import { borderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import localize from 'constants/localize';
 
 const freeLabel = localize('free');
@@ -42,7 +42,7 @@ export default function ItemPanel({
   upgradeIcon
 }) {
   const [highlighted, setHighlighted] = useState(false);
-  const { profileTheme, userId } = useMyState();
+  const { userId } = useMyState();
   const unlockProgress = useMemo(() => {
     return Math.floor(Math.min((karmaPoints * 100) / requiredKarmaPoints, 100));
   }, [karmaPoints, requiredKarmaPoints]);
@@ -185,11 +185,7 @@ export default function ItemPanel({
               </div>
             )}
             <ProgressBar
-              color={
-                unlockProgress === 100
-                  ? Color.green()
-                  : Theme(profileTheme).progressBar
-              }
+              color={unlockProgress === 100 ? Color.green() : null}
               progress={unlockProgress}
             />
             <p

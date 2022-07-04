@@ -1,10 +1,11 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { addCommasToNumber } from 'helpers/stringHelpers';
-import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
+import { useMyState } from 'helpers/hooks';
+import { Color, Theme, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import localize from 'constants/localize';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
+import localize from 'constants/localize';
 
 const unrankedLabel = localize('unranked');
 
@@ -23,6 +24,11 @@ export default function MyRank({
   style,
   twinkleXP
 }) {
+  const { profileTheme } = useMyState();
+  const xpNumberColor = useMemo(
+    () => Color[Theme(profileTheme).xpNumber.color](),
+    [profileTheme]
+  );
   const rankedColor = useMemo(
     () =>
       rank === 1
@@ -93,7 +99,7 @@ export default function MyRank({
         <span
           style={{
             fontWeight: 'bold',
-            color: rankedColor || Color.logoGreen()
+            color: rankedColor || xpNumberColor
           }}
         >
           {twinkleXP ? addCommasToNumber(twinkleXP) : 0}

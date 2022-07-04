@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import VideoThumbImage from 'components/VideoThumbImage';
 import Embedly from 'components/Embedly';
@@ -65,18 +65,22 @@ function ContentListItem({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loaded]);
 
+  const selectedItemColor = useMemo(
+    () =>
+      Color[Theme(profileTheme).itemSelected.color](
+        Theme(profileTheme).itemSelected.opacity
+      ),
+    [profileTheme]
+  );
+
   return !!notFound || !!isDeleted ? null : (
     <div
       onClick={onClick}
       style={{
         cursor: 'pointer',
         borderRadius,
-        boxShadow: selected
-          ? `0 0 5px ${Theme(profileTheme).itemSelected}`
-          : null,
-        border: selected
-          ? `0.5rem solid ${Theme(profileTheme).itemSelected}`
-          : null,
+        boxShadow: selected ? `0 0 5px ${selectedItemColor}` : null,
+        border: selected ? `0.5rem solid ${selectedItemColor}` : null,
         ...style
       }}
       className={css`

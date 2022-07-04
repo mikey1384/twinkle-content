@@ -82,13 +82,19 @@ export default function RecommendationStatus({
     return ' and';
   }, [recommendationsByUsertypeExceptMe.length]);
 
+  const rewardableRecommendationColor = useMemo(
+    () =>
+      Color[Theme(profileTheme).rewardableRecommendation.color](
+        Theme(profileTheme).rewardableRecommendation.opacity
+      ),
+    [profileTheme]
+  );
+
   return recommendations.length > 0 ? (
     <div
       style={{
         padding: '0.5rem',
-        ...(isRewardable
-          ? { background: Theme(profileTheme).rewardableRecommendation }
-          : {}),
+        ...(isRewardable ? { background: rewardableRecommendationColor } : {}),
         borderTop: `1px solid ${Color.borderGray()}`,
         borderBottom: `1px solid ${Color.borderGray()}`,
         marginBottom: '1rem',

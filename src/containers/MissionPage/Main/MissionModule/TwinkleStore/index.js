@@ -13,7 +13,7 @@ TwinkleStore.propTypes = {
 };
 
 export default function TwinkleStore({ mission }) {
-  const { canChangeUsername, userId, karmaPoints, profileTheme } = useMyState();
+  const { canChangeUsername, userId, karmaPoints } = useMyState();
   const loadKarmaPoints = useAppContext(
     (v) => v.requestHelpers.loadKarmaPoints
   );
@@ -73,7 +73,6 @@ export default function TwinkleStore({ mission }) {
           <EnoughKarmaInstructions requiredKarmaPoints={requiredKarmaPoints} />
         ) : (
           <NotEnoughKarmaInstructions
-            profileTheme={profileTheme}
             unlockProgress={unlockProgress}
             requiredKarmaPoints={requiredKarmaPoints}
             karmaPoints={karmaPoints}

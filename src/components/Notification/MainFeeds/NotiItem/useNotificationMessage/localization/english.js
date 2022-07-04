@@ -1,6 +1,6 @@
 import React from 'react';
 import { stringIsEmpty, truncateText } from 'helpers/stringHelpers';
-import { Color } from 'constants/css';
+import { Color, Theme } from 'constants/css';
 import ContentLink from 'components/ContentLink';
 
 export default function renderEnglishMessage({
@@ -9,6 +9,7 @@ export default function renderEnglishMessage({
   isReply,
   isSubjectResponse,
   isTask,
+  profileTheme,
   rewardRootId,
   rewardType,
   rewardRootMissionType,
@@ -22,6 +23,7 @@ export default function renderEnglishMessage({
     targetObj.contentType === 'pass'
       ? targetObj.missionTitle
       : targetObj.content;
+
   const contentPreview = `${
     targetObj.contentType === 'url'
       ? 'link'
@@ -36,6 +38,11 @@ export default function renderEnglishMessage({
         })})`
       : ''
   }`;
+
+  const contentLinkCommentColor = Color[Theme(profileTheme).comment.color]();
+  const contentLinkSubjectColor = Color[Theme(profileTheme).subject.color]();
+  const missionLinkColor = Color[Theme(profileTheme).mission.color]();
+
   switch (actionObj.contentType) {
     case 'like':
       return (
@@ -126,7 +133,7 @@ export default function renderEnglishMessage({
           <>
             <b style={{ color: Color.pink() }}>also recommended</b>{' '}
             <ContentLink
-              style={{ color: Color.green() }}
+              style={{ color: missionLinkColor }}
               content={{
                 id: rewardRootId,
                 title: `this ${
@@ -175,7 +182,7 @@ export default function renderEnglishMessage({
                 ? 'left a message on'
                 : 'commented on'
             }}
-            style={{ color: Color.green() }}
+            style={{ color: contentLinkCommentColor }}
           />{' '}
           your{' '}
           <ContentLink
@@ -229,7 +236,7 @@ export default function renderEnglishMessage({
                     limit: 100
                   })}"`
                 }}
-                style={{ color: Color.green() }}
+                style={{ color: contentLinkCommentColor }}
               />
             </>
           )}
@@ -248,7 +255,7 @@ export default function renderEnglishMessage({
                 limit: 100
               })})`
             }}
-            style={{ color: Color.green() }}
+            style={{ color: contentLinkSubjectColor }}
           />{' '}
           <span>to your </span>
           <ContentLink

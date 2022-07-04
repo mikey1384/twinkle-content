@@ -65,6 +65,13 @@ export default function SecretMessageInput({
       !userId || (authLevel === 0 && twinkleXP < FILE_UPLOAD_XP_REQUIREMENT),
     [authLevel, twinkleXP, userId]
   );
+  const uploadButtonDisabledColor = useMemo(
+    () =>
+      Color[Theme(profileTheme).skeuomorphicDisabled.color](
+        Theme(profileTheme).skeuomorphicDisabled.opacity
+      ),
+    [profileTheme]
+  );
 
   return (
     <div style={{ marginTop: '0.5rem' }}>
@@ -123,9 +130,7 @@ export default function SecretMessageInput({
                   opacity: disabled ? 0.2 : 1,
                   cursor: disabled ? 'default' : 'pointer',
                   boxShadow: disabled ? 'none' : '',
-                  borderColor: disabled
-                    ? Theme(profileTheme).skeuomorphicDisabled
-                    : ''
+                  borderColor: disabled ? uploadButtonDisabledColor : ''
                 }}
               >
                 <Icon size="lg" icon="upload" />

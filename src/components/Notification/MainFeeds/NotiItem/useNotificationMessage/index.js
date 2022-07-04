@@ -18,7 +18,7 @@ export default function useNotificationMessage({
   rootMissionType,
   user
 }) {
-  const { userId } = useMyState();
+  const { userId, profileTheme } = useMyState();
   const NotificationMessage = useMemo(() => {
     const isReply = targetComment?.userId === userId;
     const isSubjectResponse = targetSubject?.userId === userId;
@@ -28,6 +28,7 @@ export default function useNotificationMessage({
       isReply,
       isSubjectResponse,
       isTask,
+      profileTheme,
       rewardRootId,
       rewardType,
       rewardRootMissionType,
@@ -45,6 +46,7 @@ export default function useNotificationMessage({
     actionObj,
     isNotification,
     isTask,
+    profileTheme,
     rewardRootId,
     rewardRootMissionType,
     rewardRootType,

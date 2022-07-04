@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { borderRadius, Color, innerBorderRadius, Theme } from 'constants/css';
 import { css } from '@emotion/css';
@@ -22,7 +22,10 @@ export default function ProgressBar({
   text
 }) {
   const { profileTheme } = useMyState();
-  const barColor = color || Theme(profileTheme).progressBar;
+  const barColor = useMemo(
+    () => color || Color[Theme(profileTheme).progressBar.color](),
+    [color, profileTheme]
+  );
 
   return (
     <div

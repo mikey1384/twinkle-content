@@ -150,6 +150,18 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
     setRewardsExist(totalRewardedTwinkles + totalRewardedTwinkleCoins > 0);
   }, [totalRewardedTwinkles, totalRewardedTwinkleCoins]);
 
+  const byUserIndicatorBackgroundColor = useMemo(
+    () =>
+      Color[Theme(profileTheme).byUserIndicator.color](
+        Theme(profileTheme).byUserIndicator.opacity
+      ),
+    [profileTheme]
+  );
+  const spinnerColor = useMemo(
+    () => Color[Theme(profileTheme).spinner.color](),
+    [profileTheme]
+  );
+
   return (
     <ErrorBoundary
       componentPath="VideoPage/NavMenu"
@@ -219,7 +231,7 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
             <Icon
               style={{
                 marginRight: '1rem',
-                color: Theme(profileTheme).spinner
+                color: spinnerColor
               }}
               icon="spinner"
               pulse
@@ -406,7 +418,7 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
             }`}
             style={{
               color: video.byUser
-                ? Theme(profileTheme).byUserIndicator
+                ? byUserIndicatorBackgroundColor
                 : Color.blue()
             }}
           >

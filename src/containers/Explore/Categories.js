@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Checkbox from 'components/Checkbox';
 import Link from 'components/Link';
@@ -29,6 +29,10 @@ export default function Categories({
   );
   const { searchFilter: defaultSearchFilter, profileTheme } = useMyState();
   const [changingDefaultFilter, setChangingDefaultFilter] = useState(false);
+  const categoriesLabelColor = useMemo(
+    () => Color[Theme(profileTheme).categories.color](),
+    [profileTheme]
+  );
 
   return (
     <div
@@ -43,7 +47,7 @@ export default function Categories({
       <div
         className={css`
           width: 80%;
-          color: ${Theme(profileTheme).categories};
+          color: ${categoriesLabelColor};
           > nav {
             width: 100%;
             text-align: center;
@@ -71,7 +75,7 @@ export default function Categories({
               transition: color 0.1s;
               &:hover {
                 text-decoration: none;
-                color: ${Theme(profileTheme).categories};
+                color: ${categoriesLabelColor};
               }
               @media (max-width: ${mobileMaxWidth}) {
                 font-size: 1.7rem;

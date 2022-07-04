@@ -5,13 +5,14 @@ import UsernameText from 'components/Texts/UsernameText';
 import ContentFileViewer from 'components/ContentFileViewer';
 import LongText from 'components/Texts/LongText';
 import { MessageStyle } from '../../Styles';
-import { Color, mobileMaxWidth } from 'constants/css';
+import { mobileMaxWidth } from 'constants/css';
 import { unix } from 'moment';
 import { css } from '@emotion/css';
 
 Message.propTypes = {
   id: PropTypes.number,
   content: PropTypes.string,
+  defaultTopicColor: PropTypes.string,
   fileName: PropTypes.string,
   filePath: PropTypes.string,
   fileSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -26,6 +27,7 @@ Message.propTypes = {
 
 export default function Message({
   content,
+  defaultTopicColor,
   id: messageId,
   fileName,
   filePath,
@@ -103,11 +105,11 @@ export default function Message({
           <div className={MessageStyle.messageWrapper}>
             <LongText
               style={{
-                color: isReloadedSubject && Color.green(),
+                color: isReloadedSubject && defaultTopicColor,
                 fontWeight: isReloadedSubject && 'bold'
               }}
             >
-              {isReloadedSubject ? 'Brought back the subject' : content}
+              {isReloadedSubject ? 'Brought back the topic' : content}
             </LongText>
           </div>
         </div>

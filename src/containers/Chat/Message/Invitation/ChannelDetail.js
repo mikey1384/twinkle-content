@@ -54,6 +54,10 @@ export default function ChannelDetail({
     }
     return `and ${more} more`;
   }, [more]);
+  const invitationColor = useMemo(
+    () => Color[Theme(profileTheme).chatInvitation.color](),
+    [profileTheme]
+  );
 
   return (
     <div
@@ -75,7 +79,7 @@ export default function ChannelDetail({
           line-height: 1.3;
           font-weight: bold;
           font-size: 2.2rem;
-          color: ${Theme(profileTheme).chatInvitation};
+          color: ${invitationColor};
           cursor: ${alreadyJoined ? 'pointer' : 'default'};
           @media (max-width: ${mobileMaxWidth}) {
             font-size: 1.5rem;

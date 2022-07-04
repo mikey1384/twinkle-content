@@ -160,6 +160,18 @@ function Reaction({
     onAddReaction();
   }, [onAddReaction, onRemoveReaction, userReacted]);
 
+  const reactionButtonColor = useMemo(
+    () =>
+      Color[Theme(profileTheme).reactionButton.color](
+        Theme(profileTheme).reactionButton.opacity
+      ),
+    [profileTheme]
+  );
+  const reactionButtonBorderColor = useMemo(
+    () => Color[Theme(profileTheme).reactionButton.color](),
+    [profileTheme]
+  );
+
   return (
     <div
       ref={ReactionRef}
@@ -167,9 +179,7 @@ function Reaction({
         borderRadius,
         height: '2.3rem',
         border: `1px solid ${
-          userReacted
-            ? Theme(profileTheme).reactionButtonBorder
-            : Color.borderGray()
+          userReacted ? reactionButtonBorderColor : Color.borderGray()
         }`,
         background: Color.targetGray(),
         marginRight: '0.5rem',
@@ -178,9 +188,7 @@ function Reaction({
     >
       <div
         style={{
-          ...(userReacted
-            ? { background: Theme(profileTheme).reactionButton }
-            : {}),
+          ...(userReacted ? { background: reactionButtonColor } : {}),
           borderRadius: innerBorderRadius,
           cursor: 'pointer',
           width: '100%',

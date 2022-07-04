@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import FullTextReveal from 'components/Texts/FullTextReveal';
 import VideoThumbImage from 'components/VideoThumbImage';
@@ -29,6 +29,13 @@ export default function Selectable({
   const { profileTheme } = useMyState();
   const [onTitleHover, setOnTitleHover] = useState(false);
   const ThumbLabelRef = useRef(null);
+  const selectedItemColor = useMemo(
+    () =>
+      Color[Theme(profileTheme).itemSelected.color](
+        Theme(profileTheme).itemSelected.opacity
+      ),
+    [profileTheme]
+  );
 
   return (
     <ErrorBoundary
@@ -43,9 +50,9 @@ export default function Selectable({
         margin: '0.3%',
         cursor: 'pointer',
         boxShadow: `0 0 5px ${
-          selected ? Theme(profileTheme).itemSelected : Color.darkerGray()
+          selected ? selectedItemColor : Color.darkerGray()
         }`,
-        border: selected && `0.5rem solid ${Theme(profileTheme).itemSelected}`,
+        border: selected && `0.5rem solid ${selectedItemColor}`,
         background: Color.whiteGray()
       }}
     >

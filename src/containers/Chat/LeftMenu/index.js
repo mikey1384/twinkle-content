@@ -1,11 +1,11 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ChatSearchBox from './ChatSearchBox';
 import Channels from './Channels';
 import Vocabulary from './Vocabulary';
 import Icon from 'components/Icon';
 import Tabs from './Tabs';
-import { Theme, desktopMinWidth, mobileMaxWidth } from 'constants/css';
+import { Color, Theme, desktopMinWidth, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useChatContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
@@ -23,6 +23,17 @@ function LeftMenu({ onNewButtonClick }) {
   const { profileTheme } = useMyState();
   const chatType = useChatContext((v) => v.state.chatType);
   const loadingVocabulary = useChatContext((v) => v.state.loadingVocabulary);
+  const leftMenuTopButtonColor = useMemo(
+    () =>
+      Color[Theme(profileTheme).chatFlatButton.color](
+        Theme(profileTheme).chatFlatButton.opacity
+      ),
+    [profileTheme]
+  );
+  const leftMenuTopButtonHoverColor = useMemo(
+    () => Color[Theme(profileTheme).chatFlatButton.color](),
+    [profileTheme]
+  );
 
   return (
     <div
@@ -42,7 +53,7 @@ function LeftMenu({ onNewButtonClick }) {
       <div
         className={`unselectable ${css`
           padding: 1rem;
-          background: ${Theme(profileTheme).chatFlatButton};
+          background: ${leftMenuTopButtonColor};
           color: #fff;
           display: flex;
           justify-content: center;
@@ -50,11 +61,11 @@ function LeftMenu({ onNewButtonClick }) {
           cursor: pointer;
           transition: background 0.2s;
           @media (max-width: ${mobileMaxWidth}) {
-            background: ${Theme(profileTheme).default};
+            background: ${leftMenuTopButtonHoverColor};
           }
           @media (min-width: ${desktopMinWidth}) {
             &:hover {
-              background: ${Theme(profileTheme).default};
+              background: ${leftMenuTopButtonHoverColor};
             }
           }
         `}`}

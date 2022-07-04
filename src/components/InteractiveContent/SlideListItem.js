@@ -30,17 +30,20 @@ export default function SlideListItem({
     () => selectedSlideId === slide.id,
     [selectedSlideId, slide.id]
   );
+  const selectedItemColor = useMemo(
+    () =>
+      Color[Theme(profileTheme).itemSelected.color](
+        Theme(profileTheme).itemSelected.opacity
+      ),
+    [profileTheme]
+  );
 
   return (
     <div
       style={{
         ...style,
-        boxShadow: selected
-          ? `0 0 3px ${Theme(profileTheme).itemSelected}`
-          : null,
-        border: selected
-          ? `0.3rem solid ${Theme(profileTheme).itemSelected}`
-          : null
+        boxShadow: selected ? `0 0 3px ${selectedItemColor}` : null,
+        border: selected ? `0.3rem solid ${selectedItemColor}` : null
       }}
       onClick={() => onClick(slide.id)}
       className={css`

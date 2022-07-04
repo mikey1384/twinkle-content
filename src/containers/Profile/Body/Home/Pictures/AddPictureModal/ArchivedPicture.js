@@ -16,6 +16,8 @@ ArchivedPicture.propTypes = {
   style: PropTypes.object
 };
 
+const width = 25;
+
 export default function ArchivedPicture({
   onSelect,
   picture,
@@ -35,7 +37,13 @@ export default function ArchivedPicture({
     () => selectedPictureIds.includes(picture.id),
     [picture.id, selectedPictureIds]
   );
-  const width = 25;
+  const selectedItemColor = useMemo(
+    () =>
+      Color[Theme(profileTheme).itemSelected.color](
+        Theme(profileTheme).itemSelected.opacity
+      ),
+    [profileTheme]
+  );
 
   return (
     <div
@@ -48,11 +56,9 @@ export default function ArchivedPicture({
       style={{
         ...style,
         borderRadius,
-        boxShadow: isSelected
-          ? `0 0 5px ${Theme(profileTheme).itemSelected}`
-          : '',
+        boxShadow: isSelected ? `0 0 5px ${selectedItemColor}` : '',
         border: isSelected
-          ? `5px solid ${Theme(profileTheme).itemSelected}`
+          ? `5px solid ${selectedItemColor}`
           : `1px solid ${Color.borderGray()}`
       }}
     >

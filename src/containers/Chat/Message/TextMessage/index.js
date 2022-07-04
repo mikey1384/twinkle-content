@@ -11,8 +11,10 @@ import EditTextArea from 'components/Texts/EditTextArea';
 import ErrorBoundary from 'components/ErrorBoundary';
 import LinkAttachment from './LinkAttachment';
 import LongText from 'components/Texts/LongText';
-import { Color } from 'constants/css';
+import { GENERAL_CHAT_ID } from 'constants/defaultValues';
+import { Color, Theme } from 'constants/css';
 import { isValidSpoiler, stringIsEmpty } from 'helpers/stringHelpers';
+import { useMyState } from 'helpers/hooks';
 import { socket } from 'constants/io';
 import { isMobile } from 'helpers';
 import Spoiler from '../Spoiler';
@@ -65,6 +67,18 @@ function TextMessage({
   userCanEditThis,
   theme
 }) {
+  const { profileTheme } = useMyState();
+  const defaultTopicColor = useMemo(
+    () =>
+      Color[
+        theme ||
+          (channelId === GENERAL_CHAT_ID
+            ? Theme(profileTheme).subject.color
+            : 'green')
+      ](),
+    [channelId, profileTheme, theme]
+  );
+
   const {
     requests: { hideChatAttachment },
     actions: { onHideAttachment }
@@ -74,20 +88,30 @@ function TextMessage({
     let prefix = null;
     if (isSubject) {
       prefix = (
-        <span style={{ fontWeight: 'bold', color: Color[theme || 'green']() }}>
-          Subject:{' '}
+        <span
+          style={{
+            fontWeight: 'bold',
+            color: defaultTopicColor
+          }}
+        >
+          Topic:{' '}
         </span>
       );
     }
     if (isReloadedSubject) {
       prefix = (
-        <span style={{ fontWeight: 'bold', color: Color[theme || 'green']() }}>
+        <span
+          style={{
+            fontWeight: 'bold',
+            color: defaultTopicColor
+          }}
+        >
           {'Returning Topic: '}
         </span>
       );
     }
     return prefix;
-  }, [isReloadedSubject, isSubject, theme]);
+  }, [defaultTopicColor, isReloadedSubject, isSubject]);
 
   const handleHideAttachment = useCallback(async () => {
     await hideChatAttachment(messageId);

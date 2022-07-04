@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
@@ -6,19 +6,40 @@ import request from 'axios';
 import Message from './Message';
 import Loading from 'components/Loading';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
-import { Color } from 'constants/css';
+import { GENERAL_CHAT_ID } from 'constants/defaultValues';
+import { Color, Theme } from 'constants/css';
+import { useMyState } from 'helpers/hooks';
 import { queryStringForArray } from 'helpers/stringHelpers';
 import URL from 'constants/URL';
 
 const API_URL = `${URL}/chat`;
 
 SubjectMsgsModal.propTypes = {
+  channelId: PropTypes.number,
   onHide: PropTypes.func,
   subjectId: PropTypes.number,
-  subjectTitle: PropTypes.string
+  subjectTitle: PropTypes.string,
+  theme: PropTypes.string
 };
 
-export default function SubjectMsgsModal({ onHide, subjectId, subjectTitle }) {
+export default function SubjectMsgsModal({
+  channelId,
+  onHide,
+  subjectId,
+  subjectTitle,
+  theme
+}) {
+  const { profileTheme } = useMyState();
+  const defaultTopicColor = useMemo(
+    () =>
+      Color[
+        theme ||
+          (channelId === GENERAL_CHAT_ID
+            ? Theme(profileTheme).subject.color
+            : 'green')
+      ](),
+    [channelId, profileTheme, theme]
+  );
   const [loading, setLoading] = useState(false);
   const [loadMoreButtonShown, setLoadMoreButtonShown] = useState(false);
   const [messages, setMessages] = useState([]);
@@ -48,7 +69,7 @@ export default function SubjectMsgsModal({ onHide, subjectId, subjectTitle }) {
       onHide={onHide}
     >
       <header>
-        <span style={{ color: Color.green() }}>{subjectTitle}</span>
+        <span style={{ color: defaultTopicColor }}>{subjectTitle}</span>
       </header>
       <main>
         {loadMoreButtonShown && (
@@ -63,6 +84,7 @@ export default function SubjectMsgsModal({ onHide, subjectId, subjectTitle }) {
         {messages.map((message) => (
           <Message
             key={message.id}
+            defaultTopicColor={defaultTopicColor}
             onUsermenuShownChange={setUsermenuShown}
             {...message}
           />

@@ -71,6 +71,11 @@ export default function Cover({ missionIds, missionObj, myAttempts }) {
     );
   }, [missionIds?.length, numComplete]);
 
+  const coverColor = useMemo(
+    () => Color[Theme(profileTheme).cover.color](),
+    [profileTheme]
+  );
+
   return (
     <div
       className={css`
@@ -78,7 +83,7 @@ export default function Cover({ missionIds, missionObj, myAttempts }) {
         height: 15vh;
         display: flex;
         justify-content: space-between;
-        background: ${Theme(profileTheme).cover};
+        background: ${coverColor};
         padding: 0 5%;
         @media (max-width: ${mobileMaxWidth}) {
           height: 8rem;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { stringIsEmpty, truncateText } from 'helpers/stringHelpers';
-import { Color } from 'constants/css';
+import { Color, Theme } from 'constants/css';
 import localize from 'constants/localize';
 import ContentLink from 'components/ContentLink';
 
@@ -10,6 +10,7 @@ export default function renderEnglishMessage({
   isReply,
   isSubjectResponse,
   isTask,
+  profileTheme,
   rewardRootId,
   rewardType,
   rewardRootMissionType,
@@ -23,12 +24,13 @@ export default function renderEnglishMessage({
     targetObj.contentType === 'pass'
       ? targetObj.missionTitle
       : targetObj.content;
+
   const contentPreview = `${
     targetObj.contentType === 'url'
-      ? localize('link')
+      ? 'link'
       : targetObj.contentType === 'pass'
-      ? localize('achievement')
-      : localize(targetObj.contentType)
+      ? 'achievement'
+      : targetObj.contentType
   } ${
     !stringIsEmpty(displayedContent)
       ? `(${truncateText({
@@ -37,6 +39,11 @@ export default function renderEnglishMessage({
         })})`
       : ''
   }`;
+
+  const contentLinkCommentColor = Color[Theme(profileTheme).comment.color]();
+  const contentLinkSubjectColor = Color[Theme(profileTheme).subject.color]();
+  const missionLinkColor = Color[Theme(profileTheme).mission.color]();
+
   switch (actionObj.contentType) {
     case 'like':
       return (
@@ -133,7 +140,7 @@ export default function renderEnglishMessage({
           <>
             <span>님이</span>{' '}
             <ContentLink
-              style={{ color: Color.green() }}
+              style={{ color: missionLinkColor }}
               content={{
                 id: rewardRootId,
                 title: `이 ${
@@ -225,7 +232,7 @@ export default function renderEnglishMessage({
                 ? '메시지'
                 : '댓글'
             }}
-            style={{ color: Color.green() }}
+            style={{ color: contentLinkCommentColor }}
           />
           {targetObj.contentType === 'user' ? '를' : '을'} 남겼습니다:{' '}
           {!stringIsEmpty(actionObj.content) && (
@@ -239,7 +246,7 @@ export default function renderEnglishMessage({
                     limit: 100
                   })}"`
                 }}
-                style={{ color: Color.green() }}
+                style={{ color: contentLinkCommentColor }}
               />
             </>
           )}
@@ -270,7 +277,7 @@ export default function renderEnglishMessage({
                 limit: 100
               })})`
             }}
-            style={{ color: Color.green() }}
+            style={{ color: contentLinkSubjectColor }}
           />
           <span>를 개설했습니다</span>
         </>

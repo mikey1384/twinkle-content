@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import UsernameText from 'components/Texts/UsernameText';
 import ContentLink from 'components/ContentLink';
-import { Color } from 'constants/css';
+import { Color, Theme } from 'constants/css';
 import { truncateText } from 'helpers/stringHelpers';
 
 export default function renderEnglishText({
   contentId,
   contentType,
   isTask,
+  profileTheme,
   rewardType,
   rewardAmount,
   rewarderId,
@@ -17,6 +18,15 @@ export default function renderEnglishText({
   rootMissionType,
   targetObj
 }) {
+  const missionLinkColor = useMemo(
+    () => Color[Theme(profileTheme).mission.color](),
+    [profileTheme]
+  );
+  const contentLinkColor = useMemo(
+    () => Color[Theme(profileTheme).content.color](),
+    [profileTheme]
+  );
+
   if (rewardType === 'Twinkle') {
     return (
       <div>
@@ -42,7 +52,7 @@ export default function renderEnglishText({
         </span>
         :{' '}
         <ContentLink
-          style={{ color: Color.green() }}
+          style={{ color: contentLinkColor }}
           content={{
             id: contentId,
             title: `${contentType}${
@@ -74,7 +84,9 @@ export default function renderEnglishText({
       />
       <span>님이</span>{' '}
       <ContentLink
-        style={{ color: Color.green() }}
+        style={{
+          color: rootType === 'pass' ? missionLinkColor : contentLinkColor
+        }}
         content={{
           id: rootId,
           title: `this ${

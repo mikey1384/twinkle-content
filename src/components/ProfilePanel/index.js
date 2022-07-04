@@ -237,6 +237,10 @@ function ProfilePanel({ expandable, profileId, style }) {
     () => !profileLoaded || heightNotSet || visible || inView,
     [heightNotSet, inView, profileLoaded, visible]
   );
+  const profilePanelTopColor = useMemo(
+    () => Color[Theme(profileTheme || 'logoBlue').profilePanel.color](),
+    [profileTheme]
+  );
 
   return (
     <div style={style} ref={ComponentRef} key={profileId}>
@@ -260,7 +264,7 @@ function ProfilePanel({ expandable, profileId, style }) {
           >
             <div
               className={css`
-                background: ${Theme(profileTheme || 'logoBlue').profilePanel};
+                background: ${profilePanelTopColor};
                 min-height: 2.5rem;
                 border-top-right-radius: ${borderRadius};
                 border-top-left-radius: ${borderRadius};

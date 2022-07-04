@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import { Color, Theme, borderRadius } from 'constants/css';
@@ -17,18 +17,24 @@ export default function GoBackToMissionItem({
   onClick
 }) {
   const { profileTheme } = useMyState();
+  const selectedItemColor = useMemo(
+    () =>
+      Color[Theme(profileTheme).itemSelected.color](
+        Theme(profileTheme).itemSelected.opacity
+      ),
+    [profileTheme]
+  );
+
   return (
     <div
       onClick={onClick}
       style={{
         ...style,
         boxShadow:
-          selectedSlideId === 0
-            ? `0 0 3px ${Theme(profileTheme).itemSelected}`
-            : null,
+          selectedSlideId === 0 ? `0 0 3px ${selectedItemColor}` : null,
         border:
           selectedSlideId === 0
-            ? `0.3rem solid ${Theme(profileTheme).itemSelected}`
+            ? `0.3rem solid ${selectedItemColor}`
             : `1px solid ${Color.borderGray()}`
       }}
       className={css`

@@ -108,6 +108,18 @@ export default function MainContent({
     prevIsEditingRef.current = isEditing;
   }, [isEditing]);
 
+  const byUserIndicatorBackgroundColor = useMemo(
+    () =>
+      Color[Theme(profileTheme).byUserIndicator.color](
+        Theme(profileTheme).byUserIndicator.opacity
+      ),
+    [profileTheme]
+  );
+  const subjectColor = useMemo(
+    () => Color[Theme(profileTheme).subject.color](),
+    [profileTheme]
+  );
+
   return (
     <ErrorBoundary componentPath="ContentPanel/Body/MainContent">
       <div ref={ContainerRef}>
@@ -153,7 +165,7 @@ export default function MainContent({
             style={{
               ...(subjectIsAttachedToVideo ? { marginTop: '0.5rem' } : {}),
               padding: '0.7rem',
-              background: Theme(profileTheme).byUserIndicator,
+              background: byUserIndicatorBackgroundColor,
               color: '#fff',
               display: 'flex',
               justifyContent: 'center',
@@ -305,7 +317,7 @@ export default function MainContent({
                     style={{
                       fontWeight: 'bold',
                       fontSize: '2.2rem',
-                      color: Color.green(),
+                      color: subjectColor,
                       textDecoration: 'none'
                     }}
                     to={`/subjects/${contentId}`}

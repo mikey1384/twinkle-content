@@ -52,32 +52,42 @@ export const strongColors = ['rose', 'red', 'purple'];
 
 export function Theme(color) {
   return {
-    default: Color[color](),
-    byUserIndicator: Color[color](strongColors.includes(color) ? 0.7 : 0.9),
-    carousel: Color[color](),
-    categories: Color[color](),
-    cover: Color[color](),
-    generalChat: Color[color](),
-    chatFlatButton: Color[color](0.8),
-    chatInvitation: Color[color](),
-    homeMenuItemActive: Color[color](),
-    itemSelected: Color[color](strongColors.includes(color) ? 0.7 : 0.8),
-    mainFilterActive: Color[color](),
-    mainFilterInactive: Color[color](0.7),
-    profilePanel: Color[color](),
-    progressBar: Color[color](),
-    reactionButton: Color[color](0.2),
-    reactionButtonBorder: Color[color](),
-    rewardLevelForm: Color[color](strongColors.includes(color) ? 0.9 : 1),
-    rewardableRecommendation: Color[color](0.1),
-    sectionPanel: Color[color](),
-    skeuomorphicDisabled: Color[color](0.2),
-    spinner: Color[color](),
-    switch: Color[color](),
-    tableHeader: Color[color](),
-    userDetails: Color[color](0.7),
-    userLink: Color[color](0.9),
-    videoThumbTitle: Color[color](0.9)
+    byUserIndicator: {
+      color,
+      opacity: strongColors.includes(color) ? 0.7 : 0.9
+    },
+    carousel: { color },
+    categories: { color },
+    comment: { color: 'green' },
+    content: { color: 'green' },
+    cover: { color },
+    generalChat: {
+      color: color === 'black' || color === 'vantablack' ? 'darkBlue' : color
+    },
+    chatFlatButton: {
+      color,
+      opacity: 0.8
+    },
+    chatInvitation: { color },
+    homeMenuItemActive: { color },
+    itemSelected: { color, opacity: strongColors.includes(color) ? 0.7 : 0.8 },
+    logoTwin: { color: 'logoBlue' },
+    logoKle: { color: 'logoGreen' },
+    mainFilter: { color, opacity: 0.7 },
+    mission: { color: 'orange' },
+    profilePanel: { color },
+    progressBar: { color },
+    reactionButton: { color, opacity: 0.2 },
+    rewardLevelForm: { color, opacity: strongColors.includes(color) ? 0.9 : 1 },
+    rewardableRecommendation: { color, opacity: 0.1 },
+    sectionPanel: { color },
+    skeuomorphicDisabled: { color, opacity: 0.2 },
+    spinner: { color },
+    subject: { color: 'green' },
+    switch: { color },
+    tableHeader: { color },
+    userLink: { color, opacity: 0.9 },
+    xpNumber: { color: 'logoGreen' }
   };
 }
 

@@ -44,12 +44,20 @@ export default function ContentLink({
     }
     return result;
   }, [contentType]);
+  const userLinkColor = useMemo(
+    () =>
+      Color[Theme(profileTheme).userLink.color](
+        Theme(profileTheme).userLink.opacity
+      ),
+    [profileTheme]
+  );
   const label = title || content || username;
+
   return label ? (
     <Link
       style={{
         fontWeight: 'bold',
-        color: byUser ? Theme(profileTheme).userLink : Color.blue(),
+        color: byUser ? userLinkColor : Color.blue(),
         ...style
       }}
       to={`/${destination}/${

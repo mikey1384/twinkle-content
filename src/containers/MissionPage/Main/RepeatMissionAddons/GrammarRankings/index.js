@@ -28,7 +28,6 @@ export default function GrammarRankings({ mission, myAttempts }) {
   );
   useEffect(() => {
     init();
-
     async function init() {
       const { top30s, all } = await loadMissionRankings(mission.id);
       setTop30s(top30s);
@@ -36,10 +35,13 @@ export default function GrammarRankings({ mission, myAttempts }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   const rankers = useMemo(
     () => (allSelected ? all : top30s),
     [all, allSelected, top30s]
+  );
+  const tableHeaderColor = useMemo(
+    () => Color[Theme(profileTheme).tableHeader.color](),
+    [profileTheme]
   );
 
   return (
@@ -92,7 +94,7 @@ export default function GrammarRankings({ mission, myAttempts }) {
             style={{
               display: 'grid',
               gridTemplateColumns: '1fr 1fr 1fr 1fr',
-              background: Theme(profileTheme).tableHeader,
+              background: tableHeaderColor,
               color: '#fff',
               fontWeight: 'bold',
               padding: '0.5rem 0'

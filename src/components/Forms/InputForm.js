@@ -14,7 +14,7 @@ import Attachment from 'components/Attachment';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import FullTextReveal from 'components/Texts/FullTextReveal';
 import AlertModal from 'components/Modals/AlertModal';
-import { Theme } from 'constants/css';
+import { Color, Theme } from 'constants/css';
 import {
   FILE_UPLOAD_XP_REQUIREMENT,
   mb,
@@ -122,6 +122,13 @@ function InputForm({
   const uploadDisabled = useMemo(
     () => authLevel === 0 && twinkleXP < FILE_UPLOAD_XP_REQUIREMENT,
     [authLevel, twinkleXP]
+  );
+  const uploadButtonDisabledColor = useMemo(
+    () =>
+      Color[Theme(profileTheme).skeuomorphicDisabled.color](
+        Theme(profileTheme).skeuomorphicDisabled.opacity
+      ),
+    [profileTheme]
   );
 
   useEffect(() => {
@@ -353,9 +360,7 @@ function InputForm({
                 opacity: uploadDisabled ? 0.2 : 1,
                 cursor: uploadDisabled ? 'default' : 'pointer',
                 boxShadow: uploadDisabled ? 'none' : '',
-                borderColor: uploadDisabled
-                  ? Theme(profileTheme).skeuomorphicDisabled
-                  : ''
+                borderColor: uploadDisabled ? uploadButtonDisabledColor : ''
               }}
             >
               <Icon size="lg" icon="upload" />

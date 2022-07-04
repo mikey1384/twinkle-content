@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import UsernameText from 'components/Texts/UsernameText';
 import ContentLink from 'components/ContentLink';
-import { borderRadius, Color } from 'constants/css';
+import { borderRadius, Color, Theme } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
+import { useMyState } from 'helpers/hooks';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
@@ -17,6 +18,11 @@ MissionContent.propTypes = {
 };
 
 export default function MissionContent({ uploader, rootObj: mission }) {
+  const { profileTheme } = useMyState();
+  const xpNumberColor = useMemo(
+    () => Color[Theme(profileTheme).xpNumber.color](),
+    [profileTheme]
+  );
   const rewardDetails = useMemo(() => {
     return mission.xpReward || mission.coinReward ? (
       <div
@@ -35,7 +41,12 @@ export default function MissionContent({ uploader, rootObj: mission }) {
           <UsernameText user={uploader} color={Color.blue()} /> was rewarded{' '}
           {mission.xpReward ? (
             <>
-              <span style={{ color: Color.logoGreen(), fontWeight: 'bold' }}>
+              <span
+                style={{
+                  color: xpNumberColor,
+                  fontWeight: 'bold'
+                }}
+              >
                 {addCommasToNumber(mission.xpReward)}{' '}
               </span>
               <span style={{ color: Color.gold(), fontWeight: 'bold' }}>
@@ -65,7 +76,12 @@ export default function MissionContent({ uploader, rootObj: mission }) {
           님에게{' '}
           {mission.xpReward ? (
             <>
-              <span style={{ color: Color.logoGreen(), fontWeight: 'bold' }}>
+              <span
+                style={{
+                  color: Theme(profileTheme).xpNumber,
+                  fontWeight: 'bold'
+                }}
+              >
                 {addCommasToNumber(mission.xpReward)}{' '}
               </span>{' '}
               <span style={{ color: Color.gold(), fontWeight: 'bold' }}>
@@ -89,7 +105,7 @@ export default function MissionContent({ uploader, rootObj: mission }) {
         </>
       );
     }
-  }, [mission.coinReward, mission.xpReward, uploader]);
+  }, [mission.coinReward, mission.xpReward, profileTheme, uploader]);
 
   return (
     <div

@@ -20,6 +20,12 @@ export default function renderKoreanMessage({
 }) {
   const contentLabel =
     rootType === 'url' ? 'link' : rootType === 'subject' ? 'subject' : rootType;
+  const contentLinkSubjectColor = Color[Theme(profileTheme).subject.color]();
+  const contentLinkCommentColor = Color[Theme(profileTheme).comment.color]();
+  const userLinkColor = Color[Theme(profileTheme).userLink.color](
+    Theme(profileTheme).userLink.opacity
+  );
+
   switch (contentType) {
     case 'video':
       return (
@@ -38,7 +44,7 @@ export default function renderKoreanMessage({
           <ContentLink
             content={{ id, title: action }}
             contentType={contentType}
-            style={{ color: Color.green() }}
+            style={{ color: contentLinkCommentColor }}
           />{' '}
         </>
       );
@@ -66,7 +72,7 @@ export default function renderKoreanMessage({
             content={{ id, title: '주제를' }}
             contentType={contentType}
             style={{
-              color: byUser ? Theme(profileTheme).userLink : Color.green()
+              color: byUser ? userLinkColor : contentLinkSubjectColor
             }}
           />{' '}
           개설했습니다{' '}
@@ -113,7 +119,7 @@ export default function renderKoreanMessage({
                 : localize('comment')
             }}
             contentType="comment"
-            style={{ color: Color.green() }}
+            style={{ color: contentLinkCommentColor }}
           />
           에{' '}
         </span>
