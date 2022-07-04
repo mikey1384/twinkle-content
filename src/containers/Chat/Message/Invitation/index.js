@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ChannelDetail from './ChannelDetail';
 import Button from 'components/Button';
-import { mobileMaxWidth } from 'constants/css';
+import { mobileMaxWidth, Theme } from 'constants/css';
 import { css } from '@emotion/css';
 import { parseChannelPath } from 'helpers';
 import { useMyState } from 'helpers/hooks';
@@ -144,7 +144,7 @@ export default function Invitation({
       {userId !== sender.id && (
         <Button
           filled
-          color={profileTheme}
+          color={Theme(profileTheme).chatInvitation.color}
           onClick={handleAcceptGroupInvitation}
           disabled={alreadyJoined}
         >

@@ -10,6 +10,7 @@ import { timeSince } from 'helpers/timeStampHelpers';
 import { useManagementContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import { isMobile } from 'helpers';
+import { Theme } from 'constants/css';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import Icon from 'components/Icon';
@@ -85,7 +86,7 @@ export default function Moderators({ canManage }) {
         }
       >
         <Table
-          color={profileTheme}
+          color={Theme(profileTheme).tableHeader.color}
           columns={`
             minmax(15rem, 1.5fr)
             minmax(10rem, 1fr)

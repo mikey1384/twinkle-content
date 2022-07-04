@@ -6,7 +6,7 @@ import Loading from 'components/Loading';
 import PeopleFilterBar from './PeopleFilterBar';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { css } from '@emotion/css';
-import { mobileMaxWidth } from 'constants/css';
+import { mobileMaxWidth, Theme } from 'constants/css';
 import { useAppContext, useInputContext } from 'contexts';
 import { useInfiniteScroll, useMyState, useSearch } from 'helpers/hooks';
 import request from 'axios';
@@ -90,8 +90,8 @@ function People() {
           }
         `}
         style={{ zIndex: 0 }}
-        addonColor={profileTheme}
-        borderColor={profileTheme}
+        addonColor={Theme(profileTheme).search.color}
+        borderColor={Theme(profileTheme).search.color}
         placeholder={`${searchUsersLabel}...`}
         onChange={handleSearch}
         value={userSearchText}

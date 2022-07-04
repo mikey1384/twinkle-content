@@ -8,6 +8,7 @@ import EditBanStatusModal from '../Modals/EditBanStatusModal';
 import AddBanModal from '../Modals/AddBanModal';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
+import { Theme } from 'constants/css';
 import { useManagementContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import localize from 'constants/localize';
@@ -57,7 +58,7 @@ export default function BannedUsers({ canManage }) {
         }
       >
         <Table
-          color={profileTheme}
+          color={Theme(profileTheme).tableHeader.color}
           headerFontSize="1.5rem"
           columns={`
           minmax(10rem, 1fr)

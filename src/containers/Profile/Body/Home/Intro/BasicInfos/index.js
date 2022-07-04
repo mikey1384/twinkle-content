@@ -5,7 +5,7 @@ import Icon from 'components/Icon';
 import InfoEditForm from './InfoEditForm';
 import PasswordInputModal from './PasswordInputModal';
 import { css } from '@emotion/css';
-import { Color, mobileMaxWidth } from 'constants/css';
+import { Color, Theme, mobileMaxWidth } from 'constants/css';
 import { stringIsEmpty, trimUrl } from 'helpers/stringHelpers';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { unix } from 'moment';
@@ -295,7 +295,10 @@ export default function BasicInfos({
                   width: '100%'
                 }}
                 skeuomorphic
-                color={selectedTheme || profileTheme || 'logoBlue'}
+                color={
+                  Theme(selectedTheme || profileTheme || 'logoBlue').button
+                    .color
+                }
                 onClick={handleTalkButtonClick}
               >
                 <Icon icon="comments" />

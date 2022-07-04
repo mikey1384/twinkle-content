@@ -70,7 +70,7 @@ export default function SectionPanel({
     setOnEdit(false);
     setEditedTitle(title);
   });
-  const sectionPanelTitleColor = useMemo(
+  const sectionPanelColor = useMemo(
     () => Color[Theme(themeColor).sectionPanel.color](),
     [themeColor]
   );
@@ -90,7 +90,7 @@ export default function SectionPanel({
           grid-template-areas: 'title search buttons';
           grid-template-columns: auto ${onSearch ? '40%' : 'auto'} auto;
           background: #fff;
-          color: ${sectionPanelTitleColor};
+          color: ${sectionPanelColor};
           border-top-left-radius: ${borderRadius};
           border-top-right-radius: ${borderRadius};
           padding: 1rem;
@@ -210,8 +210,8 @@ export default function SectionPanel({
         </div>
         {onSearch && (
           <SearchInput
-            addonColor={themeColor}
-            borderColor={themeColor}
+            addonColor={Theme(themeColor).sectionPanel.color}
+            borderColor={Theme(themeColor).sectionPanel.color}
             style={{
               color: '#fff',
               gridArea: 'search',

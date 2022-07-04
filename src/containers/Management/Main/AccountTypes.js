@@ -9,6 +9,7 @@ import AddAccountTypeModal from '../Modals/AddAccountTypeModal';
 import EditAccountTypeModal from '../Modals/EditAccountTypeModal';
 import Icon from 'components/Icon';
 import { useMyState } from 'helpers/hooks';
+import { Theme } from 'constants/css';
 import { useManagementContext } from 'contexts';
 import localize from 'constants/localize';
 
@@ -62,7 +63,7 @@ export default function AccountTypes({ canManage }) {
         }
       >
         <Table
-          color={profileTheme}
+          color={Theme(profileTheme).tableHeader.color}
           headerFontSize="1.5rem"
           columns={`
           minmax(10rem, 1.5fr)

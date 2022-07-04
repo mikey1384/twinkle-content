@@ -122,7 +122,7 @@ export default function SecretMessageInput({
             <div>
               <Button
                 skeuomorphic
-                color={profileTheme}
+                color={Theme(profileTheme).button.color}
                 onClick={() => (disabled ? null : FileInputRef.current.click())}
                 onMouseEnter={() => setOnHover(true)}
                 onMouseLeave={() => setOnHover(false)}

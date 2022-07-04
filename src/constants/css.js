@@ -52,12 +52,12 @@ export const strongColors = ['rose', 'red', 'purple'];
 
 export function Theme(color) {
   return {
+    button: { color },
     byUserIndicator: {
       color,
       opacity: strongColors.includes(color) ? 0.7 : 0.9
     },
     carousel: { color },
-    categories: { color },
     comment: { color: 'green' },
     content: { color: 'green' },
     cover: { color },
@@ -80,6 +80,7 @@ export function Theme(color) {
     reactionButton: { color, opacity: 0.2 },
     rewardLevelForm: { color, opacity: strongColors.includes(color) ? 0.9 : 1 },
     rewardableRecommendation: { color, opacity: 0.1 },
+    search: { color },
     sectionPanel: { color },
     skeuomorphicDisabled: { color, opacity: 0.2 },
     spinner: { color },

@@ -77,8 +77,8 @@ function VideoThumb({ className, clickSafe, style, to, user, video }) {
 
   const byUserColor = useMemo(
     () =>
-      Color[Theme(profileTheme).byUserIndicator.color](
-        Theme(profileTheme).byUserIndicator.opacity
+      Color[Theme(profileTheme).userLink.color](
+        Theme(profileTheme).userLink.opacity
       ),
     [profileTheme]
   );

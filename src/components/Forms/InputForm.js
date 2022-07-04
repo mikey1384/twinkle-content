@@ -347,7 +347,7 @@ function InputForm({
           {userId && (
             <Button
               skeuomorphic
-              color={profileTheme}
+              color={Theme(profileTheme).button.color}
               onClick={() =>
                 uploadDisabled ? null : FileInputRef.current.click()
               }

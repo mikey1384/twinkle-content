@@ -5,7 +5,7 @@ import ForkButtons from './ForkButtons';
 import LongText from 'components/Texts/LongText';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
-import { Color, mobileMaxWidth } from 'constants/css';
+import { Color, Theme, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useMyState } from 'helpers/hooks';
@@ -226,7 +226,7 @@ export default function Content({
             >
               <Button
                 onClick={() => onPortalButtonClick(portalButton.destination)}
-                color={profileTheme}
+                color={Theme(profileTheme).button.color}
                 skeuomorphic
                 style={{ fontSize: '1.7rem' }}
               >

@@ -30,7 +30,7 @@ export default function Categories({
   const { searchFilter: defaultSearchFilter, profileTheme } = useMyState();
   const [changingDefaultFilter, setChangingDefaultFilter] = useState(false);
   const categoriesLabelColor = useMemo(
-    () => Color[Theme(profileTheme).categories.color](),
+    () => Color[Theme(profileTheme).search.color](),
     [profileTheme]
   );
 

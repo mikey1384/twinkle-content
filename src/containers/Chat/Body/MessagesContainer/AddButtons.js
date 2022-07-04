@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
+import { Theme } from 'constants/css';
 
 AddButtons.propTypes = {
   disabled: PropTypes.bool,
@@ -28,14 +29,14 @@ export default function AddButtons({
         skeuomorphic
         disabled={disabled}
         onClick={onUploadButtonClick}
-        color={profileTheme}
+        color={Theme(profileTheme).button.color}
       >
         <Icon size="lg" icon="upload" />
       </Button>
       <Button
         skeuomorphic
         disabled={disabled}
-        color={profileTheme}
+        color={Theme(profileTheme).button.color}
         onClick={onSelectVideoButtonClick}
         style={{ marginLeft: '1rem' }}
       >

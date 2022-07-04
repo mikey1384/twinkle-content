@@ -21,7 +21,7 @@ export default function Management() {
   const onLoadManagement = useManagementContext(
     (v) => v.actions.onLoadManagement
   );
-  const { loaded: userLoaded, managementLevel, profileTheme } = useMyState();
+  const { loaded: userLoaded, managementLevel } = useMyState();
   useEffect(() => {
     onLoadManagement();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -47,7 +47,6 @@ export default function Management() {
         </NavLink>
       </SideMenu>
       <FilterBar
-        color={profileTheme}
         style={{ height: '5rem', marginBottom: 0 }}
         className={`mobile ${css`
           @media (max-width: ${mobileMaxWidth}) {

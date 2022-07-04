@@ -150,10 +150,10 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
     setRewardsExist(totalRewardedTwinkles + totalRewardedTwinkleCoins > 0);
   }, [totalRewardedTwinkles, totalRewardedTwinkleCoins]);
 
-  const byUserIndicatorBackgroundColor = useMemo(
+  const userLinkColor = useMemo(
     () =>
-      Color[Theme(profileTheme).byUserIndicator.color](
-        Theme(profileTheme).byUserIndicator.opacity
+      Color[Theme(profileTheme).userLink.color](
+        Theme(profileTheme).userLink.opacity
       ),
     [profileTheme]
   );
@@ -417,9 +417,7 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
               arePlaylistVideos ? `?playlist=${playlistId}` : ''
             }`}
             style={{
-              color: video.byUser
-                ? byUserIndicatorBackgroundColor
-                : Color.blue()
+              color: video.byUser ? userLinkColor : Color.blue()
             }}
           >
             {video.title}

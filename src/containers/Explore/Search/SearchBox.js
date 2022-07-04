@@ -4,6 +4,7 @@ import SearchInput from 'components/Texts/SearchInput';
 import { useMyState } from 'helpers/hooks';
 import { useExploreContext } from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
+import { Theme } from 'constants/css';
 import localize from 'constants/localize';
 
 SearchBox.propTypes = {
@@ -31,8 +32,8 @@ export default function SearchBox({ category, className, innerRef, style }) {
     <SearchInput
       className={className}
       style={style}
-      addonColor={profileTheme}
-      borderColor={profileTheme}
+      addonColor={Theme(profileTheme).search.color}
+      borderColor={Theme(profileTheme).search.color}
       innerRef={innerRef}
       placeholder={placeholderLabel}
       onChange={onChangeSearchInput}

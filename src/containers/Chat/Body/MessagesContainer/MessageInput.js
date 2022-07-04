@@ -29,6 +29,7 @@ import {
   returnMaxUploadSize,
   GENERAL_CHAT_ID
 } from 'constants/defaultValues';
+import { Theme } from 'constants/css';
 import { useMyState } from 'helpers/hooks';
 import LocalContext from '../../Context';
 import localize from 'constants/localize';
@@ -304,7 +305,7 @@ function MessageInput({
               disabled={loading || banned?.chess}
               skeuomorphic
               onClick={onChessButtonClick}
-              color={profileTheme}
+              color={Theme(profileTheme).button.color}
             >
               <Icon size="lg" icon={['fas', 'chess']} />
               <span className="desktop" style={{ marginLeft: '0.7rem' }}>
@@ -316,7 +317,7 @@ function MessageInput({
               disabled={loading}
               skeuomorphic
               onClick={onWordleButtonClick}
-              color={profileTheme}
+              color={Theme(profileTheme).button.color}
             >
               W<span className="desktop">ordle</span>
             </Button>
@@ -349,7 +350,7 @@ function MessageInput({
             <Button
               filled
               disabled={loading || !socketConnected || coolingDown}
-              color={profileTheme}
+              color={Theme(profileTheme).button.color}
               onClick={handleSendMsg}
             >
               <Icon size="lg" icon="paper-plane" />

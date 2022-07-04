@@ -26,7 +26,7 @@ import RewardLevelForm from 'components/Forms/RewardLevelForm';
 import Icon from 'components/Icon';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
 import SecretMessageInput from 'components/Forms/SecretMessageInput';
-import { Color } from 'constants/css';
+import { Color, Theme } from 'constants/css';
 import { PanelStyle } from '../Styles';
 import {
   charLimit,
@@ -207,7 +207,7 @@ function SubjectInput() {
               ) : (
                 <Button
                   skeuomorphic
-                  color={profileTheme}
+                  color={Theme(profileTheme).button.color}
                   onClick={() => setAttachContentModalShown(true)}
                 >
                   <Icon size="lg" icon="plus" />
