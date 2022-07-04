@@ -132,7 +132,7 @@ export default function Activity({
               }
             `}
           >
-            <span style={{ color: Theme(profileTheme).xpNumber }}>
+            <span style={{ color: xpNumberColor }}>
               {addCommasToNumber(wordLevelHash[wordLevel].rewardAmount)}
             </span>{' '}
             <span style={{ color: Color.gold() }}>XP</span>

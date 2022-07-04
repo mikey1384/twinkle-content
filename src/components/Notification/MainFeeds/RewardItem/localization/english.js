@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import UsernameText from 'components/Texts/UsernameText';
 import ContentLink from 'components/ContentLink';
 import { Color, Theme } from 'constants/css';
@@ -18,14 +18,8 @@ export default function renderEnglishText({
   rootMissionType,
   targetObj
 }) {
-  const missionLinkColor = useMemo(
-    () => Color[Theme(profileTheme).mission.color](),
-    [profileTheme]
-  );
-  const contentLinkColor = useMemo(
-    () => Color[Theme(profileTheme).content.color](),
-    [profileTheme]
-  );
+  const missionLinkColor = Color[Theme(profileTheme).mission.color]();
+  const contentLinkColor = Color[Theme(profileTheme).content.color]();
 
   if (rewardType === 'Twinkle') {
     return (

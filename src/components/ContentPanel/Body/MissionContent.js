@@ -19,11 +19,8 @@ MissionContent.propTypes = {
 
 export default function MissionContent({ uploader, rootObj: mission }) {
   const { profileTheme } = useMyState();
-  const xpNumberColor = useMemo(
-    () => Color[Theme(profileTheme).xpNumber.color](),
-    [profileTheme]
-  );
   const rewardDetails = useMemo(() => {
+    const xpNumberColor = Color[Theme(profileTheme).xpNumber.color]();
     return mission.xpReward || mission.coinReward ? (
       <div
         style={{
@@ -78,7 +75,7 @@ export default function MissionContent({ uploader, rootObj: mission }) {
             <>
               <span
                 style={{
-                  color: Theme(profileTheme).xpNumber,
+                  color: xpNumberColor,
                   fontWeight: 'bold'
                 }}
               >

@@ -17,10 +17,6 @@ RankBar.propTypes = {
 
 export default function RankBar({ className, profile, style }) {
   const { profileTheme } = useMyState();
-  const xpNumberColor = useMemo(
-    () => Color[Theme(profileTheme).xpNumber.color](),
-    [profileTheme]
-  );
   const rankColor = useMemo(
     () =>
       profile.rank === 1
@@ -39,6 +35,7 @@ export default function RankBar({ className, profile, style }) {
     return `#${profile.rank}`;
   }, [profile.rank]);
   const xpNumberLabel = useMemo(() => {
+    const xpNumberColor = Color[Theme(profileTheme).xpNumber.color]();
     const innerComponent = (
       <>
         <span

@@ -180,12 +180,8 @@ export default function TargetContent({
     [comment, finalRewardLevel, userId, xpRewardInterfaceShown]
   );
 
-  const contentLinkCommentColor = useMemo(
-    () => Color[Theme(profileTheme).comment.color](),
-    [profileTheme]
-  );
-
   const DetailText = useMemo(() => {
+    const commentLinkColor = Color[Theme(profileTheme).comment.color]();
     return (
       <div>
         {SELECTED_LANGUAGE === 'kr' ? renderKoreanText() : renderEnglishText()}
@@ -210,7 +206,7 @@ export default function TargetContent({
               }:`
             }}
             contentType="comment"
-            style={{ color: contentLinkCommentColor }}
+            style={{ color: commentLinkColor }}
           />
         </>
       );
@@ -234,13 +230,13 @@ export default function TargetContent({
               }`
             }}
             contentType="comment"
-            style={{ color: contentLinkCommentColor }}
+            style={{ color: commentLinkColor }}
           />
           :
         </>
       );
     }
-  }, [comment.id, comment.uploader, contentLinkCommentColor, rootType, type]);
+  }, [comment.id, comment.uploader, profileTheme, rootType, type]);
 
   useEffect(() => {
     onSetXpRewardInterfaceShown({
