@@ -24,7 +24,7 @@ export const cloudFrontURL = `https://${process.env.REACT_APP_CLOUDFRONT_KEY}.cl
 export const CHAT_ID_BASE_NUMBER = process.env.REACT_APP_CHAT_ID_BASE_NUMBER;
 export const DEFAULT_PROFILE_THEME = 'logoBlue';
 export const DESCRIPTION_LENGTH_FOR_EXTRA_REWARD_LEVEL = 1000;
-export const FILE_UPLOAD_XP_REQUIREMENT = 10000000000;
+export const FILE_UPLOAD_XP_REQUIREMENT = 0;
 export const GENERAL_CHAT_ID = 2;
 export const GENERAL_CHAT_PATH_ID =
   Number(GENERAL_CHAT_ID) + Number(CHAT_ID_BASE_NUMBER);
