@@ -37,6 +37,7 @@ const startedByLabel = localize('startedBy');
 
 ChannelHeader.propTypes = {
   currentChannel: PropTypes.object.isRequired,
+  displayedThemeColor: PropTypes.string,
   onFavoriteClick: PropTypes.func.isRequired,
   onInputFocus: PropTypes.func.isRequired,
   onSetInviteUsersModalShown: PropTypes.func,
@@ -47,7 +48,7 @@ ChannelHeader.propTypes = {
 
 export default function ChannelHeader({
   currentChannel,
-  currentChannel: { theme },
+  displayedThemeColor,
   onFavoriteClick,
   onInputFocus,
   onSetInviteUsersModalShown,
@@ -253,7 +254,7 @@ export default function ChannelHeader({
                     className={css`
                       width: 100%;
                       cursor: default;
-                      color: ${Color[theme || 'green']()};
+                      color: ${Color[displayedThemeColor]()};
                       white-space: nowrap;
                       text-overflow: ellipsis;
                       overflow: hidden;
@@ -296,7 +297,7 @@ export default function ChannelHeader({
                 `}
               >
                 <Button
-                  color={theme || 'green'}
+                  color={displayedThemeColor}
                   filled
                   onClick={() => {
                     onSetIsRespondingToSubject({
@@ -365,6 +366,7 @@ export default function ChannelHeader({
               autoFocus
               userIsOwner={currentChannel.creatorId === userId}
               channelId={selectedChannelId}
+              displayedThemeColor={displayedThemeColor}
               maxLength={charLimit.chat.subject}
               currentSubjectId={subjectId}
               title={content}
@@ -376,14 +378,13 @@ export default function ChannelHeader({
               }}
               onReloadChatSubject={handleReloadChatSubject}
               searchResults={subjectSearchResults}
-              theme={theme}
             />
           )}
         </>
       ) : (
         <Loading
           style={{
-            color: Color[theme || 'green']()
+            color: Color[displayedThemeColor]()
           }}
           text={`${loadingSubjectLabel}...`}
         />

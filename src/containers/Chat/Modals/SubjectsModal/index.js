@@ -12,6 +12,7 @@ import { useAppContext } from 'contexts';
 SubjectsModal.propTypes = {
   channelId: PropTypes.number.isRequired,
   currentSubjectId: PropTypes.number,
+  displayedThemeColor: PropTypes.string,
   onHide: PropTypes.func,
   onSelectSubject: PropTypes.func,
   userIsOwner: PropTypes.bool
@@ -20,6 +21,7 @@ SubjectsModal.propTypes = {
 export default function SubjectsModal({
   channelId,
   currentSubjectId,
+  displayedThemeColor,
   onHide,
   onSelectSubject,
   userIsOwner
@@ -72,7 +74,7 @@ export default function SubjectsModal({
           <div style={{ width: '100%' }}>
             <h3
               style={{
-                color: Color.green(),
+                color: Color[displayedThemeColor](),
                 marginBottom: '1rem'
               }}
             >
@@ -82,6 +84,7 @@ export default function SubjectsModal({
               <SubjectItem
                 key={subject.id}
                 currentSubjectId={currentSubjectId}
+                displayedThemeColor={displayedThemeColor}
                 onDeleteSubject={() => setDeleteTarget(subject.id)}
                 onSelectSubject={() => onSelectSubject(subject.id)}
                 {...subject}
@@ -107,7 +110,7 @@ export default function SubjectsModal({
           >
             <h3
               style={{
-                color: Color.green()
+                color: Color[displayedThemeColor]()
               }}
             >
               All Topics
@@ -121,6 +124,7 @@ export default function SubjectsModal({
           <SubjectItem
             key={subject.id}
             currentSubjectId={currentSubjectId}
+            displayedThemeColor={displayedThemeColor}
             onDeleteSubject={() => setDeleteTarget(subject.id)}
             onSelectSubject={() => onSelectSubject(subject.id)}
             userIsOwner={userIsOwner}

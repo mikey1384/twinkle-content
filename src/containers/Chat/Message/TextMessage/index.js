@@ -11,10 +11,8 @@ import EditTextArea from 'components/Texts/EditTextArea';
 import ErrorBoundary from 'components/ErrorBoundary';
 import LinkAttachment from './LinkAttachment';
 import LongText from 'components/Texts/LongText';
-import { GENERAL_CHAT_ID } from 'constants/defaultValues';
-import { Color, Theme } from 'constants/css';
+import { Color } from 'constants/css';
 import { isValidSpoiler, stringIsEmpty } from 'helpers/stringHelpers';
-import { useMyState } from 'helpers/hooks';
 import { socket } from 'constants/io';
 import { isMobile } from 'helpers';
 import Spoiler from '../Spoiler';
@@ -26,6 +24,7 @@ TextMessage.propTypes = {
   attachmentHidden: PropTypes.bool,
   channelId: PropTypes.number,
   content: PropTypes.string.isRequired,
+  displayedThemeColor: PropTypes.string,
   extractedUrl: PropTypes.string,
   isNotification: PropTypes.bool,
   isReloadedSubject: PropTypes.bool,
@@ -40,7 +39,6 @@ TextMessage.propTypes = {
   onShowSubjectMsgsModal: PropTypes.func.isRequired,
   socketConnected: PropTypes.bool,
   subjectId: PropTypes.number,
-  theme: PropTypes.string,
   thumbUrl: PropTypes.string,
   userCanEditThis: PropTypes.bool
 };
@@ -49,6 +47,7 @@ function TextMessage({
   attachmentHidden,
   channelId,
   content,
+  displayedThemeColor,
   extractedUrl,
   isNotification,
   isReloadedSubject,
@@ -64,21 +63,8 @@ function TextMessage({
   onShowSubjectMsgsModal,
   socketConnected,
   thumbUrl,
-  userCanEditThis,
-  theme
+  userCanEditThis
 }) {
-  const { profileTheme } = useMyState();
-  const defaultTopicColor = useMemo(
-    () =>
-      Color[
-        theme ||
-          (channelId === GENERAL_CHAT_ID
-            ? Theme(profileTheme).subject.color
-            : 'green')
-      ](),
-    [channelId, profileTheme, theme]
-  );
-
   const {
     requests: { hideChatAttachment },
     actions: { onHideAttachment }
@@ -91,7 +77,7 @@ function TextMessage({
         <span
           style={{
             fontWeight: 'bold',
-            color: defaultTopicColor
+            color: Color[displayedThemeColor]()
           }}
         >
           Topic:{' '}
@@ -103,7 +89,7 @@ function TextMessage({
         <span
           style={{
             fontWeight: 'bold',
-            color: defaultTopicColor
+            color: Color[displayedThemeColor]()
           }}
         >
           {'Returning Topic: '}
@@ -111,7 +97,7 @@ function TextMessage({
       );
     }
     return prefix;
-  }, [defaultTopicColor, isReloadedSubject, isSubject]);
+  }, [displayedThemeColor, isReloadedSubject, isSubject]);
 
   const handleHideAttachment = useCallback(async () => {
     await hideChatAttachment(messageId);

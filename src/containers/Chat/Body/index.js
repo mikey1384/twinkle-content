@@ -12,10 +12,17 @@ Body.propTypes = {
   channelName: PropTypes.string,
   chessOpponent: PropTypes.object,
   currentChannel: PropTypes.object,
+  displayedThemeColor: PropTypes.string,
   loading: PropTypes.bool
 };
 
-function Body({ channelName, chessOpponent, currentChannel, loading }) {
+function Body({
+  channelName,
+  chessOpponent,
+  currentChannel,
+  displayedThemeColor,
+  loading
+}) {
   const {
     state: { chatType, loadingVocabulary }
   } = useContext(LocalContext);
@@ -44,6 +51,7 @@ function Body({ channelName, chessOpponent, currentChannel, loading }) {
             ) : (
               <MessagesContainer
                 key={currentChannel.id}
+                displayedThemeColor={displayedThemeColor}
                 loading={loading}
                 channelName={channelName}
                 chessOpponent={chessOpponent}

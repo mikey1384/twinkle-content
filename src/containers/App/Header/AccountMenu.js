@@ -5,7 +5,7 @@ import DropdownButton from 'components/Buttons/DropdownButton';
 import Icon from 'components/Icon';
 import FullTextReveal from 'components/Texts/FullTextReveal';
 import { useAppContext, useChatContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { socket } from 'constants/io';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { useNavigate } from 'react-router-dom';
@@ -25,6 +25,9 @@ function AccountMenu({ className }) {
   const [twinkleCoinsHovered, setTwinkleCoinsHovered] = useState(false);
   const { loggedIn, username, userId, managementLevel, twinkleCoins } =
     useMyState();
+  const {
+    login: { color: loginColor }
+  } = useTheme();
   const onLogout = useAppContext((v) => v.user.actions.onLogout);
   const onOpenSigninModal = useAppContext(
     (v) => v.user.actions.onOpenSigninModal
@@ -134,7 +137,7 @@ function AccountMenu({ className }) {
           className={className}
           onClick={onOpenSigninModal}
           style={{ marginLeft: '1rem' }}
-          color="green"
+          color={loginColor}
           filled
         >
           <div

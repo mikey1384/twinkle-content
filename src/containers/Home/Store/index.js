@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import KarmaStatus from './KarmaStatus';
 import ItemPanel from './ItemPanel';
 import ChangePassword from './ChangePassword';
 import ChangeUsername from './ChangeUsername';
 import FileSizeItem from './FileSizeItem';
 import ProfilePictureItem from './ProfilePictureItem';
-import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
+import { Color, Theme, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useAppContext, useViewContext } from 'contexts';
 import {
@@ -46,7 +46,15 @@ export default function Store() {
   );
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const pageVisible = useViewContext((v) => v.state.pageVisible);
-  const { canChangeUsername, karmaPoints, userId } = useMyState();
+  const { canChangeUsername, karmaPoints, userId, profileTheme } = useMyState();
+  const twinColor = useMemo(
+    () => Color[Theme(profileTheme).logoTwin.color](),
+    [profileTheme]
+  );
+  const kleColor = useMemo(
+    () => Color[Theme(profileTheme).logoKle.color](),
+    [profileTheme]
+  );
 
   useEffect(() => {
     if (userId) {
@@ -87,10 +95,10 @@ export default function Store() {
               line-height: 1;
             }
             > .logo-twin {
-              color: ${Color.logoBlue()};
+              color: ${twinColor};
             }
             > .logo-kle {
-              color: ${Color.logoGreen()};
+              color: ${kleColor};
             }
           `}
           style={{ fontWeight: 'bold', fontSize: '2.5rem' }}

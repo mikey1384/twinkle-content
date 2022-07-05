@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { panel } from './Styles';
 import { useAppContext } from 'contexts';
+import { Theme } from 'constants/css';
+import { useMyState } from 'helpers/hooks';
 import Icon from 'components/Icon';
 import ContentListItem from 'components/ContentListItem';
 import Button from 'components/Button';
@@ -16,6 +18,7 @@ HighXPSubjects.propTypes = {
 };
 
 export default function HighXPSubjects({ style }) {
+  const { profileTheme } = useMyState();
   const [subjects, setSubjects] = useState([]);
   const [loading, setLoading] = useState(false);
   const loadHighXPSubjects = useAppContext(
@@ -47,7 +50,11 @@ export default function HighXPSubjects({ style }) {
             justifyContent: 'center'
           }}
         >
-          <Button skeuomorphic color="green" onClick={handleLoadHighXPSubjects}>
+          <Button
+            skeuomorphic
+            color={Theme(profileTheme).showMeAnotherSubjectButton.color}
+            onClick={handleLoadHighXPSubjects}
+          >
             <Icon icon="redo" />
             <span style={{ marginLeft: '0.7rem' }}>
               {showMeAnotherSubjectLabel}

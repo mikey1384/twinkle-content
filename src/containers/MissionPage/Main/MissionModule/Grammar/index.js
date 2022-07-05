@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Questions from './Questions';
 import StartScreen from './StartScreen';
-import TryAgain from './TryAgain';
 import { useAppContext, useMissionContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 
@@ -56,34 +55,8 @@ export default function Grammar({ isRepeating, mission }) {
           }
         />
       )}
-      {mission.started && !mission.failed && (
-        <Questions
-          isRepeating={isRepeating}
-          mission={mission}
-          onFail={() =>
-            onSetMissionState({
-              missionId: mission.id,
-              newState: {
-                failed: true
-              }
-            })
-          }
-        />
-      )}
-      {mission.started && mission.failed && (
-        <TryAgain
-          isRepeating={isRepeating}
-          onInitMission={handleInitMission}
-          onTryAgain={() =>
-            onSetMissionState({
-              missionId: mission.id,
-              newState: {
-                failed: false,
-                grammarReviewLoaded: false
-              }
-            })
-          }
-        />
+      {mission.started && (
+        <Questions isRepeating={isRepeating} mission={mission} />
       )}
     </div>
   );

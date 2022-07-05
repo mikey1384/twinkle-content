@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Color, Theme } from 'constants/css';
-import { useMyState } from 'helpers/hooks';
+import { Color } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
 import { css } from '@emotion/css';
 
 TwinkleLogo.propTypes = {
@@ -9,15 +9,9 @@ TwinkleLogo.propTypes = {
 };
 
 export default function TwinkleLogo({ style }) {
-  const { profileTheme } = useMyState();
-  const twinColor = useMemo(
-    () => Color[Theme(profileTheme).logoTwin.color](),
-    [profileTheme]
-  );
-  const kleColor = useMemo(
-    () => Color[Theme(profileTheme).logoKle.color](),
-    [profileTheme]
-  );
+  const { logoTwin, logoKle } = useTheme();
+  const twinColor = useMemo(() => Color[logoTwin.color](), [logoTwin]);
+  const kleColor = useMemo(() => Color[logoKle.color](), [logoKle]);
 
   return (
     <div

@@ -12,6 +12,7 @@ RightMenu.propTypes = {
   channelOnCall: PropTypes.object,
   currentChannel: PropTypes.object,
   currentChannelOnlineMembers: PropTypes.object,
+  displayedThemeColor: PropTypes.string,
   selectedChannelId: PropTypes.number
 };
 
@@ -20,6 +21,7 @@ function RightMenu({
   channelOnCall,
   currentChannel,
   currentChannelOnlineMembers,
+  displayedThemeColor,
   selectedChannelId
 }) {
   const { userId, twinkleXP } = useMyState();
@@ -97,6 +99,7 @@ function RightMenu({
           channelOnCall={channelOnCall}
           currentChannel={currentChannel}
           currentChannelOnlineMembers={currentChannelOnlineMembers}
+          displayedThemeColor={displayedThemeColor}
           selectedChannelId={selectedChannelId}
         />
       )}

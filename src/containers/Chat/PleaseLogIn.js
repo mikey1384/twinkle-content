@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import Button from 'components/Button';
-import { Color } from 'constants/css';
+import { Color, Theme } from 'constants/css';
 import { useAppContext } from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
@@ -39,10 +39,14 @@ export default function PleaseLogIn() {
           vocabulary games & chess
         </span>{' '}
         with{' '}
-        <span style={{ color: Color.logoBlue(), fontWeight: 'bold' }}>
+        <span
+          style={{ color: Color[Theme().logoTwin.color](), fontWeight: 'bold' }}
+        >
           Twin
         </span>
-        <span style={{ color: Color.logoGreen(), fontWeight: 'bold' }}>
+        <span
+          style={{ color: Color[Theme().logoKle.color](), fontWeight: 'bold' }}
+        >
           kle
         </span>{' '}
         students and teachers?
@@ -74,7 +78,7 @@ export default function PleaseLogIn() {
       <div style={{ marginTop: '2rem' }}>
         <Button
           filled
-          color="green"
+          color={Theme().login.color}
           style={{ fontSize: '3rem' }}
           onClick={onOpenSigninModal}
         >

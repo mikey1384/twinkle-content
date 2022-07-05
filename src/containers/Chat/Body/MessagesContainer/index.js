@@ -62,6 +62,7 @@ MessagesContainer.propTypes = {
   channelName: PropTypes.string,
   chessOpponent: PropTypes.object,
   currentChannel: PropTypes.object.isRequired,
+  displayedThemeColor: PropTypes.string,
   loading: PropTypes.bool
 };
 
@@ -69,6 +70,7 @@ function MessagesContainer({
   channelName,
   chessOpponent,
   currentChannel,
+  displayedThemeColor,
   loading: channelLoading
 }) {
   const reportError = useAppContext((v) => v.requestHelpers.reportError);
@@ -1016,6 +1018,7 @@ function MessagesContainer({
         {!loadingAnimationShown && channelHeaderShown && (
           <ChannelHeader
             currentChannel={currentChannel}
+            displayedThemeColor={displayedThemeColor}
             onInputFocus={() => ChatInputRef.current.focus()}
             onSetInviteUsersModalShown={setInviteUsersModalShown}
             onSetLeaveConfirmModalShown={setLeaveConfirmModalShown}
@@ -1069,6 +1072,7 @@ function MessagesContainer({
                   chessCountdownNumber={chessCountdownNumber}
                   chessOpponent={chessOpponent}
                   currentChannel={currentChannel}
+                  displayedThemeColor={displayedThemeColor}
                   forceRefreshForMobile={handleForceRefreshForMobile}
                   index={index}
                   isLastMsg={index === 0}
@@ -1134,6 +1138,7 @@ function MessagesContainer({
       )}
       {subjectMsgsModal.shown && (
         <SubjectMsgsModal
+          displayedThemeColor={displayedThemeColor}
           subjectId={subjectMsgsModal.subjectId}
           subjectTitle={subjectMsgsModal.content}
           channelId={selectedChannelId}

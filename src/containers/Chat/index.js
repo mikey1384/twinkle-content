@@ -17,7 +17,7 @@ import PleaseLogIn from './PleaseLogIn';
 import LocalContext from './Context';
 import { parseChannelPath } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { mobileMaxWidth } from 'constants/css';
+import { mobileMaxWidth, Theme } from 'constants/css';
 import { socket } from 'constants/io';
 import { css } from '@emotion/css';
 import { useMyState } from 'helpers/hooks';
@@ -38,7 +38,7 @@ Chat.propTypes = {
 };
 
 function Chat({ onFileUpload }) {
-  const { lastChatPath, userId } = useMyState();
+  const { lastChatPath, profileTheme, userId } = useMyState();
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const userObj = useAppContext((v) => v.user.state.userObj);
@@ -500,6 +500,15 @@ function Chat({ onFileUpload }) {
     [pageVisible, selectedChannelId, userId]
   );
 
+  const displayedThemeColor = useMemo(
+    () =>
+      currentChannel.theme ||
+      (selectedChannelId === GENERAL_CHAT_ID
+        ? Theme(profileTheme).generalChat.color
+        : 'green'),
+    [currentChannel.theme, profileTheme, selectedChannelId]
+  );
+
   return (
     <LocalContext.Provider
       value={{
@@ -637,6 +646,7 @@ function Chat({ onFileUpload }) {
                 showUserListModal={() => setUserListModalShown(true)}
               />
               <Body
+                displayedThemeColor={displayedThemeColor}
                 loading={loading}
                 channelName={currentChannelName}
                 chessOpponent={partner}
@@ -647,6 +657,7 @@ function Chat({ onFileUpload }) {
                 channelName={currentChannelName}
                 currentChannel={currentChannel}
                 currentChannelOnlineMembers={currentChannelOnlineMembers}
+                displayedThemeColor={displayedThemeColor}
                 selectedChannelId={selectedChannelId}
               />
             </div>

@@ -51,6 +51,7 @@ Message.propTypes = {
   channelId: PropTypes.number,
   channelName: PropTypes.string,
   currentChannel: PropTypes.object,
+  displayedThemeColor: PropTypes.string,
   forceRefreshForMobile: PropTypes.func,
   message: PropTypes.object,
   onDelete: PropTypes.func,
@@ -74,6 +75,7 @@ function Message({
   chessCountdownNumber,
   chessOpponent,
   currentChannel,
+  displayedThemeColor,
   forceRefreshForMobile,
   index,
   isLastMsg,
@@ -709,6 +711,7 @@ function Message({
                         attachmentHidden={!!attachmentHidden}
                         channelId={channelId}
                         content={content}
+                        displayedThemeColor={displayedThemeColor}
                         extractedUrl={extractedUrl}
                         forceRefreshForMobile={forceRefreshForMobile}
                         myId={myId}

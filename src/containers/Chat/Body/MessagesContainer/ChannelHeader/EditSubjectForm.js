@@ -22,6 +22,7 @@ EditSubjectForm.propTypes = {
   autoFocus: PropTypes.bool,
   channelId: PropTypes.number,
   currentSubjectId: PropTypes.number,
+  displayedThemeColor: PropTypes.string,
   maxLength: PropTypes.number,
   onChange: PropTypes.func.isRequired,
   onClickOutSide: PropTypes.func.isRequired,
@@ -37,12 +38,12 @@ export default function EditSubjectForm({
   autoFocus,
   channelId,
   currentSubjectId,
+  displayedThemeColor,
   onReloadChatSubject,
   maxLength = 100,
   searchResults,
   onChange,
   onClickOutSide,
-  theme,
   userIsOwner,
   ...props
 }) {
@@ -84,6 +85,7 @@ export default function EditSubjectForm({
       {subjectsModalShown && (
         <SubjectsModal
           channelId={channelId}
+          displayedThemeColor={displayedThemeColor}
           currentSubjectId={currentSubjectId}
           onHide={() => setSubjectsModalShown(false)}
           userIsOwner={userIsOwner}
@@ -151,7 +153,7 @@ export default function EditSubjectForm({
             <Button
               style={{ fontSize: '1.3rem' }}
               filled
-              color={theme || 'green'}
+              color={displayedThemeColor}
               onClick={() => setSubjectsModalShown(true)}
             >
               View Topics
@@ -243,7 +245,7 @@ export default function EditSubjectForm({
       <div>
         <div
           style={{
-            color: Color[theme || 'green'](),
+            color: Color[displayedThemeColor](),
             fontWeight: 'bold'
           }}
         >

@@ -9,7 +9,7 @@ import Checkbox from 'components/Checkbox';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Loading from 'components/Loading';
 import { PanelStyle } from './Styles';
-import { Color } from 'constants/css';
+import { Color, Theme } from 'constants/css';
 import { css } from '@emotion/css';
 import { scrollElementToCenter } from 'helpers';
 import {
@@ -37,7 +37,7 @@ function ContentInput() {
     (v) => v.requestHelpers.checkContentUrl
   );
   const uploadContent = useAppContext((v) => v.requestHelpers.uploadContent);
-  const { canEditRewardLevel, banned } = useMyState();
+  const { canEditRewardLevel, banned, profileTheme } = useMyState();
   const onLoadNewFeeds = useHomeContext((v) => v.actions.onLoadNewFeeds);
   const content = useInputContext((v) => v.state.content);
   const onResetContentInput = useInputContext(
@@ -334,7 +334,7 @@ function ContentInput() {
               <Button
                 type="submit"
                 filled
-                color="green"
+                color={Theme(profileTheme).success.color}
                 style={{ marginTop: '1rem' }}
                 disabled={submitting || buttonDisabled}
                 onClick={onSubmit}

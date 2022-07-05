@@ -6,9 +6,10 @@ import Button from 'components/Button';
 import Icon from 'components/Icon';
 import LongText from 'components/Texts/LongText';
 import { useMissionContext } from 'contexts';
-import { borderRadius, Color } from 'constants/css';
+import { borderRadius, Color, Theme } from 'constants/css';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { addCommasToNumber } from 'helpers/stringHelpers';
+import { useMyState } from 'helpers/hooks';
 
 ApprovedStatus.propTypes = {
   isTask: PropTypes.bool,
@@ -27,11 +28,16 @@ export default function ApprovedStatus({
   myAttempt,
   style
 }) {
+  const { profileTheme } = useMyState();
   const onUpdateMissionAttempt = useMissionContext(
     (v) => v.actions.onUpdateMissionAttempt
   );
-
+  const tryAgainButtonColor = useMemo(
+    () => Theme(profileTheme).success.color,
+    [profileTheme]
+  );
   const rewardDetails = useMemo(() => {
+    const xpNumberColor = Color[Theme(profileTheme).xpNumber.color]();
     return (xpReward || coinReward) && myAttempt.status === 'pass' ? (
       <div
         style={{
@@ -41,7 +47,7 @@ export default function ApprovedStatus({
       >
         You were rewarded{' '}
         {xpReward ? (
-          <span style={{ color: Color.logoGreen(), fontWeight: 'bold' }}>
+          <span style={{ color: xpNumberColor, fontWeight: 'bold' }}>
             {addCommasToNumber(xpReward)}{' '}
             <span style={{ color: Color.gold(), fontWeight: 'bold' }}>XP</span>
           </span>
@@ -60,7 +66,7 @@ export default function ApprovedStatus({
         ) : null}
       </div>
     ) : null;
-  }, [coinReward, myAttempt?.status, xpReward]);
+  }, [coinReward, myAttempt.status, profileTheme, xpReward]);
 
   return (
     <div
@@ -144,7 +150,7 @@ export default function ApprovedStatus({
         <div style={{ marginTop: '3rem' }}>
           <Button
             style={{ fontSize: '2.5rem' }}
-            color="green"
+            color={tryAgainButtonColor}
             onClick={() =>
               onUpdateMissionAttempt({
                 missionId,

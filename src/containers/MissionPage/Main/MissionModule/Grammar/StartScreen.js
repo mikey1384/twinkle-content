@@ -2,8 +2,9 @@ import React, { useLayoutEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
+import { useMyState } from 'helpers/hooks';
 import { addCommasToNumber } from 'helpers/stringHelpers';
-import { borderRadius, Color } from 'constants/css';
+import { borderRadius, Color, Theme } from 'constants/css';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
@@ -28,6 +29,11 @@ export default function StartScreen({
   onInitMission,
   onStartButtonClick
 }) {
+  const { profileTheme } = useMyState();
+  const startButtonColor = useMemo(
+    () => Theme(profileTheme).success.color,
+    [profileTheme]
+  );
   useLayoutEffect(() => {
     document.getElementById('App').scrollTop = 0;
     BodyRef.scrollTop = 0;
@@ -53,7 +59,12 @@ export default function StartScreen({
       >
         You were rewarded{' '}
         {mission.xpReward ? (
-          <span style={{ color: Color.logoGreen(), fontWeight: 'bold' }}>
+          <span
+            style={{
+              color: Color[Theme(profileTheme).xpNumber.color](),
+              fontWeight: 'bold'
+            }}
+          >
             {addCommasToNumber(mission.xpReward)}{' '}
           </span>
         ) : null}
@@ -76,7 +87,13 @@ export default function StartScreen({
         ) : null}
       </div>
     ) : null;
-  }, [mission.coinReward, mission.id, mission.xpReward, myAttempts]);
+  }, [
+    mission.coinReward,
+    mission.id,
+    mission.xpReward,
+    myAttempts,
+    profileTheme
+  ]);
 
   return (
     <div
@@ -137,7 +154,7 @@ export default function StartScreen({
         }}
       >
         <Button
-          color="green"
+          color={startButtonColor}
           filled
           disabled={loading}
           style={{ fontSize: '2.3rem' }}

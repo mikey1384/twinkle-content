@@ -337,7 +337,7 @@ function SubjectInput() {
                 />
                 <Button
                   filled
-                  color="green"
+                  color={Theme(profileTheme).success.color}
                   type="submit"
                   disabled={submittingSubject || buttonDisabled}
                   onClick={handleSubmit}

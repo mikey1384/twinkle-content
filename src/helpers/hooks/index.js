@@ -18,7 +18,7 @@ import {
   DEFAULT_PROFILE_THEME,
   SELECTED_LANGUAGE
 } from 'constants/defaultValues';
-import { Color } from 'constants/css';
+import { Color, Theme } from 'constants/css';
 
 const BodyRef = document.scrollingElement || document.documentElement;
 
@@ -128,6 +128,11 @@ export function useMyState() {
         profileTheme: DEFAULT_PROFILE_THEME,
         signinModalShown
       };
+}
+
+export function useTheme() {
+  const { profileTheme } = useMyState();
+  return Theme(profileTheme);
 }
 
 export function useOutsideClick(ref, callback) {

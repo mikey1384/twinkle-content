@@ -8,11 +8,10 @@ import { useAppContext, useMissionContext } from 'contexts';
 
 Questions.propTypes = {
   isRepeating: PropTypes.bool,
-  mission: PropTypes.object.isRequired,
-  onFail: PropTypes.func.isRequired
+  mission: PropTypes.object.isRequired
 };
 
-export default function Questions({ isRepeating, mission, onFail }) {
+export default function Questions({ isRepeating, mission }) {
   const [submitDisabled, setSubmitDisabled] = useState(true);
   const { userId } = useMyState();
   const [repeatMissionComplete, setRepeatMissionComplete] = useState(false);
@@ -141,9 +140,6 @@ export default function Questions({ isRepeating, mission, onFail }) {
   }
 
   function handleCheckNavCondition(onNext) {
-    if (statusRef.current === 'fail') {
-      return onFail();
-    }
     if (statusRef.current === 'pass') {
       if (currentSlideIndex < questionIds.length - 1) {
         return onNext();

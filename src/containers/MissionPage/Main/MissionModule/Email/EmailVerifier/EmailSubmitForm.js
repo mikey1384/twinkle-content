@@ -11,10 +11,16 @@ import { useAppContext } from 'contexts';
 EmailSubmitForm.propTypes = {
   email: PropTypes.string,
   onSetEmailSent: PropTypes.func.isRequired,
-  onSetEmail: PropTypes.func.isRequired
+  onSetEmail: PropTypes.func.isRequired,
+  submitButtonColor: PropTypes.string
 };
 
-export default function EmailSubmitForm({ email, onSetEmail, onSetEmailSent }) {
+export default function EmailSubmitForm({
+  email,
+  onSetEmail,
+  onSetEmailSent,
+  submitButtonColor
+}) {
   const sendVerificationOTPEmail = useAppContext(
     (v) => v.requestHelpers.sendVerificationOTPEmail
   );
@@ -53,7 +59,7 @@ export default function EmailSubmitForm({ email, onSetEmail, onSetEmailSent }) {
           disabled={!emailIsValid || sendingEmail}
           style={{ fontSize: '1.7rem' }}
           filled
-          color="green"
+          color={submitButtonColor}
           onClick={() => handleConfirmEmail(email)}
         >
           {sendingEmail ? (

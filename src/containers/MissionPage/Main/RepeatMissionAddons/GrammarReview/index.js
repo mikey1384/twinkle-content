@@ -7,6 +7,7 @@ import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import QuestionListItem from './QuestionListItem';
 import { useAppContext } from 'contexts';
 import { css } from '@emotion/css';
+import { useTheme } from 'helpers/hooks';
 import { mobileMaxWidth } from 'constants/css';
 
 GrammarReview.propTypes = {
@@ -24,6 +25,9 @@ export default function GrammarReview({
   onSetMissionState,
   style
 }) {
+  const {
+    loadMoreButton: { color: loadMoreButtonColor }
+  } = useTheme();
   const loadMoreGrammarAttempts = useAppContext(
     (v) => v.requestHelpers.loadMoreGrammarAttempts
   );
@@ -102,7 +106,7 @@ export default function GrammarReview({
             <LoadMoreButton
               style={{ marginTop: '2rem', fontSize: '1.7rem' }}
               filled
-              color="green"
+              color={loadMoreButtonColor}
               loading={loadingMore}
               onClick={handleLoadMore}
             />

@@ -12,6 +12,7 @@ const subjectTitleHeight = 24;
 SubjectItem.propTypes = {
   id: PropTypes.number,
   currentSubjectId: PropTypes.number,
+  displayedThemeColor: PropTypes.string,
   content: PropTypes.string,
   userId: PropTypes.number,
   username: PropTypes.string,
@@ -23,6 +24,7 @@ SubjectItem.propTypes = {
 
 export default function SubjectItem({
   currentSubjectId,
+  displayedThemeColor,
   onDeleteSubject,
   onSelectSubject,
   id,
@@ -100,7 +102,12 @@ export default function SubjectItem({
       >
         <div ref={SubjectTitleRef} style={{ marginBottom }}>
           {currentSubjectId === id && (
-            <b style={{ fontSize: '1.5rem', color: Color.green() }}>
+            <b
+              style={{
+                fontSize: '1.5rem',
+                color: Color[displayedThemeColor]()
+              }}
+            >
               Current:{' '}
             </b>
           )}

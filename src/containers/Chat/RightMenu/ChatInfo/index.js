@@ -20,6 +20,7 @@ ChatInfo.propTypes = {
   channelOnCall: PropTypes.object,
   currentChannel: PropTypes.object.isRequired,
   currentChannelOnlineMembers: PropTypes.object.isRequired,
+  displayedThemeColor: PropTypes.string,
   selectedChannelId: PropTypes.number
 };
 
@@ -27,8 +28,8 @@ function ChatInfo({
   selectedChannelId,
   channelOnCall,
   currentChannel,
-  currentChannel: { theme },
   currentChannelOnlineMembers,
+  displayedThemeColor,
   channelName
 }) {
   const { userId: myId, username, profilePicUrl, banned } = useMyState();
@@ -190,7 +191,7 @@ function ChatInfo({
           {displayedChannelMembers.length > 2 && (
             <div
               className={css`
-                color: ${Color[theme || 'green']()};
+                color: ${Color[displayedThemeColor]()};
                 font-size: 1.5rem;
                 font-weight: bold;
                 @media (max-width: ${mobileMaxWidth}) {
