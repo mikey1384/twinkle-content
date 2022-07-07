@@ -63,6 +63,7 @@ export default function SectionPanel({
   const {
     success: { color: successColor }
   } = useTheme();
+  const [savingEdit, setSavingEdit] = useState(false);
   const [loading, setLoading] = useState(false);
   const [onEdit, setOnEdit] = useState(false);
   const [editedTitle, setEditedTitle] = useState(title);
@@ -156,6 +157,7 @@ export default function SectionPanel({
                   <Button
                     style={{ marginLeft: '1rem', zIndex: 1000 }}
                     filled
+                    disabled={savingEdit}
                     color={successColor}
                     onClick={() => onChangeTitle(editedTitle)}
                   >
@@ -277,8 +279,11 @@ export default function SectionPanel({
   );
 
   async function onChangeTitle(title) {
+    if (savingEdit) return;
+    setSavingEdit(true);
     await onEditTitle(title);
     setOnEdit(false);
+    setSavingEdit(false);
   }
 
   async function handleLoadMore() {
