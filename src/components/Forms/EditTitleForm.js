@@ -1,8 +1,10 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Input from 'components/Texts/Input';
-import { useOutsideClick } from 'helpers/hooks';
-import { addEmoji, finalizeEmoji } from 'helpers/stringHelpers';
+import Icon from 'components/Icon';
+import Button from 'components/Button';
+import { useOutsideClick, useTheme } from 'helpers/hooks';
+import { addEmoji, finalizeEmoji, stringIsEmpty } from 'helpers/stringHelpers';
 import { edit } from 'constants/placeholders';
 
 EditTitleForm.propTypes = {
@@ -21,53 +23,68 @@ export default function EditTitleForm({
   onClickOutSide,
   style,
   inputStyle,
+  onEditSubmit,
   ...props
 }) {
+  const {
+    success: { color: successColor }
+  } = useTheme();
   const [title, setTitle] = useState(props.title);
   const FormRef = useRef(null);
   useOutsideClick(FormRef, onClickOutSide);
 
   return (
-    <form style={style} ref={FormRef}>
-      <Input
-        style={{
-          width: '100%',
-          color: title.length > maxLength && 'red',
-          ...inputStyle
-        }}
-        autoFocus={autoFocus}
-        placeholder={edit.title}
-        value={title}
-        onChange={(text) => setTitle(text)}
-        onKeyUp={handleKeyUp}
-      />
+    <div style={style} ref={FormRef}>
+      <div style={{ width: '100%', display: 'flex' }}>
+        <Input
+          style={{
+            width: '100%',
+            color: title?.length > maxLength && 'red',
+            ...inputStyle
+          }}
+          autoFocus={autoFocus}
+          placeholder={edit.title}
+          value={title}
+          onChange={(text) => setTitle(text)}
+          onKeyUp={handleKeyUp}
+        />
+        {!stringIsEmpty(title) && (
+          <Button
+            style={{ marginLeft: '1rem', zIndex: 1000 }}
+            filled
+            disabled={title?.length > maxLength}
+            color={successColor}
+            onClick={handleEditSubmit}
+          >
+            <Icon icon="check" size="lg" />
+          </Button>
+        )}
+      </div>
       <div>
         <small
           style={{
-            color: title.length > maxLength && 'red',
+            color: title?.length > maxLength && 'red',
             fontSize: '1.3rem',
             lineHeight: '2rem'
           }}
         >
-          {title.length}/{maxLength} Characters
+          {title?.length}/{maxLength} Characters
         </small>
       </div>
-    </form>
+    </div>
   );
 
   function handleKeyUp(event) {
     setTitle(addEmoji(event.target.value));
     if (event.keyCode === 13) {
-      finalizeEmoji(event.target.value);
-      onEditSubmit({ event, title });
+      handleEditSubmit();
     }
   }
 
-  function onEditSubmit({ event, title }) {
-    event.preventDefault();
-    if (title && title.length > maxLength) return;
-    if (title && title !== props.title) {
-      props.onEditSubmit(finalizeEmoji(title));
+  function handleEditSubmit() {
+    if (title?.length > maxLength) return;
+    if (!stringIsEmpty(title) && title !== props.title) {
+      onEditSubmit(finalizeEmoji(title));
     } else {
       onClickOutSide();
     }

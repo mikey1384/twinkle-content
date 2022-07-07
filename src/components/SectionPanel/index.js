@@ -60,6 +60,9 @@ export default function SectionPanel({
   innerStyle = {},
   title
 }) {
+  const {
+    success: { color: successColor }
+  } = useTheme();
   const [loading, setLoading] = useState(false);
   const [onEdit, setOnEdit] = useState(false);
   const [editedTitle, setEditedTitle] = useState(title);
@@ -153,7 +156,7 @@ export default function SectionPanel({
                   <Button
                     style={{ marginLeft: '1rem', zIndex: 1000 }}
                     filled
-                    color="green"
+                    color={successColor}
                     onClick={() => onChangeTitle(editedTitle)}
                   >
                     <Icon icon="check" size="lg" />
