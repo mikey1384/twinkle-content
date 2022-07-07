@@ -26,13 +26,13 @@ import RewardLevelForm from 'components/Forms/RewardLevelForm';
 import Icon from 'components/Icon';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
 import SecretMessageInput from 'components/Forms/SecretMessageInput';
-import { Color, Theme } from 'constants/css';
+import { Color } from 'constants/css';
 import { PanelStyle } from '../Styles';
 import {
   charLimit,
   DESCRIPTION_LENGTH_FOR_EXTRA_REWARD_LEVEL
 } from 'constants/defaultValues';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { useAppContext, useHomeContext, useInputContext } from 'contexts';
 import localize from 'constants/localize';
 import RewardLevelExplainer from 'components/RewardLevelExplainer';
@@ -47,7 +47,11 @@ const secretMessageLabel = localize('secretMessage');
 function SubjectInput() {
   const { onFileUpload } = useContext(LocalContext);
   const uploadContent = useAppContext((v) => v.requestHelpers.uploadContent);
-  const { canEditRewardLevel, profileTheme, banned } = useMyState();
+  const { canEditRewardLevel, banned } = useMyState();
+  const {
+    success: { color: successColor },
+    button: { color: buttonColor }
+  } = useTheme();
   const fileUploadProgress = useHomeContext((v) => v.state.fileUploadProgress);
   const secretAttachmentUploadProgress = useHomeContext(
     (v) => v.state.secretAttachmentUploadProgress
@@ -207,7 +211,7 @@ function SubjectInput() {
               ) : (
                 <Button
                   skeuomorphic
-                  color={Theme(profileTheme).button.color}
+                  color={buttonColor}
                   onClick={() => setAttachContentModalShown(true)}
                 >
                   <Icon size="lg" icon="plus" />
@@ -337,7 +341,7 @@ function SubjectInput() {
                 />
                 <Button
                   filled
-                  color={Theme(profileTheme).success.color}
+                  color={successColor}
                   type="submit"
                   disabled={submittingSubject || buttonDisabled}
                   onClick={handleSubmit}

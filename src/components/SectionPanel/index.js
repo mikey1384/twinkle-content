@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import Body from './Body';
@@ -8,9 +8,9 @@ import Icon from 'components/Icon';
 import Loading from 'components/Loading';
 import Button from 'components/Button';
 import { addEmoji, stringIsEmpty } from 'helpers/stringHelpers';
-import { borderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useMyState, useOutsideClick } from 'helpers/hooks';
+import { useTheme, useOutsideClick } from 'helpers/hooks';
 import localize from 'constants/localize';
 
 const editLabel = localize('edit');
@@ -60,20 +60,17 @@ export default function SectionPanel({
   innerStyle = {},
   title
 }) {
-  const { profileTheme } = useMyState();
   const [loading, setLoading] = useState(false);
   const [onEdit, setOnEdit] = useState(false);
   const [editedTitle, setEditedTitle] = useState(title);
-  const themeColor = customColorTheme || profileTheme;
+  const {
+    sectionPanel: { color: sectionPanelColor }
+  } = useTheme(customColorTheme);
   const TitleInputRef = useRef(null);
   useOutsideClick(TitleInputRef, () => {
     setOnEdit(false);
     setEditedTitle(title);
   });
-  const sectionPanelColor = useMemo(
-    () => Color[Theme(themeColor).sectionPanel.color](),
-    [themeColor]
-  );
 
   return (
     <div
@@ -90,7 +87,7 @@ export default function SectionPanel({
           grid-template-areas: 'title search buttons';
           grid-template-columns: auto ${onSearch ? '40%' : 'auto'} auto;
           background: #fff;
-          color: ${sectionPanelColor};
+          color: ${Color[sectionPanelColor]()};
           border-top-left-radius: ${borderRadius};
           border-top-right-radius: ${borderRadius};
           padding: 1rem;
@@ -210,8 +207,8 @@ export default function SectionPanel({
         </div>
         {onSearch && (
           <SearchInput
-            addonColor={Theme(themeColor).sectionPanel.color}
-            borderColor={Theme(themeColor).sectionPanel.color}
+            addonColor={sectionPanelColor}
+            borderColor={sectionPanelColor}
             style={{
               color: '#fff',
               gridArea: 'search',

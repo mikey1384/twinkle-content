@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import renderEnglishText from './localization/english';
 import renderKoreanText from './localization/korean';
-import { useMyState } from 'helpers/hooks';
+import { useTheme } from 'helpers/hooks';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { notiFeedListItem } from '../../Styles';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
@@ -28,13 +28,17 @@ export default function RewardItem({
     timeStamp
   }
 }) {
-  const { profileTheme } = useMyState();
+  const {
+    content: { color: contentColor },
+    mission: { color: missionColor }
+  } = useTheme();
   const NotiText = useMemo(() => {
     const params = {
+      contentColor,
       contentId,
       contentType,
       isTask,
-      profileTheme,
+      missionColor,
       rewardAmount,
       rewardType,
       rewarderId,
@@ -48,10 +52,11 @@ export default function RewardItem({
       ? renderKoreanText(params)
       : renderEnglishText(params);
   }, [
+    contentColor,
     contentId,
     contentType,
     isTask,
-    profileTheme,
+    missionColor,
     rewardAmount,
     rewardType,
     rewarderId,

@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'components/Link';
-import { Color, Theme, mobileMaxWidth } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { queryStringForArray } from 'helpers/stringHelpers';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import ErrorBoundary from 'components/ErrorBoundary';
@@ -15,7 +15,7 @@ import request from 'axios';
 import URL from 'constants/URL';
 import { socket } from 'constants/io';
 import { css } from '@emotion/css';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { useAppContext, useExploreContext, useNotiContext } from 'contexts';
 import localize from 'constants/localize';
 
@@ -59,7 +59,11 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
   const toggleHideWatched = useAppContext(
     (v) => v.requestHelpers.toggleHideWatched
   );
-  const { hideWatched, profileTheme, userId } = useMyState();
+  const { hideWatched, userId } = useMyState();
+  const {
+    userLink: { color: userLinkColor, opacity: userLinkOpacity },
+    spinner: { color: spinnerColor }
+  } = useTheme();
   const numNewNotis = useNotiContext((v) => v.state.numNewNotis);
   const totalRewardedTwinkles = useNotiContext(
     (v) => v.state.totalRewardedTwinkles
@@ -150,18 +154,6 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
     setRewardsExist(totalRewardedTwinkles + totalRewardedTwinkleCoins > 0);
   }, [totalRewardedTwinkles, totalRewardedTwinkleCoins]);
 
-  const userLinkColor = useMemo(
-    () =>
-      Color[Theme(profileTheme).userLink.color](
-        Theme(profileTheme).userLink.opacity
-      ),
-    [profileTheme]
-  );
-  const spinnerColor = useMemo(
-    () => Color[Theme(profileTheme).spinner.color](),
-    [profileTheme]
-  );
-
   return (
     <ErrorBoundary
       componentPath="VideoPage/NavMenu"
@@ -231,7 +223,7 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
             <Icon
               style={{
                 marginRight: '1rem',
-                color: spinnerColor
+                color: Color[spinnerColor]()
               }}
               icon="spinner"
               pulse
@@ -417,7 +409,9 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
               arePlaylistVideos ? `?playlist=${playlistId}` : ''
             }`}
             style={{
-              color: video.byUser ? userLinkColor : Color.blue()
+              color: video.byUser
+                ? Color[userLinkColor](userLinkOpacity)
+                : Color.blue()
             }}
           >
             {video.title}

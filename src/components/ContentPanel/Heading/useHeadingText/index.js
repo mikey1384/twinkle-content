@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useMyState } from 'helpers/hooks';
+import { useTheme } from 'helpers/hooks';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import renderEnglishMessage from './localization/english';
 import renderKoreanMessage from './localization/korean';
@@ -16,21 +16,28 @@ export default function useHeadingText({ action, contentObj }) {
     uploader,
     rootObj
   } = contentObj;
-  const { profileTheme } = useMyState();
+  const {
+    subject: { color: subjectColor },
+    userLink: { color: userLinkColor, opacity: userLinkOpacity },
+    comment: { color: commentColor }
+  } = useTheme();
   const HeadingText = useMemo(() => {
     const params = {
       id,
       action,
       byUser,
+      commentColor,
       commentId,
       contentObj,
       contentType,
-      profileTheme,
       replyId,
       rootObj,
       rootType,
+      subjectColor,
       targetObj,
-      uploader
+      uploader,
+      userLinkColor,
+      userLinkOpacity
     };
     return SELECTED_LANGUAGE === 'kr'
       ? renderKoreanMessage(params)
@@ -38,16 +45,19 @@ export default function useHeadingText({ action, contentObj }) {
   }, [
     action,
     byUser,
+    commentColor,
     commentId,
     contentObj,
     contentType,
     id,
-    profileTheme,
     replyId,
     rootObj,
     rootType,
+    subjectColor,
     targetObj,
-    uploader
+    uploader,
+    userLinkColor,
+    userLinkOpacity
   ]);
 
   return HeadingText;

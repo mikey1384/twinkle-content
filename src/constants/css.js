@@ -72,7 +72,6 @@ export function Theme(color) {
     homeMenuItemActive: { color },
     itemSelected: { color, opacity: strongColors.includes(color) ? 0.7 : 0.8 },
     loadMoreButton: { color: 'green' },
-    loadMoreChannelsButtonColor: { color: 'green' },
     login: { color: 'green' },
     logoTwin: { color: 'logoBlue' },
     logoKle: { color: 'logoGreen' },

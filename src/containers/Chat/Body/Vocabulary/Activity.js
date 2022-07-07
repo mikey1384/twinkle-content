@@ -10,8 +10,8 @@ import {
   SELECTED_LANGUAGE
 } from 'constants/defaultValues';
 import { MessageStyle } from '../../Styles';
-import { Color, Theme, mobileMaxWidth } from 'constants/css';
-import { useMyState } from 'helpers/hooks';
+import { Color, mobileMaxWidth } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
 import { unix } from 'moment';
 import { socket } from 'constants/io';
 import { useChatContext } from 'contexts';
@@ -43,7 +43,9 @@ export default function Activity({
   myId,
   onReceiveNewActivity
 }) {
-  const { profileTheme } = useMyState();
+  const {
+    xpNumber: { color: xpNumberColor }
+  } = useTheme();
   const onRemoveNewActivityStatus = useChatContext(
     (v) => v.actions.onRemoveNewActivityStatus
   );
@@ -97,7 +99,6 @@ export default function Activity({
   }, [content]);
 
   const activityLabel = useMemo(() => {
-    const xpNumberColor = Color[Theme(profileTheme).xpNumber.color]();
     if (SELECTED_LANGUAGE === 'kr') {
       return (
         <div>
@@ -132,7 +133,7 @@ export default function Activity({
               }
             `}
           >
-            <span style={{ color: xpNumberColor }}>
+            <span style={{ color: Color[xpNumberColor]() }}>
               {addCommasToNumber(wordLevelHash[wordLevel].rewardAmount)}
             </span>{' '}
             <span style={{ color: Color.gold() }}>XP</span>
@@ -233,7 +234,7 @@ export default function Activity({
             }
           `}
         >
-          <span style={{ color: xpNumberColor }}>
+          <span style={{ color: Color[xpNumberColor]() }}>
             {addCommasToNumber(wordLevelHash[wordLevel].rewardAmount)}
           </span>{' '}
           <span style={{ color: Color.gold() }}>XP</span>
@@ -267,7 +268,7 @@ export default function Activity({
         )}
       </div>
     );
-  }, [content, profileTheme, wordLabel, wordLevel]);
+  }, [content, wordLabel, wordLevel, xpNumberColor]);
 
   return (
     <div className={MessageStyle.container}>

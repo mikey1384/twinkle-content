@@ -1,10 +1,9 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import SearchInput from 'components/Texts/SearchInput';
-import { useMyState } from 'helpers/hooks';
+import { useTheme } from 'helpers/hooks';
 import { useExploreContext } from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
-import { Theme } from 'constants/css';
 import localize from 'constants/localize';
 
 SearchBox.propTypes = {
@@ -15,7 +14,9 @@ SearchBox.propTypes = {
 };
 
 export default function SearchBox({ category, className, innerRef, style }) {
-  const { profileTheme } = useMyState();
+  const {
+    search: { color: searchColor }
+  } = useTheme();
   const searchText = useExploreContext((v) => v.state.search.searchText);
   const onChangeSearchInput = useExploreContext(
     (v) => v.actions.onChangeSearchInput
@@ -32,8 +33,8 @@ export default function SearchBox({ category, className, innerRef, style }) {
     <SearchInput
       className={className}
       style={style}
-      addonColor={Theme(profileTheme).search.color}
-      borderColor={Theme(profileTheme).search.color}
+      addonColor={searchColor}
+      borderColor={searchColor}
       innerRef={innerRef}
       placeholder={placeholderLabel}
       onChange={onChangeSearchInput}

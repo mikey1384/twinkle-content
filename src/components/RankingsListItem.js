@@ -2,8 +2,8 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import UsernameText from 'components/Texts/UsernameText';
 import ProfilePic from 'components/ProfilePic';
-import { Color, Theme, mobileMaxWidth } from 'constants/css';
-import { useMyState } from 'helpers/hooks';
+import { Color, mobileMaxWidth } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { css } from '@emotion/css';
 
@@ -24,11 +24,9 @@ export default function RankingsListItem({
   user,
   onUsermenuShownChange = () => {}
 }) {
-  const { profileTheme } = useMyState();
-  const xpNumberColor = useMemo(
-    () => Color[Theme(profileTheme).xpNumber.color](),
-    [profileTheme]
-  );
+  const {
+    xpNumber: { color: xpNumberColor }
+  } = useTheme();
   const rankColor = useMemo(() => {
     return user.rank === 1
       ? Color.gold()
@@ -151,7 +149,7 @@ export default function RankingsListItem({
           }
         `}
       >
-        <span style={{ color: xpNumberColor }}>
+        <span style={{ color: Color[xpNumberColor]() }}>
           {addCommasToNumber(user[target] || 0)}
         </span>{' '}
         <span style={{ color: Color.gold() }}>XP</span>

@@ -1,11 +1,4 @@
-import React, {
-  memo,
-  useEffect,
-  useMemo,
-  useCallback,
-  useRef,
-  useState
-} from 'react';
+import React, { memo, useEffect, useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import UsernameText from 'components/Texts/UsernameText';
 import Link from 'components/Link';
@@ -13,11 +6,11 @@ import FullTextReveal from 'components/Texts/FullTextRevealFromOuterLayer';
 import ErrorBoundary from 'components/ErrorBoundary';
 import VideoThumbImage from 'components/VideoThumbImage';
 import Icon from 'components/Icon';
-import { Color, Theme } from 'constants/css';
+import { Color } from 'constants/css';
 import { css } from '@emotion/css';
 import { mobileFullTextRevealShowDuration } from 'constants/defaultValues';
 import { textIsOverflown, isMobile } from 'helpers';
-import { useContentState, useMyState } from 'helpers/hooks';
+import { useContentState, useTheme } from 'helpers/hooks';
 import localize from 'constants/localize';
 
 const deviceIsMobile = isMobile(navigator);
@@ -41,7 +34,9 @@ VideoThumb.propTypes = {
 
 function VideoThumb({ className, clickSafe, style, to, user, video }) {
   const timerRef = useRef(null);
-  const { profileTheme } = useMyState();
+  const {
+    userLink: { color: userLinkColor, opacity: userLinkOpacity }
+  } = useTheme();
   const { isDeleted } = useContentState({
     contentType: 'video',
     contentId: video.id
@@ -74,14 +69,6 @@ function VideoThumb({ className, clickSafe, style, to, user, video }) {
       }, mobileFullTextRevealShowDuration);
     }
   }, [titleContext]);
-
-  const byUserColor = useMemo(
-    () =>
-      Color[Theme(profileTheme).userLink.color](
-        Theme(profileTheme).userLink.opacity
-      ),
-    [profileTheme]
-  );
 
   return !isDeleted ? (
     <ErrorBoundary componentPath="VideoThumb" style={style}>
@@ -138,7 +125,9 @@ function VideoThumb({ className, clickSafe, style, to, user, video }) {
             >
               <a
                 style={{
-                  color: video.byUser ? byUserColor : Color.blue()
+                  color: video.byUser
+                    ? Color[userLinkColor](userLinkOpacity)
+                    : Color.blue()
                 }}
                 href={`/${to}`}
                 onClick={onLinkClick}

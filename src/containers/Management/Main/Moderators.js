@@ -8,9 +8,8 @@ import AddModeratorModal from '../Modals/AddModeratorModal';
 import EditModeratorModal from '../Modals/EditModeratorModal';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { useManagementContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { isMobile } from 'helpers';
-import { Theme } from 'constants/css';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import Icon from 'components/Icon';
@@ -31,7 +30,10 @@ Moderators.propTypes = {
 };
 
 export default function Moderators({ canManage }) {
-  const { userId, profileTheme } = useMyState();
+  const { userId } = useMyState();
+  const {
+    tableHeader: { color: tableHeaderColor }
+  } = useTheme();
   const accountTypes = useManagementContext((v) => v.state.accountTypes);
   const moderators = useManagementContext((v) => v.state.moderators);
   const moderatorsLoaded = useManagementContext(
@@ -86,7 +88,7 @@ export default function Moderators({ canManage }) {
         }
       >
         <Table
-          color={Theme(profileTheme).tableHeader.color}
+          color={tableHeaderColor}
           columns={`
             minmax(15rem, 1.5fr)
             minmax(10rem, 1fr)

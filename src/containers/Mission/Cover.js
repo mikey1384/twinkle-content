@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { useNavigate } from 'react-router-dom';
 import { css } from '@emotion/css';
-import { Color, Theme, mobileMaxWidth } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { useAppContext } from 'contexts';
 import { checkMultiMissionPassStatus } from 'helpers/userDataHelpers';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
@@ -21,7 +21,10 @@ Cover.propTypes = {
 
 export default function Cover({ missionIds, missionObj, myAttempts }) {
   const navigate = useNavigate();
-  const { profileTheme, profilePicUrl, userId, username } = useMyState();
+  const { profilePicUrl, userId, username } = useMyState();
+  const {
+    cover: { color: coverColor }
+  } = useTheme();
   const loadMissionRankings = useAppContext(
     (v) => v.requestHelpers.loadMissionRankings
   );
@@ -71,11 +74,6 @@ export default function Cover({ missionIds, missionObj, myAttempts }) {
     );
   }, [missionIds?.length, numComplete]);
 
-  const coverColor = useMemo(
-    () => Color[Theme(profileTheme).cover.color](),
-    [profileTheme]
-  );
-
   return (
     <div
       className={css`
@@ -83,7 +81,7 @@ export default function Cover({ missionIds, missionObj, myAttempts }) {
         height: 15vh;
         display: flex;
         justify-content: space-between;
-        background: ${coverColor};
+        background: ${Color[coverColor]()};
         padding: 0 5%;
         @media (max-width: ${mobileMaxWidth}) {
           height: 8rem;

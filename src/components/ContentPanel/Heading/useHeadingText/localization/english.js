@@ -1,5 +1,5 @@
 import React from 'react';
-import { Color, Theme } from 'constants/css';
+import { Color } from 'constants/css';
 import UsernameText from 'components/Texts/UsernameText';
 import ContentLink from 'components/ContentLink';
 
@@ -7,23 +7,23 @@ export default function renderEnglishMessage({
   id,
   action,
   byUser,
+  commentColor,
   commentId,
   contentObj,
   contentType,
-  profileTheme,
   replyId,
   rootObj,
   rootType,
+  subjectColor,
   targetObj,
-  uploader
+  uploader,
+  userLinkColor,
+  userLinkOpacity
 }) {
   const contentLabel =
     rootType === 'url' ? 'link' : rootType === 'subject' ? 'subject' : rootType;
-  const contentLinkSubjectColor = Color[Theme(profileTheme).subject.color]();
-  const contentLinkCommentColor = Color[Theme(profileTheme).comment.color]();
-  const userLinkColor = Color[Theme(profileTheme).userLink.color](
-    Theme(profileTheme).userLink.opacity
-  );
+  const contentLinkSubjectColor = Color[subjectColor]();
+  const contentLinkCommentColor = Color[commentColor]();
 
   switch (contentType) {
     case 'video':
@@ -62,7 +62,9 @@ export default function renderEnglishMessage({
             content={{ id, title: 'subject ' }}
             contentType={contentType}
             style={{
-              color: byUser ? userLinkColor : contentLinkSubjectColor
+              color: byUser
+                ? Color[userLinkColor](userLinkOpacity)
+                : contentLinkSubjectColor
             }}
           />
           {rootObj.id && (

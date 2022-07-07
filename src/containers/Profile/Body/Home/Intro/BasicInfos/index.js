@@ -5,12 +5,12 @@ import Icon from 'components/Icon';
 import InfoEditForm from './InfoEditForm';
 import PasswordInputModal from './PasswordInputModal';
 import { css } from '@emotion/css';
-import { Color, Theme, mobileMaxWidth } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { stringIsEmpty, trimUrl } from 'helpers/stringHelpers';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { unix } from 'moment';
 import { useNavigate } from 'react-router-dom';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { useAppContext, useChatContext, useInputContext } from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
@@ -68,6 +68,9 @@ export default function BasicInfos({
     authLevel: myAuthLevel,
     banned
   } = useMyState();
+  const {
+    button: { color: buttonColor }
+  } = useTheme(selectedTheme || profileTheme || 'logoBlue');
   const loadDMChannel = useAppContext((v) => v.requestHelpers.loadDMChannel);
   const uploadProfileInfo = useAppContext(
     (v) => v.requestHelpers.uploadProfileInfo
@@ -295,10 +298,7 @@ export default function BasicInfos({
                   width: '100%'
                 }}
                 skeuomorphic
-                color={
-                  Theme(selectedTheme || profileTheme || 'logoBlue').button
-                    .color
-                }
+                color={buttonColor}
                 onClick={handleTalkButtonClick}
               >
                 <Icon icon="comments" />

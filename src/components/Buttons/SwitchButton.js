@@ -1,9 +1,9 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { Color, Theme } from 'constants/css';
+import { Color } from 'constants/css';
 import { css } from '@emotion/css';
-import { useMyState } from 'helpers/hooks';
+import { useTheme } from 'helpers/hooks';
 
 SwitchButton.propTypes = {
   color: PropTypes.string,
@@ -26,11 +26,9 @@ export default function SwitchButton({
   labelStyle = { fontSize: small ? '1.1rem' : '1.3rem' },
   style
 }) {
-  const { profileTheme } = useMyState();
-  const switchColor = useMemo(
-    () => Color[Theme(profileTheme).switch.color](),
-    [profileTheme]
-  );
+  const {
+    switch: { color: switchColor }
+  } = useTheme();
 
   return (
     <ErrorBoundary
@@ -62,7 +60,7 @@ export default function SwitchButton({
         <input
           className={css`
             &:checked + span {
-              background-color: ${color || switchColor};
+              background-color: ${color || Color[switchColor]()};
             }
             &:checked + span:before {
               transform: translateX(${small ? 16 : 26}px);

@@ -6,9 +6,9 @@ import Loading from 'components/Loading';
 import PeopleFilterBar from './PeopleFilterBar';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { css } from '@emotion/css';
-import { mobileMaxWidth, Theme } from 'constants/css';
+import { mobileMaxWidth } from 'constants/css';
 import { useAppContext, useInputContext } from 'contexts';
-import { useInfiniteScroll, useMyState, useSearch } from 'helpers/hooks';
+import { useInfiniteScroll, useTheme, useSearch } from 'helpers/hooks';
 import request from 'axios';
 import URL from 'constants/URL';
 import {
@@ -35,9 +35,11 @@ function People() {
   const orderUsersBy = useAppContext((v) => v.user.state.orderUsersBy);
   const profiles = useAppContext((v) => v.user.state.profiles);
   const searchedProfiles = useAppContext((v) => v.user.state.searchedProfiles);
-  const { profileTheme } = useMyState();
   const userSearchText = useInputContext((v) => v.state.userSearchText);
   const onSetSearchText = useInputContext((v) => v.actions.onSetSearchText);
+  const {
+    search: { color: searchColor }
+  } = useTheme();
   const [loading, setLoading] = useState(false);
   const { handleSearch, searching } = useSearch({
     onSearch: handleSearchUsers,
@@ -90,8 +92,8 @@ function People() {
           }
         `}
         style={{ zIndex: 0 }}
-        addonColor={Theme(profileTheme).search.color}
-        borderColor={Theme(profileTheme).search.color}
+        addonColor={searchColor}
+        borderColor={searchColor}
         placeholder={`${searchUsersLabel}...`}
         onChange={handleSearch}
         value={userSearchText}

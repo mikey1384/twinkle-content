@@ -1,12 +1,12 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Checkbox from 'components/Checkbox';
 import Link from 'components/Link';
 import Icon from 'components/Icon';
-import { Color, Theme, mobileMaxWidth } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useAppContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
@@ -27,12 +27,11 @@ export default function Categories({
   const onChangeDefaultSearchFilter = useAppContext(
     (v) => v.user.actions.onChangeDefaultSearchFilter
   );
-  const { searchFilter: defaultSearchFilter, profileTheme } = useMyState();
+  const { searchFilter: defaultSearchFilter } = useMyState();
+  const {
+    search: { color: searchColor }
+  } = useTheme();
   const [changingDefaultFilter, setChangingDefaultFilter] = useState(false);
-  const categoriesLabelColor = useMemo(
-    () => Color[Theme(profileTheme).search.color](),
-    [profileTheme]
-  );
 
   return (
     <div
@@ -47,7 +46,7 @@ export default function Categories({
       <div
         className={css`
           width: 80%;
-          color: ${categoriesLabelColor};
+          color: ${Color[searchColor]()};
           > nav {
             width: 100%;
             text-align: center;
@@ -75,7 +74,7 @@ export default function Categories({
               transition: color 0.1s;
               &:hover {
                 text-decoration: none;
-                color: ${categoriesLabelColor};
+                color: ${Color[searchColor]()};
               }
               @media (max-width: ${mobileMaxWidth}) {
                 font-size: 1.7rem;

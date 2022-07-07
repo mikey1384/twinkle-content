@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { borderRadius, Color, mobileMaxWidth, Theme } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useMyState } from 'helpers/hooks';
+import { useTheme } from 'helpers/hooks';
 
 FilterBar.propTypes = {
   children: PropTypes.node,
@@ -25,22 +25,15 @@ export default function FilterBar({
   dropdownButton,
   style
 }) {
-  const { profileTheme } = useMyState();
-  const themeColor = color || profileTheme;
-  const mainFilterBackgroundColor = useMemo(
-    () =>
-      Color[Theme(themeColor).mainFilter.color](
-        Theme(themeColor).mainFilter.opacity
-      ),
-    [themeColor]
-  );
-  const mainFilterActiveColor = useMemo(
-    () => Color[Theme(themeColor).mainFilter.color](),
-    [themeColor]
-  );
+  const {
+    mainFilter: { color: mainFilterColor, opacity: mainFilterOpacity }
+  } = useTheme(color);
+  const mainFilterActiveColor = Color[mainFilterColor]();
   const FilterBarStyle = useMemo(() => {
     return `${css`
-      background: ${inverted ? mainFilterBackgroundColor : '#fff'};
+      background: ${inverted
+        ? Color[mainFilterColor](mainFilterOpacity)
+        : '#fff'};
       height: 6rem;
       margin-bottom: 1rem;
       ${!inverted && bordered
@@ -151,7 +144,8 @@ export default function FilterBar({
     dropdownButton,
     inverted,
     mainFilterActiveColor,
-    mainFilterBackgroundColor
+    mainFilterColor,
+    mainFilterOpacity
   ]);
 
   return (

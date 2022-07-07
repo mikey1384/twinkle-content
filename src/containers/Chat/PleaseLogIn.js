@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import Button from 'components/Button';
-import { Color, Theme } from 'constants/css';
+import { Color } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
@@ -8,6 +9,12 @@ import localize from 'constants/localize';
 const logInLabel = localize('logIn');
 
 export default function PleaseLogIn() {
+  const {
+    login: { color: loginColor },
+    logoTwin: { color: twinColor },
+    logoKle: { color: kleColor }
+  } = useTheme();
+
   const onOpenSigninModal = useAppContext(
     (v) => v.user.actions.onOpenSigninModal
   );
@@ -39,20 +46,16 @@ export default function PleaseLogIn() {
           vocabulary games & chess
         </span>{' '}
         with{' '}
-        <span
-          style={{ color: Color[Theme().logoTwin.color](), fontWeight: 'bold' }}
-        >
+        <span style={{ color: Color[twinColor](), fontWeight: 'bold' }}>
           Twin
         </span>
-        <span
-          style={{ color: Color[Theme().logoKle.color](), fontWeight: 'bold' }}
-        >
+        <span style={{ color: Color[kleColor](), fontWeight: 'bold' }}>
           kle
         </span>{' '}
         students and teachers?
       </p>
     );
-  }, []);
+  }, [kleColor, twinColor]);
 
   return (
     <div
@@ -78,7 +81,7 @@ export default function PleaseLogIn() {
       <div style={{ marginTop: '2rem' }}>
         <Button
           filled
-          color={Theme().login.color}
+          color={loginColor}
           style={{ fontSize: '3rem' }}
           onClick={onOpenSigninModal}
         >

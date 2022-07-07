@@ -19,11 +19,11 @@ import XPRewardInterface from 'components/XPRewardInterface';
 import RecommendationStatus from 'components/RecommendationStatus';
 import RecommendationInterface from 'components/RecommendationInterface';
 import { css } from '@emotion/css';
-import { Color, Theme, mobileMaxWidth } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { stringIsEmpty, addEmoji, finalizeEmoji } from 'helpers/stringHelpers';
 import { determineXpButtonDisabled } from 'helpers';
 import { timeSince } from 'helpers/timeStampHelpers';
-import { useContentState, useMyState } from 'helpers/hooks';
+import { useContentState, useMyState, useTheme } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
@@ -91,10 +91,13 @@ export default function SubjectPanel({
     canDelete,
     canEdit,
     canReward,
-    profileTheme,
     twinkleCoins,
     userId: myId
   } = useMyState();
+  const {
+    subject: { color: subjectColor }
+  } = useTheme();
+
   const {
     editRewardComment,
     onDelete,
@@ -184,10 +187,6 @@ export default function SubjectPanel({
   ]);
   const CommentsRef = useRef(null);
   const RewardInterfaceRef = useRef(null);
-  const contentLinkSubjectColor = useMemo(
-    () => Color[Theme(profileTheme).subject.color](),
-    [profileTheme]
-  );
 
   return !isDeleted ? (
     <div
@@ -216,7 +215,7 @@ export default function SubjectPanel({
               to={`/subjects/${subjectId}`}
               style={{
                 fontSize: '2.5rem',
-                color: contentLinkSubjectColor,
+                color: Color[subjectColor](),
                 fontWeight: 'bold'
               }}
             >

@@ -13,10 +13,15 @@ import UserDetails from 'components/UserDetails';
 import Loading from 'components/Loading';
 import { useNavigate } from 'react-router-dom';
 import { MAX_PROFILE_PIC_SIZE } from 'constants/defaultValues';
-import { borderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { timeSince } from 'helpers/timeStampHelpers';
-import { useContentState, useLazyLoad, useMyState } from 'helpers/hooks';
+import {
+  useContentState,
+  useLazyLoad,
+  useMyState,
+  useTheme
+} from 'helpers/hooks';
 import { useInView } from 'react-intersection-observer';
 import {
   useAppContext,
@@ -163,6 +168,9 @@ function ProfilePanel({ expandable, profileId, style }) {
   const onResetProfile = useProfileContext((v) => v.actions.onResetProfile);
 
   const { isCreator, userId, username, banned, authLevel } = useMyState();
+  const {
+    profilePanel: { color: profilePanelColor }
+  } = useTheme(profileTheme || 'logoBlue');
 
   const [bioEditModalShown, setBioEditModalShown] = useState(false);
   const [loadingComments, setLoadingComments] = useState(false);
@@ -237,10 +245,6 @@ function ProfilePanel({ expandable, profileId, style }) {
     () => !profileLoaded || heightNotSet || visible || inView,
     [heightNotSet, inView, profileLoaded, visible]
   );
-  const profilePanelTopColor = useMemo(
-    () => Color[Theme(profileTheme || 'logoBlue').profilePanel.color](),
-    [profileTheme]
-  );
 
   return (
     <div style={style} ref={ComponentRef} key={profileId}>
@@ -264,7 +268,7 @@ function ProfilePanel({ expandable, profileId, style }) {
           >
             <div
               className={css`
-                background: ${profilePanelTopColor};
+                background: ${Color[profilePanelColor]()};
                 min-height: 2.5rem;
                 border-top-right-radius: ${borderRadius};
                 border-top-left-radius: ${borderRadius};

@@ -8,8 +8,7 @@ import Check from '../Check';
 import AddAccountTypeModal from '../Modals/AddAccountTypeModal';
 import EditAccountTypeModal from '../Modals/EditAccountTypeModal';
 import Icon from 'components/Icon';
-import { useMyState } from 'helpers/hooks';
-import { Theme } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
 import { useManagementContext } from 'contexts';
 import localize from 'constants/localize';
 
@@ -30,7 +29,9 @@ AccountTypes.propTypes = {
 };
 
 export default function AccountTypes({ canManage }) {
-  const { profileTheme } = useMyState();
+  const {
+    tableHeader: { color: tableHeaderColor }
+  } = useTheme();
   const accountTypes = useManagementContext((v) => v.state.accountTypes);
   const accountTypesLoaded = useManagementContext(
     (v) => v.state.accountTypesLoaded
@@ -63,7 +64,7 @@ export default function AccountTypes({ canManage }) {
         }
       >
         <Table
-          color={Theme(profileTheme).tableHeader.color}
+          color={tableHeaderColor}
           headerFontSize="1.5rem"
           columns={`
           minmax(10rem, 1.5fr)

@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import KarmaStatus from './KarmaStatus';
 import ItemPanel from './ItemPanel';
 import ChangePassword from './ChangePassword';
 import ChangeUsername from './ChangeUsername';
 import FileSizeItem from './FileSizeItem';
 import ProfilePictureItem from './ProfilePictureItem';
-import { Color, Theme, borderRadius, mobileMaxWidth } from 'constants/css';
+import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useAppContext, useViewContext } from 'contexts';
 import {
@@ -13,7 +13,7 @@ import {
   karmaPointTable,
   SELECTED_LANGUAGE
 } from 'constants/defaultValues';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import RewardBoostItem from './RewardBoostItem';
 import localize from 'constants/localize';
 
@@ -46,15 +46,11 @@ export default function Store() {
   );
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const pageVisible = useViewContext((v) => v.state.pageVisible);
-  const { canChangeUsername, karmaPoints, userId, profileTheme } = useMyState();
-  const twinColor = useMemo(
-    () => Color[Theme(profileTheme).logoTwin.color](),
-    [profileTheme]
-  );
-  const kleColor = useMemo(
-    () => Color[Theme(profileTheme).logoKle.color](),
-    [profileTheme]
-  );
+  const { canChangeUsername, karmaPoints, userId } = useMyState();
+  const {
+    logoTwin: { color: twinColor },
+    logoKle: { color: kleColor }
+  } = useTheme();
 
   useEffect(() => {
     if (userId) {
@@ -95,10 +91,10 @@ export default function Store() {
               line-height: 1;
             }
             > .logo-twin {
-              color: ${twinColor};
+              color: ${Color[twinColor]()};
             }
             > .logo-kle {
-              color: ${kleColor};
+              color: ${Color[kleColor]()};
             }
           `}
           style={{ fontWeight: 'bold', fontSize: '2.5rem' }}

@@ -10,7 +10,8 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import StatusMsg from './StatusMsg';
 import Bio from 'components/Texts/Bio';
 import { css } from '@emotion/css';
-import { Color, Theme } from 'constants/css';
+import { Color } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
 import { addEmoji, finalizeEmoji, renderText } from 'helpers/stringHelpers';
 import URL from 'constants/URL';
 import {
@@ -82,13 +83,9 @@ export default function UserDetails({
         : profile.statusMsg,
     [editedStatusMsg, profile.id, profile.statusMsg, userId]
   );
-  const usernameHoverColor = useMemo(
-    () =>
-      Color[Theme(profile.profileTheme || 'logoBlue').userLink.color](
-        Theme(profile.profileTheme || 'logoBlue').userLink.opacity
-      ),
-    [profile.profileTheme]
-  );
+  const {
+    userLink: { color: userLinkColor, opacity: userLinkOpacity }
+  } = useTheme(profile.profileTheme || 'logoBlue');
 
   return (
     <ErrorBoundary
@@ -118,7 +115,7 @@ export default function UserDetails({
             : css`
                 transition: color 0.2s;
                 &:hover {
-                  color: ${usernameHoverColor}!important;
+                  color: ${Color[userLinkColor](userLinkOpacity)}!important;
                 }
               `
         }

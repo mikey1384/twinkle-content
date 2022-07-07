@@ -20,7 +20,7 @@ import ContentFileViewer from 'components/ContentFileViewer';
 import SecretComment from 'components/SecretComment';
 import Icon from 'components/Icon';
 import LoginToViewContent from 'components/LoginToViewContent';
-import { borderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { timeSince } from 'helpers/timeStampHelpers';
 import {
@@ -29,7 +29,7 @@ import {
   isMobile
 } from 'helpers';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
-import { useContentState, useMyState } from 'helpers/hooks';
+import { useContentState, useMyState, useTheme } from 'helpers/hooks';
 import { useAppContext, useContentContext, useInputContext } from 'contexts';
 import { useNavigate } from 'react-router-dom';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
@@ -75,11 +75,13 @@ export default function TargetContent({
     authLevel,
     canReward,
     profilePicUrl,
-    profileTheme,
     userId,
     twinkleCoins,
     username
   } = useMyState();
+  const {
+    comment: { color: commentColor }
+  } = useTheme();
   const onSetXpRewardInterfaceShown = useContentContext(
     (v) => v.actions.onSetXpRewardInterfaceShown
   );
@@ -181,7 +183,7 @@ export default function TargetContent({
   );
 
   const DetailText = useMemo(() => {
-    const commentLinkColor = Color[Theme(profileTheme).comment.color]();
+    const commentLinkColor = Color[commentColor]();
     return (
       <div>
         {SELECTED_LANGUAGE === 'kr' ? renderKoreanText() : renderEnglishText()}
@@ -236,7 +238,7 @@ export default function TargetContent({
         </>
       );
     }
-  }, [comment.id, comment.uploader, profileTheme, rootType, type]);
+  }, [comment.id, comment.uploader, commentColor, rootType, type]);
 
   useEffect(() => {
     onSetXpRewardInterfaceShown({

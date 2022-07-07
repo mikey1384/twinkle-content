@@ -2,9 +2,9 @@ import React, { useLayoutEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
-import { useMyState } from 'helpers/hooks';
+import { useTheme } from 'helpers/hooks';
 import { addCommasToNumber } from 'helpers/stringHelpers';
-import { borderRadius, Color, Theme } from 'constants/css';
+import { borderRadius, Color } from 'constants/css';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
@@ -29,11 +29,10 @@ export default function StartScreen({
   onInitMission,
   onStartButtonClick
 }) {
-  const { profileTheme } = useMyState();
-  const startButtonColor = useMemo(
-    () => Theme(profileTheme).success.color,
-    [profileTheme]
-  );
+  const {
+    success: { color: successColor },
+    xpNumber: { color: xpNumberColor }
+  } = useTheme();
   useLayoutEffect(() => {
     document.getElementById('App').scrollTop = 0;
     BodyRef.scrollTop = 0;
@@ -61,7 +60,7 @@ export default function StartScreen({
         {mission.xpReward ? (
           <span
             style={{
-              color: Color[Theme(profileTheme).xpNumber.color](),
+              color: Color[xpNumberColor](),
               fontWeight: 'bold'
             }}
           >
@@ -92,7 +91,7 @@ export default function StartScreen({
     mission.id,
     mission.xpReward,
     myAttempts,
-    profileTheme
+    xpNumberColor
   ]);
 
   return (
@@ -154,7 +153,7 @@ export default function StartScreen({
         }}
       >
         <Button
-          color={startButtonColor}
+          color={successColor}
           filled
           disabled={loading}
           style={{ fontSize: '2.3rem' }}

@@ -1,20 +1,22 @@
 import React from 'react';
 import { stringIsEmpty, truncateText } from 'helpers/stringHelpers';
-import { Color, Theme } from 'constants/css';
+import { Color } from 'constants/css';
 import ContentLink from 'components/ContentLink';
 
 export default function renderEnglishMessage({
   actionObj,
+  commentColor,
   isNotification,
   isReply,
   isSubjectResponse,
   isTask,
-  profileTheme,
+  missionColor,
   rewardRootId,
   rewardType,
   rewardRootMissionType,
   rewardRootType,
   rootMissionType,
+  subjectColor,
   targetComment,
   targetObj,
   targetSubject
@@ -39,9 +41,9 @@ export default function renderEnglishMessage({
       : ''
   }`;
 
-  const contentLinkCommentColor = Color[Theme(profileTheme).comment.color]();
-  const contentLinkSubjectColor = Color[Theme(profileTheme).subject.color]();
-  const missionLinkColor = Color[Theme(profileTheme).mission.color]();
+  const contentLinkCommentColor = Color[commentColor]();
+  const contentLinkSubjectColor = Color[subjectColor]();
+  const missionLinkColor = Color[missionColor]();
 
   switch (actionObj.contentType) {
     case 'like':

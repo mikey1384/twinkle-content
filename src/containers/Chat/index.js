@@ -17,10 +17,10 @@ import PleaseLogIn from './PleaseLogIn';
 import LocalContext from './Context';
 import { parseChannelPath } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { mobileMaxWidth, Theme } from 'constants/css';
+import { mobileMaxWidth } from 'constants/css';
 import { socket } from 'constants/io';
 import { css } from '@emotion/css';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   useAppContext,
@@ -38,7 +38,10 @@ Chat.propTypes = {
 };
 
 function Chat({ onFileUpload }) {
-  const { lastChatPath, profileTheme, userId } = useMyState();
+  const { lastChatPath, userId } = useMyState();
+  const {
+    generalChat: { color: generalChatColor }
+  } = useTheme();
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const userObj = useAppContext((v) => v.user.state.userObj);
@@ -503,10 +506,8 @@ function Chat({ onFileUpload }) {
   const displayedThemeColor = useMemo(
     () =>
       currentChannel.theme ||
-      (selectedChannelId === GENERAL_CHAT_ID
-        ? Theme(profileTheme).generalChat.color
-        : 'green'),
-    [currentChannel.theme, profileTheme, selectedChannelId]
+      (selectedChannelId === GENERAL_CHAT_ID ? generalChatColor : 'green'),
+    [currentChannel.theme, generalChatColor, selectedChannelId]
   );
 
   return (

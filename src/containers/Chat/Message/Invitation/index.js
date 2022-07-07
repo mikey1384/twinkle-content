@@ -2,10 +2,10 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ChannelDetail from './ChannelDetail';
 import Button from 'components/Button';
-import { mobileMaxWidth, Theme } from 'constants/css';
+import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { parseChannelPath } from 'helpers';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import { useAppContext, useChatContext } from 'contexts';
 import localize from 'constants/localize';
@@ -29,7 +29,10 @@ export default function Invitation({
   onAcceptGroupInvitation,
   sender
 }) {
-  const { userId, profileTheme } = useMyState();
+  const { userId } = useMyState();
+  const {
+    chatInvitation: { color: chatInvitationColor }
+  } = useTheme();
   const loadChatChannel = useAppContext(
     (v) => v.requestHelpers.loadChatChannel
   );
@@ -144,7 +147,7 @@ export default function Invitation({
       {userId !== sender.id && (
         <Button
           filled
-          color={Theme(profileTheme).chatInvitation.color}
+          color={chatInvitationColor}
           onClick={handleAcceptGroupInvitation}
           disabled={alreadyJoined}
         >

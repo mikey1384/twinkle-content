@@ -4,8 +4,7 @@ import Attempt from './Attempt';
 import FilterBar from 'components/FilterBar';
 import Loading from 'components/Loading';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
-import { useMyState } from 'helpers/hooks';
-import { Theme } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
 import localize from 'constants/localize';
 
@@ -36,7 +35,9 @@ export default function Attempts({
   onSetAttemptObj,
   onSetManagementObj
 }) {
-  const { profileTheme } = useMyState();
+  const {
+    loadMoreButton: { color: loadMoreButtonColor }
+  } = useTheme();
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const loadMissionAttempts = useAppContext(
@@ -127,7 +128,7 @@ export default function Attempts({
         <LoadMoreButton
           style={{ marginTop: '2rem', fontSize: '1.7rem' }}
           filled
-          color={Theme(profileTheme).loadMoreButton.color}
+          color={loadMoreButtonColor}
           loading={loadingMore}
           onClick={handleLoadMoreAttempts}
         />

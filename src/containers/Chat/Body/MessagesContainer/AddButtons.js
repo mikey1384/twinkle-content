@@ -2,21 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
-import { Theme } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
 
 AddButtons.propTypes = {
   disabled: PropTypes.bool,
   onUploadButtonClick: PropTypes.func.isRequired,
-  onSelectVideoButtonClick: PropTypes.func.isRequired,
-  profileTheme: PropTypes.string
+  onSelectVideoButtonClick: PropTypes.func.isRequired
 };
 
 export default function AddButtons({
   disabled,
   onUploadButtonClick,
-  onSelectVideoButtonClick,
-  profileTheme
+  onSelectVideoButtonClick
 }) {
+  const {
+    button: { color: buttonColor }
+  } = useTheme();
+
   return (
     <div
       style={{
@@ -29,14 +31,14 @@ export default function AddButtons({
         skeuomorphic
         disabled={disabled}
         onClick={onUploadButtonClick}
-        color={Theme(profileTheme).button.color}
+        color={buttonColor}
       >
         <Icon size="lg" icon="upload" />
       </Button>
       <Button
         skeuomorphic
         disabled={disabled}
-        color={Theme(profileTheme).button.color}
+        color={buttonColor}
         onClick={onSelectVideoButtonClick}
         style={{ marginLeft: '1rem' }}
       >

@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Input from 'components/Texts/Input';
 import Button from 'components/Button';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { Color, Theme, mobileMaxWidth } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { useAppContext, useMissionContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { css } from '@emotion/css';
 
 const BodyRef = document.scrollingElement || document.documentElement;
@@ -31,11 +31,10 @@ CopyAndPaste.propTypes = {
 
 export default function CopyAndPaste({ mission, onSetMissionState, style }) {
   const [submitDisabled, setSubmitDisabled] = useState(false);
-  const { profileTheme, userId } = useMyState();
-  const successButtonColor = useMemo(
-    () => Theme(profileTheme).success.color,
-    [profileTheme]
-  );
+  const { userId } = useMyState();
+  const {
+    success: { color: successColor }
+  } = useTheme();
   const uploadMissionAttempt = useAppContext(
     (v) => v.requestHelpers.uploadMissionAttempt
   );
@@ -99,7 +98,7 @@ export default function CopyAndPaste({ mission, onSetMissionState, style }) {
             <Button
               disabled={submitDisabled}
               onClick={handleSuccess}
-              color={successButtonColor}
+              color={successColor}
               filled
             >
               Success!

@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { borderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useMyState } from 'helpers/hooks';
+import { useTheme } from 'helpers/hooks';
 import { useNavigate } from 'react-router-dom';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import UserListModal from 'components/Modals/UserListModal';
@@ -24,7 +24,9 @@ export default function ChannelDetail({
   members
 }) {
   const navigate = useNavigate();
-  const { profileTheme } = useMyState();
+  const {
+    chatInvitation: { color: chatInvitationColor }
+  } = useTheme();
   const [shownMembers, setShownMembers] = useState([]);
   const [userListModalShown, setUserListModalShown] = useState(false);
   const [more, setMore] = useState(null);
@@ -54,10 +56,6 @@ export default function ChannelDetail({
     }
     return `and ${more} more`;
   }, [more]);
-  const invitationColor = useMemo(
-    () => Color[Theme(profileTheme).chatInvitation.color](),
-    [profileTheme]
-  );
 
   return (
     <div
@@ -79,7 +77,7 @@ export default function ChannelDetail({
           line-height: 1.3;
           font-weight: bold;
           font-size: 2.2rem;
-          color: ${invitationColor};
+          color: ${Color[chatInvitationColor]()};
           cursor: ${alreadyJoined ? 'pointer' : 'default'};
           @media (max-width: ${mobileMaxWidth}) {
             font-size: 1.5rem;

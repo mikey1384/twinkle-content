@@ -1,13 +1,13 @@
 import React, { useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Color, Theme } from 'constants/css';
+import { Color } from 'constants/css';
 import {
   addEmoji,
   exceedsCharLimit,
   addCommasToNumber,
   getFileInfoFromFileName
 } from 'helpers/stringHelpers';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { returnImageFileFromUrl } from 'helpers';
 import {
   FILE_UPLOAD_XP_REQUIREMENT,
@@ -45,8 +45,14 @@ export default function SecretMessageInput({
   const [onHover, setOnHover] = useState(false);
   const [alertModalShown, setAlertModalShown] = useState(false);
   const FileInputRef = useRef(null);
-  const { authLevel, fileUploadLvl, profileTheme, twinkleXP, userId } =
-    useMyState();
+  const { authLevel, fileUploadLvl, twinkleXP, userId } = useMyState();
+  const {
+    button: { color: buttonColor },
+    skeuomorphicDisabled: {
+      color: skeuomorphicDisabledColor,
+      opacity: skeuomorphicDisabledOpacity
+    }
+  } = useTheme();
   const secretAnswerExceedsCharLimit = useMemo(
     () =>
       exceedsCharLimit({
@@ -64,13 +70,6 @@ export default function SecretMessageInput({
     () =>
       !userId || (authLevel === 0 && twinkleXP < FILE_UPLOAD_XP_REQUIREMENT),
     [authLevel, twinkleXP, userId]
-  );
-  const uploadButtonDisabledColor = useMemo(
-    () =>
-      Color[Theme(profileTheme).skeuomorphicDisabled.color](
-        Theme(profileTheme).skeuomorphicDisabled.opacity
-      ),
-    [profileTheme]
   );
 
   return (
@@ -122,7 +121,7 @@ export default function SecretMessageInput({
             <div>
               <Button
                 skeuomorphic
-                color={Theme(profileTheme).button.color}
+                color={buttonColor}
                 onClick={() => (disabled ? null : FileInputRef.current.click())}
                 onMouseEnter={() => setOnHover(true)}
                 onMouseLeave={() => setOnHover(false)}
@@ -130,7 +129,11 @@ export default function SecretMessageInput({
                   opacity: disabled ? 0.2 : 1,
                   cursor: disabled ? 'default' : 'pointer',
                   boxShadow: disabled ? 'none' : '',
-                  borderColor: disabled ? uploadButtonDisabledColor : ''
+                  borderColor: disabled
+                    ? Color[skeuomorphicDisabledColor](
+                        skeuomorphicDisabledOpacity
+                      )
+                    : ''
                 }}
               >
                 <Icon size="lg" icon="upload" />

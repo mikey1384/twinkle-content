@@ -13,9 +13,9 @@ import XPBar from './XPBar';
 import Link from 'components/Link';
 import playButtonImg from 'assets/play-button-image.png';
 import { videoRewardHash, SELECTED_LANGUAGE } from 'constants/defaultValues';
-import { Color, Theme, mobileMaxWidth } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useContentState, useMyState } from 'helpers/hooks';
+import { useContentState, useMyState, useTheme } from 'helpers/hooks';
 import { useAppContext, useContentContext, useViewContext } from 'contexts';
 
 const intervalLength = 2000;
@@ -68,7 +68,13 @@ function XPVideoPlayer({
   );
 
   const pageVisible = useViewContext((v) => v.state.pageVisible);
-  const { profileTheme, rewardBoostLvl, userId, twinkleCoins } = useMyState();
+  const { rewardBoostLvl, userId, twinkleCoins } = useMyState();
+  const {
+    byUserIndicator: {
+      color: byUserIndicatorColor,
+      opacity: byUserIndicatorOpacity
+    }
+  } = useTheme();
   const coinRewardAmount = useMemo(
     () => videoRewardHash?.[rewardBoostLvl]?.coin || 2,
     [rewardBoostLvl]
@@ -126,13 +132,6 @@ function XPVideoPlayer({
   const rewardLevelRef = useRef(0);
   const pageVisibleRef = useRef(pageVisible);
   const twinkleCoinsRef = useRef(twinkleCoins);
-  const byUserIndicatorBackgroundColor = useMemo(
-    () =>
-      Color[Theme(profileTheme).byUserIndicator.color](
-        Theme(profileTheme).byUserIndicator.opacity
-      ),
-    [profileTheme]
-  );
 
   useEffect(() => {
     pageVisibleRef.current = pageVisible;
@@ -366,7 +365,7 @@ function XPVideoPlayer({
       {byUser && !isChat && (
         <div
           className={css`
-            background: ${byUserIndicatorBackgroundColor};
+            background: ${Color[byUserIndicatorColor](byUserIndicatorOpacity)};
             display: flex;
             align-items: center;
             font-weight: bold;

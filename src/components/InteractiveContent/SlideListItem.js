@@ -2,10 +2,10 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Attachment from './Attachment';
 import { css } from '@emotion/css';
-import { borderRadius, Color, Theme } from 'constants/css';
+import { borderRadius, Color } from 'constants/css';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useInteractiveContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useTheme } from 'helpers/hooks';
 
 SlideListItem.propTypes = {
   interactiveId: PropTypes.number.isRequired,
@@ -22,7 +22,9 @@ export default function SlideListItem({
   slide,
   style
 }) {
-  const { profileTheme } = useMyState();
+  const {
+    itemSelected: { color: itemSelectedColor, opacity: itemSelectedOpacity }
+  } = useTheme();
   const onSetSlideState = useInteractiveContext(
     (v) => v.actions.onSetSlideState
   );
@@ -30,20 +32,17 @@ export default function SlideListItem({
     () => selectedSlideId === slide.id,
     [selectedSlideId, slide.id]
   );
-  const selectedItemColor = useMemo(
-    () =>
-      Color[Theme(profileTheme).itemSelected.color](
-        Theme(profileTheme).itemSelected.opacity
-      ),
-    [profileTheme]
+  const highlightColor = useMemo(
+    () => Color[itemSelectedColor](itemSelectedOpacity),
+    [itemSelectedColor, itemSelectedOpacity]
   );
 
   return (
     <div
       style={{
         ...style,
-        boxShadow: selected ? `0 0 3px ${selectedItemColor}` : null,
-        border: selected ? `0.3rem solid ${selectedItemColor}` : null
+        boxShadow: selected ? `0 0 3px ${highlightColor}` : null,
+        border: selected ? `0.3rem solid ${highlightColor}` : null
       }}
       onClick={() => onClick(slide.id)}
       className={css`

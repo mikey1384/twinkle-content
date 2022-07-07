@@ -130,9 +130,9 @@ export function useMyState() {
       };
 }
 
-export function useTheme() {
+export function useTheme(selectedTheme) {
   const { profileTheme } = useMyState();
-  return Theme(profileTheme);
+  return Theme(selectedTheme || profileTheme);
 }
 
 export function useOutsideClick(ref, callback) {

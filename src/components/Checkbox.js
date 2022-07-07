@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { innerBorderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
+import { innerBorderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useMyState } from 'helpers/hooks';
+import { useTheme } from 'helpers/hooks';
 
 Checkbox.propTypes = {
   className: PropTypes.string,
@@ -23,11 +23,9 @@ export default function Checkbox({
   style,
   textIsClickable
 }) {
-  const { profileTheme } = useMyState();
-  const switchColor = useMemo(
-    () => Color[Theme(profileTheme).switch.color](),
-    [profileTheme]
-  );
+  const {
+    switch: { color: switchColor }
+  } = useTheme();
 
   return (
     <div
@@ -64,7 +62,7 @@ export default function Checkbox({
           alignItems: 'center',
           justifyContent: 'center',
           cursor: 'pointer',
-          background: checked ? switchColor : backgroundColor
+          background: checked ? Color[switchColor]() : backgroundColor
         }}
       >
         {checked && (

@@ -5,10 +5,10 @@ import ForkButtons from './ForkButtons';
 import LongText from 'components/Texts/LongText';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
-import { Color, Theme, mobileMaxWidth } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { useMyState } from 'helpers/hooks';
+import { useTheme } from 'helpers/hooks';
 
 Content.propTypes = {
   centerRef: PropTypes.func,
@@ -51,7 +51,9 @@ export default function Content({
   slideId,
   selectedForkButtonId
 }) {
-  const { profileTheme } = useMyState();
+  const {
+    button: { color: buttonColor }
+  } = useTheme();
   const descriptionShown = useMemo(
     () => !stringIsEmpty(description),
     [description]
@@ -226,7 +228,7 @@ export default function Content({
             >
               <Button
                 onClick={() => onPortalButtonClick(portalButton.destination)}
-                color={Theme(profileTheme).button.color}
+                color={buttonColor}
                 skeuomorphic
                 style={{ fontSize: '1.7rem' }}
               >

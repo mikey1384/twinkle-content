@@ -1,14 +1,12 @@
-import React, { useMemo } from 'react';
-import { Color, Theme } from 'constants/css';
+import React from 'react';
+import { Color } from 'constants/css';
 import { css } from '@emotion/css';
-import { useMyState } from 'helpers/hooks';
+import { useTheme } from 'helpers/hooks';
 
 export default function Spinner() {
-  const { profileTheme } = useMyState();
-  const spinnerColor = useMemo(
-    () => Color[Theme(profileTheme).spinner.color](),
-    [profileTheme]
-  );
+  const {
+    spinner: { color: spinnerColor }
+  } = useTheme();
 
   return (
     <div
@@ -51,7 +49,7 @@ export default function Spinner() {
             stroke-dasharray: 187;
             stroke-dashoffset: 0;
             transform-origin: center;
-            stroke: ${spinnerColor};
+            stroke: ${Color[spinnerColor]()};
             animation: loading-dash 1.4s ease-in-out infinite;
           `}
           fill="none"

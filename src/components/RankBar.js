@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { addCommasToNumber } from 'helpers/stringHelpers';
-import { useMyState } from 'helpers/hooks';
-import { borderRadius, mobileMaxWidth, Color, Theme } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
+import { borderRadius, mobileMaxWidth, Color } from 'constants/css';
 import { css } from '@emotion/css';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
@@ -16,7 +16,9 @@ RankBar.propTypes = {
 };
 
 export default function RankBar({ className, profile, style }) {
-  const { profileTheme } = useMyState();
+  const {
+    xpNumber: { color: xpNumberColor }
+  } = useTheme();
   const rankColor = useMemo(
     () =>
       profile.rank === 1
@@ -35,14 +37,13 @@ export default function RankBar({ className, profile, style }) {
     return `#${profile.rank}`;
   }, [profile.rank]);
   const xpNumberLabel = useMemo(() => {
-    const xpNumberColor = Color[Theme(profileTheme).xpNumber.color]();
     const innerComponent = (
       <>
         <span
           style={{
             color:
               rankColor ||
-              (profile.rank <= 10 ? xpNumberColor : Color.darkGray())
+              (profile.rank <= 10 ? Color[xpNumberColor]() : Color.darkGray())
           }}
         >
           {addCommasToNumber(profile.twinkleXP)}
@@ -71,7 +72,7 @@ export default function RankBar({ className, profile, style }) {
     ) : (
       innerComponent
     );
-  }, [profile.rank, profile.twinkleXP, profileTheme, rankColor]);
+  }, [profile.rank, profile.twinkleXP, rankColor, xpNumberColor]);
 
   return (
     <div

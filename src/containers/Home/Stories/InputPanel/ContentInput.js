@@ -9,7 +9,7 @@ import Checkbox from 'components/Checkbox';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Loading from 'components/Loading';
 import { PanelStyle } from './Styles';
-import { Color, Theme } from 'constants/css';
+import { Color } from 'constants/css';
 import { css } from '@emotion/css';
 import { scrollElementToCenter } from 'helpers';
 import {
@@ -20,7 +20,7 @@ import {
   addEmoji,
   finalizeEmoji
 } from 'helpers/stringHelpers';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { useAppContext, useHomeContext, useInputContext } from 'contexts';
 import localize from 'constants/localize';
 import RewardLevelExplainer from 'components/RewardLevelExplainer';
@@ -37,7 +37,10 @@ function ContentInput() {
     (v) => v.requestHelpers.checkContentUrl
   );
   const uploadContent = useAppContext((v) => v.requestHelpers.uploadContent);
-  const { canEditRewardLevel, banned, profileTheme } = useMyState();
+  const { canEditRewardLevel, banned } = useMyState();
+  const {
+    success: { color: successColor }
+  } = useTheme();
   const onLoadNewFeeds = useHomeContext((v) => v.actions.onLoadNewFeeds);
   const content = useInputContext((v) => v.state.content);
   const onResetContentInput = useInputContext(
@@ -334,7 +337,7 @@ function ContentInput() {
               <Button
                 type="submit"
                 filled
-                color={Theme(profileTheme).success.color}
+                color={successColor}
                 style={{ marginTop: '1rem' }}
                 disabled={submitting || buttonDisabled}
                 onClick={onSubmit}

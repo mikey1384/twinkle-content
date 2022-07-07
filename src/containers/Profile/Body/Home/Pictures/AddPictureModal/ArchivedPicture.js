@@ -4,9 +4,9 @@ import Icon from 'components/Icon';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import { css } from '@emotion/css';
 import { cloudFrontURL } from 'constants/defaultValues';
-import { Color, Theme, borderRadius, innerBorderRadius } from 'constants/css';
+import { Color, borderRadius, innerBorderRadius } from 'constants/css';
 import { useAppContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useTheme } from 'helpers/hooks';
 
 ArchivedPicture.propTypes = {
   picture: PropTypes.object.isRequired,
@@ -25,7 +25,9 @@ export default function ArchivedPicture({
   style,
   onDeleteArchivedPicture
 }) {
-  const { profileTheme } = useMyState();
+  const {
+    itemSelected: { color: itemSelectedColor, opacity: itemSelectedOpacity }
+  } = useTheme();
   const deleteArchivedPicture = useAppContext(
     (v) => v.requestHelpers.deleteArchivedPicture
   );
@@ -36,13 +38,6 @@ export default function ArchivedPicture({
   const isSelected = useMemo(
     () => selectedPictureIds.includes(picture.id),
     [picture.id, selectedPictureIds]
-  );
-  const selectedItemColor = useMemo(
-    () =>
-      Color[Theme(profileTheme).itemSelected.color](
-        Theme(profileTheme).itemSelected.opacity
-      ),
-    [profileTheme]
   );
 
   return (
@@ -56,9 +51,11 @@ export default function ArchivedPicture({
       style={{
         ...style,
         borderRadius,
-        boxShadow: isSelected ? `0 0 5px ${selectedItemColor}` : '',
+        boxShadow: isSelected
+          ? `0 0 5px ${Color[itemSelectedColor](itemSelectedOpacity)}`
+          : '',
         border: isSelected
-          ? `5px solid ${selectedItemColor}`
+          ? `5px solid ${Color[itemSelectedColor](itemSelectedOpacity)}`
           : `1px solid ${Color.borderGray()}`
       }}
     >

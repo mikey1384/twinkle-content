@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { borderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { isMobile } from 'helpers';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
 import { css } from '@emotion/css';
 import Icon from 'components/Icon';
@@ -32,10 +32,13 @@ export default function HomeMenuItems({ style = {} }) {
   const onSetProfilesLoaded = useAppContext(
     (v) => v.user.actions.onSetProfilesLoaded
   );
-  const { managementLevel, profileTheme } = useMyState();
+  const { managementLevel } = useMyState();
+  const {
+    homeMenuItemActive: { color: homeMenuItemActive }
+  } = useTheme();
   const homeMenuItemActiveColor = useMemo(
-    () => Color[Theme(profileTheme).homeMenuItemActive.color](),
-    [profileTheme]
+    () => Color[homeMenuItemActive](),
+    [homeMenuItemActive]
   );
 
   return (

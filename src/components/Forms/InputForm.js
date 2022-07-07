@@ -14,7 +14,7 @@ import Attachment from 'components/Attachment';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import FullTextReveal from 'components/Texts/FullTextReveal';
 import AlertModal from 'components/Modals/AlertModal';
-import { Color, Theme } from 'constants/css';
+import { Color } from 'constants/css';
 import {
   FILE_UPLOAD_XP_REQUIREMENT,
   mb,
@@ -29,7 +29,7 @@ import {
   getFileInfoFromFileName
 } from 'helpers/stringHelpers';
 import { css } from '@emotion/css';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { useInputContext } from 'contexts';
 import localize from 'constants/localize';
 
@@ -68,8 +68,14 @@ function InputForm({
   style = {},
   targetCommentId
 }) {
-  const { userId, profileTheme, authLevel, twinkleXP, fileUploadLvl } =
-    useMyState();
+  const { userId, authLevel, twinkleXP, fileUploadLvl } = useMyState();
+  const {
+    skeuomorphicDisabled: {
+      color: skeuomorphicDisabledColor,
+      opacity: skeuomorphicDisabledOpacity
+    },
+    button: { color: buttonColor }
+  } = useTheme();
   const maxSize = useMemo(
     () => returnMaxUploadSize(fileUploadLvl),
     [fileUploadLvl]
@@ -122,13 +128,6 @@ function InputForm({
   const uploadDisabled = useMemo(
     () => authLevel === 0 && twinkleXP < FILE_UPLOAD_XP_REQUIREMENT,
     [authLevel, twinkleXP]
-  );
-  const uploadButtonDisabledColor = useMemo(
-    () =>
-      Color[Theme(profileTheme).skeuomorphicDisabled.color](
-        Theme(profileTheme).skeuomorphicDisabled.opacity
-      ),
-    [profileTheme]
   );
 
   useEffect(() => {
@@ -347,7 +346,7 @@ function InputForm({
           {userId && (
             <Button
               skeuomorphic
-              color={Theme(profileTheme).button.color}
+              color={buttonColor}
               onClick={() =>
                 uploadDisabled ? null : FileInputRef.current.click()
               }
@@ -360,7 +359,11 @@ function InputForm({
                 opacity: uploadDisabled ? 0.2 : 1,
                 cursor: uploadDisabled ? 'default' : 'pointer',
                 boxShadow: uploadDisabled ? 'none' : '',
-                borderColor: uploadDisabled ? uploadButtonDisabledColor : ''
+                borderColor: uploadDisabled
+                  ? Color[skeuomorphicDisabledColor](
+                      skeuomorphicDisabledOpacity
+                    )
+                  : ''
               }}
             >
               <Icon size="lg" icon="upload" />

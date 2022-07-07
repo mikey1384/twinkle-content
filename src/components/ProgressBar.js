@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { borderRadius, Color, innerBorderRadius, Theme } from 'constants/css';
+import { borderRadius, Color, innerBorderRadius } from 'constants/css';
 import { css } from '@emotion/css';
-import { useMyState } from 'helpers/hooks';
+import { useTheme } from 'helpers/hooks';
 
 ProgressBar.propTypes = {
   className: PropTypes.string,
@@ -21,10 +21,12 @@ export default function ProgressBar({
   style = {},
   text
 }) {
-  const { profileTheme } = useMyState();
+  const {
+    progressBar: { color: progressBarColor }
+  } = useTheme();
   const barColor = useMemo(
-    () => color || Color[Theme(profileTheme).progressBar.color](),
-    [color, profileTheme]
+    () => color || Color[progressBarColor](),
+    [color, progressBarColor]
   );
 
   return (

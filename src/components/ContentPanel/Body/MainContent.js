@@ -16,9 +16,9 @@ import SecretComment from 'components/SecretComment';
 import MissionContent from './MissionContent';
 import { isMobile, scrollElementToCenter } from 'helpers';
 import { stringIsEmpty, getFileInfoFromFileName } from 'helpers/stringHelpers';
-import { borderRadius, Color, mobileMaxWidth, Theme } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useContentState, useMyState } from 'helpers/hooks';
+import { useContentState, useTheme } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
 import { useNavigate } from 'react-router-dom';
 
@@ -42,7 +42,7 @@ export default function MainContent({
   const ContainerRef = useRef(null);
   const navigate = useNavigate();
   const editContent = useAppContext((v) => v.requestHelpers.editContent);
-  const { profileTheme } = useMyState();
+
   const {
     byUser,
     content,
@@ -76,7 +76,13 @@ export default function MainContent({
   const onEditContent = useContentContext((v) => v.actions.onEditContent);
   const onLoadTags = useContentContext((v) => v.actions.onLoadTags);
   const onSetIsEditing = useContentContext((v) => v.actions.onSetIsEditing);
-
+  const {
+    byUserIndicator: {
+      color: byUserIndicatorColor,
+      opacity: byUserIndicatorOpacity
+    },
+    subject: { color: subjectColor }
+  } = useTheme();
   const { fileType } = useMemo(
     () => (fileName ? getFileInfoFromFileName(fileName) : ''),
     [fileName]
@@ -107,18 +113,6 @@ export default function MainContent({
     }
     prevIsEditingRef.current = isEditing;
   }, [isEditing]);
-
-  const byUserIndicatorBackgroundColor = useMemo(
-    () =>
-      Color[Theme(profileTheme).byUserIndicator.color](
-        Theme(profileTheme).byUserIndicator.opacity
-      ),
-    [profileTheme]
-  );
-  const subjectColor = useMemo(
-    () => Color[Theme(profileTheme).subject.color](),
-    [profileTheme]
-  );
 
   return (
     <ErrorBoundary componentPath="ContentPanel/Body/MainContent">
@@ -165,7 +159,7 @@ export default function MainContent({
             style={{
               ...(subjectIsAttachedToVideo ? { marginTop: '0.5rem' } : {}),
               padding: '0.7rem',
-              background: byUserIndicatorBackgroundColor,
+              background: Color[byUserIndicatorColor](byUserIndicatorOpacity),
               color: '#fff',
               display: 'flex',
               justifyContent: 'center',
@@ -317,7 +311,7 @@ export default function MainContent({
                     style={{
                       fontWeight: 'bold',
                       fontSize: '2.2rem',
-                      color: subjectColor,
+                      color: Color[subjectColor](),
                       textDecoration: 'none'
                     }}
                     to={`/subjects/${contentId}`}

@@ -9,13 +9,14 @@ import React, {
 import Channel from './Channel';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { useMyState } from 'helpers/hooks';
-import { Theme } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
 import { useAppContext, useChatContext } from 'contexts';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 
 function Channels() {
-  const { profileTheme } = useMyState();
+  const {
+    loadMoreButton: { color: loadMoreButtonColor }
+  } = useTheme();
   const loadMoreChannels = useAppContext(
     (v) => v.requestHelpers.loadMoreChannels
   );
@@ -172,7 +173,7 @@ function Channels() {
         ))}
       {loadMoreButtonShown && (
         <LoadMoreButton
-          color={Theme(profileTheme).loadMoreChannelsButtonColor.color}
+          color={loadMoreButtonColor}
           filled
           loading={channelsLoading}
           onClick={handleLoadMoreChannels}

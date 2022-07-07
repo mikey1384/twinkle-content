@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import FilterBar from 'components/FilterBar';
 import Ranker from './Ranker';
 import { useAppContext } from 'contexts';
-import { borderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import localize from 'constants/localize';
 
 const myRankingLabel = localize('myRanking');
@@ -17,7 +17,10 @@ GrammarRankings.propTypes = {
 };
 
 export default function GrammarRankings({ mission, myAttempts }) {
-  const { profileTheme, userId } = useMyState();
+  const { userId } = useMyState();
+  const {
+    tableHeader: { color: tableHeaderColor }
+  } = useTheme();
   const [allSelected, setAllSelected] = useState(
     myAttempts[mission.id]?.status === 'pass'
   );
@@ -38,10 +41,6 @@ export default function GrammarRankings({ mission, myAttempts }) {
   const rankers = useMemo(
     () => (allSelected ? all : top30s),
     [all, allSelected, top30s]
-  );
-  const tableHeaderColor = useMemo(
-    () => Color[Theme(profileTheme).tableHeader.color](),
-    [profileTheme]
   );
 
   return (
@@ -94,7 +93,7 @@ export default function GrammarRankings({ mission, myAttempts }) {
             style={{
               display: 'grid',
               gridTemplateColumns: '1fr 1fr 1fr 1fr',
-              background: tableHeaderColor,
+              background: Color[tableHeaderColor](),
               color: '#fff',
               fontWeight: 'bold',
               padding: '0.5rem 0'

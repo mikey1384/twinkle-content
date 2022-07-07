@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import UsernameText from 'components/Texts/UsernameText';
 import ContentLink from 'components/ContentLink';
-import { borderRadius, Color, Theme } from 'constants/css';
+import { borderRadius, Color } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
-import { useMyState } from 'helpers/hooks';
+import { useTheme } from 'helpers/hooks';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
@@ -18,9 +18,11 @@ MissionContent.propTypes = {
 };
 
 export default function MissionContent({ uploader, rootObj: mission }) {
-  const { profileTheme } = useMyState();
+  const {
+    xpNumber: { color: xpNumberColor }
+  } = useTheme();
+
   const rewardDetails = useMemo(() => {
-    const xpNumberColor = Color[Theme(profileTheme).xpNumber.color]();
     return mission.xpReward || mission.coinReward ? (
       <div
         style={{
@@ -40,7 +42,7 @@ export default function MissionContent({ uploader, rootObj: mission }) {
             <>
               <span
                 style={{
-                  color: xpNumberColor,
+                  color: Color[xpNumberColor](),
                   fontWeight: 'bold'
                 }}
               >
@@ -75,7 +77,7 @@ export default function MissionContent({ uploader, rootObj: mission }) {
             <>
               <span
                 style={{
-                  color: xpNumberColor,
+                  color: Color[xpNumberColor](),
                   fontWeight: 'bold'
                 }}
               >
@@ -102,7 +104,7 @@ export default function MissionContent({ uploader, rootObj: mission }) {
         </>
       );
     }
-  }, [mission.coinReward, mission.xpReward, profileTheme, uploader]);
+  }, [mission.coinReward, mission.xpReward, uploader, xpNumberColor]);
 
   return (
     <div

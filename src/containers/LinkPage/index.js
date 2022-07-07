@@ -17,9 +17,9 @@ import InvalidPage from 'components/InvalidPage';
 import Loading from 'components/Loading';
 import Description from './Description';
 import { css } from '@emotion/css';
-import { Color, Theme, mobileMaxWidth } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { determineUserCanRewardThis, determineXpButtonDisabled } from 'helpers';
-import { useContentState, useMyState } from 'helpers/hooks';
+import { useContentState, useMyState, useTheme } from 'helpers/hooks';
 import { processedURL } from 'helpers/stringHelpers';
 import {
   useAppContext,
@@ -44,15 +44,14 @@ export default function LinkPage() {
   const loadContent = useAppContext((v) => v.requestHelpers.loadContent);
   const loadSubjects = useAppContext((v) => v.requestHelpers.loadSubjects);
 
+  const { authLevel, canDelete, canEdit, canReward, twinkleCoins, userId } =
+    useMyState();
   const {
-    authLevel,
-    canDelete,
-    canEdit,
-    canReward,
-    profileTheme,
-    twinkleCoins,
-    userId
-  } = useMyState();
+    byUserIndicator: {
+      color: byUserIndicatorColor,
+      opacity: byUserIndicatorOpacity
+    }
+  } = useTheme();
   const onEditLinkPage = useExploreContext((v) => v.actions.onEditLinkPage);
   const onLikeLink = useExploreContext((v) => v.actions.onLikeLink);
   const onUpdateNumLinkComments = useExploreContext(
@@ -242,14 +241,6 @@ export default function LinkPage() {
     [byUser, rewards, userId, xpRewardInterfaceShown]
   );
 
-  const byUserIndicatorBackgroundColor = useMemo(
-    () =>
-      Color[Theme(profileTheme).byUserIndicator.color](
-        Theme(profileTheme).byUserIndicator.opacity
-      ),
-    [profileTheme]
-  );
-
   useEffect(() => {
     onSetXpRewardInterfaceShown({
       contentType: 'url',
@@ -316,7 +307,7 @@ export default function LinkPage() {
           <div
             style={{
               padding: '0.7rem',
-              background: byUserIndicatorBackgroundColor,
+              background: Color[byUserIndicatorColor](byUserIndicatorOpacity),
               color: '#fff',
               display: 'flex',
               justifyContent: 'center',

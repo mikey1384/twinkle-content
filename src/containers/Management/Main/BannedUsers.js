@@ -8,9 +8,8 @@ import EditBanStatusModal from '../Modals/EditBanStatusModal';
 import AddBanModal from '../Modals/AddBanModal';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
-import { Theme } from 'constants/css';
 import { useManagementContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useTheme } from 'helpers/hooks';
 import localize from 'constants/localize';
 
 const chatLabel = localize('chat');
@@ -30,7 +29,9 @@ export default function BannedUsers({ canManage }) {
   const bannedUsersLoaded = useManagementContext(
     (v) => v.state.bannedUsersLoaded
   );
-  const { profileTheme } = useMyState();
+  const {
+    tableHeader: { color: tableHeaderColor }
+  } = useTheme();
   const [newBanModalShown, setNewBanModalShown] = useState(false);
   const [banStatusModalTarget, setEditBanStatusModalTarget] = useState(null);
 
@@ -58,7 +59,7 @@ export default function BannedUsers({ canManage }) {
         }
       >
         <Table
-          color={Theme(profileTheme).tableHeader.color}
+          color={tableHeaderColor}
           headerFontSize="1.5rem"
           columns={`
           minmax(10rem, 1fr)

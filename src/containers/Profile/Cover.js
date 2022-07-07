@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import ProfilePic from 'components/ProfilePic';
 import ColorSelector from 'components/ColorSelector';
@@ -8,10 +8,10 @@ import ImageModal from 'components/Modals/ImageModal';
 import ImageEditModal from 'components/Modals/ImageEditModal';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from '@emotion/css';
-import { borderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
+import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { cloudFrontURL, MAX_PROFILE_PIC_SIZE } from 'constants/defaultValues';
 import { useAppContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import localize from 'constants/localize';
 
 const changeThemeLabel = localize('changeTheme2');
@@ -63,11 +63,9 @@ export default function Cover({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const coverColor = useMemo(
-    () =>
-      Color[Theme(selectedTheme || profileTheme || 'logoBlue').cover.color](),
-    [profileTheme, selectedTheme]
-  );
+  const {
+    cover: { color: coverColor }
+  } = useTheme(selectedTheme || profileTheme || 'logoBlue');
 
   return (
     <ErrorBoundary componentPath="Profile/Cover">
@@ -76,7 +74,7 @@ export default function Cover({
           color: '#fff',
           backgroundRepeat: 'no-repeat',
           backgroundSize: '100% 100%',
-          backgroundColor: coverColor
+          backgroundColor: Color[coverColor]()
         }}
         className={css`
           height: 26rem;

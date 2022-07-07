@@ -1,13 +1,13 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import FullTextReveal from 'components/Texts/FullTextReveal';
 import VideoThumbImage from 'components/VideoThumbImage';
 import Embedly from 'components/Embedly';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { isMobile, textIsOverflown } from 'helpers';
-import { Color, mobileMaxWidth, Theme } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useMyState } from 'helpers/hooks';
+import { useTheme } from 'helpers/hooks';
 
 Selectable.propTypes = {
   item: PropTypes.object,
@@ -26,16 +26,12 @@ export default function Selectable({
   onDeselect,
   selected
 }) {
-  const { profileTheme } = useMyState();
+  const {
+    itemSelected: { color: itemSelectedColor, opacity: itemSelectedOpacity }
+  } = useTheme();
   const [onTitleHover, setOnTitleHover] = useState(false);
+  const highlightColor = Color[itemSelectedColor](itemSelectedOpacity);
   const ThumbLabelRef = useRef(null);
-  const selectedItemColor = useMemo(
-    () =>
-      Color[Theme(profileTheme).itemSelected.color](
-        Theme(profileTheme).itemSelected.opacity
-      ),
-    [profileTheme]
-  );
 
   return (
     <ErrorBoundary
@@ -49,10 +45,8 @@ export default function Selectable({
       style={{
         margin: '0.3%',
         cursor: 'pointer',
-        boxShadow: `0 0 5px ${
-          selected ? selectedItemColor : Color.darkerGray()
-        }`,
-        border: selected && `0.5rem solid ${selectedItemColor}`,
+        boxShadow: `0 0 5px ${selected ? highlightColor : Color.darkerGray()}`,
+        border: selected && `0.5rem solid ${highlightColor}`,
         background: Color.whiteGray()
       }}
     >

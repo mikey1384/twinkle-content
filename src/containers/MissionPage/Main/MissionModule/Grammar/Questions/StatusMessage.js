@@ -4,8 +4,8 @@ import Icon from 'components/Icon';
 import LongText from 'components/Texts/LongText';
 import Button from 'components/Button';
 import { css } from '@emotion/css';
-import { useMyState } from 'helpers/hooks';
-import { borderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 
 StatusMessage.propTypes = {
@@ -25,7 +25,9 @@ export default function StatusMessage({
   failMessage,
   onBackToStart
 }) {
-  const { profileTheme } = useMyState();
+  const {
+    xpNumber: { color: xpNumberColor }
+  } = useTheme();
 
   const rewardDetails = useMemo(() => {
     return (
@@ -40,7 +42,7 @@ export default function StatusMessage({
           {mission.repeatXpReward ? (
             <span
               style={{
-                color: Color[Theme(profileTheme).xpNumber.color](),
+                color: Color[xpNumberColor](),
                 fontWeight: 'bold'
               }}
             >
@@ -69,7 +71,7 @@ export default function StatusMessage({
         </div>
       )
     );
-  }, [mission.repeatCoinReward, mission.repeatXpReward, profileTheme]);
+  }, [mission.repeatCoinReward, mission.repeatXpReward, xpNumberColor]);
 
   return (
     <div

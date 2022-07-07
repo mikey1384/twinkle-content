@@ -1,17 +1,15 @@
-import React, { useMemo, useState } from 'react';
-import { useMyState } from 'helpers/hooks';
+import React, { useState } from 'react';
+import { useTheme } from 'helpers/hooks';
 import { css } from '@emotion/css';
-import { Color, Theme, mobileMaxWidth } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import ErrorBoundary from 'components/ErrorBoundary';
 import EmailSubmitForm from './EmailSubmitForm';
 import VerificationCodeInput from './VerificationCodeInput';
 
 export default function EmailVerifier() {
-  const { profileTheme } = useMyState();
-  const submitButtonColor = useMemo(
-    () => Theme(profileTheme).success.color,
-    [profileTheme]
-  );
+  const {
+    success: { color: successColor }
+  } = useTheme();
   const [email, setEmail] = useState('');
   const [emailSent, setEmailSent] = useState(false);
   return (
@@ -50,7 +48,7 @@ export default function EmailVerifier() {
         ) : (
           <>
             Enter your email address below and tap{' '}
-            <b style={{ color: Color[submitButtonColor]() }}>submit</b>
+            <b style={{ color: Color[successColor]() }}>submit</b>
           </>
         )}
       </div>
@@ -59,7 +57,7 @@ export default function EmailVerifier() {
           email={email}
           onSetEmail={setEmail}
           onSetEmailSent={setEmailSent}
-          submitButtonColor={submitButtonColor}
+          submitButtonColor={successColor}
         />
       )}
       {emailSent && (

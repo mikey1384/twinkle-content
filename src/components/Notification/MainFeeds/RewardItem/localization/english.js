@@ -1,14 +1,15 @@
 import React from 'react';
 import UsernameText from 'components/Texts/UsernameText';
 import ContentLink from 'components/ContentLink';
-import { Color, Theme } from 'constants/css';
+import { Color } from 'constants/css';
 import { truncateText } from 'helpers/stringHelpers';
 
 export default function renderEnglishText({
+  contentColor,
   contentId,
   contentType,
   isTask,
-  profileTheme,
+  missionColor,
   rewardType,
   rewardAmount,
   rewarderId,
@@ -18,8 +19,8 @@ export default function renderEnglishText({
   rootMissionType,
   targetObj
 }) {
-  const missionLinkColor = Color[Theme(profileTheme).mission.color]();
-  const contentLinkColor = Color[Theme(profileTheme).content.color]();
+  const missionLinkColor = Color[missionColor]();
+  const contentLinkColor = Color[contentColor]();
 
   if (rewardType === 'Twinkle') {
     return (

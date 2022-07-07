@@ -29,8 +29,7 @@ import {
   returnMaxUploadSize,
   GENERAL_CHAT_ID
 } from 'constants/defaultValues';
-import { Theme } from 'constants/css';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import LocalContext from '../../Context';
 import localize from 'constants/localize';
 
@@ -77,7 +76,10 @@ function MessageInput({
   subjectId,
   textForThisChannel
 }) {
-  const { banned, profileTheme, fileUploadLvl } = useMyState();
+  const { banned, fileUploadLvl } = useMyState();
+  const {
+    button: { color: buttonColor }
+  } = useTheme();
   const {
     actions: { onEnterComment, onSetIsRespondingToSubject, onSetReplyTarget }
   } = useContext(LocalContext);
@@ -305,7 +307,7 @@ function MessageInput({
               disabled={loading || banned?.chess}
               skeuomorphic
               onClick={onChessButtonClick}
-              color={Theme(profileTheme).button.color}
+              color={buttonColor}
             >
               <Icon size="lg" icon={['fas', 'chess']} />
               <span className="desktop" style={{ marginLeft: '0.7rem' }}>
@@ -317,7 +319,7 @@ function MessageInput({
               disabled={loading}
               skeuomorphic
               onClick={onWordleButtonClick}
-              color={Theme(profileTheme).button.color}
+              color={buttonColor}
             >
               W<span className="desktop">ordle</span>
             </Button>
@@ -350,7 +352,7 @@ function MessageInput({
             <Button
               filled
               disabled={loading || !socketConnected || coolingDown}
-              color={Theme(profileTheme).button.color}
+              color={buttonColor}
               onClick={handleSendMsg}
             >
               <Icon size="lg" icon="paper-plane" />
@@ -361,7 +363,6 @@ function MessageInput({
           disabled={loading || !!banned?.chat || !socketConnected}
           onUploadButtonClick={() => FileInputRef.current.click()}
           onSelectVideoButtonClick={onSelectVideoButtonClick}
-          profileTheme={profileTheme}
         />
         {!socketConnected && (
           <Loading

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Carousel from 'components/Carousel';
 import VideoThumb from 'components/VideoThumb';
@@ -10,9 +10,9 @@ import ConfirmModal from 'components/Modals/ConfirmModal';
 import Link from 'components/Link';
 import Icon from 'components/Icon';
 import { css } from '@emotion/css';
-import { Color, Theme, mobileMaxWidth } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { charLimit } from 'constants/defaultValues';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { useAppContext, useExploreContext } from 'contexts';
 import localize from 'constants/localize';
 
@@ -48,7 +48,10 @@ export default function PlaylistCarousel({
   const editPlaylistTitle = useAppContext(
     (v) => v.requestHelpers.editPlaylistTitle
   );
-  const { canEditPlaylists, profileTheme } = useMyState();
+  const { canEditPlaylists } = useMyState();
+  const {
+    carousel: { color: carouselColor }
+  } = useTheme();
   const clickSafe = useExploreContext((v) => v.state.videos.clickSafe);
   const onDeletePlaylist = useExploreContext((v) => v.actions.onDeletePlaylist);
   const onEditPlaylistTitle = useExploreContext(
@@ -61,10 +64,6 @@ export default function PlaylistCarousel({
     useState(false);
   const [deleteConfirmModalShown, setDeleteConfirmModalShown] = useState(false);
   const [playlistModalShown, setPlaylistModalShown] = useState(false);
-  const carouselLinkHoverColor = useMemo(
-    () => Color[Theme(profileTheme).carousel.color](),
-    [profileTheme]
-  );
 
   return (
     <div
@@ -91,7 +90,7 @@ export default function PlaylistCarousel({
               text-decoration: none;
               &:hover {
                 transition: color 0.3s;
-                color: ${carouselLinkHoverColor};
+                color: ${Color[carouselColor]()};
               }
             }
           }

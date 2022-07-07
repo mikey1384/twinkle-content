@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useMemo } from 'react';
+import React, { memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import VideoThumbImage from 'components/VideoThumbImage';
 import Embedly from 'components/Embedly';
@@ -7,9 +7,9 @@ import SecretAnswer from 'components/SecretAnswer';
 import Loading from 'components/Loading';
 import ContentFileViewer from 'components/ContentFileViewer';
 import { useNavigate } from 'react-router-dom';
-import { Color, Theme, borderRadius, mobileMaxWidth } from 'constants/css';
+import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useContentState, useMyState } from 'helpers/hooks';
+import { useContentState, useMyState, useTheme } from 'helpers/hooks';
 import { useContentContext } from 'contexts';
 
 ContentListItem.propTypes = {
@@ -33,7 +33,10 @@ function ContentListItem({
   style
 }) {
   const navigate = useNavigate();
-  const { profileTheme, userId } = useMyState();
+  const { userId } = useMyState();
+  const {
+    itemSelected: { color: itemSelectedColor, opacity: itemSelectedOpacity }
+  } = useTheme();
   const {
     content,
     description,
@@ -65,22 +68,18 @@ function ContentListItem({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loaded]);
 
-  const selectedItemColor = useMemo(
-    () =>
-      Color[Theme(profileTheme).itemSelected.color](
-        Theme(profileTheme).itemSelected.opacity
-      ),
-    [profileTheme]
-  );
-
   return !!notFound || !!isDeleted ? null : (
     <div
       onClick={onClick}
       style={{
         cursor: 'pointer',
         borderRadius,
-        boxShadow: selected ? `0 0 5px ${selectedItemColor}` : null,
-        border: selected ? `0.5rem solid ${selectedItemColor}` : null,
+        boxShadow: selected
+          ? `0 0 5px ${Color[itemSelectedColor](itemSelectedOpacity)}`
+          : null,
+        border: selected
+          ? `0.5rem solid ${Color[itemSelectedColor](itemSelectedOpacity)}`
+          : null,
         ...style
       }}
       className={css`

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import Loading from 'components/Loading';
@@ -6,8 +6,8 @@ import VideoThumbImage from 'components/VideoThumbImage';
 import Link from 'components/Link';
 import InvalidPage from 'components/InvalidPage';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { Color, Theme } from 'constants/css';
-import { useMyState } from 'helpers/hooks';
+import { Color } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
 import localize from 'constants/localize';
 
@@ -32,19 +32,13 @@ export default function Playlist({
   const loadPlaylistVideos = useAppContext(
     (v) => v.requestHelpers.loadPlaylistVideos
   );
-  const { profileTheme } = useMyState();
+  const {
+    userLink: { color: userLinkColor, opacity: userLinkOpacity }
+  } = useTheme();
   const [videos, setVideos] = useState([]);
   const [loadMoreButton, setLoadMoreButton] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loaded, setLoaded] = useState(false);
-
-  const userLinkColor = useMemo(
-    () =>
-      Color[Theme(profileTheme).userLink.color](
-        Theme(profileTheme).userLink.opacity
-      ),
-    [profileTheme]
-  );
 
   useEffect(() => {
     handleLoadPlaylistVideos();
@@ -104,7 +98,9 @@ export default function Playlist({
           <div style={{ width: '60%' }}>
             <Link
               style={{
-                color: video.byUser ? userLinkColor : Color.blue(),
+                color: video.byUser
+                  ? Color[userLinkColor](userLinkOpacity)
+                  : Color.blue(),
                 fontSize: '2rem',
                 fontWeight: 'bold',
                 lineHeight: 1.5

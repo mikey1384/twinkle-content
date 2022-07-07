@@ -5,10 +5,10 @@ import Channels from './Channels';
 import Vocabulary from './Vocabulary';
 import Icon from 'components/Icon';
 import Tabs from './Tabs';
-import { Color, Theme, desktopMinWidth, mobileMaxWidth } from 'constants/css';
+import { Color, desktopMinWidth, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useChatContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useTheme } from 'helpers/hooks';
 import { useNavigate } from 'react-router-dom';
 import localize from 'constants/localize';
 
@@ -20,19 +20,21 @@ LeftMenu.propTypes = {
 
 function LeftMenu({ onNewButtonClick }) {
   const navigate = useNavigate();
-  const { profileTheme } = useMyState();
+  const {
+    chatFlatButton: {
+      color: chatFlatButtonColor,
+      opacity: chatFlatButtonOpacity
+    }
+  } = useTheme();
   const chatType = useChatContext((v) => v.state.chatType);
   const loadingVocabulary = useChatContext((v) => v.state.loadingVocabulary);
   const leftMenuTopButtonColor = useMemo(
-    () =>
-      Color[Theme(profileTheme).chatFlatButton.color](
-        Theme(profileTheme).chatFlatButton.opacity
-      ),
-    [profileTheme]
+    () => Color[chatFlatButtonColor](chatFlatButtonOpacity),
+    [chatFlatButtonColor, chatFlatButtonOpacity]
   );
   const leftMenuTopButtonHoverColor = useMemo(
-    () => Color[Theme(profileTheme).chatFlatButton.color](),
-    [profileTheme]
+    () => Color[chatFlatButtonColor](),
+    [chatFlatButtonColor]
   );
 
   return (
