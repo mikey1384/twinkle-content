@@ -57,6 +57,7 @@ export default function PlaylistCarousel({
   const onEditPlaylistTitle = useExploreContext(
     (v) => v.actions.onEditPlaylistTitle
   );
+  const [savingEdit, setSavingEdit] = useState(false);
   const [onEdit, setOnEdit] = useState(false);
   const [changePLVideosModalShown, setChangePLVideosModalShown] =
     useState(false);
@@ -103,6 +104,7 @@ export default function PlaylistCarousel({
         {onEdit ? (
           <EditTitleForm
             autoFocus
+            savingEdit={savingEdit}
             maxLength={charLimit.playlist.title}
             style={{ width: '90%' }}
             title={title}
@@ -253,9 +255,11 @@ export default function PlaylistCarousel({
   }
 
   async function handleEditedTitleSubmit(title) {
+    setSavingEdit(true);
     await editPlaylistTitle({ title, playlistId });
     onEditPlaylistTitle({ playlistId, title });
     setOnEdit(false);
+    setSavingEdit(false);
   }
 
   async function handleDeleteConfirm() {

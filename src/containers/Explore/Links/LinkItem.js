@@ -48,6 +48,7 @@ export default function LinkItem({
     contentType: 'url',
     contentId: id
   });
+  const [savingEdit, setSavingEdit] = useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   const [userListModalShown, setUserListModalShown] = useState(false);
   const [onEdit, setOnEdit] = useState(false);
@@ -253,6 +254,7 @@ export default function LinkItem({
               {onEdit && (
                 <EditTitleForm
                   autoFocus
+                  savingEdit={savingEdit}
                   style={{ width: '80%' }}
                   maxLength={200}
                   title={title}
@@ -316,8 +318,10 @@ export default function LinkItem({
   }
 
   async function handleEditedTitleSubmit(text) {
+    setSavingEdit(true);
     await editContent({ editedTitle: text, contentId: id, contentType: 'url' });
     onEditLinkTitle({ title: text, id });
     setOnEdit(false);
+    setSavingEdit(false);
   }
 }

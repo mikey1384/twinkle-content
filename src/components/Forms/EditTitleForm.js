@@ -13,6 +13,7 @@ EditTitleForm.propTypes = {
   maxLength: PropTypes.number,
   onClickOutSide: PropTypes.func.isRequired,
   onEditSubmit: PropTypes.func.isRequired,
+  savingEdit: PropTypes.bool,
   style: PropTypes.object,
   title: PropTypes.string.isRequired
 };
@@ -24,6 +25,7 @@ export default function EditTitleForm({
   style,
   inputStyle,
   onEditSubmit,
+  savingEdit,
   ...props
 }) {
   const {
@@ -52,7 +54,7 @@ export default function EditTitleForm({
           <Button
             style={{ marginLeft: '1rem', zIndex: 1000 }}
             filled
-            disabled={title?.length > maxLength}
+            disabled={title?.length > maxLength || savingEdit}
             color={successColor}
             onClick={handleEditSubmit}
           >
@@ -82,7 +84,7 @@ export default function EditTitleForm({
   }
 
   function handleEditSubmit() {
-    if (title?.length > maxLength) return;
+    if (title?.length > maxLength || savingEdit) return;
     if (!stringIsEmpty(title) && title !== props.title) {
       onEditSubmit(finalizeEmoji(title));
     } else {
