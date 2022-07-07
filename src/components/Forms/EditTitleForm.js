@@ -35,7 +35,7 @@ export default function EditTitleForm({
 
   return (
     <div style={style} ref={FormRef}>
-      <div style={{ width: '100%', display: 'flex' }}>
+      <div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
         <Input
           style={{
             width: '100%',

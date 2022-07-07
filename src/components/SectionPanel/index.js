@@ -137,7 +137,7 @@ export default function SectionPanel({
             {onEdit ? (
               <div
                 ref={TitleInputRef}
-                style={{ width: '100%', display: 'flex' }}
+                style={{ width: '100%', display: 'flex', alignItems: 'center' }}
               >
                 <Input
                   style={{ width: '100%' }}
