@@ -18,6 +18,12 @@ export default function NotiActions(dispatch) {
         userId
       });
     },
+    onCollectRewards(userId) {
+      return dispatch({
+        type: 'COLLECT_REWARDS',
+        userId
+      });
+    },
     onLoadNotifications({
       currentChatSubject,
       loadMoreNotifications,

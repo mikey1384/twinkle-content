@@ -63,7 +63,7 @@ function MainFeeds({
     [userId, notiObj]
   );
   const numNewNotis = useNotiContext((v) => v.state.numNewNotis);
-  const onClearRewards = useNotiContext((v) => v.actions.onClearRewards);
+  const onCollectRewards = useNotiContext((v) => v.actions.onCollectRewards);
   const onLoadNotifications = useNotiContext(
     (v) => v.actions.onLoadNotifications
   );
@@ -221,7 +221,7 @@ function MainFeeds({
       userId,
       newState: { twinkleXP: xp, twinkleCoins: coins, rank }
     });
-    onClearRewards(userId);
+    onCollectRewards(userId);
     setCollectingReward(false);
   }
 

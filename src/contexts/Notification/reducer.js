@@ -26,6 +26,17 @@ export default function NotiReducer(state, action) {
           ...state.notiObj,
           [action.userId]: {
             ...state.notiObj[action.userId],
+            rewards: []
+          }
+        }
+      };
+    case 'COLLECT_REWARDS':
+      return {
+        ...state,
+        notiObj: {
+          ...state.notiObj,
+          [action.userId]: {
+            ...state.notiObj[action.userId],
             totalRewardedTwinkles: 0,
             totalRewardedTwinkleCoins: 0
           }
