@@ -11,9 +11,12 @@ import { css } from '@emotion/css';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { cloudFrontURL, MAX_PROFILE_PIC_SIZE } from 'constants/defaultValues';
 import { useAppContext } from 'contexts';
+import { isMobile } from 'helpers';
 import { useMyState, useTheme } from 'helpers/hooks';
 import localize from 'constants/localize';
 
+const deviceIsMobile = isMobile(navigator);
+const changeThemeMobileLabel = localize('changeThemeMobile');
 const changeThemeLabel = localize('changeTheme2');
 
 Cover.propTypes = {
@@ -103,8 +106,8 @@ export default function Cover({
             }
             @media (max-width: ${mobileMaxWidth}) {
               margin-left: 15rem;
-              padding-top: 5.5rem;
-              font-size: 3rem;
+              padding-top: 6rem;
+              font-size: 2.5rem;
               > p {
                 font-size: 1.3rem;
               }
@@ -133,6 +136,13 @@ export default function Cover({
         </div>
         {profile.id === userId && (
           <div
+            className={css`
+              @media (max-width: ${mobileMaxWidth}) {
+                button {
+                  font-size: 1.3rem;
+                }
+              }
+            `}
             style={{
               background: colorSelectorShown && '#fff',
               borderRadius,
@@ -149,7 +159,7 @@ export default function Cover({
                 filled
                 onClick={() => setColorSelectorShown(true)}
               >
-                {changeThemeLabel}
+                {deviceIsMobile ? changeThemeMobileLabel : changeThemeLabel}
               </Button>
             )}
             {colorSelectorShown && (

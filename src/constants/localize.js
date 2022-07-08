@@ -180,6 +180,10 @@ const languageObj = {
     en: 'Change Picture',
     kr: '사진 변경'
   },
+  changeThemeMobile: {
+    en: 'Theme',
+    kr: '테마'
+  },
   changeTheme: {
     en: 'Change theme',
     kr: '테마 변경'
