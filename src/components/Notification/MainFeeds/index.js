@@ -52,15 +52,17 @@ function MainFeeds({
   const collectRewardedCoins = useAppContext(
     (v) => v.requestHelpers.collectRewardedCoins
   );
-
   const { userId, rank, twinkleXP, twinkleCoins } = useMyState();
+  const notiObj = useNotiContext((v) => v.state.notiObj);
+  const totalRewardedTwinkles = useMemo(
+    () => notiObj[userId]?.totalRewardedTwinkles || 0,
+    [userId, notiObj]
+  );
+  const totalRewardedTwinkleCoins = useMemo(
+    () => notiObj[userId]?.totalRewardedTwinkleCoins || 0,
+    [userId, notiObj]
+  );
   const numNewNotis = useNotiContext((v) => v.state.numNewNotis);
-  const totalRewardedTwinkles = useNotiContext(
-    (v) => v.state.totalRewardedTwinkles
-  );
-  const totalRewardedTwinkleCoins = useNotiContext(
-    (v) => v.state.totalRewardedTwinkleCoins
-  );
   const onClearRewards = useNotiContext((v) => v.actions.onClearRewards);
   const onLoadNotifications = useNotiContext(
     (v) => v.actions.onLoadNotifications

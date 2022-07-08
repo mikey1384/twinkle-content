@@ -31,20 +31,12 @@ function Notification({ className, location, style, trackScrollPosition }) {
   );
   const loadRewards = useAppContext((v) => v.requestHelpers.loadRewards);
   const { userId } = useMyState();
-  const loadMoreRewards = useNotiContext((v) => v.state.loadMoreRewards);
   const notiObj = useNotiContext((v) => v.state.notiObj);
   const notificationsLoaded = useNotiContext(
     (v) => v.state.notificationsLoaded
   );
   const rankingsLoaded = useNotiContext((v) => v.state.rankingsLoaded);
   const numNewNotis = useNotiContext((v) => v.state.numNewNotis);
-  const rewards = useNotiContext((v) => v.state.rewards);
-  const totalRewardedTwinkles = useNotiContext(
-    (v) => v.state.totalRewardedTwinkles
-  );
-  const totalRewardedTwinkleCoins = useNotiContext(
-    (v) => v.state.totalRewardedTwinkleCoins
-  );
   const {
     content = defaultChatSubject,
     loaded,
@@ -55,7 +47,6 @@ function Notification({ className, location, style, trackScrollPosition }) {
   );
   const onLoadRewards = useNotiContext((v) => v.actions.onLoadRewards);
   const onGetRanks = useNotiContext((v) => v.actions.onGetRanks);
-  const onResetRewards = useNotiContext((v) => v.actions.onResetRewards);
   const scrollPositions = useViewContext((v) => v.state.scrollPositions);
   const onRecordScrollPosition = useViewContext(
     (v) => v.actions.onRecordScrollPosition
@@ -64,6 +55,22 @@ function Notification({ className, location, style, trackScrollPosition }) {
   const loadingNotificationRef = useRef(false);
   const [loadingNotifications, setLoadingNotifications] = useState(false);
   const userChangedTab = useRef(false);
+  const totalRewardedTwinkles = useMemo(
+    () => notiObj[userId]?.totalRewardedTwinkles || [],
+    [notiObj, userId]
+  );
+  const totalRewardedTwinkleCoins = useMemo(
+    () => notiObj[userId]?.totalRewardedTwinkleCoins || [],
+    [notiObj, userId]
+  );
+  const rewards = useMemo(
+    () => notiObj[userId]?.rewards || [],
+    [notiObj, userId]
+  );
+  const loadMoreRewards = useMemo(
+    () => notiObj[userId]?.loadMoreRewards || false,
+    [notiObj, userId]
+  );
   const notifications = useMemo(
     () => notiObj[userId]?.notifications || [],
     [userId, notiObj]
@@ -75,13 +82,6 @@ function Notification({ className, location, style, trackScrollPosition }) {
     () => notiObj[userId]?.loadMore || false,
     [userId, notiObj]
   );
-
-  useEffect(() => {
-    return function cleanUp() {
-      onResetRewards();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     if (!userChangedTab.current) {
@@ -116,7 +116,6 @@ function Notification({ className, location, style, trackScrollPosition }) {
 
   useEffect(() => {
     userChangedTab.current = false;
-    onResetRewards();
     if (activeTab === 'reward') {
       setActiveTab('notification');
     }
@@ -282,7 +281,8 @@ function Notification({ className, location, style, trackScrollPosition }) {
         rewards,
         loadMoreRewards,
         totalRewardedTwinkles,
-        totalRewardedTwinkleCoins
+        totalRewardedTwinkleCoins,
+        userId
       });
       onLoadNotifications({
         currentChatSubject,

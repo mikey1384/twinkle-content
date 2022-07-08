@@ -35,14 +35,16 @@ export default function NotiActions(dispatch) {
       rewards,
       loadMoreRewards,
       totalRewardedTwinkles,
-      totalRewardedTwinkleCoins
+      totalRewardedTwinkleCoins,
+      userId
     }) {
       return dispatch({
         type: 'LOAD_REWARDS',
         rewards,
         loadMoreRewards,
         totalRewardedTwinkles,
-        totalRewardedTwinkleCoins
+        totalRewardedTwinkleCoins,
+        userId
       });
     },
     onGetRanks({
@@ -100,11 +102,6 @@ export default function NotiActions(dispatch) {
     onResetNumNewPosts() {
       return dispatch({
         type: 'RESET_NUM_NEW_POSTS'
-      });
-    },
-    onResetRewards() {
-      return dispatch({
-        type: 'RESET_REWARDS'
       });
     },
     onShowUpdateNotice(shown) {

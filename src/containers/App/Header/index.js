@@ -575,7 +575,8 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
           rewards,
           loadMoreRewards,
           totalRewardedTwinkles,
-          totalRewardedTwinkleCoins
+          totalRewardedTwinkleCoins,
+          userId
         });
         onLoadNotifications({
           currentChatSubject,

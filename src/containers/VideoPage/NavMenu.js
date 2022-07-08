@@ -323,7 +323,8 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
       rewards,
       loadMoreRewards,
       totalRewardedTwinkles,
-      totalRewardedTwinkleCoins
+      totalRewardedTwinkleCoins,
+      userId
     });
   }
 

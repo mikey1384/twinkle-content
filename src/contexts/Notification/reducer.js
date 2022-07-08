@@ -22,8 +22,14 @@ export default function NotiReducer(state, action) {
     case 'CLEAR_REWARDS':
       return {
         ...state,
-        totalRewardedTwinkles: 0,
-        totalRewardedTwinkleCoins: 0,
+        notiObj: {
+          ...state.notiObj,
+          [action.userId]: {
+            ...state.notiObj[action.userId],
+            totalRewardedTwinkles: 0,
+            totalRewardedTwinkleCoins: 0
+          }
+        },
         loadMoreRewards: false
       };
     case 'INCREASE_NUM_NEW_NOTIS':
@@ -42,6 +48,7 @@ export default function NotiReducer(state, action) {
         notiObj: {
           ...state.notiObj,
           [action.userId]: {
+            ...state.notiObj[action.userId],
             notifications: (
               state.notiObj[action.userId]?.notifications || []
             ).concat(action.notifications),
@@ -56,6 +63,7 @@ export default function NotiReducer(state, action) {
         notiObj: {
           ...state.notiObj,
           [action.userId]: {
+            ...state.notiObj[action.userId],
             notifications: action.notifications,
             loadMore: action.loadMoreNotifications
           }
@@ -66,16 +74,30 @@ export default function NotiReducer(state, action) {
     case 'LOAD_REWARDS':
       return {
         ...state,
-        rewards: action.rewards,
-        totalRewardedTwinkles: action.totalRewardedTwinkles,
-        totalRewardedTwinkleCoins: action.totalRewardedTwinkleCoins,
-        loadMoreRewards: action.loadMoreRewards
+        notiObj: {
+          ...state.notiObj,
+          [action.userId]: {
+            ...state.notiObj[action.userId],
+            rewards: action.rewards,
+            totalRewardedTwinkles: action.totalRewardedTwinkles,
+            totalRewardedTwinkleCoins: action.totalRewardedTwinkleCoins,
+            loadMoreRewards: action.loadMoreRewards
+          }
+        }
       };
     case 'LOAD_MORE_REWARDS':
       return {
         ...state,
-        rewards: state.rewards.concat(action.data.rewards),
-        loadMoreRewards: action.data.loadMore
+        notiObj: {
+          ...state.notiObj,
+          [action.userId]: {
+            ...state.notiObj[action.userId],
+            rewards: state.notiObj[action.userId].rewards.concat(
+              action.data.rewards
+            ),
+            loadMoreRewards: action.data.loadMore
+          }
+        }
       };
     case 'LOAD_RANKS':
       return {
@@ -94,14 +116,6 @@ export default function NotiReducer(state, action) {
       return {
         ...state,
         numNewPosts: 0
-      };
-    case 'RESET_REWARDS':
-      return {
-        ...state,
-        rewards:
-          state.totalRewardedTwinkles + state.totalRewardedTwinkleCoins === 0
-            ? []
-            : state.rewards
       };
     case 'SHOW_UPDATE_NOTICE':
       return {

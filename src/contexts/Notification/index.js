@@ -24,8 +24,6 @@ export const initialNotiState = {
   top30s: [],
   top30sMonthly: [],
   socketConnected: false,
-  totalRewardedTwinkles: 0,
-  totalRewardedTwinkleCoins: 0,
   updateDetail: '',
   updateNoticeShown: false
 };
