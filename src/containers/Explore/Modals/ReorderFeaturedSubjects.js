@@ -16,6 +16,7 @@ export default function ReorderFeaturedSubjects({
   onHide,
   subjectIds: initialSubjectIds
 }) {
+  const reportError = useAppContext((v) => v.requestHelpers.reportError);
   const uploadFeaturedSubjects = useAppContext(
     (v) => v.requestHelpers.uploadFeaturedSubjects
   );
@@ -69,6 +70,14 @@ export default function ReorderFeaturedSubjects({
 
   async function handleSubmit() {
     setDisabled(true);
+    for (let subjectId of subjectIds) {
+      if (!subjectId) {
+        return reportError({
+          componentPath: 'Explore/Modals/ReorderFeaturedSubjects',
+          message: `handleSubmit: one of the elements inside subjectIds array is null`
+        });
+      }
+    }
     const reorderedSubjects = await uploadFeaturedSubjects({
       selected: subjectIds
     });

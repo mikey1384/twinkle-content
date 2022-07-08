@@ -29,7 +29,6 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import Icon from 'components/Icon';
 import { v1 as uuidv1 } from 'uuid';
 import {
-  clientVersion,
   GENERAL_CHAT_ID,
   GENERAL_CHAT_PATH_ID,
   rewardReasons
@@ -511,8 +510,7 @@ function MessagesContainer({
           if (selectedChannelId === 0 && !recepientId) {
             return reportError({
               componentPath: 'MessagesContainer/index',
-              message: `handleConfirmChessMove: User is trying to send the first chess message to someone but recepient ID is missing`,
-              clientVersion
+              message: `handleConfirmChessMove: User is trying to send the first chess message to someone but recepient ID is missing`
             });
           }
           const { alreadyExists, channel, message, pathId } =
@@ -628,8 +626,7 @@ function MessagesContainer({
           if (!user.id) {
             return reportError({
               componentPath: 'MessagesContainer/index',
-              message: `handleInviteUsersDone: User is trying to invite people to their channel but at least one of their user ID is missing. Channel ID was: ${selectedChannelId}`,
-              clientVersion
+              message: `handleInviteUsersDone: User is trying to invite people to their channel but at least one of their user ID is missing. Channel ID was: ${selectedChannelId}`
             });
           }
           recepientIds.push(user.id);
@@ -807,8 +804,7 @@ function MessagesContainer({
         if (!recepientId) {
           return reportError({
             componentPath: 'MessagesContainer/index',
-            message: `handleMessageSubmit: User is trying to send the first message to someone but recepient ID is missing`,
-            clientVersion
+            message: `handleMessageSubmit: User is trying to send the first message to someone but recepient ID is missing`
           });
         }
         onSetCreatingNewDMChannel(true);

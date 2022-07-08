@@ -1,5 +1,6 @@
 import request from 'axios';
 import URL from 'constants/URL';
+import { clientVersion } from 'constants/defaultValues';
 import { queryStringForArray } from 'helpers/stringHelpers';
 
 export default function userRequestHelpers({ auth, handleError, token }) {
@@ -419,7 +420,7 @@ export default function userRequestHelpers({ auth, handleError, token }) {
         return handleError(error);
       }
     },
-    async reportError({ componentPath, message, clientVersion }) {
+    async reportError({ componentPath, message }) {
       try {
         const {
           data: { success }

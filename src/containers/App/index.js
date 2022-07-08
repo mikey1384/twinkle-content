@@ -36,7 +36,6 @@ import { css } from '@emotion/css';
 import { socket } from 'constants/io';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 import { finalizeEmoji } from 'helpers/stringHelpers';
-import { clientVersion } from 'constants/defaultValues';
 import { useMyState, useScrollPosition } from 'helpers/hooks';
 import {
   isMobile,
@@ -282,8 +281,7 @@ function App() {
       if (channelId === 0 && !recepientId) {
         return reportError({
           componentPath: 'App/index',
-          message: `handleFileUploadOnChat: User is trying to send the first file message to someone but recepient ID is missing`,
-          clientVersion
+          message: `handleFileUploadOnChat: User is trying to send the first file message to someone but recepient ID is missing`
         });
       }
       const promises = [];

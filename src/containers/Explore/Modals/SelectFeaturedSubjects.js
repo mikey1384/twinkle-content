@@ -23,6 +23,7 @@ export default function SelectFeaturedSubjectsModal({
   onHide,
   onSubmit
 }) {
+  const reportError = useAppContext((v) => v.requestHelpers.reportError);
   const loadUploads = useAppContext((v) => v.requestHelpers.loadUploads);
   const searchContent = useAppContext((v) => v.requestHelpers.searchContent);
   const uploadFeaturedSubjects = useAppContext(
@@ -251,6 +252,14 @@ export default function SelectFeaturedSubjectsModal({
 
   async function handleSubmit() {
     setSubmitting(true);
+    for (let selectedId of selected) {
+      if (!selectedId) {
+        return reportError({
+          componentPath: 'Explore/Modals/SelectFeaturedSubjects',
+          message: `handleSubmit: one of the elements inside selected array is null`
+        });
+      }
+    }
     await uploadFeaturedSubjects({ selected });
     onSubmit(selected.map((selectedId) => subjectObj[selectedId]));
   }
