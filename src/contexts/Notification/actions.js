@@ -12,9 +12,10 @@ export default function NotiActions(dispatch) {
         data
       });
     },
-    onClearRewards() {
+    onClearRewards(userId) {
       return dispatch({
-        type: 'CLEAR_REWARDS'
+        type: 'CLEAR_REWARDS',
+        userId
       });
     },
     onLoadNotifications({
@@ -87,10 +88,11 @@ export default function NotiActions(dispatch) {
         userId
       });
     },
-    onLoadMoreRewards(data) {
+    onLoadMoreRewards({ userId, data }) {
       return dispatch({
         type: 'LOAD_MORE_REWARDS',
-        data
+        data,
+        userId
       });
     },
     onNotifyChatSubjectChange(subject) {

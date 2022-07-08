@@ -221,7 +221,7 @@ function MainFeeds({
       userId,
       newState: { twinkleXP: xp, twinkleCoins: coins, rank }
     });
-    onClearRewards();
+    onClearRewards(userId);
     setCollectingReward(false);
   }
 
@@ -251,7 +251,7 @@ function MainFeeds({
       });
     } else {
       const data = await loadMoreRewards(rewards[rewards.length - 1].id);
-      onLoadMoreRewards(data);
+      onLoadMoreRewards({ data, userId });
     }
     setLoading(false);
   }
