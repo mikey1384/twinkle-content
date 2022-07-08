@@ -332,6 +332,7 @@ export function fetchedVideoCodeFromURL(url) {
 }
 
 export function finalizeEmoji(string) {
+  if (stringIsEmpty(string)) return '';
   let finalizedString = addAdvancedEmoji(
     addEmoji(expandShortcut(string + ' '))
   );
@@ -925,7 +926,7 @@ export function renderText(text) {
 }
 
 export function replaceFakeAtSymbol(string) {
-  if (stringIsEmpty(string)) return string;
+  if (stringIsEmpty(string)) return '';
   return string.replace(/＠/g, '@');
 }
 
