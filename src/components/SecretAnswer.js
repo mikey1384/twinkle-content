@@ -16,6 +16,7 @@ SecretAnswer.propTypes = {
   answer: PropTypes.string,
   attachment: PropTypes.object,
   mediaDisabled: PropTypes.bool,
+  modalOverModal: PropTypes.bool,
   onClick: PropTypes.func,
   style: PropTypes.object,
   subjectId: PropTypes.number,
@@ -26,6 +27,7 @@ function SecretAnswer({
   answer,
   attachment,
   mediaDisabled,
+  modalOverModal,
   onClick,
   style,
   subjectId,
@@ -103,6 +105,7 @@ function SecretAnswer({
                   filePath={attachment.filePath}
                   fileSize={attachment.fileSize}
                   isThumb={mediaDisabled}
+                  modalOverModal={modalOverModal}
                   thumbUrl={attachment.thumbUrl}
                   videoHeight="100%"
                   style={{

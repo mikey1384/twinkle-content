@@ -302,6 +302,7 @@ function ContentListItem({
               subjectId={contentId}
               uploaderId={uploader.id}
               attachment={secretAttachment}
+              modalOverModal={modalOverModal}
               mediaDisabled
             />
           )}
