@@ -38,10 +38,10 @@ export default function NotiReducer(state, action) {
           [action.userId]: {
             ...state.notiObj[action.userId],
             totalRewardedTwinkles: 0,
-            totalRewardedTwinkleCoins: 0
+            totalRewardedTwinkleCoins: 0,
+            loadMoreRewards: false
           }
-        },
-        loadMoreRewards: false
+        }
       };
     case 'INCREASE_NUM_NEW_NOTIS':
       return {
