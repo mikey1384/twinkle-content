@@ -16,24 +16,27 @@ export default function ChatReducer(state, action) {
         ...state,
         channelsObj: {
           ...state.channelsObj,
-          [action.channelId]: {
-            ...state.channelsObj[action.channelId],
-            messageIds: state.channelsObj[action.channelId]?.messageIds?.map(
-              (messageId) =>
-                messageId === action.tempMessageId
-                  ? action.messageId
-                  : messageId
-            ),
-            messagesObj: {
-              ...state.channelsObj[action.channelId].messagesObj,
-              [action.messageId]: {
-                ...state.channelsObj[action.channelId].messagesObj[
-                  action.tempMessageId
-                ],
-                id: action.messageId
+          [action.channelId]: state.channelsObj[action.channelId]
+            ? {
+                ...state.channelsObj[action.channelId],
+                messageIds: state.channelsObj[
+                  action.channelId
+                ]?.messageIds?.map((messageId) =>
+                  messageId === action.tempMessageId
+                    ? action.messageId
+                    : messageId
+                ),
+                messagesObj: {
+                  ...state.channelsObj[action.channelId]?.messagesObj,
+                  [action.messageId]: {
+                    ...state.channelsObj[action.channelId]?.messagesObj[
+                      action.tempMessageId
+                    ],
+                    id: action.messageId
+                  }
+                }
               }
-            }
-          }
+            : {}
         }
       };
     case 'ADD_REACTION_TO_MESSAGE': {
