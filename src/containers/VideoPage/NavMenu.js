@@ -65,11 +65,14 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
     spinner: { color: spinnerColor }
   } = useTheme();
   const numNewNotis = useNotiContext((v) => v.state.numNewNotis);
-  const totalRewardedTwinkles = useNotiContext(
-    (v) => v.state.totalRewardedTwinkles
+  const notiObj = useNotiContext((v) => v.state.notiObj);
+  const totalRewardedTwinkles = useMemo(
+    () => notiObj[userId]?.totalRewardedTwinkles || 0,
+    [notiObj, userId]
   );
-  const totalRewardedTwinkleCoins = useNotiContext(
-    (v) => v.state.totalRewardedTwinkleCoins
+  const totalRewardedTwinkleCoins = useMemo(
+    () => notiObj[userId]?.totalRewardedTwinkleCoins || 0,
+    [notiObj, userId]
   );
   const onLoadRewards = useNotiContext((v) => v.actions.onLoadRewards);
 

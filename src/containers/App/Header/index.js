@@ -164,11 +164,14 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
 
   const numNewNotis = useNotiContext((v) => v.state.numNewNotis);
   const numNewPosts = useNotiContext((v) => v.state.numNewPosts);
-  const totalRewardedTwinkles = useNotiContext(
-    (v) => v.state.totalRewardedTwinkles
+  const notiObj = useNotiContext((v) => v.state.notiObj);
+  const totalRewardedTwinkles = useMemo(
+    () => notiObj[userId]?.totalRewardedTwinkles || 0,
+    [notiObj, userId]
   );
-  const totalRewardedTwinkleCoins = useNotiContext(
-    (v) => v.state.totalRewardedTwinkleCoins
+  const totalRewardedTwinkleCoins = useMemo(
+    () => notiObj[userId]?.totalRewardedTwinkleCoins || 0,
+    [notiObj, userId]
   );
   const versionMatch = useNotiContext((v) => v.state.versionMatch);
   const prevUserId = useNotiContext((v) => v.state.prevUserId);
