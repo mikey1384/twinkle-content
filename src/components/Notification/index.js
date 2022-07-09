@@ -39,7 +39,7 @@ function Notification({ className, location, style, trackScrollPosition }) {
   const numNewNotis = useNotiContext((v) => v.state.numNewNotis);
   const {
     content = defaultChatSubject,
-    loaded,
+    loaded: chatTopicLoaded,
     ...subject
   } = useNotiContext((v) => v.state.currentChatSubject);
   const onLoadNotifications = useNotiContext(
@@ -124,7 +124,7 @@ function Notification({ className, location, style, trackScrollPosition }) {
 
   useEffect(() => {
     if (rankingsLoaded && !notificationsLoaded) {
-      fetchNews();
+      handleFetchNews();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -166,7 +166,7 @@ function Notification({ className, location, style, trackScrollPosition }) {
             flexDirection: 'column'
           }}
         >
-          {loaded && location === 'home' && (
+          {userId && chatTopicLoaded && location === 'home' && (
             <ChatFeeds
               myId={userId}
               content={content}
@@ -256,11 +256,11 @@ function Notification({ className, location, style, trackScrollPosition }) {
   async function handleFetchNotifications(userId) {
     await fetchRankings();
     if (notifications.length === 0 && userId) {
-      fetchNews(userId);
+      handleFetchNews(userId);
     }
   }
 
-  async function fetchNews() {
+  async function handleFetchNews() {
     if (!loadingNotificationRef.current) {
       setLoadingNotifications(true);
       loadingNotificationRef.current = true;
