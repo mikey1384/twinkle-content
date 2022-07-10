@@ -24,10 +24,10 @@ export default function WelcomeMessage({ userId, openSigninModal }) {
       }}
     >
       {!userId && (
-        <>
+        <div style={{ width: '100%' }}>
           <div className="login-message">{logInLabel}</div>
           <div className="login-message">{toAccessAllFeaturesLabel}</div>
-        </>
+        </div>
       )}
       {!userId && (
         <Button
