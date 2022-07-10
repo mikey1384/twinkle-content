@@ -55,10 +55,10 @@ function ChatFeeds({
   }, 1000);
   const Details = useMemo(() => {
     const posterString = (
-      <>
+      <div style={{ width: '100%' }}>
         {startedByLabel} <UsernameText user={{ id: userId, username }} />
         {timeStamp ? ` ${timeSincePost}` : ''}
-      </>
+      </div>
     );
     const reloaderString = (
       <div style={{ marginTop: '0.5rem' }}>
