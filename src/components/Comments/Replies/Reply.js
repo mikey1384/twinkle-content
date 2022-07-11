@@ -24,7 +24,7 @@ import { commentContainer } from '../Styles';
 import { Link } from 'react-router-dom';
 import { Color } from 'constants/css';
 import { determineUserCanRewardThis, determineXpButtonDisabled } from 'helpers';
-import { useContentState, useMyState } from 'helpers/hooks';
+import { useContentState, useMyState, useTheme } from 'helpers/hooks';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { useAppContext, useContentContext } from 'contexts';
 import { getFileInfoFromFileName, stringIsEmpty } from 'helpers/stringHelpers';
@@ -117,6 +117,9 @@ function Reply({
     twinkleCoins,
     userId
   } = useMyState();
+  const {
+    link: { color: linkColor }
+  } = useTheme();
   const onSetIsEditing = useContentContext((v) => v.actions.onSetIsEditing);
   const onSetXpRewardInterfaceShown = useContentContext(
     (v) => v.actions.onSetXpRewardInterfaceShown
@@ -362,7 +365,7 @@ function Reply({
                 !!reply.replyId &&
                 reply.replyId !== comment.id && (
                   <ErrorBoundary componentPath="Comments/Replies/Reply/to">
-                    <span className="to">
+                    <span className="to" style={{ color: Color[linkColor]() }}>
                       to:{' '}
                       <UsernameText user={reply.targetObj.comment.uploader} />
                     </span>

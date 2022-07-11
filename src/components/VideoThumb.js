@@ -35,6 +35,7 @@ VideoThumb.propTypes = {
 function VideoThumb({ className, clickSafe, style, to, user, video }) {
   const timerRef = useRef(null);
   const {
+    link: { color: linkColor },
     userLink: { color: userLinkColor, opacity: userLinkOpacity }
   } = useTheme();
   const { isDeleted } = useContentState({
@@ -127,7 +128,7 @@ function VideoThumb({ className, clickSafe, style, to, user, video }) {
                 style={{
                   color: video.byUser
                     ? Color[userLinkColor](userLinkOpacity)
-                    : Color.blue()
+                    : Color[linkColor]()
                 }}
                 href={`/${to}`}
                 onClick={onLinkClick}

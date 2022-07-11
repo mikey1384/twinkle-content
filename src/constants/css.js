@@ -52,12 +52,16 @@ export const strongColors = ['rose', 'red', 'purple'];
 
 export function Theme(color) {
   return {
+    alreadyPostedByOtherUser: { color: 'red' },
+    alreadyPostedByThisUser: { color: 'blue' },
     button: { color },
     byUserIndicator: {
       color,
       opacity: strongColors.includes(color) ? 0.7 : 0.9
     },
     carousel: { color },
+    carouselProgress: { color: 'logoBlue' },
+    carouselProgressComplete: { color: 'blue' },
     comment: { color: 'green' },
     content: { color: 'green' },
     cover: { color },
@@ -71,7 +75,10 @@ export function Theme(color) {
     chatInvitation: { color },
     homeMenuItemActive: { color },
     itemSelected: { color, opacity: strongColors.includes(color) ? 0.7 : 0.8 },
-    loadMoreButton: { color: 'green' },
+    likeButton: { color: 'lightBlue' },
+    likeButtonPressed: { color: 'logoBlue' },
+    link: { color: 'blue' },
+    loadMoreButton: { color: 'lightBlue' },
     login: { color: 'green' },
     logoTwin: { color: 'logoBlue' },
     logoKle: { color: 'logoGreen' },

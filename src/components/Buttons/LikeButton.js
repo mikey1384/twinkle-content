@@ -4,7 +4,7 @@ import Button from 'components/Button';
 import Icon from 'components/Icon';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { useAppContext, useContentContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import localize from 'constants/localize';
 
 const likeLabel = localize('like');
@@ -40,6 +40,10 @@ function LikeButton({
     }
     return userLikedThis;
   }, [likes, userId]);
+  const {
+    likeButton: { color: likeButtonColor },
+    likeButtonPressed: { color: likeButtonPressedColor }
+  } = useTheme();
 
   return (
     <ErrorBoundary componentPath="LikeButton">
@@ -47,7 +51,11 @@ function LikeButton({
         componentPath="LikeButton"
         disabled={disabled}
         className={className}
-        color={(filled && liked) || !filled ? 'logoBlue' : 'lightBlue'}
+        color={
+          (filled && liked) || !filled
+            ? likeButtonPressedColor
+            : likeButtonColor
+        }
         filled={filled || liked}
         style={style}
         onClick={async () => {

@@ -4,7 +4,7 @@ import Link from 'components/Link';
 import { Color } from 'constants/css';
 import { css } from '@emotion/css';
 import { useAppContext, useContentContext } from 'contexts';
-import { useContentState } from 'helpers/hooks';
+import { useContentState, useTheme } from 'helpers/hooks';
 
 AlreadyPosted.propTypes = {
   changingPage: PropTypes.bool,
@@ -25,6 +25,10 @@ export default function AlreadyPosted({
   url,
   videoCode
 }) {
+  const {
+    alreadyPostedByThisUser: { color: alreadyPostedByThisUserColor },
+    alreadyPostedByOtherUser: { color: alreadyPostedByOtherUserColor }
+  } = useTheme();
   const checkContentUrl = useAppContext(
     (v) => v.requestHelpers.checkContentUrl
   );
@@ -72,8 +76,8 @@ export default function AlreadyPosted({
         color: '#fff',
         backgroundColor:
           uploaderId !== existingContent.uploader
-            ? Color.brown()
-            : Color.blue(),
+            ? Color[alreadyPostedByOtherUserColor]()
+            : Color[alreadyPostedByThisUserColor](),
         ...style
       }}
       className={css`

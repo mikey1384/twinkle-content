@@ -34,7 +34,6 @@ export const commentContainer = css`
     }
   }
   .to {
-    color: ${Color.blue()};
     font-size: 1.3rem;
     line-height: 2.3rem;
     font-weight: bold;

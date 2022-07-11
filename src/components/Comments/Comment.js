@@ -37,7 +37,12 @@ import {
   determineXpButtonDisabled,
   scrollElementToCenter
 } from 'helpers';
-import { useContentState, useLazyLoad, useMyState } from 'helpers/hooks';
+import {
+  useContentState,
+  useLazyLoad,
+  useMyState,
+  useTheme
+} from 'helpers/hooks';
 import { borderRadius, Color } from 'constants/css';
 import { getFileInfoFromFileName, stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext } from 'contexts';
@@ -147,6 +152,9 @@ function Comment({
     twinkleCoins,
     userId
   } = useMyState();
+  const {
+    link: { color: linkColor }
+  } = useTheme();
   const onChangeSpoilerStatus = useContentContext(
     (v) => v.actions.onChangeSpoilerStatus
   );
@@ -623,7 +631,10 @@ function Comment({
                   {comment.targetUserId &&
                     !!comment.replyId &&
                     comment.replyId !== parent.contentId && (
-                      <span className="to">
+                      <span
+                        className="to"
+                        style={{ color: Color[linkColor]() }}
+                      >
                         to:{' '}
                         <UsernameText
                           user={{

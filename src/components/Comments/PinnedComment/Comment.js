@@ -30,7 +30,7 @@ import { css } from '@emotion/css';
 import { useNavigate } from 'react-router-dom';
 import { commentContainer } from '../Styles';
 import { timeSince } from 'helpers/timeStampHelpers';
-import { useContentState, useMyState } from 'helpers/hooks';
+import { useContentState, useMyState, useTheme } from 'helpers/hooks';
 import {
   determineUserCanRewardThis,
   determineXpButtonDisabled,
@@ -117,6 +117,9 @@ function Comment({
     twinkleCoins,
     userId
   } = useMyState();
+  const {
+    link: { color: linkColor }
+  } = useTheme();
   const onChangeSpoilerStatus = useContentContext(
     (v) => v.actions.onChangeSpoilerStatus
   );
@@ -458,7 +461,7 @@ function Comment({
               {comment.targetUserId &&
                 !!comment.replyId &&
                 comment.replyId !== parent.contentId && (
-                  <span className="to">
+                  <span className="to" style={{ color: Color[linkColor]() }}>
                     to:{' '}
                     <UsernameText
                       user={{

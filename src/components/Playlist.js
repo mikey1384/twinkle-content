@@ -33,6 +33,8 @@ export default function Playlist({
     (v) => v.requestHelpers.loadPlaylistVideos
   );
   const {
+    loadMoreButton: { color: loadMoreButtonColor },
+    link: { color: linkColor },
     userLink: { color: userLinkColor, opacity: userLinkOpacity }
   } = useTheme();
   const [videos, setVideos] = useState([]);
@@ -100,7 +102,7 @@ export default function Playlist({
               style={{
                 color: video.byUser
                   ? Color[userLinkColor](userLinkOpacity)
-                  : Color.blue(),
+                  : Color[linkColor](),
                 fontSize: '2rem',
                 fontWeight: 'bold',
                 lineHeight: 1.5
@@ -121,7 +123,7 @@ export default function Playlist({
           style={{ marginTop: '1.5em' }}
           loading={loading}
           filled
-          color="lightBlue"
+          color={loadMoreButtonColor}
           onClick={handleLoadMoreVideos}
         />
       )}

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import LocalContext from '../Context';
 import Reply from './Reply';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
+import { useTheme } from 'helpers/hooks';
 import { scrollElementToCenter } from 'helpers';
 import { useAppContext } from 'contexts';
 
@@ -45,6 +46,9 @@ function Replies({
     onReplySubmit,
     onSubmitWithAttachment
   } = useContext(LocalContext);
+  const {
+    loadMoreButton: { color: loadMoreButtonColor }
+  } = useTheme();
   const loadReplies = useAppContext((v) => v.requestHelpers.loadReplies);
   const [deleting, setDeleting] = useState(false);
   const [replying, setReplying] = useState(false);
@@ -87,7 +91,7 @@ function Replies({
             width: '100%'
           }}
           filled
-          color="lightBlue"
+          color={loadMoreButtonColor}
           loading={loadingMoreReplies}
           onClick={handleLoadMoreReplies}
         />
@@ -101,7 +105,7 @@ function Replies({
               width: '100%'
             }}
             filled
-            color="lightBlue"
+            color={loadMoreButtonColor}
             loading={loadingMoreRepliesOfReply}
             onClick={() =>
               handleLoadMoreRepliesOfReply({
