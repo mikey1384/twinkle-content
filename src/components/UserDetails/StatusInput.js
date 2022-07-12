@@ -7,6 +7,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import { css } from '@emotion/css';
 import { Color } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
 import { exceedsCharLimit } from 'helpers/stringHelpers';
 
 StatusInput.propTypes = {
@@ -32,6 +33,9 @@ export default function StatusInput({
   onTextChange,
   setColor
 }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const statusExceedsCharLimit = useMemo(
     () =>
       exceedsCharLimit({
@@ -118,7 +122,7 @@ export default function StatusInput({
               Cancel
             </Button>
             <Button
-              color="blue"
+              color={doneColor}
               filled
               disabled={
                 !!exceedsCharLimit({

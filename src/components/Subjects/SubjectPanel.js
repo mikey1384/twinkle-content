@@ -95,6 +95,7 @@ export default function SubjectPanel({
     userId: myId
   } = useMyState();
   const {
+    done: { color: doneColor },
     subject: { color: subjectColor }
   } = useTheme();
 
@@ -345,7 +346,7 @@ export default function SubjectPanel({
                 Cancel
               </Button>
               <Button
-                color="blue"
+                color={doneColor}
                 style={{
                   fontSize: '1.8rem'
                 }}

@@ -4,6 +4,7 @@ import Modal from 'components/Modal';
 import Button from 'components/Button';
 import TagForm from 'components/Forms/TagForm';
 import AddPlaylistModal from 'components/Modals/AddPlaylistModal';
+import { useTheme } from 'helpers/hooks';
 import { capitalize, hashify } from 'helpers/stringHelpers';
 import { useAppContext } from 'contexts';
 
@@ -24,6 +25,9 @@ function TagModal({
   onSubmit,
   videoId
 }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const addVideoToPlaylists = useAppContext(
     (v) => v.requestHelpers.addVideoToPlaylists
   );
@@ -103,7 +107,7 @@ function TagModal({
         </Button>
         <Button
           disabled={disabled || selectedPlaylists.length === 0}
-          color="blue"
+          color={doneColor}
           onClick={handleSubmit}
         >
           Done

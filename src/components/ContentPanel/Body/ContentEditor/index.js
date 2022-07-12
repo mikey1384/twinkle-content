@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import TextEditSection from './TextEditSection';
 import { useInputContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { css } from '@emotion/css';
 import {
   addEmoji,
@@ -54,6 +54,9 @@ function ContentEditor({
   title
 }) {
   const { banned } = useMyState();
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const defaultInputState = useMemo(
     () => ({
       editedContent: replaceFakeAtSymbol(content || ''),
@@ -344,7 +347,7 @@ function ContentEditor({
             flexDirection: 'row-reverse'
           }}
         >
-          <Button color="blue" type="submit" disabled={editButtonDisabled}>
+          <Button color={doneColor} type="submit" disabled={editButtonDisabled}>
             {doneLabel}
           </Button>
           <Button

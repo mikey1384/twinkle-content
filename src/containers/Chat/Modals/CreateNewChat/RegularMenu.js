@@ -5,7 +5,7 @@ import Button from 'components/Button';
 import Input from 'components/Texts/Input';
 import SwitchButton from 'components/Buttons/SwitchButton';
 import { Color } from 'constants/css';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
@@ -33,6 +33,9 @@ export default function RegularMenu({
   onDone
 }) {
   const { userId } = useMyState();
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const [channelName, setChannelName] = useState('');
   const [isClosed, setIsClosed] = useState(false);
 
@@ -88,7 +91,7 @@ export default function RegularMenu({
           {onBackClick ? backLabel : cancelLabel}
         </Button>
         <Button
-          color="blue"
+          color={doneColor}
           onClick={handleDone}
           disabled={creatingChat || !channelName}
         >

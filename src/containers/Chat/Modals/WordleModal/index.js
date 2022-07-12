@@ -9,6 +9,7 @@ import FilterBar from 'components/FilterBar';
 import Streaks from './Streaks';
 import Rankings from './Rankings';
 import { css } from '@emotion/css';
+import { useTheme } from 'helpers/hooks';
 import { MAX_GUESSES } from './constants/settings';
 import { useAppContext, useChatContext } from 'contexts';
 
@@ -37,6 +38,9 @@ export default function WordleModal({
   onHide,
   socketConnected
 }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const [activeTab, setActiveTab] = useState('game');
   const [rankingsTab, setRankingsTab] = useState('all');
   const loadWordle = useAppContext((v) => v.requestHelpers.loadWordle);
@@ -162,7 +166,7 @@ export default function WordleModal({
             style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
           >
             <Button
-              color="blue"
+              color={doneColor}
               onClick={() => setOverviewModalShown(true)}
               isGameWon={isGameWon}
             >

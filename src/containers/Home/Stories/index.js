@@ -9,7 +9,7 @@ import ContentPanel from 'components/ContentPanel';
 import Icon from 'components/Icon';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
-import { useInfiniteScroll, useMyState } from 'helpers/hooks';
+import { useInfiniteScroll, useMyState, useTheme } from 'helpers/hooks';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import { useAppContext, useHomeContext, useNotiContext } from 'contexts';
 import localize from 'constants/localize';
@@ -40,6 +40,9 @@ export default function Stories() {
   const loadFeeds = useAppContext((v) => v.requestHelpers.loadFeeds);
   const loadNewFeeds = useAppContext((v) => v.requestHelpers.loadNewFeeds);
   const { hideWatched, userId, username } = useMyState();
+  const {
+    loadMoreButton: { color: loadMoreButtonColor }
+  } = useTheme();
   const numNewPosts = useNotiContext((v) => v.state.numNewPosts);
   const onResetNumNewPosts = useNotiContext(
     (v) => v.actions.onResetNumNewPosts
@@ -211,7 +214,7 @@ export default function Stories() {
                   style={{ marginBottom: '1rem' }}
                   onClick={() => setLoadingMore(true)}
                   loading={loadingMore}
-                  color="lightBlue"
+                  color={loadMoreButtonColor}
                   filled
                 />
               )}

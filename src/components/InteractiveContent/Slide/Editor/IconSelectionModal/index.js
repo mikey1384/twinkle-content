@@ -4,6 +4,7 @@ import Modal from 'components/Modal';
 import Button from 'components/Button';
 import IconMenu from './IconMenu';
 import { isEqual } from 'lodash';
+import { useTheme } from 'helpers/hooks';
 
 IconSelectionModal.propTypes = {
   onHide: PropTypes.func.isRequired,
@@ -16,6 +17,9 @@ export default function IconSelectionModal({
   onSelectIcon,
   selectedIcon: prevSelectedIcon
 }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const [selectedIcon, setSelectedIcon] = useState(prevSelectedIcon);
   return (
     <Modal onHide={onHide}>
@@ -36,7 +40,7 @@ export default function IconSelectionModal({
           Cancel
         </Button>
         <Button
-          color="blue"
+          color={doneColor}
           onClick={() => {
             onSelectIcon(selectedIcon);
             onHide();

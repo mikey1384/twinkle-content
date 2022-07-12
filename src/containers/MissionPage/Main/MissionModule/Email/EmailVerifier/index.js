@@ -8,6 +8,7 @@ import VerificationCodeInput from './VerificationCodeInput';
 
 export default function EmailVerifier() {
   const {
+    link: { color: linkColor },
     success: { color: successColor }
   } = useTheme();
   const [email, setEmail] = useState('');
@@ -31,7 +32,7 @@ export default function EmailVerifier() {
               An email with a 6-digit number was sent to{' '}
               <span
                 onClick={handleEmailClick}
-                style={{ color: Color.blue(), cursor: 'pointer' }}
+                style={{ color: Color[linkColor](), cursor: 'pointer' }}
                 className={css`
                   &:hover {
                     text-decoration: underline;

@@ -9,7 +9,7 @@ import RewardLevelForm from 'components/Forms/RewardLevelForm';
 import SecretMessageInput from 'components/Forms/SecretMessageInput';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
 import { useAppContext, useContentContext, useInputContext } from 'contexts';
-import { useContentState } from 'helpers/hooks';
+import { useContentState, useTheme } from 'helpers/hooks';
 import { returnImageFileFromUrl } from 'helpers';
 import { v1 as uuidv1 } from 'uuid';
 import localize from 'constants/localize';
@@ -46,6 +46,9 @@ export default function SubjectInputForm({
   descriptionPlaceholder,
   onSubmit
 }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const { fileUploadProgress, uploadingFile } = useContentState({
     contentType,
     contentId
@@ -199,7 +202,7 @@ export default function SubjectInputForm({
               {cancelLabel}
             </Button>
             <Button
-              color="blue"
+              color={doneColor}
               style={{ fontSize: '1.7rem' }}
               onClick={handleSubmit}
               disabled={

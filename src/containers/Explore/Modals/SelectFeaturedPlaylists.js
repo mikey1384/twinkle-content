@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSearch } from 'helpers/hooks';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
@@ -9,6 +8,7 @@ import FilterBar from 'components/FilterBar';
 import Banner from 'components/Banner';
 import SearchInput from 'components/Texts/SearchInput';
 import Loading from 'components/Loading';
+import { useSearch, useTheme } from 'helpers/hooks';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { isEqual } from 'lodash';
 import { useAppContext, useExploreContext } from 'contexts';
@@ -22,6 +22,9 @@ export default function SelectFeaturedPlaylists({
   onHide,
   selectedPlaylists: initialSelectedPlaylists
 }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const loadPlaylistList = useAppContext(
     (v) => v.requestHelpers.loadPlaylistList
   );
@@ -189,7 +192,7 @@ export default function SelectFeaturedPlaylists({
           Cancel
         </Button>
         <Button
-          color="blue"
+          color={doneColor}
           onClick={handleSubmit}
           disabled={
             isEqual(selectedPlaylists, initialSelectedPlaylists) ||

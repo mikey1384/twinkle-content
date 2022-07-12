@@ -13,6 +13,7 @@ import {
   addEmoji,
   finalizeEmoji
 } from 'helpers/stringHelpers';
+import { useTheme } from 'helpers/hooks';
 import { useAppContext, useExploreContext } from 'contexts';
 
 AddLinkModal.propTypes = {
@@ -20,6 +21,9 @@ AddLinkModal.propTypes = {
 };
 
 export default function AddLinkModal({ onHide }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const uploadContent = useAppContext((v) => v.requestHelpers.uploadContent);
   const onUploadLink = useExploreContext((v) => v.actions.onUploadLink);
   const [urlError, setUrlError] = useState('');
@@ -133,7 +137,7 @@ export default function AddLinkModal({ onHide }) {
           Cancel
         </Button>
         <Button
-          color="blue"
+          color={doneColor}
           type="submit"
           onClick={handleSubmit}
           disabled={submitDisabled()}

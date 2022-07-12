@@ -11,6 +11,7 @@ export default function renderEnglishMessage({
   commentId,
   contentObj,
   contentType,
+  linkColor,
   replyId,
   rootObj,
   rootType,
@@ -29,14 +30,14 @@ export default function renderEnglishMessage({
     case 'video':
       return (
         <>
-          <UsernameText user={uploader} color={Color.blue()} /> uploaded a
+          <UsernameText user={uploader} color={Color[linkColor]()} /> uploaded a
           video: <ContentLink content={contentObj} contentType={contentType} />{' '}
         </>
       );
     case 'comment':
       return (
         <>
-          <UsernameText user={uploader} color={Color.blue()} />{' '}
+          <UsernameText user={uploader} color={Color[linkColor]()} />{' '}
           <ContentLink
             content={{ id, title: action }}
             contentType={contentType}
@@ -49,7 +50,7 @@ export default function renderEnglishMessage({
     case 'url':
       return (
         <>
-          <UsernameText user={uploader} color={Color.blue()} /> shared a
+          <UsernameText user={uploader} color={Color[linkColor]()} /> shared a
           link:&nbsp;
           <ContentLink content={contentObj} contentType={contentType} />{' '}
         </>
@@ -57,7 +58,7 @@ export default function renderEnglishMessage({
     case 'subject':
       return (
         <>
-          <UsernameText user={uploader} color={Color.blue()} /> started a{' '}
+          <UsernameText user={uploader} color={Color[linkColor]()} /> started a{' '}
           <ContentLink
             content={{ id, title: 'subject ' }}
             contentType={contentType}
@@ -78,7 +79,8 @@ export default function renderEnglishMessage({
     case 'pass':
       return (
         <>
-          <UsernameText user={uploader} color={Color.blue()} /> completed a{' '}
+          <UsernameText user={uploader} color={Color[linkColor]()} /> completed
+          a{' '}
           <ContentLink
             content={{
               id: rootObj.id,
@@ -102,7 +104,7 @@ export default function renderEnglishMessage({
           {' '}
           <UsernameText
             user={targetObj.comment.uploader}
-            color={Color.blue()}
+            color={Color[linkColor]()}
           />
           {"'s "}
           <ContentLink

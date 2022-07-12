@@ -8,6 +8,7 @@ import VerificationEmailSendModal from './VerificationEmailSendModal';
 import { css } from '@emotion/css';
 import { isValidPassword, stringIsEmpty } from 'helpers/stringHelpers';
 import { Color } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
 
 const currentPasswordLabel = localize('currentPassword');
@@ -28,6 +29,10 @@ ChangePasswordModal.propTypes = {
 };
 
 export default function ChangePasswordModal({ onHide }) {
+  const {
+    done: { color: doneColor },
+    link: { color: linkColor }
+  } = useTheme();
   const changePasswordFromStore = useAppContext(
     (v) => v.requestHelpers.changePasswordFromStore
   );
@@ -155,7 +160,7 @@ export default function ChangePasswordModal({ onHide }) {
                 style={{
                   fontWeight: 'bold',
                   cursor: 'pointer',
-                  color: Color.blue()
+                  color: Color[linkColor]()
                 }}
                 className={css`
                   &:hover {
@@ -224,7 +229,7 @@ export default function ChangePasswordModal({ onHide }) {
         </Button>
         <Button
           style={{ marginLeft: '1rem' }}
-          color={success ? 'green' : 'blue'}
+          color={success ? 'green' : doneColor}
           onClick={handleSubmit}
           disabled={submitDisabled}
         >

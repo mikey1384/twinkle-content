@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import Input from 'components/Texts/Input';
+import { useTheme } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
@@ -12,6 +13,9 @@ PasswordInputModal.propTypes = {
 };
 
 export default function PasswordInputModal({ onHide, onConfirm }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const confirmPassword = useAppContext(
@@ -51,7 +55,7 @@ export default function PasswordInputModal({ onHide, onConfirm }) {
         </Button>
         <Button
           style={{ marginLeft: '1rem' }}
-          color="blue"
+          color={doneColor}
           onClick={handleConfirmPassword}
         >
           Done

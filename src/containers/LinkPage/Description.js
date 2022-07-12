@@ -17,7 +17,7 @@ import {
   replaceFakeAtSymbol
 } from 'helpers/stringHelpers';
 import { css } from '@emotion/css';
-import { useContentState, useMyState } from 'helpers/hooks';
+import { useContentState, useMyState, useTheme } from 'helpers/hooks';
 import { useContentContext, useInputContext } from 'contexts';
 import localize from 'constants/localize';
 
@@ -55,6 +55,9 @@ export default function Description({
   userIsUploader
 }) {
   const { canDelete, canEdit } = useMyState();
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const onSetIsEditing = useContentContext((v) => v.actions.onSetIsEditing);
   const inputState = useInputContext((v) => v.state);
   const onSetEditForm = useInputContext((v) => v.actions.onSetEditForm);
@@ -337,7 +340,7 @@ export default function Description({
                 Cancel
               </Button>
               <Button
-                color="blue"
+                color={doneColor}
                 disabled={doneButtonDisabled}
                 onClick={onEditFinish}
               >

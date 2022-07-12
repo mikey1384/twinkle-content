@@ -5,6 +5,7 @@ import Button from 'components/Button';
 import { useAppContext } from 'contexts';
 import { css } from '@emotion/css';
 import { addEmoji } from 'helpers/stringHelpers';
+import { useTheme } from 'helpers/hooks';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 
 Editor.propTypes = {
@@ -22,6 +23,9 @@ export default function Editor({
   tutorialPrompt,
   tutorialButtonLabel
 }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const updateTutorialPrompt = useAppContext(
     (v) => v.requestHelpers.updateTutorialPrompt
   );
@@ -75,7 +79,7 @@ export default function Editor({
       <div style={{ display: 'flex', marginTop: '2rem' }}>
         <Button
           style={{ fontSize: '1.7rem' }}
-          color="blue"
+          color={doneColor}
           onClick={handleDone}
         >
           Done

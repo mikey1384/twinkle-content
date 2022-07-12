@@ -4,6 +4,7 @@ import Question from './Question';
 import Button from 'components/Button';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { scrollElementToCenter } from 'helpers';
+import { useTheme } from 'helpers/hooks';
 import { useAppContext, useMissionContext } from 'contexts';
 
 const BodyRef = document.scrollingElement || document.documentElement;
@@ -15,6 +16,9 @@ Googling.propTypes = {
 };
 
 export default function Googling({ mission, onSetMissionState, style }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const uploadMissionAttempt = useAppContext(
     (v) => v.requestHelpers.uploadMissionAttempt
   );
@@ -69,7 +73,7 @@ export default function Googling({ mission, onSetMissionState, style }) {
         <Button
           style={{ fontSize: '1.7rem' }}
           disabled={submitDisabled}
-          color="blue"
+          color={doneColor}
           filled
           onClick={handleSubmit}
         >

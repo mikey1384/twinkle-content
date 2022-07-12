@@ -4,6 +4,7 @@ import Modal from 'components/Modal';
 import Button from 'components/Button';
 import SlideListItem from '../../../SlideListItem';
 import GoBackToMissionItem from './GoBackToMissionItem';
+import { useTheme } from 'helpers/hooks';
 
 SelectDestinationModal.propTypes = {
   interactiveId: PropTypes.number.isRequired,
@@ -20,6 +21,9 @@ export default function SelectDestinationModal({
   originForkId,
   slideObj
 }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const [forkIds, setForkIds] = useState([]);
   const [selectedSlideId, setSelectedSlideId] = useState(null);
 
@@ -61,7 +65,7 @@ export default function SelectDestinationModal({
         </Button>
         <Button
           disabled={selectedSlideId === null}
-          color="blue"
+          color={doneColor}
           onClick={() => onDone(selectedSlideId)}
         >
           Done

@@ -6,7 +6,7 @@ import { hashify } from 'helpers/stringHelpers';
 import { css } from '@emotion/css';
 import { Color } from 'constants/css';
 import { useAppContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
@@ -29,6 +29,9 @@ function TagStatus({
   style,
   tags
 }) {
+  const {
+    link: { color: linkColor }
+  } = useTheme();
   const fetchPlaylistsContaining = useAppContext(
     (v) => v.requestHelpers.fetchPlaylistsContaining
   );
@@ -100,7 +103,7 @@ function TagStatus({
           {canEditPlaylists && (
             <a
               style={{
-                color: tags.length > 0 ? Color.orange() : Color.blue()
+                color: tags.length > 0 ? Color.orange() : Color[linkColor]()
               }}
               onClick={() => setTagModalShown(true)}
             >

@@ -5,7 +5,7 @@ import Button from 'components/Button';
 import TagForm from 'components/Forms/TagForm';
 import Input from 'components/Texts/Input';
 import { useAppContext, useChatContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { css } from '@emotion/css';
 import { socket } from 'constants/io';
 import { mobileMaxWidth } from 'constants/css';
@@ -41,6 +41,9 @@ export default function ClassroomChatForm({ onBackClick, onHide }) {
     (v) => v.actions.onSearchUserToInvite
   );
   const { userId } = useMyState();
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const [creatingChat, setCreatingChat] = useState(false);
   const [channelName, setChannelName] = useState('');
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -107,7 +110,7 @@ export default function ClassroomChatForm({ onBackClick, onHide }) {
         >
           {onBackClick ? 'Back' : 'Cancel'}
         </Button>
-        <Button color="blue" onClick={handleDone} disabled={disabled}>
+        <Button color={doneColor} onClick={handleDone} disabled={disabled}>
           Create
         </Button>
       </footer>

@@ -4,6 +4,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import Modal from 'components/Modal';
 import SortableListGroup from 'components/SortableListGroup';
 import Button from 'components/Button';
+import { useTheme } from 'helpers/hooks';
 import { isEqual } from 'lodash';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -25,6 +26,9 @@ export default function ReorderButtonsModal({
   forkButtonIds: initialButtonIds,
   onSubmit
 }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const [forkButtonIds, setForkButtonIds] = useState(initialButtonIds);
   return (
     <ErrorBoundary componentPath="ForkButtonsField/ReorderButtonsModal">
@@ -48,7 +52,7 @@ export default function ReorderButtonsModal({
             </Button>
             <Button
               disabled={isEqual(initialButtonIds, forkButtonIds)}
-              color="blue"
+              color={doneColor}
               onClick={handleSubmit}
             >
               Done

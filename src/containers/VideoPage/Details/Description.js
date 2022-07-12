@@ -5,6 +5,7 @@ import LongText from 'components/Texts/LongText';
 import Button from 'components/Button';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { edit } from 'constants/placeholders';
+import { useTheme } from 'helpers/hooks';
 import localize from 'constants/localize';
 
 const cancelLabel = localize('cancel');
@@ -34,6 +35,9 @@ export default function Description({
   onEditCancel,
   onEditFinish
 }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   return (
     <div style={{ width: '100%' }}>
       {onEdit ? (
@@ -70,7 +74,7 @@ export default function Description({
               {cancelLabel}
             </Button>
             <Button
-              color="blue"
+              color={doneColor}
               disabled={determineEditButtonDoneStatus()}
               onClick={onEditFinish}
               style={{ fontSize: '1.7rem' }}

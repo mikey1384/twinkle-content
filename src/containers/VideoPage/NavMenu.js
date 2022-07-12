@@ -61,6 +61,7 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
   );
   const { hideWatched, userId } = useMyState();
   const {
+    link: { color: linkColor },
     userLink: { color: userLinkColor, opacity: userLinkOpacity },
     spinner: { color: spinnerColor }
   } = useTheme();
@@ -415,7 +416,7 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
             style={{
               color: video.byUser
                 ? Color[userLinkColor](userLinkOpacity)
-                : Color.blue()
+                : Color[linkColor]()
             }}
           >
             {video.title}

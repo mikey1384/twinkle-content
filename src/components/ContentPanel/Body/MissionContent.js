@@ -19,6 +19,7 @@ MissionContent.propTypes = {
 
 export default function MissionContent({ uploader, rootObj: mission }) {
   const {
+    link: { color: linkColor },
     xpNumber: { color: xpNumberColor }
   } = useTheme();
 
@@ -37,7 +38,8 @@ export default function MissionContent({ uploader, rootObj: mission }) {
     function renderEnglish() {
       return (
         <>
-          <UsernameText user={uploader} color={Color.blue()} /> was rewarded{' '}
+          <UsernameText user={uploader} color={Color[linkColor]()} /> was
+          rewarded{' '}
           {mission.xpReward ? (
             <>
               <span
@@ -71,7 +73,7 @@ export default function MissionContent({ uploader, rootObj: mission }) {
     function renderKorean() {
       return (
         <>
-          <UsernameText user={uploader} color={Color.blue()} />
+          <UsernameText user={uploader} color={Color[linkColor]()} />
           님에게{' '}
           {mission.xpReward ? (
             <>
@@ -104,7 +106,13 @@ export default function MissionContent({ uploader, rootObj: mission }) {
         </>
       );
     }
-  }, [mission.coinReward, mission.xpReward, uploader, xpNumberColor]);
+  }, [
+    linkColor,
+    mission.coinReward,
+    mission.xpReward,
+    uploader,
+    xpNumberColor
+  ]);
 
   return (
     <div

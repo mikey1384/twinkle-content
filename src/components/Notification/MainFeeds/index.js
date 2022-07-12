@@ -10,7 +10,7 @@ import MyRank from 'components/MyRank';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { REWARD_VALUE, SELECTED_LANGUAGE } from 'constants/defaultValues';
 import { addCommasToNumber } from 'helpers/stringHelpers';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { useAppContext, useNotiContext } from 'contexts';
 import localize from 'constants/localize';
 
@@ -53,6 +53,9 @@ function MainFeeds({
     (v) => v.requestHelpers.collectRewardedCoins
   );
   const { userId, rank, twinkleXP, twinkleCoins } = useMyState();
+  const {
+    loadMoreButton: { color: loadMoreButtonColor }
+  } = useTheme();
   const notiObj = useNotiContext((v) => v.state.notiObj);
   const totalRewardedTwinkles = useMemo(
     () => notiObj[userId]?.totalRewardedTwinkles || 0,
@@ -200,7 +203,7 @@ function MainFeeds({
           <LoadMoreButton
             style={{ marginTop: '1rem' }}
             loading={loading}
-            color="lightBlue"
+            color={loadMoreButtonColor}
             filled
             stretch
             onClick={onLoadMore}

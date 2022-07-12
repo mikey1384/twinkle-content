@@ -5,7 +5,7 @@ import Button from 'components/Button';
 import CheckYourEmail from 'components/CheckYourEmail';
 import SelectEmail from 'components/SelectEmail';
 import AskForHelp from 'components/AskForHelp';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 
 VerificationEmailSendModal.propTypes = {
   onHide: PropTypes.func.isRequired
@@ -13,6 +13,9 @@ VerificationEmailSendModal.propTypes = {
 
 export default function VerificationEmailSendModal({ onHide }) {
   const { email, verifiedEmail, userId } = useMyState();
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const emailExists = useMemo(
     () => email || verifiedEmail,
     [email, verifiedEmail]
@@ -45,7 +48,11 @@ export default function VerificationEmailSendModal({ onHide }) {
         )}
       </main>
       <footer>
-        <Button style={{ marginLeft: '1rem' }} color="blue" onClick={onHide}>
+        <Button
+          style={{ marginLeft: '1rem' }}
+          color={doneColor}
+          onClick={onHide}
+        >
           OK
         </Button>
       </footer>

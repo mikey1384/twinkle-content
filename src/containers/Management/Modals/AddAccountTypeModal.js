@@ -6,6 +6,7 @@ import Input from 'components/Texts/Input';
 import Check from '../Check';
 import Table from '../Table';
 import { stringIsEmpty } from 'helpers/stringHelpers';
+import { useTheme } from 'helpers/hooks';
 import { css } from '@emotion/css';
 import { useAppContext, useManagementContext } from 'contexts';
 
@@ -14,6 +15,9 @@ AddAccountTypeModal.propTypes = {
 };
 
 export default function AddAccountTypeModal({ onHide }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const addAccountType = useAppContext((v) => v.requestHelpers.addAccountType);
   const onAddAccountType = useManagementContext(
     (v) => v.actions.onAddAccountType
@@ -179,7 +183,7 @@ export default function AddAccountTypeModal({ onHide }) {
         <Button transparent onClick={onHide} style={{ marginRight: '0.7rem' }}>
           Cancel
         </Button>
-        <Button color="blue" disabled={disabled} onClick={handleSubmit}>
+        <Button color={doneColor} disabled={disabled} onClick={handleSubmit}>
           Done
         </Button>
       </footer>

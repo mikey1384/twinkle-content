@@ -65,6 +65,7 @@ export function Theme(color) {
     comment: { color: 'green' },
     content: { color: 'green' },
     cover: { color },
+    done: { color: 'blue' },
     generalChat: {
       color: color === 'black' || color === 'vantablack' ? 'darkBlue' : color
     },

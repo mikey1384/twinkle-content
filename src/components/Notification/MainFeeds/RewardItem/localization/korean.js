@@ -9,6 +9,7 @@ export default function renderEnglishText({
   contentId,
   contentType,
   isTask,
+  linkColor,
   missionColor,
   rewardType,
   rewardAmount,
@@ -27,7 +28,7 @@ export default function renderEnglishText({
       <div>
         <UsernameText
           user={{ id: rewarderId, username: rewarderUsername }}
-          color={Color.blue()}
+          color={Color[linkColor]()}
         />
         <span>님이</span> 회원님께{' '}
         <span
@@ -75,7 +76,7 @@ export default function renderEnglishText({
     <div>
       <UsernameText
         user={{ id: rewarderId, username: rewarderUsername }}
-        color={Color.blue()}
+        color={Color[linkColor]()}
       />
       <span>님이</span>{' '}
       <ContentLink

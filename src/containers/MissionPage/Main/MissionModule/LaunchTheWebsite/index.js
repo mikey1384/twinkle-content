@@ -10,7 +10,7 @@ import UpdateYourRepl from './UpdateYourRepl';
 import defaultCode from './defaultCode';
 import RequiresComputer from '../components/RequiresComputer';
 import { useAppContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { isMobile } from 'helpers';
 
 LaunchTheWebsite.propTypes = {
@@ -23,6 +23,9 @@ const deviceIsMobile = isMobile(navigator);
 
 export default function LaunchTheWebsite({ onSetMissionState, style, task }) {
   const { missions, username } = useMyState();
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const updateMissionStatus = useAppContext(
     (v) => v.requestHelpers.updateMissionStatus
   );
@@ -37,7 +40,7 @@ export default function LaunchTheWebsite({ onSetMissionState, style, task }) {
   const FirstButton = useMemo(() => {
     return {
       label: 'Save and move on',
-      color: 'blue',
+      color: doneColor,
       skeuomorphic: true,
       onClick: async (onNext) => {
         await handleSaveCode(taskState.code);
@@ -51,7 +54,7 @@ export default function LaunchTheWebsite({ onSetMissionState, style, task }) {
         newStatus: { code }
       });
     }
-  }, [task.missionType, taskState.code, updateMissionStatus]);
+  }, [doneColor, task.missionType, taskState.code, updateMissionStatus]);
 
   const SecondButton = useMemo(() => {
     if (!makeAccountOkayPressed) {

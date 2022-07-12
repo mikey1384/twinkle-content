@@ -7,7 +7,7 @@ import Table from '../Table';
 import RedTimes from '../RedTimes';
 import SearchInput from 'components/Texts/SearchInput';
 import Loading from 'components/Loading';
-import { useSearch, useMyState } from 'helpers/hooks';
+import { useSearch, useMyState, useTheme } from 'helpers/hooks';
 import { useAppContext, useManagementContext } from 'contexts';
 import { isEqual } from 'lodash';
 import { css } from '@emotion/css';
@@ -21,6 +21,9 @@ AddBanModal.propTypes = {
 
 export default function AddBanModal({ onHide }) {
   const { authLevel } = useMyState();
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const [searchText, setSearchText] = useState('');
   const [searchedUsers, setSearchedUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -148,7 +151,11 @@ export default function AddBanModal({ onHide }) {
           >
             Cancel
           </Button>
-          <Button color="blue" disabled={submitDisabled} onClick={handleSubmit}>
+          <Button
+            color={doneColor}
+            disabled={submitDisabled}
+            onClick={handleSubmit}
+          >
             Done
           </Button>
         </footer>

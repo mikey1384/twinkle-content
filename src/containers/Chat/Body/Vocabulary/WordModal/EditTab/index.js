@@ -1,15 +1,15 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { isEqual } from 'lodash';
-import { useAppContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
-import { capitalize } from 'helpers/stringHelpers';
 import Button from 'components/Button';
 import FilterBar from 'components/FilterBar';
 import Reorder from './Reorder';
 import Remove from './Remove';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import { isEqual } from 'lodash';
+import { useAppContext } from 'contexts';
+import { useMyState, useTheme } from 'helpers/hooks';
+import { capitalize } from 'helpers/stringHelpers';
 
 EditTab.propTypes = {
   deletedDefIds: PropTypes.array.isRequired,
@@ -36,6 +36,9 @@ export default function EditTab({
 }) {
   const editWord = useAppContext((v) => v.requestHelpers.editWord);
   const { canDelete } = useMyState();
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const [selectedTab, setSelectedTab] = useState('reorder');
   const [posting, setPosting] = useState(false);
   const [poses, setPoses] = useState([]);
@@ -129,7 +132,7 @@ export default function EditTab({
           Close
         </Button>
         <Button
-          color="blue"
+          color={doneColor}
           disabled={disabled || posting}
           onClick={() => handleEditDone({ poses, editedDefinitionOrder })}
         >

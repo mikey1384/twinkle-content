@@ -14,8 +14,6 @@ import {
   isValidUrl,
   isValidYoutubeUrl
 } from 'helpers/stringHelpers';
-import { returnImageFileFromUrl } from 'helpers';
-import { edit } from 'constants/placeholders';
 import Textarea from 'components/Texts/Textarea';
 import Input from 'components/Texts/Input';
 import AttachmentField from './AttachmentField';
@@ -25,6 +23,9 @@ import Button from 'components/Button';
 import Icon from 'components/Icon';
 import ForkButtonsField from './ForkButtonsField';
 import GoBackField from './GoBackField';
+import { returnImageFileFromUrl } from 'helpers';
+import { edit } from 'constants/placeholders';
+import { useTheme } from 'helpers/hooks';
 import { isEqual } from 'lodash';
 import { v1 as uuidv1 } from 'uuid';
 
@@ -67,6 +68,9 @@ export default function Editor({
   slideObj,
   uploadingFile
 }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const defaultInputState = useMemo(
     () => ({
       editedPortalButton: portalButton || {
@@ -518,7 +522,7 @@ export default function Editor({
           }}
         >
           <Button
-            color="blue"
+            color={doneColor}
             onClick={handleSubmit}
             disabled={doneButtonDisabled}
           >

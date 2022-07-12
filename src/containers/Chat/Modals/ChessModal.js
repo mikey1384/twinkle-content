@@ -7,7 +7,7 @@ import ConfirmModal from 'components/Modals/ConfirmModal';
 import Icon from 'components/Icon';
 import { Color } from 'constants/css';
 import { socket } from 'constants/io';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { useAppContext, useChatContext } from 'contexts';
 import { v1 as uuidv1 } from 'uuid';
 import ErrorBoundary from 'components/ErrorBoundary';
@@ -50,6 +50,9 @@ export default function ChessModal({
   socketConnected
 }) {
   const { banned, userId, username, profilePicUrl } = useMyState();
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const fetchCurrentChessState = useAppContext(
     (v) => v.requestHelpers.fetchCurrentChessState
   );
@@ -228,7 +231,7 @@ export default function ChessModal({
             </Button>
           ) : !userMadeLastMove ? (
             <Button
-              color="blue"
+              color={doneColor}
               style={{ marginLeft: '1rem' }}
               onClick={handleSubmitChessMove}
               disabled={

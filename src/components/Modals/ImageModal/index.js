@@ -4,6 +4,7 @@ import Button from 'components/Button';
 import Modal from 'components/Modal';
 import Caption from './Caption';
 import Icon from 'components/Icon';
+import { useTheme } from 'helpers/hooks';
 import { stringIsEmpty, finalizeEmoji } from 'helpers/stringHelpers';
 
 ImageModal.propTypes = {
@@ -29,6 +30,9 @@ export default function ImageModal({
   downloadable = true,
   userIsUploader
 }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const [editedCaption, setEditedCaption] = useState(caption || '');
   const [isEditing, setIsEditing] = useState(false);
   return (
@@ -95,7 +99,11 @@ export default function ImageModal({
         {((!hasCaption && stringIsEmpty(editedCaption)) ||
           (stringIsEmpty(caption) && stringIsEmpty(editedCaption)) ||
           editedCaption === caption) && (
-          <Button style={{ marginLeft: '1rem' }} color="blue" onClick={onHide}>
+          <Button
+            style={{ marginLeft: '1rem' }}
+            color={doneColor}
+            onClick={onHide}
+          >
             Close
           </Button>
         )}

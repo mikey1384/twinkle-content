@@ -4,6 +4,7 @@ import Modal from 'components/Modal';
 import Button from 'components/Button';
 import StartScreen from './StartScreen';
 import SelectFromArchive from './SelectFromArchive';
+import { useTheme } from 'helpers/hooks';
 
 AddPictureModal.propTypes = {
   currentPictures: PropTypes.array.isRequired,
@@ -20,6 +21,9 @@ export default function AddPictureModal({
   onHide,
   profileId
 }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const [section, setSection] = useState('start');
   const [selectedPictureIds, setSelectedPictureIds] = useState([]);
 
@@ -64,7 +68,7 @@ export default function AddPictureModal({
               selectedPictureIds.length === 0 ||
               selectedPictureIds.length > maxNumSelectable
             }
-            color="blue"
+            color={doneColor}
             style={{ marginLeft: '0.7rem' }}
             onClick={() => onConfirm({ selectedPictureIds })}
           >

@@ -4,6 +4,7 @@ import StepSlide from '../components/StepSlide';
 import Button from 'components/Button';
 import { useAppContext } from 'contexts';
 import { Color, mobileMaxWidth } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
 import { css } from '@emotion/css';
 
 ConnectReplToGitHub.propTypes = {
@@ -21,6 +22,9 @@ export default function ConnectReplToGitHub({
   onOpenTutorial,
   taskType
 }) {
+  const {
+    link: { color: linkColor }
+  } = useTheme();
   const updateMissionStatus = useAppContext(
     (v) => v.requestHelpers.updateMissionStatus
   );
@@ -46,7 +50,7 @@ export default function ConnectReplToGitHub({
           <a
             onClick={onOpenTutorial}
             style={{
-              color: Color.blue(),
+              color: Color[linkColor](),
               cursor: 'pointer',
               fontWeight: 'bold'
             }}

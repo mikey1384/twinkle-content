@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import Editor from './Editor';
 import { borderRadius, Color } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
 import { css } from '@emotion/css';
 
 CreatorView.propTypes = {
@@ -18,13 +19,16 @@ export default function CreatorView({
   tutorialPrompt,
   tutorialButtonLabel
 }) {
+  const {
+    link: { color: linkColor }
+  } = useTheme();
   const [isEditing, setIsEditing] = useState(false);
 
   return (
     <div style={{ width: '100%' }}>
       <div
         style={{
-          color: Color.blue(),
+          color: Color[linkColor](),
           fontSize: '1.5rem',
           marginTop: '-1.7rem',
           marginLeft: '-1rem',

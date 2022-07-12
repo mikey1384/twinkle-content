@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { useSearch } from 'helpers/hooks';
 import PropTypes from 'prop-types';
 import Textarea from 'components/Texts/Textarea';
 import Modal from 'components/Modal';
@@ -17,6 +16,7 @@ import {
   addEmoji,
   finalizeEmoji
 } from 'helpers/stringHelpers';
+import { useSearch, useTheme } from 'helpers/hooks';
 import { isMobile, objectify } from 'helpers';
 import { css } from '@emotion/css';
 import { useAppContext } from 'contexts';
@@ -40,6 +40,9 @@ export default function AddPlaylistModal({
   onUploadPlaylist,
   title: initialTitle = ''
 }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const loadUploads = useAppContext((v) => v.requestHelpers.loadUploads);
   const searchContent = useAppContext((v) => v.requestHelpers.searchContent);
   const uploadPlaylist = useAppContext((v) => v.requestHelpers.uploadPlaylist);
@@ -258,12 +261,16 @@ export default function AddPlaylistModal({
             </Button>
           )}
           {section === 2 ? (
-            <Button color="blue" disabled={isUploading} onClick={handleFinish}>
+            <Button
+              color={doneColor}
+              disabled={isUploading}
+              onClick={handleFinish}
+            >
               Finish
             </Button>
           ) : (
             <Button
-              color="blue"
+              color={doneColor}
               type="submit"
               disabled={
                 (section === 0 &&

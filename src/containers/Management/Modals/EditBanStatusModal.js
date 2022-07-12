@@ -8,6 +8,7 @@ import Button from 'components/Button';
 import { css } from '@emotion/css';
 import { Color } from 'constants/css';
 import { isEqual } from 'lodash';
+import { useTheme } from 'helpers/hooks';
 import { useAppContext, useManagementContext } from 'contexts';
 
 EditBanStatusModal.propTypes = {
@@ -16,6 +17,9 @@ EditBanStatusModal.propTypes = {
 };
 
 export default function EditBanStatusModal({ onHide, target }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const updateBanStatus = useAppContext(
     (v) => v.requestHelpers.updateBanStatus
   );
@@ -96,7 +100,11 @@ export default function EditBanStatusModal({ onHide, target }) {
           >
             Cancel
           </Button>
-          <Button color="blue" disabled={submitDisabled} onClick={handleSubmit}>
+          <Button
+            color={doneColor}
+            disabled={submitDisabled}
+            onClick={handleSubmit}
+          >
             Done
           </Button>
         </footer>

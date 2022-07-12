@@ -5,6 +5,7 @@ import Button from 'components/Button';
 import SortableListGroup from 'components/SortableListGroup';
 import { objectify } from 'helpers';
 import { isEqual } from 'lodash';
+import { useTheme } from 'helpers/hooks';
 import { useAppContext, useExploreContext } from 'contexts';
 
 ReorderFeaturedSubjects.propTypes = {
@@ -16,6 +17,9 @@ export default function ReorderFeaturedSubjects({
   onHide,
   subjectIds: initialSubjectIds
 }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const reportError = useAppContext((v) => v.requestHelpers.reportError);
   const uploadFeaturedSubjects = useAppContext(
     (v) => v.requestHelpers.uploadFeaturedSubjects
@@ -50,7 +54,7 @@ export default function ReorderFeaturedSubjects({
               featuredSubjects.map((subject) => subject.id)
             ) || disabled
           }
-          color="blue"
+          color={doneColor}
           onClick={handleSubmit}
         >
           Done

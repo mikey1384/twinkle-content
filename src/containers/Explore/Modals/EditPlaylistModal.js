@@ -1,18 +1,18 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { useSearch } from 'helpers/hooks';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import Loading from 'components/Loading';
 import SelectUploadsForm from 'components/Forms/SelectUploadsForm';
 import SortableThumb from 'components/SortableThumb';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { TouchBackend } from 'react-dnd-touch-backend';
 import FilterBar from 'components/FilterBar';
 import SearchInput from 'components/Texts/SearchInput';
 import ErrorBoundary from 'components/ErrorBoundary';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { TouchBackend } from 'react-dnd-touch-backend';
+import { useSearch, useTheme } from 'helpers/hooks';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { isMobile, objectify } from 'helpers';
 import { useAppContext, useExploreContext } from 'contexts';
@@ -32,6 +32,9 @@ export default function EditPlaylistModal({
   onHide,
   playlistId
 }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const editPlaylistVideos = useAppContext(
     (v) => v.requestHelpers.editPlaylistVideos
   );
@@ -314,7 +317,7 @@ export default function EditPlaylistModal({
               Cancel
             </Button>
             <Button
-              color="blue"
+              color={doneColor}
               onClick={handleSave}
               disabled={
                 (Object.keys(removedVideoIds).length === numPlaylistVids &&

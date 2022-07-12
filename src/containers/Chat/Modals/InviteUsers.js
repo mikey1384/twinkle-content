@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import TagForm from 'components/Forms/TagForm';
+import { useTheme } from 'helpers/hooks';
 import { useAppContext, useChatContext } from 'contexts';
 
 InviteUsersModal.propTypes = {
@@ -18,6 +19,9 @@ export default function InviteUsersModal({
   onHide,
   currentChannel
 }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const inviteUsersToChannel = useAppContext(
     (v) => v.requestHelpers.inviteUsersToChannel
   );
@@ -69,7 +73,7 @@ export default function InviteUsersModal({
           Cancel
         </Button>
         <Button
-          color="blue"
+          color={doneColor}
           onClick={handleDone}
           disabled={selectedUsers.length === 0 || inviting}
         >

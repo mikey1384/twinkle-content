@@ -9,7 +9,7 @@ import Loading from 'components/Loading';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
 import CaptionEditor from 'components/Texts/CaptionEditor';
 import { v1 as uuidv1 } from 'uuid';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { returnImageFileFromUrl } from 'helpers';
 import { useAppContext } from 'contexts';
 import { finalizeEmoji } from 'helpers/stringHelpers';
@@ -37,6 +37,9 @@ export default function ImageEditModal({
   const uploadFile = useAppContext((v) => v.requestHelpers.uploadFile);
   const uploadUserPic = useAppContext((v) => v.requestHelpers.uploadUserPic);
   const { userId } = useMyState();
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(null);
   const [processing, setProcessing] = useState(false);
@@ -137,7 +140,11 @@ export default function ImageEditModal({
           >
             Cancel
           </Button>
-          <Button color="blue" onClick={handleFileUpload} disabled={processing}>
+          <Button
+            color={doneColor}
+            onClick={handleFileUpload}
+            disabled={processing}
+          >
             Submit
           </Button>
         </footer>

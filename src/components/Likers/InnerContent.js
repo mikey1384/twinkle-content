@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import UsernameText from 'components/Texts/UsernameText';
+import { useTheme } from 'helpers/hooks';
 import { Color } from 'constants/css';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 
@@ -21,6 +22,9 @@ export default function InnerContent({
   target,
   defaultText = ''
 }) {
+  const {
+    link: { color: linkColor }
+  } = useTheme();
   const userLiked = useMemo(() => {
     for (let like of likes) {
       if (like?.id === userId) {
@@ -48,7 +52,7 @@ export default function InnerContent({
               회원님과{' '}
               <UsernameText
                 wordBreakEnabled={wordBreakEnabled}
-                color={Color.blue()}
+                color={Color[linkColor]()}
                 user={{
                   id: otherLikes[0]?.id,
                   username: otherLikes[0]?.username
@@ -63,7 +67,7 @@ export default function InnerContent({
             You and{' '}
             <UsernameText
               wordBreakEnabled={wordBreakEnabled}
-              color={Color.blue()}
+              color={Color[linkColor]()}
               user={{
                 id: otherLikes[0]?.id,
                 username: otherLikes[0]?.username
@@ -112,7 +116,7 @@ export default function InnerContent({
           <div>
             <UsernameText
               wordBreakEnabled={wordBreakEnabled}
-              color={Color.blue()}
+              color={Color[linkColor]()}
               user={likes[0]}
             />
             님이 이 게시물을 좋아합니다.
@@ -123,7 +127,7 @@ export default function InnerContent({
         <div>
           <UsernameText
             wordBreakEnabled={wordBreakEnabled}
-            color={Color.blue()}
+            color={Color[linkColor]()}
             user={likes[0]}
           />{' '}
           likes {`this${target ? ' ' + target : ''}.`}

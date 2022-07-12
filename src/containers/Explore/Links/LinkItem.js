@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { timeSince } from 'helpers/timeStampHelpers';
-import { useContentState, useMyState } from 'helpers/hooks';
+import { useContentState, useMyState, useTheme } from 'helpers/hooks';
 import { useAppContext, useContentContext, useExploreContext } from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
@@ -41,6 +41,9 @@ export default function LinkItem({
   const deleteContent = useAppContext((v) => v.requestHelpers.deleteContent);
   const editContent = useAppContext((v) => v.requestHelpers.editContent);
   const { authLevel, canDelete, canEdit, userId } = useMyState();
+  const {
+    link: { color: linkColor }
+  } = useTheme();
   const onEditLinkTitle = useExploreContext((v) => v.actions.onEditLinkTitle);
   const onDeleteContent = useContentContext((v) => v.actions.onDeleteContent);
   const onInitContent = useContentContext((v) => v.actions.onInitContent);
@@ -238,7 +241,7 @@ export default function LinkItem({
                     textOverflow: 'ellipsis',
                     overflow: 'hidden',
                     cursor: 'pointer',
-                    color: Color.blue(),
+                    color: Color[linkColor](),
                     fontWeight: 'bold'
                   }}
                   className={css`

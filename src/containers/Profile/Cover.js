@@ -67,7 +67,8 @@ export default function Cover({
   }, []);
 
   const {
-    cover: { color: coverColor }
+    cover: { color: coverColor },
+    done: { color: doneColor }
   } = useTheme(selectedTheme || profileTheme || 'logoBlue');
 
   return (
@@ -203,7 +204,7 @@ export default function Cover({
                   </Button>
                   <Button
                     style={{ fontSize: '1.2rem' }}
-                    color="blue"
+                    color={doneColor}
                     filled
                     onClick={handleSetTheme}
                   >

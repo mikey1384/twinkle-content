@@ -40,7 +40,7 @@ import { socket } from 'constants/io';
 import { isMobile, parseChannelPath } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { useAppContext } from 'contexts';
 import LocalContext from '../../Context';
 import localize from 'constants/localize';
@@ -124,6 +124,9 @@ function MessagesContainer({
     inputState
   } = useContext(LocalContext);
   const { banned, profilePicUrl, userId, username } = useMyState();
+  const {
+    loadMoreButton: { color: loadMoreButtonColor }
+  } = useTheme();
   const {
     isRespondingToSubject = false,
     messageIds = [],
@@ -1103,7 +1106,7 @@ function MessagesContainer({
                     >
                       <LoadMoreButton
                         filled
-                        color="lightBlue"
+                        color={loadMoreButtonColor}
                         loading={loadingMore}
                         onClick={handleLoadMore}
                       />

@@ -6,7 +6,7 @@ import {
   processedStringWithURL
 } from 'helpers/stringHelpers';
 import { Color } from 'constants/css';
-import { useContentState } from 'helpers/hooks';
+import { useContentState, useTheme } from 'helpers/hooks';
 import { useContentContext } from 'contexts';
 import localize from 'constants/localize';
 
@@ -38,8 +38,11 @@ export default function LongText({
   section,
   maxLines = 10,
   readMoreHeightFixed,
-  readMoreColor = Color.blue()
+  readMoreColor
 }) {
+  const {
+    link: { color: linkColor }
+  } = useTheme();
   const onSetFullTextState = useContentContext(
     (v) => v.actions.onSetFullTextState
   );
@@ -132,7 +135,7 @@ export default function LongText({
             style={{
               fontWeight: 'bold',
               cursor: 'pointer',
-              color: readMoreColor,
+              color: readMoreColor || Color[linkColor](),
               display: 'inline',
               paddingTop: '1rem'
             }}

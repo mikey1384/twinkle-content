@@ -6,6 +6,7 @@ import DropdownButton from 'components/Buttons/DropdownButton';
 import Icon from 'components/Icon';
 import { Color } from 'constants/css';
 import { capitalize } from 'helpers/stringHelpers';
+import { useTheme } from 'helpers/hooks';
 import { useAppContext, useManagementContext } from 'contexts';
 
 EditModeratorModal.propTypes = {
@@ -15,6 +16,9 @@ EditModeratorModal.propTypes = {
 };
 
 export default function EditModeratorModal({ accountTypes, onHide, target }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const changeAccountType = useAppContext(
     (v) => v.requestHelpers.changeAccountType
   );
@@ -77,7 +81,7 @@ export default function EditModeratorModal({ accountTypes, onHide, target }) {
           Cancel
         </Button>
         <Button
-          color="blue"
+          color={doneColor}
           disabled={target.userType === selectedAccountType}
           onClick={handleSubmit}
         >

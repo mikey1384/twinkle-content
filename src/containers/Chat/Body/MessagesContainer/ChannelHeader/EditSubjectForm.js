@@ -6,7 +6,7 @@ import {
   stringIsEmpty,
   trimWhiteSpaces
 } from 'helpers/stringHelpers';
-import { useOutsideClick } from 'helpers/hooks';
+import { useOutsideClick, useTheme } from 'helpers/hooks';
 import SearchDropdown from 'components/SearchDropdown';
 import Button from 'components/Button';
 import { Color } from 'constants/css';
@@ -47,6 +47,9 @@ export default function EditSubjectForm({
   userIsOwner,
   ...props
 }) {
+  const {
+    link: { color: linkColor }
+  } = useTheme();
   const [exactMatchExists, setExactMatchExists] = useState(false);
   const [title, setTitle] = useState(props.title);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
@@ -250,7 +253,7 @@ export default function EditSubjectForm({
           }}
         >
           {item.content}
-          <span style={{ color: Color.blue() }}>
+          <span style={{ color: Color[linkColor]() }}>
             {Number(item.numMsgs) > 0 && ` (${item.numMsgs})`}
           </span>
         </div>

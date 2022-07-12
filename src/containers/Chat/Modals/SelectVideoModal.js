@@ -7,7 +7,7 @@ import SearchInput from 'components/Texts/SearchInput';
 import { objectify } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext } from 'contexts';
-import { useSearch } from 'helpers/hooks';
+import { useSearch, useTheme } from 'helpers/hooks';
 
 SelectVideoModal.propTypes = {
   onHide: PropTypes.func.isRequired,
@@ -15,6 +15,9 @@ SelectVideoModal.propTypes = {
 };
 
 export default function SelectVideoModal({ onDone, onHide }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const loadUploads = useAppContext((v) => v.requestHelpers.loadUploads);
   const searchContent = useAppContext((v) => v.requestHelpers.searchContent);
   const onInitContent = useContentContext((v) => v.actions.onInitContent);
@@ -93,7 +96,7 @@ export default function SelectVideoModal({ onDone, onHide }) {
         </Button>
         <Button
           disabled={selectedUpload.length === 0}
-          color="blue"
+          color={doneColor}
           style={{ marginLeft: '0.7rem' }}
           onClick={() => onDone(selectedUpload?.[0])}
         >

@@ -11,6 +11,7 @@ export default function renderEnglishMessage({
   isReply,
   isSubjectResponse,
   isTask,
+  linkColor,
   missionColor,
   rewardRootId,
   rewardType,
@@ -300,7 +301,7 @@ export default function renderEnglishMessage({
                 limit: 100
               })})`
             }}
-            style={{ color: Color.blue() }}
+            style={{ color: Color[linkColor]() }}
           />
         </>
       );
@@ -320,7 +321,7 @@ export default function renderEnglishMessage({
                 limit: 100
               })})`
             }}
-            style={{ color: Color.blue() }}
+            style={{ color: Color[linkColor]() }}
           />
         </>
       );

@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
-import { Color } from 'constants/css';
 import Input from 'components/Texts/Input';
+import { Color } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
 import { css } from '@emotion/css';
 import { addEmoji, finalizeEmoji } from 'helpers/stringHelpers';
 
@@ -18,6 +19,9 @@ BioEditModal.propTypes = {
 };
 
 export default function BioEditModal({ onHide, onSubmit, ...props }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const [firstLine, setFirstLine] = useState(props.firstLine || '');
   const [secondLine, setSecondLine] = useState(props.secondLine || '');
   const [thirdLine, setThirdLine] = useState(props.thirdLine || '');
@@ -110,7 +114,7 @@ export default function BioEditModal({ onHide, onSubmit, ...props }) {
           Cancel
         </Button>
         <Button
-          color="blue"
+          color={doneColor}
           onClick={() =>
             onSubmit({
               firstLine: finalizeEmoji(firstLine),

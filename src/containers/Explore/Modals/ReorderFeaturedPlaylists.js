@@ -5,6 +5,7 @@ import Button from 'components/Button';
 import SortableListGroup from 'components/SortableListGroup';
 import { objectify } from 'helpers';
 import { isEqual } from 'lodash';
+import { useTheme } from 'helpers/hooks';
 import { useAppContext, useExploreContext } from 'contexts';
 
 ReorderFeaturedPlaylists.propTypes = {
@@ -16,6 +17,9 @@ export default function ReorderFeaturedPlaylists({
   onHide,
   playlistIds: initialPlaylistIds
 }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const uploadFeaturedPlaylists = useAppContext(
     (v) => v.requestHelpers.uploadFeaturedPlaylists
   );
@@ -51,7 +55,7 @@ export default function ReorderFeaturedPlaylists({
               featuredPlaylists.map((playlist) => playlist.id)
             ) || disabled
           }
-          color="blue"
+          color={doneColor}
           onClick={handleSubmit}
         >
           Done

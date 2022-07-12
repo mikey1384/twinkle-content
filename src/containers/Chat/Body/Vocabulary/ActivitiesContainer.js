@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import Activity from './Activity';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import { useAppContext, useChatContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { checkScrollIsAtTheBottom } from 'helpers';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 
@@ -18,6 +18,9 @@ ActivitiesContainer.propTypes = {
 };
 
 function ActivitiesContainer({ style }) {
+  const {
+    loadMoreButton: { color: loadMoreButtonColor }
+  } = useTheme();
   const [loadingMore, setLoadingMore] = useState(false);
   const [scrollAtBottom, setScrollAtBottom] = useState(false);
   const [scrollHeight, setScrollHeight] = useState(0);
@@ -99,7 +102,7 @@ function ActivitiesContainer({ style }) {
         >
           <LoadMoreButton
             filled
-            color="lightBlue"
+            color={loadMoreButtonColor}
             loading={loadingMore}
             onClick={handleLoadMore}
           />

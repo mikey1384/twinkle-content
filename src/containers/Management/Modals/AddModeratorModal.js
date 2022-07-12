@@ -7,7 +7,7 @@ import SearchInput from 'components/Texts/SearchInput';
 import DropdownButton from 'components/Buttons/DropdownButton';
 import Table from '../Table';
 import Icon from 'components/Icon';
-import { useSearch, useMyState } from 'helpers/hooks';
+import { useSearch, useMyState, useTheme } from 'helpers/hooks';
 import { useAppContext, useManagementContext } from 'contexts';
 import { Color } from 'constants/css';
 import { capitalize } from 'helpers/stringHelpers';
@@ -21,6 +21,9 @@ AddModeratorModal.propTypes = {
 };
 
 export default function AddModeratorModal({ accountTypes, onHide }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const addModerators = useAppContext((v) => v.requestHelpers.addModerators);
   const searchUsers = useAppContext((v) => v.requestHelpers.searchUsers);
   const onEditModerators = useManagementContext(
@@ -143,7 +146,7 @@ export default function AddModeratorModal({ accountTypes, onHide }) {
         <Button transparent onClick={onHide} style={{ marginRight: '0.7rem' }}>
           Cancel
         </Button>
-        <Button color="blue" onClick={handleSubmit}>
+        <Button color={doneColor} onClick={handleSubmit}>
           Done
         </Button>
       </footer>

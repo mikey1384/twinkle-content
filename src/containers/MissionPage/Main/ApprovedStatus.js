@@ -29,6 +29,7 @@ export default function ApprovedStatus({
   style
 }) {
   const {
+    link: { color: linkColor },
     success: { color: successColor },
     xpNumber: { color: xpNumberColor }
   } = useTheme();
@@ -135,7 +136,10 @@ export default function ApprovedStatus({
               lineHeight: 1.5
             }}
           >
-            <UsernameText color={Color.blue()} user={myAttempt.reviewer} />
+            <UsernameText
+              color={Color[linkColor]()}
+              user={myAttempt.reviewer}
+            />
             <span>{timeSince(myAttempt.reviewTimeStamp)}</span>
           </div>
           <LongText>

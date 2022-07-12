@@ -6,6 +6,7 @@ import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import SubjectItem from './SubjectItem';
 import Loading from 'components/Loading';
 import ConfirmModal from 'components/Modals/ConfirmModal';
+import { useTheme } from 'helpers/hooks';
 import { Color } from 'constants/css';
 import { useAppContext } from 'contexts';
 
@@ -26,6 +27,9 @@ export default function SubjectsModal({
   onSelectSubject,
   userIsOwner
 }) {
+  const {
+    loadMoreButton: { color: loadMoreButtonColor }
+  } = useTheme();
   const deleteChatSubject = useAppContext(
     (v) => v.requestHelpers.deleteChatSubject
   );
@@ -93,7 +97,7 @@ export default function SubjectsModal({
             {mySubjects.loadMoreButton && (
               <LoadMoreButton
                 filled
-                color="lightBlue"
+                color={loadMoreButtonColor}
                 loading={mySubjects.loading}
                 onClick={() => handleLoadMoreSubjects(true)}
               />
@@ -134,7 +138,7 @@ export default function SubjectsModal({
         {allSubjects.loadMoreButton && (
           <LoadMoreButton
             filled
-            color="lightBlue"
+            color={loadMoreButtonColor}
             loading={allSubjects.loading}
             onClick={() => handleLoadMoreSubjects(false)}
           />

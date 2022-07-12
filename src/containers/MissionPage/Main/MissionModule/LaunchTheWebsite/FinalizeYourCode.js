@@ -7,6 +7,7 @@ import StepSlide from '../components/StepSlide';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import { Color, mobileMaxWidth } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
 import { css } from '@emotion/css';
 import { useAppContext } from 'contexts';
 
@@ -25,6 +26,9 @@ export default function FinalizeYourCode({
   username,
   onSetCode
 }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const updateMissionStatus = useAppContext(
     (v) => v.requestHelpers.updateMissionStatus
   );
@@ -89,7 +93,7 @@ export default function FinalizeYourCode({
           onClick={handleSave}
           style={{ marginTop: '2rem', marginBottom: '-0.5rem' }}
           skeuomorphic
-          color="blue"
+          color={doneColor}
         >
           <Icon icon="save" />
           <span style={{ marginLeft: '0.7rem' }}>

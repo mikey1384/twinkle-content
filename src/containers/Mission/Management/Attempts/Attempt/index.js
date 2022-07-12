@@ -7,6 +7,7 @@ import LongText from 'components/Texts/LongText';
 import { css } from '@emotion/css';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { timeSince } from 'helpers/timeStampHelpers';
+import { useTheme } from 'helpers/hooks';
 import { stringIsEmpty, processedStringWithURL } from 'helpers/stringHelpers';
 
 Attempt.propTypes = {
@@ -26,6 +27,9 @@ export default function Attempt({
   onSetAttemptObj,
   style
 }) {
+  const {
+    link: { color: linkColor }
+  } = useTheme();
   return (
     <div
       style={{ width: '100%', paddingBottom: '1.5rem', ...style }}
@@ -53,7 +57,7 @@ export default function Attempt({
       >
         <UsernameText
           style={{ fontSize: '2rem' }}
-          color={Color.blue()}
+          color={Color[linkColor]()}
           user={attempt.uploader}
         />
         <div style={{ fontSize: '1.5rem', color: Color.darkGray() }}>
@@ -125,7 +129,7 @@ export default function Attempt({
             <div>
               <UsernameText
                 style={{ fontSize: '1.5rem' }}
-                color={Color.blue()}
+                color={Color[linkColor]()}
                 user={attempt.reviewer}
               />{' '}
               <span>

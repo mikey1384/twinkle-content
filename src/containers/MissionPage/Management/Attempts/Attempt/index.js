@@ -6,6 +6,7 @@ import ApproveInterface from './ApproveInterface';
 import LongText from 'components/Texts/LongText';
 import { Color, borderRadius } from 'constants/css';
 import { panel } from '../../../Styles';
+import { useTheme } from 'helpers/hooks';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { stringIsEmpty, processedStringWithURL } from 'helpers/stringHelpers';
 
@@ -24,6 +25,9 @@ export default function Attempt({
   mission,
   style
 }) {
+  const {
+    link: { color: linkColor }
+  } = useTheme();
   return (
     <div
       style={{ width: '100%', paddingBottom: '1.5rem', ...style }}
@@ -39,7 +43,7 @@ export default function Attempt({
       >
         <UsernameText
           style={{ fontSize: '2rem' }}
-          color={Color.blue()}
+          color={Color[linkColor]()}
           user={attempt.uploader}
         />
         <div style={{ fontSize: '1.5rem', color: Color.darkGray() }}>
@@ -110,7 +114,7 @@ export default function Attempt({
             <div>
               <UsernameText
                 style={{ fontSize: '1.5rem' }}
-                color={Color.blue()}
+                color={Color[linkColor]()}
                 user={attempt.reviewer}
               />{' '}
               <span>

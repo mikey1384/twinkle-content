@@ -80,6 +80,7 @@ export default function TargetContent({
     username
   } = useMyState();
   const {
+    link: { color: linkColor },
     comment: { color: commentColor }
   } = useTheme();
   const onSetXpRewardInterfaceShown = useContentContext(
@@ -193,7 +194,7 @@ export default function TargetContent({
     function renderEnglishText() {
       return (
         <>
-          <UsernameText user={comment.uploader} color={Color.blue()} />{' '}
+          <UsernameText user={comment.uploader} color={Color[linkColor]()} />{' '}
           <ContentLink
             content={{
               id: comment.id,
@@ -216,7 +217,7 @@ export default function TargetContent({
     function renderKoreanText() {
       return (
         <>
-          <UsernameText user={comment.uploader} color={Color.blue()} />
+          <UsernameText user={comment.uploader} color={Color[linkColor]()} />
           님이{' '}
           <ContentLink
             content={{
@@ -238,7 +239,7 @@ export default function TargetContent({
         </>
       );
     }
-  }, [comment.id, comment.uploader, commentColor, rootType, type]);
+  }, [comment.id, comment.uploader, commentColor, linkColor, rootType, type]);
 
   useEffect(() => {
     onSetXpRewardInterfaceShown({

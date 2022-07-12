@@ -5,6 +5,7 @@ import Button from 'components/Button';
 import StartScreen from './StartScreen';
 import SelectAttachmentScreen from './SelectAttachmentScreen';
 import localize from 'constants/localize';
+import { useTheme } from 'helpers/hooks';
 
 const attachContentToSubjectLabel = localize('attachContentToSubject');
 const backLabel = localize('back');
@@ -31,6 +32,9 @@ AttachContentModal.propTypes = {
 };
 
 export default function AttachContentModal({ onConfirm, onHide }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const [section, setSection] = useState('start');
   const [selected, setSelected] = useState();
   return (
@@ -87,7 +91,7 @@ export default function AttachContentModal({ onConfirm, onHide }) {
         {section !== 'start' && (
           <Button
             disabled={!selected}
-            color="blue"
+            color={doneColor}
             style={{ marginLeft: '0.7rem' }}
             onClick={() => onConfirm(selected)}
           >

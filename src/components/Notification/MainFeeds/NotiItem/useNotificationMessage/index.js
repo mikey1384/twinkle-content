@@ -21,6 +21,7 @@ export default function useNotificationMessage({
   const { userId } = useMyState();
   const {
     comment: { color: commentColor },
+    link: { color: linkColor },
     mission: { color: missionColor },
     subject: { color: subjectColor }
   } = useTheme();
@@ -34,6 +35,7 @@ export default function useNotificationMessage({
       isReply,
       isSubjectResponse,
       isTask,
+      linkColor,
       missionColor,
       rewardRootId,
       rewardType,
@@ -54,6 +56,7 @@ export default function useNotificationMessage({
     commentColor,
     isNotification,
     isTask,
+    linkColor,
     missionColor,
     rewardRootId,
     rewardRootMissionType,

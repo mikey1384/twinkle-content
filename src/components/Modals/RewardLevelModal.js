@@ -7,6 +7,7 @@ import RewardLevelForm from 'components/Forms/RewardLevelForm';
 import RewardLevelExplainer from 'components/RewardLevelExplainer';
 import AlertModal from 'components/Modals/AlertModal';
 import { useAppContext } from 'contexts';
+import { useTheme } from 'helpers/hooks';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
@@ -30,6 +31,9 @@ export default function RewardLevelModal({
   onSubmit,
   onHide
 }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const updateRewardLevel = useAppContext(
     (v) => v.requestHelpers.updateRewardLevel
   );
@@ -78,7 +82,7 @@ export default function RewardLevelModal({
           >
             {cancelLabel}
           </Button>
-          <Button disabled={disabled} color="blue" onClick={submit}>
+          <Button disabled={disabled} color={doneColor} onClick={submit}>
             {setLabel}
           </Button>
         </footer>

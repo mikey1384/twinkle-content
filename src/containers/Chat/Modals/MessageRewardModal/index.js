@@ -6,7 +6,7 @@ import RewardReason from './RewardReason';
 import RewardLevelForm from 'components/Forms/RewardLevelForm';
 import { rewardReasons } from 'constants/defaultValues';
 import { addCommasToNumber } from 'helpers/stringHelpers';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 
 MessageRewardModal.propTypes = {
   onHide: PropTypes.func.isRequired,
@@ -16,12 +16,15 @@ MessageRewardModal.propTypes = {
 
 export default function MessageRewardModal({ onHide, userToReward, onSubmit }) {
   const { isCreator } = useMyState();
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const [selectedReasonId, setSelectedReasonId] = useState(0);
   const [rewardAmount, setRewardAmount] = useState(0);
-  const submitDisabled = useMemo(() => !rewardAmount || !selectedReasonId, [
-    rewardAmount,
-    selectedReasonId
-  ]);
+  const submitDisabled = useMemo(
+    () => !rewardAmount || !selectedReasonId,
+    [rewardAmount, selectedReasonId]
+  );
 
   return (
     <Modal onHide={onHide}>
@@ -71,7 +74,7 @@ export default function MessageRewardModal({ onHide, userToReward, onSubmit }) {
           Cancel
         </Button>
         <Button
-          color="blue"
+          color={doneColor}
           disabled={submitDisabled}
           style={{ marginRight: '0.7rem' }}
           onClick={handleSubmit}

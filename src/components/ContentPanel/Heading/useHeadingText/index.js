@@ -17,6 +17,7 @@ export default function useHeadingText({ action, contentObj }) {
     rootObj
   } = contentObj;
   const {
+    link: { color: linkColor },
     subject: { color: subjectColor },
     userLink: { color: userLinkColor, opacity: userLinkOpacity },
     comment: { color: commentColor }
@@ -30,6 +31,7 @@ export default function useHeadingText({ action, contentObj }) {
       commentId,
       contentObj,
       contentType,
+      linkColor,
       replyId,
       rootObj,
       rootType,
@@ -50,6 +52,7 @@ export default function useHeadingText({ action, contentObj }) {
     contentObj,
     contentType,
     id,
+    linkColor,
     replyId,
     rootObj,
     rootType,

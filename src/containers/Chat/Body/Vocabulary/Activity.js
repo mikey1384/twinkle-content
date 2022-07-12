@@ -44,6 +44,7 @@ export default function Activity({
   onReceiveNewActivity
 }) {
   const {
+    link: { color: linkColor },
     xpNumber: { color: xpNumberColor }
   } = useTheme();
   const onRemoveNewActivityStatus = useChatContext(
@@ -174,7 +175,7 @@ export default function Activity({
             `}
             style={{
               fontWeight: 'bold',
-              color: Color.blue(),
+              color: Color[linkColor](),
               cursor: 'pointer'
             }}
             onClick={() => setWordModalShown(true)}
@@ -210,7 +211,7 @@ export default function Activity({
           `}
           style={{
             fontWeight: 'bold',
-            color: Color.blue(),
+            color: Color[linkColor](),
             cursor: 'pointer'
           }}
           onClick={() => setWordModalShown(true)}
@@ -268,7 +269,7 @@ export default function Activity({
         )}
       </div>
     );
-  }, [content, wordLabel, wordLevel, xpNumberColor]);
+  }, [content, linkColor, wordLabel, wordLevel, xpNumberColor]);
 
   return (
     <div className={MessageStyle.container}>

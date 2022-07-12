@@ -8,6 +8,7 @@ import {
   isValidYoutubeChannelUrl,
   stringIsEmpty
 } from 'helpers/stringHelpers';
+import { useTheme } from 'helpers/hooks';
 import { useInputContext } from 'contexts';
 
 InfoEditForm.propTypes = {
@@ -27,6 +28,9 @@ export default function InfoEditForm({
   youtubeName,
   youtubeUrl
 }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const [checking, setChecking] = useState(false);
   const userInfo = useInputContext((v) => v.state.userInfo);
   const onSetEditedEmail = useInputContext((v) => v.actions.onSetEditedEmail);
@@ -100,7 +104,7 @@ export default function InfoEditForm({
           Cancel
         </Button>
         <Button
-          color="blue"
+          color={doneColor}
           disabled={
             checking || emailError || websiteError || youtubeError || noChange()
           }

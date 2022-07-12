@@ -13,7 +13,7 @@ import Loading from 'components/Loading';
 import ExtractedThumb from 'components/ExtractedThumb';
 import FileInfo from './FileInfo';
 import { returnImageFileFromUrl } from 'helpers';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { v1 as uuidv1 } from 'uuid';
 import {
   exceedsCharLimit,
@@ -45,6 +45,9 @@ function UploadModal({
   subjectId
 }) {
   const { profilePicUrl, userId, username } = useMyState();
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const {
     onFileUpload,
     state: { isRespondingToSubject },
@@ -191,7 +194,7 @@ function UploadModal({
         </Button>
         <Button
           disabled={captionExceedsCharLimit || !selectedFile}
-          color="blue"
+          color={doneColor}
           onClick={handleSubmit}
         >
           Upload

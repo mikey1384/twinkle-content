@@ -12,6 +12,7 @@ export default function renderKoreanMessage({
   commentId,
   contentObj,
   contentType,
+  linkColor,
   replyId,
   rootObj,
   rootType,
@@ -30,7 +31,7 @@ export default function renderKoreanMessage({
     case 'video':
       return (
         <>
-          <UsernameText user={uploader} color={Color.blue()} />
+          <UsernameText user={uploader} color={Color[linkColor]()} />
           님이 동영상을 게시했습니다:{' '}
           <ContentLink content={contentObj} contentType={contentType} />{' '}
         </>
@@ -38,7 +39,7 @@ export default function renderKoreanMessage({
     case 'comment':
       return (
         <>
-          <UsernameText user={uploader} color={Color.blue()} />
+          <UsernameText user={uploader} color={Color[linkColor]()} />
           님이 <ContentLink content={rootObj} contentType={rootType} />(
           {localize(contentLabel)})에 {renderTargetAction()}
           <ContentLink
@@ -51,15 +52,15 @@ export default function renderKoreanMessage({
     case 'url':
       return (
         <>
-          <UsernameText user={uploader} color={Color.blue()} /> 님이 링크를
-          공유했습니다:{' '}
+          <UsernameText user={uploader} color={Color[linkColor]()} /> 님이
+          링크를 공유했습니다:{' '}
           <ContentLink content={contentObj} contentType={contentType} />{' '}
         </>
       );
     case 'subject':
       return (
         <>
-          <UsernameText user={uploader} color={Color.blue()} />
+          <UsernameText user={uploader} color={Color[linkColor]()} />
           님이{' '}
           {rootObj.id && (
             <>
@@ -83,7 +84,7 @@ export default function renderKoreanMessage({
     case 'pass':
       return (
         <>
-          <UsernameText user={uploader} color={Color.blue()} />
+          <UsernameText user={uploader} color={Color[linkColor]()} />
           님이{' '}
           <ContentLink
             content={{
@@ -108,7 +109,7 @@ export default function renderKoreanMessage({
         <span>
           <UsernameText
             user={targetObj.comment.uploader}
-            color={Color.blue()}
+            color={Color[linkColor]()}
           />
           님이 남기신{' '}
           <ContentLink

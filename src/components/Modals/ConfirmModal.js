@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import localize from 'constants/localize';
+import { useTheme } from 'helpers/hooks';
 
 const areYouSureLabel = localize('areYouSure');
 const cancelLabel = localize('cancel');
@@ -30,6 +31,9 @@ export default function ConfirmModal({
   title,
   onConfirm
 }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const [submitting, setSubmitting] = useState(false);
   return (
     <Modal modalOverModal={modalOverModal} onHide={onHide}>
@@ -43,7 +47,7 @@ export default function ConfirmModal({
         </Button>
         <Button
           disabled={submitting || disabled}
-          color="blue"
+          color={doneColor}
           onClick={handleConfirm}
         >
           {confirmLabel}

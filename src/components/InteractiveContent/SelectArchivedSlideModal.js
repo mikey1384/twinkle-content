@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import SlideListItem from './SlideListItem';
+import { useTheme } from 'helpers/hooks';
 
 SelectArchivedSlideModal.propTypes = {
   interactiveId: PropTypes.number.isRequired,
@@ -17,6 +18,9 @@ export default function SelectArchivedSlideModal({
   onHide,
   archivedSlides
 }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const [selectedSlideId, setSelectedSlideId] = useState(null);
 
   return (
@@ -40,7 +44,7 @@ export default function SelectArchivedSlideModal({
         </Button>
         <Button
           disabled={!selectedSlideId}
-          color="blue"
+          color={doneColor}
           onClick={() => onDone(selectedSlideId)}
         >
           Done

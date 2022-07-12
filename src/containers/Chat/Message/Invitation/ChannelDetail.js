@@ -25,7 +25,8 @@ export default function ChannelDetail({
 }) {
   const navigate = useNavigate();
   const {
-    chatInvitation: { color: chatInvitationColor }
+    chatInvitation: { color: chatInvitationColor },
+    link: { color: linkColor }
   } = useTheme();
   const [shownMembers, setShownMembers] = useState([]);
   const [userListModalShown, setUserListModalShown] = useState(false);
@@ -107,7 +108,7 @@ export default function ChannelDetail({
           <p
             className={css`
               cursor: pointer;
-              color: ${Color.blue()};
+              color: ${Color[linkColor]()};
               &:hover {
                 text-decoration: underline;
               }

@@ -5,6 +5,7 @@ import { timeSince } from 'helpers/timeStampHelpers';
 import { Color } from 'constants/css';
 import { notiFeedListItem } from '../../Styles';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
+import { useTheme } from 'helpers/hooks';
 import useNotificationMessage from './useNotificationMessage';
 import UsernameText from 'components/Texts/UsernameText';
 
@@ -30,6 +31,9 @@ export default function NotiItem({
     rootMissionType
   }
 }) {
+  const {
+    link: { color: linkColor }
+  } = useTheme();
   const NotificationMessage = useNotificationMessage({
     actionObj,
     isNotification,
@@ -47,14 +51,14 @@ export default function NotiItem({
   const userLabel = useMemo(() => {
     if (actionObj.contentType !== 'pass' && actionObj.contentType !== 'fail') {
       return (
-        <>
-          <UsernameText user={user} color={Color.blue()} />
+        <div style={{ display: 'inline' }}>
+          <UsernameText user={user} color={Color[linkColor]()} />
           {SELECTED_LANGUAGE === 'kr' ? '' : ' '}
-        </>
+        </div>
       );
     }
     return '';
-  }, [actionObj.contentType, user]);
+  }, [actionObj.contentType, linkColor, user]);
 
   return (
     <ErrorBoundary componentPath="Notification/MainFeeds/NotiItem/index">

@@ -5,7 +5,7 @@ import Input from 'components/Texts/Input';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useAppContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 
 VerificationCodeInput.propTypes = {
   email: PropTypes.string.isRequired,
@@ -13,6 +13,9 @@ VerificationCodeInput.propTypes = {
 };
 
 export default function VerificationCodeInput({ onRetry, email }) {
+  const {
+    link: { color: linkColor }
+  } = useTheme();
   const [verificationCode, setVerificationCode] = useState('');
   const [verifying, setVerifying] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -66,7 +69,7 @@ export default function VerificationCodeInput({ onRetry, email }) {
         style={{
           marginTop: '0.5rem',
           cursor: 'pointer',
-          color: Color.blue()
+          color: Color[linkColor]()
         }}
         className={css`
           font-size: 1.3rem;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Textarea from 'components/Texts/Textarea';
 import { useInputContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import {
   exceedsCharLimit,
   stringIsEmpty,
@@ -44,6 +44,9 @@ export default function EditTextArea({
   text
 }) {
   const { banned } = useMyState();
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const submitting = useRef(false);
   const state = useInputContext((v) => v.state);
   const onSetEditForm = useInputContext((v) => v.actions.onSetEditForm);
@@ -122,7 +125,7 @@ export default function EditTextArea({
         }}
       >
         <Button
-          color="blue"
+          color={doneColor}
           onClick={onSubmit}
           disabled={
             (!allowEmptyText && stringIsEmpty(editText)) ||

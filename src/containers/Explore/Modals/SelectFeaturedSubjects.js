@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useSearch } from 'helpers/hooks';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Modal from 'components/Modal';
@@ -8,6 +7,7 @@ import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import Loading from 'components/Loading';
 import FilterBar from 'components/FilterBar';
 import SearchInput from 'components/Texts/SearchInput';
+import { useSearch, useTheme } from 'helpers/hooks';
 import { objectify } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext } from 'contexts';
@@ -23,6 +23,9 @@ export default function SelectFeaturedSubjectsModal({
   onHide,
   onSubmit
 }) {
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const reportError = useAppContext((v) => v.requestHelpers.reportError);
   const loadUploads = useAppContext((v) => v.requestHelpers.loadUploads);
   const searchContent = useAppContext((v) => v.requestHelpers.searchContent);
@@ -183,7 +186,7 @@ export default function SelectFeaturedSubjectsModal({
         </Button>
         <Button
           disabled={selected.length > 10 || submitting}
-          color="blue"
+          color={doneColor}
           onClick={handleSubmit}
         >
           {selected.length > 10 ? 'Cannot select more than 10' : 'Done'}

@@ -10,7 +10,7 @@ import Icon from 'components/Icon';
 import ColorSelector from './ColorSelector';
 import NameChanger from './NameChanger';
 import { priceTable } from 'constants/defaultValues';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useChatContext } from 'contexts';
 import { Color, mobileMaxWidth } from 'constants/css';
@@ -61,6 +61,9 @@ export default function SettingsModal({
   );
   const onEnableTheme = useChatContext((v) => v.actions.onEnableTheme);
   const { twinkleCoins, userId } = useMyState();
+  const {
+    done: { color: doneColor }
+  } = useTheme();
   const [hovered, setHovered] = useState(false);
   const [selectNewOwnerModalShown, setSelectNewOwnerModalShown] =
     useState(false);
@@ -287,7 +290,7 @@ export default function SettingsModal({
           Cancel
         </Button>
         <Button
-          color="blue"
+          color={doneColor}
           disabled={disabled}
           onClick={() =>
             onDone({
