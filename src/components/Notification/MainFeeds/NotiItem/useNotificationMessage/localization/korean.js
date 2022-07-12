@@ -6,6 +6,7 @@ import ContentLink from 'components/ContentLink';
 
 export default function renderEnglishMessage({
   actionObj,
+  contentColor,
   commentColor,
   isNotification,
   isReply,
@@ -43,6 +44,7 @@ export default function renderEnglishMessage({
       : ''
   }`;
 
+  const contentLinkColor = Color[contentColor]();
   const contentLinkCommentColor = Color[commentColor]();
   const contentLinkSubjectColor = Color[subjectColor]();
   const missionLinkColor = Color[missionColor]();
@@ -143,7 +145,12 @@ export default function renderEnglishMessage({
           <>
             <span>님이</span>{' '}
             <ContentLink
-              style={{ color: missionLinkColor }}
+              style={{
+                color:
+                  rewardRootType === 'pass'
+                    ? missionLinkColor
+                    : contentLinkColor
+              }}
               content={{
                 id: rewardRootId,
                 title: `이 ${
