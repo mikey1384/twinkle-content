@@ -31,6 +31,7 @@ export default function UserListModal({
   title,
   users
 }) {
+  const reportError = useAppContext((v) => v.requestHelpers.reportError);
   const navigate = useNavigate();
   const { userId, username, profilePicUrl, authLevel } = useMyState();
   const loadDMChannel = useAppContext((v) => v.requestHelpers.loadDMChannel);
@@ -126,6 +127,14 @@ export default function UserListModal({
     if (user.id !== userId) {
       const { channelId, pathId } = await loadDMChannel({ recepient: user });
       if (!pathId) {
+        if (!user?.id) {
+          return reportError({
+            componentPath: 'Modals/UserListModal',
+            message: `handleTalkClick: recepient userId is null. recepient: ${JSON.stringify(
+              user
+            )}`
+          });
+        }
         onOpenNewChatTab({
           user: { username, id: userId, profilePicUrl, authLevel },
           recepient: {
