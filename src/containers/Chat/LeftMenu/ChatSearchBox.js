@@ -12,6 +12,7 @@ ChatSearchBox.propTypes = {
 };
 
 function ChatSearchBox({ style }) {
+  const reportError = useAppContext((v) => v.requestHelpers.reportError);
   const navigate = useNavigate();
   const searchChat = useAppContext((v) => v.requestHelpers.searchChat);
   const { profilePicUrl, userId, username, authLevel } = useMyState();
@@ -42,6 +43,14 @@ function ChatSearchBox({ style }) {
       if (item.primary || !!item.pathId) {
         navigate(`/chat/${item.pathId}`);
       } else {
+        if (!item?.id) {
+          return reportError({
+            componentPath: 'Chat/LeftMenu/ChatSearchBox',
+            message: `handleSelect: recepient userId is null. recepient: ${JSON.stringify(
+              item
+            )}`
+          });
+        }
         onOpenNewChatTab({
           user: { username, id: userId, profilePicUrl, authLevel },
           recepient: {

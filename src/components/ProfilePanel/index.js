@@ -49,6 +49,7 @@ ProfilePanel.propTypes = {
 };
 
 function ProfilePanel({ expandable, profileId, style }) {
+  const reportError = useAppContext((v) => v.requestHelpers.reportError);
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const navigate = useNavigate();
   const profilePanelState = useContentState({
@@ -606,6 +607,14 @@ function ProfilePanel({ expandable, profileId, style }) {
   async function handleTalkClick() {
     const { channelId, pathId } = await loadDMChannel({ recepient: profile });
     if (!pathId) {
+      if (!profile?.id) {
+        return reportError({
+          componentPath: 'ProfilePanel/index',
+          message: `handleTalkClick: recepient userId is null. recepient: ${JSON.stringify(
+            profile
+          )}`
+        });
+      }
       onOpenNewChatTab({
         user: { username, id: userId, profilePicUrl, authLevel },
         recepient: {

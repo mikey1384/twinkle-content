@@ -61,6 +61,7 @@ export default function BasicInfos({
   youtubeUrl,
   style
 }) {
+  const reportError = useAppContext((v) => v.requestHelpers.reportError);
   const navigate = useNavigate();
   const {
     userId: myId,
@@ -325,6 +326,17 @@ export default function BasicInfos({
       recepient: { id: userId, username }
     });
     if (!pathId) {
+      if (!userId) {
+        return reportError({
+          componentPath: 'Profile/Body/Home/Intro/BasicInfos/index',
+          message: `handleTalkButtonClick: recepient userId is null. recepient: ${JSON.stringify(
+            {
+              userId,
+              username
+            }
+          )}`
+        });
+      }
       onOpenNewChatTab({
         user: {
           username: myUsername,

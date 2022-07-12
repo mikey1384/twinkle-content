@@ -34,6 +34,7 @@ export default function UsernameText({
   wordBreakEnabled,
   displayedName
 }) {
+  const reportError = useAppContext((v) => v.requestHelpers.reportError);
   const navigate = useNavigate();
   const location = useLocation();
   const usingChat = useMemo(
@@ -146,7 +147,7 @@ export default function UsernameText({
               style={{
                 color: Color.darkerGray()
               }}
-              onClick={onLinkClick}
+              onClick={handleLinkClick}
             >
               <Icon icon="comment" />
               <span style={{ marginLeft: '1rem' }}>{chatLabel}</span>
@@ -233,11 +234,19 @@ export default function UsernameText({
     }
   }
 
-  async function onLinkClick() {
+  async function handleLinkClick() {
     setDropdownContext(null);
     if (user.id !== userId) {
       const { channelId, pathId } = await loadDMChannel({ recepient: user });
       if (!pathId) {
+        if (!user?.id) {
+          return reportError({
+            componentPath: 'Texts/UsernameText',
+            message: `handleLinkClick: recepient userId is null. recepient: ${JSON.stringify(
+              user
+            )}`
+          });
+        }
         onOpenNewChatTab({
           user: { username, id: userId, profilePicUrl, authLevel },
           recepient: {
