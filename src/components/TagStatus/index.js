@@ -59,7 +59,11 @@ function TagStatus({
     () =>
       tags.map((tag) => (
         <a
-          style={{ marginRight: '0.5rem', fontSize: '1.5rem' }}
+          style={{
+            marginRight: '0.5rem',
+            fontSize: '1.5rem',
+            color: Color[linkColor]()
+          }}
           key={tag.id}
           onClick={() => {
             setShownPlaylistId(tag.id);
@@ -69,7 +73,7 @@ function TagStatus({
           {hashify(tag.title)}
         </a>
       )),
-    [tags]
+    [linkColor, tags]
   );
 
   const addLabel = useMemo(() => {

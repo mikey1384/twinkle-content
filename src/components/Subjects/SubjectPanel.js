@@ -96,7 +96,7 @@ export default function SubjectPanel({
   } = useMyState();
   const {
     done: { color: doneColor },
-    subject: { color: subjectColor }
+    content: { color: contentColor }
   } = useTheme();
 
   const {
@@ -216,7 +216,7 @@ export default function SubjectPanel({
               to={`/subjects/${subjectId}`}
               style={{
                 fontSize: '2.5rem',
-                color: Color[subjectColor](),
+                color: Color[contentColor](),
                 fontWeight: 'bold'
               }}
             >

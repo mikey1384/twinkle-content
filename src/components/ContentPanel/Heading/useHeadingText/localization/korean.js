@@ -8,7 +8,7 @@ export default function renderKoreanMessage({
   id,
   action,
   byUser,
-  commentColor,
+  contentColor,
   commentId,
   contentObj,
   contentType,
@@ -16,7 +16,6 @@ export default function renderKoreanMessage({
   replyId,
   rootObj,
   rootType,
-  subjectColor,
   targetObj,
   uploader,
   userLinkColor,
@@ -24,8 +23,7 @@ export default function renderKoreanMessage({
 }) {
   const contentLabel =
     rootType === 'url' ? 'link' : rootType === 'subject' ? 'subject' : rootType;
-  const contentLinkSubjectColor = Color[subjectColor]();
-  const contentLinkCommentColor = Color[commentColor]();
+  const contentLinkColor = Color[contentColor]();
 
   switch (contentType) {
     case 'video':
@@ -45,7 +43,7 @@ export default function renderKoreanMessage({
           <ContentLink
             content={{ id, title: action }}
             contentType={contentType}
-            style={{ color: contentLinkCommentColor }}
+            style={{ color: contentLinkColor }}
           />{' '}
         </>
       );
@@ -75,7 +73,7 @@ export default function renderKoreanMessage({
             style={{
               color: byUser
                 ? Color[userLinkColor](userLinkOpacity)
-                : contentLinkSubjectColor
+                : contentLinkColor
             }}
           />{' '}
           개설했습니다{' '}
@@ -122,7 +120,7 @@ export default function renderKoreanMessage({
                 : localize('comment')
             }}
             contentType="comment"
-            style={{ color: contentLinkCommentColor }}
+            style={{ color: contentLinkColor }}
           />
           에{' '}
         </span>

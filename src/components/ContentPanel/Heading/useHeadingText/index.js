@@ -18,16 +18,15 @@ export default function useHeadingText({ action, contentObj }) {
   } = contentObj;
   const {
     link: { color: linkColor },
-    subject: { color: subjectColor },
     userLink: { color: userLinkColor, opacity: userLinkOpacity },
-    comment: { color: commentColor }
+    content: { color: contentColor }
   } = useTheme();
   const HeadingText = useMemo(() => {
     const params = {
       id,
       action,
       byUser,
-      commentColor,
+      contentColor,
       commentId,
       contentObj,
       contentType,
@@ -35,7 +34,6 @@ export default function useHeadingText({ action, contentObj }) {
       replyId,
       rootObj,
       rootType,
-      subjectColor,
       targetObj,
       uploader,
       userLinkColor,
@@ -47,7 +45,7 @@ export default function useHeadingText({ action, contentObj }) {
   }, [
     action,
     byUser,
-    commentColor,
+    contentColor,
     commentId,
     contentObj,
     contentType,
@@ -56,7 +54,6 @@ export default function useHeadingText({ action, contentObj }) {
     replyId,
     rootObj,
     rootType,
-    subjectColor,
     targetObj,
     uploader,
     userLinkColor,

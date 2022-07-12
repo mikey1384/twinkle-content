@@ -5,7 +5,6 @@ import ContentLink from 'components/ContentLink';
 
 export default function renderEnglishMessage({
   actionObj,
-  commentColor,
   contentColor,
   isNotification,
   isReply,
@@ -18,7 +17,6 @@ export default function renderEnglishMessage({
   rewardRootMissionType,
   rewardRootType,
   rootMissionType,
-  subjectColor,
   targetComment,
   targetObj,
   targetSubject
@@ -44,8 +42,6 @@ export default function renderEnglishMessage({
   }`;
 
   const contentLinkColor = Color[contentColor]();
-  const contentLinkCommentColor = Color[commentColor]();
-  const contentLinkSubjectColor = Color[subjectColor]();
   const missionLinkColor = Color[missionColor]();
 
   switch (actionObj.contentType) {
@@ -192,7 +188,7 @@ export default function renderEnglishMessage({
                 ? 'left a message on'
                 : 'commented on'
             }}
-            style={{ color: contentLinkCommentColor }}
+            style={{ color: contentLinkColor }}
           />{' '}
           your{' '}
           <ContentLink
@@ -246,7 +242,7 @@ export default function renderEnglishMessage({
                     limit: 100
                   })}"`
                 }}
-                style={{ color: contentLinkCommentColor }}
+                style={{ color: contentLinkColor }}
               />
             </>
           )}
@@ -265,7 +261,7 @@ export default function renderEnglishMessage({
                 limit: 100
               })})`
             }}
-            style={{ color: contentLinkSubjectColor }}
+            style={{ color: contentLinkColor }}
           />{' '}
           <span>to your </span>
           <ContentLink

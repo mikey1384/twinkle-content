@@ -7,7 +7,7 @@ export default function renderEnglishMessage({
   id,
   action,
   byUser,
-  commentColor,
+  contentColor,
   commentId,
   contentObj,
   contentType,
@@ -15,7 +15,6 @@ export default function renderEnglishMessage({
   replyId,
   rootObj,
   rootType,
-  subjectColor,
   targetObj,
   uploader,
   userLinkColor,
@@ -23,8 +22,7 @@ export default function renderEnglishMessage({
 }) {
   const contentLabel =
     rootType === 'url' ? 'link' : rootType === 'subject' ? 'subject' : rootType;
-  const contentLinkSubjectColor = Color[subjectColor]();
-  const contentLinkCommentColor = Color[commentColor]();
+  const contentLinkColor = Color[contentColor]();
 
   switch (contentType) {
     case 'video':
@@ -41,7 +39,7 @@ export default function renderEnglishMessage({
           <ContentLink
             content={{ id, title: action }}
             contentType={contentType}
-            style={{ color: contentLinkCommentColor }}
+            style={{ color: contentLinkColor }}
           />
           {renderTargetAction()} {contentLabel}:{' '}
           <ContentLink content={rootObj} contentType={rootType} />{' '}
@@ -65,7 +63,7 @@ export default function renderEnglishMessage({
             style={{
               color: byUser
                 ? Color[userLinkColor](userLinkOpacity)
-                : contentLinkSubjectColor
+                : contentLinkColor
             }}
           />
           {rootObj.id && (
@@ -117,7 +115,7 @@ export default function renderEnglishMessage({
                 : 'comment '
             }}
             contentType="comment"
-            style={{ color: contentLinkCommentColor }}
+            style={{ color: contentLinkColor }}
           />
           {!replyId && rootType === 'user' ? 'to' : 'on'}
         </span>

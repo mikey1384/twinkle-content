@@ -81,7 +81,7 @@ export default function TargetContent({
   } = useMyState();
   const {
     link: { color: linkColor },
-    comment: { color: commentColor }
+    content: { color: contentColor }
   } = useTheme();
   const onSetXpRewardInterfaceShown = useContentContext(
     (v) => v.actions.onSetXpRewardInterfaceShown
@@ -184,7 +184,7 @@ export default function TargetContent({
   );
 
   const DetailText = useMemo(() => {
-    const commentLinkColor = Color[commentColor]();
+    const commentLinkColor = Color[contentColor]();
     return (
       <div>
         {SELECTED_LANGUAGE === 'kr' ? renderKoreanText() : renderEnglishText()}
@@ -239,7 +239,7 @@ export default function TargetContent({
         </>
       );
     }
-  }, [comment.id, comment.uploader, commentColor, linkColor, rootType, type]);
+  }, [comment.id, comment.uploader, contentColor, linkColor, rootType, type]);
 
   useEffect(() => {
     onSetXpRewardInterfaceShown({

@@ -11,7 +11,7 @@ SubjectLink.propTypes = {
 
 export default function SubjectLink({ subject }) {
   const {
-    subject: { color: subjectColor }
+    content: { color: contentColor }
   } = useTheme();
 
   return (
@@ -19,7 +19,7 @@ export default function SubjectLink({ subject }) {
       <Link
         style={{
           fontWeight: 'bold',
-          color: Color[subjectColor]()
+          color: Color[contentColor]()
         }}
         to={`/subjects/${subject.id}`}
       >

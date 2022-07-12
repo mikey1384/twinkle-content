@@ -21,10 +21,8 @@ export default function useNotificationMessage({
   const { userId } = useMyState();
   const {
     content: { color: contentColor },
-    comment: { color: commentColor },
     link: { color: linkColor },
-    mission: { color: missionColor },
-    subject: { color: subjectColor }
+    mission: { color: missionColor }
   } = useTheme();
   const NotificationMessage = useMemo(() => {
     const isReply = targetComment?.userId === userId;
@@ -32,7 +30,6 @@ export default function useNotificationMessage({
     const params = {
       actionObj,
       contentColor,
-      commentColor,
       isNotification,
       isReply,
       isSubjectResponse,
@@ -44,7 +41,6 @@ export default function useNotificationMessage({
       rewardRootMissionType,
       rewardRootType,
       rootMissionType,
-      subjectColor,
       targetComment,
       targetObj,
       targetSubject,
@@ -56,7 +52,6 @@ export default function useNotificationMessage({
   }, [
     actionObj,
     contentColor,
-    commentColor,
     isNotification,
     isTask,
     linkColor,
@@ -66,7 +61,6 @@ export default function useNotificationMessage({
     rewardRootType,
     rewardType,
     rootMissionType,
-    subjectColor,
     targetComment,
     targetObj,
     targetSubject,

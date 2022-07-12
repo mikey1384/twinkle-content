@@ -81,7 +81,7 @@ export default function MainContent({
       color: byUserIndicatorColor,
       opacity: byUserIndicatorOpacity
     },
-    subject: { color: subjectColor }
+    content: { color: contentColor }
   } = useTheme();
   const { fileType } = useMemo(
     () => (fileName ? getFileInfoFromFileName(fileName) : ''),
@@ -311,7 +311,7 @@ export default function MainContent({
                     style={{
                       fontWeight: 'bold',
                       fontSize: '2.2rem',
-                      color: Color[subjectColor](),
+                      color: Color[contentColor](),
                       textDecoration: 'none'
                     }}
                     to={`/subjects/${contentId}`}

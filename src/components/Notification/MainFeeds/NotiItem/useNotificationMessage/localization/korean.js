@@ -7,7 +7,6 @@ import ContentLink from 'components/ContentLink';
 export default function renderEnglishMessage({
   actionObj,
   contentColor,
-  commentColor,
   isNotification,
   isReply,
   isSubjectResponse,
@@ -19,7 +18,6 @@ export default function renderEnglishMessage({
   rewardRootMissionType,
   rewardRootType,
   rootMissionType,
-  subjectColor,
   targetComment,
   targetObj,
   targetSubject
@@ -45,8 +43,6 @@ export default function renderEnglishMessage({
   }`;
 
   const contentLinkColor = Color[contentColor]();
-  const contentLinkCommentColor = Color[commentColor]();
-  const contentLinkSubjectColor = Color[subjectColor]();
   const missionLinkColor = Color[missionColor]();
 
   switch (actionObj.contentType) {
@@ -242,7 +238,7 @@ export default function renderEnglishMessage({
                 ? '메시지'
                 : '댓글'
             }}
-            style={{ color: contentLinkCommentColor }}
+            style={{ color: contentLinkColor }}
           />
           {targetObj.contentType === 'user' ? '를' : '을'} 남겼습니다:{' '}
           {!stringIsEmpty(actionObj.content) && (
@@ -256,7 +252,7 @@ export default function renderEnglishMessage({
                     limit: 100
                   })}"`
                 }}
-                style={{ color: contentLinkCommentColor }}
+                style={{ color: contentLinkColor }}
               />
             </>
           )}
@@ -287,7 +283,7 @@ export default function renderEnglishMessage({
                 limit: 100
               })})`
             }}
-            style={{ color: contentLinkSubjectColor }}
+            style={{ color: contentLinkColor }}
           />
           <span>를 개설했습니다</span>
         </>

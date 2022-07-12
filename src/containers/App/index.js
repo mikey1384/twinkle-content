@@ -36,7 +36,7 @@ import { css } from '@emotion/css';
 import { socket } from 'constants/io';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 import { finalizeEmoji } from 'helpers/stringHelpers';
-import { useMyState, useScrollPosition } from 'helpers/hooks';
+import { useMyState, useTheme, useScrollPosition } from 'helpers/hooks';
 import {
   isMobile,
   getSectionFromPathname,
@@ -56,6 +56,9 @@ const deviceIsMobile = isMobile(navigator);
 const userIsUsingIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
 function App() {
+  const {
+    link: { color: linkColor }
+  } = useTheme();
   const location = useLocation();
   const onCloseSigninModal = useAppContext(
     (v) => v.user.actions.onCloseSigninModal
@@ -522,6 +525,9 @@ function App() {
       className={css`
         height: CALC(100% - 4.5rem);
         width: 100%;
+        a {
+          color: ${Color[linkColor]()};
+        }
         @media (max-width: ${mobileMaxWidth}) {
           height: 100%;
         }
