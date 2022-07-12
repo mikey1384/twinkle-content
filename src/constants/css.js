@@ -17,6 +17,7 @@ export const Color = {
   fernGreen: (opacity = 1) => `rgba(89,159,89,${opacity})`,
   limeGreen: (opacity = 1) => `rgba(34, 197, 94,${opacity})`,
   yellowGreen: (opacity = 1) => `rgba(154,204,96,${opacity})`,
+  lightYellowGreen: (opacity = 1) => `rgba(185,214,90,${opacity})`,
   lightCyan: (opacity = 1) => `rgba(224,255,255,${opacity})`,
   darkerGray: (opacity = 1) => `rgba(85,85,85,${opacity})`,
   darkGray: (opacity = 1) => `rgba(115,115,115,${opacity})`,
@@ -80,7 +81,9 @@ export function Theme(color) {
     likeButton: { color: 'lightBlue' },
     likeButtonPressed: { color: 'logoBlue' },
     link: { color: { green: 'fernGreen' }[color] || 'blue' },
-    loadMoreButton: { color: 'lightBlue' },
+    loadMoreButton: {
+      color: { green: 'lightYellowGreen' }[color] || 'lightBlue'
+    },
     login: { color: 'green' },
     logoTwin: { color: 'logoBlue' },
     logoKle: { color: 'logoGreen' },
