@@ -38,6 +38,9 @@ export const Color = {
   ivory: (opacity = 1) => `rgba(255,255,240,${opacity})`,
   brownOrange: (opacity = 1) => `rgba(245,190,70,${opacity})`,
   orange: (opacity = 1) => `rgba(255,140,0,${opacity})`,
+  lightOrange: (opacity = 1) => `rgba(250,185,75,${opacity})`,
+  lighterOrange: (opacity = 1) => `rgba(250,205,90,${opacity})`,
+  peach: (opacity = 1) => `rgba(255,175,150,${opacity})`,
   pink: (opacity = 1) => `rgba(255,105,180,${opacity})`,
   purple: (opacity = 1) => `rgba(152,28,235,${opacity})`,
   lightPurple: (opacity = 1) => `rgba(248,246,255,${opacity})`,
@@ -78,8 +81,10 @@ export function Theme(color) {
     chatInvitation: { color },
     homeMenuItemActive: { color },
     itemSelected: { color, opacity: strongColors.includes(color) ? 0.7 : 0.8 },
-    likeButton: { color: 'lightBlue' },
-    likeButtonPressed: { color: 'logoBlue' },
+    likeButton: {
+      color: { green: 'lighterOrange' }[color] || 'lightBlue'
+    },
+    likeButtonPressed: { color: { green: 'lightOrange' }[color] || 'logoBlue' },
     link: { color: { green: 'fernGreen' }[color] || 'blue' },
     loadMoreButton: {
       color: { green: 'lightYellowGreen' }[color] || 'lightBlue'
