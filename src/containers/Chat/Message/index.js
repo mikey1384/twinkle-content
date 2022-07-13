@@ -33,7 +33,12 @@ import { socket } from 'constants/io';
 import { unix } from 'moment';
 import { MessageStyle } from '../Styles';
 import { fetchURLFromText } from 'helpers/stringHelpers';
-import { useContentState, useMyState, useLazyLoad } from 'helpers/hooks';
+import {
+  useContentState,
+  useMyState,
+  useLazyLoad,
+  useTheme
+} from 'helpers/hooks';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { isMobile } from 'helpers';
@@ -126,6 +131,9 @@ function Message({
   onShowSubjectMsgsModal,
   zIndex
 }) {
+  const {
+    reward: { color: rewardColor }
+  } = useTheme();
   const spoilerClickedRef = useRef(false);
   const [highlighted, setHighlighted] = useState(false);
   const [reactionsMenuShown, setReactionsMenuShown] = useState(false);
@@ -409,7 +417,7 @@ function Message({
             <span style={{ marginLeft: '1rem' }}>{rewardLabel}</span>
           </>
         ),
-        style: { color: '#fff', background: Color.pink() },
+        style: { color: '#fff', background: Color[rewardColor]() },
         className: css`
           opacity: 0.9;
           &:hover {

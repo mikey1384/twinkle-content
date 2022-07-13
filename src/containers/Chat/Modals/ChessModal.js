@@ -51,6 +51,7 @@ export default function ChessModal({
 }) {
   const { banned, userId, username, profilePicUrl } = useMyState();
   const {
+    alert: { color: alertColor },
     done: { color: doneColor }
   } = useTheme();
   const fetchCurrentChessState = useAppContext(
@@ -212,7 +213,7 @@ export default function ChessModal({
           {!!newChessState && (
             <Button
               style={{ marginLeft: '1rem' }}
-              color="pink"
+              color={alertColor}
               onClick={() => setNewChessState(undefined)}
             >
               {cancelMoveLabel}

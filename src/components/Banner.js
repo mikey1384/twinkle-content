@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import { css } from '@emotion/css';
+import { useTheme } from 'helpers/hooks';
 import { Color } from 'constants/css';
 
 Banner.propTypes = {
@@ -16,13 +17,16 @@ Banner.propTypes = {
 
 export default function Banner({
   children,
-  color = 'pink',
+  color,
   innerRef,
   loading,
   onClick,
   spinnerDelay = 1000,
   style = {}
 }) {
+  const {
+    alert: { color: alertColor }
+  } = useTheme();
   const timerRef = useRef(null);
   const [spinnerShown, setSpinnerShown] = useState(false);
 
@@ -43,7 +47,7 @@ export default function Banner({
       className={css`
         opacity: ${loading ? 0.5 : 1};
         width: 100%;
-        background: ${Color[color]()};
+        background: ${Color[color || alertColor]()};
         color: #fff;
         padding: 1.5rem;
         text-align: center;

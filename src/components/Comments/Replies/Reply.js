@@ -118,7 +118,8 @@ function Reply({
     userId
   } = useMyState();
   const {
-    link: { color: linkColor }
+    link: { color: linkColor },
+    reward: { color: rewardColor }
   } = useTheme();
   const onSetIsEditing = useContentContext((v) => v.actions.onSetIsEditing);
   const onSetXpRewardInterfaceShown = useContentContext(
@@ -466,7 +467,7 @@ function Reply({
                         </Button>
                         {userCanRewardThis && (
                           <Button
-                            color="pink"
+                            color={rewardColor}
                             style={{ marginLeft: '1rem' }}
                             onClick={() =>
                               onSetXpRewardInterfaceShown({
@@ -495,7 +496,7 @@ function Reply({
                     </div>
                     <div>
                       <Button
-                        color="pink"
+                        color={rewardColor}
                         filled={isRecommendedByUser}
                         disabled={recommendationInterfaceShown}
                         onClick={() => setRecommendationInterfaceShown(true)}

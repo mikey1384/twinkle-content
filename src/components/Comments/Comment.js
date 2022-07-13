@@ -153,7 +153,8 @@ function Comment({
     userId
   } = useMyState();
   const {
-    link: { color: linkColor }
+    link: { color: linkColor },
+    reward: { color: rewardColor }
   } = useTheme();
   const onChangeSpoilerStatus = useContentContext(
     (v) => v.actions.onChangeSpoilerStatus
@@ -766,7 +767,7 @@ function Comment({
                                 </Button>
                                 {userCanRewardThis && (
                                   <Button
-                                    color="pink"
+                                    color={rewardColor}
                                     style={{ marginLeft: '0.7rem' }}
                                     onClick={() =>
                                       onSetXpRewardInterfaceShown({
@@ -793,7 +794,7 @@ function Comment({
                             </div>
                             <div>
                               <Button
-                                color="pink"
+                                color={rewardColor}
                                 filled={isRecommendedByUser}
                                 disabled={recommendationInterfaceShown}
                                 onClick={() =>

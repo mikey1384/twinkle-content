@@ -81,7 +81,8 @@ export default function TargetContent({
   } = useMyState();
   const {
     link: { color: linkColor },
-    content: { color: contentColor }
+    content: { color: contentColor },
+    reward: { color: rewardColor }
   } = useTheme();
   const onSetXpRewardInterfaceShown = useContentContext(
     (v) => v.actions.onSetXpRewardInterfaceShown
@@ -419,7 +420,7 @@ export default function TargetContent({
                         {userCanRewardThis && (
                           <Button
                             style={{ marginLeft: '1rem' }}
-                            color="pink"
+                            color={rewardColor}
                             disabled={!!xpButtonDisabled}
                             onClick={handleSetXpRewardInterfaceShown}
                           >
@@ -447,7 +448,7 @@ export default function TargetContent({
                       className="right"
                     >
                       <Button
-                        color="pink"
+                        color={rewardColor}
                         filled={isRecommendedByUser}
                         disabled={recommendationInterfaceShown}
                         onClick={() => setRecommendationInterfaceShown(true)}

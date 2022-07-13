@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Icon from 'components/Icon';
 import { useAppContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { scrollElementToCenter } from 'helpers';
 
 MultiStepContainer.propTypes = {
@@ -23,6 +23,9 @@ export default function MultiStepContainer({
   taskType
 }) {
   const { missions } = useMyState();
+  const {
+    alert: { color: alertColor }
+  } = useTheme();
   const updateMissionStatus = useAppContext(
     (v) => v.requestHelpers.updateMissionStatus
   );
@@ -138,7 +141,7 @@ export default function MultiStepContainer({
             marginTop: '5rem'
           }}
         >
-          <Button skeuomorphic color="pink" onClick={onOpenTutorial}>
+          <Button skeuomorphic color={alertColor} onClick={onOpenTutorial}>
             {`I don't understand what I am supposed to do`}
           </Button>
         </div>

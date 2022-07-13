@@ -14,6 +14,7 @@ export default function renderEnglishMessage({
   missionColor,
   rewardRootId,
   rewardType,
+  rewardColor,
   rewardRootMissionType,
   rewardRootType,
   rootMissionType,
@@ -132,7 +133,7 @@ export default function renderEnglishMessage({
       } else {
         return (
           <>
-            <b style={{ color: Color.pink() }}>also recommended</b>{' '}
+            <b style={{ color: Color[rewardColor]() }}>also recommended</b>{' '}
             <ContentLink
               style={{
                 color:

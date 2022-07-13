@@ -50,7 +50,8 @@ export default function LinkPage() {
     byUserIndicator: {
       color: byUserIndicatorColor,
       opacity: byUserIndicatorOpacity
-    }
+    },
+    reward: { color: rewardColor }
   } = useTheme();
   const onEditLinkPage = useExploreContext((v) => v.actions.onEditLinkPage);
   const onLikeLink = useExploreContext((v) => v.actions.onLikeLink);
@@ -358,7 +359,7 @@ export default function LinkPage() {
               />
               {userCanRewardThis && (
                 <Button
-                  color="pink"
+                  color={rewardColor}
                   filled
                   disabled={xpButtonDisabled}
                   style={{
@@ -399,7 +400,7 @@ export default function LinkPage() {
           </div>
           <Button
             style={{ right: '1rem', bottom: '0.5rem', position: 'absolute' }}
-            color="pink"
+            color={rewardColor}
             skeuomorphic
             filled={isRecommendedByUser}
             disabled={recommendationInterfaceShown}

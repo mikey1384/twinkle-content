@@ -11,6 +11,7 @@ export default function renderEnglishText({
   isTask,
   linkColor,
   missionColor,
+  rewardColor,
   rewardType,
   rewardAmount,
   rewarderId,
@@ -78,7 +79,7 @@ export default function renderEnglishText({
         user={{ id: rewarderId, username: rewarderUsername }}
         color={Color[linkColor]()}
       />{' '}
-      <b style={{ color: Color.pink() }}>also recommended</b>{' '}
+      <b style={{ color: Color[rewardColor]() }}>also recommended</b>{' '}
       <ContentLink
         style={{
           color: rootType === 'pass' ? missionLinkColor : contentLinkColor

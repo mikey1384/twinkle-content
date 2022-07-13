@@ -31,7 +31,8 @@ export default function RewardItem({
   const {
     content: { color: contentColor },
     link: { color: linkColor },
-    mission: { color: missionColor }
+    mission: { color: missionColor },
+    reward: { color: rewardColor }
   } = useTheme();
   const NotiText = useMemo(() => {
     const params = {
@@ -41,6 +42,7 @@ export default function RewardItem({
       isTask,
       linkColor,
       missionColor,
+      rewardColor,
       rewardAmount,
       rewardType,
       rewarderId,
@@ -61,6 +63,7 @@ export default function RewardItem({
     linkColor,
     missionColor,
     rewardAmount,
+    rewardColor,
     rewardType,
     rewarderId,
     rewarderUsername,

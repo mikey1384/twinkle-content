@@ -39,6 +39,7 @@ function ContentInput() {
   const uploadContent = useAppContext((v) => v.requestHelpers.uploadContent);
   const { canEditRewardLevel, banned } = useMyState();
   const {
+    alert: { color: alertColor },
     success: { color: successColor }
   } = useTheme();
   const onLoadNewFeeds = useHomeContext((v) => v.actions.onLoadNewFeeds);
@@ -194,7 +195,7 @@ function ContentInput() {
     >
       <p>{postContentLabel}</p>
       {urlError && (
-        <Banner color="pink" style={{ marginBottom: '1rem' }}>
+        <Banner color={alertColor} style={{ marginBottom: '1rem' }}>
           {urlError}
         </Banner>
       )}

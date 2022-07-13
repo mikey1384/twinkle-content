@@ -25,7 +25,7 @@ import {
   isMobile,
   scrollElementToCenter
 } from 'helpers';
-import { useContentState, useMyState } from 'helpers/hooks';
+import { useContentState, useMyState, useTheme } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
@@ -84,6 +84,9 @@ export default function Body({
 
   const { authLevel, canDelete, canEdit, canReward, twinkleCoins, userId } =
     useMyState();
+  const {
+    reward: { color: rewardColor }
+  } = useTheme();
 
   const onSetIsEditing = useContentContext((v) => v.actions.onSetIsEditing);
   const onSetXpRewardInterfaceShown = useContentContext(
@@ -406,7 +409,7 @@ export default function Body({
                   )}
                   {userCanRewardThis && !secretHidden && (
                     <Button
-                      color="pink"
+                      color={rewardColor}
                       disabled={!!xpButtonDisabled}
                       className={css`
                         margin-left: 1rem;
@@ -478,7 +481,7 @@ export default function Body({
                   style={{ position: 'relative', marginRight: 0 }}
                 >
                   <Button
-                    color="pink"
+                    color={rewardColor}
                     filled={isRecommendedByUser}
                     disabled={recommendationInterfaceShown}
                     onClick={() => setRecommendationInterfaceShown(true)}

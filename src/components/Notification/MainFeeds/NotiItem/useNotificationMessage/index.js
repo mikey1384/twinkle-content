@@ -22,7 +22,8 @@ export default function useNotificationMessage({
   const {
     content: { color: contentColor },
     link: { color: linkColor },
-    mission: { color: missionColor }
+    mission: { color: missionColor },
+    reward: { color: rewardColor }
   } = useTheme();
   const NotificationMessage = useMemo(() => {
     const isReply = targetComment?.userId === userId;
@@ -36,6 +37,7 @@ export default function useNotificationMessage({
       isTask,
       linkColor,
       missionColor,
+      rewardColor,
       rewardRootId,
       rewardType,
       rewardRootMissionType,
@@ -56,6 +58,7 @@ export default function useNotificationMessage({
     isTask,
     linkColor,
     missionColor,
+    rewardColor,
     rewardRootId,
     rewardRootMissionType,
     rewardRootType,

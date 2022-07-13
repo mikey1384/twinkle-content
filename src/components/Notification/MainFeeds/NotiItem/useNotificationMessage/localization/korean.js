@@ -13,6 +13,7 @@ export default function renderEnglishMessage({
   isTask,
   linkColor,
   missionColor,
+  rewardColor,
   rewardRootId,
   rewardType,
   rewardRootMissionType,
@@ -163,7 +164,7 @@ export default function renderEnglishMessage({
               }
             />
             에 대한 회원님의 추천을{' '}
-            <b style={{ color: Color.pink() }}>승인했습니다</b>:{' '}
+            <b style={{ color: Color[rewardColor]() }}>승인했습니다</b>:{' '}
             <p style={{ fontWeight: 'bold', color: Color.brownOrange() }}>
               트윈클 코인 {actionObj.amount}개가 지급되었습니다
             </p>

@@ -27,7 +27,7 @@ import {
   isValidYoutubeUrl,
   replaceFakeAtSymbol
 } from 'helpers/stringHelpers';
-import { useContentState, useMyState } from 'helpers/hooks';
+import { useContentState, useMyState, useTheme } from 'helpers/hooks';
 import {
   useContentContext,
   useExploreContext,
@@ -97,6 +97,9 @@ export default function Details({
     canReward,
     twinkleCoins
   } = useMyState();
+  const {
+    reward: { color: rewardColor }
+  } = useTheme();
   const onSetIsEditing = useContentContext((v) => v.actions.onSetIsEditing);
   const onSetXpRewardInterfaceShown = useContentContext(
     (v) => v.actions.onSetXpRewardInterfaceShown
@@ -457,7 +460,7 @@ export default function Details({
               {rewardButtonShown && (
                 <Button
                   skeuomorphic
-                  color="pink"
+                  color={rewardColor}
                   disabled={xpButtonDisabled}
                   onClick={handleSetXpRewardInterfaceShown}
                 >
@@ -468,7 +471,7 @@ export default function Details({
                 </Button>
               )}
               <Button
-                color="pink"
+                color={rewardColor}
                 style={{ marginLeft: '1rem' }}
                 skeuomorphic
                 filled={isRecommendedByUser}

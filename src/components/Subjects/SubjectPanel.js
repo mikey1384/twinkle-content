@@ -21,7 +21,7 @@ import RecommendationInterface from 'components/RecommendationInterface';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { stringIsEmpty, addEmoji, finalizeEmoji } from 'helpers/stringHelpers';
-import { determineXpButtonDisabled } from 'helpers';
+import { determineUserCanRewardThis, determineXpButtonDisabled } from 'helpers';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { useContentState, useMyState, useTheme } from 'helpers/hooks';
 import { useAppContext, useContentContext } from 'contexts';
@@ -96,7 +96,8 @@ export default function SubjectPanel({
   } = useMyState();
   const {
     done: { color: doneColor },
-    content: { color: contentColor }
+    content: { color: contentColor },
+    reward: { color: rewardColor }
   } = useTheme();
 
   const {
@@ -154,11 +155,20 @@ export default function SubjectPanel({
       !(secretShown || userIsUploader),
     [secretAnswer, secretAttachment, secretShown, userIsUploader]
   );
+  const userCanRewardThis = useMemo(
+    () =>
+      determineUserCanRewardThis({
+        authLevel,
+        canReward,
+        recommendations,
+        uploader: { id: userId },
+        userId: myId
+      }),
+    [authLevel, canReward, myId, recommendations, userId]
+  );
   const rewardButtonShown = useMemo(() => {
-    return (
-      !onEdit && canReward && !userIsUploader && authLevel > uploaderAuthLevel
-    );
-  }, [authLevel, canReward, onEdit, uploaderAuthLevel, userIsUploader]);
+    return !onEdit && userCanRewardThis;
+  }, [onEdit, userCanRewardThis]);
   const finalRewardLevel = useMemo(() => {
     return byUser ? 5 : rootRewardLevel > 0 ? 1 : 0;
   }, [byUser, rootRewardLevel]);
@@ -392,7 +402,7 @@ export default function SubjectPanel({
                 {rewardButtonShown && (
                   <Button
                     skeuomorphic
-                    color="pink"
+                    color={rewardColor}
                     style={{ fontSize: '2rem', marginLeft: '1rem' }}
                     disabled={determineXpButtonDisabled({
                       rewardLevel: finalRewardLevel,
@@ -420,7 +430,7 @@ export default function SubjectPanel({
                   </Button>
                 )}
                 <Button
-                  color="pink"
+                  color={rewardColor}
                   style={{ fontSize: '2rem', marginLeft: '1rem' }}
                   skeuomorphic
                   filled={isRecommendedByUser}

@@ -58,6 +58,7 @@ export const strongColors = ['rose', 'red', 'purple'];
 
 export function Theme(color) {
   return {
+    alert: { color: 'pink' },
     alreadyPostedByOtherUser: { color: 'red' },
     alreadyPostedByThisUser: { color: 'blue' },
     button: { color },
@@ -97,6 +98,7 @@ export function Theme(color) {
     profilePanel: { color },
     progressBar: { color },
     reactionButton: { color, opacity: 0.2 },
+    reward: { color: 'pink' },
     rewardLevelForm: { color, opacity: strongColors.includes(color) ? 0.9 : 1 },
     rewardableRecommendation: { color, opacity: 0.1 },
     search: { color },
