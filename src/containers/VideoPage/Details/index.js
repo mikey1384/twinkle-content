@@ -468,14 +468,14 @@ export default function Details({
                 </Button>
               )}
               <Button
-                color="brownOrange"
+                color="pink"
                 style={{ marginLeft: '1rem' }}
                 skeuomorphic
                 filled={isRecommendedByUser}
                 disabled={recommendationInterfaceShown}
                 onClick={() => setRecommendationInterfaceShown(true)}
               >
-                <Icon icon="star" />
+                <Icon icon="heart" />
               </Button>
             </div>
           </div>

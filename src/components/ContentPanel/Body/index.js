@@ -478,12 +478,12 @@ export default function Body({
                   style={{ position: 'relative', marginRight: 0 }}
                 >
                   <Button
-                    color="brownOrange"
+                    color="pink"
                     filled={isRecommendedByUser}
                     disabled={recommendationInterfaceShown}
                     onClick={() => setRecommendationInterfaceShown(true)}
                   >
-                    <Icon icon="star" />
+                    <Icon icon="heart" />
                   </Button>
                   {(contentType === 'subject' ||
                     contentType === 'video' ||

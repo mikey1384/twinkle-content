@@ -405,7 +405,7 @@ function Message({
       result.push({
         label: (
           <>
-            <Icon icon="star"></Icon>
+            <Icon icon="star" />
             <span style={{ marginLeft: '1rem' }}>{rewardLabel}</span>
           </>
         ),
