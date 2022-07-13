@@ -6595,6 +6595,7 @@ export const VALID_GUESSES = [
   'keijo',
   'keirs',
   'keith',
+  'kelek',
   'kelep',
   'kelim',
   'kells',
