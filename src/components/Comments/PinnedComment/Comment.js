@@ -597,12 +597,12 @@ function Comment({
                       </div>
                       <div>
                         <Button
-                          color="brownOrange"
+                          color="pink"
                           filled={isRecommendedByUser}
                           disabled={recommendationInterfaceShown}
                           onClick={() => setRecommendationInterfaceShown(true)}
                         >
-                          <Icon icon="star" />
+                          <Icon icon="heart" />
                         </Button>
                       </div>
                     </div>

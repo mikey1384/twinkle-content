@@ -399,13 +399,13 @@ export default function LinkPage() {
           </div>
           <Button
             style={{ right: '1rem', bottom: '0.5rem', position: 'absolute' }}
-            color="brownOrange"
+            color="pink"
             skeuomorphic
             filled={isRecommendedByUser}
             disabled={recommendationInterfaceShown}
             onClick={() => setRecommendationInterfaceShown(true)}
           >
-            <Icon icon="star" />
+            <Icon icon="heart" />
           </Button>
         </div>
         {recommendationInterfaceShown && (

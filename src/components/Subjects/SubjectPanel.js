@@ -419,14 +419,14 @@ export default function SubjectPanel({
                   </Button>
                 )}
                 <Button
-                  color="brownOrange"
+                  color="pink"
                   style={{ fontSize: '2rem', marginLeft: '1rem' }}
                   skeuomorphic
                   filled={isRecommendedByUser}
                   disabled={recommendationInterfaceShown}
                   onClick={() => setRecommendationInterfaceShown(true)}
                 >
-                  <Icon icon="star" />
+                  <Icon icon="heart" />
                 </Button>
               </div>
             )}
