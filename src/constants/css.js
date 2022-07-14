@@ -55,7 +55,7 @@ export const Color = {
   rose: (opacity = 1) => `rgba(223,0,102,${opacity})`,
   vantaBlack: (opacity = 1) => `rgba(0,0,0,${opacity})`,
   white: (opacity = 1) => `rgba(255,255,255,${opacity})`,
-  yellow: (opacity = 1) => `rgba(253,253,150,${opacity})`
+  yellow: (opacity = 1) => `rgba(255,255,0,${opacity})`
 };
 
 export const strongColors = ['rose', 'red', 'purple'];
@@ -115,6 +115,9 @@ export function Theme(color) {
     showMeAnotherSubjectButton: { color: 'green' },
     skeuomorphicDisabled: { color, opacity: 0.2 },
     spinner: { color },
+    statusMsgLink: {
+      color: { ivory: 'blue', orange: 'yellow', red: 'yellow' }[color] || 'gold'
+    },
     success: { color: 'green' },
     switch: { color },
     tableHeader: { color },

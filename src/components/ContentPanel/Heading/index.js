@@ -8,6 +8,7 @@ import useHeadingText from './useHeadingText';
 
 Heading.propTypes = {
   action: PropTypes.string.isRequired,
+  theme: PropTypes.string,
   contentObj: PropTypes.shape({
     id: PropTypes.number,
     byUser: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
@@ -27,13 +28,15 @@ Heading.propTypes = {
 
 function Heading({
   action,
+  theme,
   contentObj,
   contentObj: { contentType, id, rootObj = {}, timeStamp, uploader = {} }
 }) {
   const navigate = useNavigate();
   const HeadingText = useHeadingText({
     action,
-    contentObj
+    contentObj,
+    theme
   });
 
   return (

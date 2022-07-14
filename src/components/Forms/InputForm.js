@@ -52,6 +52,7 @@ InputForm.propTypes = {
   rows: PropTypes.number,
   onViewSecretAnswer: PropTypes.func,
   style: PropTypes.object,
+  theme: PropTypes.string,
   targetCommentId: PropTypes.number
 };
 
@@ -66,6 +67,7 @@ function InputForm({
   rows,
   onViewSecretAnswer,
   style = {},
+  theme,
   targetCommentId
 }) {
   const { userId, authLevel, twinkleXP, fileUploadLvl } = useMyState();
@@ -75,7 +77,7 @@ function InputForm({
       opacity: skeuomorphicDisabledOpacity
     },
     button: { color: buttonColor }
-  } = useTheme();
+  } = useTheme(theme);
   const maxSize = useMemo(
     () => returnMaxUploadSize(fileUploadLvl),
     [fileUploadLvl]

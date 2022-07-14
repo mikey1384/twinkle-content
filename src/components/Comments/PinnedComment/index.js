@@ -15,6 +15,7 @@ PinnedComment.propTypes = {
   parent: PropTypes.object,
   rootContent: PropTypes.object,
   subject: PropTypes.object,
+  theme: PropTypes.string,
   userId: PropTypes.number
 };
 
@@ -23,6 +24,7 @@ export default function PinnedComment({
   parent,
   rootContent,
   subject,
+  theme,
   userId
 }) {
   const loadContent = useAppContext((v) => v.requestHelpers.loadContent);
@@ -73,6 +75,7 @@ export default function PinnedComment({
             rootContent={rootContent}
             subject={subject}
             comment={comment}
+            theme={theme}
             userId={userId}
           />
         </div>

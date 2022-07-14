@@ -104,7 +104,11 @@ export default function MissionProgress({
         loaded={missionsLoaded}
         style={style}
       >
-        <FilterBar bordered style={{ fontSize: '1.5rem', height: '5rem' }}>
+        <FilterBar
+          color={selectedTheme}
+          bordered
+          style={{ fontSize: '1.5rem', height: '5rem' }}
+        >
           <nav
             className={selectedMissionListTab === 'complete' ? 'active' : ''}
             onClick={() =>

@@ -49,6 +49,7 @@ TargetContent.propTypes = {
   rootType: PropTypes.string.isRequired,
   onShowTCReplyInput: PropTypes.func.isRequired,
   style: PropTypes.object,
+  theme: PropTypes.string,
   targetObj: PropTypes.object
 };
 
@@ -60,6 +61,7 @@ export default function TargetContent({
   rootType,
   onShowTCReplyInput,
   style,
+  theme,
   targetObj: {
     comment,
     comment: { comments = [] } = {},
@@ -83,7 +85,7 @@ export default function TargetContent({
     link: { color: linkColor },
     content: { color: contentColor },
     reward: { color: rewardColor }
-  } = useTheme();
+  } = useTheme(theme);
   const onSetXpRewardInterfaceShown = useContentContext(
     (v) => v.actions.onSetXpRewardInterfaceShown
   );
@@ -377,7 +379,7 @@ export default function TargetContent({
                         onClick={() => navigate(`/subjects/${subject.id}`)}
                       />
                     ) : (
-                      <LongText>{comment.content}</LongText>
+                      <LongText theme={theme}>{comment.content}</LongText>
                     )}
                   </div>
                 </div>
@@ -554,6 +556,7 @@ export default function TargetContent({
                         profilePicUrl={profilePicUrl}
                         onDelete={onDeleteComment}
                         onEditDone={onEditComment}
+                        theme={theme}
                       />
                     ))}
                 </div>

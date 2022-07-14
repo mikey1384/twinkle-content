@@ -33,7 +33,7 @@ export default function Feeds({
   const { filter } = useParams();
   const {
     loadMoreButton: { color: loadMoreButtonColor }
-  } = useTheme();
+  } = useTheme(selectedTheme || 'logoBlue');
   const location = useLocation();
   const navigate = useNavigate();
   const [loadingFeeds, setLoadingFeeds] = useState(false);

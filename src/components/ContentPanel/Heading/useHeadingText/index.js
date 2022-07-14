@@ -4,7 +4,7 @@ import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import renderEnglishMessage from './localization/english';
 import renderKoreanMessage from './localization/korean';
 
-export default function useHeadingText({ action, contentObj }) {
+export default function useHeadingText({ action, contentObj, theme }) {
   const {
     id,
     byUser,
@@ -20,7 +20,7 @@ export default function useHeadingText({ action, contentObj }) {
     link: { color: linkColor },
     userLink: { color: userLinkColor, opacity: userLinkOpacity },
     content: { color: contentColor }
-  } = useTheme();
+  } = useTheme(theme);
   const HeadingText = useMemo(() => {
     const params = {
       id,
@@ -35,6 +35,7 @@ export default function useHeadingText({ action, contentObj }) {
       rootObj,
       rootType,
       targetObj,
+      theme,
       uploader,
       userLinkColor,
       userLinkOpacity
@@ -55,6 +56,7 @@ export default function useHeadingText({ action, contentObj }) {
     rootObj,
     rootType,
     targetObj,
+    theme,
     uploader,
     userLinkColor,
     userLinkOpacity

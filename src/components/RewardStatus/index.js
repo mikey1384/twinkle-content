@@ -21,7 +21,8 @@ RewardStatus.propTypes = {
   noMarginForEditButton: PropTypes.bool,
   onCommentEdit: PropTypes.func,
   rewards: PropTypes.array,
-  style: PropTypes.object
+  style: PropTypes.object,
+  theme: PropTypes.string
 };
 
 function RewardStatus({
@@ -32,12 +33,13 @@ function RewardStatus({
   noMarginForEditButton,
   onCommentEdit,
   rewards = [],
-  style
+  style,
+  theme
 }) {
   const { userId } = useMyState();
   const {
     info: { color: infoColor }
-  } = useTheme();
+  } = useTheme(theme);
   const [numLoaded, setNumLoaded] = useState(2);
   rewards = useMemo(() => {
     const rewardsWithComment = rewards.filter(

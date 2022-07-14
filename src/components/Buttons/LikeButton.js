@@ -17,7 +17,8 @@ LikeButton.propTypes = {
   filled: PropTypes.bool,
   likes: PropTypes.array,
   onClick: PropTypes.func,
-  style: PropTypes.object
+  style: PropTypes.object,
+  theme: PropTypes.string
 };
 
 function LikeButton({
@@ -27,6 +28,7 @@ function LikeButton({
   filled,
   likes,
   style,
+  theme,
   onClick = () => {}
 }) {
   const likeContent = useAppContext((v) => v.requestHelpers.likeContent);
@@ -43,7 +45,7 @@ function LikeButton({
   const {
     likeButton: { color: likeButtonColor },
     likeButtonPressed: { color: likeButtonPressedColor }
-  } = useTheme();
+  } = useTheme(theme);
 
   return (
     <ErrorBoundary componentPath="LikeButton">

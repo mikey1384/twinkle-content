@@ -45,7 +45,8 @@ Body.propTypes = {
   commentsShown: PropTypes.bool,
   inputAtBottom: PropTypes.bool,
   numPreviewComments: PropTypes.number,
-  onChangeSpoilerStatus: PropTypes.func.isRequired
+  onChangeSpoilerStatus: PropTypes.func.isRequired,
+  theme: PropTypes.string
 };
 
 export default function Body({
@@ -77,7 +78,8 @@ export default function Body({
   },
   inputAtBottom,
   numPreviewComments,
-  onChangeSpoilerStatus
+  onChangeSpoilerStatus,
+  theme
 }) {
   const deleteContent = useAppContext((v) => v.requestHelpers.deleteContent);
   const loadComments = useAppContext((v) => v.requestHelpers.loadComments);
@@ -86,7 +88,7 @@ export default function Body({
     useMyState();
   const {
     reward: { color: rewardColor }
-  } = useTheme();
+  } = useTheme(theme);
 
   const onSetIsEditing = useContentContext((v) => v.actions.onSetIsEditing);
   const onSetXpRewardInterfaceShown = useContentContext(
@@ -317,6 +319,7 @@ export default function Body({
           contentId={contentId}
           contentType={contentType}
           secretHidden={secretHidden}
+          theme={theme}
           userId={userId}
           onClickSecretAnswer={onSecretAnswerClick}
         />
@@ -375,6 +378,7 @@ export default function Body({
                       key="likeButton"
                       onClick={handleLikeClick}
                       small
+                      theme={theme}
                     />
                   )}
                   {!secretHidden && (
@@ -583,6 +587,7 @@ export default function Body({
         />
         {!isNotification && (
           <Comments
+            theme={theme}
             autoExpand={
               (autoExpand && !secretHidden) ||
               (contentType === 'subject' && secretHidden)

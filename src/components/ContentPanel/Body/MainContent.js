@@ -27,6 +27,7 @@ MainContent.propTypes = {
   contentType: PropTypes.string.isRequired,
   onClickSecretAnswer: PropTypes.func.isRequired,
   secretHidden: PropTypes.bool,
+  theme: PropTypes.string,
   userId: PropTypes.number
 };
 
@@ -37,6 +38,7 @@ export default function MainContent({
   contentType,
   onClickSecretAnswer,
   secretHidden,
+  theme,
   userId
 }) {
   const ContainerRef = useRef(null);
@@ -82,7 +84,7 @@ export default function MainContent({
       opacity: byUserIndicatorOpacity
     },
     content: { color: contentColor }
-  } = useTheme();
+  } = useTheme(theme);
   const { fileType } = useMemo(
     () => (fileName ? getFileInfoFromFileName(fileName) : ''),
     [fileName]
@@ -118,7 +120,7 @@ export default function MainContent({
     <ErrorBoundary componentPath="ContentPanel/Body/MainContent">
       <div ref={ContainerRef}>
         {contentType === 'pass' && (
-          <MissionContent uploader={uploader} rootObj={rootObj} />
+          <MissionContent theme={theme} uploader={uploader} rootObj={rootObj} />
         )}
         {(contentType === 'video' || subjectIsAttachedToVideo) && (
           <XPVideoPlayer
@@ -294,6 +296,7 @@ export default function MainContent({
                       contentId={contentId}
                       contentType={contentType}
                       section="content"
+                      theme={theme}
                     >
                       {content}
                     </LongText>

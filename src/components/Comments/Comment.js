@@ -99,7 +99,8 @@ Comment.propTypes = {
   rootContent: PropTypes.shape({
     contentType: PropTypes.string
   }),
-  subject: PropTypes.object
+  subject: PropTypes.object,
+  theme: PropTypes.string
 };
 
 function Comment({
@@ -110,6 +111,7 @@ function Comment({
   pinnedCommentId,
   rootContent = {},
   subject,
+  theme,
   comment: {
     id: commentId,
     replies = [],
@@ -155,7 +157,7 @@ function Comment({
   const {
     link: { color: linkColor },
     reward: { color: rewardColor }
-  } = useTheme();
+  } = useTheme(theme);
   const onChangeSpoilerStatus = useContentContext(
     (v) => v.actions.onChangeSpoilerStatus
   );
@@ -711,6 +713,7 @@ function Comment({
                         </div>
                       ) : !commentIsEmpty ? (
                         <LongText
+                          theme={theme}
                           contentId={commentId}
                           contentType="comment"
                           section="comment"
@@ -738,6 +741,7 @@ function Comment({
                                   contentId={comment.id}
                                   onClick={handleLikeClick}
                                   likes={likes}
+                                  theme={theme}
                                 />
                                 <Button
                                   disabled={loadingReplies}
@@ -853,6 +857,7 @@ function Comment({
                       fontSize: '1.5rem',
                       marginTop: likes?.length > 0 ? '0.5rem' : '1rem'
                     }}
+                    theme={theme}
                     rewards={rewards}
                     uploaderName={uploader?.username}
                   />
@@ -872,6 +877,7 @@ function Comment({
                         style={{
                           marginTop: '0.5rem'
                         }}
+                        theme={theme}
                         targetCommentId={comment.id}
                       />
                       <Replies
@@ -886,6 +892,7 @@ function Comment({
                         onPinReply={handlePinComment}
                         onReplySubmit={onReplySubmit}
                         ReplyRefs={ReplyRefs}
+                        theme={theme}
                       />
                     </>
                   )}

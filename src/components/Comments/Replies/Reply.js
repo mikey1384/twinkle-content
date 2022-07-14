@@ -77,7 +77,8 @@ Reply.propTypes = {
   }),
   rootContent: PropTypes.object,
   subject: PropTypes.object,
-  onSubmitReply: PropTypes.func.isRequired
+  onSubmitReply: PropTypes.func.isRequired,
+  theme: PropTypes.string
 };
 
 function Reply({
@@ -103,7 +104,8 @@ function Reply({
   },
   rootContent,
   onSubmitReply,
-  subject
+  subject,
+  theme
 }) {
   const editContent = useAppContext((v) => v.requestHelpers.editContent);
   const loadReplies = useAppContext((v) => v.requestHelpers.loadReplies);
@@ -120,7 +122,7 @@ function Reply({
   const {
     link: { color: linkColor },
     reward: { color: rewardColor }
-  } = useTheme();
+  } = useTheme(theme);
   const onSetIsEditing = useContentContext((v) => v.actions.onSetIsEditing);
   const onSetXpRewardInterfaceShown = useContentContext(
     (v) => v.actions.onSetXpRewardInterfaceShown
@@ -417,6 +419,7 @@ function Reply({
                 <div>
                   {!replyIsEmpty ? (
                     <LongText
+                      theme={theme}
                       contentType="comment"
                       contentId={reply.id}
                       section="reply"
@@ -439,6 +442,7 @@ function Reply({
                           contentType="comment"
                           onClick={handleLikeClick}
                           likes={likes}
+                          theme={theme}
                           small
                         />
                         <Button
@@ -561,6 +565,7 @@ function Reply({
               style={{
                 marginTop: '0.5rem'
               }}
+              theme={theme}
               targetCommentId={reply.id}
             />
           </section>

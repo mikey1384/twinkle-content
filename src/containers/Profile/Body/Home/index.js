@@ -107,6 +107,7 @@ export default function Home({ profile, selectedTheme }) {
           title={messageBoardLabel}
         >
           <Comments
+            theme={selectedTheme}
             comments={comments}
             commentsLoadLimit={5}
             commentsShown={true}

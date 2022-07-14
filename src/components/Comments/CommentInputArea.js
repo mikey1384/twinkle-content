@@ -23,7 +23,8 @@ CommentInputArea.propTypes = {
   subjectId: PropTypes.number,
   style: PropTypes.object,
   subjectRewardLevel: PropTypes.number,
-  targetCommentId: PropTypes.number
+  targetCommentId: PropTypes.number,
+  theme: PropTypes.string
 };
 
 export default function CommentInputArea({
@@ -40,7 +41,8 @@ export default function CommentInputArea({
   subjectId,
   style,
   subjectRewardLevel,
-  targetCommentId
+  targetCommentId,
+  theme
 }) {
   const placeholderLabel = useMemo(() => {
     if (SELECTED_LANGUAGE === 'kr') {
@@ -102,6 +104,7 @@ export default function CommentInputArea({
           rows={numInputRows}
           placeholder={placeholderLabel}
           targetCommentId={targetCommentId}
+          theme={theme}
         />
       )}
     </div>

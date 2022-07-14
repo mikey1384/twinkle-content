@@ -9,6 +9,7 @@ import { Color } from 'constants/css';
 import { useContentState, useTheme } from 'helpers/hooks';
 import { useContentContext } from 'contexts';
 import localize from 'constants/localize';
+import { css } from '@emotion/css';
 
 const readMoreLabel = localize('readMore');
 const lineHeight = 1.7;
@@ -20,11 +21,13 @@ LongText.propTypes = {
   contentId: PropTypes.number,
   contentType: PropTypes.string,
   isPreview: PropTypes.bool,
+  isStatusMsg: PropTypes.bool,
   maxLines: PropTypes.number,
   section: PropTypes.string,
   style: PropTypes.object,
   readMoreHeightFixed: PropTypes.bool,
-  readMoreColor: PropTypes.string
+  readMoreColor: PropTypes.string,
+  theme: PropTypes.string
 };
 
 export default function LongText({
@@ -35,14 +38,18 @@ export default function LongText({
   contentId,
   contentType,
   isPreview,
+  isStatusMsg,
   section,
   maxLines = 10,
   readMoreHeightFixed,
-  readMoreColor
+  readMoreColor,
+  theme
 }) {
   const {
+    statusMsgLink: { color: statusMsgLinkColor },
     link: { color: linkColor }
-  } = useTheme();
+  } = useTheme(theme);
+
   const onSetFullTextState = useContentContext(
     (v) => v.actions.onSetFullTextState
   );
@@ -119,6 +126,11 @@ export default function LongText({
                 WebkitBoxOrient: 'vertical'
               })
         }}
+        className={css`
+          > a {
+            color: ${Color[isStatusMsg ? statusMsgLinkColor : linkColor]()};
+          }
+        `}
       >
         {innerHTML}
       </span>

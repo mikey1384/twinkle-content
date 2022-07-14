@@ -72,7 +72,8 @@ Comment.propTypes = {
   rootContent: PropTypes.shape({
     contentType: PropTypes.string
   }),
-  subject: PropTypes.object
+  subject: PropTypes.object,
+  theme: PropTypes.string
 };
 
 function Comment({
@@ -82,6 +83,7 @@ function Comment({
   parent,
   rootContent = {},
   subject,
+  theme,
   comment: {
     id: commentId,
     replies = [],
@@ -120,7 +122,7 @@ function Comment({
   const {
     link: { color: linkColor },
     reward: { color: rewardColor }
-  } = useTheme();
+  } = useTheme(theme);
   const onChangeSpoilerStatus = useContentContext(
     (v) => v.actions.onChangeSpoilerStatus
   );
@@ -659,6 +661,7 @@ function Comment({
                   marginTop: likes?.length > 0 ? '0.5rem' : '1rem'
                 }}
                 rewards={rewards}
+                theme={theme}
                 uploaderName={uploader.username}
               />
             )}

@@ -59,6 +59,7 @@ Comments.propTypes = {
   showSecretButtonAvailable: PropTypes.bool,
   style: PropTypes.object,
   subject: PropTypes.object,
+  theme: PropTypes.string,
   userId: PropTypes.number
 };
 
@@ -93,12 +94,13 @@ function Comments({
   showSecretButtonAvailable,
   subject,
   style,
+  theme,
   userId
 }) {
   const { banned } = useMyState();
   const {
     loadMoreButton: { color: loadMoreButtonColor }
-  } = useTheme();
+  } = useTheme(theme);
   const uploadThumb = useAppContext((v) => v.requestHelpers.uploadThumb);
   const deleteContent = useAppContext((v) => v.requestHelpers.deleteContent);
   const loadComments = useAppContext((v) => v.requestHelpers.loadComments);
@@ -321,6 +323,7 @@ function Comments({
               : 0
           }
           style={style}
+          theme={theme}
           targetCommentId={
             parent.contentType === 'comment' ? parent.contentId : null
           }
@@ -388,7 +391,8 @@ function Comments({
       parent,
       showSecretButtonAvailable,
       subject?.id,
-      subject?.rewardLevel
+      subject?.rewardLevel,
+      theme
     ]
   );
 
@@ -531,6 +535,7 @@ function Comments({
                   subject={subject}
                   commentId={pinnedCommentId}
                   userId={userId}
+                  theme={theme}
                 />
               )}
             {inputAtBottom && loadMoreButton && renderLoadMoreButton()}
@@ -542,6 +547,7 @@ function Comments({
                   parent={parent}
                   rootContent={rootContent}
                   subject={subject}
+                  theme={theme}
                   comment={comment}
                   pinnedCommentId={pinnedCommentId}
                   key={comment.id}
@@ -554,9 +560,7 @@ function Comments({
         {inputAtBottom &&
           !noInput &&
           (commentsShown || autoExpand) &&
-          renderInputArea({
-            marginTop: comments.length > 0 ? '1rem' : 0
-          })}
+          renderInputArea({ marginTop: comments.length > 0 ? '1rem' : 0 })}
       </div>
     </Context.Provider>
   );

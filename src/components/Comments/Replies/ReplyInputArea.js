@@ -18,6 +18,7 @@ ReplyInputArea.propTypes = {
   parent: PropTypes.object.isRequired,
   rows: PropTypes.number,
   style: PropTypes.object,
+  theme: PropTypes.string,
   targetCommentId: PropTypes.number
 };
 
@@ -29,6 +30,7 @@ export default function ReplyInputArea({
   rootCommentId,
   style,
   targetCommentId,
+  theme,
   rows = 1
 }) {
   const state = useInputContext((v) => v.state);
@@ -68,6 +70,7 @@ export default function ReplyInputArea({
             parent={parent}
             placeholder={`${enterReplyLabel}...`}
             rows={rows}
+            theme={theme}
             targetCommentId={targetCommentId}
           />
         )}

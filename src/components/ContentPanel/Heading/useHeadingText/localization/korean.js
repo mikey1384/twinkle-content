@@ -17,6 +17,7 @@ export default function renderKoreanMessage({
   rootObj,
   rootType,
   targetObj,
+  theme,
   uploader,
   userLinkColor,
   userLinkOpacity
@@ -31,16 +32,22 @@ export default function renderKoreanMessage({
         <>
           <UsernameText user={uploader} color={Color[linkColor]()} />
           님이 동영상을 게시했습니다:{' '}
-          <ContentLink content={contentObj} contentType={contentType} />{' '}
+          <ContentLink
+            theme={theme}
+            content={contentObj}
+            contentType={contentType}
+          />{' '}
         </>
       );
     case 'comment':
       return (
         <>
           <UsernameText user={uploader} color={Color[linkColor]()} />
-          님이 <ContentLink content={rootObj} contentType={rootType} />(
-          {localize(contentLabel)})에 {renderTargetAction()}
+          님이{' '}
+          <ContentLink theme={theme} content={rootObj} contentType={rootType} />
+          ({localize(contentLabel)})에 {renderTargetAction()}
           <ContentLink
+            theme={theme}
             content={{ id, title: action }}
             contentType={contentType}
             style={{ color: contentLinkColor }}
@@ -52,7 +59,11 @@ export default function renderKoreanMessage({
         <>
           <UsernameText user={uploader} color={Color[linkColor]()} /> 님이
           링크를 공유했습니다:{' '}
-          <ContentLink content={contentObj} contentType={contentType} />{' '}
+          <ContentLink
+            theme={theme}
+            content={contentObj}
+            contentType={contentType}
+          />{' '}
         </>
       );
     case 'subject':
@@ -63,11 +74,16 @@ export default function renderKoreanMessage({
           {rootObj.id && (
             <>
               {localize(contentLabel)}(
-              <ContentLink content={rootObj} contentType={rootType} />
+              <ContentLink
+                theme={theme}
+                content={rootObj}
+                contentType={rootType}
+              />
               )에{' '}
             </>
           )}
           <ContentLink
+            theme={theme}
             content={{ id, title: '주제를' }}
             contentType={contentType}
             style={{
@@ -85,6 +101,7 @@ export default function renderKoreanMessage({
           <UsernameText user={uploader} color={Color[linkColor]()} />
           님이{' '}
           <ContentLink
+            theme={theme}
             content={{
               id: rootObj.id,
               title: `${rootObj.isTask ? '과제' : '임무'}(${rootObj.title})`,
@@ -111,6 +128,7 @@ export default function renderKoreanMessage({
           />
           님이 남기신{' '}
           <ContentLink
+            theme={theme}
             content={{
               id: replyId || commentId,
               title: replyId

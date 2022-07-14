@@ -75,8 +75,9 @@ export default function NotableActivities({
         const { contentId, contentType } = notable;
         return (
           <ContentPanel
-            alwaysShow={feeds.length <= 3}
             key={contentType + contentId}
+            theme={selectedTheme}
+            alwaysShow={feeds.length <= 3}
             zIndex={feeds.length - index}
             style={{ marginBottom: '1rem' }}
             contentId={contentId}

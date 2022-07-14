@@ -14,14 +14,15 @@ const missionAccomplishedLabel = localize('missionAccomplished');
 
 MissionContent.propTypes = {
   uploader: PropTypes.object.isRequired,
-  rootObj: PropTypes.object.isRequired
+  rootObj: PropTypes.object.isRequired,
+  theme: PropTypes.string
 };
 
-export default function MissionContent({ uploader, rootObj: mission }) {
+export default function MissionContent({ uploader, rootObj: mission, theme }) {
   const {
     link: { color: linkColor },
     xpNumber: { color: xpNumberColor }
-  } = useTheme();
+  } = useTheme(theme);
 
   const rewardDetails = useMemo(() => {
     return mission.xpReward || mission.coinReward ? (

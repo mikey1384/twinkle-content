@@ -27,6 +27,7 @@ ContentPanel.propTypes = {
   contentType: PropTypes.string.isRequired,
   numPreviewComments: PropTypes.number,
   style: PropTypes.object,
+  theme: PropTypes.string,
   zIndex: PropTypes.number
 };
 
@@ -39,6 +40,7 @@ export default function ContentPanel({
   contentType,
   numPreviewComments = 0,
   style = {},
+  theme,
   zIndex = 1
 }) {
   const [ComponentRef, inView] = useInView({
@@ -250,6 +252,7 @@ export default function ContentPanel({
                   {loaded && (
                     <>
                       <Heading
+                        theme={theme}
                         contentObj={contentState}
                         action={
                           commentId
@@ -271,6 +274,7 @@ export default function ContentPanel({
                           inputAtBottom={inputAtBottom}
                           numPreviewComments={numPreviewComments}
                           onChangeSpoilerStatus={onChangeSpoilerStatus}
+                          theme={theme}
                         />
                       </div>
                     </>
@@ -282,6 +286,7 @@ export default function ContentPanel({
                       position: 'relative',
                       zIndex: 2
                     }}
+                    theme={theme}
                     targetObj={targetObj}
                     rootObj={rootObj}
                     rootType={contentState.rootType}

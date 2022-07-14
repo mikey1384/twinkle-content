@@ -16,7 +16,8 @@ ContentLink.propTypes = {
     username: PropTypes.string
   }).isRequired,
   style: PropTypes.object,
-  contentType: PropTypes.string
+  contentType: PropTypes.string,
+  theme: PropTypes.string
 };
 
 export default function ContentLink({
@@ -30,12 +31,13 @@ export default function ContentLink({
     title,
     username
   },
-  contentType
+  contentType,
+  theme
 }) {
   const {
     userLink: { color: userLinkColor, opacity: userLinkOpacity },
     link: { color: linkColor }
-  } = useTheme();
+  } = useTheme(theme);
   const destination = useMemo(() => {
     let result = '';
     if (contentType === 'url') {

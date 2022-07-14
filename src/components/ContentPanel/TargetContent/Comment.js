@@ -30,6 +30,7 @@ Comment.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onEditDone: PropTypes.func.isRequired,
   profilePicUrl: PropTypes.string,
+  theme: PropTypes.string,
   userId: PropTypes.number,
   username: PropTypes.string.isRequired
 };
@@ -40,6 +41,7 @@ function Comment({
   onDelete,
   onEditDone,
   profilePicUrl,
+  theme,
   userId,
   username
 }) {
@@ -145,6 +147,7 @@ function Comment({
           ) : (
             <div style={{ paddingLeft: '0px' }}>
               <LongText
+                theme={theme}
                 style={{
                   whiteSpace: 'pre-wrap',
                   overflowWrap: 'break-word',

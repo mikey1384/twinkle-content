@@ -16,6 +16,7 @@ export default function renderEnglishMessage({
   rootObj,
   rootType,
   targetObj,
+  theme,
   uploader,
   userLinkColor,
   userLinkOpacity
@@ -29,7 +30,12 @@ export default function renderEnglishMessage({
       return (
         <>
           <UsernameText user={uploader} color={Color[linkColor]()} /> uploaded a
-          video: <ContentLink content={contentObj} contentType={contentType} />{' '}
+          video:{' '}
+          <ContentLink
+            content={contentObj}
+            contentType={contentType}
+            theme={theme}
+          />{' '}
         </>
       );
     case 'comment':
@@ -40,9 +46,10 @@ export default function renderEnglishMessage({
             content={{ id, title: action }}
             contentType={contentType}
             style={{ color: contentLinkColor }}
+            theme={theme}
           />
           {renderTargetAction()} {contentLabel}:{' '}
-          <ContentLink content={rootObj} contentType={rootType} />{' '}
+          <ContentLink content={rootObj} contentType={rootType} theme={theme} />{' '}
         </>
       );
     case 'url':
@@ -50,7 +57,11 @@ export default function renderEnglishMessage({
         <>
           <UsernameText user={uploader} color={Color[linkColor]()} /> shared a
           link:&nbsp;
-          <ContentLink content={contentObj} contentType={contentType} />{' '}
+          <ContentLink
+            content={contentObj}
+            contentType={contentType}
+            theme={theme}
+          />{' '}
         </>
       );
     case 'subject':
@@ -60,6 +71,7 @@ export default function renderEnglishMessage({
           <ContentLink
             content={{ id, title: 'subject ' }}
             contentType={contentType}
+            theme={theme}
             style={{
               color: byUser
                 ? Color[userLinkColor](userLinkOpacity)
@@ -69,7 +81,11 @@ export default function renderEnglishMessage({
           {rootObj.id && (
             <>
               on {contentLabel}:{' '}
-              <ContentLink content={rootObj} contentType={rootType} />{' '}
+              <ContentLink
+                content={rootObj}
+                contentType={rootType}
+                theme={theme}
+              />{' '}
             </>
           )}
         </>
@@ -88,6 +104,7 @@ export default function renderEnglishMessage({
             }}
             contentType="mission"
             style={{ color: Color.orange() }}
+            theme={theme}
           />{' '}
         </>
       );
@@ -116,6 +133,7 @@ export default function renderEnglishMessage({
             }}
             contentType="comment"
             style={{ color: contentLinkColor }}
+            theme={theme}
           />
           {!replyId && rootType === 'user' ? 'to' : 'on'}
         </span>

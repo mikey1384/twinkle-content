@@ -25,6 +25,7 @@ Replies.propTypes = {
   pinnedCommentId: PropTypes.number,
   ReplyRefs: PropTypes.object,
   rootContent: PropTypes.object,
+  theme: PropTypes.string,
   userId: PropTypes.number
 };
 
@@ -37,7 +38,8 @@ function Replies({
   parent,
   pinnedCommentId,
   rootContent,
-  ReplyRefs
+  ReplyRefs,
+  theme
 }) {
   const {
     onDelete,
@@ -48,7 +50,7 @@ function Replies({
   } = useContext(LocalContext);
   const {
     loadMoreButton: { color: loadMoreButtonColor }
-  } = useTheme();
+  } = useTheme(theme);
   const loadReplies = useAppContext((v) => v.requestHelpers.loadReplies);
   const [deleting, setDeleting] = useState(false);
   const [replying, setReplying] = useState(false);
@@ -132,6 +134,7 @@ function Replies({
             pinnedCommentId={pinnedCommentId}
             rootContent={rootContent}
             subject={subject}
+            theme={theme}
             onSubmitReply={handleSubmitReply}
           />
         );
