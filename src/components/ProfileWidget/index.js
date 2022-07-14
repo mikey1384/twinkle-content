@@ -32,7 +32,7 @@ export default function ProfileWidget({ onLoadImage, onShowAlert }) {
   return (
     <ErrorBoundary componentPath="ProfileWidget/index">
       <div className={container} style={{ cursor: 'pointer' }}>
-        {username && (
+        {username ? (
           <div
             className="heading"
             onClick={() => (username ? navigate(`/users/${username}`) : null)}
@@ -56,14 +56,14 @@ export default function ProfileWidget({ onLoadImage, onShowAlert }) {
               )}
             </div>
           </div>
-        )}
+        ) : null}
         <div
           className={`details ${css`
             border-top-right-radius: ${username ? '' : borderRadius};
             border-top-left-radius: ${username ? '' : borderRadius};
           `}`}
         >
-          {userId && (
+          {userId ? (
             <div>
               <Button
                 style={{ width: '100%' }}
@@ -80,9 +80,8 @@ export default function ProfileWidget({ onLoadImage, onShowAlert }) {
                 {changePictureLabel}
               </Button>
             </div>
-          )}
+          ) : null}
           <WelcomeMessage userId={userId} openSigninModal={onOpenSigninModal} />
-
           <input
             ref={FileInputRef}
             style={{ display: 'none' }}

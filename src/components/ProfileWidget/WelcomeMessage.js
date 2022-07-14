@@ -23,13 +23,13 @@ export default function WelcomeMessage({ userId, openSigninModal }) {
         textAlign: 'center'
       }}
     >
-      {!userId && (
+      {!userId ? (
         <div style={{ width: '100%' }}>
           <div className="login-message">{logInLabel}</div>
           <div className="login-message">{toAccessAllFeaturesLabel}</div>
         </div>
-      )}
-      {!userId && (
+      ) : null}
+      {!userId ? (
         <Button
           filled
           color="green"
@@ -38,7 +38,7 @@ export default function WelcomeMessage({ userId, openSigninModal }) {
         >
           {tapHereLabel}!
         </Button>
-      )}
+      ) : null}
     </div>
   );
 }
