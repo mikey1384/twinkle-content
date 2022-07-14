@@ -62,7 +62,7 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
   const { hideWatched, userId } = useMyState();
   const {
     link: { color: linkColor },
-    userLink: { color: userLinkColor, opacity: userLinkOpacity },
+    userLink: { color: userLinkColor },
     spinner: { color: spinnerColor }
   } = useTheme();
   const numNewNotis = useNotiContext((v) => v.state.numNewNotis);
@@ -414,9 +414,7 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
               arePlaylistVideos ? `?playlist=${playlistId}` : ''
             }`}
             style={{
-              color: video.byUser
-                ? Color[userLinkColor](userLinkOpacity)
-                : Color[linkColor]()
+              color: video.byUser ? Color[userLinkColor]() : Color[linkColor]()
             }}
           >
             {video.title}

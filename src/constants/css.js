@@ -4,6 +4,7 @@ export const Color = {
   darkBlue: (opacity = 1) => `rgba(0,70,195,${opacity})`,
   logoBlue: (opacity = 1) => `rgba(65, 140, 235,${opacity})`,
   oceanBlue: (opacity = 1) => `rgba(33,150,243,${opacity})`,
+  darkOceanBlue: (opacity = 1) => `rgba(33,125,193,${opacity})`,
   black: (opacity = 1) => `rgba(51,51,51,${opacity})`,
   brown: (opacity = 1) => `rgba(139,69,19,${opacity})`,
   lightBrown: (opacity = 1) => `rgba(150,125,76,${opacity})`,
@@ -47,6 +48,7 @@ export const Color = {
   passionFruit: (opacity = 1) => `rgba(243,103,123,${opacity})`,
   peach: (opacity = 1) => `rgba(255,175,150,${opacity})`,
   pink: (opacity = 1) => `rgba(255,105,180,${opacity})`,
+  pastelPink: (opacity = 1) => `rgba(255,155,189,${opacity})`,
   cranberry: (opacity = 1) => `rgba(230,80,112,${opacity})`,
   purple: (opacity = 1) => `rgba(152,28,235,${opacity})`,
   lightPurple: (opacity = 1) => `rgba(248,246,255,${opacity})`,
@@ -73,7 +75,9 @@ export function Theme(color) {
     carousel: { color },
     carouselProgress: { color: 'logoBlue' },
     carouselProgressComplete: { color: 'blue' },
-    content: { color: { green: 'pinkOrange' }[color] || 'green' },
+    content: {
+      color: { green: 'pinkOrange', orange: 'pinkOrange' }[color] || 'green'
+    },
     cover: { color },
     done: { color: 'blue' },
     generalChat: {
@@ -86,7 +90,8 @@ export function Theme(color) {
     chatInvitation: { color },
     homeMenuItemActive: { color },
     info: {
-      color: { green: 'yellowGreen' }[color] || 'lightBlue'
+      color:
+        { green: 'yellowGreen', orange: 'lightOrange' }[color] || 'lightBlue'
     },
     itemSelected: { color, opacity: strongColors.includes(color) ? 0.7 : 0.8 },
     likeButton: {
@@ -95,9 +100,13 @@ export function Theme(color) {
     likeButtonPressed: {
       color: { green: 'darkYellowGreen' }[color] || 'logoBlue'
     },
-    link: { color: { green: 'fernGreen' }[color] || 'blue' },
+    link: {
+      color: { green: 'fernGreen', orange: 'darkOceanBlue' }[color] || 'blue'
+    },
     loadMoreButton: {
-      color: { green: 'lightYellowGreen' }[color] || 'lightBlue'
+      color:
+        { green: 'lightYellowGreen', orange: 'lightOrange' }[color] ||
+        'lightBlue'
     },
     login: { color: 'green' },
     logoTwin: { color: 'logoBlue' },
@@ -121,7 +130,7 @@ export function Theme(color) {
     success: { color: 'green' },
     switch: { color },
     tableHeader: { color },
-    userLink: { color, opacity: 0.9 },
+    userLink: { color: 'logoBlue', opacity: 0.9 },
     xpNumber: { color: 'logoGreen' }
   };
 }

@@ -18,7 +18,7 @@ export default function useHeadingText({ action, contentObj, theme }) {
   } = contentObj;
   const {
     link: { color: linkColor },
-    userLink: { color: userLinkColor, opacity: userLinkOpacity },
+    userLink: { color: userLinkColor },
     content: { color: contentColor }
   } = useTheme(theme);
   const HeadingText = useMemo(() => {
@@ -37,8 +37,7 @@ export default function useHeadingText({ action, contentObj, theme }) {
       targetObj,
       theme,
       uploader,
-      userLinkColor,
-      userLinkOpacity
+      userLinkColor
     };
     return SELECTED_LANGUAGE === 'kr'
       ? renderKoreanMessage(params)
@@ -58,8 +57,7 @@ export default function useHeadingText({ action, contentObj, theme }) {
     targetObj,
     theme,
     uploader,
-    userLinkColor,
-    userLinkOpacity
+    userLinkColor
   ]);
 
   return HeadingText;

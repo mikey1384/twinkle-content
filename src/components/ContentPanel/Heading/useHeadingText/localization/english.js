@@ -18,8 +18,7 @@ export default function renderEnglishMessage({
   targetObj,
   theme,
   uploader,
-  userLinkColor,
-  userLinkOpacity
+  userLinkColor
 }) {
   const contentLabel =
     rootType === 'url' ? 'link' : rootType === 'subject' ? 'subject' : rootType;
@@ -73,9 +72,7 @@ export default function renderEnglishMessage({
             contentType={contentType}
             theme={theme}
             style={{
-              color: byUser
-                ? Color[userLinkColor](userLinkOpacity)
-                : contentLinkColor
+              color: byUser ? Color[userLinkColor]() : contentLinkColor
             }}
           />
           {rootObj.id && (

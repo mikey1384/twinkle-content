@@ -35,7 +35,7 @@ export default function Playlist({
   const {
     loadMoreButton: { color: loadMoreButtonColor },
     link: { color: linkColor },
-    userLink: { color: userLinkColor, opacity: userLinkOpacity }
+    userLink: { color: userLinkColor }
   } = useTheme();
   const [videos, setVideos] = useState([]);
   const [loadMoreButton, setLoadMoreButton] = useState(false);
@@ -101,7 +101,7 @@ export default function Playlist({
             <Link
               style={{
                 color: video.byUser
-                  ? Color[userLinkColor](userLinkOpacity)
+                  ? Color[userLinkColor]()
                   : Color[linkColor](),
                 fontSize: '2rem',
                 fontWeight: 'bold',

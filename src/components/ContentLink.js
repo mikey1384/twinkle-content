@@ -35,7 +35,7 @@ export default function ContentLink({
   theme
 }) {
   const {
-    userLink: { color: userLinkColor, opacity: userLinkOpacity },
+    userLink: { color: userLinkColor },
     link: { color: linkColor }
   } = useTheme(theme);
   const destination = useMemo(() => {
@@ -56,9 +56,7 @@ export default function ContentLink({
     <Link
       style={{
         fontWeight: 'bold',
-        color: byUser
-          ? Color[userLinkColor](userLinkOpacity)
-          : Color[linkColor](),
+        color: byUser ? Color[userLinkColor]() : Color[linkColor](),
         ...style
       }}
       to={`/${destination}/${

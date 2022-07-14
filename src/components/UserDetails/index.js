@@ -84,7 +84,7 @@ export default function UserDetails({
     [editedStatusMsg, profile.id, profile.statusMsg, userId]
   );
   const {
-    userLink: { color: userLinkColor, opacity: userLinkOpacity }
+    userLink: { color: userLinkColor }
   } = useTheme(profile.profileTheme || 'logoBlue');
 
   return (
@@ -115,7 +115,7 @@ export default function UserDetails({
             : css`
                 transition: color 0.2s;
                 &:hover {
-                  color: ${Color[userLinkColor](userLinkOpacity)}!important;
+                  color: ${Color[userLinkColor]()}!important;
                 }
               `
         }

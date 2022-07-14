@@ -19,8 +19,7 @@ export default function renderKoreanMessage({
   targetObj,
   theme,
   uploader,
-  userLinkColor,
-  userLinkOpacity
+  userLinkColor
 }) {
   const contentLabel =
     rootType === 'url' ? 'link' : rootType === 'subject' ? 'subject' : rootType;
@@ -87,9 +86,7 @@ export default function renderKoreanMessage({
             content={{ id, title: '주제를' }}
             contentType={contentType}
             style={{
-              color: byUser
-                ? Color[userLinkColor](userLinkOpacity)
-                : contentLinkColor
+              color: byUser ? Color[userLinkColor]() : contentLinkColor
             }}
           />{' '}
           개설했습니다{' '}
