@@ -7,6 +7,7 @@ import Message from './Message';
 import Loading from 'components/Loading';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import { Color } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
 import { queryStringForArray } from 'helpers/stringHelpers';
 import URL from 'constants/URL';
 
@@ -27,6 +28,9 @@ export default function SubjectMsgsModal({
   subjectId,
   subjectTitle
 }) {
+  const {
+    loadMoreButton: { color: loadMoreButtonColor }
+  } = useTheme(displayedThemeColor);
   const [loading, setLoading] = useState(false);
   const [loadMoreButtonShown, setLoadMoreButtonShown] = useState(false);
   const [messages, setMessages] = useState([]);
@@ -63,7 +67,7 @@ export default function SubjectMsgsModal({
       <main>
         {loadMoreButtonShown && (
           <LoadMoreButton
-            color="lightBlue"
+            color={loadMoreButtonColor}
             filled
             onClick={onLoadMoreButtonClick}
             loading={loading}

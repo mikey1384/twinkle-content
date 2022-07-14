@@ -8,6 +8,7 @@ export default function renderEnglishText({
   contentColor,
   contentId,
   contentType,
+  infoColor,
   isTask,
   linkColor,
   missionColor,
@@ -40,7 +41,7 @@ export default function renderEnglishText({
                 ? Color.rose()
                 : rewardAmount >= 3
                 ? Color.pink()
-                : Color.lightBlue(),
+                : Color[infoColor](),
             fontWeight: 'bold'
           }}
         >

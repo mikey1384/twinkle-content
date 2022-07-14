@@ -7,15 +7,18 @@ export const Color = {
   black: (opacity = 1) => `rgba(51,51,51,${opacity})`,
   brown: (opacity = 1) => `rgba(139,69,19,${opacity})`,
   lightBrown: (opacity = 1) => `rgba(150,125,76,${opacity})`,
+  lighterBrown: (opacity = 1) => `rgba(175,135,70,${opacity})`,
   sandyBrown: (opacity = 1) => `rgba(230,204,96,${opacity})`,
   bronze: (opacity = 1) => `rgba(255,190,130,${opacity})`,
-  cyan: (opacity = 1) => `rgba(0,255,255,${opacity})`,
-  darkCyan: (opacity = 1) => `rgba(0,139,139,${opacity})`,
   gold: (opacity = 1) => `rgba(255,206,0,${opacity})`,
   logoGreen: (opacity = 1) => `rgba(97,226,101,${opacity})`,
+  cyan: (opacity = 1) => `rgba(0,255,255,${opacity})`,
+  darkCyan: (opacity = 1) => `rgba(0,139,139,${opacity})`,
   green: (opacity = 1) => `rgba(40,182,44,${opacity})`,
+  blueGreen: (opacity = 1) => `rgba(59,137,160,${opacity})`,
   fernGreen: (opacity = 1) => `rgba(89,159,89,${opacity})`,
   limeGreen: (opacity = 1) => `rgba(34, 197, 94,${opacity})`,
+  darkYellowGreen: (opacity = 1) => `rgba(135,180,76,${opacity})`,
   yellowGreen: (opacity = 1) => `rgba(154,204,96,${opacity})`,
   lightYellowGreen: (opacity = 1) => `rgba(175,224,96,${opacity})`,
   lightCyan: (opacity = 1) => `rgba(224,255,255,${opacity})`,
@@ -40,14 +43,15 @@ export const Color = {
   orange: (opacity = 1) => `rgba(255,140,0,${opacity})`,
   lightOrange: (opacity = 1) => `rgba(250,185,75,${opacity})`,
   lighterOrange: (opacity = 1) => `rgba(250,205,90,${opacity})`,
+  pinkOrange: (opacity = 1) => `rgba(243,140,100,${opacity})`,
+  passionFruit: (opacity = 1) => `rgba(243,103,123,${opacity})`,
   peach: (opacity = 1) => `rgba(255,175,150,${opacity})`,
   pink: (opacity = 1) => `rgba(255,105,180,${opacity})`,
+  cranberry: (opacity = 1) => `rgba(230,80,112,${opacity})`,
   purple: (opacity = 1) => `rgba(152,28,235,${opacity})`,
   lightPurple: (opacity = 1) => `rgba(248,246,255,${opacity})`,
   red: (opacity = 1) => `rgba(255,65,54,${opacity})`,
   darkRed: (opacity = 1) => `rgba(139,0,0,${opacity})`,
-  cranberry: (opacity = 1) => `rgba(230,80,112,${opacity})`,
-  passionFruit: (opacity = 1) => `rgba(243,103,123,${opacity})`,
   rose: (opacity = 1) => `rgba(223,0,102,${opacity})`,
   vantaBlack: (opacity = 1) => `rgba(0,0,0,${opacity})`,
   white: (opacity = 1) => `rgba(255,255,255,${opacity})`,
@@ -69,7 +73,7 @@ export function Theme(color) {
     carousel: { color },
     carouselProgress: { color: 'logoBlue' },
     carouselProgressComplete: { color: 'blue' },
-    content: { color: { green: 'lightBrown' }[color] || 'green' },
+    content: { color: { green: 'pinkOrange' }[color] || 'green' },
     cover: { color },
     done: { color: 'blue' },
     generalChat: {
@@ -81,11 +85,16 @@ export function Theme(color) {
     },
     chatInvitation: { color },
     homeMenuItemActive: { color },
+    info: {
+      color: { green: 'yellowGreen' }[color] || 'lightBlue'
+    },
     itemSelected: { color, opacity: strongColors.includes(color) ? 0.7 : 0.8 },
     likeButton: {
-      color: { green: 'lighterOrange' }[color] || 'lightBlue'
+      color: { green: 'yellowGreen' }[color] || 'lightBlue'
     },
-    likeButtonPressed: { color: { green: 'lightOrange' }[color] || 'logoBlue' },
+    likeButtonPressed: {
+      color: { green: 'darkYellowGreen' }[color] || 'logoBlue'
+    },
     link: { color: { green: 'fernGreen' }[color] || 'blue' },
     loadMoreButton: {
       color: { green: 'lightYellowGreen' }[color] || 'lightBlue'
@@ -98,7 +107,7 @@ export function Theme(color) {
     profilePanel: { color },
     progressBar: { color },
     reactionButton: { color, opacity: 0.2 },
-    reward: { color: 'pink' },
+    reward: { color: { green: 'passionFruit' }[color] || 'pink' },
     rewardLevelForm: { color, opacity: strongColors.includes(color) ? 0.9 : 1 },
     rewardableRecommendation: { color, opacity: 0.1 },
     search: { color },

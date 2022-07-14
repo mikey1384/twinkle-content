@@ -7,6 +7,7 @@ import ContentLink from 'components/ContentLink';
 export default function renderEnglishMessage({
   actionObj,
   contentColor,
+  infoColor,
   isNotification,
   isReply,
   isSubjectResponse,
@@ -59,7 +60,7 @@ export default function renderEnglishMessage({
             }}
           />
           에{' '}
-          <span style={{ color: Color.lightBlue(), fontWeight: 'bold' }}>
+          <span style={{ color: Color[infoColor](), fontWeight: 'bold' }}>
             좋아요
           </span>{' '}
           버튼을 눌렀습니다
@@ -121,7 +122,7 @@ export default function renderEnglishMessage({
                     ? Color.orange()
                     : actionObj.amount >= 3
                     ? Color.pink()
-                    : Color.lightBlue(),
+                    : Color[infoColor](),
                 fontWeight: 'bold'
               }}
             >

@@ -8,7 +8,7 @@ import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import Comment from './Comment';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Starmarks from './Starmarks';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import localize from 'constants/localize';
 
 const showMoreRewardRecordsLabel = localize('showMoreRewardRecords');
@@ -35,6 +35,9 @@ function RewardStatus({
   style
 }) {
   const { userId } = useMyState();
+  const {
+    info: { color: infoColor }
+  } = useTheme();
   const [numLoaded, setNumLoaded] = useState(2);
   rewards = useMemo(() => {
     const rewardsWithComment = rewards.filter(
@@ -116,7 +119,7 @@ function RewardStatus({
           color={
             amountRewarded === maxRewards || amountRewarded > 10
               ? 'orange'
-              : 'lightBlue'
+              : infoColor
           }
           label={showMoreRewardRecordsLabel}
           filled

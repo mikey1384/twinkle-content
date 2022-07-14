@@ -126,7 +126,7 @@ function MessagesContainer({
   const { banned, profilePicUrl, userId, username } = useMyState();
   const {
     loadMoreButton: { color: loadMoreButtonColor }
-  } = useTheme();
+  } = useTheme(displayedThemeColor);
   const {
     isRespondingToSubject = false,
     messageIds = [],

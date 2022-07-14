@@ -6,6 +6,7 @@ import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import LocalContext from './Context';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { useAppContext } from 'contexts';
+import { useTheme } from 'helpers/hooks';
 
 Subjects.propTypes = {
   className: PropTypes.string,
@@ -60,6 +61,9 @@ export default function Subjects({
     onUploadReply
   }
 }) {
+  const {
+    loadMoreButton: { color: loadMoreButtonColor }
+  } = useTheme();
   const loadSubjects = useAppContext((v) => v.requestHelpers.loadSubjects);
   const [loadingMore, setLoadingMore] = useState(false);
   return (
@@ -103,7 +107,7 @@ export default function Subjects({
               <LoadMoreButton
                 style={{ width: '100%', borderRadius: 0 }}
                 filled
-                color="lightBlue"
+                color={loadMoreButtonColor}
                 loading={loadingMore}
                 onClick={handleLoadMoreSubjects}
               />

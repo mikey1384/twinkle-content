@@ -30,6 +30,7 @@ export default function RewardItem({
 }) {
   const {
     content: { color: contentColor },
+    info: { color: infoColor },
     link: { color: linkColor },
     mission: { color: missionColor },
     reward: { color: rewardColor }
@@ -39,6 +40,7 @@ export default function RewardItem({
       contentColor,
       contentId,
       contentType,
+      infoColor,
       isTask,
       linkColor,
       missionColor,
@@ -59,6 +61,7 @@ export default function RewardItem({
     contentColor,
     contentId,
     contentType,
+    infoColor,
     isTask,
     linkColor,
     missionColor,

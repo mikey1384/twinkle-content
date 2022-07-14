@@ -12,6 +12,7 @@ import { css } from '@emotion/css';
 import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useTheme } from 'helpers/hooks';
 import localize from 'constants/localize';
 import Icon from 'components/Icon';
 
@@ -78,6 +79,10 @@ export default function QuestionsBuilder({
   title,
   videoCode
 }) {
+  const {
+    success: { color: successColor },
+    info: { color: infoColor }
+  } = useTheme();
   const [reorderModeOn, setReorderModeOn] = useState(false);
   const [questions, setQuestions] = useState({});
   const [questionIds, setQuestionIds] = useState([]);
@@ -199,13 +204,13 @@ export default function QuestionsBuilder({
                         label: `+ ${addLabel}`,
                         filled: true,
                         onClick: onAddQuestion,
-                        color: 'green'
+                        color: successColor
                       },
                       {
                         label: reorderLabel,
                         filled: true,
                         onClick: () => setReorderModeOn(true),
-                        color: 'lightBlue'
+                        color: infoColor
                       },
                       {
                         label: resetLabel,
