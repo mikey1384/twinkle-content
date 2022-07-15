@@ -403,6 +403,7 @@ export default function TargetContent({
                     >
                       <div style={{ display: 'flex' }}>
                         <LikeButton
+                          theme={theme}
                           contentType="comment"
                           contentId={comment.id}
                           onClick={handleLikeClick}

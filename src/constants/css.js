@@ -10,8 +10,6 @@ export const Color = {
   lightBrown: (opacity = 1) => `rgba(150,125,76,${opacity})`,
   lighterBrown: (opacity = 1) => `rgba(175,135,70,${opacity})`,
   sandyBrown: (opacity = 1) => `rgba(230,204,96,${opacity})`,
-  bronze: (opacity = 1) => `rgba(255,190,130,${opacity})`,
-  gold: (opacity = 1) => `rgba(255,206,0,${opacity})`,
   logoGreen: (opacity = 1) => `rgba(97,226,101,${opacity})`,
   cyan: (opacity = 1) => `rgba(0,255,255,${opacity})`,
   darkCyan: (opacity = 1) => `rgba(0,139,139,${opacity})`,
@@ -49,6 +47,7 @@ export const Color = {
   peach: (opacity = 1) => `rgba(255,175,150,${opacity})`,
   pink: (opacity = 1) => `rgba(255,105,180,${opacity})`,
   pastelPink: (opacity = 1) => `rgba(255,155,165,${opacity})`,
+  bronze: (opacity = 1) => `rgba(255,190,130,${opacity})`,
   cranberry: (opacity = 1) => `rgba(230,80,112,${opacity})`,
   purple: (opacity = 1) => `rgba(152,28,235,${opacity})`,
   lightPurple: (opacity = 1) => `rgba(248,246,255,${opacity})`,
@@ -57,6 +56,8 @@ export const Color = {
   rose: (opacity = 1) => `rgba(223,0,102,${opacity})`,
   vantaBlack: (opacity = 1) => `rgba(0,0,0,${opacity})`,
   white: (opacity = 1) => `rgba(255,255,255,${opacity})`,
+  darkGold: (opacity = 1) => `rgba(255,195,55,${opacity})`,
+  gold: (opacity = 1) => `rgba(255,206,0,${opacity})`,
   yellow: (opacity = 1) => `rgba(255,255,0,${opacity})`
 };
 
@@ -64,7 +65,9 @@ export const strongColors = ['rose', 'red', 'purple'];
 
 export function Theme(color) {
   return {
-    alert: { color: 'gold' },
+    alert: {
+      color: { green: 'darkGold', orange: 'sandyBrown' }[color] || 'gold'
+    },
     alreadyPostedByOtherUser: { color: 'red' },
     alreadyPostedByThisUser: { color: 'blue' },
     button: { color },
@@ -76,7 +79,7 @@ export function Theme(color) {
     carouselProgress: { color: 'logoBlue' },
     carouselProgressComplete: { color: 'blue' },
     content: {
-      color: { green: 'pinkOrange', orange: 'pinkOrange' }[color] || 'green'
+      color: { green: 'passionFruit', orange: 'pinkOrange' }[color] || 'green'
     },
     cover: { color },
     done: { color: 'blue' },
@@ -119,7 +122,7 @@ export function Theme(color) {
     progressBar: { color },
     reactionButton: { color, opacity: 0.2 },
     reward: {
-      color: { green: 'passionFruit', orange: 'pastelPink' }[color] || 'pink'
+      color: { green: 'pinkOrange', orange: 'pastelPink' }[color] || 'pink'
     },
     rewardLevelForm: { color, opacity: strongColors.includes(color) ? 0.9 : 1 },
     rewardableRecommendation: { color, opacity: 0.1 },

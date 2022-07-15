@@ -35,7 +35,7 @@ export default function MyRank({
         ? '#fff'
         : rank === 3
         ? Color.bronze()
-        : undefined,
+        : null,
     [rank]
   );
   const rankLabel = useMemo(() => {

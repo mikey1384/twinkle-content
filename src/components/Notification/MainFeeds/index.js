@@ -54,6 +54,8 @@ function MainFeeds({
   );
   const { userId, rank, twinkleXP, twinkleCoins } = useMyState();
   const {
+    alert: { color: alertColor },
+    success: { color: successColor },
     loadMoreButton: { color: loadMoreButtonColor }
   } = useTheme();
   const notiObj = useNotiContext((v) => v.state.notiObj);
@@ -120,7 +122,7 @@ function MainFeeds({
       {numNewNotis > 0 && !(activeTab === 'reward' && totalRewardAmount > 0) && (
         <Banner
           loading={loadingNewFeeds}
-          color="gold"
+          color={alertColor}
           style={{ marginBottom: '1rem' }}
           onClick={handleNewNotiAlertClick}
           spinnerDelay={100}
@@ -132,7 +134,7 @@ function MainFeeds({
       {activeTab === 'reward' && !loadingNotifications && (
         <Banner
           loading={collectingReward}
-          color={totalRewardAmount > 0 ? 'gold' : 'green'}
+          color={totalRewardAmount > 0 ? alertColor : successColor}
           style={{ marginBottom: '1rem' }}
           onClick={totalRewardAmount > 0 ? onCollectReward : null}
         >

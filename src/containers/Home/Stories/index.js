@@ -41,6 +41,7 @@ export default function Stories() {
   const loadNewFeeds = useAppContext((v) => v.requestHelpers.loadNewFeeds);
   const { hideWatched, userId, username } = useMyState();
   const {
+    alert: { color: alertColor },
     loadMoreButton: { color: loadMoreButtonColor }
   } = useTheme();
   const numNewPosts = useNotiContext((v) => v.state.numNewPosts);
@@ -183,7 +184,7 @@ export default function Stories() {
             <>
               {feedsOutdated && (
                 <Banner
-                  color="gold"
+                  color={alertColor}
                   onClick={() => window.location.reload()}
                   style={{
                     marginBottom: '1rem'
@@ -194,7 +195,7 @@ export default function Stories() {
               )}
               {numNewPosts > 0 && !feedsOutdated && (
                 <Banner
-                  color="gold"
+                  color={alertColor}
                   onClick={handleFetchNewFeeds}
                   style={{
                     marginBottom: '1rem',

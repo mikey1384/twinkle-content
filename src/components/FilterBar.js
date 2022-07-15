@@ -26,6 +26,7 @@ export default function FilterBar({
   style
 }) {
   const {
+    alert: { color: alertColor },
     mainFilter: { color: mainFilterColor, opacity: mainFilterOpacity }
   } = useTheme(color);
   const mainFilterActiveColor = Color[mainFilterColor]();
@@ -79,7 +80,7 @@ export default function FilterBar({
             text-decoration: none;
           }
           &.alert {
-            color: ${Color.gold()}!important;
+            color: ${Color[alertColor]()}!important;
           }
         }
         > nav.active {
@@ -98,7 +99,7 @@ export default function FilterBar({
           }
         }
         > nav.active.alert {
-          border-bottom: 3px solid ${Color.gold()}!important;
+          border-bottom: 3px solid ${Color[alertColor]()}!important;
         }
         > nav:first-of-type {
           ${!inverted && bordered
@@ -122,8 +123,8 @@ export default function FilterBar({
             ? ''
             : `3px solid ${mainFilterActiveColor}`};
           &.alert {
-            color: ${Color.gold()}!important;
-            border-bottom: 3px solid ${Color.gold()}!important;
+            color: ${Color[alertColor]()}!important;
+            border-bottom: 3px solid ${Color[alertColor]()}!important;
           }
           > a {
             color: ${inverted ? '#fff' : mainFilterActiveColor};
@@ -139,6 +140,7 @@ export default function FilterBar({
       }
     `} ${className}`;
   }, [
+    alertColor,
     bordered,
     className,
     dropdownButton,
