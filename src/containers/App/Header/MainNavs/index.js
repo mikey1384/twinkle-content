@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import Nav from './Nav';
 import Icon from 'components/Icon';
 import { matchPath } from 'react-router-dom';
-import { Color, mobileMaxWidth } from 'constants/css';
+import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { getSectionFromPathname } from 'helpers';
 import { addCommasToNumber, truncateText } from 'helpers/stringHelpers';
-import { useMyState, useTheme } from 'helpers/hooks';
+import { useMyState } from 'helpers/hooks';
 import {
   useAppContext,
   useChatContext,
@@ -47,9 +47,6 @@ function MainNavs({
 }) {
   const [twinkleCoinsHovered, setTwinkleCoinsHovered] = useState(false);
   const { twinkleCoins, userId, banned, lastChatPath } = useMyState();
-  const {
-    alert: { color: alertColor }
-  } = useTheme();
   const exploreCategory = useViewContext((v) => v.state.exploreCategory);
   const contentPath = useViewContext((v) => v.state.contentPath);
   const contentNav = useViewContext((v) => v.state.contentNav);
@@ -311,7 +308,6 @@ function MainNavs({
         isMobileSideMenu
         className="mobile"
         alert={numNewNotis > 0 || totalRewardAmount > 0}
-        alertColor={Color[alertColor]()}
         imgLabel="bars"
         onClick={onMobileMenuOpen}
       />

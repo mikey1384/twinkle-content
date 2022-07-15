@@ -66,7 +66,7 @@ export const strongColors = ['rose', 'red', 'purple'];
 export function Theme(color) {
   return {
     alert: {
-      color: { green: 'darkGold', orange: 'sandyBrown' }[color] || 'gold'
+      color: { green: 'darkGold' }[color] || 'gold'
     },
     alreadyPostedByOtherUser: { color: 'red' },
     alreadyPostedByThisUser: { color: 'blue' },
@@ -94,7 +94,7 @@ export function Theme(color) {
     homeMenuItemActive: { color },
     info: {
       color:
-        { green: 'yellowGreen', orange: 'lighterOrange' }[color] || 'lightBlue'
+        { green: 'yellowGreen', orange: 'lightOrange' }[color] || 'lightBlue'
     },
     itemSelected: { color, opacity: strongColors.includes(color) ? 0.7 : 0.8 },
     likeButton: {

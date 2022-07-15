@@ -2,6 +2,7 @@ import React, { memo, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useTheme } from 'helpers/hooks';
 import { Color, desktopMinWidth, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import {
@@ -16,7 +17,6 @@ const BodyRef = document.scrollingElement || document.documentElement;
 Nav.propTypes = {
   isMobileSideMenu: PropTypes.bool,
   alert: PropTypes.bool,
-  alertColor: PropTypes.string,
   className: PropTypes.string,
   children: PropTypes.node,
   imgLabel: PropTypes.string,
@@ -29,7 +29,6 @@ Nav.propTypes = {
 
 function Nav({
   alert,
-  alertColor,
   className,
   children,
   imgLabel,
@@ -40,6 +39,9 @@ function Nav({
   to,
   style
 }) {
+  const {
+    alert: { color: alertColor }
+  } = useTheme();
   const navigate = useNavigate();
   const { pathname, search } = useLocation();
   const onResetProfile = useProfileContext((v) => v.actions.onResetProfile);
@@ -55,7 +57,7 @@ function Nav({
     (v) => v.actions.onSetSubjectsLoaded
   );
   const highlightColor = useMemo(
-    () => (alert ? alertColor : Color.darkGray()),
+    () => (alert ? Color[alertColor]() : Color.darkGray()),
     [alert, alertColor]
   );
   const onSetProfilesLoaded = useAppContext(
@@ -140,7 +142,7 @@ function Nav({
         style={{
           display: 'flex',
           alignItems: 'center',
-          ...(alert ? { color: alertColor || Color.gold() } : {})
+          ...(alert ? { color: Color[alertColor]() } : {})
         }}
         onClick={() => navigate(to)}
       >
