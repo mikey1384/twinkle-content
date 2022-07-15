@@ -42,13 +42,13 @@ export const Color = {
   ivory: (opacity = 1) => `rgba(255,255,240,${opacity})`,
   brownOrange: (opacity = 1) => `rgba(245,190,70,${opacity})`,
   orange: (opacity = 1) => `rgba(255,140,0,${opacity})`,
-  lightOrange: (opacity = 1) => `rgba(250,185,75,${opacity})`,
-  lighterOrange: (opacity = 1) => `rgba(250,205,90,${opacity})`,
+  lightOrange: (opacity = 1) => `rgba(255,175,75,${opacity})`,
+  lighterOrange: (opacity = 1) => `rgba(255,205,90,${opacity})`,
   pinkOrange: (opacity = 1) => `rgba(243,140,100,${opacity})`,
   passionFruit: (opacity = 1) => `rgba(243,103,123,${opacity})`,
   peach: (opacity = 1) => `rgba(255,175,150,${opacity})`,
   pink: (opacity = 1) => `rgba(255,105,180,${opacity})`,
-  pastelPink: (opacity = 1) => `rgba(255,155,189,${opacity})`,
+  pastelPink: (opacity = 1) => `rgba(255,155,165,${opacity})`,
   cranberry: (opacity = 1) => `rgba(230,80,112,${opacity})`,
   purple: (opacity = 1) => `rgba(152,28,235,${opacity})`,
   lightPurple: (opacity = 1) => `rgba(248,246,255,${opacity})`,
@@ -91,21 +91,23 @@ export function Theme(color) {
     homeMenuItemActive: { color },
     info: {
       color:
-        { green: 'yellowGreen', orange: 'lightOrange' }[color] || 'lightBlue'
+        { green: 'yellowGreen', orange: 'lighterOrange' }[color] || 'lightBlue'
     },
     itemSelected: { color, opacity: strongColors.includes(color) ? 0.7 : 0.8 },
     likeButton: {
-      color: { green: 'yellowGreen' }[color] || 'lightBlue'
+      color:
+        { green: 'yellowGreen', orange: 'lighterOrange' }[color] || 'lightBlue'
     },
     likeButtonPressed: {
-      color: { green: 'darkYellowGreen' }[color] || 'logoBlue'
+      color:
+        { green: 'darkYellowGreen', orange: 'lightOrange' }[color] || 'logoBlue'
     },
     link: {
       color: { green: 'fernGreen', orange: 'darkOceanBlue' }[color] || 'blue'
     },
     loadMoreButton: {
       color:
-        { green: 'lightYellowGreen', orange: 'lightOrange' }[color] ||
+        { green: 'lightYellowGreen', orange: 'lighterOrange' }[color] ||
         'lightBlue'
     },
     login: { color: 'green' },
@@ -116,7 +118,9 @@ export function Theme(color) {
     profilePanel: { color },
     progressBar: { color },
     reactionButton: { color, opacity: 0.2 },
-    reward: { color: { green: 'passionFruit' }[color] || 'pink' },
+    reward: {
+      color: { green: 'passionFruit', orange: 'pastelPink' }[color] || 'pink'
+    },
     rewardLevelForm: { color, opacity: strongColors.includes(color) ? 0.9 : 1 },
     rewardableRecommendation: { color, opacity: 0.1 },
     search: { color },
