@@ -98,12 +98,10 @@ export function Theme(color) {
     },
     itemSelected: { color, opacity: strongColors.includes(color) ? 0.7 : 0.8 },
     likeButton: {
-      color:
-        { green: 'yellowGreen', orange: 'lighterOrange' }[color] || 'lightBlue'
+      color: { green: 'yellowGreen' }[color] || 'lightBlue'
     },
     likeButtonPressed: {
-      color:
-        { green: 'darkYellowGreen', orange: 'lightOrange' }[color] || 'logoBlue'
+      color: { green: 'darkYellowGreen' }[color] || 'logoBlue'
     },
     link: {
       color: { green: 'fernGreen', orange: 'darkOceanBlue' }[color] || 'blue'
