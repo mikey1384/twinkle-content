@@ -64,6 +64,7 @@ export const strongColors = ['rose', 'red', 'purple'];
 
 export function Theme(color) {
   return {
+    alert: { color: 'gold' },
     alreadyPostedByOtherUser: { color: 'red' },
     alreadyPostedByThisUser: { color: 'blue' },
     button: { color },
