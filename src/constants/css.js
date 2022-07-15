@@ -38,6 +38,7 @@ export const Color = {
   highlightGray: (opacity = 1) => `rgba(242,242,242,${opacity})`,
   whiteGray: (opacity = 1) => `rgba(250,250,250,${opacity})`,
   ivory: (opacity = 1) => `rgba(255,255,240,${opacity})`,
+  darkBrownOrange: (opacity = 1) => `rgba(235,140,70,${opacity})`,
   brownOrange: (opacity = 1) => `rgba(245,190,70,${opacity})`,
   orange: (opacity = 1) => `rgba(255,140,0,${opacity})`,
   lightOrange: (opacity = 1) => `rgba(255,175,75,${opacity})`,
@@ -79,7 +80,8 @@ export function Theme(color) {
     carouselProgress: { color: 'logoBlue' },
     carouselProgressComplete: { color: 'blue' },
     content: {
-      color: { green: 'passionFruit', orange: 'pinkOrange' }[color] || 'green'
+      color:
+        { green: 'passionFruit', orange: 'darkBrownOrange' }[color] || 'green'
     },
     cover: { color },
     done: { color: 'blue' },
