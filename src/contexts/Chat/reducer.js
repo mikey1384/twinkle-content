@@ -539,18 +539,22 @@ export default function ChatReducer(state, action) {
         ...state,
         channelsObj: {
           ...state.channelsObj,
-          [action.channelId]: {
-            ...state.channelsObj[action.channelId],
-            messagesObj: {
-              ...state.channelsObj[action.channelId].messagesObj,
-              [action.messageId]: {
-                ...state.channelsObj[action.channelId].messagesObj[
-                  action.messageId
-                ],
-                attachmentHidden: true
+          ...(state.channelsObj[action.channelId]?.messagesObj
+            ? {
+                [action.channelId]: {
+                  ...state.channelsObj[action.channelId],
+                  messagesObj: {
+                    ...state.channelsObj[action.channelId].messagesObj,
+                    [action.messageId]: {
+                      ...state.channelsObj[action.channelId].messagesObj[
+                        action.messageId
+                      ],
+                      attachmentHidden: true
+                    }
+                  }
+                }
               }
-            }
-          }
+            : {})
         }
       };
     case 'HIDE_CHAT':
