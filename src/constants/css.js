@@ -64,7 +64,6 @@ export const strongColors = ['rose', 'red', 'purple'];
 
 export function Theme(color) {
   return {
-    alert: { color: 'pink' },
     alreadyPostedByOtherUser: { color: 'red' },
     alreadyPostedByThisUser: { color: 'blue' },
     button: { color },
@@ -135,6 +134,7 @@ export function Theme(color) {
     switch: { color },
     tableHeader: { color },
     userLink: { color: 'logoBlue', opacity: 0.9 },
+    warning: { color: 'pink' },
     xpNumber: { color: 'logoGreen' }
   };
 }

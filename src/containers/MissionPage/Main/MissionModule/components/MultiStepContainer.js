@@ -24,7 +24,7 @@ export default function MultiStepContainer({
 }) {
   const { missions } = useMyState();
   const {
-    alert: { color: alertColor }
+    warning: { color: warningColor }
   } = useTheme();
   const updateMissionStatus = useAppContext(
     (v) => v.requestHelpers.updateMissionStatus
@@ -141,7 +141,7 @@ export default function MultiStepContainer({
             marginTop: '5rem'
           }}
         >
-          <Button skeuomorphic color={alertColor} onClick={onOpenTutorial}>
+          <Button skeuomorphic color={warningColor} onClick={onOpenTutorial}>
             {`I don't understand what I am supposed to do`}
           </Button>
         </div>

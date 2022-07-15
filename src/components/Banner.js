@@ -25,7 +25,7 @@ export default function Banner({
   style = {}
 }) {
   const {
-    alert: { color: alertColor }
+    warning: { color: warningColor }
   } = useTheme();
   const timerRef = useRef(null);
   const [spinnerShown, setSpinnerShown] = useState(false);
@@ -47,7 +47,7 @@ export default function Banner({
       className={css`
         opacity: ${loading ? 0.5 : 1};
         width: 100%;
-        background: ${Color[color || alertColor]()};
+        background: ${Color[color || warningColor]()};
         color: #fff;
         padding: 1.5rem;
         text-align: center;
