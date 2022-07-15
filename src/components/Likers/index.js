@@ -16,6 +16,7 @@ Likers.propTypes = {
   style: PropTypes.object,
   target: PropTypes.string,
   wordBreakEnabled: PropTypes.bool,
+  theme: PropTypes.string,
   userId: PropTypes.number
 };
 
@@ -27,6 +28,7 @@ export default function Likers({
   style = {},
   className,
   defaultText,
+  theme,
   wordBreakEnabled
 }) {
   return (
@@ -38,6 +40,7 @@ export default function Likers({
           onLinkClick={onLinkClick}
           target={target}
           userId={userId}
+          theme={theme}
           wordBreakEnabled={wordBreakEnabled}
         />
       </div>

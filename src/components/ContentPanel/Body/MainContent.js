@@ -154,6 +154,7 @@ export default function MainContent({
             onLoadTags={onLoadTags}
             tags={tags || []}
             contentId={contentId}
+            theme={theme}
           />
         )}
         {(contentType === 'url' || contentType === 'subject') && !!byUser && (
@@ -350,6 +351,7 @@ export default function MainContent({
                     contentId={contentId}
                     contentType={contentType}
                     section="description"
+                    theme={theme}
                   >
                     {Description}
                   </LongText>

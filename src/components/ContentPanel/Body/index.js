@@ -524,6 +524,7 @@ export default function Body({
                 userId={userId}
                 likes={likes}
                 onLinkClick={() => setUserListModalShown(true)}
+                theme={theme}
               />
               {views > 10 && contentType === 'video' && (
                 <div
@@ -542,6 +543,7 @@ export default function Body({
           style={{ marginBottom: '1rem' }}
           contentType={contentType}
           recommendations={recommendations}
+          theme={theme}
         />
         {recommendationInterfaceShown && (
           <RecommendationInterface
@@ -570,6 +572,7 @@ export default function Body({
           />
         )}
         <RewardStatus
+          theme={theme}
           contentType={contentType}
           contentId={contentId}
           rewardLevel={finalRewardLevel}

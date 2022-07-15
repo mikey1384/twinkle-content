@@ -18,6 +18,7 @@ TagStatus.propTypes = {
   onLoadTags: PropTypes.func,
   contentId: PropTypes.number.isRequired,
   style: PropTypes.object,
+  theme: PropTypes.string,
   tags: PropTypes.array.isRequired
 };
 
@@ -27,11 +28,12 @@ function TagStatus({
   onAddTagToContents,
   onLoadTags,
   style,
+  theme,
   tags
 }) {
   const {
     link: { color: linkColor }
-  } = useTheme();
+  } = useTheme(theme);
   const fetchPlaylistsContaining = useAppContext(
     (v) => v.requestHelpers.fetchPlaylistsContaining
   );

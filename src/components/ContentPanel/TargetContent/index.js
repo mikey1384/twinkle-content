@@ -434,6 +434,7 @@ export default function TargetContent({
                         )}
                       </div>
                       <Likers
+                        theme={theme}
                         className={css`
                           font-weight: bold;
                           color: ${Color.darkerGray()};
@@ -469,6 +470,7 @@ export default function TargetContent({
                   }}
                   contentType="comment"
                   recommendations={comment.recommendations}
+                  theme={theme}
                 />
               )}
               {recommendationInterfaceShown && (
@@ -502,6 +504,7 @@ export default function TargetContent({
               <RewardStatus
                 contentType="comment"
                 contentId={comment.id}
+                theme={theme}
                 className={css`
                   margin-left: -1px;
                   margin-right: -1px;

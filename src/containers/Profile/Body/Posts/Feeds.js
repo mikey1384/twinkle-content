@@ -213,6 +213,7 @@ export default function Feeds({
                     zIndex={feeds.length - index}
                     contentId={contentId}
                     contentType={contentType}
+                    theme={selectedTheme}
                     commentsLoadLimit={5}
                     numPreviewComments={1}
                   />

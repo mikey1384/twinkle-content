@@ -11,7 +11,8 @@ InnerContent.propTypes = {
   wordBreakEnabled: PropTypes.bool,
   onLinkClick: PropTypes.func,
   target: PropTypes.string,
-  defaultText: PropTypes.string
+  defaultText: PropTypes.string,
+  theme: PropTypes.string
 };
 
 export default function InnerContent({
@@ -20,11 +21,12 @@ export default function InnerContent({
   wordBreakEnabled,
   onLinkClick,
   target,
-  defaultText = ''
+  defaultText = '',
+  theme
 }) {
   const {
     link: { color: linkColor }
-  } = useTheme();
+  } = useTheme(theme);
   const userLiked = useMemo(() => {
     for (let like of likes) {
       if (like?.id === userId) {

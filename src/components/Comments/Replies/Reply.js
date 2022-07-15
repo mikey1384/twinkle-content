@@ -491,6 +491,7 @@ function Reply({
                       </div>
                       <small>
                         <Likers
+                          theme={theme}
                           className="comment__likes"
                           userId={userId}
                           likes={reply.likes}
@@ -516,6 +517,7 @@ function Reply({
               style={{ marginTop: '0.5rem' }}
               contentType="comment"
               recommendations={recommendations}
+              theme={theme}
             />
             {recommendationInterfaceShown && (
               <RecommendationInterface

@@ -14,13 +14,15 @@ const othersLabel = localize('others');
 RecommendationStatus.propTypes = {
   contentType: PropTypes.string.isRequired,
   recommendations: PropTypes.array.isRequired,
-  style: PropTypes.object
+  style: PropTypes.object,
+  theme: PropTypes.string
 };
 
 export default function RecommendationStatus({
   contentType,
   recommendations = [],
-  style
+  style,
+  theme
 }) {
   const { userId } = useMyState();
   const {
@@ -28,7 +30,7 @@ export default function RecommendationStatus({
       color: rewardableColor,
       opacity: rewardableOpacity
     }
-  } = useTheme();
+  } = useTheme(theme);
   const [userListModalShown, setUserListModalShown] = useState(false);
   const recommendationsByUsertype = useMemo(() => {
     const result = [...recommendations];

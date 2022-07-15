@@ -790,6 +790,7 @@ function Comment({
                                 )}
                               </div>
                               <Likers
+                                theme={theme}
                                 className="comment__likes"
                                 userId={userId}
                                 likes={likes}
@@ -818,6 +819,7 @@ function Comment({
                     style={{ marginTop: likes.length > 0 ? '0.5rem' : '1rem' }}
                     contentType="comment"
                     recommendations={recommendations}
+                    theme={theme}
                   />
                 )}
                 {!isPreview && recommendationInterfaceShown && (
