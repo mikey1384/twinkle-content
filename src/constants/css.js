@@ -3,6 +3,7 @@ export const Color = {
   lightBlue: (opacity = 1) => `rgba(117,192,255,${opacity})`,
   darkBlue: (opacity = 1) => `rgba(0,70,195,${opacity})`,
   logoBlue: (opacity = 1) => `rgba(65, 140, 235,${opacity})`,
+  lightOceanBlue: (opacity = 1) => `rgba(63,175,255,${opacity})`,
   oceanBlue: (opacity = 1) => `rgba(33,150,243,${opacity})`,
   darkOceanBlue: (opacity = 1) => `rgba(33,125,193,${opacity})`,
   black: (opacity = 1) => `rgba(51,51,51,${opacity})`,
@@ -67,7 +68,7 @@ export const strongColors = ['rose', 'red', 'purple'];
 export function Theme(color) {
   return {
     alert: {
-      color: { green: 'darkGold' }[color] || 'gold'
+      color: { green: 'darkGold', rose: 'darkGold' }[color] || 'gold'
     },
     alreadyPostedByOtherUser: { color: 'red' },
     alreadyPostedByThisUser: { color: 'blue' },
@@ -80,7 +81,10 @@ export function Theme(color) {
     carouselProgress: { color: 'logoBlue' },
     carouselProgressComplete: { color: 'blue' },
     content: {
-      color: { green: 'blue', orange: 'darkBrownOrange' }[color] || 'green'
+      color:
+        { green: 'blue', orange: 'darkBrownOrange', rose: 'cranberry' }[
+          color
+        ] || 'green'
     },
     cover: { color },
     done: { color: 'blue' },
@@ -95,7 +99,9 @@ export function Theme(color) {
     homeMenuItemActive: { color },
     info: {
       color:
-        { green: 'yellowGreen', orange: 'lightOrange' }[color] || 'lightBlue'
+        { green: 'yellowGreen', orange: 'lightOrange', rose: 'pastelPink' }[
+          color
+        ] || 'lightBlue'
     },
     itemSelected: { color, opacity: strongColors.includes(color) ? 0.7 : 0.8 },
     level1: { color: 'logoBlue' },
@@ -104,10 +110,12 @@ export function Theme(color) {
     level4: { color: 'cranberry' },
     level5: { color: 'gold' },
     likeButton: {
-      color: { green: 'yellowGreen' }[color] || 'lightBlue'
+      color:
+        { green: 'yellowGreen', rose: 'lightOceanBlue' }[color] || 'lightBlue'
     },
     likeButtonPressed: {
-      color: { green: 'darkYellowGreen' }[color] || 'logoBlue'
+      color:
+        { green: 'darkYellowGreen', rose: 'oceanBlue' }[color] || 'logoBlue'
     },
     link: {
       color:
