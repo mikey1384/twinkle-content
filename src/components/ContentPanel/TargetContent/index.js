@@ -351,6 +351,7 @@ export default function TargetContent({
                       !contentHidden &&
                       (userId ? (
                         <ContentFileViewer
+                          theme={theme}
                           contentId={comment.id}
                           contentType="comment"
                           fileName={comment.fileName}

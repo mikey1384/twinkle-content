@@ -474,11 +474,14 @@ function Comment({
                     />
                   </span>
                 )}
-              {isCommentForContentSubject && <SubjectLink subject={subject} />}
+              {isCommentForContentSubject && (
+                <SubjectLink theme={theme} subject={subject} />
+              )}
               {filePath &&
                 (userId ? (
                   <div style={{ width: '100%', paddingTop: '3rem' }}>
                     <ContentFileViewer
+                      theme={theme}
                       contentId={comment.id}
                       contentType="comment"
                       fileName={fileName}

@@ -6,13 +6,14 @@ import { useTheme } from 'helpers/hooks';
 import { Color } from 'constants/css';
 
 SubjectLink.propTypes = {
-  subject: PropTypes.object.isRequired
+  subject: PropTypes.object.isRequired,
+  theme: PropTypes.string
 };
 
-export default function SubjectLink({ subject }) {
+export default function SubjectLink({ subject, theme }) {
   const {
     content: { color: contentColor }
-  } = useTheme();
+  } = useTheme(theme);
 
   return (
     <ErrorBoundary componentPath="Comments/SubjectLink">

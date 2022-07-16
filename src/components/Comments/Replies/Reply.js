@@ -378,6 +378,7 @@ function Reply({
                 (userId ? (
                   <div style={{ width: '100%', paddingTop: '2rem' }}>
                     <ContentFileViewer
+                      theme={theme}
                       contentId={reply.id}
                       contentType="comment"
                       fileName={fileName}

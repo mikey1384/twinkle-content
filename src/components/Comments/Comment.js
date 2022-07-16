@@ -648,13 +648,14 @@ function Comment({
                       </span>
                     )}
                   {isCommentForContentSubject && (
-                    <SubjectLink subject={subject} />
+                    <SubjectLink theme={theme} subject={subject} />
                   )}
                   {filePath &&
                     !isDeleteNotification &&
                     (userId ? (
                       <div style={{ width: '100%', paddingTop: '2rem' }}>
                         <ContentFileViewer
+                          theme={theme}
                           contentId={comment.id}
                           contentType="comment"
                           fileName={fileName}

@@ -20,6 +20,7 @@ SecretAnswer.propTypes = {
   onClick: PropTypes.func,
   style: PropTypes.object,
   subjectId: PropTypes.number,
+  theme: PropTypes.string,
   uploaderId: PropTypes.number
 };
 
@@ -31,6 +32,7 @@ function SecretAnswer({
   onClick,
   style,
   subjectId,
+  theme,
   uploaderId
 }) {
   const checkIfUserResponded = useAppContext(
@@ -99,6 +101,7 @@ function SecretAnswer({
               >
                 <ContentFileViewer
                   isSecretAttachment
+                  theme={theme}
                   contentId={subjectId}
                   contentType="subject"
                   fileName={attachment.fileName}
@@ -120,6 +123,7 @@ function SecretAnswer({
             )}
             {!stringIsEmpty(answer) && (
               <LongText
+                theme={theme}
                 style={{ marginTop: fileType === 'image' ? '1.3rem' : 0 }}
               >
                 {answer}

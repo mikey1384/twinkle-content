@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import FileInfo from './FileInfo';
 import ImagePreview from './ImagePreview';
 import MediaPlayer from './MediaPlayer';
+import { Color } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
 import { cloudFrontURL } from 'constants/defaultValues';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 
@@ -18,6 +20,7 @@ ContentFileViewer.propTypes = {
   onMediaPause: PropTypes.func,
   onMediaPlay: PropTypes.func,
   style: PropTypes.object,
+  theme: PropTypes.string,
   thumbUrl: PropTypes.string,
   videoHeight: PropTypes.string
 };
@@ -34,9 +37,13 @@ export default function ContentFileViewer({
   onMediaPause = () => {},
   onMediaPlay = () => {},
   style,
+  theme,
   thumbUrl,
   videoHeight
 }) {
+  const {
+    link: { color: linkColor }
+  } = useTheme(theme);
   const isDisplayedOnHome = useMemo(
     () => contentType === 'subject' || contentType === 'comment',
     [contentType]
@@ -90,7 +97,7 @@ export default function ContentFileViewer({
               }}
             >
               <a
-                style={{ fontWeight: 'bold' }}
+                style={{ fontWeight: 'bold', color: Color[linkColor]() }}
                 href={src}
                 target="_blank"
                 rel="noopener noreferrer"

@@ -189,6 +189,7 @@ export default function MainContent({
           !(contentType === 'comment' && secretHidden) &&
           (userId ? (
             <ContentFileViewer
+              theme={theme}
               contentId={contentId}
               contentType={contentType}
               fileName={fileName}
@@ -360,6 +361,7 @@ export default function MainContent({
               {(secretAnswer || secretAttachment) && (
                 <SecretAnswer
                   answer={secretAnswer}
+                  theme={theme}
                   attachment={secretAttachment}
                   onClick={onClickSecretAnswer}
                   subjectId={contentId}

@@ -161,6 +161,7 @@ function Comment({
                 (userId ? (
                   <div style={{ width: '100%' }}>
                     <ContentFileViewer
+                      theme={theme}
                       contentId={comment.id}
                       contentType="comment"
                       fileName={fileName}
