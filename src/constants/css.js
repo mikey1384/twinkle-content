@@ -80,8 +80,7 @@ export function Theme(color) {
     carouselProgress: { color: 'logoBlue' },
     carouselProgressComplete: { color: 'blue' },
     content: {
-      color:
-        { green: 'passionFruit', orange: 'darkBrownOrange' }[color] || 'green'
+      color: { green: 'blue', orange: 'darkBrownOrange' }[color] || 'green'
     },
     cover: { color },
     done: { color: 'blue' },
