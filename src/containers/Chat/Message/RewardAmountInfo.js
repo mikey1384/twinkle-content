@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { css } from '@emotion/css';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { returnXpLevelColor, videoRewardHash } from 'constants/defaultValues';
+import { videoRewardHash } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
 const continueLabel = localize('continue');
@@ -21,9 +21,10 @@ export default function RewardAmountInfo({
   rewardLevel,
   startingPosition = 0
 }) {
+  const theme = useTheme();
   const xpLevelColor = useMemo(
-    () => returnXpLevelColor(rewardLevel),
-    [rewardLevel]
+    () => theme[`level${rewardLevel}`]?.color,
+    [rewardLevel, theme]
   );
   const { rewardBoostLvl } = useMyState();
   const watching = startingPosition > 0;

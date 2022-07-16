@@ -2,9 +2,8 @@ import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import FullTextReveal from 'components/Texts/FullTextReveal';
 import Icon from 'components/Icon';
-import { useContentState, useMyState } from 'helpers/hooks';
+import { useContentState, useMyState, useTheme } from 'helpers/hooks';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { returnXpLevelColor } from 'constants/defaultValues';
 import { isMobile } from 'helpers';
 import { css } from '@emotion/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
@@ -23,6 +22,7 @@ export default function RewardLevelInfo({
   videoId
 }) {
   const { twinkleCoins } = useMyState();
+  const theme = useTheme();
   const { numCoinsEarned = 0, numXpEarned = 0 } = useContentState({
     contentType: 'video',
     contentId: videoId
@@ -39,8 +39,8 @@ export default function RewardLevelInfo({
     [numCoinsEarned]
   );
   const xpLevelColor = useMemo(
-    () => returnXpLevelColor(rewardLevel),
-    [rewardLevel]
+    () => theme[`level${rewardLevel}`]?.color,
+    [rewardLevel, theme]
   );
   const Stars = useMemo(
     () =>

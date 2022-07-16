@@ -12,6 +12,7 @@ export default function renderEnglishMessage({
   isSubjectResponse,
   isTask,
   linkColor,
+  mentionColor,
   missionColor,
   rewardRootId,
   rewardType,
@@ -66,7 +67,7 @@ export default function renderEnglishMessage({
     case 'mention':
       return (
         <>
-          <span style={{ color: Color.passionFruit(), fontWeight: 'bold' }}>
+          <span style={{ color: Color[mentionColor](), fontWeight: 'bold' }}>
             mentioned you
           </span>{' '}
           in a{' '}

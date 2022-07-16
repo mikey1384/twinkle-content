@@ -4,7 +4,7 @@ import ItemPanel from './ItemPanel';
 import Icon from 'components/Icon';
 import MaxLevelItemInfo from './MaxLevelItemInfo';
 import { css } from '@emotion/css';
-import { Color, mobileMaxWidth } from 'constants/css';
+import { Color, Theme, mobileMaxWidth } from 'constants/css';
 import { useAppContext } from 'contexts';
 import { useMyState } from 'helpers/hooks';
 import {
@@ -34,7 +34,6 @@ const item = {
   ],
   description: [...Array(10).keys()].map((key) => {
     const rewardLevels = [1, 2, 3, 4, 5];
-    const colorKey = ['logoBlue', 'pink', 'orange', 'cranberry', 'gold'];
     const keyNumber = Number(key);
     const descriptionLabel =
       SELECTED_LANGUAGE === 'kr' ? (
@@ -86,7 +85,9 @@ const item = {
                     align-items: center;
                     min-width: 4rem;
                     padding: 0.5rem 0.5rem;
-                    background: ${Color[colorKey[index]]()};
+                    background: ${Color[
+                      Theme()[`level${rewardLevel}`].color
+                    ]()};
                     font-size: 1.5rem;
                     font-weight: bold;
                     color: #fff;

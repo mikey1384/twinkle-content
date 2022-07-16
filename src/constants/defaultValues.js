@@ -305,15 +305,3 @@ export function returnWordLevel({ frequency, word }) {
   if (frequency <= epicWordFrequency) return 5;
   return 3;
 }
-
-export function returnXpLevelColor(rewardLevel) {
-  return rewardLevel === 5
-    ? 'gold'
-    : rewardLevel === 4
-    ? 'cranberry'
-    : rewardLevel === 3
-    ? 'orange'
-    : rewardLevel === 2
-    ? 'pink'
-    : 'logoBlue';
-}

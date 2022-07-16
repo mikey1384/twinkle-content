@@ -23,6 +23,7 @@ export default function useNotificationMessage({
     content: { color: contentColor },
     info: { color: infoColor },
     link: { color: linkColor },
+    mention: { color: mentionColor },
     mission: { color: missionColor },
     reward: { color: rewardColor }
   } = useTheme();
@@ -38,6 +39,7 @@ export default function useNotificationMessage({
       isSubjectResponse,
       isTask,
       linkColor,
+      mentionColor,
       missionColor,
       rewardColor,
       rewardRootId,
@@ -60,6 +62,7 @@ export default function useNotificationMessage({
     isNotification,
     isTask,
     linkColor,
+    mentionColor,
     missionColor,
     rewardColor,
     rewardRootId,

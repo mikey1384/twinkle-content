@@ -98,6 +98,11 @@ export function Theme(color) {
         { green: 'yellowGreen', orange: 'lightOrange' }[color] || 'lightBlue'
     },
     itemSelected: { color, opacity: strongColors.includes(color) ? 0.7 : 0.8 },
+    level1: { color: 'logoBlue' },
+    level2: { color: 'pink' },
+    level3: { color: 'orange' },
+    level4: { color: 'cranberry' },
+    level5: { color: 'gold' },
     likeButton: {
       color: { green: 'yellowGreen' }[color] || 'lightBlue'
     },
@@ -116,6 +121,7 @@ export function Theme(color) {
     logoTwin: { color: 'logoBlue' },
     logoKle: { color: 'logoGreen' },
     mainFilter: { color, opacity: 0.7 },
+    mention: { color: 'passionFruit' },
     mission: { color: 'orange' },
     profilePanel: { color },
     progressBar: { color },

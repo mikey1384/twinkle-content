@@ -5,7 +5,7 @@ import ProgressBar from 'components/ProgressBar';
 import Icon from 'components/Icon';
 import FullTextReveal from 'components/Texts/FullTextReveal';
 import { videoRewardHash } from 'constants/defaultValues';
-import { useContentState, useMyState } from 'helpers/hooks';
+import { useContentState, useMyState, useTheme } from 'helpers/hooks';
 import { isMobile } from 'helpers';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
@@ -40,6 +40,11 @@ function XPBar({
   const [xpHovered, setXPHovered] = useState(false);
   const watching = startingPosition > 0;
   const { rewardBoostLvl, twinkleCoins } = useMyState();
+  const theme = useTheme();
+  const xpLevelColor = useMemo(
+    () => theme[`level${rewardLevel}`]?.color,
+    [rewardLevel, theme]
+  );
   const xpRewardAmount = useMemo(
     () => rewardLevel * (videoRewardHash?.[rewardBoostLvl]?.xp || 20),
     [rewardBoostLvl, rewardLevel]
@@ -66,18 +71,6 @@ function XPBar({
     () => addCommasToNumber(numCoinsEarned),
     [numCoinsEarned]
   );
-
-  const xpLevelColor = useMemo(() => {
-    return rewardLevel === 5
-      ? 'gold'
-      : rewardLevel === 4
-      ? 'cranberry'
-      : rewardLevel === 3
-      ? 'orange'
-      : rewardLevel === 2
-      ? 'pink'
-      : 'logoBlue';
-  }, [rewardLevel]);
 
   const continuingStatusShown = useMemo(
     () => watching && !started,

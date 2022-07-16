@@ -3,7 +3,7 @@ import { useAppContext } from 'contexts';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import WatchProgressBar from './WatchProgressBar';
-import { useMyState } from 'helpers/hooks';
+import { useMyState, useTheme } from 'helpers/hooks';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { isMobile } from 'helpers';
@@ -27,6 +27,7 @@ function VideoThumbImage({
   style,
   videoId
 }) {
+  const theme = useTheme();
   const loadVideoWatchPercentage = useAppContext(
     (v) => v.requestHelpers.loadVideoWatchPercentage
   );
@@ -56,17 +57,8 @@ function VideoThumbImage({
   }, [userId, videoId]);
 
   const tagColor = useMemo(
-    () =>
-      rewardLevel === 5
-        ? Color.gold()
-        : rewardLevel === 4
-        ? Color.cranberry()
-        : rewardLevel === 3
-        ? Color.orange()
-        : rewardLevel === 2
-        ? Color.pink()
-        : Color.logoBlue(),
-    [rewardLevel]
+    () => theme[`level${rewardLevel}`]?.color,
+    [rewardLevel, theme]
   );
 
   return (
@@ -108,7 +100,7 @@ function VideoThumbImage({
               min-width: 4rem;
               position: absolute;
               padding: 0.5rem 0.5rem;
-              background: ${tagColor};
+              background: ${Color[tagColor]()};
               font-size: 1.5rem;
               font-weight: bold;
               color: #fff;

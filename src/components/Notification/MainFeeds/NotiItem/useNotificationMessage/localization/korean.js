@@ -13,6 +13,7 @@ export default function renderEnglishMessage({
   isSubjectResponse,
   isTask,
   linkColor,
+  mentionColor,
   missionColor,
   rewardColor,
   rewardRootId,
@@ -70,7 +71,7 @@ export default function renderEnglishMessage({
       return (
         <>
           <span>님이</span> 회원님을{' '}
-          <span style={{ color: Color.passionFruit(), fontWeight: 'bold' }}>
+          <span style={{ color: Color[mentionColor](), fontWeight: 'bold' }}>
             언급
           </span>
           했습니다:{' '}

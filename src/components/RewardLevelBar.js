@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import { Color } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
@@ -15,6 +16,7 @@ RewardLevelBar.propTypes = {
 };
 
 export default function RewardLevelBar({ className, rewardLevel, style }) {
+  const theme = useTheme();
   const stars = useMemo(() => {
     const result = [];
     for (let i = 0; i < rewardLevel; i++) {
@@ -33,24 +35,15 @@ export default function RewardLevelBar({ className, rewardLevel, style }) {
   }, [rewardLevel]);
 
   const barColor = useMemo(
-    () =>
-      rewardLevel === 5
-        ? Color.gold()
-        : rewardLevel === 4
-        ? Color.cranberry()
-        : rewardLevel === 3
-        ? Color.orange()
-        : rewardLevel === 2
-        ? Color.pink()
-        : Color.logoBlue(),
-    [rewardLevel]
+    () => theme[`level${rewardLevel}`]?.color,
+    [rewardLevel, theme]
   );
 
   return (
     <div
       className={className}
       style={{
-        background: barColor,
+        background: Color[barColor](),
         color: '#fff',
         padding: '0.5rem 1rem',
         display: 'flex',

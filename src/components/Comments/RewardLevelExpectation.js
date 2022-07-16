@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Color, mobileMaxWidth } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
 import { css } from '@emotion/css';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
@@ -10,9 +11,7 @@ RewardLevelExpectation.propTypes = {
 };
 
 export default function RewardLevelExpectation({ rewardLevel }) {
-  if (rewardLevel < 3) {
-    return null;
-  }
+  const theme = useTheme();
   const rewardLevelExpectation = useMemo(() => {
     switch (rewardLevel) {
       case 3:
@@ -40,15 +39,10 @@ export default function RewardLevelExpectation({ rewardLevel }) {
       </>
     );
   }, [rewardLevelExpectation]);
-  const rewardColor = useMemo(
-    () =>
-      rewardLevel === 5
-        ? Color.gold()
-        : rewardLevel === 4
-        ? Color.cranberry()
-        : Color.orange(),
-    [rewardLevel]
-  );
+  const rewardColor = useMemo(() => {
+    const appliedRewardLevel = Math.max(3, rewardLevel);
+    return Color[theme[`level${appliedRewardLevel}`]?.color]();
+  }, [rewardLevel, theme]);
   const rewardLevelExplanation = useMemo(() => {
     if (rewardLevelExpectation === '') {
       return '';
