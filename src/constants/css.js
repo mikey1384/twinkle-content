@@ -14,7 +14,7 @@ export const Color = {
   cyan: (opacity = 1) => `rgba(0,255,255,${opacity})`,
   darkCyan: (opacity = 1) => `rgba(0,139,139,${opacity})`,
   green: (opacity = 1) => `rgba(40,182,44,${opacity})`,
-  blueGreen: (opacity = 1) => `rgba(59,137,160,${opacity})`,
+  blueGreen: (opacity = 1) => `rgba(59,150,160,${opacity})`,
   fernGreen: (opacity = 1) => `rgba(89,159,89,${opacity})`,
   limeGreen: (opacity = 1) => `rgba(34, 197, 94,${opacity})`,
   darkYellowGreen: (opacity = 1) => `rgba(135,180,76,${opacity})`,
@@ -110,12 +110,18 @@ export function Theme(color) {
       color: { green: 'darkYellowGreen' }[color] || 'logoBlue'
     },
     link: {
-      color: { green: 'fernGreen', orange: 'darkOceanBlue' }[color] || 'blue'
+      color:
+        { green: 'fernGreen', orange: 'darkOceanBlue', rose: 'darkOceanBlue' }[
+          color
+        ] || 'blue'
     },
     loadMoreButton: {
       color:
-        { green: 'lightYellowGreen', orange: 'lighterOrange' }[color] ||
-        'lightBlue'
+        {
+          green: 'lightYellowGreen',
+          orange: 'lighterOrange',
+          rose: 'passionFruit'
+        }[color] || 'lightBlue'
     },
     login: { color: 'green' },
     logoTwin: { color: 'logoBlue' },
@@ -142,7 +148,14 @@ export function Theme(color) {
     success: { color: 'green' },
     switch: { color },
     tableHeader: { color },
-    userLink: { color: 'logoBlue', opacity: 0.9 },
+    userLink: {
+      color:
+        {
+          green: 'blueGreen',
+          orange: 'cranberry',
+          rose: 'passionFruit'
+        }[color] || color
+    },
     warning: { color: 'pink' },
     xpNumber: { color: 'logoGreen' }
   };
