@@ -248,7 +248,7 @@ export default function ContentPanel({
                   }}
                   className={container}
                 >
-                  {!loaded && <Loading />}
+                  {!loaded && <Loading theme={theme} />}
                   {loaded && (
                     <>
                       <Heading
