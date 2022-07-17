@@ -29,7 +29,7 @@ export default function RewardItem({
   }
 }) {
   const {
-    content: { color: contentColor },
+    action: { color: actionColor },
     info: { color: infoColor },
     link: { color: linkColor },
     mission: { color: missionColor },
@@ -37,7 +37,7 @@ export default function RewardItem({
   } = useTheme();
   const NotiText = useMemo(() => {
     const params = {
-      contentColor,
+      actionColor,
       contentId,
       contentType,
       infoColor,
@@ -58,7 +58,7 @@ export default function RewardItem({
       ? renderKoreanText(params)
       : renderEnglishText(params);
   }, [
-    contentColor,
+    actionColor,
     contentId,
     contentType,
     infoColor,

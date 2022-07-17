@@ -5,7 +5,7 @@ import ContentLink from 'components/ContentLink';
 
 export default function renderEnglishMessage({
   actionObj,
-  contentColor,
+  actionColor,
   infoColor,
   isNotification,
   isReply,
@@ -44,7 +44,7 @@ export default function renderEnglishMessage({
       : ''
   }`;
 
-  const contentLinkColor = Color[contentColor]();
+  const contentLinkColor = Color[actionColor]();
   const missionLinkColor = Color[missionColor]();
 
   switch (actionObj.contentType) {
@@ -220,7 +220,14 @@ export default function renderEnglishMessage({
                   ? 'link'
                   : targetObj.contentType
               }${
-                !isReply && targetObj.contentType === 'user'
+                (!isReply && targetObj.contentType === 'user') ||
+                stringIsEmpty(
+                  isReply
+                    ? targetComment.content
+                    : isSubjectResponse
+                    ? targetSubject.content
+                    : targetObj.content
+                )
                   ? ''
                   : ` (${truncateText({
                       text: isReply

@@ -6,8 +6,9 @@ export const Color = {
   skyBlue: (opacity = 1) => `rgba(63,175,255,${opacity})`,
   littleBoyBlue: (opacity = 1) => `rgba(103,163,217,${opacity})`,
   lightOceanBlue: (opacity = 1) => `rgba(87,190,255,${opacity})`,
-  oceanBlue: (opacity = 1) => `rgba(33,155,255,${opacity})`,
-  darkOceanBlue: (opacity = 1) => `rgba(33,125,193,${opacity})`,
+  oceanBlue: (opacity = 1) => `rgba(36,120,215,${opacity})`,
+  darkOceanBlue: (opacity = 1) => `rgba(33,120,193,${opacity})`,
+  darkerOceanBlue: (opacity = 1) => `rgba(13,85,173,${opacity})`,
   black: (opacity = 1) => `rgba(51,51,51,${opacity})`,
   brown: (opacity = 1) => `rgba(139,69,19,${opacity})`,
   lightBrown: (opacity = 1) => `rgba(150,125,76,${opacity})`,
@@ -25,6 +26,7 @@ export const Color = {
   yellowGreen: (opacity = 1) => `rgba(154,204,96,${opacity})`,
   lightYellowGreen: (opacity = 1) => `rgba(175,224,96,${opacity})`,
   lightCyan: (opacity = 1) => `rgba(224,255,255,${opacity})`,
+  blackGray: (opacity = 1) => `rgba(75,75,75,${opacity})`,
   darkerGray: (opacity = 1) => `rgba(85,85,85,${opacity})`,
   darkGray: (opacity = 1) => `rgba(115,115,115,${opacity})`,
   gray: (opacity = 1) => `rgba(153,153,153,${opacity})`,
@@ -34,7 +36,9 @@ export const Color = {
   blueGray: (opacity = 1) => `rgba(61,75,95,${opacity})`,
   lightBlueGray: (opacity = 1) => `rgba(91,105,125,${opacity})`,
   darkBlueGray: (opacity = 1) => `rgba(41,55,75,${opacity})`,
-  bluerGray: (opacity = 1) => `rgba(51,65,135,${opacity})`,
+  lightBluerGray: (opacity = 1) => `rgba(71,105,155,${opacity})`,
+  bluerGray: (opacity = 1) => `rgba(51,75,135,${opacity})`,
+  darkBluerGray: (opacity = 1) => `rgba(51,65,115,${opacity})`,
   borderGray: (opacity = 1) => `rgba(204,204,204,${opacity})`,
   checkboxAreaGray: (opacity = 1) => `rgba(229,229,229,${opacity})`,
   targetGray: (opacity = 1) => `rgba(218,218,230,${opacity})`,
@@ -75,13 +79,28 @@ export const strongColors = ['rose', 'red', 'purple'];
 
 export function Theme(color) {
   return {
+    action: {
+      color:
+        {
+          green: 'blue',
+          orange: 'darkBrownOrange',
+          rose: 'cranberry',
+          pink: 'darkGray',
+          purple: 'purple',
+          black: 'darkOceanBlue',
+          red: 'redOrange',
+          darkBlue: 'armyGreen',
+          vantaBlack: 'armyGreen'
+        }[color] || 'green'
+    },
     alert: {
       color:
         {
           green: 'darkGold',
           rose: 'darkGold',
           black: 'darkGold',
-          darkBlue: 'darkGold'
+          darkBlue: 'darkGold',
+          vantaBlack: 'darkGold'
         }[color] || 'gold'
     },
     alreadyPostedByOtherUser: { color: 'red' },
@@ -104,14 +123,16 @@ export function Theme(color) {
           purple: 'purple',
           black: 'darkOceanBlue',
           red: 'redOrange',
-          darkBlue: 'armyGreen'
+          darkBlue: 'armyGreen',
+          vantaBlack: 'armyGreen'
         }[color] || 'green'
     },
     cover: { color },
     danger: {
       color:
         {
-          red: 'darkRed'
+          red: 'darkRed',
+          vantaBlack: 'black'
         }[color] || 'rose'
     },
     done: { color: 'blue' },
@@ -130,11 +151,12 @@ export function Theme(color) {
           green: 'yellowGreen',
           orange: 'lightOrange',
           rose: 'pastelPink',
-          pink: 'strongPink',
+          pink: 'pink',
           purple: 'lightPurple',
           black: 'darkGray',
           red: 'lightRed',
-          darkBlue: 'oceanBlue'
+          darkBlue: 'oceanBlue',
+          vantaBlack: 'oceanBlue'
         }[color] || 'lightBlue'
     },
     itemSelected: { color, opacity: strongColors.includes(color) ? 0.7 : 0.8 },
@@ -161,7 +183,8 @@ export function Theme(color) {
           orange: 'darkOceanBlue',
           rose: 'darkOceanBlue',
           pink: 'oceanBlue',
-          black: 'bluerGray'
+          black: 'bluerGray',
+          vantaBlack: 'darkerOceanBlue'
         }[color] || 'blue'
     },
     loadMoreButton: {
@@ -174,7 +197,8 @@ export function Theme(color) {
           purple: 'lightPurple',
           black: 'darkGray',
           red: 'lightRed',
-          darkBlue: 'lightOceanBlue'
+          darkBlue: 'lightOceanBlue',
+          vantaBlack: 'black'
         }[color] || 'lightBlue'
     },
     login: { color: 'green' },

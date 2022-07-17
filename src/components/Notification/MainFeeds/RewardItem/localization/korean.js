@@ -5,7 +5,7 @@ import { Color } from 'constants/css';
 import { truncateText } from 'helpers/stringHelpers';
 
 export default function renderEnglishText({
-  contentColor,
+  actionColor,
   contentId,
   contentType,
   infoColor,
@@ -23,7 +23,7 @@ export default function renderEnglishText({
   targetObj
 }) {
   const missionLinkColor = Color[missionColor]();
-  const contentLinkColor = Color[contentColor]();
+  const contentLinkColor = Color[actionColor]();
 
   if (rewardType === 'Twinkle') {
     return (

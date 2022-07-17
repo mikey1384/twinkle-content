@@ -20,7 +20,7 @@ export default function useNotificationMessage({
 }) {
   const { userId } = useMyState();
   const {
-    content: { color: contentColor },
+    action: { color: actionColor },
     info: { color: infoColor },
     link: { color: linkColor },
     mention: { color: mentionColor },
@@ -32,7 +32,7 @@ export default function useNotificationMessage({
     const isSubjectResponse = targetSubject?.userId === userId;
     const params = {
       actionObj,
-      contentColor,
+      actionColor,
       infoColor,
       isNotification,
       isReply,
@@ -57,7 +57,7 @@ export default function useNotificationMessage({
       : renderEnglishMessage(params);
   }, [
     actionObj,
-    contentColor,
+    actionColor,
     infoColor,
     isNotification,
     isTask,
