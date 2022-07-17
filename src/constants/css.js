@@ -33,6 +33,7 @@ export const Color = {
   blueGray: (opacity = 1) => `rgba(61,75,95,${opacity})`,
   lightBlueGray: (opacity = 1) => `rgba(91,105,125,${opacity})`,
   darkBlueGray: (opacity = 1) => `rgba(41,55,75,${opacity})`,
+  bluerGray: (opacity = 1) => `rgba(51,65,135,${opacity})`,
   borderGray: (opacity = 1) => `rgba(204,204,204,${opacity})`,
   checkboxAreaGray: (opacity = 1) => `rgba(229,229,229,${opacity})`,
   targetGray: (opacity = 1) => `rgba(218,218,230,${opacity})`,
@@ -91,7 +92,8 @@ export function Theme(color) {
           orange: 'darkBrownOrange',
           rose: 'cranberry',
           pink: 'passionFruit',
-          purple: 'purple'
+          purple: 'purple',
+          black: 'darkBlue'
         }[color] || 'green'
     },
     cover: { color },
@@ -112,7 +114,8 @@ export function Theme(color) {
           orange: 'lightOrange',
           rose: 'pastelPink',
           pink: 'strongPink',
-          purple: 'lightPurple'
+          purple: 'lightPurple',
+          black: 'darkGray'
         }[color] || 'lightBlue'
     },
     itemSelected: { color, opacity: strongColors.includes(color) ? 0.7 : 0.8 },
@@ -134,7 +137,8 @@ export function Theme(color) {
           green: 'fernGreen',
           orange: 'darkOceanBlue',
           rose: 'darkOceanBlue',
-          pink: 'oceanBlue'
+          pink: 'oceanBlue',
+          black: 'bluerGray'
         }[color] || 'blue'
     },
     loadMoreButton: {
@@ -144,7 +148,8 @@ export function Theme(color) {
           orange: 'lighterOrange',
           rose: 'passionFruit',
           pink: 'pastelPink',
-          purple: 'lightPurple'
+          purple: 'lightPurple',
+          black: 'darkGray'
         }[color] || 'lightBlue'
     },
     login: { color: 'green' },
