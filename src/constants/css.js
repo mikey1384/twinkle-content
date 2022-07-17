@@ -5,7 +5,7 @@ export const Color = {
   logoBlue: (opacity = 1) => `rgba(65, 140, 235,${opacity})`,
   skyBlue: (opacity = 1) => `rgba(63,175,255,${opacity})`,
   littleBoyBlue: (opacity = 1) => `rgba(103,163,217,${opacity})`,
-  lightOceanBlue: (opacity = 1) => `rgba(37,170,250,${opacity})`,
+  lightOceanBlue: (opacity = 1) => `rgba(87,190,255,${opacity})`,
   oceanBlue: (opacity = 1) => `rgba(33,155,255,${opacity})`,
   darkOceanBlue: (opacity = 1) => `rgba(33,125,193,${opacity})`,
   black: (opacity = 1) => `rgba(51,51,51,${opacity})`,
@@ -17,6 +17,7 @@ export const Color = {
   cyan: (opacity = 1) => `rgba(0,255,255,${opacity})`,
   darkCyan: (opacity = 1) => `rgba(0,139,139,${opacity})`,
   green: (opacity = 1) => `rgba(40,182,44,${opacity})`,
+  armyGreen: (opacity = 1) => `rgba(40,150,44,${opacity})`,
   blueGreen: (opacity = 1) => `rgba(59,150,160,${opacity})`,
   fernGreen: (opacity = 1) => `rgba(89,159,89,${opacity})`,
   limeGreen: (opacity = 1) => `rgba(34, 197, 94,${opacity})`,
@@ -75,7 +76,13 @@ export const strongColors = ['rose', 'red', 'purple'];
 export function Theme(color) {
   return {
     alert: {
-      color: { green: 'darkGold', rose: 'darkGold' }[color] || 'gold'
+      color:
+        {
+          green: 'darkGold',
+          rose: 'darkGold',
+          black: 'darkGold',
+          darkBlue: 'darkGold'
+        }[color] || 'gold'
     },
     alreadyPostedByOtherUser: { color: 'red' },
     alreadyPostedByThisUser: { color: 'blue' },
@@ -96,7 +103,8 @@ export function Theme(color) {
           pink: 'passionFruit',
           purple: 'purple',
           black: 'darkOceanBlue',
-          red: 'redOrange'
+          red: 'redOrange',
+          darkBlue: 'armyGreen'
         }[color] || 'green'
     },
     cover: { color },
@@ -125,7 +133,8 @@ export function Theme(color) {
           pink: 'strongPink',
           purple: 'lightPurple',
           black: 'darkGray',
-          red: 'lightRed'
+          red: 'lightRed',
+          darkBlue: 'oceanBlue'
         }[color] || 'lightBlue'
     },
     itemSelected: { color, opacity: strongColors.includes(color) ? 0.7 : 0.8 },
@@ -164,7 +173,8 @@ export function Theme(color) {
           pink: 'pastelPink',
           purple: 'lightPurple',
           black: 'darkGray',
-          red: 'lightRed'
+          red: 'lightRed',
+          darkBlue: 'lightOceanBlue'
         }[color] || 'lightBlue'
     },
     login: { color: 'green' },
@@ -182,7 +192,8 @@ export function Theme(color) {
           green: 'pinkOrange',
           orange: 'pastelPink',
           pink: 'cranberry',
-          red: 'strongPink'
+          red: 'strongPink',
+          darkBlue: 'strongPink'
         }[color] || 'pink'
     },
     rewardLevelForm: { color, opacity: strongColors.includes(color) ? 0.9 : 1 },
