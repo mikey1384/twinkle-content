@@ -215,7 +215,7 @@ export function Theme(color) {
         {
           green: 'pinkOrange',
           orange: 'pastelPink',
-          pink: 'cranberry',
+          pink: 'strongPink',
           red: 'strongPink',
           rose: 'strongPink',
           purple: 'strongPink',
