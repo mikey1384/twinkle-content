@@ -42,6 +42,7 @@ export const Color = {
   highlightGray: (opacity = 1) => `rgba(242,242,242,${opacity})`,
   whiteGray: (opacity = 1) => `rgba(250,250,250,${opacity})`,
   ivory: (opacity = 1) => `rgba(255,255,240,${opacity})`,
+  redOrange: (opacity = 1) => `rgba(255,90,70,${opacity})`,
   darkBrownOrange: (opacity = 1) => `rgba(235,160,70,${opacity})`,
   brownOrange: (opacity = 1) => `rgba(245,190,70,${opacity})`,
   orange: (opacity = 1) => `rgba(255,140,0,${opacity})`,
@@ -95,7 +96,7 @@ export function Theme(color) {
           pink: 'passionFruit',
           purple: 'purple',
           black: 'darkOceanBlue',
-          red: 'rose'
+          red: 'redOrange'
         }[color] || 'green'
     },
     cover: { color },
@@ -140,7 +141,7 @@ export function Theme(color) {
     },
     likeButtonPressed: {
       color:
-        { green: 'darkYellowGreen', rose: 'oceanBlue', red: 'cranberry' }[
+        { green: 'darkYellowGreen', rose: 'oceanBlue', red: 'passionFruit' }[
           color
         ] || 'logoBlue'
     },
