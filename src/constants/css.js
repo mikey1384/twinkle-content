@@ -58,8 +58,9 @@ export const Color = {
   purple: (opacity = 1) => `rgba(152,28,235,${opacity})`,
   lightPurple: (opacity = 1) => `rgba(245,135,255,${opacity})`,
   whitePurple: (opacity = 1) => `rgba(248,246,255,${opacity})`,
+  lightRed: (opacity = 1) => `rgba(255,130,134,${opacity})`,
   red: (opacity = 1) => `rgba(255,65,54,${opacity})`,
-  darkRed: (opacity = 1) => `rgba(139,0,0,${opacity})`,
+  darkRed: (opacity = 1) => `rgba(235,0,60,${opacity})`,
   rose: (opacity = 1) => `rgba(223,0,102,${opacity})`,
   vantaBlack: (opacity = 1) => `rgba(0,0,0,${opacity})`,
   white: (opacity = 1) => `rgba(255,255,255,${opacity})`,
@@ -93,19 +94,26 @@ export function Theme(color) {
           rose: 'cranberry',
           pink: 'passionFruit',
           purple: 'purple',
-          black: 'darkOceanBlue'
+          black: 'darkOceanBlue',
+          red: 'rose'
         }[color] || 'green'
     },
     cover: { color },
-    done: { color: 'blue' },
-    generalChat: {
-      color: color === 'black' || color === 'vantablack' ? 'darkBlue' : color
+    danger: {
+      color:
+        {
+          red: 'darkRed'
+        }[color] || 'rose'
     },
+    done: { color: 'blue' },
     chatFlatButton: {
       color,
       opacity: 0.8
     },
     chatInvitation: { color },
+    generalChat: {
+      color: color === 'black' || color === 'vantablack' ? 'darkBlue' : color
+    },
     homeMenuItemActive: { color },
     info: {
       color:
@@ -115,7 +123,8 @@ export function Theme(color) {
           rose: 'pastelPink',
           pink: 'strongPink',
           purple: 'lightPurple',
-          black: 'darkGray'
+          black: 'darkGray',
+          red: 'lightRed'
         }[color] || 'lightBlue'
     },
     itemSelected: { color, opacity: strongColors.includes(color) ? 0.7 : 0.8 },
@@ -125,11 +134,15 @@ export function Theme(color) {
     level4: { color: 'cranberry' },
     level5: { color: 'gold' },
     likeButton: {
-      color: { green: 'yellowGreen', rose: 'skyBlue' }[color] || 'lightBlue'
+      color:
+        { green: 'yellowGreen', rose: 'skyBlue', red: 'pinkOrange' }[color] ||
+        'lightBlue'
     },
     likeButtonPressed: {
       color:
-        { green: 'darkYellowGreen', rose: 'oceanBlue' }[color] || 'logoBlue'
+        { green: 'darkYellowGreen', rose: 'oceanBlue', red: 'cranberry' }[
+          color
+        ] || 'logoBlue'
     },
     link: {
       color:
@@ -149,7 +162,8 @@ export function Theme(color) {
           rose: 'passionFruit',
           pink: 'pastelPink',
           purple: 'lightPurple',
-          black: 'darkGray'
+          black: 'darkGray',
+          red: 'lightRed'
         }[color] || 'lightBlue'
     },
     login: { color: 'green' },
@@ -163,9 +177,12 @@ export function Theme(color) {
     reactionButton: { color, opacity: 0.2 },
     reward: {
       color:
-        { green: 'pinkOrange', orange: 'pastelPink', pink: 'cranberry' }[
-          color
-        ] || 'pink'
+        {
+          green: 'pinkOrange',
+          orange: 'pastelPink',
+          pink: 'cranberry',
+          red: 'strongPink'
+        }[color] || 'pink'
     },
     rewardLevelForm: { color, opacity: strongColors.includes(color) ? 0.9 : 1 },
     rewardableRecommendation: { color, opacity: 0.1 },

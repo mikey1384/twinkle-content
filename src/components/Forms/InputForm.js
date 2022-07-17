@@ -76,7 +76,8 @@ function InputForm({
       color: skeuomorphicDisabledColor,
       opacity: skeuomorphicDisabledOpacity
     },
-    button: { color: buttonColor }
+    button: { color: buttonColor },
+    danger: { color: dangerColor }
   } = useTheme(theme);
   const maxSize = useMemo(
     () => returnMaxUploadSize(fileUploadLvl),
@@ -292,7 +293,7 @@ function InputForm({
           >
             <Button
               style={{ marginTop: '0.5rem', marginBottom: '0.5rem' }}
-              color="rose"
+              color={dangerColor}
               filled
               disabled={secretViewMessageSubmitting}
               onClick={
