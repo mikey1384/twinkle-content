@@ -76,7 +76,11 @@ export default function Profile() {
       {!notExist ? (
         <>
           {loading && (
-            <Loading style={{ marginTop: '5rem' }} text="Loading Profile..." />
+            <Loading
+              theme={selectedTheme}
+              style={{ marginTop: '5rem' }}
+              text="Loading Profile..."
+            />
           )}
           {!loading && profile.id && (
             <div

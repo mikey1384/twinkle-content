@@ -1,12 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Color } from 'constants/css';
 import { css } from '@emotion/css';
 import { useTheme } from 'helpers/hooks';
 
-export default function Spinner() {
+Spinner.propTypes = {
+  theme: PropTypes.string
+};
+
+export default function Spinner({ theme }) {
   const {
     spinner: { color: spinnerColor }
-  } = useTheme();
+  } = useTheme(theme);
 
   return (
     <div

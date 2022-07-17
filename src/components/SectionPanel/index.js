@@ -262,7 +262,7 @@ export default function SectionPanel({
             `}
           />
         ) : (
-          <Loading />
+          <Loading theme={customColorTheme} />
         )}
         {loadMoreButtonShown && (
           <div style={{ display: 'flex', justifyContent: 'center' }}>

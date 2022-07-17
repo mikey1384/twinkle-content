@@ -189,6 +189,7 @@ export default function Feeds({
         )}
         {loadingShown ? (
           <Loading
+            theme={selectedTheme}
             className={css`
               margin-top: ${['likes', 'watched'].includes(section)
                 ? '12rem'

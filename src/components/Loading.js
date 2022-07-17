@@ -7,14 +7,16 @@ Loading.propTypes = {
   className: PropTypes.string,
   innerStyle: PropTypes.object,
   style: PropTypes.object,
-  text: PropTypes.string
+  text: PropTypes.string,
+  theme: PropTypes.string
 };
 
 export default function Loading({
   className,
   text = '',
   innerStyle = {},
-  style = {}
+  style = {},
+  theme
 }) {
   return (
     <div
@@ -38,7 +40,7 @@ export default function Loading({
           ...innerStyle
         }}
       >
-        <Spinner />
+        <Spinner theme={theme} />
         {text && <div style={{ marginLeft: '1.5rem' }}>{text}</div>}
       </div>
     </div>
