@@ -87,7 +87,7 @@ export function Theme(color) {
           rose: 'cranberry',
           pink: 'darkGray',
           purple: 'purple',
-          black: 'darkOceanBlue',
+          black: 'darkerGray',
           red: 'redOrange',
           darkBlue: 'armyGreen',
           vantaBlack: 'armyGreen'
@@ -153,7 +153,7 @@ export function Theme(color) {
           rose: 'pastelPink',
           pink: 'pink',
           purple: 'lightPurple',
-          black: 'darkGray',
+          black: 'oceanBlue',
           red: 'lightRed',
           darkBlue: 'oceanBlue',
           vantaBlack: 'oceanBlue'
