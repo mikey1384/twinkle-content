@@ -6,7 +6,7 @@ export const Color = {
   skyBlue: (opacity = 1) => `rgba(63,175,255,${opacity})`,
   littleBoyBlue: (opacity = 1) => `rgba(103,163,217,${opacity})`,
   lightOceanBlue: (opacity = 1) => `rgba(87,190,255,${opacity})`,
-  oceanBlue: (opacity = 1) => `rgba(36,120,215,${opacity})`,
+  oceanBlue: (opacity = 1) => `rgba(36,135,235,${opacity})`,
   darkOceanBlue: (opacity = 1) => `rgba(33,120,193,${opacity})`,
   darkerOceanBlue: (opacity = 1) => `rgba(13,85,173,${opacity})`,
   black: (opacity = 1) => `rgba(51,51,51,${opacity})`,
