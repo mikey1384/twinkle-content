@@ -524,7 +524,7 @@ function Comments({
               width: '100%'
             }}
           >
-            {isLoading && <Loading />}
+            {isLoading && <Loading theme={theme} />}
             {!isLoading &&
               parent.contentType !== 'comment' &&
               pinnedCommentId &&
