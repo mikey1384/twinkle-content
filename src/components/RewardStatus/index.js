@@ -118,11 +118,7 @@ function RewardStatus({
       </div>
       {numLoaded < rewards.length && (
         <LoadMoreButton
-          color={
-            amountRewarded === maxRewards || amountRewarded > 10
-              ? 'orange'
-              : infoColor
-          }
+          color={infoColor}
           label={showMoreRewardRecordsLabel}
           filled
           style={{
