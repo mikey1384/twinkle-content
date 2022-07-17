@@ -43,6 +43,11 @@ export default function renderEnglishMessage({
         })})`
       : ''
   }`;
+  const contentString = isReply
+    ? targetComment.content
+    : isSubjectResponse
+    ? targetSubject.content
+    : targetObj.content;
 
   const contentLinkColor = Color[actionColor]();
   const missionLinkColor = Color[missionColor]();
@@ -221,20 +226,10 @@ export default function renderEnglishMessage({
                   : targetObj.contentType
               }${
                 (!isReply && targetObj.contentType === 'user') ||
-                stringIsEmpty(
-                  isReply
-                    ? targetComment.content
-                    : isSubjectResponse
-                    ? targetSubject.content
-                    : targetObj.content
-                )
+                stringIsEmpty(contentString)
                   ? ''
                   : ` (${truncateText({
-                      text: isReply
-                        ? targetComment.content
-                        : isSubjectResponse
-                        ? targetSubject.content
-                        : targetObj.content,
+                      text: contentString,
                       limit: 100
                     })})`
               }`
