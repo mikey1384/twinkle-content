@@ -97,7 +97,11 @@ export default function InnerContent({
           <div>
             You and{' '}
             <a
-              style={{ cursor: 'pointer', fontWeight: 'bold' }}
+              style={{
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                color: Color[linkColor]()
+              }}
               onClick={() => onLinkClick()}
             >
               {totalLikes} others
@@ -140,7 +144,11 @@ export default function InnerContent({
         return (
           <div>
             <a
-              style={{ cursor: 'pointer', fontWeight: 'bold' }}
+              style={{
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                color: Color[linkColor]()
+              }}
               onClick={() => onLinkClick()}
             >
               {totalLikes}
@@ -152,7 +160,11 @@ export default function InnerContent({
       return (
         <div>
           <a
-            style={{ cursor: 'pointer', fontWeight: 'bold' }}
+            style={{
+              cursor: 'pointer',
+              fontWeight: 'bold',
+              color: Color[linkColor]()
+            }}
             onClick={() => onLinkClick()}
           >
             {totalLikes} people

@@ -93,7 +93,7 @@ export function Theme(color) {
           rose: 'cranberry',
           pink: 'passionFruit',
           purple: 'purple',
-          black: 'darkBlue'
+          black: 'darkOceanBlue'
         }[color] || 'green'
     },
     cover: { color },
