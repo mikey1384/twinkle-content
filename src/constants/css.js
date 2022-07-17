@@ -55,7 +55,8 @@ export const Color = {
   bronze: (opacity = 1) => `rgba(255,190,130,${opacity})`,
   cranberry: (opacity = 1) => `rgba(230,80,112,${opacity})`,
   purple: (opacity = 1) => `rgba(152,28,235,${opacity})`,
-  lightPurple: (opacity = 1) => `rgba(248,246,255,${opacity})`,
+  lightPurple: (opacity = 1) => `rgba(245,135,255,${opacity})`,
+  whitePurple: (opacity = 1) => `rgba(248,246,255,${opacity})`,
   red: (opacity = 1) => `rgba(255,65,54,${opacity})`,
   darkRed: (opacity = 1) => `rgba(139,0,0,${opacity})`,
   rose: (opacity = 1) => `rgba(223,0,102,${opacity})`,
@@ -89,7 +90,8 @@ export function Theme(color) {
           green: 'blue',
           orange: 'darkBrownOrange',
           rose: 'cranberry',
-          pink: 'passionFruit'
+          pink: 'passionFruit',
+          purple: 'purple'
         }[color] || 'green'
     },
     cover: { color },
@@ -109,7 +111,8 @@ export function Theme(color) {
           green: 'yellowGreen',
           orange: 'lightOrange',
           rose: 'pastelPink',
-          pink: 'strongPink'
+          pink: 'strongPink',
+          purple: 'lightPurple'
         }[color] || 'lightBlue'
     },
     itemSelected: { color, opacity: strongColors.includes(color) ? 0.7 : 0.8 },
@@ -140,7 +143,8 @@ export function Theme(color) {
           green: 'lightYellowGreen',
           orange: 'lighterOrange',
           rose: 'passionFruit',
-          pink: 'pastelPink'
+          pink: 'pastelPink',
+          purple: 'lightPurple'
         }[color] || 'lightBlue'
     },
     login: { color: 'green' },

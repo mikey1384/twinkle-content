@@ -67,7 +67,7 @@ export default function Table({
           }
         }
         tr:hover td {
-          background: ${Color.lightPurple()};
+          background: ${Color.whitePurple()};
           a {
             font-weight: bold;
             color: ${Color.logoBlue()};
