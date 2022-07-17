@@ -157,7 +157,7 @@ export function Theme(color) {
           red: 'lightRed',
           darkBlue: 'oceanBlue',
           vantaBlack: 'oceanBlue'
-        }[color] || 'lightBlue'
+        }[color] || 'lightOceanBlue'
     },
     itemSelected: { color, opacity: strongColors.includes(color) ? 0.7 : 0.8 },
     level1: { color: 'logoBlue' },
