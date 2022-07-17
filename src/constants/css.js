@@ -62,7 +62,7 @@ export const Color = {
   bronze: (opacity = 1) => `rgba(255,190,130,${opacity})`,
   cranberry: (opacity = 1) => `rgba(230,80,112,${opacity})`,
   purple: (opacity = 1) => `rgba(152,28,235,${opacity})`,
-  lightPurple: (opacity = 1) => `rgba(245,135,255,${opacity})`,
+  lightPurple: (opacity = 1) => `rgba(225,105,255,${opacity})`,
   whitePurple: (opacity = 1) => `rgba(248,246,255,${opacity})`,
   lightRed: (opacity = 1) => `rgba(255,130,134,${opacity})`,
   red: (opacity = 1) => `rgba(255,65,54,${opacity})`,
@@ -217,6 +217,7 @@ export function Theme(color) {
           orange: 'pastelPink',
           pink: 'cranberry',
           red: 'strongPink',
+          purple: 'strongPink',
           darkBlue: 'strongPink'
         }[color] || 'pink'
     },
