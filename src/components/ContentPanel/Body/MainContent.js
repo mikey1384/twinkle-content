@@ -16,9 +16,9 @@ import SecretComment from 'components/SecretComment';
 import MissionContent from './MissionContent';
 import { isMobile, scrollElementToCenter } from 'helpers';
 import { stringIsEmpty, getFileInfoFromFileName } from 'helpers/stringHelpers';
-import { borderRadius, Color, mobileMaxWidth, Theme } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useContentState } from 'helpers/hooks';
+import { useContentState, useTheme } from 'helpers/hooks';
 import { useAppContext, useKeyContext, useContentContext } from 'contexts';
 import { useNavigate } from 'react-router-dom';
 
@@ -85,7 +85,7 @@ export default function MainContent({
       opacity: byUserIndicatorOpacity
     },
     content: { color: contentColor }
-  } = Theme(theme || profileTheme);
+  } = useTheme(theme || profileTheme);
   const { fileType } = useMemo(
     () => (fileName ? getFileInfoFromFileName(fileName) : ''),
     [fileName]

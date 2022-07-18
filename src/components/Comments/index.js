@@ -16,8 +16,8 @@ import PinnedComment from './PinnedComment';
 import { v1 as uuidv1 } from 'uuid';
 import { returnImageFileFromUrl, scrollElementToCenter } from 'helpers';
 import { css } from '@emotion/css';
-import { Color, mobileMaxWidth, Theme } from 'constants/css';
-import { useContentState } from 'helpers/hooks';
+import { Color, mobileMaxWidth } from 'constants/css';
+import { useContentState, useTheme } from 'helpers/hooks';
 import {
   useAppContext,
   useContentContext,
@@ -105,7 +105,7 @@ function Comments({
   const { banned, profileTheme } = useKeyContext((v) => v.myState);
   const {
     loadMoreButton: { color: loadMoreButtonColor }
-  } = Theme(theme || profileTheme);
+  } = useTheme(theme || profileTheme);
   const uploadThumb = useAppContext((v) => v.requestHelpers.uploadThumb);
   const deleteContent = useAppContext((v) => v.requestHelpers.deleteContent);
   const loadComments = useAppContext((v) => v.requestHelpers.loadComments);

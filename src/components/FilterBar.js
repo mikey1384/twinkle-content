@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { borderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
 import { css } from '@emotion/css';
 import { useKeyContext } from 'contexts';
 
@@ -29,7 +30,7 @@ export default function FilterBar({
   const {
     alert: { color: alertColor },
     filter: { color: filterColor, opacity: filterOpacity }
-  } = Theme(color || profileTheme);
+  } = useTheme(color || profileTheme);
 
   const filterActiveColor = Color[filterColor]();
   const FilterBarStyle = useMemo(() => {

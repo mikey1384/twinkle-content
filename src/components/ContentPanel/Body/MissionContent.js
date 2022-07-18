@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import UsernameText from 'components/Texts/UsernameText';
 import ContentLink from 'components/ContentLink';
-import { borderRadius, Color, Theme } from 'constants/css';
+import { borderRadius, Color } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
+import { useTheme } from 'helpers/hooks';
 import { useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
@@ -23,7 +24,7 @@ export default function MissionContent({ uploader, rootObj: mission, theme }) {
   const {
     link: { color: linkColor },
     xpNumber: { color: xpNumberColor }
-  } = Theme(theme || profileTheme);
+  } = useTheme(theme || profileTheme);
 
   const rewardDetails = useMemo(() => {
     return mission.xpReward || mission.coinReward ? (

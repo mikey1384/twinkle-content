@@ -20,7 +20,7 @@ import ContentFileViewer from 'components/ContentFileViewer';
 import SecretComment from 'components/SecretComment';
 import Icon from 'components/Icon';
 import LoginToViewContent from 'components/LoginToViewContent';
-import { borderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { timeSince } from 'helpers/timeStampHelpers';
 import {
@@ -29,7 +29,7 @@ import {
   isMobile
 } from 'helpers';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
-import { useContentState } from 'helpers/hooks';
+import { useContentState, useTheme } from 'helpers/hooks';
 import {
   useAppContext,
   useContentContext,
@@ -91,7 +91,7 @@ export default function TargetContent({
     link: { color: linkColor },
     content: { color: contentColor },
     reward: { color: rewardColor }
-  } = Theme(theme || profileTheme);
+  } = useTheme(theme || profileTheme);
   const onSetXpRewardInterfaceShown = useContentContext(
     (v) => v.actions.onSetXpRewardInterfaceShown
   );

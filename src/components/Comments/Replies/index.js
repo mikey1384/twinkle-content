@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import LocalContext from '../Context';
 import Reply from './Reply';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
-import { Theme } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
 import { scrollElementToCenter } from 'helpers';
 import { useAppContext, useKeyContext } from 'contexts';
 
@@ -51,7 +51,7 @@ function Replies({
   } = useContext(LocalContext);
   const {
     loadMoreButton: { color: loadMoreButtonColor }
-  } = Theme(theme || profileTheme);
+  } = useTheme(theme || profileTheme);
   const loadReplies = useAppContext((v) => v.requestHelpers.loadReplies);
   const [deleting, setDeleting] = useState(false);
   const [replying, setReplying] = useState(false);

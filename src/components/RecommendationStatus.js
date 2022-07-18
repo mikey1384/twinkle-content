@@ -2,8 +2,9 @@ import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import UsernameText from 'components/Texts/UsernameText';
 import UserListModal from 'components/Modals/UserListModal';
-import { Color, Theme } from 'constants/css';
+import { Color } from 'constants/css';
 import { useKeyContext } from 'contexts';
+import { useTheme } from 'helpers/hooks';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
@@ -30,7 +31,7 @@ export default function RecommendationStatus({
       color: rewardableColor,
       opacity: rewardableOpacity
     }
-  } = Theme(theme || profileTheme);
+  } = useTheme(theme || profileTheme);
   const [userListModalShown, setUserListModalShown] = useState(false);
   const recommendationsByUsertype = useMemo(() => {
     const result = [...recommendations];

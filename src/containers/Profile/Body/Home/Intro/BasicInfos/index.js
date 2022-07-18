@@ -5,7 +5,8 @@ import Icon from 'components/Icon';
 import InfoEditForm from './InfoEditForm';
 import PasswordInputModal from './PasswordInputModal';
 import { css } from '@emotion/css';
-import { Color, Theme, mobileMaxWidth } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
 import { stringIsEmpty, trimUrl } from 'helpers/stringHelpers';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { unix } from 'moment';
@@ -75,7 +76,7 @@ export default function BasicInfos({
   } = useKeyContext((v) => v.myState);
   const {
     button: { color: buttonColor }
-  } = Theme(selectedTheme || profileTheme || 'logoBlue');
+  } = useTheme(selectedTheme || profileTheme || 'logoBlue');
   const loadDMChannel = useAppContext((v) => v.requestHelpers.loadDMChannel);
   const uploadProfileInfo = useAppContext(
     (v) => v.requestHelpers.uploadProfileInfo
