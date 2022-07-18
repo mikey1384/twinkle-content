@@ -37,8 +37,8 @@ import {
   determineXpButtonDisabled,
   scrollElementToCenter
 } from 'helpers';
-import { useContentState, useLazyLoad, useTheme } from 'helpers/hooks';
-import { borderRadius, Color } from 'constants/css';
+import { useContentState, useLazyLoad } from 'helpers/hooks';
+import { borderRadius, Color, Theme } from 'constants/css';
 import { getFileInfoFromFileName, stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext, useKeyContext } from 'contexts';
 import { useInView } from 'react-intersection-observer';
@@ -147,12 +147,13 @@ function Comment({
     canReward,
     isCreator,
     twinkleCoins,
-    userId
+    userId,
+    profileTheme
   } = useKeyContext((v) => v.myState);
   const {
     link: { color: linkColor },
     reward: { color: rewardColor }
-  } = useTheme(theme);
+  } = Theme(theme || profileTheme);
   const onChangeSpoilerStatus = useContentContext(
     (v) => v.actions.onChangeSpoilerStatus
   );

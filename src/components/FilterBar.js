@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 
 FilterBar.propTypes = {
   children: PropTypes.node,
@@ -25,10 +25,11 @@ export default function FilterBar({
   dropdownButton,
   style
 }) {
+  const { profileTheme } = useKeyContext((v) => v.myState);
   const {
     alert: { color: alertColor },
     mainFilter: { color: mainFilterColor, opacity: mainFilterOpacity }
-  } = useTheme(color);
+  } = Theme(color || profileTheme);
   const mainFilterActiveColor = Color[mainFilterColor]();
   const FilterBarStyle = useMemo(() => {
     return `${css`

@@ -5,12 +5,11 @@ import Icon from 'components/Icon';
 import InfoEditForm from './InfoEditForm';
 import PasswordInputModal from './PasswordInputModal';
 import { css } from '@emotion/css';
-import { Color, mobileMaxWidth } from 'constants/css';
+import { Color, Theme, mobileMaxWidth } from 'constants/css';
 import { stringIsEmpty, trimUrl } from 'helpers/stringHelpers';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { unix } from 'moment';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from 'helpers/hooks';
 import {
   useAppContext,
   useChatContext,
@@ -76,7 +75,7 @@ export default function BasicInfos({
   } = useKeyContext((v) => v.myState);
   const {
     button: { color: buttonColor }
-  } = useTheme(selectedTheme || profileTheme || 'logoBlue');
+  } = Theme(selectedTheme || profileTheme || 'logoBlue');
   const loadDMChannel = useAppContext((v) => v.requestHelpers.loadDMChannel);
   const uploadProfileInfo = useAppContext(
     (v) => v.requestHelpers.uploadProfileInfo

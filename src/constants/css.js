@@ -77,7 +77,7 @@ export const Color = {
 
 export const strongColors = ['rose', 'red', 'purple'];
 
-export function Theme(color) {
+export function Theme(color = 'logoBlue') {
   return {
     action: {
       color:

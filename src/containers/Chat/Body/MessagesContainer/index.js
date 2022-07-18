@@ -35,12 +35,11 @@ import {
 } from 'constants/defaultValues';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 import { css } from '@emotion/css';
-import { Color } from 'constants/css';
+import { Color, Theme } from 'constants/css';
 import { socket } from 'constants/io';
 import { isMobile, parseChannelPath } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useTheme } from 'helpers/hooks';
 import { useAppContext, useKeyContext } from 'contexts';
 import LocalContext from '../../Context';
 import localize from 'constants/localize';
@@ -123,12 +122,11 @@ function MessagesContainer({
     },
     inputState
   } = useContext(LocalContext);
-  const { banned, profilePicUrl, userId, username } = useKeyContext(
-    (v) => v.myState
-  );
+  const { banned, profilePicUrl, userId, profileTheme, username } =
+    useKeyContext((v) => v.myState);
   const {
     loadMoreButton: { color: loadMoreButtonColor }
-  } = useTheme(displayedThemeColor);
+  } = Theme(displayedThemeColor || profileTheme);
   const {
     isRespondingToSubject = false,
     messageIds = [],

@@ -18,7 +18,7 @@ import {
   DEFAULT_PROFILE_THEME,
   SELECTED_LANGUAGE
 } from 'constants/defaultValues';
-import { Color, Theme } from 'constants/css';
+import { Color } from 'constants/css';
 
 const BodyRef = document.scrollingElement || document.documentElement;
 
@@ -143,11 +143,6 @@ export function useMyState() {
     ]
   );
   return result;
-}
-
-export function useTheme(selectedTheme) {
-  const { profileTheme } = useMyState();
-  return Theme(selectedTheme || profileTheme);
 }
 
 export function useOutsideClick(ref, callback) {

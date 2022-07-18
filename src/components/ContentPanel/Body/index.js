@@ -17,7 +17,7 @@ import RecommendationStatus from 'components/RecommendationStatus';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Icon from 'components/Icon';
 import { css } from '@emotion/css';
-import { Color, mobileMaxWidth } from 'constants/css';
+import { Color, mobileMaxWidth, Theme } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import {
   determineUserCanRewardThis,
@@ -25,7 +25,7 @@ import {
   isMobile,
   scrollElementToCenter
 } from 'helpers';
-import { useContentState, useTheme } from 'helpers/hooks';
+import { useContentState } from 'helpers/hooks';
 import { useAppContext, useContentContext, useKeyContext } from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
@@ -84,11 +84,18 @@ export default function Body({
   const deleteContent = useAppContext((v) => v.requestHelpers.deleteContent);
   const loadComments = useAppContext((v) => v.requestHelpers.loadComments);
 
-  const { authLevel, canDelete, canEdit, canReward, twinkleCoins, userId } =
-    useKeyContext((v) => v.myState);
+  const {
+    authLevel,
+    canDelete,
+    canEdit,
+    canReward,
+    profileTheme,
+    twinkleCoins,
+    userId
+  } = useKeyContext((v) => v.myState);
   const {
     reward: { color: rewardColor }
-  } = useTheme(theme);
+  } = Theme(theme || profileTheme);
 
   const onSetIsEditing = useContentContext((v) => v.actions.onSetIsEditing);
   const onSetXpRewardInterfaceShown = useContentContext(

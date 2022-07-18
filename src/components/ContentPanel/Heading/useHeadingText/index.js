@@ -1,8 +1,9 @@
 import { useMemo } from 'react';
-import { useTheme } from 'helpers/hooks';
+import { Theme } from 'constants/css';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import renderEnglishMessage from './localization/english';
 import renderKoreanMessage from './localization/korean';
+import { useKeyContext } from 'contexts';
 
 export default function useHeadingText({ action, contentObj, theme }) {
   const {
@@ -16,11 +17,12 @@ export default function useHeadingText({ action, contentObj, theme }) {
     uploader,
     rootObj
   } = contentObj;
+  const { profileTheme } = useKeyContext((v) => v.myState);
   const {
     link: { color: linkColor },
     userLink: { color: userLinkColor },
     content: { color: contentColor }
-  } = useTheme(theme);
+  } = Theme(theme || profileTheme);
   const HeadingText = useMemo(() => {
     const params = {
       id,

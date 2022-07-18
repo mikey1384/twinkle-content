@@ -30,13 +30,13 @@ import { css } from '@emotion/css';
 import { useNavigate } from 'react-router-dom';
 import { commentContainer } from '../Styles';
 import { timeSince } from 'helpers/timeStampHelpers';
-import { useContentState, useTheme } from 'helpers/hooks';
+import { useContentState } from 'helpers/hooks';
 import {
   determineUserCanRewardThis,
   determineXpButtonDisabled,
   scrollElementToCenter
 } from 'helpers';
-import { borderRadius, Color } from 'constants/css';
+import { borderRadius, Color, Theme } from 'constants/css';
 import { getFileInfoFromFileName, stringIsEmpty } from 'helpers/stringHelpers';
 import { useAppContext, useContentContext, useKeyContext } from 'contexts';
 import LocalContext from '../Context';
@@ -116,13 +116,14 @@ function Comment({
     canEdit,
     canReward,
     isCreator,
+    profileTheme,
     twinkleCoins,
     userId
   } = useKeyContext((v) => v.myState);
   const {
     link: { color: linkColor },
     reward: { color: rewardColor }
-  } = useTheme(theme);
+  } = Theme(theme || profileTheme);
   const onChangeSpoilerStatus = useContentContext(
     (v) => v.actions.onChangeSpoilerStatus
   );

@@ -31,12 +31,12 @@ import Outgoing from 'components/Stream/Outgoing';
 import InvalidPage from 'components/InvalidPage';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { useLocation, Routes, Route } from 'react-router-dom';
-import { Color, mobileMaxWidth } from 'constants/css';
+import { Color, Theme, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { socket } from 'constants/io';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 import { finalizeEmoji } from 'helpers/stringHelpers';
-import { useMyState, useTheme, useScrollPosition } from 'helpers/hooks';
+import { useMyState, useScrollPosition } from 'helpers/hooks';
 import {
   isMobile,
   getSectionFromPathname,
@@ -82,7 +82,10 @@ function App() {
   );
   const reportError = useAppContext((v) => v.requestHelpers.reportError);
   const myState = useMyState();
-  const theme = useTheme();
+  const theme = useMemo(
+    () => Theme(myState.profileTheme),
+    [myState.profileTheme]
+  );
   const {
     authLevel,
     profilePicUrl,

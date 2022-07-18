@@ -8,10 +8,9 @@ import ImageModal from 'components/Modals/ImageModal';
 import ImageEditModal from 'components/Modals/ImageEditModal';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from '@emotion/css';
-import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
+import { Color, Theme, borderRadius, mobileMaxWidth } from 'constants/css';
 import { cloudFrontURL, MAX_PROFILE_PIC_SIZE } from 'constants/defaultValues';
 import { useAppContext, useKeyContext } from 'contexts';
-import { useTheme } from 'helpers/hooks';
 import { isMobile } from 'helpers';
 import localize from 'constants/localize';
 
@@ -69,7 +68,7 @@ export default function Cover({
   const {
     cover: { color: coverColor },
     done: { color: doneColor }
-  } = useTheme(selectedTheme || profileTheme || 'logoBlue');
+  } = Theme(selectedTheme || profileTheme || 'logoBlue');
 
   return (
     <ErrorBoundary componentPath="Profile/Cover">

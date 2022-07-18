@@ -14,7 +14,7 @@ import Attachment from 'components/Attachment';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import FullTextReveal from 'components/Texts/FullTextReveal';
 import AlertModal from 'components/Modals/AlertModal';
-import { Color } from 'constants/css';
+import { Color, Theme } from 'constants/css';
 import {
   FILE_UPLOAD_XP_REQUIREMENT,
   mb,
@@ -29,7 +29,6 @@ import {
   getFileInfoFromFileName
 } from 'helpers/stringHelpers';
 import { css } from '@emotion/css';
-import { useTheme } from 'helpers/hooks';
 import { useInputContext, useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
@@ -70,9 +69,8 @@ function InputForm({
   theme,
   targetCommentId
 }) {
-  const { userId, authLevel, twinkleXP, fileUploadLvl } = useKeyContext(
-    (v) => v.myState
-  );
+  const { userId, authLevel, profileTheme, twinkleXP, fileUploadLvl } =
+    useKeyContext((v) => v.myState);
   const {
     skeuomorphicDisabled: {
       color: skeuomorphicDisabledColor,
@@ -80,7 +78,7 @@ function InputForm({
     },
     button: { color: buttonColor },
     danger: { color: dangerColor }
-  } = useTheme(theme);
+  } = Theme(theme || profileTheme);
   const maxSize = useMemo(
     () => returnMaxUploadSize(fileUploadLvl),
     [fileUploadLvl]
