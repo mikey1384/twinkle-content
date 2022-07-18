@@ -35,7 +35,7 @@ export default function FilterBar({
 
   const FilterBarStyle = useMemo(() => {
     return `${css`
-      background: ${inverted ? Color[filterColor]() : '#fff'};
+      background: ${inverted ? Color[filterColor](0.7) : '#fff'};
       height: 6rem;
       margin-bottom: 1rem;
       ${!inverted && bordered
@@ -118,15 +118,17 @@ export default function FilterBar({
             : ''};
         }
         > nav:hover {
-          background: ${inverted ? filterActiveColor : ''};
-          color: ${inverted ? '#fff' : filterActiveColor};
-          border-bottom: ${inverted ? '' : `3px solid ${filterActiveColor}`};
+          background: ${inverted ? Color[filterActiveColor]() : ''};
+          color: ${inverted ? '#fff' : Color[filterActiveColor]()};
+          border-bottom: ${inverted
+            ? ''
+            : `3px solid ${Color[filterActiveColor]()}`};
           &.alert {
             color: ${Color[alertColor]()}!important;
             border-bottom: 3px solid ${Color[alertColor]()}!important;
           }
           > a {
-            color: ${inverted ? '#fff' : filterActiveColor};
+            color: ${inverted ? '#fff' : Color[filterActiveColor]()};
             font-weight: bold;
           }
         }
