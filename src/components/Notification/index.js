@@ -100,7 +100,7 @@ function Notification({ className, location, style, trackScrollPosition }) {
           ? 'notification'
           : 'rankings';
       setActiveTab(tab);
-      if (totalRewardedTwinkles + totalRewardedTwinkleCoins === 0) {
+      if (totalRewardedTwinkles + totalRewardedTwinkleCoins === 0 && userId) {
         onClearRewards(userId);
       }
     }

@@ -91,6 +91,7 @@ function App() {
     userId,
     username
   } = myState;
+
   const channelOnCall = useChatContext((v) => v.state.channelOnCall);
   const channelsObj = useChatContext((v) => v.state.channelsObj);
   const currentChannelName = useChatContext((v) => v.state.currentChannelName);
