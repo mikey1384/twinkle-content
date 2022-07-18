@@ -126,9 +126,6 @@ function MessagesContainer({
   const { banned, profilePicUrl, userId, profileTheme, username } =
     useKeyContext((v) => v.myState);
   const {
-    loadMoreButton: { color: loadMoreButtonColor }
-  } = useTheme(displayedThemeColor || profileTheme);
-  const {
     isRespondingToSubject = false,
     messageIds = [],
     messagesObj = {},
@@ -138,8 +135,12 @@ function MessagesContainer({
     wordleWordLevel,
     wordleAttemptState,
     wordleStats,
-    nextDayTimeStamp
+    nextDayTimeStamp,
+    twoPeople
   } = currentChannel;
+  const {
+    loadMoreButton: { color: loadMoreButtonColor }
+  } = useTheme(twoPeople ? profileTheme : displayedThemeColor || profileTheme);
 
   const scrolledToBottomRef = useRef(true);
   const loadMoreButtonLock = useRef(false);
