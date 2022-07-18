@@ -8,9 +8,9 @@ import Icon from 'components/Icon';
 import Loading from 'components/Loading';
 import Button from 'components/Button';
 import { addEmoji, stringIsEmpty } from 'helpers/stringHelpers';
-import { borderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useOutsideClick } from 'helpers/hooks';
+import { useOutsideClick, useTheme } from 'helpers/hooks';
 import { useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
@@ -69,7 +69,7 @@ export default function SectionPanel({
   const {
     success: { color: successColor },
     sectionPanel: { color: sectionPanelColor }
-  } = Theme(customColorTheme || profileTheme);
+  } = useTheme(customColorTheme || profileTheme);
   const TitleInputRef = useRef(null);
   useOutsideClick(TitleInputRef, () => {
     setOnEdit(false);

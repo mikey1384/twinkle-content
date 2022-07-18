@@ -14,7 +14,8 @@ import Attachment from 'components/Attachment';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import FullTextReveal from 'components/Texts/FullTextReveal';
 import AlertModal from 'components/Modals/AlertModal';
-import { Color, Theme } from 'constants/css';
+import { Color } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
 import {
   FILE_UPLOAD_XP_REQUIREMENT,
   mb,
@@ -78,7 +79,7 @@ function InputForm({
     },
     button: { color: buttonColor },
     danger: { color: dangerColor }
-  } = Theme(theme || profileTheme);
+  } = useTheme(theme || profileTheme);
   const maxSize = useMemo(
     () => returnMaxUploadSize(fileUploadLvl),
     [fileUploadLvl]

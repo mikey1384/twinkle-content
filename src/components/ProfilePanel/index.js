@@ -13,10 +13,10 @@ import UserDetails from 'components/UserDetails';
 import Loading from 'components/Loading';
 import { useNavigate } from 'react-router-dom';
 import { MAX_PROFILE_PIC_SIZE } from 'constants/defaultValues';
-import { borderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { timeSince } from 'helpers/timeStampHelpers';
-import { useContentState, useLazyLoad } from 'helpers/hooks';
+import { useContentState, useLazyLoad, useTheme } from 'helpers/hooks';
 import { useInView } from 'react-intersection-observer';
 import {
   useAppContext,
@@ -169,7 +169,7 @@ function ProfilePanel({ expandable, profileId, style }) {
   );
   const {
     profilePanel: { color: profilePanelColor }
-  } = Theme(profileTheme || 'logoBlue');
+  } = useTheme(profileTheme || 'logoBlue');
 
   const [bioEditModalShown, setBioEditModalShown] = useState(false);
   const [loadingComments, setLoadingComments] = useState(false);

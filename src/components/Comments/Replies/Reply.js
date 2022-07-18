@@ -22,9 +22,9 @@ import XPRewardInterface from 'components/XPRewardInterface';
 import ContentFileViewer from 'components/ContentFileViewer';
 import { commentContainer } from '../Styles';
 import { Link } from 'react-router-dom';
-import { Color, Theme } from 'constants/css';
+import { Color } from 'constants/css';
 import { determineUserCanRewardThis, determineXpButtonDisabled } from 'helpers';
-import { useContentState } from 'helpers/hooks';
+import { useContentState, useTheme } from 'helpers/hooks';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { useAppContext, useContentContext, useKeyContext } from 'contexts';
 import { getFileInfoFromFileName, stringIsEmpty } from 'helpers/stringHelpers';
@@ -123,7 +123,7 @@ function Reply({
   const {
     link: { color: linkColor },
     reward: { color: rewardColor }
-  } = Theme(theme || profileTheme);
+  } = useTheme(theme || profileTheme);
   const onSetIsEditing = useContentContext((v) => v.actions.onSetIsEditing);
   const onSetXpRewardInterfaceShown = useContentContext(
     (v) => v.actions.onSetXpRewardInterfaceShown

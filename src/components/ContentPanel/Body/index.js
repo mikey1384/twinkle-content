@@ -17,7 +17,7 @@ import RecommendationStatus from 'components/RecommendationStatus';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Icon from 'components/Icon';
 import { css } from '@emotion/css';
-import { Color, mobileMaxWidth, Theme } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import {
   determineUserCanRewardThis,
@@ -25,7 +25,7 @@ import {
   isMobile,
   scrollElementToCenter
 } from 'helpers';
-import { useContentState } from 'helpers/hooks';
+import { useContentState, useTheme } from 'helpers/hooks';
 import { useAppContext, useContentContext, useKeyContext } from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
@@ -95,7 +95,7 @@ export default function Body({
   } = useKeyContext((v) => v.myState);
   const {
     reward: { color: rewardColor }
-  } = Theme(theme || profileTheme);
+  } = useTheme(theme || profileTheme);
 
   const onSetIsEditing = useContentContext((v) => v.actions.onSetIsEditing);
   const onSetXpRewardInterfaceShown = useContentContext(

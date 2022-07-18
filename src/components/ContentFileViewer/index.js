@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import FileInfo from './FileInfo';
 import ImagePreview from './ImagePreview';
 import MediaPlayer from './MediaPlayer';
-import { Color, Theme } from 'constants/css';
+import { Color } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
 import { cloudFrontURL } from 'constants/defaultValues';
 import { useKeyContext } from 'contexts';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
@@ -44,7 +45,7 @@ export default function ContentFileViewer({
   const { profileTheme } = useKeyContext((v) => v.myState);
   const {
     link: { color: linkColor }
-  } = Theme(theme || profileTheme);
+  } = useTheme(theme || profileTheme);
   const isDisplayedOnHome = useMemo(
     () => contentType === 'subject' || contentType === 'comment',
     [contentType]

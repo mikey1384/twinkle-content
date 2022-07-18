@@ -6,7 +6,8 @@ import request from 'axios';
 import Message from './Message';
 import Loading from 'components/Loading';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
-import { Color, Theme } from 'constants/css';
+import { Color } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
 import { queryStringForArray } from 'helpers/stringHelpers';
 import { useKeyContext } from 'contexts';
 import URL from 'constants/URL';
@@ -31,7 +32,7 @@ export default function SubjectMsgsModal({
   const { profileTheme } = useKeyContext((v) => v.myState);
   const {
     loadMoreButton: { color: loadMoreButtonColor }
-  } = Theme(displayedThemeColor || profileTheme);
+  } = useTheme(displayedThemeColor || profileTheme);
   const [loading, setLoading] = useState(false);
   const [loadMoreButtonShown, setLoadMoreButtonShown] = useState(false);
   const [messages, setMessages] = useState([]);

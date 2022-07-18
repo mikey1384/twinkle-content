@@ -6,9 +6,9 @@ import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import FilterBar from 'components/FilterBar';
 import Loading from 'components/Loading';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
-import { useInfiniteScroll } from 'helpers/hooks';
+import { useInfiniteScroll, useTheme } from 'helpers/hooks';
 import { useAppContext, useProfileContext } from 'contexts';
-import { mobileMaxWidth, Theme } from 'constants/css';
+import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 
 Feeds.propTypes = {
@@ -33,7 +33,7 @@ export default function Feeds({
   const { filter } = useParams();
   const {
     loadMoreButton: { color: loadMoreButtonColor }
-  } = Theme(selectedTheme || 'logoBlue');
+  } = useTheme(selectedTheme || 'logoBlue');
   const location = useLocation();
   const navigate = useNavigate();
   const [loadingFeeds, setLoadingFeeds] = useState(false);
